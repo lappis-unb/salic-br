@@ -145,10 +145,25 @@ table.tabela td.destacar span,
 
 nav .nav-wrapper {
     color: #fff;
-    background-color: #1b5e20;
     width: 100%;
     height: 56px;
     line-height: 56px;
+}
+nav.breadcrumb {
+    height: 30px;
+    /*background-color: #388E3C;*/
+}
+nav.breadcrumb .nav-wrapper {
+    color: #fff;
+    background-color: #388E3C;
+    /*background-color: #1B5E20;*/
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+
+.breadcrumb a {
+    font-size: 13px;
 }
 
 /* label color */
@@ -286,25 +301,35 @@ ul, menu, dir {
 }
 /*Inherited from nav.nav-extended*/
 /*@media only screen and (min-width: 601px)*/
-/*nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {*/
-    /*height: 56px;*/
-    /*line-height: 56px;*/
-/*}*/
-    /*nav {*/
-        /*color: #fff;*/
-        /*background-color: #ee6e73;*/
-        /*width: 100%;*/
-        /*height: 56px;*/
-        /*line-height: 56px;*/
-    /*}*/
-/*nav ul a {*/
-    /*transition: background-color .3s;*/
-    /*font-size: 1rem;*/
-    /*color: #fff;*/
-    /*display: block;*/
-    /*padding: 0 15px;*/
-    /*cursor: pointer;*/
-/*}*/
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 56px;
+    line-height: 56px;
+}
+nav {
+    color: #fff;
+    background-color: #ee6e73;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+}
+nav ul a {
+    transition: background-color .3s;
+    font-size: 1rem;
+    color: #fff;
+    display: block;
+    padding: 0 15px;
+    cursor: pointer;
+}
+#sidenav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 996;
+    will-change: opacity;
+}
 
 /* Buttons */
 .btn-default,

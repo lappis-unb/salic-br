@@ -93,6 +93,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
             $this->arrProjeto = $tbProjeto->findBy($intIdPronac);
         }
 
+
         $this->arrBreadCrumb[] = array('url' => '/principal', 'title' => 'In&iacute;cio', 'description' => 'Ir para in&iacute;cio');
     }
 

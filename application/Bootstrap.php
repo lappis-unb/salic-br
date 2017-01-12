@@ -12,6 +12,71 @@
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+
+    protected $_cache;
+
+    /**
+     * @name _initCoreCache
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  10/01/2016
+     */
+    protected function _initCoreCache()
+    {
+        $frontendOptions = array(
+            'lifetime' => 7200, // cache lifetime of 2 hours
+            'automatic_serialization' => true
+        );
+        $backendOptions = array(
+            'cache_dir' => APPLICATION_PATH . '/../data/cache/' // Directory where to put the cache files
+        );
+
+        // getting a Zend_Cache_Core object
+        $this->_cache = Zend_Cache::factory(
+            'Core',
+            'File',
+            $frontendOptions,
+            $backendOptions
+        );
+    }
+
+    /**
+     * @name _initConfig
+     * @return Zend_Config
+     * @author  Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     */
+    public function _initConfig()
+    {
+        $config = new Zend_Config($this->getOptions(), true);
+//        Zend_Registry::set('config', $config);
+
+        $cacheId = APPLICATION_ENV . __FUNCTION__;
+        if (APPLICATION_ENV == 'development' || APPLICATION_ENV == 'testing') $this->_cache->remove($cacheId);
+//        if ( ($configObject = $this->_cache->load($cacheId)) === false ) {
+            $configPath = APPLICATION_PATH . '/configs';
+            $configFileExt = '.ini';
+            if ($handle = opendir($configPath)) {
+                while (false !== ($file = readdir($handle))) {
+                    if ($configName = strstr($file, $configFileExt, true)) {
+                        if ($configName == 'application' || $configName == 'exemplo-application') continue;
+                        $config->{$configName} = new Zend_Config_Ini($configPath . '/' . $file, null, array(
+                          'allowModifications' => true,
+//                          'nestSeparator'      => ':',
+//                          'skipExtends'        => false
+                        ));
+
+                    }
+                }
+                closedir($handle);
+            }
+//            $configObject->{'application'}->{APPLICATION_ENV} = new Zend_Config($this->getApplication()->getOptions());
+//            $this->_cache->save($config, $cacheId);
+//        }
+
+        Zend_Registry::set('config', $config);
+        return $config;
+    }
+
     /**
      * _initPath
      *
@@ -151,18 +216,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
 
-
-    /**
-     * @return Zend_Config
-     * @author  Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     */
-    public function _initConfig()
-    {
-        $config = new Zend_Config($this->getOptions(), true);
-        Zend_Registry::set('config', $config);
-        return $config;
-    }
-
     /**
      * _initRoutes Texto de descri��o do m�todo.
      *
@@ -205,6 +258,33 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 //        var_dump($breadCrumb);
 //        exit;
 //            Zend_Controller_Action_HelperBroker::addHelper($breadCrumb);
+    }
+
+
+    public function _initLayouts()
+    {
+        /* configuraççes do layout padrão do sistema */
+//        Zend_Layout::startMvc(array(
+//            'layout'     => 'layout',
+//            'layoutPath' => APPLICATION_PATH.'/layout/',
+//            'contentKey' => 'content'));
+//        # paginacao
+//        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacaoMinc.phtml');
+
+        // Initialize view
+//        $view         = new Zend_View();
+//        $layout         = new Zend_Layout();
+//        echo '<pre>';
+//        var_dump($layout->name);
+//        exit;
+//        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
+//            'ViewRenderer'
+//        );
+//        $viewRenderer->setView($view);
+//        $view->addHelperPath(
+//            APPLICATION_PATH . '/../library/MinC/View/Helper/',
+//            'MinC_View_Helper_'
+//        );
     }
 
 }

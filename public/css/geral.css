@@ -267,7 +267,7 @@ a:hover {
 }
 #conteudo {
 	border-left:1px solid #e8e8e8;
-	background:url(../img/sombra-conteudo-right.gif) right repeat-y #fff;
+	/*background:url(../img/sombra-conteudo-right.gif) right repeat-y #fff;*/
 }
 #conteudo a {
 	color:#0a449b;
