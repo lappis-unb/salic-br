@@ -14,7 +14,6 @@
             //-->
             </script>
     <?php
-    //Zend_Debug::dump($this->analista, 1);
     if (count($this->analista)<=0) {
         echo '<div class="miolo"><div class="msgALERT"><div>Usu�rio n�o encontrado.</div></div>';
     } else {
@@ -23,7 +22,7 @@
         }
     ?>
         <form id="frmGerAnalista" method="post" action="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/gerenciaranalista">
-            <table>
+            <table class="bordered">
                 <tr>
                     <th>
                         Habilitar / Desabilitar Analista
@@ -43,7 +42,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <b>Unidade *</b>
+                        <b>Unidade * </b>
                         <br />
                         <?php echo $this->analista->unidade; ?>
                         <input type="hidden" name="usu_orgao" value="<?php echo $this->analista->usu_orgao; ?>" />
@@ -61,26 +60,35 @@
                     <td>
                         <b>Status *</b>
                         <br />
-                        <?php
-                        if ((int) $this->analista->status == 1) {
-                            echo "<input type='radio' id='status' name='status' checked='checked' value='{$this->analista->status}'/>
-                                  Habilitado
-                                  <input type='radio' id='status' name='status' value='0'/>
-                                  Desabilitado";
-                        } else {
-                            echo "<input type='radio' id='status' name='status' value='1'/>
-                                  Habilitado
-                                  <input type='radio' id='status' name='status' checked='checked' value='{$this->analista->status}'/>
-                                  Desabilitado";
-                        }
-                        ?>
+                        <?php if ((int) $this->analista->status == 1): ?>
+                            <p>
+                                <input type='radio' id='status1' name='status'
+                                    checked='checked' value="<?php echo $this->analista->status ?>"/>
+                                <label for='status1'>Habilitado</label>
+                            </p>
+                            <p>
+                              <input type='radio' id='status2' name='status' value='0'/>
+                              <label for='status2'>Desabilitado</label>
+                            </p>
+                        <?php else:?>
+                            <p>
+                                <input type='radio' id='status1' name='status' value='1'/>
+                                <label for='status1'>Habilitado</label>
+                            </p>
+                            <p>
+                                <input type='radio' id='status2' name='status' checked='checked' value="<?php echo $this->analista->status ?>"/>
+                                <label for='status2'>Desabilitado</label>
+                            </p>
+                        <?php endif ?>
                     </td>
                 </tr>
             </table>
             <table>
                 <tr>
                     <td class="centro">
-                        <input type="button" class="btArmazenar btn_salvar" title="Salvar" value=" " />
+                        <button type="submit" class="btn  ">Salvar</button>
+                        <a class="btn red-text white"
+                            href="<?php echo $this->url(array('module'=>'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')) ?>">Cancelar</a>
                     </td>
                 </tr>
             </table>
