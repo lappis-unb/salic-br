@@ -1,4 +1,3 @@
-
 $3(document).ready(function ($) {
     elmBody = $('body');
     elmBody.on('click', '#btConfirmar', function(){
@@ -27,20 +26,21 @@ $3(document).ready(function ($) {
 
 function redirect(strUrl)
 {
-    $('.card').removeClass('fadeInUp');
-    $('.card').removeClass('animated');
+    var elmCard = $3('.card');
+    elmCard.removeClass('fadeInUp');
+    elmCard.removeClass('animated');
     strAnimate = 'fadeOutDown';
 //            strAnimate = 'jello';
 //            strAnimate = 'wobble';
 //            strAnimate = 'pulse';
-    $('.card').addClass(strAnimate);
-    $('.card').addClass('animated');
+    elmCard.addClass(strAnimate);
+    elmCard.addClass('animated');
 //            setTimeout(function(){
 //                $('.card').removeClass(strAnimate);
 //                $('.card').removeClass('animated');
 //            }, 1000);
-    $('#title').fadeOut();
-    $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $3('#title').fadeOut();
+    elmCard.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
         window.location.href = strUrl;
 //                $('.card').removeClass(strAnimate);
 //                $('.card').removeClass('animated');

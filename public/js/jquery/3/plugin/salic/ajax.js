@@ -178,7 +178,9 @@
         if (elmForm.valid()) {
             $(elmForm).ajaxSubmit({
                 beforeSerialize: function($form, options) {
-                    tinyMCE.triggerSave();
+                    if (typeof tinyMCE == 'object') {
+                        tinyMCE.triggerSave();
+                    }
                 },
                 success: function(result) {
                     result = $3.parseJSON(result);
