@@ -8,15 +8,15 @@
             </form>
             <div >
                 <div class="conteudoImprimivel" id="conteudoImprimivel">
-                <table class="tabela" style="width: 40%;">
+                <table>
                     <tr>
-                        <th width="80%">Resumo</th>
-                        <th width="20%">Registros</th>
+                        <th>Resumo</th>
+                        <th>Registros</th>
                     </tr>
                     <?php $totalGeral=0; ?>
                     <?php foreach($this->resumo as $resumo=>$valor): ?>
                     <tr>
-                        <td align="left">Proposta para An�lise&nbsp;<?php echo $resumo; ?></td>
+                        <td align="left">Proposta para An&aacute;lise&nbsp;<?php echo $resumo; ?></td>
                         <td align="right"><?php echo $valor; ?></td>
                     </tr>
                     <?php $totalGeral+=$valor; ?>
@@ -34,7 +34,7 @@
                 <input type="hidden" name="gVal_<?php echo $resumo; ?>" value="<?php echo $valor; ?>" />
             <?php endforeach; ?>
             </form>
-                <table class="tabela" style="width: 40%;">
+                <table>
                 <tr>
                 <td class="centro">
                     <input type="button" title="Imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'/>

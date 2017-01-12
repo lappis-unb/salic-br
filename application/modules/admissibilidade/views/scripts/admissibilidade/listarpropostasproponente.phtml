@@ -51,7 +51,7 @@
                                 <tbody>
                                 <?php foreach($this->propostas as $proposta): ?>
                                 <tr>
-                                    <td nowrap><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>"><?php echo $proposta->idPreProjeto; ?></a></td>
+                                    <td nowrap><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>"><?php echo $proposta->idPreProjeto; ?></a></td>
                                     <td><?php echo $proposta->NomeProjeto; ?></td>
                                     <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"]; ?></td>
                                     <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["tecnico"]; ?></td>
