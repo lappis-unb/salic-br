@@ -1434,7 +1434,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".xls;");
+            header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
