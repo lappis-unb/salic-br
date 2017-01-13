@@ -22,12 +22,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function init()
     {
-        Zend_Layout::startMvc(array('layout' => 'open'));
         parent::init();
     }
 
     public function indexAction()
     {
+        Zend_Layout::startMvc(array('layout' => 'open'));
         $oauthConfigArray = Zend_Registry::get("config")->toArray();
         $this->view->habilitarServicoLoginCidadao = false;
         if($oauthConfigArray && $oauthConfigArray['OAuth']) {
@@ -207,7 +207,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function cadastrarusuarioAction()
     {
-
+        Zend_Layout::startMvc(array('layout' => 'open'));
         if ($_POST) {
             $this->_helper->layout->disableLayout();
             $post = Zend_Registry::get('post');
@@ -316,6 +316,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function solicitarsenhaAction()
     {
+        Zend_Layout::startMvc(array('layout' => 'open'));
         if ($_POST) {
             $this->_helper->layout->disableLayout();
             $post = Zend_Registry::get('post');
