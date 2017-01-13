@@ -302,6 +302,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $recurso->save();
 
-        parent::message('Proejto enviado para portaria.', "/admissibilidade/enquadramento/desistencia-recursal");
+        parent::message('Projeto enviado para portaria.', "/admissibilidade/enquadramento/desistencia-recursal");
     }
 }
