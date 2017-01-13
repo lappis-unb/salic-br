@@ -35,7 +35,8 @@
                         <thead>
                         <tr class="titulo_tabela">
                             <th>
-                                <input type="checkbox" name="marcarDesmarcarCheckbox" id="marcarDesmarcarCheckbox" class="filled-in"/>
+                                <input type="checkbox" name="marcarDesmarcarCheckbox" id="marcarDesmarcarCheckbox"
+                                       class="filled-in"/>
                                 <label id="marcarDesmarcarCheckboxLabel" for="marcarDesmarcarCheckbox"></label>
                             </th>
                             <th width="40">PRONAC</th>
@@ -87,7 +88,8 @@
                         <div class="col s12 m6 l4">
                             <label>Legenda:</label>
                             <br/>
-                            <div class="amber lighten-4" style="border: 1px solid gray; height: 20px; display: inline">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                            <div class="amber lighten-4" style="border: 1px solid gray; height: 20px; display: inline">
+                                &nbsp;&nbsp;&nbsp;&nbsp;</div>
                             Projeto Enquadrado Com Recurso
                             <br clear="both"/>
                             <div class="" style="border: 1px solid gray; height: 20px; display: inline">
@@ -95,7 +97,8 @@
                             Projeto Enquadrado
                         </div>
                     </div>
-                    <div class="center-align">
+                    <div class="center-align" id="divEncaminhamentoEmMassa"
+                         style="display: none;">
                         <button class="btn waves-effect waves-light" type="submit" name="action">
                             Encaminhar em massa <i class="material-icons right">send</i>
                         </button>
@@ -134,6 +137,19 @@
                 });
                 $3("#marcarDesmarcarCheckboxLabel").click(function () {
                     utilitarios.marcarDesmarcarCheckBoxesMaterialize($3("#marcarDesmarcarCheckbox"), ".checkbox_legal");
+                    tratarExibicaoCheckboxChecados('.checkbox_legal', '#divEncaminhamentoEmMassa');
+                });
+
+                function tratarExibicaoCheckboxChecados (seletorCheckboxes, seletorExibicao) {
+                    var quantidadeCheckboxChecados = $(seletorCheckboxes).filter(':checked').length;
+                    $3(seletorExibicao).hide('fast');
+                    if(quantidadeCheckboxChecados > 0) {
+                        $3(seletorExibicao).show('fast');
+                    }
+                }
+
+                $3('.checkbox_legal').click(function () {
+                    tratarExibicaoCheckboxChecados('.checkbox_legal', '#divEncaminhamentoEmMassa');
                 });
 
                 $3("#formEncaminhamento").validate({
@@ -159,7 +175,7 @@
 
                 $3.validator.addMethod("validarPreenchimento", function (value, element) {
                     var checkbox = $('input[type=checkbox]:checked').filter('.checkbox_legal');
-                    if(checkbox.length > 0){
+                    if (checkbox.length > 0) {
                         return true;
                     }
                 });

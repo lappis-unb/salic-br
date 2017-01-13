@@ -50,6 +50,10 @@
             <?php if (!empty($this->usuario->usu_identificacao) && !empty($this->usuario->usu_nome)) : ?>
                 <li >Usu&aacute;rio <strong><?php echo $this->usuario->usu_nome; ?> [<?php echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?>]</strong></li>
             <?php endif; ?>
+            <?php $user = array_change_key_case((array) $this->usuario); ?>
+            <?php if (!empty($user['cpf']) && !empty($user['nome'])) : ?>
+                <li>Usu&aacute;rio <strong><?php echo $user['nome']; ?> [<?php echo Validacao::mascaraCPFCNPJ($user['cpf']); ?>]</strong></li>
+            <?php endif; ?>
             <li>
                 <a
                     class="btn-floating small waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sair do Sistema"
