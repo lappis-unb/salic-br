@@ -136,7 +136,7 @@
                                         <tr>
                                             <th width="10%">Nr. Proposta</th>
                                             <th width="75%">Nome da Proposta</th>
-                                            <th width="15%">Dt. Movimenta��o</th>
+                                            <th width="15%">Dt. Movimenta&ccedil;&atilde;o</th>
                                         </tr>
                                         <?php foreach($propostas as $proposta): ?>
                                         <?php if($proposta->ConformidadeOK == 9): ?>
@@ -165,10 +165,16 @@
             <table class="tabela">
                 <tr>
                     <td align="center">
-                        <!--<input  type="button" name="imprimir" class="btn_imprimir" onclick="window.location='<?php echo $this->urlPDF; ?>'">-->
-                        <input  type="button" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
-                        <input  type="button" name="xls" class="btn_xls" style="width: 43px" onclick="window.location='<?php echo $this->urlXLS; ?>'">
-                        <input type="button" style="width: 88px" class="btn_resumo" id="btn_resumo" onclick="$('#frmResumo').submit();" />
+
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir"  type="button" name="imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
+                            Imprimir <i class="material-icons right">print</i>
+                        </button>
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="XLS"  type="button" name="xls" onclick="window.location='<?php echo $this->urlXLS; ?>'">
+                            XLS <i class="material-icons right">view_list</i>
+                        </button>
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo"  type="button" name="imprimir" class="btn_resumo" id="btn_resumo" onclick="$('#frmResumo').submit();">
+                            Resumo <i class="material-icons right">description</i>
+                        </button>
                     </td>
                 </tr>
             </table>
