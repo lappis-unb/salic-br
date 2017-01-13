@@ -53,6 +53,8 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     p.EstrategiaDeExecucao,
                     p.stDataFixa,
                     p.stPlanoAnual,
+                    p.stProposta,
+                    p.tpProrrogacao,
                     a.CNPJCPF,
                     agentes.dbo.fnNome(p.idAgente) as NomeAgente,
                     SAC.dbo.fnNomeTecnicoMinc(tbap.idTecnico) as tecnico,
@@ -83,7 +85,8 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     mun.Descricao as NomeCidade,
                     p.idEdital,
                     p.DtArquivamento,
-                    p.stEstado
+                    p.stEstado,
+                    versac.Descricao as ExecucaoImediata
                 FROM sac.dbo.PreProjeto p
                     left JOIN agentes.dbo.Agentes a			on p.idAgente = a.idAgente
                     left join agentes.dbo.endereconacional en		on p.idAgente = en.idAgente
@@ -102,6 +105,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     left JOIN SAC.dbo.tbAvaliacaoProposta tbap		on tbhe.idAvaliacaoProposta = tbap.idAvaliacaoProposta
                     left join AGENTES.dbo.Uf uf                         on uf.idUf = en.UF
                     left join AGENTES.dbo.Municipios mun                on mun.idMunicipioIBGE = en.Cidade
+                    left join SAC.dbo.Verificacao versac    on  p.stProposta = versac.idVerificacao
                 WHERE idPreProjeto = {$idPreProjeto}";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
