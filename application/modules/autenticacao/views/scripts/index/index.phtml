@@ -1,6 +1,6 @@
-<style>
-    body {overflow-x: hidden;overflow-y: hidden;}
-</style>
+<!--<style>-->
+<!--    body {overflow-x: hidden;overflow-y: hidden;}-->
+<!--</style>-->
 <?php if (!$this->habilitarServicoLoginCidadao): ?>
     <div class="container">
         <!--<div class="container animated slideInUp">-->
@@ -83,7 +83,7 @@
         </div>
     </div>
 <?php else: ?>
-    <p align="center">
+    <p align="center" colspan="2">
         <a href="<?php echo $this->url(array('controller' => 'logincidadao', 'module' => 'autenticacao')) ?>">
             <img style="border: 0px"
                  src="<?php echo $this->baseUrl(); ?>/public/img/buttons/login_cidadao/BotaoParaLogin_escuro.png"
@@ -92,8 +92,8 @@
         </a>
     </p>
 <?php endif; ?>
-<?php $this->headScript()->appendFile('/public/scripts/autenticacao/js/index.js') ?>
 <script type="text/javascript">
+
     $3(document).ready(function ($) {
         $("#inicial").validate({
             // Define as regras

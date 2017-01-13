@@ -29,7 +29,7 @@ class MinC_View_Helper_Vcs extends Zend_View_Helper_Abstract
         exec("git rev-parse --abbrev-ref HEAD", $branchName);
         exec("git rev-parse --short HEAD", $commit);
         
-        return "Branch|Tag: " . array_pop($branchName) . " - revis&atilde;o: <a target=\"_blank\" href='http://git.cultura.gov.br/sistemas/novo-salic/blob/master/CHANGELOG'>" . array_pop($tagNumber) . "</a> / <a target=\"_blank\" href='http://git.cultura.gov.br/sistemas/novo-salic/commit/" . current($commit) . "'>" . current($commit) . "</a>";
+        return "Branch|Tag: " . array_pop($branchName) . " - revis&atilde;o: <a class=\"tooltipped\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"Ir para o changelog\" target=\"_blank\" href='http://git.cultura.gov.br/sistemas/novo-salic/blob/master/CHANGELOG'>" . array_pop($tagNumber) . "</a> / <a  class=\"tooltipped\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"Ir para os arquivos alterados\"  target=\"_blank\" href='http://git.cultura.gov.br/sistemas/novo-salic/commit/" . current($commit) . "'>" . current($commit) . "</a>";
     }
 
     /**

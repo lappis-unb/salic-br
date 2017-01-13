@@ -62,3 +62,21 @@ insert into tbItensPlanilhaProduto
 (idProduto,idPlanilhaEtapa,idPlanilhaItens,idUsuario)
 select 0,8,5249,236
 
+-- amarrando os valores de pos-producao etapa 7
+-- @todo ATENCAO, esse valores não irão para produção, o Rômulo fará o insert correto
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (1, 7, 4001, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (1, 7, 4002, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (1, 7, 4003, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (1, 7, 4005, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (19, 7, 5000, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (19, 7, 5001, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (19, 7, 5002, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (19, 7, 5003, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (19, 7, 5004, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (19, 7, 5005, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (51, 7, 6000, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (51, 7, 6001, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (51, 7, 6002, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (51, 7, 6003, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (51, 7, 6004, 236);
+INSERT INTO SAC.dbo.tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens, idUsuario) VALUES (51, 7, 6005, 236);
