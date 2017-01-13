@@ -213,6 +213,10 @@ footer.page-footer {
     background-color: #ee6e73;
 }
 
+footer a{
+    color: #ffcc80;
+}
+
 .dropdown-content li > a, .dropdown-content li > span {
     font-size: 16px;
     color: #00481d;
