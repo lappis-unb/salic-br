@@ -2,7 +2,10 @@
 $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
 $auth = Zend_Auth::getInstance();
 $arrAuth = $auth->getIdentity();
-$intQtd = count($dbTable->getAllBy(array('tbMensagemProjeto.idDestinatario' => $arrAuth->usu_codigo, 'tbMensagemProjeto.idMensagemOrigem IS NULL' => '')));
+$intQtd = 0;
+if (isset($arrAuth->usu_codigo)) {
+    $intQtd = count($dbTable->getAllBy(array('tbMensagemProjeto.idDestinatario' => $arrAuth->usu_codigo, 'tbMensagemProjeto.idMensagemOrigem IS NULL' => '')));
+}
 //$intQtd = count($dbTable->getAllBy(array('idDestinatario' => $arrAuth->usu_codigo, 'tbMensagemProjeto.idUnidade => $arrAuth->usu_orgao')));
 if ($intQtd > 99) {
     $cssPadding = '1';

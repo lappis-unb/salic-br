@@ -8,7 +8,7 @@
             validClass: "valid",
             errorPlacement: function (error, element) {
                 var elmForm = $(element).closest("form"),
-                    elmIcon = $(element).closest('input-field').find('i'),
+                    elmIcon = $(element).closest('.input-field').find('i'),
                     elmLabel = elmForm.find("label[for='" + $(element).attr("id") + "']");
                 elmLabel.attr('data-error', error.text());
                 elmLabel.removeClass('green-text');
@@ -38,6 +38,10 @@
 
     function ready()
     {
+        // Colocando mascara nos inputs com a class date.
+        $('.input-field input.date').mask('00/00/0000');
+
+        // Chamando o tooltip automaticamente
         $('.tooltipped').tooltip();
         $('.container.fade').fadeIn(1500);
         Materialize.updateTextFields();
