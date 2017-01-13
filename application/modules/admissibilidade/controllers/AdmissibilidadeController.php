@@ -1415,6 +1415,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function listarPropostasAnaliseFinalAction()
     {
+        throw new Exception('Funcionalidade descontinuada na versao atual do Salic');
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
@@ -1687,6 +1688,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function historicoAnaliseVisualAction()
     {
+        throw new Exception('Funcionalidade descontinuada na versao atual do Salic');
         $post = Zend_Registry::get("get");
         $usuario = $this->codOrgaoSuperior;
 
@@ -1796,62 +1798,62 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
 
-        if ($post->numeroProposta != "") {
-            $arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
-        }
-        if ($post->nomeProposta != "") {
-            if ($post->tiponome == "igual") {
-                $arrBusca['p.NomeProjeto = '] = $post->nomeProposta;
-            } elseif ($post->tiponome == "contendo") {
-                $arrBusca['p.NomeProjeto LIKE '] = "('%" . $post->nomeProposta . "%')";
-            }
-        }
-        if ($post->dataPropostaInicial != "") {
-            if ($post->tipodata == "igual") {
-                $arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
-                $arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 23:59:59'";
-            } else {
-                $arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
-                if ($post->dataPropostaFinal != "") {
-                    $arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaFinal, 13) . " 23:59:59'";
-                }
-            }
-        }
+        //if ($post->numeroProposta != "") {
+            //$arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
+        //}
+        //if ($post->nomeProposta != "") {
+            //if ($post->tiponome == "igual") {
+                //$arrBusca['p.NomeProjeto = '] = $post->nomeProposta;
+            //} elseif ($post->tiponome == "contendo") {
+                //$arrBusca['p.NomeProjeto LIKE '] = "('%" . $post->nomeProposta . "%')";
+            //}
+        //}
+        //if ($post->dataPropostaInicial != "") {
+            //if ($post->tipodata == "igual") {
+                //$arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
+                //$arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 23:59:59'";
+            //} else {
+                //$arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
+                //if ($post->dataPropostaFinal != "") {
+                    //$arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaFinal, 13) . " 23:59:59'";
+                //}
+            //}
+        //}
 
-        if ($post->situacao != "") {
-            if ($post->situacao == "inicial") {
-                if ($post->tipobuscasituacao == "igual") {
-                    $arrBusca['m.Movimentacao = '] = 96;
-                    $rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                }
-            }
-            if ($post->situacao == "visual") {
-                if ($post->tipobuscasituacao == "igual") {
-                    $arrBusca['m.Movimentacao = '] = 97;
-                    $rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                }
-            }
-            /*if($post->situacao == "documental"){
-                if($post->tipobuscasituacao == "igual"){
-                    $arrBusca['m.Movimentacao = '] = 97;
-                    $rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                }
-            }*/
-            if ($post->situacao == "final") {
-                if ($post->tipobuscasituacao == "igual") {
-                    $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
-                    $rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                }
-            }
-        } else {
-            $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_PARA_ANALISE_INICIAL;
-            $rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
+        //if ($post->situacao != "") {
+            //if ($post->situacao == "inicial") {
+                //if ($post->tipobuscasituacao == "igual") {
+                    //$arrBusca['m.Movimentacao = '] = 96;
+                    //$rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
+                //}
+            //}
+            //if ($post->situacao == "visual") {
+                //if ($post->tipobuscasituacao == "igual") {
+                    //$arrBusca['m.Movimentacao = '] = 97;
+                    //$rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
+                //}
+            //}
+            //[>if($post->situacao == "documental"){
+                //if($post->tipobuscasituacao == "igual"){
+                    //$arrBusca['m.Movimentacao = '] = 97;
+                    //$rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
+                //}
+            //}*/
+            //if ($post->situacao == "final") {
+                //if ($post->tipobuscasituacao == "igual") {
+                    //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
+                    //$rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
+                //}
+            //}
+        //} else {
+            //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_PARA_ANALISE_INICIAL;
+            //$rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
 
-            $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
-            $rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 97 >> VISUAL
+            //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
+            //$rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 97 >> VISUAL
 
-            $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
-            $rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 128 >> FINAL
+            //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
+            //$rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 128 >> FINAL
 
             $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_PARA_ANALISE_INICIAL;
             $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
@@ -1859,7 +1861,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $tec['x.idTecnico = '] = $usuario;
             $this->view->propostas = $tblProposta->propostaAdmissibilidade($tec, array("x.DtAvaliacao DESC"), $in, $this->codOrgaoSuperior );
-        }
+        //}
 
         //recuperando a unidade do usuario logado
         $auth = Zend_Auth::getInstance();
@@ -2338,6 +2340,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function painelProjetosDistribuidosAction()
     {
+        throw new Exception('Funcionalidade descontinuada na versao atual do Salic');
         //select codigo,sigla from orgaos WHERE Status = 0 and vinculo = 1 order by sigla
         $where = array(
             'Status = ?' => 0,
@@ -2526,7 +2529,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                          then  '1'
                                          else  '2'
                                      end as TipoPessoa,
-                                     Nome, 
+                                     Nome,
                                      SAC.dbo.fnNomeResponsavel(p.Usuario),
                                      p.Logradouro + ' - ' + p.Bairro,
                                      u.Municipio,

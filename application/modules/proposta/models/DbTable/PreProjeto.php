@@ -3195,7 +3195,6 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         $sql->order($order);
-        //echo $sql;
 
         return $db->fetchAll($sql);
     }
