@@ -39,6 +39,7 @@
     function ready()
     {
         // Colocando mascara nos inputs com a class date.
+        $('.input-field input.cpf').mask('000.000.000-00');
         $('.input-field input.date').mask('00/00/0000');
 
         // Chamando o tooltip automaticamente
