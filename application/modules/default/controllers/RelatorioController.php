@@ -507,7 +507,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Resultado_Relatorio_Propostas.xls;");
+            header("Content-Disposition: inline; filename=Resultado_Relatorio_Propostas.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -961,7 +961,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Resultado_Relatorio_Projetos.xls;");
+            header("Content-Disposition: inline; filename=Resultado_Relatorio_Projetos.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {

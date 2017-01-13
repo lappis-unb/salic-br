@@ -1471,7 +1471,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.xls;");
+            header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -2083,7 +2083,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
+                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -2653,7 +2653,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
+                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -3659,7 +3659,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.xls;");
+                header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -3906,7 +3906,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Manter_Assinantes.xls;");
+            header("Content-Disposition: inline; filename=Manter_Assinantes.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
