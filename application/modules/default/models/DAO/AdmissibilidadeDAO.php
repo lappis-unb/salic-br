@@ -272,9 +272,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                            x.idTecnico AS idUsuario,
                            SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico,
                            SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria,
-                           --TABELAS.dbo.fnCodigoOrgaoEstrutura(u.usu_orgao, 1) AS org_superior,
                            CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade,
-                           --DAY(x.DtAvaliacao - GETDATE()) as dias,
                            DATEDIFF(d, x.DtAvaliacao, GETDATE()) as dias,
                            x.idAvaliacaoProposta,
                            m.idMovimentacao,
@@ -283,7 +281,6 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                 INNER JOIN SAC.dbo.tbMovimentacao AS m ON p.idPreProjeto = m.idProjeto AND m.Movimentacao = 127 AND m.stEstado = 0
                 INNER JOIN SAC.dbo.tbAvaliacaoProposta AS x ON p.idPreProjeto = x.idProjeto AND x.ConformidadeOK = 1 AND x.stEstado = 0
                 INNER JOIN AGENTES.dbo.Agentes AS a ON p.idAgente = a.idAgente
-                --INNER JOIN TABELAS.dbo.Usuarios AS u ON u.usu_codigo = x.idTecnico
                 WHERE {$meuWhere} (p.stEstado = 1) and p.stTipoDemanda = 'NA'
                 AND (NOT EXISTS
                         (
