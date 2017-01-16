@@ -56,12 +56,18 @@
                 <textarea name="html" id="conteudoImprimir"></textarea>
             </form>
             <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
-                <table class="tabela">
+                <table>
                     <tr>
-                        <td align="center">
-                            <input type="button" title="Localizar" name="localizar" class="btn_localizar" onclick="window.location='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'localizar-gerenciamento-proposta')); ?>'">
-                            <input type="button" title="Imprimir" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoPdf").html()); $("#formGerarPdf").submit();'>
-                            <input type="button" title="Resumo" style="width: 88px" class="btn_resumo" id="btn_resumo" onclick="$('#frmResumo').submit();" />
+                        <td>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Localizar"  type="button" name="action" onclick="window.location='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'localizar-gerenciamento-proposta')); ?>'">
+                                Localizar <i class="material-icons right">search</i>
+                            </button>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir"  type="button" name="action" onclick='$("#conteudoImprimir").val($(".conteudoPdf").html()); $("#formGerarPdf").submit();'>
+                                Imprimir <i class="material-icons right">print</i>
+                            </button>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo" id="btn_resumo" type="button" name="action" onclick="$('#frmResumo').submit();">
+                                Resumo <i class="material-icons right">description</i>
+                            </button>
                         </td>
                     </tr>
                 </table>
@@ -171,7 +177,7 @@
                 </div><!-- div de impressao -->
                 <table>
                     <tr>
-                        <td align="center">
+                        <td>
                             <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Localizar"  type="button" name="action" onclick="window.location='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'localizar-gerenciamento-proposta')); ?>'">
                                 Localizar <i class="material-icons right">search</i>
                             </button>
