@@ -40,7 +40,9 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
     protected $_primary = 'idPlanilhaProposta';
 
 //    @todo : esse arquivo deverá ter seus metodos transferidos para Proposta_Model_DbTable_TbPlanilhaProposta e o arquivo apagado
-
+    /*
+     * @deprecated Todos os metodos deste arquivo, foram migrados para o arquivo TbPlanilhaPrposta.php (Proposta_Model_DbTable_TbPlanilhaProposta).
+     */
     public function somarPlanilhaProposta($idprojeto, $fonte = null, $outras = null, $where = array())
     {
         $somar = $this->select();
@@ -86,7 +88,10 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         return $this->fetchRow($somar);
     }
 
-    //Criado no dia 07/10/2013 - Jefferson Alessandro
+    /*
+    * Criado no dia 07/10/2013 - Jefferson Alessandro
+    * @deprecated Todos os metodos deste arquivo, foram migrados para o arquivo TbPlanilhaPrposta.php (Proposta_Model_DbTable_TbPlanilhaProposta).
+    */
     public function buscarDadosAvaliacaoDeItem($idPlanilhaProposta)
     {
         $select = $this->select();
@@ -121,6 +126,9 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
+    /*
+    * @deprecated Todos os metodos deste arquivo, foram migrados para o arquivo TbPlanilhaPrposta.php (Proposta_Model_DbTable_TbPlanilhaProposta).
+    */
     public function Orcamento($id_projeto)
     {
 // @todo limpar
@@ -192,6 +200,9 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
        return $db->fetchAll($sql);
     }
 
+    /*
+    * @deprecated Todos os metodos deste arquivo, foram migrados para o arquivo TbPlanilhaPrposta.php (Proposta_Model_DbTable_TbPlanilhaProposta).
+    */
     public function buscarCustos($idPreProjeto, $tipoCusto, $idEtapa = null, $idItem = null, $idUf = null, $idMunicipio = null,
                                         $fonte = null, $unidade = null, $quantidade = null, $ocorrencia = null, $vlunitario = null, $qtdDias = null, $dsJustificativa = null)
     {
@@ -305,6 +316,9 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
+    /*
+    * @deprecated Todos os metodos deste arquivo, foram migrados para o arquivo TbPlanilhaPrposta.php (Proposta_Model_DbTable_TbPlanilhaProposta).
+    */
     public function buscarDadosCadastrarCustos($idPreProjeto) {
 //        $sql = "
 //            SELECT TOP 1
@@ -330,6 +344,9 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
     }
 
+    /*
+    * @deprecated Todos os metodos deste arquivo, foram migrados para o arquivo TbPlanilhaPrposta.php (Proposta_Model_DbTable_TbPlanilhaProposta).
+    */
     public function buscarItensUfRegionalizacao( $idProposta ) {
 
             $select = $this->select();

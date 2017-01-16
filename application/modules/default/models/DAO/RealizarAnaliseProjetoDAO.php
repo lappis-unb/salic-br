@@ -49,7 +49,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             ->where('taa.tpanalise = ?', $tpAnalise)
             ->where('pdp.stPlanoDistribuicaoProduto = 1');
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($select);
 
