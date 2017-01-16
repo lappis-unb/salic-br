@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
-        <div class="col s9 m8 l8">
+        <div class="col s10 m10 l10">
             <h4>Admissibilidade de propostas</h4>
             <script type="text/javascript">
 
@@ -59,13 +59,19 @@
             </form>
             <table>
                 <tr>
-                    <td align="center">
-                        <input type="button" style="width: 88px" class="btn_localizar" id="btn_localizar"
-                               onclick="window.location.href='<?php echo $this->formularioLocalizar; ?>';"/>
-                        <input type="button" name="imprimir" class="btn_imprimir"
-                               onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
-                        <input type="button" style="width: 88px" class="btn_resumo" id="btn_resumo"
-                               onclick="$('#frmResumo').submit();"/>
+                    <td class="center-align">
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Localizar" id="btn_localizar" type="button"
+                                onclick="window.location='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'localizar' ));?>'">
+                                Localizar<i class="material-icons right">search</i>
+                        </button>
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir" name="imprimir"  type="button"
+                                onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
+                                Imprimir<i class="material-icons right">print</i>
+                        </button>
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo" id="btn_resumo" id="btn_localizar" type="button"
+                                onclick="$('#frmResumo').submit();">
+                                Resumo<i class="material-icons right">description</i>
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -74,16 +80,16 @@
                 <?php if (!empty($this->propostas)): ?>
                 <thead>
                 <tr>
-                    <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
-                    <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
-                    <th>Data/Hora</th>
-                    <th>Dias</th>
-                    <th>Dias de Dilig&ecirc;ncia</th>
-                    <th>Dias de Resposta de Dilig&ecirc;ncia</th>
-                    <th>Outras</th>
+                    <th style="cursor:pointer" title="Clique aqui para ordenar">Nr. Proposta</th>
+                    <th style="cursor:pointer" title="Clique aqui para ordenar">Nome da Proposta</th>
+                    <th>Dt. Admiss&atilde;o</th>
+                    <th>Dias em An&aacute;lise</th>
+<!--                    <th>Dias de Dilig&ecirc;ncia</th>-->
+<!--                    <th>Dias de Resposta de Dilig&ecirc;ncia</th>-->
+                    <th>Outras Propostas</th>
                     <th>T&eacute;cnico</th>
-                    <th>Visual</th>
-                    <th>Projeto</th>
+                    <th>Analisar</th>
+                    <th>Transformar</th>
                     <th>Arquivar</th>
                     <th>Imprimir</th>
                 </tr>
@@ -106,8 +112,8 @@
                         <td><?php echo $propostaFinal->NomeProposta; ?></td>
                         <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaFinal->DtAdmissibilidade)); ?></td>
                         <td align="center" <?php echo $cor ?> > <?php echo $propostaFinal->diasCorridos; ?></td>
-                        <td align="center"> <?php echo ($propostaFinal->diasDiligencia) ? $propostaFinal->diasDiligencia : 0; ?></td>
-                        <td align="center"> <?php echo ($propostaFinal->diasRespostaDiligencia) ? $propostaFinal->diasRespostaDiligencia : 0; ?></td>
+<!--                        <td align="center"> --><?php //echo ($propostaFinal->diasDiligencia) ? $propostaFinal->diasDiligencia : 0; ?><!--</td>-->
+<!--                        <td align="center"> --><?php //echo ($propostaFinal->diasRespostaDiligencia) ? $propostaFinal->diasRespostaDiligencia : 0; ?><!--</td>-->
                         <td>
 
                             <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaFinal->idAgente; ?>">
@@ -151,9 +157,11 @@
                             </td>
                         <?php endif ?>
                         <td align="center">
-                            <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
-                                   onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>');"/>
+                                <a class="medium btn tooltipped" data-tooltip="Imprimir" href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'imprimirpropostacultural'))?>?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
+                                <i class="material-icons">print</i>
+                            </a>
                         </td>
+
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
