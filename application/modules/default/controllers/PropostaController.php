@@ -166,7 +166,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $html .= "</table>" ;
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=file.xls;");
+            header("Content-Disposition: inline; filename=file.ods;");
             echo $html;
         }
 
@@ -194,7 +194,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $html .= "</table>" ;
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=file.xls;");
+            header("Content-Disposition: inline; filename=file.ods;");
             echo $html;
         }
 

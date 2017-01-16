@@ -330,7 +330,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Analisar_Comprovacao_do_Objeto.xls;");
+            header("Content-Disposition: inline; filename=Analisar_Comprovacao_do_Objeto.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {

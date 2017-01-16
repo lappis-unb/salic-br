@@ -190,6 +190,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             $objRecurso = new tbRecurso();
             $this->view->avaliacaoRecurso = trim($objRecurso->buscarAvaliacaoRecurso($projeto['IdPRONAC']));
         }
+        $this->view->codGrupo = $this->grupoAtivo->codGrupo;
     }
 
     public function encaminharPortariaAction() {
@@ -302,6 +303,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $recurso->save();
 
-        parent::message('Proejto enviado para portaria.', "/admissibilidade/enquadramento/desistencia-recursal");
+        parent::message('Projeto enviado para portaria.', "/admissibilidade/enquadramento/desistencia-recursal");
     }
 }
