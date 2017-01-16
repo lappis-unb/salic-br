@@ -504,219 +504,347 @@
                     </table>
 
                 <table>
-                    <tr onclick="abrirDinamico('#tdPropostaCultural', $(this));" style="cursor:pointer">
+                    <tr onclick="abrirDinamico('#tdFichaTecnica', $(this));" style="cursor:pointer">
                         <th>
                             <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
-                            Proposta Cultural
+                            Ficha T&eacute;cnica
                         </th>
                     </tr>
-                    <tr id="tdPropostaCultural" style="display: none;">
+                    <tr id="tdFichaTecnica" style="display: none;">
                         <td>
-                            <fieldset>
-                                <legend>Ficha T&eacute;cnica</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->FichaTecnica)) != "")?strip_tags($this->itensGeral[0]->FichaTecnica,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->FichaTecnica)) != "")?strip_tags($this->itensGeral[0]->FichaTecnica,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
+                                    </tr>
+                                <?php }?>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
 
-                            <fieldset>
-                                <legend>Resumo do Projeto</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                <table>
+                    <tr onclick="abrirDinamico('#tdResumo', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Resumo
+                        </th>
+                    </tr>
+                    <tr id="tdResumo" style="display: none;">
+                        <td>
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
                                     <tr>
                                         <td><?php echo (strip_tags($this->itensGeral[0]->ResumoDoProjeto))?strip_tags($this->itensGeral[0]->ResumoDoProjeto,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
                                     </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
+                                <?php }?>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
 
-                            <fieldset>
-                                <legend>Plano de Distribui&ccedil;&atilde;o do Produto</legend>
-                                <table class="bordered striped responsive-table">
-                                    <tr class="destacar">
-                                        <td style="font-size:11px">Nome do Evento / Produto</td>
-                                        <td style="font-size:11px">&Aacute;rea</td>
-                                        <td style="font-size:11px">Segmento</td>
-                                        <td style="font-size:11px">Posi&ccedil;&atilde;o da Logomarca</td>
-                                        <td style="font-size:11px">N&ordm; Exemplares/ Ingressos</td>
-                                        <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Patrocinador</td>
-                                        <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Divulga&ccedil;&atilde;o</td>
-                                        <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Benefici&aacute;rios</td>
-                                        <td style="font-size:11px">Total Venda Normal</td>
-                                        <td style="font-size:11px">Total Venda Promocional</td>
-                                        <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Normal</td>
-                                        <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Promocional</td>
-                                        <td style="font-size:11px">Receita Prevista Venda Normal (R$)</td>
-                                        <td style="font-size:11px">Receita Prevista Venda Promocional (R$)</td>
-                                        <td style="font-size:10px">Total de Receita Prevista (R$)</td>
-                                    </tr>
-                                    <?php
-                                    $vlQtdeProduzida              = 0;
-                                    $vlQtdePatrocinador           = 0;
-                                    $vlQtdeProponente             = 0;
-                                    $vlQtdeOutros                 = 0;
-                                    $vlQtdeVendaNormal            = 0;
-                                    $vlQtdeVendaPromocional       = 0;
-                                    $vlPrecoUnitarioNormal        = 0;
-                                    $vlPrecoUnitarioPromocional   = 0;
-                                    $vlReceitaNormal              = 0;
-                                    $vlReceitaPro                 = 0;
-                                    $vlReceitaPrevista            = 0;
+                <table>
+                    <tr onclick="abrirDinamico('#tdPlanoDistribuicao', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Plano de Distribui&ccedil;&atilde;o do Produto
+                        </th>
+                    </tr>
+                    <tr id="tdPlanoDistribuicao" style="display: none;">
+                        <td>
 
-                                    if(is_array($this->itensPlanosDistribuicao) and count($this->itensPlanosDistribuicao)>0)
-                                        foreach ($this->itensPlanosDistribuicao as $distribuicao){
-                                            $destacar = "";
-                                            if ($distribuicao->stPrincipal == 1){$destacar = 'style="color:#FF0000"';}
-                                            ?>
-                                            <tr>
-                                                <td align="left" <?php echo $destacar?>><?php echo $distribuicao->produto ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php echo $distribuicao->area ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php echo $distribuicao->segmento ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php echo $distribuicao->posicaoLogo ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlQtdeProduzida += $distribuicao->QtdeProduzida; echo $distribuicao->QtdeProduzida; ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlQtdePatrocinador += $distribuicao->QtdePatrocinador; echo $distribuicao->QtdePatrocinador; ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlQtdeProponente += $distribuicao->QtdeProponente; echo $distribuicao->QtdeProponente; ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlQtdeOutros += $distribuicao->QtdeOutros; echo $distribuicao->QtdeOutros; ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlQtdeVendaNormal += $distribuicao->QtdeVendaNormal; echo $distribuicao->QtdeVendaNormal; ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlQtdeVendaPromocional += $distribuicao->QtdeVendaPromocional; echo $distribuicao->QtdeVendaPromocional; ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlPrecoUnitarioNormal += $distribuicao->PrecoUnitarioNormal; echo number_format($distribuicao->PrecoUnitarioNormal,2,',','.');  ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlPrecoUnitarioPromocional += $distribuicao->PrecoUnitarioPromocional; echo number_format($distribuicao->PrecoUnitarioPromocional,2,',','.'); ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlReceitaNormal += $distribuicao->ReceitaNormal; echo number_format($distribuicao->ReceitaNormal,2,',','.'); ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlReceitaPro += $distribuicao->ReceitaPro; echo number_format($distribuicao->ReceitaPro,2,',','.'); ?></td>
-                                                <td align="center" <?php echo $destacar?>><?php $vlReceitaPrevista += $distribuicao->ReceitaPrevista; echo number_format($distribuicao->ReceitaPrevista,2,',','.'); ?></td>
-                                            </tr>
-                                        <?php } ?>
+                            <table class="bordered striped responsive-table">
+                                <tr class="destacar">
+                                    <td style="font-size:11px">Nome do Evento / Produto</td>
+                                    <td style="font-size:11px">&Aacute;rea</td>
+                                    <td style="font-size:11px">Segmento</td>
+                                    <td style="font-size:11px">Posi&ccedil;&atilde;o da Logomarca</td>
+                                    <td style="font-size:11px">N&ordm; Exemplares/ Ingressos</td>
+                                    <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Patrocinador</td>
+                                    <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Divulga&ccedil;&atilde;o</td>
+                                    <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Benefici&aacute;rios</td>
+                                    <td style="font-size:11px">Total Venda Normal</td>
+                                    <td style="font-size:11px">Total Venda Promocional</td>
+                                    <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Normal</td>
+                                    <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Promocional</td>
+                                    <td style="font-size:11px">Receita Prevista Venda Normal (R$)</td>
+                                    <td style="font-size:11px">Receita Prevista Venda Promocional (R$)</td>
+                                    <td style="font-size:10px">Total de Receita Prevista (R$)</td>
+                                </tr>
+                                <?php
+                                $vlQtdeProduzida              = 0;
+                                $vlQtdePatrocinador           = 0;
+                                $vlQtdeProponente             = 0;
+                                $vlQtdeOutros                 = 0;
+                                $vlQtdeVendaNormal            = 0;
+                                $vlQtdeVendaPromocional       = 0;
+                                $vlPrecoUnitarioNormal        = 0;
+                                $vlPrecoUnitarioPromocional   = 0;
+                                $vlReceitaNormal              = 0;
+                                $vlReceitaPro                 = 0;
+                                $vlReceitaPrevista            = 0;
+
+                                if(is_array($this->itensPlanosDistribuicao) and count($this->itensPlanosDistribuicao)>0)
+                                    foreach ($this->itensPlanosDistribuicao as $distribuicao){
+                                        $destacar = "";
+                                        if ($distribuicao->stPrincipal == 1){$destacar = 'style="color:#FF0000"';}
+                                        ?>
+                                        <tr>
+                                            <td align="left" <?php echo $destacar?>><?php echo $distribuicao->produto ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php echo $distribuicao->area ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php echo $distribuicao->segmento ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php echo $distribuicao->posicaoLogo ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlQtdeProduzida += $distribuicao->QtdeProduzida; echo $distribuicao->QtdeProduzida; ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlQtdePatrocinador += $distribuicao->QtdePatrocinador; echo $distribuicao->QtdePatrocinador; ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlQtdeProponente += $distribuicao->QtdeProponente; echo $distribuicao->QtdeProponente; ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlQtdeOutros += $distribuicao->QtdeOutros; echo $distribuicao->QtdeOutros; ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlQtdeVendaNormal += $distribuicao->QtdeVendaNormal; echo $distribuicao->QtdeVendaNormal; ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlQtdeVendaPromocional += $distribuicao->QtdeVendaPromocional; echo $distribuicao->QtdeVendaPromocional; ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlPrecoUnitarioNormal += $distribuicao->PrecoUnitarioNormal; echo number_format($distribuicao->PrecoUnitarioNormal,2,',','.');  ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlPrecoUnitarioPromocional += $distribuicao->PrecoUnitarioPromocional; echo number_format($distribuicao->PrecoUnitarioPromocional,2,',','.'); ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlReceitaNormal += $distribuicao->ReceitaNormal; echo number_format($distribuicao->ReceitaNormal,2,',','.'); ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlReceitaPro += $distribuicao->ReceitaPro; echo number_format($distribuicao->ReceitaPro,2,',','.'); ?></td>
+                                            <td align="center" <?php echo $destacar?>><?php $vlReceitaPrevista += $distribuicao->ReceitaPrevista; echo number_format($distribuicao->ReceitaPrevista,2,',','.'); ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                <tr>
+                                    <td align="center" colspan="4"><b>Total Geral</b></td>
+                                    <td align="center"><?php echo $vlQtdeProduzida;  ?></td>
+                                    <td align="center"><?php echo $vlQtdePatrocinador;  ?></td>
+                                    <td align="center"><?php echo $vlQtdeProponente;  ?></td>
+                                    <td align="center"><?php echo $vlQtdeOutros;  ?></td>
+                                    <td align="center"><?php echo $vlQtdeVendaNormal;  ?></td>
+                                    <td align="center"><?php echo $vlQtdeVendaPromocional;  ?></td>
+                                    <td align="center"><?php echo number_format($vlPrecoUnitarioNormal,2,',','.');  ?></td>
+                                    <td align="center"><?php echo number_format($vlPrecoUnitarioPromocional,2,',','.'); ?></td>
+                                    <td align="center"><?php echo number_format($vlReceitaNormal,2,',','.'); ?></td>
+                                    <td align="center"><?php echo number_format($vlReceitaPro,2,',','.'); ?></td>
+                                    <td align="center"><?php echo number_format($vlReceitaPrevista,2,',','.'); ?></td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdFonteRecurso', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Fonte de Recurso
+                        </th>
+                    </tr>
+                    <tr id="tdFonteRecurso" style="display: none;">
+                        <td>
+
+                            <table class="bordered striped responsive-table">
+                                <tr class="destacar">
+                                    <td align="left"><b>Fonte de Recurso</b></td>
+                                    <td align="right"><b>Valor</b></td>
+                                </tr>
+                                <?php if(is_array($this->itensFonteRecurso) and count($this->itensFonteRecurso)>0)
+                                    foreach ($this->itensFonteRecurso as $fonte){ ?>
+                                        <tr>
+                                            <td><?php echo $fonte->Descricao ?></td>
+                                            <td align="right"><?php echo number_format($fonte->valor,2,',','.')?></td>
+                                        </tr>
+                                    <?php }  ?>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdDemocratizacaoAcesso', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Democratiza&ccedil;&atilde;o de Acesso
+                        </th>
+                    </tr>
+                    <tr id="tdDemocratizacaoAcesso" style="display: none;">
+                        <td>
+
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
                                     <tr>
-                                        <td align="center" colspan="4"><b>Total Geral</b></td>
-                                        <td align="center"><?php echo $vlQtdeProduzida;  ?></td>
-                                        <td align="center"><?php echo $vlQtdePatrocinador;  ?></td>
-                                        <td align="center"><?php echo $vlQtdeProponente;  ?></td>
-                                        <td align="center"><?php echo $vlQtdeOutros;  ?></td>
-                                        <td align="center"><?php echo $vlQtdeVendaNormal;  ?></td>
-                                        <td align="center"><?php echo $vlQtdeVendaPromocional;  ?></td>
-                                        <td align="center"><?php echo number_format($vlPrecoUnitarioNormal,2,',','.');  ?></td>
-                                        <td align="center"><?php echo number_format($vlPrecoUnitarioPromocional,2,',','.'); ?></td>
-                                        <td align="center"><?php echo number_format($vlReceitaNormal,2,',','.'); ?></td>
-                                        <td align="center"><?php echo number_format($vlReceitaPro,2,',','.'); ?></td>
-                                        <td align="center"><?php echo number_format($vlReceitaPrevista,2,',','.'); ?></td>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso)) != "")?strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
                                     </tr>
-                                </table>
-                            </fieldset>
+                                <?php }?>
+                            </table>
 
-                            <fieldset>
-                                <legend>Fonte de Recurso</legend>
+                        </td>
+                    </tr>
+                </table>
 
-                                <table class="bordered striped responsive-table">
-                                    <tr class="destacar">
-                                        <td align="left"><b>Fonte de Recurso</b></td>
-                                        <td align="right"><b>Valor</b></td>
+                <table>
+                    <tr onclick="abrirDinamico('#tdObjetivos', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Objetivos
+                        </th>
+                    </tr>
+                    <tr id="tdObjetivos" style="display: none;">
+                        <td>
+
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->Objetivos)) != "")?strip_tags($this->itensGeral[0]->Objetivos,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
                                     </tr>
-                                    <?php if(is_array($this->itensFonteRecurso) and count($this->itensFonteRecurso)>0)
-                                        foreach ($this->itensFonteRecurso as $fonte){ ?>
-                                            <tr>
-                                                <td><?php echo $fonte->Descricao ?></td>
-                                                <td align="right"><?php echo number_format($fonte->valor,2,',','.')?></td>
-                                            </tr>
-                                        <?php }  ?>
-                                </table>
-                            </fieldset>
+                                <?php }?>
+                            </table>
 
-                            <fieldset>
-                                <legend>Democratiza&ccedil;&atilde;o de Acesso</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso)) != "")?strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
 
-                            <fieldset>
-                                <legend>Objetivos</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Objetivos)) != "")?strip_tags($this->itensGeral[0]->Objetivos,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
-                            <fieldset>
-                                <legend>Etapa de Trabalho</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EtapaDeTrabalho)) != "")?strip_tags($this->itensGeral[0]->EtapaDeTrabalho,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
+                <table>
+                    <tr onclick="abrirDinamico('#tdEtapaTrabalho', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Etapa de Trabalho
+                        </th>
+                    </tr>
+                    <tr id="tdEtapaTrabalho" style="display: none;">
+                        <td>
 
-                            <fieldset>
-                                <legend>Acessibilidade</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Acessibilidade)) != "")?strip_tags($this->itensGeral[0]->Acessibilidade,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
-                            <fieldset>
-                                <legend>Sinopse de obra</legend>
-                                <table class="tabela">
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->EtapaDeTrabalho)) != "")?strip_tags($this->itensGeral[0]->EtapaDeTrabalho,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
+                                    </tr>
+                                <?php }?>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdAcessibilidade', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Acessibilidade
+                        </th>
+                    </tr>
+                    <tr id="tdAcessibilidade" style="display: none;">
+                        <td>
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->Acessibilidade)) != "")?strip_tags($this->itensGeral[0]->Acessibilidade,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
+                                    </tr>
+                                <?php }?>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdSinopseObra', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Sinopse de Obra
+                        </th>
+                    </tr>
+                    <tr id="tdSinopseObra" style="display: none;">
+                        <td>
+                            <table class="tabela">
                                     <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
                                         <tr>
                                             <td><?php echo (trim(strip_tags($this->itensGeral[0]->Sinopse)) != "")?strip_tags($this->itensGeral[0]->Sinopse,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
                                         </tr>
                                     <?php }?>
-                                </table>
-                            </fieldset>
-                            <fieldset>
-                                <legend>Especifica&ccedil;&otilde;es t&eacute;cnicas do produto</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EstrategiaDeExecucao)) != "")?strip_tags($this->itensGeral[0]->EstrategiaDeExecucao,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
-                            <fieldset>
-                                <legend>Outras Informa&ccedil;&otilde;es</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EspecificacaoTecnica)) != "")?strip_tags($this->itensGeral[0]->EspecificacaoTecnica,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
-                            <fieldset>
-                                <legend>Impacto Ambiental</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->ImpactoAmbiental)) != "")?strip_tags($this->itensGeral[0]->ImpactoAmbiental,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
-                            <fieldset>
-                                <legend>Justificativa</legend>
-                                <table class="tabela">
-                                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Justificativa)) != "")?strip_tags($this->itensGeral[0]->Justificativa,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
-                                        </tr>
-                                    <?php }?>
-                                </table>
-                            </fieldset>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdEspecificacoesTecnicas', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Especifica&ccedil;&otilde;es t&eacute;cnicas do produto
+                        </th>
+                    </tr>
+                    <tr id="tdEspecificacoesTecnicas" style="display: none;">
+                        <td>
+
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->EstrategiaDeExecucao)) != "")?strip_tags($this->itensGeral[0]->EstrategiaDeExecucao,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
+                                    </tr>
+                                <?php }?>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdOutrasInformacoes', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Outras Informa&ccedil;&otilde;es
+                        </th>
+                    </tr>
+                    <tr id="tdOutrasInformacoes" style="display: none;">
+                        <td>
+
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->EspecificacaoTecnica)) != "")?strip_tags($this->itensGeral[0]->EspecificacaoTecnica,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado."; ?></td>
+                                    </tr>
+                                <?php }?>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdImpactoAmbiental', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Impacto Ambiental
+                        </th>
+                    </tr>
+                    <tr id="tdImpactoAmbiental" style="display: none;">
+                        <td>
+
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->ImpactoAmbiental)) != "")?strip_tags($this->itensGeral[0]->ImpactoAmbiental,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
+                                    </tr>
+                                <?php }?>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr onclick="abrirDinamico('#tdJustificativa', $(this));" style="cursor:pointer">
+                        <th>
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                            Justificativa
+                        </th>
+                    </tr>
+                    <tr id="tdJustificativa" style="display: none;">
+                        <td>
+
+                            <table class="tabela">
+                                <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                                    <tr>
+                                        <td><?php echo (trim(strip_tags($this->itensGeral[0]->Justificativa)) != "")?strip_tags($this->itensGeral[0]->Justificativa,"<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>"):"N&atilde;o informado.";  ?></td>
+                                    </tr>
+                                <?php }?>
+                            </table>
+
                         </td>
                     </tr>
                 </table>
