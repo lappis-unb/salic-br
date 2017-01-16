@@ -714,8 +714,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $this->eviarEmail($this->idPreProjeto, $msg->msg);
 
             parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/listar-propostas", "CONFIRM");
-            return;
-            $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Exception $e) {
             parent::message("Erro ao realizar opera&ccedil;&atilde;o!", "/admissibilidade/admissibilidade/listar-propostas", "ERROR");
         }
