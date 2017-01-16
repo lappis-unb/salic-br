@@ -1789,14 +1789,16 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
 
         if (Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo){
-            $tec['idUsuario = '] = $this->idUsuario;
+            $where['idUsuario = ?'] = $this->idUsuario;
         }
+
         $where['idSecretaria = ?'] = $this->codOrgaoSuperior;
         $this->view->propostas = $vwPainelAvaliar->propostas($where, array("DtAvaliacao DESC"));
-
+        $this->view->codGrupo = $this->codGrupo;
 
         $arrDados = array(
             "orgao" => $rsOrgao,
+            "grupo" => $this->codGrupo,
             "formularioLocalizar" => $this->_urlPadrao . "/admissibilidade/admissibilidade/localizar",
             "urlResumo" => $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-propostas"
         );
