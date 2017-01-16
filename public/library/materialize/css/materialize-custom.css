@@ -111,6 +111,8 @@ table.tabela td.destacar span,
     text-decoration: underline;
 }
 
+#conteudo [type="checkbox"]:not(:checked),
+#conteudo [type="checkbox"]:checked,
 #conteudo [type="radio"]:not(:checked),
 #conteudo [type="radio"]:checked,
 #conteudo table.tabela [type="radio"]:not(:checked),
