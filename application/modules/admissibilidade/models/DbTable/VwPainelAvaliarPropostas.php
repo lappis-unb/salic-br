@@ -24,6 +24,7 @@ class Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas extends MinC_Db_Tab
         }
 
         $sql->order($order);
+        $sql->limit(100);
 
         return $db->fetchAll($sql);
     }
