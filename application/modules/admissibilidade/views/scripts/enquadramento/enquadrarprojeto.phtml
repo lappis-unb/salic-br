@@ -48,7 +48,12 @@
                         <tr>
                             <td valign="top" colspan="2">
                                 <div class="input-field col s12 m6">
-                                    <select id="areaCultural" disabled="disabled"
+                                    <select id="areaCultural"
+                                            <?php if($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
+                                            disabled="disabled"
+                                            <?php else: ?>
+                                            name="areaCultural"
+                                            <?php endif; ?>
                                             style="width: 160px;">
                                         <option value=""> - Selecione -</option>
                                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
@@ -57,7 +62,9 @@
                                         <?php } ?>
                                     </select>
                                     <label>&Aacute;rea Cultural</label>
-                                    <input name="areaCultural" type="hidden" value="<?php echo $this->projeto['Area']?>" />
+                                    <?php if($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
+                                        <input name="areaCultural" type="hidden" value="<?php echo $this->projeto['Area']?>" />
+                                    <?php endif; ?>
                                     &nbsp; <span id="erroAreaCultural" class="spanError"></span>
                                 </div>
                                 <div class="input-field col s12 m6">
@@ -135,16 +142,16 @@
 
     <script type="text/javascript">
         function carregarSegmento() {
-            $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
-            $.ajax({
+            $3('#segmentoCultural').html('<option value=""> - Carregando - </option>');
+            $3.ajax({
                 type: 'POST',
                 url: '<?php echo $this->url(array('module' => 'default', 'controller' => 'segmento', 'action' => 'combo')); ?>',
                 data: {
-                    id: $('#areaCultural').val()
+                    id: $3('#areaCultural').val()
                 },
                 success: function (dados) {
-                    $('#segmentoCultural').find('option').remove();
-                    $('#segmentoCultural').append(dados);
+                    $3('#segmentoCultural').find('option').remove();
+                    $3('#segmentoCultural').append(dados);
                 }
             });
         }
@@ -164,7 +171,7 @@
                 isLimitarCarateres: true
             });
 
-            $('#areaCultural').change(function () {
+            $3('#areaCultural').change(function () {
                 carregarSegmento();
             });
 

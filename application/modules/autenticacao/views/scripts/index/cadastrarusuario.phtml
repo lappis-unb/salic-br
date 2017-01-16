@@ -43,9 +43,9 @@ if (isset ($auth->getIdentity()->Cpf)) { ?>
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">account_circle</i>
                                 <input required="required" value="<?php echo $this->cpf ?>"
-                                       onkeyup="mascara(this, format_cpf);" maxlength="14" type="text" name="cpf"
+                                       type="text" name="cpf"
                                        id="cpf"
-                                       minlength="14"
+                                       class="cpf"
                                 />
                                 <label for="cpf">CPF</label>
                             </div>

@@ -41,10 +41,15 @@
 #rodapeConteudo,
 #rodapeConteudo_com_menu,
 #rodapeSemSolicitacao,
-#conteudo,
-#rodapeConteudo_com_menu {
+#conteudo {
     background: none;
 }
+
+#rodapeConteudo,
+#rodapeConteudo_com_menu {
+    display: none;
+}
+
 .conteudoImprimir table,
 #conteudo table.tabela {
     background: #fff;

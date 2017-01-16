@@ -46,7 +46,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function loginAction()
     {
         $this->_helper->layout->disableLayout();
-
         try {
             $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
             $password = $this->getParam('Senha', null);
@@ -78,12 +77,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $this->_helper->viewRenderer->setNoRender(true);
                     echo json_encode(array('status' => 1, 'msg' => 'Login realizado com sucesso!','redirect' => '/principal'));
                 } else {
-                    //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
-                    //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
-                    //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
-//                    $this->forward("login-proponente", "index", "autenticacao");
+                        //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
+                        //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
+                        //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
+                    $this->forward("login-proponente", "index", "autenticacao");
 //                    echo json_encode(array('status' => false, 'msg' => 'Cpf ou senha invalida!'));
-                    throw new Exception("Usuario inexistente!");
+//                        throw new Exception("Usuario inexistente!");
                 }
             }
 
@@ -92,7 +91,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 //            var_dump($objException->getMessage());
 //            $this->_helper->viewRenderer->setNoRender(TRUE);
 //            parent::message($objException->getMessage(), "index", "ERROR");
-            $this->_helper->viewRenderer->setNoRender(true);
             echo json_encode(array('status' => false, 'msg' => $objException->getMessage()));
         }
     }
@@ -105,7 +103,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function loginProponenteAction()
     {
-
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
         // recebe os dados do formulario via post
         $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
         $password = $this->getParam('Senha', null);
@@ -116,14 +115,15 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         try {
             if (empty($username) || empty($password)) {
                 # verifica se os campos foram preenchidos
-                parent::message("Senha ou login inv&aacute;lidos", "/login/index", "ALERT");
+                throw new Exception("Senha ou login inv&aacute;lidos");
             } else if (strlen($username) == 11 && !Validacao::validarCPF($username)) {
                 # verifica se o CPF e valido
-                parent::message("CPF inv&aacute;lido", "/login/index");
+                throw new Exception("CPF inv&aacute;lido");
             } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ e valido
             {
-                parent::message("CNPJ inv&aacute;lido", "/login/index");
+                throw new Exception("CNPJ inv&aacute;lido");
             } else {
+
                 // realiza a busca do usuario no banco, fazendo a autenticacao do mesmo
                 $Usuario = new Autenticacao_Model_Sgcacesso();
                 $verificaStatus = $Usuario->buscar(array('cpf = ?' => $username))->toArray();
@@ -140,7 +140,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                         $buscar = $Usuario->loginSemCript($username, md5($password));
                     }
                     if (!$buscar) {
-                        parent::message("Login ou Senha inv&aacute;lidos!", "/autenticacao", "ALERT");
+                        throw new Exception("Login ou Senha inv&aacute;lidos!");
                     }
                 } else {
                     $SenhaFinal = addslashes($password);
@@ -150,30 +150,32 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 if ($buscar) {
                     $verificaSituacao = $verificaStatus['Situacao'];
                     if ($verificaSituacao == 1) {
-                        parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=" . $IdUsuario, "ALERT");
-                    }
-                    $agentes = new Agente_Model_DbTable_Agentes();
-                    $verificaAgentes = $agentes->buscar(array('cnpjcpf = ?' => $username))->current();
-                    if (!empty ($verificaAgentes)) {
-                        //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
-                        //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
-                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
+//                        parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=" . $IdUsuario, "ALERT");
+                        echo json_encode(array('status' => 1, 'msg' => 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.','redirect' => "/autenticacao/index/alterarsenha?idUsuario={$IdUsuario}"));
                     } else {
-                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
-                        //parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus['idusuario']}", "ALERT");
+                        $agentes = new Agente_Model_DbTable_Agentes();
+                        $verificaAgentes = $agentes->buscar(array('cnpjcpf = ?' => $username))->current();
+                        if (!empty ($verificaAgentes)) {
+                            //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
+                            //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
+//                            return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
+                            echo json_encode(array('status' => 1, 'msg' => 'Login realizado com sucesso!','redirect' => '/principalproponente'));
+                        } else {
+//                            return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
+                            echo json_encode(array('status' => 1, 'msg' => 'Login realizado com sucesso!','redirect' => '/principalproponente'));
+                            //parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus['idusuario']}", "ALERT");
+                        }
                     }
-
                 }
                 else {
-                    parent::message("Usu&aacute;rio n&atilde;o cadastrado", "/autenticacao", "ALERT");
+                    throw new Exception("Usu&aacute;rio n&atilde;o cadastrado");
                 }
             }
         }
         catch (Exception $e) {
-            echo '<pre>';
-            var_dump($e->getMessage());
-            $this->_helper->viewRenderer->setNoRender(TRUE);
-            parent::message($e->getMessage(), "index", "ERROR");
+            echo json_encode(array('status' => false, 'msg' => $e->getMessage()));
+//            $this->_helper->viewRenderer->setNoRender(TRUE);
+//            parent::message($e->getMessage(), "index", "ERROR");
         }
     }
 
@@ -316,7 +318,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function solicitarsenhaAction()
     {
-        Zend_Layout::startMvc(array('layout' => 'open'));
         if ($_POST) {
             $this->_helper->layout->disableLayout();
             $post = Zend_Registry::get('post');
@@ -364,6 +365,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $this->_helper->viewRenderer->setNoRender(true);
                 echo json_encode(array('status' => true, 'msg' => 'Senha gerada com sucesso. Verifique seu email!', 'redirect' => '/autenticacao'));
             }
+        } else {
+            Zend_Layout::startMvc(array('layout' => 'open'));
         }
     }
 

@@ -1462,7 +1462,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $html .= "</table>";
 
         header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: inline; filename=file.xls;");
+        header("Content-Disposition: inline; filename=file.ods;");
         echo $html;
     }
 
@@ -1493,7 +1493,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $html .= "</table>";
 
         header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: inline; filename=file.xls;");
+        header("Content-Disposition: inline; filename=file.ods;");
         echo $html;
     }
 

@@ -43,6 +43,7 @@
                             <th>Nome do Projeto</th>
                             <th>&Aacute;rea</th>
                             <th>Segmento</th>
+                            <th>Artigo</th>
                             <th>Dias</th>
                             <th align="center">Encaminhar</th>
                         </tr>
@@ -68,6 +69,7 @@
                             <td><?php echo $dado->nomeProjeto; ?></td>
                             <td><?php echo $dado->area; ?></td>
                             <td><?php echo $dado->segmento; ?></td>
+                            <td><?php echo ((int)$dado->tp_enquadramento == 1) ? 'Artigo 26' : 'Artigo 18'; ?></td>
                             <td><?php echo $dado->dias; ?></td>
                             <td>
                                 <?php if ((int)$dado->dias >= 10): ?>
@@ -142,9 +144,10 @@
 
                 function tratarExibicaoCheckboxChecados (seletorCheckboxes, seletorExibicao) {
                     var quantidadeCheckboxChecados = $(seletorCheckboxes).filter(':checked').length;
-                    $3(seletorExibicao).hide('fast');
                     if(quantidadeCheckboxChecados > 0) {
                         $3(seletorExibicao).show('fast');
+                    } else {
+                        $3(seletorExibicao).hide('fast');
                     }
                 }
 
