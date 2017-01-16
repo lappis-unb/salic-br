@@ -157,7 +157,7 @@
                             </td>
                         <?php endif ?>
                         <td align="center">
-                                <a class="medium btn" onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>');">
+                                <a class="medium btn tooltipped" data-tooltip="Imprimir" href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'imprimirpropostacultural'))?>?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
                                 <i class="material-icons">print</i>
                             </a>
                         </td>
