@@ -13,11 +13,11 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				          CASE WHEN ValorParecer > 0 THEN (Elaboracao / ValorParecer) * 100 ELSE 0 END AS PERC, 
 				          CASE WHEN ValorParecer > 0 THEN CASE WHEN ((Elaboracao / ValorParecer) * 100) > 10 THEN 'Acima de 10%' ELSE '' END END AS Acima,
 				          case 
-							 when TipoParecer = '1' then 'Aprova��o' when TipoParecer = '2' then 'Complementa��o' when TipoParecer = '3' then 'Prorroga��o'
-							 when TipoParecer = '4' then 'Redu��o'
+							 when TipoParecer = '1' then 'Aprova&ccedil;&atilde;o' when TipoParecer = '2' then 'Complementa&ccedil;&atilde;o' when TipoParecer = '3' then 'Prorroga&ccedil;&atilde;o'
+							 when TipoParecer = '4' then 'Redu&ccedil;&atilde;o'
 						   end as TipoParecer,
 						   case 
-							 when ParecerFavoravel = '1' then 'N�o' when ParecerFavoravel = '2' then 'Sim' else 'Sim com restri��es' 
+							 when ParecerFavoravel = '1' then 'N&atilde;o' when ParecerFavoravel = '2' then 'Sim' else 'Sim com restri��es' 
 						   end as ParecerFavoravel,       
 						   case 
 							 when Enquadramento = '1' then 'Artigo 26' when Enquadramento = '2' then 'Artigo 18'
@@ -62,7 +62,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				}
 				//**********************************************************************
 				
-				//Data de consolida��o
+				//Data de consolida&ccedil;&atilde;o
 				if(($dtI) && ($dtF == null))
 				{
 					$sql .= " AND cast(convert(char(8),pa.DtParecer,112)as smalldatetime) = '".$dtI."'";
@@ -73,7 +73,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				}	
 				//**********************************************************************
 				
-				/* Situa��o ************************************************************
+				/* Situa&ccedil;&atilde;o ************************************************************
 				* C09 - Projeto fora da pauta - Proponente Inabilitado
 				* C20 - An�lise T�cnica Concluida
 				* C25 - Parecer T�cnico desfavor�vel
@@ -116,22 +116,22 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 							 END as Enquadramento,
 						   CASE
 							  WHEN IncisoArtigo27_I = 0
-								   THEN \'Não\'
+								   THEN \'N&atilde;o\'
 								   ELSE \'Sim\'
 							  END as IncisoArtigo27_I,
 						   CASE
 							  WHEN IncisoArtigo27_II = 0
-								   THEN \'Não\'
+								   THEN \'N&atilde;o\'
 								   ELSE \'Sim\'
 							  END as IncisoArtigo27_II,
 						   CASE
 							  WHEN IncisoArtigo27_III = 0
-								   THEN \'Não\'
+								   THEN \'N&atilde;o\'
 								   ELSE \'Sim\'
 							  END as IncisoArtigo27_III,
 						   CASE
 							  WHEN IncisoArtigo27_IV = 0
-								   THEN \'Não\'
+								   THEN \'N&atilde;o\'
 								   ELSE \'Sim\'
 							  END as IncisoArtigo27_IV
 				')),
@@ -143,7 +143,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 		 	->where('idPronac = ?',$idPronac);
 
 
-		$db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($select);
 			
@@ -155,7 +155,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 		
 		$sql = "SELECT  t.stPrincipal, t.stEstado,  t.idDistribuirParecer, t.idOrgao, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS PRONAC, p.NomeProjeto, t.idProduto, r.Descricao AS Produto, 
 						   x.idSecretaria, a.Descricao as AreaD, s.Descricao as SegmentoD,
-						   CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
+						   CASE WHEN TipoAnalise = 0 THEN 'Conte&uacute;do' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
 						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Conclu�do' ELSE 'Aguardando an�lise' END AS Estado, 
 						   TABELAS.dbo.fnEstruturaOrgao(t.idOrgao, 0) AS Orgao
 				FROM       SAC.dbo.tbDistribuirParecer AS t 
@@ -185,7 +185,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                                                         $unidade     = null)
 	{
 		$sql = "select idPronac,idProduto, Descricao as Produto,
-				      	 case TipoAnalise when 0 then 'Cont�udo' when 1 then 'Custo do Produto'
+				      	 case TipoAnalise when 0 then 'Conte&uacute;do' when 1 then 'Custo do Produto'
 				         else 'Custo Administrativo' end as TipoAnalise
 				        ,d.idOrgao,tabelas.dbo.fnEstruturaOrgao(d.idOrgao,0) as Unidade, 
                                         CONVERT(CHAR(11),DtEnvio,103) + CONVERT(CHAR(8),DtEnvio,108) AS DtEnvio ,
@@ -288,11 +288,11 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                         new Zend_Db_Expr(
                             ' CASE
                                     WHEN Lei8313 = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS Lei8313,
                               CASE
                                     WHEN Artigo3 = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS Artigo3,
                               CASE
                                     WHEN IncisoArtigo3 = 1 THEN \'I\'
@@ -300,41 +300,41 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                                     WHEN IncisoArtigo3 = 3 THEN \'III\'
                                     WHEN IncisoArtigo3 = 4 THEN \'IV\'
                                     WHEN IncisoArtigo3 = 5 THEN \'V\'
-                              END AS IncisoArtigo3, a.AlineaArtigo3, CASE WHEN Artigo18 = 1 THEN \'Sim\' ELSE \'N�o\' END AS Artigo18, a.AlineaArtigo18,
+                              END AS IncisoArtigo3, a.AlineaArtigo3, CASE WHEN Artigo18 = 1 THEN \'Sim\' ELSE \'N&atilde;o\' END AS Artigo18, a.AlineaArtigo18,
                               CASE
                                     WHEN Artigo26 = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS Artigo26,
                               CASE
                                     WHEN Lei5761 = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS Lei5761,
                               CASE
                                     WHEN Artigo27 = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS Artigo27,
                               CASE
                                     WHEN IncisoArtigo27_I = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS IncisoArtigo27_I,
                               CASE
                                     WHEN IncisoArtigo27_II = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS IncisoArtigo27_II,
                               CASE
                                     WHEN IncisoArtigo27_III = 1 THEN \'Sim\'
-                                    ELSE \'N�o\' END AS IncisoArtigo27_III,
+                                    ELSE \'N&atilde;o\' END AS IncisoArtigo27_III,
                               CASE
                                     WHEN IncisoArtigo27_IV = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                               END AS IncisoArtigo27_IV,
-                              CASE WHEN TipoParecer = 1 THEN \'Aprova��o\'
-                                    WHEN TipoParecer = 2 THEN \'Complementa��o\'
-                                    WHEN TipoParecer = 4 THEN \'Redu��o\'
+                              CASE WHEN TipoParecer = 1 THEN \'Aprova&ccedil;&atilde;o\'
+                                    WHEN TipoParecer = 2 THEN \'Complementa&ccedil;&atilde;o\'
+                                    WHEN TipoParecer = 4 THEN \'Redu&ccedil;&atilde;o\'
                               END AS TipoParecer,
                                CASE
                                     WHEN ParecerFavoravel = 1 THEN \'Sim\'
-                                    ELSE \'N�o\'
+                                    ELSE \'N&atilde;o\'
                                END AS ParecerFavoravel,
                                SAC.dbo.fnNomeParecerista(a.idUsuario) AS Parecerista
                             ')),
@@ -358,7 +358,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
             ->where('a.idUsuario IS NOT NULL AND p.IdPRONAC = ?', $idpronac)
             ->order('pd.stPrincipal DESC');
 
-		$db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($select);
 			
@@ -393,7 +393,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT     t.idDistribuirParecer, t.idOrgao, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS PRONAC, p.NomeProjeto, t.stPrincipal ,t.idProduto, r.Descricao AS Produto, 
 						   x.idSecretaria, a.Descricao as AreaD, s.Descricao as SegmentoD,
-						   CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
+						   CASE WHEN TipoAnalise = 0 THEN 'Conte&uacute;do' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
 						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Conclu�do' ELSE 'Aguardando an�lise' END AS Estado, 
 						   TABELAS.dbo.fnEstruturaOrgao(t.idOrgao, 0) AS Orgao
 				FROM       SAC.dbo.tbDistribuirParecer AS t 
@@ -423,7 +423,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 			b.idPlanilhaProjeto,
 			PAP.dsJustificativa dsJustificativaConselheiro,
 			(PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) AS VlSugeridoConselheiro,
-			CASE WHEN b.idProduto = 0 THEN 'Administra��o do Projeto' ELSE c.Descricao END AS Produto, CONVERT(varchar(8),
+			CASE WHEN b.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END AS Produto, CONVERT(varchar(8),
 			d.idPlanilhaEtapa) + ' - ' + d.Descricao AS Etapa,
 			d.idPlanilhaEtapa,
 			i.Descricao AS Item,
@@ -561,7 +561,7 @@ FROM         SAC.dbo.Projetos AS a
 		return $db->query($sql);			
 	}
 	
-	//-- Alterar a situa��o do projeto	
+	//-- Alterar a situa&ccedil;&atilde;o do projeto
 	public static function updateProjetos($idpronac)
 	{
 		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = 'B11', 
