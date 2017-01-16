@@ -1784,96 +1784,18 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function listarPropostasAction()
     {
-        $usuario = $_SESSION['Zend_Auth']['storage']->usu_codigo;
         $post = Zend_Registry::get("post");
 
-        //$analistas = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
-        //$usuario = 605; //Apagar esta linha quando este modulo for para producao
+        $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
 
-        $rsPropostaInicial = array();
-        $rsPropostaVisual = array();
-        $rsPropostaDocumental = array();
-        $rsPropostaFinal = array();
-        $arrBusca['x.idTecnico = '] = $usuario;
+        if (Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo){
+            $tec['idUsuario = '] = $this->idUsuario;
+        }
+        $where['idSecretaria = ?'] = $this->codOrgaoSuperior;
+        $this->view->propostas = $vwPainelAvaliar->propostas($where, array("DtAvaliacao DESC"));
 
-        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-
-        //if ($post->numeroProposta != "") {
-            //$arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
-        //}
-        //if ($post->nomeProposta != "") {
-            //if ($post->tiponome == "igual") {
-                //$arrBusca['p.NomeProjeto = '] = $post->nomeProposta;
-            //} elseif ($post->tiponome == "contendo") {
-                //$arrBusca['p.NomeProjeto LIKE '] = "('%" . $post->nomeProposta . "%')";
-            //}
-        //}
-        //if ($post->dataPropostaInicial != "") {
-            //if ($post->tipodata == "igual") {
-                //$arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
-                //$arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 23:59:59'";
-            //} else {
-                //$arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
-                //if ($post->dataPropostaFinal != "") {
-                    //$arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaFinal, 13) . " 23:59:59'";
-                //}
-            //}
-        //}
-
-        //if ($post->situacao != "") {
-            //if ($post->situacao == "inicial") {
-                //if ($post->tipobuscasituacao == "igual") {
-                    //$arrBusca['m.Movimentacao = '] = 96;
-                    //$rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                //}
-            //}
-            //if ($post->situacao == "visual") {
-                //if ($post->tipobuscasituacao == "igual") {
-                    //$arrBusca['m.Movimentacao = '] = 97;
-                    //$rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                //}
-            //}
-            //[>if($post->situacao == "documental"){
-                //if($post->tipobuscasituacao == "igual"){
-                    //$arrBusca['m.Movimentacao = '] = 97;
-                    //$rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                //}
-            //}*/
-            //if ($post->situacao == "final") {
-                //if ($post->tipobuscasituacao == "igual") {
-                    //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
-                    //$rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-                //}
-            //}
-        //} else {
-            //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_PARA_ANALISE_INICIAL;
-            //$rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
-
-            //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
-            //$rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 97 >> VISUAL
-
-            //$arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
-            //$rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 128 >> FINAL
-
-            $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_PARA_ANALISE_INICIAL;
-            $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
-            $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
-
-            $tec['x.idTecnico = '] = $usuario;
-            $this->view->propostas = $tblProposta->propostaAdmissibilidade($tec, array("x.DtAvaliacao DESC"), $in, $this->codOrgaoSuperior );
-        //}
-
-        //recuperando a unidade do usuario logado
-        $auth = Zend_Auth::getInstance();
-        $idOrgao = $auth->getIdentity()->usu_orgao;
-        $tblOrgao = new Orgaos();
-        $rsOrgao = $tblOrgao->buscar(array("Codigo = ?" => $idOrgao))->current();
 
         $arrDados = array(
-            "propostasInicial" => $rsPropostaInicial,
-            "propostasVisual" => $rsPropostaVisual,
-            "propostasDocumental" => $rsPropostaDocumental,
-            "propostasFinal" => $rsPropostaFinal,
             "orgao" => $rsOrgao,
             "formularioLocalizar" => $this->_urlPadrao . "/admissibilidade/admissibilidade/localizar",
             "urlResumo" => $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-propostas"
