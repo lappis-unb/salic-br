@@ -3,7 +3,7 @@ $nmArquivo = preg_replace('#(\s)#is', '_', $_POST['relatorio']);
 
 header("Content-type: application/vnd.ms-excel; name='excel'");
 //header("Content-Disposition: filename=$nmArquivo.xls");
-header("Content-Disposition: attachment; filename=relatorio.xls");
+header("Content-Disposition: attachment; filename=relatorio.ods");
 header("Pragma: no-cache");
 header("Expires: 0");
 

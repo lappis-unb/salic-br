@@ -486,7 +486,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
         $html = $_POST['html'];
         header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: inline; filename=file.xls;");
+        header("Content-Disposition: inline; filename=file.ods;");
         echo $html;
     }
 

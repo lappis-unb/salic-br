@@ -420,7 +420,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Relatorio_de_inconsistencias_de_conta_captacao.xls;");
+                header("Content-Disposition: inline; filename=Relatorio_de_inconsistencias_de_conta_captacao.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -1400,7 +1400,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Transferencia_de_recurso.xls;");
+                header("Content-Disposition: inline; filename=Transferencia_de_recurso.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {

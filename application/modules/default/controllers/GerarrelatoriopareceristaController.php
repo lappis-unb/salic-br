@@ -449,7 +449,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=file.xls;");
+            header("Content-Disposition: inline; filename=file.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -1378,7 +1378,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
     }
     public function gerarXLS($html){
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=file.xls;");
+            header("Content-Disposition: inline; filename=file.ods;");
             echo $html;
     }
     public function gerarPDF($html){

@@ -272,7 +272,7 @@ class LocalizacaoFisicaController extends MinC_Controller_Action_Abstract
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Localizar_Projeto.xls;");
+                header("Content-Disposition: inline; filename=Localizar_Projeto.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
