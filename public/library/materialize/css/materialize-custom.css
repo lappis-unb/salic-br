@@ -111,6 +111,34 @@ table.tabela td.destacar span,
     text-decoration: underline;
 }
 
+/*Customizando o radio para ficar sempre ao lado do outro.*/
+[type="radio"] + label:before, [type="radio"] + label:after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: -1px;
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    z-index: 0;
+    transition: .28s ease;
+}
+[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+     /*display: inline-block;*/
+     display: inline;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    transition: .28s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 #conteudo [type="checkbox"]:not(:checked),
 #conteudo [type="checkbox"]:checked,
 #conteudo [type="radio"]:not(:checked),
