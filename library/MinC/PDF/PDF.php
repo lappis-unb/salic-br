@@ -79,8 +79,8 @@ class PDF {
         header("Expires: Mon, 1 Apr 1974 05:00:00 GMT");
         header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
         header("Pragma: no-cache");
-        header("Content-type: application/xls; name=" . $this->nomeArquivo . ".xls");
-        header("Content-Disposition: attachment; filename=" . $this->nomeArquivo . ".xls");
+        header("Content-type: application/xls; name=" . $this->nomeArquivo . ".ods");
+        header("Content-Disposition: attachment; filename=" . $this->nomeArquivo . ".ods");
         header("Content-Description: MID Gera excel");
         return $this->entrada;
         exit;

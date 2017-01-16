@@ -193,7 +193,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $select->joinLeft(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = projetos.idProjeto and tbAvaliacaoProposta.stEstado = 0', array(), $this->_schema);
         $select->joinLeft(array('Usuarios' => 'Usuarios'), 'tbAvaliacaoProposta.idTecnico = Usuarios.usu_codigo', array('Usuarios.usu_nome'), $this->getSchema('Tabelas'));
         $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'));
-        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'));
+        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento', 'Segmento.tp_enquadramento'));
         $select->where("projetos.situacao in ( ? )", array('B02', 'B03'));
 
         !empty($order) ? $select->order($order) : null;

@@ -139,7 +139,7 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
 
         if($_POST) {
             header("Content-type: application/msexcel");
-            header("Content-Disposition: attachment; filename=documentos.xls");
+            header("Content-Disposition: attachment; filename=documentos.ods");
             echo $_POST['htmlxls'];
 
         }
