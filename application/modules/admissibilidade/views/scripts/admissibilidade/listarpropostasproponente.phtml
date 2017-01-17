@@ -30,7 +30,7 @@
             </script>
             <div >
                 <?php if(!empty($this->propostas)): ?>
-                <table class="tabela">
+                <table class="bordered">
                     <tr onclick="abrirDinamico('#propostasProponente', $(this))" style="cursor:pointer">
                         <th align="left">
                             <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" />
@@ -39,7 +39,7 @@
                     </tr>
                     <tr id="propostasProponente">
                         <td>
-                            <table class="tabela" id="tabelaPropostas">
+                            <table class="bordered striped" id="tabelaPropostas">
                                 <thead>
                                 <tr>
                                     <th style="cursor: pointer" title="Clique aqui para ordenar">Nr. Proposta</th>
