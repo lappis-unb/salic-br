@@ -349,10 +349,10 @@
         <?php
             $controller = "manterorcamento";
             $links = array(
-                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
+                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
                 array('Or&ccedil;amento' => array())
             );
-            montaGuiaLinks($controller, $links);
+            montaGuiaLinks($controller, $links, $this);
         ?>
         <div class="clearfix"></div>
         <h5 class="light">Custo por produto </h5>
