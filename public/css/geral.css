@@ -985,7 +985,7 @@ div.plan span {
 .carregando, .msg, .msgALERT, .msgCONFIRM, .msgERROR, .carregando_ajax {
 	background:#ffc;
 	border:1px solid #ccc;
-	padding:5px;
+	/*padding:5px;*/
 	margin:10px 10px 20px;
 	font:bold 12px Verdana, Arial, Helvetica, sans-serif;
 	color:#f03;
@@ -1005,6 +1005,7 @@ div.plan span {
 }
 .msgALERT, .msgCONFIRM, .msgERROR {
 	/*min-height:30px;*/
+	min-height:42px;
 }
 .msgALERT div, .msgCONFIRM div, .msgERROR div {
 	margin-left:40px;
