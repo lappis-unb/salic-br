@@ -43,7 +43,7 @@ docker pull culturagovbr/web-apache-php5-debian
 
 Docker Run Command :
 ```
-docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1 --add-host homolog.cultura.gov.br:10.0.0.13 --add-host mailapp.cultura.gov.br:192.168.10.25 --add-host id.cultura.gov.br:192.168.11.32  -p 80:80 culturagovbr/salic-web
+docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1 --add-host homolog.cultura.gov.br:10.0.0.13 --add-host mailapp.cultura.gov.br:192.168.10.25 --add-host id.cultura.gov.br:192.168.11.32 --add-host seihomolog.cultura.gov.br:192.168.11.26 --add-host sei.cultura.gov.br:192.168.11.6 -p 80:80 culturagovbr/salic-web
 ```
 
 #### SALIC DB - PostgreSQL | Debian
