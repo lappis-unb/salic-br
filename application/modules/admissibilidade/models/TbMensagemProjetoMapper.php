@@ -119,7 +119,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
                 $model->setIdRemetenteUnidade($arrAuth['usu_orgao']);
-                $model->setIdDestinatario($arrAuth['usu_codigo']);
+//                $model->setIdDestinatario($arrAuth['usu_codigo']);
                 $model->setCdTipoMensagem('E');
                 $model->setStAtivo(1);
                 if ($intId = parent::save($model)) {
