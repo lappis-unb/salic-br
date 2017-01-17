@@ -997,8 +997,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $i = 0;
             foreach ($analistas as $analista) {
                 $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProjeto;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = ConverteData($analista->DtMovimentacao, 5);;
+                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProposta;
+                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
                 $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['fase'] = $analista->Fase;
                 $i++;
             }

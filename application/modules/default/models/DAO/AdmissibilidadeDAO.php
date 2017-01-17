@@ -99,41 +99,15 @@ class AdmissibilidadeDAO extends Zend_Db_Table
 
     public static function consultarRedistribuirAnalise(stdClass $params)
     {
+
+        $sql = "
+            SELECT idProjeto,NomeProposta,stPlanoAnual,CNPJCPF,idAgente,idUsuario,Tecnico,idSecretaria,
+                DtAdmissibilidade,dias,idAvaliacaoProposta,
+                idMovimentacao,stTipoDemanda
+            FROM sac.dbo.vwListarPropostas
+            WHERE idSecretaria = {$params->usu_orgao}
+            ORDER BY Tecnico";
         $retorno = false;
-        $sql = "SELECT
-                   idProjeto,
-                   NomeProjeto,
-                   SAC.dbo.fnNomeTecnicoMinc(Tecnico) Tecnico,
-                   CONVERT(CHAR(20),DtMovimentacao, 120) AS DtMovimentacao,
-                   1 idFase,
-                   'Visual' Fase
-                FROM SAC.dbo.vwRedistribuirAnaliseVisual
-                                WHERE EXISTS
-                                        (SELECT org_superior
-                                        FROM TABELAS.dbo.vwUsuariosOrgaosGrupos
-                                        WHERE usu_codigo = Tecnico
-                                                AND sis_codigo = 21
-                                                AND gru_codigo = 92
-                                                AND org_superior = {$params->usu_orgao}
-                                        GROUP BY org_superior)
-                UNION
-                SELECT
-                   idProjeto,
-                   NomeProjeto,
-                   SAC.dbo.fnNomeTecnicoMinc(idTecnico) Tecnico,
-                   CONVERT(CHAR(20),DtMovimentacao, 120) AS DtMovimentacao,
-                   2 idFase,
-                   'Documental' Fase
-                FROM SAC.dbo.vwConformidadeDocumentalTecnico
-                                WHERE EXISTS
-                                        (SELECT org_superior
-                                        FROM TABELAS.dbo.vwUsuariosOrgaosGrupos
-                                        WHERE usu_codigo = idTecnico
-                                                AND sis_codigo = 21
-                                                AND gru_codigo = 92
-                                                AND org_superior = {$params->usu_orgao}
-                                        GROUP BY org_superior)
-                ORDER BY Fase, Tecnico, DtMovimentacao, idProjeto, NomeProjeto";
 
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -141,6 +115,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
         }
+
         $retorno = $db->fetchAll($sql);
         return $retorno;
     }
