@@ -116,7 +116,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         return $this->delete($where);
     }
 
-    public function obterProjetosParaEnquadramento($codOrgao, $order = null)
+    public function obterProjetosParaEnquadramento($codOrgaoSuperior, $order = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -124,42 +124,45 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $queryMensagensNaoRespondidas = $this->select();
         $queryMensagensNaoRespondidas->setIntegrityCheck(false);
         $queryMensagensNaoRespondidas->from(array('tbMensagemProjeto' => 'tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
-        $queryMensagensNaoRespondidas->where("projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
+        $queryMensagensNaoRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NULL");
 
         $queryMensagensRespondidas = $this->select();
         $queryMensagensRespondidas->setIntegrityCheck(false);
         $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
-        $queryMensagensRespondidas->where("projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
+        $queryMensagensRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NOT NULL");
 
         $select->setIntegrityCheck(false);
         $select->from(
-            array("projetos"),
-            array('pronac' => New Zend_Db_Expr('projetos.AnoProjeto + projetos.Sequencial'),
-                'projetos.nomeProjeto',
-                'projetos.IdPRONAC',
-                'projetos.CgcCpf',
-                'projetos.idpronac',
-                'projetos.Area as cdarea',
-                'projetos.ResumoProjeto',
-                'projetos.UfProjeto',
-                'projetos.DtInicioExecucao',
-                'projetos.DtFimExecucao',
-                'projetos.Situacao',
-                'projetos.DtSituacao',
+            array("Projetos"),
+            array('pronac' => New Zend_Db_Expr('Projetos.AnoProjeto + Projetos.Sequencial'),
+                'Projetos.nomeProjeto',
+                'Projetos.IdPRONAC',
+                'Projetos.CgcCpf',
+                'Projetos.idpronac',
+                'Projetos.Area as cdarea',
+                'Projetos.ResumoProjeto',
+                'Projetos.UfProjeto',
+                'Projetos.DtInicioExecucao',
+                'Projetos.DtFimExecucao',
+                'Projetos.Situacao',
+                'Projetos.DtSituacao',
                 '(' . $queryMensagensNaoRespondidas->assemble() . ') as mensagens_nao_respondidas',
                 '(' . $queryMensagensRespondidas->assemble() . ') as mensagens_respondidas'
             ),
             $this->_schema
         );
 
-        $select->joinLeft(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = projetos.idProjeto and tbAvaliacaoProposta.stEstado = 0', array(), $this->_schema);
+        $select->joinLeft(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = Projetos.idProjeto and tbAvaliacaoProposta.stEstado = 0', array(), $this->_schema);
         $select->joinLeft(array('Usuarios' => 'Usuarios'), 'tbAvaliacaoProposta.idTecnico = Usuarios.usu_codigo', array('Usuarios.usu_nome'), $this->getSchema('Tabelas'));
-        $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'));
-        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'));
-        $select->where("projetos.situacao in ( ? )", array('B01', 'B03'));
-        $select->where("projetos.Orgao = ?", $codOrgao);
+        $select->joinInner(array('PreProjeto' => 'PreProjeto'), 'PreProjeto.idPreProjeto = Projetos.idProjeto', array(), $this->_schema);
+        $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = Projetos.Area', array('Area.Descricao AS area'), $this->_schema);
+        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = Projetos.Segmento', array('Segmento.Descricao AS segmento'), $this->_schema);
+        $select->where("Projetos.situacao in ( ? )", array('B01', 'B03'));
+        $select->where("( PreProjeto.AreaAbrangencia = 0 AND 251 = {$codOrgaoSuperior} OR PreProjeto.AreaAbrangencia = 1 AND 160 = {$codOrgaoSuperior} )");
+
+
         !empty($order) ? $select->order($order) : null;
         !empty($limit) ? $select->limit($limit) : null;
         return $this->_db->fetchAll($select);
@@ -201,7 +204,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($select);
     }
 
-    public function obterProjetosParaEnquadramentoVinculados($id_usuario, $codOrgao, $order = null)
+    public function obterProjetosParaEnquadramentoVinculados($id_usuario, $codOrgaoSuperior, $order = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -209,42 +212,43 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $queryMensagensNaoRespondidas = $this->select();
         $queryMensagensNaoRespondidas->setIntegrityCheck(false);
         $queryMensagensNaoRespondidas->from(array('tbMensagemProjeto' => 'tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
-        $queryMensagensNaoRespondidas->where("projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
+        $queryMensagensNaoRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NULL");
 
         $queryMensagensRespondidas = $this->select();
         $queryMensagensRespondidas->setIntegrityCheck(false);
         $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
-        $queryMensagensRespondidas->where("projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
+        $queryMensagensRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NOT NULL");
 
         $select->setIntegrityCheck(false);
         $select->from(
-            array("projetos"),
-            array('pronac' => New Zend_Db_Expr('projetos.AnoProjeto + projetos.Sequencial'),
-                'projetos.nomeProjeto',
-                'projetos.IdPRONAC',
-                'projetos.CgcCpf',
-                'projetos.idpronac',
-                'projetos.Area as cdarea',
-                'projetos.ResumoProjeto',
-                'projetos.UfProjeto',
-                'projetos.DtInicioExecucao',
-                'projetos.DtFimExecucao',
-                'projetos.DtSituacao',
-                'projetos.Situacao',
+            array("Projetos"),
+            array('pronac' => New Zend_Db_Expr('Projetos.AnoProjeto + Projetos.Sequencial'),
+                'Projetos.nomeProjeto',
+                'Projetos.IdPRONAC',
+                'Projetos.CgcCpf',
+                'Projetos.idpronac',
+                'Projetos.Area as cdarea',
+                'Projetos.ResumoProjeto',
+                'Projetos.UfProjeto',
+                'Projetos.DtInicioExecucao',
+                'Projetos.DtFimExecucao',
+                'Projetos.DtSituacao',
+                'Projetos.Situacao',
                 '(' . $queryMensagensNaoRespondidas->assemble() . ') as mensagens_nao_respondidas',
                 '(' . $queryMensagensRespondidas->assemble() . ') as mensagens_respondidas',
             ),
             $this->_schema
         );
 
-        $select->joinInner(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = projetos.idProjeto', array(), $this->_schema);
-        $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'), $this->_schema);
-        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'), $this->_schema);
+        $select->joinInner(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = Projetos.idProjeto', array(), $this->_schema);
+        $select->joinInner(array('PreProjeto' => 'PreProjeto'), 'PreProjeto.idPreProjeto = Projetos.idProjeto', array(), $this->_schema);
+        $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = Projetos.Area', array('Area.Descricao AS area'), $this->_schema);
+        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = Projetos.Segmento', array('Segmento.Descricao AS segmento'), $this->_schema);
 
-        $select->where("projetos.situacao in ( ? )", array('B01', 'B03'));
-        $select->where("projetos.Orgao = ?", $codOrgao);
+        $select->where("Projetos.situacao in ( ? )", array('B01', 'B03'));
+        $select->where("( PreProjeto.AreaAbrangencia = 0 AND 251 = {$codOrgaoSuperior} OR PreProjeto.AreaAbrangencia = 1 AND 160 = {$codOrgaoSuperior} )");
         $select->where("tbAvaliacaoProposta.stEstado = ?", array('0'));
         $select->where("tbAvaliacaoProposta.idTecnico = ?", array($id_usuario));
 

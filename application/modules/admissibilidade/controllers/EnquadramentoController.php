@@ -17,6 +17,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     public function gerenciarEnquadramentoAction()
     {
+        $auth = Zend_Auth::getInstance();
+        $objSession = $auth->getIdentity();
+
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
         $enquadramento = new Enquadramento();
 
@@ -25,7 +28,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
             $this->view->dados = $enquadramento->obterProjetosParaEnquadramento(
-                $this->grupoAtivo->codOrgao,
+                $objSession->usu_org_max_superior,
                 $ordenacao
             );
         } elseif ($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE) {
