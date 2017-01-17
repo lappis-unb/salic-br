@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
-        <div class="col s9 m8 l8">
+        <div class="col s10 m10 l10">
             <h4>Admissibilidade de propostas - Gerenciamento de propostas </h4>
 
             <script type="text/javascript">
@@ -72,7 +72,7 @@
                     </tr>
                 </table>
                 <div class="conteudoPdf">
-                    <table >
+                    <table class="responsive-table bordered">
                         <?php
                         $html = '';
                         if($this->mensagem) {
@@ -96,7 +96,7 @@
                                          </td>
                                      </tr>
                                      <tr id='tr_{$i}' style='display:none'><td>";
-                                    $html .= '<table class="tabela" id="tabelaGerenciamento_' . $i . '">
+                                    $html .= '<table class="responsive-table bordered striped" id="tabelaGerenciamento_' . $i . '">
                                                 <tr>
                                                     <th>Nr. Proposta</th>
                                                     <th>Nome da Proposta</th>
