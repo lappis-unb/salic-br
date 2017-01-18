@@ -42,10 +42,8 @@
                     <th>Dias em An&aacute;lise</th>
                     <th>Outras Propostas</th>
                     <th>T&eacute;cnico</th>
+                    <th>Analisado</th>
                     <th>Analisar</th>
-                    <th>Transformar</th>
-                    <th>Arquivar</th>
-                    <th>Imprimir</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -107,7 +105,7 @@
                         ]
                         ,
                         "aoColumnDefs": [
-                            {'bSortable': false, 'aTargets': [6,7,8,9]}
+                            {'bSortable': false, 'aTargets': [4,6,7]}
                         ]
                         , "ajax": {
                             url : "/admissibilidade/admissibilidade/listar-propostas-ajax",
@@ -115,6 +113,11 @@
                         },
                         "processing": true,
                         "serverSide": true,
+                        "createdRow": function ( row, data, index ) {
+                                    if (data.CodSituacao == $('#PROPOSTA_EM_ANALISE_FINAL').val()) {
+                                        $(row).addClass('green lighten-5');
+                                    }
+                        },
                         "columns": [
                             {
                                 data: null,
@@ -152,41 +155,40 @@
                             {
                                 data: null,
                                 render: function ( data, type, row ) {
+                                    if (data.CodSituacao == $('#PROPOSTA_EM_ANALISE_FINAL').val()) {
+                                        return '<i class="material-icons">done</i>'+
+                                             '';
+                                    }
+                                    return '';
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function ( data, type, row ) {
                                     return '<a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto='+data.idProjeto+'&realizar_analise=sim">'
                                             +'<img src="<?php echo $this->baseUrl(); ?>/public/img/ico/eye.png"'
                                             +'title="Fazer An&aacute;lise Visual da Proposta" alt="Fazer An&aacute;lise Visual da Proposta"/> </a>'
                                 }
                             },
 
-                            {
-                                data: null,
-                                render: function ( data, type, row ) {
-                                    if (data.CodSituacao == $('#PROPOSTA_EM_ANALISE_FINAL').val()) {
-                                        return ' <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/transformar.png"'+
-                                             'title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto" style="cursor: pointer"'+
-                                             'data-id-pre-projeto="'+data.idProjeto+'" class="transformarPropostaEmProjeto" />';
-                                    }
-                                    return '';
-                                }
-                            },
-                            {
-                                data: null,
-                                render: function ( data, type, row ) {
-                                    if (data.CodSituacao == $('#PROPOSTA_EM_ANALISE_FINAL').val()) {
-                                        return ' <a href="/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto='+ data.idProjeto
-                                                        +'"  data-tooltip="Imprimir" href=""> '
-                                                        +'<img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png" title="Arquivar Proposta" alt="Arquivar Proposta"/>'
-                                                        +' </a>';
-                                    }
-                                    return '';
-                                }
-                            },
-                            {
-                                data: null,
-                                render: function ( data, type, row ) {
-                                    return ' <a href="/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto='+data.idProjeto+'" class="medium btn tooltipped" data-tooltip="Imprimir" href=""> <i class="material-icons">print</i> </a>';
-                                }
-                            }
+                            //{
+                                //data: null,
+                                //render: function ( data, type, row ) {
+                                    //if (data.CodSituacao == $('#PROPOSTA_EM_ANALISE_FINAL').val()) {
+                                        //return ' <a href="/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto='+ data.idProjeto
+                                                        //+'"  data-tooltip="Imprimir" href=""> '
+                                                        //+'<img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png" title="Arquivar Proposta" alt="Arquivar Proposta"/>'
+                                                        //+' </a>';
+                                    //}
+                                    //return '';
+                                //}
+                            //},
+                            //{
+                                //data: null,
+                                //render: function ( data, type, row ) {
+                                    //return ' <a href="/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto='+data.idProjeto+'" class="medium btn tooltipped" data-tooltip="Imprimir" href=""> <i class="material-icons">print</i> </a>';
+                                //}
+                            //}
                         ]
                     }
                 );

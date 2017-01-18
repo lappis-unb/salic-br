@@ -97,16 +97,34 @@
             <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>" />
         </form>
         <br />
-        <div align="center">
+        <div class="center">
             <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
                 <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
                     Avaliar <i class="material-icons right">gavel</i>
                 </button>
             <?php endif; ?>
             <iframe name="esconde" id="esconde" class="sumir"> </iframe>
-            <button class="btn waves-effect waves-light imprimirProposta blue" type="button" name="action">
+            <button class="btn waves-effect waves-light imprimirProposta white black-text" type="button" name="action">
                 Imprimir <i class="material-icons right">print</i>
             </button>
+            <button
+                <?php if($this->movimentacao != Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL): ?>
+                     disabled
+                <?php endif ?>
+                id="transformarPropostaEmProjeto" class=" waves-effect waves-light btn blue white-text" title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto"
+                data-id-pre-projeto="<?php echo $this->itensGeral[0]->idPreProjeto ?>">
+               <i class="material-icons right ">transform</i> Transformar em Projeto
+            </button>
+            <a class="btn black white-text" title="Arquivar Proposta" alt="Arquivar Proposta"
+                <?php if($this->movimentacao != Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL): ?>
+                     disabled
+                <?php endif ?>
+                href="/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto=<?php echo $this->itensGeral[0]->idPreProjeto ?>">
+                <i class="material-icons right">archive</i>Arquivar
+            </a>
+            <a href="/admissibilidade/admissibilidade/listar-propostas" class="waves-effect waves-light btn white black-text" title="" alt="" >
+               <i class="material-icons  left">undo</i> Voltar
+            </a>
         </div>
         <div class="conteudoImprimir">
             <br>
@@ -1247,11 +1265,9 @@
                             </button>
                         <?php endif; ?>
                         <iframe name="esconde" id="esconde" class="sumir"> </iframe>
-                        <button class="btn waves-effect waves-light imprimirProposta blue" type="button" name="action">
-                            Imprimir <i class="material-icons right">print</i>
-                        </button>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
+    <?php echo $this->partial('admissibilidade/inc/modalTransformarEmProjeto.phtml')?>
