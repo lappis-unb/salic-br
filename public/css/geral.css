@@ -555,7 +555,7 @@ table caption {
 #conteudo table td a {
 	color:#333 !important;
 }
-table th {
+#conteudo table th {
 	background:#abda5d;
 	padding:8px;
 	color:#3a7300;

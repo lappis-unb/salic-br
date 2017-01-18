@@ -204,13 +204,20 @@ function aplicaMascara($valor, $mascara) {
     return $novoValor;
 }
 
-function montaGuiaLinks($controller, $links = array()) {
+function montaGuiaLinks($controller = null, $links = array()) {
     try {
-        $pattern = "#(.*?)/$controller#is";
-        if ($BASEURL = retornaBaseUrl($controller)) {
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $first = null;
 
+        $auth = Zend_Auth::getInstance();
+        if( isset($auth->getIdentity()->usu_codigo ) )
+            $first =  $router->assemble(array('module' => 'default', 'controller' => 'principal', 'action' => ''));
+        else
+            $first =  $router->assemble(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''));
+
+        if ($first) {
             $guia = "<div id='breadcrumb'><ul>";
-            $guia .= "<li class='first'><a href='{$BASEURL}/principal/' title='In&iacute;cio'>In&iacute;cio</a></li>";
+            $guia .= "<li class='first'><a href='{$first}' title='In&iacute;cio'>In&iacute;cio</a></li>";
             $qtdLinks = count($links);
             $contador = 0;
             if ($qtdLinks > 0) {
@@ -220,7 +227,6 @@ function montaGuiaLinks($controller, $links = array()) {
                         if ($contador == $qtdLinks) {
                             $guia .= "<li class='last'>{$key}</li>";
                         } else {
-                            $router = Zend_Controller_Front::getInstance()->getRouter();
                             if (is_array($val)) {
                                 $url = $router->assemble(array('controller' => $val['controller'], 'action' => $val['action']));
                             } else {
@@ -234,7 +240,7 @@ function montaGuiaLinks($controller, $links = array()) {
             $guia .= "</ul></div>";
             print $guia;
         } else {
-            print "<span style='color: red;'>Erro na apresenta�?o da guia! - controller invalido</span>";
+            print "<span style='color: red;'>Erro na apresenta&ccedil;&atilde;o da guia! - controller inv&aacute;lido</span>";
         }
     } catch (Zend_Exception $objException) {
         throw new Exception("Erro ao montar guia de links", 0, $objException);

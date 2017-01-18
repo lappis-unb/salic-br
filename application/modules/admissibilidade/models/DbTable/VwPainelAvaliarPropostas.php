@@ -9,7 +9,7 @@ class Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas extends MinC_Db_Tab
     protected $_schema    = 'sac';
     protected $_name      = 'vwPainelAvaliarPropostas';
 
-    public function propostas($where=array(), $order=array())
+    public function propostas($where = array(), $order = array(), $start = 0, $limit = 10, $search = null)
     {
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -23,9 +23,45 @@ class Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas extends MinC_Db_Tab
             $sql->where($coluna, $valor);
         }
 
+        if (!empty($search['value'])){
+            $sql->where('idProjeto like ? OR NomeProposta like ? OR Tecnico like ?', '%'.$search['value'].'%');
+        }
+
         $sql->order($order);
-        $sql->limit(100);
+
+        $start = (int)$start;
+        $limit = (int)$limit;
+        $sql->limitPage($start, $limit);
 
         return $db->fetchAll($sql);
+    }
+
+    public function propostasTotal($where = array(), $order = array(), $start = null, $limit = null, $search = null)
+    {
+        $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from('vwPainelAvaliarPropostas', 'count(*) as total', $this->_schema)
+            ;
+
+        foreach ($where as $coluna=>$valor)
+        {
+            $sql->where($coluna, $valor);
+        }
+
+        if ($search){
+            $sql->where('idProjeto like ? OR NomeProposta like ?', '%'.$search['value'].'%');
+        }
+
+        $sql->order($order);
+
+        if($start && $limit){
+            $start = (int)$start;
+            $limit = (int)$limit;
+            $sql->limitPage($start, $limit);
+        }
+
+        return $db->fetchRow($sql);
     }
 }
