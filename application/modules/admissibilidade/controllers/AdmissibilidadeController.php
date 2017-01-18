@@ -997,8 +997,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $i = 0;
             foreach ($analistas as $analista) {
                 $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProjeto;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = ConverteData($analista->DtMovimentacao, 5);;
+                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProposta;
+                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
                 $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['fase'] = $analista->Fase;
                 $i++;
             }
@@ -2634,5 +2634,39 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             throw new Exception ($objException->getMessage(), 0, $objException);
         }
 
+    }
+
+    public function listarPropostasAjaxAction()
+    {
+        $start = $this->getRequest()->getParam('start');
+        $length = $this->getRequest()->getParam('length');
+        $draw = (int)$this->getRequest()->getParam('draw');
+        $search = $this->getRequest()->getParam('search');
+        $order = $this->getRequest()->getParam('order');
+        $columns = $this->getRequest()->getParam('columns');
+
+        $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' '. $order[0]['dir']) : array("DtAvaliacao DESC");
+        //var_dump($order[0]['dir']);die;
+
+        $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
+
+        if (Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo){
+            $where['idUsuario = ?'] = $this->idUsuario;
+        }
+
+        $where['idSecretaria = ?'] = $this->codOrgaoSuperior;
+
+        $propostas = $vwPainelAvaliar->propostas($where, $order, $start, $length, $search);
+
+        foreach($propostas as $key => $proposta){
+            $proposta->NomeProposta = utf8_encode($proposta->NomeProposta);
+            $proposta->Tecnico = utf8_encode($proposta->Tecnico);
+            $aux[$key] = $proposta;
+        }
+
+        $recordsTotal = $vwPainelAvaliar->propostasTotal($where);
+        $recordsFiltered = $vwPainelAvaliar->propostasTotal($where);
+
+        $this->_helper->json(array("data" => $aux, 'recordsTotal' => $recordsTotal->total, 'draw' => $draw, 'recordsFiltered' => $recordsFiltered->total));
     }
 }
