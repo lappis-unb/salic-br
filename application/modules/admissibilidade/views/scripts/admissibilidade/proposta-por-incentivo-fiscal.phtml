@@ -107,6 +107,10 @@
             <button class="btn waves-effect waves-light imprimirProposta white black-text" type="button" name="action">
                 Imprimir <i class="material-icons right">print</i>
             </button>
+            <a class="btn white black-text"
+                href="/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $this->itensGeral[0]->idAgente ?>&idPreProjeto=<?php echo $this->idPreProjeto; ?>"
+               title="Vizualizar outras Propostas deste Proponente" alt="Vizualizar outras Propostas deste Proponente"  />
+                <i class="material-icons right ">work</i>Outras Propostas</a>
             <button
                 <?php if($this->movimentacao != Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL): ?>
                      disabled
