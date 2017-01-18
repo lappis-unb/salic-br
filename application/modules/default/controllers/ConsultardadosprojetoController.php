@@ -840,8 +840,10 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 	    // xd($planilhaOrcamentaria);
 	    if(count($planilhaOrcamentaria)==0){
 	      $this->view->tipoPlanilha = 2;
-            }  else if ($tpPlanilhaAtiva == 6) {
-	      $this->view->tipoPlanilha = 6;
+        }  else if ($tpPlanilhaAtiva == 5) {
+            $this->view->tipoPlanilha = 5;
+        }  else if ($tpPlanilhaAtiva == 6) {
+            $this->view->tipoPlanilha = 6;
 	    } else {
 	      $this->view->tipoPlanilha = 3;
 	    }
