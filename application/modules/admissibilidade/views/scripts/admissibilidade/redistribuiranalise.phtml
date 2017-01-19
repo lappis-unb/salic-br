@@ -63,7 +63,7 @@
             }
         ?>
     </form>
-        <table>
+        <table class="bordered striped">
             <tr>
                 <th>
                     Propostas Distribuidas para An&aacute;lise
@@ -86,7 +86,7 @@
                          <tr id='tr_{$i}' style='display:none'><td>";
                 $j = 0;
                 foreach ($fases as $faseNome => $faseItems) {
-                    $html .= "<table class='tabela'>
+                    $html .= "<table class='bordered '>
                               <tr>
                                   <th onclick=\"abrirDinamico('#tr_{$i}_{$j}', $(this))\" style=\"cursor:pointer\">
                                       <img src=\"{$this->baseUrl()}/public/img/navigation-right.png\" id=\"imgDinamica\" align=\"left\"/>
@@ -95,7 +95,7 @@
                               </tr>";
                     $html .= '<tr id="tr_' . $i . '_' . $j . '" style="display:none">
                               <td>
-                                  <table class="tabela" id="tabelaRedistribuir_' . $i . '_' . $j . '">
+                                  <table class="bordered striped" id="tabelaRedistribuir_' . $i . '_' . $j . '">
                                     <thead>
                                     <tr>
                                         <th>
