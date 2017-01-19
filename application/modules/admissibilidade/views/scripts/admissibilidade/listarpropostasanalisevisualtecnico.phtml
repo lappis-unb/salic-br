@@ -141,7 +141,7 @@
                                         <?php foreach($propostas as $proposta): ?>
                                         <?php if($proposta->ConformidadeOK == 9): ?>
                                         <tr>
-                                            <td align="center"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
+                                            <td align="center"><a class="black-text btn waves-effect waves-dark white" href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
                                             <td align="center"><?php echo $proposta->NomeProjeto; ?></td>
                                             <td><?php echo str_replace(" ", " as ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
                                         </tr>
