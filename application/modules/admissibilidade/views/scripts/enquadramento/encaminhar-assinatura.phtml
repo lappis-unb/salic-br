@@ -18,7 +18,7 @@
 <!--    </nav>-->
     <?php
     $links = array(
-        array('Encaminhar para Portaria' => array())
+        array('Encaminhar para Assinatura' => array())
     );
     montaGuiaLinks($controller, $links);
     ?>
@@ -66,8 +66,14 @@
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a class="blue-text"
-                                   href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
+                                <a class="waves-effect waves-dark btn white black-text"
+                                   href="<?php echo $this->url(
+                                           array(
+                                               'module' => 'default',
+                                               'controller' => 'consultardadosprojeto',
+                                               'action' => 'index'
+                                           )
+                                       ) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
                             </td>
                             <td><?php echo $dado->nomeProjeto; ?></td>
                             <td><?php echo $dado->area; ?></td>
