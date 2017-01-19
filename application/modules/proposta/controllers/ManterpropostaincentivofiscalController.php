@@ -65,7 +65,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
         if ($agente) {
-            //$this->idResponsavel = $agente['usuario'];
             $this->idResponsavel = $acessos['IdUsuario'];
             $this->idAgente = $agente['idAgente'];
         }
@@ -111,6 +110,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idpreprojeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
+
+            $this->view->isEditarProposta = $this->isEditarProposta();
+            $this->view->isEditarProjeto  = $this->isEditarProjeto();
         }
     }
 
@@ -1393,5 +1395,41 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $this->view->dados = $busca;
         $this->view->dadoscount = count($busca);
         $this->view->idAgenteProponente = $this->idAgenteProponente;
+    }
+
+    /*
+     * @todo melhorar o nome e colocar em generic/abstract para proposta
+     */
+    public function isEditarProposta() {
+
+        if( empty($this->idPreProjeto) )
+            return false;
+
+        // Verifica se a proposta estah com o minc
+        $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+        $rsStatusAtual = $tbMovimentacao->findBy(array('idprojeto = ?' => $this->idPreProjeto, 'stestado = ?' => 0));
+
+        if( $rsStatusAtual['Movimentacao'] == '95' )
+            return true;
+
+        return false;
+    }
+
+    /*
+     * @todo melhorar o nome e colocar em generic/abstract para proposta
+     */
+    public function isEditarProjeto() {
+
+        if( empty($this->idPreProjeto) )
+            return false;
+
+        // Verifica se o projeto esta na situacao para editar
+        $tblProjetos = new Projetos();
+        $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $this->idPreProjeto));
+
+        if( $projeto['Situacao'] == 'B02') // @todo romulo vai criar a situacao correta
+            return true;
+
+        return false;
     }
 }
