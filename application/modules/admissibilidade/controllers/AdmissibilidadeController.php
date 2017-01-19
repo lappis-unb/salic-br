@@ -93,6 +93,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $this->view->itensGeral = $dados;
 
+        $movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+        $movimentacao = $movimentacao->buscarStatusAtualProposta($idPreProjeto);
+        $this->view->movimentacao = $movimentacao['Movimentacao'];
+
         //========== inicio codigo dirigente ================
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
@@ -101,13 +105,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
-//xd($this->view->itensGeral);
 
         $Projetos = new Projetos();
         $dadosProjeto = $Projetos->buscar(array('idProjeto = ?' => $this->idPreProjeto))->current();
 
         // Busca na tabela apoio ExecucaoImediata stproposta
-      //  xd($this->idPreProjeto);
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
         if( !empty($this->view->itensGeral[0]->stProposta))
             $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
