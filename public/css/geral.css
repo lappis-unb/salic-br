@@ -257,13 +257,13 @@ a:hover {
 	top:10px;
 }
 #menuContexto, #conteudo, #titulo, #rodapeConteudo {
-	float:left;
+	float:right;
 }
 #conteudo, #titulo, #rodapeConteudo {
 	position:relative;
 	/*top:10px;*/
 	top: 0px;
-	left:20px;
+	left:0px;
 }
 #conteudo {
 	border-left:1px solid #e8e8e8;
