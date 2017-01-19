@@ -7,12 +7,15 @@
                     <h4>Lista de propostas por proponente</h4>
                 </div>
                 <div class="col s6 ">
-                    <a class=" right btn white black-text"href="/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $this->idPreProjeto?><?php echo !empty($_GET['realizar_analise']) ? '&realizar_analise=sim' : null ?>">
-                        <i class="material-icons left">undo</i> Voltar
-                        <?php  if(!empty($_GET['realizar_analise'])) :  ?>
-                            : <?php echo $this->idPreProjeto?>
-                        <?php endif  ?>
-                    </a>
+                    <?php  if(!empty($_GET['realizar_analise'])) :  ?>
+                        <a class=" right btn white black-text"href="/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $this->idPreProjeto?><?php echo !empty($_GET['realizar_analise']) ? '&realizar_analise=sim' : null ?>">
+                            <i class="material-icons left">undo</i> Voltar: <?php echo $this->idPreProjeto?>
+                        </a>
+                    <?php else:  ?>
+                        <a class=" right btn white black-text"href="/admissibilidade/admissibilidade/listar-propostas">
+                            <i class="material-icons left">undo</i> Voltar
+                        </a>
+                    <?php endif  ?>
                 </div>
             </div>
             <div>
@@ -38,8 +41,9 @@
                                 <tbody>
                                 <?php foreach($this->propostas as $proposta): ?>
                                 <tr>
-                                    <td nowrap><a class="black-text btn waves-effect waves-dark white" href="#abrirModal"><?php echo $proposta->idPreProjeto; ?></a></td>
-<!--                                    <td nowrap><a class="black-text btn waves-effect waves-dark white" href="--><?php //echo $this->baseUrl(); ?><!--/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=--><?php //echo $proposta->idPreProjeto; ?><!--">--><?php //echo $proposta->idPreProjeto; ?><!--</a></td>-->
+                                    <td><a data-idpreprojeto="<?php echo $proposta->idPreProjeto; ?>"
+                                        class="proposta-visualizar black-text btn waves-effect waves-dark white"
+                                        href="#abrirModal"><?php echo $proposta->idPreProjeto; ?></a></td>
                                     <td><?php echo $proposta->NomeProjeto; ?></td>
                                     <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"]; ?></td>
                                     <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["tecnico"]; ?></td>
@@ -52,21 +56,34 @@
                 </table>
                 <?php endif; ?>
 
-                <!-- Modal Structure -->
-                <div id="abrirModal" class="modal modal-fixed-footer">
-                    <div class="modal-content">
-                        <h4>Modal Header</h4>
-                        <p>A bunch of text</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Fechar</a>
-                    </div>
-                </div>
 
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Structure -->
+<div id="abrirModal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Fechar</a>
+    </div>
+</div>
+<script type="text/javascript">
+    $3('.proposta-visualizar').on('click',
+        function() {
+            $3(".modal-content").empty().load('/admissibilidade/admissibilidade/exibirpropostacultural-ajax?idPreProjeto=' + $3(this).data().idpreprojeto)
+        }
+    );
+</script>
+<style>
+    #abrirModal.modal{
+       height: 100%;
+       max-height: 96%;
+       width: 98%;
+    }
+</style>
 <script type="text/javascript">
     <!--
     $(document).ready(function(){
