@@ -7,7 +7,12 @@
                     <h4>Lista de propostas por proponente</h4>
                 </div>
                 <div class="col s6 ">
-                    <a class=" right btn"href="/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=">Voltar: </a>
+                    <a class=" right btn white black-text"href="/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $this->idPreProjeto?><?php echo !empty($_GET['realizar_analise']) ? '&realizar_analise=sim' : null ?>">
+                        <i class="material-icons left">undo</i> Voltar
+                        <?php  if(!empty($_GET['realizar_analise'])) :  ?>
+                            : <?php echo $this->idPreProjeto?>
+                        <?php endif  ?>
+                    </a>
                 </div>
             </div>
 
