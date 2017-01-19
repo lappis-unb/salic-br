@@ -1,3 +1,6 @@
+Release 1.14.8
+  * Fix: [Consultar dados projeto] adicionando visualização de planilha específica para remanejamento
+
 Release 1.14.7
   * Fix: [Readequações] Quando técnico fazia avaliação, inseria erroneamente uma entrada a mais em tbDistribuirReadequacao
   * Fix: [Readequações] Corrigido erro na lista de pareceristas
