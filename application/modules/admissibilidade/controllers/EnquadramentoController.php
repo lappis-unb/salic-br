@@ -196,23 +196,23 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
     }
 
-    public function encaminharPortariaAction() {
+    public function encaminharAssinaturaAction() {
         try {
             $get = $this->getRequest()->getParams();
             $post = $this->getRequest()->getPost();
 
             if (isset($get['IdPRONAC']) && !empty($get['IdPRONAC']) && $get['encaminhar'] == 'true') {
                 $this->encaminharProjetoParaPortaria($get['IdPRONAC']);
-                parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
+                parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-assinatura', 'CONFIRM');
             } elseif(isset($post['IdPRONAC']) && is_array($post['IdPRONAC']) && count($post['IdPRONAC']) > 0) {
                 foreach($post['IdPRONAC'] as $idPronac) {
                     $this->encaminharProjetoParaPortaria($idPronac);
                 }
-                parent::message('Projetos encaminhados com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
+                parent::message('Projetos encaminhados com sucesso.', '/admissibilidade/enquadramento/encaminhar-assinatura', 'CONFIRM');
             }
             $this->carregarListaEncaminhamentoPortaria();
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-portaria');
+            parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-assinatura');
         }
     }
 
