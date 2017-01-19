@@ -422,15 +422,22 @@
     $currentUrl = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 ?>
 
-<div class="">
+<div class="container-fluid">
     <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
-    <div id="breadcrumb">
-        <ul>
-            <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
-            <li class="second"><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas'), null, true); ?>" title="Lista de Propostas" onclick="carregandoModal();">Lista de Propostas</a></li>
-            <li class="last">Proposta</li>
-        </ul>
-    </div>
+<!--    <div id="breadcrumb">-->
+<!--        <ul>-->
+<!--            <li class="first"><a href="--><?php //echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?><!--" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>-->
+<!--            <li class="second"><a href="--><?php //echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas'), null, true); ?><!--" title="Lista de Propostas" onclick="carregandoModal();">Lista de Propostas</a></li>-->
+<!--            <li class="last">Proposta</li>-->
+<!--        </ul>-->
+<!--    </div>-->
+
+    <?php
+    montaGuiaLinks( null, array(
+        array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+        array('Proposta' => '')
+    ));
+    ?>
     <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
     <div id="msgExclusaoArq" class="sumir">Deseja realmente efetuar a exclus&atilde;o do arquivo?</div>
