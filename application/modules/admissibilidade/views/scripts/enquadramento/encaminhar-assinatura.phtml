@@ -31,7 +31,7 @@
                       action="<?php echo $this->url(array(
                               'module' => 'admissibilidade',
                               'controller' => 'enquadramento',
-                              'action' => 'encaminhar-portaria'
+                              'action' => 'encaminhar-assinatura'
                           ), '', true) . "?IdPRONAC={$this->IdPRONAC}"; ?>"
                       onsubmit="return false;">
                     <table class="bordered responsive-table" id="enquadramento">
@@ -77,7 +77,7 @@
                             <td>
                                 <?php if ((int)$dado->dias >= 10): ?>
                                     <a class="btn waves-effect waves-light cyan tooltipped small"
-                                       href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-portaria')) . "?IdPRONAC={$dado->idpronac}&encaminhar=true" ?>"
+                                       href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-assinatura')) . "?IdPRONAC={$dado->idpronac}&encaminhar=true" ?>"
                                        data-position="top"
                                        data-delay="50"
                                        data-tooltip="Encaminhar">
@@ -120,6 +120,8 @@
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.material.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
 
     <script type="text/javascript">
         (function ($) {
