@@ -161,7 +161,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         	),
         	array('idComprovantePagamento = ?' => $this->comprovantePagamento)
         );
-        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovantePagamento);
+        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovanteValor, $this->comprovantePagamento);
     }
     
 }

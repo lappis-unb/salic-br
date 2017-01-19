@@ -318,7 +318,7 @@ class ComprovantePagamento extends GenericModel
         	),
         	array('idComprovantePagamento = ?' => $this->comprovantePagamento)
         );
-        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovantePagamento);
+        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovanteValor, $this->comprovantePagamento);
     }
 
     /**
@@ -582,11 +582,14 @@ class ComprovantePagamento extends GenericModel
     /**
      * @todo remover esse metodo apos implementacao ideal planilha comprovacao
      */
-    function comprovarPlanilhaAtualizarStatus($status, $idComprovantePagamento)
+    function comprovarPlanilhaAtualizarStatus($status, $vlComprovado, $idComprovantePagamento)
     {
         $comprovantePlanilha = new ComprovantePagamentoxPlanilhaAprovacao();
         $comprovantePlanilha->update(
-            array('stItemAvaliado' => $status), //aguardando analise
+            array(
+                'stItemAvaliado' => $status,  //aguardando analise
+                'vlComprovado' => $vlComprovado
+            ),
             array('idComprovantePagamento = ?' => $idComprovantePagamento)
         );
     }
