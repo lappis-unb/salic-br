@@ -100,17 +100,12 @@ if (isset ($auth->getIdentity()->Cpf)) { ?>
         <div class="col s12 m3 l3"></div>
     </div>
 </div>
-<script>
+<script type="type/javascript">
 $3(document).ready(function($){
-//        $('.datepicker').pickadate({
-//            selectMonths: true, // Creates a dropdown to control month
-//            selectYears: 100, // Creates a dropdown of 15 years to control year
-//            max: dateNow
-//        });
-    var dateNowMax = new Date();
-    dateNowMax.setFullYear(dateNowMax.getUTCFullYear() - 16);
-    var dateNowMin = new Date();
-    dateNowMin.setFullYear(dateNowMin.getUTCFullYear() - 100);
+    //var dateNowMax = new Date();
+    //dateNowMax.setFullYear(dateNowMax.getUTCFullYear() - 16);
+    //var dateNowMin = new Date();
+    //dateNowMin.setFullYear(dateNowMin.getUTCFullYear() - 100);
     $("form.materialize").validate({
         rules: {
             cpf: {
@@ -119,10 +114,10 @@ $3(document).ready(function($){
             emailConf: {
                 equalTo: "#email"
             },
-            dataNasc: {
-                dateMax: dateNowMax,
-                dateMin: dateNowMin
-            }
+            //dataNasc: {
+                //dateMax: dateNowMax,
+                //dateMin: dateNowMin
+            //}
         },
         messages: {
             emailConf: {
@@ -131,8 +126,8 @@ $3(document).ready(function($){
         }
     });
 
-    var elmEmailconf = $('#emailConf');
-    elmEmailconf.on('paste', function(){return false;});
-    elmEmailconf.on('drop', function(){return false;});
+    //var elmEmailconf = $('#emailConf');
+    //elmEmailconf.on('paste', function(){return false;});
+    //elmEmailconf.on('drop', function(){return false;});
 });
 </script>
