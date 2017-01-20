@@ -14,7 +14,7 @@
     <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/plugins/editorRico.js"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
     <h4>Incluir avalia&ccedil;&atilde;o </h4>
-    <div class="col s9">
+    <div class="col s10">
         <form id="formEncaminhar" name="formEncaminhar" method="post" action="<?php echo $SalvarAvaliacao; ?>" onsubmit="return false;">
             <table class="tabela">
                 <tr>
@@ -54,6 +54,10 @@
                         <button class="btn waves-effect waves-light avaliarProposta" type="submit" name="salvar" title="Salvar">
                             Salvar
                         </button>
+                        <a href="/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $this->idPreProjeto ?>&realizar_analise=sim"
+                            class="btn waves-effect waves-light white red-text"  name="cancelar" title="Cancelar">
+                            cancelar
+                        </a>
                     </td>
                 </tr>
             </table>
