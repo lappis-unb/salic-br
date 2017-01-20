@@ -1,24 +1,7 @@
 <main>
-<!--    <nav class="breadcrumb">-->
-<!--        <div class="nav-wrapper" style="padding: 0 15px 0 15px">-->
-<!--            <div class="col s12">-->
-<!--                <a href="--><?php //echo $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => 'index'), null, true); ?><!--"-->
-<!--                   class="breadcrumb tooltipped"-->
-<!--                   data-position="top"-->
-<!--                   data-delay="50"-->
-<!--                   data-tooltip="Ir para In&iacute;cio">In&iacute;cio</a>-->
-<!---->
-<!--                <a href="#"-->
-<!--                   class="breadcrumb tooltipped"-->
-<!--                   data-position="top"-->
-<!--                   data-delay="50"-->
-<!--                   data-tooltip="Localizar Parecer">Encaminhar para Portaria</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
     <?php
     $links = array(
-        array('Encaminhar para Assinatura' => array())
+        array('Gerenciar Projetos' => array())
     );
     montaGuiaLinks($controller, $links);
     ?>
@@ -27,11 +10,11 @@
             <div class="col s12">
                 <form method="post"
                       class="materialize"
-                      id="formEncaminhamento"
+                      id="formGerenciamentoPropostas"
                       action="<?php echo $this->url(array(
-                              'module' => 'admissibilidade',
+                              'module' => 'assinatura',
                               'controller' => 'enquadramento',
-                              'action' => 'encaminhar-assinatura'
+                              'action' => 'tratar-assinatura'
                           ), '', true) . "?IdPRONAC={$this->IdPRONAC}"; ?>"
                       onsubmit="return false;">
                     <table class="bordered responsive-table" id="enquadramento">
@@ -46,7 +29,8 @@
                             <th>Nome do Projeto</th>
                             <th>&Aacute;rea</th>
                             <th>Segmento</th>
-                            <th>Artigo</th>
+                            <th>Enquadramento</th>
+                            <th>Valor Aprovado</th>
                             <th>Dias</th>
                             <th align="center">Encaminhar</th>
                         </tr>
@@ -79,6 +63,7 @@
                             <td><?php echo $dado->area; ?></td>
                             <td><?php echo $dado->segmento; ?></td>
                             <td><?php echo ((int)$dado->tp_enquadramento == 1) ? 'Artigo 26' : 'Artigo 18'; ?></td>
+                            <td><?php echo $dado->dias; ?></td>
                             <td><?php echo $dado->dias; ?></td>
                             <td>
                                 <?php if ((int)$dado->dias >= 10): ?>
@@ -127,7 +112,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.material.min.js"></script>
 
-<!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>-->
+    <!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>-->
 
     <script type="text/javascript">
         (function ($) {
@@ -166,7 +151,7 @@
                     tratarExibicaoCheckboxChecados('.checkbox_legal', '#divEncaminhamentoEmMassa');
                 });
 
-                $3("#formEncaminhamento").validate({
+                $3("#formGerenciamentoPropostas").validate({
                     rules: {
                         marcarDesmarcarCheckbox: {
                             validarPreenchimento: true
