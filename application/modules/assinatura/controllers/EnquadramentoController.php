@@ -17,34 +17,41 @@ class Assinatura_EnquadramentoController extends MinC_Controller_Action_Abstract
 
     public function gerenciarProjetosAction()
     {
-xd("parei aqui");
-//        $auth = Zend_Auth::getInstance();
-//        $objSession = $auth->getIdentity();
-//
-//
-//        // LEMBRAR :
-//        // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
-//
-//        $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-//        $enquadramento = new Enquadramento();
-//
-//        $this->view->dados = array();
-//        $ordenacao = array("projetos.DtSituacao asc");
-//
+        $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
+        $enquadramento = new Enquadramento();
+
+        $this->view->dados = array();
+        $ordenacao = array("projetos.DtSituacao asc");
+
 //        if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
-//            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento(
-//                $this->grupoAtivo->codOrgao,
-//                $ordenacao
-//            );
-//        } elseif ($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE) {
-//            $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados(
-//                $this->view->idUsuarioLogado,
-//                $this->grupoAtivo->codOrgao,
-//                $ordenacao
-//            );
+            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento(
+                $this->grupoAtivo->codOrgao,
+                $ordenacao
+            );
 //        }
-//
-//        $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+
+        $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+    }
+
+    private function tratarAssinaturaAction()
+    {
+        /*
+         *
+            --- [ DEVOLUÇÃO ]
+            select * from sac.dbo.Orgaos where idSecretaria = 251
+            -- Quando devolver o projeto deve voltar para o órgçao 262 ( qunado for SEFIC [ SEFIC é o órgão superior ] )
+
+            select * from sac.dbo.Orgaos where idSecretaria = 160
+            -- Quando devolver o projeto deve voltar para o órgçao 171 ( qunado for SAV [ SAV é o órgão superior ] )
+
+            --- [ ENCAMINHAR ]
+
+            -- Quando encaminha para o 'Diretor' o Código é 341
+
+            -- Quando encaminha para o 'Secretário' o Código é 251
+
+            select * from Tabelas..Grupos where gru_sistema = 21
+         */
     }
 
 }
