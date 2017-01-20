@@ -195,7 +195,9 @@ montaGuiaLinks(null, $links);
                         <td>
                             <?php if( !empty($projetos->idProjeto) ) : ?>
                                 <?php if( $projetos->Situacao == 'B02' ) :  //@todo romulo vai criar a nova situacao ?>
-                                        <a class="btn small btn-default" target="_blank" href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $projetos->idProjeto )); ?>">Alterar</a>
+                                    <a class="btn small waves-effect waves-light tooltipped btn-primary" data-tooltip="Alterar projeto" target="_blank" href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $projetos->idProjeto )); ?>">
+                                        <i class="material-icons">edit</i>
+                                    </a>
                                 <?php endif; ?>
                             <?php endif; ?>
                         </td>

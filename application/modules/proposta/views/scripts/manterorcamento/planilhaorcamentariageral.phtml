@@ -1,22 +1,70 @@
+<div class="container-fluid">
+
+    <div class="row">
+
+        <?php echo $this->partial("inc/menu.phtml", $this); ?>
+
+        <div class="content col s10 m12 l10 planilha-produtos">
+
+            <!-- ========== INCIO BREADCRUMB (LINKS TOPO) ========== -->
+            <div id="breadcrumb">
+                <ul>
+                    <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+                    <li class="second">Or&ccedil;amento</li>
+                    <li class="last">Planilha Or&ccedil;ament&aacute;ria Geral</li>
+                </ul>
+            </div>
+            <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+
+            <!-- ========== INCIO TTULO ========== -->
+            <div id="titulo" class="materialize">
+                <div>Planilha Or&ccedil;ament&aacute;ria Geral</div>
+            </div>
+            <!-- ========== FIM TTULO ========== -->
+
+
+            <!-- ========== INCIO CONTEDO ========== -->
+            <div id="conteudo" class="materialize">
+
+                <?php /***** CARREGA A PLANILHA ORCAMENTARIA *****/ ?>
+                <script type="text/javascript">
+                    jqAjaxLink('<?php echo $this->Url(array('module'=>'default','controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPreProjeto; ?>&tipoPlanilha=<?php echo $this->tipoPlanilha; ?>', '', 'planilhaOrcamentariaMontada');
+                </script>
+                <div id="planilhaOrcamentariaMontada"></div>
+                <?php /****** FIM DA PLANILHA ORCAMENTARIA ******/ ?>
+
+            </div> <!-- FIM CONTEUDO -->
+
+
+            <!-- ========== FIM CONTEDO ========== --> <!-- ========== INCIO RODAP DO CONTEDO ========== -->
+            <div id="rodapeConteudo"><span></span></div>
+            <!-- ========== FIM RODAP DO CONTEDO ========== -->
+
+            <br clear="all" />
+        </div>
+    </div>
+</div>
+
 <script>
 
-    function layout_fluido(){
-        var janela = $(window).width();
-        var fluidNavGlobal = janela - 245;
-        var fluidConteudo = janela - 253;
-        var fluidTitulo = janela - 252;
-        var fluidRodape = janela - 19;
-        $("#navglobal").css("width", fluidNavGlobal);
-        $("#conteudo").css("width", fluidConteudo);
-        $("#titulo").css("width", fluidTitulo);
-        $("#rodapeConteudo").css("width", fluidConteudo);
-        $("#imagemRodape").css("width", fluidConteudo);
-        $("#rodape").css("width", fluidRodape);
-        $("#conteudo").css("min-height", $('#menuContexto').height()); // altura minima do conteudo
-        $("#rodapeConteudo").css("margin-left", "225px");
-        $(".sanfonaDiv").css("clear", "both");
-        $(".sanfonaDiv").css("width", "91%");
-    } // fecha fun��o layout_fluido()
+//    function layout_fluido(){
+//        var janela = $(window).width();
+//        var fluidNavGlobal = janela - 245;
+//        var fluidConteudo = janela - 253;
+//        var fluidTitulo = janela - 252;
+//        var fluidRodape = janela - 19;
+//        $("#navglobal").css("width", fluidNavGlobal);
+//        $("#conteudo").css("width", fluidConteudo);
+//        $("#titulo").css("width", fluidTitulo);
+//        $("#rodapeConteudo").css("width", fluidConteudo);
+//        $("#imagemRodape").css("width", fluidConteudo);
+//        $("#rodape").css("width", fluidRodape);
+//        $("#conteudo").css("min-height", $('#menuContexto').height()); // altura minima do conteudo
+//        $("#rodapeConteudo").css("margin-left", "225px");
+//        $(".sanfonaDiv").css("clear", "both");
+//        $(".sanfonaDiv").css("width", "91%");
+//    } // fecha fun��o layout_fluido()
 
 
     function AbrirFecharPlanilha(elemento) {
@@ -90,43 +138,3 @@
         });
     });
 </script>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<?php echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); ?>
-
-<!-- ========== INCIO BREADCRUMB (LINKS TOPO) ========== -->
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second">Or&ccedil;amento</li>
-        <li class="last">Planilha Or&ccedil;ament&aacute;ria Geral</li>
-    </ul>
-</div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-<!-- ========== INCIO TTULO ========== -->
-<div id="titulo">
-    <div>Planilha Or&ccedil;ament&aacute;ria Geral</div>
-</div>
-<!-- ========== FIM TTULO ========== -->
-
-
-<!-- ========== INCIO CONTEDO ========== -->
-<div id="conteudo">
-
-    <?php /***** CARREGA A PLANILHA ORCAMENTARIA *****/ ?>
-    <script type="text/javascript">
-        jqAjaxLink('<?php echo $this->Url(array('module'=>'default','controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $_GET['idPreProjeto']; ?>&tipoPlanilha=<?php echo $this->tipoPlanilha; ?>', '', 'planilhaOrcamentariaMontada');
-    </script>
-    <div id="planilhaOrcamentariaMontada"></div>
-    <?php /****** FIM DA PLANILHA ORCAMENTARIA ******/ ?>
-
-</div> <!-- FIM CONTEUDO -->
-
-
-<!-- ========== FIM CONTEDO ========== --> <!-- ========== INCIO RODAP DO CONTEDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP DO CONTEDO ========== -->
-
-<br clear="all" />
