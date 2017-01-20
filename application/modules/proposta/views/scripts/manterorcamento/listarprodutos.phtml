@@ -185,19 +185,19 @@
         $3(".expandall").hide();
         $3(".collapseall").show();
 
-        $3(".collapsible-header").addClass("active");
-        $3(".collapsible").collapsible({accordion: false});
+        $3(".planilha-produtos .collapsible-header").addClass("active");
+        $3(".planilha-produtos .collapsible").collapsible({accordion: false});
     }
 
     function collapseAll(){
         $3(".expandall").show();
         $3(".collapseall").hide();
 
-        $3(".collapsible-header").removeClass(function(){
+        $3(".planilha-produtos .collapsible-header").removeClass(function(){
             return "active";
         });
-        $3(".collapsible").collapsible({accordion: true});
-        $3(".collapsible").collapsible({accordion: false});
+        $3(".planilha-produtos .collapsible").collapsible({accordion: true});
+        $3(".planilha-produtos .collapsible").collapsible({accordion: false});
 
     }
 

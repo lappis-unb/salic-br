@@ -209,6 +209,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function planilhaorcamentariageralAction(){
         $this->view->tipoPlanilha = 0; // 0=Planilha Or?ament?ria da Proposta
+        $this->view->idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
     }
 
     /**

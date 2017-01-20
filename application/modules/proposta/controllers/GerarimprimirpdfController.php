@@ -76,7 +76,7 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
 
        }
 
-        $id_projeto = $_REQUEST['idPreProjeto'];
+        $id_projeto = $this->getRequest()->getParam('idPreProjeto');
         $this->view->id_projeto = $id_projeto;
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
