@@ -210,10 +210,9 @@ function montaGuiaLinks($controller = null, $links = array()) {
         $first = null;
 
         $auth = Zend_Auth::getInstance();
+        $first =  $router->assemble(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''));
         if( isset($auth->getIdentity()->usu_codigo ) )
             $first =  $router->assemble(array('module' => 'default', 'controller' => 'principal', 'action' => ''));
-        else
-            $first =  $router->assemble(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''));
 
         if ($first) {
             $guia = "<div id='breadcrumb'><ul>";

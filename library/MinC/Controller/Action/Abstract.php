@@ -46,6 +46,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     private $idAgente = 0;
     private $idUsuario = 0;
 
+    protected $moduleName;
+
     /**
      * Reescreve o metodo init() para aceitar
      * as mensagens e redirecionamentos.
@@ -116,6 +118,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $this->view->idResponsavelKeyLog = $this->idResponsavel;
             $this->view->idUsuarioKeyLog = $this->idUsuario;
         }
+
+        $this->moduleName = $this->getRequest()->getModuleName();
     }
 
     /**
