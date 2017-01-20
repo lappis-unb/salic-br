@@ -104,10 +104,7 @@
                                                     <th>Admissibilidade</th>
                                                     <th>Dias</th>
                                                     <th>Plano Anual</th>
-                                                    <th>Detalhes</th>
                                                     <th>Outras</th>
-                                                    <!--th>Devolver</th-->
-                                                    <!--th>Despachos</th-->
                                                 </tr>';
                                     foreach ($projetos as $idProjeto => $projeto) {
                                         if($projeto['stPlanoAnual']){
@@ -144,13 +141,8 @@
                                                     ' . $stPlano . '
                                                 </td>
                                                 <td align="center">
-                                                    <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=' . $idProjeto . '" title="Exibir proposta cultural">
-                                                        <img src="' . $this->baseUrl() . '/public/img/ico/eye.png" alt="Exibir proposta cultural" />
-                                                    </a>
-                                                </td>
-                                                <td align="center">
-                                                    <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/proposta-por-proponente?agente=' . $projeto['idAgente'] . '" title="Visualizar outras propostas deste proponente">
-                                                        <img src="' . $this->baseUrl() . '/public/img/buttons/ver.gif" alt="Visualizar outras propostas deste proponente" />
+                                                    <a class="btn waves-effect waves-darrk white black-text" href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/proposta-por-proponente?agente=' . $projeto['idAgente'] . '" title="Visualizar outras propostas deste proponente">
+                                                        <i class="material-icons" alt="Visualizar outras propostas deste proponente" >search</i>
                                                     </a>
                                                 </td>
                                                 <!--td align="center">
