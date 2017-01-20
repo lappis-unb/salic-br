@@ -2179,6 +2179,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function localizarAction()
     {
+        throw new Exception("Metodo descontinuado nesta versão");
         $arrDados = array(
             "urlAcao" => $this->_urlPadrao . "/admissibilidade/admissibilidade/listar-propostas"
         );
