@@ -264,7 +264,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                         $Visao = new Visao();
 
                         $sgcAcessoSave = $sgcAcesso->salvar($dados);
-
                         $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
 
                         $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
