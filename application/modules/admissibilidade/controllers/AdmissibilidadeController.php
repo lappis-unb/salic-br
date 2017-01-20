@@ -1219,10 +1219,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     {
         $get = Zend_Registry::get("get");
         $idAgente = $get->agente;
+        $this->view->idPreProjeto = !empty($get->idPreProjeto) ? $get->idPreProjeto:null;
+        $this->view->realizar_analise = !empty($get->realizar_analise) ? $get->realizar_analise:null;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsPropostas = $tblProposta->buscar(array("idagente = ?" => $idAgente), array("nomeprojeto ASC"));
-
 
         //Descobrindo os dados do Agente/Proponente
         $tblAgente = new Nomes();
@@ -2670,5 +2671,172 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $recordsFiltered = $vwPainelAvaliar->propostasTotal($where);
 
         $this->_helper->json(array("data" => $aux, 'recordsTotal' => $recordsTotal->total, 'draw' => $draw, 'recordsFiltered' => $recordsFiltered->total));
+    }
+
+    public function exibirpropostaculturalAjaxAction()
+    {
+        $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
+
+        $idPreProjeto = $this->idPreProjeto;
+        $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+        $this->view->itensGeral = $dados;
+
+        $movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+        $movimentacao = $movimentacao->buscarStatusAtualProposta($idPreProjeto);
+        $this->view->movimentacao = $movimentacao['Movimentacao'];
+
+        //========== inicio codigo dirigente ================
+        $arrMandatos = array();
+        $this->view->mandatos = $arrMandatos;
+        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
+        $rsDirigentes = array();
+
+        $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
+        $idEmpresa = $Empresa->idAgente;
+
+        $Projetos = new Projetos();
+        $dadosProjeto = $Projetos->buscar(array('idProjeto = ?' => $this->idPreProjeto))->current();
+
+        // Busca na tabela apoio ExecucaoImediata stproposta
+        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+        if( !empty($this->view->itensGeral[0]->stProposta))
+            $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
+
+        $Pronac = null;
+        if (count($dadosProjeto) > 0) {
+            $Pronac = $dadosProjeto->AnoProjeto . $dadosProjeto->Sequencial;
+        }
+        $this->view->Pronac = $Pronac;
+
+        if (isset($dados[0]->CNPJCPFdigirente) && $dados[0]->CNPJCPFdigirente != "") {
+            $tblAgente = new Agente_Model_DbTable_Agentes();
+            $tblNomes = new Nomes();
+            foreach ($dados as $v) {
+                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
+                $rsDirigentes[$rsAgente->idAgente]['CNPJCPFDirigente'] = $rsAgente->CNPJCPF;
+                $rsDirigentes[$rsAgente->idAgente]['idAgente'] = $rsAgente->idAgente;
+                $rsDirigentes[$rsAgente->idAgente]['NomeDirigente'] = $rsAgente->Descricao;
+            }
+
+            $tbDirigenteMandato = new tbAgentesxVerificacao();
+            foreach ($rsDirigentes as $dirigente) {
+                $rsMandato = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idEmpresa, 'idDirigente = ?' => $dirigente['idAgente'], 'stMandato = ?' => 0));
+                $NomeDirigente = $dirigente['NomeDirigente'];
+                $arrMandatos[$NomeDirigente] = $rsMandato;
+            }
+        }
+
+        $this->view->dirigentes = $rsDirigentes;
+        $this->view->mandatos = $arrMandatos;
+        //============== fim codigo dirigente ================
+
+        $propostaPorEdital = false;
+        if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
+            $propostaPorEdital = true;
+        }
+        $this->view->isEdital = $propostaPorEdital;
+        $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
+        $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
+        $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
+        $this->view->itensPlanoDivulgacao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
+
+        //DOCUMENTOS ANEXADOS PROPOSTA
+        $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+        $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $this->idPreProjeto));
+        $this->view->arquivosProposta = $rs;
+
+        //DOCUMENTOS ANEXADOS PROPONENTE
+        $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
+        $rsA = $tbA->buscarDocumentos(array("idAgente = ?" => $dados[0]->idAgente));
+        $this->view->arquivosProponente = $rsA;
+
+        //DOCUMENTOS ANEXADOS NA DILIGENCIA
+        $tblAvaliacaoProposta = new AvaliacaoProposta();
+        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
+        $tbArquivo = new tbArquivo();
+        $arrDadosArquivo = array();
+        $arrRelacionamentoAvaliacaoDocumentosExigidos = array();
+        if (count($rsAvaliacaoProposta) > 0) {
+            foreach ($rsAvaliacaoProposta as $avaliacao) {
+                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?" => $avaliacao->idArquivo));
+                $arrRelacionamentoAvaliacaoDocumentosExigidos[$avaliacao->idArquivo] = $avaliacao->idCodigoDocumentosExigidos;
+            }
+        }
+        $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
+        $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
+
+        //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
+        $tblDocumentosExigidos = new DocumentosExigidos();
+        $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
+        $arrDocumentosExigidos = array();
+        foreach ($rsDocumentosExigidos as $documentoExigido) {
+            $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
+        }
+        $this->view->documentosExigidos = $arrDocumentosExigidos;
+        $this->view->itensHistorico = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
+        $this->view->itensPlanilhaOrcamentaria = Proposta_Model_AnalisarPropostaDAO::buscarPlanilhaOrcamentaria($idPreProjeto);
+
+        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
+        $this->view->Produtos = $buscarProduto;
+
+        $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $buscarEtapa = $tbPlanilhaEtapa->listarEtapasProdutos($this->idPreProjeto);
+
+        $this->view->Etapa = $buscarEtapa;
+
+        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
+
+        $buscarItem = $preProjeto->listarItensProdutos($this->idPreProjeto);
+        $this->view->AnaliseCustos = Proposta_Model_DbTable_PreProjeto::analiseDeCustos($this->idPreProjeto);
+
+        $this->view->idPreProjeto = $this->idPreProjeto;
+        $pesquisaView = $this->_getParam('pesquisa');
+        if ($pesquisaView == 'proposta') {
+            $this->view->menu = 'inativo';
+            $this->view->tituloTopo = 'Consultar dados da proposta';
+        }
+
+        if ($propostaPorEdital) {
+            $tbFormDocumentoDAO = new tbFormDocumento();
+            $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?' => $this->view->itensGeral[0]->idEdital, 'idClassificaDocumento = ?' => $this->COD_CLASSIFICACAO_DOCUMENTO));
+
+            //busca o nome do EDITAL
+            $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?' => $this->view->itensGeral[0]->idEdital));
+            $nmEdital = $edital[0]->nmFormDocumento;
+            $this->view->nmEdital = $nmEdital;
+
+            $arrPerguntas = array();
+            $arrRespostas = array();
+            $tbPerguntaDAO = new tbPergunta();
+            $tbRespostaDAO = new tbResposta();
+
+            foreach ($edital as $registro) {
+                $questoes = $tbPerguntaDAO->montarQuestionario($registro["nrFormDocumento"], $registro["nrVersaoDocumento"]);
+                $questionario = '';
+                if (is_object($questoes) and count($questoes) > 0) {
+                    foreach ($questoes as $questao) {
+                        $resposta = '';
+                        $where = array(
+                            'nrFormDocumento = ?' => $registro["nrFormDocumento"]
+                        , 'nrVersaoDocumento = ?' => $registro["nrVersaoDocumento"]
+                        , 'nrPergunta = ?' => $questao->nrPergunta
+                        , 'idProjeto = ?' => $this->idPreProjeto
+                        );
+                        $resposta = $tbRespostaDAO->buscar($where);
+                        $arrPerguntas[$registro["nrFormDocumento"]]["titulo"] = $registro["nmFormDocumento"];
+                        $arrPerguntas[$registro["nrFormDocumento"]]["pergunta"][] = $questao->toArray();
+                        $arrRespostas[] = $resposta->toArray();
+                    }
+                }
+            }
+            $this->view->perguntas = $arrPerguntas;
+            $this->view->respostas = $arrRespostas;
+
+            $this->montaTela("admissibilidade/proposta-por-edital.phtml");
+        } else {
+            $this->montaTela("admissibilidade/proposta-por-incentivo-fiscal-ajax.phtml");
+        }
     }
 }

@@ -20,6 +20,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $auth = Zend_Auth::getInstance();
         $objSession = $auth->getIdentity();
 
+
+        // LEMBRAR :
+        // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
+
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
         $enquadramento = new Enquadramento();
 
@@ -28,7 +32,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
             $this->view->dados = $enquadramento->obterProjetosParaEnquadramento(
-                $objSession->usu_org_max_superior,
+                $this->grupoAtivo->codOrgao,
                 $ordenacao
             );
         } elseif ($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE) {
@@ -196,27 +200,27 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
     }
 
-    public function encaminharPortariaAction() {
+    public function encaminharAssinaturaAction() {
         try {
             $get = $this->getRequest()->getParams();
             $post = $this->getRequest()->getPost();
 
             if (isset($get['IdPRONAC']) && !empty($get['IdPRONAC']) && $get['encaminhar'] == 'true') {
-                $this->encaminharProjetoParaPortaria($get['IdPRONAC']);
-                parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
+                $this->encaminharProjetoEnquadradoParaAssinatura($get['IdPRONAC']);
+                parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-assinatura', 'CONFIRM');
             } elseif(isset($post['IdPRONAC']) && is_array($post['IdPRONAC']) && count($post['IdPRONAC']) > 0) {
                 foreach($post['IdPRONAC'] as $idPronac) {
-                    $this->encaminharProjetoParaPortaria($idPronac);
+                    $this->encaminharProjetoEnquadradoParaAssinatura($idPronac);
                 }
-                parent::message('Projetos encaminhados com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
+                parent::message('Projetos encaminhados com sucesso.', '/admissibilidade/enquadramento/encaminhar-assinatura', 'CONFIRM');
             }
             $this->carregarListaEncaminhamentoPortaria();
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-portaria');
+            parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-assinatura');
         }
     }
 
-    private function encaminharProjetoParaPortaria($IdPRONAC) {
+    private function encaminharProjetoEnquadradoParaAssinatura($IdPRONAC) {
 
         $objProjeto = new Projetos();
         $projeto = $objProjeto->findBy(array('IdPRONAC' => $IdPRONAC));
@@ -238,14 +242,14 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
         $objProjeto = new Projetos();
         $arrayDadosProjeto = array(
-            'Situacao' => 'D27',
+            'Situacao' => 'B04',
             'DtSituacao' => $objProjeto->getExpressionDate(),
             'ProvidenciaTomada' => 'Projeto encamihado para Portaria.',
             'logon' => $authIdentity['usu_codigo'],
             'Orgao' => $orgaoDestino
         );
 
-        $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
+        $arrayWhere = array('IdPRONAC = ?' => $projeto['IdPRONAC']);
         $objProjeto->update($arrayDadosProjeto, $arrayWhere);
     }
 
@@ -255,7 +259,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $this->view->dados = array();
         $ordenacao = array("dias desc");
-        $this->view->dados = $enquadramento->obterProjetosEnquadradosParaEncaminhamento($ordenacao);
+        $this->view->dados = $enquadramento->obterProjetosEnquadradosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
         $this->view->codOrgao = $this->grupoAtivo->codOrgao;
     }

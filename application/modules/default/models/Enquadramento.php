@@ -116,7 +116,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         return $this->delete($where);
     }
 
-    public function obterProjetosParaEnquadramento($codOrgaoSuperior, $order = null)
+    public function obterProjetosParaEnquadramento($codOrgao, $order = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -156,19 +156,21 @@ class Enquadramento extends MinC_Db_Table_Abstract
 
         $select->joinLeft(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = Projetos.idProjeto and tbAvaliacaoProposta.stEstado = 0', array(), $this->_schema);
         $select->joinLeft(array('Usuarios' => 'Usuarios'), 'tbAvaliacaoProposta.idTecnico = Usuarios.usu_codigo', array('Usuarios.usu_nome'), $this->getSchema('Tabelas'));
-        $select->joinInner(array('PreProjeto' => 'PreProjeto'), 'PreProjeto.idPreProjeto = Projetos.idProjeto', array(), $this->_schema);
+//        $select->joinInner(array('PreProjeto' => 'PreProjeto'), 'PreProjeto.idPreProjeto = Projetos.idProjeto', array(), $this->_schema);
         $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = Projetos.Area', array('Area.Descricao AS area'), $this->_schema);
         $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = Projetos.Segmento', array('Segmento.Descricao AS segmento'), $this->_schema);
         $select->where("Projetos.situacao in ( ? )", array('B01', 'B03'));
-        $select->where("( PreProjeto.AreaAbrangencia = 0 AND 251 = {$codOrgaoSuperior} OR PreProjeto.AreaAbrangencia = 1 AND 160 = {$codOrgaoSuperior} )");
+        $select->where("Projetos.Orgao in ( ? )", $codOrgao);
+//        $select->where("( PreProjeto.AreaAbrangencia = 0 AND 251 = {$codOrgaoSuperior} OR PreProjeto.AreaAbrangencia = 1 AND 160 = {$codOrgaoSuperior} )");
 
 
         !empty($order) ? $select->order($order) : null;
         !empty($limit) ? $select->limit($limit) : null;
+
         return $this->_db->fetchAll($select);
     }
 
-    public function obterProjetosEnquadradosParaEncaminhamento($order = null, $limit = null)
+    public function obterProjetosEnquadradosParaAssinatura($codOrgao, $order = null, $limit = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -176,19 +178,20 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
             array("projetos"),
-            array('pronac' => New Zend_Db_Expr('projetos.AnoProjeto + projetos.Sequencial'),
-                'projetos.nomeProjeto',
-                'projetos.IdPRONAC',
-                'projetos.CgcCpf',
-                'projetos.idpronac',
-                'projetos.Area',
-                'projetos.ResumoProjeto',
-                'projetos.UfProjeto',
-                'projetos.DtInicioExecucao',
-                'projetos.DtFimExecucao',
-                'projetos.Situacao',
-                'projetos.DtSituacao',
-                'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, GETDATE())'
+            array(
+                  'pronac' => New Zend_Db_Expr('projetos.AnoProjeto + projetos.Sequencial'),
+                  'projetos.nomeProjeto',
+                  'projetos.IdPRONAC',
+                  'projetos.CgcCpf',
+                  'projetos.idpronac',
+                  'projetos.Area',
+                  'projetos.ResumoProjeto',
+                  'projetos.UfProjeto',
+                  'projetos.DtInicioExecucao',
+                  'projetos.DtFimExecucao',
+                  'projetos.Situacao',
+                  'projetos.DtSituacao',
+                  'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, GETDATE())'
             ),
             $this->_schema
         );
@@ -198,13 +201,14 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'));
         $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento', 'Segmento.tp_enquadramento'));
         $select->where("projetos.situacao in ( ? )", array('B02', 'B03'));
+        $select->where("projetos.Orgao = ?", $codOrgao);
 
         !empty($order) ? $select->order($order) : null;
         !empty($limit) ? $select->limit($limit) : null;
         return $this->_db->fetchAll($select);
     }
 
-    public function obterProjetosParaEnquadramentoVinculados($id_usuario, $codOrgaoSuperior, $order = null)
+    public function obterProjetosParaEnquadramentoVinculados($id_usuario, $codOrgao, $order = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -243,12 +247,11 @@ class Enquadramento extends MinC_Db_Table_Abstract
         );
 
         $select->joinInner(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = Projetos.idProjeto', array(), $this->_schema);
-        $select->joinInner(array('PreProjeto' => 'PreProjeto'), 'PreProjeto.idPreProjeto = Projetos.idProjeto', array(), $this->_schema);
         $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = Projetos.Area', array('Area.Descricao AS area'), $this->_schema);
         $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = Projetos.Segmento', array('Segmento.Descricao AS segmento'), $this->_schema);
 
         $select->where("Projetos.situacao in ( ? )", array('B01', 'B03'));
-        $select->where("( PreProjeto.AreaAbrangencia = 0 AND 251 = {$codOrgaoSuperior} OR PreProjeto.AreaAbrangencia = 1 AND 160 = {$codOrgaoSuperior} )");
+        $select->where("Projetos.Orgao = ?", $codOrgao);
         $select->where("tbAvaliacaoProposta.stEstado = ?", array('0'));
         $select->where("tbAvaliacaoProposta.idTecnico = ?", array($id_usuario));
 
