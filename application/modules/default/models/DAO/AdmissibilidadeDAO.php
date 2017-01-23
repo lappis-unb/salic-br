@@ -29,7 +29,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                     TABELAS.dbo.vwUsuariosOrgaosGrupos
                 WHERE sis_codigo   = 21 and
                       gru_codigo = 92 and
-                      (uog_orgao = {$params->cod_orgao} OR org_superior = {$params->cod_orgao})
+                      (org_superior = {$params->cod_orgao})
                 ORDER BY usu_nome";
 
         try {
@@ -101,7 +101,8 @@ class AdmissibilidadeDAO extends Zend_Db_Table
     {
 
         $sql = "
-            SELECT idProjeto,NomeProposta,stPlanoAnual,CNPJCPF,idAgente,idUsuario,Tecnico,idSecretaria,
+            SELECT idProjeto,NomeProposta,stPlanoAnual,CNPJCPF,idAgente,
+                idUsuario,Tecnico,idSecretaria,
                 DtAdmissibilidade,dias,idAvaliacaoProposta,
                 idMovimentacao,stTipoDemanda
             FROM sac.dbo.vwListarPropostas
@@ -116,6 +117,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
         }
 
+        echo $sql;
         $retorno = $db->fetchAll($sql);
         return $retorno;
     }
@@ -149,7 +151,6 @@ class AdmissibilidadeDAO extends Zend_Db_Table
         if ($retorno) {
             $retorno = $retorno[0];
         }
-
         return $retorno;
     }
 
@@ -158,13 +159,11 @@ class AdmissibilidadeDAO extends Zend_Db_Table
         $sql = "   SELECT DISTINCT usu_codigo as usu_cod, usu_nome,org_superior
                      FROM TABELAS.dbo.vwUsuariosOrgaosGrupos
                     WHERE sis_codigo = 21 AND
-                          --org_superior = {$params->usu_orgao} AND
-                          uog_orgao = {$params->usu_orgao} AND
+                          org_superior = {$params->usu_orgao} AND
                           gru_codigo = 92 AND
-                          uog_status = 1 AND
-                          usu_nome <> '{$params->usu_nome}'
+                          uog_status = 1 -- AND
+                          -- usu_nome <> '{$params->usu_nome}'
                     ORDER BY usu_nome";
-
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);

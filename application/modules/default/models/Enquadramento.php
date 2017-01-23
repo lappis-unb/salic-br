@@ -131,7 +131,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $queryMensagensRespondidas->setIntegrityCheck(false);
         $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
         $queryMensagensRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
-        $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NOT NULL");
+        $queryMensagensRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NOT NULL");
 
         $select->setIntegrityCheck(false);
         $select->from(
@@ -140,7 +140,6 @@ class Enquadramento extends MinC_Db_Table_Abstract
                 'Projetos.nomeProjeto',
                 'Projetos.IdPRONAC',
                 'Projetos.CgcCpf',
-                'Projetos.idpronac',
                 'Projetos.Area as cdarea',
                 'Projetos.ResumoProjeto',
                 'Projetos.UfProjeto',

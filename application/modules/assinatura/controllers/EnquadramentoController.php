@@ -18,16 +18,14 @@ class Assinatura_EnquadramentoController extends MinC_Controller_Action_Abstract
     public function gerenciarProjetosAction()
     {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Enquadramento();
+        $enquadramento = new Assinatura_Model_DbTable_TbAssinatura();
 
         $this->view->dados = array();
         $ordenacao = array("projetos.DtSituacao asc");
 
 //        if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
-            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento(
-                $this->grupoAtivo->codOrgao,
-                $ordenacao
-            );
+            $this->view->dados = $enquadramento->obterProjetosEnquadrados($this->grupoAtivo->codOrgao, $ordenacao);
+xd($this->view->dados);
 //        }
 
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
