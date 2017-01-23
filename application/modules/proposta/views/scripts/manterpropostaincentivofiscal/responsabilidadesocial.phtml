@@ -1,0 +1,51 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <?php
+            if (isset($this->proposta['idPreProjeto'])) {
+                echo $this->partial("inc/menu.phtml", $this); // menu
+            }
+
+            $currentUrl = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
+        ?>
+
+        <div class="col <?php echo isset($this->proposta['idPreProjeto']) ? 's10 m12 l10 ': 's12 m12 l12 '?>">
+            <?php
+            montaGuiaLinks( null, array(
+                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                array('Proposta' => '')
+            ));
+            ?>
+&ecirc;
+            <!-- ========== INICIO TITULO ========== -->
+            <div id="titulo">
+                <div><?php if (!isset($this->proposta['idPreProjeto'])) { echo "NOVA"; } ?> PROPOSTA <?php //echo montaBotaoVoltar($controller, $links); ?></div>
+            </div>
+
+            <!-- ========== FIM TITULO ========== -->
+            <div id="conteudo" style="align="center">
+                <div id="confirmacao"></div>
+                <div id="confirm"></div>
+                <div class="error centro"><span></span></div>
+
+                <form action="<?php echo $this->acao; ?>" method="post" id="frmProposta" name="frmProposta" enctype="multipart/form-data">
+
+                    <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php
+                    if (isset($this->proposta['idPreProjeto']))
+                        echo $this->proposta['idPreProjeto'];
+                    ?>">
+                    <input type="hidden" name="acao" id="acao" value="<?php
+                           if (isset($this->proposta['idPreProjeto'])) {
+                               echo "alterar";
+                           } else {
+                               echo "incluir";
+                           }
+                    ?>">
+
+                </form>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+

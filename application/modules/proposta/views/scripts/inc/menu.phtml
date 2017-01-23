@@ -10,14 +10,14 @@
 
     $arrMenuProponente = array();
     $arrMenuProponente['principal'] = array(
-        'id' => 'proposta',
-        'label' => 'Proposta Cultural',
+        'id' => 'informacaoinicial',
+        'label' => 'Informa&ccedil;&otilde;es iniciais',
         'title' => '',
         'url' => '',
         'menu' => array(),
         'grupo' => array()
     );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Informa&ccedil;&otilde;es iniciais', 'title' => 'Ir para informa&ccedil;&otilde;es iniciais',
+    $arrMenuProponente['principal']['menu'][] = array('label' => 'Identifica&ccedil&atilde;o da proposta', 'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
@@ -26,7 +26,7 @@
         'grupo' => array()
     );
     $arrMenuProponente['principal']['menu'][] = array('label' => 'Detalhes t&eacute;cnicos', 'title' => 'Ir para detalhes t&eacute;cnicos',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
+        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'detalhestecnicos', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
     $arrMenuProponente['principal']['menu'][] = array('label' => 'Outras informa&ccedil;&otilde;es', 'title' => 'Ir para outras informa&ccedil;&otilde;es',
@@ -54,25 +54,25 @@
 
     $arrMenuProponente['planilhaorcamentaria'] = array(
         'id' => 'planodedistribuicao',
-        'label' => 'Planilha Or&ccedil;ament&aacute;ria',
-        'title' => 'Ir para Planilha Or&ccedil;ament&aacute;ria',
+        'label' => 'Or&ccedil;amento do projeto',
+        'title' => '',
         'url' => '',
         'menu' => array(),
         'grupo' => array()
     );
-    $arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Custos por produtos', 'title' => 'Ir para Custos por Produtos',
+    $arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Custos por produtos', 'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
-    $arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Planilha Or&ccedil;ament&aacute;ria Geral', 'title' => 'Ir para Planilha Or&ccedil;ament&aacute;ria Geral',
+    $arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Visualizar planilha', 'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'planilhaorcamentariageral', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
 
     $arrMenuProponente['itensorcamentario'] = array(
         'id' => 'itensorcamentario',
-        'label' => 'Itens de custo or&ccedil;ament&aacute;rio',
-        'title' => 'Ir para Itens de custo or&ccedil;ament&aacute;rio',
+        'label' => 'Itens or&ccedil;ament&aacute;rios',
+        'title' => '',
         'url' => '',
         'menu' => array(),
         'grupo' => array()
@@ -104,14 +104,14 @@
         'grupo' => array()
     );
 
-    $arrMenuProponente['mensagensenviadas'] = array(
-        'id' => 'mensagensenviadas',
-        'label' => 'Msg enviadas pelo MinC',
-        'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente', 'idPreProjeto' => $idPreProjeto)),
-        'menu' => array(),
-        'grupo' => array()
-    );
+//    $arrMenuProponente['mensagensenviadas'] = array(
+//        'id' => 'mensagensenviadas',
+//        'label' => 'Dilig&ecirc;ncias',
+//        'title' => '',
+//        'url' => $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente', 'idPreProjeto' => $idPreProjeto)),
+//        'menu' => array(),
+//        'grupo' => array()
+//    );
 
     $arrMenuProponente['imprimir'] = array(
         'id' => 'imprimir',
@@ -124,7 +124,7 @@
 
     $arrMenuProponente['mensagensenviadas'] = array(
         'id' => 'mensagensenviadas',
-        'label' => 'Msg enviadas pelo MinC',
+        'label' => 'Dilig&ecirc;ncias',
         'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente', 'idPreProjeto' => $idPreProjeto)),
         'menu' => array(),
@@ -156,6 +156,14 @@
 <div class="col s2 m12 l2">
     <aside id="left-sidebar-nav">
         <ul class="sidebar-nav">
+            <li class="proposta-detalhes green darken-2 no-padding">
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <p class="white-text valign-wrapper"><i class="material-icons left">lock_open</i>Proposta n&#186; <?php echo isset($this->proposta['idPreProjeto']) ? $this->proposta['idPreProjeto'] : ''; ?></p>
+                        <p class="white-text"><?php echo isset($this->proposta['NomeProjeto']) ? $this->proposta['NomeProjeto'] : ''; ?></p>
+                    </div>
+                </div>
+            </li>
             <?php echo $this->partialLoop('inc/item.phtml', $arrMenuProponente); ?>
         </ul>
     </aside>
