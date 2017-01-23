@@ -31,7 +31,7 @@
             ?>
             <form id="frmRedistAnalise" method="post"
                   action="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/redistribuiranaliseitem?fase=<?php echo $this->analista->Tipo; ?>">
-                <table class="tabela">
+                <table class="bordered ">
                     <tr>
                         <th colspan="2">
                             Propostas distribuidas para an&aacute;lise
@@ -68,12 +68,13 @@
                             <b>Novo Analista *</b>
                         </td>
                         <td align="left">
-                            <select class="select_simples" name="usu_cod">
-                                <?php
-                                foreach ($this->novosAnalistas as $analista) {
-                                    echo "<option value='{$analista->usu_cod}'>{$analista->usu_nome}</option>";
-                                } ?>
-                            </select>
+                            <?php if($this->novosAnalistas) :?>
+                                <select class="select_simples" name="usu_cod">
+                                    <?php foreach ($this->novosAnalistas as $analista) : ?>
+                                        <option value="<?php echo $analista->usu_cod ?>"><?php echo $analista->usu_nome ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            <?php endif ?>
                         </td>
                     </tr>
                 </table>
