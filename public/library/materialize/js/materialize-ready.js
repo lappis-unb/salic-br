@@ -63,8 +63,6 @@
 
         setTimeout(function () {
             Materialize.updateTextFields();
-            // elmFormsMaterialize.find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
-            // elmFormsMaterialize.find('[required=required]').addClass('invalid');
         }, 300);
     }
 }($3));
