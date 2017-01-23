@@ -103,7 +103,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             # Busca na Agentes
             $tblAgentes = new Agente_Model_DbTable_Agentes();
             $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
-            
+
             if ($acessos) {
                 $this->idResponsavel = $acessos['idUsuario'];
             }
@@ -113,7 +113,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             if ($usuario) {
                 $this->idUsuario = $usuario['usu_codigo'];
             }
-            
+
             $this->view->idAgenteKeyLog = $this->idAgente;
             $this->view->idResponsavelKeyLog = $this->idResponsavel;
             $this->view->idUsuarioKeyLog = $this->idUsuario;
@@ -338,7 +338,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 # ========== INICIO AUTENTICACAO ZEND ==========
                 # caso o usuario nao esteja autenticado pelo scriptcase
                 # verifica se o grupo ativo esta no array de permissoes
-                if (!in_array($GrupoAtivo->codgrupo, $permissoes)) {
+                if (!in_array($GrupoAtivo->codGrupo, $permissoes)) {
                     $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
 

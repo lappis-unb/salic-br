@@ -223,8 +223,8 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     public function salvar($dados)
     {
         try {
-            if (isset($dados['idusuario'])) {
-                $objSgcAcesso = $this->buscar(array("idusuario = ?" => $dados['idusuario']))->current();
+            if (isset($dados['IdUsuario'])) {
+                $objSgcAcesso = $this->buscar(array("IdUsuario = ?" => $dados['IdUsuario']))->current();
             } else {
                 $objSgcAcesso = $this->createRow();
             }

@@ -31,7 +31,7 @@ $arrMenuProponente['administrativo']['menu'][] = array('label' => 'Procura&ccedi
     'grupo' => array()
 );
 // ========== FIM MENU ADMINISTRATIVO ==========
-// ========== INICIO MENU PROPOSTA ========== 
+// ========== INICIO MENU PROPOSTA ==========
 $arrMenuProponente['proposta'] = array(
     'id' => 'proposta',
     'label' => 'Proposta',
@@ -539,6 +539,13 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'desarquivarpropostas')),
     'title' => 'Desarquivar Proposta',
     'label' => 'Desarquivar Proposta'
+);
+
+$arrMenu['admissibilidade']['menu'][] = array(
+    'grupo' => array(131),
+    'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')),
+    'title' => 'Gerenciar Analistas',
+    'label' => 'Gerenciar Analistas'
 );
 $arrMenu['admissibilidade']['menu'][] = array(
     'grupo' => array(92,97,131),

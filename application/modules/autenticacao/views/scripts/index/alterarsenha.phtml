@@ -82,14 +82,12 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
 
 
 <!-- ========== INICIO CONTEUDO ========== -->
-
 	<div id="conteudo">
-
-
-            <fieldset><legend>Informa&ccedil;&otilde;es</legend>
-
-                <form method="POST" onsubmit="return validaSenha()" action="<?php echo $this->url(array('module'=>'autenticacao', 'controller' => 'index', 'action' => 'alterarsenha')); ?>" name="alterarSenha" id="alterarSenha">
-
+            <fieldset>
+                <legend>Informa&ccedil;&otilde;es</legend>
+                <form method="POST" onsubmit="return validaSenha()"
+                    action="<?php echo $this->url(array('module'=>'autenticacao', 'controller' => 'index', 'action' => 'alterarsenha')); ?>"
+                    name="alterarSenha" id="alterarSenha">
                 <table border="1" class="tabela">
                     <thead>
                         <tr>
