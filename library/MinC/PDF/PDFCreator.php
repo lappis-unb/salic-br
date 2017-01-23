@@ -123,71 +123,15 @@ class PDFCreator {
           </html>
           ';
 
-        //xd($output);
 
-        //$ua = $_SERVER["SERVER_SOFTWARE"];
-        //preg_match('/\((.*?)\)/is', $ua,$so);
-        
-       $documentRoot = str_replace("/index.php",'', $_SERVER["DOCUMENT_ROOT"].$_SERVER["PHP_SELF"]);
+        $mpdf = new mPDF();
 
+        $output = utf8_encode($output);
 
-        $nmArquivo = "relatorio_" . date("His").microtime(true);
+        $mpdf->WriteHTML($output);
 
-        //xd($documentRoot.'/public/tmpPDF/' . $nmArquivo);
-        
+        $mpdf->Output();
 
-//        if($so[1] == "Win32" || $so[1] == "Win64"){
-//            $caminho = 'C:\Arquivos de programas\xampplite\htdocs\integracao\public\tmpPDF\\' . $nmArquivo;
-//            $cmd = '"\Arquivos de programas\BrOffice.org\program\soffice.exe" -norestore -nofirststartwizard -nologo -headless -pt PDFCreator "'.$caminho.'.html"';
-//        }else{
-            $caminho = $documentRoot.'/public/tmpPDF/' . $nmArquivo;
-            $cmd = "xhtml2pdf {$caminho}.html {$caminho}.pdf";
-//       }
-
-
-
-        $fp = fopen($caminho . '.html', 'a');
-
-        if (fwrite($fp, $output) === FALSE) {
-            echo "N&atilde;o foi possível escrever no arquivo ";
-            exit;
-        }
-
-
-        fclose($fp);
-
-
-        chmod($caminho . '.html', 0777);
-
-
-       system($cmd, $rs);
-
-        $ctLoop = 0;
-        if ($rs == 0) {
-            while (!file_exists($caminho.'.pdf')) {
-                if($ctLoop > 15){
-                    $error = true;
-                    break;
-                }
-                sleep(1);
-                $ctLoop++;
-            }
-
-            if($error){
-                xd("Erro na gere&ccedil;&atilde;o de PDF");
-            }
-        }
-
-        if (is_readable($caminho . '.pdf')) {
-            header('Content-type: application/pdf');
-            header('Content-Disposition: attachment; filename="'.$nmArquivo.'.pdf"');
-
-            // Envia o arquivo para o cliente
-            readfile($caminho . '.pdf');
-
-            //unlink($caminho . '.html');
-            //unlink($caminho . '.pdf');
-        }
     }
 
 }
