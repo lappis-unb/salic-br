@@ -5,13 +5,21 @@
     <nav class="breadcrumb">
         <div class="nav-wrapper" style="padding: 0 15px 0 15px">
             <div class="col s12">
-                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), null, true); ?>"
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admissibilidade',
+                    'controller' => 'gerenciarparecer',
+                    'action' => 'index'
+                ), null, true); ?>"
                    class="breadcrumb tooltipped"
                    data-position="top"
                    data-delay="50"
                    data-tooltip="Ir para In&iacute;cio">In&iacute;cio</a>
 
-                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'gerenciar-enquadramento'), null, true); ?>"
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admissibilidade',
+                    'controller' => 'enquadramento',
+                    'action' => 'gerenciar-enquadramento'
+                ), null, true); ?>"
                    class="breadcrumb tooltipped"
                    data-position="top"
                    data-delay="50"
@@ -49,11 +57,7 @@
                             <td valign="top" colspan="2">
                                 <div class="input-field col s12 m6">
                                     <select id="areaCultural"
-                                            <?php if($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
-                                            disabled="disabled"
-                                            <?php else: ?>
                                             name="areaCultural"
-                                            <?php endif; ?>
                                             style="width: 160px;">
                                         <option value=""> - Selecione -</option>
                                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
@@ -62,9 +66,6 @@
                                         <?php } ?>
                                     </select>
                                     <label>&Aacute;rea Cultural</label>
-                                    <?php if($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
-                                        <input name="areaCultural" type="hidden" value="<?php echo $this->projeto['Area']?>" />
-                                    <?php endif; ?>
                                     &nbsp; <span id="erroAreaCultural" class="spanError"></span>
                                 </div>
                                 <div class="input-field col s12 m6">
