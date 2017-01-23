@@ -1,6 +1,4 @@
-<?php //$this->headScript()->appendFile('/public/scripts/autenticacao/js/index.js') ?>
 <div style="display:none" id="dialog-alert2"></div>
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <?php
     $auth = Zend_Auth::getInstance();
@@ -86,12 +84,8 @@
     var dateNow = new Date();
     dateNow.setFullYear(dateNow.getUTCFullYear() - 16);
     $3(document).ready(function ($) {
-//        $('.datepicker').pickadate({
-//            selectMonths: true, // Creates a dropdown to control month
-//            selectYears: 100, // Creates a dropdown of 15 years to control year
-//            max: dateNow
-//        });
-        $("form.materialize").validate({
+        $('#dataNasc').mask('00/00/0000');
+        $("#solicitaSenha").validate({
             rules: {
                 cpf: {
                     cpfBR: $('#cpf').val()
