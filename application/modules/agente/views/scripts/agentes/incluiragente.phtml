@@ -122,10 +122,12 @@
                             <?php if ($this->modulo != "movimentacaobancaria"): ?>
                                 <option value="0" selected="selected"> - Selecione -</option>
                             <?php endif; ?>
-                            <?php foreach ($this->combovisoes as $combovisoes): ?>
-                                <option
-                                    value="<?php echo $combovisoes['idVerificacao']; ?>"> <?php echo $combovisoes['Descricao']; ?> </option>
-                            <?php endforeach; ?>
+                            <?php if ($this->combovisoes): ?>
+                                <?php foreach ($this->combovisoes as $combovisoes): ?>
+                                    <option
+                                        value="<?php echo $combovisoes['idVerificacao']; ?>"> <?php echo $combovisoes['Descricao']; ?> </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select>
                         &nbsp; <span id="erroVisao" class="spanError"></span>
                         &nbsp; <span id="spanVisao"></span>
