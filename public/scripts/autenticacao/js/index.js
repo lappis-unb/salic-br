@@ -4,8 +4,6 @@ $3(document).ready(function ($) {
         var elmForm = $(this).closest('form');
         elmForm.ajaxFormSubmit(function(booStatus){
             var  elmCard = $('.card');
-//            strAnimate = 'wobble';
-//            strAnimate = 'pulse';
             elmCard.removeClass('fadeInUp');
             elmCard.removeClass('animated');
             if (booStatus) {
@@ -22,6 +20,26 @@ $3(document).ready(function ($) {
         });
         return false;
     });
+
+    $("form.materialize").validate({
+        rules: {
+            cpf: {
+                cpfBR: $('#cpf').val()
+            },
+            emailConf: {
+                equalTo: "#email"
+            },
+            dataNasc: {
+                date: false ,
+                dateITA: true ,
+            }
+        },
+        messages: {
+            emailConf: {
+                equalTo: "Digite correto o seu e-mail."
+            }
+        }
+    });
 });
 
 function redirect(strUrl)
@@ -30,19 +48,10 @@ function redirect(strUrl)
     elmCard.removeClass('fadeInUp');
     elmCard.removeClass('animated');
     strAnimate = 'fadeOutDown';
-//            strAnimate = 'jello';
-//            strAnimate = 'wobble';
-//            strAnimate = 'pulse';
     elmCard.addClass(strAnimate);
     elmCard.addClass('animated');
-//            setTimeout(function(){
-//                $('.card').removeClass(strAnimate);
-//                $('.card').removeClass('animated');
-//            }, 1000);
     $3('#title').fadeOut();
     elmCard.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
         window.location.href = strUrl;
-//                $('.card').removeClass(strAnimate);
-//                $('.card').removeClass('animated');
     });
 }
