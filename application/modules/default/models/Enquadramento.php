@@ -140,7 +140,6 @@ class Enquadramento extends MinC_Db_Table_Abstract
                 'Projetos.nomeProjeto',
                 'Projetos.IdPRONAC',
                 'Projetos.CgcCpf',
-                'Projetos.idpronac',
                 'Projetos.Area as cdarea',
                 'Projetos.ResumoProjeto',
                 'Projetos.UfProjeto',

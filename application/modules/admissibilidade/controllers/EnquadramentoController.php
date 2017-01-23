@@ -17,10 +17,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     public function gerenciarEnquadramentoAction()
     {
-        $auth = Zend_Auth::getInstance();
-        $objSession = $auth->getIdentity();
-
-
         // LEMBRAR :
         // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
 
