@@ -31,15 +31,15 @@
                 <table class="bordered responsive-table" id="enquadramento">
                     <thead>
                     <tr class="titulo_tabela">
-                        <th width="40">PRONAC</th>
-                        <th>Nome do Projeto</th>
-                        <th>&Aacute;rea</th>
-                        <th>Segmento</th>
-                        <th>Data</th>
+                        <th class="center-align">PRONAC</th>
+                        <th class="center-align">Nome do Projeto</th>
+                        <th class="center-align">&Aacute;rea</th>
+                        <th class="center-align">Segmento</th>
+                        <th class="center-align">Data</th>
                         <?php if ($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
-                            <th>T&eacute;cnico</th>
+                            <th class="center-align">T&eacute;cnico</th>
                         <?php endif; ?>
-                        <th align="center">A&ccedil;&atilde;o</th>
+                        <th class="center-align">A&ccedil;&atilde;o</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,18 +49,18 @@
                         <?php else: ?>
                             <tr>
                         <?php endif; ?>
-                        <td>
-                            <a class="blue-text"
+                        <td class="center-align">
+                            <a class="black-text btn waves-effect waves-dark white"
                                 href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
                         </td>
-                        <td><?php echo $dado->nomeProjeto; ?></td>
-                        <td><?php echo $dado->area; ?></td>
-                        <td><?php echo $dado->segmento; ?></td>
-                        <td><?php echo Data::tratarDataZend($dado->DtSituacao, 'Brasileira'); ?></td>
+                        <td class="center-align"><?php echo $dado->nomeProjeto; ?></td>
+                        <td class="center-align"><?php echo $dado->area; ?></td>
+                        <td class="center-align"><?php echo $dado->segmento; ?></td>
+                        <td class="center-align"><?php echo Data::tratarDataZend($dado->DtSituacao, 'Brasileira'); ?></td>
                         <?php if ($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
-                            <td><?php echo (trim($dado->usu_nome) != "") ? $dado->usu_nome : '-' ?></td>
+                            <td class="center-align"><?php echo (trim($dado->usu_nome) != "") ? $dado->usu_nome : '-' ?></td>
                         <?php endif; ?>
-                        <td>
+                        <td class="center-align">
                             <?php
                             $corMensagem = 'green';
                             if ($dado->mensagens_nao_respondidas == '0' && $dado->mensagens_respondidas == '0') {
