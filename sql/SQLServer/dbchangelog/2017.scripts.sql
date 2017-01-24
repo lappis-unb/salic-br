@@ -110,3 +110,20 @@ CREATE TABLE TbAssinatura
 );
 CREATE INDEX IX_idPronac ON TbAssinatura (idPronac);
 CREATE INDEX IX_idAssinante ON TbAssinatura (idAssinante);
+
+-- [ Novos grupos para quando o orgao for SEFIC ]
+INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) VALUES (147, 21, 'Coordenador-Geral de Admissibilidade e Aprovação', 1);
+INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) VALUES (148, 21, 'Diretor do Deparmentamento de Incentivo à Produção Cultural', 1);
+INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) VALUES (149, 21, 'Secretario de Fomento e Incentivo à Cultura', 1);
+--select * from Tabelas..Grupos where gru_sistema = 21 and gru_codigo in (147,148,149)
+
+
+-- [ Novos grupos para quando o orgao for SAV ]
+INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) VALUES (150, 21, 'Coordenador Geral de Acompanhamento e Prestação de Contas', 1);
+INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) VALUES (151, 21, 'Diretor de Departamento de Políticas Audiovisuais', 1);
+INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) VALUES (152, 21, 'Secretário do Audiovisual', 1);
+--select * from Tabelas..Grupos where gru_sistema = 21 and gru_codigo in (150,151,152)
+
+
+-- [ Novo órgão criado. OBS: já existe em PROD ]
+INSERT INTO sac.dbo.Orgaos (Codigo, Sigla, idSecretaria, Vinculo, Status, stVinculada) VALUES (682, 'SAV/DPAC', 160, 0, 0, null);

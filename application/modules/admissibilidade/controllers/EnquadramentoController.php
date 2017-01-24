@@ -229,11 +229,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
-        $orgaoDestino = 272;
-        if($projeto['Area'] == 2) {
-            $orgaoDestino = 166;
-        }
-
         $auth = Zend_Auth::getInstance();
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
         $objProjeto = new Projetos();
