@@ -1,11 +1,10 @@
     <?php
-
     if( isset($this->idPreProjeto)) {
         $idPreProjeto = $this->idPreProjeto;
     } elseif (isset($this->proposta->idPreProjeto)) {
         $idPreProjeto = $this->proposta->idPreProjeto;
-    } elseif (isset($get->idPreProjeto)) {
-        $idPreProjeto = $get->idPreProjeto;
+    } elseif( $this->proposta['idpreprojeto'] ) {
+        $idPreProjeto = $this->proposta['idpreprojeto'];
     }
 
     $arrMenuProponente = array();
@@ -17,20 +16,24 @@
         'menu' => array(),
         'grupo' => array()
     );
+    $arrMenuProponente['principal']['menu'][] = array('label' => 'Form antigo', 'title' => '',
+        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
+        'grupo' => array()
+    );
     $arrMenuProponente['principal']['menu'][] = array('label' => 'Identifica&ccedil&atilde;o da proposta', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
+        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Responsabilidade Social', 'title' => 'Ir para responsabilidade social',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
+    $arrMenuProponente['principal']['menu'][] = array('label' => 'Responsabilidade Social', 'title' => '',
+        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'responsabilidadesocial', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Detalhes t&eacute;cnicos', 'title' => 'Ir para detalhes t&eacute;cnicos',
+    $arrMenuProponente['principal']['menu'][] = array('label' => 'Detalhes t&eacute;cnicos', 'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'detalhestecnicos', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Outras informa&ccedil;&otilde;es', 'title' => 'Ir para outras informa&ccedil;&otilde;es',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
+    $arrMenuProponente['principal']['menu'][] = array('label' => 'Outras informa&ccedil;&otilde;es', 'title' => '',
+        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'outrasinformacoes', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
     );
 
@@ -104,15 +107,6 @@
         'grupo' => array()
     );
 
-//    $arrMenuProponente['mensagensenviadas'] = array(
-//        'id' => 'mensagensenviadas',
-//        'label' => 'Dilig&ecirc;ncias',
-//        'title' => '',
-//        'url' => $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente', 'idPreProjeto' => $idPreProjeto)),
-//        'menu' => array(),
-//        'grupo' => array()
-//    );
-
     $arrMenuProponente['imprimir'] = array(
         'id' => 'imprimir',
         'label' => 'Imprimir/Gerar PDF',
@@ -159,8 +153,12 @@
             <li class="proposta-detalhes green darken-2 no-padding">
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        <p class="white-text valign-wrapper"><i class="material-icons left">lock_open</i>Proposta n&#186; <?php echo isset($this->proposta['idPreProjeto']) ? $this->proposta['idPreProjeto'] : ''; ?></p>
-                        <p class="white-text"><?php echo isset($this->proposta['NomeProjeto']) ? $this->proposta['NomeProjeto'] : ''; ?></p>
+                        <p class="white-text valign-wrapper">
+                            <i class="material-icons left"><?php echo (!$this->isEditavel) ? 'lock_outline' : 'lock_open'; ?></i>
+                            <?php echo isset($this->configs['titleShort']) ? $this->titleShort : 'Proposta'; ?> n&#186;
+                            <?php echo isset($this->configs['projeto']) ? $this->configs['projeto'] : $this->proposta['idpreprojeto']; ?>
+                        </p>
+                        <p class="white-text"><?php echo isset($this->proposta['nomeprojeto']) ? $this->proposta['nomeprojeto'] : ''; ?></p>
                     </div>
                 </div>
             </li>
@@ -180,7 +178,7 @@
             }
             ?>
             <input type="hidden" value="<?php echo $idVinculoProposta; ?>" name="idVinculoProposta"/>
-            <input type="hidden" value="<?php echo $this->idPreProjeto; ?>" name="idPreProjeto"/>
+            <input type="hidden" value="<?php echo $idPreProjeto; ?>" name="idPreProjeto"/>
             <input type="hidden" value="1" name="mecanismo"/>
             <table class="tabela">
                 <tr>
@@ -211,11 +209,6 @@
 <script type="text/javascript">
     function layout_fluido() {
         var janela = $(window).width();
-//
-        var fluidNavGlobal = janela - 245;
-        var fluidConteudo = janela - 253;
-        var fluidTitulo = janela - 252;
-        var fluidRodape = janela - 19;
 
         $("#navglobal").css("width", "100%");
         $("#conteudo").css("width", "100%");
