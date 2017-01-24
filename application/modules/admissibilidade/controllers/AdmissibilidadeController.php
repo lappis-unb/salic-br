@@ -1797,7 +1797,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $where['idUsuario = ?'] = $this->idUsuario;
         }
 
-        $where['idSecretaria = ?'] = $this->codOrgaoSuperior;
+        $orgao = new Orgaos();
+        $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+        $orgaoSuperior = $orgao[0]['Superior'];
+
+        $where['idSecretaria = ?'] = $orgaoSuperior;
         $this->view->propostas = $vwPainelAvaliar->propostas($where, array("DtAvaliacao DESC"));
         $this->view->codGrupo = $this->codGrupo;
 
