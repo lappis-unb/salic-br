@@ -65,9 +65,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $this->codGrupo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
             $this->codOrgao = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
-            $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : $auth->getIdentity()->usu_orgao;
+            $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : null;
         }
-
     }
 
     public function indexAction()
@@ -1009,39 +1008,36 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function redistribuiranaliseitemAction()
     {
-
         if ($_REQUEST['idProjeto'] && isset($_REQUEST['usu_cod'])) {
             $params = new stdClass();
             $params->usu_cod = $_REQUEST['usu_cod'];
             $params->idProjeto = $_REQUEST['idProjeto'];
             AdmissibilidadeDAO::redistribuirAnalise($params);
-            //$this->view->mensagem = 'Altera��o realizada com sucesso.';
             parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/admissibilidade/admissibilidade/redistribuiranalise", "CONFIRM");
         }
 
-        if ($_REQUEST['idProjeto'] && $_REQUEST['fase']) {
+        if ($_REQUEST['idProjeto'] ) {
             $params = new stdClass();
             $params->idProjeto = $_REQUEST['idProjeto'];
-            $params->fase = $_REQUEST['fase'];
-            $this->view->analista = AdmissibilidadeDAO::consultarRedistribuirAnaliseItem($params);
-            if ($this->view->analista) {
-                $params = new stdClass();
-                $params->usu_nome = $this->view->analista->Tecnico;
-                $params->gru_codigo = $_SESSION['GrupoAtivo']['codOrgao'];
-                //$params->usu_orgao  = $this->codOrgaoSuperior;
-                $params->usu_orgao = $this->codOrgao;
-                $this->view->novosAnalistas = AdmissibilidadeDAO::consultarRedistribuirAnaliseItemSelect($params);
-            }
+
+            $params = new stdClass();
+            $params->gru_codigo = $_SESSION['GrupoAtivo']['codOrgao'];
+            $params->usu_orgao = $this->codOrgaoSuperior;
+            $this->view->novosAnalistas = AdmissibilidadeDAO::consultarRedistribuirAnaliseItemSelect($params);
         }
     }
 
     public function gerenciaranalistasAction()
     {
-
         if ($this->codOrgao) {
             $params = new stdClass();
             $params->cod_grupo = $this->codGrupo;
-            $params->cod_orgao = $this->codOrgao;
+
+            $orgao = new Orgaos();
+            $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+
+            $params->cod_orgao = $orgao[0]['Superior'];
+
             $this->view->analistas = AdmissibilidadeDAO::gerenciarAnalistas($params);
         }
     }
