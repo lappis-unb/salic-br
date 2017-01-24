@@ -23,11 +23,11 @@
         $("#botaoTransformarPropostaEmProjeto").click(function () {
             var idPreProjeto = parseInt($("#idPreProjetoSpan").html(), 10);
 
-            Materialize.toast('Gerando PRONAC...', 2000, '', function () {
+            Materialize.toast('Gerando PRONAC...', 3000, '', function () {
                 $.post('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto,
                     {},
                     function (data) {
-                        Materialize.toast('PRONAC gerado com sucesso.', 2000, '', function () {
+                        Materialize.toast('PRONAC gerado com sucesso.', 3000, '', function () {
                             window.location = "";
                         });
                     }
