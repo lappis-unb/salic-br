@@ -17,10 +17,6 @@
             <table>
                 <tr>
                     <td class="center-align">
-                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Localizar" id="btn_localizar" type="button"
-                                onclick="window.location='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'localizar' ));?>'">
-                                Localizar<i class="material-icons right">search</i>
-                        </button>
                         <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir" name="imprimir"  type="button"
                                 onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
                                 Imprimir<i class="material-icons right">print</i>
@@ -143,9 +139,9 @@
                             {
                                 data: null,
                                 render: function ( data, type, row ) {
-                                   return  '<a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente='+data.idAgente+'">'
-                                        +'<img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png"'
-                                             +'title="Vizualizar outras Propostas deste Proponente" alt="Vizualizar outras Propostas deste Proponente"/> </a>';
+                                   return  '<a class="btn waves-effect waves-darrk white black-text" href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente='+data.idAgente+'">'
+                                        +'<i class="material-icons"'
+                                             +'title="Vizualizar outras Propostas deste Proponente" alt="Vizualizar outras Propostas deste Proponente">search</i> </a>';
                                 }
                             },
                             {
@@ -165,9 +161,9 @@
                             {
                                 data: null,
                                 render: function ( data, type, row ) {
-                                    return '<a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto='+data.idProjeto+'&realizar_analise=sim">'
-                                            +'<img src="<?php echo $this->baseUrl(); ?>/public/img/ico/eye.png"'
-                                            +'title="Fazer An&aacute;lise Visual da Proposta" alt="Fazer An&aacute;lise Visual da Proposta"/> </a>'
+                                    return '<a class="btn waves-effect waves-darrk white black-text" href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto='+data.idProjeto+'&realizar_analise=sim">'
+                                            +'<i class="material-icons" '
+                                            +'title="Fazer An&aacute;lise Visual da Proposta" alt="Fazer An&aacute;lise Visual da Proposta">visibility</i></a>'
                                 }
                             },
 

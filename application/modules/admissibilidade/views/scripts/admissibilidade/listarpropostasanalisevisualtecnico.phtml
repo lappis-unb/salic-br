@@ -54,7 +54,7 @@
         </form>
         <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
             <div class="conteudoImprimivel" id="conteudoImprimivel">
-            <table class="tabela">
+            <table class="tabela bordered">
                 <tr>
                     <th>AN&aacute;LISE VISUAL POR T&eacute;CNICO</th>
                 </tr>
@@ -66,7 +66,7 @@
                 </tr>
                 <tr id="reavaliacao">
                     <td>
-                        <table class="tabela">
+                        <table class="tabela bordered">
                                 <?php $ultimoRegistro = null; $ct = 1; ?>
                                 <?php if(!empty($this->tecnicosPropostasReavaliacao)): ?>
                                 <?php //foreach($this->tecnicos as $idOrgaoGeral=>$tecnico): ?>
@@ -89,7 +89,7 @@
                                             <?php foreach($propostas as $proposta): ?>
                                             <?php if($proposta->ConformidadeOK == 0): ?>
                                             <tr>
-                                                <td align="center"><a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller'=>'admissibilidade', 'action' => 'exibirpropostacultural')); ?>?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
+                                                <td align="center"><a class="black-text btn waves-effect waves-dark white" href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller'=>'admissibilidade', 'action' => 'exibirpropostacultural')); ?>?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
                                                 <td align="center"><?php echo $proposta->NomeProjeto; ?></td>
                                                 <td><?php echo str_replace(" ", " as ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
                                             </tr>
@@ -109,7 +109,7 @@
                     </td>
                 </tr>
             </table>
-            <table class="tabela">
+            <table class="tabela bordered">
                 <tr onclick="abrirDinamico('#inicial', $(this))" style="cursor:pointer">
                     <td align="center">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -118,7 +118,7 @@
                 </tr>
                 <tr id="inicial">
                     <td>
-                        <table class="tabela">
+                        <table class="tabela bordered">
                             <?php $ultimoRegistro = null; $ct = 1; ?>
                             <?php if(!empty($this->tecnicosPropostasInicial)): ?>
                             <?php //foreach($this->tecnicos as $idOrgaoGeral=>$tecnico): ?>
@@ -132,7 +132,7 @@
                             </tr>
                             <tr id="analista_inicial_<?php echo $ct; ?>" style="display:none">
                                 <td>
-                                    <table class="tabela">
+                                    <table class="tabela bordered">
                                         <tr>
                                             <th width="10%">Nr. Proposta</th>
                                             <th width="75%">Nome da Proposta</th>
