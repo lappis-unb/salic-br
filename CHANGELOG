@@ -1,3 +1,8 @@
+Release 1.14.9
+  * Fix: [Comprovação física do objeto] mensagens de erro quando estoura tamanho de upload
+  * Fix: [Publicação de portaria] pequeno ajuste no texto da portaria
+  * Fix: [Comprovação financeira] Atualizando valor na tabela ComprovantePagamentoxPlanilhaOrcamentaria quando edita uma comprovação
+
 Release 1.14.8
   * Fix: [Consultar dados projeto] adicionando visualização de planilha específica para remanejamento
 
