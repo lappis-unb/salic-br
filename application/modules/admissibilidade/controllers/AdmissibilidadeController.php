@@ -1787,6 +1787,14 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
     }
 
+    /**
+     * ListarPropostas que vão ser avaliadas pelos tecnicos e Coordenadores de Admissibilidade.
+     * A proposta são divididas em 2 areas SAV e SEFIC.
+     * Tecnico só pode ver a suas proprias propostas.
+     *
+     * @access public
+     * @return void
+     */
     public function listarPropostasAction()
     {
         $post = Zend_Registry::get("post");
