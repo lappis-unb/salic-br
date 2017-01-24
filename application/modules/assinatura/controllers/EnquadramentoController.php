@@ -15,6 +15,9 @@ class Assinatura_EnquadramentoController extends MinC_Controller_Action_Abstract
         $this->redirect("/{$this->moduleName}/enquadramento/gerenciar-projetos");
     }
 
+    /**
+     * @todo foram comentados os tratamentos de acordo com o pefil, temporariamente
+     */
     public function gerenciarProjetosAction()
     {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
@@ -25,29 +28,59 @@ class Assinatura_EnquadramentoController extends MinC_Controller_Action_Abstract
 
 //        if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
             $this->view->dados = $enquadramento->obterProjetosEnquadrados($this->grupoAtivo->codOrgao, $ordenacao);
-xd($this->view->dados);
 //        }
 
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+    }
+
+    public function visualizarEnquadramentoAction()
+    {
+        throw new Exception("@todo implementar!");
+    }
+
+    public function devolverProjetoAction()
+    {
+        /**
+         *  --- [ DEVOLUÇÃO ]
+        select * from sac.dbo.Orgaos where idSecretaria = 251
+        -- Quando devolver o projeto deve voltar para o órgçao 262 ( qunado for SEFIC [ SEFIC é o órgão superior ] )
+
+        select * from sac.dbo.Orgaos where idSecretaria = 160
+        -- Quando devolver o projeto deve voltar para o órgçao 171 ( qunado for SAV [ SAV é o órgão superior ] )
+
+         */
+        throw new Exception("@todo implementar!");
+    }
+
+    public function assinarProjetoAction()
+    {
+        throw new Exception("@todo implementar!");
+
+        /**
+         * Ao assinar:
+         * - Caso esteja com o Coordenador Geral a próxima assinatura deve ser para Diretor:
+         * - Caso esteja com o Diretor a próxima assinatura deve ser para Secretário:
+         *
+         * Usar esse script como base:
+         *
+         *
+         */
+    }
+
+    public function finalizarAssinaturaAction()
+    {
+        throw new Exception("@todo implementar!");
+        // portaria
+        $orgaoDestino = 272;
+        if($projeto['Area'] == 2) {
+            $orgaoDestino = 166;
+        }
     }
 
     private function tratarAssinaturaAction()
     {
         /*
          *
-            --- [ DEVOLUÇÃO ]
-            select * from sac.dbo.Orgaos where idSecretaria = 251
-            -- Quando devolver o projeto deve voltar para o órgçao 262 ( qunado for SEFIC [ SEFIC é o órgão superior ] )
-
-            select * from sac.dbo.Orgaos where idSecretaria = 160
-            -- Quando devolver o projeto deve voltar para o órgçao 171 ( qunado for SAV [ SAV é o órgão superior ] )
-
-            --- [ ENCAMINHAR ]
-
-            -- Quando encaminha para o 'Diretor' o Código é 341
-
-            -- Quando encaminha para o 'Secretário' o Código é 251
-
             select * from Tabelas..Grupos where gru_sistema = 21
          */
     }
