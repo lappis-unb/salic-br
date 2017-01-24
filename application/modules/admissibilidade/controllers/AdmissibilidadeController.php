@@ -1017,12 +1017,18 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
         if ($_REQUEST['idProjeto'] ) {
+            $this->view->analista = AdmissibilidadeDAO::consultarProposta($this->getRequest()->getParam('idProjeto'));
+
             $params = new stdClass();
             $params->idProjeto = $_REQUEST['idProjeto'];
 
+            $orgao = new Orgaos();
+            $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+            $orgaoSuperior = $orgao[0]['Superior'];
+
             $params = new stdClass();
             $params->gru_codigo = $_SESSION['GrupoAtivo']['codOrgao'];
-            $params->usu_orgao = $this->codOrgaoSuperior;
+            $params->usu_orgao = $orgaoSuperior;
             $this->view->novosAnalistas = AdmissibilidadeDAO::consultarRedistribuirAnaliseItemSelect($params);
         }
     }

@@ -99,7 +99,6 @@ class AdmissibilidadeDAO extends Zend_Db_Table
 
     public static function consultarRedistribuirAnalise(stdClass $params)
     {
-
         $sql = "
             SELECT idProjeto,NomeProposta,stPlanoAnual,CNPJCPF,idAgente,
                 idUsuario,Tecnico,idSecretaria,
@@ -117,7 +116,6 @@ class AdmissibilidadeDAO extends Zend_Db_Table
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
         }
 
-        echo $sql;
         $retorno = $db->fetchAll($sql);
         return $retorno;
     }
@@ -334,4 +332,27 @@ class AdmissibilidadeDAO extends Zend_Db_Table
 
     }
 
+
+    public static function consultarProposta($idProjeto)
+    {
+        $sql = "
+            SELECT idProjeto,NomeProposta,stPlanoAnual,CNPJCPF,idAgente,
+                idUsuario,Tecnico,idSecretaria,
+                DtAdmissibilidade,dias,idAvaliacaoProposta,
+                idMovimentacao,stTipoDemanda
+            FROM sac.dbo.vwListarPropostas
+            WHERE idProjeto = {$idProjeto}
+            ORDER BY Tecnico";
+        $retorno = false;
+
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
+        }
+
+        $retorno = $db->fetchRow($sql);
+        return $retorno;
+    }
 }
