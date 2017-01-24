@@ -21,7 +21,7 @@
         });
 
         $("#botaoTransformarPropostaEmProjeto").click(function () {
-            var idPreProjeto = parseInt($("#idPreProjeto").html(), 10);
+            var idPreProjeto = parseInt($("#idPreProjetoSpan").html(), 10);
 
             Materialize.toast('Gerando PRONAC...', 2000, '', function () {
                 $.post('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto,
