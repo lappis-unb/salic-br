@@ -7313,4 +7313,24 @@ class Projetos extends MinC_Db_Table_Abstract
     }
 
 
+    public function obterInteressadoProjeto($idPronac) {
+
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            array('Projetos' => 'Projetos'),
+            array('NomeProjeto'),
+            $this->_schema
+        );
+        $objQuery->joinInner(
+            array('Interessado' => 'Interessado'),
+            'Interessado.CgcCpf = Projetos.CgcCpf',
+            'Nome',
+            $this->_schema
+        );
+        $objQuery->where('Projetos.IdPRONAC = ?', $idPronac);
+
+        return $this->_db->fetchRow($objQuery);
+    }
+
 }
