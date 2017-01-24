@@ -36,13 +36,15 @@ SELECT a.idPreProjeto AS idProjeto,a.NomeProjeto AS NomeProposta,a.idAgente,CONV
 	     WHEN a.AreaAbrangencia = 1 THEN 160
 	   END AS idSecretaria,
 	   d.CNPJCPF
-FROM SAC.dbo.preprojeto                AS a
-INNER JOIN SAC.dbo.tbMovimentacao      AS b ON (a.idPreProjeto = b.idProjeto)
-INNER JOIN SAC.dbo.tbAvaliacaoProposta AS c ON (a.idPreProjeto = c.idProjeto)
-INNER JOIN agentes.dbo.Agentes         AS d ON (a.idAgente     = d.idAgente)
-INNER JOIN sac.dbo.Verificacao         AS e ON (b.Movimentacao = e.idVerificacao)
+FROM SAC.dbo.preprojeto                     AS a
+INNER JOIN SAC.dbo.tbMovimentacao           AS b ON (a.idPreProjeto = b.idProjeto)
+INNER JOIN SAC.dbo.tbAvaliacaoProposta      AS c ON (a.idPreProjeto = c.idProjeto)
+INNER JOIN agentes.dbo.Agentes              AS d ON (a.idAgente     = d.idAgente)
+INNER JOIN sac.dbo.Verificacao              AS e ON (b.Movimentacao = e.idVerificacao)
+INNER JOIN sac.dbo.PlanoDistribuicaoProduto AS f ON (a.idPreProjeto = f.idProjeto)
 WHERE b.Movimentacao IN(96,97,127,128)
       AND b.stEstado = 0
+      AND f.stPrincipal = 1
 	  AND c.stEstado = 0
 	  AND NOT EXISTS(SELECT * FROM SAC.dbo.Projetos AS u WHERE a.idPreProjeto = idProjeto)
 
