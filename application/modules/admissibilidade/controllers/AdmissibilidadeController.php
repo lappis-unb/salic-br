@@ -631,7 +631,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
             }
         } catch (Exception $e) {
-            echo "Erro ao tentar transformar proposta em projeto! " . $e->getMessage();
+//            echo "Erro ao tentar transformar proposta em projeto! " .
+// $e->getMessage();
+            print_r($e);
         }
 
     }
@@ -2616,6 +2618,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $idTextoEmail = 12;
                 $sqlInsertHistoricoEmail = "INSERT INTO SAC.dbo.tbHistoricoEmail (idPronac,idTextoemail,DtEmail,stEstado,idUsuario)
                                             VALUES ({$idPronac}, {$idTextoEmail}, getdate(), 1, {$idUsuario})";
+
                 $resultado = $db->query($sqlInsertHistoricoEmail);
                 if($resultado->rowCount() < 1) {
                     throw new Exception ("Não é permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
@@ -2624,8 +2627,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $objTbTextoEmail = new tbTextoEmail();
                 $resultadoTetoEmail = $objTbTextoEmail->obterTextoPorIdentificador($idTextoEmail);;
 
-                $objMensagem = new Mensagem();
-                $resultadoMensagem = $objMensagem->obterInteressadoProjeto($idPronac);
+                $objProjetos = new Projetos();
+
+                $resultadoMensagem = $objProjetos ->obterInteressadoProjeto($idPronac);
 
                 $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$resultadoMensagem->NomeProjeto} <br> Proponente: {$resultadoMensagem->Nome}<br> </b>{$resultadoTetoEmail->dsTexto}";
 
