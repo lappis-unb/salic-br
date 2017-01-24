@@ -7,9 +7,9 @@
  */
 class Mensagem extends GenericModel{
 
+    protected $_primary = '';
     protected $_name = 'tbMensagem';
     protected $_schema = 'SAC';
-    protected $_banco = 'SAC';
 
     /**
      * Salva a informaç&atilde;o de para quais dispositivos foram enviadas as mensagens no banco de dados.
@@ -110,23 +110,5 @@ class Mensagem extends GenericModel{
         return $this->fetchAll($consulta);
     }
 
-    public function obterInteressadoProjeto($idPronac) {
-
-        $objQuery = $this->select();
-        $objQuery->from(
-            array('Projetos' => 'Projetos'),
-            array('NomeProjeto'),
-            $this->_schema
-        );
-        $objQuery->joinInner(
-            array('Interessado' => 'Interessado'),
-            'Interessado.CgcCpf = Projetos.CgcCpf',
-            'Nome',
-            $this->_schema
-        );
-        $objQuery->where('Projetos.IdPRONAC = ?', $idPronac);
-
-        return $this->fetchRow($objQuery);
-    }
 
 }

@@ -631,7 +631,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
             }
         } catch (Exception $e) {
-            echo "Erro ao tentar transformar proposta em projeto! " . $e->getMessage();
+//            echo "Erro ao tentar transformar proposta em projeto! " .
+// $e->getMessage();
+            print_r($e);
         }
 
     }
@@ -1017,12 +1019,18 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
         if ($_REQUEST['idProjeto'] ) {
+            $this->view->analista = AdmissibilidadeDAO::consultarProposta($this->getRequest()->getParam('idProjeto'));
+
             $params = new stdClass();
             $params->idProjeto = $_REQUEST['idProjeto'];
 
+            $orgao = new Orgaos();
+            $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+            $orgaoSuperior = $orgao[0]['Superior'];
+
             $params = new stdClass();
             $params->gru_codigo = $_SESSION['GrupoAtivo']['codOrgao'];
-            $params->usu_orgao = $this->codOrgaoSuperior;
+            $params->usu_orgao = $orgaoSuperior;
             $this->view->novosAnalistas = AdmissibilidadeDAO::consultarRedistribuirAnaliseItemSelect($params);
         }
     }
@@ -1789,7 +1797,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $where['idUsuario = ?'] = $this->idUsuario;
         }
 
-        $where['idSecretaria = ?'] = $this->codOrgaoSuperior;
+        $orgao = new Orgaos();
+        $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+        $orgaoSuperior = $orgao[0]['Superior'];
+
+        $where['idSecretaria = ?'] = $orgaoSuperior;
         $this->view->propostas = $vwPainelAvaliar->propostas($where, array("DtAvaliacao DESC"));
         $this->view->codGrupo = $this->codGrupo;
 
@@ -2175,6 +2187,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function localizarAction()
     {
+        throw new Exception("Metodo descontinuado nesta versão");
         $arrDados = array(
             "urlAcao" => $this->_urlPadrao . "/admissibilidade/admissibilidade/listar-propostas"
         );
@@ -2609,6 +2622,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $idTextoEmail = 12;
                 $sqlInsertHistoricoEmail = "INSERT INTO SAC.dbo.tbHistoricoEmail (idPronac,idTextoemail,DtEmail,stEstado,idUsuario)
                                             VALUES ({$idPronac}, {$idTextoEmail}, getdate(), 1, {$idUsuario})";
+
                 $resultado = $db->query($sqlInsertHistoricoEmail);
                 if($resultado->rowCount() < 1) {
                     throw new Exception ("Não é permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
@@ -2617,8 +2631,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $objTbTextoEmail = new tbTextoEmail();
                 $resultadoTetoEmail = $objTbTextoEmail->obterTextoPorIdentificador($idTextoEmail);;
 
-                $objMensagem = new Mensagem();
-                $resultadoMensagem = $objMensagem->obterInteressadoProjeto($idPronac);
+                $objProjetos = new Projetos();
+
+                $resultadoMensagem = $objProjetos ->obterInteressadoProjeto($idPronac);
 
                 $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$resultadoMensagem->NomeProjeto} <br> Proponente: {$resultadoMensagem->Nome}<br> </b>{$resultadoTetoEmail->dsTexto}";
 
