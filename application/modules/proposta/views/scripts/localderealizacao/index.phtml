@@ -71,20 +71,16 @@ if(isset($_GET['edital'])) {
     }
 </script>
 <?php
-        $controller = "localderealizacao";
         $links = array(
             array('Lista de Propostas' => array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
             array('Local de Realiza&ccedil;&atilde;o' => array())
         );
-montaGuiaLinks($controller, $links);
+gerarBreadCrumb($links);
 ?>
-<!-- ========== INULO ========== -->
 <div id="titulo">
     <div>Local de Realiza&ccedil;&atilde;o <?php if(!isset($_GET['edital'])): ?>/ Deslocamento<?php endif; ?>
     <?php echo montaBotaoVoltar($controller, $links); ?></div>
 </div>
-<!-- ========== FIM TITULO ========== -->
-<!-- ========== IDO ========== -->
 <div id="conteudo">
     <?php  if(!isset($_GET['edital'])): ?>
         <p style="margin-top: 30px;">

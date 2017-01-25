@@ -204,43 +204,45 @@ function aplicaMascara($valor, $mascara) {
     return $novoValor;
 }
 
-function montaGuiaLinks($controller = null, $links = array()) {
+function gerarBreadCrumb($links = array()) {
     try {
         $router = Zend_Controller_Front::getInstance()->getRouter();
-        $first = null;
+        $primeiroLink = null;
 
         $auth = Zend_Auth::getInstance();
-        $first =  $router->assemble(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''));
-        if( isset($auth->getIdentity()->usu_codigo ) )
-            $first =  $router->assemble(array('module' => 'default', 'controller' => 'principal', 'action' => ''));
+        $primeiroLink =  $router->assemble(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''));
+        if( isset($auth->getIdentity()->usu_codigo ) ) {
+            $primeiroLink =  $router->assemble(array('module' => 'default', 'controller' => 'principal', 'action' => ''));
+        }
 
-        if ($first) {
-            $guia = "<div id='breadcrumb'><ul>";
-            $guia .= "<li class='first'><a href='{$first}' title='In&iacute;cio'>In&iacute;cio</a></li>";
-            $qtdLinks = count($links);
-            $contador = 0;
-            if ($qtdLinks > 0) {
-                foreach ($links as $link) {
-                    foreach ($link as $key => $val) {
-                        $contador++;
-                        if ($contador == $qtdLinks) {
-                            $guia .= "<li class='last'>{$key}</li>";
-                        } else {
-                            if (is_array($val)) {
-                                $url = $router->assemble(array('controller' => $val['controller'], 'action' => $val['action']));
-                            } else {
-                                $url = $val;
+        $guia = "<div id='breadcrumb'><ul>";
+        $guia .= "<li class='first'><a href='{$primeiroLink}' title='In&iacute;cio'>In&iacute;cio</a></li>";
+        $qtdLinks = count($links);
+
+        $contador = 0;
+        if ($qtdLinks > 0) {
+
+            foreach ($links as $link) {
+                foreach ($link as $nomeLink => $val) {
+                    $contador++;
+                    if ($contador == $qtdLinks) {
+                        $guia .= "<li class='last'>{$nomeLink}</li>";
+                    } else {
+                        $url = $val;
+                        if (is_array($val)) {
+                            $arrayLink = array('controller' => $val['controller'], 'action' => $val['action']);
+                            if(isset($val['module']) && !empty($val['module'])) {
+                                $arrayLink['module'] = $val['module'];
                             }
-                            $guia .= "<li><a href='" . $url . "' title='{$key}'>" . $key . "</a></li>";
+                            $url = $router->assemble($arrayLink);
                         }
+                        $guia .= "<li><a href='" . $url . "' title='{$nomeLink}'>" . $nomeLink . "</a></li>";
                     }
                 }
             }
-            $guia .= "</ul></div>";
-            print $guia;
-        } else {
-            print "<span style='color: red;'>Erro na apresenta&ccedil;&atilde;o da guia! - controller inv&aacute;lido</span>";
         }
+        $guia .= "</ul></div>";
+        print $guia;
     } catch (Zend_Exception $objException) {
         throw new Exception("Erro ao montar guia de links", 0, $objException);
     }

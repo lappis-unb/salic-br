@@ -423,26 +423,13 @@
 ?>
 
 <div class="container-fluid">
-    <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
-<!--    <div id="breadcrumb">-->
-<!--        <ul>-->
-<!--            <li class="first"><a href="--><?php //echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?><!--" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>-->
-<!--            <li class="second"><a href="--><?php //echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas'), null, true); ?><!--" title="Lista de Propostas" onclick="carregandoModal();">Lista de Propostas</a></li>-->
-<!--            <li class="last">Proposta</li>-->
-<!--        </ul>-->
-<!--    </div>-->
-
     <?php
-    montaGuiaLinks( null, array(
+    gerarBreadCrumb(array(
         array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
         array('Proposta' => '')
     ));
     ?>
-    <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
     <div id="msgExclusaoArq" class="sumir">Deseja realmente efetuar a exclus&atilde;o do arquivo?</div>
-
-    <!-- ========== INICIO TITULO ========== -->
     <div id="titulo">
         <div><?php if (!isset($this->proposta['idPreProjeto'])) { echo "NOVA"; } ?> PROPOSTA <?php //echo montaBotaoVoltar($controller, $links); ?></div>
     </div>
@@ -620,7 +607,7 @@
                             <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta['idPreProjeto'])) echo $this->proposta['dtiniciodeexecucaoform']; ?>"/>
                         </td>
                         <td>
-                            <label for="tpProrrogacao">Prorroga&ccedil;&atilde;o autom&aacute;tica?</label><br><?php //xd($this->proposta['tpProrrogacao'] ); ?>
+                            <label for="tpProrrogacao">Prorroga&ccedil;&atilde;o autom&aacute;tica?</label><br>
                             <select class="select_simples" name="tpProrrogacao" id="tpProrrogacao" style="width: 5em">
                                 <option value="1" <?php echo($this->proposta['tpProrrogacao'] == "1" ) ? "selected": ""; ?>>Sim</option>
                                 <option value="0" <?php echo($this->proposta['tpProrrogacao'] === "0") ? "selected": ""; ?>>N&atilde;o</option>
@@ -964,18 +951,10 @@
         <br/>
     </div>
 </div>
-
-    <!-- ========== FIM CONTEUDO ========== -->
-    <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
     <div id="rodapeConteudo"><span></span></div>
-    <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
     <br clear="all" />
-
-<script>
-
-    // funcao para excluir os anexos
-    function excluirAnexos(idArquivo, idPreProjeto, tipoDocumento, request)
-    {
+<script type="text/javascript">
+    function excluirAnexos(idArquivo, idPreProjeto, tipoDocumento, request) {
         url = '<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'excluiranexo')) ?>?idArquivo=' + idArquivo + '&idPreProjeto=' + idPreProjeto + '&tipoDocumento=' + tipoDocumento + '&request=' + request;
         confirmModal('CONFIRMA&Ccedil;&Atilde;O', 'msgExclusaoArq', 320, 200, null, url);
     }

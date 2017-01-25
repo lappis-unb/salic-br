@@ -8,24 +8,16 @@ if(isset($_GET['edital']) && $_GET['edital']=="s"){
 }
 ?>
 <?php
-        $controller = "Manterpropostaedital";
-        $links = array(
-            array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
-            array('Local e Per&iacute;odo de Realiza&ccedil;&atilde;o' => array())
-        );
-montaGuiaLinks($controller, $links);
+    $links = array(
+        array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
+        array('Local e Per&iacute;odo de Realiza&ccedil;&atilde;o' => array())
+    );
+gerarBreadCrumb($links);
 ?>
 
-
-<!-- ========== INULO ========== -->
 <div id="titulo">
     <div>Documentos Pendentes<?php echo montaBotaoVoltar($controller, $links); ?></div>
 </div>
-<!-- ========== FIM TITULO ========== -->
-
-
-
-<!-- ========== IDO ========== -->
 <div id="conteudo">
     <br />
     <table class="tabela" style="margin-bottom: 100px">
@@ -48,9 +40,6 @@ montaGuiaLinks($controller, $links);
         </tr>
         <?php endif; ?>
     </table>
-</div><!-- ========== FIM CONTEUDO ========== -->
+</div>
 <br clear="all" />
-<!-- ========== I ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RO ========== -->
-

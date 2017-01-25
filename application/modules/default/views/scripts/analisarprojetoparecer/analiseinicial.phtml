@@ -1,47 +1,27 @@
 <?php
 $linkProjetosProdutos = $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'projetosprodutos'));
 
-/* INICIO DA GUIA DE LINKS */
-$controller = 'Analisarprojetoparecer';
 $links = array();
 $links[] = array('Projetos/Produtos para An�lise' => array());
-montaGuiaLinks($controller, $links);
-/* FIM DA GUIA DE LINKS */
+gerarBreadCrumb($links);
 ?>
-
-
-<!-- ========== INA� CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="total">
-
-    <!-- ========== FIM BREADCRUMB (LINKS TOPO)========== -->
     <br clear="all">
-    <div id="divDestao">
-
-    </div>
-
-    <!-- ==========INA� CIO TA� TULO========== -->
-
+    <div id="divDestao"></div>
     <div id="titulo">
         <div>
-            Projetos/Produtos para An�lise
+            Projetos/Produtos para An&aacute;lise
             <?php echo montaBotaoVoltar($controller, $links); ?>
         </div>
-
     </div>
-
-    <!-- ========== FIM TA� TULO ========== -->
-
-    <!-- ========== INA� CIO CONTEAšDO ==========-->
-
-
     <div id="conteudo">
         <table class="tabela">
             <tr>
                 <td>
                     <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left;"> A diligenciar</div>
                     <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice.png" width="20px"/></div><div style="margin-top: 2px;  margin-right: 15px; margin-left: 3px; float: left"> Diligenciado</div>
-                    <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig�ncia n�o respondida</div>
-                    <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig�ncia respondida</div>
+                    <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia n&atilde;o respondida</div>
+                    <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia respondida</div>
                 </td>
             </tr>
         </table>
@@ -56,10 +36,10 @@ montaGuiaLinks($controller, $links);
 				<th width="100">Tipo de produto</th>
 				<th width="120">Data de Recebimento</th>
 				<th width="90">Tempo Restante</th>
-				<th width="70">Dilig�ncia</th>
-				<th width="120">Tempo da Dilig�ncia</th>
+				<th width="70">Dilig&ecirc;ncia</th>
+				<th width="120">Tempo da Dilig&ecirc;ncia</th>
 				<th width="70">Historico</th>
-				<th width="70">Conclus�o</th>
+				<th width="70">Conclus&atilde;o</th>
 			</tr>
 			<?php 
 				$contador = 1; 
@@ -149,11 +129,8 @@ montaGuiaLinks($controller, $links);
 				endforeach; 
 			?>
 		</table>
-		
-			<!-- ========== PAGINA��O ========== -->
 			<?php if($this->qtdRegistro > 5){ echo "<p>" . $this->buscar . "</p>"; } ?>
-			<!-- ========== FIM PAGINA��O ========== -->
-		
+
 		<?php else: ?>
 		<table class="tabela" style="width: 95%;">
 			<tr>
@@ -161,16 +138,9 @@ montaGuiaLinks($controller, $links);
 			</tr>
 		</table>	
 		<?php endif; ?>    
-		   
-        
-        
     </div>
-    <!-- ========== FIM CONTEAšDO ========== -->
-
-    <!-- ========== INA� CIO RODAPA‰ DO CONTEAšDO ========== // -->
 
     <div id="rodapeConteudo_com_menu" ><span></span></div>
-    <!-- ========== FIM RODAP� DO CONTE�DO ========== -->
     <br clear="all" />
 </div>
 

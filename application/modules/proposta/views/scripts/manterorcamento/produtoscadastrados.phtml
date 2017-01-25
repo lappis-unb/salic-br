@@ -347,7 +347,7 @@
     </div>
     <div class="content col s10 m12 l10">
         <?php
-        montaGuiaLinks( null, array(
+        gerarBreadCrumb(array(
             array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
             array('Or&ccedil;amento' => '')
         ));
@@ -361,18 +361,9 @@
         <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
     </div>
 </div>
-
-
-<!-- FIM DIV CONTEUDO -->
     <div id="msg"></div>
-
-    <!-- ========== INCIO RODAPE DO CONTEDO ========== -->
     <div id="rodapeConteudo"><span></span></div>
-    <!-- ========== FIM RODAPE DO CONTEDO ========== -->
     <br clear="all" />
-
-
-<!-- Modal Structure -->
 <div id="modal-pre-loader" class="modal modal-pre-loader">
     <div class="modal-header center valign"><h5>Aguarde!</h5></div>
     <div class="modal-content">
@@ -478,7 +469,6 @@ $3(document).ready(function () {
                         $3('#modal').modal('close');
 
                     $3('#form')[0].reset();
-//                    $3.ajaxRender()
                     Materialize.toast(result.msg, 4000, 'green white-text');
                     $3.each($('div[data-ajax-render]'), function () {
                         $3.ajaxRender({
@@ -495,6 +485,4 @@ $3(document).ready(function () {
     });
     window.dispatchEvent(new Event('resize'));
 });
-
-
 </script>
