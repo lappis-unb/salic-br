@@ -90,7 +90,7 @@
                                     <td class="centro"><b>Nome do Projeto</b></td>
                                 </tr>
                                 <tr>
-                                    <td align="center"><?php echo isset($this->configs['projeto']) ? $this->configs['projeto'] : ''; ?></td>
+                                    <td align="center"><?php echo isset($this->projeto['Sequencial']) ? $this->projeto['AnoProjeto'] . $this->projeto['Sequencial'] : ''; ?></td>
                                     <td align="center"><?php echo isset($this->projeto['NomeProjeto']) ? $this->projeto['NomeProjeto'] : ''; ?></td>
                                 </tr>
                                 <tr class="destacar">
@@ -427,6 +427,10 @@
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>
 
+        $("textarea.editor").each(function () {
+            $(this).editorRico({altura: 400});
+        });
+
         $("#nrAtoTombamento").numeric();
 
         //VALIDA CAMPO RESUMO DA PROPOSTA
@@ -704,20 +708,4 @@
     //        }
     //    }
 
-</script>
-
-
-<script type="text/javascript">
-    $(document).ready(function ($) {
-
-        <?php  if ( !$this->isEditarProposta && !$this->isEditarProjeto) : ?>
-        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
-        JSBloquearAlteracaoFormulario();
-        <?php endif; ?>
-
-
-        $("textarea.editor").each(function () {
-            $(this).editorRico({altura: 400});
-        });
-    });
 </script>
