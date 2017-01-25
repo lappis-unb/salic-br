@@ -76,12 +76,12 @@ if (isset($this->idPreProjeto)) {
                 },
                 dtIniExec:{
                     //dataInicioFim: ' Data inicial dever&aacute; ser no m&iacute;nimo 90 dias ap&oacute;s a data atual.',
-                    maxlength: ' Formato de data inválida.'
+                    maxlength: ' Formato de data invï¿½lida.'
                 }
                 ,
                 dtFimExec:{
                 	required: ' Preencha a data final.',
-                        maxlength: ' Formato de data inválida.'
+                        maxlength: ' Formato de data invï¿½lida.'
                 }
                 ,
                 resumoProjeto:{
@@ -165,15 +165,12 @@ if (isset($this->idPreProjeto)) {
 
 </script>
 <?php
-$controller = "Manterpropostaedital";
 $links = array(
     array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
     array('Dados da Proposta' => array())
 );
-montaGuiaLinks($controller, $links);
+gerarBreadCrumb($links);
 ?>
-
-
 <div id="titulo">
     <div>
         DADOS DA PROPOSTA
@@ -190,22 +187,11 @@ montaGuiaLinks($controller, $links);
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
         <link type="text/css" rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.css" />
-        <script type="text/javascript">
-            <!--
-                /**
-                * Funções que são chamadas após a página ser carregada
-                */
-                $(document).ready(function()
-                {
-                    //CKEDITOR.replaceAll('editor');
-                });
-           //-->
-</script>
         <link type="text/css" rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.css" />
         <table class="tabela" cellpadding="1" cellspacing="1">
             <tr>
                 <th colspan="4">
-                    Identificação da Proposta
+                    Identifica&ccedil;&atilde;o da Proposta
                 </th>
             </tr>
             <tr>
@@ -237,17 +223,6 @@ montaGuiaLinks($controller, $links);
                         echo strip_tags($this->nomeProjeto);
                     }
                     ?>" class="input_simples" style="width: 98%" maxlength="290" />
-                    <!-- ========== EDITOR ========== -->
-                    <!-- textarea cols="80" id="nomeProjeto" name="nomeProjeto" rows="10"><?php
-                           if ($this->nomeProjeto) {
-                               echo $this->nomeProjeto;
-                           }
-                    ?></textarea>
-                    <script type="text/javascript">
-                        //<![CDATA[
-                        CKEDITOR.replace('nomeProjeto', {fullPage : true });
-                        //]]>
-                    </script -->
                     <div>
                         <br/>Ag&ecirc;ncia Banc&aacute;ria: * <input type="text" id="agencia" name="agencia" maxlength="5" class="input_simples" value="<?php echo !empty($this->AgenciaBancaria) ? $this->AgenciaBancaria : ''?>"/><br/>
                         <div id="erroragencia" style="color: red; font-weight: 600" class="sumir">Preencha a ag&ecirc;ncia v&aacute;lida</div>
@@ -275,16 +250,14 @@ montaGuiaLinks($controller, $links);
                 <th>Resumo da Proposta</th></tr>
             <tr>
                 <td>
-                    Explique de forma clara, objetiva e sucinta o que será realizado - máximo de 1000 caracteres. *
+                    Explique de forma clara, objetiva e sucinta o que ser&aacute; realizado - m&aacute;ximo de 1000 caracteres. *
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
                     <span id="ERROresumoProjeto" style="color:#f00; font-weight: bold"></span><input type="text" value="" id="ERROresumoProjetoF" style="width: 1px; height: 1px"  style="display:none"/>
-                    <!-- ========== EDITOR ========== -->
                     <textarea class="editor input_simples" style="width: 99%" id="resumoProjeto" name="resumoProjeto" rows="10"><?php
-	                    if ($this->resumoProjeto) 
-	                    {
+	                    if ($this->resumoProjeto) {
 	                        echo strip_tags($this->resumoProjeto);
 	                    }
 	                    ?></textarea>
