@@ -1,6 +1,6 @@
 <?php
 
-class Proposta_TestController extends GenericController {
+class Proposta_TestController extends Proposta_GenericController {
 
     public function indexAction () {
         xd("Teste");
