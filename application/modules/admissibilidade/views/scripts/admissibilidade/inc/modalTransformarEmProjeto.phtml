@@ -26,11 +26,17 @@
             Materialize.toast('Gerando PRONAC...', 3000, '', function () {
                 $.post('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto,
                     {},
-                    function (data) {
-                        Materialize.toast('PRONAC gerado com sucesso.', 3000, '', function () {
+                    function (response) {
+//console.log(response);
+                        var resposta = response.sucesso;
+                        if(response.hasOwnProperty("erro")){
+                            resposta = response.erro;
+                        }
+                        Materialize.toast(resposta, 3000, '', function () {
                             window.location = "";
                         });
-                    }
+                    },
+                    'json'
                 );
             });
         });

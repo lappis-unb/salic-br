@@ -620,22 +620,20 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
         $nrProcesso = $nrProcessoSemFormatacao;
 
+        $retorno = array();
         try {
             $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
             $tblProjeto = new Projetos();
             $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
             if (!empty($rsProjeto)) {
                 $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
-
-                echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
-                echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
+                $retorno['sucesso'] = "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
             }
-        } catch (Exception $e) {
-//            echo "Erro ao tentar transformar proposta em projeto! " .
-// $e->getMessage();
-            print_r($e);
+        } catch (Exception $objException) {
+            $retorno['erro'] = 'Erro ao tentar transformar proposta em projeto!';
         }
-
+        header('Content-Type: application/json');
+        echo json_encode($retorno);
     }
 
     public function encaminharpropostaAction()
