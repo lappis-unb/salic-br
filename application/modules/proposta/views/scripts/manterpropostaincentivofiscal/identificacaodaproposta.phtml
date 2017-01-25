@@ -13,8 +13,8 @@
     }
 
     .error {
-        color: red;
-        font-weight: normal;
+        color: red !important;
+        font-weight: normal !important;
     }
 
     #conteudo table,
@@ -26,7 +26,6 @@
     form > table:first-of-type {
         margin-top: 0px !important;
     }
-
 
 </style>
 
@@ -44,8 +43,8 @@
         <div class="col <?php echo isset($this->proposta['idpreprojeto']) ? 's10 m12 l10 ' : 's12 m12 l12 ' ?>">
             <?php
             gerarBreadCrumb(array(
-                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
-                array('Proposta' => '')
+                $this->layout['listagem'],
+                array('Identifica&ccedil;&atilde;o' => '')
             ));
             ?>
 
@@ -55,7 +54,7 @@
                     <?php if (!isset($this->proposta['idpreprojeto'])) {
                         echo "Nova Proposta";
                     } else {
-                        echo $this->titleFull;
+                        echo $this->layout['titleFull'];
                     }
                     ?>
                 </div>
@@ -75,6 +74,9 @@
                     <input type="hidden" name="idPreProjeto" id="idPreProjeto"
                            value="<?php echo isset($this->proposta['idpreprojeto']) ? $this->proposta['idpreprojeto'] : '' ?>">
                     <input type="hidden" name="acao" id="acao" value="alterar">
+
+                    <input type="hidden" name="acao" id="acao"
+                           value="<?php echo isset($this->proposta['idpreprojeto']) ? 'alterar' : 'incluir' ?>">
                     <input type="hidden" name="idagente"
                            value="<?php echo isset($this->proponente['idagente']) ? $this->proponente['idagente'] : '' ?>">
                     <input type="hidden" name="url"
@@ -394,7 +396,7 @@
                         </tr>
                     </table>
 
-                    <?php if ($this->isEditavel) : ?>
+                    <?php if ($this->isEditavel || empty($this->idPreProjeto)) : ?>
                         <div class="row">
                             <div class="input-field col s12 center">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Salvar
@@ -418,11 +420,12 @@
     }
 </script>
 
+<div id="msgExclusaoArq" class="sumir">Deseja realmente efetuar a exclus&atilde;o do arquivo?</div>
 
 <script type="text/javascript">
     $(document).ready(function () {
 
-        <?php  if ( !$this->isEditavel ) : ?>
+        <?php if ($this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>
@@ -435,32 +438,31 @@
 
         //VALIDA CAMPO RESUMO DA PROPOSTA
         jQuery.validator.addMethod("validarResumoDoProjeto", function (value, element) {
-            var texto = CKEDITOR.instances['resumoDoProjeto'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g, '');
-
+            var texto = $("#resumodoprojeto").getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g, '');
+            return false;
             if (texto.length > 0) {
-                $('#resumoDoProjeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
+                $('#resumodoprojeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
                 return true;
             }
-
             return false;
         });
 
         //VALIDA CAMPO RESUMO DA PROPOSTA Menor que 1000 caracteres
         jQuery.validator.addMethod("validarResumoDoProjeto1000", function (value, element) {
-            var texto = CKEDITOR.instances['resumoDoProjeto'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g, '');
+            var texto = $("#resumodoprojeto").getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g, '');
 
             if (texto.length > 1000) {
                 return false;
             }
 
-            $('#resumoDoProjeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
+            $('#resumodoprojeto').val().getData();
             return true;
         });
 
         $("#frmProposta").validate({
             rules: {
                 nomeProjeto: {required: true},
-                resumoDoProjeto: {validarResumoDoProjeto: true, validarResumoDoProjeto1000: true},
+//                resumoDoProjeto: {validarResumoDoProjeto: true, validarResumoDoProjeto1000: true},
                 agenciaBancaria: {required: true},
                 dtInicioDeExecucao: {required: true, minlength: 10},
                 dtFinalDeExecucao: {required: true, minlength: 10},
@@ -556,7 +558,7 @@
                         : 'Voc&ecirc; possui ' + errors + ' campos com erros. Eles foram destacados abaixo';
                     $("div.error span").html(message);
                     $("div.error").show();
-                    JSMostraOcultaObj('identificacaodiv', null, true);
+//                    JSMostraOcultaObj('identificacaodiv', null, true);
 
                 } else {
                     $("div.error").hide();
@@ -609,7 +611,7 @@
             validaAgencia()
         });
 
-        <?php if (!empty($this->proposta->agenciabancaria)): ?>
+        <?php if (!empty($this->proposta['agenciabancaria'])): ?>
         validaAgencia();
         <?php endif; ?>
 
@@ -674,38 +676,7 @@
 
         // id dos campos que utilizarï¿½o o calendï¿½rio
         $("#dtInicioDeExecucao, #dtFinalDeExecucao, #dtAtoTombamento").datepicker($.datepicker.regional['pt-BR']);
-
-
     });
 
-    /* -----
-     FUNcao QUE FAZ A TROCA (VISUAL) DE UM OBJETO NA TELA
-     CASO ID_STATUS SEJA UM, O OBJETO ANTERIOR NAO SERIA RETIRADO DA TELA
-     DENTRO DA FUNCAO ABAIXO ELE TAMBEM ALTERA OS DADOS CONFORME A MUDANCA NO DISPLAY
-     --------- */
-    //function JSMostraOcultaObj(id_tbl,id_status){
-    //    function JSMostraOcultaObj(idObjConteudo,obj, show){
-    //
-    //        aparece = $('#'+idObjConteudo).css('display');
-    //
-    //        if(show) aparece = 'none';
-    //
-    //        $('#conteudo').find('.divChave').each(function(){
-    //            $(this).hide();
-    //            $(this).fadeOut('fast', function() {
-    //                $('img.imgDinamica').attr('src','<?php //echo $this->baseUrl(); ?>///public/img/btn_adicionar.gif');
-    //            });
-    //        });
-    //        if(aparece != 'block'){
-    //            $("#"+idObjConteudo).fadeIn('fast', function() {
-    //                $('img', $(obj)).attr('src','<?php //echo $this->baseUrl(); ?>///public/img/btn_menos.gif');
-    //                if(obj){
-    //                    $('html, body').animate({
-    //                        scrollTop: $(obj).offset().top
-    //                    }, 1000);
-    //                }
-    //            });
-    //        }
-    //    }
 
 </script>

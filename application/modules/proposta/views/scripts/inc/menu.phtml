@@ -16,10 +16,10 @@
         'menu' => array(),
         'grupo' => array()
     );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Form antigo', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
-        'grupo' => array()
-    );
+//    $arrMenuProponente['principal']['menu'][] = array('label' => 'Form antigo', 'title' => '',
+//        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
+//        'grupo' => array()
+//    );
     $arrMenuProponente['principal']['menu'][] = array('label' => 'Identifica&ccedil&atilde;o da proposta', 'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto)),
         'grupo' => array()
@@ -37,8 +37,8 @@
         'grupo' => array()
     );
 
-    $arrMenuProponente['localderealizacao'] = array(
-        'id' => 'localderealizacao',
+    $arrMenuProponente['localderealizacoes'] = array(
+        'id' => 'localderealizacoes',
         'label' => 'Local de realiza&ccedil;&atilde;o',
         'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
@@ -125,15 +125,19 @@
         'grupo' => array()
     );
 
-    if (isset($this->movimentacaoAtual) && $this->movimentacaoAtual == '95') {
-        $arrMenuProponente['excluirproposta'] = array(
-            'id' => 'excluirproposta',
-            'label' => 'Excluir proposta',
-            'title' => '',
-            'url' => '',
-            'menu' => array(),
-            'grupo' => array()
-        );
+    if ($this->isEditavel)  {
+
+        if (!$this->isEditarProjeto) {
+
+            $arrMenuProponente['excluirproposta'] = array(
+                'id' => 'excluirproposta',
+                'label' => 'Excluir proposta',
+                'title' => '',
+                'url' => '',
+                'menu' => array(),
+                'grupo' => array()
+            );
+        }
 
         $arrMenuProponente['enviarproposta'] = array(
             'id' => 'enviarproposta',

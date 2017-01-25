@@ -1,13 +1,3 @@
-<?php
-//$edital = "";
-//if(isset($_GET['edital'])) {
-//    echo $this->partial('manterpropostaedital/inc/menu.inc.php', $this); // menu de manter proposta por edital
-//    $edital = "&edital=s";
-//}else {
-//   echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu de manter proposta por incentivo fiscal
-//}
-
-?>
 <div class="container-fluid">
 
     <div class="row">
@@ -17,29 +7,33 @@
         <div class="content col s10 m12 l10 planilha-produtos">
 
             <?php
-                $links = array(
-                    array('Lista de Propostas' => array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
-                    array('Local de Realiza&ccedil;&atilde;o' => array())
-                );
-                gerarBreadCrumb($links);
+            $links = array(
+                array('Lista de Propostas' => array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                array('Local de Realiza&ccedil;&atilde;o' => array())
+            );
+            gerarBreadCrumb($links);
             ?>
 
-            <!-- ========== INULO ========== -->
             <div id="titulo">
-                <div>Local de Realiza&ccedil;&atilde;o <?php if(!isset($_GET['edital'])): ?>/ Deslocamento<?php endif; ?>
+                <div>Local de
+                    Realiza&ccedil;&atilde;o <?php if (!isset($_GET['edital'])): ?>/ Deslocamento<?php endif; ?>
                     <?php echo montaBotaoVoltar($controller, $links); ?>
                 </div>
             </div>
 
-            <!-- ========== FIM TITULO ========== -->
-            <!-- ========== IDO ========== -->
             <div id="conteudo">
-                <?php  if(!isset($_GET['edital'])): ?>
+                <?php if (!isset($_GET['edital'])): ?>
                     <p style="margin-top: 30px;">
-                        &nbsp;&nbsp;&nbsp;&nbsp<input type="radio" <?php echo( !isset($_GET['deslocamento']) ) ? 'checked' : ''; ?> name="selecionar" id="selecionar1" value="realizacao" onclick="trocatela('1')" style="margin-right: 15px;" />Local de Realiza&ccedil;&atilde;o &nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp<input type="radio" <?php echo( isset($_GET['deslocamento']) ) ? 'checked' : ''; ?> name="selecionar" id="selecionar2" value="deslocamento" onclick="trocatela('2')" style="margin-right: 15px;" />Deslocamento
+                        &nbsp;&nbsp;&nbsp;&nbsp<input
+                            type="radio" <?php echo (!isset($_GET['deslocamento'])) ? 'checked' : ''; ?>
+                            name="selecionar" id="selecionar1" value="realizacao" onclick="trocatela('1')"
+                            style="margin-right: 15px;"/>Local de Realiza&ccedil;&atilde;o &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp<input
+                            type="radio" <?php echo (isset($_GET['deslocamento'])) ? 'checked' : ''; ?>
+                            name="selecionar" id="selecionar2" value="deslocamento" onclick="trocatela('2')"
+                            style="margin-right: 15px;"/>Deslocamento
                     </p>
-                <?php  endif; ?>
+                <?php endif; ?>
 
                 <div id="localderealizacao">
                     <table class="tabela">
@@ -50,9 +44,15 @@
                         <tr>
                             <td colspan="4" style="padding-left: 30px;">
                                 <ul>
-                                    <li>Esta tela dever&aacute; ser preenchida com um ou mais locais realiza&ccedil;&atilde;o da proposta cultural.</li>
-                                    <li>Se o local de realiza&ccedil;&atilde;o for no exterior, selecione o pa&iacute;s.</li>
-                                    <li>Se o local de realiza&ccedil;&atilde;o for no Brasil, selecione a UF e a Cidade.</li>
+                                    <li>Esta tela dever&aacute; ser preenchida com um ou mais locais realiza&ccedil;&atilde;o
+                                        da proposta cultural.
+                                    </li>
+                                    <li>Se o local de realiza&ccedil;&atilde;o for no exterior, selecione o
+                                        pa&iacute;s.
+                                    </li>
+                                    <li>Se o local de realiza&ccedil;&atilde;o for no Brasil, selecione a UF e a
+                                        Cidade.
+                                    </li>
                                 </ul>
 
                             </td>
@@ -65,14 +65,18 @@
                             <th width="20%" nowrap>A&ccedil;&otilde;es</th>
                         </tr>
                         <?php foreach ($this->localizacoes as $localizacao) { ?>
-                        <tr class="fundo">
-                            <td class="centro"><?php echo $localizacao['pais']; ?></td>
-                            <td class="centro"><?php echo $localizacao['uf']; ?></td>
-                            <td class="centro"><?php echo $localizacao['cidade']; ?></td>
-                            <td class="centro" nowrap>
-                            <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('module'=>'proposta', 'controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao['idAbrangencia'];?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
-                            <input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $localizacao['idAbrangencia'];?>);"></td>
-                        </tr>
+                            <tr class="fundo">
+                                <td class="centro"><?php echo $localizacao['pais']; ?></td>
+                                <td class="centro"><?php echo $localizacao['uf']; ?></td>
+                                <td class="centro"><?php echo $localizacao['cidade']; ?></td>
+                                <td class="centro" nowrap>
+                                    <input type="button" id="btn_editar" name="sair" style="width: 88px"
+                                           class="btn_editar"
+                                           onclick="window.location.href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao['idAbrangencia']; ?>&idPreProjeto=<?php if ($_GET['idPreProjeto']) echo $_GET['idPreProjeto']; ?><?php echo $edital; ?>&edit=1'">
+                                    <input type="button" id="btn_excluir" name="sair" style="width: 88px"
+                                           class="btn_exclusao"
+                                           onclick="excluir(<?php echo $localizacao['idAbrangencia']; ?>);"></td>
+                            </tr>
                         <?php } ?>
                     </table>
                     <table class="tabela">
@@ -101,42 +105,38 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         <?php if( isset($_GET['deslocamento']) ) : ?>
         trocatela(2);
         <?php endif; ?>
 
-        <?php if(!empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if ($this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>
 
-        $('#btn_novo').click(function(){
-            redirecionar('<?php echo $this->url(array('module'=>'proposta','controller'=>'localderealizacao', 'action'=>'form-inserir')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>');
+        $('#btn_novo').click(function () {
+            redirecionar('<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-inserir')); ?>?idPreProjeto=<?php if ($_GET['idPreProjeto']) echo $_GET['idPreProjeto'];?><?php echo $edital;?>');
         });
 
     });
 
-    function excluir(cod)
-    {
+    function excluir(cod) {
         $("#modalConfirmaExclusao").html("Tem certeza que deseja excluir o registro?");
         // modal com os ddos do dirigente
         $("#modalConfirmaExclusao").dialog("destroy");
         $("#modalConfirmaExclusao").dialog
         ({
-            width:400,
-            height:180,
-            EscClose:false,
-            modal:true
-            ,buttons:
-            {
-                'Cancelar':function()
-                {
+            width: 400,
+            height: 180,
+            EscClose: false,
+            modal: true
+            , buttons: {
+                'Cancelar': function () {
                     $(this).dialog('close'); // fecha a modal
                 },
-                'Confirmar':function()
-                {
-                    window.location.href="<?php echo $this->url(array('module'=>'proposta', 'controller'=>'localderealizacao', 'action'=>'excluir')); ?>?cod="+cod+"&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>";
+                'Confirmar': function () {
+                    window.location.href = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'excluir')); ?>?cod=" + cod + "&idPreProjeto=<?php if ($_GET['idPreProjeto']) echo $_GET['idPreProjeto'];?><?php echo $edital;?>";
                     $(this).dialog('close'); // fecha a modal
                 }
             }
@@ -146,15 +146,14 @@
 
     }
 
-    function trocatela (obj)
-    {
-        if(obj==1){
+    function trocatela(obj) {
+        if (obj == 1) {
             $('#deslocamento').hide();
             $('#localderealizacao').show();
 
-        }else {
+        } else {
             $('#deslocamento').html('&ensp;&ensp;&ensp;Carregando...');
-            jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')).'?idPreProjeto='.$_GET['idPreProjeto']; ?>", "", "deslocamento");
+            jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')) . '?idPreProjeto=' . $_GET['idPreProjeto']; ?>", "", "deslocamento");
             $('#deslocamento').show();
             $('#localderealizacao').hide();
 

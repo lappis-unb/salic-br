@@ -4,14 +4,14 @@
         <div class="col s10 m12 l10">
 
             <?php
-            gerarBreadCrumb(null, array(
-                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+            gerarBreadCrumb(array(
+                $this->layout['listagem'],
                 array('Responsabilidade Social' => '')
             ));
             ?>
 
             <div id="titulo" style="width: 100%;">
-                <div>Responsabilidade Social</div>
+                <div><?php echo $this->layout['titleFull']; ?> - Responsabilidade Social</div>
             </div>
             <div class="clear-fix"></div>
             <div id="conteudo" class="section">
