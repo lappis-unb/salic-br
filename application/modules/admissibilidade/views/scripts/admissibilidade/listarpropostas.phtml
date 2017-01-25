@@ -17,8 +17,7 @@
             <table>
                 <tr>
                     <td class="center-align">
-                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir" name="imprimir"  type="button"
-                                onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir" name="imprimir"  id="imprimir" type="button">
                                 Imprimir<i class="material-icons right">print</i>
                         </button>
                         <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo" id="btn_resumo" id="btn_localizar" type="button"
@@ -166,33 +165,19 @@
                                             +'title="Fazer An&aacute;lise Visual da Proposta" alt="Fazer An&aacute;lise Visual da Proposta">visibility</i></a>'
                                 }
                             },
-
-                            //{
-                                //data: null,
-                                //render: function ( data, type, row ) {
-                                    //if (data.CodSituacao == $('#PROPOSTA_EM_ANALISE_FINAL').val()) {
-                                        //return ' <a href="/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto='+ data.idProjeto
-                                                        //+'"  data-tooltip="Imprimir" href=""> '
-                                                        //+'<img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png" title="Arquivar Proposta" alt="Arquivar Proposta"/>'
-                                                        //+' </a>';
-                                    //}
-                                    //return '';
-                                //}
-                            //},
-                            //{
-                                //data: null,
-                                //render: function ( data, type, row ) {
-                                    //return ' <a href="/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto='+data.idProjeto+'" class="medium btn tooltipped" data-tooltip="Imprimir" href=""> <i class="material-icons">print</i> </a>';
-                                //}
-                            //}
                         ]
                     }
                 );
             });
         }($.noConflict(true)));
     </script>
+    <script type="text/javascript">
 
-            <script type="text/javascript">
+        $3("#imprimir").on('click', function(){
+            console.log('teste');
+            $3("#conteudoImprimir").val($3(".conteudoImprimivel").html());
+            $3("#formGerarPdf").submit();
+        });
 
                 $("#tabelaAnaliseFinal").ready(function () {
 
