@@ -155,8 +155,8 @@
                     <div class="col s12 m12 l12">
                         <p class="white-text valign-wrapper">
                             <i class="material-icons left"><?php echo (!$this->isEditavel) ? 'lock_outline' : 'lock_open'; ?></i>
-                            <?php echo isset($this->configs['titleShort']) ? $this->titleShort : 'Proposta'; ?> n&#186;
-                            <?php echo isset($this->configs['projeto']) ? $this->configs['projeto'] : $this->proposta['idpreprojeto']; ?>
+                            <?php echo isset($this->layout['titleShort']) ? $this->layout['titleShort'] : 'Proposta'; ?> n&#186;
+                            <?php echo isset($this->layout['projeto']) ? $this->layout['projeto'] : $this->proposta['idpreprojeto']; ?>
                         </p>
                         <p class="white-text"><?php echo isset($this->proposta['nomeprojeto']) ? $this->proposta['nomeprojeto'] : ''; ?></p>
                     </div>

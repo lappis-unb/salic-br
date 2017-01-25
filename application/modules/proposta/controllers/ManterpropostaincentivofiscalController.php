@@ -135,9 +135,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $this->view->isEditarProposta = $this->isEditarProposta();
             $this->view->isEditarProjeto = $this->isEditarProjeto();
             $this->view->isEditavel = $this->isEditavel();
-            $this->view->configs['titleShort'] = "Proposta";
-            $this->view->configs['titleShort'] = "Propossta Cultural";
-            $this->view->configs['projeto'] = $this->idPreProjeto;
+            $configs = array(
+                'titleShort' => 'Proposta',
+                'titleFull' => 'Proposta Cultural',
+                'projeto' => $this->idPreProjeto,
+                'listagem' => array('Lista de propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+            );
+
+            $this->view->layout = $configs;
 
             // Alterar projeto
 
@@ -146,9 +151,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $this->idPreProjeto));
                 $this->view->projeto = $projeto;
 
-                $this->view->configs['titleShort'] = "Projeto";
-                $this->view->configs['titleShort'] = "Alterar projeto";
-                $this->view->configs['projeto'] = $projeto['AnoProjeto'] . $projeto['Sequencial'];
+                $configs = array(
+                    'titleShort' => 'Projeto',
+                    'titleFull' => 'Alterar projeto',
+                    'projeto' => $this->idPreProjeto,
+                    'listagem' => array('Lista de projetos' => array('module' => 'default', 'controller' => 'Listarprojetos', 'action' => 'listarprojetos')),
+                );
+
+                $this->view->layout = $configs;
 
             }
 
