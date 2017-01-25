@@ -620,22 +620,20 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
         $nrProcesso = $nrProcessoSemFormatacao;
 
+        $retorno = array();
         try {
             $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
             $tblProjeto = new Projetos();
             $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
             if (!empty($rsProjeto)) {
                 $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
-
-                echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
-                echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
+                $retorno['sucesso'] = "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
             }
-        } catch (Exception $e) {
-//            echo "Erro ao tentar transformar proposta em projeto! " .
-// $e->getMessage();
-            print_r($e);
+        } catch (Exception $objException) {
+            $retorno['erro'] = 'Erro ao tentar transformar proposta em projeto!';
         }
-
+        header('Content-Type: application/json');
+        echo json_encode($retorno);
     }
 
     public function encaminharpropostaAction()
@@ -991,21 +989,27 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function redistribuiranaliseAction()
     {
-        if ($this->codOrgaoSuperior) {
-            $params = new stdClass();
-            $params->usu_orgao = $this->codOrgaoSuperior;
-            $analistas = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
+            $orgao = new Orgaos();
+            $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
+
+            $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+            $orgaoSuperior = $orgao[0]['Superior'];
+
+            $where['idSecretaria = ?'] = $orgaoSuperior;
+
+            $analistas = $vwPainelAvaliar->propostas($where,null, null,null);
+
+
             $this->view->analistas = array();
             $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
             $i = 0;
             foreach ($analistas as $analista) {
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProposta;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['fase'] = $analista->Fase;
+                $this->view->analistas[$analista->Tecnico][$i]['nrProposta'] = $analista->idProjeto;
+                $this->view->analistas[$analista->Tecnico][$i]['NomeProjeto'] = $analista->NomeProposta;
+                $this->view->analistas[$analista->Tecnico][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
+                $this->view->analistas[$analista->Tecnico][$i]['fase'] = $analista->Fase;
                 $i++;
             }
-        }
     }
 
     public function redistribuiranaliseitemAction()
@@ -2668,7 +2672,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $columns = $this->getRequest()->getParam('columns');
 
         $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' '. $order[0]['dir']) : array("DtAvaliacao DESC");
-        //var_dump($order[0]['dir']);die;
 
         $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
 
@@ -2676,13 +2679,20 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $where['idUsuario = ?'] = $this->idUsuario;
         }
 
-        $where['idSecretaria = ?'] = $this->codOrgaoSuperior;
+        $orgao = new Orgaos();
+        $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+        $orgaoSuperior = $orgao[0]['Superior'];
+        $where['idSecretaria = ?'] = $orgaoSuperior;
 
         $propostas = $vwPainelAvaliar->propostas($where, $order, $start, $length, $search);
 
+        $zDate = new Zend_Date();
         foreach($propostas as $key => $proposta){
+            $zDate->set($proposta->DtMovimentacao);
+
             $proposta->NomeProposta = utf8_encode($proposta->NomeProposta);
             $proposta->Tecnico = utf8_encode($proposta->Tecnico);
+            $proposta->DtMovimentacao= $zDate->toString('dd/MM/y h:m');
             $aux[$key] = $proposta;
         }
 
