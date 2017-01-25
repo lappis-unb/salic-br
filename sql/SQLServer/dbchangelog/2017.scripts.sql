@@ -42,8 +42,10 @@ INNER JOIN SAC.dbo.tbAvaliacaoProposta      AS c ON (a.idPreProjeto = c.idProjet
 INNER JOIN agentes.dbo.Agentes              AS d ON (a.idAgente     = d.idAgente)
 INNER JOIN sac.dbo.Verificacao              AS e ON (b.Movimentacao = e.idVerificacao)
 INNER JOIN sac.dbo.PlanoDistribuicaoProduto AS f ON (a.idPreProjeto = f.idProjeto)
+
 WHERE b.Movimentacao IN(96,97,127,128)
       AND b.stEstado = 0
+      AND a.stTipoDemanda = 'NA'
       AND f.stPrincipal = 1
 	  AND c.stEstado = 0
 	  AND NOT EXISTS(SELECT * FROM SAC.dbo.Projetos AS u WHERE a.idPreProjeto = idProjeto)

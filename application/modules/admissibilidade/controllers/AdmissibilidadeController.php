@@ -991,21 +991,27 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function redistribuiranaliseAction()
     {
-        if ($this->codOrgaoSuperior) {
-            $params = new stdClass();
-            $params->usu_orgao = $this->codOrgaoSuperior;
-            $analistas = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
+            $orgao = new Orgaos();
+            $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
+
+            $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+            $orgaoSuperior = $orgao[0]['Superior'];
+
+            $where['idSecretaria = ?'] = $orgaoSuperior;
+
+            $analistas = $vwPainelAvaliar->propostas($where,null, null,null);
+
+
             $this->view->analistas = array();
             $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
             $i = 0;
             foreach ($analistas as $analista) {
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProposta;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['fase'] = $analista->Fase;
+                $this->view->analistas[$analista->Tecnico][$i]['nrProposta'] = $analista->idProjeto;
+                $this->view->analistas[$analista->Tecnico][$i]['NomeProjeto'] = $analista->NomeProposta;
+                $this->view->analistas[$analista->Tecnico][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
+                $this->view->analistas[$analista->Tecnico][$i]['fase'] = $analista->Fase;
                 $i++;
             }
-        }
     }
 
     public function redistribuiranaliseitemAction()
