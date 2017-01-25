@@ -244,13 +244,13 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Solicita&ccedil;&atilde;o Recurso</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Solicita&ccedil;&atilde;o</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Recurso</a></th>
+                <th>Ver</th>                                       
                 <?php if($this->filtro == 'emanalise'){ ?>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Situação</a></th>
 		<th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Vinculada</a></th>
                 <?php } ?>
                 
                 <?php if($this->filtro == 'analisados'){ ?>
-                <th style="width: 130px;">Visualizar</th>
                 <th>Componente da Comissão</th>
                 <?php } ?>
                 
@@ -279,6 +279,9 @@
                 <td align="center"><?php echo Data::tratarDataZend($d->dtSolicitacaoRecurso, 'Brasileira'); ?></td>
                 <td align="center"><?php echo $d->tpSolicitacao; ?></td>
                 <td align="center"><?php echo $d->tpRecurso; ?></td>
+                <td align="center">
+		  <input type="button" class="btn_ver" idRecurso="<?php echo $d->idRecurso; ?>" />
+		</td>
                 <?php if($this->filtro == 'emanalise'){ ?>
                 <td align="center">
                     <?php
@@ -299,10 +302,7 @@
                 <?php } ?>
                 
                 <?php if($this->filtro == 'analisados'){ ?>
-                <td align="center">
-                    <input type="button" class="btn_ver" idRecurso="<?php echo $d->idRecurso; ?>" />
-                </td>
-
+		
                 <td align="center">
                     <?php if($this->filtro == 'analisados' && $d->siRecurso == 6){ ?>
                     <select name="tecnico" class="select_simples comboComponente">
