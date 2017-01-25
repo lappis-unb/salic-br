@@ -43,7 +43,7 @@
 
         <div class="col <?php echo isset($this->proposta['idpreprojeto']) ? 's10 m12 l10 ' : 's12 m12 l12 ' ?>">
             <?php
-            montaGuiaLinks(null, array(
+            gerarBreadCrumb(array(
                 array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
                 array('Proposta' => '')
             ));
