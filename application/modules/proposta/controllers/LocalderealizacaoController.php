@@ -11,7 +11,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstract {
+class Proposta_LocalderealizacaoController extends Proposta_GenericController {
     private $idPreProjeto = null;
     private $usuarioLogado = null;
     private $idUsuario = 0;
@@ -390,7 +390,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
         if(count($rsAbrangencia)>0 && empty($idAbrangencia)){
-            parent::message("Local de Realização já cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=". $this->idPreProjeto . $edital, "ALERT");
+            parent::message("Local de Realiza&ccedil;&atilde;o j&aacute; cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=". $this->idPreProjeto . $edital, "ALERT");
         }
 
         if(isset($_REQUEST['edital'])) {

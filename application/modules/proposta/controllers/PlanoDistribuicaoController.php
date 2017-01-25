@@ -1,6 +1,6 @@
 <?php
 
-class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstract
+class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
 {
     private $intTamPag;
     private $_idPreProjeto = null;

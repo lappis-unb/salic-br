@@ -4,7 +4,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
+class Proposta_ManterorcamentoController extends Proposta_GenericController
 {
     private $idUsuario = null;
     private $idPreProjeto = null;

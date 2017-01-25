@@ -5,13 +5,13 @@
 
             <?php
             gerarBreadCrumb(array(
-                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                $this->layout['listagem'],
                 array('Outras Informa&ccedil;&otilde;es' => '')
             ));
             ?>
 
             <div id="titulo" style="width: 100%;">
-                <div>Outras Informa&ccedil;&otilde;es</div>
+                <div><?php echo $this->layout['titleFull']; ?> - Outras Informa&ccedil;&otilde;es</div>
             </div>
             <div class="clear-fix"></div>
             <div id="conteudo" class="section">

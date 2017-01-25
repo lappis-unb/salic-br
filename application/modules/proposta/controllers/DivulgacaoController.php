@@ -11,7 +11,7 @@
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 15/12/2010
  */
-class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
+class Proposta_DivulgacaoController extends Proposta_GenericController
 {
     private $idPreProjeto = null;
     private $idUsuario = null;

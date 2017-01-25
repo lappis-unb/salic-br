@@ -8,7 +8,7 @@
  * @package application
  * @subpackage application.controllers
  */
-class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_Action_Abstract
+class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericController
 {
 
     /**
@@ -71,7 +71,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         }
         if ($usuario) {
             $this->idUsuario = $usuario['usu_codigo'];
-            if ($this->idAgente != 0) {
+            if ($this->proponente != 0) {
                 $this->usuarioProponente = "S";
             }
         }
@@ -113,55 +113,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idpreprojeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
 
-            $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-
-            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-            $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
-
-            if ($rsPreProjeto) {
-                $rsPreProjeto = array_change_key_case($rsPreProjeto->toArray());
-            }
-
-            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idagente'];
-            $tblAgente = new Agente_Model_DbTable_Agentes();
-            $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
-            if ($rsProponente) {
-                $rsProponente = array_change_key_case($rsProponente->toArray());
-            }
-
-            $this->view->proposta = $rsPreProjeto;
-            $this->view->proponente = $rsProponente;
-            $this->view->url = $this->getRequest()->REQUEST_URI;
-            $this->view->isEditarProposta = $this->isEditarProposta();
-            $this->view->isEditarProjeto = $this->isEditarProjeto();
-            $this->view->isEditavel = $this->isEditavel();
-            $configs = array(
-                'titleShort' => 'Proposta',
-                'titleFull' => 'Proposta Cultural',
-                'projeto' => $this->idPreProjeto,
-                'listagem' => array('Lista de propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
-            );
-
-            $this->view->layout = $configs;
-
-            // Alterar projeto
-
-            if (!empty($this->view->isEditarProjeto)) {
-                $tblProjetos = new Projetos();
-                $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $this->idPreProjeto));
-                $this->view->projeto = $projeto;
-
-                $configs = array(
-                    'titleShort' => 'Projeto',
-                    'titleFull' => 'Alterar projeto',
-                    'projeto' => $this->idPreProjeto,
-                    'listagem' => array('Lista de projetos' => array('module' => 'default', 'controller' => 'Listarprojetos', 'action' => 'listarprojetos')),
-                );
-
-                $this->view->layout = $configs;
-
-            }
-
+            $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
 
         }
     }
@@ -199,7 +151,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $this->montaTela(
             "manterpropostaincentivofiscal/index.phtml",
             array(
-                "acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/editar",
+                "acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/identificacaodaproposta",
                 "acaoExcluir" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/excluir",
                 "dados" => $rsPreProjeto
             )
@@ -253,9 +205,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
         if ($rsProponente) {
-            $rsProponente = $rsProponente->toArray();
+            $rsProponente = array_change_key_case($rsProponente->toArray());
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
+            $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
         } else {
             $this->_redirect("/agente/manteragentes/agentes");
@@ -428,9 +380,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 /* **************************************************************************************** */
             }
             // Plano de execução imediata #novain
-            if ($post['stProposta'] == '618') { // proposta execucao imediata edital
+            if ($post['stproposta'] == '618') { // proposta execucao imediata edital
                 $idDocumento = 248;
-            } elseif ($post['stProposta'] == '619') { // proposta execucao imediata contrato de patrocínio
+            } elseif ($post['stproposta'] == '619') { // proposta execucao imediata contrato de patrocínio
                 $idDocumento = 162;
             }
 
@@ -493,6 +445,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * Metodo responsavel por carregar os dados da proposta para alteracao
      * @param void
      * @return objeto
+     * @deprecated testar proposta e remover em novaIn
      */
     public function editarAction()
     {
@@ -500,6 +453,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $this->verificarPermissaoAcesso(true, false, false);
 
         $idPreProjeto = $this->idPreProjeto;
+
+        $this->redirect("/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/".$this->idPreProjeto);
+
         $this->view->idPreProjeto = $idPreProjeto;
 
         if (!empty($idPreProjeto)) {
@@ -589,55 +545,37 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
     public function identificacaodapropostaAction()
     {
-        $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
+        if (!empty($this->_proposta["stproposta"])) {
+
+            $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+
+            // Plano de execução imediata #novain
+            if ($this->_proposta["stproposta"] == '618') { // proposta execucao imediata edital
+                $idDocumento = 248;
+            } elseif ($this->_proposta["stproposta"] == '619') { // proposta execucao imediata contrato de patrocínio
+                $idDocumento = 162;
+            }
+            if (!empty($idDocumento))
+                $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $this->idPreProjeto, "CodigoDocumento = ?" => $idDocumento));
+        }
+
+        $this->view->arquivoExecucaoImediata = $arquivoExecucaoImediata;
 
     }
 
     public function responsabilidadesocialAction()
     {
-        $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
-//        $this->verificarPermissaoAcesso(true, false, false);
-//        $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
 
     }
 
     public function detalhestecnicosAction()
     {
-        $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
-//        $this->verificarPermissaoAcesso(true, false, false);
-//        $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
-
-//        if (!empty($this->idPreProjeto)) {
-//
-//            $arrBusca['idPreProjeto = ?'] = $this->idPreProjeto;
-//            $this->view->idPreProjeto = $this->idPreProjeto;
-//
-//            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-//            $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
-//
-//            if ($rsPreProjeto) {
-//                $rsPreProjeto = array_change_key_case($rsPreProjeto->toArray());
-//            }
-//
-//            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idagente'];
-//            $tblAgente = new Agente_Model_DbTable_Agentes();
-//            $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
-//            if ($rsProponente) {
-//                $rsProponente = array_change_key_case($rsProponente->toArray());
-//            }
-//
-
-//            $this->view->proposta = $rsPreProjeto;
-//            $this->view->proponente = $rsProponente;
-//            $this->view->url = $this->getRequest()->REQUEST_URI;
-//
-//        }
 
     }
 
     public function outrasinformacoesAction()
     {
-        $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
+
     }
 
     /**
@@ -1515,55 +1453,5 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $this->view->dadoscount = count($busca);
         $this->view->idAgenteProponente = $this->idAgenteProponente;
     }
-
-    /*
-     * @todo melhorar o nome e colocar em generic/abstract para proposta
-     */
-    public function isEditarProposta()
-    {
-
-        if (empty($this->idPreProjeto))
-            return false;
-
-        // Verifica se a proposta estah com o minc
-        $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-        $rsStatusAtual = $tbMovimentacao->findBy(array('idprojeto = ?' => $this->idPreProjeto, 'stestado = ?' => 0));
-
-        if ($rsStatusAtual['Movimentacao'] == '95')
-            return true;
-
-        return false;
-    }
-
-    /*
-     * @todo melhorar o nome e colocar em generic/abstract para proposta
-     */
-    public function isEditarProjeto()
-    {
-
-        if (empty($this->idPreProjeto))
-            return false;
-
-        // Verifica se o projeto esta na situacao para editar
-        $tblProjetos = new Projetos();
-        $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $this->idPreProjeto));
-
-        if ($projeto['Situacao'] == 'B02') // @todo romulo vai criar a situacao correta
-            return true;
-
-        return false;
-    }
-
-    /*
-    * @todo melhorar o nome e colocar em generic/abstract para proposta
-    */
-    public function isEditavel()
-    {
-        if (!$this->isEditarProjeto() && !$this->isEditarProposta())
-            return false;
-
-        return true;
-    }
-
 
 }

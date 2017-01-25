@@ -6,7 +6,7 @@
  * @author tisomar
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abstract
+class Proposta_VincularresponsavelController extends Proposta_GenericController
 {
 
     private $emailResponsavel = null;

@@ -559,6 +559,7 @@ ul.sidebar-nav ul {
     overflow: hidden;
 }
 
+.sidebar-nav li a.active:before,
 .sidebar-nav a.collapsible-header:before {
     content: "";
     display: block;
@@ -571,6 +572,10 @@ ul.sidebar-nav ul {
     border-color: transparent #666;
 }
 
+.sidebar-nav li a.active:before {
+    border-color: transparent #afaaaa;
+}
+
 .sidebar-nav a.collapsible-header.active:before {
     border-width: 6px 6px 0px 6px;
     border-color: #666 transparent;
@@ -581,7 +586,7 @@ ul.sidebar-nav ul {
 .sidebar-nav li a.active,
 .sidebar-nav a.collapsible-header:hover,
 .sidebar-nav li a:hover {
-    background: rgba(0,0,0,0.04);
+    background: rgba(0, 0, 0, 0.11);
 }
 
 .sidebar-nav li .collapsible-body a {
