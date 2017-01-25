@@ -8,27 +8,22 @@
     }
 ?>
 <?php
-        $controller = "Manterpropostaedital";
         $links = array(
             array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
-            array('Confirmar envio da proposta cultural ao Ministério da Cultura' => array())
+            array('Confirmar envio da proposta cultural ao Ministï¿½rio da Cultura' => array())
         );
-montaGuiaLinks($controller, $links);
+gerarBreadCrumb($links);
 ?>
-<!-- ========== INULO ========== -->
 <div id="titulo">
-    <div>Confirmar envio da proposta cultural ao Ministério da Cultura<?php echo montaBotaoVoltar($controller, $links); ?></div>
+    <div>Confirmar envio da proposta cultural ao Ministï¿½rio da Cultura<?php echo montaBotaoVoltar($controller, $links); ?></div>
 </div>
-<!-- ========== FIM TITULO ========== -->
-
-<!-- ========== IDO ========== -->
 <div id="conteudo">
 
     <table class="tabela">
 
         <tr class="titulo_tabela">
             <th></th>
-            <th>Observações</th>
+            <th>Observa&ccedil;&otilde;es</th>
         </tr>
         <?php foreach ($this->resultado as $chave => $valor) { ?>
             <?php if($chave!="erro"){ ?>
@@ -64,9 +59,6 @@ montaGuiaLinks($controller, $links);
             </td>
         </tr>
     </table>
-</div><!-- ========== FIM CONTEUDO ========== -->
+</div>
 <br clear="all" />
-<!-- ========== I ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RO ========== -->
-

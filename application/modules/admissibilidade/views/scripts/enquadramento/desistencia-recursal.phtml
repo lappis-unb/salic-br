@@ -1,26 +1,9 @@
 <main>
-<!--    <nav class="breadcrumb">-->
-<!--        <div class="nav-wrapper" style="padding: 0 15px 0 15px">-->
-<!--            <div class="col s12">-->
-<!--                <a href="--><?php //echo $this->url(array('module' => 'admissibilidade', 'controller' => 'desistencia-recursal', 'action' => 'index'), null, true); ?><!--"-->
-<!--                   class="breadcrumb tooltipped"-->
-<!--                   data-position="top"-->
-<!--                   data-delay="50"-->
-<!--                   data-tooltip="Ir para In&iacute;cio">In&iacute;cio</a>-->
-<!---->
-<!--                <a href="#"-->
-<!--                   class="breadcrumb tooltipped"-->
-<!--                   data-position="top"-->
-<!--                   data-delay="50"-->
-<!--                   data-tooltip="Desist&#234ncia recursal">Desist&#234ncia Recursal</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
     <?php
     $links = array(
         array('Desist&#234ncia Recursal' => array())
     );
-    montaGuiaLinks($controller, $links);
+    gerarBreadCrumb($links);
     ?>
     <div class="content-fluid">
         <div class="row">
@@ -53,15 +36,6 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
-<!--                <div class="col s12 m6 l4">-->
-<!--                    <label>Legenda:</label>-->
-<!--                    <br />-->
-<!--                    <div class="amber lighten-4" style="border: 1px solid gray; height: 20px; display: inline">&nbsp;&nbsp;&nbsp;&nbsp;</div>-->
-<!--                    Projeto Enquadrado Com Recurso-->
-<!--                    <br clear="both" />-->
-<!--                    <div class="" style="border: 1px solid gray; height: 20px; display: inline">&nbsp;&nbsp;&nbsp;&nbsp;</div>-->
-<!--                    Projeto Para Enquadrado-->
-<!--                </div>-->
             </div>
         </div>
     </div>

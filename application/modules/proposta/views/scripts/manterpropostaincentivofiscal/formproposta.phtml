@@ -36,7 +36,7 @@
 
         <div class="col <?php echo isset($this->proposta['idPreProjeto']) ? 's10 m12 l10 ': 's12 m12 l12 '?>">
             <?php
-            montaGuiaLinks( null, array(
+            gerarBreadCrumb(array(
                 array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
                 array('Proposta' => '')
             ));
@@ -532,47 +532,41 @@
                             </tr>
                         </table>
 
-                        <table class="tabela" cellpadding="1" cellspacing="1">
-                            <tr>
-                                <th>Outras Informa&ccedil;&otilde;es</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Apenas utilizar este campo caso tenha informa&ccedil;&atilde;o complementar do projeto que n&atilde;o tenha sido abordada nos campos anteriores. Como, por exemplo, algum apontamento acerca de rubricas no or&ccedil;amento da Planilha Or&ccedil;ament&aacute;ria.</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <!-- ========== EDITOR ========== -->
-                                    <textarea cols="80" id="informacoes" name="informacoes" rows="10"><?php
-                                        if (isset($this->proposta['idPreProjeto']))
-                                            echo $this->proposta['EstrategiadeExecucao'];
-                                    ?>
-                                    </textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span style="color: #ff5050;">Limite m&aacute;ximo de 8000 caracteres.</span></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <br>
-                    <div align="center">
-                        <span id="msgForm" style="font-color:red;"></span>
-                        <input type="submit" class="btn_salvar" id="btn_salvar" value="">
-                        <!-- <input id="btn_sair" type="button" value=" " name="sair" class="btn_sair" style="cursor: pointer;" onclick="window.location='<?php //echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'index'));         ?>';" /> -->
-                    </div>
-                </form>
-                <br/>
+                <table class="tabela" cellpadding="1" cellspacing="1">
+                    <tr>
+                        <th>Outras Informa&ccedil;&otilde;es</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Apenas utilizar este campo caso tenha informa&ccedil;&atilde;o complementar do projeto que n&atilde;o tenha sido abordada nos campos anteriores. Como, por exemplo, algum apontamento acerca de rubricas no or&ccedil;amento da Planilha Or&ccedil;ament&aacute;ria.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <!-- ========== EDITOR ========== -->
+                            <textarea cols="80" id="informacoes" name="informacoes" rows="10"><?php
+                                if (isset($this->proposta['idPreProjeto']))
+                                    echo $this->proposta['EstrategiadeExecucao'];
+                            ?>
+                            </textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: #ff5050;">Limite m&aacute;ximo de 8000 caracteres.</span></td>
+                    </tr>
+                </table>
             </div>
-        </div>
+            <br>
+            <div align="center">
+                <span id="msgForm" style="font-color:red;"></span>
+                <input type="submit" class="btn_salvar" id="btn_salvar" value="">
+                <!-- <input id="btn_sair" type="button" value=" " name="sair" class="btn_sair" style="cursor: pointer;" onclick="window.location='<?php //echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'index'));         ?>';" /> -->
+            </div>
+        </form>
+        <br/>
     </div>
 </div>
-
-    <!-- ========== FIM CONTEUDO ========== -->
-    <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
     <div id="rodapeConteudo"><span></span></div>
-    <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
     <br clear="all" />
 
 <script>

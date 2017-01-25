@@ -3,7 +3,6 @@
 /**
  * Controle Gen?rico (Utilizado por todos os controles)
  * Trata as mensagens do sistema
- * @author Equipe RUP - Politec
  * @since 12/08/2010
  * @version 2.0
  * @package application
@@ -11,37 +10,12 @@
  * @copyright ? 2010 - Minist?rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class MinC_Controller_Action_Abstract extends Zend_Controller_Action
+abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 {
-    /**
-     * Vari?vel com a mensagem
-     * @var $_msg
-     */
     protected $_msg;
-
-
-    /**
-     * Vari?vel com a p?gina de redirecionamento
-     * @var $_url
-     */
     protected $_url;
-
-
-    /**
-     * Vari?vel com o tipo de mensagem
-     * Valores: ALERT, CONFIRM, ERROR ou vazio
-     * @var $_type
-     */
     protected $_type;
-
-
-    /**
-     * Vari?vel com a URL padrao do sistema
-     * @var $_urlPadrao
-     */
     protected $_urlPadrao;
-
-
     private $idResponsavel = 0;
     private $idAgente = 0;
     private $idUsuario = 0;

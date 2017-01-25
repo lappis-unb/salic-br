@@ -17,12 +17,11 @@
         <div class="content col s10 m12 l10 planilha-produtos">
 
             <?php
-                $controller = "localderealizacao";
                 $links = array(
                     array('Lista de Propostas' => array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
                     array('Local de Realiza&ccedil;&atilde;o' => array())
                 );
-                montaGuiaLinks($controller, $links);
+                gerarBreadCrumb($links);
             ?>
 
             <!-- ========== INULO ========== -->
@@ -147,7 +146,8 @@
 
     }
 
-    function trocatela (obj){
+    function trocatela (obj)
+    {
         if(obj==1){
             $('#deslocamento').hide();
             $('#localderealizacao').show();
