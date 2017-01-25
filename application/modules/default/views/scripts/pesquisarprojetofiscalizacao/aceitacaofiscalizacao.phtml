@@ -4,31 +4,24 @@ $cadastraraceitacaofiscalizacaoHref = $this->url(array('controller' => 'Pesquisa
 $buscarTecnicoHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 'action' => 'buscartecnico'));
 
 $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 'action' => 'excluir'));
-/* INICIO DA GUIA DE LINKS */
-$controller = 'Pesquisarprojetofiscalizacao';
 $links = array(
     array('Fiscaliza&ccedil;&atilde;o do Projeto' => array(
             'controller' => 'Pesquisarprojetofiscalizacao',
             'action' => 'painelcontroleentidade')),
     array('Oficializar Fiscaliza&ccedil;&atilde;o' => array())
 );
-montaGuiaLinks('Pesquisarprojetofiscalizacao', $links);
-/* FIM DA GUIA DE LINKS */
+gerarBreadCrumb($links);
 ?>
 <div id="total" style="width: 100%;">
     <div>
-        <!-- início: #titulo -->
         <div id="titulo">
             <div>
                 Oficializar Fiscaliza&ccedil;&atilde;o
                 <?php echo montaBotaoVoltar($controller, $links); ?>
             </div>
         </div>
-        <!-- final: #titulo -->
-        <!-- início: área principal #conteudo -->
         <div id="conteudo">
             <div id="miolo">
-
                     <div>
                         <form action="<?php echo $cadastraraceitacaofiscalizacaoHref; ?>" id="frOficializar" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="idPronac" value="<?php echo $this->idPronac; ?>" />
@@ -114,7 +107,7 @@ montaGuiaLinks('Pesquisarprojetofiscalizacao', $links);
                                         if ($this->infoProjeto[0]->dtInicioFiscalizacaoProjeto != '') {
                                             echo date('d/m/Y', strtotime($this->infoProjeto[0]->dtInicioFiscalizacaoProjeto));
                                         } else {
-                                        	echo 'Não informada';
+                                        	echo 'N&atilde;o informada';
                                         }
                                         ?>
                                     </div>
@@ -124,7 +117,7 @@ montaGuiaLinks('Pesquisarprojetofiscalizacao', $links);
 if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
     echo date('d/m/Y', strtotime($this->infoProjeto[0]->dtFimFiscalizacaoProjeto));
 } else {
-	echo 'Não informada';
+	echo 'Nï¿½o informada';
 }
 ?>
                                     </div>
@@ -163,7 +156,7 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
                                 <div style="float: left;width: 100%;margin-top: 5px;">
                                     <div style="float: left;width: 200px;">Dados para Fiscaliza&ccedil;&atilde;o </div>
                                     <div style="float: left; overflow: auto; height: 100px;">
-<?php echo !empty($this->infoProjeto[0]->dsFiscalizacaoProjeto) ? $this->infoProjeto[0]->dsFiscalizacaoProjeto : 'Não informado'; ?>
+<?php echo !empty($this->infoProjeto[0]->dsFiscalizacaoProjeto) ? $this->infoProjeto[0]->dsFiscalizacaoProjeto : 'Nï¿½o informado'; ?>
                                     </div>
                                 </div>
 
@@ -179,18 +172,6 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
 
 
                                 <div id="parecerista" style="margin-top: 5px;display: none;">
-<!--                                    <div style="float: left;width: 300px;">Identifica&ccedil;&atilde;o do Parecerista*</div>
-                                    <input type="hidden" name="idAgente" id="idAgente" value="<?php //echo $this->infoProjeto[0]->idTecnico; ?>"/>
-                                    <div style="float: left;width: 100%;margin-top: 5px;margin-left: 20px;">
-                                        <div style="float: left;width: 180px;">CPF *</div>
-                                        <div style="float: left;"><input type="text" name="CNPJCPF" id="CNPJCPF" idAgente="idAgente" null="" cnpjcpf="true" idDescricao="Descricao" classaux="tpFornecedor" value=""/></div>
-                                    </div>
-                                    <div style="float: left;width: 100%;margin-top: 5px;margin-left: 20px;">
-                                        <div style="float: left;width: 180px;">Nome *</div>
-                                        <div style="float: left;"><input type="text" readonly size="60" name="Descricao" readonly id="Descricao" null="" value=""/></div>
-                                    </div>-->
-                                    
-
                                 <div style="float: left;width: 100%;margin-top: 5px;">
                                     <div style="float: left;width: 180px;">Parecerista*</div>
                                     <div style="float: left;">
@@ -199,9 +180,6 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
                                         </select>
                                     </div>
                                 </div>
-
-
-
                                 </div>
                                 <div style="float: left;width: 100%;margin-top: 5px;">
                                     <div style="float: left;width: 200px;">Observa&ccedil;&atilde;o * </div>
@@ -253,9 +231,8 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
                     </div>
 
             </div>
-        </div><!-- final: conteúdo principal #conteudo -->
+        </div>
         <div id="rodapeConteudo" ><span></span></div>
-        <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
     </div>
     <br clear="all" />
 </div>
@@ -264,9 +241,6 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
     $(function(){
         buscarFornecedor('#selectAgente');
         mascaras('#frOficializar');
-//        $('#CNPJCPF').focusout(function(){
-//            buscarFornecedor(this);
-//        });
         $('#indicarSim').click(function(){
             if($(this).attr('checked')){
                 $('#parecerista').css('display','');
@@ -322,7 +296,7 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
         });
 
         $('#frOficializar').submit(function(){
-            return validarFormulario('#frOficializar','Preencher campos obrigatórios!');
+            return validarFormulario('#frOficializar','Preencher campos obrigat&oacute;rios!');
         });
 
         $('.btn_excluir').click(function(){
@@ -452,28 +426,6 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
             mascaraCNPJCPF(this);
         });
     }
-//    function buscarFornecedor(este){
-//        if($(este).val() != null && $(este).val() != ''){
-//            if($(este).val().length == 14){
-//                var fornecedor = buscarJson('<?php echo $buscarTecnicoHref; ?>',{cnpjcpf:$(este).val(),perfil:perfil});
-//                if(fornecedor.length >= 1 && fornecedor != 0){
-//                var retorno =  fornecedor[0];
-//                    $('#'+$(este).attr('idAgente')).val(retorno.idAgente);
-//                    $('#Descricao').val(retorno.nome).attr('readonly',true);
-//                }
-//                else{
-//                    $(este).val('');
-//                    $('#'+$(este).attr('idAgente')).val('');
-//                    $('#Descricao').val('').attr('readonly',true);
-//                }
-//            }
-//            else{
-//                $(este).val('')
-//                $('#'+$(este).attr('idAgente')).val('');
-//                $('#Descricao').val('').attr('readonly',true);
-//            }
-//        }
-//    }
 
     function buscarFornecedor(select){
             var tecnicos = buscarJson('<?php echo $buscarTecnicoHref; ?>',{perfil:perfil});
@@ -487,8 +439,6 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
             }
     }
 
-
-
     function buscarRadioMarcado(este){
         var marcado = '';
         $('.'+$(este).attr('classaux')).each(function(){
@@ -499,7 +449,7 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
         return marcado;
     }
     function mascaraCNPJCPF(este){
-        var marcado = 'cpf';//buscarRadioMarcado(este);
+        var marcado = 'cpf';
         switch(marcado){
             case 'cpf':
                 $(este).val($(este).val().slice(0,14));
@@ -523,7 +473,7 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
 
         $(form).find('[cnpjcpf=true]').each(function(){
             var este = this;
-            var marcado = 'cpf';//buscarRadioMarcado(este);
+            var marcado = 'cpf';
             if(marcado == 'cpf' && $(este).val().length < 14){
                 validar = true;
                 mensagem += '<br />Preencha o CPF.';
@@ -533,8 +483,6 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
                 mensagem += '<br />Preencha o CNPJ.';
             }
         });
-
-
 
         $(form).find('[data=true]').each(function(){
             var estadata =   $(this).val().slice(6,10)+''+$(this).val().slice(3,5)+''+$(this).val().slice(0,2);
@@ -572,8 +520,6 @@ if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
                 if($.trim($(this).val()).length == 0)
                     validar = true;
             }
-            //        if(validar)
-            //            alert($(this).attr('name'));
         });
 
         if(validar){

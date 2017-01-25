@@ -1,26 +1,9 @@
 <main>
-<!--    <nav class="breadcrumb">-->
-<!--        <div class="nav-wrapper" style="padding: 0 15px 0 15px">-->
-<!--            <div class="col s12">-->
-<!--                <a href="--><?php //echo $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => 'index'), null, true); ?><!--"-->
-<!--                   class="breadcrumb tooltipped"-->
-<!--                   data-position="top"-->
-<!--                   data-delay="50"-->
-<!--                   data-tooltip="Ir para In&iacute;cio">In&iacute;cio</a>-->
-<!---->
-<!--                <a href="#"-->
-<!--                   class="breadcrumb tooltipped"-->
-<!--                   data-position="top"-->
-<!--                   data-delay="50"-->
-<!--                   data-tooltip="Localizar Parecer">Encaminhar para Portaria</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
     <?php
     $links = array(
         array('Encaminhar para Assinatura' => array())
     );
-    montaGuiaLinks($controller, $links);
+    gerarBreadCrumb($links);
     ?>
     <div class="content">
         <div class="row">

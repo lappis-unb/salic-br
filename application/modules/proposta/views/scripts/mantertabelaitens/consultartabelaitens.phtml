@@ -6,12 +6,11 @@
 
         <div class="content col s10 m12 l10 planilha-produtos">
             <?php
-                    $controller = "mantertabelaitens";
                     $links = array(
                         array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
                         array('Tabelas de Itens' => array())
                     );
-            montaGuiaLinks($controller, $links);
+            gerarBreadCrumb($links);
             ?>
             <!-- ========== INICIO TITULO ========== -->
             <div id="titulo">
