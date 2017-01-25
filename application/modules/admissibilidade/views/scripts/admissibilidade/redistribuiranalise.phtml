@@ -63,100 +63,83 @@
             }
         ?>
     </form>
+
         <table class="bordered striped">
-            <tr>
-                <th>
-                    Propostas Distribuidas para An&aacute;lise
-                </th>
-            </tr>
+            <caption>Propostas Distribuidas para An&aacute;lise</caption>
             <?php
-            $html = '';
             $i = 0;
-            foreach ($this->analistas as $nomeAnalista => $fases) {
+            foreach ($this->analistas as $nomeAnalista => $fases):
                 $qtd = 0;
                 foreach ($fases as $fase) {
                     $qtd += count($fase);
                 }
-                $html .= "<tr onclick=\"abrirDinamico('#tr_{$i}', $(this))\" style=\"cursor:pointer\">
-                             <td align=\"center\">
-                                 <img src=\"{$this->baseUrl()}/public/img/navigation-right.png\" id=\"imgDinamica\" align=\"left\"/>
-                                 Analista : {$nomeAnalista} ( {$qtd} )
-                             </td>
-                         </tr>
-                         <tr id='tr_{$i}' style='display:none'><td>";
-                $j = 0;
-                foreach ($fases as $faseNome => $faseItems) {
-                    $html .= "<table class='bordered '>
-                              <tr>
-                                  <th onclick=\"abrirDinamico('#tr_{$i}_{$j}', $(this))\" style=\"cursor:pointer\">
-                                      <img src=\"{$this->baseUrl()}/public/img/navigation-right.png\" id=\"imgDinamica\" align=\"left\"/>
-                                      Fase: {$faseNome} ( " . count($fases[$faseNome]) . " )
-                                  </th>
-                              </tr>";
-                    $html .= '<tr id="tr_' . $i . '_' . $j . '" style="display:none">
-                              <td>
-                                  <table class="bordered striped" id="tabelaRedistribuir_' . $i . '_' . $j . '">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            Redistribuir
-                                        </th>
-                                        <th style="cursor:pointer" title="Clique aqui para ordenar">
-                                            Nr.Proposta
-                                        </th>
-                                        <th style="cursor:pointer" title="Clique aqui para ordenar">
-                                            Proposta
-                                        </th>
-                                        <th style="cursor:pointer" title="Clique aqui para ordenar">
-                                            Dt. Distribui&ccedil;&atilde;o
-                                        </th>
-                                        <th>
-                                            Fase
-                                        </th>
-                                    </tr>
-                                    </thead><tbody>';
-                    foreach ($faseItems as $faseItem) {
-                        $html.= '<tr>
-                                    <td align="center">
-                                        <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/redistribuiranaliseitem?idProjeto=' . $faseItem['nrProposta'] . '&fase=' . $faseNome . '">
-                                            <img src="' . $this->baseUrl() . '/public/img/user_gray.png" />
-                                        </a>
-                                    </td>
-                                    <td align="center">
-                                        <a class="black-text btn waves-effect waves-dark white" href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=' . $faseItem['nrProposta'] . '&fase=' . $faseNome . '">
-                                        ' . $faseItem['nrProposta'] . '
-                                        </a>
-                                    </td>
-                                    <td align="center">
-                                        ' . $faseItem['NomeProjeto'] . '
-                                    </td>
-                                    <td align="center">
-                                        ' . $faseItem['DtMovimentacao'] . '
-                                    </td>
-                                    <td align="center">
-                                        ' . $faseNome . '
-                                    </td>
-                                </tr>';
-                    }
-                    echo '<script>setTimeout(\'$("#tabelaRedistribuir_' . $i . '_' . $j . '").tablesorter()\',700);</script>';
-                    $j++;
-                    $html .='</tbody></table>
-                          </td>
-                      </tr></table>';
-                }
-                $html .= '</td></tr>';
-                $i++;
-            }
-            echo $html;
             ?>
-        </table>
-        <table>
-            <tr>
-                <td class="centro">
-                    <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo"  type="button" id="btn_resumo"
-                            onclick="$('#frmResumo').submit();">
-                        Resumo<i class="material-icons right">description</i>
-                    </button>
+             <tr onclick="abrirDinamico('#tr_<?php echo $i ?>', $(this))" style="cursor:pointer">
+                 <td>
+                     <img src="<?php echo $this->baseUrl()?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                         Analista : <?php echo "$nomeAnalista ( $qtd )" ?>
+                 </td>
+             </tr>
+                 <tr id='tr_<?php echo $i?>' style='display:none'>
+                    <td>
+                     <?php $j = 0; ?>
+                      <table class="bordered striped" id="tabelaRedistribuir_<?php echo $i?>_<?php echo $j?>">
+                          <thead>
+                                <tr>
+                                    <th>
+                                        Redistribuir
+                                    </th>
+                                    <th style="cursor:pointer" title="Clique aqui para ordenar">
+                                        Nr.Proposta
+                                    </th>
+                                    <th style="cursor:pointer" title="Clique aqui para ordenar">
+                                        Proposta
+                                    </th>
+                                    <th style="cursor:pointer" title="Clique aqui para ordenar">
+                                        Dt. Distribui&ccedil;&atilde;o
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($fases as  $faseItem) : ?>
+                                <tr>
+                                    <td >
+                                        <a href="<?php echo $this->baseUrl()?>'/admissibilidade/admissibilidade/redistribuiranaliseitem?idProjeto=<?php echo $faseItem['nrProposta']?>">
+                                            <img src="<?php echo $this->baseUrl()?>/public/img/user_gray.png" />
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="black-text btn waves-effect waves-dark white" href="<?php echo $this->baseUrl()?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $faseItem['nrProposta']?>">
+                                            <?php echo $faseItem['nrProposta'] ?>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <?php echo  $faseItem['NomeProjeto'] ?>
+                                    </td>
+                                    <td >
+                                        <?php echo $faseItem['DtMovimentacao'] ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                            <script>setTimeout('$("#tabelaRedistribuir_<?php echo $i?>_<?php echo $j?>").tablesorter()',700);</script>
+                            <?php $j++; ?>
+                        </tbody>
+                    </table>
+                  </td>
+              </tr>
+        </td>
+        </tr>
+        <?php $i++;
+        endforeach;?>
+    </table>
+
+    <table>
+        <tr>
+            <td class="centro">
+                <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo"  type="button" id="btn_resumo"
+                        onclick="$('#frmResumo').submit();">
+                    Resumo<i class="material-icons right">description</i>
+                </button>
                 </td>
             </tr>
         </table>
