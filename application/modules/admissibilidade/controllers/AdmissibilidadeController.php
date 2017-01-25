@@ -2668,7 +2668,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $columns = $this->getRequest()->getParam('columns');
 
         $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' '. $order[0]['dir']) : array("DtAvaliacao DESC");
-        //var_dump($order[0]['dir']);die;
 
         $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
 
@@ -2676,13 +2675,20 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $where['idUsuario = ?'] = $this->idUsuario;
         }
 
-        $where['idSecretaria = ?'] = $this->codOrgaoSuperior;
+        $orgao = new Orgaos();
+        $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+        $orgaoSuperior = $orgao[0]['Superior'];
+        $where['idSecretaria = ?'] = $orgaoSuperior;
 
         $propostas = $vwPainelAvaliar->propostas($where, $order, $start, $length, $search);
 
+        $zDate = new Zend_Date();
         foreach($propostas as $key => $proposta){
+            $zDate->set($proposta->DtMovimentacao);
+
             $proposta->NomeProposta = utf8_encode($proposta->NomeProposta);
             $proposta->Tecnico = utf8_encode($proposta->Tecnico);
+            $proposta->DtMovimentacao= $zDate->toString('dd/MM/y h:m');
             $aux[$key] = $proposta;
         }
 
