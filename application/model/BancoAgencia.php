@@ -8,5 +8,5 @@
 class BancoAgencia extends GenericModel {
     protected $_banco   = "SAC";
     protected $_schema  = "dbo";
-    protected $_name    = "bancoAgencia";
+    protected $_name    = "BancoAgencia";
 } // fecha class
