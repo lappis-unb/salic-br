@@ -1,10 +1,12 @@
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
-        <li class="last">Listar Propostas</li>
-    </ul>
-</div>
+<?php
+    gerarBreadCrumb(array(
+        array('Listar Proposta' => '')
+    ));
+?>
+
+<div id="alerta" title="Alerta"></div>
+<div id="erro" title="Erro"></div>
+<div id="resultado"></div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 <div id="titulo">
     <div>Lista de Propostas<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>

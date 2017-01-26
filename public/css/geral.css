@@ -1812,3 +1812,18 @@ footer.green a {
 	/*padding:0;*/
 	/*border:none;*/
 /*}*/
+
+.ui-dialog .ui-dialog-titlebar {
+	background: rgb(76,175,80);
+}
+.ui-dialog .ui-dialog-buttonpane button {
+	background-color: rgb(76,175,80);
+	box-shadow: none;
+	border: none;
+	padding: 10px 20px !important;
+}
+
+.ui-dialog .ui-dialog-buttonpane button:hover,
+.ui-dialog .ui-dialog-buttonpane button:active {
+	background-color: #2bbbad;
+}
