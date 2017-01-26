@@ -99,16 +99,19 @@ a:hover {
 	margin-top:5px;
 }
 #combousuario {
-	width: 415px;
-	position: absolute;
+	float: right;
+	/*width: 700px;*/
+	position: relative;
     right: 32px;
     top: 43px;
 	z-index: 1;
-	height: 30px;
+	/*height: 30px;*/
 }
 
 #combousuario label {
+	/*float: right;*/
 	/*text-transform: uppercase;*/
+	position: relative;
 	color: #000;
 	/*float: right;*/
 	/*position: absolute;*/
@@ -116,6 +119,10 @@ a:hover {
 	font-size:13px;
     font-weight: 500;
 	width: 40px;
+	margin-right: 5px;
+}
+#combousuario select {
+	/*float: right;*/
 }
 .perfilXgrupo {
 	/*display: inline;*/
