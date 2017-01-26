@@ -23,13 +23,13 @@ class Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas extends MinC_Db_Tab
             $sql->where($coluna, $valor);
         }
 
-        if (!empty($search['value'])){
+        if (!empty($search['value'])) {
             $sql->where('idProjeto like ? OR NomeProposta like ? OR Tecnico like ?', '%'.$search['value'].'%');
         }
 
         $sql->order($order);
 
-        if ($start && $limit) {
+        if (!is_null($start) && $limit) {
             $start = (int)$start;
             $limit = (int)$limit;
             $sql->limitPage($start, $limit);
