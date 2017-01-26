@@ -3,12 +3,6 @@
         <?php echo $this->partial("admissibilidade/inc/menu.inc.php", $this); ?>
         <div class="col s10 m10 l10">
             <h4>Admissibilidade de propostas</h4>
-            <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
-                <input type="hidden" name="Inicial" value="<?php echo count($this->propostasInicial); ?>"/>
-                <input type="hidden" name="Visual" value="<?php echo count($this->propostasVisual); ?>"/>
-                <input type="hidden" name="Documental" value="<?php echo count($this->propostasDocumental); ?>"/>
-                <input type="hidden" name="Final" value="<?php echo count($this->propostasFinal); ?>"/>
-            </form>
             <form method="POST" id="formGerarPdf" name="formGerarPdf"
                   action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>"
                   target="gerarPDF" style="display:none">
@@ -19,10 +13,6 @@
                     <td class="center-align">
                         <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir" name="imprimir"  id="imprimir" type="button">
                                 Imprimir<i class="material-icons right">print</i>
-                        </button>
-                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo" id="btn_resumo" id="btn_localizar" type="button"
-                                onclick="$('#frmResumo').submit();">
-                                Resumo<i class="material-icons right">description</i>
                         </button>
                     </td>
                 </tr>

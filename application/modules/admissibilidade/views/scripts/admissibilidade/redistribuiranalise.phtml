@@ -71,7 +71,7 @@
             foreach ($this->analistas as $nomeAnalista => $fases):
                 $qtd = 0;
                 foreach ($fases as $fase) {
-                    $qtd += count($fase);
+                    $qtd += 1;
                 }
             ?>
              <tr onclick="abrirDinamico('#tr_<?php echo $i ?>', $(this))" style="cursor:pointer">
@@ -104,7 +104,7 @@
                             <?php foreach ($fases as  $faseItem) : ?>
                                 <tr>
                                     <td >
-                                        <a href="<?php echo $this->baseUrl()?>'/admissibilidade/admissibilidade/redistribuiranaliseitem?idProjeto=<?php echo $faseItem['nrProposta']?>">
+                                        <a href="<?php echo $this->baseUrl()?>/admissibilidade/admissibilidade/redistribuiranaliseitem?idProjeto=<?php echo $faseItem['nrProposta']?>">
                                             <img src="<?php echo $this->baseUrl()?>/public/img/user_gray.png" />
                                         </a>
                                     </td>
