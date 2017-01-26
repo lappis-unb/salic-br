@@ -596,7 +596,6 @@ ul.sidebar-nav ul {
     padding-left: 50px;
 
 }
-
 .sidebar-nav li .collapsible-body{
     border-bottom: 1px solid #D2D2D2;
 }
@@ -612,6 +611,16 @@ ul.sidebar-nav ul {
 
 .sidebar-nav .detalhes-proposta i {
     margin-right: 5px;
+}
+
+@media screen and (max-width: 1300px) {
+    .sidebar-nav a.collapsible-header, .sidebar-nav li a {
+        padding: 0 10px;
+    }
+
+    .sidebar-nav li .collapsible-body a {
+        padding-left: 15px;
+    }
 }
 /** form **/
 #frmProposta .input-field label {
