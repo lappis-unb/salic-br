@@ -100,16 +100,7 @@
 
     $arrMenuProponente['imprimir'] = array(
         'id' => 'imprimir',
-        'label' => 'Imprimir/Gerar PDF',
-        'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'Gerarimprimirpdf', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
-        'menu' => array(),
-        'grupo' => array()
-    );
-
-    $arrMenuProponente['imprimir'] = array(
-        'id' => 'imprimir',
-        'label' => 'Imprimir/Gerar PDF',
+        'label' => 'Gerar PDF',
         'title' => '',
         'url' => $this->url(array('module' => 'proposta', 'controller' => 'Gerarimprimirpdf', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
         'menu' => array(),
@@ -137,16 +128,25 @@
                 'menu' => array(),
                 'grupo' => array()
             );
-        }
 
-        $arrMenuProponente['enviarproposta'] = array(
-            'id' => 'enviarproposta',
-            'label' => 'Enviar proposta ao MinC',
-            'title' => '',
-            'url' => '',
-            'menu' => array(),
-            'grupo' => array()
-        );
+            $arrMenuProponente['enviarproposta'] = array(
+                'id' => 'enviarproposta',
+                'label' => 'Enviar proposta ao MinC',
+                'title' => '',
+                'url' => '',
+                'menu' => array(),
+                'grupo' => array()
+            );
+        }else {
+            $arrMenuProponente['finalizaralteracaodeprojeto'] = array(
+                'id' => 'finalizaralteracaodeprojeto',
+                'label' => 'Finalizar e enviar',
+                'title' => '',
+                'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'finalizaralteracaodeprojeto', 'idPreProjeto' => $idPreProjeto)),
+                'menu' => array(),
+                'grupo' => array()
+            );
+        }
 
     }
 ?>
