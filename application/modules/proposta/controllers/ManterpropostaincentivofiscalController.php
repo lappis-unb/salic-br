@@ -550,7 +550,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             $post = Zend_Registry::get('post');
 
-            if ( empty($post->idAgente)) {
+            if (empty($post->idAgente)) {
                 parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
             }
 
@@ -593,7 +593,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $projeto2 = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => (int)$projeto['IdPRONAC']));
 
                 $this->view->projeto = array_change_key_case((array)$projeto2[0]);
-//                xd($projeto, $this->view->projeto);
             }
 
         }
@@ -613,6 +612,26 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     public function outrasinformacoesAction()
     {
+
+    }
+
+    public function finalizaralteracaodeprojetoAction()
+    {
+        $this->verificarPermissaoAcesso(true, false, false);
+
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
+        if (!empty($idPreProjeto)) {
+            $sp = new Proposta_Model_DbTable_PreProjeto();
+
+            $arrResultado = $sp->checklistEnvioProposta($idPreProjeto);
+            // @todo parei aqui finalziar envio do alterar projeto
+
+            $this->view->resultado = $arrResultado;
+
+        } else {
+            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
+        }
 
     }
 
