@@ -1,6 +1,6 @@
 <?php
 
-class Assinatura_EnquadramentoController extends MinC_Controller_Action_Abstract
+class Assinatura_EnquadramentoController extends Assinatura_GenericController
 {
     public function init()
     {
@@ -35,19 +35,20 @@ class Assinatura_EnquadramentoController extends MinC_Controller_Action_Abstract
 
     public function visualizarEnquadramentoAction()
     {
-        throw new Exception("@todo implementar!");
+        $get = Zend_Registry::get('get');
+        $this->view->IdPRONAC = $get->IdPRONAC;
+        //throw new Exception("@todo implementar!");
     }
 
     public function devolverProjetoAction()
     {
         /**
-         *  --- [ DEVOLUÇÃO ]
+        -- [ DEVOLUÇÃO ]
         select * from sac.dbo.Orgaos where idSecretaria = 251
         -- Quando devolver o projeto deve voltar para o órgçao 262 ( qunado for SEFIC [ SEFIC é o órgão superior ] )
 
         select * from sac.dbo.Orgaos where idSecretaria = 160
         -- Quando devolver o projeto deve voltar para o órgçao 171 ( qunado for SAV [ SAV é o órgão superior ] )
-
          */
         throw new Exception("@todo implementar!");
     }
