@@ -16,10 +16,10 @@
     }
 </script>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Início">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Inï¿½cio">In&iacute;cio</a></li>
         <li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes')); ?>">Manter Agentes</a></li>
         <li class="last">Pesquisar</li>
     </ul>
@@ -28,15 +28,15 @@
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Pesquisar</div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo">
 
     <br clear="all" />
@@ -44,8 +44,8 @@
         <table class="tabela" style="width:50%;">
             <tr>
                 <td class="destacar bold" width="130">
-                    <input type="radio" name="Tipo" id="0" value="0" class="checkradio" checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();" /> <label for="0">CPF</label> &nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="Tipo" id="1" value="1" class="checkradio" onclick="filtroCNPJ();" onkeypress="filtroCNPJ();" /> <label for="1">CNPJ</label>
+                    <input type="radio" name="Tipo" id="0" value="0" class="checkradio" checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();" /> CPF
+                    <input type="radio" name="Tipo" id="1" value="1" class="checkradio" onclick="filtroCNPJ();" onkeypress="filtroCNPJ();" /> CNPJ
                 </td>
                 <td>
                     <input class="input_simples w150" type="text" name="cpf" id="cpf"
@@ -79,7 +79,7 @@
     <br clear="all" />
 
     <script type="text/javascript">
-        // valida o envio do formulário
+        // valida o envio do formulï¿½rio
         $('#formBuscar').submit(function(){
             cpf = document.getElementById('cpf').value;
             nome = document.getElementById('nome').value;
@@ -109,7 +109,7 @@
                 return false;
 
             } else if (Tipo == 0 && cpf.length != 14 && (nome == "" || nome == " ")){
-                msg = 'CPF inválido!';
+                msg = 'CPF invï¿½lido!';
                 $("#dialog").dialog("destroy");
                 $("#dialog-alert").dialog({
                     modal: true,
@@ -126,7 +126,7 @@
                 return false;
 
             } else if (Tipo == 1 && cpf.length != 18 && (nome == "" || nome == " ")){
-                msg = 'CNPJ inválido!';
+                msg = 'CNPJ invï¿½lido!';
                 $("#dialog").dialog("destroy");
                 $("#dialog-alert").dialog ({
                     modal: true,
@@ -150,12 +150,12 @@
     <div id="dialog-alert" class="sumir">Informe um documento v&aacute;lido!</div>
     <div id="dialog-alert2" class="sumir">Dados obrigat&oacute;rios n&atilde;o informados!</div>
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />
