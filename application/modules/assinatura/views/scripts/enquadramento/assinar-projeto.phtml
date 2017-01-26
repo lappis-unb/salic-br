@@ -1,0 +1,83 @@
+<main>
+    <?php
+    $links = array(
+        array('Gerenciar Projetos' => array(
+            'module' => 'assinatura',
+            'controller' => 'enquadramento',
+            'action' => 'gerenciar-projetos'
+        )),
+        array('Assinar' => array())
+    );
+    gerarBreadCrumb($links);
+    ?>
+    <div class="content padding20">
+        <form action="<?php
+        echo $this->url(array(
+                'module' => 'assinatura',
+                'controller' => 'enquadramento',
+                'action' => 'assinar-projeto'
+            )) . "?IdPRONAC={$this->IdPRONAC}";
+        ?>"
+        method="post">
+            <input type="hidden" name="IdPRONAC" value="<?php echo $this->IdPRONAC ?>" />
+            <div class="row">
+                <div class="col s12 margin-bottom30">
+                    <h3>Assinar</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s3">
+                    <label>PRONAC</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+                <div class="col s9">
+                    <label>Nome do Projeto</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Tipo Documento</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Assinante: </label>
+                    <p>
+                        <select id="usu_cod" name="usu_cod"></select>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Cargo: </label>
+                    <p>
+                        <select id="" name=""></select>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Senha: </label>
+                    <p>
+                        <input type="password" id="" name="" />
+                    </p>
+                </div>
+            </div>
+
+            <div class="row center-align">
+                <a class="btn waves-effect waves-dark"
+                   href="javascript:history.go(-1)">Voltar</a>
+                <button type="submit" class="btn waves-effect waves-dark">Assinar</button>
+            </div>
+        </form>
+    </div>
+    <br clear="all"/>
+</main>

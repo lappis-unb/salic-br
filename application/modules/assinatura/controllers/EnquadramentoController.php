@@ -17,6 +17,8 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     /**
      * @todo foram comentados os tratamentos de acordo com o pefil, temporariamente
+     * @todo Validar quando o botão "Finalizar" deve ser exibido
+     * @todo Adicionar ícones aos bot&otilde;es
      */
     public function gerenciarProjetosAction()
     {
@@ -33,6 +35,12 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
     }
 
+    /**
+     * @todo Preencher os campos que estão com "xxxx" na view.
+     * @todo Validar quando o botão "Finalizar" deve ser exibido
+     * @todo Validar quando o botão "Devolver" deve ser exibido
+     * @todo Adicionar ícones aos bot&otilde;es
+     */
     public function visualizarEnquadramentoAction()
     {
         $get = Zend_Registry::get('get');
@@ -40,6 +48,12 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         //throw new Exception("@todo implementar!");
     }
 
+    /**
+     * @todo Criar view.
+     * @todo Preencher os campos que estão com "xxxx" na view.
+     * @todo Validar quando o botão "Finalizar" deve ser exibido
+     * @todo Adicionar ícones aos bot&otilde;es
+     */
     public function devolverProjetoAction()
     {
         /**
@@ -53,21 +67,27 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         throw new Exception("@todo implementar!");
     }
 
+    /**
+     * @todo Criar view.
+     * @todo Preencher os campos que estão com "xxxx" na view.
+     * @todo Adicionar ícones aos bot&otilde;es
+     */
     public function assinarProjetoAction()
     {
-        throw new Exception("@todo implementar!");
-
         /**
          * Ao assinar:
          * - Caso esteja com o Coordenador Geral a próxima assinatura deve ser para Diretor:
          * - Caso esteja com o Diretor a próxima assinatura deve ser para Secretário:
          *
          * Usar esse script como base:
-         *
-         *
          */
     }
 
+    /**
+     * @todo Criar view.
+     * @todo Preencher os campos que estão com "xxxx" na view.
+     * @todo Adicionar ícones aos bot&otilde;es
+     */
     public function finalizarAssinaturaAction()
     {
         throw new Exception("@todo implementar!");
@@ -81,7 +101,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     private function tratarAssinaturaAction()
     {
         /*
-         *
             select * from Tabelas..Grupos where gru_sistema = 21
          */
     }
