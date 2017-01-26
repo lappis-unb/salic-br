@@ -403,7 +403,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             if ($acao != 'atualizacao_automatica') {
 
                 if (empty($url))
-                    $url = "/proposta/manterpropostaincentivofiscal/editar/idPreProjeto/" . $idPreProjeto;
+                    $url = "/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $idPreProjeto;
 
                 parent::message($mesagem, $url, "CONFIRM");
             }
@@ -437,7 +437,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             "proponente" => $rsProponente);
         return $arrDados;
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMETROS NECESSARIOS DENTRO DO ARRAY
-        $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
+        $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
             "proposta" => $rsPreProjeto,
             "proponente" => $rsProponente));
     }
@@ -527,7 +527,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             }
 
             $this->montaTela(
-                "manterpropostaincentivofiscal/formproposta.phtml",
+                "manterpropostaincentivofiscal/identificacaodaproposta.phtml",
                 array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
                     "proposta" => $rsPreProjeto,
                     "solicitacaovinculo" => $verificarvinculo,
