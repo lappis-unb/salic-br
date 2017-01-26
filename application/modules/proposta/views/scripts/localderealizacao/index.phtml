@@ -4,7 +4,7 @@
 
         <?php echo $this->partial("inc/menu.phtml", $this); ?>
 
-        <div class="content col s10 m12 l10 planilha-produtos">
+        <div class="content col s10 m12 l10">
 
             <?php
             $links = array(
@@ -72,7 +72,7 @@
                                 <td class="centro" nowrap>
                                     <input type="button" id="btn_editar" name="sair" style="width: 88px"
                                            class="btn_editar"
-                                           onclick="window.location.href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao['idAbrangencia']; ?>&idPreProjeto=<?php if ($_GET['idPreProjeto']) echo $_GET['idPreProjeto']; ?><?php echo $edital; ?>&edit=1'">
+                                           onclick="window.location.href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao['idAbrangencia']; ?>&idPreProjeto=<?php echo $this->idPreProjeto; ?>&edit=1'">
                                     <input type="button" id="btn_excluir" name="sair" style="width: 88px"
                                            class="btn_exclusao"
                                            onclick="excluir(<?php echo $localizacao['idAbrangencia']; ?>);"></td>
@@ -116,7 +116,7 @@
         <?php endif; ?>
 
         $('#btn_novo').click(function () {
-            redirecionar('<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-inserir')); ?>?idPreProjeto=<?php if ($_GET['idPreProjeto']) echo $_GET['idPreProjeto'];?><?php echo $edital;?>');
+            redirecionar("<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-inserir', 'idPreProjeto' => $this->idPreProjeto)); ?>");
         });
 
     });
@@ -136,7 +136,7 @@
                     $(this).dialog('close'); // fecha a modal
                 },
                 'Confirmar': function () {
-                    window.location.href = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'excluir')); ?>?cod=" + cod + "&idPreProjeto=<?php if ($_GET['idPreProjeto']) echo $_GET['idPreProjeto'];?><?php echo $edital;?>";
+                    window.location.href = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'excluir')); ?>?cod=" + cod + "&idPreProjeto=<?php echo $this->idPreProjeto;?>";
                     $(this).dialog('close'); // fecha a modal
                 }
             }
@@ -153,7 +153,7 @@
 
         } else {
             $('#deslocamento').html('&ensp;&ensp;&ensp;Carregando...');
-            jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')) . '?idPreProjeto=' . $_GET['idPreProjeto']; ?>", "", "deslocamento");
+            jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')) . '?idPreProjeto=' . $this->idPreProjeto; ?>", "", "deslocamento");
             $('#deslocamento').show();
             $('#localderealizacao').hide();
 

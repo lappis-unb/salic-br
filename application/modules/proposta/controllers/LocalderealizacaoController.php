@@ -328,9 +328,8 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController {
      * @return void
      */
     public function formInserirAction() {
-        $get = Zend_Registry::get('get');
-        $idProjeto = $get->idPreProjeto;
-        $this->view->idPreProjeto = $idProjeto;
+//        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+//        $this->view->idPreProjeto = $idPreProjeto;
 
         # RECUPERA OS PAISES
         $tablePais = new Agente_Model_DbTable_Pais();

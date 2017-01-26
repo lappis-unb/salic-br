@@ -173,7 +173,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $post = Zend_Registry::get('post');
 
         if ($post->mecanismo == 1) { //mecanismo == 1 (proposta por incentivo fiscal)
-            $url = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/buscaproponente";
+            $url = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/identificacaodaproposta";
         } else {
             $url = $this->_urlPadrao . "/manterpropostaedital/editalconfirmar";
         }
@@ -188,6 +188,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
      *
      * @access public
      * @return void
+     * @deprecated Fiz as alteracoes e este metodo era desnecessario para iniciar uma nova proposta
      */
     public function buscaproponenteAction()
     {
@@ -454,7 +455,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $idPreProjeto = $this->idPreProjeto;
 
-        $this->redirect("/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/".$this->idPreProjeto);
+        $this->redirect("/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $this->idPreProjeto);
 
         $this->view->idPreProjeto = $idPreProjeto;
 
@@ -545,7 +546,28 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     public function identificacaodapropostaAction()
     {
-        if (!empty($this->_proposta["stproposta"])) {
+        if (empty($this->_proposta["stproposta"])) {
+
+            $post = Zend_Registry::get('post');
+
+            if ( empty($post->idAgente)) {
+                parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            }
+
+            $arrBusca = array();
+            $arrBusca['a.idagente = ?'] = $post->idAgente;
+            $tblAgente = new Agente_Model_DbTable_Agentes();
+            $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
+
+            if ($rsProponente) {
+                $rsProponente = array_change_key_case($rsProponente->toArray());
+
+                $this->view->proponente = $rsProponente;
+
+                $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("proponente" => $rsProponente,
+                    "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
+            }
+        } else {
 
             $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
 
@@ -557,9 +579,25 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             }
             if (!empty($idDocumento))
                 $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $this->idPreProjeto, "CodigoDocumento = ?" => $idDocumento));
+
+            $this->view->arquivoExecucaoImediata = $arquivoExecucaoImediata;
         }
 
-        $this->view->arquivoExecucaoImediata = $arquivoExecucaoImediata;
+
+        if ($this->isEditarProjeto($this->idPreProjeto)) {
+
+            $tblProjetos = new Projetos();
+            $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $this->idPreProjeto));
+
+            if (!empty($projeto['IdPRONAC'])) {
+                $projeto2 = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => (int)$projeto['IdPRONAC']));
+
+                $this->view->projeto = array_change_key_case((array)$projeto2[0]);
+//                xd($projeto, $this->view->projeto);
+            }
+
+        }
+
 
     }
 

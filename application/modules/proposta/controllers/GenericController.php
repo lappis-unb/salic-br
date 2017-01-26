@@ -16,6 +16,8 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         if (!empty($idPreProjeto)) {
 
+            $this->view->idPreProjeto = $idPreProjeto;
+
             $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
 
             $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
@@ -49,13 +51,18 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             // Alterar projeto
             if (!empty($this->view->isEditarProjeto)) {
                 $tblProjetos = new Projetos();
-                $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
+                $projeto = array_change_key_case($tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto)));
+//                $projeto = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idprojeto' => (int) $idPreProjeto));
+
+                if( !isset($projeto['nrprojeto']))
+                    $projeto['nrprojeto'] = $projeto['anoprojeto'] . $projeto['sequencial'];
+
                 $this->view->projeto = $projeto;
 
                 $layout = array(
                     'titleShort' => 'Projeto',
                     'titleFull' => 'Alterar projeto',
-                    'projeto' => $projeto['AnoProjeto'] . $projeto['Sequencial'],
+                    'projeto' => $projeto['nrprojeto'],
                     'listagem' => array('Lista de projetos' => array('module' => 'default', 'controller' => 'Listarprojetos', 'action' => 'listarprojetos')),
                 );
 
