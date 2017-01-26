@@ -55,7 +55,7 @@ $buscarVeiculo = $this->url(array('module' => 'proposta', 'controller' => 'divul
 <br clear="all"/>
 <script>
     $(document).ready(function () {
-        <?php if(isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if (!$this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>

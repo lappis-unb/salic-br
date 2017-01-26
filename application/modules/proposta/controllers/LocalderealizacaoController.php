@@ -271,6 +271,9 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController {
      * @return objeto
      */
     public function excluirAction() {
+
+        $this->verificarPermissaoAcesso(true, false, false);
+
         $get = Zend_Registry::get("get");
         $idAbrangencia = $get->cod;
 

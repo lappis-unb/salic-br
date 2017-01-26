@@ -7,24 +7,18 @@
         <?php echo $this->partial("inc/menu.phtml", $this); ?>
 
         <div class="content col s10 m12 l10 planilha-produtos">
-            <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
-            <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
-            <div id="breadcrumb">
-                <ul>
-                    <li class="first"><a href="<?php echo $this->url(array('controller' => 'prototipos', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-                    <li class="second"><a href="<?php echo $this->url(array('controller' => 'prototipos', 'action' => 'propostas')); ?>" title="Projetos">Propostas</a></li>
-                    <li class="last">Plano de Distribui&ccedil;&atilde;o</li>
-                </ul>
-            </div>
-            <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-            <!-- ========== INICIO TITULO ========== -->
+            <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
+            <?php
+            gerarBreadCrumb(array(
+                $this->layout['listagem'],
+                array('Plano de Distribui&ccedil;&atilde;o' => '')
+            )); ?>
+
             <div id="titulo">
                 <div>Plano de Distribui&ccedil;&atilde;o</div>
             </div>
 
-            <!-- ========== FIM TITULO ========== -->
-            <!-- ========== INICIO CONTEUDO ========== -->
             <div id="conteudo">
                 <div id="div_form"></div>
                 <table class="tabela">
@@ -79,10 +73,10 @@
 <script language="javascript" type="text/javascript">
 
     $(document).ready(function(){
-        <?php if(!empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'){ ?>
+        <?php if (!$this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
-        <?php } ?>
+        <?php endif; ?>
     });
 
     function confirma(obj){

@@ -601,10 +601,18 @@ ul.sidebar-nav ul {
     border-bottom: 1px solid #D2D2D2;
 }
 
-.sidebar-nav .proposta-detalhes .row {
+.sidebar-nav .detalhes-proposta .row {
     margin-bottom: 0px;
 }
 
+.sidebar-nav .detalhes-proposta p {
+    line-height: 12pt;
+    padding: 0 0 2px;
+}
+
+.sidebar-nav .detalhes-proposta i {
+    margin-right: 5px;
+}
 /** form **/
 #frmProposta .input-field label {
     color: #212121;

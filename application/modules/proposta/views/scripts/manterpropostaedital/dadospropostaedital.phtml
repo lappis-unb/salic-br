@@ -44,7 +44,7 @@ if (isset($this->idPreProjeto)) {
 	});
 
 
-<?php if (isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+<?php if (!$this->isEditavel) : ?>
             //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
             JSBloquearAlteracaoFormulario();
 <?php endif; ?>
@@ -166,7 +166,7 @@ if (isset($this->idPreProjeto)) {
 </script>
 <?php
 $links = array(
-    array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+    $this->layout['listagem'],
     array('Dados da Proposta' => array())
 );
 gerarBreadCrumb($links);

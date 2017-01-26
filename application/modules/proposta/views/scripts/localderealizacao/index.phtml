@@ -8,7 +8,7 @@
 
             <?php
             $links = array(
-                array('Lista de Propostas' => array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                $this->layout['listagem'],
                 array('Local de Realiza&ccedil;&atilde;o' => array())
             );
             gerarBreadCrumb($links);
@@ -110,7 +110,7 @@
         trocatela(2);
         <?php endif; ?>
 
-        <?php if ($this->isEditavel) : ?>
+        <?php if (!$this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>

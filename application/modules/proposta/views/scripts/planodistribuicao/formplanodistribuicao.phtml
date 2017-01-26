@@ -17,7 +17,7 @@
             });
         });
 
-        <?php if ($this->isEditavel) : ?>
+        <?php if (!$this->isEditavel) : ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>

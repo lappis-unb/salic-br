@@ -9,7 +9,7 @@ if(isset($_GET['edital']) && $_GET['edital']=="s"){
 ?>
 <?php
     $links = array(
-        array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
+        $this->layout['listagem'],
         array('Local e Per&iacute;odo de Realiza&ccedil;&atilde;o' => array())
     );
 gerarBreadCrumb($links);

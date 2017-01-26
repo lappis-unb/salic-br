@@ -55,7 +55,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                 $layout = array(
                     'titleShort' => 'Projeto',
                     'titleFull' => 'Alterar projeto',
-                    'projeto' => $idPreProjeto,
+                    'projeto' => $projeto['AnoProjeto'] . $projeto['Sequencial'],
                     'listagem' => array('Lista de projetos' => array('module' => 'default', 'controller' => 'Listarprojetos', 'action' => 'listarprojetos')),
                 );
 

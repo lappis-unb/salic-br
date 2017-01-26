@@ -154,11 +154,14 @@
 <div class="col s2 m12 l2">
     <aside id="left-sidebar-nav">
         <ul class="sidebar-nav">
-            <li class="proposta-detalhes green darken-2 no-padding">
+            <li class="detalhes-proposta green darken-2 no-padding">
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        <p class="white-text valign-wrapper">
+                        <p class="white-text  valign-wrapper">
                             <i class="material-icons left"><?php echo (!$this->isEditavel) ? 'lock_outline' : 'lock_open'; ?></i>
+                            <b><?php echo $this->layout['titleFull']; ?></b>
+                        </p>
+                        <p class="white-text">
                             <?php echo isset($this->layout['titleShort']) ? $this->layout['titleShort'] : 'Proposta'; ?> n&#186;
                             <?php echo isset($this->layout['projeto']) ? $this->layout['projeto'] : $this->proposta['idpreprojeto']; ?>
                         </p>
