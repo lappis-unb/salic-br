@@ -71,7 +71,7 @@
             foreach ($this->analistas as $nomeAnalista => $fases):
                 $qtd = 0;
                 foreach ($fases as $fase) {
-                    $qtd += count($fase);
+                    $qtd += 1;
                 }
             ?>
              <tr onclick="abrirDinamico('#tr_<?php echo $i ?>', $(this))" style="cursor:pointer">
