@@ -701,18 +701,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $dao = new Proposta_Model_AnalisarPropostaDAO();
         try {
             //Enviar e-mail informando arquivamento e a justificativa
-            //$dao->deletePreProjeto($this->idPreProjeto);
             $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->find($this->idPreProjeto)->current();
             $rsPreProjeto->DtArquivamento = date("Y/m/d H:i:s");
             $rsPreProjeto->stEstado = 0;
             $rsPreProjeto->save();
-
-            //Enviar e-mail informando arquivamento e a justificativa
-            $tipo = ($rsPreProjeto->idEdital) ? 'arquivamento_proposta_Edital' : 'arquivamento_proposta_IF';
-            $msg = new Zend_Config_Ini(getcwd() . '/public/admissibilidade/mensagens_email_proponente.ini', $tipo);
-
-            $this->eviarEmail($this->idPreProjeto, $msg->msg);
 
             parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/listar-propostas", "CONFIRM");
         } catch (Exception $e) {
@@ -728,7 +721,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?" => $this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto = strip_tags($rsProposta->NomeProjeto);
-
     }
 
     public function arquivarAction()
@@ -2686,20 +2678,29 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $propostas = $vwPainelAvaliar->propostas($where, $order, $start, $length, $search);
 
-        $zDate = new Zend_Date();
-        foreach($propostas as $key => $proposta){
-            $zDate->set($proposta->DtMovimentacao);
+        $recordsTotal = 0;
+        $recordsFiltered = 0;
 
-            $proposta->NomeProposta = utf8_encode($proposta->NomeProposta);
-            $proposta->Tecnico = utf8_encode($proposta->Tecnico);
-            $proposta->DtMovimentacao= $zDate->toString('dd/MM/y h:m');
-            $aux[$key] = $proposta;
+        if (!empty($propostas)) {
+            $zDate = new Zend_Date();
+            foreach($propostas as $key => $proposta){
+                $zDate->set($proposta->DtMovimentacao);
+
+                $proposta->NomeProposta = utf8_encode($proposta->NomeProposta);
+                $proposta->Tecnico = utf8_encode($proposta->Tecnico);
+                $proposta->DtMovimentacao= $zDate->toString('dd/MM/y h:m');
+                $aux[$key] = $proposta;
+            }
+
+            $recordsTotal = $vwPainelAvaliar->propostasTotal($where);
+            $recordsFiltered = $vwPainelAvaliar->propostasTotal($where);
         }
 
-        $recordsTotal = $vwPainelAvaliar->propostasTotal($where);
-        $recordsFiltered = $vwPainelAvaliar->propostasTotal($where);
-
-        $this->_helper->json(array("data" => $aux, 'recordsTotal' => $recordsTotal->total, 'draw' => $draw, 'recordsFiltered' => $recordsFiltered->total));
+        $this->_helper->json(array(
+            "data" => !empty($aux) ? $aux : 0,
+            'recordsTotal' => $recordsTotal ? $recordsTotal->total : 0,
+            'draw' => $draw,
+            'recordsFiltered' => $recordsFiltered ? $recordsFiltered->total : 0 ));
     }
 
     public function exibirpropostaculturalAjaxAction()

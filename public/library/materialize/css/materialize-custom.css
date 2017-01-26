@@ -1625,3 +1625,10 @@ input.mdl-button[type="submit"] {
     .mdl-cell--11-offset-desktop.mdl-cell--11-offset-desktop {
         margin-left: 91.6666666667%; } }
 /*TEMPORARIAMENTE */
+
+.padding20 {
+    padding: 20px;
+}
+.margin-bottom30 {
+    margin-bottom: 30px
+}
