@@ -33,7 +33,7 @@
                             resposta = response.erro;
                         }
                         Materialize.toast(resposta, 3000, '', function () {
-                            window.location = "";
+                            window.location = '<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/listar-propostas';
                         });
                     },
                     'json'
