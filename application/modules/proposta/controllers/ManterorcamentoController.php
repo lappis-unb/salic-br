@@ -612,7 +612,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
         $idPlanilhaProposta = $params['idPlanilhaProposta'];
 
-        $tbPlanilhaProposta = new Proposta_Model_DbTable_PlanilhaProposta();
+        $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
         $where = 'idPlanilhaProposta = ' . $idPlanilhaProposta;
 
@@ -651,7 +651,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 //            $buscaDados = $manterOrcamento->buscarDadosCadastrarCustos($idPreProjeto);
             $this->view->dados = $buscaDados;
 
-            $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
+            $buscaDados = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
             $this->view->dados = $buscaDados->buscarDadosCadastrarCustos($idPreProjeto);
         }

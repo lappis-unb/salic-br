@@ -583,7 +583,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-        <?php  if ( !$this->isEditarProposta && !$this->isEditarProjeto) : ?>
+        <?php if (!$this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>

@@ -128,7 +128,7 @@ if(isset($_GET['cod'])){
             ativarDesativarUfCidade(idPais,numLocais);
         }
 
-        <?php if(isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if (!$this->isEditavel) : ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>
