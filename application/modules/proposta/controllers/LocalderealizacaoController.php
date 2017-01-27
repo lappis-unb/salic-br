@@ -122,7 +122,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
     }
 
     /**
-     * Metodo que monta o formulario de cadastro e alteracao de locais de realizacao
+     * Metodo que monta o formulario de editar os locais de realizacao
      * @param void
      * @return void
      */
@@ -149,11 +149,19 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             $arrBusca['idAbrangencia'] = $idAbrangencia;
         }
         $arrAbrangencia = $tblAbrangencia->buscar($arrBusca);
+        $arrCidades = "";
+        # RECUPERA AS CIDADES
+        if( !empty($arrAbrangencia[0]['idMunicipioIBGE'])) {
+            $table = new Agente_Model_DbTable_Municipios();
+            $arrCidades = $table->fetchPairs('idMunicipioIBGE', 'Descricao', array('idufibge' => $arrAbrangencia[0]['idUF']));
+        }
+
         $arrDados = array("paises" => $arrPais,
             "estados" => $arrUf,
+            'municipios' => $arrCidades,
             "localizacoes" => $arrAbrangencia,
             "idAbrangencia" => $idAbrangencia,
-            "acao" => $this->_urlPadrao . "/localderealizacao/salvar");
+            "acao" => $this->_urlPadrao . "/localderealizacao/salvar-local-realizacao");
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY DADOS
         $this->montaTela("localderealizacao/formlocalderealizacao.phtml", $arrDados);
@@ -163,6 +171,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
      * Metodo responsavel por gravar os locais de realizacao em banco (INSERT e UPDATE)
      * @param void
      * @return objeto
+     * @deprecated Este metodo eh usado quando edita um local de realizacao
      */
     public function salvarAction()
     {
@@ -179,6 +188,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         $qtdeLocais = $post->qtdeLocais;
         $locais = array();
         $locaisinvalidos = array();
+        xd($post);
         for ($i = 1; $i <= $qtdeLocais; $i++) {
 
             $pais = $post->__get("pais_" . $i);
@@ -209,7 +219,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         //incluindo novos registros
         if (empty($idAbrangencia)) {
             //APAGA TODOS OS REGISTROS PARA CADASTRA-LOS NOVAMENTE
-            $tblAbrangencia->deleteBy(array('idprojeto' => $this->idPreProjeto, 'stabrangencia' => 1));
+           // $tblAbrangencia->deleteBy(array('idprojeto' => $this->idPreProjeto, 'stabrangencia' => 1));
         } else {
 
             foreach ($locais as $d) {
@@ -385,6 +395,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
     {
         $post = Zend_Registry::get("post");
         $idAbrangencia = $post->cod;
+
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 
         //RECUPERA LOCALIZACOES CADASTRADAS
@@ -398,19 +409,10 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
 
         }
 
-        if (!empty($idAbrangencia)) {
-            $arrBusca['idAbrangencia'] = $idAbrangencia;
-        }
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
         if (count($rsAbrangencia) > 0 && empty($idAbrangencia)) {
             parent::message("Local de Realiza&ccedil;&atilde;o j&aacute; cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto . $edital, "ALERT");
-        }
-
-        if (isset($_REQUEST['edital'])) {
-            $edital = "&edital=s";
-        } else {
-            $edital = "";
         }
 
         $pais = $post->pais;
@@ -418,7 +420,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         $cidades = $post->cidades;
 
         //INSERE LOCAIS DE REALIZACAO (tabela SAC.dbo.Abrangencia)
-        $dados = array(
+        $dadosAbrangencia = array(
             "idprojeto" => $this->idPreProjeto,
             "stabrangencia" => 1,
             "usuario" => $this->usuarioLogado,
@@ -427,10 +429,34 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             "idmunicipioibge" => ($pais == 31) ? $cidades : 0
         );
 
-        if (!empty($dados["idprojeto"]) && !empty($dados["idpais"])) {
-            $retorno = $tblAbrangencia->insert($dados);
+        if (!empty($dadosAbrangencia["idprojeto"]) && !empty($dadosAbrangencia["idpais"])) {
+
+            if(empty($idAbrangencia)) {
+                $retorno = $tblAbrangencia->insert($dadosAbrangencia);
+            } else {
+
+                // buscar municipio e estado desta abrangencia
+                $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+                $abrangencia = $tblAbrangencia->findby(array('idabrangencia' => $idAbrangencia));
+
+                // atualizar itens orcamentarios desta abrangencia
+                if (!empty($abrangencia)) {
+
+                    $dadosAbrangenciaPlanilha  = array(
+                        'UfDespesa' => $dadosAbrangencia["iduf"],
+                        'MunicipioDespesa' => $dadosAbrangencia["idmunicipioibge"]
+                    );
+                    $wherePlanilha = array('idProjeto = ?' => $this->idPreProjeto, 'idEtapa = ?' => 1, 'UfDespesa = ?' => $abrangencia['idUF'], 'MunicipioDespesa = ?' => $abrangencia['idMunicipioIBGE']);
+
+                    $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+                    $retorno = $tbPlanilhaProposta->update($dadosAbrangenciaPlanilha,$wherePlanilha);
+                }
+
+                $whereAbrangencia['idAbrangencia = ?']  = $idAbrangencia;
+                $retorno = $tblAbrangencia->update($dadosAbrangencia, $whereAbrangencia);
+            }
         }
 
-        parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto . $edital, "CONFIRM");
+        parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
     }
 }
