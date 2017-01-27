@@ -98,7 +98,7 @@ table.tabela td.destacar span,
     text-align: center !important;
 }
 
-#conteudo table.tabela tr a {
+#conteudo table.tabela tr a:not(.btn) {
     text-decoration: underline;
 }
 
@@ -607,6 +607,7 @@ ul.sidebar-nav ul {
 .sidebar-nav .detalhes-proposta p {
     line-height: 12pt;
     padding: 0 0 2px;
+    font-size: 13px;
 }
 
 .sidebar-nav .detalhes-proposta i {
@@ -640,6 +641,16 @@ ul.sidebar-nav ul {
     font-size: 14px !important;
 }
 
+.btn.loading {
+    background-image: url(../../../img/loader-mini.gif);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    cursor: none;
+    box-shadow: none;
+    border: none;
+    text-indent: -2000px;
+}
 
 
 /*.input-field input:focus label:after{*/
@@ -670,7 +681,6 @@ div.dataTables_wrapper div.dataTables_processing{
     font-size: 2.5em !important;
     height: 100% !important;
     padding: 5%;
-    position: ;
     text-align: center !important;
     vertical-align: middle !important;
     top: 0% !important;

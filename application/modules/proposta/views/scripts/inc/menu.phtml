@@ -1,156 +1,163 @@
-    <?php
-    if( isset($this->idPreProjeto)) {
-        $idPreProjeto = $this->idPreProjeto;
-    } elseif (isset($this->proposta->idPreProjeto)) {
-        $idPreProjeto = $this->proposta->idPreProjeto;
-    } elseif( $this->proposta['idpreprojeto'] ) {
-        $idPreProjeto = $this->proposta['idpreprojeto'];
-    }
+<?php
+if (isset($this->idPreProjeto)) {
+    $idPreProjeto = $this->idPreProjeto;
+} elseif (isset($this->proposta->idPreProjeto)) {
+    $idPreProjeto = $this->proposta->idPreProjeto;
+} elseif ($this->proposta['idpreprojeto']) {
+    $idPreProjeto = $this->proposta['idpreprojeto'];
+}
 
-    $arrMenuProponente = array();
-    $arrMenuProponente['principal'] = array(
-        'id' => 'informacaoinicial',
-        'label' => 'Informa&ccedil;&otilde;es iniciais',
-        'title' => '',
-        'url' => '',
-        'menu' => array(),
-        'grupo' => array()
-    );
+$arrMenuProponente = array();
+$arrMenuProponente['principal'] = array(
+    'id' => 'informacaoinicial',
+    'label' => 'Informa&ccedil;&otilde;es iniciais',
+    'title' => '',
+    'url' => '',
+    'menu' => array(),
+    'grupo' => array()
+);
 //    $arrMenuProponente['principal']['menu'][] = array('label' => 'Form antigo', 'title' => '',
 //        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto)),
 //        'grupo' => array()
 //    );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Identifica&ccedil&atilde;o da proposta', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto)),
-        'grupo' => array()
-    );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Responsabilidade Social', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'responsabilidadesocial', 'idPreProjeto' => $idPreProjeto)),
-        'grupo' => array()
-    );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Detalhes t&eacute;cnicos', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'detalhestecnicos', 'idPreProjeto' => $idPreProjeto)),
-        'grupo' => array()
-    );
-    $arrMenuProponente['principal']['menu'][] = array('label' => 'Outras informa&ccedil;&otilde;es', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'outrasinformacoes', 'idPreProjeto' => $idPreProjeto)),
-        'grupo' => array()
-    );
+$arrMenuProponente['principal']['menu'][] = array('label' => 'Identifica&ccedil&atilde;o da proposta', 'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto)),
+    'grupo' => array()
+);
+$arrMenuProponente['principal']['menu'][] = array('label' => 'Responsabilidade Social', 'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'responsabilidadesocial', 'idPreProjeto' => $idPreProjeto)),
+    'grupo' => array()
+);
+$arrMenuProponente['principal']['menu'][] = array('label' => 'Detalhes t&eacute;cnicos', 'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'detalhestecnicos', 'idPreProjeto' => $idPreProjeto)),
+    'grupo' => array()
+);
+$arrMenuProponente['principal']['menu'][] = array('label' => 'Outras informa&ccedil;&otilde;es', 'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'outrasinformacoes', 'idPreProjeto' => $idPreProjeto)),
+    'grupo' => array()
+);
 
-    $arrMenuProponente['localderealizacoes'] = array(
-        'id' => 'localderealizacoes',
-        'label' => 'Local de realiza&ccedil;&atilde;o',
-        'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
-        'menu' => array(),
-        'grupo' => array()
-    );
+$arrMenuProponente['localderealizacoes'] = array(
+    'id' => 'localderealizacoes',
+    'label' => 'Local de realiza&ccedil;&atilde;o',
+    'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
+    'menu' => array(),
+    'grupo' => array()
+);
 
-    $arrMenuProponente['planodedistribuicao'] = array(
-        'id' => 'planodedistribuicao',
-        'label' => 'Plano de distribui&ccedil;&atilde;o',
-        'title' => 'Ir para plano de distribui&ccedil;&atilde;o',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
-        'menu' => array(),
-        'grupo' => array()
-    );
+$arrMenuProponente['planodedistribuicao'] = array(
+    'id' => 'planodedistribuicao',
+    'label' => 'Plano de distribui&ccedil;&atilde;o',
+    'title' => 'Ir para plano de distribui&ccedil;&atilde;o',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
+    'menu' => array(),
+    'grupo' => array()
+);
 
-    $arrMenuProponente['planilhaorcamentaria'] = array(
-        'id' => 'planodedistribuicao',
-        'label' => 'Or&ccedil;amento do projeto',
-        'title' => '',
-        'url' => '',
-        'menu' => array(),
-        'grupo' => array()
-    );
-    $arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Custos por produtos', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto)),
-        'grupo' => array()
-    );
-    $arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Visualizar planilha', 'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'planilhaorcamentariageral', 'idPreProjeto' => $idPreProjeto)),
-        'grupo' => array()
-    );
+$arrMenuProponente['planilhaorcamentaria'] = array(
+    'id' => 'planodedistribuicao',
+    'label' => 'Or&ccedil;amento do projeto',
+    'title' => '',
+    'url' => '',
+    'menu' => array(),
+    'grupo' => array()
+);
+$arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Custos por produtos', 'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto)),
+    'grupo' => array()
+);
+$arrMenuProponente['planilhaorcamentaria']['menu'][] = array('label' => 'Visualizar planilha', 'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'planilhaorcamentariageral', 'idPreProjeto' => $idPreProjeto)),
+    'grupo' => array()
+);
 
-    $arrMenuProponente['itensorcamentario'] = array(
-        'id' => 'itensorcamentario',
-        'label' => 'Itens or&ccedil;ament&aacute;rios',
-        'title' => '',
-        'url' => '',
-        'menu' => array(),
-        'grupo' => array()
-    );
-    $arrMenuProponente['itensorcamentario']['menu'][] = array('label' => 'Solicitar inclus&atilde;o de itens', 'title' => 'Ir para Solicitar inclus&atilde;o de itens',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'mantertabelaitens', 'action' => 'index')) . '?idPreProjeto='. $idPreProjeto,
-        'grupo' => array()
-    );
-    $arrMenuProponente['itensorcamentario']['menu'][] = array('label' => 'Minhas solicita&ccedil;&otilde;es', 'title' => 'Ir para Minhas solicita&ccedil;&otilde;es',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'mantertabelaitens', 'action' => 'minhas-solicitacoes')) . '?idPreProjeto=' . $idPreProjeto,
-        'grupo' => array()
-    );
+$arrMenuProponente['itensorcamentario'] = array(
+    'id' => 'itensorcamentario',
+    'label' => 'Itens or&ccedil;ament&aacute;rios',
+    'title' => '',
+    'url' => '',
+    'menu' => array(),
+    'grupo' => array()
+);
+$arrMenuProponente['itensorcamentario']['menu'][] = array('label' => 'Solicitar inclus&atilde;o de itens', 'title' => 'Ir para Solicitar inclus&atilde;o de itens',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'mantertabelaitens', 'action' => 'index')) . '?idPreProjeto=' . $idPreProjeto,
+    'grupo' => array()
+);
+$arrMenuProponente['itensorcamentario']['menu'][] = array('label' => 'Minhas solicita&ccedil;&otilde;es', 'title' => 'Ir para Minhas solicita&ccedil;&otilde;es',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'mantertabelaitens', 'action' => 'minhas-solicitacoes')) . '?idPreProjeto=' . $idPreProjeto,
+    'grupo' => array()
+);
 
-    $arrMenuProponente['anexardocumentos'] = array(
-        'id' => 'anexardocumentos',
-        'label' => 'Anexar documentos',
-        'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'enviararquivoedital')) . '?idPreProjeto=' . $idPreProjeto,
-        'menu' => array(),
-        'grupo' => array()
-    );
+$arrMenuProponente['anexardocumentos'] = array(
+    'id' => 'anexardocumentos',
+    'label' => 'Anexar documentos',
+    'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'enviararquivoedital')) . '?idPreProjeto=' . $idPreProjeto,
+    'menu' => array(),
+    'grupo' => array()
+);
 
-    $arrMenuProponente['imprimir'] = array(
-        'id' => 'imprimir',
-        'label' => 'Gerar PDF',
-        'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'Gerarimprimirpdf', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
-        'menu' => array(),
-        'grupo' => array()
-    );
+$arrMenuProponente['imprimir'] = array(
+    'id' => 'imprimir',
+    'label' => 'Gerar PDF',
+    'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'Gerarimprimirpdf', 'action' => 'index', 'idPreProjeto' => $idPreProjeto)),
+    'menu' => array(),
+    'grupo' => array()
+);
 
-    $arrMenuProponente['mensagensenviadas'] = array(
-        'id' => 'mensagensenviadas',
-        'label' => 'Dilig&ecirc;ncias',
-        'title' => '',
-        'url' => $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente', 'idPreProjeto' => $idPreProjeto)),
-        'menu' => array(),
-        'grupo' => array()
-    );
+$arrMenuProponente['mensagensenviadas'] = array(
+    'id' => 'mensagensenviadas',
+    'label' => 'Dilig&ecirc;ncias',
+    'title' => '',
+    'url' => $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente', 'idPreProjeto' => $idPreProjeto)),
+    'menu' => array(),
+    'grupo' => array()
+);
 
-    if ($this->isEditavel)  {
+if ($this->isEditavel) {
 
-        if (!$this->isEditarProjeto) {
+    if (!$this->isEditarProjeto) {
 
-            $arrMenuProponente['excluirproposta'] = array(
-                'id' => 'excluirproposta',
-                'label' => 'Excluir proposta',
-                'title' => '',
-                'url' => '',
-                'menu' => array(),
-                'grupo' => array()
-            );
+        $arrMenuProponente['excluirproposta'] = array(
+            'id' => 'excluirproposta',
+            'label' => 'Excluir proposta',
+            'title' => '',
+            'url' => '',
+            'menu' => array(),
+            'grupo' => array()
+        );
 
-            $arrMenuProponente['enviarproposta'] = array(
-                'id' => 'enviarproposta',
-                'label' => 'Enviar proposta ao MinC',
-                'title' => '',
-                'url' => '',
-                'menu' => array(),
-                'grupo' => array()
-            );
-        }else {
-            $arrMenuProponente['finalizaralteracaodeprojeto'] = array(
-                'id' => 'finalizaralteracaodeprojeto',
-                'label' => 'Finalizar e enviar',
-                'title' => '',
-                'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'finalizaralteracaodeprojeto', 'idPreProjeto' => $idPreProjeto)),
-                'menu' => array(),
-                'grupo' => array()
-            );
-        }
-
+        $arrMenuProponente['enviarproposta'] = array(
+            'id' => 'enviarproposta',
+            'label' => 'Enviar proposta ao MinC',
+            'title' => '',
+            'url' => '',
+            'menu' => array(),
+            'grupo' => array()
+        );
+    } else {
+        $arrMenuProponente['finalizaralteracaodeprojeto'] = array(
+            'id' => 'finalizaralteracaodeprojeto',
+            'label' => 'Finalizar e enviar',
+            'title' => '',
+            'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'finalizaralteracaodeprojeto', 'idPreProjeto' => $idPreProjeto)),
+            'menu' => array(),
+            'grupo' => array()
+        );
     }
-?>
 
+}
+?>
+<style>
+    /*#enviarproposta,*/
+    /*#finalizaralteracaodeprojeto {*/
+        /*background-color: #FF8A80;*/
+        /*color: #fff;*/
+
+    /*}*/
+</style>
 <div class="col s2 m12 l2">
     <aside id="left-sidebar-nav">
         <ul class="sidebar-nav">
@@ -162,7 +169,7 @@
                             <b><?php echo $this->layout['titleFull']; ?></b>
                         </p>
                         <p class="white-text">
-                            <?php echo isset($this->layout['titleShort']) ? $this->layout['titleShort'] : 'Proposta'; ?> n&#186;
+                            <?php echo isset($this->layout['titleShort']) ? $this->layout['titleShort'] : 'Proposta'; ?>
                             <?php echo isset($this->layout['projeto']) ? $this->layout['projeto'] : $this->proposta['idpreprojeto']; ?>
                         </p>
                         <p class="white-text"><?php echo isset($this->proposta['nomeprojeto']) ? $this->proposta['nomeprojeto'] : ''; ?></p>
@@ -180,7 +187,7 @@
               method="post">
             <?php
             $idVinculoProposta = "";
-            if(!empty($this->dadosVinculo[0])) {
+            if (!empty($this->dadosVinculo[0])) {
                 $idVinculoProposta = $this->dadosVinculo[0]->idvinculoproposta;
             }
             ?>
@@ -196,8 +203,8 @@
                         CPF/CNPJ Proponente:&nbsp;
                         <select name="propronente" id="propronente" class="input_simples w240">
                             <?php $idAgente = 0; ?>
-                            <?php if ($this->listaProponentes):?>
-                                <?php foreach ($this->listaProponentes as $lp): $lp = array_change_key_case($lp);?>
+                            <?php if ($this->listaProponentes): ?>
+                                <?php foreach ($this->listaProponentes as $lp): $lp = array_change_key_case($lp); ?>
                                     <?php if ($lp['idagenteproponente'] != $idAgente): ?>
                                         <option
                                             value="<?php echo $lp['idvinculo']; ?>:<?php echo $lp['idagenteproponente']; ?>"><?php echo $lp['nomeproponente']; ?></option>
@@ -227,6 +234,17 @@
 
     $(document).ready(function () {
 
+        <?php if (!$this->isEditavel) : ?>
+        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
+        JSBloquearAlteracaoFormulario();
+
+            $("textarea.editor").each(function () {
+                $(this).editorRico({
+                    isDesabilitarEdicao: 1
+                });
+            });
+        <?php endif; ?>
+
         $('.planilha').click(function () {
             $(this).next().toggle('fast');
         });
@@ -245,7 +263,7 @@
 
         var text = 'Deseja realmente excluir sua proposta?';
 
-        $('<div id="modalExcluirProposta"></div>').appendTo( $( "#left-sidebar-nav" ) ).html(text)
+        $('<div id="modalExcluirProposta"></div>').appendTo($("#left-sidebar-nav")).html(text)
 
         $("#modalExcluirProposta").dialog("destroy");
         $("#modalExcluirProposta").dialog
@@ -270,7 +288,7 @@
     function JSEnviarProposta() {
         var text = 'Deseja realmente enviar sua proposta?';
 
-        $('<div id="modalEnviarProposta"></div>').appendTo( $( "#left-sidebar-nav" ) ).html(text)
+        $('<div id="modalEnviarProposta"></div>').appendTo($("#left-sidebar-nav")).html(text)
 
         $("#modalEnviarProposta").dialog("destroy");
         $("#modalEnviarProposta").dialog
@@ -296,7 +314,7 @@
 
     function trocarproponente() {
 
-        $('<div id="trocarproponente"></div>').appendTo( $( "#left-sidebar-nav" ) ).html(text)
+        $('<div id="trocarproponente"></div>').appendTo($("#left-sidebar-nav")).html(text)
 
         $("#trocarproponente").dialog("destroy");
         $("#trocarproponente").dialog
