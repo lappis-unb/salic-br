@@ -713,10 +713,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
     }
 
-
     public function confirmararquivarpropostaAction()
     {
-
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?" => $this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
@@ -893,7 +891,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
 
     }
-
 
     public function gerarpdfAction()
     {
@@ -2693,7 +2690,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             }
 
             $recordsTotal = $vwPainelAvaliar->propostasTotal($where);
-            $recordsFiltered = $vwPainelAvaliar->propostasTotal($where);
+            $recordsFiltered = $vwPainelAvaliar->propostasTotal($where, null, null, null, $search);
         }
 
         $this->_helper->json(array(
