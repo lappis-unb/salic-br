@@ -491,7 +491,7 @@ class tbRecurso extends GenericModel
                 new Zend_Db_Expr("CASE 
                                     WHEN c.idUnidade IN(262,272,166,171,179) THEN 'SECRETARIA'
                                     ELSE d.Sigla + '- '+ ISNULL(e.Descricao,'Aguardando distribuição')
-                                 END as Vinculada")
+                                 END as Vinculada, b.Situacao"),
             )
         );
 

@@ -113,13 +113,20 @@ class RecursoController extends GenericControllerNew
                     $where['c.stFecharAnalise = ?'] = '0';
                     $where['c.stEstado = ?'] = '0';                 
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de Análise; 4=Encaminhado para Parecerista /  Técnico; 7=Encaminhado para o Componente da Comissão
+                    $where['a.siRecurso in (?)'] = array(3,4); // // 3=Encaminhado do MinC para a  Unidade de Análise; 4=Encaminhado para Parecerista
                     $this->view->nmPagina = 'Em Análise';
                     break;
                 case 'analisados':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siRecurso in (?)'] = array(6,10); // 6=Devolvido da Unidade de Analise para o MinC; 10=Devolvido pelo Tecnico para o Coordenador
+                    $where['a.stEstado = ?'] = '0'; // 0=Atual; 1=Historico
+                    $where['a.siRecurso in (?)'] = array(6, 7); // 6=Devolvido da Unidade de Analise para o MinC; Técnico; 7=Encaminhado para o Componente da Comissão
                     $this->view->nmPagina = 'Analisados';
+                    break;
+                case 'analisados_cnic':
+                    $where['a.stEstado = ?'] = '1'; // 0=Atual; 1=Historico
+                    $where['a.siRecurso in (?)'] = array(8, 9, 15); // 9=Retornou da CNIC
+                    $where['b.Situacao in (?)'] = array('B11', 'D03', 'D20');
+                    $where['b.area <> ?'] = 2;
+                    $this->view->nmPagina = 'Aguardando CNIC';
                     break;
             }
         } else {
@@ -361,7 +368,7 @@ class RecursoController extends GenericControllerNew
             }
             $r->save();
             
-            if($_POST['stAtendimento'] == 'D'){
+            if($_POST['stAtendimento'] == 'D' ){
                 $tbDistribuirProjeto = new tbDistribuirProjeto();
                 $dados = array(
                     'IdPRONAC' => $r->IdPRONAC,
