@@ -559,7 +559,7 @@ table caption {
 #conteudo table tr.destacar td, table td.destacar {
 	background:#dfefc2;
 }
-#conteudo table td a {
+#conteudo table td a:not(.btn) {
 	color:#333 !important;
 }
 #conteudo table th {

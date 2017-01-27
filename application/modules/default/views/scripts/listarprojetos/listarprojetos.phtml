@@ -162,16 +162,32 @@ gerarBreadCrumb($links);
                         <table class="tabela">
                         <tr>
                             <th>Pronac</th>
+                            <th>A&ccedil;&otilde;es</th>
                             <th>Nome do Projeto</th>
                             <th>Situa&ccedil;&atilde;o do Projeto</th>
                             <th>Per&iacute;odo de Execu&ccedil;&atilde;o</th>
                             <th>Mecanismo</th>
-                            <th>A&ccedil;&otilde;es</th>
                         </tr>
 
                     <?php endif;  ?>
                     <tr>
-                        <td class="centro"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo Seguranca::encrypt($this->escape($projetos->IdPRONAC));?>" target="_blanck"><?php echo $this->escape($projetos->Pronac);?></a></td>
+                        <td>
+                            <a class="waves-effect waves-light btn white-text tooltipped"
+                               data-tooltip="Ver projeto"
+                               href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo Seguranca::encrypt($this->escape($projetos->IdPRONAC));?>" target="_blanck" style="padding: 0 1rem">
+                                <i class="material-icons right">visibility</i>
+                                <?php echo $this->escape($projetos->Pronac);?>
+                            </a>
+<!--                        <td class="centro"><a href="--><?php //echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?><!--?idPronac=--><?php //echo Seguranca::encrypt($this->escape($projetos->IdPRONAC));?><!--" target="_blanck">--><?php //echo $this->escape($projetos->Pronac);?><!--</a></td>-->
+                        <td>
+                            <?php if( !empty($projetos->idProjeto) ) : ?>
+                                <?php if( $projetos->Situacao == 'B02' ) :  //@todo romulo vai criar a nova situacao ?>
+                                    <a class="btn small waves-effect waves-light tooltipped btn-primary" data-tooltip="Alterar projeto" target="_blank" href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $projetos->idProjeto )); ?>">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </td>
                         <td><?php echo $projetos->NomeProjeto; ?></td>
                         <td><?php echo $projetos->Situacao. ' - '. $projetos->Descricao ;?></td>
                         <td>
@@ -189,15 +205,6 @@ gerarBreadCrumb($links);
                                 echo 'Recurso do Tesouro';
                             }
                             ?></td>
-                        <td>
-                            <?php if( !empty($projetos->idProjeto) ) : ?>
-                                <?php if( $projetos->Situacao == 'B02' ) :  //@todo romulo vai criar a nova situacao ?>
-                                    <a class="btn small waves-effect waves-light tooltipped btn-primary" data-tooltip="Alterar projeto" target="_blank" href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $projetos->idProjeto )); ?>">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </td>
                     </tr>
 
                     <?php $idAgente = $projetos->idAgente; ?>
