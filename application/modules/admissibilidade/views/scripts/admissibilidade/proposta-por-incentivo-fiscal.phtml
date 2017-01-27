@@ -1024,7 +1024,7 @@
                                                     <a href="#IFF_PRODUTO<?php echo $comparadorProdutos; ?>" onclick="AbrirFecharPlanilha('IFF_PRODUTO<?php echo $comparadorProdutos; ?>');" onkeypress=" ">
                                                         <div id="IFF_PRODUTO<?php echo $comparadorProdutos; ?>" class="icn_menos" style="width:98%; margin-left:2%;">
                                                             <span class="green-text del_link">
-                                                                <?php echo $resposta->Produto; ?>
+                                                                <?php echo utf8_decode(htmlentities($resposta->Produto)); ?>
                                                             </span>
                                                         </div>
                                                     </a>
