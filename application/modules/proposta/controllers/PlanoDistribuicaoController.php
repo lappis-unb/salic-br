@@ -234,4 +234,40 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
             parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
     }
+
+    public function detalharPlanoDistribuicaoAction() {
+        $pag = 1;
+        $get = Zend_Registry::get('get');
+        if (isset($get->pag)) $pag = $get->pag;
+        if (isset($get->tamPag)) $this->intTamPag = $get->tamPag;
+        $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+        $fim = $inicio + $this->intTamPag;
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $total = $tblPlanoDistribuicao->pegaTotal(array("a.idProjeto = ?"=>$this->_idPreProjeto, "a.stPlanoDistribuicaoProduto = ?"=>1));
+        $tamanho = (($inicio+$this->intTamPag)<=$total) ? $this->intTamPag : $total - ($inicio) ;
+
+        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(
+            array("a.idprojeto = ?" => $this->_idPreProjeto, "a.stplanodistribuicaoproduto = ?" => 1),
+            array("idplanodistribuicao DESC"),
+            $tamanho,
+            $inicio
+        );
+
+        if ($fim>$total) $fim = $total;
+        $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+        $arrDados = array(
+                        "pag"=>$pag,
+                        "total"=>$total,
+                        "inicio"=>($inicio+1),
+                        "fim"=>$fim,
+                        "totalPag"=>$totalPag,
+                        "planosDistribuicao"=>($rsPlanoDistribuicao),
+                        "formulario"=>$this->_urlPadrao."/proposta/plano-distribuicao/frm-plano-distribuicao?idPreProjeto=".$this->_idPreProjeto,
+                        "urlApagar"=>$this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto,
+                        "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
+                    );
+
+
+        $this->view->planosDistribuicao=($rsPlanoDistribuicao);
+    }
 }
