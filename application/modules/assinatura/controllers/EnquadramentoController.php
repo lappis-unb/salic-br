@@ -64,7 +64,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         select * from sac.dbo.Orgaos where idSecretaria = 160
         -- Quando devolver o projeto deve voltar para o órgçao 171 ( qunado for SAV [ SAV é o órgão superior ] )
          */
-        throw new Exception("@todo implementar!");
     }
 
     /**
