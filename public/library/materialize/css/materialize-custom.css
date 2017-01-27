@@ -146,6 +146,10 @@ table.tabela td.destacar span,
     color: #212121;
 }
 
+#conteudo table.tabela label.error {
+    color: red;
+}
+
 #conteudo .btn_calendario,
 #conteudo .btn_calendario:hover,
 #conteudo .btn_calendario-off,

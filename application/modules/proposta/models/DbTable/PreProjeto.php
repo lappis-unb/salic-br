@@ -2542,7 +2542,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @return void
      * @author wouerner <wouerner@gmail.com>
      */
-    public function checklistEnvioProposta($idPreProjeto)
+    public function checklistEnvioProposta($idPreProjeto, $alterarprojeto = false)
     {
         $validacao = new stdClass();
         $listaValidacao = array();
@@ -2563,7 +2563,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $movimentacao = $db->fetchAll($sql);
 
-        if (!empty( $movimentacao )) {
+        if (!empty( $movimentacao ) && !$alterarprojeto) {
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL ENCONTRA-SE NO MINIST&Eacute;RIO DA CULTURA.</b></font>';
             $validacao->Observacao = '';
             $validacao->Url = '';
@@ -2885,7 +2885,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             }
         }
 
-        if($validado) {
+        if($validado ) {
 
             $dados = array(
                 'idprojeto' => $idPreProjeto,
