@@ -1,0 +1,521 @@
+<?php $frmplanoHref = $this->url(array('module' => 'proposta' , 'controller' => 'plano-distribuicao', 'action' => 'frm-plano-distribuicao')).'?idPreProjeto='.$_GET['idPreProjeto']; ?>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <?php echo $this->partial("inc/menu.phtml", $this); ?>
+
+        <div class="content col s10 m12 l10 planilha-produtos">
+
+            <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
+            <?php
+            gerarBreadCrumb(array(
+                $this->layout['listagem'],
+                array('Plano de Distribui&ccedil;&atilde;o' => '')
+            )); ?>
+
+            <div id="titulo">
+                <div>Plano de Distribui&ccedil;&atilde;o</div>
+            </div>
+
+            <div id="conteudo">
+                <div id="div_form"></div>
+                <table class="tabela">
+                    <tr class="titulo_tabela">
+                        <th width="25%">Nome do Evento / Produto</th>
+                        <th width="25%">&Aacute;rea</th>
+                        <th width="15%">Segmento</th>
+                        <th width="15%">Principal</th>
+                        <th width="20%">A&ccedil;&otilde;es</th>
+                    </tr>
+                    <?php $totalExemplares=0; $totalReceita=0; ?>
+                    <?php if(!empty($this->planosDistribuicao)){ ?>
+                        <?php foreach($this->planosDistribuicao as $planoDistribuicao){ ?>
+                            <?php
+                            $totalExemplares += $planoDistribuicao->QtdeProduzida;
+                            $receita = ($planoDistribuicao->QtdeVendaNormal*$planoDistribuicao->PrecoUnitarioNormal)+($planoDistribuicao->QtdeVendaPromocional*$planoDistribuicao->PrecoUnitarioPromocional);
+                            $totalReceita += $receita;
+                            ?>
+                        <tr class="fundo">
+                            <td class="centro"><?php echo $planoDistribuicao->Produto; ?></td>
+                            <td class="centro"><?php echo $planoDistribuicao->DescricaoArea; ?></td>
+                            <td align="right"><?php echo $planoDistribuicao->DescricaoSegmento; ?></td>
+                            <td align="right"><?php echo ($planoDistribuicao->stPrincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
+                            <td class="centro" nowrap>
+                                <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>)"/>&nbsp;
+                                <input type="button" class="btn_exclusao" id="btn_excluir" onclick="confirma('<?php echo $this->urlApagar; ?>&idPlanoDistribuicao=<?php echo $planoDistribuicao['idPlanoDistribuicao']; ?>')"/></td>
+                        </tr>
+                        <?php } ?>
+                    <?php } ?>
+                </table>
+
+                <div id="miolo"> <!-- ========== INICIO MIOLO IDENTIFICACAO ========== -->
+                    <table class="tabela" style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="center">
+                                <input type="button" class="btn_novo" id="btn_novo"  />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div><!-- ========== FIM CONTEUDO ========== -->
+
+            <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
+            <div id="rodapeConteudo"><span></span></div>
+            <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+            <br clear="all" />
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<div class="container-fluid">
+<div id="app-6">
+    <div class="row">
+    <div class="col s12">
+    <table class="bordered">
+        <caption>Item</caption>
+        <thead>
+        <tr>
+            <th>Categoria</th>
+            <th>Quantidade de exemplar / Ingresso</th>
+            <th>Divulgação</th>
+            <th>Patrocinador</th>
+            <th>População</th>
+            <th>Quantidade de Inteira</th>
+            <th>Quantidade de Meia Entrada</th>
+            <th>Preço Unitario do Ingresso</th>
+            <th>Valor da inteira</th>
+            <th>Valor da meia entrada</th>
+            <th>Quantidade de Inteira</th>
+            <th>Quantidade de Meia Inteira</th>
+            <th>Preço Unitario do Ingresso</th>
+            <th>Valor da inteira</th>
+            <th>Valor da meia entrada</th>
+            <th>Receita Prevista</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="produto in produtos">
+                <td>{{ produto.categoria }}</td>
+                <td>{{ produto.quantidade }}</td>
+                <td>{{ produto.divulgacao }}</td>
+                <td>{{ produto.populacao }}</td>
+                <td>{{ produto.patrocinador }}</td>
+                <td>{{ produto.inteira }}</td>
+                <td>{{ produto.meiaEntrada }}</td>
+                <td>{{ produto.precoUnitarioIngresso }}</td>
+                <td>{{ produto.valorInteira }}</td>
+                <td>{{ produto.valorMeiaEntrada }}</td>
+                <td>{{ produto.quantidadeInteira }}</td>
+                <td>{{ produto.quantidadeMeiaEntrada }}</td>
+                <td>{{ produto.precoUnitarioIngressoProponente }}</td>
+                <td>{{ produto.valorInteiraProponente }}</td>
+                <td>{{ produto.valorMeiaEntradaProponente }}</td>
+                <td>{{ produto.receitaPrevista }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td>{{ quantidadeTotal }}</td>
+                <td>{{ divulgacaoTotal }}</td>
+                <td>{{ populacaoTotal }}</td>
+                <td>{{ patrocinadorTotal }}</td>
+                <td>{{ inteiraTotal }}</td>
+                <td>{{ meiaEntradaTotal }}</td>
+                <td>{{ precoUnitarioIngressoTotal }}</td>
+                <td>{{ valorInteiraTotal }}</td>
+                <td>{{ valorMeiaEntradaTotal }}</td>
+                <td>{{ quantidadeInteiraTotal }}</td>
+                <td>{{ quantidadeMeiaEntradaTotal }}</td>
+                <td>{{ precoUnitarioIngressoProponenteTotal }}</td>
+                <td>{{ valorInteiraProponenteTotal }}</td>
+                <td>{{ valorMeiaEntradaProponenteTotal }}</td>
+                <td>{{ receitaPrevistaTotal }}</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+        <table class="bordered">
+            <caption>Novo Item</caption>
+            <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Quantidade de exemplar / Ingresso</th>
+                <th>Divulgação</th>
+                <th>Patrocinador</th>
+                <th>População</th>
+                <th>Quantidade de Inteira</th>
+                <th>Quantidade de Meia Entrada</th>
+                <th>Preço Unitario do Ingresso</th>
+                <th>Valor da inteira</th>
+                <th>Valor da meia entrada</th>
+                <th>Quantidade de Inteira</th>
+                <th>Quantidade de Meia Inteira</th>
+                <th>Preço Unitario do Ingresso</th>
+                <th>Valor da inteira</th>
+                <th>Valor da meia entrada</th>
+                <th>Receita Prevista</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ categoria }}</td>
+                    <td>{{ quantidade }}</td>
+                    <td>{{ divulgacao }}</td>
+                    <td>{{ populacao }}</td>
+                    <td>{{ patrocinador }}</td>
+                    <td>{{ inteira }}</td>
+                    <td>{{ meiaEntrada }}</td>
+                    <td>{{ precoUnitarioIngresso }}</td>
+                    <td>{{ valorInteira }}</td>
+                    <td>{{ valorMeiaEntrada }}</td>
+                    <td>{{ quantidadeInteira }}</td>
+                    <td>{{ quantidadeMeiaEntrada }}</td>
+                    <td>{{ precoUnitarioIngressoProponente }}</td>
+                    <td>{{ valorInteiraProponente }}</td>
+                    <td>{{ valorMeiaEntradaProponente }}</td>
+                    <td>{{ receitaPrevista }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form>
+            <div class="row">
+                <div class="input-field  col s2">
+                    <input id="categoria" v-model="categoria">
+                    <label class="active" for="categoria">Categoria</label>
+                </div>
+                <div class="input-field  col s2">
+                    <input v-model="quantidade">
+                    <label class="active" >Quantidade</label>
+                </div>
+                <div class="input-field  col s2">
+                    <label class="active" >Preço Unitario do Ingresso</label>
+                    <input v-model="precoUnitarioIngresso">
+                </div>
+                <div class="input-field  col s2">
+                    <label class="active" >Preço Unitario do Ingresso Proponente</label>
+                    <input v-model="precoUnitarioIngressoProponente">
+                </div>
+                <button class="btn" v-on:click="salvar">salvar</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    var app6 = new Vue({
+            el: '#app-6',
+            data: {
+                categoria: '',
+                quantidade: 0,
+                //divulgacao: 0.0,
+                patrocinador: 0.0,
+                populacao: 0.0,
+                inteira: 0.0,
+                meiaEntrada: 0.0,
+                precoUnitarioIngresso: 0.0,
+                valorInteira: 0.0,
+                valorMeiaEntrada: 0.0,
+                quantidadeInteira : 0.0,
+                quantidadeMeiaEntrada: 0.0,
+                precoUnitarioIngressoProponente: 0.0,
+                valorInteiraProponente: 0.0,
+                valorMeiaEntradaProponente: 0.0,
+                receitaPrevista: 0.0,
+                produto:{ },
+                produtos:[]
+            },
+            computed:{
+                divulgacao: function(){
+                    return this.quantidade * 0.1;
+                },
+                quantidadeTotal: function() {
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length; i++){
+                        total += parseFloat(this.produtos[i]['quantidade']);
+                    }
+                    return total.toFixed(2);
+                },
+                 divulgacaoTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['divulgacao'];
+                    }
+                    return total;
+
+                },
+                 populacaoTotal :function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['populacao'];
+                    }
+                    return total;
+
+                },
+                 patrocinadorTotal :function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['patrocinador'];
+                    }
+                    return total;
+
+                },
+                 inteiraTotal :function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['inteira'];
+                    }
+                    return total;
+
+                },
+                 meiaEntradaTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['meiaEntrada'];
+                    }
+                    return total;
+
+                },
+                 precoUnitarioIngressoTotal :function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['precoUnitarioIngresso'];
+                    }
+                    return total;
+
+                },
+                 valorInteiraTotal :function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['valorInteira'];
+                    }
+                    return total;
+
+                },
+                 valorMeiaEntradaTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['valorMeiaEntrada'];
+                    }
+                    return total;
+
+                },
+                 quantidadeInteiraTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['quantidadeInteira'];
+                    }
+                    return total;
+
+                },
+                 quantidadeMeiaEntradaTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['quantidadeMeiaEntrada'];
+                    }
+                    return total;
+
+                },
+                 precoUnitarioIngressoProponenteTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['precoUnitarioIngressoProponente'];
+                    }
+                    return total;
+
+                },
+                 valorInteiraProponenteTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['valorInteiraProponente'];
+                    }
+                    return total;
+
+                },
+                 valorMeiaEntradaProponenteTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['valorMeiaEntradaProponente'];
+                    }
+                    return total;
+
+                },
+                 receitaPrevistaTotal:function(){
+                    total = 0 ;
+                    for ( var i = 0 ; i < this.produtos.length ; i++){
+                          total += this.produtos[i]['receitaPrevista'];
+                    }
+                    return total;
+
+                },
+            },
+            beforeUpdate: function() {
+                this.divulgacao = this.quantidade * 0.1;
+                this.patrocinador = this.quantidade * 0.1;
+                this.populacao = this.quantidade * 0.1;
+                this.inteira = ( ((this.quantidade * 0.5) - (this.divulgacao + this.patrocinador + this.populacao)) *0.6 ).toFixed(2);
+                this.meiaEntrada = ( ((this.quantidade * 0.5) - (this.divulgacao + this.patrocinador + this.populacao)) *0.4 ).toFixed(2);
+
+                this.valorInteira = (this.inteira * this.precoUnitarioIngresso).toFixed(2);
+                this.valorMeiaEntrada = ( (this.precoUnitarioIngresso * 0.5) * this.meiaEntrada ).toFixed(2);
+
+                this.quantidadeInteira = ((this.quantidade *0.5) * 0.6).toFixed(2);
+
+                this.quantidadeMeiaEntrada = ((this.quantidade *0.5) * 0.4).toFixed(2);
+                this.valorInteiraProponente = ( this.quantidadeInteira*this.precoUnitarioIngressoProponente ).toFixed(2);
+                this.valorMeiaEntradaProponente = (this.precoUnitarioIngressoProponente * 0.5) * this.quantidadeMeiaEntrada;
+
+                this.receitaPrevista = parseFloat(( this.valorInteira + this.valorMeiaEntrada ) + ( this.valorInteiraProponente + this.valorMeiaEntradaProponente)).toFixed(2);
+            },
+            methods: {
+                salvar:function(event){
+                    event.preventDefault();
+
+                    this.produto = {
+                        categoria: this.categoria,
+                        quantidade: this.quantidade,
+                        divulgacao: this.divulgacao,
+                        patrocinador: this.patrocinador,
+                        populacao: this.populacao,
+                        inteira: this.inteira,
+                        meiaEntrada: this.meiaEntrada,
+                        precoUnitarioIngresso: this.precoUnitarioIngresso,
+                        valorInteira: this.valorInteira,
+                        valorMeiaEntrada: this.valorMeiaEntrada,
+                        quantidadeInteira : this.quantidadeInteira,
+                        quantidadeMeiaEntrada: this.quantidadeMeiaEntrada,
+                        precoUnitarioIngressoProponente: this.precoUnitarioIngressoProponente,
+                        valorInteiraProponente: this.valorInteiraProponente,
+                        valorMeiaEntradaProponente: this.valorMeiaEntradaProponente,
+                        receitaPrevista: this.receitaPrevista,
+                    }
+
+                    this.produtos.push(this.produto);
+                }
+            }
+        })
+</script>
+
+<script language="javascript" type="text/javascript">
+
+    $(document).ready(function(){
+        <?php if (!$this->isEditavel) : ?>
+        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
+        JSBloquearAlteracaoFormulario();
+        <?php endif; ?>
+    });
+
+    function confirma(obj){
+        $("#confirm").dialog("destroy");
+        $("#confirm").dialog({
+            width:350,
+            height:150,
+            EscClose:false,
+            modal:true,
+            buttons: {
+                'Cancelar':function(){
+                    $(this).dialog('close'); // fecha a modal
+                },
+                'Confirmar':function(){
+                    location.href=obj;
+                }
+            }
+        });
+        $("#confirm").dialog('open');
+    }
+
+    function requisicaoAjaxObj(){
+        var ajaxObj={
+            pagina          :   '',
+            parametros      :   {},
+            type            :   'post',
+            dataType        :   '',
+            resposta        :   '#conteudo',
+            async           :   true,
+            funcaoRetorno   :   function (resposta){
+                $(this.resposta).html(resposta);
+            },
+            executar        :   function(dados){
+                this.refineParametrosObj(dados);
+                var esteObj = this;
+                if(this.resposta != undefined && this.resposta != '')
+                    $(this.resposta).html('<img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" alt="carregando"><br/><br/>Carregando...<br>Por Favor, aguarde!!');
+                $.ajax({
+                    type      : esteObj.type,
+                    url       : esteObj.pagina,
+                    data      : esteObj.parametros,
+                    async     : esteObj.async,
+                    success   : function(resp){
+                        esteObj.funcaoRetorno(resp);
+                    }
+                    ,dataType  : esteObj.dataType
+                });
+            },
+            refineParametrosObj : function(data){
+                if(data!= undefined)
+                    for(var j in data){
+
+                        this[j]=data[j];
+                    }
+            }
+        }
+        return ajaxObj;
+    }
+
+    function janelaObj(dados){
+        var divConteudo = $('<div></div>')
+            .attr('title',dados.title)
+            .appendTo('body');
+        var novaJanela = {
+            divConteudo : divConteudo,
+            removerBtFechar: true,
+            parametros : {autoOpen: false},
+            iniciarJanela : function(dados){
+                this.refineParametrosObj(dados);
+                var esse = this.divConteudo;
+                this.parametros.close = function (){
+                    esse.html('');
+                }
+                this.divConteudo.dialog(this.parametros);
+            },
+            abrirJanela:function(){
+                this.divConteudo.dialog('open');
+                if(this.removerBtFechar)
+                    $('.ui-dialog-titlebar-close').remove();
+            },
+            fecharJanela:function(){
+                this.divConteudo.dialog('close');
+                this.divConteudo.remove();
+            },
+            refineParametrosObj : function(data){
+                if(data!= undefined)
+                    for(var j in data){
+                        this[j]=data[j];
+                    }
+            }
+        }
+        novaJanela.iniciarJanela(dados);
+        return novaJanela;
+    }
+
+    $(function(){
+        $('#btn_novo').click(function(){
+            $("#div_form").html('<br><center><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
+            jqAjaxLinkSemLoading("<?php echo $frmplanoHref; ?>", "", "div_form");
+        });
+    });
+
+    function editar(idPlanoDistribuicao){
+        var url = '<?php echo $this->url(array('controller' => 'plano-distribuicao', 'action' => 'frm-plano-distribuicao')).'?idPreProjeto='.$_GET['idPreProjeto'].'&idPlanoDistribuicao=';?>'+idPlanoDistribuicao;
+        $("#div_form").html('<br><center><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
+        jqAjaxLinkSemLoading(url, "", "div_form");
+    }
+</script>
