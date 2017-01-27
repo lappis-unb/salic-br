@@ -1,0 +1,137 @@
+<main>
+    <?php
+    $links = array(
+        array('Gerenciar Projetos' => array(
+            'module' => 'assinatura',
+            'controller' => 'enquadramento',
+            'action' => 'gerenciar-projetos'
+        )),
+        array('Devolver' => array())
+    );
+    gerarBreadCrumb($links);
+    ?>
+    <div class="content padding20">
+        <form action="<?php
+        echo $this->url(array(
+                'module' => 'assinatura',
+                'controller' => 'enquadramento',
+                'action' => 'devolver-projeto'
+            )) . "?IdPRONAC={$this->IdPRONAC}";
+        ?>"
+        method="post">
+            <input type="hidden" name="IdPRONAC" value="<?php echo $this->IdPRONAC ?>" />
+            <div class="row">
+                <div class="col s12 margin-bottom30">
+                    <h3>Devolver</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s3">
+                    <label>PRONAC</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+                <div class="col s9">
+                    <label>Nome do Projeto</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s3">
+                    <label>&Aacute;rea Cultural</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+                <div class="col s3">
+                    <label>Segmento Cultural</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+                <div class="col s6">
+                    <label>Enquadramento</label>
+                    <p>
+                        xxxx
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>Motiva&ccedil;&atilde;o do Enquadramento</label>
+                    <p class="bordered padding20">
+                        xxxx
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <p>
+                        <label>Motiva&ccedil;&atilde;o da Devolu&ccedil;&atilde;o para nova avalia&ccedil;&atilde;o:</label>
+                    </p>
+                    <div class="">
+                        <textarea class="padding20 textarea_simples"
+                                  id="dsDespacho"
+                                  name="dsDespacho"
+                                  style="height: 200px"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row center-align">
+                <a class="btn waves-effect waves-dark"
+                   href="javascript:history.go(-1)">Voltar</a>
+                <button type="submit"
+                        class="btn waves-effect waves-dark">Devolver</button>
+            </div>
+        </form>
+    </div>
+    <br clear="all"/>
+    <script type="text/javascript">
+        jQuery(function ($) {
+
+            var editorRico = $("#dsDespacho").editorRico({
+                altura: 200,
+                isLimitarCarateres: true
+            });
+
+            $("#formEnquadramentoProjeto").validate({
+                rules: {
+                    dsDespacho: {
+                        validarPreenchimento: true,
+                        validarPreenchimentoMaximo: true
+                    }
+                },
+                messages: {
+                    dsDespacho: {
+                        validarPreenchimento: "Dado obrigat&oacute;rio n&atilde;o informado",
+                        validarPreenchimentoMaximo: "limite excedido"
+                    }
+                },
+
+                submitHandler: function (form) {
+                    $("#container-progress").show();
+                    form.submit();
+                },
+                invalidHandler: function (event, validator) {
+                    Materialize.toast(validator.submitted.dsDespacho, 2000, '', function () {
+                    });
+                }
+            });
+
+            $.validator.addMethod("validarPreenchimento", function (value, element) {
+                if (editorRico.contarCaracteres() > 0) {
+                    return true;
+                }
+            });
+            $.validator.addMethod("validarPreenchimentoMaximo", function (value, element) {
+                if (editorRico.contarCaracteres() <= 1000) {
+                    return true;
+                }
+            });
+        });
+    </script>
+</main>
