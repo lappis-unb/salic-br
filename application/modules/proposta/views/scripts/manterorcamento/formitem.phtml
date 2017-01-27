@@ -173,7 +173,6 @@
                             <input placeholder="R$" type="text" value="" maxlength="6" class="disabled" size="15" name="total" id="total" disabled>
                             <label for="total">Total</label>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col s4">
@@ -191,15 +190,16 @@
                         </div>
 
                     </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 center-align">
-                            <a class="btn-close-modal waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
-                            <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
-                                <i class="material-icons right">send</i>
-                            </a>
+                    <?php if ($this->isEditavel) : ?>
+                        <div class="row">
+                            <div class="input-field col s12 center-align">
+                                <a class="btn-close-modal waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
+                                <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
+                                    <i class="material-icons right">send</i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </form>
             <?php endforeach;?>
         </div>

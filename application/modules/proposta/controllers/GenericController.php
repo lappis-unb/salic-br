@@ -54,7 +54,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                 $projeto = array_change_key_case($tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto)));
 //                $projeto = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idprojeto' => (int) $idPreProjeto));
 
-                if( !isset($projeto['nrprojeto']))
+                if (!isset($projeto['nrprojeto']))
                     $projeto['nrprojeto'] = $projeto['anoprojeto'] . $projeto['sequencial'];
 
                 $this->view->projeto = $projeto;
@@ -97,7 +97,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $tblProjetos = new Projetos();
         $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
 
-        if ($projeto['Situacao'] == 'B02') // @todo romulo vai criar a situacao correta
+        if ($projeto['Situacao'] == 'B01') // @todo romulo vai criar a situacao correta
             return true;
 
         return false;
@@ -109,6 +109,18 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             return false;
 
         return true;
+    }
+
+    public function buscarStatusProposta($idPreProjeto)
+    {
+        if( empty($idPreProjeto))
+            return false;
+
+        $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+        $rsStatusAtual = $tbMovimentacao->buscarStatusPropostaNome($idPreProjeto);
+
+        return $rsStatusAtual;
+
     }
 
 

@@ -624,10 +624,15 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         if (!empty($idPreProjeto)) {
             $sp = new Proposta_Model_DbTable_PreProjeto();
 
-            $arrResultado = $sp->checklistEnvioProposta($idPreProjeto);
-            // @todo parei aqui finalziar envio do alterar projeto
+            $arrResultado = $sp->checklistEnvioProposta($idPreProjeto, true);
 
-            $this->view->resultado = $arrResultado;
+            $novoResultado = $this->objectsToArray($arrResultado);
+            $pendencias = in_array('PENDENTE', array_column($novoResultado, 'Observacao'));
+
+            if ($pendencias) {
+                $this->view->resultado = $arrResultado;
+            }
+
 
         } else {
             parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
@@ -1351,6 +1356,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $arrPropostas[$x]['nomeproponente'] = $prop->nomeproponente;
                 $arrPropostas[$x]['idpreprojeto'] = $prop->idpreprojeto;
                 $arrPropostas[$x]['nomeprojeto'] = $prop->nomeprojeto;
+                $arrPropostas[$x]['movimentacao'] = $this->buscarStatusProposta($prop->idpreprojeto);
                 $x++;
             }
             $identificadores[$i] = $prop->idagente . $prop->idpreprojeto;

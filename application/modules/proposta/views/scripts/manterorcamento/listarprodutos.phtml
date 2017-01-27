@@ -52,7 +52,7 @@
                                                                 <th>Ocorr&ecirc;ncia</th>
                                                                 <th class="right-align" width="10%">Valor Unit&aacute;rio (R$)</th>
                                                                 <th class="right-align" width="10%">Total (R$)</th>
-                                                                <th colspan="2" width="10%">A&ccedil;&otilde;es</th>
+                                                                <?php if ($this->isEditavel) : ?><th colspan="2" width="10%">A&ccedil;&otilde;es</th><?php endif; ?>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -90,14 +90,16 @@
                                                                                     <td><?php echo number_format($item['Ocorrencia'],0) ?></td>
                                                                                     <td class="right-align"><?php echo number_format($item['ValorUnitario'], 2, ",", ".") ?></td>
                                                                                     <td class="right-align"><?php echo number_format(($item['Quantidade'] * $item['ValorUnitario']) * $item['Ocorrencia'], 2, ",", ".") ?></td>
-                                                                                    <td class="action right-align">
-                                                                                        <a data-ajax-modal="<?php echo $this->url($editarProduto); ?>" href="javascript:void(0);" class="btn small waves-effect waves-light tooltipped btn-primary" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">
-                                                                                            <i class="material-icons">edit</i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                    <td class="action left-align">
-                                                                                        <a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="javascript:void(0);" data-tooltip="Excluir" data-ajax="<?php echo $item['idPlanilhaProposta'];?>" ><i class="material-icons">delete</i></a>
-                                                                                    </td>
+                                                                                    <?php if ($this->isEditavel) : ?>
+                                                                                        <td class="action right-align">
+                                                                                            <a data-ajax-modal="<?php echo $this->url($editarProduto); ?>" href="javascript:void(0);" class="btn small waves-effect waves-light tooltipped btn-primary" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">
+                                                                                                <i class="material-icons">edit</i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td class="action left-align">
+                                                                                            <a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="javascript:void(0);" data-tooltip="Excluir" data-ajax="<?php echo $item['idPlanilhaProposta'];?>" ><i class="material-icons">delete</i></a>
+                                                                                        </td>
+                                                                                    <?php endif; ?>
                                                                                 </tr>
                                                                             <?php endif; ?>
                                                                         <?php endif; ?>
@@ -123,17 +125,19 @@
                                                             'idMunicipio' => $local['idMunicipioIBGE']
                                                         );
                                                     ?>
-                                                    <div class="row">
-                                                        <div class="col s12 center-align">
-                                                            <p>
+                                                    <?php if ($this->isEditavel) : ?>
+                                                        <div class="row">
+                                                            <div class="col s12 center-align">
+                                                                <p>
 
-                                                                <a class="waves-effect waves-light btn tooltipped btn_default" data-ajax-modal="<?php echo $this->url($novoProduto)?>" href="javascript:void(0);" class="waves-effect waves-light btn tooltipped" data-position="top" data-delay="50" data-tooltip="Cadastrar novo item" data-ajax-modal-type="bottom-sheet">
-                                                                    Novo item
-                                                                </a>
-                                                            </p>
+                                                                    <a class="waves-effect waves-light btn tooltipped btn_default" data-ajax-modal="<?php echo $this->url($novoProduto)?>" href="javascript:void(0);" class="waves-effect waves-light btn tooltipped" data-position="top" data-delay="50" data-tooltip="Cadastrar novo item" data-ajax-modal-type="bottom-sheet">
+                                                                        Novo item
+                                                                    </a>
+                                                                </p>
 
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    <?php endif; ?>
                                                 </div>
 
                                             <?php endforeach; ?>
