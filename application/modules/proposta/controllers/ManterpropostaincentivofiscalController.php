@@ -615,7 +615,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     }
 
-    public function finalizaralteracaodeprojetoAction()
+    public function encaminharprojetoaomincAction()
     {
         $this->verificarPermissaoAcesso(true, false, false);
 

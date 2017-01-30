@@ -134,11 +134,11 @@ if ($this->isEditavel) {
             'grupo' => array()
         );
     } else {
-        $arrMenuProponente['finalizaralteracaodeprojeto'] = array(
-            'id' => 'finalizaralteracaodeprojeto',
-            'label' => 'Finalizar e enviar',
+        $arrMenuProponente['encaminharprojetoaominc'] = array(
+            'id' => 'encaminharprojetoaominc',
+            'label' => 'Encaminhar projeto ao MinC',
             'title' => '',
-            'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'finalizaralteracaodeprojeto', 'idPreProjeto' => $idPreProjeto)),
+            'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'encaminharprojetoaominc', 'idPreProjeto' => $idPreProjeto)),
             'menu' => array(),
             'grupo' => array()
         );
