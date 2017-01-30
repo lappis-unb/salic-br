@@ -14,7 +14,7 @@ class Proposta_GerarimprimirpdfController extends Proposta_GenericController
     public function init()
     {
 
-        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // titulo da pagina
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura";
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Usuario = new UsuarioDAO(); // objeto usuario
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
@@ -28,22 +28,8 @@ class Proposta_GerarimprimirpdfController extends Proposta_GenericController
             $PermissoesGrupo[] = 103; // Coordenador de Analise
             $PermissoesGrupo[] = 118; // Componente da Comissao
             $PermissoesGrupo[] = 119; // Presidente da Mesa
-            $PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
-            //if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est� no array de permiss�es
-            //{
-            //    parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
-            //}
 
-            // pega as unidades autorizadas, org�os e grupos do usu�rio (pega todos os grupos)
-//            $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-//
-//            // manda os dados para a visao
-//            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuario para a visao
-//            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuario para a visao
-//            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
-//            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
-
-        } // fecha if
+        }
         else // caso o usuario nao esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
