@@ -4,7 +4,18 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 {
     public function init()
     {
-        parent::perfil();
+        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
+
+        $PermissoesGrupo = array();
+        $PermissoesGrupo[] = 147;
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 149;
+        $PermissoesGrupo[] = 150;
+        $PermissoesGrupo[] = 151;
+        $PermissoesGrupo[] = 152;
+
+        isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
+
         parent::init();
         $this->auth = Zend_Auth::getInstance();
         $this->grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
