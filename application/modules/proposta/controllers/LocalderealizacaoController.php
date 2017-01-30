@@ -35,7 +35,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if (isset($auth->getIdentity()->usu_codigo)) {
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
             $grupos = $Usuario->buscarUnidades($arrAuth['usu_codigo'], 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -52,10 +52,10 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             $this->idPreProjeto = $idPreProjeto;
             $this->view->idPreProjeto = $idPreProjeto;
 
-            //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
-            $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
+//            //VERIFICA SE A PROPOSTA ESTA COM O MINC
+//            $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+//            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
+//            $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
         } else {
             parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
@@ -65,29 +65,29 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         //*******************************************
         //VALIDA ITENS DO MENU (Documento pendentes)
         //*******************************************
-        $model = new Proposta_Model_DbTable_DocumentosExigidos();
-        //$this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
-        $this->view->documentosPendentes = $model->buscarDocumentoPendente($idPreProjeto);
-
-        if (!empty($this->view->documentosPendentes)) {
-            $verificarmenu = 1;
-            $this->view->verificarmenu = $verificarmenu;
-        } else {
-            $verificarmenu = 0;
-            $this->view->verificarmenu = $verificarmenu;
-        }
+//        $model = new Proposta_Model_DbTable_DocumentosExigidos();
+//        //$this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
+//        $this->view->documentosPendentes = $model->buscarDocumentoPendente($idPreProjeto);
+//
+//        if (!empty($this->view->documentosPendentes)) {
+//            $verificarmenu = 1;
+//            $this->view->verificarmenu = $verificarmenu;
+//        } else {
+//            $verificarmenu = 0;
+//            $this->view->verificarmenu = $verificarmenu;
+//        }
 
         //(Enviar Proposta ao MinC , Excluir Proposta)
-        $mov = new Proposta_Model_DbTable_TbMovimentacao();
-        $movBuscar = $mov->buscar(array('idprojeto = ?' => $idPreProjeto), array('idmovimentacao desc'), 1, 0)->current();
-
-        if (isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {
-            $enviado = 'true';
-            $this->view->enviado = $enviado;
-        } else {
-            $enviado = 'false';
-            $this->view->enviado = $enviado;
-        }
+//        $mov = new Proposta_Model_DbTable_TbMovimentacao();
+//        $movBuscar = $mov->buscar(array('idprojeto = ?' => $idPreProjeto), array('idmovimentacao desc'), 1, 0)->current();
+//
+//        if (isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {
+//            $enviado = 'true';
+//            $this->view->enviado = $enviado;
+//        } else {
+//            $enviado = 'false';
+//            $this->view->enviado = $enviado;
+//        }
 
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         $this->verificarPermissaoAcesso(true, false, false);
@@ -122,7 +122,8 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
     }
 
     /**
-     * Metodo que monta o formulario de editar os locais de realizacao
+     *
+     * Metodo que monta o formulario de editar local de realizacao
      * @param void
      * @return void
      */
@@ -151,7 +152,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         $arrAbrangencia = $tblAbrangencia->buscar($arrBusca);
         $arrCidades = "";
         # RECUPERA AS CIDADES
-        if( !empty($arrAbrangencia[0]['idMunicipioIBGE'])) {
+        if (!empty($arrAbrangencia[0]['idMunicipioIBGE'])) {
             $table = new Agente_Model_DbTable_Municipios();
             $arrCidades = $table->fetchPairs('idMunicipioIBGE', 'Descricao', array('idufibge' => $arrAbrangencia[0]['idUF']));
         }
@@ -168,10 +169,10 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
     }
 
     /**
-     * Metodo responsavel por gravar os locais de realizacao em banco (INSERT e UPDATE)
+     *
      * @param void
      * @return objeto
-     * @deprecated Este metodo eh usado quando edita um local de realizacao
+     * @deprecated Este metodo era usado para editar o local de realizacao, foi substitudo pelo metodo salvarlocaderealizacao @novain
      */
     public function salvarAction()
     {
@@ -219,7 +220,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         //incluindo novos registros
         if (empty($idAbrangencia)) {
             //APAGA TODOS OS REGISTROS PARA CADASTRA-LOS NOVAMENTE
-           // $tblAbrangencia->deleteBy(array('idprojeto' => $this->idPreProjeto, 'stabrangencia' => 1));
+            // $tblAbrangencia->deleteBy(array('idprojeto' => $this->idPreProjeto, 'stabrangencia' => 1));
         } else {
 
             foreach ($locais as $d) {
@@ -298,11 +299,10 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             // excluir itens orcamentarios desta abrangencia
             if (!empty($abrangencia)) {
                 $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-//                $itensProduto = $tbPlanilhaProposta->buscar(array('idProjeto = ?' => $this->idPreProjeto, 'idEtapa = ?' => 1, 'UfDespesa = ?' => $abrangencia['idUF'],'MunicipioDespesa = ?' => $abrangencia['idMunicipioIBGE'] ))->toArray();
                 $excluir = $tbPlanilhaProposta->deleteBy(array('idProjeto' => $this->idPreProjeto, 'idEtapa' => 1, 'UfDespesa' => $abrangencia['idUF'], 'MunicipioDespesa' => $abrangencia['idMunicipioIBGE']));
             }
 
-            //EXCLUI REGISTRO DA TABELA ABRANGENCIA
+            //Exclui registro da tabela abrangencia
             $excluir = $tblAbrangencia->delete(array('idabrangencia = ?' => $params['cod']));
 
         }
@@ -386,7 +386,8 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
     }
 
     /**
-     * salvarLocalRealizacaoAction
+     * Metódo que salva e edita o local de realizacao
+     * Neste metodo, quando edita um local de realizacao o mesmo atualiza os itens da planilha orcamentaria.
      *
      * @access public
      * @return void
@@ -411,9 +412,19 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
 
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
-        if (count($rsAbrangencia) > 0 && empty($idAbrangencia)) {
-            parent::message("Local de Realiza&ccedil;&atilde;o j&aacute; cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto . $edital, "ALERT");
+        $jacadastrado = false;
+        if (count($rsAbrangencia) > 0) {
+            if (empty($idAbrangencia)) {
+                $jacadastrado = true;
+            } elseif ($rsAbrangencia[0]['idAbrangencia'] != $idAbrangencia) {
+                $jacadastrado = true;
+            }
         }
+
+        if ($jacadastrado) {
+            parent::message("Local de realiza&ccedil;&atilde;o j&aacute; cadastrado!", "/proposta/localderealizacao/index/idPreProjeto/" . $this->idPreProjeto, "ALERT");
+        }
+
 
         $pais = $post->pais;
         $estados = $post->estados;
@@ -429,9 +440,11 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             "idmunicipioibge" => ($pais == 31) ? $cidades : 0
         );
 
+        $msg = "Local de realiza&ccedil;&atilde;o cadastrado com sucesso!";
+
         if (!empty($dadosAbrangencia["idprojeto"]) && !empty($dadosAbrangencia["idpais"])) {
 
-            if(empty($idAbrangencia)) {
+            if (empty($idAbrangencia)) {
                 $retorno = $tblAbrangencia->insert($dadosAbrangencia);
             } else {
 
@@ -442,21 +455,23 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
                 // atualizar itens orcamentarios desta abrangencia
                 if (!empty($abrangencia)) {
 
-                    $dadosAbrangenciaPlanilha  = array(
+                    $dadosAbrangenciaPlanilha = array(
                         'UfDespesa' => $dadosAbrangencia["iduf"],
                         'MunicipioDespesa' => $dadosAbrangencia["idmunicipioibge"]
                     );
                     $wherePlanilha = array('idProjeto = ?' => $this->idPreProjeto, 'idEtapa = ?' => 1, 'UfDespesa = ?' => $abrangencia['idUF'], 'MunicipioDespesa = ?' => $abrangencia['idMunicipioIBGE']);
 
                     $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-                    $retorno = $tbPlanilhaProposta->update($dadosAbrangenciaPlanilha,$wherePlanilha);
+                    $retorno = $tbPlanilhaProposta->update($dadosAbrangenciaPlanilha, $wherePlanilha);
+
+                    $msg = "Local de realiza&ccedil;&atilde;o alterado com sucesso!";
                 }
 
-                $whereAbrangencia['idAbrangencia = ?']  = $idAbrangencia;
+                $whereAbrangencia['idAbrangencia = ?'] = $idAbrangencia;
                 $retorno = $tblAbrangencia->update($dadosAbrangencia, $whereAbrangencia);
             }
         }
 
-        parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
+        parent::message($msg, "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
     }
 }
