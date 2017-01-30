@@ -569,7 +569,7 @@ table caption {
 	text-transform:uppercase;
 	font-size:11px;
 }
-table tfoot td {
+#conteudo table tfoot td {
 	background:#f3f3f3;
 	text-align:center;
 	word-spacing:.8em;
