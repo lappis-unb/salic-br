@@ -129,3 +129,26 @@ INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) V
 
 -- [ Novo órgão criado. OBS: já existe em PROD ]
 INSERT INTO sac.dbo.Orgaos (Codigo, Sigla, idSecretaria, Vinculo, Status, stVinculada) VALUES (682, 'SAV/DPAC', 160, 0, 0, null);
+
+
+/*
+  [ Adição de vínculo entre órgão, perfis e usuário ]
+
+  -- SAV
+  'Secretário do Audiovisual e órgão'
+  'Coordenador Geral de Acompanhamento e Prestação de Contas e órgão'
+  'Diretor de Departamento de Políticas Audiovisuais'
+
+  -- SEFIC
+  'Secretario de Fomento e Incentivo à Cultura e órgão'
+  'Coordenador-Geral de Admissibilidade e Aprovação e órgão'
+  'Diretor do Departamento de Incentivo à Produção Cultural'
+
+  OBS: Notei que esse insert é necessário para que exibir uma lista de perfis selecionáveis.
+*/
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 160, 149, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 166, 147, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 682, 148, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 251, 152, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 262, 150, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 341, 151, 1);
