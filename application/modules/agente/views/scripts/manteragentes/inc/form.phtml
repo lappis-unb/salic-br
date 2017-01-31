@@ -47,8 +47,8 @@ function filtroCNPJ()
 <table id="tabDados" class="tabela">
 	<tr>
 		<td colspan="2">
-			<input type="radio" name="Tipo" id="0" value="0" class="checkradio tipos" style="background: none; border: 0%; float:none; clear:auto; display:inline;" checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();" /> <label for="0">CPF</label> &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="Tipo" <?php // echo $this->grupoativo== 118 ? 'disabled="disabled"' : '';?> id="1" value="1" class="checkradio tipos" style="background: none; border: 0%; float:none; clear:auto; display:inline;" onclick="filtroCNPJ();" onkeypress="filtroCNPJ();" /> <label for="1">CNPJ</label>
+			<input type="radio" name="Tipo" id="0" value="0" class="checkradio tipos" style="background: none; border: 0%; float:none; clear:auto; display:inline;" checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();" /> CPF&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="Tipo" <?php // echo $this->grupoativo== 118 ? 'disabled="disabled"' : '';?> id="1" value="1" class="checkradio tipos" style="background: none; border: 0%; float:none; clear:auto; display:inline;" onclick="filtroCNPJ();" onkeypress="filtroCNPJ();" /> CNPJ
 			<br />
 			<label for="cpf"> </label>
 			<div class="left"></div>
@@ -62,7 +62,8 @@ function filtroCNPJ()
 
 			<div class="right"></div>
 			&nbsp; <span id="erroCpf" class="spanError"></span>
-			<input type="hidden" id="idAgente" name="idAgente" />
+
+            <input type="hidden" id="idAgente" name="idAgente" />
 		</td>
 		<td colspan="2">
 			<label for="nome">Nome *</label>
@@ -301,10 +302,9 @@ function filtroCNPJ()
 	<tr>
 		<td colspan="2">
 			<label>Autorizo divulgar o endere&ccedil;o</label>
-			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarFoneS">Sim</label>
-			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarFoneN">N&atilde;o</label>
+			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> Sim
+
+			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> N&atilde;o
 		</td>
         <td colspan="2">
             <div class="botao_texto" style="float:right">
@@ -321,7 +321,7 @@ function filtroCNPJ()
 <!-- ========== INICIO FORMULARIO FONE ========== -->
 <table id="tabFone" class="tabela sumir">
 	<tr>
-		<th colspan="6">ADICIONE TELEFONES ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO!</th>
+		<th colspan="6">ADICIONE TELEFONES ATRAV&Eacute;S DO FORMUL&Aacute;RIO ABAIXO!</th>
 	</tr>
 	<tr>
 		<td>
@@ -368,9 +368,9 @@ function filtroCNPJ()
 			<label>Divulgar? *</label>
 			<br />
 			<input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarFoneS">Sim</label>
+			Sim
 			<input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarFoneN">N&atilde;o</label>
+			N&atilde;o
 		</td>
 		<td class="centro" width="3%">
 			<div class="botao_texto">
@@ -386,7 +386,7 @@ function filtroCNPJ()
 <!-- ========== INICIO FORMULARIO E-MAIL ========== -->
 <table id="tabEmail" class="tabela sumir">
 	<tr>
-		<th colspan="6">ADICIONE E-MAILS ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO</th>
+		<th colspan="6">ADICIONE E-MAILS ATRAV&Eacute;S DO FORMUL&Aacute;RIO ABAIXO</th>
 	</tr>
 	<tr>
 		<td>
@@ -414,17 +414,17 @@ function filtroCNPJ()
 			<label>Posso Divulgar? *</label>
 			<br />
 			<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarEmailS">Sim</label>
+			Sim
 			<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-			<label for="divulgarEmailN">N&atilde;o</label>
+			N&atilde;o
 		</td>
 		<td>
 			<label>Para correpond&ecirc;ncia? *</label>
 			<br />
 			<input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-			<label for="enviarEmailS">Sim</label>
+			Sim
 			<input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-			<label for="enviarEmailN">N&atilde;o</label>
+			N&atilde;o
 		</td>
 		<td class="centro" width="3%">
 			<div class="botao_texto">
