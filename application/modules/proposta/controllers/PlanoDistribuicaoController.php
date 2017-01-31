@@ -270,4 +270,22 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
 
         $this->view->planosDistribuicao=($rsPlanoDistribuicao);
     }
+
+    public function detalharSalvarAction()
+    {
+        $dados = $this->getRequest()->getPost();
+        $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+        $detalhamento->salvar($dados);
+
+        $this->_helper->json(array('data' => $dados, 'success' => 'true'));
+    }
+
+    public function detalharMostrarAction()
+    {
+        $dados = $this->getRequest()->getParam('idPlanoDistribuicao');
+        $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+        $dados = $detalhamento->mostrar($dados);
+
+        $this->_helper->json(array('data' => $dados->toArray(), 'success' => 'true'));
+    }
 }
