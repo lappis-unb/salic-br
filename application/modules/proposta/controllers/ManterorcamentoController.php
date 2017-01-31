@@ -405,7 +405,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $idMunicipio    = $params['idMunicipio'];
         $etapa          = $params['etapa'];
 
-        if( !empty( $params['idPlanilhaProposta']) ) { // editar item91141824
+        if( !empty( $params['idPlanilhaProposta']) ) { // editar item
 
 
             $idProposta = $params['idPreProjeto'];

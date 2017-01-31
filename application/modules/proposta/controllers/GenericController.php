@@ -9,7 +9,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     private $_movimentacaoAlterarProposta = '95';
 
-    private $_situacaoAlterarProjeto = 'E09'; // @todo situacao correta 'E90'
+    private $_situacaoAlterarProjeto = 'E90'; // @todo situacao correta 'E90'
 
     public function init()
     {
@@ -251,4 +251,12 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             }
         }
     }
+
+    public function calcularValorTotalProjeto($totalSolicitado) {
+        $custoAdministrativo = $totalSolicitado * 0.15;
+        $divulgacao = $totalSolicitado * 0.2;
+        $remuneracaoCaptacaoRecurso = $totalSolicitado * 0.1;
+        $controleAuditoria = $totalSolicitado * 0.1;
+        $totalProjeto = $totalSolicitado + $custoAdministrativo + $divulgacao + $remuneracaoCaptacaoRecurso + $controleAuditoria;
+    ?>
 }
