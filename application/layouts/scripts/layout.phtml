@@ -63,8 +63,15 @@
             </li>
         </ul>
     </div>
+
+    <?php
+    $logoLink =  $this->url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''), '', true);
+    if( isset($auth['usu_codigo']) && !isset($auth['cpf']) ) {
+        $logoLink =  $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => ''), '', true);
+    }
+    ?>
     <div id="logo">
-        <h1><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura">Salic</a></h1>
+        <h1><a href="<?php echo $logoLink; ?>" title="Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura">Salic</a></h1>
     </div>
     </div>
         <?php
