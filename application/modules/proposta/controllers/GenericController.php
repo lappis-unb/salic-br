@@ -141,7 +141,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             $fonteRecurso = '109'; // incentivo fiscal
 
             // fazer uma busca geral
-            $TPP = new Proposta_Model_DbTable_PlanilhaProposta();
+            $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
             // @todo fazer uma busca mais leve, nao precisa dos joins
             $todosItensPlanilha = $TPP->buscarCustos($idPreProjeto, 'P', '', '', '', '', 109); // apenas itens de incentivo fiscal
@@ -250,14 +250,5 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                 }
             }
         }
-    }
-
-    public function calcularValorTotalProjeto($totalSolicitado)
-    {
-        $custoAdministrativo = $totalSolicitado * 0.15;
-        $divulgacao = $totalSolicitado * 0.2;
-        $remuneracaoCaptacaoRecurso = $totalSolicitado * 0.1;
-        $controleAuditoria = $totalSolicitado * 0.1;
-        $totalProjeto = $totalSolicitado + $custoAdministrativo + $divulgacao + $remuneracaoCaptacaoRecurso + $controleAuditoria;
     }
 }

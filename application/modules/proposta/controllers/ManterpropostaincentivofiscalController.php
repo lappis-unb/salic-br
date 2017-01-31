@@ -595,9 +595,13 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $this->view->projeto = array_change_key_case((array)$projeto2[0]);
             }
 
+            $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, 109);
+            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, false, 109);
+
+            $this->view->valorsolicitadoincentivo = !empty( $fonteincentivo['soma'] ) ? $fonteincentivo['soma'] : 0;
+            $this->view->valoroutrasfontes = !empty( $outrasfontes['soma'] ) ? $outrasfontes['soma'] : 0;
         }
-
-
     }
 
     public function responsabilidadesocialAction()

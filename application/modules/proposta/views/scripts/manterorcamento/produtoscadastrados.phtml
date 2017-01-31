@@ -3,15 +3,6 @@
 <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
-<script>
-    $(document).ready(function(){
-
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
-        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
-        JSBloquearAlteracaoFormulario();
-        <?php endif; ?>
-    });
-</script>
 <style>
 
     #toast-container div {
@@ -327,8 +318,6 @@
     .modal.modal-pre-loader {
         width: 300px;
         height: 180px;
-        /*top: 50% !important;*/
-        /*margin-top: -200px !important;*/
         padding: 10px;
     }
 
@@ -390,6 +379,12 @@
 </div>
 
 <script>
+
+$(document).ready(function(){
+    <?php if (!$this->isEditavel) : ?>
+        JSBloquearAlteracaoFormulario();
+    <?php endif; ?>
+});
 
 $3( document ).ajaxStart(function() {
     $3('#modal-pre-loader').modal('open');

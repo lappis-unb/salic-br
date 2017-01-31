@@ -72,15 +72,19 @@
     </tr>
     <tr>
         <td align="center"><b><?php echo @number_format($this->projeto['valorsolicitado'], 2, ",", "."); ?></b></td>
-        <td align="center"><b><font
-                    color="#009900"><?php echo @number_format($this->projeto['valorsolicitado'], 2, ",", "."); ?></font></b>
+        <td align="center">
+            <b>
+                <a style="color: #009900 !important;" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $this->proposta['idpreprojeto'])) ?>">
+                    <?php echo @number_format($this->valorsolicitadoincentivo, 2, ",", "."); ?>
+                </a>
+            </b>
         </td>
         <td align="center"><b><font
-                    color="#CC0000"><?php echo @number_format($this->projeto['outrasfontes'], 2, ",", "."); ?></font></b>
+                    color="#CC0000"><?php echo @number_format($this->valoroutrasfontes, 2, ",", "."); ?></font></b>
         </td>
         <td align="center">
             <b><font
-                    color=\"#0000FF\"><?php echo @number_format(($this->projeto->ValorSolicitado + $this->projeto->OutrasFontes), 2, ",", "."); ?></font></b>
+                    color=\"#0000FF\"><?php echo @number_format(($this->valorsolicitadoincentivo + $this->valoroutrasfontes), 2, ",", "."); ?></font></b>
         </td>
         <td align="center"><b>
                 <?php if ($this->projeto['ValorCaptado'] > 0): ?>
@@ -105,6 +109,27 @@
                    value="<?php if (isset($this->proposta['idpreprojeto']))
                        echo str_replace("'", "", str_replace("\"", "", ($this->proposta['nomeprojeto'])));
                    ?>"/>
+        </td>
+    </tr>
+
+    <tr class="destacar centro">
+        <td colspan="5"><b>Resumo do Projeto</b></td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <p class="caption">No resumo do projeto, o resumo deve descrever o que se pretende
+                realizar, limitado ao m&aacute;ximo de 1000 caracteres. Trata-se de uma s&iacute;ntese
+                com as
+                informa&ccedil;&otilde;es essenciais fazendo refer&ecirc;ncia ao(s) produto(s)
+                cadastrado(s) no Plano de Distribui&ccedil;&atilde;o.<br/> A leitura do resumo
+                deve
+                responder &agrave; quest&atilde;o: O QU&Ecirc;? *</p>
+
+            <textarea id="resumodoprojeto" class="browser-default editor"
+                      name="resumodoprojeto" <?php echo isset($this->arrConfig['resumodoprojeto']['disabled']) ? 'disabled="disabled"' : '' ?>>
+                                 <?php if (isset($this->proposta['resumodoprojeto'])) echo $this->proposta['resumodoprojeto']; ?>
+                                </textarea>
+            <!--                                <label for="resumodoprojeto" class="active">Justificativa *</label>-->
         </td>
     </tr>
 </table>
