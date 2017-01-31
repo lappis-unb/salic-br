@@ -123,7 +123,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
             foreach ($dados as $v) {
-                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
+                $rsAgente = $tblAgente->buscarAgenteENome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
                 $rsDirigentes[$rsAgente->idAgente]['CNPJCPFDirigente'] = $rsAgente->CNPJCPF;
                 $rsDirigentes[$rsAgente->idAgente]['idAgente'] = $rsAgente->idAgente;
                 $rsDirigentes[$rsAgente->idAgente]['NomeDirigente'] = $rsAgente->Descricao;
@@ -418,7 +418,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->view->proposta = $rsProposta;
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
+        $rsAgente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
         $this->view->agente = $rsAgente;
 
         $idPreProjeto = $this->idPreProjeto;
@@ -609,7 +609,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
+        $rsAgente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
 
         $cnpjcpf = $rsAgente->CNPJCPF;
 
@@ -779,7 +779,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
             foreach ($dados as $v) {
-                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
+                $rsAgente = $tblAgente->buscarAgenteENome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
                 $rsDirigentes[$rsAgente->idAgente]['CNPJCPFDirigente'] = $rsAgente->CNPJCPF;
                 $rsDirigentes[$rsAgente->idAgente]['idAgente'] = $rsAgente->idAgente;
                 $rsDirigentes[$rsAgente->idAgente]['NomeDirigente'] = $rsAgente->Descricao;
@@ -2741,7 +2741,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
             foreach ($dados as $v) {
-                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
+                $rsAgente = $tblAgente->buscarAgenteENome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
                 $rsDirigentes[$rsAgente->idAgente]['CNPJCPFDirigente'] = $rsAgente->CNPJCPF;
                 $rsDirigentes[$rsAgente->idAgente]['idAgente'] = $rsAgente->idAgente;
                 $rsDirigentes[$rsAgente->idAgente]['NomeDirigente'] = $rsAgente->Descricao;

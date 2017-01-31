@@ -491,7 +491,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $dados['a.CNPJCPF = ?'] = $cpf;
 
         $agentes = new Agente_Model_DbTable_Agentes();
-        $result = $agentes->buscarAgenteNome($dados);
+        $result = $agentes->buscarAgenteENome($dados);
 
         $a = 0;
         if(count($result) > 0){

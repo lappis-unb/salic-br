@@ -29,7 +29,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     /**
      * @todo foram comentados os tratamentos de acordo com o pefil, temporariamente
      * @todo Validar quando o botão "Finalizar" deve ser exibido
-     * @todo Adicionar ícones aos bot&otilde;es
      */
     public function gerenciarProjetosAction()
     {
@@ -56,7 +55,38 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     {
         $get = Zend_Registry::get('get');
         $this->view->IdPRONAC = $get->IdPRONAC;
-        //throw new Exception("@todo implementar!");
+
+        $objProjeto = new Projetos();
+        $this->view->projeto = $objProjeto->findBy(array(
+            'IdPRONAC' => $this->view->IdPRONAC
+        ));
+
+        $this->view->valoresProjeto = $objProjeto->obterValoresProjeto($this->view->IdPRONAC);
+
+        $objAgentes = new Agente_Model_DbTable_Agentes();
+        $dadosAgente = $objAgentes->buscarFornecedor(array(
+            'a.CNPJCPF = ?' => $this->view->projeto['CgcCpf']
+        ));
+        $arrayDadosAgente = $dadosAgente->current();
+        $this->view->nomeAgente = $arrayDadosAgente['nome'];
+
+        $mapperArea = new Agente_Model_AreaMapper();
+        $this->view->areaCultural = $mapperArea->findBy(array(
+            'Codigo' => $this->view->projeto['Area']
+        ));
+
+        $objSegmentocultural = new Segmentocultural();
+        $this->view->segmentoCultural = $objSegmentocultural->findBy(array(
+            'Codigo' => $this->view->projeto['Segmento']
+        ));
+//xd($this->view->areaCultural, $this->view->segmentoCultural);
+        $objEnquadramento = new Enquadramento();
+        $arrayPesquisa = array(
+            'AnoProjeto' => $this->view->projeto['AnoProjeto'],
+            'Sequencial' => $this->view->projeto['Sequencial'],
+            'IdPRONAC' => $this->view->projeto['IdPRONAC']
+        );
+        $arrayEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
     }
 
     /**

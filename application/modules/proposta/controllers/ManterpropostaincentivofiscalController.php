@@ -195,7 +195,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $arrBusca = array();
         $arrBusca['a.idagente = ?'] = $post->idAgente;
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
+        $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
 
         if ($rsProponente) {
             $rsProponente = $rsProponente->toArray();
@@ -419,7 +419,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
+        $rsProponente = $tblAgente->buscarAgenteENome($arrBuscaProponete)->current();
 
         $arrDados = array("proposta" => $rsPreProjeto,
             "proponente" => $rsProponente);
@@ -458,7 +458,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idAgente'];
             $tblAgente = new Agente_Model_DbTable_Agentes();
-            $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
+            $rsProponente = $tblAgente->buscarAgenteENome($arrBuscaProponete)->current();
             if ($rsProponente) {
                 $rsProponente = ($rsProponente->toArray());
             }
@@ -625,7 +625,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
+        $rsProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
 

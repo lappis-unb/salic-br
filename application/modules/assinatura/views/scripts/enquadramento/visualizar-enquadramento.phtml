@@ -6,161 +6,234 @@
             'controller' => 'enquadramento',
             'action' => 'gerenciar-projetos'
         )),
-        array('Visualizar ' => array())
+        array('Enquadramento ' => array())
     );
     gerarBreadCrumb($links);
     ?>
     <div class="content padding20">
         <div class="row">
-            <div class="col s12 margin-bottom30">
+            <div class="col s1"></div>
+            <div class="col s10">
                 <h3>Enquadramento</h3>
             </div>
+            <div class="col s1"></div>
         </div>
         <div class="row">
-            <div class="col s3">
+            <div class="col s1"></div>
+            <div class="col s1">
                 <label>PRONAC</label>
-                <p>
-                    xxxx
+                <p class="bold padding20 bordered">
+                    <?php
+                        echo $this->projeto['AnoProjeto'] . $this->projeto['Sequencial'];
+                    ?>
                 </p>
             </div>
             <div class="col s9">
                 <label>Nome do Projeto</label>
-                <p>
-                    xxxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo $this->projeto['NomeProjeto'];
+                    ?>
                 </p>
             </div>
+            <div class="col s1"></div>
         </div>
         <div class="row">
-            <div class="col s3">
+            <div class="col s1"></div>
+            <div class="col s2">
                 <label>CNPJ / CPF</label>
-                <p>
-                    xxxx
-                </p>
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo $this->projeto['CgcCpf'];
+                    ?>
             </div>
-            <div class="col s9">
+            <div class="col s8">
                 <label>Proponente</label>
                 <br/>
-                <p>
-                    xxxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo $this->nomeAgente;
+                    ?>
                 </p>
             </div>
+            <div class="col s1"></div>
         </div>
         <div class="row">
+            <div class="col s1"></div>
             <div class="col s1">
                 <label>UF</label>
-                <p>
-                    xxxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo $this->projeto['UfProjeto'];
+                    ?>
                 </p>
             </div>
-            <div class="col s4">
+            <div class="col s3">
                 <label>&Aacute;rea Cultural</label>
-                <p>
-                    xxxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo $this->areaCultural['Descricao'];
+                    ?>
                 </p>
             </div>
             <div class="col s4">
                 <label>Segmento Cultural</label>
-                <p>
-                    xxxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo $this->segmentoCultural['Descricao'];
+                    ?>
                 </p>
             </div>
-            <div class="col s3">
+            <div class="col s2">
                 <label>Per&iacute;odo de Execu&ccedil;&atilde;o</label>
-                <p>
-                    <b>xxxx</b>
+                <p class="padding20 bordered">
+                    <b>
+                        <?php
+                        echo Data::tratarDataZend($this->projeto['DtInicioExecucao'], 'Brasileira');
+                        ?>
+                    </b>
                     a
-                    <b>xxxx</b>
+                    <b>
+                        <?php
+                        echo Data::tratarDataZend($this->projeto['DtFimExecucao'], 'Brasileira');
+                        ?>
+                    </b>
                 </p>
             </div>
+            <div class="col s1"></div>
         </div>
         <div class="row margin-bottom30"></div>
         <div class="row">
-            <div class="col s2">
+            <div class="col s1"></div>
+            <div class="col s2 center-align">
                 <label>
                     Vl. Solicita&ccedil;&atilde;o
                     <br/>
                     (A)
                 </label>
-                <p>
-                    xxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo @number_format($this->valoresProjeto['ValorSolicitado'], 2, ",", ".");
+                    ?>
                 </p>
             </div>
-            <div class="col s2">
+            <div class="col s2 center-align">
                 <label>
                     Vl. Outras Fontes
                     <br/>
                     (B)
                 </label>
-                <p>
-                    xxx
+                <p class="bold padding20 bordered">
+                    <font color="#CC0000"><?php echo @number_format($this->valoresProjeto['OutrasFontes'], 2, ",", "."); ?></font>
                 </p>
             </div>
-            <div class="col s2">
+            <div class="col s2 center-align">
                 <label>
                     Vl. Proposta
                     <br/>
                     (C = A + B)
                 </label>
-                <p>
-                    xxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    echo "<a href=\"#\" onclick=\"carregaDados('"
+                        . $this->url(array(
+                            'controller' => 'consultardadosprojeto',
+                            'action' => 'planilha-orcamentaria'
+                        ))
+                        . "?idPronac=".$this->idPronac."','conteudo'); return false\" title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">"
+                        . @number_format(($this->valoresProjeto['ValorSolicitado'] + $this->valoresProjeto['OutrasFontes']), 2, ",", ".")
+                        . "</font></a>";
+                    ?>
                 </p>
             </div>
-            <div class="col s2">
+            <div class="col s2 center-align">
                 <label>
                     Vl. Aprovado
                     <br/>
                     (D)
                 </label>
-                <p>
-                    xxx
+                <p class="bold padding20 bordered">
+                    <?php
+                    if ($this->valoresProjeto['ValorAprovado'] > 0):
+                        echo "<a href=\"#\" onclick=\"carregaDados('"
+                            . $this->url(array(
+                            'controller' => 'consultardadosprojeto',
+                                'action' => 'planilha-orcamentaria-aprovada'
+                            ))
+                            . "?idPronac="
+                            . $this->idPronac
+                            . "','conteudo'); return false\" 
+                            title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">"
+                            . @number_format(($this->valoresProjeto['ValorAprovado']), 2, ",", ".")
+                            . "</font></a>";
+                    else :
+                        echo @number_format(($this->valoresProjeto['ValorAprovado']), 2, ",", ".");
+                    endif;
+                    ?>
                 </p>
             </div>
-            <div class="col s4">
+            <div class="col s2 center-align">
                 <label>
                     Vl. Projeto
                     <br/>
                     (E = B + D)
                 </label>
-                <p>
-                    xxx
+                <p class="bold padding20 bordered">
+                    <?php echo @number_format(($this->valoresProjeto['OutrasFontes'] + $this->valoresProjeto['ValorAprovado']), 2, ",", "."); ?>
                 </p>
             </div>
+            <div class="col s1"></div>
         </div>
         <div class="row margin-bottom30"></div>
         <div class="row">
-            <label>S&iacute;ntese do Projeto</label>
-            <p class="bordered padding20">
-                xxxxxxxx
-            </p>
-        </div>
-        <div class="row">
-            <h5>Produ&ccedil;&atilde;o do Projeto</h5>
-            <div class="col s8">
-                <label>Produto</label>
-                <p class="bordered padding20">
-                    xxxxxxxx
-                </p>
-            </div>
-            <div class="col s4">
-                <label>Principal / Secund&aacute;rio</label>
-                <p class="bordered padding20">
-                    xxxxxxxx
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s2">
-                <label>Total Produzido</label>
-                <p class="bordered padding20">
-                    xxxxx
-                </p>
-            </div>
+            <div class="col s1"></div>
             <div class="col s10">
-                <label>Total de Receita Prevista</label>
-                <p class="bordered padding20">
-                    xxxxx
+                <label>S&iacute;ntese do Projeto</label>
+                <p class="padding20 bordered">
+                    <?php
+                    echo $this->projeto['ResumoProjeto'];
+                    ?>
                 </p>
             </div>
+            <div class="col s1"></div>
+        </div>
+        <div class="row margin-bottom30"></div>
+        <div class="row">
+            <div class="col s1"></div>
+            <div class="col s10">
+                <h5>Produ&ccedil;&atilde;o do Projeto</h5>
+                <div class="bordered padding20">
+                    <div class="row">
+                        <div class="col s8">
+                            <label>Produto</label>
+                            <p class=" padding20 bordered">
+                                xxxxxxxx
+                            </p>
+                        </div>
+                        <div class="col s4">
+                            <label>Principal / Secund&aacute;rio</label>
+                            <p class=" padding20 bordered">
+                                xxxxxxxx
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s2">
+                            <label>Total Produzido</label>
+                            <p class=" padding20 bordered">
+                                xxxxx
+                            </p>
+                        </div>
+                        <div class="col s10">
+                            <label>Total de Receita Prevista</label>
+                            <p class=" padding20 bordered">
+                                xxxxx
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s1"></div>
         </div>
         <div class="row center-align">
             <a class="btn waves-effect waves-dark"

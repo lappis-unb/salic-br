@@ -1302,7 +1302,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         if (count($validapronac) > 0) {
             $listaparecer = $projeto->buscarTodosDadosProjeto($validapronac[0]->IdPRONAC);
             $agente = new Agente_Model_DbTable_Agentes();
-            $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $listaparecer[0]->CgcCpf));
+            $agente = $agente->buscarAgenteENome(array("CNPJCPF = ?" => $listaparecer[0]->CgcCpf));
             if (count($agente) > 0) {
                 $this->view->agente = $agente[0]['Descricao'];
             } else {
@@ -1335,7 +1335,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
         if (strlen($cpf) == 11 or strlen($cpf) == 14) {
             $agente = new Agente_Model_DbTable_Agentes();
-            $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $cpf));
+            $agente = $agente->buscarAgenteENome(array("CNPJCPF = ?" => $cpf));
 
             $inabilitados = new Inabilitado();
 
