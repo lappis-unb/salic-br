@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Description of Projetos
- *
- * @author augusto
- */
 class Projetos extends MinC_Db_Table_Abstract
 {
 
@@ -15,6 +10,7 @@ class Projetos extends MinC_Db_Table_Abstract
     public $_total = 0;
     public $_totalRegistros;
     private $codOrgao = null;
+
 
     public function montarFiltrosListaProjetosDeUsuario($consulta, stdClass $objParam)
     {
@@ -3805,7 +3801,7 @@ class Projetos extends MinC_Db_Table_Abstract
                         sac.dbo.fnCustoProjeto (pr.AnoProjeto,pr.Sequencial) as ValorCaptado,
                         CASE
                             WHEN inab.Habilitado = 'S' THEN 'Sim'
-                            WHEN inab.Habilitado = 'N' THEN 'N�o'
+                            WHEN inab.Habilitado = 'N' THEN 'N&atilde;o'
                             WHEN inab.Habilitado = '' THEN 'Sim'
                             WHEN inab.Habilitado is null THEN 'Sim'
                         END AS Habilitado, pr.Situacao, si.Descricao AS dsSituacao
@@ -6010,7 +6006,8 @@ class Projetos extends MinC_Db_Table_Abstract
                             s.Descricao as Segmento, p.Mecanismo as idMecanismo, m.Descricao as Mecanismo,p.Situacao + ' - ' + si.Descricao as Situacao,
                             convert(varchar(10),DtSituacao,103) as DtSituacao,
                             CAST(p.ProvidenciaTomada AS TEXT) AS ProvidenciaTomada,
-                            isnull(sac.dbo.fnValorDaProposta(idProjeto),sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)) as ValorProposta,
+                            isnull(sac.dbo.fnValorDaProposta(idProjeto),
+                            sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)) as ValorProposta,
                             sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial) as ValorSolicitado,
                             sac.dbo.fnOutrasFontes(p.idPronac) as OutrasFontes,
                             case
@@ -7308,7 +7305,6 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-
     public function obterInteressadoProjeto($idPronac) {
 
         $objQuery = $this->select();
@@ -7329,4 +7325,36 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->_db->fetchRow($objQuery);
     }
 
+    public function obterValoresProjeto($idPronac) {
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            array(
+                'projetos' => $this->_name
+            )
+            ,array(
+                "ValorProposta" => new Zend_Db_Expr("sac.dbo.fnValorSolicitado(projetos.AnoProjeto,projetos.Sequencial)"),
+                "ValorSolicitado" => new Zend_Db_Expr("sac.dbo.fnValorSolicitado(projetos.AnoProjeto,projetos.Sequencial)") ,
+                "OutrasFontes" => new Zend_Db_Expr("sac.dbo.fnOutrasFontes(projetos.idPronac)"),
+                "ValorAprovado" => new Zend_Db_Expr(
+                    "case when projetos.Mecanismo ='2' or projetos.Mecanismo ='6'
+                        then sac.dbo.fnValorAprovadoConvenio(projetos.AnoProjeto,projetos.Sequencial)
+                     else 
+                        sac.dbo.fnValorAprovado(projetos.AnoProjeto,projetos.Sequencial)
+                     end"
+                ),
+                "ValorProjeto" => new Zend_Db_Expr(
+                    "case when projetos.Mecanismo ='2' or projetos.Mecanismo ='6'
+                     then sac.dbo.fnValorAprovadoConvenio(projetos.AnoProjeto,projetos.Sequencial)
+                     else sac.dbo.fnValorAprovado(projetos.AnoProjeto,projetos.Sequencial) + sac.dbo.fnOutrasFontes(projetos.idPronac) 
+                      end "
+                ),
+                "ValorCaptado" => new Zend_Db_Expr("sac.dbo.fnCustoProjeto (projetos.AnoProjeto,projetos.Sequencial)"),
+            )
+        );
+        $objQuery->where('projetos.IdPRONAC = ?', $idPronac);
+//xd($objQuery->assemble());
+        return $this->_db->fetchRow($objQuery);
+    }
+    
 }
