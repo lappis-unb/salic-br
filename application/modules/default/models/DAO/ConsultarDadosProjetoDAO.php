@@ -45,7 +45,7 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                             CASE
                                 WHEN Enquadramento = \'1\' THEN \'Artigo 26\'
                                 WHEN Enquadramento = \'2\' THEN \'Artigo 18\'
-                                ELSE \'N�o enquadrado\'
+                                ELSE \'N&atilde;o enquadrado\'
                             END as Enquadramento')
                          ),
                     'SAC.dbo')
