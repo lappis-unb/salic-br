@@ -300,6 +300,10 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             if (!empty($abrangencia)) {
                 $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $excluir = $tbPlanilhaProposta->deleteBy(array('idProjeto' => $this->idPreProjeto, 'idEtapa' => 1, 'UfDespesa' => $abrangencia['idUF'], 'MunicipioDespesa' => $abrangencia['idMunicipioIBGE']));
+
+                if($excluir) {
+                    $this->salvarcustosvinculados($this->idPreProjeto);
+                }
             }
 
             //Exclui registro da tabela abrangencia
