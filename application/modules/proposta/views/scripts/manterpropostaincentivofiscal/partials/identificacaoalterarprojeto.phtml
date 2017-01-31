@@ -6,7 +6,7 @@
     </tr>
     <tr>
         <td align="center"><?php echo isset($this->projeto['nrprojeto']) ? $this->projeto['nrprojeto'] : ''; ?></td>
-        <td align="center"><?php echo isset($this->projeto['nomeprojeto']) ? $this->projeto['nomeprojeto'] : ''; ?></td>
+        <td align="center"><?php echo isset($this->proposta['nomeprojeto']) ? $this->proposta['nomeprojeto'] : ''; ?></td>
         <td align="center"><?php echo !empty($this->proponente['descricao']) ? $this->proponente['descricao'] : ''; ?></td>
     </tr>
     <tr class="destacar">
@@ -90,6 +90,21 @@
                     <?php echo @number_format($this->projeto['ValorCaptado'], 2, ",", "."); ?>
                 <?php endif; ?>
             </b>
+        </td>
+    </tr>
+</table>
+
+<table class="tabela" cellpadding="1" cellspacing="1">
+    <tr class="destacar centro">
+        <td colspan="5"><b>Identifica&ccedil;&atilde;o do Projeto</b></td>
+    </tr>
+    <tr class="esquerda">
+        <td colspan="5">Nome do projeto *
+            <input type="text" class="input_simples" name="nomeProjeto" id="nomeProjeto"
+                   maxlength="500" title="Nome do Projeto" style="width:50em;"
+                   value="<?php if (isset($this->proposta['idpreprojeto']))
+                       echo str_replace("'", "", str_replace("\"", "", ($this->proposta['nomeprojeto'])));
+                   ?>"/>
         </td>
     </tr>
 </table>
