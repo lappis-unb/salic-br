@@ -602,6 +602,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             $this->view->valorsolicitadoincentivo = !empty( $fonteincentivo['soma'] ) ? $fonteincentivo['soma'] : 0;
             $this->view->valoroutrasfontes = !empty( $outrasfontes['soma'] ) ? $outrasfontes['soma'] : 0;
         }
+
     }
 
     public function responsabilidadesocialAction()
