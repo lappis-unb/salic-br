@@ -28,6 +28,10 @@
                         $totalReceita += $receita;
                         ?>
                     <tr>
+                        <td class="centro">
+                            <input type="hidden" id="idPlanoDistribuicao"  value="<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>"/>
+                            <?php echo $planoDistribuicao->idPlanoDistribuicao; ?>
+                        </td>
                         <td class="centro"><?php echo $planoDistribuicao->Produto; ?></td>
                         <td class="centro"><?php echo $planoDistribuicao->DescricaoArea; ?></td>
                         <td align="right"><?php echo $planoDistribuicao->DescricaoSegmento; ?></td>
@@ -41,7 +45,9 @@
             </table>
             <input type="button" class="btn_novo" id="btn_novo"  />
 
+
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.1.1/vue-resource.min.js"></script>
 <div id="app-6">
     <div class="row">
         <div class="col s12">
@@ -127,28 +133,46 @@
         <div class="col s12">
             <form>
                 <div class="row">
-                    <table class="bordered green lighten-5">
+                    <table class="bordered ">
                         <thead>
                             <tr>
-                                <th>Categoria</th>
-                                <th>Quantidade de exemplar / Ingresso</th>
-                                <th>Divulga&ccedil;&atilde;o até: <br> {{divulgacao}}</th>
-                                <th>Patrocinador: <br>{{ patrocinador }} de {{quantidade * 0.1}}</th>
-                                <th>Popula&ccedil;&atilde;o {{ populacao }} de {{quantidade * 0.3}}</th>
-                                <th>Quantidade de Inteira</th>
-                                <th>Quantidade de Meia Entrada</th>
-                                <th>Pre&ccedil;o Unitario do Ingresso</th>
-                                <th>Valor da inteira</th>
-                                <th>Valor da meia entrada</th>
-                                <th>Quantidade de Inteira</th>
-                                <th>Quantidade de Meia Inteira</th>
-                                <th>Pre&ccedil;o Unitario do Ingresso</th>
-                                <th>Valor da inteira</th>
-                                <th>Valor da meia entrada</th>
-                                <th>Receita Prevista</th>
-                                <th>A&ccedil;&atilde;o</th>
+                                <th></th>
+                                <th></th>
+                                <th class="center" colspan="8">At&eacute; 50%</th>
+                                <th class="center" colspan="5">At&eacute; 50%</th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2">Categoria</th>
+                                <th rowspan="2">Quantidade de exemplar / Ingresso</th>
+                                <th class="center green lighten-4" colspan="3">
+                                    Distribui&ccedil;&atilde;o Gratuita (no minimo 30%)
+                                </th>
+                                <th class="center red lighten-4"colspan="5">
+                                    Pre&ccedil;o Popular (at&eacute; 20%)
+                                </th>
+                                <th  class="center lime lighten-3" colspan="5">
+                                    Proponente
+                                </th>
+                                <th rowspan="2">Receita Prevista</th>
+                                <th rowspan="2">A&ccedil;&otildees</th>
+                            </tr>
+                            <tr>
+                                <th class="green lighten-4" >Divulga&ccedil;&atilde;o</th>
+                                <th class="green lighten-4" >Patrocinador</th>
+                                <th class="green lighten-4" >Popula&ccedil;&atilde;o</th>
+                                <th class="red lighten-4">Quantidade de Inteira</th>
+                                <th class="red lighten-4">Quantidade de Meia Entrada</th>
+                                <th class="red lighten-4">Pre&ccedil;o Unitario do Ingresso</th>
+                                <th class="red lighten-4">Valor da inteira</th>
+                                <th class="red lighten-4">Valor da meia entrada</th>
+                                <th class="lime lighten-3" >Quantidade de Inteira</th>
+                                <th class="lime lighten-3" >Quantidade de Meia Inteira</th>
+                                <th class="lime lighten-3" >Pre&ccedil;o Unitario do Ingresso</th>
+                                <th class="lime lighten-3" >Valor da inteira</th>
+                                <th class="lime lighten-3" >Valor da meia entrada</th>
                             </tr>
                         </thead>
+                        <tbody class="bordered green lighten-5">
                         <tr>
                             <td>
                                 <div class="input-field  ">
@@ -162,7 +186,7 @@
                             </td>
                             <td>
                                 <div class="input-field">
-                                    <input v-model="divulgacao" >
+                                    <input v-model.number="divulgacao" >
                                 </div>
                             </td>
                             <td>
@@ -194,9 +218,10 @@
                             <td>{{ valorMeiaEntradaProponente }}</td>
                             <td>{{ receitaPrevista }}</td>
                             <td>
-                                <button class="btn" v-on:click="salvar">salvar</button>
+                                <button class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
             </form>
@@ -204,6 +229,18 @@
     </div>
 </div>
 <script type="text/javascript">
+    var lista = [];
+    $3.ajax({
+      type: "GET",
+      url: "/proposta/plano-distribuicao/detalhar-mostrar/idPreProjeto/239950",
+      data: {idPlanoDistribuicao: $3("#idPlanoDistribuicao").val()},
+      async : false,
+    })
+    .done(function(data) {
+        lista = data.data;
+    })
+    .fail(function(){ alert('error'); });
+
     var app6 = new Vue({
             el: '#app-6',
             data: {
@@ -212,7 +249,6 @@
                 divulgacao: 0,
                 patrocinador: 0.0,
                 populacao: 0.0,
-                //inteira: 0,
                 meiaEntrada: 0.0,
                 precoUnitarioIngresso: 0.0,
                 valorInteira: 0.0,
@@ -224,7 +260,13 @@
                 valorMeiaEntradaProponente: 0.0,
                 receitaPrevista: 0.0,
                 produto:{ },
-                produtos:[]
+                produtos: lista
+            },
+            mounted: function(){
+
+                    this.produtos = lista;
+                    console.log(this.produtos); ;
+
             },
             computed:{
                 inteira: function() {
@@ -243,7 +285,6 @@
                           total += this.produtos[i]['divulgacao'];
                     }
                     return total;
-
                 },
                  populacaoTotal :function(){
                     total = 0 ;
@@ -251,7 +292,6 @@
                           total += this.produtos[i]['populacao'];
                     }
                     return total;
-
                 },
                  patrocinadorTotal :function(){
                     total = 0 ;
@@ -266,7 +306,6 @@
                           total += parseInt(this.produtos[i]['inteira']);
                     }
                     return total;
-
                 },
                  meiaEntradaTotal:function(){
                     total = 0 ;
@@ -274,7 +313,6 @@
                           total += parseInt(this.produtos[i]['meiaEntrada']);
                     }
                     return total;
-
                 },
                  precoUnitarioIngressoTotal :function(){
                     total = 0 ;
@@ -282,7 +320,6 @@
                           total += parseFloat(this.produtos[i]['precoUnitarioIngresso']);
                     }
                     return total;
-
                 },
                  valorInteiraTotal :function(){
                     total = 0 ;
@@ -290,7 +327,6 @@
                           total += parseFloat(this.produtos[i]['valorInteira']);
                     }
                     return total;
-
                 },
                  valorMeiaEntradaTotal:function(){
                     total = 0 ;
@@ -298,7 +334,6 @@
                           total += parseFloat(this.produtos[i]['valorMeiaEntrada']);
                     }
                     return total;
-
                 },
                  quantidadeInteiraTotal:function(){
                     total = 0 ;
@@ -306,7 +341,6 @@
                           total += parseInt(this.produtos[i]['quantidadeInteira']);
                     }
                     return total;
-
                 },
                  quantidadeMeiaEntradaTotal:function(){
                     total = 0 ;
@@ -314,7 +348,6 @@
                           total += parseInt(this.produtos[i]['quantidadeMeiaEntrada']);
                     }
                     return total;
-
                 },
                  precoUnitarioIngressoProponenteTotal:function(){
                     total = 0 ;
@@ -369,6 +402,26 @@
                         this.patrocinador = this.quantidade * 0.1;
                     }
                 },
+                precoUnitarioIngresso: function() {
+                    console.log(this.precoUnitarioIngresso);
+                    if (this.precoUnitarioIngresso > 50.00) {
+                        alert('O valor não pode ser maior que 50.00');
+                        this.precoUnitarioIngresso = 50.00;
+                    }
+                },
+                produtos:function() {
+                    vue = this;
+                    $3.ajax({
+                      type: "GET",
+                      url: "/proposta/plano-distribuicao/detalhar-mostrar/idPreProjeto/239950",
+                      data: {idPlanoDistribuicao: $3("#idPlanoDistribuicao").val()},
+                    })
+                    .done(function(data) {
+                        vue.$data.produtos = data.data;
+                    })
+                    .fail(function(){ alert('error'); });
+
+                },
             },
             beforeUpdate: function() {
 
@@ -377,42 +430,65 @@
                 this.valorInteira = parseFloat((this.inteira * this.precoUnitarioIngresso)).toFixed(2);
                 this.valorMeiaEntrada = parseFloat( (this.precoUnitarioIngresso * 0.5) * this.meiaEntrada );
 
-                this.quantidadeInteira = ((this.quantidade *0.5) * 0.6).toFixed(2);
+                this.quantidadeInteira = ((this.quantidade *0.5) * 0.6);
 
-                this.quantidadeMeiaEntrada = ((this.quantidade *0.5) * 0.4).toFixed(2);
+                this.quantidadeMeiaEntrada = ((this.quantidade *0.5) * 0.4);
 
                 this.valorInteiraProponente = parseFloat( this.quantidadeInteira*this.precoUnitarioIngressoProponente ).toFixed(2);
                 this.valorMeiaEntradaProponente = parseFloat((this.precoUnitarioIngressoProponente * 0.5) * this.quantidadeMeiaEntrada);
 
                 this.receitaPrevista = ( parseInt(this.valorInteira) + parseFloat(this.valorMeiaEntrada)) + ( parseFloat(this.valorInteiraProponente) + parseFloat(this.valorMeiaEntradaProponente));
             },
-            //updated: function() {
-                //console.log(this.populacao);
-            //},
+            updated: function() {
+                //console.log(this.produtos);
+                //this.produtos
+
+            },
             methods: {
                 salvar:function(event){
-                    event.preventDefault();
+                    //event.preventDefault();
 
-                    this.produto = {
-                        categoria: this.categoria,
-                        quantidade: this.quantidade,
-                        divulgacao: this.divulgacao,
-                        patrocinador: this.patrocinador,
-                        populacao: this.populacao,
-                        inteira: this.inteira,
-                        meiaEntrada: this.meiaEntrada,
-                        precoUnitarioIngresso: this.precoUnitarioIngresso,
-                        valorInteira: this.valorInteira,
-                        valorMeiaEntrada: this.valorMeiaEntrada,
-                        quantidadeInteira : this.quantidadeInteira,
-                        quantidadeMeiaEntrada: this.quantidadeMeiaEntrada,
-                        precoUnitarioIngressoProponente: this.precoUnitarioIngressoProponente,
-                        valorInteiraProponente: this.valorInteiraProponente,
-                        valorMeiaEntradaProponente: this.valorMeiaEntradaProponente,
-                        receitaPrevista: this.receitaPrevista,
+                    p = {
+                        idPlanoDistribuicao: $3("#idPlanoDistribuicao").val(),
+                        idUF: 1,
+                        idMunicipio: 1,
+                        dsProduto: this.categoria,
+                        qtExemplares: this.quantidade,
+                        qtDistribuicaoGratuitaDivulgacao: this.divulgacao,
+                        qtDistribuicaoGratuitaPatrocinador: this.patrocinador,
+                        qtDistribuicaoGratuitaPopulacao: this.populacao,
+                        qtPrecoPopularValorIntegral: this.inteira,
+                        qtPrecoPopularValorParcial: this.meiaEntrada,
+                        //precoUnitarioIngresso: this.precoUnitarioIngresso,
+                        vlUnitarioPrecoPopularValorIntegral: this.valorInteira,
+                        //valorMeiaEntrada: this.valorMeiaEntrada,
+                        qtPrecoProponenteValorIntegral : this.quantidadeInteira,
+                        qtPrecoProponenterValorParcial: this.quantidadeMeiaEntrada,
+                        //precoUnitarioIngressoProponente: this.precoUnitarioIngressoProponente,
+                        vlUnitarioPrecoProponenteValorIntegral: this.valorInteiraProponente,
+                        vlUnitarioPrecoProponenteValorParcial: this.valorMeiaEntradaProponente,
+                        vlReceitaPrevista: this.receitaPrevista,
                     }
 
-                    this.produtos.push(this.produto);
+                    vue = this;
+                    $3.ajax({
+                      type: "POST",
+                      url: "/proposta/plano-distribuicao/detalhar-salvar/idPreProjeto/239950",
+                      data: p,
+                    })
+                    .done(function() {
+                    })
+                    .fail(function(){ alert('error'); });
+
+                    $3.ajax({
+                      type: "GET",
+                      url: "/proposta/plano-distribuicao/detalhar-mostrar/idPreProjeto/239950",
+                      data: {idPlanoDistribuicao: $3("#idPlanoDistribuicao").val()},
+                    })
+                    .done(function(data) {
+                        vue.$data.produtos = data.data;
+                    })
+                    .fail(function(){ alert('error'); });
                 },
                 excluir: function(index){
                     this.produtos.splice(index, 1)
@@ -434,6 +510,7 @@
                 }
             }
         })
+
 </script>
                 </div>
             </div>
