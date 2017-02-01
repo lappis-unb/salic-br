@@ -452,40 +452,12 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
         } else {
 
-            if ($this->isEditarProjeto($this->idPreProjeto)) {
-                /*
-                * Quando o sistema abre a opcao de alterar projeto, o proponente
-                * nao pode ultrapassar o valor total inicialmente solicitado para incentivo fiscal(Fonte Recurso=109)
-                 * @todo parei aqui
-                */
+            if ($this->isEditarProjeto($idPreProjeto)) {
 
-                $totalItemSalvo = 0;
-
-                # Busca o valor total solicitado inicialmente
-                $tblProjetos = new Projetos();
-                $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $this->idPreProjeto));
-                $valorTotalIncentivoOriginal = $projeto['SolicitadoReal'];
-
-                # Faz a soma da planilha da proposta
-                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-                $valorTotalIncentivoAtual = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, 109);
-                $valorTotalIncentivoAtual = !empty($valorTotalIncentivoAtual['soma']) ? $valorTotalIncentivoAtual['soma'] : 0;
-
-                # Item atual
-                $totalItemAtual = $dados['Quantidade'] * $dados['ValorUnitario'] * $dados['Ocorrencia'];
-
-                # Se for editar tem que subtrair o valor anterior
-                if( !empty($params['idPlanilhaProposta']) ){
-
-                    $item = $tbPlanilhaProposta->findBy(array("idPlanilhaProposta = ?" => $params['idPlanilhaProposta']));
-
-                    if($item)
-                        $totalItemSalvo = $item['Quantidade'] * $item['Ocorrencia'] * $item['ValorUnitario'];
-                }
-                $verifica = $valorTotalIncentivoOriginal < ($valorTotalIncentivoAtual + ($totalItemAtual - $totalItemSalvo));
+                $verifica = $this->verificarSeUltrapassaValorOriginal($idPreProjeto, $dados);
 
                 if ($verifica && $dados['FonteRecurso'] == 109) {
-                    $return['msg'] = "O item cadastrado ultrapassa o valor original da proposta. Transa&ccedil;&atilde;o cancelada!";
+                    $return['msg'] = "O item cadastrado ultrapassa o valor original do projeto. Transa&ccedil;&atilde;o cancelada!";
                     $return['close'] = false;
                     $return['status'] = false;
                     $resultAlterarProjeto = false;
@@ -580,7 +552,49 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
         echo json_encode($return);
         die;
+    }
 
+    /*
+    * Quando o sistema abre a opcao de alterar projeto, o proponente
+    * nao pode ultrapassar o valor total inicialmente solicitado para incentivo fiscal(Fonte Recurso=109)
+    * @todo parei aqui
+    */
+    public function verificarSeUltrapassaValorOriginal($idPreProjeto, $dados)
+    {
+        $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+
+        $totalItemSalvo = 0;
+
+        # Busca o valor total solicitado inicialmente
+        $tblProjetos = new Projetos();
+        $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
+        $valorTotalIncentivoOriginal = $projeto['SolicitadoReal'];
+
+        $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
+
+        # Faz a soma da planilha da proposta
+        $somaPlanilhaPropostaProdutos = $TPP->somarPlanilhaPropostaProdutos($idPreProjeto, 109);
+        $somaPlanilhaPropostaProdutos = !empty($somaPlanilhaPropostaProdutos['soma']) ? $somaPlanilhaPropostaProdutos['soma'] : 0;
+
+        # Item atual
+        $totalItemAtual = $dados['Quantidade'] * $dados['ValorUnitario'] * $dados['Ocorrencia'];
+
+        # Se tiver editando um item, tem que subtrair o valor anterior
+        if (!empty($params['idPlanilhaProposta'])) {
+
+            $item = $tbPlanilhaProposta->findBy(array("idPlanilhaProposta = ?" => $params['idPlanilhaProposta']));
+
+            if ($item)
+                $totalItemSalvo = $item['Quantidade'] * $item['Ocorrencia'] * $item['ValorUnitario'];
+        }
+
+        # eh necessario calcular os custos vinculados com o novo item
+        $valorTotaldosProdutosIncentivados = $somaPlanilhaPropostaProdutos + ($totalItemAtual - $totalItemSalvo);
+        $custosvinculados = $this->somarTotalCustosVinculados($idPreProjeto, $valorTotaldosProdutosIncentivados);
+
+        $valorTotalProjetoIncentivo = $valorTotaldosProdutosIncentivados + $custosvinculados;
+
+        return ($valorTotalIncentivoOriginal < $valorTotalProjetoIncentivo);
     }
 
     /**
