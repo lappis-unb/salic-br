@@ -145,7 +145,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             new Zend_Db_Expr("
                 CASE
                   WHEN idProduto = 0
-                       THEN 'Administração do Projeto'
+                       THEN 'Administra&ccedil;&atilde;o do Projeto'
                        ELSE c.Descricao
                   END as Produto
             "),
@@ -209,7 +209,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             new Zend_Db_Expr("
                      CASE
                        WHEN b.idProduto = 0
-                            THEN 'Administração do Projeto'
+                            THEN 'Administra&ccedil;&atilde;o do Projeto'
                             ELSE c.Descricao
                        END as Produto
                  "),
