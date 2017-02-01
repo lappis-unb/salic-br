@@ -79,8 +79,13 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->view->segmentoCultural = $objSegmentocultural->findBy(array(
             'Codigo' => $this->view->projeto['Segmento']
         ));
-//xd($this->view->areaCultural, $this->view->segmentoCultural);
-        $objEnquadramento = new Enquadramento();
+
+        $objPlanoDistribuicaoProduto = new Projeto_Model_vwPlanoDeDistribuicaoProduto();
+        $this->view->dadosProducaoProjeto = $objPlanoDistribuicaoProduto->obterProducaoProjeto(array(
+            'IdPRONAC = ?' => $this->view->IdPRONAC
+        ));
+
+        $objEnquadramento = new Admissibilidade_Model_Enquadramento();
         $arrayPesquisa = array(
             'AnoProjeto' => $this->view->projeto['AnoProjeto'],
             'Sequencial' => $this->view->projeto['Sequencial'],

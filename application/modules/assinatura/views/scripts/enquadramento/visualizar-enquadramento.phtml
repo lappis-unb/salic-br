@@ -10,7 +10,7 @@
     );
     gerarBreadCrumb($links);
     ?>
-    <div class="content padding20">
+    <div class="content padding20 clearfix">
         <div class="row">
             <div class="col s1"></div>
             <div class="col s10">
@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col s1"></div>
-            <div class="col s1">
+            <div class="col s2">
                 <label>PRONAC</label>
                 <p class="bold padding20 bordered">
                     <?php
@@ -28,7 +28,7 @@
                     ?>
                 </p>
             </div>
-            <div class="col s9">
+            <div class="col s8">
                 <label>Nome do Projeto</label>
                 <p class="bold padding20 bordered">
                     <?php
@@ -40,14 +40,14 @@
         </div>
         <div class="row">
             <div class="col s1"></div>
-            <div class="col s2">
+            <div class="col s3">
                 <label>CNPJ / CPF</label>
                 <p class="bold padding20 bordered">
                     <?php
                     echo $this->projeto['CgcCpf'];
                     ?>
             </div>
-            <div class="col s8">
+            <div class="col s7">
                 <label>Proponente</label>
                 <br/>
                 <p class="bold padding20 bordered">
@@ -113,7 +113,7 @@
                 </label>
                 <p class="bold padding20 bordered">
                     <?php
-                    echo @number_format($this->valoresProjeto['ValorSolicitado'], 2, ",", ".");
+                    echo number_format($this->valoresProjeto['ValorSolicitado'], 2, ",", ".");
                     ?>
                 </p>
             </div>
@@ -123,8 +123,8 @@
                     <br/>
                     (B)
                 </label>
-                <p class="bold padding20 bordered">
-                    <font color="#CC0000"><?php echo @number_format($this->valoresProjeto['OutrasFontes'], 2, ",", "."); ?></font>
+                <p class="bold padding20 bordered red-text">
+                    <?php echo number_format($this->valoresProjeto['OutrasFontes'], 2, ",", "."); ?>
                 </p>
             </div>
             <div class="col s2 center-align">
@@ -141,7 +141,7 @@
                             'action' => 'planilha-orcamentaria'
                         ))
                         . "?idPronac=".$this->idPronac."','conteudo'); return false\" title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">"
-                        . @number_format(($this->valoresProjeto['ValorSolicitado'] + $this->valoresProjeto['OutrasFontes']), 2, ",", ".")
+                        . number_format(($this->valoresProjeto['ValorSolicitado'] + $this->valoresProjeto['OutrasFontes']), 2, ",", ".")
                         . "</font></a>";
                     ?>
                 </p>
@@ -204,32 +204,26 @@
                 <h5>Produ&ccedil;&atilde;o do Projeto</h5>
                 <div class="bordered padding20">
                     <div class="row">
-                        <div class="col s8">
-                            <label>Produto</label>
-                            <p class=" padding20 bordered">
-                                xxxxxxxx
-                            </p>
-                        </div>
-                        <div class="col s4">
-                            <label>Principal / Secund&aacute;rio</label>
-                            <p class=" padding20 bordered">
-                                xxxxxxxx
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s2">
-                            <label>Total Produzido</label>
-                            <p class=" padding20 bordered">
-                                xxxxx
-                            </p>
-                        </div>
-                        <div class="col s10">
-                            <label>Total de Receita Prevista</label>
-                            <p class=" padding20 bordered">
-                                xxxxx
-                            </p>
-                        </div>
+                        <table class="table margin0">
+                            <thead>
+                                <tr>
+                                    <th class=""><label>Produto</label></th>
+                                    <th><label>Tipo</label></th>
+                                    <th><label>Total Produzido</label></th>
+                                    <th><label>Total de Receita Prevista</label></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($this->dadosProducaoProjeto as $dadoProducaoProjeto): ?>
+                                <tr>
+                                    <td><?php echo $dadoProducaoProjeto['Produto'] ?></td>
+                                    <td><?php echo $dadoProducaoProjeto['tpProduto'] ?></td>
+                                    <td><?php echo number_format($dadoProducaoProjeto['QtdeProduzida'], 2, ',', '.') ?></td>
+                                    <td><?php echo number_format($dadoProducaoProjeto['ReceitaTotal'], 2, ',', '.') ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

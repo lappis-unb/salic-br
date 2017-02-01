@@ -348,7 +348,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                         $Parecer = new Parecer();
                         $Parecer->delete(array('IdPRONAC = ?' => $r->IdPRONAC, 'stAtivo = ?' => 1, 'idTipoAgente = ?' => 6));
 
-                        $Enquadramento = new Enquadramento();
+                        $Enquadramento = new Admissibilidade_Model_Enquadramento();
                         $Enquadramento->delete(array('IdPRONAC = ?' => $r->IdPRONAC));
                     }
                 }
@@ -790,7 +790,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
-                $enquadramentoDAO = new Enquadramento();
+                $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
                 $dadosEnquadramento = array(
                     'IdPRONAC'=> $idPronac,
                     'AnoProjeto' => $dadosProjeto[0]->AnoProjeto,
@@ -930,7 +930,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
-                $enquadramentoDAO = new Enquadramento();
+                $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
                 $dadosEnquadramento = array(
                     'IdPRONAC'=> $idPronac,
                     'AnoProjeto' => $dadosProjeto[0]->AnoProjeto,
@@ -1336,7 +1336,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
-                $enquadramentoDAO = new Enquadramento();
+                $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
                 $dadosEnquadramento = array(
                     'IdPRONAC'=> $idPronac,
                     'AnoProjeto' => $dadosProjeto[0]->AnoProjeto,

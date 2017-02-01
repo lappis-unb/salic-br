@@ -21,7 +21,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
 
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Enquadramento();
+        $enquadramento = new Admissibilidade_Model_Enquadramento();
 
         $this->view->dados = array();
         $ordenacao = array("projetos.DtSituacao asc");
@@ -86,7 +86,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
             $get = $this->getRequest()->getParams();
             $authIdentity = array_change_key_case((array)$auth->getIdentity());
-            $objEnquadramento = new Enquadramento();
+            $objEnquadramento = new Admissibilidade_Model_Enquadramento();
             $arrayDadosEnquadramento = $objEnquadramento->findBy(array('IdPRONAC = ?'=>$projeto['IdPRONAC']));
             $arrayArmazenamentoEnquadramento = array(
                 'AnoProjeto' => $projeto['AnoProjeto'],
@@ -98,7 +98,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 'IdPRONAC' => $get['IdPRONAC']
             );
 
-            $objEnquadramento = new Enquadramento();
+            $objEnquadramento = new Admissibilidade_Model_Enquadramento();
             if(!$arrayDadosEnquadramento) {
                 $objEnquadramento->inserir($arrayArmazenamentoEnquadramento);
             } else {
@@ -180,7 +180,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             throw new Exception("N&atilde;o foram encontradas Segmentos Culturais para o PRONAC informado.");
         }
 
-        $objEnquadramento = new Enquadramento();
+        $objEnquadramento = new Admissibilidade_Model_Enquadramento();
         $arrayPesquisa = array(
             'AnoProjeto' => $projeto['AnoProjeto'],
             'Sequencial' => $projeto['Sequencial'],
@@ -246,7 +246,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     private function carregarListaEncaminhamentoPortaria() {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Enquadramento();
+        $enquadramento = new Admissibilidade_Model_Enquadramento();
 
         $this->view->dados = array();
         $ordenacao = array("dias desc");
