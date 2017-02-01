@@ -74,7 +74,8 @@
         <td align="center"><b><?php echo @number_format($this->projeto['valorsolicitado'], 2, ",", "."); ?></b></td>
         <td align="center">
             <b>
-                <a style="color: #009900 !important;" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $this->proposta['idpreprojeto'])) ?>">
+                <a style="color: #009900 !important;"
+                   href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $this->proposta['idpreprojeto'])) ?>">
                     <?php echo @number_format($this->valorsolicitadoincentivo, 2, ",", "."); ?>
                 </a>
             </b>
@@ -100,36 +101,81 @@
 
 <table class="tabela" cellpadding="1" cellspacing="1">
     <tr class="destacar centro">
-        <td colspan="5"><b>Identifica&ccedil;&atilde;o do Projeto</b></td>
-    </tr>
-    <tr class="esquerda">
-        <td colspan="5">Nome do projeto *
-            <input type="text" class="input_simples" name="nomeProjeto" id="nomeProjeto"
-                   maxlength="500" title="Nome do Projeto" style="width:50em;"
-                   value="<?php if (isset($this->proposta['idpreprojeto']))
-                       echo str_replace("'", "", str_replace("\"", "", ($this->proposta['nomeprojeto'])));
-                   ?>"/>
-        </td>
-    </tr>
-
-    <tr class="destacar centro">
         <td colspan="5"><b>Resumo do Projeto</b></td>
     </tr>
     <tr>
         <td colspan="5">
-            <p class="caption">No resumo do projeto, o resumo deve descrever o que se pretende
-                realizar, limitado ao m&aacute;ximo de 1000 caracteres. Trata-se de uma s&iacute;ntese
-                com as
-                informa&ccedil;&otilde;es essenciais fazendo refer&ecirc;ncia ao(s) produto(s)
-                cadastrado(s) no Plano de Distribui&ccedil;&atilde;o.<br/> A leitura do resumo
-                deve
-                responder &agrave; quest&atilde;o: O QU&Ecirc;? *</p>
+            <?php if (isset($this->proposta['resumodoprojeto'])) echo $this->proposta['resumodoprojeto']; ?>
+        </td>
+    </tr>
+    <tr class="destacar centro">
+        <td colspan="5"><b>Objetivos *</b></td>
+    </tr>
+    <tr>
+        <td>
+            <?php if (isset($this->proposta['objetivos'])) echo $this->proposta['objetivos']; ?>
+        </td>
+    </tr>
+    <tr class="destacar centro">
+        <td colspan="5"><b>Justificativa *</b></td>
+    </tr>
+    <tr>
+        <td>
+            <?php if (isset($this->proposta['justificativa'])) echo $this->proposta['justificativa']; ?>
+        </td>
+    </tr>
+</table>
 
-            <textarea id="resumodoprojeto" class="browser-default editor"
-                      name="resumodoprojeto" <?php echo isset($this->arrConfig['resumodoprojeto']['disabled']) ? 'disabled="disabled"' : '' ?>>
-                                 <?php if (isset($this->proposta['resumodoprojeto'])) echo $this->proposta['resumodoprojeto']; ?>
-                                </textarea>
-            <!--                                <label for="resumodoprojeto" class="active">Justificativa *</label>-->
+<table class="tabela" cellpadding="1" cellspacing="1">
+    <tr class="destacar centro">
+        <td colspan="3"><b>Per&iacute;odo de Realiza&ccedil;&atilde;o</b></td>
+        <td colspan="2"><b>No caso de bem tombado</b></td>
+    </tr>
+    <tr>
+        <td class="centro"><label for="dtInicioDeExecucao">Data de In&iacute;cio *</label></td>
+        <td>
+            <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10"
+                   class="input_simples btn_calendario"
+                   value="<?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtiniciodeexecucaoform']; ?>"/>
+        </td>
+        <td>Prorroga&ccedil;&atilde;o autom&aacute;tica?
+            <?php echo ($this->proposta['tpprorrogacao'] == "1") ? "Sim" : "N&atilde;o"; ?>
+        </td>
+        <td><label for="nrAtoTombamento">N&uacute;mero do Ato </label></td>
+        <td>
+            <?php if (isset($this->proposta['idpreprojeto'])) echo trim($this->proposta['nratotombamento']); ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="centro"><label for="dtFinalDeExecucao">Data Final *</label></td>
+        <td>
+            <input type="text" name="dtFinalDeExecucao" id="dtFinalDeExecucao" maxlength="10"
+                   class="input_simples btn_calendario"
+                   value="<?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtfinaldeexecucaoform']; ?>"/>
+        </td>
+        <td></td>
+        <td><label for="dtAtoTombamento">Data do Ato </label></td>
+        <td>
+            <?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtatotombamentoform']; ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <span id="msgValidaData"></span>
+            <input type="hidden" name="blnDatasValidas" id="blnDatasValidas" value="true">
+        </td>
+        <td><label for="esferaTombamento">Esfera do Ato </label></td>
+        <td>
+            <?php
+
+            if ($this->proposta['esferatombamento'] == "1") {
+                echo "Municipal";
+            } else if ($this->proposta['esferatombamento'] == "2") {
+                echo "Estadual";
+            } else if ($this->proposta['esferatombamento'] == "3") {
+                echo "Federal";
+            }
+            ?>
         </td>
     </tr>
 </table>

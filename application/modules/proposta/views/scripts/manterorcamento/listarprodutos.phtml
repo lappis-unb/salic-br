@@ -83,7 +83,7 @@
                                                                                     );
                                                                                 ?>
 
-                                                                                <tr id="item-planilha-<?php echo $item['idPlanilhaProposta']; ?>">
+                                                                                <tr id="item-planilha-<?php echo $item['idPlanilhaProposta']; ?>" class="<?php echo ($item['idFonteRecurso'] != '109') ? 'outrasfontes' : 'incentivo';?>">
                                                                                     <td class="left-align"><?php echo $item['DescricaoItem']; ?></td>
                                                                                     <td><?php echo $item['Unidade']; ?></td>
                                                                                     <td><?php echo number_format($item['Quantidade'],0) ?></td>
