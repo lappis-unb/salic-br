@@ -454,7 +454,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
             if ($this->isEditarProjeto($idPreProjeto)) {
 
-                $verifica = $this->verificarSeUltrapassaValorOriginal($idPreProjeto, $dados);
+                $verifica = $this->verificarSeUltrapassaValorOriginal($idPreProjeto, $dados, $params['idPlanilhaProposta']);
 
                 if ($verifica && $dados['FonteRecurso'] == 109) {
                     $return['msg'] = "O item cadastrado ultrapassa o valor original do projeto. Transa&ccedil;&atilde;o cancelada!";
@@ -559,7 +559,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
     * nao pode ultrapassar o valor total inicialmente solicitado para incentivo fiscal(Fonte Recurso=109)
     * @todo parei aqui
     */
-    public function verificarSeUltrapassaValorOriginal($idPreProjeto, $dados)
+    public function verificarSeUltrapassaValorOriginal($idPreProjeto, $dados, $idPlanilhaProposta = null)
     {
         $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
@@ -580,12 +580,15 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $totalItemAtual = $dados['Quantidade'] * $dados['ValorUnitario'] * $dados['Ocorrencia'];
 
         # Se tiver editando um item, tem que subtrair o valor anterior
-        if (!empty($params['idPlanilhaProposta'])) {
+        if (!empty($idPlanilhaProposta)) {
 
-            $item = $tbPlanilhaProposta->findBy(array("idPlanilhaProposta = ?" => $params['idPlanilhaProposta']));
+            $item = $tbPlanilhaProposta->findBy(array("idPlanilhaProposta = ?" => $idPlanilhaProposta));
 
-            if ($item)
+            if ($item) {
                 $totalItemSalvo = $item['Quantidade'] * $item['Ocorrencia'] * $item['ValorUnitario'];
+                $custosDesteItem = $this->somarTotalCustosVinculados($idPreProjeto, $totalItemSalvo);
+                $totalItemSalvo = $totalItemSalvo + $custosDesteItem;
+            }
         }
 
         # eh necessario calcular os custos vinculados com o novo item
