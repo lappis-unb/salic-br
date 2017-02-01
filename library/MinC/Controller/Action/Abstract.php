@@ -586,7 +586,7 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             //Verifica Permissao de Projeto
 
             if ($projeto) {
-                $msgERRO = 'Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessaresse Projeto!';
+                $msgERRO = 'Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar esse Projeto!';
                 $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPronac = $this->_request->getParam('idpronac') ? $this->_request->getParam('idpronac') : $this->_request->getParam('idPronac');
                 if (strlen($idPronac) > 7) {

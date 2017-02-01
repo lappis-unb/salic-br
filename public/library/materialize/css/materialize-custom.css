@@ -25,15 +25,6 @@
     box-shadow: 1px 2px 4px #9e9e9e;
 }
 
-#conteudo, #titulo, #rodapeConteudo {
-    /*top: 0px;*/
-    left: 15px;
-}
-
-/*#rodapeConteudo {*/
-    /*top: -20px;*/
-/*}*/
-
 #imagemRodapeTelaMenorQueMenu span,
 #imagemRodape span,
 #rodapeConteudo span,
@@ -107,7 +98,7 @@ table.tabela td.destacar span,
     text-align: center !important;
 }
 
-#conteudo table.tabela tr a {
+#conteudo table.tabela tr a:not(.btn) {
     text-decoration: underline;
 }
 
@@ -127,8 +118,8 @@ table.tabela td.destacar span,
     position: relative;
     padding-left: 30px;
     cursor: pointer;
-     /*display: inline-block;*/
-     display: inline;
+    /*display: inline-block;*/
+    display: inline;
     height: 25px;
     line-height: 25px;
     font-size: 1rem;
@@ -153,6 +144,10 @@ table.tabela td.destacar span,
 #conteudo table.tabela label {
     font-size: 0.8rem;
     color: #212121;
+}
+
+#conteudo table.tabela label.error {
+    color: red;
 }
 
 #conteudo .btn_calendario,
@@ -240,7 +235,7 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
 }
 
 /*.input-field .prefix.active: .invalid{*/
-    /*color: #F44336;*/
+/*color: #F44336;*/
 /*}*/
 
 footer.page-footer {
@@ -326,8 +321,8 @@ body {
 }
 
 /*nav.breadcrumb {*/
-    /*bottom: 20px;*/
-    /*position: relative;*/
+/*bottom: 20px;*/
+/*position: relative;*/
 /*}*/
 
 ul, menu, dir {
@@ -443,7 +438,6 @@ label {
     width: 100%;
 }
 
-
 /* label color */
 .input-field label {
     color: #1b5e20;
@@ -470,17 +464,6 @@ label {
     border-bottom: 1px solid #F44336;
     box-shadow: 0 1px 0 0 #F44336;
 }
-/* icon prefix focus color */
-
-/*.input-field + input[type=text].invalid + label {*/
-    /*color: #F44336;*/
-    /*border-bottom: 1px solid #F44336;*/
-    /*box-shadow: 0 1px 0 0 #F44336;*/
-/*}*/
-
-/*.input-field .prefix.active + input[type=text].invalid{*/
-    /*color: #00481d;*/
-/*}*/
 
 .input-field label[data-error] {
     font-size: 0.8rem;
@@ -540,6 +523,140 @@ table > tbody > tr:hover {
     background-color: #f2f2f2;
 }
 
+
+/**** Sidebar ***/
+
+ul.sidebar-nav {
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0px 1px 4px #9e9e9e;
+    overflow: hidden;
+    min-width: 100px;
+}
+
+ul.sidebar-nav ul {
+    margin: 0px;
+    padding: 0px;
+}
+.sidebar-nav .collapsible-header,
+.sidebar-nav .collapsible-body,
+.sidebar-nav .collapsible {
+    box-shadow: none;
+    border: none;
+    margin: 0;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding: 0px;
+}
+
+.sidebar-nav a.collapsible-header,
+.sidebar-nav li a {
+    position: relative;
+    font-size: 12px;
+    color: #565656;
+    line-height: 44px;
+    height: 44px;
+    padding: 0 30px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #D2D2D2;
+    overflow: hidden;
+}
+
+.sidebar-nav li a.active:before,
+.sidebar-nav a.collapsible-header:before {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 16px;
+    top: 18px;
+    width: 0;
+    border-width: 6px 0 6px 6px;
+    border-style: solid;
+    border-color: transparent #666;
+}
+
+.sidebar-nav li a.active:before {
+    border-color: transparent #afaaaa;
+}
+
+.sidebar-nav a.collapsible-header.active:before {
+    border-width: 6px 6px 0px 6px;
+    border-color: #666 transparent;
+    top: 20px
+}
+
+.sidebar-nav a.collapsible-header.active,
+.sidebar-nav li a.active,
+.sidebar-nav a.collapsible-header:hover,
+.sidebar-nav li a:hover {
+    background: rgba(0, 0, 0, 0.11);
+}
+
+.sidebar-nav li .collapsible-body a {
+    border: none;
+    font-weight: normal;
+    color: #212121;
+    padding-left: 50px;
+
+}
+.sidebar-nav li .collapsible-body{
+    border-bottom: 1px solid #D2D2D2;
+}
+
+.sidebar-nav .detalhes-proposta .row {
+    margin-bottom: 0px;
+}
+
+.sidebar-nav .detalhes-proposta p {
+    line-height: 12pt;
+    padding: 0 0 2px;
+    font-size: 13px;
+}
+
+.sidebar-nav .detalhes-proposta i {
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 1300px) {
+    .sidebar-nav a.collapsible-header, .sidebar-nav li a {
+        padding: 0 10px;
+    }
+
+    .sidebar-nav li .collapsible-body a {
+        padding-left: 15px;
+    }
+}
+/** form **/
+#frmProposta .input-field label {
+    color: #212121;
+    font-size: 16px;
+}
+
+#frmProposta .input-field .caption {
+    color: #212121;
+}
+
+#frmProposta .mce-tinymce {
+    margin-bottom: 20px;
+
+}
+#tinymce  {
+    font-size: 14px !important;
+}
+
+.btn.loading {
+    background-image: url(../../../img/loader-mini.gif);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    cursor: none;
+    box-shadow: none;
+    border: none;
+    text-indent: -2000px;
+}
+
+
 /*.input-field input:focus label:after{*/
 /*.input-field label:after{*/
 /*input:not([type]).invalid + label:after, input:not([type]):focus.invalid + label:after, input[type=text].invalid + label:after, input[type=text]:focus.invalid + label:after, input[type=password].invalid + label:after, input[type=password]:focus.invalid + label:after, input[type=email].invalid + label:after, input[type=email]:focus.invalid + label:after, input[type=url].invalid + label:after, input[type=url]:focus.invalid + label:after, input[type=time].invalid + label:after, input[type=time]:focus.invalid + label:after, input[type=date].invalid + label:after, input[type=date]:focus.invalid + label:after, input[type=datetime].invalid + label:after, input[type=datetime]:focus.invalid + label:after, input[type=datetime-local].invalid + label:after, input[type=datetime-local]:focus.invalid + label:after, input[type=tel].invalid + label:after, input[type=tel]:focus.invalid + label:after, input[type=number].invalid + label:after, input[type=number]:focus.invalid + label:after, input[type=search].invalid + label:after, input[type=search]:focus.invalid + label:after, textarea.materialize-textarea.invalid + label:after, textarea.materialize-textarea:focus.invalid + label:after {*/
@@ -568,7 +685,6 @@ div.dataTables_wrapper div.dataTables_processing{
     font-size: 2.5em !important;
     height: 100% !important;
     padding: 5%;
-    position: ;
     text-align: center !important;
     vertical-align: middle !important;
     top: 0% !important;

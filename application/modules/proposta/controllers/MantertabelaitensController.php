@@ -5,7 +5,7 @@
  * @since 10/12/2010
  * @link http://www.cultura.gov.br
  */
-class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstract {
+class Proposta_MantertabelaitensController extends Proposta_GenericController {
 
     private $getIdUsuario = 0;
     private $idUsuario = 0;

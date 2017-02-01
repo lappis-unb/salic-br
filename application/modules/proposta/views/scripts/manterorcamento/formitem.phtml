@@ -3,7 +3,7 @@
     $(document).ready(function() {
 
 
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if (!$this->isEditavel) : ?>
             //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
             JSBloquearAlteracaoFormulario();
         <?php endif; ?>
@@ -173,33 +173,39 @@
                             <input placeholder="R$" type="text" value="" maxlength="6" class="disabled" size="15" name="total" id="total" disabled>
                             <label for="total">Total</label>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col s4">
                             <label for="fonterecurso">Fonte de recurso</label><br><br><br>
                             <select class="valida browser-default" id="fonterecurso" name="fonterecurso">
+                                <?php
+                                    if( isset($dados->Recurso))
+                                        $selected = $dados->Recurso;
+                                    else
+                                        $selected = 109;
+                                ?>
                                 <?php foreach($this->Recurso as $recurso) {?>
-                                    <option <?php echo ($recurso->idverificacao == 109) ? 'selected' : ''; ?>  value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
+                                    <option <?php echo ($recurso->idverificacao == $selected) ? 'selected' : ''; ?>  value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
                                 <?php } ?>
                             </select>
                         </div>
 
                         <div class="input-field col s8">
-                            <label for="edito1">Detalhamento / Justificativa / Observa&ccedil;&otilde;es</label>
+                            <label for="edito1">Detalhamento / Justificativa / Observa&ccedil;&otilde;es (Opcional)</label>
                             <textarea cols="80" id="editor1" name="editor1" rows="7" class="materialize-textarea browser-default" placeholder=" "><?php echo $dados->Justificativa; ?></textarea>
                         </div>
 
                     </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 center-align">
-                            <a class="btn-close-modal waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
-                            <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
-                                <i class="material-icons right">send</i>
-                            </a>
+                    <?php if ($this->isEditavel) : ?>
+                        <div class="row">
+                            <div class="input-field col s12 center-align">
+                                <a class="btn-close-modal waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
+                                <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
+                                    <i class="material-icons right">send</i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </form>
             <?php endforeach;?>
         </div>

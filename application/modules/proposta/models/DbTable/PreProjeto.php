@@ -206,7 +206,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         {
             $slct->where($coluna, $valor);
         }
-        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from " . $this->getSchema('sac') . ".projetos pr where a.idPreProjeto = pr.idProjeto)"));
+        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from " . $this->getSchema('sac') . ".projetos pr where a.idPreProjeto = pr.idProjeto and pr.Situacao != 'E90')")); //@todo alterar quando Rômulo enviar a situacao correta
 
         $slct->order($order);
 
@@ -2542,7 +2542,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @return void
      * @author wouerner <wouerner@gmail.com>
      */
-    public function checklistEnvioProposta($idPreProjeto)
+    public function checklistEnvioProposta($idPreProjeto, $alterarprojeto = false)
     {
         $validacao = new stdClass();
         $listaValidacao = array();
@@ -2563,7 +2563,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $movimentacao = $db->fetchAll($sql);
 
-        if (!empty( $movimentacao )) {
+        if (!empty( $movimentacao ) && !$alterarprojeto) {
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL ENCONTRA-SE NO MINIST&Eacute;RIO DA CULTURA.</b></font>';
             $validacao->Observacao = '';
             $validacao->Url = '';
@@ -2721,7 +2721,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (empty($documento)) {
                         $validacao->Descricao = $msg;
                         $validacao->Observacao = 'PENDENTE';
-                        $validacao->Url = array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto);
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     }
                 }
@@ -2760,7 +2760,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 if (!empty($minimo90)) {
                     $validacao->Descricao = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de início de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
                     $validacao->Observacao = 'PENDENTE';
-                    $validacao->Url =  array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto);
+                    $validacao->Url =  array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
                 }
 
@@ -2885,7 +2885,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             }
         }
 
-        if($validado) {
+        if($validado ) {
 
             $dados = array(
                 'idprojeto' => $idPreProjeto,

@@ -6,7 +6,7 @@
  * @uses MinC_Controller_Action_Abstract
  * @author  wouerner <wouerner@gmail.com>
  */
-class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
+class Proposta_DeslocamentoController extends Proposta_GenericController {
 
     private $idPreProjeto = null;
 

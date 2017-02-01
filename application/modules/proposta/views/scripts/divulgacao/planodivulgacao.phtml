@@ -89,7 +89,7 @@ $IncluirDivulgacao = $this->url(array('controller' => 'divulgacao', 'action' => 
 </script>
 <script>
     $(document).ready(function () {
-        <?php if(isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if (!$this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>

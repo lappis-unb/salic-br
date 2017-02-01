@@ -1,3 +1,9 @@
+<?php
+/*
+ * @todo este arquivo foi migrado para /proposta/view/scripts/inc/menu.phtml @novain
+ */
+?>
+
  <!-- ========== INICIO MENU ========== -->
 <script language="javascript" type="text/javascript"
         src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
