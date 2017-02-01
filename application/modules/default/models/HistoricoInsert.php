@@ -18,7 +18,7 @@ class HistoricoInsert extends MinC_Db_Table_Abstract
 
 
 	/**
-	 * M�todo para verificar se a trigger HISTORICO_INSERT est� habilitada
+	 * Metodo para verificar se a trigger HISTORICO_INSERT estah habilitada
 	 * @access public
 	 * @param void
 	 * @return integer (0 = Habilitado e 1 = desabilitado)
@@ -26,26 +26,18 @@ class HistoricoInsert extends MinC_Db_Table_Abstract
 	public function statusHISTORICO_INSERT()
 	{
 		$sql = "SELECT ObjectProperty(Object_id(name), 'ExecIsTriggerDisabled') AS Habilitado
-				FROM {$this->_banco}.{$this->_schema}.{$this->_name}
+				FROM {$this->_schema}.{$this->_name}
 				WHERE name = 'HISTORICO_INSERT'";
 
-		// seta para o banco SAC que � onde encontra-se a trigger
-		$DIRBANCO = Zend_Registry::get('DIR_CONFIG');
-		$Conexao  = 'conexao_sac';
-		$config   = new Zend_Config_Ini($DIRBANCO, $Conexao);
-		$registry = Zend_Registry::getInstance();
-		$registry->set('config', $config); // registra
-		$db = Zend_Db::factory($config->db);
-		Zend_Db_Table::setDefaultAdapter($db);
-
+        $db = Zend_Db_Table::getDefaultAdapter();
 		// executa a query
 		$resultado = $db->fetchAll($sql);
 
-		// encerra a conex�o
+		// encerra a conexao
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->closeConnection();
 
 		return $resultado[0]['Habilitado'];
-	} // fecha m�todo statusHISTORICO_INSERT()
+	} // fecha metodo statusHISTORICO_INSERT()
 
 }

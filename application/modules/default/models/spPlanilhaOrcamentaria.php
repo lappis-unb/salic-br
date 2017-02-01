@@ -305,7 +305,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
                    ELSE
                     ($subSQLB)
             END as vlComprovado"),
-        new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+        new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END as Produto"),
         'CONVERT(varchar(max), k.dsJustificativa) as JustComponente',
         'ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) as vlSugerido',
         'ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado',
@@ -374,7 +374,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $a = array(
-            new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+            new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END as Produto"),
             'ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) as vlSugerido',
             'ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado',
             'ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) as vlSolicitado',
@@ -464,7 +464,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
             $a = array(
                 "($subSql) AS vlComprovado",
-                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END as Produto"),
                 "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
                 "(a.AnoProjeto+a.Sequencial) as PRONAC",
                 "a.NomeProjeto",
@@ -525,7 +525,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
             $c = array(
                 "($subSql) AS vlComprovado",
-                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END as Produto"),
                 "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
                 "(a.AnoProjeto+a.Sequencial) as PRONAC",
                 "a.NomeProjeto",
@@ -609,7 +609,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
             $a = array(
                 "($subSQL) as vlComprovado",
-                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END as Produto"),
                 "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
                 "( a.AnoProjeto+a.Sequencial ) as PRONAC",
                 "a.NomeProjeto",
@@ -668,7 +668,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
             $a = array(
                 "($subSQL) as vlComprovado",
-                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END as Produto"),
                 "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
                 "(a.AnoProjeto+a.Sequencial) as PRONAC",
                 "a.NomeProjeto",

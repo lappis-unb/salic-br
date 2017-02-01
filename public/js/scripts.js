@@ -1104,7 +1104,7 @@ function JSBloquearAlteracaoFormulario()
         $(this).replaceWith("<input type='button' class='btn_incluir-off' name='btn_desabilitado' id='btn_desabilitado'>");
    });
    $('body').find('.btn_novo').each(function(){
-        //$(this).replaceWith("<input type='button' class='btn_novo-off' name='btn_desabilitado' id='btn_desabilitado'>");
+       $(this).replaceWith("<input type='button' class='btn_novo-off' name='btn_desabilitado' id='btn_desabilitado'>");
    });
 
    /* ==== Alterar / Editar ==== */
@@ -1129,6 +1129,8 @@ function JSBloquearAlteracaoFormulario()
    $('body').find('.btn_aprovar').each(function(){
         $(this).replaceWith("<input type='button' class='btn_aprovar-off' name='btn_desabilitado' id='btn_desabilitado'>");
    });
+
+    $('form').find('input, textarea, button, select').attr('disabled','disabled');
 }
 
 

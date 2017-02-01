@@ -7,7 +7,7 @@
  * @package Proposta
  * @author  wouerner <wouerner@gmail.com>
  */
-class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
+class Proposta_DiligenciarController extends Proposta_GenericController {
 
     private $idPronac = null;
     private $idPreProjeto = null;

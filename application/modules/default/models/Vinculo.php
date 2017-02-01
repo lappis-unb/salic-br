@@ -129,7 +129,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         if (count($rsProponente) > 0) {
             //xd($rsProponente);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
+            $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar"));
         } else {
 
@@ -304,7 +304,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
             "proponente" => $rsProponente);
         return $arrDados;
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-        $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
+        $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
             "proposta" => $rsPreProjeto,
             "proponente" => $rsProponente));
     }
@@ -410,7 +410,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
+            $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
                 "proposta" => $rsPreProjeto,
                 "proponente" => $rsProponente));
         } else {

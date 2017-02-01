@@ -3,15 +3,6 @@
 <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
-<script>
-    $(document).ready(function(){
-
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
-        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
-        JSBloquearAlteracaoFormulario();
-        <?php endif; ?>
-    });
-</script>
 <style>
 
     #toast-container div {
@@ -39,92 +30,92 @@
         margin-top: 15px;
     }
 
-    #menuContexto {
-        width: 100%;
-        background: none;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        border: 1px solid #D2D2D2;
-        box-shadow:  0px 0px 2px #a2a2a2;
-        margin-left: 10px;
-        border-radius: 10px;
-    }
-
-    #menuContexto #qm0 {
-        width: 100%;
+    /*#menuContexto {*/
+        /*width: 100%;*/
+        /*background: none;*/
         /*padding-top: 10px;*/
         /*padding-bottom: 10px;*/
-
-    }
-
-    #menuContexto .qmmc #qm0 {
-        border: none;
-        box-shadow: none;
-    }
-
-    #menuContexto #qm0 a {
-        position: relative !important;
-        /*width: 100%;*/
-        /*background-position: center center;*/
-        background-image: none;
-        /*border: none;*/
-        /*padding: 10px 5px;*/
-        /*margin: 0px 15px;*/
-        /*font-size: 13px;*/
-        /*font-family: "Roboto", sans-serif;*/
-        /*width:88%;*/
-        border-bottom: 1px solid #d2d2d2;
-    }
-    #menuContexto #qm0 a:not(.no_seta):before {
-        content: "";
-        display: block;
-        position: absolute;
-        right: 16px;
-        width: 0;
-        border-width: 6px 0 6px 6px;
-        border-style: solid;
-        border-color: transparent #666;
-    }
-
-    #menuContexto #qm0 div,
-    #menuContexto #qm0.sanfonaDiv a {
-        width: 90% !important;
-    }
-
-    #menuContexto #qm0.sanfonaDiv a:not(.no_seta):before {
-        border: none;
-    }
-
-    /*#menuContexto #qm0 a:hover {*/
-        /*!*background: inherit;*!*/
-        /*!*color: #ffffff;*!*/
+        /*border: 1px solid #D2D2D2;*/
+        /*box-shadow:  0px 0px 2px #a2a2a2;*/
+        /*margin-left: 10px;*/
+        /*border-radius: 10px;*/
     /*}*/
 
-    #menuContexto #qm0 a:last-child {
-        border-bottom: none;
-    }
+    /*#menuContexto #qm0 {*/
+        /*width: 100%;*/
+        /*!*padding-top: 10px;*!*/
+        /*!*padding-bottom: 10px;*!*/
 
-    #menuContexto .top {
-        background: none;
-        height: 0;
-    }
+    /*}*/
 
-    #menuContexto .bottom {
-        background: none;
-        height: 0;
-    }
+    /*#menuContexto .qmmc #qm0 {*/
+        /*border: none;*/
+        /*box-shadow: none;*/
+    /*}*/
 
-    .sidebar aside h3:after {
-        content: "";
-        display: block;
-        position: absolute;
-        bottom: -9px;
-        left: 10px;
-        width: 0;
-        border-width: 9px 9px 0px 9px;
-        border-style: solid;
-        border-color: #0c451a transparent;
-    }
+    /*#menuContexto #qm0 a {*/
+        /*position: relative !important;*/
+        /*!*width: 100%;*!*/
+        /*!*background-position: center center;*!*/
+        /*background-image: none;*/
+        /*!*border: none;*!*/
+        /*!*padding: 10px 5px;*!*/
+        /*!*margin: 0px 15px;*!*/
+        /*!*font-size: 13px;*!*/
+        /*!*font-family: "Roboto", sans-serif;*!*/
+        /*!*width:88%;*!*/
+        /*border-bottom: 1px solid #d2d2d2;*/
+    /*}*/
+    /*#menuContexto #qm0 a:not(.no_seta):before {*/
+        /*content: "";*/
+        /*display: block;*/
+        /*position: absolute;*/
+        /*right: 16px;*/
+        /*width: 0;*/
+        /*border-width: 6px 0 6px 6px;*/
+        /*border-style: solid;*/
+        /*border-color: transparent #666;*/
+    /*}*/
+
+    /*#menuContexto #qm0 div,*/
+    /*#menuContexto #qm0.sanfonaDiv a {*/
+        /*width: 90% !important;*/
+    /*}*/
+
+    /*#menuContexto #qm0.sanfonaDiv a:not(.no_seta):before {*/
+        /*border: none;*/
+    /*}*/
+
+    /*!*#menuContexto #qm0 a:hover {*!*/
+        /*!*!*background: inherit;*!*!*/
+        /*!*!*color: #ffffff;*!*!*/
+    /*!*}*!*/
+
+    /*#menuContexto #qm0 a:last-child {*/
+        /*border-bottom: none;*/
+    /*}*/
+
+    /*#menuContexto .top {*/
+        /*background: none;*/
+        /*height: 0;*/
+    /*}*/
+
+    /*#menuContexto .bottom {*/
+        /*background: none;*/
+        /*height: 0;*/
+    /*}*/
+
+    /*.sidebar aside h3:after {*/
+        /*content: "";*/
+        /*display: block;*/
+        /*position: absolute;*/
+        /*bottom: -9px;*/
+        /*left: 10px;*/
+        /*width: 0;*/
+        /*border-width: 9px 9px 0px 9px;*/
+        /*border-style: solid;*/
+        /*border-color: #0c451a transparent;*/
+    /*}*/
 
     #rodapeConteudo_com_menu {
         display: none;
@@ -327,8 +318,6 @@
     .modal.modal-pre-loader {
         width: 300px;
         height: 180px;
-        /*top: 50% !important;*/
-        /*margin-top: -200px !important;*/
         padding: 10px;
     }
 
@@ -336,29 +325,34 @@
         padding: 10px;
     }
 
+    .table.bordered > thead > tr.outrasfontes, table.bordered > tbody > tr.outrasfontes {
+        background: rgba(205, 200, 230, 0.45);
+    }
+
 
 </style>
 
-<div class="row">
-    <div class="col s2 m12 l2">
-        <div class="menu-contexto">
-            <?php  echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); ?>
+<div class="container-fluid">
+
+    <div class="row">
+
+        <?php echo $this->partial("inc/menu.phtml", $this); ?>
+
+        <div class="content col s10 m12 l10 planilha-produtos">
+            <?php
+            gerarBreadCrumb(array(
+                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                array('Or&ccedil;amento' => '')
+            ));
+            ?>
+
+            <div class="clearfix"></div>
+            <h5 class="light">Custo por produto </h5>
+
+            <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'><p class="center align">Carregando or&ccedil;amento ...</p></div>
+
+            <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
         </div>
-    </div>
-    <div class="content col s10 m12 l10">
-        <?php
-        gerarBreadCrumb(array(
-            array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
-            array('Or&ccedil;amento' => '')
-        ));
-        ?>
-
-        <div class="clearfix"></div>
-        <h5 class="light">Custo por produto </h5>
-
-        <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'><p class="center align">Carregando or&ccedil;amento ...</p></div>
-
-        <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
     </div>
 </div>
     <div id="msg"></div>
@@ -389,6 +383,12 @@
 </div>
 
 <script>
+
+$(document).ready(function(){
+    <?php if (!$this->isEditavel) : ?>
+        JSBloquearAlteracaoFormulario();
+    <?php endif; ?>
+});
 
 $3( document ).ajaxStart(function() {
     $3('#modal-pre-loader').modal('open');

@@ -559,7 +559,7 @@ table caption {
 #conteudo table tr.destacar td, table td.destacar {
 	background:#dfefc2;
 }
-#conteudo table td a {
+#conteudo table td a:not(.btn) {
 	color:#333 !important;
 }
 #conteudo table th {
@@ -569,7 +569,7 @@ table caption {
 	text-transform:uppercase;
 	font-size:11px;
 }
-table tfoot td {
+#conteudo table tfoot td {
 	background:#f3f3f3;
 	text-align:center;
 	word-spacing:.8em;
@@ -1819,3 +1819,18 @@ footer.green a {
 	/*padding:0;*/
 	/*border:none;*/
 /*}*/
+
+.ui-dialog .ui-dialog-titlebar {
+	background: rgb(76,175,80);
+}
+.ui-dialog .ui-dialog-buttonpane button {
+	background-color: rgb(76,175,80);
+	box-shadow: none;
+	border: none;
+	padding: 10px 20px !important;
+}
+
+.ui-dialog .ui-dialog-buttonpane button:hover,
+.ui-dialog .ui-dialog-buttonpane button:active {
+	background-color: #2bbbad;
+}

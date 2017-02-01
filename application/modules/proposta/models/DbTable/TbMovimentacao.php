@@ -72,6 +72,29 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         return ($arrResult) ? $arrResult->toArray() : array();
     }
 
+    public function buscarStatusPropostaNome($idPreProjeto)
+    {
+        $slct = $this->select();
+        $slct->setIntegrityCheck(false);
+        $slct->from(
+            array('mov' => $this->_name),
+            $this->_getCols(),
+            $this->_schema);
+
+        $slct->joinInner(
+            array('ver' => 'verificacao'),
+            'mov.Movimentacao = ver.idVerificacao',
+            array('Descricao as MovimentacaoNome'),
+            $this->_schema
+        );
+        $slct->where('mov.idprojeto = ? ', $idPreProjeto);
+        $slct->where('mov.stestado = ? ', 0);
+        $slct->order(array("mov.dtmovimentacao DESC"));
+
+        $arrResult = $this->fetchRow($slct);
+        return ($arrResult) ? $arrResult->toArray() : array();
+    }
+
     public function buscarTecCoordAdmissibilidade($idPronac, $idusuario=null) {
 
         $slct = $this->select();

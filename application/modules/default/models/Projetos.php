@@ -5638,6 +5638,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtInicioExecucao as DtInicioDeExecucao',
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
+                'idProjeto',
                 New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
             )
         );
@@ -5671,6 +5672,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtInicioExecucao as DtInicioDeExecucao',
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
+                'idProjeto',
                 New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
             )
         );
@@ -5714,6 +5716,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtInicioExecucao as DtInicioDeExecucao',
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
+                'idProjeto',
                 New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
             )
         );
@@ -5744,7 +5747,8 @@ class Projetos extends MinC_Db_Table_Abstract
             ->union(array('(' . $a . ')', '(' . $b . ')', '(' . $c . ')'))
             ->order('Ordem')
             ->order('CgcCpf')
-            ->order('NomeProjeto');
+            ->order('NomeProjeto')
+            ->order('idProjeto');
         return $this->fetchAll($slctUnion);
     }
 

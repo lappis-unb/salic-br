@@ -11,7 +11,7 @@
  */
 $menuX = !empty($_GET['menu']) ? $_GET['menu'] : 0;
 if ($menuX != 1) {
-    echo  $this->partial('inc/menu.inc.php');
+    echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
 }
 ?>
 

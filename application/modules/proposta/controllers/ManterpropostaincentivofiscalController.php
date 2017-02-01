@@ -8,8 +8,8 @@
  * @package application
  * @subpackage application.controllers
  */
-
-class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_Action_Abstract {
+class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericController
+{
 
     /**
      * @var integer (variï¿½vel com o id do usuï¿½rio logado)
@@ -30,10 +30,11 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return void
      */
-    public function init() {
+    public function init()
+    {
 
         $auth = Zend_Auth::getInstance();
-        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $arrAuth = array_change_key_case((array)$auth->getIdentity());
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
         // verifica as permissoes
@@ -65,13 +66,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
         if ($agente) {
-            //$this->idResponsavel = $agente['usuario'];
             $this->idResponsavel = $acessos['IdUsuario'];
             $this->idAgente = $agente['idAgente'];
         }
         if ($usuario) {
             $this->idUsuario = $usuario['usu_codigo'];
-            if ($this->idAgente != 0) {
+            if ($this->proponente != 0) {
                 $this->usuarioProponente = "S";
             }
         }
@@ -96,6 +96,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $this->view->idPreProjeto = $idPreProjeto;
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
+            // @todo criei um metodo separado para verificar a situacao, fazer os testes e retirar esse trecho
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($this->idPreProjeto);
             $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
@@ -111,6 +112,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idpreprojeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
+
+            $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
+
         }
     }
 
@@ -121,7 +125,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @access public
      * @return void
      */
-    public function verificaPermissaoAcessoProposta($idPreProjeto) {
+    public function verificaPermissaoAcessoProposta($idPreProjeto)
+    {
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rs = $tblProposta->buscar(array("idPreProjeto = ? " => $idPreProjeto, "1=1 OR idEdital IS NULL OR idEdital > 0" => "?", "idUsuario =?" => $this->idResponsavel));
         return $rs->count();
@@ -146,7 +151,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $this->montaTela(
             "manterpropostaincentivofiscal/index.phtml",
             array(
-                "acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/editar",
+                "acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/identificacaodaproposta",
                 "acaoExcluir" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/excluir",
                 "dados" => $rsPreProjeto
             )
@@ -159,7 +164,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @access public
      * @return void
      */
-    public function declaracaonovapropostaAction() {
+    public function declaracaonovapropostaAction()
+    {
 
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
@@ -167,7 +173,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $post = Zend_Registry::get('post');
 
         if ($post->mecanismo == 1) { //mecanismo == 1 (proposta por incentivo fiscal)
-            $url = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/buscaproponente";
+            $url = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/identificacaodaproposta";
         } else {
             $url = $this->_urlPadrao . "/manterpropostaedital/editalconfirmar";
         }
@@ -182,8 +188,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      *
      * @access public
      * @return void
+     * @deprecated Fiz as alteracoes e este metodo era desnecessario para iniciar uma nova proposta
      */
-    public function buscaproponenteAction() {
+    public function buscaproponenteAction()
+    {
         $post = Zend_Registry::get('post');
 
         if (empty($post->idAgente)) {
@@ -198,9 +206,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
         if ($rsProponente) {
-            $rsProponente = $rsProponente->toArray();
+            $rsProponente = array_change_key_case($rsProponente->toArray());
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
+            $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
         } else {
             $this->_redirect("/agente/manteragentes/agentes");
@@ -213,7 +221,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @access public
      * @return void
      */
-    public function validaagenciaAction() {
+    public function validaagenciaAction()
+    {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
@@ -241,89 +250,89 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     public function salvarAction()
     {
 
-        $post = Zend_Registry::get("post");
-        $idPreProjeto = $post->idPreProjeto;
-        $acao = $post->acao;
+        $post = array_change_key_case($this->getRequest()->getPost());
+
+        if (empty($post['idagente'])) {
+            throw new Zend_Exception("Informe o idagente");
+        }
+
+        $idPreProjeto = $post['idpreprojeto'];
+        $acao = $post['acao'];
+        $url = $post['url'];
 
         if ($acao == 'atualizacao_automatica') {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $this->_helper->viewRenderer->setNoRender(true);
         }
-        $dtInicio = null;
-        $dtInicioTemp = explode("/", $post->dtInicioDeExecucao);
 
-        $dtInicio = $dtInicioTemp[2] . "/" . $dtInicioTemp[1] . "/" . $dtInicioTemp[0] . date(" H:i:s");
-
-        $dtFim = null;
-        $dtFimTemp = explode("/", $post->dtFinalDeExecucao);
-        $dtFim = $dtFimTemp[2] . "/" . $dtFimTemp[1] . "/" . $dtFimTemp[0] . date(" H:i:s");
-
-        $dtAtoTombamento = null;
-        if ($post->dtAtoTombamento) {
-            $dtAtoTombamentoTemp = explode("/", $post->dtAtoTombamento);
-            $dtAtoTombamento = $dtAtoTombamentoTemp[2] . "/" . $dtAtoTombamentoTemp[1] . "/" . $dtAtoTombamentoTemp[0] . date(" H:i:s");
+        if ($post['dtiniciodeexecucao']) {
+            $dtInicioTemp = explode("/", $post['dtiniciodeexecucao']);
+            $post['dtiniciodeexecucao'] = $dtInicioTemp[2] . "/" . $dtInicioTemp[1] . "/" . $dtInicioTemp[0] . date(" H:i:s");
         }
 
-        $idAgente = $post->idAgente;
-        $nomeProjeto = str_replace("'", "", $post->nomeProjeto);
-        $nomeProjeto = str_replace("\"", "", $nomeProjeto);
+        if ($post['dtfinaldeexecucao']) {
+            $dtFimTemp = explode("/", $post['dtfinaldeexecucao']);
+            $post['dtfinaldeexecucao'] = $dtFimTemp[2] . "/" . $dtFimTemp[1] . "/" . $dtFimTemp[0] . date(" H:i:s");
+        }
 
-        //***NAO TIRAR ESSA QUEBRA DE LINHA - FAZ PARTE DA PROGRAMACAO****
-        $resumoDoProjeto = str_replace('
-', ' ', str_replace('	', '', str_replace('&nbsp;', '', strip_tags(trim($_POST['resumoDoProjeto'])))));
-        //***NAO TIRAR ESSA QUEBRA DE LINHA - FAZ PARTE DA PROGRAMACAO****
+        if ($post['dtatotombamento']) {
+            $dtAtoTombamentoTemp = explode("/", $post['dtatotombamento']);
+            $post['dtatotombamento'] = $dtAtoTombamentoTemp[2] . "/" . $dtAtoTombamentoTemp[1] . "/" . $dtAtoTombamentoTemp[0] . date(" H:i:s");
+        }
 
-        $stDataFixa = $post->stDataFixa;
-        $stProposta = $post->stProposta;
-        $agenciaBancaria = $post->agenciaBancaria;
-        $propostaAudioVisual = $post->propostaAudioVisual;
-        $dtInicioDeExecucao = $dtInicio;
-        $dtFinalDeExecucao = $dtFim;
-        $nrAtoTombamento = $post->nrAtoTombamento;
-        $esferaTombamento = $post->esferaTombamento;
-        $objetivos = $_POST['objetivos'];
-        $justificativa = $_POST['justificativa'];
-        $acessibilidade = $_POST['acessibilidade'];
-        $democratizacaoDeAcesso = $_POST['democratizacaoDeAcesso'];
-        $etapaDeTrabalho = $_POST['etapaDeTrabalho'];
-        $fichaTecnica = $_POST['fichaTecnica'];
-        $sinopse = $_POST['sinopse'];
-        $impactoAmbiental = $_POST['impactoAmbiental'];
-        $especificacaoTecnica = $_POST['especificacaoTecnica'];
-        $informacoes = $_POST['informacoes'];
-        $stProposta = $_POST['stProposta']; //Execucao Imediata
-        $tpProrrogacao = $_POST['tpProrrogacao'];
+        if ($post['nomeprojeto']) {
+            $nomeProjeto = str_replace("'", "", $post['nomeprojeto']);
+            $post['nomeprojeto'] = str_replace("\"", "", $nomeProjeto);
+        }
+
+        if ($post['resumodoprojeto']) {
+            //***NAO TIRAR ESSA QUEBRA DE LINHA - FAZ PARTE DA PROGRAMACAO****
+            $post['resumodoprojeto'] = str_replace('
+', ' ', str_replace('	', '', str_replace('&nbsp;', '', strip_tags(trim($post['resumodoprojeto'])))));
+            //***NAO TIRAR ESSA QUEBRA DE LINHA - FAZ PARTE DA PROGRAMACAO****
+        }
+
+        if (!empty($idPreProjeto)) {
+
+            $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
+
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+            $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
+            $proposta = array_change_key_case($rsPreProjeto->toArray());
+            $post = array_intersect_key($post, $proposta) + $proposta;
+        }
 
         $dados = array(
-            "idagente" => $idAgente,
-            "nomeprojeto" => $nomeProjeto,
+            "idagente" => isset($post['idagente']) ? $post['idagente'] : '',
+            "nomeprojeto" => isset($post['nomeprojeto']) ? $post['nomeprojeto'] : '',
             "mecanismo" => 1, //seguindo sistema legado
-            "agenciabancaria" => $agenciaBancaria,
-            "areaabrangencia" => $propostaAudioVisual,
-            "dtiniciodeexecucao" => $dtInicioDeExecucao,
-            "dtfinaldeexecucao" => $dtFinalDeExecucao,
-            "nratotombamento" => $nrAtoTombamento,
-            "dtatotombamento" => $dtAtoTombamento,
-            "esferatombamento" => ($esferaTombamento) ? $esferaTombamento : '0',
-            "resumodoprojeto" => $resumoDoProjeto,
-            "objetivos" => $objetivos,
-            "justificativa" => $justificativa,
-            "acessibilidade" => $acessibilidade,
-            "democratizacaodeacesso" => $democratizacaoDeAcesso,
-            "etapadetrabalho" => $etapaDeTrabalho,
-            "fichatecnica" => $fichaTecnica,
-            "sinopse" => $sinopse,
-            "impactoambiental" => $impactoAmbiental,
-            "especificacaotecnica" => $especificacaoTecnica, //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
-            "estrategiadeexecucao" => $informacoes, //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
-            "dtaceite" => date("Y/m/d H:i:s"),
-            "stestado" => 1,
-            "stdatafixa" => $stDataFixa,
-            "stproposta" => $stProposta,
-            "idusuario" => $this->idResponsavel,
+            "agenciabancaria" => isset($post['agenciabancaria']) ? $post['agenciabancaria'] : '',
+            "areaabrangencia" => isset($post['areaabrangencia']) ? $post['areaabrangencia'] : '',
+            "dtiniciodeexecucao" => isset($post['dtiniciodeexecucao']) ? $post['dtiniciodeexecucao'] : '',
+            "dtfinaldeexecucao" => isset($post['dtfinaldeexecucao']) ? $post['dtfinaldeexecucao'] : '',
+            "dtatotombamento" => isset($post['dtatotombamento']) ? $post['dtatotombamento'] : '',
+            "nratotombamento" => isset($post['nratotombamento']) ? $post['nratotombamento'] : '',
+            "esferatombamento" => isset($post['esferatombamento']) ? $post['esferatombamento'] : '0',
+            "resumodoprojeto" => isset($post['resumodoprojeto']) ? $post['resumodoprojeto'] : '',
+            "objetivos" => isset($post['objetivos']) ? $post['objetivos'] : '',
+            "justificativa" => isset($post['justificativa']) ? $post['justificativa'] : '',
+            "acessibilidade" => isset($post['acessibilidade']) ? $post['acessibilidade'] : '',
+            "democratizacaodeacesso" => isset($post['democratizacaodeacesso']) ? $post['democratizacaodeacesso'] : '',
+            "etapadetrabalho" => isset($post['etapadetrabalho']) ? $post['etapadetrabalho'] : '',
+            "fichatecnica" => isset($post['fichatecnica']) ? $post['fichatecnica'] : '',
+            "sinopse" => isset($post['sinopse']) ? $post['sinopse'] : '',
+            "impactoambiental" => isset($post['impactoambiental']) ? $post['impactoambiental'] : '',
+            "especificacaotecnica" => isset($post['especificacaotecnica']) ? $post['especificacaotecnica'] : '', //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
+            "estrategiadeexecucao" => isset($post['estrategiadeexecucao']) ? $post['estrategiadeexecucao'] : '', //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
+            "dtaceite" => isset($post['dtaceite']) ? $post['dtaceite'] : date("Y/m/d H:i:s"), // verificar se realmente eh sempre que salva
+            "stestado" => isset($post['stestado']) ? $post['stestado'] : 1,
+            "stdatafixa" => isset($post['stdatafixa']) ? $post['stdatafixa'] : '',
+            "stproposta" => isset($post['stproposta']) ? $post['stproposta'] : '',
+            "idusuario" => isset($post['idusuario']) ? $post['idusuario'] : $this->idResponsavel,
             "sttipodemanda" => "NA", //seguindo sistema legado
-            "tpprorrogacao" => $tpProrrogacao
+            "tpprorrogacao" => isset($post['tpprorrogacao']) ? $post['tpprorrogacao'] : ''
         );
+
         $dados['idpreprojeto'] = $idPreProjeto;
 
         if (!empty($idPreProjeto)) {
@@ -334,7 +343,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         //instancia classe modelo
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-//        $db = Zend_Db_Table::getDefaultAdapter();
         try {
             //persiste os dados do Pre Projeto
             $idPreProjeto = $tblPreProjeto->salvar($dados);
@@ -346,12 +354,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
                 $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
-                $whereVinculo['idAgenteProponente   = ?'] = $idAgente;
+                $whereVinculo['idAgenteProponente   = ?'] = $post['idagente'];
                 $vinculo = $tbVinculoDAO->buscar($whereVinculo);
 
                 if (count($vinculo) == 0) {
                     $dadosV = array(
-                        'idAgenteProponente' => $idAgente,
+                        'idAgenteProponente' => $post['idagente'],
                         'dtVinculo' => MinC_Db_Expr::date(),
                         'siVinculo' => 2,
                         'idUsuarioResponsavel' => $this->idResponsavel
@@ -373,13 +381,13 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 /* **************************************************************************************** */
             }
             // Plano de execução imediata #novain
-            if( $stProposta == '618') { // proposta execucao imediata edital
+            if ($post['stproposta'] == '618') { // proposta execucao imediata edital
                 $idDocumento = 248;
-            }elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
+            } elseif ($post['stproposta'] == '619') { // proposta execucao imediata contrato de patrocínio
                 $idDocumento = 162;
             }
 
-            if( !empty($idDocumento) ) {
+            if (!empty($idDocumento)) {
 
                 $arrayFile = array(
                     'idPreProjeto' => $idPreProjeto,
@@ -392,9 +400,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $file = new Zend_File_Transfer();
                 $mapperTbDocumentoAgentes->saveCustom($arrayFile, $file);
             }
-
             if ($acao != 'atualizacao_automatica') {
-                parent::message($mesagem, "/proposta/manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "CONFIRM");
+
+                if (empty($url))
+                    $url = "/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $idPreProjeto;
+
+                parent::message($mesagem, $url, "CONFIRM");
             }
             return;
         } catch (Zend_Exception $ex) {
@@ -407,7 +418,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param $idPreProjeto
      * @return objeto
      */
-    public function carregaProposta($idPreProjeto) {
+    public function carregaProposta($idPreProjeto)
+    {
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
         $this->view->idPreProjeto = $idPreProjeto;
@@ -425,7 +437,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             "proponente" => $rsProponente);
         return $arrDados;
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMETROS NECESSARIOS DENTRO DO ARRAY
-        $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
+        $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
             "proposta" => $rsPreProjeto,
             "proponente" => $rsProponente));
     }
@@ -434,13 +446,16 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * Metodo responsavel por carregar os dados da proposta para alteracao
      * @param void
      * @return objeto
+     * @deprecated testar proposta e remover em novaIn
      */
     public function editarAction()
     {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-         $this->verificarPermissaoAcesso(true, false, false);
+        $this->verificarPermissaoAcesso(true, false, false);
 
-        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+        $idPreProjeto = $this->idPreProjeto;
+
+        $this->redirect("/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $this->idPreProjeto);
 
         $this->view->idPreProjeto = $idPreProjeto;
 
@@ -497,22 +512,22 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $idDocumento = "";
 
-            if( !empty($stProposta) ) {
+            if (!empty($stProposta)) {
 
                 $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
 
                 // Plano de execução imediata #novain
-                if( $stProposta == '618') { // proposta execucao imediata edital
+                if ($stProposta == '618') { // proposta execucao imediata edital
                     $idDocumento = 248;
-                }elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
+                } elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
                     $idDocumento = 162;
                 }
-                if( !empty($idDocumento))
+                if (!empty($idDocumento))
                     $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto, "CodigoDocumento = ?" => $idDocumento));
             }
 
             $this->montaTela(
-                "manterpropostaincentivofiscal/formproposta.phtml",
+                "manterpropostaincentivofiscal/identificacaodaproposta.phtml",
                 array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
                     "proposta" => $rsPreProjeto,
                     "solicitacaovinculo" => $verificarvinculo,
@@ -522,11 +537,112 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     "idPreProjeto" => $idPreProjeto,
                     "arquivoExecucaoImediata" => $arquivoExecucaoImediata,
                     "proponente" => $rsProponente)
-                );
+            );
         } else {
             //chama o metodo index
             $this->_forward("index", "manterpropostaincentivofiscal", 'proposta');
         }
+    }
+
+    public function identificacaodapropostaAction()
+    {
+        if (empty($this->_proposta["stproposta"])) {
+
+            $post = Zend_Registry::get('post');
+
+            if (empty($post->idAgente)) {
+                parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            }
+
+            $arrBusca = array();
+            $arrBusca['a.idagente = ?'] = $post->idAgente;
+            $tblAgente = new Agente_Model_DbTable_Agentes();
+            $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
+
+            if ($rsProponente) {
+                $rsProponente = array_change_key_case($rsProponente->toArray());
+
+                $this->view->proponente = $rsProponente;
+
+                $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("proponente" => $rsProponente,
+                    "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
+            }
+        } else {
+
+            $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+
+            // Plano de execução imediata #novain
+            if ($this->_proposta["stproposta"] == '618') { // proposta execucao imediata edital
+                $idDocumento = 248;
+            } elseif ($this->_proposta["stproposta"] == '619') { // proposta execucao imediata contrato de patrocínio
+                $idDocumento = 162;
+            }
+            if (!empty($idDocumento))
+                $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $this->idPreProjeto, "CodigoDocumento = ?" => $idDocumento));
+
+            $this->view->arquivoExecucaoImediata = $arquivoExecucaoImediata;
+        }
+
+
+        if ($this->isEditarProjeto($this->idPreProjeto)) {
+
+            $tblProjetos = new Projetos();
+            $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $this->idPreProjeto));
+
+            if (!empty($projeto['IdPRONAC'])) {
+                $projeto2 = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => (int)$projeto['IdPRONAC']));
+
+                $this->view->projeto = array_change_key_case((array)$projeto2[0]);
+            }
+
+            $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, 109);
+            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, false, 109);
+
+            $this->view->valorsolicitadoincentivo = !empty( $fonteincentivo['soma'] ) ? $fonteincentivo['soma'] : 0;
+            $this->view->valoroutrasfontes = !empty( $outrasfontes['soma'] ) ? $outrasfontes['soma'] : 0;
+        }
+
+    }
+
+    public function responsabilidadesocialAction()
+    {
+
+    }
+
+    public function detalhestecnicosAction()
+    {
+
+    }
+
+    public function outrasinformacoesAction()
+    {
+
+    }
+
+    public function encaminharprojetoaomincAction()
+    {
+        $this->verificarPermissaoAcesso(true, false, false);
+
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
+        if (!empty($idPreProjeto)) {
+            $sp = new Proposta_Model_DbTable_PreProjeto();
+
+            $arrResultado = $sp->checklistEnvioProposta($idPreProjeto, true);
+
+            $novoResultado = $this->objectsToArray($arrResultado);
+            $pendencias = in_array('PENDENTE', array_column($novoResultado, 'Observacao'));
+
+            if ($pendencias) {
+                $this->view->resultado = $arrResultado;
+            }
+
+
+        } else {
+            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
+        }
+
     }
 
     /**
@@ -538,6 +654,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         $this->verificarPermissaoAcesso(true, false, false);
+
+        if($this->isEditarProjeto){
+            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+        }
 
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
@@ -591,8 +711,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @access public
      * @return void
      */
-    public function validarEnvioPropostaAoMinc($idPreProjeto) {
-    /* }}} */
+    public function validarEnvioPropostaAoMinc($idPreProjeto)
+    {
+        /* }}} */
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
@@ -697,8 +818,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             //DADOS GERAIS DA PROPOSTA
             if (!empty($rsPreProjeto)) {
                 if (trim($rsPreProjeto->Objetivos) == "" || trim($rsPreProjeto->Justificativa) == "" || trim($rsPreProjeto->Acessibilidade) == "" ||
-                        trim($rsPreProjeto->DemocratizacaoDeAcesso) == "" || trim($rsPreProjeto->EtapaDeTrabalho) == "" || trim($rsPreProjeto->FichaTecnica) == "" ||
-                        trim($rsPreProjeto->Sinopse) == "" || trim($rsPreProjeto->ImpactoAmbiental) == "" || trim($rsPreProjeto->EspecificacaoTecnica) == "") {
+                    trim($rsPreProjeto->DemocratizacaoDeAcesso) == "" || trim($rsPreProjeto->EtapaDeTrabalho) == "" || trim($rsPreProjeto->FichaTecnica) == "" ||
+                    trim($rsPreProjeto->Sinopse) == "" || trim($rsPreProjeto->ImpactoAmbiental) == "" || trim($rsPreProjeto->EspecificacaoTecnica) == ""
+                ) {
                     $arrResultado['erro'] = true;
                     $arrResultado['dadosgeraisproposta']['erro'] = true;
                     $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta pendente. Os campos Objetivos, Justificativa, Acessibilidade, Democratiza&ccedil;&atilde;o de Acesso, Etapas de Trabalho, Ficha Técnica, Sinopse da obra, Impacto Ambiental e Especifica&ccedil;&atilde;o técnicas do produto, são de preenchimento obrigatório.";
@@ -851,7 +973,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
                         //realiza calculo para encontrar valor do projeto
                         for ($i = 0; $i < sizeof($planilhaOrcamentaria); $i++) {
-                            $valorProjeto += ( $planilhaOrcamentaria[$i]->Quantidade * $planilhaOrcamentaria[$i]->Ocorrencia * $planilhaOrcamentaria[$i]->ValorUnitario);
+                            $valorProjeto += ($planilhaOrcamentaria[$i]->Quantidade * $planilhaOrcamentaria[$i]->Ocorrencia * $planilhaOrcamentaria[$i]->ValorUnitario);
                         }
                     } else {
                         $arrProdutoPlanilhaOrcamentaria['NAO_CONTEM'][] = $idProduto;
@@ -926,14 +1048,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //=========== PLANO ANUAL==========
         if ($rsPreProjeto->stProposta <> 0) {
             $ano_envio = date("Y");
-            $ano_execucao = explode ('/',data::formatarDataMssql($rsPreProjeto->DtInicioDeExecucao));
+            $ano_execucao = explode('/', data::formatarDataMssql($rsPreProjeto->DtInicioDeExecucao));
             $ano_execucao = $ano_execucao[2];
-            $data_validacao = (int) date("Y") . '0930';
+            $data_validacao = (int)date("Y") . '0930';
             if (($data_validacao <= date('Ymd')) && ($ano_envio >= $ano_execucao)) {
                 $arrResultado['erro'] = true;
                 $arrResultado['planoanual']['erro'] = true;
                 $arrResultado['planoanual']['msg'] = "De acordo com a s&uacute;mula 10, projetos de plano anual s&oacute; poder&atilde;o ser enviados at&eacute; 30 de setembro do ano vigente, e o per&iacute;odo de execu&ccedil;&atilde;o dever&aacute; ser do ano seguinte a data de envio.";
-            }else  {
+            } else {
                 $arrResultado['planoanual']['erro'] = false;
                 $arrResultado['planoanual']['msg'] = "Plano Anual";
             }
@@ -943,7 +1065,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         return $arrResultado;
     }
 
-    public function confirmarEnvioPropostaAoMincAction() {
+    public function confirmarEnvioPropostaAoMincAction()
+    {
 
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -1086,7 +1209,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return objeto
      */
-    public function validaDatasAction() {
+    public function validaDatasAction()
+    {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         //recupera parametros
         $get = Zend_Registry::get('get');
@@ -1156,7 +1280,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         }
 
 
-
         $script = "\$('#blnDatasValidas').val(" . $bln . ");\n";
         $this->montaTela("manterpropostaincentivofiscal/mensagem.phtml", array("mensagem" => $mensagem,
             "script" => $script));
@@ -1170,7 +1293,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      *
      * @todo retirar futuramenteq
      */
-    public function listarPropostasAction() {
+    public function listarPropostasAction()
+    {
 
         // Desativei essa view para a outra abaixo
         $this->_redirect("proposta/manterpropostaincentivofiscal/listarproposta");
@@ -1188,7 +1312,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $dadosCombo = array();
         $cpfCnpj = '';
 
-        $rsVinculo = ($this->idResponsavel) ? $proposta->listarPropostasCombo($this->idResponsavel): array();
+        $rsVinculo = ($this->idResponsavel) ? $proposta->listarPropostasCombo($this->idResponsavel) : array();
 
         $agente = array();
 
@@ -1218,7 +1342,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      * @todo retirar html
      */
-    public function localizarPropostaAction() {
+    public function localizarPropostaAction()
+    {
 
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
@@ -1234,19 +1359,20 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $x = 0;
         $identificadores = array();
         foreach ($rsPreProjeto as $prop) {
-            if(!in_array($prop->idagente.$prop->idpreprojeto, $identificadores)) {
+            if (!in_array($prop->idagente . $prop->idpreprojeto, $identificadores)) {
                 $arrPropostas[$x]['cnpjcpf'] = $prop->cnpjcpf;
                 $arrPropostas[$x]['idagente'] = $prop->idagente;
                 $arrPropostas[$x]['nomeproponente'] = $prop->nomeproponente;
                 $arrPropostas[$x]['idpreprojeto'] = $prop->idpreprojeto;
                 $arrPropostas[$x]['nomeprojeto'] = $prop->nomeprojeto;
+                $arrPropostas[$x]['movimentacao'] = $this->buscarStatusProposta($prop->idpreprojeto);
                 $x++;
             }
-            $identificadores[$i] = $prop->idagente.$prop->idpreprojeto;
+            $identificadores[$i] = $prop->idagente . $prop->idpreprojeto;
             $i++;
         }
 
-        if(count($rsPreProjeto) > 0){
+        if (count($rsPreProjeto) > 0) {
             $this->montaTela("manterpropostaincentivofiscal/localizarproposta.phtml", array("propostas" => $arrPropostas));
         } else {
             echo "<table class='tabela'><tr><td class='centro'>N&atilde;o foi encontrado nenhum registro.</td></tr></table>";
@@ -1260,9 +1386,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return void
      */
-    public function consultarresponsaveisAction() {
+    public function consultarresponsaveisAction()
+    {
         $auth = Zend_Auth::getInstance();
-        $arrAuth = array_change_key_case((array) $auth->getIdentity()); // pega a autenticação
+        $arrAuth = array_change_key_case((array)$auth->getIdentity()); // pega a autenticação
 
         $idUsuario = $arrAuth['idusuario'];
         $cpf = $arrAuth['cpf'];
@@ -1283,7 +1410,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return void
      */
-    public function vincularpropostasAction() {
+    public function vincularpropostasAction()
+    {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $propostas = new Proposta_Model_DbTable_PreProjeto();
 
@@ -1308,7 +1436,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $rsVinculucao = $Vinculacao->verificarDirigenteIdAgentes($this->cpfLogado);
 
         //CASO RETORNE ALGUM RESULTADO, ADICIONA OS IDAGENTE'S DE CADA UM AO ARRAY
-        if( count($rsVinculucao) > 0 ){
+        if (count($rsVinculucao) > 0) {
             foreach ($rsVinculucao as $value) {
                 $dadosIdAgentes[] = $value->idagente;
             }
@@ -1334,7 +1462,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return void
      */
-    public function vincularprojetosAction() {
+    public function vincularprojetosAction()
+    {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $propostas = new Proposta_Model_DbTable_PreProjeto();
 
@@ -1353,7 +1482,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return void
      */
-    public function novoresponsavelAction() {
+    public function novoresponsavelAction()
+    {
 
     }
 
@@ -1366,7 +1496,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      * @todo retirar html
      */
-    public function respnovoresponsavelAction() {
+    public function respnovoresponsavelAction()
+    {
 
         $this->_helper->layout->disableLayout();
 
@@ -1394,4 +1525,5 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $this->view->dadoscount = count($busca);
         $this->view->idAgenteProponente = $this->idAgenteProponente;
     }
+
 }

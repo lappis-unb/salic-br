@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abstract {
+class Proposta_ManterpropostaeditalController extends Proposta_GenericController {
 
     private $getIdUsuario   = 0;
     private $idResponsavel  = 0;

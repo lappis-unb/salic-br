@@ -298,6 +298,55 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         return $this->fetchRow($somar);
     }
 
+    public function somarPlanilhaPropostaProdutos($idprojeto, $fonte = null, $outras = null, $where = array())
+    {
+        $somar = $this->select();
+        $somar->from(
+            array('p' => $this->_name),
+            array(
+                'sum(Quantidade*Ocorrencia*ValorUnitario) as soma'
+            ),
+            $this->_schema
+        );
+
+        $somar->joinInner(
+            array('e' => 'tbplanilhaetapa'),
+            'e.idPlanilhaEtapa = p.idEtapa',
+            array(),
+            $this->_schema);
+        $somar->where("e.tpCusto = 'P'");
+        $somar->where('idProjeto = ?', $idprojeto);
+        $somar->where('idProduto <> ?', '206');
+
+        if ($fonte) {
+            $somar->where('FonteRecurso = ?', $fonte);
+        }
+
+        if ($outras) {
+            $somar->where('FonteRecurso <> ?', $outras);
+        }
+
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $somar->where($coluna, $valor);
+        }
+
+        return $this->fetchRow($somar);
+    }
+
+    public function excluirCustosVinculados($idPreProjeto){
+
+        if( empty($idPreProjeto) )
+            return false;
+
+        $where = array('idProjeto' => $idPreProjeto, 'idEtapa' => 8);
+
+        return $this->deleteBy($where);
+    }
+
+    /*
+     * @deprecated Este metodo nao eh usado apos a IN2017
+     */
     public function somarPlanilhaPropostaDivulgacao($idprojeto, $fonte = null, $outras = null)
     {
         $somar = $this->select();
@@ -447,8 +496,8 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             ->joinLeft(array('pd' => 'produto'), 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
             ->join(array('tpe' => 'tbplanilhaetapa'), 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
             ->join(array('tpi' => 'tbplanilhaitens'), 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
-            ->join(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
-            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa', $mun, $this->getSchema('agentes'))
+            ->joinLeft(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
+            ->joinLeft(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa', $mun, $this->getSchema('agentes'))
             ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
