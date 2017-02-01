@@ -23,53 +23,55 @@ $edital='';
                 <div>Anexar Documentos<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
             </div>
             <div id="conteudo">
-                <form method="post" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'incluir-anexo')) ?>" id="formulario"  enctype="multipart/form-data">
-                <input type="hidden" name="idPreProjeto" value="<?php echo $_GET['idPreProjeto'] ?>" >
-                <input type="hidden" name="edital" value="<?php echo $edital ?>" />
+                <?php if( !$this->isEditarProjeto) : ?>
+                    <form method="post" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'incluir-anexo')) ?>" id="formulario"  enctype="multipart/form-data">
+                    <input type="hidden" name="idPreProjeto" value="<?php echo $_GET['idPreProjeto'] ?>" >
+                    <input type="hidden" name="edital" value="<?php echo $edital ?>" />
 
-                 <table class="tabela">
-                    <tr>
-                        <th colspan="2">
-                            Novo Arquivo
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="bold destacar w150">Arquivo <span class="red">*</span></td>
-                        <td>
-                            <input type="file" name="arquivo" id="arquivo" class="input_simples">
-                            <span style="color:#f00" id="arquivoinvalido"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bold destacar">Tipo do documento<span class="red-text">*</span></td>
-                        <td align="left">
-                            <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento1" value="1" /> Proponente
-                            <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento2" value="2" /> Proposta
-                            <span style="color:#f00" id="tipodocumentoinvalido"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bold destacar">Documento <span class="red">*</span></td>
-                        <td align="left">
-                            <select id="documento" name="documento" class="select_simples">
-                                <option value=""> - Selecione um Tipo de Documento - &nbsp;</option>
-                            </select>
-                            <span style="color:#f00" id="documentoinvalido"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td valign="top" class="bold destacar">Observa&ccedil;&atilde;o</td>
-                        <td><textarea name="observacao" class="input_simples" style="width: 99%" cols="60" rows="5"></textarea></td>
-                    </tr>
-                </table>
-                <table class="tabela">
-                    <tr>
-                        <td align="center">
-                            <input class="btn_enviar" id="enviar" type="button" onclick="enviaform()" value="">
-                        </td>
-                    </tr>
-                </table>
-                </form>
+                     <table class="tabela">
+                        <tr>
+                            <th colspan="2">
+                                Novo Arquivo
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="bold destacar w150">Arquivo <span class="red">*</span></td>
+                            <td>
+                                <input type="file" name="arquivo" id="arquivo" class="input_simples">
+                                <span style="color:#f00" id="arquivoinvalido"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bold destacar">Tipo do documento<span class="red-text">*</span></td>
+                            <td align="left">
+                                <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento1" value="1" /> Proponente
+                                <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento2" value="2" /> Proposta
+                                <span style="color:#f00" id="tipodocumentoinvalido"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bold destacar">Documento <span class="red">*</span></td>
+                            <td align="left">
+                                <select id="documento" name="documento" class="select_simples">
+                                    <option value=""> - Selecione um Tipo de Documento - &nbsp;</option>
+                                </select>
+                                <span style="color:#f00" id="documentoinvalido"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" class="bold destacar">Observa&ccedil;&atilde;o</td>
+                            <td><textarea name="observacao" class="input_simples" style="width: 99%" cols="60" rows="5"></textarea></td>
+                        </tr>
+                    </table>
+                    <table class="tabela">
+                        <tr>
+                            <td align="center">
+                                <input class="btn_enviar" id="enviar" type="button" onclick="enviaform()" value="">
+                            </td>
+                        </tr>
+                    </table>
+                    </form>
+                <?php endif; ?>
 
                 <?php if(count($this->arquivosProposta)>0){ ?>
                 <table class="tabela">
@@ -80,7 +82,9 @@ $edital='';
                         <td align="center"><b>Documento</b></td>
                         <td align="center"><b>Data envio</b></td>
                         <td align="center"><b>Arquivo</b></td>
+                        <?php if( !$this->isEditarProjeto) : ?>
                         <td align="center" width="150"><b>A&ccedil;&atilde;o</b></td>
+                        <?php endif; ?>
                     </tr>
                     <?php foreach ($this->arquivosProposta as $arquivosProposta) { ?>
                     <tr>
@@ -91,7 +95,9 @@ $edital='';
                                 <?php echo $arquivosProposta['noarquivo']; ?>
                             </a>
                         </td>
-                        <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proposta');" /></td>
+                        <?php if( !$this->isEditarProjeto) : ?>
+                            <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proposta');" /></td>
+                        <?php endif; ?>
                     <?php } ?>
                 </table>
                 <?php } ?>
@@ -106,14 +112,19 @@ $edital='';
                         <td align="center"><b>Documento</b></td>
                         <td align="center"><b>Data envio</b></td>
                         <td align="center"><b>Arquivo</b></td>
-                        <td align="center" width="150"><b>A&ccedil;&atilde;o</b></td>
+                        <?php if( !$this->isEditarProjeto) : ?>
+                            <td align="center" width="150"><b>A&ccedil;&atilde;o</b></td>
+                        <?php endif; ?>
                     </tr>
                     <?php foreach ($this->arquivosProponente as $arquivosProponente) { ?>
                     <tr>
                         <td><?php echo $arquivosProponente['Descricao']; ?></td>
                         <td align="center"><?php echo Data::tratarDataZend($arquivosProponente['Data'], 'Brasileira'); ?></td>
                         <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-agentes')); ?>?id=<?php echo $arquivosProponente['idDocumentosAgentes']; ?>"><?php echo $arquivosProponente['NoArquivo']; ?></a></td>
-                        <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProponente['idDocumentosAgentes']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proponente');" /></td>
+                        <?php if( !$this->isEditarProjeto) : ?>
+                            <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProponente['idDocumentosAgentes']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proponente');" /></td>
+                        <?php endif; ?>
+
                     <?php } ?>
                 </table>
                 <?php } ?>
