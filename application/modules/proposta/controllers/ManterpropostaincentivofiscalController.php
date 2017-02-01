@@ -655,6 +655,10 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         $this->verificarPermissaoAcesso(true, false, false);
 
+        if($this->isEditarProjeto){
+            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+        }
+
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         //BUSCANDO REGISTRO A SER ALTERADO
