@@ -306,9 +306,8 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         $datainicial = strtotime($datainicial . "+ " . $prazo ." day");
         $datafinal   = strtotime($datafinal) + 24 * 3600;
-        $datatirada  = $datainicial - $datafinal;
-        $dias = $datatirada;
+        $segundos  = $datainicial - $datafinal;
 
-        return $dias;
+        return $segundos;
     }
 }
