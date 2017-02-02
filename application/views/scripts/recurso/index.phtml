@@ -39,28 +39,6 @@
             $('.ui-dialog-titlebar-close').remove();
         });
 
-        $('.devolverRecursoCnic').click(function(){
-            var id = $(this).attr('idRecurso');
-            $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente devolver o recurso para uma nova análise da CNIC?');
-            $("#alerta").dialog({
-                resizable: false,
-                title: 'Alerta!',
-                width: 340,
-                height: 180,
-                modal: true,
-                buttons : {
-                    'Não' : function(){
-                        $(this).dialog('close');
-                    },
-                    'Sim' : function(){
-                        window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'devolver-recurso-cnic')); ?>?id="+id;
-                    }
-                }
-            });
-            $('.ui-dialog-titlebar-close').remove();
-        });
-	
         $('.devolverRecurso').click(function(){
             var id = $(this).attr('idRecurso');
             $("#alerta").dialog("destroy");
@@ -288,18 +266,15 @@
                 <?php } ?>	
                 
                 <?php if($this->filtro != 'emanalise'){ ?>
-                    <?php if($this->filtro == 'analisados'){ ?>
+                    <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>                                                             
                     <th>Ação</th>
                     <?php } else if ($this->filtro == '') { ?>
                     <th>Avaliar</th>
                     <?php } ?>
                 <?php } ?>
                 
-                <?php if($this->filtro == 'analisados'){ ?>
+                <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>
                 <th>Devolver para análise</th>
-                <?php } ?>
-		<?php if($this->filtro == 'analisados_cnic'){ ?>
-                <th>Devolver para CNIC</th>
                 <?php } ?>
             </tr>
         </thead>
@@ -361,29 +336,25 @@
                 </td>
                 <?php } ?>
 		
-                <?php if($this->filtro == 'analisados' || $this->filtro == ''){ ?>
+                <?php if($this->filtro != 'emanalise'){ ?>
+                    <!-- todos exceto em analise --> 
                 <td align="center">
-                    <?php if($this->filtro == 'analisados'){ ?>
+                    <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>
                         <?php if($d->siRecurso == 6){ ?>
                         <input type="button" name="btn_enviar" class="btn_enviar finalizarRecurso" idRecurso="<?php echo $d->idRecurso; ?>" title="Finalizar">
                         <?php } else { ?>
-                        <input type="button" name="btn_encaminhar" class="btn_gerarpublicacao encaminharRecursoCheckList" idRecurso="<?php echo $d->idRecurso; ?>" title="Encaminhar Checklist Publicação">
+                        <input type="button" name="btn_encaminhar" class="btn_finalizar encaminharRecursoCheckList" idRecurso="<?php echo $d->idRecurso; ?>" title="Encaminhar Checklist Publicação">
                         <?php } ?>
                     <?php } else if ($this->filtro == '') { ?>
                         <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_avaliar" recurso="<?php echo $d->idRecurso; ?>" pronac="<?php echo $d->PRONAC; ?>" nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Avaliar">
                     <?php } ?>
                 </td>
                 <?php } ?>
-                <?php if($this->filtro == 'analisados'){ ?>
+                <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>
                 <td align="center">
                     <img src="<?php echo $this->baseUrl().'/public/img/desarquivar.gif'; ?>" style="cursor: pointer;" class="devolverRecurso" idRecurso="<?php echo $d->idRecurso; ?>" title="Devolver">
                 </td>
                 <?php } ?>
-                <?php if($this->filtro == 'analisados_cnic'){ ?>
-                <td align="center">
-                    <img src="<?php echo $this->baseUrl().'/public/img/desarquivar.gif'; ?>" style="cursor: pointer;" class="devolverRecursoCnic" idRecurso="<?php echo $d->idRecurso; ?>" title="Devolver CNIC">
-                </td>
-                <?php } ?>		
             </tr>
             <?php } ?>
         </tbody>
