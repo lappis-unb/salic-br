@@ -91,7 +91,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             'Sequencial' => $this->view->projeto['Sequencial'],
             'IdPRONAC' => $this->view->projeto['IdPRONAC']
         );
-        $arrayEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+        $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
     }
 
     /**
