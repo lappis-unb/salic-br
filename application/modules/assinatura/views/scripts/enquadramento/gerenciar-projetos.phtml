@@ -3,11 +3,18 @@
     $links = array(
         array('Gerenciar Projetos' => array())
     );
-    gerarBreadCrumb($links);
     ?>
-    <div class="content">
+    <div class="content padding20 clearfix">
         <div class="row">
-            <div class="col s12">
+            <div class="col s1"></div>
+            <div class="col s10">
+                <?php gerarBreadCrumb($links); ?>
+            </div>
+            <div class="col s1"></div>
+        </div>
+        <div class="row">
+            <div class="col s1"></div>
+            <div class="col s10">
                 <form method="post"
                       class="materialize"
                       id="formGerenciamentoPropostas"
@@ -20,7 +27,7 @@
                     <table class="bordered responsive-table margin0" id="enquadramento">
                         <thead>
                         <tr class="">
-                            <th>
+                            <th class="center-align">
                                 <input type="checkbox"
                                        name="marcarDesmarcarCheckbox"
                                        id="marcarDesmarcarCheckbox"
@@ -28,30 +35,30 @@
                                 <label id="marcarDesmarcarCheckboxLabel"
                                        for="marcarDesmarcarCheckbox"></label>
                             </th>
-                            <th align="center" width="40">PRONAC</th>
-                            <th>Nome do Projeto</th>
-                            <th>&Aacute;rea</th>
-                            <th>Segmento</th>
-                            <th>Enquadramento</th>
-                            <th>Valor Aprovado</th>
-                            <th>Dias</th>
-                            <th align="center">Ver</th>
-                            <th align="center">Devolver</th>
-                            <th align="center">Assinar</th>
-                            <th align="center">Finalizar</th>
+                            <th align="center" width="40" class="center-align">PRONAC</th>
+                            <th class="center-align">Nome do Projeto</th>
+                            <th class="center-align">&Aacute;rea</th>
+                            <th class="center-align">Segmento</th>
+                            <th class="center-align">Enquadramento</th>
+                            <th class="center-align">Valor Aprovado</th>
+                            <th class="center-align">Dias</th>
+                            <th class="center-align" align="center">Ver</th>
+                            <th class="center-align" align="center">Devolver</th>
+                            <th class="center-align" align="center">Assinar</th>
+                            <th class="center-align" align="center">Finalizar</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($this->dados as $dado): ?>
                             <tr>
-                                <td>
+                                <td class="center-align">
                                     <input type="checkbox"
                                            name="IdPRONAC[]"
                                            id="IdPRONAC<?php echo $dado->IdPRONAC ?>"
                                            class="checkbox_legal filled-in" value="<?php echo $dado->IdPRONAC ?>"/>
                                     <label for="IdPRONAC<?php echo $dado->IdPRONAC ?>"></label>
                                 </td>
-                                <td align="center" >
+                                <td class="center-align" align="center" >
                                     <a class="waves-effect waves-dark btn white black-text"
                                        href="<?php echo $this->url(
                                                array(
@@ -61,13 +68,13 @@
                                                )
                                            ) . "?idPronac={$dado['IdPRONAC']}"; ?>"><u><?php echo $dado['pronac']; ?></u></a>
                                 </td>
-                                <td align="center"><?php echo $dado['nomeProjeto']; ?></td>
-                                <td align="center"><?php echo $dado['area']; ?></td>
-                                <td align="center"><?php echo $dado['segmento']; ?></td>
-                                <td align="center"><?php echo ((int)$dado['tp_enquadramento'] == 1) ? 'Artigo 26' : 'Artigo 18'; ?></td>
-                                <td align="center"><?php echo (!empty($dado['vlAprovado'])) ? $dado['vlAprovado'] : '-'; ?></td>
-                                <td align="center"><?php echo $dado['dias']; ?></td>
-                                <td align="center">
+                                <td class="center-align" align="center"><?php echo $dado['nomeProjeto']; ?></td>
+                                <td class="center-align" align="center"><?php echo $dado['area']; ?></td>
+                                <td class="center-align" align="center"><?php echo $dado['segmento']; ?></td>
+                                <td class="center-align" align="center"><?php echo ((int)$dado['tp_enquadramento'] == 1) ? 'Artigo 26' : 'Artigo 18'; ?></td>
+                                <td class="center-align" align="center"><?php echo (!empty($dado['vlAprovado'])) ? $dado['vlAprovado'] : '-'; ?></td>
+                                <td class="center-align" align="center"><?php echo $dado['dias']; ?></td>
+                                <td class="center-align" align="center">
                                     <a class="btn waves-effect waves-light white tooltipped small black-text"
                                        href="<?php echo $this->url(array(
                                            'module' => 'assinatura',
@@ -80,7 +87,7 @@
                                         <i class="material-icons">search</i>
                                     </a>
                                 </td>
-                                <td align="center">
+                                <td class="center-align" align="center">
                                     <a class="btn waves-effect waves-light white tooltipped small black-text"
                                        href="<?php echo $this->url(array(
                                            'module' => 'assinatura',
@@ -93,7 +100,7 @@
                                         <i class="material-icons">keyboard_backspace</i>
                                     </a>
                                 </td>
-                                <td align="center">
+                                <td class="center-align" align="center">
                                     <a class="btn waves-effect waves-light white tooltipped small black-text"
                                        href="<?php echo $this->url(array(
                                            'module' => 'assinatura',
@@ -106,7 +113,7 @@
                                         <i class="material-icons">create</i>
                                     </a>
                                 </td>
-                                <td align="center">
+                                <td class="center-align" align="center">
                                     <a class="btn waves-effect waves-light white tooltipped small black-text"
                                        href="<?php echo $this->url(array(
                                            'module' => 'assinatura',
@@ -131,6 +138,7 @@
                     </div>
                 </form>
             </div>
+            <div class="col s1"></div>
         </div>
     </div>
     <br clear="all"/>

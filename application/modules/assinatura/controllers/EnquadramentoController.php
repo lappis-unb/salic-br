@@ -90,6 +90,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             'IdPRONAC' => $this->view->projeto['IdPRONAC']
         );
         $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+        $this->view->titulo = "Enquadramento";
     }
 
     /**
@@ -108,6 +109,34 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         select * from sac.dbo.Orgaos where idSecretaria = 160
         -- Quando devolver o projeto deve voltar para o órgçao 171 ( qunado for SAV [ SAV é o órgão superior ] )
          */
+
+        $get = Zend_Registry::get('get');
+        $this->view->IdPRONAC = $get->IdPRONAC;
+
+        $objProjeto = new Projetos();
+        $this->view->projeto = $objProjeto->findBy(array(
+            'IdPRONAC' => $this->view->IdPRONAC
+        ));
+
+        $mapperArea = new Agente_Model_AreaMapper();
+        $this->view->areaCultural = $mapperArea->findBy(array(
+            'Codigo' => $this->view->projeto['Area']
+        ));
+
+        $objSegmentocultural = new Segmentocultural();
+        $this->view->segmentoCultural = $objSegmentocultural->findBy(array(
+            'Codigo' => $this->view->projeto['Segmento']
+        ));
+
+        $objEnquadramento = new Admissibilidade_Model_Enquadramento();
+        $arrayPesquisa = array(
+            'AnoProjeto' => $this->view->projeto['AnoProjeto'],
+            'Sequencial' => $this->view->projeto['Sequencial'],
+            'IdPRONAC' => $this->view->projeto['IdPRONAC']
+        );
+        $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+
+        $this->view->titulo = "Devolver";
     }
 
     /**
