@@ -1545,3 +1545,6 @@ input.mdl-button[type="submit"] {
 .margin0 {
     margin: 0px;
 }
+.no-border {
+    border: 0px;
+}

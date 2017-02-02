@@ -8,9 +8,15 @@
         )),
         array('Enquadramento ' => array())
     );
-    gerarBreadCrumb($links);
     ?>
     <div class="content padding20 clearfix">
+        <div class="row">
+            <div class="col s1"></div>
+            <div class="col s10">
+                <?php gerarBreadCrumb($links); ?>
+            </div>
+            <div class="col s1"></div>
+        </div>
         <div class="row">
             <div class="col s1"></div>
             <div class="col s10">
