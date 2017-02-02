@@ -1,3 +1,11 @@
+Release 1.15.0
+  * Novo: [Recursos] Painel de projetos analisados na CNIC
+  * Fix: [Comprovação financeira] Adicionando novas situações
+  * Fix: [Comprovação de pagamento] Adicionando situações que podem realizar comprovação financeira
+  * Fix: [Manter dados bancários] alterando model
+  * Fix: [Recursos] Corrigindo link do painel de recuros analisados pela cnic
+  * Fix: [Recursos] Padronizando painel - botão de ver em todas as abas
+
 Release 1.14.9
   * Fix: [Comprovação física do objeto] mensagens de erro quando estoura tamanho de upload
   * Fix: [Publicação de portaria] pequeno ajuste no texto da portaria
