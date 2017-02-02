@@ -152,3 +152,40 @@ INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog
 INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 251, 152, 1);
 INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 262, 150, 1);
 INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 341, 151, 1);
+
+/**
+  Tabela que contém qual o perfil, cargo, orgão e ordem dos próximos assinantes
+  De acordoc om o Tipo do Ato 998521491
+ */
+CREATE TABLE tbAtoAdministrativo
+(
+  idAtoAdministrativo INT PRIMARY KEY NOT NULL IDENTITY,
+  idTipoDoAto INT NOT NULL,
+  idCargoDoAssinante INT NOT NULL,
+  idOrgaoDoAssinante INT NOT NULL,
+  idPerfilDoAssinante INT,
+  idOrdemDaAssinatura TINYINT NOT NULL,
+  stEstado BIT DEFAULT 1 NOT NULL,
+  CONSTRAINT FK_tbAtoAdministrativo_Verificacao FOREIGN KEY (idTipoDoAto) REFERENCES Verificacao (idVerificacao)
+);
+CREATE INDEX IX_idTipoDoAto ON tbAtoAdministrativo (idTipoDoAto);
+CREATE INDEX IX_idCargoDoAssinante ON tbAtoAdministrativo (idCargoDoAssinante);
+CREATE INDEX IX_idOrgaoDoAssinante ON tbAtoAdministrativo (idOrgaoDoAssinante);
+
+/**
+  View Criada para facilitar o carregamento das informações vinculadas ao tbAtoAdministrativo
+ */
+CREATE TABLE vwAtoAdministrativo
+(
+    idAtoAdministrativo INT NOT NULL,
+    idTipoDoAto INT NOT NULL,
+    dsAtoAdministrativo VARCHAR(100) NOT NULL,
+    idCargoDoAssinante INT NOT NULL,
+    dsCargoDoAssinante VARCHAR(100) NOT NULL,
+    idOrgaoDoAssinante INT NOT NULL,
+    dsOrgaoDoAssinante VARCHAR(20) NOT NULL,
+    idPerfilDoAssinante INT,
+    dsPerfil VARCHAR(60) NOT NULL,
+    idOrdemDaAssinatura TINYINT NOT NULL,
+    stEstado BIT NOT NULL
+);

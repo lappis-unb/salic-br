@@ -1536,6 +1536,9 @@ input.mdl-button[type="submit"] {
 .padding20 {
     padding: 20px;
 }
+.margin-bottom20 {
+    margin-bottom: 20px;
+}
 .margin-bottom30 {
     margin-bottom: 30px
 }

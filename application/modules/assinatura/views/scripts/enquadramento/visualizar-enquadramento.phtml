@@ -229,6 +229,20 @@
             </div>
             <div class="col s1"></div>
         </div>
+        <div class="row">
+            <div class="col s1"></div>
+            <div class="col s10">
+                <p>
+                    <label class="margin-bottom20">Motiva&ccedil;&atilde;o do Enquadramento</label>
+                </p>
+                <div class="padding20 bordered">
+                    <?php
+                    echo $this->dadosEnquadramento['Observacao'];
+                    ?>
+                </div>
+            </div>
+            <div class="col s1"></div>
+        </div>
         <div class="row center-align">
             <a class="btn waves-effect waves-dark"
                href="<?php
@@ -236,7 +250,8 @@
                        'module' => 'assinatura',
                        'controller' => 'enquadramento',
                        'action' => 'gerenciar-projetos'
-                   )) . "?IdPRONAC={$this->IdPRONAC}";
+                   ))
+                   . "?IdPRONAC={$this->IdPRONAC}";
                ?>">Voltar</a>
             <a class="btn waves-effect waves-dark"
                href="<?php
@@ -244,7 +259,8 @@
                        'module' => 'assinatura',
                        'controller' => 'enquadramento',
                        'action' => 'assinar-projeto'
-                   )) . "?IdPRONAC={$this->IdPRONAC}";
+                   ))
+                   . "?IdPRONAC={$this->IdPRONAC}";
                ?>">Assinar</a>
             <a class="btn waves-effect waves-dark"
                href="<?php
@@ -252,7 +268,8 @@
                        'module' => 'assinatura',
                        'controller' => 'enquadramento',
                        'action' => 'finalizar-assinatura'
-                   )) . "?IdPRONAC={$this->IdPRONAC}";
+                   ))
+                   . "?IdPRONAC={$this->IdPRONAC}";
                     ?>">Finalizar</a>
             <a class="btn waves-effect waves-dark"
                href="<?php
