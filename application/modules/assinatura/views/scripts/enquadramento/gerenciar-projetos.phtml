@@ -21,9 +21,12 @@
                         <thead>
                         <tr class="">
                             <th>
-                                <input type="checkbox" name="marcarDesmarcarCheckbox" id="marcarDesmarcarCheckbox"
+                                <input type="checkbox"
+                                       name="marcarDesmarcarCheckbox"
+                                       id="marcarDesmarcarCheckbox"
                                        class="filled-in"/>
-                                <label id="marcarDesmarcarCheckboxLabel" for="marcarDesmarcarCheckbox"></label>
+                                <label id="marcarDesmarcarCheckboxLabel"
+                                       for="marcarDesmarcarCheckbox"></label>
                             </th>
                             <th align="center" width="40">PRONAC</th>
                             <th>Nome do Projeto</th>
@@ -42,7 +45,9 @@
                         <?php foreach ($this->dados as $dado): ?>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="IdPRONAC[]" id="IdPRONAC<?php echo $dado->IdPRONAC ?>"
+                                    <input type="checkbox"
+                                           name="IdPRONAC[]"
+                                           id="IdPRONAC<?php echo $dado->IdPRONAC ?>"
                                            class="checkbox_legal filled-in" value="<?php echo $dado->IdPRONAC ?>"/>
                                     <label for="IdPRONAC<?php echo $dado->IdPRONAC ?>"></label>
                                 </td>
@@ -67,7 +72,7 @@
                                        href="<?php echo $this->url(array(
                                            'module' => 'assinatura',
                                            'controller' => 'enquadramento',
-                                           'action' => 'visualizar-enquadramento'
+                                           'action' => 'visualizar-projeto'
                                            )) . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
                                        data-position="top"
                                        data-delay="50"
@@ -134,8 +139,6 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.material.min.js"></script>
-
-    <!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>-->
 
     <script type="text/javascript">
         (function ($) {

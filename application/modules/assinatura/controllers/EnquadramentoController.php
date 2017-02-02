@@ -46,12 +46,10 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     }
 
     /**
-     * @todo Preencher os campos que estão com "xxxx" na view.
      * @todo Validar quando o botão "Finalizar" deve ser exibido
      * @todo Validar quando o botão "Devolver" deve ser exibido
-     * @todo Adicionar ícones aos bot&otilde;es
      */
-    public function visualizarEnquadramentoAction()
+    public function visualizarProjetoAction()
     {
         $get = Zend_Registry::get('get');
         $this->view->IdPRONAC = $get->IdPRONAC;
@@ -116,6 +114,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
      * @todo Criar view.
      * @todo Preencher os campos que estão com "xxxx" na view.
      * @todo Adicionar ícones aos bot&otilde;es
+     * @todo Tratar quando receber mais de um número de PRONAC
      */
     public function assinarProjetoAction()
     {
@@ -126,6 +125,16 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
          *
          * Usar esse script como base:
          */
+        $get = Zend_Registry::get('get');
+        $this->view->IdPRONAC = $get->IdPRONAC;
+        $this->obterDadosAssinaturaProjeto($get->IdPRONAC);
+    }
+
+    private function obterDadosAssinaturaProjeto($idPronac) {
+        $objProjeto = new Projetos();
+        $this->view->projeto = $objProjeto->findBy(array(
+            'IdPRONAC' => $idPronac
+        ));
     }
 
     /**
