@@ -135,6 +135,13 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->view->projeto = $objProjeto->findBy(array(
             'IdPRONAC' => $idPronac
         ));
+
+        $auth = Zend_Auth::getInstance();
+        $Usuario = new UsuarioDAO();
+        $this->view->grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+
+        $objUsuariosOrgaosGrupos = new Usuariosorgaosgrupos();
+        $this->view->cargos = $objUsuariosOrgaosGrupos->obterGruposPorUsuarioEOrgao($auth->getIdentity()->usu_codigo, $auth->getIdentity()->usu_orgao);
     }
 
     /**
