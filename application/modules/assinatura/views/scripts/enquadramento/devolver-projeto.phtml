@@ -8,7 +8,6 @@
         )),
         array('Devolver' => array())
     );
-    gerarBreadCrumb($links);
     ?>
     <div class="content padding20">
         <form action="<?php
@@ -21,54 +20,70 @@
         method="post">
             <input type="hidden" name="IdPRONAC" value="<?php echo $this->IdPRONAC ?>" />
             <div class="row">
-                <div class="col s12 margin-bottom30">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <?php gerarBreadCrumb($links); ?>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
                     <h3>Devolver</h3>
                 </div>
+                <div class="col s1"></div>
             </div>
             <div class="row">
+                <div class="col s1"></div>
                 <div class="col s3">
                     <label>PRONAC</label>
-                    <p>
+                    <p class="bordered padding20 bold">
                         xxxx
                     </p>
                 </div>
-                <div class="col s9">
+                <div class="col s7">
                     <label>Nome do Projeto</label>
-                    <p>
+                    <p class="bordered padding20 bold">
                         xxxx
                     </p>
                 </div>
+                <div class="col s1"></div>
             </div>
             <div class="row">
+                <div class="col s1"></div>
                 <div class="col s3">
                     <label>&Aacute;rea Cultural</label>
-                    <p>
+                    <p class="bordered padding20 bold">
+                        xxxx
+                    </p>
+                </div>
+                <div class="col s4">
+                    <label>Segmento Cultural</label>
+                    <p class="bordered padding20 bold">
                         xxxx
                     </p>
                 </div>
                 <div class="col s3">
-                    <label>Segmento Cultural</label>
-                    <p>
-                        xxxx
-                    </p>
-                </div>
-                <div class="col s6">
                     <label>Enquadramento</label>
-                    <p>
+                    <p class="bordered padding20 bold">
                         xxxx
                     </p>
                 </div>
+                <div class="col s1"></div>
             </div>
             <div class="row">
-                <div class="col s12">
+                <div class="col s1"></div>
+                <div class="col s10">
                     <label>Motiva&ccedil;&atilde;o do Enquadramento</label>
-                    <p class="bordered padding20">
+                    <p class="bordered padding20 bold">
                         xxxx
                     </p>
                 </div>
+                <div class="col s1"></div>
             </div>
             <div class="row">
-                <div class="col s12">
+                <div class="col s1"></div>
+                <div class="col s10">
                     <p>
                         <label>Motiva&ccedil;&atilde;o da Devolu&ccedil;&atilde;o para nova avalia&ccedil;&atilde;o:</label>
                     </p>
@@ -79,6 +94,7 @@
                                   style="height: 200px"></textarea>
                     </div>
                 </div>
+                <div class="col s1"></div>
             </div>
 
             <div class="row center-align">
