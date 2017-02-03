@@ -141,6 +141,19 @@ table.tabela td.destacar span,
     opacity: 1;
 }
 
+#conteudo [type="radio"] + label:before,
+#conteudo [type="radio"] + label:after {
+    content: '';
+    position: absolute;
+    left: -19px;
+    top: -4px;
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    z-index: 0;
+    transition: .28s ease;
+}
+
 #conteudo table.tabela label {
     font-size: 0.8rem;
     color: #212121;

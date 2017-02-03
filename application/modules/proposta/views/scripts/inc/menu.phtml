@@ -169,7 +169,7 @@ if ($this->isEditavel) {
                             <?php echo isset($this->layout['projeto']) ? $this->layout['projeto'] : $this->proposta['idpreprojeto']; ?>
                         </p>
                         <p class="white-text"><?php echo isset($this->proposta['nomeprojeto']) ? $this->proposta['nomeprojeto'] : ''; ?></p>
-                        <?php if( isset($this->layout['prazoAlterarProjeto'])) : ?>
+                        <?php if( isset($this->layout['prazoAlterarProjeto']) && $this->layout['prazoAlterarProjeto'] > 0 ) : ?>
                             <p class="white-text">
                                 <?php $n = round($this->layout['prazoAlterarProjeto']); ?>
                                 <i class="material-icons left tiny">query_builder</i>
