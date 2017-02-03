@@ -1,4 +1,4 @@
- // register
+// register
 Vue.component('my-component', {
   template: '#app-6',
     data: function() {
@@ -179,14 +179,13 @@ Vue.component('my-component', {
             }
         },
         vlUnitarioPrecoPopularValorIntegral: function() {
+            console.log(this.vlUnitarioPrecoPopularValorIntegral);
+ console.log((Math.trunc(this.vlUnitarioPrecoPopularValorIntegral * 100) / 100).toFixed(2));
             if (this.vlUnitarioPrecoPopularValorIntegral > 50.00) {
                 alert('O valor não pode ser maior que 50.00');
                 this.vlUnitarioPrecoPopularValorIntegral = 50.00;
             }
         },
-        //produtos:function(){
-            //this.t();
-        //}
     },
     beforeUpdate: function() {
 

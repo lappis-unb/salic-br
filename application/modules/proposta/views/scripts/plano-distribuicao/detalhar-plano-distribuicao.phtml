@@ -75,6 +75,7 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script type="text/x-template" id="app-6">
     <div>
@@ -209,12 +210,12 @@
                             <tr>
                                 <td>
                                     <div class="input-field  ">
-                                        <input id="dsProduto" v-model="dsProduto">
+                                        <input  id="dsProduto" v-model="dsProduto">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-field">
-                                        <input v-model.lazy="qtExemplares" >
+                                        <input  v-model.lazy="qtExemplares" >
                                     </div>
                                 </td>
                                 <td>
@@ -235,7 +236,8 @@
                                 <td>{{ qtPrecoPopularValorParcial }} </td>
                                 <td>
                                     <div class="input-field ">
-                                        <input v-model="vlUnitarioPrecoPopularValorIntegral">
+                                        <input  v-model="vlUnitarioPrecoPopularValorIntegral">
+                                        <currency-input ></currency-input>
                                     </div>
                                 </td>
                                 <td>{{ vlReceitaPrecoPopularValorIntegral }}</td>
@@ -244,7 +246,7 @@
                                 <td>{{ qtPrecoProponenteValorParcial }}</td>
                                 <td>
                                     <div class="input-field ">
-                                        <input v-model="precoUnitarioIngressoProponente">
+                                        <input  v-model="precoUnitarioIngressoProponente">
                                     </div>
                                 </td>
                                 <td>{{ vlReceitaPrecoProponenteValorIntegral }}</td>
