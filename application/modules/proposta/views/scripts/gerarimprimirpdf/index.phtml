@@ -27,7 +27,11 @@
 </head>
 
 <body style="paddig:20px">
-<center><h1>Proposta Cultural</h1></center>
+<?php if( $this->isEditarProjeto ) : ?>
+    <center><h1>Alterar Projeto</h1></center>
+<?php else : ?>
+    <center><h1>Proposta Cultural</h1></center>
+<?php endif; ?>
 <br>
 <h2>Identifica&ccedil;&atilde;o </h2>
 <table class="identificacao">
