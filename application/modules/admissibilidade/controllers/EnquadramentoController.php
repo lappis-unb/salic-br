@@ -40,21 +40,23 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
 
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+
     }
+
 
     public function enquadrarprojetoAction()
     {
         try {
             $get = $this->getRequest()->getParams();
             if (!isset($get['IdPRONAC']) || empty($get['IdPRONAC'])) {
-                throw new Exception("Número de PRONAC não informado.");
+                throw new Exception("N&uacute;mero de PRONAC n&atilde;o informado.");
             }
             $this->view->IdPRONAC = $get['IdPRONAC'];
             $objProjeto = new Projetos();
             $projeto = $objProjeto->findBy(array('IdPRONAC' => $this->view->IdPRONAC));
 
             if (!$projeto) {
-                throw new Exception("PRONAC não encontrado.");
+                throw new Exception("PRONAC n&atilde;ao encontrado.");
             }
 
             $arraySituacoesValidas = array("B01", "B03");
