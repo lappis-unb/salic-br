@@ -1,11 +1,13 @@
 <main>
     <?php
     $links = array(
-        array('Gerenciar Projetos' => array(
-            'module' => 'assinatura',
-            'controller' => 'enquadramento',
-            'action' => 'gerenciar-projetos'
-        )),
+        array(
+            'Gerenciar Projetos' => array(
+                'module' => 'assinatura',
+                'controller' => 'enquadramento',
+                'action' => 'gerenciar-projetos'
+            )
+        ),
         array('Enquadramento ' => array())
     );
     ?>
@@ -146,7 +148,7 @@
                             'controller' => 'consultardadosprojeto',
                             'action' => 'planilha-orcamentaria'
                         ))
-                        . "?idPronac=".$this->idPronac."','conteudo'); return false\" title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">"
+                        . "?IdPRONAC=".$this->IdPRONAC."','conteudo'); return false\" title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">"
                         . number_format(($this->valoresProjeto['ValorSolicitado'] + $this->valoresProjeto['OutrasFontes']), 2, ",", ".")
                         . "</font></a>";
                     ?>
@@ -166,8 +168,8 @@
                             'controller' => 'consultardadosprojeto',
                                 'action' => 'planilha-orcamentaria-aprovada'
                             ))
-                            . "?idPronac="
-                            . $this->idPronac
+                            . "?IdPRONAC="
+                            . $this->IdPRONAC
                             . "','conteudo'); return false\" 
                             title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">"
                             . @number_format(($this->valoresProjeto['ValorAprovado']), 2, ",", ".")
@@ -244,7 +246,33 @@
                 <div class="padding20 bordered">
                     <?php
                     echo $this->dadosEnquadramento['Observacao'];
+//                    xd($_SERVER);
                     ?>
+                </div>
+            </div>
+            <div class="col s1"></div>
+        </div>
+        <div class="row">
+            <div class="col s1"></div>
+            <div class="col s10">
+                <p>
+                    <label class="margin-bottom20">Acompanhamento do Projeto</label>
+                </p>
+                <div class="padding20 bordered row">
+                    <div class="row center-align">
+                        Utilize o QR Code abaixo para acompanhar as assinaturas do projeto.
+                    </div>
+                    <div class="row center-align">
+                        <img src="<?php echo $this->url(array(
+                                'module' => 'qrcode',
+                                'controller' => 'QRCode',
+                                'action' => 'exibir'
+                            )) . "?texto=http://{$_SERVER['SERVER_NAME']}" . $this->url(array(
+                                'module' => 'assinatura',
+                                'controller' => 'enquadramento',
+                                'action' => 'visualizar-projeto'
+                            )) . "?IdPRONAC={$this->IdPRONAC}" ?>" />
+                    </div>
                 </div>
             </div>
             <div class="col s1"></div>
