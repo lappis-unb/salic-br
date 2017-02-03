@@ -11,6 +11,8 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     private $_situacaoAlterarProjeto = 'E90'; // @todo situacao correta 'E90'
 
+    private $_diasParaAlterarProjeto = 10;
+
     public function init()
     {
         parent::init();
@@ -67,8 +69,8 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                     'titleFull' => 'Alterar projeto',
                     'projeto' => $projeto['nrprojeto'],
                     'listagem' => array('Lista de projetos' => array('module' => 'default', 'controller' => 'Listarprojetos', 'action' => 'listarprojetos')),
-                );
-
+                    'prazoAlterarProjeto' =>  $this->contagemRegressivaSegundos($projeto['dtsituacao'], $this->_diasParaAlterarProjeto)
+                    );
             }
             $this->view->layout = $layout;
         }
@@ -99,6 +101,9 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         // Verifica se o projeto esta na situacao para editar
         $tblProjetos = new Projetos();
         $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
+
+        if( $this->contagemRegressivaDias($projeto['DtSituacao'], $this->_diasParaAlterarProjeto) < 0)
+            return false;
 
         if ($projeto['Situacao'] == $this->_situacaoAlterarProjeto)
             return true;
@@ -281,5 +286,28 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             }
         }
         return $soma;
+    }
+
+    public function contagemRegressivaDias($datainicial = null, $prazo = null)
+    {
+        $datafinal="NOW";
+
+        $datainicial = strtotime($datainicial . "+ " . $prazo ." day");
+        $datafinal   = strtotime($datafinal);
+        $datatirada  = $datainicial - $datafinal;
+        $dias = (($datatirada / 3600) / 24);
+
+        return $dias;
+    }
+
+    public function contagemRegressivaSegundos($datainicial = null, $prazo = null)
+    {
+        $datafinal="NOW";
+
+        $datainicial = strtotime($datainicial . "+ " . $prazo ." day");
+        $datafinal   = strtotime($datafinal) + 24 * 3600;
+        $segundos  = $datainicial - $datafinal;
+
+        return $segundos;
     }
 }
