@@ -20,15 +20,7 @@ class Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto extends MinC
      * @var bool
      * @access protected
      */
-    protected $_name = 'TbDetalhamentoPlanoDistribuicaoProduto';
-
-    /**
-     * _primary
-     *
-     * @var bool
-     * @access protected
-     */
-    //protected $_primary = 'idAbrangencia';
+    protected $_name = 'tbDetalhaPlanoDistribuicao';
 
     public function salvar($dados)
     {
