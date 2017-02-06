@@ -74,8 +74,7 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.4/numeral.min.js"></script>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script type="text/x-template" id="app-6">
     <div>
@@ -118,23 +117,21 @@
                     <tr v-for="( produto, index ) in produtos">
                         <td>{{ produto.dsProduto }}</td>
                         <td>{{ produto.qtExemplares }}</td>
-                        <td>{{ qtDistribuicaoGratuitaDivulgacao }}</td>
-                        <td>{{ produto.qtDistribuicaoGratuitaPatrocinador }}</td>
-                        <td>{{ produto.qtDistribuicaoGratuitaPopulacao }}</td>
-                        <td>{{ produto.qtPrecoPopularValorIntegral }}</td>
-                        <td>{{ produto.qtPrecoPopularValorParcial }}</td>
-                        <td>{{ produto.vlUnitarioPrecoPopularValorIntegral }}</td>
-                        <td>{{ produto.vlReceitaPrecoPopularValorIntegral }}</td>
-                        <td>{{ produto.vlReceitaPrecoPopularValorParcial }}</td>
-                        <td>{{ produto.qtPrecoProponenteValorIntegral }}</td>
-                        <td>{{ produto.quantidadeMeiaEntrada }}</td>
-                        <td>{{ produto.precoUnitarioIngressoProponente }}</td>
-                        <td>{{ produto.vlReceitaPrecoProponenteValorIntegral }}</td>
-                        <td>{{ produto.vlReceitaPrecoProponenteValorParcial }}</td>
+                        <td>{{ produto.qtGratuitaDivulgacao }}</td>
+                        <td>{{ produto.qtGratuitaPatrocinador }}</td>
+                        <td>{{ produto.qtGratuitaPopulacao }}</td>
+                        <td>{{ produto.qtPopularIntegral }}</td>
+                        <td>{{ produto.qtPopularParcial }}</td>
+                        <td>{{ produto.vlUnitarioPopularIntegral }}</td>
+                        <td>{{ produto.vlReceitaPopularIntegral }}</td>
+                        <td>{{ produto.vlReceitaPopularParcial }}</td>
+                        <td>{{ produto.qtProponenteIntegral }}</td>
+                        <td>{{ produto.qtProponenteParcial }}</td>
+                        <td>{{ produto.vlUnitarioProponenteIntegral }}</td>
+                        <td>{{ produto.vlReceitaProponenteIntegral }}</td>
+                        <td>{{ produto.vlReceitaProponenteParcial }}</td>
                         <td>{{ produto.vlReceitaPrevista }}</td>
-
-
-                        <td><button class="btn red white-text" v-on:click="excluir(index)"><i class="material-icons">delete</i></button></td>
+                        <td><button class="btn red white-text" v-on:click="excluir(produto.idDetalhamentoPlanoDistribuicaoProduto)"><i class="material-icons">delete</i></button></td>
                     </tr>
                 </tbody>
                 <tfoot class=" grey lighten-1">
@@ -146,12 +143,12 @@
                         <td>{{ patrocinadorTotal }}</td>
                         <td>{{ inteiraTotal }}</td>
                         <td>{{ meiaEntradaTotal }}</td>
-                        <td>{{ precoUnitarioIngressoTotal }}</td>
+                        <td></td>
                         <td>{{ valorInteiraTotal }}</td>
                         <td>{{ valorMeiaEntradaTotal }}</td>
                         <td>{{ quantidadeInteiraTotal }}</td>
                         <td>{{ quantidadeMeiaEntradaTotal }}</td>
-                        <td>{{ precoUnitarioIngressoProponenteTotal }}</td>
+                        <td></td>
                         <td>{{ valorInteiraProponenteTotal }}</td>
                         <td>{{ valorMeiaEntradaProponenteTotal }}</td>
                         <td>{{ receitaPrevistaTotal }}</td>
@@ -205,6 +202,16 @@
                                     <th class="lime lighten-3" >Valor da inteira</th>
                                     <th class="lime lighten-3" >Valor da meia entrada</th>
                                 </tr>
+                                <tr>
+                                    <th class="green lighten-4" ></th>
+                                    <th class="green lighten-4" ></th>
+                                    <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
+                                    <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
+                                    <th class="green lighten-4" >de {{ (qtExemplares * 0.1) }} at&eacute; {{ (qtExemplares * 0.3) }}</th>
+                                    <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorIntegralLimite }}</th>
+                                    <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorParcialLimite }}</th>
+                                    <th class="green lighten-4" >At&eacute; 50,00</th>
+                                </tr>
                             </thead>
                             <tbody class=" green lighten-7">
                             <tr>
@@ -220,37 +227,50 @@
                                 </td>
                                 <td>
                                     <div class="input-field">
-                                        <input v-model.number="qtDistribuicaoGratuitaDivulgacao" >
+                                        <input v-model.number="qtGratuitaDivulgacao" >
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-field">
-                                        <input v-model="qtDistribuicaoGratuitaPatrocinador" ref="patrocinador">
+                                        <input v-model="qtGratuitaPatrocinador" ref="patrocinador">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-field">
-                                        <input v-model="qtDistribuicaoGratuitaPopulacao"  v-on:blur="populacaoValidate(qtDistribuicaoGratuitaPopulacao)">
+                                        <input v-model="qtGratuitaPopulacao"  v-on:blur="populacaoValidate(qtGratuitaPopulacao)">
                                     </div>
-                                <td>{{ qtPrecoPopularValorIntegral }} </td>
-                                <td>{{ qtPrecoPopularValorParcial }} </td>
                                 <td>
-                                    <div class="input-field ">
-                                        <input  v-model="vlUnitarioPrecoPopularValorIntegral">
-                                        <currency-input ></currency-input>
+                                    <div class="input-field">
+                                        <input v-model="qtPrecoPopularValorIntegral"  >
                                     </div>
                                 </td>
-                                <td>{{ vlReceitaPrecoPopularValorIntegral }}</td>
-                                <td>{{ vlReceitaPrecoPopularValorParcial }}</td>
-                                <td>{{ qtPrecoProponenteValorIntegral }}</td>
-                                <td>{{ qtPrecoProponenteValorParcial }}</td>
                                 <td>
-                                    <div class="input-field ">
-                                        <input  v-model="precoUnitarioIngressoProponente">
+                                    <div class="input-field">
+                                        <input v-model="qtPrecoPopularValorParcial"  >
                                     </div>
                                 </td>
-                                <td>{{ vlReceitaPrecoProponenteValorIntegral }}</td>
-                                <td>{{ vlReceitaPrecoProponenteValorParcial }}</td>
+                                <td>
+                                    <div class="input-field ">
+                                        <input-money
+                                             v-bind:value="vlUnitarioPopularIntegral"
+                                             v-on:ev="vlUnitarioPopularIntegral = $event">
+                                        </input-money>
+                                    </div>
+                                </td>
+                                <td>{{ vlReceitaPopularIntegral }}</td>
+                                <td>{{ vlReceitaPopularParcial }}</td>
+                                <td>{{ qtProponenteIntegral }}</td>
+                                <td>{{ qtProponenteParcial }}</td>
+                                <td>
+                                    <div class="input-field ">
+                                        <input-money
+                                             v-bind:value="vlUnitarioProponenteIntegral"
+                                             v-on:ev="vlUnitarioProponenteIntegral = $event">
+                                        </input-money>
+                                    </div>
+                                </td>
+                                <td>{{ vlReceitaProponenteIntegral }}</td>
+                                <td>{{ vlReceitaProponenteParcial }}</td>
                                 <td>{{ vlReceitaPrevista }}</td>
                                 <td>
                                     <button class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>
