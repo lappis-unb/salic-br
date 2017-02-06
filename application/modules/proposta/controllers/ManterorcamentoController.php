@@ -118,7 +118,16 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         );
 
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
-        $this->view->localRealizacao = $tblAbrangencia->buscar($arrBusca);
+        $locais = $tblAbrangencia->buscar($arrBusca);
+
+        // Remove outros paises para cadastro na planilha
+        $novosLocais = array();
+        foreach ($locais as $key => $local) {
+            if (isset($local['idPais']) && $local['idPais'] == 31) {
+                $novosLocais[] = $local;
+            }
+        }
+        $this->view->localRealizacao = $novosLocais;
 
         $this->view->idPreProjeto = $this->idPreProjeto;
 
