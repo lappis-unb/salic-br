@@ -1,3 +1,71 @@
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
+    numeral.register('locale', 'pt-br', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'mil',
+            million: 'milhões',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            return 'º';
+        },
+        currency: {
+            symbol: 'R$'
+        }
+    });
+}));
+
+// switch between locales
+numeral.locale('pt-br');
+
+// register
+Vue.component('input-money', {
+    template: '<div>\
+                <input\
+                    v-bind:value="value"\
+                    ref="input"\
+                    v-on:input="updateMoney($event.target.value)"\
+                    v-on:blur="formatValue"\
+                >\
+                </div>',
+    props: {
+        value: {
+          type: Number,
+          default: 0
+        }
+    },
+    data:function(){
+        return {
+           val:1
+        }
+    },
+    mounted: function () {
+        this.formatValue()
+    },
+    methods:{
+        formatValue: function () {
+          this.$refs.input.value = numeral(this.$refs.input.value).format('0,0.00');
+        },
+        updateMoney: function(value) {
+            console.log(value);
+            this.val = value;
+            this.$emit('ev', this.val)
+        }
+    }
+})
+
 // register
 Vue.component('my-component', {
   template: '#app-6',
@@ -5,48 +73,50 @@ Vue.component('my-component', {
        return {
             "dsProduto": '', // Categoria
             "qtExemplares": 0, // Quantidade de exemplar / Ingresso
-            "qtDistribuicaoGratuitaDivulgacao" : 0,
-            "qtDistribuicaoGratuitaPatrocinador": 0,
-            "qtDistribuicaoGratuitaPopulacao": 0,
-            "vlUnitarioPrecoPopularValorIntegral": 0.0, // Preço popular: Preço Unitario do Ingresso
+            "qtGratuitaDivulgacao" : 0,
+            "qtGratuitaPatrocinador": 0,
+            "qtGratuitaPopulacao": 0,
+            "vlUnitarioPopularIntegral": 0.0, // Preço popular: Preço Unitario do Ingresso
             "precoUnitarioIngressoProponente": 0.0, // Proponente: Preço Unitario do Ingresso
-            produto:{ },
-            produtos:  [],
-           active : false,
-           icon : 'add'
+            "qtPrecoPopularValorIntegral" : 0, //Preço Popular: Quantidade de Inteira
+            "qtPrecoPopularValorParcial": 0,//Preço Popular: Quantidade de meia entrada
+            produto:{ }, // produto sendo manipulado
+            produtos:  [], // lista de produtos
+            active : false,
+            icon : 'add'
         }
     },
     props:['idpreprojeto','idplanodistribuicao', 'idmunicipioibge', 'iduf' ],
     computed:{
-        // preço popular: Quantidade de Inteira
-        qtPrecoPopularValorIntegral: function() {
-            return ((this.qtExemplares * 0.5)  - (parseInt(this.qtDistribuicaoGratuitaDivulgacao) + parseInt(this.qtDistribuicaoGratuitaPatrocinador) + parseInt(this.qtDistribuicaoGratuitaPopulacao))) * 0.6 ;
+        // Limite: preço popular: Quantidade de Inteira
+        qtPrecoPopularValorIntegralLimite: function() {
+            return ((this.qtExemplares * 0.5)  - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) * 0.6 ;
         },
-        // preço popular: Quantidade de Meia Entrada
-        qtPrecoPopularValorParcial: function () {
-            return  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtDistribuicaoGratuitaDivulgacao) + parseInt(this.qtDistribuicaoGratuitaPatrocinador) + parseInt(this.qtDistribuicaoGratuitaPopulacao))) *0.4 );
+        // Limite: preço popular: Quantidade de meia entrada
+        qtPrecoPopularValorParcialLimite: function () {
+            return  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
         },
-        vlReceitaPrecoPopularValorIntegral: function(){
-            return parseInt(this.qtPrecoPopularValorIntegral) * parseFloat(this.vlUnitarioPrecoPopularValorIntegral);
+        vlReceitaPopularIntegral: function(){
+            return parseInt(this.qtPrecoPopularValorIntegral) * parseFloat(this.vlUnitarioPopularIntegral);
         },
-        vlReceitaPrecoPopularValorParcial: function() {
-            return this.qtPrecoPopularValorParcial * ( this.vlUnitarioPrecoPopularValorIntegral * 0.5);
+        vlReceitaPopularParcial: function() {
+            return this.qtPrecoPopularValorParcial * ( this.vlUnitarioPopularIntegral * 0.5);
         },
-        qtPrecoProponenteValorIntegral: function() {
+        qtProponenteIntegral: function() {
             return (this.qtExemplares * 0.5) * 0.6 ;
         },
-        qtPrecoProponenteValorParcial: function() {
+        qtProponenteParcial: function() {
             return (this.qtExemplares * 0.5) * 0.4 ;
         },
-        vlReceitaPrecoProponenteValorIntegral: function(){
-            return parseFloat( this.precoUnitarioIngressoProponente * this.qtPrecoProponenteValorIntegral ).toFixed(2);
+        vlReceitaProponenteIntegral: function(){
+            return parseFloat( this.precoUnitarioIngressoProponente * this.qtProponenteIntegral ).toFixed(2);
         },
-        vlReceitaPrecoProponenteValorParcial: function(){
-            return parseFloat( ( this.precoUnitarioIngressoProponente * 0.5 ) * this.qtPrecoProponenteValorParcial).toFixed(2);
+        vlReceitaProponenteParcial: function(){
+            return parseFloat( ( this.precoUnitarioIngressoProponente * 0.5 ) * this.qtProponenteParcial).toFixed(2);
         },
         vlReceitaPrevista: function() {
-            return parseFloat(this.vlReceitaPrecoPopularValorIntegral) + parseFloat(this.vlReceitaPrecoPopularValorParcial)
-                + parseFloat(this.vlReceitaPrecoProponenteValorIntegral) + parseFloat(this.vlReceitaPrecoProponenteValorParcial);
+            return parseFloat(this.vlReceitaPopularIntegral) + parseFloat(this.vlReceitaPopularParcial)
+                + parseFloat(this.vlReceitaProponenteIntegral) + parseFloat(this.vlReceitaProponenteParcial);
         },
         quantidadeTotal: function() {
             total = 0 ;
@@ -58,7 +128,7 @@ Vue.component('my-component', {
          divulgacaoTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += this.produtos[i]['divulgacao'];
+                total += this.produtos[i]['qtGratuitaDivulgacao'];
             }
             return total;
         },
@@ -90,13 +160,6 @@ Vue.component('my-component', {
             }
             return total;
         },
-         precoUnitarioIngressoTotal :function(){
-            total = 0 ;
-            for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseFloat(this.produtos[i]['vlUnitarioPrecoPopularValorIntegral']);
-            }
-            return total;
-        },
          valorInteiraTotal :function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
@@ -114,7 +177,7 @@ Vue.component('my-component', {
          quantidadeInteiraTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseInt(this.produtos[i]['qtPrecoProponenteValorIntegral']);
+                  total += parseInt(this.produtos[i]['qtProponenteIntegral']);
             }
             return total;
         },
@@ -125,25 +188,17 @@ Vue.component('my-component', {
             }
             return total;
         },
-        precoUnitarioIngressoProponenteTotal:function(){
-            total = 0 ;
-            for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseFloat(this.produtos[i]['precoUnitarioIngressoProponente']);
-            }
-            return total;
-
-        },
         valorInteiraProponenteTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseFloat(this.produtos[i]['vlReceitaPrecoProponenteValorIntegral']);
+                  total += parseFloat(this.produtos[i]['vlReceitaProponenteIntegral']);
             }
             return total.toFixed(2);
         },
         valorMeiaEntradaProponenteTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                total += parseFloat(this.produtos[i]['vlReceitaPrecoProponenteValorParcial']);
+                total += parseFloat(this.produtos[i]['vlReceitaProponenteParcial']);
             }
             return total.toFixed(2);
         },
@@ -158,16 +213,18 @@ Vue.component('my-component', {
     watch:{
         //Quantidade de exemplar / Ingresso
         qtExemplares: function(val)  {
-            this.qtDistribuicaoGratuitaDivulgacao = this.qtExemplares * 0.1;
-            this.qtDistribuicaoGratuitaPatrocinador = this.qtExemplares * 0.1;
-            this.qtDistribuicaoGratuitaPopulacao = parseInt(this.qtExemplares * 0.1);
+            this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
+            this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
+            this.qtGratuitaPopulacao = parseInt(this.qtExemplares * 0.1);
+            this.qtPrecoPopularValorIntegral = ((this.qtExemplares * 0.5)  - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) * 0.6 ;
+            this.qtPrecoPopularValorParcial =  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
         },
         //Distribuição Gratuita: Divulgação
-        divulgacao: function(val)  {
+        qtGratuitaDivulgacao: function(val)  {
             quantidade = this.qtExemplares * 0.1;
             if(val > quantidade) {
                 alert("Valor n&atilde;o pode passar de: "+quantidade);
-                this.qtDistribuicaoGratuitaDivulgacao = this.qtExemplares * 0.1;
+                this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
             }
         },
         //Distribuição Gratuita: Patrocinador
@@ -175,26 +232,35 @@ Vue.component('my-component', {
             quantidade = this.qtExemplares * 0.1;
             if(val > quantidade) {
                 alert("Valor n&atilde;o pode passar de: "+quantidade);
-                this.qtDistribuicaoGratuitaPatrocinador = this.qtExemplares * 0.1;
+                this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
             }
         },
-        vlUnitarioPrecoPopularValorIntegral: function() {
-            console.log(this.vlUnitarioPrecoPopularValorIntegral);
- console.log((Math.trunc(this.vlUnitarioPrecoPopularValorIntegral * 100) / 100).toFixed(2));
-            if (this.vlUnitarioPrecoPopularValorIntegral > 50.00) {
+        vlUnitarioPopularIntegral: function() {
+            if (this.vlUnitarioPopularIntegral > 50.00) {
                 alert('O valor não pode ser maior que 50.00');
-                this.vlUnitarioPrecoPopularValorIntegral = 50.00;
+                this.vlUnitarioPopularIntegral = 50.00;
             }
         },
+        qtPrecoPopularValorIntegral: function(val){
+            if (this.qtPrecoPopularValorIntegral > this.qtPrecoPopularValorIntegralLimite) {
+                alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorIntegralLimite);
+            }
+        },
+        qtPrecoPopularValorParcial: function(val){
+            console.log(val);
+            if (this.qtPrecoPopularValorParcial > this.qtPrecoPopularValorParcialLimite) {
+                alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorParcialLimite);
+            }
+        }
     },
     beforeUpdate: function() {
 
-        this.valorInteira = parseFloat((this.qtPrecoPopularValorIntegral * this.vlUnitarioPrecoPopularValorIntegral)).toFixed(2);
-        this.valorMeiaEntrada = parseFloat( (this.vlUnitarioPrecoPopularValorIntegral * 0.5) * this.qtPrecoPopularValorParcial );
+        this.valorInteira = parseFloat((this.qtPrecoPopularValorIntegral * this.vlUnitarioPopularIntegral)).toFixed(2);
+        this.valorMeiaEntrada = parseFloat( (this.vlUnitarioPopularIntegral * 0.5) * this.qtPrecoPopularValorParcial );
         this.qtExemplaresInteira = ((this.qtExemplares *0.5) * 0.6);
         this.qtExemplaresMeiaEntrada = ((this.qtExemplares *0.5) * 0.4);
     },
-    mounted: function(){
+    mounted: function() {
         this.t();
     },
     methods: {
@@ -219,20 +285,20 @@ Vue.component('my-component', {
                 idMunicipio: this.idmunicipioibge,
                 dsProduto: this.dsProduto,
                 qtExemplares: this.qtExemplares,
-                qtDistribuicaoGratuitaDivulgacao: this.qtDistribuicaoGratuitaDivulgacao,
-                qtDistribuicaoGratuitaPatrocinador: this.qtDistribuicaoGratuitaPatrocinador,
-                qtDistribuicaoGratuitaPopulacao: this.qtDistribuicaoGratuitaPopulacao,
+                qtGratuitaDivulgacao: this.qtGratuitaDivulgacao,
+                qtGratuitaPatrocinador: this.qtGratuitaPatrocinador,
+                qtGratuitaPopulacao: this.qtGratuitaPopulacao,
                 qtPrecoPopularValorIntegral: this.qtPrecoPopularValorIntegral,
                 qtPrecoPopularValorParcial: this.qtPrecoPopularValorParcial,
-                vlUnitarioPrecoPopularValorIntegral: this.valorInteira,
-                qtPrecoProponenteValorIntegral : this.qtExemplaresInteira,
+                vlUnitarioPopularIntegral: this.valorInteira,
+                qtProponenteIntegral : this.qtExemplaresInteira,
                 qtPrecoProponenterValorParcial: this.qtExemplaresMeiaEntrada,
-                vlUnitarioPrecoProponenteValorIntegral: this.vlReceitaPrecoProponenteValorIntegral,
+                vlUnitarioPrecoProponenteValorIntegral: this.vlReceitaProponenteIntegral,
                 vlUnitarioPrecoProponenteValorParcial: this.vlUnitarioPrecoProponenteValorParcial,
-                vlReceitaPrecoPopularValorIntegral:this.vlReceitaPrecoPopularValorIntegral,
-                vlReceitaPrecoPopularValorParcial:this.vlReceitaPrecoPopularValorParcial,
-                vlReceitaPrecoProponenteValorIntegral : this.vlReceitaPrecoProponenteValorIntegral,
-                vlReceitaPrecoProponenteValorParcial : this.vlReceitaPrecoProponenteValorParcial,
+                vlReceitaPopularIntegral:this.vlReceitaPopularIntegral,
+                vlReceitaPopularParcial:this.vlReceitaPopularParcial,
+                vlReceitaProponenteIntegral : this.vlReceitaProponenteIntegral,
+                vlReceitaProponenteParcial : this.vlReceitaProponenteParcial,
                 vlReceitaPrevista: this.vlReceitaPrevista,
             }
 
@@ -255,10 +321,10 @@ Vue.component('my-component', {
             quantidade = this.qtExemplares * 0.1;
             if(val < quantidade) {
                 alert("Valor n&atilde;o pode ser menor que: "+quantidade);
-                this.qtDistribuicaoGratuitaPopulacao = this.qtExemplares * 0.1;
+                this.qtGratuitaPopulacao = this.qtExemplares * 0.1;
             }
 
-            if((parseInt( this.qtDistribuicaoGratuitaDivulgacao ) + parseInt(this.qtDistribuicaoGratuitaPatrocinador) + parseInt(this.qtDistribuicaoGratuitaPopulacao)) > (this.qtExemplares * 0.3)) {
+            if((parseInt( this.qtGratuitaDivulgacao ) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao)) > (this.qtExemplares * 0.3)) {
                 alert("A soma dos valores de divulga&ccedil;&atilde;o, patrocinador e popula&ccedil;&atilde;o n&atilde;o pode passar de 30%");
                 this.$refs.patrocinador.focus();
             }
