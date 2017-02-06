@@ -236,8 +236,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Situacao' => 'B04',
             'DtSituacao' => $objProjeto->getExpressionDate(),
             'ProvidenciaTomada' => 'Projeto encamihado para Portaria.',
-            'logon' => $authIdentity['usu_codigo'],
-            'Orgao' => $orgaoDestino
+            'logon' => $authIdentity['usu_codigo']
         );
 
         $arrayWhere = array('IdPRONAC = ?' => $projeto['IdPRONAC']);
