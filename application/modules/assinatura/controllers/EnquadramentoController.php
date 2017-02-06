@@ -2,6 +2,11 @@
 
 class Assinatura_EnquadramentoController extends Assinatura_GenericController
 {
+    /**
+     * Tipo do ato 626 : Enquadramento
+     */
+    private $idTipoDoAto = 626;
+
     public function init()
     {
         $auth = Zend_Auth::getInstance(); // instancia da autenticacao
@@ -33,21 +38,29 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     public function gerenciarProjetosAction()
     {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Assinatura_Model_DbTable_TbAssinatura();
+        $enquadramento = new Admissibilidade_Model_Enquadramento();
 
         $this->view->dados = array();
         $ordenacao = array("projetos.DtSituacao asc");
 
 //        if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
-            $this->view->dados = $enquadramento->obterProjetosEnquadrados($this->grupoAtivo->codOrgao, $ordenacao);
+            $this->view->dados = $enquadramento->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
 //        }
 
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+
+        $get = Zend_Registry::get('get');
+        $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
+        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAto);
+
+        $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
+        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAto);
     }
 
     /**
-     * @todo Validar quando o botão "Finalizar" deve ser exibido
-     * @todo Validar quando o botão "Devolver" deve ser exibido
+     * @todo Criar opção de gerar PDF
+     * @todo Criar opção de Imprimir
+     * @todo Adicionar ícones aos bot&otilde;es
      */
     public function visualizarProjetoAction()
     {
@@ -56,10 +69,10 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
         $objProjeto = new Projetos();
         $this->view->projeto = $objProjeto->findBy(array(
-            'IdPRONAC' => $this->view->IdPRONAC
+            'IdPRONAC' => $get->IdPRONAC
         ));
 
-        $this->view->valoresProjeto = $objProjeto->obterValoresProjeto($this->view->IdPRONAC);
+        $this->view->valoresProjeto = $objProjeto->obterValoresProjeto($get->IdPRONAC);
 
         $objAgentes = new Agente_Model_DbTable_Agentes();
         $dadosAgente = $objAgentes->buscarFornecedor(array(
@@ -80,23 +93,28 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
         $objPlanoDistribuicaoProduto = new Projeto_Model_vwPlanoDeDistribuicaoProduto();
         $this->view->dadosProducaoProjeto = $objPlanoDistribuicaoProduto->obterProducaoProjeto(array(
-            'IdPRONAC = ?' => $this->view->IdPRONAC
+            'IdPRONAC = ?' => $get->IdPRONAC
         ));
 
         $objEnquadramento = new Admissibilidade_Model_Enquadramento();
         $arrayPesquisa = array(
             'AnoProjeto' => $this->view->projeto['AnoProjeto'],
             'Sequencial' => $this->view->projeto['Sequencial'],
-            'IdPRONAC' => $this->view->projeto['IdPRONAC']
+            'IdPRONAC' => $get->IdPRONAC
         );
         $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
         $this->view->titulo = "Enquadramento";
+
+        $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
+        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAto);
+
+        $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
+        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAto);
     }
 
     /**
-     * @todo Criar view.
-     * @todo Preencher os campos que estão com "xxxx" na view.
      * @todo Validar quando o botão "Finalizar" deve ser exibido
+     * @todo Validar para qual orgão e situação o projeto deve ser enviado quando
      * @todo Adicionar ícones aos bot&otilde;es
      */
     public function devolverProjetoAction()
@@ -144,6 +162,8 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
      * @todo Preencher os campos que estão com "xxxx" na view.
      * @todo Adicionar ícones aos bot&otilde;es
      * @todo Tratar quando receber mais de um número de PRONAC
+     * @todo A validação pelo perfil do assinante foi temporariamente comentada
+     * porque existem inconsistências no banco de dados.
      */
     public function assinarProjetoAction()
     {
@@ -166,11 +186,19 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         ));
 
         $auth = Zend_Auth::getInstance();
-        $Usuario = new UsuarioDAO();
-        $this->view->grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+//        $Usuario = new UsuarioDAO();
+//        $this->view->grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-        $objUsuariosOrgaosGrupos = new Usuariosorgaosgrupos();
-        $this->view->cargos = $objUsuariosOrgaosGrupos->obterGruposPorUsuarioEOrgao($auth->getIdentity()->usu_codigo, $auth->getIdentity()->usu_orgao);
+        $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
+        $this->view->dadosAtoAdministrativo = $objTbAtoAdministrativo->obterCargoAssinante($auth->getIdentity()->usu_orgao, $this->grupoAtivo->codGrupo, $this->idTipoDoAto);
+    }
+
+    private function possuiOrdemAssinaturaValida($idOrdemDaAssinatura) {
+
+    }
+
+    private function permitirFinalizacaoAssinaturas($idPronac) {
+
     }
 
     /**

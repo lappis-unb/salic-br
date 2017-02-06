@@ -73,12 +73,8 @@
                     <p>
                         <label>Cargo: </label>
                     </p>
-                    <div class="padding20 bordered input-field">
-                        <select id="" name="">
-                            <?php foreach ($this->cargos as $cargo): ?>
-                                <option value="<?php echo $cargo['gru_codigo'] ?>"><?php echo $cargo['gru_nome'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    <div class="padding20 bordered bold">
+                        <?php echo $this->dadosAtoAdministrativo['dsCargoAssinante'] ?>
                     </div>
                 </div>
                 <div class="col s1"></div>
