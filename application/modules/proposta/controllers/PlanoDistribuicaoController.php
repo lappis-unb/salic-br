@@ -267,7 +267,13 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
                         "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
                     );
 
+        $arrBusca['idprojeto'] = $this->_idPreProjeto;
+        $arrBusca['stabrangencia'] = 1;
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
+        $this->view->idPreProjeto = $this->_idPreProjeto;
+        $this->view->abrangencias = $rsAbrangencia;
         $this->view->planosDistribuicao=($rsPlanoDistribuicao);
     }
 
@@ -275,6 +281,7 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
     {
         $dados = $this->getRequest()->getPost();
         $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+
         $detalhamento->salvar($dados);
 
         $this->_helper->json(array('data' => $dados, 'success' => 'true'));
@@ -282,9 +289,9 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
 
     public function detalharMostrarAction()
     {
-        $dados = $this->getRequest()->getParam('idPlanoDistribuicao');
+        $dados = $this->getRequest()->getParams();
         $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
-        $dados = $detalhamento->mostrar($dados);
+        $dados = $detalhamento->listarPorMunicicipioUF($dados);
 
         $this->_helper->json(array('data' => $dados->toArray(), 'success' => 'true'));
     }

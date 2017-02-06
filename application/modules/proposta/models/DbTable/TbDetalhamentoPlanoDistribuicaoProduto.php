@@ -20,24 +20,19 @@ class Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto extends MinC
      * @var bool
      * @access protected
      */
-    protected $_name = 'TbDetalhamentoPlanoDistribuicaoProduto';
-
-    /**
-     * _primary
-     *
-     * @var bool
-     * @access protected
-     */
-    //protected $_primary = 'idAbrangencia';
+    protected $_name = 'tbDetalhaPlanoDistribuicao';
 
     public function salvar($dados)
     {
         return $this->insert($dados);
     }
 
-    public function mostrar($dados)
+    public function listarPorMunicicipioUF($dados)
     {
-        $sql = $this->select()->where('idPlanoDistribuicao = ?', $dados);
+        $sql = $this->select()
+            ->where(' idUF= ?', $dados['idUF'])
+            ->where(' idMunicipio= ?', $dados['idMunicipio'])
+            ->where('idPlanoDistribuicao = ?', $dados['idPlanoDistribuicao']);
         return $this->fetchAll($sql);
     }
 }
