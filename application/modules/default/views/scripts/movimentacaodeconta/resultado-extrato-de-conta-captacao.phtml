@@ -264,7 +264,7 @@
                 <td class="centro"><?php echo $projeto->NumeroRecibo; ?></td>
                 <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtChegadaRecibo)); ?></td>
                 <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtRecibo)); ?></td>O
-                <td><?php echo utf8_encode($projeto->TipoApoio); ?></td>
+                <td><?php echo $projeto->TipoApoio; ?></td>
                 <td class="centro"><?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 'Sim' : '<span style="color:red; font-weight: bold;">N&atilde;o</span>'; ?></td>
                 <td class="direita"><?php echo $projeto->Percentual; ?></td>
                 <td class="direita" nowrap><?php echo "R$ ".number_format($projeto->CaptacaoReal,'2',',','.'); ?></td>
