@@ -69,8 +69,8 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                     'titleFull' => 'Alterar projeto',
                     'projeto' => $projeto['nrprojeto'],
                     'listagem' => array('Lista de projetos' => array('module' => 'default', 'controller' => 'Listarprojetos', 'action' => 'listarprojetos')),
-                    'prazoAlterarProjeto' =>  $this->contagemRegressivaSegundos($projeto['dtsituacao'], $this->_diasParaAlterarProjeto)
-                    );
+                    'prazoAlterarProjeto' => $this->contagemRegressivaSegundos($projeto['dtsituacao'], $this->_diasParaAlterarProjeto)
+                );
             }
             $this->view->layout = $layout;
         }
@@ -102,7 +102,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $tblProjetos = new Projetos();
         $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
 
-        if( $this->contagemRegressivaDias($projeto['DtSituacao'], $this->_diasParaAlterarProjeto) < 0)
+        if ($this->contagemRegressivaDias($projeto['DtSituacao'], $this->_diasParaAlterarProjeto) < 0)
             return false;
 
         if ($projeto['Situacao'] == $this->_situacaoAlterarProjeto)
@@ -148,7 +148,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $somaPlanilhaPropostaProdutos = $TPP->somarPlanilhaPropostaProdutos($idPreProjeto, 109);
 
-        if (is_numeric($somaPlanilhaPropostaProdutos['soma']) &&  $somaPlanilhaPropostaProdutos['soma'] <= 0) {
+        if (is_numeric($somaPlanilhaPropostaProdutos['soma']) && $somaPlanilhaPropostaProdutos['soma'] <= 0) {
             $TPP->excluirCustosVinculados($idPreProjeto);
             return true;
         }
@@ -212,7 +212,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
             $rsAbrangencia = $tblAbrangencia->findBy($arrBusca);
 
-            $idUf        = 1;
+            $idUf = 1;
             $idMunicipio = 1;
         }
 
@@ -290,11 +290,11 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     public function contagemRegressivaDias($datainicial = null, $prazo = null)
     {
-        $datafinal="NOW";
+        $datafinal = "NOW";
 
-        $datainicial = strtotime($datainicial . "+ " . $prazo ." day");
-        $datafinal   = strtotime($datafinal);
-        $datatirada  = $datainicial - $datafinal;
+        $datainicial = strtotime($datainicial . "+ " . $prazo . " day");
+        $datafinal = strtotime($datafinal);
+        $datatirada = $datainicial - $datafinal;
         $dias = (($datatirada / 3600) / 24);
 
         return $dias;
@@ -302,12 +302,121 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     public function contagemRegressivaSegundos($datainicial = null, $prazo = null)
     {
-        $datafinal="NOW";
+        $datafinal = "NOW";
 
-        $datainicial = strtotime($datainicial . "+ " . $prazo ." day");
-        $datafinal   = strtotime($datafinal) + 24 * 3600;
-        $segundos  = $datainicial - $datafinal;
+        $datainicial = strtotime($datainicial . "+ " . $prazo . " day");
+        $datafinal = strtotime($datafinal) + 24 * 3600;
+        $segundos = $datainicial - $datafinal;
 
         return $segundos;
     }
+
+    /**
+     * @param $object
+     * @param $where
+     * @return bool|string
+     */
+    public function serializarObjeto($object, $where)
+    {
+        $result = $object->findAll($where);
+
+        if (!$result)
+            return false;
+
+        return serialize($result);
+    }
+
+    /**
+     * @param $result
+     * @param null $where
+     * @return bool|mixed
+     */
+    public function unserializarObjeto($object, $idPreProjeto, $metakey = null)
+    {
+        if (empty($idPreProjeto))
+            return false;
+
+        # se não passar o metakey, tenta recuperar a tabela do objeto
+        if (empty($metakey))
+            $metakey = str_replace('dbo.', '', $object->getTableName());
+
+        $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
+        $result = $PPM->buscarMeta($idPreProjeto, $metakey);
+
+        return unserialize($result);
+    }
+
+    /**
+     * @param $object
+     * @param $idPreProjeto
+     * @param null $metakey
+     * @return bool|int|mixed
+     */
+    public function salvarObjetoSerializado($object, $idPreProjeto, $metakey = null)
+    {
+        $where = array('idProjeto' => $idPreProjeto);
+
+        $serializado = $this->serializarObjeto($object, $where);
+
+        # se não passar o metakey, salva o nome da tabela do objeto
+        if (empty($metakey))
+            $metakey = str_replace('dbo.', '', $object->getTableName());
+
+        $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
+        return $PPM->salvarMeta($idPreProjeto, $metakey, $serializado);
+
+    }
+
+    public function restaurarObjetoSerializadoParaTabela($object, $idPreProjeto, $metakey)
+    {
+        if (empty($idPreProjeto))
+            return false;
+
+        if (empty($metakey))
+            return false;
+
+        # metakey de backup para o objeto atual
+        $tableName = str_replace('dbo.', '', $object->getTableName());
+
+        if ($tableName == 'preprojeto' || $tableName == 'tbplanodistribuicao')
+            return false;
+
+        # recupera e verifica se os itens existem
+        $itens = $this->unserializarObjeto($object, $idPreProjeto, $metakey);
+
+        if (empty($itens) || !is_array($itens))
+            return false;
+
+        # metakey de backup para o objeto atual
+        $metakeybkp = $tableName . "_bkp";
+
+        # salvar objeto atual
+        $salvarBkp = $this->salvarObjetoSerializado($object, $idPreProjeto, $metakeybkp);
+
+        # excluir itens atuais
+        if ($salvarBkp) {
+            $whereDelete = array('idProjeto' => $idPreProjeto);
+            $delete = $object->deleteBy($whereDelete);
+        }
+
+        #incluir os novos itens
+        if ($delete) {
+            foreach ($itens as $item) {
+
+                $PK = $object->getPrimary();
+                $PK = $PK[1];
+
+                if ($item[$PK])
+                    unset($item[$PK]);
+
+                $object->insert($item);
+            }
+
+            return true;
+        }
+
+        return false;
+
+    }
+
 }
