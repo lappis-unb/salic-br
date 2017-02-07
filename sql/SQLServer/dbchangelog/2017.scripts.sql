@@ -189,3 +189,18 @@ CREATE TABLE vwAtoAdministrativo
     idOrdemDaAssinatura TINYINT NOT NULL,
     stEstado BIT NOT NULL
 );
+
+/**
+ * Tem como responsabilidade armazenar informacoes do projeto para que possam ser
+   visualizadas ao assinar projetos.
+ */
+CREATE TABLE tbDocumentoAssinatura
+(
+    id_documento_assinatura INT PRIMARY KEY NOT NULL IDENTITY,
+    IdPRONAC INT NOT NULL,
+    idTipoDoAtoAdministrativo INT NOT NULL,
+    conteudo VARCHAR(MAX) NOT NULL,
+    dt_criacao DATETIME DEFAULT getdate() NOT NULL,
+    CONSTRAINT tbDocumentoAssinatura_Projetos_IdPRONAC_fk FOREIGN KEY (IdPRONAC) REFERENCES Projetos (IdPRONAC)
+);
+CREATE INDEX tbDocumentoAssinatura_idTipoDoAtoAdministrativo_index ON tbDocumentoAssinatura (idTipoDoAtoAdministrativo);

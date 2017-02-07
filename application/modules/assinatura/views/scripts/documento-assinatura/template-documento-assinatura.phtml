@@ -1,0 +1,118 @@
+<main>
+    <?php
+    $links = array(
+        array('Gerenciar Projetos' => array(
+            'module' => 'assinatura',
+            'controller' => 'enquadramento',
+            'action' => 'gerenciar-projetos'
+        )),
+        array('Assinar' => array())
+    );
+    ?>
+    <div class="content padding20 clearfix">
+        <form action="<?php
+        echo $this->url(
+                array(
+                    'module' => 'assinatura',
+                    'controller' => 'enquadramento',
+                    'action' => 'assinar-projeto'
+                )
+            )
+            . "?IdPRONAC={$this->IdPRONAC}";
+        ?>"
+        method="post">
+            <input type="hidden" name="IdPRONAC" value="<?php echo $this->IdPRONAC ?>" />
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <?php gerarBreadCrumb($links); ?>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <h3>Assinar</h3>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s2">
+                    <label>PRONAC</label>
+                    <p class="padding20 bordered bold">
+                        <?php echo $this->projeto['AnoProjeto'] . $this->projeto['Sequencial']; ?>
+                    </p>
+                </div>
+                <div class="col s8">
+                    <label>Nome do Projeto</label>
+                    <p class="padding20 bordered bold">
+                        <?php echo $this->projeto['NomeProjeto']; ?>
+                    </p>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <label>Tipo Documento</label>
+                    <p class="padding20 bordered bold">
+                        <?php echo $this->tipoDocumento['Descricao']; ?>
+                    </p>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s5">
+                    <p>
+                        <label>Assinante: </label>
+                    </p>
+                    <div class="padding20 bordered bold">
+                        <?php echo $this->usuario->usu_nome; ?>
+                    </div>
+                </div>
+                <div class="col s5">
+                    <p>
+                        <label>Cargo: </label>
+                    </p>
+                    <div class="padding20 bordered bold">
+                        <?php echo $this->dadosAtoAdministrativo['dsCargoAssinante'] ?>
+                    </div>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <p>
+                        <label>De acordo do Assinante</label>
+                    </p>
+                    <div class="padding20 bordered" style="height: 200px">
+                        <textarea style="height: 100%" class="padding20 bordered" id="" name=""></textarea>
+                    </div>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s3">
+                    <p>
+                        <label>Senha: </label>
+                    </p>
+                    <div class="bordered padding20">
+                        <input type="password" id="" name="" style="width: 100%" />
+                    </div>
+                </div>
+                <div class="col s1"></div>
+            </div>
+            <div class="row center-align">
+                <a class="btn waves-effect waves-dark"
+                   href="javascript:history.go(-1)">Voltar</a>
+                <button type="submit"
+                        class="btn waves-effect waves-dark">Assinar</button>
+            </div>
+        </form>
+    </div>
+    <br clear="all"/>
+</main>

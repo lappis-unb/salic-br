@@ -109,6 +109,11 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
         $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAto);
+
+//        $this->_helper->layout()->disableLayout();
+//        $this->_helper->viewRenderer->setNoRender(true);
+//        $html = $this->view->render('/enquadramento/visualizar-projeto.phtml');
+//        xd($html);
     }
 
     /**
