@@ -6,11 +6,7 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
     protected $_name      = 'tbAtoAdministrativo';
     protected $_primary   = 'idAtoAdministrativo';
 
-    /**
-     * @todo A validação pelo perfil do assinante foi temporariamente comentada
-     * porque existem inconsistências no banco de dados.
-     */
-    public function obterCargoAssinante($idOrgaoDoAssinante, $idPerfilDoAssinante, $idTipoDoAto) {
+    public function obterPerfilAssinante($idOrgaoDoAssinante, $idPerfilDoAssinante, $idTipoDoAto) {
 
         $objQuery = $this->select();
         $objQuery->setIntegrityCheck(false);
@@ -20,6 +16,8 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
                 'idAtoAdministrativo',
                 'idTipoDoAto',
                 'idCargoDoAssinante',
+                'idPerfilDoAssinante',
+                'idOrgaoDoAssinante',
                 'idOrdemDaAssinatura'
             ),
             $this->_schema
@@ -30,10 +28,16 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
             array('dsCargoAssinante' => 'Verificacao.Descricao'),
             $this->getSchema('Agentes')
         );
+        $objQuery->joinInner(
+            array('grupos' => 'Grupos'),
+            'grupos.gru_codigo = tbAtoAdministrativo.idPerfilDoAssinante',
+            array('dsPerfil' => 'grupos.gru_nome'),
+            $this->getSchema('Tabelas')
+        );
         $objQuery->where('idOrgaoDoAssinante = ?', $idOrgaoDoAssinante);
-//        $objQuery->where('idPerfilDoAssinante = ?', $idPerfilDoAssinante);
+        $objQuery->where('idPerfilDoAssinante = ?', $idPerfilDoAssinante);
         $objQuery->where('idTipoDoAto = ?', $idTipoDoAto);
-//xd($objQuery->assemble());
+
         $result = $this->fetchRow($objQuery);
         if($result) {
             return $result->toArray();
