@@ -11,11 +11,14 @@
     ?>
     <div class="content padding20 clearfix">
         <form action="<?php
-        echo $this->url(array(
-                'module' => 'assinatura',
-                'controller' => 'enquadramento',
-                'action' => 'assinar-projeto'
-            )) . "?IdPRONAC={$this->IdPRONAC}";
+        echo $this->url(
+                array(
+                    'module' => 'assinatura',
+                    'controller' => 'enquadramento',
+                    'action' => 'assinar-projeto'
+                )
+            )
+            . "?IdPRONAC={$this->IdPRONAC}";
         ?>"
         method="post">
             <input type="hidden" name="IdPRONAC" value="<?php echo $this->IdPRONAC ?>" />
@@ -54,7 +57,7 @@
                 <div class="col s10">
                     <label>Tipo Documento</label>
                     <p class="padding20 bordered bold">
-                        xxxx
+                        <?php echo $this->tipoDocumento['Descricao']; ?>
                     </p>
                 </div>
                 <div class="col s1"></div>

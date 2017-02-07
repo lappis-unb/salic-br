@@ -33,7 +33,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     /**
      * @todo foram comentados os tratamentos de acordo com o pefil, temporariamente
-     * @todo Validar quando o botão "Finalizar" deve ser exibido
      */
     public function gerenciarProjetosAction()
     {
@@ -158,12 +157,12 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     }
 
     /**
-     * @todo Criar view.
      * @todo Preencher os campos que estão com "xxxx" na view.
      * @todo Adicionar ícones aos bot&otilde;es
      * @todo Tratar quando receber mais de um número de PRONAC
      * @todo A validação pelo perfil do assinante foi temporariamente comentada
-     * porque existem inconsistências no banco de dados.
+     *       porque existem inconsistências no banco de dados.
+     * @todo preparar código para assinatura em massa
      */
     public function assinarProjetoAction()
     {
@@ -176,30 +175,21 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
          */
         $get = Zend_Registry::get('get');
         $this->view->IdPRONAC = $get->IdPRONAC;
-        $this->obterDadosAssinaturaProjeto($get->IdPRONAC);
-    }
 
-    private function obterDadosAssinaturaProjeto($idPronac) {
         $objProjeto = new Projetos();
         $this->view->projeto = $objProjeto->findBy(array(
-            'IdPRONAC' => $idPronac
+            'IdPRONAC' => $get->IdPRONAC
         ));
 
-        $auth = Zend_Auth::getInstance();
-//        $Usuario = new UsuarioDAO();
-//        $this->view->grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+        $objVerificacao = new Verificacao();
+        $this->view->tipoDocumento = $objVerificacao->findBy(array(
+            'idVerificacao = ?' => $this->idTipoDoAto
+        ));
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->dadosAtoAdministrativo = $objTbAtoAdministrativo->obterCargoAssinante($auth->getIdentity()->usu_orgao, $this->grupoAtivo->codGrupo, $this->idTipoDoAto);
+        $this->view->dadosAtoAdministrativo = $objTbAtoAdministrativo->obterPerfilAssinante($this->grupoAtivo->codOrgao, $this->grupoAtivo->codGrupo, $this->idTipoDoAto);
     }
 
-    private function possuiOrdemAssinaturaValida($idOrdemDaAssinatura) {
-
-    }
-
-    private function permitirFinalizacaoAssinaturas($idPronac) {
-
-    }
 
     /**
      * @todo Criar view.
