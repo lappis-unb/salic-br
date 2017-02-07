@@ -77,9 +77,11 @@ Vue.component('my-component', {
             "qtGratuitaPatrocinador": 0,
             "qtGratuitaPopulacao": 0,
             "vlUnitarioPopularIntegral": 0.0, // Preço popular: Preço Unitario do Ingresso
-            "precoUnitarioIngressoProponente": 0.0, // Proponente: Preço Unitario do Ingresso
             "qtPrecoPopularValorIntegral" : 0, //Preço Popular: Quantidade de Inteira
             "qtPrecoPopularValorParcial": 0,//Preço Popular: Quantidade de meia entrada
+            "vlUnitarioProponenteIntegral": 0,
+            "qtPopularIntegral": 0,
+            "qtPopularParcial": 0,
             produto:{ }, // produto sendo manipulado
             produtos:  [], // lista de produtos
             active : false,
@@ -96,11 +98,13 @@ Vue.component('my-component', {
         qtPrecoPopularValorParcialLimite: function () {
             return  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
         },
-        vlReceitaPopularIntegral: function(){
-            return parseInt(this.qtPrecoPopularValorIntegral) * parseFloat(this.vlUnitarioPopularIntegral);
+        //Preço Popular: Valor da inteira
+        vlReceitaPopularIntegral: function() {
+            //console.log(this.qtPopularIntegral, this.vlUnitarioPopularIntegral);
+            return parseInt(this.qtPopularIntegral) * parseFloat(this.vlUnitarioPopularIntegral);
         },
         vlReceitaPopularParcial: function() {
-            return this.qtPrecoPopularValorParcial * ( this.vlUnitarioPopularIntegral * 0.5);
+            return this.qtPopularParcial * ( this.vlUnitarioPopularIntegral * 0.5);
         },
         qtProponenteIntegral: function() {
             return (this.qtExemplares * 0.5) * 0.6 ;
@@ -108,106 +112,112 @@ Vue.component('my-component', {
         qtProponenteParcial: function() {
             return (this.qtExemplares * 0.5) * 0.4 ;
         },
-        vlReceitaProponenteIntegral: function(){
-            return parseFloat( this.precoUnitarioIngressoProponente * this.qtProponenteIntegral ).toFixed(2);
+        vlReceitaProponenteIntegral: function() {
+            return parseFloat( this.vlUnitarioProponenteIntegral * this.qtProponenteIntegral ).toFixed(2);
         },
         vlReceitaProponenteParcial: function(){
-            return parseFloat( ( this.precoUnitarioIngressoProponente * 0.5 ) * this.qtProponenteParcial).toFixed(2);
+            return parseFloat( ( this.vlUnitarioProponenteIntegral * 0.5 ) * this.qtProponenteParcial).toFixed(2);
         },
         vlReceitaPrevista: function() {
             return parseFloat(this.vlReceitaPopularIntegral) + parseFloat(this.vlReceitaPopularParcial)
                 + parseFloat(this.vlReceitaProponenteIntegral) + parseFloat(this.vlReceitaProponenteParcial);
         },
-        quantidadeTotal: function() {
+        // Total de exemplares
+        qtExemplaresTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length; i++){
                 total += parseInt(this.produtos[i]['qtExemplares']);
             }
             return total;
         },
-         divulgacaoTotal:function(){
+        // Total de divulgação gratuita.
+        qtGratuitaDivulgacaoTotal: function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
                 total += this.produtos[i]['qtGratuitaDivulgacao'];
             }
             return total;
         },
-         populacaoTotal :function(){
+        // Total de divulgação Patrocinador
+        qtGratuitaPatrocinadorTotal: function() {
             total = 0 ;
-            for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += this.produtos[i]['populacao'];
+            for ( var i = 0 ; i < this.produtos.length ; i++) {
+                total += parseInt(this.produtos[i]['qtGratuitaPatrocinador']);
             }
             return total;
         },
-         patrocinadorTotal :function(){
+        // Total de divulgação gratuita.
+        qtGratuitaPopulacaoTotal: function() {
             total = 0 ;
-            for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseInt(this.produtos[i]['patrocinador']);
+            for ( var i = 0 ; i < this.produtos.length ; i++) {
+                total += this.produtos[i]['qtGratuitaPopulacao'];
             }
             return total;
         },
-         inteiraTotal :function(){
+        //Preço Popular: Quantidade de Inteira
+        qtPopularIntegralTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                total += parseInt(this.produtos[i]['qtPrecoPopularValorIntegral']);
+                total += parseInt(this.produtos[i]['qtPopularIntegral']);
             }
             return total;
         },
-         meiaEntradaTotal:function(){
+        //Preço Popular: Quantidade de mei entrada
+        qtPopularParcialTotal:function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseInt(this.produtos[i]['meiaEntrada']);
+                total += parseInt(this.produtos[i]['qtPopularParcial']);
             }
             return total;
         },
-         valorInteiraTotal :function(){
+        vlReceitaPopularIntegralTotal :function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseFloat(this.produtos[i]['valorInteira']);
+                total += parseFloat(this.produtos[i]['vlReceitaPopularIntegral']);
+            }
+            return numeral(total).format('0,0.00');
+        },
+        vlReceitaPopularParcialTotal: function() {
+            total = 0 ;
+            for ( var i = 0 ; i < this.produtos.length ; i++) {
+                total += parseFloat(this.produtos[i]['vlReceitaPopularParcial']);
+            }
+            return numeral(total).format('0,0.00');
+        },
+        qtProponenteIntegralTotal:function(){
+            total = 0 ;
+            for ( var i = 0 ; i < this.produtos.length ; i++){
+                total += parseInt(this.produtos[i]['qtProponenteIntegral']);
             }
             return total;
         },
-         valorMeiaEntradaTotal:function(){
+        qtProponenteParcialTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseFloat(this.produtos[i]['valorMeiaEntrada']);
+                total += parseInt(this.produtos[i]['qtProponenteParcial']);
             }
             return total;
         },
-         quantidadeInteiraTotal:function(){
-            total = 0 ;
-            for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseInt(this.produtos[i]['qtProponenteIntegral']);
-            }
-            return total;
-        },
-         quantidadeMeiaEntradaTotal:function(){
-            total = 0 ;
-            for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseInt(this.produtos[i]['quantidadeMeiaEntrada']);
-            }
-            return total;
-        },
-        valorInteiraProponenteTotal:function(){
+        vlReceitaProponenteIntegralTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
                   total += parseFloat(this.produtos[i]['vlReceitaProponenteIntegral']);
             }
-            return total.toFixed(2);
+            return numeral(total).format('0,0.00');
         },
-        valorMeiaEntradaProponenteTotal:function(){
+        vlReceitaProponenteParcialTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
                 total += parseFloat(this.produtos[i]['vlReceitaProponenteParcial']);
             }
-            return total.toFixed(2);
+            return numeral(total).format('0,0.00');
         },
         receitaPrevistaTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
                 total += parseFloat(this.produtos[i]['vlReceitaPrevista']);
             }
-            return total;
+            return numeral(total).format('0,0.00');
         },
     },
     watch:{
@@ -216,8 +226,8 @@ Vue.component('my-component', {
             this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
             this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
             this.qtGratuitaPopulacao = parseInt(this.qtExemplares * 0.1);
-            this.qtPrecoPopularValorIntegral = ((this.qtExemplares * 0.5)  - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) * 0.6 ;
-            this.qtPrecoPopularValorParcial =  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
+            this.qtPopularIntegral = ((this.qtExemplares * 0.5)  - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) * 0.6 ;
+            this.qtPopularParcial =  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
         },
         //Distribuição Gratuita: Divulgação
         qtGratuitaDivulgacao: function(val)  {
@@ -247,18 +257,10 @@ Vue.component('my-component', {
             }
         },
         qtPrecoPopularValorParcial: function(val){
-            console.log(val);
             if (this.qtPrecoPopularValorParcial > this.qtPrecoPopularValorParcialLimite) {
                 alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorParcialLimite);
             }
         }
-    },
-    beforeUpdate: function() {
-
-        this.valorInteira = parseFloat((this.qtPrecoPopularValorIntegral * this.vlUnitarioPopularIntegral)).toFixed(2);
-        this.valorMeiaEntrada = parseFloat( (this.vlUnitarioPopularIntegral * 0.5) * this.qtPrecoPopularValorParcial );
-        this.qtExemplaresInteira = ((this.qtExemplares *0.5) * 0.6);
-        this.qtExemplaresMeiaEntrada = ((this.qtExemplares *0.5) * 0.4);
     },
     mounted: function() {
         this.t();
@@ -283,23 +285,23 @@ Vue.component('my-component', {
                 idPlanoDistribuicao: this.idplanodistribuicao,
                 idUF: this.iduf,
                 idMunicipio: this.idmunicipioibge,
+
                 dsProduto: this.dsProduto,
-                qtExemplares: this.qtExemplares,
-                qtGratuitaDivulgacao: this.qtGratuitaDivulgacao,
-                qtGratuitaPatrocinador: this.qtGratuitaPatrocinador,
-                qtGratuitaPopulacao: this.qtGratuitaPopulacao,
-                qtPrecoPopularValorIntegral: this.qtPrecoPopularValorIntegral,
-                qtPrecoPopularValorParcial: this.qtPrecoPopularValorParcial,
-                vlUnitarioPopularIntegral: this.valorInteira,
-                qtProponenteIntegral : this.qtExemplaresInteira,
-                qtPrecoProponenterValorParcial: this.qtExemplaresMeiaEntrada,
-                vlUnitarioPrecoProponenteValorIntegral: this.vlReceitaProponenteIntegral,
-                vlUnitarioPrecoProponenteValorParcial: this.vlUnitarioPrecoProponenteValorParcial,
-                vlReceitaPopularIntegral:this.vlReceitaPopularIntegral,
-                vlReceitaPopularParcial:this.vlReceitaPopularParcial,
+                qtExemplares : this.qtExemplares,
+                qtGratuitaDivulgacao :this.qtGratuitaDivulgacao,
+                qtGratuitaPatrocinador : this.qtGratuitaPatrocinador,
+                qtGratuitaPopulacao : this.qtGratuitaPopulacao,
+                qtPopularIntegral :this.qtPopularIntegral,
+                qtPopularParcial : this.qtPopularParcial,
+                vlUnitarioPopularIntegral : this.vlUnitarioPopularIntegral,
+                vlReceitaPopularIntegral : this.vlReceitaPopularIntegral,
+                vlReceitaPopularParcial : this.vlReceitaPopularParcial,
+                qtProponenteIntegral : this.qtProponenteIntegral,
+                qtProponenteParcial : this.qtProponenteParcial,
+                vlUnitarioProponenteIntegral : this.vlUnitarioProponenteIntegral,
                 vlReceitaProponenteIntegral : this.vlReceitaProponenteIntegral,
                 vlReceitaProponenteParcial : this.vlReceitaProponenteParcial,
-                vlReceitaPrevista: this.vlReceitaPrevista,
+                vlReceitaPrevista : this.vlReceitaPrevista,
             }
 
             vue = this;
@@ -314,8 +316,17 @@ Vue.component('my-component', {
             this.t();
         },
         excluir: function(index){
-            this.produtos.splice(index, 1)
-            event.preventDefault();
+            //this.produtos.splice(index, 1)
+
+            $3.ajax({
+                type: "POST",
+                url: "/proposta/plano-distribuicao/detalhar-excluir/idPreProjeto/" + this.idpreprojeto,
+                data: {idDetalhaPlanoDistribuicao: index},
+            })
+            .done(function() {
+                alert("Excluido com sucesso");
+            });
+            this.t();
         },
         populacaoValidate: function(val){
             quantidade = this.qtExemplares * 0.1;
