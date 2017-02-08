@@ -14,7 +14,7 @@ class Projetos extends Zend_Db_Table
 
     public function buscarCpf($sql)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -22,7 +22,7 @@ class Projetos extends Zend_Db_Table
 
     public function abrirArquivo()
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "select top 1 * 
         from BDCORPORATIVO.scCorp.tbArquivo a inner join
@@ -34,7 +34,7 @@ class Projetos extends Zend_Db_Table
 
     public function buscarArquivo($id)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $busca = "select * FROM scCorp.tbArquivo a inner join
                                   scCorp.tbArquivoImagem b on
@@ -47,7 +47,7 @@ class Projetos extends Zend_Db_Table
 
     public function buscaTelaProjeto($cpf)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "select 
                         a.idPronac,
@@ -67,7 +67,7 @@ class Projetos extends Zend_Db_Table
 
     public function buscaTelaProponente($cpf)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "select * from SAC.dbo.Interessado where CgcCpf = '" . $cpf . "'";
         $resultado = $db->fetchAll($sql);
@@ -76,7 +76,7 @@ class Projetos extends Zend_Db_Table
 
     public function telaBuscaDetalheProjeto($cpf, $pronac)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "select 
                             a.idPronac,
@@ -94,7 +94,7 @@ class Projetos extends Zend_Db_Table
 
     public function buscarGeral($sql)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -103,7 +103,7 @@ class Projetos extends Zend_Db_Table
     public static function respostaTela($cpf, $pronac)
     {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "select top 1
                             a.idPRONAC,
@@ -123,7 +123,7 @@ class Projetos extends Zend_Db_Table
     public function inserirDados($dados)
     {
         //echo $dados;die();
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $resultado = $db->query($dados);
         return $resultado;
@@ -131,7 +131,7 @@ class Projetos extends Zend_Db_Table
 
     public function inserirArquivo($name, $fileType)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $tbArquivo = "INSERT INTO scCorp.tbArquivo " .
                 "(nmArquivo, sgExtensao, dsTipo, dtEnvio ,stAtivo) values  ('$name', '$fileType', 'application/pdf', GETDATE(),'A')";
@@ -141,7 +141,7 @@ class Projetos extends Zend_Db_Table
 
     public function inserirArquivoImagem($idGeradoArquivo, $data)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $tbArquivoImagem = "INSERT INTO scCorp.tbArquivoImagem " .
                 "(idArquivo,biArquivo) values  ($idGeradoArquivo,$data)";
@@ -151,7 +151,7 @@ class Projetos extends Zend_Db_Table
 
     public function ultimoIdPedidoAlteracaoProjeto()
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $idGerado = $db->fetchOne("SELECT MAX(idPedidoAlteracao) as maior from scSAC.tbPedidoAlteracaoProjeto");
         return $idGerado;
@@ -159,7 +159,7 @@ class Projetos extends Zend_Db_Table
 
     public function ultimoIdArquivo()
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $idGerado = $db->fetchOne("SELECT MAX(idArquivo) as id from scCorp.tbArquivo");
         return $idGerado;

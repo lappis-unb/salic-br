@@ -1168,7 +1168,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
         endif;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -1293,7 +1293,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -1598,7 +1598,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {

@@ -33,7 +33,7 @@ class PlanilhaPropostaDAO extends Zend_Db_Table
 				left join SAC.dbo.tbAnaliseDeConteudo AN on PL.idProjeto = AN.IdPRONAC
 				inner join SAC.dbo.Parecer PA on PL.idProjeto = PA.idPRONAC AND PL.idPlanilhaProjeto = " . $idPlanilha;
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} 
@@ -56,7 +56,7 @@ class PlanilhaPropostaDAO extends Zend_Db_Table
 			
 		}
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
         }

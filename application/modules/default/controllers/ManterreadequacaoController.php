@@ -142,7 +142,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
             "tamanho"=>$tamanho
          );
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL da lista de Entidades Vinculadas - T�cnico
@@ -181,7 +181,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         $idAgenteRemetente = $this->getIdUsuario;
         $idPerfilRemetente = $this->codGrupo;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -257,7 +257,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
             $idPerfil = 2;
         }
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -316,7 +316,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
     }
 
     public function comboEncaminhamentoTecnicoAction(){
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $idorgao = $_POST['idorgao'];
@@ -344,7 +344,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
     }
 
     public function comboEncaminhamentoPareceristaAction(){
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $idorgao = $_POST['idorgao'];
@@ -373,7 +373,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
     public function historicoAction(){
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $idavaliacao = $_POST['idavaliacao'];
         $ListaRegistros =  ReadequacaoProjetos::retornaSQLHistoricoLista($idavaliacao);
@@ -390,7 +390,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         $idAgenteRemetente = $this->getIdUsuario;
         $idPerfilRemetente = $this->codGrupo;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {

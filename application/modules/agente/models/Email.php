@@ -104,7 +104,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 		{
 			$sql = "DELETE FROM AGENTES.dbo.Internet WHERE idInternet = '$id'";
 
-			$db = Zend_Registry :: get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -129,7 +129,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 		{
 			$sql = "DELETE FROM AGENTES.dbo.Internet WHERE idAgente =".$idAgente;
 
-			$db = Zend_Registry :: get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 			$i = $db->query($sql);
 		}

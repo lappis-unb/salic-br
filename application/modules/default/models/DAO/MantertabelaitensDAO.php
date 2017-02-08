@@ -406,7 +406,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
     public function cadastraritem($dadosassociar) {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 

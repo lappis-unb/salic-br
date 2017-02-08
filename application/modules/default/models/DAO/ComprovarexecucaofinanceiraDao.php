@@ -96,7 +96,7 @@ class ComprovarexecucaofinanceiraDao extends Zend_Db_Table
                         // cadastra dados do arquivo
 
                         $sql = "";
-                        $db = Zend_Registry :: get('db');
+                        $db = Zend_Db_Table::getDefaultAdapter();
                         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                         $db->query($sql);
 
