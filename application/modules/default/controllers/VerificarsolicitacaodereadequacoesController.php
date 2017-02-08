@@ -228,7 +228,7 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
         $idPronac = $_POST['idPronacProjeto'];
         $dsObservacao = $_POST['obervacaoDaAvaliacao'];
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $auth = Zend_Auth::getInstance();
 

@@ -7,7 +7,7 @@ class Lembretes extends Zend_Db_Table
     public function buscar($sql)   
     {
        	//echo $sql . "<br>";
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -15,7 +15,7 @@ class Lembretes extends Zend_Db_Table
 	
     public function inserirLembrete($anoprojeto, $sequencial, $lembrete)   
     {
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
       	$sql = "INSERT INTO SAC.dbo.Lembrete (Logon, AnoProjeto, Sequencial, DtLembrete, Lembrete)
@@ -37,7 +37,7 @@ from SAC.dbo.Lembrete lm
 left join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto
  where Pr.IdPRONAC = " . $pronac . "  and lm.Sequencial = Pr.Sequencial";
 		
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -50,7 +50,7 @@ left join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto
  				 where 	 IdPRONAC = ". $pronac;
 	
 			
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado1 = $db->fetchAll($sql1);
 		return $resultado1;
@@ -65,7 +65,7 @@ left join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto
 					Lembrete       		= '".$lembrete."', 
 				where Contador     	= '".$contador."'";
 		//echo $sql;die();		
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->query($sql2);
  	}

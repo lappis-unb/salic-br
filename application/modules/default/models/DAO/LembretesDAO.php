@@ -7,7 +7,7 @@ class LembretesDAO extends Zend_Db_Table
     public function buscar($sql)   
     {
        	//echo $sql . "<br>";
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -15,7 +15,7 @@ class LembretesDAO extends Zend_Db_Table
 	
     public function inserirLembrete($anoprojeto, $sequencial, $lembrete)   
     {
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
       	$sql = "INSERT INTO SAC.dbo.Lembrete (Logon, AnoProjeto, Sequencial, DtLembrete, Lembrete)
@@ -37,7 +37,7 @@ from SAC.dbo.Lembrete lm
 inner join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencial = Pr.Sequencial
  where Pr.IdPRONAC = " . $pronac . " ";
 		
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -65,7 +65,7 @@ INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
 		
 
 		
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		
@@ -83,7 +83,7 @@ INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
  				where 	 IdPRONAC = ".$pronac;
 	
 			
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -98,7 +98,7 @@ INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
 					Lembrete       		= '" . $lembrete . "' 
 				where Contador = '" . $contador . "'";  
 		//echo $sql;die();		
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado2 = $db->query($sql2);
  	}
@@ -110,7 +110,7 @@ INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
  	            $sql3 = "DELETE 
  	               				FROM SAC.dbo.Lembrete 
  	            				WHERE Contador = '" . $contador . "'";                       
-                $db = Zend_Registry :: get('db');
+                $db = Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                 $resultado3 = $db->fetchAll($sql3);
                 

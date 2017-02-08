@@ -278,7 +278,7 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                   (".$idPronac.", 0, null, ".$tipo_doc.", ".$idusuario.", GETDATE(), '".$arquivoNome."', ".$arquivoTamanho.", null, null, ".$codOrgao.", '".$cod_ect."', ".$arquivoBinario.")
             ";
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {

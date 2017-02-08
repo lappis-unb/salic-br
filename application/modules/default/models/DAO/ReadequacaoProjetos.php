@@ -239,7 +239,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function inserirSolicitacao($idPronac, $idSolicitante, $stPedido, $siVerificacao = 0) {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto (IdPRONAC, idSolicitante,dtSolicitacao,stPedidoAlteracao, siVerificacao)
@@ -389,7 +389,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function inserirProduto($idPedidoAlteracao, $idProdutoNovo, $areaCultural, $segmentoCultural, $idPosicaoLogo, $qtProduzida, $qtPatrocinador, $qtOutros, $qtVendaNormal, $qtVendaPromocional, $vlUnitarioNormal, $vlUnitarioPromocional, $areaCultural, $segmentoCultural, $dsJustificativa = null) {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "insert into sac.dbo.tbPlanoDistribuicao
                 (idPedidoAlteracao,idProduto,cdArea,cdSegmento,idPosicaoLogo,qtProduzida,qtPatrocinador,qtOutros,qtVendaNormal,qtVendaPromocional,vlUnitarioNormal,vlUnitarioPromocional,stPrincipal,tpAcao,tpPlanoDistribuicao,dtPlanoDistribuicao, dsjustificativa)
