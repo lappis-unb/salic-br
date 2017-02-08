@@ -2287,7 +2287,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
 	// verificar se j� existe planilha de remanejamento de 20%
 	$sql = "SELECT COUNT(*) FROM sac.dbo.tbPlanilhaAprovacao WHERE idPronac = " . $idPronac . " AND tpPlanilha = 'RP'";
-	$db = Zend_Registry :: get('db');
+	$db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 	$countTpPlanilhaRemanej = $db->fetchOne($sql);
 

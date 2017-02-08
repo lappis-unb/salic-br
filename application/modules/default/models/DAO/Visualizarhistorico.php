@@ -7,7 +7,7 @@ class Visualizarhistorico extends Zend_Db_Table
     public function buscar($sql)   
     {
        	//echo $sql . "<br>";
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -18,7 +18,7 @@ class Visualizarhistorico extends Zend_Db_Table
        	$sql = "INSERT INTO BDCORPORATIVO.scSAC.tbMensagemProjeto (idPRONAC, idRemetente, idDestinatario, dtEncaminhamento, dsMensagem, stAtivo)
 					        VALUES ($PRONAC, 75, $componenteComissao, GETDATE(), '$mensagem', 'A')"; 
        	//echo $sql; die();
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->query($sql);
 		return $resultado;
@@ -33,7 +33,7 @@ class Visualizarhistorico extends Zend_Db_Table
 						FROM SAC.dbo.Projetos WHERE 
 								IdPRONAC = " . $pronac . " ";
 		
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -54,7 +54,7 @@ left join Agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestina
 left join SAC.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
  where mp.stAtivo = 'A' and Pr.IdPRONAC = " . $pronac . "";
 					
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($historico);
 		return $resultado;
@@ -73,7 +73,7 @@ left join SAC.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
 						AND N.idAgente = A.idAgente
 						ORDER BY N.Descricao";
 						
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($conselheiro);
 		return $resultado;

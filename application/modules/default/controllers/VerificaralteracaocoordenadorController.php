@@ -143,7 +143,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -229,7 +229,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -314,7 +314,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -417,7 +417,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -498,7 +498,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -594,7 +594,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -692,7 +692,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL

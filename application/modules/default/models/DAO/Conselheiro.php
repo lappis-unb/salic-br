@@ -97,7 +97,7 @@ class Conselheiro extends Zend_Db_Table
 
 	
 	public function alterar($sql = array (), $cond) {
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
             $n = $db->update('pessoa', $sql, $cond);
             $db->closeConnection();
@@ -127,7 +127,7 @@ class Conselheiro extends Zend_Db_Table
 	public function alteraConselheiro($tabela, $dados, $id){
 			$conselheiro = new Conselheiro();
 			
-			$db = Zend_Registry :: get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 			

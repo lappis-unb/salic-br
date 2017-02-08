@@ -2197,7 +2197,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function transformarPropostaEmProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso)
     {
         $sql = "EXEC SAC.dbo.paPropostaParaProjeto {$idPreProjeto}, '{$cnpjcpf}', {$idOrgao}, {$idUsuario}, {$nrProcesso}";
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         return $db->fetchAll($sql);

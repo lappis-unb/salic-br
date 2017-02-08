@@ -215,7 +215,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
 				INNER JOIN SAC.dbo.tbPlanilhaProposta AS pro ON pro.idPlanilhaProposta = PP.idPlanilhaProposta
 				WHERE PP.idPronac = ".$idpronac;
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
     }

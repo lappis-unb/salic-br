@@ -21,7 +21,7 @@ class vwDespacharProjeto extends MinC_Db_Table_Abstract {
                 (idPronac,idUnidade,idUsuarioEmissor,meDespacho)
                 VALUES ('$idPronac',$idUnidade,$idUsuarioEmissor,'$meDespacho')";
 //        xd($sql);
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);
     }

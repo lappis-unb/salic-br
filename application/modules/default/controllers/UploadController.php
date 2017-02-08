@@ -573,7 +573,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
 
                 try {
 
-                    $db = Zend_Registry :: get('db');
+                    $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $db->beginTransaction();
 
@@ -734,7 +734,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
 
         try {
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
             $db->beginTransaction();
 

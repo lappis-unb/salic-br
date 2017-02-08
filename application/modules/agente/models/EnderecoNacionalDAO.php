@@ -164,7 +164,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
                     WHERE idAgente = ".$idAgente."
                     AND idEndereco = (select MIN(idEndereco) as valor from AGENTES.dbo.EnderecoNacional  where idAgente = ".$idAgente.")";
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)

@@ -24,7 +24,7 @@ class tbAnaliseAprovacao extends MinC_Db_Table_Abstract
 
         ";
 //        xd($sql);
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select

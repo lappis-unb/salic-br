@@ -535,7 +535,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 // fecha m�todo ProjetoPublicadoDOU2002()
 
     public static function cadastrarportaria($dados, $id) {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 
         $where = "idAprovacao = " . (int) $id;
 

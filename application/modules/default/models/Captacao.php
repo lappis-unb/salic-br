@@ -1079,7 +1079,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         if($tipo == 'autorizado')
         {
-        	$db = Zend_Registry :: get('db');
+        	$db = Zend_Db_Table::getDefaultAdapter();
         	$db->setFetchMode(Zend_DB :: FETCH_OBJ);
         	$slct = "select SAC.dbo.fnTotalAprovadoProjeto('{$ano}','{$sequencial}')";
         	$valor = $db->fetchAll($slct);

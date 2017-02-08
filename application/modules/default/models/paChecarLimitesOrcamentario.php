@@ -11,7 +11,7 @@ class paChecarLimitesOrcamentario extends MinC_Db_Table_Abstract {
 
     public function exec($idPronac, $fase){
         $sql = "exec ".$this->_banco.".dbo.".$this->_name." $idPronac, $fase ";
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);
     }

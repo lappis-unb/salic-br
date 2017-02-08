@@ -3921,7 +3921,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $auth = Zend_Auth::getInstance();
         $this->usu_codigo = $auth->getIdentity()->usu_codigo;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -3950,7 +3950,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $auth = Zend_Auth::getInstance();
         $this->usu_codigo = $auth->getIdentity()->usu_codigo;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {

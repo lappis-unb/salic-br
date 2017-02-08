@@ -83,7 +83,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
                         WHERE idPronac = '$idPronac'
         ";
 //        xd($sql);
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select
@@ -103,7 +103,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
                         WHERE idPronac = '$idPronac'
         ";
         //xd($sql);
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select

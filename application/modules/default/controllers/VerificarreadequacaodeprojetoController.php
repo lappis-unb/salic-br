@@ -60,7 +60,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  * ************************************************************************************************************************/
 	public function historicoAction(){
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$idavaliacao = $_POST['idavaliacao'];
 		$ListaRegistros =  ReadequacaoProjetos::retornaSQLHistoricoLista($idavaliacao);
@@ -78,7 +78,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		if(isset($_POST['verifica']) and $_POST['verifica'] == 'a')
@@ -309,7 +309,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 $PermissoesGrupo[] = 93; // Coordenador de Parecerista
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 	// Chama o SQL Desejado e monta a lista
@@ -379,7 +379,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 $PermissoesGrupo[] = 94; // Parecerista
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 	// Chama o SQL Desejado e monta a lista
@@ -428,7 +428,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 $PermissoesGrupo[] = 129; // T�cnico
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 	// Chama o SQL Desejado e monta a lista
@@ -509,7 +509,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             // Chama o SQL
@@ -538,7 +538,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
  		$id_Pronac = $_GET['id'];
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		// BUSCA O ID DO PEDIDO DE ALTERA��O
@@ -570,7 +570,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                 $id_Pronac = $_GET['id'];
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		// BUSCA O ID DO PEDIDO DE ALTERA��O
@@ -614,7 +614,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  		$IdPronac = $_POST['IdPronac'];
  		$solicitacao = $_POST['solicitacao'];
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -643,7 +643,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$idPronac = $_GET['idPronac'];
 		$opcao = $_GET['opcao'];
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -692,7 +692,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 // 		$IdProposta = $_POST['IdProposta'];
 // 		$idOrgao = $_POST['idOrgao'];
 //
-// 		$db = Zend_Registry :: get('db');
+// 		$db = Zend_Db_Table::getDefaultAdapter();
 //		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 //
 //                try{
@@ -731,7 +731,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $status = "IN";
                 }
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		try{
                     $db->beginTransaction();
@@ -774,7 +774,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($id_Pronac);
@@ -814,7 +814,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -935,7 +935,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1059,7 +1059,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($id_Pronac);
@@ -1112,7 +1112,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
         {
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1251,7 +1251,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  		$IdPRONAC = $_GET['IdPRONAC'];
 
  	//CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 	// CHAMA O SQL
@@ -1314,7 +1314,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 }
 
                 //CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
                 // CHAMA O SQL
 		$sqllistaidplano = ReadequacaoProjetos::listaSQLidPlano($idPronac);
@@ -1414,7 +1414,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 }
 
  	//CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 	// CHAMA O SQL
 		$sqllistaidplano = ReadequacaoProjetos::listaSQLidPlano($idPronac);
@@ -1506,7 +1506,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($id_Pronac);
@@ -1560,7 +1560,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1761,7 +1761,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1920,7 +1920,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             $idPedidoAlteracao = $_GET['id']; //idPedido Altera��o � o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
             $opcao = $_GET['opcao']; //op��o escolhida no select - APROVADO, INDEFERIDO ou EM AN�LISE
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $registro = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlteracao);
@@ -2014,7 +2014,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  		$opcao = $_GET['opcao']; //op��o escolhida no select - APROVADO, INDEFERIDO ou EM AN�LISE
  		$IdPronac = $_GET['IdPronac'];
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		//SQL PARA TRAZER OD DADOS DO REGISTRO EM QUEST�O
@@ -2060,7 +2060,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
  		$idAcao = $_GET['id'];
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
                 try{
                     $db->beginTransaction();
@@ -2117,7 +2117,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             $idAgenteRemetente = $this->getIdUsuario;
             $idPerfilRemetente = $this->codGrupo;
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
              try{
@@ -2567,7 +2567,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             $idPronac_Get = $this->_request->getParam("idpronac"); // pega o id do pronac via get
             $idAcao       = $this->_request->getParam("idacao"); // pega o idAcaoAvaliacaoPedidoAlteracao via get
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
@@ -2759,7 +2759,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                 xd($_POST);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -2832,7 +2832,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $idPerfil = 2;
                 }
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -2889,7 +2889,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$agenteNovo = $_POST['agenteNovo'];
 		$Orgao = $_POST['Orgao'];
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -2926,7 +2926,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$idOrgao = $_POST['idOrgao'];
 		$idAgente = $_POST['agenteNovo'];
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -3028,7 +3028,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 	public function selectcoordacompAction(){
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 	// Chama o SQL da lista de Entidades Vinculadas - T�cnicos
@@ -3213,7 +3213,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             $observacoes = $_POST['observacoes'];
 
             //CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
@@ -3266,7 +3266,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             $analisetecnica = $_POST['analisetecnica'];
 
             //CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
@@ -3457,7 +3457,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                  $status = 'IN';
              }
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             // busca o idPlanoDistribuicao (vincula��o entre a tabela original e a solicitada)
