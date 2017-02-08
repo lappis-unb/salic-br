@@ -196,11 +196,20 @@ CREATE TABLE vwAtoAdministrativo
  */
 CREATE TABLE tbDocumentoAssinatura
 (
-    id_documento_assinatura INT PRIMARY KEY NOT NULL IDENTITY,
+    idDocumentoAssinatura INT PRIMARY KEY NOT NULL IDENTITY,
     IdPRONAC INT NOT NULL,
     idTipoDoAtoAdministrativo INT NOT NULL,
     conteudo VARCHAR(MAX) NOT NULL,
     dt_criacao DATETIME DEFAULT getdate() NOT NULL,
+    idCriadorDocumento INT NOT NULL,
     CONSTRAINT tbDocumentoAssinatura_Projetos_IdPRONAC_fk FOREIGN KEY (IdPRONAC) REFERENCES Projetos (IdPRONAC)
 );
 CREATE INDEX tbDocumentoAssinatura_idTipoDoAtoAdministrativo_index ON tbDocumentoAssinatura (idTipoDoAtoAdministrativo);
+
+/**
+ * Adição de coluna "idDocumentoAssinatura" na tabela "TbAssinatura" e Foreign key para campo "idDocumentoAssinatura"
+ */
+ALTER TABLE sac.dbo.TbAssinatura ADD idDocumentoAssinatura INT NOT NULL;
+ALTER TABLE sac.dbo.TbAssinatura
+ADD CONSTRAINT TbAssinatura_tbDocumentoAssinatura_idDocumentoAssinatura_fk
+FOREIGN KEY (idDocumentoAssinatura) REFERENCES tbDocumentoAssinatura (idDocumentoAssinatura);

@@ -5,7 +5,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     /**
      * Tipo do ato 626 : Enquadramento
      */
-    private $idTipoDoAto = 626;
+    const IDTIPODOATO = 626;
 
     public function init()
     {
@@ -50,10 +50,10 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
         $get = Zend_Registry::get('get');
         $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAto);
+        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, self::IDTIPODOATO);
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAto);
+        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas(self::IDTIPODOATO);
     }
 
     /**
@@ -105,10 +105,10 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->view->titulo = "Enquadramento";
 
         $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAto);
+        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, self::IDTIPODOATO);
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAto);
+        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas(self::IDTIPODOATO);
 
 //        $this->_helper->layout()->disableLayout();
 //        $this->_helper->viewRenderer->setNoRender(true);
@@ -188,11 +188,11 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
         $objVerificacao = new Verificacao();
         $this->view->tipoDocumento = $objVerificacao->findBy(array(
-            'idVerificacao = ?' => $this->idTipoDoAto
+            'idVerificacao = ?' => self::IDTIPODOATO
         ));
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->dadosAtoAdministrativo = $objTbAtoAdministrativo->obterPerfilAssinante($this->grupoAtivo->codOrgao, $this->grupoAtivo->codGrupo, $this->idTipoDoAto);
+        $this->view->dadosAtoAdministrativo = $objTbAtoAdministrativo->obterPerfilAssinante($this->grupoAtivo->codOrgao, $this->grupoAtivo->codGrupo, self::IDTIPODOATO);
     }
 
 

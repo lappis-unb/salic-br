@@ -2,11 +2,12 @@
 
 class Assinatura_Model_TbDocumentoAssinatura extends MinC_Db_Model
 {
-    protected $_id_documento_assinatura;
+    protected $_idDocumentoAssinatura;
     protected $_IdPRONAC;
     protected $_idTipoDoAtoAdministrativo;
     protected $_conteudo;
     protected $_dt_criacao;
+    protected $_idCriadorDocumento;
 
     /**
      * @return mixed
@@ -97,4 +98,24 @@ class Assinatura_Model_TbDocumentoAssinatura extends MinC_Db_Model
         $this->_dt_criacao = $dt_criacao;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdCriadorDocumento()
+    {
+        return $this->_idCriadorDocumento;
+    }
+
+    /**
+     * @param mixed $idCriadorDocumento
+     * @return Assinatura_Model_TbDocumentoAssinatura
+     */
+    public function setIdCriadorDocumento($idCriadorDocumento)
+    {
+        $this->_idCriadorDocumento = $idCriadorDocumento;
+        return $this;
+    }
+
+
 }
