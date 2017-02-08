@@ -1,10 +1,10 @@
 <?php
 
-class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstract
+class Assinatura_Model_DbTable_TbDocumentoAssinatura extends MinC_Db_Table_Abstract
 {
     protected $_schema    = 'sac';
     protected $_name      = 'tbDocumentoAssinatura';
-    protected $_primary   = 'id_documento_assinatura';
+    protected $_primary   = 'idDocumentoAssinatura';
 
     public function obterDocumentoAssinatura($idPronac, $idTipoDoAtoAdministrativo) {
         $objQuery = $this->select();

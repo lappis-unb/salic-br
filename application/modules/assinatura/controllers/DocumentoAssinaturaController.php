@@ -3,14 +3,13 @@
 class Assinatura_DocumentoAssinaturaController extends Assinatura_GenericController
 {
 
-    public function gerarDocumentoAssinatura()
+    public function gerarDocumentoAssinaturaAction($idPronac, $idTipoDoAto)
     {
-        $get = Zend_Registry::get('get');
-        $this->view->IdPRONAC = $get->IdPRONAC;
+        $this->view->IdPRONAC = $idPronac;
 
         $objProjeto = new Projetos();
         $this->view->projeto = $objProjeto->findBy(array(
-            'IdPRONAC' => $get->IdPRONAC
+            'IdPRONAC' => $idPronac
         ));
 
         $objAgentes = new Agente_Model_DbTable_Agentes();
@@ -32,24 +31,24 @@ class Assinatura_DocumentoAssinaturaController extends Assinatura_GenericControl
 
         $objPlanoDistribuicaoProduto = new Projeto_Model_vwPlanoDeDistribuicaoProduto();
         $this->view->dadosProducaoProjeto = $objPlanoDistribuicaoProduto->obterProducaoProjeto(array(
-            'IdPRONAC = ?' => $get->IdPRONAC
+            'IdPRONAC = ?' => $idPronac
         ));
 
         $objEnquadramento = new Admissibilidade_Model_Enquadramento();
         $arrayPesquisa = array(
             'AnoProjeto' => $this->view->projeto['AnoProjeto'],
             'Sequencial' => $this->view->projeto['Sequencial'],
-            'IdPRONAC' => $get->IdPRONAC
+            'IdPRONAC' => $idPronac
         );
 
         $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
         $this->view->titulo = "Enquadramento";
 
         $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAto);
+        $this->view->assinaturas = $objAssinatura->obterAssinaturas($idPronac, $idTipoDoAto);
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAto);
+        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($idTipoDoAto);
 
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

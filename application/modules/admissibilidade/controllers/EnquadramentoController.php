@@ -229,6 +229,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
+        $objDocumentoAssinaturaController = new Assinatura_DocumentoAssinaturaController();
+        $objDocumentoAssinaturaController->gerarDocumentoAssinatura($IdPRONAC, Assinatura_EnquadramentoController::IDTIPODOATO);
+        xd(123);
+
         $auth = Zend_Auth::getInstance();
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
         $objProjeto = new Projetos();
@@ -254,7 +258,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $this->view->codOrgao = $this->grupoAtivo->codOrgao;
     }
 
-   //@TODO TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL
+   /**
+    * @todo TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL
+    */
     public function desistenciaRecursalAction()
     {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
