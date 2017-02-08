@@ -62,21 +62,6 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
 
-        // opcao de restaurar planilha
-        if (!empty($idPreProjeto)) {
-            if ($this->isEditarProjeto($idPreProjeto)) {
-
-                $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
-                # verifica se a planilha já possui um registro na PreProjetoMeta
-                $meta = $PPM->buscarMeta($idPreProjeto, 'tbplanilhaproposta');
-                if ($meta) {
-                    $this->view->restaurarPlanilha = true;
-                } else {
-                    $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
-                    $this->view->restaurarPlanilha = $this->salvarObjetoSerializado($TPP, $idPreProjeto);
-                }
-            }
-        }
     }
 
     /**
@@ -673,7 +658,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             if ($this->isEditarProjeto($idPreProjeto)) {
 
                 $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
-                $restaurar = $this->restaurarObjetoSerializadoParaTabela($TPP, $idPreProjeto, 'tbplanilhaproposta');
+                $restaurar = $this->restaurarObjetoSerializadoParaTabela($TPP, $idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
             }
 
             if ($restaurar) {
@@ -684,6 +669,10 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
         echo json_encode($return);
         die;
+    }
+
+    public function resumorestaurarplanilhaAction() {
+
     }
 
     /**

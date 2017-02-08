@@ -56,6 +56,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
             // Alterar projeto
             if (!empty($this->view->isEditarProjeto)) {
+
                 $tblProjetos = new Projetos();
                 $projeto = array_change_key_case($tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto)));
 
@@ -71,6 +72,8 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                     'listagem' => array('Lista de projetos' => array('module' => 'default', 'controller' => 'Listarprojetos', 'action' => 'listarprojetos')),
                     'prazoAlterarProjeto' => $this->contagemRegressivaSegundos($projeto['dtsituacao'], $this->_diasParaAlterarProjeto)
                 );
+
+                $this->salvarDadosPropostaSerializada($idPreProjeto);
             }
             $this->view->layout = $layout;
         }
@@ -102,7 +105,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $tblProjetos = new Projetos();
         $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
 
-        if ($this->contagemRegressivaDias($projeto['DtSituacao'], $this->_diasParaAlterarProjeto) < 0)
+        if ($this->contagemRegressivaSegundos($projeto['DtSituacao'], $this->_diasParaAlterarProjeto) < 0)
             return false;
 
         if ($projeto['Situacao'] == $this->_situacaoAlterarProjeto)
@@ -148,7 +151,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $somaPlanilhaPropostaProdutos = $TPP->somarPlanilhaPropostaProdutos($idPreProjeto, 109);
 
-        if (is_numeric($somaPlanilhaPropostaProdutos['soma']) && $somaPlanilhaPropostaProdutos['soma'] <= 0) {
+        if (empty($somaPlanilhaPropostaProdutos['soma']) || (is_numeric($somaPlanilhaPropostaProdutos['soma']) && $somaPlanilhaPropostaProdutos['soma'] <= 0)) {
             $TPP->excluirCustosVinculados($idPreProjeto);
             return true;
         }
@@ -352,9 +355,10 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
      * @param null $metakey
      * @return bool|int|mixed
      */
-    public function salvarObjetoSerializado($object, $idPreProjeto, $metakey = null)
+    public function salvarObjetoSerializado($object, $idPreProjeto, $metakey = null, $where = null)
     {
-        $where = array('idProjeto' => $idPreProjeto);
+        if (empty($where))
+            $where = array('idProjeto' => $idPreProjeto);
 
         $serializado = $this->serializarObjeto($object, $where);
 
@@ -364,10 +368,34 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
         return $PPM->salvarMeta($idPreProjeto, $metakey, $serializado);
+    }
+
+    /**
+     * @param $array
+     * @param $idPreProjeto
+     * @param $metakey
+     * @return bool|int|mixed
+     */
+    public function salvarArraySerializado($array, $idPreProjeto, $metakey)
+    {
+        if (empty($metakey))
+            return false;
+
+        $serializado = serialize($array);
+
+        $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
+        return $PPM->salvarMeta($idPreProjeto, $metakey, $serializado);
 
     }
 
-    public function restaurarObjetoSerializadoParaTabela($object, $idPreProjeto, $metakey)
+    /**
+     * @param $object
+     * @param $idPreProjeto
+     * @param $metakey
+     * @param null $whereDelete
+     * @return bool
+     */
+    public function restaurarObjetoSerializadoParaTabela($object, $idPreProjeto, $metakey, $whereDelete = null)
     {
         if (empty($idPreProjeto))
             return false;
@@ -384,23 +412,27 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         # recupera e verifica se os itens existem
         $itens = $this->unserializarObjeto($object, $idPreProjeto, $metakey);
 
+        # se não tiver itens, não eh pra restaurar
         if (empty($itens) || !is_array($itens))
             return false;
 
         # metakey de backup para o objeto atual
-        $metakeybkp = $tableName . "_bkp";
+        $metakeybkp = $metakey . "_bkp";
 
         # salvar objeto atual
         $salvarBkp = $this->salvarObjetoSerializado($object, $idPreProjeto, $metakeybkp);
 
         # excluir itens atuais
         if ($salvarBkp) {
-            $whereDelete = array('idProjeto' => $idPreProjeto);
+
+            if (empty($whereDelete))
+                $whereDelete = array('idProjeto' => $idPreProjeto);
+
             $delete = $object->deleteBy($whereDelete);
         }
 
         #incluir os novos itens
-        if ($delete) {
+        if ($delete >= 0) {
             foreach ($itens as $item) {
 
                 $PK = $object->getPrimary();
@@ -416,6 +448,129 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         }
 
         return false;
+    }
+
+    /**
+     *
+     * Metodo para salvar uma copia das informacoes da proposta antes do proponente alterar o projeto(proposta)
+     * Salva a tbplanilhaproposta, abrangencia, planodistribuicaoproduto e tbdetalhaplanodistribuicao
+     *
+     * @param $idPreProjeto
+     * @return bool
+     */
+    public function salvarDadosPropostaSerializada($idPreProjeto)
+    {
+        if (empty($idPreProjeto))
+            return false;
+
+        if (!$this->isEditarProjeto($idPreProjeto))
+            return false;
+
+        $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
+
+        # Recupera informações da proposta atual
+        $proposta = $this->_proposta;
+
+
+        # Planilha orcamentaria
+        $metaPlanilha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
+        if (!$metaPlanilha) {
+            $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $this->view->PlanilhaSalvo = $this->salvarObjetoSerializado($TPP, $idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
+        } else {
+            $this->view->PlanilhaSalvo = true;
+        }
+
+        # Local de realizacao (abrangencia)
+        $metaAbrangencia = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_abrangencia');
+        if (!$metaAbrangencia) {
+            $TPA = new Proposta_Model_DbTable_Abrangencia();
+            $this->view->AbrangenciaSalvo = $this->salvarObjetoSerializado($TPA, $idPreProjeto, 'alterarprojeto_abrangencia');
+        } else {
+            $this->view->AbrangenciaSalvo = true;
+        }
+
+        # Plano distribuicao
+        $metaPlanoDistribuicao = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_planodistribuicaoproduto');
+        if (!$metaPlanoDistribuicao) {
+            $TPD = new PlanoDistribuicao();
+            $this->view->PlanoDistribuicaoSalvo = $this->salvarObjetoSerializado($TPD, $idPreProjeto, 'alterarprojeto_planodistribuicaoproduto');
+        } else {
+            $this->view->PlanoDistribuicaoSalvo = true;
+        }
+
+        # Plano de distribuicao Detalhado
+        $metaPlanoDistribuicaoDetalha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao');
+        if (!$metaPlanoDistribuicaoDetalha) {
+
+            $where = array('idPlanoDistribuicao' => $idPreProjeto);
+            $TPD = new PlanoDistribuicao();
+
+            $PlanoDetalhado = $TPD->buscarPlanoDistribuicaoDetalhadoByIdProjeto($idPreProjeto);
+
+            $this->view->PlanoDistribuicaoDetalhadoSalvo = $this->salvarArraySerializado($PlanoDetalhado, $idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao', $where);
+        } else {
+            $this->view->PlanoDistribuicaoDetalhadoSalvo = true;
+        }
+
+        # identificacao da proposta
+        $metaIdentificacaoProposta = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_identificacaoproposta');
+        if (!$metaIdentificacaoProposta) {
+
+            $identificacaoProposta = array(
+                'dtiniciodeexecucao' => $proposta['dtiniciodeexecucaoform'],
+                'dtfinaldeexecucao' => $proposta['dtfinaldeexecucaoform']
+            );
+
+            $this->view->IdentificaoPropostaSalvo = $this->salvarArraySerializado($identificacaoProposta, $idPreProjeto, 'alterarprojeto_identificacaoproposta');
+        } else {
+            $this->view->IdentificaoPropostaSalvo = true;
+        }
+
+        # responsabilidade social
+        $metaResponsabilidadeSocial = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_responsabilidadesocial');
+        if (!$metaResponsabilidadeSocial) {
+
+            $responsabilidadeSocial = array(
+                'Acessibilidade' => $proposta['acessibilidade'],
+                'DemocratizacaoDeAcesso' => $proposta['democratizacaodeacesso'],
+                'ImpactoAmbiental' => $proposta['impactoambiental']
+            );
+
+            $this->view->ResponsabilidadeSocialSalvo = $this->salvarArraySerializado($responsabilidadeSocial, $idPreProjeto, 'alterarprojeto_responsabilidadesocial');
+        } else {
+            $this->view->ResponsabilidadeSocialSalvo = true;
+        }
+
+        # detalhes técnicos
+        $metadetalhesTecnicos = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_detalhestecnicos');
+        if (!$metadetalhesTecnicos) {
+
+            $detalhesTecnicos = array(
+                'EtapaDeTrabalho' => $proposta['etapadetrabalho'],
+                'FichaTecnica' => $proposta['fichatecnica'],
+                'Sinopse' => $proposta['sinopse'],
+                'EspecificacaoTecnica' => $proposta['especificacaotecnica']
+            );
+            $this->view->DetalhesTecnicosSalvo = $this->salvarArraySerializado($detalhesTecnicos, $idPreProjeto, 'alterarprojeto_detalhestecnicos');
+        } else {
+            $this->view->DetalhesTecnicosSalvo = true;
+        }
+
+        # outras informacoes
+        $metaOutrasInformacoes = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_outrasinformacoes');
+        if (!$metaOutrasInformacoes) {
+
+            $outrasInformacoes = array(
+                'EstrategiadeExecucao' => $proposta['estrategiadeexecucao']
+            );
+
+            $this->view->OutrasInformacoesSalvo = $this->salvarArraySerializado($outrasInformacoes, $idPreProjeto, 'alterarprojeto_outrasinformacoes');
+        } else {
+            $this->view->OutrasInformacoesSalvo = true;
+        }
+
+        return true;
 
     }
 
