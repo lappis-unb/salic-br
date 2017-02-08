@@ -61,6 +61,22 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
+
+        // opcao de restaurar planilha
+        if (!empty($idPreProjeto)) {
+            if ($this->isEditarProjeto($idPreProjeto)) {
+
+                $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
+                # verifica se a planilha já possui um registro na PreProjetoMeta
+                $meta = $PPM->buscarMeta($idPreProjeto, 'tbplanilhaproposta');
+                if ($meta) {
+                    $this->view->restaurarPlanilha = true;
+                } else {
+                    $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
+                    $this->view->restaurarPlanilha = $this->salvarObjetoSerializado($TPP, $idPreProjeto);
+                }
+            }
+        }
     }
 
     /**
@@ -566,7 +582,6 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
     /*
     * Quando o sistema abre a opcao de alterar projeto, o proponente
     * nao pode ultrapassar o valor total inicialmente solicitado para incentivo fiscal(Fonte Recurso=109)
-    * @todo parei aqui
     */
     public function verificarSeUltrapassaValorOriginal($idPreProjeto, $dados, $idPlanilhaProposta = null)
     {
@@ -639,6 +654,32 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
             $return['msg'] = "Exclus&atilde;o realizada com sucesso!";
             $return['status'] = true;
+        }
+
+        echo json_encode($return);
+        die;
+    }
+
+    public function restaurarplanilhaAction()
+    {
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
+        $return['msg'] = "Erro ao restaurar a planilha! ";
+        $return['status'] = false;
+        $restaurar = false;
+
+        if (!empty($idPreProjeto)) {
+
+            if ($this->isEditarProjeto($idPreProjeto)) {
+
+                $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
+                $restaurar = $this->restaurarObjetoSerializadoParaTabela($TPP, $idPreProjeto, 'tbplanilhaproposta');
+            }
+
+            if ($restaurar) {
+                $return['msg'] = "Orcamento restaurado com sucesso!";
+                $return['status'] = true;
+            }
         }
 
         echo json_encode($return);

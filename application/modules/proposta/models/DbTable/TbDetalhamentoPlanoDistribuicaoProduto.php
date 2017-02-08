@@ -35,4 +35,9 @@ class Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto extends MinC
             ->where('idPlanoDistribuicao = ?', $dados['idPlanoDistribuicao']);
         return $this->fetchAll($sql);
     }
+
+    public function excluir($id)
+    {
+        return $this->delete("idDetalhaPlanoDistribuicao =  $id");
+    }
 }

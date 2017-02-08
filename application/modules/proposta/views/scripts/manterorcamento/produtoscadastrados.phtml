@@ -347,8 +347,12 @@
             ?>
 
             <div class="clearfix"></div>
-            <h5 class="light">Custo por produto </h5>
-
+            <h5 class="light">Custo por produto</h5>
+            <?php if( $this->restaurarPlanilha) : ?>
+                <p class="right-align" style="position: absolute; top: 167px; right: 100px">
+                    <a id="btn-restaurar-planilha" class="btn-floating waves-effect waves-light btn tooltipped btn-info" data-tooltip="Restaurar planilha"><i class="material-icons left">restore</i></a>
+                </p>
+            <?php endif; ?>
             <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'><p class="center align">Carregando or&ccedil;amento ...</p></div>
 
             <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
@@ -484,5 +488,55 @@ $3(document).ready(function () {
          return false;
     });
     window.dispatchEvent(new Event('resize'));
+
+    <?php if( $this->restaurarPlanilha) : ?>
+        $3('body').on('click', '#btn-restaurar-planilha', function () {
+
+            $3("#msg").html('Tem certeza que deseja restaurar a planilha?\n Esta acao nao podera ser desfeita!');
+
+            $("#msg").dialog
+            ({
+                width: 350,
+                height: 200,
+                modal: true,
+                draggable: false,
+                resizable: false,
+                closeOnEscape: false,
+                buttons: {
+                    'N\xE3o': function () {
+                        $(this).dialog('close');
+                        $(this).dialog('close');
+                    },
+                    'Sim': function () {
+                        var urlAction = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'restaurarplanilha')); ?>";
+                        var dados = { idPreProjeto: <?php echo isset($this->idPreProjeto) ? $this->idPreProjeto : '' ?>};
+
+                        $.post(urlAction, dados, function (result) {
+                            result = $3.parseJSON(result)
+                            if (result.status == '1') {
+                                Materialize.toast(result.msg, 4000, 'green white-text');
+
+                                var divRender = $('div[data-ajax-render]');
+
+                                $3.each($3('div[data-ajax-render]'), function () {
+                                    $3.ajaxRender({strUrl: $(this).attr('data-ajax-render'), strTarget: '#' + $(this).attr('id')});
+                                });
+
+                            } else {
+                                Materialize.toast(result.msg, 8000, 'red darken-1 white-text');
+                            }
+                        });
+
+                        $(this).dialog('close');
+                    }
+                }
+            });
+
+            $3(".ui-dialog-titlebar-close").remove();
+
+            return false;
+
+        });
+    <?php endif; ?>
 });
 </script>
