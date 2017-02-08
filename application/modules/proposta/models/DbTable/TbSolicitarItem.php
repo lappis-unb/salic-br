@@ -28,7 +28,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
                     '),
                     new Zend_Db_Expr("
                         CASE
-                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associa��o'
+                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associa&ccedil;&atilde;o'
                             ELSE 'Inclusão'
                        END as TipoSolicitacao
                     "),
