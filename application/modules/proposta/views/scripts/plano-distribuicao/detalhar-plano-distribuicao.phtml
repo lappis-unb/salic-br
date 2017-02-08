@@ -80,6 +80,13 @@
     <div>
     <div class="row">
         <div class="col s12 center">
+           <button class="btn" v-on:click.prevent="mostrar()"><i class="material-icons">{{icon}}</i></button>
+       </div>
+    </div>
+
+           <div v-show="active">
+    <div class="row">
+        <div class="col s12 center">
             <table  class="bordered">
                 <thead>
                     <tr>
@@ -120,49 +127,47 @@
                         <td>{{ produto.qtGratuitaDivulgacao }}</td>
                         <td>{{ produto.qtGratuitaPatrocinador }}</td>
                         <td>{{ produto.qtGratuitaPopulacao }}</td>
+                        <!--Preço Popular -->
                         <td>{{ produto.qtPopularIntegral }}</td>
                         <td>{{ produto.qtPopularParcial }}</td>
                         <td>{{ produto.vlUnitarioPopularIntegral }}</td>
                         <td>{{ produto.vlReceitaPopularIntegral }}</td>
                         <td>{{ produto.vlReceitaPopularParcial }}</td>
+                        <!--Preço Popular -->
                         <td>{{ produto.qtProponenteIntegral }}</td>
                         <td>{{ produto.qtProponenteParcial }}</td>
                         <td>{{ produto.vlUnitarioProponenteIntegral }}</td>
                         <td>{{ produto.vlReceitaProponenteIntegral }}</td>
                         <td>{{ produto.vlReceitaProponenteParcial }}</td>
                         <td>{{ produto.vlReceitaPrevista }}</td>
-                        <td><button class="btn red white-text" v-on:click="excluir(produto.idDetalhamentoPlanoDistribuicaoProduto)"><i class="material-icons">delete</i></button></td>
+                        <td><button class="btn red white-text" v-on:click="excluir(produto.idDetalhaPlanoDistribuicao)"><i class="material-icons">delete</i></button></td>
                     </tr>
                 </tbody>
                 <tfoot class=" grey lighten-1">
                     <tr >
                         <td>Totais</td>
-                        <td>{{ quantidadeTotal }}</td>
-                        <td>{{ divulgacaoTotal }}</td>
-                        <td>{{ populacaoTotal }}</td>
-                        <td>{{ patrocinadorTotal }}</td>
-                        <td>{{ inteiraTotal }}</td>
-                        <td>{{ meiaEntradaTotal }}</td>
-                        <td></td>
-                        <td>{{ valorInteiraTotal }}</td>
-                        <td>{{ valorMeiaEntradaTotal }}</td>
-                        <td>{{ quantidadeInteiraTotal }}</td>
-                        <td>{{ quantidadeMeiaEntradaTotal }}</td>
-                        <td></td>
-                        <td>{{ valorInteiraProponenteTotal }}</td>
-                        <td>{{ valorMeiaEntradaProponenteTotal }}</td>
+                        <td>{{ qtExemplaresTotal }}</td>
+                        <td>{{ qtGratuitaDivulgacaoTotal }}</td>
+                        <td>{{ qtGratuitaPatrocinadorTotal }}</td>
+                        <td>{{ qtGratuitaPopulacaoTotal }}</td>
+                        <!--Preço Popular -->
+                        <td>{{ qtPopularIntegralTotal }}</td>
+                        <td>{{ qtPopularParcialTotal }}</td>
+                        <td> - </td>
+                        <td>{{ vlReceitaPopularIntegralTotal }}</td>
+                        <td>{{ vlReceitaPopularParcialTotal }}</td>
+                        <!--Fim: Preço Popular -->
+                        <td>{{ qtProponenteIntegralTotal }}</td>
+                        <td>{{ qtProponenteParcialTotal }}</td>
+                        <td> - </td>
+                        <td>{{ vlReceitaProponenteIntegralTotal }}</td>
+                        <td>{{ vlReceitaProponenteParcialTotal }}</td>
                         <td>{{ receitaPrevistaTotal }}</td>
                     </tr>
                 </tfoot>
             </table>
        </div>
     </div>
-    <div class="row">
-        <div class="col s12 center">
-           <button class="btn" v-on:click.prevent="mostrar()"><i class="material-icons">{{icon}}</i></button>
-       </div>
-    </div>
-           <div v-show="active">
                 <form>
                         <table class="bordered " >
                             <thead>
@@ -239,14 +244,16 @@
                                     <div class="input-field">
                                         <input v-model="qtGratuitaPopulacao"  v-on:blur="populacaoValidate(qtGratuitaPopulacao)">
                                     </div>
+                                </td>
+                                <!-- Preço popular-->
                                 <td>
                                     <div class="input-field">
-                                        <input v-model="qtPrecoPopularValorIntegral"  >
+                                        <input v-model="qtPopularIntegral"  >
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-field">
-                                        <input v-model="qtPrecoPopularValorParcial"  >
+                                        <input v-model="qtPopularParcial"  >
                                     </div>
                                 </td>
                                 <td>
@@ -259,6 +266,8 @@
                                 </td>
                                 <td>{{ vlReceitaPopularIntegral }}</td>
                                 <td>{{ vlReceitaPopularParcial }}</td>
+                                <!-- Preço popular-->
+                                <!-- Proponente-->
                                 <td>{{ qtProponenteIntegral }}</td>
                                 <td>{{ qtProponenteParcial }}</td>
                                 <td>
@@ -271,6 +280,8 @@
                                 </td>
                                 <td>{{ vlReceitaProponenteIntegral }}</td>
                                 <td>{{ vlReceitaProponenteParcial }}</td>
+                                <!-- Proponente-->
+                                <td>{{ qtProponenteIntegral }}</td>
                                 <td>{{ vlReceitaPrevista }}</td>
                                 <td>
                                     <button class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>

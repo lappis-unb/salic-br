@@ -81,6 +81,7 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
                         "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
                     );
 
+        $this->view->idPreProjeto = $this->_idPreProjeto;
         $this->montaTela("planodistribuicao/index.phtml", $arrDados);
     }
 
@@ -294,5 +295,15 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         $dados = $detalhamento->listarPorMunicicipioUF($dados);
 
         $this->_helper->json(array('data' => $dados->toArray(), 'success' => 'true'));
+    }
+
+    public function detalharExcluirAction()
+    {
+        $id = (int)$this->getRequest()->getParam('idDetalhaPlanoDistribuicao');
+
+        $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+        $dados = $detalhamento->excluir($id);
+
+        $this->_helper->json(array('data' => $dados, 'success' => 'true'));
     }
 }
