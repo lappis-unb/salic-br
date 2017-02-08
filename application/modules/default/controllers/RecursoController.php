@@ -108,7 +108,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 case 'emanalise':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
                     $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de An�lise; 4=Encaminhado para Parecerista /  T�cnico; 7=Encaminhado para o Componente da Comiss�o
-                    $this->view->nmPagina = 'Em An�lise';
+                    $this->view->nmPagina = 'Em An&aacute;lise';
                     break;
                 case 'analisados':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
@@ -117,7 +117,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     break;
             }
         } else {
-            $this->view->nmPagina = 'Aguardando An�lise';
+            $this->view->nmPagina = 'Aguardando An&aacute;lise';
             $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
             $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
@@ -233,7 +233,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     break;
             }
         } else {
-            $this->view->nmPagina = 'Aguardando An�lise';
+            $this->view->nmPagina = 'Aguardando An&aacute;lise';
             $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
             $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
@@ -499,7 +499,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     break;
             }
         } else {
-            $this->view->nmPagina = 'Aguardando An�lise';
+            $this->view->nmPagina = 'Aguardando An&aacute;lise';
             if($this->idPerfil == 93){
                 $where['d.siRecurso = ?'] = 3;
                 $where['a.idAvaliador IS NULL'] = '';

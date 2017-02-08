@@ -1,5 +1,5 @@
 <?php //require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php'; ?>
-<script type="text/javascript">
+<script type="text/javascript" >
     $(document).ready(function(){
         $("#btn_pesquisar").click(function(){
             var pronac = $('#pronacPesquisa').val(),
@@ -43,7 +43,7 @@
                 height:180,
                 modal:true,
                 buttons: {
-                    'Não': function(){
+                    'Nï¿½o': function(){
                         $("#msgAlerta").dialog("destroy");
                     },
                     'Sim': function() {
@@ -73,7 +73,7 @@
                 height:180,
                 modal:true,
                 buttons: {
-                    'Não': function(){
+                    'Nï¿½o': function(){
                         $("#msgAlerta").dialog("destroy");
                     },
                     'Sim': function() {
@@ -86,9 +86,9 @@
                             },
                             success: function(data){
                                 if(data.resposta){
-                                    message('Transferência está sendo executada com sucesso. Por favor, aguarde!', 'CONFIRM');
+                                    message('Transferï¿½ncia estï¿½ sendo executada com sucesso. Por favor, aguarde!', 'CONFIRM');
                                     $("#msgAlerta").dialog("destroy");
-                                    $("#msgAlerta").html('<center><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" alt="carregando"><br /><br />Transação concluída.<br />Por favor, aguarde!!</center>');
+                                    $("#msgAlerta").html('<center><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" alt="carregando"><br /><br />Transaï¿½ï¿½o concluï¿½da.<br />Por favor, aguarde!!</center>');
                                     $("#msgAlerta").dialog({
                                         resizable: false,
                                         title: 'Alerta!',
@@ -104,7 +104,7 @@
                                     //}, 2500);
 
                                 } else {
-                                    message('Erro ao executar a transferência.', 'ERROR');
+                                    message('Erro ao executar a transferï¿½ncia.', 'ERROR');
                                 }
 
                             },
@@ -122,7 +122,7 @@
 
 <div id="msgAlerta"></div>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'), '', true); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -133,14 +133,14 @@
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-    <div>Transfer&ecirc;ncia de Recurso <!--<span class="voltar"><a href="<?php //echo $this->url(array('controller'=>'movimentacaodeconta', 'action'=>'form-extrato-de-conta-captacao')); ?>" title="Ir para página anterior">Voltar</a></span>--></div>
+    <div>Transfer&ecirc;ncia de Recurso <!--<span class="voltar"><a href="<?php //echo $this->url(array('controller'=>'movimentacaodeconta', 'action'=>'form-extrato-de-conta-captacao')); ?>" title="Ir para pï¿½gina anterior">Voltar</a></span>--></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo">
 
     <table class="tabela">
@@ -159,14 +159,14 @@
             <td width="550" align="center">
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left;"> A diligenciar</div>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice.png" width="20px"/></div><div style="margin-top: 2px;  margin-right: 15px; margin-left: 3px; float: left"> Diligenciado</div>
-                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Diligência respondida</div>
-                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Diligência não respondida</div>
+                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia respondida</div>
+                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia n&atilde;o respondida</div>
             </td>
         </tr>
     </table>
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINAï¿½ï¿½O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -191,12 +191,12 @@
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronacProjeto; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -215,17 +215,18 @@
             echo " de ". $this->paginacao['total']. " Projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
     <?php } ?>
     
 
     <?php if($this->qtdRegistros > 0){ ?>
-    <table class="tabela tablesorter">
+    <table class="tabela tablesorter" >
         <thead>
-            <tr class="titulo_tabela">
+
+        <tr class="titulo_tabela">
                 <th width="1px">N&ordm;</th>
                 <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=1&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=13&ordem='.$this->paginacao['novaOrdem'];?>">Situação</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=13&ordem='.$this->paginacao['novaOrdem'];?>">Situa&ccedil;&atilde;o</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=2&ordem='.$this->paginacao['novaOrdem'];?>">CPF/CNPJ</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Incentivador</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">N&ordm; do Lote</a></th>
@@ -262,9 +263,9 @@
                 <td><?php echo $projeto->Incentivador; ?></td>
                 <td class="centro"><?php echo $projeto->NumeroRecibo; ?></td>
                 <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtChegadaRecibo)); ?></td>
-                <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtRecibo)); ?></td>
+                <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtRecibo)); ?></td>O
                 <td><?php echo $projeto->TipoApoio; ?></td>
-                <td class="centro"><?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 'Sim' : '<span style="color:red; font-weight: bold;">Não</span>'; ?></td>
+                <td class="centro"><?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 'Sim' : '<span style="color:red; font-weight: bold;">N&atilde;o</span>'; ?></td>
                 <td class="direita"><?php echo $projeto->Percentual; ?></td>
                 <td class="direita" nowrap><?php echo "R$ ".number_format($projeto->CaptacaoReal,'2',',','.'); ?></td>
                 <?php if(!isset($_GET['tipoFiltro']) || $_GET['tipoFiltro'] != 'nc'){ ?>
@@ -307,7 +308,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINAï¿½ï¿½O ============ -->
         <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -340,12 +341,12 @@
                         <input class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronacProjeto; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -357,7 +358,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
 
     <?php } } ?>
 
@@ -383,10 +384,10 @@
 
 </div><!-- fecha div resultado ajax -->
     
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />

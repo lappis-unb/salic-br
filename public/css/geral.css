@@ -13,9 +13,9 @@
 
 /* ========== IN�CIO ESTRUTURA GERAL DO LAYOUT ========== */
 * {
-	/*margin:0;*/
+	margin:0;
 	padding:0;
-	/*border:none;*/
+	border:none;
 
 }
 html { overflow-y:auto; }
@@ -264,13 +264,13 @@ a:hover {
 	top:10px;
 }
 #menuContexto, #conteudo, #titulo, #rodapeConteudo {
-	float:right;
+	float: Left;
 }
 #conteudo, #titulo, #rodapeConteudo {
 	position:relative;
 	/*top:10px;*/
 	top: 0px;
-	left:0px;
+	left:15px;
 }
 #conteudo {
 	border-left:1px solid #e8e8e8;

@@ -143,15 +143,7 @@ table.tabela td.destacar span,
 
 #conteudo [type="radio"] + label:before,
 #conteudo [type="radio"] + label:after {
-    content: '';
-    position: absolute;
-    left: -19px;
-    top: -4px;
-    margin: 0;
-    width: 16px;
-    height: 16px;
-    z-index: 0;
-    transition: .28s ease;
+ display: none;
 }
 
 #conteudo table.tabela label {
