@@ -74,7 +74,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function buscaProjetos($idAgente) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		$sqlProjetosDoComponente = "SELECT
@@ -102,7 +102,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function encaminharProjeto($idPronac, $data, $justificativa, $agenteAtual, $agenteNovo) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		$dados = "Update BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
@@ -152,7 +152,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function ativarComponente($idAgente, $justificativa, $usucodigo) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		// Mudar a situa��o do componente da comiss�o para inativo 'I'
@@ -178,7 +178,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function balancear($idPronac) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		$sqlProjetoAreaSegmento = "SELECT P.idPRONAC, A.Codigo as area, S.Codigo as segmento
@@ -344,7 +344,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function buscaProjetos($idAgente) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		$sqlProjetosDoComponente = "SELECT
@@ -372,7 +372,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function encaminharProjeto($idPronac, $data, $justificativa, $agenteAtual, $agenteNovo) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		$dados = "Update BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
@@ -422,7 +422,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function ativarComponente($idAgente, $justificativa, $usucodigo) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		// Mudar a situa��o do componente da comiss�o para inativo 'I'
@@ -448,7 +448,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 	public static function balancear($idPronac) {
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		$sqlProjetoAreaSegmento = "SELECT P.idPRONAC, A.Codigo as area, S.Codigo as segmento

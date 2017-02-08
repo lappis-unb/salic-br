@@ -692,7 +692,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $idorgao    = $this->_request->getParam("idorgao");
             $observacao = $this->_request->getParam("observacao");
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 	    
             try {
@@ -773,7 +773,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		}	
 			
 			
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         	
 		try
@@ -1121,7 +1121,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 				parent::message("O projeto j� est� aprovado e n�o pode ser desconsolidado.", "gerenciarpareceres/index", "ALERT");
 			}
 			
-			$db = Zend_Registry :: get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 	        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 	        	
 			try

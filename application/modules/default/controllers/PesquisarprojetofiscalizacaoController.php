@@ -806,7 +806,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 
     public function enviaremailAction() {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $post = Zend_Registry::get('post');

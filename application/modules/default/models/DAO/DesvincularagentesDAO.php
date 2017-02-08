@@ -23,7 +23,7 @@ class DesvincularagentesDAO extends Zend_Db_Table {
                            INNER JOIN AGENTES.dbo.Verificacao as ver on ver.idVerificacao = '198'
                            WHERE n.Descricao = " . $proponente . "  or a.CNPJCPFSuperior = " . $cnpjcpfsuperior . ""; 
 	
-           $db = Zend_Registry :: get('db');
+           $db = Zend_Db_Table::getDefaultAdapter();
            $db->setFetchMode(Zend_DB :: FETCH_OBJ);
            $resultado = $db->fetchAll($sql);
            return $resultado;
@@ -59,7 +59,7 @@ class DesvincularagentesDAO extends Zend_Db_Table {
             }
         }
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -77,7 +77,7 @@ class DesvincularagentesDAO extends Zend_Db_Table {
                         INNER JOIN AGENTES.dbo.Verificacao ve ON ve.idVerificacao = vi.Visao
                 WHERE vi.Visao = '198'";
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -107,7 +107,7 @@ FROM         AGENTES.dbo.Agentes AS a LEFT OUTER JOIN
 
 WHERE     (a.TipoPessoa = 0) AND (n.TipoNome = 18)  and v.idVinculoPrincipal = $idVinculoPrincipal";
 	
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -119,7 +119,7 @@ WHERE     (a.TipoPessoa = 0) AND (n.TipoNome = 18)  and v.idVinculoPrincipal = $
 
         $sql = "DELETE FROM AGENTES.dbo.Vinculacao WHERE idAgente = ".$idagente." AND idVinculoPrincipal = ".$idVinculoPrincipal;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         
         $resultado = $db->query($sql);

@@ -61,7 +61,7 @@ Class Documentosanexados extends Zend_Db_Table{
 			$tbArquivo = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivo " .
 								"(nmArquivo, sgExtensao, dsTipo, dtEnvio ,stAtivo)  " .
 							"VALUES ('$name', '$fileType', 'application/pdf', GETDATE(),'A')";
-				$db = Zend_Registry :: get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 					$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 			$resultado = $db->query();
 			return $resultado;
@@ -69,7 +69,7 @@ Class Documentosanexados extends Zend_Db_Table{
 		
 		public function inserirArquivoImagem($idGeradoArquivo,$data)
 		{
-			$db = Zend_Registry :: get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 			$tbArquivoImagem = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivoImagem " .
 								"(idArquivo,biArquivo) " .
@@ -80,7 +80,7 @@ Class Documentosanexados extends Zend_Db_Table{
 		
 		public function ultimoIdArquivo() 
 		{
-			$db = Zend_Registry :: get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);				
 			$idGerado = $db->fetchOne("SELECT MAX(idArquivo) as id from BDCORPORATIVO.scCorp.tbArquivo");	
 			return $idGerado;

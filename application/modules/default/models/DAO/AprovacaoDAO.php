@@ -72,7 +72,7 @@ class AprovacaoDAO extends Zend_Db_Table
         {
             $sql .= " where pr.idpronac = $idpronac ";
         }
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -114,7 +114,7 @@ class AprovacaoDAO extends Zend_Db_Table
                 where (pr.Situacao = 'D40' and ap.TipoAprovacao= 2) or (pr.Situacao='D40' and ap.TipoAprovacao=4) or (ap.TipoAprovacao = 5)";
 
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -122,7 +122,7 @@ class AprovacaoDAO extends Zend_Db_Table
     public static function buscarCaptacaoRead($idpronac=null)
     {
         $sql = "select dtiniciocaptacao, dtfimcaptacao, PortariaAprovacao from sac.dbo.aprovacao where idpronac = $idpronac  --and tipoaprovacao=9";
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -133,7 +133,7 @@ class AprovacaoDAO extends Zend_Db_Table
                 from SAC..Aprovacao
                 where idpronac = $idpronac
                 and portariaaprovacao is not null";
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_ASSOC);
         return $db->fetchRow($sql);
 
@@ -146,7 +146,7 @@ class AprovacaoDAO extends Zend_Db_Table
                 where idpronac = $idpronac
                 and tipoaprovacao = $tipoaprovacao
                 and portariaaprovacao is null";
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_ASSOC);
         return $db->fetchRow($sql);
 

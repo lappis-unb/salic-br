@@ -165,7 +165,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 			INNER JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 			where A.CNPJCPF = " . $cpf . "";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -201,7 +201,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 			$sql.= "where Pr.CgcCpf = '". $cpf ."'";
 		}
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -237,7 +237,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 			$sql.= "where Pr.CgcCpf = '". $cpf ."'";
 		}
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -247,7 +247,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 
 	public function reintegrarecursoorc($idrecurso, $idplanilhaaprovacao, $justificativa)
     {
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 	 	$sql = "INSERT INTO SAC.dbo.tbRecursoXPlanilhaAprovacao (idRecurso, idPlanilhaAprovacao, stRecursoAprovacao, dsJustificativa)
@@ -263,7 +263,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 
 			public function projetonaoaprovado($idpronac, $recurso, $idagente)
     {
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
       	$sql = "INSERT INTO SAC.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
@@ -278,7 +278,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 
 			public function projetoaprovado($idpronac, $recurso, $idagente)
     {
-       	$db = Zend_Registry :: get('db');
+       	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
       	$sql = "INSERT INTO SAC.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
@@ -305,7 +305,7 @@ FROM         tbPlanilhaProposta INNER JOIN
 	     if (!empty($idplanilha))
         {
             $sql.= " AND tbPlanilhaProposta.idPlanilhaItem = $idplanilha";
-	            			$db = Zend_Registry :: get('db');
+	            			$db = Zend_Db_Table::getDefaultAdapter();
 									$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 									$resultado = $db->fetchAll($sql);
 									return $resultado;
