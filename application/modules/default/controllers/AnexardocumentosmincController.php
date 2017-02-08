@@ -100,7 +100,7 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
             }
         } else {
             $dados = array();
-            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto n�o encontrado.</span>');
+            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto n&atilde;o encontrado.</span>');
             $jsonEncode = json_encode($dados);
             echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
         }
@@ -158,7 +158,7 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         $pronac = $this->_request->getParam("Pronac");
         $tpDocumento = $this->_request->getParam("tpDocumento");
         if(empty($pronac) || empty($tpDocumento)){
-            parent::message("Favor preencher os dados obrigat�rios!", "anexardocumentosminc", "ERROR");
+            parent::message("Favor preencher os dados obrigat&oacute;rios!", "anexardocumentosminc", "ERROR");
         }
 
         try {
