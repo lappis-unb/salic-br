@@ -2,10 +2,7 @@
 
 class Assinatura_EnquadramentoController extends Assinatura_GenericController
 {
-    /**
-     * Tipo do ato 626 : Enquadramento
-     */
-    const IDTIPODOATO = 626;
+    private $idTipoDoAtoAdministrativo;
 
     public function init()
     {
@@ -24,6 +21,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         parent::init();
         $this->auth = Zend_Auth::getInstance();
         $this->grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+        $this->idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
     }
 
     public function indexAction()
@@ -39,21 +37,16 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
         $enquadramento = new Admissibilidade_Model_Enquadramento();
 
-        $this->view->dados = array();
         $ordenacao = array("projetos.DtSituacao asc");
-
-//        if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
-            $this->view->dados = $enquadramento->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
-//        }
-
+        $this->view->dados = $enquadramento->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
 
         $get = Zend_Registry::get('get');
         $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, self::IDTIPODOATO);
+        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAtoAdministrativo);
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas(self::IDTIPODOATO);
+        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAtoAdministrativo);
     }
 
     /**
@@ -102,18 +95,20 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             'IdPRONAC' => $get->IdPRONAC
         );
         $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
-        $this->view->titulo = "Enquadramento";
 
         $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, self::IDTIPODOATO);
+        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAtoAdministrativo);
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas(self::IDTIPODOATO);
+        $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAtoAdministrativo);
 
-//        $this->_helper->layout()->disableLayout();
-//        $this->_helper->viewRenderer->setNoRender(true);
-//        $html = $this->view->render('/enquadramento/visualizar-projeto.phtml');
-//        xd($html);
+        $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
+        $this->view->documentoAssinatura = $objModelDocumentoAssinatura->findBy(
+            array(
+                'IdPRONAC' => $get->IdPRONAC,
+                'idTipoDoAtoAdministrativo' => $this->idTipoDoAtoAdministrativo
+            )
+        );
     }
 
     /**
@@ -188,11 +183,15 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
         $objVerificacao = new Verificacao();
         $this->view->tipoDocumento = $objVerificacao->findBy(array(
-            'idVerificacao = ?' => self::IDTIPODOATO
+            'idVerificacao = ?' => $this->idTipoDoAtoAdministrativo
         ));
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $this->view->dadosAtoAdministrativo = $objTbAtoAdministrativo->obterPerfilAssinante($this->grupoAtivo->codOrgao, $this->grupoAtivo->codGrupo, self::IDTIPODOATO);
+        $this->view->dadosAtoAdministrativo = $objTbAtoAdministrativo->obterPerfilAssinante(
+            $this->grupoAtivo->codOrgao,
+            $this->grupoAtivo->codGrupo,
+            $this->idTipoDoAtoAdministrativo
+        );
     }
 
 

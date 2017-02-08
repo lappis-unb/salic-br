@@ -229,22 +229,19 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
-        $objDocumentoAssinaturaController = new Assinatura_DocumentoAssinaturaController();
-        $objDocumentoAssinaturaController->gerarDocumentoAssinatura($IdPRONAC, Assinatura_EnquadramentoController::IDTIPODOATO);
-        xd(123);
-
         $auth = Zend_Auth::getInstance();
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
-        $objProjeto = new Projetos();
-        $arrayDadosProjeto = array(
-            'Situacao' => 'B04',
-            'DtSituacao' => $objProjeto->getExpressionDate(),
-            'ProvidenciaTomada' => 'Projeto encamihado para Portaria.',
-            'logon' => $authIdentity['usu_codigo']
+
+        $objDocumentoAssinatura = new MinC_Assinatura_DocumentoAssinatura();
+        $idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
+        $objDocumentoAssinatura->criarDocumentoAssinatura(
+            $IdPRONAC,
+            $idTipoDoAtoAdministrativo,
+            $authIdentity['usu_codigo']
         );
 
-        $arrayWhere = array('IdPRONAC = ?' => $projeto['IdPRONAC']);
-        $objProjeto->update($arrayDadosProjeto, $arrayWhere);
+        $objProjeto = new Projetos();
+        $objProjeto->alterarSituacao($projeto['IdPRONAC'], null, 'B04', 'Projeto encamihado para Portaria.');
     }
 
     private function carregarListaEncaminhamentoPortaria() {
