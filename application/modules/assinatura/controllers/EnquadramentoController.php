@@ -118,22 +118,49 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
      */
     public function devolverProjetoAction()
     {
-        /**
-        -- [ DEVOLUÇÃO ]
-        select * from sac.dbo.Orgaos where idSecretaria = 251
-        -- Quando devolver o projeto deve voltar para o órgçao 262 ( qunado for SEFIC [ SEFIC é o órgão superior ] )
-
-        select * from sac.dbo.Orgaos where idSecretaria = 160
-        -- Quando devolver o projeto deve voltar para o órgçao 171 ( qunado for SAV [ SAV é o órgão superior ] )
-         */
-
         $get = Zend_Registry::get('get');
-        $this->view->IdPRONAC = $get->IdPRONAC;
 
-        $objProjeto = new Projetos();
-        $this->view->projeto = $objProjeto->findBy(array(
-            'IdPRONAC' => $this->view->IdPRONAC
+        $objProjetos = new Projetos();
+        $this->view->projeto = $objProjetos->findBy(array(
+            'IdPRONAC' => $get->IdPRONAC
         ));
+
+        $post = $this->getRequest()->getPost();
+        if($post) {
+            try {
+
+                if(!$post['motivoDevolucao']) {
+                    throw new Exception("Campo 'Motivação da Devolução para nova avaliação' não informado.");
+                }
+
+                $objTbDepacho = new Proposta_Model_DbTable_TbDespacho();
+                $objTbDepacho->devolverProjetoEncaminhadoParaAssinatura($get->IdPRONAC, $post['motivoDevolucao']);
+
+                $objOrgaos = new Orgaos();
+                $orgaoSuperior = $objOrgaos->obterOrgaoSuperior($this->view->projeto['Orgao']);
+
+                $orgaoDestino = 171;
+                if($orgaoSuperior['Codigo'] == 251) {
+                    $orgaoDestino = 262;
+                }
+
+                $objTbProjetos = new Projeto_Model_DbTable_Projetos();
+                $objTbProjetos->alterarOrgao($orgaoDestino, $get->IdPRONAC);
+
+                $objProjetos->alterarSituacao(
+                    $get->IdPRONAC,
+                    null,
+                    'B01',
+                    'Projeto encaminhado ao t&eacute;cnico para a readequa&ccedil;&atilde;o do Enquadramento'
+                );
+
+                parent::message('Projeto devolvido com sucesso.', "/assinatura/enquadramento/gerenciar-projetos", 'CONFIRM');
+            } catch (Exception $objException) {
+                parent::message($objException->getMessage(), "/assinatura/enquadramento/devolver-projeto?IdPRONAC={$get->IdPRONAC}");
+            }
+        }
+
+        $this->view->IdPRONAC = $get->IdPRONAC;
 
         $mapperArea = new Agente_Model_AreaMapper();
         $this->view->areaCultural = $mapperArea->findBy(array(

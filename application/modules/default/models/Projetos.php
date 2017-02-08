@@ -2648,7 +2648,9 @@ class Projetos extends MinC_Db_Table_Abstract
 
         // grava no hist?rico a situa??o atual do projeto caso a trigger HISTORICO_INSERT esteja desabilitada
         $HistoricoInsert = new HistoricoInsert();
+
         if ($HistoricoInsert->statusHISTORICO_INSERT() == 1) { // desabilitada
+
             // busca a situa??o atual do projeto
             $p = $this->buscarSituacaoAtual($idPronac, $pronac);
 
@@ -2722,7 +2724,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from($this->_name, "(AnoProjeto+Sequencial) AS pronac");
 
-// busca pelo id pronac
         if (!empty($idPronac)) {
             $select->where("IdPRONAC = ?", $idPronac);
         }
@@ -2736,7 +2737,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from($this->_name, array("AnoProjeto", "Sequencial"));
 
-// busca pelo id pronac
         if (!empty($idPronac)) {
             $select->where("IdPRONAC = ?", $idPronac);
         }
@@ -2744,7 +2744,6 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchRow($select);
     }
 
-// fecha m?todo buscarPronac()
 
     /**
      * M?todo para buscar o idPronac de acordo com um pronac
@@ -2758,7 +2757,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from($this->_name, "idpronac");
 
-// busca pelo pronac
         if (!empty($pronac)) {
             $select->where("(anoprojeto " . parent::getConcatExpression() . " sequencial) = ?", $pronac);
 //            $select->where("(anoprojeto+sequencial) = ?", $pronac);
@@ -2775,8 +2773,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where("(AnoProjeto+Sequencial) = ?", $pronac);
         return $this->fetchAll($select);
     }
-
-// fecha m?todo buscarIdPronac()
 
     /**
      * M?todo para buscar os projetos para solicita??o de recurso (UC33)

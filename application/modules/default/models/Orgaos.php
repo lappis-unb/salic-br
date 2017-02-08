@@ -3,6 +3,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
     protected $_name  = 'Orgaos';
+    protected $_primary = 'Codigo';
 
     public function pesquisarTodosOrgaos() {
         $select = $this->select();
@@ -125,5 +126,29 @@ class Orgaos extends MinC_Db_Table_Abstract{
         $slct->where("se.Codigo = ?", $segmento);
         //xd($slct->assemble());
         return $this->fetchAll($slct);
+    }
+
+    public function obterOrgaoSuperior($codOrgao) {
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+
+        $objQuery->from(
+            array('OrgaoSuperior' => $this->_name),
+            'OrgaoSuperior.*',
+            $this->_schema
+        );
+
+        $objQuery->joinInner(
+            array('OrgaoFilho' => $this->_name),
+            'OrgaoFilho.idSecretaria = OrgaoSuperior.Codigo',
+            array(),
+            $this->_schema
+        );
+
+        $objQuery->where("OrgaoFilho.Codigo = ?", $codOrgao);
+        $resultado = $this->fetchRow($objQuery);
+        if($resultado) {
+            return $resultado->toArray();
+        }
     }
 }

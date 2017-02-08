@@ -11,41 +11,37 @@
 
 class HistoricoInsert extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "SAC";
-	protected $_schema = "SAC";
-	protected $_name   = "sysobjects";
-	public $dados = 'HISTORICO_INSERT';
-
+	protected $_schema  = "SAC";
+	protected $_name    = "sysobjects";
+	protected $_primary = "Id";
 
 	/**
-	 * M�todo para verificar se a trigger HISTORICO_INSERT est� habilitada
+	 * M&amp;eacute;todo para verificar se a trigger HISTORICO_INSERT est habilitada
 	 * @access public
 	 * @param void
 	 * @return integer (0 = Habilitado e 1 = desabilitado)
 	 */
 	public function statusHISTORICO_INSERT()
-	{
-		$sql = "SELECT ObjectProperty(Object_id(name), 'ExecIsTriggerDisabled') AS Habilitado
-				FROM {$this->_banco}.{$this->_schema}.{$this->_name}
-				WHERE name = 'HISTORICO_INSERT'";
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $objQuery = $db->select();
 
-		// seta para o banco SAC que � onde encontra-se a trigger
-		$DIRBANCO = Zend_Registry::get('DIR_CONFIG');
-		$Conexao  = 'conexao_sac';
-		$config   = new Zend_Config_Ini($DIRBANCO, $Conexao);
-		$registry = Zend_Registry::getInstance();
-		$registry->set('config', $config); // registra
-		$db = Zend_Db::factory($config->db);
-		Zend_Db_Table::setDefaultAdapter($db);
+        $objQuery->from(
+            array( 'sysobjects' => $this->_name),
+            array(
+                'Habilitado' => new Zend_Db_Expr(
+                    "ObjectProperty(Object_id(name), 'ExecIsTriggerDisabled')"
+                )
+            ),
+            $this->_schema
+        );
 
-		// executa a query
-		$resultado = $db->fetchAll($sql);
+        $objQuery->where('name = ?', 'HISTORICO_INSERT');
+        $resultado = $db->fetchAll($objQuery->assemble());
 
-		// encerra a conex�o
-		$db = Zend_Db_Table::getDefaultAdapter();
-		$db->closeConnection();
+        $db->closeConnection();
 
-		return $resultado[0]['Habilitado'];
-	} // fecha m�todo statusHISTORICO_INSERT()
+        return $resultado[0]['Habilitado'];
+    }
 
 }
