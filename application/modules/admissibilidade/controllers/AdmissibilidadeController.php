@@ -60,11 +60,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         isset($auth->getIdentity()->usu_codigo) ? $this->idUsuario = $auth->getIdentity()->usu_codigo : $this->idUsuario = $auth->getIdentity()->IdUsuario;
         //$this->idUsuario = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
         if (isset($auth->getIdentity()->usu_codigo)) {
 
-            $this->codGrupo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
-            $this->codOrgao = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+            $this->codGrupo = $GrupoAtivo->codGrupo;
+            $this->codOrgao = $GrupoAtivo->codOrgao;
             $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : null;
         }
     }
@@ -1976,7 +1976,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $grafico->setTituloEixoXY("Avalia&ccedil;&atilde;o", "Registros");
 
         $grafico->configurar($_POST);
-        //PREPARA NOME DAS FASES
+
         foreach ($dados as $nomeAnalista => $fases) {
             if (isset($_POST["todos"]) || isset($_POST[str_replace(".", "_", str_replace(" ", "_", $nomeAnalista))])) {
                 foreach ($fases as $faseNome => $faseItems) {
@@ -1984,9 +1984,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 }
             }
         }
+
         $arrSeries = array_unique($arrSeries);
-
-
         $aux = array();
         foreach ($dados as $nomeAnalista => $fases) {
             if (isset($_POST["todos"]) || isset($_POST[str_replace(".", "_", str_replace(" ", "_", $nomeAnalista))])) {
