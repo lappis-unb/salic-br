@@ -55,7 +55,7 @@
                                            class="checkbox_legal filled-in" value="<?php echo $dado->IdPRONAC ?>"/>
                                     <label for="IdPRONAC<?php echo $dado->IdPRONAC ?>"></label>
                                 </td>
-                                <td class="center-align" align="center" >
+                                <td class="center-align" align="center">
                                     <a class="waves-effect waves-dark btn white black-text"
                                        href="<?php echo $this->url(
                                                array(
@@ -68,15 +68,17 @@
                                 <td class="center-align" align="center"><?php echo $dado['nomeProjeto']; ?></td>
                                 <td class="center-align" align="center"><?php echo $dado['area']; ?></td>
                                 <td class="center-align" align="center"><?php echo $dado['segmento']; ?></td>
-                                <td class="center-align" align="center"><?php echo ((int)$dado['tp_enquadramento'] == 1) ? 'Artigo 26' : 'Artigo 18'; ?></td>
-                                <td class="center-align" align="center"><?php echo (!empty($dado['vlAprovado'])) ? $dado['vlAprovado'] : '-'; ?></td>
+                                <td class="center-align"
+                                    align="center"><?php echo ((int)$dado['tp_enquadramento'] == 1) ? 'Artigo 26' : 'Artigo 18'; ?></td>
+                                <td class="center-align"
+                                    align="center"><?php echo (!empty($dado['vlAprovado'])) ? $dado['vlAprovado'] : '-'; ?></td>
                                 <td class="center-align" align="center"><?php echo $dado['dias']; ?></td>
                                 <td class="center-align" align="center">
                                     <a class="btn waves-effect waves-light white tooltipped small black-text"
                                        href="<?php echo $this->url(array(
-                                           'module' => 'assinatura',
-                                           'controller' => 'enquadramento',
-                                           'action' => 'visualizar-projeto'
+                                               'module' => 'assinatura',
+                                               'controller' => 'enquadramento',
+                                               'action' => 'visualizar-projeto'
                                            )) . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
                                        data-position="top"
                                        data-delay="50"
@@ -87,9 +89,9 @@
                                 <td class="center-align" align="center">
                                     <a class="btn waves-effect waves-light white tooltipped small black-text"
                                        href="<?php echo $this->url(array(
-                                           'module' => 'assinatura',
-                                           'controller' => 'enquadramento',
-                                           'action' => 'devolver-projeto'
+                                               'module' => 'assinatura',
+                                               'controller' => 'enquadramento',
+                                               'action' => 'devolver-projeto'
                                            )) . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
                                        data-position="top"
                                        data-delay="50"
@@ -100,9 +102,9 @@
                                 <td class="center-align" align="center">
                                     <a class="btn waves-effect waves-light white tooltipped small black-text"
                                        href="<?php echo $this->url(array(
-                                           'module' => 'assinatura',
-                                           'controller' => 'enquadramento',
-                                           'action' => 'assinar-projeto'
+                                               'module' => 'assinatura',
+                                               'controller' => 'enquadramento',
+                                               'action' => 'assinar-projeto'
                                            )) . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
                                        data-position="top"
                                        data-delay="50"
@@ -111,18 +113,26 @@
                                     </a>
                                 </td>
                                 <td class="center-align" align="center">
-                                    <?php if( count($this->assinaturas) >= $this->quantidade_minima_assinaturas): ?>
-                                    <a class="btn waves-effect waves-light white tooltipped small black-text"
-                                       href="<?php echo $this->url(array(
-                                           'module' => 'assinatura',
-                                           'controller' => 'enquadramento',
-                                           'action' => 'finalizar-assinatura'
-                                           )) . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
-                                       data-position="top"
-                                       data-delay="50"
-                                       data-tooltip="Finalizar">
-                                        <i class="material-icons">grade</i>
-                                    </a>
+                                    <?php
+
+                                    $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
+                                    $assinaturas = $objAssinatura->obterAssinaturas($dado['IdPRONAC'], $this->idTipoDoAtoAdministrativo);
+                                    if (count($assinaturas) >= $this->quantidade_minima_assinaturas):
+                                        ?>
+                                        <a class="btn waves-effect waves-light white tooltipped small black-text"
+                                            href="<?php echo $this->url(
+                                                    array(
+                                                       'module' => 'assinatura',
+                                                       'controller' => 'enquadramento',
+                                                       'action' => 'finalizar-assinatura'
+                                                   )
+                                                )
+                                                . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
+                                            data-position="top"
+                                            data-delay="50"
+                                            data-tooltip="Finalizar">
+                                            <i class="material-icons">grade</i>
+                                        </a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -170,9 +180,9 @@
                     tratarExibicaoCheckboxChecados('.checkbox_legal', '#divAssinaturaEmMassa');
                 });
 
-                function tratarExibicaoCheckboxChecados (seletorCheckboxes, seletorExibicao) {
+                function tratarExibicaoCheckboxChecados(seletorCheckboxes, seletorExibicao) {
                     var quantidadeCheckboxChecados = $(seletorCheckboxes).filter(':checked').length;
-                    if(quantidadeCheckboxChecados > 0) {
+                    if (quantidadeCheckboxChecados > 0) {
                         $3(seletorExibicao).show('fast');
                     } else {
                         $3(seletorExibicao).hide('fast');

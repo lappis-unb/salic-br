@@ -60,9 +60,10 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
         );
         $objQuery->where('idTipoDoAto = ?', $idTipoDoAto);
         $objQuery->where('stEstado = ?', true);
-        $result = $this->fetchRow($objQuery);
-        if ($result) {
-            return $result->toArray();
+        $objResultado = $this->fetchRow($objQuery);
+        if ($objResultado) {
+            $resultadoArray = $objResultado->toArray();
+            return $resultadoArray['quantidade_assinaturas'];
         }
     }
 
