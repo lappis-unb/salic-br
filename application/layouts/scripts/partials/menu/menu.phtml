@@ -613,6 +613,7 @@ $arrMenu['protocolo']['menu'][] = array(
     'label' => 'Analisar Laudo Final'
 );
 // ========== FIM MENU PRESTACAO DE CONTAS ==========
+
 // ========== INICIO MENU RELATORIOS ==========
 $arrMenu['relatorios'] = array(
     'id' => 'relatorios',
@@ -629,13 +630,13 @@ $arrMenu['relatorios']['menu'][] = array(
 );
 $arrMenu['relatorios']['menu'][] = array(
     'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
-    'url' => $this->url(array('controller' => 'gerarrelatorios', 'action' => 'index'), '', true),
-    'title' => 'Ir para Edital',
-    'label' => 'Edital'
+    'url' => $this->url(array('controller' => 'relatorio', 'action' => 'index'), '', true),
+    'title' => 'Ir para Propostas',
+    'label' => 'Propostas'
 );
 $arrMenu['relatorios']['menu'][] = array(
     'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
-    'url' => $this->url(array('controller' => 'relatorio', 'action' => 'index'), '', true),
+    'url' => $this->url(array('controller' => 'relatorio', 'action' => 'projeto'), '', true),
     'title' => 'Ir para Projetos',
     'label' => 'Projetos'
 );
@@ -682,6 +683,7 @@ $arrMenu['relatorios']['menu'][] = array(
     'label' => 'Gerar Relat&oacute;rio Parecerista'
 );
 // ========== FIM MENU RELATORIOS ==========
+//
 // ========== INICIO MENU EDITAIS ==========
 $arrMenu['edital'] = array(
     'id' => 'edital',
