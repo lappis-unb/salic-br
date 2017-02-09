@@ -2,11 +2,12 @@
 
 class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstract
 {
-    protected $_schema    = 'sac';
-    protected $_name      = 'tbAtoAdministrativo';
-    protected $_primary   = 'idAtoAdministrativo';
+    protected $_schema = 'sac';
+    protected $_name = 'tbAtoAdministrativo';
+    protected $_primary = 'idAtoAdministrativo';
 
-    public function obterPerfilAssinante($idOrgaoDoAssinante, $idPerfilDoAssinante, $idTipoDoAto) {
+    public function obterPerfilAssinante($idOrgaoDoAssinante, $idPerfilDoAssinante, $idTipoDoAto)
+    {
 
         $objQuery = $this->select();
         $objQuery->setIntegrityCheck(false);
@@ -39,12 +40,13 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
         $objQuery->where('idTipoDoAto = ?', $idTipoDoAto);
 
         $result = $this->fetchRow($objQuery);
-        if($result) {
+        if ($result) {
             return $result->toArray();
         }
     }
 
-    public function obterQuantidadeMinimaAssinaturas($idTipoDoAto) {
+    public function obterQuantidadeMinimaAssinaturas($idTipoDoAto)
+    {
         $objQuery = $this->select();
         $objQuery->setIntegrityCheck(false);
         $objQuery->from(
@@ -57,9 +59,50 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
             $this->_schema
         );
         $objQuery->where('idTipoDoAto = ?', $idTipoDoAto);
+        $objQuery->where('stEstado = ?', true);
         $result = $this->fetchRow($objQuery);
-        if($result) {
+        if ($result) {
             return $result->toArray();
+        }
+    }
+
+    public function obterProximoOrgaoDeDestino($idTipoDoAto, $idOrdemDaAssinaturaAtual)
+    {
+
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            $this->_name,
+            'idOrgaoDoAssinante',
+            $this->_schema
+        );
+        $objQuery->where('idTipoDoAto = ?', $idTipoDoAto);
+        $objQuery->where('idOrdemDaAssinatura > ?', $idOrdemDaAssinaturaAtual);
+        $objQuery->order('idOrdemDaAssinatura asc');
+        $objQuery->limit(1);
+
+        $objResultado = $this->fetchRow($objQuery);
+        if ($objResultado) {
+            $arrayResultado = $objResultado->toArray();
+            return $arrayResultado['idOrgaoDoAssinante'];
+        }
+    }
+
+    public function obterAtoAdministrativoAtual($idTipoDoAto, $idPerfilDoAssinante, $idOrgaoDoAssinante)
+    {
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            $this->_name,
+            '*',
+            $this->_schema
+        );
+        $objQuery->where('idTipoDoAto = ?', $idTipoDoAto);
+        $objQuery->where('idPerfilDoAssinante = ?', $idPerfilDoAssinante);
+        $objQuery->where('idOrgaoDoAssinante = ?', $idOrgaoDoAssinante);
+        $objResultado = $this->fetchRow($objQuery);
+        if ($objResultado) {
+            return $objResultado->toArray();
         }
     }
 

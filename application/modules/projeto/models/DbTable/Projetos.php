@@ -1,9 +1,6 @@
 <?php
 
 /**
- * Class Projeto_Model_DbTable_TbProjetos
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
- * @since
  * @todo Mover todas os métodos e alterar todas as referências para da antiga classe para essa.
  */
 class Projeto_Model_DbTable_Projetos extends MinC_Db_Table_Abstract
