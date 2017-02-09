@@ -7,34 +7,34 @@ class AprovacaoModel implements ModelInterface
 {
 
     /**
-     * 
+     *
      */
     const TIPO_ANALISE_INICIAL = 1;
 
     /**
-     * 
+     *
      */
     const TIPO_COMPLEMENTACAO = 2;
 
     /**
-     * 
+     *
      */
     const TIPO_PRORROGACAO = 3;
 
     /**
-     * 
+     *
      */
     const TIPO_REDUCAO = 3;
 
     /**
      *
-     * @var Aprovacao 
+     * @var Aprovacao
      */
     private $table = null;
 
     /**
      *
-     * @var int 
+     * @var int
      */
     private $idPronac = null;
 
@@ -46,19 +46,19 @@ class AprovacaoModel implements ModelInterface
 
     /**
      *
-     * @var int 
+     * @var int
      */
     private $anoProjeto = null;
 
     /**
      *
-     * @var int 
+     * @var int
      */
     private $sequencial = null;
 
     /**
      *
-     * @var int 
+     * @var int
      */
     private $tipo = null;
 
@@ -81,7 +81,7 @@ class AprovacaoModel implements ModelInterface
     private $usuarioLogado = null;
 
     /**
-     * 
+     *
      */
     public function __construct()
     {
@@ -177,24 +177,26 @@ class AprovacaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      */
     public function salvar()
     {
-        $this->table->inserir(array(
-            'IdPRONAC' => $this->getIdPronac(),
-            'idProrrogacao' => $this->getIdProrrogacao(),
-            'AnoProjeto' => $this->getAnoProjeto(),
-            'Sequencial' => $this->getSequencial(),
-            'TipoAprovacao' => $this->getTipo(),
-            'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-            'ResumoAprovacao' => $this->getResumo(),
-            'Logon' => $this->getUsuarioLogado(),
-        ));
+        $dados = array(
+                'IdPRONAC' => $this->getIdPronac(),
+                'idProrrogacao' => $this->getIdProrrogacao(),
+                'AnoProjeto' => $this->getAnoProjeto(),
+                'Sequencial' => $this->getSequencial(),
+                'TipoAprovacao' => $this->getTipo(),
+                'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                'ResumoAprovacao' => $this->getResumo(),
+                'Logon' => $this->getUsuarioLogado(),
+         );
+
+        $this->table->inserir($dados);
     }
 
     /**
-     * 
+     *
      */
     public function atualizar()
     {
@@ -202,7 +204,7 @@ class AprovacaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @throws Exception
      */
@@ -212,7 +214,7 @@ class AprovacaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @throws Exception
      */
