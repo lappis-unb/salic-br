@@ -61,7 +61,6 @@
                 <div class="padding20 bordered">
                     <?php
                     echo $this->dadosEnquadramento['Observacao'];
-//                    xd($_SERVER);
                     ?>
                 </div>
             </div>
@@ -74,10 +73,29 @@
                 <p>
                     <label class="margin-bottom20">Assinaturas</label>
                 </p>
-                <div class="padding20 bordered row">
-                <?php foreach($this->assinaturas as $assinatura) :  ?>
-                    <?php xd($assinatura); ?>
-                <?php endforeach; ?>
+                <div class="bordered padding20">
+                    <p> Documento assinado eletronicamente por: </p>
+                    <div class="padding20 bordered row">
+                        <div class="row">
+                            <div class="col s1"></div>
+                            <div class="col s5 bold">Colaborador</div>
+                            <div class="col s3 bold center-align">Cargo</div>
+                            <div class="col s3 bold center-align">Hor&aacute;rio</div>
+                        </div>
+                    <?php
+                    foreach($this->assinaturas as $assinatura) :
+                        $objDateTime = new DateTime($assinatura['dtAssinatura']);
+                        $dataAssinatura = $objDateTime->format('d/m/Y');
+                        $horaAssinatura = $objDateTime->format('H:i:s');
+                    ?>
+                        <div class="row">
+                            <div class="col s1 center-align"><i class="material-icons blue-text">lock</i></div>
+                            <div class="col s5 "><?php echo $assinatura['usu_nome'] ?></div>
+                            <div class="col s3 center-align"><?php echo $assinatura['dsCargoAssinante'] ?></div>
+                            <div class="col s3 center-align"><?php echo $dataAssinatura ?> &agrave;s <?php echo $horaAssinatura ?></div>
+                        </div>
+                    <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
             <div class="col s1"></div>

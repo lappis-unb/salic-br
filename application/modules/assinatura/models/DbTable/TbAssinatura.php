@@ -8,26 +8,37 @@ class Assinatura_Model_DbTable_TbAssinatura extends MinC_Db_Table_Abstract
 
     const TIPO_ATO_ENQUADRAMENTO = 626;
 
-    public function obterAssinaturas($idPronac, $idTipoDoAto)
+    public function obterAssinaturas($idPronac, $idTipoDoAtoAdministrativo)
     {
         $query = $this->select();
         $query->setIntegrityCheck(false);
 
-        $queryPlanilhaOrcamentaria = $this->select();
-        $queryPlanilhaOrcamentaria->setIntegrityCheck(false);
-        $queryPlanilhaOrcamentaria->from(
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
             array(
                 'tbAssinatura' => $this->_name
             ),
             '*',
             $this->_schema
         );
-        $queryPlanilhaOrcamentaria->joinInner('tbAtoAdministrativo',
+
+        $objQuery->joinInner(
+            'tbAtoAdministrativo',
             'tbAssinatura.idAtoAdministrativo = tbAtoAdministrativo.idAtoAdministrativo',
             'tbAtoAdministrativo.*',
             $this->_schema
         );
-        $queryPlanilhaOrcamentaria->joinInner('usuarios',
+
+        $objQuery->joinInner(
+            'Verificacao',
+            'Verificacao.idVerificacao = tbAtoAdministrativo.idCargoDoAssinante',
+            array('dsCargoAssinante' => 'Verificacao.Descricao'),
+            $this->getSchema('Agentes')
+        );
+
+        $objQuery->joinInner(
+            'usuarios',
             'tbAssinatura.idAssinante = usuarios.usu_codigo',
             array(
                 'usuarios.usu_identificacao',
@@ -35,10 +46,9 @@ class Assinatura_Model_DbTable_TbAssinatura extends MinC_Db_Table_Abstract
             ),
             $this->getSchema('tabelas')
         );
-        $queryPlanilhaOrcamentaria->where("IdPRONAC = ?", $idPronac);
-        $queryPlanilhaOrcamentaria->where("tbAtoAdministrativo.idTipoDoAto = ?", $idTipoDoAto);
-
-        return $this->_db->fetchAll($query);
+        $objQuery->where("IdPRONAC = ?", $idPronac);
+        $objQuery->where("tbAtoAdministrativo.idTipoDoAto = ?", $idTipoDoAtoAdministrativo);
+        return $this->_db->fetchAll($objQuery);
     }
 
 //    public function obterSituacaoAtualAssinaturas($idPronac, $idOrgaoDoAssinante, $idTipoDoAto)

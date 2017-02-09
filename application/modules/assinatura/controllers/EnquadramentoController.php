@@ -41,20 +41,17 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->view->dados = $enquadramento->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
 
-        $get = Zend_Registry::get('get');
-        $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-        $this->view->assinaturas = $objAssinatura->obterAssinaturas($get->IdPRONAC, $this->idTipoDoAtoAdministrativo);
-
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
         $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAtoAdministrativo);
+        $this->view->idTipoDoAtoAdministrativo = $this->idTipoDoAtoAdministrativo;
     }
 
     /**
      * @todo Criar opção de gerar PDF
      * @todo Criar opção de Imprimir
      * @todo Adicionar ícones aos bot&otilde;es
-     * @todo Adicionar Exibi&ccedil;&atilde;o de assinaturas
      * @todo tratar a exibi&ccedil;&atilde;o dos bot&otilde;es de acordo com a fase do projeto
+     * @todo Dividir cada bloco da camada de apresentação em partials que podem ser adicionadas ou não
      */
     public function visualizarProjetoAction()
     {
