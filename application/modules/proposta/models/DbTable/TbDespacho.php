@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Class Proposta_Model_DbTable_TbDeslocamento
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
- * @since
- */
 class Proposta_Model_DbTable_TbDespacho extends MinC_Db_Table_Abstract
 {
     protected $_schema = 'sac';
@@ -36,5 +31,4 @@ class Proposta_Model_DbTable_TbDespacho extends MinC_Db_Table_Abstract
 
         return $this->inserir($dadosInclusao);
     }
-
 }
