@@ -438,45 +438,11 @@ $arrMenu['protocolo']['menu'][] = array(
     'label' => 'Tramitar Documentos'
 );
 // ========== FIM MENU PROTOCOLO ==========
-// ========== INICIO MENU MANUTENCAO ==========
-$arrMenu['manutencao'] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'id' => 'protocolo',
-    'title' => 'Ir para Manuten&ccedil;&atilde;o',
-    'label' => 'Manuten&ccedil;&atilde;o',
-    'menu' => array()
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'alterarprojeto', 'action' => 'consultarprojeto'), '', true),
-    'title' => 'Ir para Alterar Projeto',
-    'label' => 'Alterar Projeto'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'anexardocumentosminc', 'action' => 'index'), '', true),
-    'title' => 'Anexar Documentos',
-    'label' => 'Anexar Documentos'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'anexardocumentosminc', 'action' => 'excluir'), '', true),
-    'title' => 'Excluir Documentos',
-    'label' => 'Excluir Documentos'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'rastrearagente', 'action' => 'index'), '', true),
-    'title' => 'Ir para Rastrear Agente',
-    'label' => 'Rastrear Agente'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'localizacao-fisica', 'action' => 'index'), '', true),
-    'title' => 'Localiza&ccedil;&atilde;o F&iacute;sica do Projeto',
-    'label' => 'Localiza&ccedil;&atilde;o F&iacute;sica do Projeto'
-);
-// ========== FIM MENU MANUTECAO ==========
+//
+//// ========== INICIO MENU MANUTENCAO ==========
+include_once(APPLICATION_PATH . '/layouts/scripts/partials/menu/menu-manutencao.phtml');
+//// ========== FIM MENU MANUTECAO ==========
+
 // ========== INICIO MENU ADMISSIBILIDADE ==========
 $arrMenu['admissibilidade'] = array(
     'id' => 'admissibilidade',
@@ -884,11 +850,15 @@ $arrMenu['aulas']['menu'][] = array('label' => '8. Considera&ccedil;&otilde;es',
 //    'grupo' => array()
 //);
 
+//var_dump($arrMenu);
 # Filtrando menu conforme o grupo ativo do usuario logado.
 if (isset ($auth['cpf'])) {
     $arrMenu = $arrMenuProponente;
 } elseif (isset($auth['usu_codigo'])) {
-    $arrMenu = array_filter($arrMenu, function($arrMenu){return (empty($arrMenu['grupo']) || in_array($this->grupoAtivo, $arrMenu['grupo']));});
+    $arrMenu = array_filter($arrMenu, function($arrMenu) {
+        return (empty($arrMenu['grupo']) || in_array($this->grupoAtivo, $arrMenu['grupo']));
+    });
+
     $arrMenu = array_map(function($arrMenu){
         $arrMenu['menu'] = array_filter($arrMenu['menu'], function($arrMenu2){
             return (empty($arrMenu2['grupo']) || in_array($this->grupoAtivo, $arrMenu2['grupo']));
