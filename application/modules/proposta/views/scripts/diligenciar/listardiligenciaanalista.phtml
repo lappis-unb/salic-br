@@ -40,7 +40,7 @@ $qtdia = 40;
                                 <input type="checkbox" name="idAvaliacaoProposta[]" class="idDiligencia" value="<?php echo $value->idDiligencia;?>" />
                             </td>
                             <td style="text-align: center;">
-                                <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" class="visualizarProposta" 
+                                <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" class="visualizarProposta"
                                     idAvaliacaoProposta="<?php echo $value->idDiligencia;?>" width="20" style="cursor: pointer;"/>
                             </td>
                             <td><?php echo $value->pronac;?></td>
@@ -52,10 +52,8 @@ $qtdia = 40;
                     <?php endforeach; ?>
                 </table>
             </div>
-        <?php
-           endif;
-           if ($this->diligencias) :
-        ?>
+        <?php endif; ?>
+        <?php if ($this->diligencias) : ?>
             <table class="tabela">
                 <tr>
                     <td><input type="button" name="grid1" id="g1_2" class="btn_remover" title="Expandir" />Dilig&ecirc;ncia Projeto</td>
@@ -77,14 +75,14 @@ $qtdia = 40;
                         <th>PRAZO DA RESPOSTA</th>
                         <th>PRORROGADO</th>
                     </tr>
-		    <?php $diligenciaAberta = false; ?>
+                <?php $diligenciaAberta = false; ?>
                     <?php foreach ($this->diligencias as $value) : ?>
                         <tr>
                             <td style="text-align: center;">
                                 <input type="checkbox" name="idDiligencia[]" class="idDiligencia" value="<?php echo $value->idDiligencia;?>" />
                             </td>
                             <td style="text-align: center;">
-                                <a href="<?php 
+                                <a href="<?php
                                     echo $this->url(
                                         array(
                                             'controller' => 'diligenciar',
@@ -115,23 +113,19 @@ $qtdia = 40;
                             <td align="center"><?php echo date('d/m/Y',strtotime($value->dataSolicitacao.' +'.$qtdia.' day')); ?></td>
                             <td>Prorrogado</td>
                         </tr>
-
-			<?php
-			   // adicionando verificador de diligência não respondida
-			   $diligenciaAberta = false;
-			   if (empty($value->dataResposta)) {
-                   $diligenciaAberta = true;
-               }
-			?>
+                        <?php
+                           // adicionando verificador de diligência não respondida
+                           $diligenciaAberta = false;
+                           if (empty($value->dataResposta)) {
+                               $diligenciaAberta = true;
+                           }
+                        ?>
                     <?php endforeach; ?>
                 </table>
             </div>
-            <?php endif; ?>
-            <?php
-	       if ($diligenciaAberta) : ?>
-	    <? else: 
-	       if (($this->situacao && $this->tpDiligencia)) :
-	    ?>
+        <?php endif; ?>
+        <?php if ($diligenciaAberta) : ?>
+            <? else if (($this->situacao && $this->tpDiligencia)) : ?>
                     <table class="tabela">
                         <tr>
                             <td >
@@ -141,8 +135,7 @@ $qtdia = 40;
                             </td>
                         </tr>
                     </table>
-                    <?php endif;?>
-		    <?php endif;?>
+        <?php endif;?>
         <table class="tabela">
             <tr>
                 <td >

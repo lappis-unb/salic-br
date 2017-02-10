@@ -11,7 +11,7 @@
             $('#addCampoXls').remove();
             $('#formImpressao').submit();
         });
-        
+
         $('.btn_xls').click(function(){
             $('#addCampoXls').remove();
             $('#formImpressao').append('<input id="addCampoXls" type="hidden" name="xls" value="1">');
@@ -43,17 +43,17 @@
                 nmAssinante = $(this).attr('nmAssinante'),
                 tpCargo = $(this).attr('tpCargo'),
                 stAtivo = $(this).attr('stAtivo');
-                
+
             if(stAtivo == 1){
                 $('#editarAtivo').click()
             } else {
                 $('#editarInativo').click()
             }
-            
+
             $('#idAssinante').val(idAssinante);
             $('#editarAssinante').val(nmAssinante);
             $('#editarCargo').val(tpCargo);
-                
+
             $("#divEditarAssinante").dialog("destroy");
             $("#divEditarAssinante").dialog({
                 resizable: false,
@@ -72,7 +72,7 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
+
         $('#tipoFiltro').change(function(){
             var tpFiltro = $(this).val();
             window.location = "<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'manter-assinantes')); ?>?tipoFiltro="+tpFiltro;
@@ -97,9 +97,8 @@
 
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
-
     <table class="tabela">
-	<tr>
+        <tr>
             <td class="destacar bold" width="1" align="center">Cargo</td>
             <td>
                 <select name="tipoFiltro" id="tipoFiltro" class="select_simples">
@@ -289,9 +288,6 @@
         <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
     </form>
 
-</div>
-<!-- ========== FIM CONTEÚDO ========== -->
-
 
 <div id="divIncluirAssinante" class="sumir">
     <form name="formIncluirAssinante" id="formIncluirAssinante" action="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'incluir-assinantes-prestacao'));?>" method="post">
@@ -339,13 +335,18 @@
             <tr>
                 <td class="destacar bold" align="right">Status</td>
                 <td>
-                    <label style="font-weight: inherit;"><input type="radio" name="stAtivo" id="editarAtivo" value="1"> Ativo</label>
-                    <label style="font-weight: inherit; margin-left: 20px;"><input type="radio" name="stAtivo" id="editarInativo" value="0"> Inativo</label>
+                    <input type="radio" name="stAtivo" id="editarAtivo" value="1">
+                    <label for="editarAtivo" style="font-weight: inherit;"> Ativo</label>
+                    <input type="radio" name="stAtivo" id="editarInativo" value="0">
+                    <label for="editarInativo" style="font-weight: inherit; margin-left: 20px;"> Inativo</label>
                 </td>
             </tr>
         </table>
     </form>
 </div>
+
+</div>
+<!-- ========== FIM CONTEÚDO ========== -->
 
 
 <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->

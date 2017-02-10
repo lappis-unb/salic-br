@@ -188,7 +188,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $sql .= " AND pp.FonteRecurso = ".$fonte;
         }
 
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -477,7 +477,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         echo $sql; exit;
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db  = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {

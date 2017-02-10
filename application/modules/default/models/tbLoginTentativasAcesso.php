@@ -18,7 +18,7 @@ class tbLoginTentativasAcesso extends GenericModel {
             ->where('nrCPF = ?', $cpf)
             ->where('nrIP = ?',$ip);
 
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 

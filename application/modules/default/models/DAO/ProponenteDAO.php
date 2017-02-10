@@ -56,7 +56,7 @@ Class ProponenteDAO extends Zend_Db_Table
                 'AGENTES.dbo')
             ->where('pr.IdPRONAC = ?', $idpronac);
 
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($select);
         return $resultado;

@@ -438,45 +438,11 @@ $arrMenu['protocolo']['menu'][] = array(
     'label' => 'Tramitar Documentos'
 );
 // ========== FIM MENU PROTOCOLO ==========
-// ========== INICIO MENU MANUTENCAO ==========
-$arrMenu['manutencao'] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'id' => 'protocolo',
-    'title' => 'Ir para Manuten&ccedil;&atilde;o',
-    'label' => 'Manuten&ccedil;&atilde;o',
-    'menu' => array()
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'alterarprojeto', 'action' => 'consultarprojeto'), '', true),
-    'title' => 'Ir para Alterar Projeto',
-    'label' => 'Alterar Projeto'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'anexardocumentosminc', 'action' => 'index'), '', true),
-    'title' => 'Anexar Documentos',
-    'label' => 'Anexar Documentos'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'anexardocumentosminc', 'action' => 'excluir'), '', true),
-    'title' => 'Excluir Documentos',
-    'label' => 'Excluir Documentos'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'rastrearagente', 'action' => 'index'), '', true),
-    'title' => 'Ir para Rastrear Agente',
-    'label' => 'Rastrear Agente'
-);
-$arrMenu['manutencao']['menu'][] = array(
-    'grupo' => array(92,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,131,132,134,135,136,137,138,139,140,143),
-    'url' => $this->url(array('controller' => 'localizacao-fisica', 'action' => 'index'), '', true),
-    'title' => 'Localiza&ccedil;&atilde;o F&iacute;sica do Projeto',
-    'label' => 'Localiza&ccedil;&atilde;o F&iacute;sica do Projeto'
-);
-// ========== FIM MENU MANUTECAO ==========
+//
+//// ========== INICIO MENU MANUTENCAO ==========
+include_once(APPLICATION_PATH . '/layouts/scripts/partials/menu/menu-manutencao.phtml');
+//// ========== FIM MENU MANUTECAO ==========
+
 // ========== INICIO MENU ADMISSIBILIDADE ==========
 $arrMenu['admissibilidade'] = array(
     'id' => 'admissibilidade',
@@ -572,81 +538,11 @@ $arrMenu['parecer']['menu'][] = array('label' => 'Relatório', 'title' => 'Ir pa
     'url' => $this->url(array('controller' => 'consultarpareceristas', 'action' => 'consultardadospareceristas'), '', true),
     'grupo' => array(137)
 );
+
 // ========== INICIO MENU PRESTACAO DE CONTAS ==========
-$arrMenu['prestacao-contas'] = array(
-    'id' => 'prestacao-contas',
-    'label' => 'Presta&ccedil;&atilde;o de Contas',
-    'title' => 'Ir para Presta&ccedil;&atilde;o de Contas',
-    'menu' => array(),
-    'grupo' => array(100,124,125,126,132),
-);
-$arrMenu['prestacao-contas']['menu'][] = array(
-    'label' => 'Analisar Presta&ccedil;&atilde;o de Contas',
-    'title' => 'Ir para Analisar Presta&ccedil;&atilde;o de Contas',
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'painel'), '', true),
-    'grupo' => array(126)
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(125),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'painel'), '', true),
-    'title' => 'Analisar Presta&ccedil;&atilde;o de Contas',
-    'label' => 'Analisar Presta&ccedil;&atilde;o de Contas'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(125),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'manter-assinantes'), '', true),
-    'title' => 'Ir para Assinantes',
-    'label' => 'Assinantes'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(124),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'tecnicoprestacaocontas'), '', true),
-    'title' => 'Analisar Presta&ccedil;&atilde;o de Contas',
-    'label' => 'Analisar Presta&ccedil;&atilde;o de Contas'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(12),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'conjurprestacaocontas'), '', true),
-    'title' => 'Analisar Presta&ccedil;&atilde;o de Contas',
-    'label' => 'Ir para Presta&ccedil;&atilde;o de Contas'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(177),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'aeciprestacaocontas'), '', true),
-    'title' => 'Analisar Presta&ccedil;&atilde;o de Contas',
-    'label' => 'Analisar Presta&ccedil;&atilde;o de Contas'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(132),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'chefedivisaoprestacaocontas'), '', true),
-    'title' => 'Analisar Presta&ccedil;&atilde;o de Contas',
-    'label' => 'Analisar Presta&ccedil;&atilde;o de Contas'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(93),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'coordenadorpareceristaprestacaocontas'), '', true),
-    'title' => 'Analisar Presta&ccedil;&atilde;o de Contas',
-    'label' => 'Analisar Presta&ccedil;&atilde;o de Contas'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(94, 93),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'pareceristaprestacaocontas'), '', true),
-    'title' => 'Ir para Presta&ccedil;&atilde;o de Contas',
-    'label' => 'Analisar Presta&ccedil;&atilde;o de Contas'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(126),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'analisar-laudo-final'), '', true),
-    'title' => 'Ir para Analisar Laudo Final',
-    'label' => 'Analisar Laudo Final'
-);
-$arrMenu['protocolo']['menu'][] = array(
-    'grupo' => array(124,125,132),
-    'url' => $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'consultar-laudo-final'), '', true),
-    'title' => 'Ir para Analisar Laudo Final',
-    'label' => 'Analisar Laudo Final'
-);
+include_once(APPLICATION_PATH . '/layouts/scripts/partials/menu/menu-prestacao-contas.phtml');
 // ========== FIM MENU PRESTACAO DE CONTAS ==========
+
 // ========== INICIO MENU RELATORIOS ==========
 $arrMenu['relatorios'] = array(
     'id' => 'relatorios',
@@ -663,13 +559,13 @@ $arrMenu['relatorios']['menu'][] = array(
 );
 $arrMenu['relatorios']['menu'][] = array(
     'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
-    'url' => $this->url(array('controller' => 'gerarrelatorios', 'action' => 'index'), '', true),
-    'title' => 'Ir para Edital',
-    'label' => 'Edital'
+    'url' => $this->url(array('controller' => 'relatorio', 'action' => 'index'), '', true),
+    'title' => 'Ir para Propostas',
+    'label' => 'Propostas'
 );
 $arrMenu['relatorios']['menu'][] = array(
     'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
-    'url' => $this->url(array('controller' => 'relatorio', 'action' => 'index'), '', true),
+    'url' => $this->url(array('controller' => 'relatorio', 'action' => 'projeto'), '', true),
     'title' => 'Ir para Projetos',
     'label' => 'Projetos'
 );
@@ -716,6 +612,7 @@ $arrMenu['relatorios']['menu'][] = array(
     'label' => 'Gerar Relat&oacute;rio Parecerista'
 );
 // ========== FIM MENU RELATORIOS ==========
+//
 // ========== INICIO MENU EDITAIS ==========
 $arrMenu['edital'] = array(
     'id' => 'edital',
@@ -884,11 +781,15 @@ $arrMenu['aulas']['menu'][] = array('label' => '8. Considera&ccedil;&otilde;es',
 //    'grupo' => array()
 //);
 
+//var_dump($arrMenu);
 # Filtrando menu conforme o grupo ativo do usuario logado.
 if (isset ($auth['cpf'])) {
     $arrMenu = $arrMenuProponente;
 } elseif (isset($auth['usu_codigo'])) {
-    $arrMenu = array_filter($arrMenu, function($arrMenu){return (empty($arrMenu['grupo']) || in_array($this->grupoAtivo, $arrMenu['grupo']));});
+    $arrMenu = array_filter($arrMenu, function($arrMenu) {
+        return (empty($arrMenu['grupo']) || in_array($this->grupoAtivo, $arrMenu['grupo']));
+    });
+
     $arrMenu = array_map(function($arrMenu){
         $arrMenu['menu'] = array_filter($arrMenu['menu'], function($arrMenu2){
             return (empty($arrMenu2['grupo']) || in_array($this->grupoAtivo, $arrMenu2['grupo']));
