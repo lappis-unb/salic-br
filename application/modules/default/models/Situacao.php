@@ -12,10 +12,7 @@ class Situacao extends MinC_Db_Table_Abstract
                     array('sit' => $this->_name)
                   );
 
-        foreach($codigosituacao as $campo => $situacao)
-        {
-            $select->orwhere('sit.Codigo = ?', $situacao);
-        }
+        $select->orWhere('sit.Codigo IN (?) ', $codigosituacao);
         return $this->fetchAll($select);
 	}
 }
