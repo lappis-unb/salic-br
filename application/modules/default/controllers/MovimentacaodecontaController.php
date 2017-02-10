@@ -398,13 +398,13 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     if(!empty($projeto->Agencia)){
                         $agencia = $projeto->Agencia;
                     } else {
-                        $agencia = '<em>N�o informada</em>';
+                        $agencia = '<em>N&atilde;o informada</em>';
                     }
 
                     if(!empty($projeto->ContaBloqueada)){
                         $conta = $projeto->ContaBloqueada;
                     } else {
-                        $conta = '<em>N�o informada</em>';
+                        $conta = '<em>N&atilde;o informada</em>';
                     }
 
                     $html .= '<tr>';
