@@ -46,7 +46,7 @@
             <div class="top"></div>
             <div id="qm0" class="qmmc">
                 <!--<a class ="no_seta" href="<?php// echo $this->url(array('controller' => 'fiscalizarprojetocultural', 'action' => 'diligenciarproponente')); ?>" title="Diligenciar">Diligenciar</a>-->
-                <a class ="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?>?idPronac=<?php echo $projeto->IdPRONAC;?>&situacao=E60&tpDiligencia=172" target="_blank" title="Diligenciar">Diligenciar Proponente</a>
+                <a class ="no_seta" href="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?>?idPronac=<?php echo $projeto->IdPRONAC;?>&situacao=E60&tpDiligencia=172" target="_blank" title="Diligenciar">Diligenciar Proponente</a>
                 <!--<a class="no_seta" target='_blank' href='<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem'), '', true); ?>/idpronac/<?php echo preg_replace('([^0-9])','',$projeto->IdPRONAC); ?>'>Mensagem</a>-->
             </div>
             <div class="bottom"></div>
