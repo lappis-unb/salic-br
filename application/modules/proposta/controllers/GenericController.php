@@ -503,12 +503,11 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $metaPlanoDistribuicaoDetalha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao');
         if (!$metaPlanoDistribuicaoDetalha) {
 
-            $where = array('idPlanoDistribuicao' => $idPreProjeto);
+//            $where = array('idPlanoDistribuicao' => $idPreProjeto);
             $TPD = new PlanoDistribuicao();
-
             $PlanoDetalhado = $TPD->buscarPlanoDistribuicaoDetalhadoByIdProjeto($idPreProjeto);
 
-            $this->view->PlanoDistribuicaoDetalhadoSalvo = $this->salvarArraySerializado($PlanoDetalhado, $idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao', $where);
+            $this->view->PlanoDistribuicaoDetalhadoSalvo = $this->salvarArraySerializado($PlanoDetalhado, $idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao');
         } else {
             $this->view->PlanoDistribuicaoDetalhadoSalvo = true;
         }
@@ -572,6 +571,76 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         return true;
 
+    }
+
+    /**
+     *  Devido ao desenho do banco, pra recuperar o detalhamento dos produtos, eu tenho que saber o novo id dos produtos inseridos
+     *  Tendo em isso em mente, quando for salvar o Plano de distribuicao do produto, pega o id dele e salva os detalhamentos referentes aa ele.
+     * @param $idPreProjeto
+     * @return bool
+     */
+    public function restaurarPlanoDistribuicaoDetalhado($idPreProjeto)
+    {
+        if (empty($idPreProjeto))
+            return false;
+
+        $TPD = new PlanoDistribuicao();
+        $produtos = $this->unserializarObjeto($TPD, $idPreProjeto, 'alterarprojeto_planodistribuicaoproduto');
+
+        $TPDD = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+        $detalhamentoProdutos = $this->unserializarObjeto($TPDD, $idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao');
+
+        # se não tiver itens, não eh pra restaurar
+        if (empty($produtos) || !is_array($produtos))
+            return false;
+
+        if (empty($detalhamentoProdutos) || !is_array($detalhamentoProdutos))
+            return false;
+
+        # metakey de backup para os objetos atuais
+        $bkpPDP = "alterarprojeto_planodistribuicaoproduto_bkp";
+        $bkpPDPD = "alterarprojeto_tbdetalhaplanodistribuicao_bkp";
+
+        # salvar os objetos atuais
+        $salvarPDP = $this->salvarObjetoSerializado($TPD, $idPreProjeto, $bkpPDP);
+
+        $PlanoDetalhado = $TPD->buscarPlanoDistribuicaoDetalhadoByIdProjeto($idPreProjeto);
+        $salvarPDPD     = $this->salvarArraySerializado($PlanoDetalhado, $idPreProjeto, $bkpPDPD);
+
+        # excluir itens atuais
+        if ($salvarPDP && $salvarPDPD) {
+            $TPD->delete(array('idProjeto = ?' => $idPreProjeto)); # produto
+            $TPDD->excluirByIdPreProjeto($idPreProjeto); # detalhamento
+        }
+
+        foreach ($produtos as $produto) {
+            # Guarda a chave primeira antiga do plano de distribuicao
+            $oldIdPlanoDistribuicao = $produto['idPlanoDistribuicao'];
+
+            # Remove a chave primaria antiga
+            unset($produto['idPlanoDistribuicao']);
+
+            # Salva como um novo item
+            $novoID = $TPD->insert($produto);
+
+            # Varre os detalhamentos do plano de distribuicao anterior e substitui o id pelo atual
+            if ($novoID) {
+                foreach ($detalhamentoProdutos as $detalhamento) {
+                    if ($oldIdPlanoDistribuicao == $detalhamento['idPlanoDistribuicao']) {
+                        $detalhamento['idPlanoDistribuicao'] = $novoID;
+                        $novosDetalhamento[] = $detalhamento;
+                    }
+                }
+            }
+        }
+        if( $novosDetalhamento ) {
+            # Salva o detalhamento dos produtos
+            foreach( $novosDetalhamento as $detalhamento ) {
+                unset($detalhamento['idDetalhaPlanoDistribuicao']);
+                $TPDD->insert($detalhamento);
+            }
+        }
+        return true;
     }
 
 }
