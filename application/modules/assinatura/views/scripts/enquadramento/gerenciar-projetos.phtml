@@ -24,7 +24,7 @@
                     <table class="bordered margin0" id="enquadramento">
                         <thead>
                         <tr class="">
-                            <th class="center-align">
+                            <th class="center-align" style="padding-left: 20px">
                                 <input type="checkbox"
                                        name="marcarDesmarcarCheckbox"
                                        id="marcarDesmarcarCheckbox"
@@ -48,7 +48,7 @@
                         <tbody>
                         <?php foreach ($this->dados as $dado): ?>
                             <tr>
-                                <td class="center-align">
+                                <td class="center-align" style="padding-left: 20px">
                                     <input type="checkbox"
                                            name="IdPRONAC[]"
                                            id="IdPRONAC<?php echo $dado->IdPRONAC ?>"
@@ -74,7 +74,7 @@
                                     align="center"><?php echo (!empty($dado['vlAprovado'])) ? $dado['vlAprovado'] : '-'; ?></td>
                                 <td class="center-align" align="center"><?php echo $dado['dias']; ?></td>
                                 <td class="center-align" align="center">
-                                    <a class="btn waves-effect waves-light white tooltipped small black-text"
+                                    <a class="btn waves-effect waves-light tooltipped small "
                                        href="<?php echo $this->url(array(
                                                'module' => 'assinatura',
                                                'controller' => 'enquadramento',
@@ -87,7 +87,7 @@
                                     </a>
                                 </td>
                                 <td class="center-align" align="center">
-                                    <a class="btn waves-effect waves-light white tooltipped small black-text"
+                                    <a class="btn waves-effect waves-light  tooltipped small"
                                        href="<?php echo $this->url(array(
                                                'module' => 'assinatura',
                                                'controller' => 'enquadramento',
@@ -100,7 +100,7 @@
                                     </a>
                                 </td>
                                 <td class="center-align" align="center">
-                                    <a class="btn waves-effect waves-light white tooltipped small black-text"
+                                    <a class="btn waves-effect waves-light tooltipped small"
                                        href="<?php echo $this->url(array(
                                                'module' => 'assinatura',
                                                'controller' => 'enquadramento',
@@ -119,7 +119,7 @@
                                     $assinaturas = $objAssinatura->obterAssinaturas($dado['IdPRONAC'], $this->idTipoDoAtoAdministrativo);
                                     if (count($assinaturas) >= $this->quantidade_minima_assinaturas):
                                         ?>
-                                        <a class="btn waves-effect waves-light white tooltipped small black-text"
+                                        <a class="btn waves-effect waves-light tooltipped small"
                                             href="<?php echo $this->url(
                                                     array(
                                                        'module' => 'assinatura',

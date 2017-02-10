@@ -6,7 +6,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     public function init()
     {
-        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
+        $auth = Zend_Auth::getInstance();
 
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 147;
@@ -55,20 +55,20 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
      */
     public function visualizarProjetoAction()
     {
+        $get = Zend_Registry::get('get');
         try {
             if (!filter_input(INPUT_GET, 'IdPRONAC')) {
                 throw new Exception ("Identificador do projeto é necessário para acessar essa funcionalidade.");
             }
 
-            $get = Zend_Registry::get('get');
             $this->view->IdPRONAC = $get->IdPRONAC;
 
-            $objProjeto = new Projetos();
-            $this->view->projeto = $objProjeto->findBy(array(
+            $objTbProjetos = new Projeto_Model_DbTable_Projetos();
+            $this->view->projeto = $objTbProjetos->findBy(array(
                 'IdPRONAC' => $get->IdPRONAC
             ));
 
-            $this->view->valoresProjeto = $objProjeto->obterValoresProjeto($get->IdPRONAC);
+            $this->view->valoresProjeto = $objTbProjetos->obterValoresProjeto($get->IdPRONAC);
 
             $objAgentes = new Agente_Model_DbTable_Agentes();
             $dadosAgente = $objAgentes->buscarFornecedor(array(
@@ -123,16 +123,16 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
      */
     public function devolverProjetoAction()
     {
+        $get = Zend_Registry::get('get');
         try {
 
             if (!filter_input(INPUT_GET, 'IdPRONAC')) {
                 throw new Exception ("Identificador do projeto é necessário para acessar essa funcionalidade.");
             }
 
-            $get = Zend_Registry::get('get');
+            $objTbProjetos = new Projeto_Model_DbTable_Projetos();
 
-            $objProjetos = new Projetos();
-            $this->view->projeto = $objProjetos->findBy(array(
+            $this->view->projeto = $objTbProjetos->findBy(array(
                 'IdPRONAC' => $get->IdPRONAC
             ));
 
@@ -150,13 +150,13 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
                 $orgaoSuperior = $objOrgaos->obterOrgaoSuperior($this->view->projeto['Orgao']);
 
                 $orgaoDestino = 171;
-                if ($orgaoSuperior['Codigo'] == 251) {
+                if ($orgaoSuperior['Codigo'] == Orgaos::ORGAO_SUPERIOR_SEFIC) {
                     $orgaoDestino = 262;
                 }
 
-                $objTbProjetos = new Projeto_Model_DbTable_Projetos();
-                $objTbProjetos->alterarOrgao($orgaoDestino, $get->IdPRONAC);
 
+                $objTbProjetos->alterarOrgao($orgaoDestino, $get->IdPRONAC);
+                $objProjetos = new Projetos();
                 $objProjetos->alterarSituacao(
                     $get->IdPRONAC,
                     null,
@@ -199,12 +199,12 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
      */
     public function assinarProjetoAction()
     {
+        $get = Zend_Registry::get('get');
         try {
             if (!filter_input(INPUT_GET, 'IdPRONAC')) {
                 throw new Exception ("Identificador do projeto é necessário para acessar essa funcionalidade.");
             }
 
-            $get = Zend_Registry::get('get');
             $this->view->IdPRONAC = $get->IdPRONAC;
 
 
@@ -305,11 +305,54 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
      */
     public function finalizarAssinaturaAction()
     {
-        throw new Exception("@todo implementar!");
-        // portaria
-        $orgaoDestino = 272;
-        if ($projeto['Area'] == 2) {
+        $get = Zend_Registry::get('get');
+        try {
+            if (!filter_input(INPUT_GET, 'IdPRONAC')) {
+                throw new Exception ("Identificador do projeto é necessário para acessar essa funcionalidade.");
+            }
+
+
+            $objProjetos = new Projetos();
+            $objProjetos->alterarSituacao(
+                $get->IdPRONAC,
+                null,
+                'D27',
+                'Projeto para inclus&atilde;o em Portaria'
+            );
+
+            $objTbProjetos = new Projeto_Model_DbTable_Projetos();
+            $dadosProjeto = $objTbProjetos->findBy(array(
+                'IdPRONAC' => $get->IdPRONAC
+            ));
+
             $orgaoDestino = 166;
+            $objOrgaos = new Orgaos();
+            $dadosOrgaoSuperior = $objOrgaos->obterOrgaoSuperior($dadosProjeto['Orgao']);
+            if ($dadosOrgaoSuperior['Codigo'] == Orgaos::ORGAO_SUPERIOR_SEFIC) {
+                $orgaoDestino = 272;
+            }
+            $objTbProjetos->alterarOrgao($orgaoDestino, $get->IdPRONAC);
+
+            $auth = Zend_Auth::getInstance();
+
+            $valoresProjeto = $objTbProjetos->obterValoresProjeto($get->IdPRONAC);
+
+            $dadosInclusaoAprovacao = array(
+                'IdPRONAC' => $get->IdPRONAC,
+                'AnoProjeto' => $dadosProjeto['AnoProjeto'],
+                'Sequencial' => $dadosProjeto['Sequencial'],
+                'TipoAprovacao' => 1,
+                'dtAprovacao' => $objTbProjetos->getExpressionDate(),
+                'ResumoAprovacao' => 'Projeto Aprovado para capta&ccedil;&atilde;o de recursos',
+                'AprovadoReal' => $valoresProjeto['ValorAprovado'],
+                'Logon' => $auth->getIdentity()->usu_codigo,
+            );
+            $objAprovacao = new Aprovacao();
+            $objAprovacao->inserir($dadosInclusaoAprovacao);
+
+            parent::message('Projeto finalizado com sucesso!', "/assinatura/enquadramento/gerenciar-projetos", 'CONFIRM');
+        } catch (Exception $objException) {
+            parent::message($objException->getMessage(), "/assinatura/enquadramento/assinar-projeto?IdPRONAC={$get->IdPRONAC}");
         }
     }
 

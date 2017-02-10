@@ -25,14 +25,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->charset ?>" />
         <meta name="title" content="Sistema Salic" />
         <meta name="description" content="Sistema de Apoio às Leis de Incentivo à Cultura" />
-        <link type="image/x-icon" rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/public/img/favicon.ico" />
+        <link type="image/x-icon" rel="shortcut icon" media="all" href="<?php echo $this->baseUrl(); ?>/public/img/favicon.ico" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/geral.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/chrome.css" />
-        <link type="text/css" rel="stylesheet" media="screen" href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/ajustes.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/botoes.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/OrderTabela.css" />
-        <link type="text/css" rel="stylesheet" media="print" href="<?php echo $this->baseUrl(); ?>/public/css/estilo_print.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/estilo_print.css" />
 
         <!--[if IE]>
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/ie.css" />
@@ -71,7 +71,7 @@
         </noscript>
 
         <!-- Jquery -->
-        <link type="text/css" href="<?php echo $this->baseUrl(); ?>/public/css/custom-theme/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
+        <link type="text/css" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/custom-theme/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery-ui-1.8.2.custom.min.js"></script>
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ui/i18n/jquery.ui.datepicker-pt-BR.js"></script>
         <style type="text/css">
@@ -85,8 +85,8 @@
         </style>
 
         <!-- Manter Agentes -->
-        <link href="<?php echo $this->baseUrl(); ?>/public/css/manteragentes.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo $this->baseUrl(); ?>/public/css/gerenciarpautareuniao.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->baseUrl(); ?>/public/css/manteragentes.css" media="all" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->baseUrl(); ?>/public/css/gerenciarpautareuniao.css" media="all" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/manteragentes.js"></script>
@@ -105,18 +105,18 @@
         <!-- Analisar Projeto Parecer -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/analisarprojetoparecer.js"></script>
 
-        <link type="text/css" rel="stylesheet" media="screen" href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css" />
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/fg.menu.js"></script>
 
 
 
         <!--    NOVO    -->
         <?php if( isset($auth['usu_codigo']) ) : ?>
-            <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
-    <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
-            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
-            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
+            <link href="http://fonts.googleapis.com/icon?family=Material+Icons" media="all" rel="stylesheet">
+            <link rel="stylesheet" media="print" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
+    <!--        <link rel="stylesheet" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
+            <link rel="stylesheet" media="print" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
+            <link rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
         <?php endif; ?>
 
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>

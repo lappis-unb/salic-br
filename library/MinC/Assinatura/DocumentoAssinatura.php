@@ -61,6 +61,8 @@ class MinC_Assinatura_DocumentoAssinatura
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
         $view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($idTipoDoAto);
 
+        $this->view->valoresProjeto = $objProjeto->obterValoresProjeto($idPronac);
+
         return $view->render('documento-assinatura.phtml');
     }
 

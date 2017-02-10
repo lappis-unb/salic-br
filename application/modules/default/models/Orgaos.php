@@ -5,6 +5,9 @@ class Orgaos extends MinC_Db_Table_Abstract{
     protected $_name  = 'Orgaos';
     protected $_primary = 'Codigo';
 
+    const ORGAO_SUPERIOR_SAV = 160;
+    const ORGAO_SUPERIOR_SEFIC = 251;
+
     public function pesquisarTodosOrgaos() {
         $select = $this->select();
         $select->setIntegrityCheck(false);

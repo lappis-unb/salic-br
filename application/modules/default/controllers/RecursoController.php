@@ -21,24 +21,23 @@ class RecursoController extends MinC_Controller_Action_Abstract
      */
     public function init()
     {
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
-        $this->idUsuario = $auth->getIdentity()->usu_codigo; // usu�rio logado
+        $auth = Zend_Auth::getInstance();
+        $this->idUsuario = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
         $this->idOrgao = $GrupoAtivo->codOrgao;
         $this->idPerfil = $GrupoAtivo->codGrupo;
 
-        // autentica��o e permiss�es zend (AMBIENTE MINC)
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 93; // Coordenador de Parecer
         $PermissoesGrupo[] = 94; // Parecerista
-        $PermissoesGrupo[] = 103; // Coordenador de An�lise
+        $PermissoesGrupo[] = 103; // Coordenador de An&aacute;lise
         $PermissoesGrupo[] = 110; // Tecnico de Analise
-        $PermissoesGrupo[] = 118; // Componente da Comiss�o
-        $PermissoesGrupo[] = 127; // Coordenador - Geral de An�lise (Ministro)
+        $PermissoesGrupo[] = 118; // Componente da Comiss&atilde;o
+        $PermissoesGrupo[] = 127; // Coordenador - Geral de An&aacute;lise (Ministro)
 
         $PermissoesGrupo[] = 131; // Coordenador - Geral de Admissibilidade.
-        $PermissoesGrupo[] = 92; // Coordenador - Tecnico de  Admissibilidade.
+        $PermissoesGrupo[] = 92; // Coordenador - Tecnico de Admissibilidade.
 
         parent::perfil(1, $PermissoesGrupo);
 
@@ -53,9 +52,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	 */
 	public function indexAction()
 	{
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.Coordenado Admissibilidade
+        //FUN&Ccedil;&Atilde;O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN&Aacute;LISE E COORD. DE AN&Aacute;LISE.Coordenado Admissibilidade
         if($this->idPerfil != 103 && $this->idPerfil != 127 && $this->idPerfil != 131 && $this->idPerfil != 92){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -107,8 +106,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     break;
                 case 'emanalise':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de An�lise; 4=Encaminhado para Parecerista /  T�cnico; 7=Encaminhado para o Componente da Comiss�o
-                    $this->view->nmPagina = 'Em An�lise';
+                    $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de An&aacute;lise; 4=Encaminhado para Parecerista /  T&eacute;cnico; 7=Encaminhado para o Componente da Comiss&atilde;o
+                    $this->view->nmPagina = 'Em An&aacute;lise';
                     break;
                 case 'analisados':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
@@ -117,7 +116,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     break;
             }
         } else {
-            $this->view->nmPagina = 'Aguardando An�lise';
+            $this->view->nmPagina = 'Aguardando An&aacute;lise';
             $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
             $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
@@ -131,9 +130,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
 
         if(isset($idSecretaria) && !empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 251){
+            if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SEFIC){
                 $where['b.Area <> ?'] = 2;
-            } else if($idSecretaria->idSecretaria == 160){
+            } else if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SAV){
                 $where['b.Area = ?'] = 2;
             } else {
                 $where['b.Area = ?'] = 0;
@@ -223,8 +222,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     break;
                 case 'emanalise':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de An�lise; 4=Encaminhado para Parecerista /  T�cnico; 7=Encaminhado para o Componente da Comiss�o
-                    $this->view->nmPagina = 'Em An�lise';
+                    $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de An&aacute;lise; 4=Encaminhado para Parecerista /  T&eacute;cnico; 7=Encaminhado para o Componente da Comiss&atilde;o
+                    $this->view->nmPagina = 'Em An&aacute;lise';
                     break;
                 case 'analisados':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
@@ -233,7 +232,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     break;
             }
         } else {
-            $this->view->nmPagina = 'Aguardando An�lise';
+            $this->view->nmPagina = 'Aguardando An&aacute;lise';
             $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
             $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
@@ -298,14 +297,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $r->idAgenteAvaliador = $this->idUsuario;
 
             if($_POST['stAtendimento'] == 'I'){
-                $r->siRecurso = 2; //2=Solicita��o indeferida
+                $r->siRecurso = 2; //2=Solicita&ccedil;&atilde;o indeferida
                 $r->stEstado = 1;
 
-                //BUSCA A SITUA��O ANTERIOR DO PROJETO ANTES DA SOLICITA��O RECURSO
+                //BUSCA A SITUA&Ccedil;&Atilde;O ANTERIOR DO PROJETO ANTES DA SOLICITA&Ccedil;&Atilde;O RECURSO
                 $historicoSituacao = new HistoricoSituacao();
                 $dadosHist = $historicoSituacao->buscarSituacaoAnterior($pronac);
 
-                //ATUALIZA A SITUA��O DO PROJETO
+                //ATUALIZA A SITUA&Ccedil;&Atilde;O DO PROJETO
                 $w = array();
                 $w['situacao'] = $dadosHist->Situacao;
                 $w['ProvidenciaTomada'] = 'Recurso indeferido.';
@@ -473,7 +472,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $where = array();
         $where['a.stEstado = ?'] = 0;
         $where['a.stFecharAnalise = ?'] = 0;
-        if($this->idOrgao == 160){
+        if($this->idOrgao == Orgaos::ORGAO_SUPERIOR_SAV){
             $where['a.idUnidade in (?)'] = array(160,171);
         } else {
             $where['a.idUnidade = ?'] = $this->idOrgao;
@@ -2267,9 +2266,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
 
         if(!empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 251){
+            if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SEFIC){
                 $where['b.Area <> ?'] = 2;
-            } else if($idSecretaria->idSecretaria == 160){
+            } else if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SAV){
                 $where['b.Area = ?'] = 2;
             }
         }
