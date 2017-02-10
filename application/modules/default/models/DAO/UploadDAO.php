@@ -23,7 +23,7 @@ class UploadDAO extends MinC_Db_Table_Abstract {
      */
     public static function abrir($id) {
         $table = Zend_Db_Table::getDefaultAdapter();
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $select = $table->select()
