@@ -742,6 +742,40 @@ $arrMenu['relatorios']['menu'][] = array(
     'title' => 'Ir para Listar Selecionados',
     'label' => 'Listar Selecionados'
 );
+
+// ========== INICIO MENU ASSINATURA ==========
+$arrMenu['assinatura'] = array(
+    'id' => 'assinatura',
+    'label' => 'Assinatura',
+    'title' => 'Ir para Assinatura',
+    'menu' => array(),
+    'grupo' => array(
+        147
+    ,148
+    ,149
+    ,150
+    ,151
+    ,152
+    ),
+);
+$arrMenu['assinatura']['menu'][] = array(
+    'grupo' => array(
+        147
+    ,148
+    ,149
+    ,150
+    ,151
+    ,152
+    ),
+    'url' => $this->url(array(
+        'module' => 'assinatura',
+        'controller' => 'enquadramento',
+        'action' => 'gerenciar-projetos'
+    ), '', true),
+    'title' => 'Gerenciar Projetos Enquadrados',
+    'label' => 'Gerenciar Projetos Enquadrados'
+);
+
 // ========== FIM MENU EDITAIS ==========
 // ========== INICIO MENU MENSAGENS ==========
 // @todo verificar depois se tem utilidade este menu, por enquanto foi comentado
@@ -885,38 +919,7 @@ $arrMenu['aulas']['menu'][] = array('label' => '8. Considera&ccedil;&otilde;es',
     'target' => '_blank'
 );
 
-// ========== INICIO MENU ASSINATURA ==========
-$arrMenu['assinatura'] = array(
-    'id' => 'assinatura',
-    'label' => 'Assinatura',
-    'title' => 'Ir para Assinatura',
-    'menu' => array(),
-    'grupo' => array(
-        147
-        ,148
-        ,149
-        ,150
-        ,151
-        ,152
-    ),
-);
-$arrMenu['assinatura']['menu'][] = array(
-    'grupo' => array(
-        147
-        ,148
-        ,149
-        ,150
-        ,151
-        ,152
-    ),
-    'url' => $this->url(array(
-        'module' => 'assinatura',
-        'controller' => 'enquadramento',
-        'action' => 'gerenciar-projetos'
-    ), '', true),
-    'title' => 'Gerenciar Projetos Enquadrados',
-    'label' => 'Gerenciar Projetos Enquadrados'
-);
+
 
 //$arrMenu['analise']['menu'][] = array('label' => '', 'title' => 'Ir para',
 //    'url' => ,

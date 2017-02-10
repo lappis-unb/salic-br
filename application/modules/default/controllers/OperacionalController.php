@@ -3452,7 +3452,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
 
         if(isset($idSecretaria) && !empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 160){
+            if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SAV){
                 $where['p.Area = ?'] = 2;
             } else {
                 $where['p.Area <> ?'] = 2;
@@ -3592,7 +3592,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
 
         if(isset($idSecretaria) && !empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 160){
+            if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SAV){
                 $where['p.Area = ?'] = 2;
             } else {
                 $where['p.Area <> ?'] = 2;

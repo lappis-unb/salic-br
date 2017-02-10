@@ -78,8 +78,8 @@
                     <div class="padding20 bordered row">
                         <div class="row">
                             <div class="col s1"></div>
-                            <div class="col s5 bold">Colaborador</div>
-                            <div class="col s3 bold center-align">Cargo</div>
+                            <div class="col s4 bold">Colaborador</div>
+                            <div class="col s4 bold center-align">Cargo</div>
                             <div class="col s3 bold center-align">Hor&aacute;rio</div>
                         </div>
                     <?php
@@ -90,8 +90,8 @@
                     ?>
                         <div class="row">
                             <div class="col s1 center-align"><i class="material-icons blue-text">lock</i></div>
-                            <div class="col s5 "><?php echo $assinatura['usu_nome'] ?></div>
-                            <div class="col s3 center-align"><?php echo $assinatura['dsCargoAssinante'] ?></div>
+                            <div class="col s4 "><?php echo $assinatura['usu_nome'] ?></div>
+                            <div class="col s4 center-align"><?php echo $assinatura['dsCargoAssinante'] ?></div>
                             <div class="col s3 center-align"><?php echo $dataAssinatura ?> &agrave;s <?php echo $horaAssinatura ?></div>
                         </div>
                     <?php endforeach; ?>
@@ -165,8 +165,8 @@
                        'action' => 'devolver-projeto'
                    )) . "?IdPRONAC={$this->IdPRONAC}";
                ?>">Devolver</a>
-            <a class="btn waves-effect waves-dark"
-               href="#">Imprimir</a>
+            <a class="btn waves-effect waves-dark" media="all"
+               href="javascript:window.print()">Imprimir</a>
             <a class="btn waves-effect waves-dark"
                href="<?php
                echo $this->url(array(

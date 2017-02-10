@@ -266,7 +266,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$GrupoAtivo->codOrgao))->current();
 
         $area = 1;
-        if($idSecretaria->idSecretaria == 160){
+        if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SAV){
             $area = 2;
         }
 

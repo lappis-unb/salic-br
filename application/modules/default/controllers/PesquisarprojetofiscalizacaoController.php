@@ -689,7 +689,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 
         $auth = Zend_Auth::getInstance();
         $tpDemandante = 0;
-        if ($auth->getIdentity()->usu_orgao == 160)
+        if ($auth->getIdentity()->usu_orgao == Orgaos::ORGAO_SUPERIOR_SAV)
             $tpDemandante = 1; //'SAV';
         if ($post->oficializar) {
             $dados['stFiscalizacaoProjeto'] = 1;
