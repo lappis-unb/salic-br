@@ -2,8 +2,8 @@
 class Votante extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
-    protected $_name = 'BDCORPORATIVO.tbVotante';
-    protected $_schema = 'SCsac';
+    protected $_name = 'tbVotante';
+    protected $_schema = 'BDCORPORATIVO.SCsac';
 
     public function selecionarvotantes($idreuniao) {
             $select = $this->select();
