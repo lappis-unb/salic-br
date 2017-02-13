@@ -49,7 +49,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     /**
      * @todo Criar opção de gerar PDF
      * @todo Criar opção de Imprimir
-     * @todo Adicionar ícones aos bot&otilde;es
      * @todo tratar a exibi&ccedil;&atilde;o dos bot&otilde;es de acordo com a fase do projeto
      * @todo Dividir cada bloco da camada de apresentação em partials que podem ser adicionadas ou não
      */
@@ -118,9 +117,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         }
     }
 
-    /**
-     * @todo Adicionar ícones aos bot&otilde;es
-     */
     public function devolverProjetoAction()
     {
         $get = Zend_Registry::get('get');
@@ -194,7 +190,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     }
 
     /**
-     * @todo Adicionar ícones aos bot&otilde;es
      * @todo Tratar quando receber mais de um número de PRONAC
      */
     public function assinarProjetoAction()
@@ -206,7 +201,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             }
 
             $this->view->IdPRONAC = $get->IdPRONAC;
-
 
             $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
             $dadosAtoAdministrativoAtual = $objTbAtoAdministrativo->obterAtoAdministrativoAtual(
@@ -298,11 +292,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         }
     }
 
-    /**
-     * @todo Criar view.
-     * @todo Preencher os campos que estão com "xxxx" na view.
-     * @todo Adicionar ícones aos bot&otilde;es
-     */
     public function finalizarAssinaturaAction()
     {
         $get = Zend_Registry::get('get');
