@@ -152,18 +152,17 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    public function buscarProjetoEmPauta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $analise=null, $arrReuniao=array(), $retornaResultadoIndividual=null){
-
-        /*========================================================*/
+    public function buscarProjetoEmPauta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $analise=null, $arrReuniao=array(), $retornaResultadoIndividual=null)
+    {
         /*================ PROJETO ANALISADOS ================*/
-        /*========================================================*/
         $slctAnalisados = $this->select();
         $slctAnalisados->setIntegrityCheck(false);
         $slctAnalisados->from(
-                        array('dpc'=>$this->_schema.'.'.$this->_name),
-                        array(new Zend_Db_Expr("'Analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
-                     );
-
+                        array('dpc'=>$this->_name),
+                        array(new Zend_Db_Expr("'Analisado' as Analise"),
+                        'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente',
+                        'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                     ,$this->_schema);
         $slctAnalisados->joinInner(
                             array('pa'=>'tbPauta'),
                             '(pa.IdPRONAC = dpc.idPRONAC)',
@@ -240,8 +239,6 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             $slctAnalisados->where($coluna, $valor);
         }
 
-        //xd($slctAnalisados->assemble());
-
         //RETORNA RESULTADO DA PRIMEIRA QUERY - PROJETO ANALISADOS
         if($retornaResultadoIndividual == "1"){
             return $this->fetchAll($slctAnalisados);
@@ -253,8 +250,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados = $this->select();
         $slctNaoAnalisados->setIntegrityCheck(false);
         $slctNaoAnalisados->from(
-                        array('dpc'=>$this->_schema.'.'.$this->_name),
-                        array(new Zend_Db_Expr("'N�o analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        array('dpc'=>$this->_name),
+                        array(new Zend_Db_Expr("'Não analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        ,$this->_schema
                      );
         $slctNaoAnalisados->joinInner(
                             array('pr'=>'Projetos'),
@@ -309,6 +307,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->where("par.stAtivo = ?", 1);
         $slctNaoAnalisados->where("nm2.Status = ?", 0);
 
+
         /*=== INICIO EXCLUI PROJETOS CADASTRADOS NA PAUTA ====*/
         $slctInterno = $this->select();
         $slctInterno->setIntegrityCheck(false);
@@ -338,15 +337,14 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 
         $slctUnion = $this->select();
         $slctUnion->union(array($slctAnalisados, $slctNaoAnalisados));//->order($order);
-        //xd($slctUnion->assemble());
 
         $slctMaster = $this->select();
         $slctMaster->setIntegrityCheck(false);
         $slctMaster->from(
                         array('Master'=>$slctUnion),
-                        array('*')
+                        array('*'),
+                        new Zend_Db_Expr(' ')
                      );
-
 
         //BUSCA PELO STATUS DO PROJETO
         if($analise != null){
@@ -376,8 +374,12 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             }
             $slctMaster->limit($tamanho, $tmpInicio);
         }
-        //xd($slctMaster->assemble());
-        return $this->fetchAll($slctMaster);
+
+        $newString = substr($slctMaster->assemble(), 33);
+        $newString = 'SELECT "Master".* FROM  '.$newString;
+
+
+        //return $this->fetchAll($newString);
     }
 
     public function buscaProjetosEmPauta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $analise=null){
@@ -932,5 +934,96 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
+    public function qtdProjetoNaoAnalisados()
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+
+        $select->from(
+                array('dpc' => "tbdistribuicaoprojetocomissao"),
+                array(new Zend_Db_Expr('count(*)')),
+                "BDCORPORATIVO.scSAC"
+              )
+            ->join(
+                array('pr' => 'Projetos'),
+                'pr.idPronac = dpc.idPronac',
+                array(),
+                'SAC.dbo'
+               )
+            ->joinInner(
+                array('par'=>"Parecer"),
+                'pr.idPronac = par.idPronac
+                AND par.DtParecer =(
+                    SELECT
+                        TOP 1 max( DtParecer )
+                    from
+                        SAC.dbo.Parecer
+                    where
+                        IdPRONAC = pr.IdPRONAC
+                )',
+                array(),
+                'SAC.dbo'
+            )
+            ->join(
+                array("s" => "Situacao"),
+                'pr.Situacao = s.Codigo',
+                array(),
+                'SAC.dbo'
+            )
+            ->join(
+                array("ar" => "Area"),
+                'pr.Area = ar.Codigo',
+                array(),
+                'SAC.dbo'
+            )
+            ->join(
+                array("se" => "Segmento"),
+                'pr.Segmento = se.Codigo',
+                array(),
+                'SAC.dbo'
+            )
+            ->join(
+                array("nm" => "Nomes" ),
+                'dpc.idAgente = nm.idAgente',
+                array(),
+                'Agentes.dbo'
+            )
+            ->join(
+                array("ag" => "Agentes"),
+                'pr.CgcCpf = ag.CNPJCPF',
+                array(),
+                "Agentes.dbo"
+            )
+            ->join(
+                array("nm2" => "Nomes"),
+                'ag.idAgente = nm2.idAgente',
+                array(),
+                "Agentes.dbo"
+            )
+            ->where(
+                    "pr.Situacao IN(
+                        'C10',
+                        'C30'
+                    )")
+            ->where("dpc.stDistribuicao = 'A'")
+            ->where("par.stAtivo = 1")
+            ->where("nm2.Status = 0")
+            ->where('(
+                    NOT EXISTS(
+                        SELECT
+                            TOP 1 "tbpa" .*
+                        FROM
+                            "BDCORPORATIVO"."scSAC"."tbPauta" AS "tbpa"
+                        WHERE
+                            (
+                                tbpa.IdPRONAC = pr.idPronac
+                            )
+                    )
+                )')
+            ;
+//echo $select;die;
+
+        return $this->fetchAll($select);
+    }
+
 }
-?>
