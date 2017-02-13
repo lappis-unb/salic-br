@@ -17,7 +17,7 @@ class MinC_Assinatura_DocumentoAssinatura
 
         $view->IdPRONAC = $idPronac;
 
-        $objProjeto = new Projetos();
+        $objProjeto = new Projeto_Model_DbTable_Projetos();
         $view->projeto = $objProjeto->findBy(array(
             'IdPRONAC' => $idPronac
         ));

@@ -218,14 +218,14 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     private function encaminharProjetoEnquadradoParaAssinatura($IdPRONAC) {
 
-        $objProjeto = new Projetos();
-        $projeto = $objProjeto->findBy(array('IdPRONAC' => $IdPRONAC));
+        $objTbProjetos = new Projeto_Model_DbTable_Projetos();
+        $dadosProjeto = $objTbProjetos->findBy(array('IdPRONAC' => $IdPRONAC));
 
-        if(!$projeto) {
+        if(!$dadosProjeto) {
             throw new Exception("Projeto n&atilde;o encontrado.");
         }
 
-        if($projeto['Situacao'] != 'B02' && $projeto['Situacao'] != 'B03') {
+        if($dadosProjeto['Situacao'] != 'B02' && $dadosProjeto['Situacao'] != 'B03') {
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
@@ -241,7 +241,15 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         );
 
         $objProjeto = new Projetos();
-        $objProjeto->alterarSituacao($projeto['IdPRONAC'], null, 'B04', 'Projeto encamihado para Portaria.');
+        $objProjeto->alterarSituacao($dadosProjeto['IdPRONAC'], null, 'B04', 'Projeto encamihado para Portaria.');
+
+        $orgaoDestino = 166;
+        $objOrgaos = new Orgaos();
+        $dadosOrgaoSuperior = $objOrgaos->obterOrgaoSuperior($dadosProjeto['Orgao']);
+        if ($dadosOrgaoSuperior['Codigo'] == Orgaos::ORGAO_SUPERIOR_SEFIC) {
+            $orgaoDestino = 262;
+        }
+        $objTbProjetos->alterarOrgao($orgaoDestino, $dadosProjeto['IdPRONAC']);
     }
 
     private function carregarListaEncaminhamentoPortaria() {
