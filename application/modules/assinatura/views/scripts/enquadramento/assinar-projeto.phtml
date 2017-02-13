@@ -40,15 +40,19 @@
                 <div class="col s1"></div>
                 <div class="col s2">
                     <label>PRONAC</label>
-                    <p class="padding20 bordered bold">
-                        <?php echo $this->projeto['AnoProjeto'] . $this->projeto['Sequencial']; ?>
-                    </p>
+                    <div class="padding20 bordered bold">
+                        <?php foreach($this->projeto as $projeto):  ?>
+                        <?php echo "<p>{$projeto['AnoProjeto']}{$projeto['Sequencial']}</p>"; ?>
+                        <?php endforeach;  ?>
+                    </div>
                 </div>
                 <div class="col s8">
                     <label>Nome do Projeto</label>
-                    <p class="padding20 bordered bold">
-                        <?php echo $this->projeto['NomeProjeto']; ?>
-                    </p>
+                    <div class="padding20 bordered bold">
+                        <?php foreach($this->projeto as $projeto):  ?>
+                            <?php echo "<p>{$projeto['NomeProjeto']}</p>"; ?>
+                        <?php endforeach;  ?>
+                    </div>
                 </div>
                 <div class="col s1"></div>
             </div>
@@ -77,7 +81,7 @@
                         <label>Cargo: </label>
                     </p>
                     <div class="padding20 bordered bold">
-                        <?php echo $this->dadosAtoAdministrativo['dsCargoAssinante'] ?>
+                        <?php echo $this->perfilAssinante['dsCargoAssinante'] ?>
                     </div>
                 </div>
                 <div class="col s1"></div>
