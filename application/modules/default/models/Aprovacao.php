@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
-*/
-
 /**
  * Description of aprovacao
  *
@@ -251,7 +246,6 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $select->where($comando,$valores);
         }
 
-        //xd($select->assemble());
         return $this->fetchAll($select);
     }
 

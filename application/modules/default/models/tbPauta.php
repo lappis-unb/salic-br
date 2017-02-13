@@ -727,11 +727,12 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array('tp' => $this->_schema . '.' . $this->_name),
+                array('tp' =>  $this->_name),
                 array(
                     'tp.IdPRONAC',
                     'tp.stAnalise'
-                )
+                ),
+                $this->_schema
         );
         $slct->joinInner(
                 array('pr' => 'Projetos'),
@@ -836,7 +837,6 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
@@ -952,4 +952,3 @@ class tbPauta extends MinC_Db_Table_Abstract {
     }
 
 }
-?>
