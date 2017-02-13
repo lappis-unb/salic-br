@@ -2,7 +2,7 @@
 class tbPauta extends MinC_Db_Table_Abstract {
 
     protected $_banco = "BDCORPORATIVO";
-    protected $_schema = "scSAC";
+    protected $_schema = "BDCORPORATIVO.scSAC";
     protected $_name = "tbPauta";
 
     public function buscarProjetosAvaliados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $bln_readequacao=false){
@@ -422,12 +422,13 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array('tp' => $this->_schema . '.' . $this->_name),
+                array('tp' =>  $this->_name),
                 array(
                     'tp.dtEnvioPauta',
                     'tp.stEnvioPlenario',
                     'tp.stAnalise'
-                )
+                ),
+                $this->_schema
         );
         $slct->joinInner(
                 array('pr' => 'Projetos'),
@@ -461,7 +462,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 array('dpc' => 'tbDistribuicaoProjetoComissao'),
                 "pr.IdPRONAC = dpc.idPRONAC",
                 array(),
-                'scSAC'
+                'BDCORPORATIVO.scSAC'
         );
         $slct->joinInner(
                 array('nm' => 'Nomes'),
@@ -479,14 +480,14 @@ class tbPauta extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        
+
         if($count){
 
             $slctContador = $this->select();
             $slctContador->setIntegrityCheck(false);
             $selectCount->from(
                             array('p'=>$this->_schema.'.'.$this->_name),
-                            array('total'=>"count(*)")  
+                            array('total'=>"count(*)")
                          );
             $slctContador->joinInner(
                     array('pr' => 'Projetos'),
@@ -545,10 +546,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-    
+
 
     public function buscarProjetosVotadosCnic($where=array(),$order=array(), $tamanho=-1, $inicio=-1, $count=false) {
         $slct = $this->select();
@@ -641,14 +641,14 @@ class tbPauta extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        
+
         if($count){
 
             $slctContador = $this->select();
             $slctContador->setIntegrityCheck(false);
             $selectCount->from(
                             array('p'=>$this->_schema.'.'.$this->_name),
-                            array('total'=>"count(*)")  
+                            array('total'=>"count(*)")
                          );
             $slctContador->joinInner(
                     array('pr' => 'Projetos'),
@@ -722,7 +722,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-    
+
     public function buscarProjetosTermoAprovacao($where=array(),$order=array(), $tamanho=-1, $inicio=-1, $count=false) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -770,7 +770,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     'r.NrReuniao',
                     'r.DtInicio',
                     'r.DtFinal',
-                    'DtAssinatura' => New Zend_Db_Expr("CASE DATEPART(DW, r.DtFinal) 
+                    'DtAssinatura' => New Zend_Db_Expr("CASE DATEPART(DW, r.DtFinal)
                                                              WHEN 6 THEN DATEADD(D,3,r.DtFinal) -- SEXTA-FEIRA (ADICIONA TRES DIAS)
                                                              WHEN 7 THEN DATEADD(D,2,r.DtFinal) -- SABADO (ADICIONA DOIS DIAS)
                                                              ELSE  DATEADD(D,1,r.DtFinal) -- OTROS DIAS DA SEMNA (ADICIONA UM DIA)
@@ -788,14 +788,14 @@ class tbPauta extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        
+
         if($count){
 
             $slctContador = $this->select();
             $slctContador->setIntegrityCheck(false);
             $selectCount->from(
                             array('tp'=>$this->_schema.'.'.$this->_name),
-                            array('total'=>"count(*)")  
+                            array('total'=>"count(*)")
                          );
             $slctContador->joinInner(
                     array('pr' => 'Projetos'),
@@ -860,9 +860,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
         }
         return $db->fetchAll($select);
     }
-    
+
     public function buscaProjetosAprovados($idNrReuniao) {
-        
+
         //PROJETOS NORMAIS DA CNIC
         $slct1 = $this->select();
         $slct1->setIntegrityCheck(false);
@@ -886,8 +886,8 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct1->where('a.stEnvioPlenario = ?', 'S');
         $slct1->where('a.idNrReuniao = ?', $idNrReuniao);
-        
-        
+
+
         //PROJETOS DE RECURSOS
         $slct2 = $this->select();
         $slct2->setIntegrityCheck(false);
@@ -912,8 +912,8 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slct2->where('a.siRecurso = ?', 8);
         $slct2->where('a.idNrReuniao = ?', $idNrReuniao);
         $slct2->where('a.stEstado = ?', 0);
-        
-        
+
+
         //PROJETOS DE READEQUA��O
         $slct3 = $this->select();
         $slct3->setIntegrityCheck(false);
@@ -942,7 +942,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slct3->where('a.siEncaminhamento = ?', 8);
         $slct3->where('a.idNrReuniao = ?', $idNrReuniao);
         $slct3->where('a.stEstado = ?', 0);
-        
+
         $slctUnion = $this->select()
                             ->union(array('('.$slct1.')', '('.$slct2.')', '('.$slct3.')'))
                             ->order('3');
@@ -950,6 +950,6 @@ class tbPauta extends MinC_Db_Table_Abstract {
         //xd($slctUnion->assemble());
         return $this->fetchAll($slctUnion);
     }
-    
+
 }
 ?>
