@@ -43,7 +43,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
         // Busca na SGCAcesso
-        $sgcAcesso = new Sgcacesso();
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
         // Busca na Usuarios
@@ -686,7 +686,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
 
