@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Mensagemprojeto
  *
@@ -13,7 +7,7 @@
 class Mensagemprojeto extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
-    protected $_name = 'tbmensagemprojeto';
+    protected $_name = 'BDCORPORATIVO.tbmensagemprojeto';
     protected $_schema = 'scSAC';
 
     public function buscarMensagemProjeto($where = array(), $orwhere=array()) {
@@ -72,4 +66,3 @@ class Mensagemprojeto extends MinC_Db_Table_Abstract {
 
 }
 
-?>

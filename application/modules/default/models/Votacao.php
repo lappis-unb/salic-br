@@ -13,7 +13,7 @@
 class Votacao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
-    protected $_schema = 'scSAC';
+    protected $_schema = 'BDCORPORATIVO.scSAC';
     protected $_name = 'tbVotacao';
 
     public function resultadovotacao($idNrReuniao, $idPRONAC, $stvoto = null, $tipoReadequacao = null) {
@@ -61,4 +61,3 @@ class Votacao extends MinC_Db_Table_Abstract {
 
 }
 
-?>

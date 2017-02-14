@@ -1,20 +1,9 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Votante
- *
- * @author augusto
- */
 class Votante extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
     protected $_name = 'tbVotante';
-    protected $_schema = 'SCsac';
+    protected $_schema = 'BDCORPORATIVO.SCsac';
 
     public function selecionarvotantes($idreuniao) {
             $select = $this->select();
@@ -37,5 +26,3 @@ class Votante extends MinC_Db_Table_Abstract {
     }
 
 }
-
-?>
