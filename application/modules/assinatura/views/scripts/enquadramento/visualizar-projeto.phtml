@@ -185,8 +185,10 @@
                        )
                    ) . "?IdPRONAC={$this->IdPRONAC}";
                ?>">Devolver</a>
-            <a class="btn waves-effect waves-dark" media="print"
-               href="javascript:window.print()">Imprimir</a>
+            <a id="acao_imprimir"
+               href="#"
+               class="btn waves-effect waves-dark"
+               media="print">Imprimir</a>
             <button class="btn waves-effect waves-dark"
                     type="submit">Gerar PDF
             </button>
@@ -196,6 +198,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#html").val($(".content").html());
+
+            $("#acao_imprimir").click(function () {
+                window.print();
         });
     </script>
 </main>
