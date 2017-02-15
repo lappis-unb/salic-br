@@ -2690,7 +2690,7 @@ class Projetos extends MinC_Db_Table_Abstract
         //x("Se voce esta vendo esta mensagem, favor entrar em contato com o Everton ou Danilo Lisboa urgentemente! <br>Informe tambem os dados abaixo, se houver! ");
         //xd($where);
         if (!empty($where)) {
-            return $this->update($dados, $where);
+            #return $this->update($dados, $where);
         } else {
             return new Exception("Erro ao alterar situa&ccedil;&atilde;o do Projeto.");
         }
@@ -5639,7 +5639,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $a->joinInner(
@@ -5673,7 +5674,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $b->joinInner(
@@ -5717,7 +5719,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $c->joinInner(
