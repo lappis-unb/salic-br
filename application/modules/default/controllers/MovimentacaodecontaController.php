@@ -7,9 +7,8 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
-
+include_once(APPLICATION_PATH . '/modules/default/models/dominio/TipoMensagem.php');
 class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 {
 	/**
@@ -1263,8 +1262,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->view->qtdRegistros  = $total;
             $this->view->dados         = $busca;
             $this->view->intTamPag     = $this->intTamPag;
-
-	} // fecha m�todo listarProjetosAction()
+	}
 
 
 	public function imprimirExtratoDeContaCaptacaoAction()
