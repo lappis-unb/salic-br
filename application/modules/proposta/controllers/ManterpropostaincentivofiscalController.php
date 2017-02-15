@@ -620,30 +620,105 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     }
 
+    /**
+     * Encaminhar projeto ao MinC
+     *
+     * Metódo para o proponente finalizar a situação do projeto, nem sempre este metódo será acionado,
+     * tendo em vista que existe uma rotina no banco para alterar a situacao do projeto após o prazo de alteracao.
+     *
+     * Regras antes de encaminhar
+     * 1. Validar o checklist da proposta
+     *
+     * Regras após encaminhar
+     * 1. Se a captação do projeto for inferior a 20% o sistema por meio de rotina automatizada alterará novamente a situação do projeto para E12.
+     * 2. Se a captação do projeto for igual ou superior a 20%, o sistema por meio de rotina automatizada alterará a situação do projeto para B11.
+     * 3. Os projetos em situação B11 serão enviados, por meio de  rotina automatizada,  as unidades vinculadas de acordo com o segmento cultural
+     * do produto principal do projeto.
+     *
+     */
     public function encaminharprojetoaomincAction()
     {
         $this->verificarPermissaoAcesso(true, false, false);
 
-        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+        $params = $this->getRequest()->getParams();
 
-        if (!empty($idPreProjeto)) {
-            $sp = new Proposta_Model_DbTable_PreProjeto();
+        $idPreProjeto = $params['idPreProjeto'];
 
-            $arrResultado = $sp->checklistEnvioProposta($idPreProjeto, true);
+        if( empty($idPreProjeto)) {
+            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
+       }
 
-            $novoResultado = $this->objectsToArray($arrResultado);
-            $pendencias = in_array('PENDENTE', array_column($novoResultado, 'Observacao'));
+        $validacao = new stdClass();
+        $listaValidacao = array();
 
-            if ($pendencias) {
-                $this->view->resultado = $arrResultado;
+        $sp = new Proposta_Model_DbTable_PreProjeto();
+
+        # verifica se existe alguma pendencia no checklist de proposta
+        $validaProposta = $sp->checklistEnvioProposta($idPreProjeto, true);
+        $pendencias = in_array('PENDENTE', array_column($this->objectsToArray($validaProposta), 'Observacao'));
+
+        if ($pendencias) {
+            $this->view->resultado = $validaProposta;
+
+        } else {
+
+            $tblProjetos = new Projetos();
+            $projeto = array_change_key_case($tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto)));
+            $idPronac = $projeto['idpronac'];
+
+            $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $ValorTotalPlanilha = $planilhaproposta->somarPlanilhaProposta($idPreProjeto)->toArray();
+
+            # validar valor original e valor total atual da proposta
+            if ($ValorTotalPlanilha['soma'] > $projeto['solicitadoreal']) {
+                $validacao->Descricao = 'O valor total do projeto n&atilde;o pode ultrapassar o valor anteriormente solicitado!';
+                $validacao->Observacao = 'PENDENTE';
+                $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
+                $listaValidacao[] = clone($validacao);
+            }
+
+            $validado = true;
+            foreach ($listaValidacao as $valido) {
+                if ($valido->Observacao == 'PENDENTE') {
+                    $validado = false;
+                    break;
+                }
+            }
+
+            if  ( $params['confirmarenvioaominc']==true) {
+                if ( $validado ) {
+                     # Consultar percentual de valor captado
+                    $percentualCaptado = $this->percentualCaptadoByProposta($idPreProjeto, $idPronac);
+
+                    if ($percentualCaptado >= 20) {
+                        $situacao = 'B11';
+                    } else {
+                        $situacao = 'E12';
+                    }
+
+                    $tblSituacao = new Situacao();
+                    $rsSituacao = $tblSituacao->buscar(array('Codigo=?' => $situacao))->current();
+                    if (!empty($rsSituacao)) {
+                        $providencia = $rsSituacao->Descricao;
+                    }
+
+                    # alterar a situacao do projeto
+                    $tblProjetos->alterarSituacao($idPronac, '', $situacao, $providencia);
+
+                    parent::message("Projeto encaminhado com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/listarprojetos/listarprojetos", "CONFIRM");
+                }else {
+                    parent::message("Alguns erros encontrados no envio do projeto", "/proposta/manterpropostaincentivofiscal/encaminharprojetoaominc/idPreProjeto/" . $idPreProjeto, "ERROR");
+                }
             }
 
 
-        } else {
-            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
-        }
+            $this->view->resultado = $listaValidacao;
+            $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/encaminharprojetoaominc";
 
+
+        }
     }
+
 
     /**
      * Metodo responsavel por inativar uma proposta gravada

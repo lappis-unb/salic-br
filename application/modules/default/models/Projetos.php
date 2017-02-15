@@ -950,7 +950,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'CAST(pr.ProvidenciaTomada AS TEXT) AS ProvidenciaTomada',
                 'pr.Localizacao',
                 'pr.SolicitadoReal',
-                'pr.dtSituacao'
+                'pr.dtSituacao',
             )
         );
         $select->joinInner(
@@ -7331,6 +7331,12 @@ class Projetos extends MinC_Db_Table_Abstract
         $objQuery->where('Projetos.IdPRONAC = ?', $idPronac);
 
         return $this->_db->fetchRow($objQuery);
+    }
+
+    public function verificarLiberacaoParaAdequacao($idPronac){
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchOne('select sac.dbo.fnChecarLiberacaoDaAdequacaoDoProjeto (?)', $idPronac);
     }
 
 }
