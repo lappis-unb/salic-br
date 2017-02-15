@@ -164,7 +164,7 @@ var resolverInconsistencia = function (event) {
     var idTmpCaptacao = $('body').data('currentIdTmpCaptacao');
     
     $.ajax({
-        url: "/resolver-inconsistencia/incentivador-proponente-iguais/idPronac/<?php echo $this->projeto->IdPRONAC; ?>/idInconsistencia/" + idTmpCaptacao,
+	url: '<?php echo $this->url(array('controller' => 'resolver-inconsistencia', 'action' => 'incentivador-proponente-iguais')); ?>/idInconsistencia/' + idTmpCaptacao,
         data: {cnpjcpf: event.detail.CNPJCPF},
         success: function (data) {
                 if (0 == $("#carregando").length) {
