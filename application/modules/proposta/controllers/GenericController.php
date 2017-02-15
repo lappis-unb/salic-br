@@ -105,6 +105,10 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $tblProjetos = new Projetos();
         $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
 
+//        $tblProjetos->verificarLiberacaoParaAdequacao($projeto['IdPRONAC']);
+        if( !$tblProjetos->verificarLiberacaoParaAdequacao($projeto['IdPRONAC']))
+            return false;
+
         if ($this->contagemRegressivaSegundos($projeto['DtSituacao'], $this->_diasParaAlterarProjeto) < 0)
             return false;
 
@@ -574,8 +578,10 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
     }
 
     /**
-     *  Devido ao desenho do banco, pra recuperar o detalhamento dos produtos, eu tenho que saber o novo id dos produtos inseridos
-     *  Tendo em isso em mente, quando for salvar o Plano de distribuicao do produto, pega o id dele e salva os detalhamentos referentes aa ele.
+     *  Devido ao desenho do banco para a tabela tbdetalhaplanodistribuicao, para restaurar o detalhamento dos produtos,
+     *  eu tenho que saber o novo id dos produtos inseridos. Tendo em isso em mente, quando for salvar o Plano de distribuicao
+     *  do produto, pega o id dele e salva os detalhamentos referentes a ele.
+     *
      * @param $idPreProjeto
      * @return bool
      */
@@ -641,6 +647,30 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             }
         }
         return true;
+    }
+
+    protected function calcularPercentualCaptado($valorTotal, $valorCaptado)
+    {
+        if( empty($valorCaptado) || $valorCaptado <= 0)
+            return 0;
+
+        return number_format(($valorCaptado * 100) / $valorTotal, 2, ",", ".");
+    }
+
+    protected function percentualCaptadoByProposta($idPreProjeto, $idProjeto)
+    {
+        if( empty($idProjeto) || empty($idPreProjeto))
+            return false;
+
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+        $total   = $planilhaproposta->somarPlanilhaProposta($idPreProjeto)->toArray();
+
+        $rsProjeto = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => $idProjeto));
+
+        $valorTotal = $total['soma'];
+        $valorcaptado = $rsProjeto[0]->ValorCaptado;
+
+        return $this->calcularPercentualCaptado($valorTotal, $valorcaptado);
     }
 
 }
