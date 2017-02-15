@@ -25,19 +25,17 @@ class HistoricoInsert extends MinC_Db_Table_Abstract
 	 */
 	public function statusHISTORICO_INSERT()
 	{
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
 		$sql = "SELECT ObjectProperty(Object_id(name), 'ExecIsTriggerDisabled') AS Habilitado
 				FROM {$this->_schema}.{$this->_name}
 				WHERE name = 'HISTORICO_INSERT'";
 
-        $db = Zend_Db_Table::getDefaultAdapter();
 		// executa a query
 		$resultado = $db->fetchAll($sql);
 
-		// encerra a conexao
-		$db = Zend_Db_Table::getDefaultAdapter();
-		$db->closeConnection();
-
-		return $resultado[0]['Habilitado'];
+		return $resultado[0]->Habilitado;
 	} // fecha metodo statusHISTORICO_INSERT()
 
 }
