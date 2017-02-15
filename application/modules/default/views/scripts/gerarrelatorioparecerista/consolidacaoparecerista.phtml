@@ -11,7 +11,7 @@ include_once 'inc/funcoes.inc.php';
         <!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
         <div id="breadcrumb">
             <ul>
-                <li class="first"><a href="index.phtml" title="Ir para In�cio">In�cio</a></li>
+                <li class="first"><a href="index.phtml" title="Ir para In�cio">In&iacute;cio</a></li>
 
                 <li class="last">Principal</li>
             </ul>
@@ -19,7 +19,7 @@ include_once 'inc/funcoes.inc.php';
         <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
         <!-- ========== BUTTON VOLTAR ========== -->
         <div id="titulo">
-            <div>An�lise por Parecerista<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+            <div>An&aacute;lise por Parecerista<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
         </div>
         <!-- ========== FIM T�TULO ========== -->
         <!-- ========== GRID NOME DA PROPOSTA ========== -->
@@ -72,7 +72,7 @@ include_once 'inc/funcoes.inc.php';
                         </td>
                     </tr>
                     <tr>
-                        <td>�rea</td>
+                        <td>&Aacute;rea</td>
                         <td>
 	                        <select name="Area" id="Area" onchange="carregar_combo(this.value, 'Seguimento', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma �rea Cultural - ')" class="input_simples" style="width: 200px;">
 			
@@ -94,7 +94,7 @@ include_once 'inc/funcoes.inc.php';
                             <select name="Seguimento" id="Seguimento"  class="input_simples" style="width: 200px;">
 		
 								<?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-								<option value="0"> - Selecione uma �rea Cultural - </option>
+								<option value="0"> - Selecione uma &Aacute;rea Cultural - </option>
 								<?php } else { ?>
 				
 									<?php if (!isset($this->segmentoCultural) || empty($this->segmentoCultural)) { ?>
@@ -114,14 +114,14 @@ include_once 'inc/funcoes.inc.php';
                         </td>
                     </tr>
                     <tr>
-                        <td>Status da an�lise</td>
+                        <td>Status da an&aacute;lise</td>
                         <td colspan="3">
                             <select name="stAnalise" style="width: 250px;">
                                 <option value="">Selecione</option>
                                 <option value="0">A diligenciar</option>
                                 <option value="1">Diligenciado</option>
                                 <option value="2">Dilig&ecirc;ncia respondida</option>
-                                <option value="3">Dilig&ecirc;ncia n�o respondida</option>
+                                <option value="3">Dilig&ecirc;ncia n&atilde;o respondida</option>
                             </select>
                         </td>
                     </tr>
