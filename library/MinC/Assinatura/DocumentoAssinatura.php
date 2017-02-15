@@ -23,9 +23,11 @@ class MinC_Assinatura_DocumentoAssinatura
         ));
 
         $objAgentes = new Agente_Model_DbTable_Agentes();
-        $dadosAgente = $objAgentes->buscarFornecedor(array(
-            'a.CNPJCPF = ?' => $view->projeto['CgcCpf']
-        ));
+        $dadosAgente = $objAgentes->buscarFornecedor(
+            array(
+                'a.CNPJCPF = ?' => $view->projeto['CgcCpf']
+            )
+        );
 
         $arrayDadosAgente = $dadosAgente->current();
         $view->nomeAgente = $arrayDadosAgente['nome'];
