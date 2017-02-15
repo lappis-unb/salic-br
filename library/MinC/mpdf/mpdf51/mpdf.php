@@ -22094,7 +22094,8 @@ function ReadCSS($html) {
 			// Remove comment tags 
 			$sub = preg_replace('/(<\!\-\-|\-\->)/s',' ',$m[1][$i]);
 			$sub = preg_replace('|/\*.*?\*/|s',' ',$sub);		// mPDF 5.0.013
-			$html = preg_replace('/'.preg_quote($m[1][$i], '/').'/si', $sub, $html); 
+//			$html = preg_replace('/'.preg_quote($m[1][$i], '/').'/si', $sub, $html); 
+			$html = str_replace('/'.preg_quote($m[1][$i], '/').'/si', $sub, $html);
 		}
 	}
 
