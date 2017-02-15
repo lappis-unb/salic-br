@@ -113,7 +113,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
                 )
             );
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/assinatura/enquadramento/visualizar-projeto?IdPRONAC={$get->IdPRONAC}");
+            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento/visualizar-projeto?IdPRONAC={$get->IdPRONAC}");
         }
     }
 
@@ -184,7 +184,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
                     )
                 );
 
-                parent::message('Projeto devolvido com sucesso.', "/assinatura/enquadramento/gerenciar-projetos", 'CONFIRM');
+                parent::message('Projeto devolvido com sucesso.', "/{$this->moduleName}/enquadramento/gerenciar-projetos", 'CONFIRM');
             }
 
             $this->view->IdPRONAC = $get->IdPRONAC;
@@ -209,7 +209,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
             $this->view->titulo = "Devolver";
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/assinatura/enquadramento/devolver-projeto?IdPRONAC={$get->IdPRONAC}");
+            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento/devolver-projeto?IdPRONAC={$get->IdPRONAC}");
         }
     }
 
@@ -221,9 +221,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $get = Zend_Registry::get('get');
 
         try {
-            if (!filter_input(INPUT_GET, 'IdPRONAC')) {
-                throw new Exception ("Identificador do projeto é necessário para acessar essa funcionalidade.");
-            }
 
             $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
             $this->view->perfilAssinante = $objTbAtoAdministrativo->obterPerfilAssinante(
@@ -236,30 +233,39 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
                 throw new Exception ("A fase atual de assinaturas do projeto atual n&atilde;o permite realizar essa opera&ccedil;&atilde;o.");
             }
 
+            if(is_array($get->IdPRONAC)) {
+                $idPronacUnidos = implode(',', $get->IdPRONAC);
+                $this->redirect("/{$this->moduleName}/enquadramento/assinar-projeto?IdPRONAC={$idPronacUnidos}");
+            }
+
             $this->view->IdPRONAC = $get->IdPRONAC;
             $arrayIdPronacs = explode(',', $get->IdPRONAC);
+            if(count($arrayIdPronacs) < 1) {
+                throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
+            }
 
             $post = $this->getRequest()->getPost();
 
             if ($post) {
-                if (isset($get->IdPRONAC) && !empty($get->IdPRONAC)) {
-                    throw new Exception("Identificador do Projeto n&atilde;o informado.");
-                }
 
                 foreach($arrayIdPronacs as $idPronac) {
-                    $this->assinarProjeto($idPronac, $post['password'], $post['dsManifestacao']);
+                    $this->assinarProjeto(
+                        $idPronac,
+                        $post['password'],
+                        $post['dsManifestacao']
+                    );
                 }
 
                 if(count($arrayIdPronacs) > 1) {
                     parent::message(
                         "Projetos assinados com sucesso!",
-                        "/assinatura/enquadramento/gerenciar-projetos",
+                        "/{$this->moduleName}/enquadramento/gerenciar-projetos",
                         'CONFIRM'
                     );
                 }
                 parent::message(
                     "Projeto assinado com sucesso!",
-                    "/assinatura/enquadramento/visualizar-projeto?IdPRONAC={$idPronac}",
+                    "/{$this->moduleName}/enquadramento/visualizar-projeto?IdPRONAC={$idPronac}",
                     'CONFIRM'
                 );
             }
@@ -281,12 +287,12 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             if(is_array($get->IdPRONAC)) {
                 parent::message(
                     $objException->getMessage(),
-                    "/assinatura/enquadramento/gerenciar-projetos"
+                    "/{$this->moduleName}/enquadramento/gerenciar-projetos"
                 );
             }
             parent::message(
                 $objException->getMessage(),
-                "/assinatura/enquadramento/assinar-projeto?IdPRONAC={$get->IdPRONAC}"
+                "/{$this->moduleName}/enquadramento/assinar-projeto?IdPRONAC={$get->IdPRONAC}"
             );
         }
     }
@@ -296,6 +302,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         if (!filter_input(INPUT_POST, 'dsManifestacao')) {
             throw new Exception ("Campo \"De acordo do Assinante\" &eacute; de preenchimento obrigat&oacute;rio.");
         }
+
         if (!filter_input(INPUT_POST, 'password')) {
             throw new Exception ("Campo \"Senha\" &eacute; de preenchimento obrigat&oacute;rio.");
         }
@@ -408,10 +415,34 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             $objAprovacao = new Aprovacao();
             $objAprovacao->inserir($dadosInclusaoAprovacao);
 
-            parent::message('Projeto finalizado com sucesso!', "/assinatura/enquadramento/gerenciar-projetos", 'CONFIRM');
+            parent::message('Projeto finalizado com sucesso!', "/{$this->moduleName}/enquadramento/gerenciar-projetos", 'CONFIRM');
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/assinatura/enquadramento/assinar-projeto?IdPRONAC={$get->IdPRONAC}");
+            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento/assinar-projeto?IdPRONAC={$get->IdPRONAC}");
         }
     }
 
+    public function gerarPdfAction()
+    {
+        ini_set("memory_limit", "5000M");
+        set_time_limit(30);
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $cssContents = file_get_contents(APPLICATION_PATH . '/../public/library/materialize/css/materialize.css');
+        $cssContents .= file_get_contents(APPLICATION_PATH . '/../public/library/materialize/css/materialize-custom.css');
+        $html = $_POST['html'];
+
+        $pdf = new mPDF('pt', 'A4', 12, '', 8, 8, 5, 14, 9, 9, 'P');
+        $pdf->allow_charset_conversion = true;
+        $pdf->WriteHTML($cssContents, 1);
+        $pdf->charset_in = 'ISO-8859-1';
+
+        if(!mb_check_encoding($html, 'ISO-8859-1')) {
+            $pdf->charset_in = 'UTF-8';
+        }
+
+        $pdf->WriteHTML($html, 2);
+        $pdf->Output();
+        die;
+    }
 }

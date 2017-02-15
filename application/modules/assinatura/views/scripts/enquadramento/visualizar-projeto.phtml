@@ -11,122 +11,140 @@
         array('Enquadramento ' => array())
     );
     ?>
-    <div class="content padding20 clearfix">
-        <div class="row">
-            <div class="col s1"></div>
-            <div class="col s10">
-                <?php gerarBreadCrumb($links); ?>
-            </div>
-            <div class="col s1"></div>
+    <div class="row margin-bottom30"></div>
+    <div class="row">
+        <div class="col s1"></div>
+        <div class="col s10">
+            <?php gerarBreadCrumb($links); ?>
         </div>
-        <?php echo $this->documentoAssinatura['conteudo'] ?>
-        <div class="row margin-bottom30"></div>
-        <div class="row">
-            <div class="col s1"></div>
-            <div class="col s10">
-                <h5>Produ&ccedil;&atilde;o do Projeto</h5>
-                <div class="bordered padding20">
-                    <div class="row">
-                        <table class="table margin0">
-                            <thead>
+        <div class="col s1"></div>
+    </div>
+    <form method="post" target="_blank" action="<?php
+    echo $this->url(
+            array(
+                'module' => 'assinatura',
+                'controller' => 'enquadramento',
+                'action' => 'gerar-pdf'
+            )
+        )
+        . "?IdPRONAC={$this->IdPRONAC}";
+    ?>">
+        <div class="content padding20 clearfix">
+            <?php echo $this->documentoAssinatura['conteudo'] ?>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <h5>Produ&ccedil;&atilde;o do Projeto</h5>
+                    <div class="bordered padding20">
+                        <div class="row">
+                            <table class="table margin0">
+                                <thead>
                                 <tr>
                                     <th class=""><label>Produto</label></th>
                                     <th><label>Tipo</label></th>
                                     <th><label>Total Produzido</label></th>
                                     <th><label>Total de Receita Prevista</label></th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach($this->dadosProducaoProjeto as $dadoProducaoProjeto): ?>
-                                <tr>
-                                    <td><?php echo $dadoProducaoProjeto['Produto'] ?></td>
-                                    <td><?php echo $dadoProducaoProjeto['tpProduto'] ?></td>
-                                    <td><?php echo number_format($dadoProducaoProjeto['QtdeProduzida'], 2, ',', '.') ?></td>
-                                    <td><?php echo number_format($dadoProducaoProjeto['ReceitaTotal'], 2, ',', '.') ?></td>
-                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($this->dadosProducaoProjeto as $dadoProducaoProjeto): ?>
+                                    <tr>
+                                        <td><?php echo $dadoProducaoProjeto['Produto'] ?></td>
+                                        <td><?php echo $dadoProducaoProjeto['tpProduto'] ?></td>
+                                        <td><?php echo number_format($dadoProducaoProjeto['QtdeProduzida'], 2, ',', '.') ?></td>
+                                        <td><?php echo number_format($dadoProducaoProjeto['ReceitaTotal'], 2, ',', '.') ?></td>
+                                    </tr>
                                 <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+                <div class="col s1"></div>
             </div>
-            <div class="col s1"></div>
-        </div>
-        <div class="row">
-            <div class="col s1"></div>
-            <div class="col s10">
-                <p>
-                    <label class="margin-bottom20">Motiva&ccedil;&atilde;o do Enquadramento</label>
-                </p>
-                <div class="padding20 bordered">
-                    <?php
-                    echo $this->dadosEnquadramento['Observacao'];
-                    ?>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <p>
+                        <label class="margin-bottom20">Motiva&ccedil;&atilde;o do Enquadramento</label>
+                    </p>
+                    <div class="padding20 bordered">
+                        <?php
+                        echo $this->dadosEnquadramento['Observacao'];
+                        ?>
+                    </div>
                 </div>
+                <div class="col s1"></div>
             </div>
-            <div class="col s1"></div>
-        </div>
-        <?php if(count($this->assinaturas) > 0) : ?>
-        <div class="row">
-            <div class="col s1"></div>
-            <div class="col s10">
-                <p>
-                    <label class="margin-bottom20">Assinaturas</label>
-                </p>
-                <div class="bordered padding20">
-                    <p> Documento assinado eletronicamente com fundamento no artigo 132 da instru&ccedil;&atilde;o normativa n&ordm; 01/2017 do Minist&eacute;rio da Cultura publicado conforme hor&aacute;rio oficial de bras&iacute;lia no Di&aacute;rio Oficial da Uni&atilde;o data de xxxx/xxxx por: </p>
+            <?php if (count($this->assinaturas) > 0) : ?>
+                <div class="row">
+                    <div class="col s1"></div>
+                    <div class="col s10">
+                        <p>
+                            <label class="margin-bottom20">Assinaturas</label>
+                        </p>
+                        <div class="bordered padding20">
+                            <p> Documento assinado eletronicamente com fundamento no artigo 132 da instru&ccedil;&atilde;o
+                                normativa n&ordm; 01/2017 do Minist&eacute;rio da Cultura publicado conforme hor&aacute;rio
+                                oficial de bras&iacute;lia no Di&aacute;rio Oficial da Uni&atilde;o data de xxxx/xxxx
+                                por: </p>
+                            <div class="padding20 bordered row">
+                                <div class="row">
+                                    <div class="col s1"></div>
+                                    <div class="col s4 bold">Colaborador</div>
+                                    <div class="col s4 bold center-align">Cargo</div>
+                                    <div class="col s3 bold center-align">Hor&aacute;rio</div>
+                                </div>
+                                <?php
+                                foreach ($this->assinaturas as $assinatura) :
+                                    $objDateTime = new DateTime($assinatura['dtAssinatura']);
+                                    $dataAssinatura = $objDateTime->format('d/m/Y');
+                                    $horaAssinatura = $objDateTime->format('H:i:s');
+                                    ?>
+                                    <div class="row">
+                                        <div class="col s1 center-align"><i class="material-icons blue-text">lock</i>
+                                        </div>
+                                        <div class="col s4 "><?php echo $assinatura['usu_nome'] ?></div>
+                                        <div
+                                            class="col s4 center-align"><?php echo $assinatura['dsCargoAssinante'] ?></div>
+                                        <div
+                                            class="col s3 center-align"><?php echo $dataAssinatura ?> &agrave;s <?php echo $horaAssinatura ?></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s1"></div>
+                </div>
+            <?php endif; ?>
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s10">
+                    <p>
+                        <label class="margin-bottom20">Acompanhamento do Projeto</label>
+                    </p>
                     <div class="padding20 bordered row">
-                        <div class="row">
-                            <div class="col s1"></div>
-                            <div class="col s4 bold">Colaborador</div>
-                            <div class="col s4 bold center-align">Cargo</div>
-                            <div class="col s3 bold center-align">Hor&aacute;rio</div>
+                        <div class="row center-align">
+                            Utilize o QR Code abaixo para acompanhar as assinaturas do projeto.
                         </div>
-                    <?php
-                    foreach($this->assinaturas as $assinatura) :
-                        $objDateTime = new DateTime($assinatura['dtAssinatura']);
-                        $dataAssinatura = $objDateTime->format('d/m/Y');
-                        $horaAssinatura = $objDateTime->format('H:i:s');
-                    ?>
-                        <div class="row">
-                            <div class="col s1 center-align"><i class="material-icons blue-text">lock</i></div>
-                            <div class="col s4 "><?php echo $assinatura['usu_nome'] ?></div>
-                            <div class="col s4 center-align"><?php echo $assinatura['dsCargoAssinante'] ?></div>
-                            <div class="col s3 center-align"><?php echo $dataAssinatura ?> &agrave;s <?php echo $horaAssinatura ?></div>
+                        <div class="row center-align">
+                            <img src="<?php echo $this->url(array(
+                                    'module' => 'qrcode',
+                                    'controller' => 'QRCode',
+                                    'action' => 'exibir'
+                                )) . "?texto=http://{$_SERVER['SERVER_NAME']}" . $this->url(array(
+                                    'module' => 'assinatura',
+                                    'controller' => 'enquadramento',
+                                    'action' => 'visualizar-projeto'
+                                )) . "?IdPRONAC={$this->IdPRONAC}" ?>"/>
                         </div>
-                    <?php endforeach; ?>
                     </div>
                 </div>
+                <div class="col s1"></div>
             </div>
-            <div class="col s1"></div>
-        </div>
-        <?php endif; ?>
-        <div class="row">
-            <div class="col s1"></div>
-            <div class="col s10">
-                <p>
-                    <label class="margin-bottom20">Acompanhamento do Projeto</label>
-                </p>
-                <div class="padding20 bordered row">
-                    <div class="row center-align">
-                        Utilize o QR Code abaixo para acompanhar as assinaturas do projeto.
-                    </div>
-                    <div class="row center-align">
-                        <img src="<?php echo $this->url(array(
-                                'module' => 'qrcode',
-                                'controller' => 'QRCode',
-                                'action' => 'exibir'
-                            )) . "?texto=http://{$_SERVER['SERVER_NAME']}" . $this->url(array(
-                                'module' => 'assinatura',
-                                'controller' => 'enquadramento',
-                                'action' => 'visualizar-projeto'
-                            )) . "?IdPRONAC={$this->IdPRONAC}" ?>" />
-                    </div>
-                </div>
-            </div>
-            <div class="col s1"></div>
-        </div>
 
+            <input type="hidden" id="html" name="html"/>
+        </div>
         <div class="row center-align">
             <a class="btn waves-effect waves-dark"
                href="<?php
@@ -139,44 +157,45 @@
                ?>">Voltar</a>
             <a class="btn waves-effect waves-dark"
                href="<?php
-                   echo $this->url(array(
+               echo $this->url(array(
                        'module' => 'assinatura',
                        'controller' => 'enquadramento',
                        'action' => 'assinar-projeto'
                    ))
                    . "?IdPRONAC={$this->IdPRONAC}";
                ?>">Assinar</a>
-            <?php if( count($this->assinaturas) >= $this->quantidade_minima_assinaturas): ?>
-            <a class="btn waves-effect waves-dark"
-               href="<?php
-               echo $this->url(array(
-                       'module' => 'assinatura',
-                       'controller' => 'enquadramento',
-                       'action' => 'finalizar-assinatura'
-                   ))
-                   . "?IdPRONAC={$this->IdPRONAC}";
-                    ?>">Finalizar</a>
+            <?php if (count($this->assinaturas) >= $this->quantidade_minima_assinaturas): ?>
+                <a class="btn waves-effect waves-dark"
+                   href="<?php
+                   echo $this->url(array(
+                           'module' => 'assinatura',
+                           'controller' => 'enquadramento',
+                           'action' => 'finalizar-assinatura'
+                       ))
+                       . "?IdPRONAC={$this->IdPRONAC}";
+                   ?>">Finalizar</a>
             <?php endif; ?>
             <a class="btn waves-effect waves-dark"
                href="<?php
-               echo $this->url(array(
-                       'module' => 'assinatura',
-                       'controller' => 'enquadramento',
-                       'action' => 'devolver-projeto'
-                   )) . "?IdPRONAC={$this->IdPRONAC}";
+               echo $this->url(
+                       array(
+                           'module' => 'assinatura',
+                           'controller' => 'enquadramento',
+                           'action' => 'devolver-projeto'
+                       )
+                   ) . "?IdPRONAC={$this->IdPRONAC}";
                ?>">Devolver</a>
-            <a class="btn waves-effect waves-dark" media="all"
+            <a class="btn waves-effect waves-dark" media="print"
                href="javascript:window.print()">Imprimir</a>
-            <a class="btn waves-effect waves-dark"
-               href="<?php
-               echo $this->url(array(
-                       'module' => 'admissibilidade',
-                       'controller' => 'enquadramento',
-                       'action' => 'gerar-pdf-enquadramento'
-                   )) . "?IdPRONAC={$this->IdPRONAC}";
-               ?>">Gerar PDF</a>
-
+            <button class="btn waves-effect waves-dark"
+                    type="submit">Gerar PDF
+            </button>
         </div>
-    </div>
+    </form>
     <br clear="all"/>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#html").val($(".content").html());
+        });
+    </script>
 </main>
