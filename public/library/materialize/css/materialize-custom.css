@@ -1658,6 +1658,18 @@ input.mdl-button[type="submit"] {
 .padding20 {
     padding: 20px;
 }
+.margin-bottom20 {
+    margin-bottom: 20px;
+}
 .margin-bottom30 {
     margin-bottom: 30px
+}
+.margin0 {
+    margin: 0px;
+}
+.margin5 {
+    margin: 5px;
+}
+.no-border {
+    border: 0px;
 }
