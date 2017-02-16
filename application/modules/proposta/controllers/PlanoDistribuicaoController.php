@@ -285,6 +285,9 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
 
         $detalhamento->salvar($dados);
 
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $tblPlanoDistribuicao->updateConsolidacaoPlanoDeDistribuicao($dados['idPlanoDistribuicao']);
+
         $this->_helper->json(array('data' => $dados, 'success' => 'true'));
     }
 
@@ -300,9 +303,13 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
     public function detalharExcluirAction()
     {
         $id = (int)$this->getRequest()->getParam('idDetalhaPlanoDistribuicao');
+        $idPlanoDistribuicao = (int)$this->getRequest()->getParam('idPlanoDistribuicao');
 
         $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
         $dados = $detalhamento->excluir($id);
+
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $tblPlanoDistribuicao->updateConsolidacaoPlanoDeDistribuicao($idPlanoDistribuicao);
 
         $this->_helper->json(array('data' => $dados, 'success' => 'true'));
     }
