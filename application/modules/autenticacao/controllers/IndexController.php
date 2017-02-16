@@ -1,25 +1,9 @@
 <?php
 
-/**
- * Controller Login
- * @author tisomar - Politec
- * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
- * @since 2011
- * @version 1.0
- * @package application
- * @subpackage application.controller
- * @link http://www.cultura.gov.br
- */
 class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 {
     public $orgaoAtivo;
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init()
     {
         parent::init();
@@ -36,7 +20,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     }
 
     /**
-     * Efetua o login no sistema
      * @access public
      * @param void
      * @return void

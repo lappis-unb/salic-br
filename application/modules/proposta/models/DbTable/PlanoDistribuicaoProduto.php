@@ -135,9 +135,10 @@ class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
 
         $select->where('pd.stplanodistribuicaoproduto = ?', 1);
 
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($select);
     }
-} // fecha class
+
+}

@@ -53,7 +53,12 @@
     }
 //    $arrCssFiles = array_reverse($arrCssFiles);
     foreach ($arrCssFiles as $arrCssValue) {
-        $this->headLink()->appendStylesheet($configLayout->resources->css->path . '/' . $arrCssValue, 'screen', true, array('rel' => 'stylesheet'));
+        $this->headLink()->appendStylesheet(
+            $configLayout->resources->css->path . '/' . $arrCssValue,
+            'all',
+            true,
+            array('rel' => 'stylesheet')
+        );
     }
 
     $this->headTitle(html_entity_decode($configLayout->layout->headTitle, ENT_QUOTES, $config->resources->db->params->charset));

@@ -65,7 +65,7 @@ class MantertermodecisaoController extends MinC_Controller_Action_Abstract {
             $orgao = $this->_request->getParam("orgao");
 
             if (!empty($orgao)) {
-                if ($orgao == "sefic" || $orgao == 251) {
+                if ($orgao == "sefic" || $orgao == Orgaos::ORGAO_SUPERIOR_SEFIC) {
                     $idOrgao = 251;
                     $this->view->sefic = "true";
                     $this->view->sav = "false";
