@@ -95,6 +95,8 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             $this->idPreProjeto = $idPreProjeto;
             $this->view->idPreProjeto = $idPreProjeto;
 
+            $this->verificarPermissaoAcesso(true, false, false);
+
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             // @todo criei um metodo separado para verificar a situacao, fazer os testes e retirar esse trecho
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
@@ -546,19 +548,19 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     public function identificacaodapropostaAction()
     {
-        if (empty($this->_proposta["stproposta"])) {
+
+        if (empty($this->_proposta["idpreprojeto"])) {
 
             $post = Zend_Registry::get('post');
 
+            $arrBusca = array();
             if (empty($post->idAgente)) {
-                parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+                parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
             }
 
-            $arrBusca = array();
             $arrBusca['a.idagente = ?'] = $post->idAgente;
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
-
             if ($rsProponente) {
                 $rsProponente = array_change_key_case($rsProponente->toArray());
 
@@ -731,7 +733,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->verificarPermissaoAcesso(true, false, false);
 
         if($this->isEditarProjeto){
-            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
 
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
@@ -743,9 +745,9 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $preProjeto->stEstado = 0;
 
         if ($preProjeto->save()) {
-            parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listarproposta", "CONFIRM");
         } else {
-            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
     }
 
