@@ -209,7 +209,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
      */
-    public function buscarAgenteNome($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
+    public function buscarAgenteENome($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name), '*', $this->_schema);
@@ -218,6 +218,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
+
         return $this->fetchAll($slct);
     }
 

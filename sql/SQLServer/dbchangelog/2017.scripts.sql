@@ -129,3 +129,87 @@ INSERT INTO Tabelas.dbo.Grupos (gru_codigo, gru_sistema, gru_nome, gru_status) V
 
 -- [ Novo órgão criado. OBS: já existe em PROD ]
 INSERT INTO sac.dbo.Orgaos (Codigo, Sigla, idSecretaria, Vinculo, Status, stVinculada) VALUES (682, 'SAV/DPAC', 160, 0, 0, null);
+
+
+/*
+  [ Adição de vínculo entre órgão, perfis e usuário ]
+
+  -- SAV
+  'Secretário do Audiovisual e órgão'
+  'Coordenador Geral de Acompanhamento e Prestação de Contas e órgão'
+  'Diretor de Departamento de Políticas Audiovisuais'
+
+  -- SEFIC
+  'Secretario de Fomento e Incentivo à Cultura e órgão'
+  'Coordenador-Geral de Admissibilidade e Aprovação e órgão'
+  'Diretor do Departamento de Incentivo à Produção Cultural'
+
+  OBS: Notei que esse insert é necessário para que exibir uma lista de perfis selecionáveis.
+*/
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 160, 149, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 166, 147, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 682, 148, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 251, 152, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 262, 150, 1);
+INSERT INTO "Tabelas"."dbo"."usuariosxorgaosxgrupos"(uog_usuario, uog_orgao, uog_grupo, uog_status) VALUES (394, 341, 151, 1);
+
+/**
+  Tabela que contém qual o perfil, cargo, orgão e ordem dos próximos assinantes
+  De acordoc om o Tipo do Ato 998521491
+ */
+CREATE TABLE tbAtoAdministrativo
+(
+  idAtoAdministrativo INT PRIMARY KEY NOT NULL IDENTITY,
+  idTipoDoAto INT NOT NULL,
+  idCargoDoAssinante INT NOT NULL,
+  idOrgaoDoAssinante INT NOT NULL,
+  idPerfilDoAssinante INT,
+  idOrdemDaAssinatura TINYINT NOT NULL,
+  stEstado BIT DEFAULT 1 NOT NULL,
+  CONSTRAINT FK_tbAtoAdministrativo_Verificacao FOREIGN KEY (idTipoDoAto) REFERENCES Verificacao (idVerificacao)
+);
+CREATE INDEX IX_idTipoDoAto ON tbAtoAdministrativo (idTipoDoAto);
+CREATE INDEX IX_idCargoDoAssinante ON tbAtoAdministrativo (idCargoDoAssinante);
+CREATE INDEX IX_idOrgaoDoAssinante ON tbAtoAdministrativo (idOrgaoDoAssinante);
+
+/**
+  View Criada para facilitar o carregamento das informações vinculadas ao tbAtoAdministrativo
+ */
+CREATE TABLE vwAtoAdministrativo
+(
+    idAtoAdministrativo INT NOT NULL,
+    idTipoDoAto INT NOT NULL,
+    dsAtoAdministrativo VARCHAR(100) NOT NULL,
+    idCargoDoAssinante INT NOT NULL,
+    dsCargoDoAssinante VARCHAR(100) NOT NULL,
+    idOrgaoDoAssinante INT NOT NULL,
+    dsOrgaoDoAssinante VARCHAR(20) NOT NULL,
+    idPerfilDoAssinante INT,
+    dsPerfil VARCHAR(60) NOT NULL,
+    idOrdemDaAssinatura TINYINT NOT NULL,
+    stEstado BIT NOT NULL
+);
+
+/**
+ * Tem como responsabilidade armazenar informacoes do projeto para que possam ser
+   visualizadas ao assinar projetos.
+ */
+CREATE TABLE tbDocumentoAssinatura
+(
+    idDocumentoAssinatura INT PRIMARY KEY NOT NULL IDENTITY,
+    IdPRONAC INT NOT NULL,
+    idTipoDoAtoAdministrativo INT NOT NULL,
+    conteudo VARCHAR(MAX) NOT NULL,
+    dt_criacao DATETIME DEFAULT getdate() NOT NULL,
+    idCriadorDocumento INT NOT NULL,
+    CONSTRAINT tbDocumentoAssinatura_Projetos_IdPRONAC_fk FOREIGN KEY (IdPRONAC) REFERENCES Projetos (IdPRONAC)
+);
+CREATE INDEX tbDocumentoAssinatura_idTipoDoAtoAdministrativo_index ON tbDocumentoAssinatura (idTipoDoAtoAdministrativo);
+
+/**
+ * Adição de coluna "idDocumentoAssinatura" na tabela "TbAssinatura" e Foreign key para campo "idDocumentoAssinatura"
+ */
+ALTER TABLE sac.dbo.TbAssinatura ADD idDocumentoAssinatura INT NOT NULL;
+ALTER TABLE sac.dbo.TbAssinatura
+ADD CONSTRAINT TbAssinatura_tbDocumentoAssinatura_idDocumentoAssinatura_fk
+FOREIGN KEY (idDocumentoAssinatura) REFERENCES tbDocumentoAssinatura (idDocumentoAssinatura);

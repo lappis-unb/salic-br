@@ -53,7 +53,7 @@ class MarcasController extends MinC_Controller_Action_Abstract {
         $rsUsuario = $tblUsuario->buscarOrgaoSuperior($this->codOrgao);
         $idOrgaoSuperior = $rsUsuario->idSecretaria;
 
-        if($idOrgaoSuperior == 251){
+        if($idOrgaoSuperior == Orgaos::ORGAO_SUPERIOR_SEFIC){
             $lista = $tbArquivoImagem->listarMarcasAcompanhamentoArea('p.Area <> 2');
         } else {
             $lista = $tbArquivoImagem->listarMarcasAcompanhamentoArea('p.Area = 2');

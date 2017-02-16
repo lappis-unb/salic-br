@@ -2,6 +2,7 @@
         src="<?php echo $this->baseUrl(); ?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/plugins/editorRico.js"></script>
 <main>
+
     <?php
     $links = array(
         array('Gerenciar Enquadramento' => array(
@@ -14,9 +15,9 @@
     );
     gerarBreadCrumb($links);
     ?>
+    <div class="margin-bottom20 clearfix"></div>
 
-
-    <div id="alerta"></div>
+    <div id="alerta" class=""></div>
     <div class="container">
         <div class="row">
             <div class="col s12">

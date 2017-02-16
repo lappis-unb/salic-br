@@ -46,7 +46,7 @@ class AvaliarprojetoscomissaoController extends MinC_Controller_Action_Abstract 
         $dados = array('CNPJCPF = ?' => $cpf);
 
         $idAge = new Agente_Model_DbTable_Agentes();
-        $idAgente = $idAge->buscarAgenteNome($dados);
+        $idAgente = $idAge->buscarAgenteENome($dados);
         $this->idAgente = $idAgente;
 
         parent::init(); // chama o init() do pai GenericControllerNew
