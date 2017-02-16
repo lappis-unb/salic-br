@@ -1,6 +1,6 @@
 <?php
 
-class Enquadramento extends MinC_Db_Table_Abstract
+class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
 {
     protected $_name = "Enquadramento";
     protected $_schema = "sac";
@@ -9,7 +9,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
     public function alterarEnquadramento($dados)
     {
         $id = null;
-        $tmpTbl = new Enquadramento();
+        $tmpTbl = new Admissibilidade_Model_Enquadramento();
         $tmpTbl = $tmpTbl->find($dados['IdEnquadramento'])->current();
 
         if ($tmpTbl) {
@@ -21,19 +21,9 @@ class Enquadramento extends MinC_Db_Table_Abstract
         }
         if ($id) {
             return $id;
-        } else {
-            return false;
         }
     }
 
-    /**
-     * M�todo para buscar o enquadramento do projeto
-     * @access public
-     * @param integer $idPronac
-     * @param string $pronac
-     * @param boolean $buscarTodos (informa se busca todos ou somente um)
-     * @return array || object
-     */
     public function buscarDados($idPronac = null, $pronac = null, $buscarTodos = true)
     {
         $select = $this->select();
@@ -51,30 +41,14 @@ class Enquadramento extends MinC_Db_Table_Abstract
         }
 
         return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
-    } // fecha m�todo buscarDados()
+    }
 
 
-    /**
-     * M�todo para cadastrar
-     * @access public
-     * @param array $dados
-     * @return integer (retorna o �ltimo id cadastrado)
-     */
     public function cadastrarDados($dados)
     {
         return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    }
 
-
-    /**
-     * M�todo para alterar
-     * @access public
-     * @param array $dados
-     * @param integer $idEnquadramento
-     * @param integer $idPronac
-     * @param string $pronac
-     * @return integer (quantidade de registros alterados)
-     */
     public function alterarDados($dados, $idEnquadramento = null, $idPronac = null, $pronac = null)
     {
         // altera pelo id do enquadramento
@@ -89,26 +63,16 @@ class Enquadramento extends MinC_Db_Table_Abstract
         }
 
         return $this->update($dados, $where);
-    } // fecha m�todo alterarDados()
+    }
 
-
-    /**
-     * M�todo para excluir
-     * @access public
-     * @param integer $idEnquadramento
-     * @param integer $idPronac
-     * @param string $pronac
-     * @return integer (quantidade de registros exclu�dos)
-     */
     public function excluirDados($idEnquadramento = null, $idPronac = null, $pronac = null)
     {
-        // exclui pelo id do enquadramento
         if (!empty($idEnquadramento)) {
             $where = "IdEnquadramento = " . $idEnquadramento;
-        } // exclui pelo id do pronac
+        }
         else if (!empty($idPronac)) {
             $where = "IdPRONAC = " . $idPronac;
-        } // exclui pelo pronac
+        }
         else if (!empty($pronac)) {
             $where = "AnoProjeto+Sequencial = " . $pronac;
         }
@@ -257,6 +221,63 @@ class Enquadramento extends MinC_Db_Table_Abstract
         !empty($order) ? $select->order($order) : null;
 
         return $this->_db->fetchAll($select);
+    }
+
+    public function obterProjetosEncaminhadosParaAssinatura($codOrgao, $ordenacao = array())
+    {
+        $query = $this->select();
+        $query->setIntegrityCheck(false);
+
+        $queryPlanilhaOrcamentaria = $this->select();
+        $queryPlanilhaOrcamentaria->setIntegrityCheck(false);
+        $queryPlanilhaOrcamentaria->from('tbPlanilhaAprovacao', array(
+            "vlAprovado" => New Zend_Db_Expr(
+                "tbPlanilhaAprovacao.vlUnitario * tbPlanilhaAprovacao.qtItem * tbPlanilhaAprovacao.nrOcorrencia"
+            )
+        ), $this->_schema
+        );
+        $queryPlanilhaOrcamentaria->where("tbPlanilhaAprovacao.IdPRONAC = projetos.IdPRONAC");
+
+        $query->from(
+            array("Projetos" => "Projetos"),
+            array(
+                'pronac' => New Zend_Db_Expr('Projetos.AnoProjeto + Projetos.Sequencial'),
+                'Projetos.nomeProjeto',
+                'Projetos.IdPRONAC',
+                'Projetos.CgcCpf',
+                'Projetos.Area as cdarea',
+                'Projetos.ResumoProjeto',
+                'Projetos.UfProjeto',
+                'Projetos.DtInicioExecucao',
+                'Projetos.DtFimExecucao',
+                'Projetos.Situacao',
+                'Projetos.DtSituacao',
+                'Projetos.Orgao',
+                'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, GETDATE())',
+                '(' . $queryPlanilhaOrcamentaria->assemble() . ') as vlAprovado'
+            ),
+            $this->_schema
+        );
+        $query->joinInner(
+            array('Area' => 'Area'),
+            "Area.Codigo = Projetos.Area",
+            "Area.Descricao as area",
+            $this->_schema
+        );
+        $query->joinInner(
+            array('Segmento' => 'Segmento'),
+            "Segmento.Codigo = Projetos.Segmento",
+            array(
+                "Segmento.Descricao as segmento",
+                "Segmento.tp_enquadramento"
+            ),
+            $this->_schema
+        );
+        $query->where("Projetos.Orgao = ?", $codOrgao);
+        $query->where("Projetos.Situacao in (?)", array('B04'));
+        $query->order($ordenacao);
+
+        return $this->_db->fetchAll($query);
     }
 
 }

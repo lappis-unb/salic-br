@@ -114,19 +114,6 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         return $s;
     }
 
-    /**
-     * Metodo para buscar os dados do usuario de acordo com login e senha
-     *
-     * @name login
-     * @param $username - cpf ou cnpj do usuario
-     * @param $password - senha do usuario criptografada
-     * @access public
-     * @return bool
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
-     * @since  10/08/2016
-     */
     public function login($username, $password)
     {
         // busca o usuario de acordo com o login e a senha
@@ -1047,6 +1034,31 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $buscar = $this->fetchRow($sql);
 
         if ($buscar) {
+            return true;
+        }
+    }
+
+    public function isUsuarioESenhaValidos($username, $password)
+    {
+        $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($username, $password);
+
+        $objQuery = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(
+                $this->_name,
+                array(
+                    'usu_codigo',
+                    'usu_nome',
+                    'usu_identificacao',
+                    'usu_senha',
+                    'usu_orgao'
+                ),
+                $this->_schema
+            )
+            ->where('usu_identificacao = ?', $username)
+            ->where('usu_status  = ?', 1)
+            ->where("usu_senha  = ?", $senhaCriptografada);
+        if($this->fetchRow($objQuery)) {
             return true;
         }
     }

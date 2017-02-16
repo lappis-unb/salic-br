@@ -382,5 +382,33 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         $select->order('uog_status DESC');
         return $this->fetchRow($select);
     }
+
+    public function obterGruposPorUsuarioEOrgao($usu_codigo, $usu_orgao) {
+//        select * --grupos.
+//    from tabelas.dbo.UsuariosXOrgaosXGrupos associativa
+//   inner join tabelas.dbo.Grupos grupos on grupos.gru_codigo = associativa.uog_grupo
+
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            array('usuariosOrgaoGrupo' => 'UsuariosXOrgaosXGrupos'),
+            '',
+            $this->_schema
+        );
+        $objQuery->joinInner(
+            array('grupos' => 'Grupos'),
+            'grupos.gru_codigo = usuariosOrgaoGrupo.uog_grupo',
+            'grupos.*',
+            $this->_schema
+        );
+        $objQuery->where('usuariosOrgaoGrupo.uog_usuario = ?', $usu_codigo);
+        $objQuery->where('usuariosOrgaoGrupo.uog_orgao = ?', $usu_orgao);
+        $objQuery->where('usuariosOrgaoGrupo.uog_status = ?', 1);
+        $objQuery->order('grupos.gru_nome ASC');
+        $resultado = $this->fetchAll($objQuery);
+        if($resultado) {
+            return $resultado->toArray();
+        }
+    }
 }
 
