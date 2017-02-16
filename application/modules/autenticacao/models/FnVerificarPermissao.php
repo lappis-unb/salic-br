@@ -35,6 +35,10 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
         $cpfCnpjProponente = 0;
         $permissao = 0;
 
+        $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
+        $PreProjeto = $PreProjeto->buscaCompleta(array('idpreprojeto = ?' => $idPreProjeto));
+        $cpfCnpjProponente = $PreProjeto[0]->CNPJCPF;
+
         //SELECT @CPF_Logado = CPF FROM CONTROLEDEACESSO.dbo.SGCacesso WHERE IdUsuario = @idUsuario_Logado
         $sql = $db->select()
             ->from('sgcacesso', 'cpf', $this->getSchema('controledeacesso'))
@@ -119,7 +123,6 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     ->where('d.visao = 198')
                     ;
                     $dirigenteCpf = $db->fetchRow($sql);
-
                     if (!empty($dirigenteCpf)) {
                        //IF @CPF_Logado = @CPF_Dirigente or @idUsuario_Responsavel = @idUsuario_Logado
                         if ($cpfLogado['cpf'] == $dirigenteCpf['b.cnpjcpf'] || $agente['idusuario'] == $idUsuarioLogado) {

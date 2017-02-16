@@ -37,11 +37,8 @@ class HistoricoInsert extends MinC_Db_Table_Abstract
         );
 
         $objQuery->where('name = ?', 'HISTORICO_INSERT');
-        $resultado = $db->fetchAll($objQuery->assemble());
-
-        $db->closeConnection();
-
-        return $resultado[0]['Habilitado'];
+        $resultado = $db->fetchRow($objQuery->assemble());
+        return $resultado->Habilitado;
     }
 
 }
