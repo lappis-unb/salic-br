@@ -439,8 +439,9 @@ fieldset {
 	border:1px solid #d4d4d4;
 	padding:5px;
 	margin:20px;
-	background:#f8f8f8;
+	background: #bdbdbd;
 }
+
 #miolo .imagem, .miolo .imagem {
 	margin:0 20px 10px 0;
 	padding:5px;
@@ -546,15 +547,15 @@ table caption {
 
 #conteudo table {
 	margin:0 auto;
-	background:#ccc;
+	background: #bfbdc1;
 }
 #conteudo table td {
-	background:url(../img/bg-celulas.gif) repeat-x #fff;
+	background:url(../img/bg-celulas.gif) repeat-x #fdfaff;
 	padding:8px;
 	color:auto;
 }
 #conteudo table tr.linha:hover td {
-	background:#eef8de;
+	background: #f81e30;
 }
 #conteudo table tr.destacar td, table td.destacar {
 	background:#dfefc2;
