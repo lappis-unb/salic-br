@@ -5629,7 +5629,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $a->joinInner(
@@ -5663,7 +5664,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $b->joinInner(
@@ -5707,7 +5709,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $c->joinInner(

@@ -22,24 +22,11 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         if (!empty($idPreProjeto)) {
 
+            $this->_proposta = $this->buscarProposta($idPreProjeto);
+            $this->_proponente = $this->buscarProponente($this->_proposta['idagente']);
+
             $this->view->idPreProjeto = $idPreProjeto;
-
-            $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-
-            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-            $this->_proposta = $tblPreProjeto->buscar($arrBusca)->current();
-
-            if ($this->_proposta) {
-                $this->_proposta = array_change_key_case($this->_proposta->toArray());
-            }
             $this->view->proposta = $this->_proposta;
-
-            $arrBuscaProponete['a.idagente = ?'] = $this->_proposta['idagente'];
-            $tblAgente = new Agente_Model_DbTable_Agentes();
-            $this->_proponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
-            if ($this->_proponente) {
-                $this->_proponente = array_change_key_case($this->_proponente->toArray());
-            }
             $this->view->proponente = $this->_proponente;
 
             $this->view->url = $this->getRequest()->REQUEST_URI;
@@ -79,6 +66,34 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         }
     }
 
+    private function buscarProponente($idAgente)
+    {
+        $tblAgente = new Agente_Model_DbTable_Agentes();
+
+        $proponente = $tblAgente->buscarAgenteENome(array('a.idagente = ?' => $idAgente))->current();
+
+        if ($proponente) {
+            $proponente = array_change_key_case($proponente->toArray());
+
+            return $proponente;
+        }
+
+        return false;
+    }
+
+    private function buscarProposta($idPreProjeto)
+    {
+
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+        $proposta = $tblPreProjeto->buscar(array('idPreProjeto = ?' => $idPreProjeto))->current();
+
+        if ($proposta) {
+            $proposta = array_change_key_case($proposta->toArray());
+            return $proposta;
+        }
+        return false;
+    }
+
     public function isEditarProposta($idPreProjeto)
     {
 
@@ -106,7 +121,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
 
 //        $tblProjetos->verificarLiberacaoParaAdequacao($projeto['IdPRONAC']);
-        if( !$tblProjetos->verificarLiberacaoParaAdequacao($projeto['IdPRONAC']))
+        if (!$tblProjetos->verificarLiberacaoParaAdequacao($projeto['IdPRONAC']))
             return false;
 
         if ($this->contagemRegressivaSegundos($projeto['DtSituacao'], $this->_diasParaAlterarProjeto) < 0)
@@ -611,7 +626,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $salvarPDP = $this->salvarObjetoSerializado($TPD, $idPreProjeto, $bkpPDP);
 
         $PlanoDetalhado = $TPD->buscarPlanoDistribuicaoDetalhadoByIdProjeto($idPreProjeto);
-        $salvarPDPD     = $this->salvarArraySerializado($PlanoDetalhado, $idPreProjeto, $bkpPDPD);
+        $salvarPDPD = $this->salvarArraySerializado($PlanoDetalhado, $idPreProjeto, $bkpPDPD);
 
         # excluir itens atuais
         if ($salvarPDP && $salvarPDPD) {
@@ -639,9 +654,9 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                 }
             }
         }
-        if( $novosDetalhamento ) {
+        if ($novosDetalhamento) {
             # Salva o detalhamento dos produtos
-            foreach( $novosDetalhamento as $detalhamento ) {
+            foreach ($novosDetalhamento as $detalhamento) {
                 unset($detalhamento['idDetalhaPlanoDistribuicao']);
                 $TPDD->insert($detalhamento);
             }
@@ -651,7 +666,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     protected function calcularPercentualCaptado($valorTotal, $valorCaptado)
     {
-        if( empty($valorCaptado) || $valorCaptado <= 0)
+        if (empty($valorCaptado) || $valorCaptado <= 0)
             return 0;
 
         return number_format(($valorCaptado * 100) / $valorTotal, 2, ",", ".");
@@ -659,11 +674,11 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     protected function percentualCaptadoByProposta($idPreProjeto, $idProjeto)
     {
-        if( empty($idProjeto) || empty($idPreProjeto))
+        if (empty($idProjeto) || empty($idPreProjeto))
             return false;
 
         $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-        $total   = $planilhaproposta->somarPlanilhaProposta($idPreProjeto)->toArray();
+        $total = $planilhaproposta->somarPlanilhaProposta($idPreProjeto)->toArray();
 
         $rsProjeto = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => $idProjeto));
 
