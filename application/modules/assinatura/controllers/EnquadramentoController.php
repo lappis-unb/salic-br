@@ -29,9 +29,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->redirect("/{$this->moduleName}/enquadramento/gerenciar-projetos");
     }
 
-    /**
-     * @todo foram comentados os tratamentos de acordo com o pefil, temporariamente
-     */
     public function gerenciarProjetosAction()
     {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
@@ -46,12 +43,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $this->view->idTipoDoAtoAdministrativo = $this->idTipoDoAtoAdministrativo;
     }
 
-    /**
-     * @todo Criar opção de gerar PDF
-     * @todo Criar opção de Imprimir
-     * @todo tratar a exibi&ccedil;&atilde;o dos bot&otilde;es de acordo com a fase do projeto
-     * @todo Dividir cada bloco da camada de apresentação em partials que podem ser adicionadas ou não
-     */
     public function visualizarProjetoAction()
     {
         $get = Zend_Registry::get('get');
@@ -213,9 +204,6 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         }
     }
 
-    /**
-     * @todo Tratar quando receber mais de um número de PRONAC
-     */
     public function assinarProjetoAction()
     {
         $get = Zend_Registry::get('get');
