@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("analise/inc/menu.phtml", $this); ?>
+        <div class="col s10 m10 l10">
+            <h4>Admissibilidade de propostas</h4>
+            <form method="POST" id="formGerarPdf" name="formGerarPdf"
+                  action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>"
+                  target="gerarPDF" style="display:none">
+                <textarea name="html" id="conteudoImprimir"></textarea>
+            </form>
+            <table>
+                <tr>
+                    <td class="center-align">
+                        <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir" name="imprimir"  id="imprimir" type="button">
+                            Imprimir<i class="material-icons right">print</i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <!-- ============ ANALISE Unificada  ============== -->
+            <table class="bordered striped conteudoImprimivel" id="tabelaAnaliseFinal">
+                <thead>
+                <tr>
+                    <th  title="Clique aqui para ordenar">Nr. Proposta</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                if ($propostaFinal->diasCorridos < 11) {
+                    $cor = 'style = "color: #228B22"';
+                } else if ($propostaFinal->diasCorridos > 10 && $propostaFinal->diasCorridos < 21) {
+                    $cor = 'style = "color: #FFD700"';
+                } else {
+                    $cor = 'style = "color: #FF0000"';
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="modalTransformarProposta" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5>Deseja Transformar a proposta Nr. <span id="idPreProjeto"></span>, em Projeto?</h5>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect waves-light "
+                id="botaoTransformarPropostaEmProjeto"
+                type="button">
+            Sim
+        </button>
+        <a class="btn waves-effect waves-dark red-text white modal-close">
+            Cancelar
+        </a>
+    </div>
+</div>
+
+<br clear="all"/>
+<iframe name="gerarPDF" style="display: none;"></iframe>
+
+<input id="PROPOSTA_EM_ANALISE_FINAL" type="hidden" value="<?php echo Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL ?>">
+<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+<script type="text/javascript" >
+    (function ($) {
+        $(document).ready(function () {
+            $('#tabelaAnaliseFinal').DataTable(
+                {
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+                    }
+                    , "lengthChange": true
+                    , "ajax": {
+                    url : "/analise/analise/listar-projetos-ajax",
+                    type: "POST"
+                },
+                    "processing": true,
+                    "serverSide": true,
+                    "columns": [
+                        {
+                            "name": "NomeProjeto",
+                            "data": "NomeProjeto"
+
+                        }
+                    ]
+                }
+            );
+        });
+    }($.noConflict(true)));
+</script>
