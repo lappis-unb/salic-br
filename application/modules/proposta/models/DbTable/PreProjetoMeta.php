@@ -6,7 +6,7 @@
 class Proposta_Model_DbTable_PreProjetoMeta extends MinC_Db_Table_Abstract
 {
     protected $_schema = "sac";
-    protected $_name = "preprojetometa";
+    protected $_name = "tbpreprojetometa";
     protected $_primary = "idPreProjetoMeta";
 
     /**
@@ -27,10 +27,13 @@ class Proposta_Model_DbTable_PreProjetoMeta extends MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->from($this->_name, 'metaValue', $this->_schema)
-            ->where('idPreProjeto = ?', $idPreProjeto)
-            ->where('metaKey = ?', $metaKey)
-            ->order('idPreProjetoMeta DESC')
-            ->limit(1);
+            ->where('idPreProjeto = ?', $idPreProjeto);
+
+        if (!empty($metaKey))
+            $sql->where('metaKey = ?', $metaKey);
+
+        $sql->order('idPreProjetoMeta DESC');
+        $sql->limit(1);
 
         return $db->fetchOne($sql);
     }

@@ -1,9 +1,8 @@
-<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
-<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
 <style>
+
+    body {
+        background: transparent;
+    }
 
     #toast-container div {
         font-weight: bold;
@@ -348,7 +347,7 @@
 
             <div class="clearfix"></div>
             <h5 class="light">Custo por produto</h5>
-            <?php if( $this->restaurarPlanilha) : ?>
+            <?php if( $this->PlanilhaSalvo) : ?>
                 <p class="right-align" style="position: absolute; top: 167px; right: 100px">
                     <a id="btn-restaurar-planilha" class="btn-floating waves-effect waves-light btn tooltipped btn-info" data-tooltip="Restaurar planilha"><i class="material-icons left">restore</i></a>
                 </p>
@@ -489,7 +488,7 @@ $3(document).ready(function () {
     });
     window.dispatchEvent(new Event('resize'));
 
-    <?php if( $this->restaurarPlanilha) : ?>
+    <?php if( $this->PlanilhaSalvo) : ?>
         $3('body').on('click', '#btn-restaurar-planilha', function () {
 
             $3("#msg").html('Tem certeza que deseja restaurar a planilha?\n Esta acao nao podera ser desfeita!');

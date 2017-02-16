@@ -231,4 +231,33 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             throw new Exception($objException->getMessage(), 0, $objException);
         }
     }
+
+    public function buscarPlanoDistribuicaoDetalhadoByIdProjeto($idPreProjeto, $where = array(), $order = null)
+    {
+        $slct = $this->select();
+        $slct->setIntegrityCheck(false);
+        $slct->from(array("p" => $this->_name), array(), $this->_schema);
+
+        $slct->joinInner(array("d" => "tbDetalhaPlanoDistribuicao"),
+            "p.idPlanoDistribuicao = d.idPlanoDistribuicao",
+            '*', $this->_schema);
+
+        $slct->where('p.idProjeto = ?', $idPreProjeto);
+
+        foreach ($where as $coluna => $valor) {
+            $slct->where($coluna, $valor);
+        }
+
+        $slct->order($order);
+
+        try {
+            return $this->fetchAll($slct)->toArray();
+
+        } catch (Exception $e) {
+            echo($slct->assemble());
+            die;
+        }
+    }
+
+
 }

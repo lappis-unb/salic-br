@@ -299,9 +299,9 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             // excluir itens orcamentarios desta abrangencia
             if (!empty($abrangencia)) {
                 $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-                $excluir = $tbPlanilhaProposta->deleteBy(array('idProjeto' => $this->idPreProjeto, 'idEtapa' => 1, 'UfDespesa' => $abrangencia['idUF'], 'MunicipioDespesa' => $abrangencia['idMunicipioIBGE']));
+                $excluir = $tbPlanilhaProposta->deleteBy(array('idProjeto' => $this->idPreProjeto, 'UfDespesa' => $abrangencia['idUF'], 'MunicipioDespesa' => $abrangencia['idMunicipioIBGE']));
 
-                if($excluir) {
+                if ($excluir) {
                     $this->salvarcustosvinculados($this->idPreProjeto);
                 }
             }
@@ -451,31 +451,36 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             if (empty($idAbrangencia)) {
                 $retorno = $tblAbrangencia->insert($dadosAbrangencia);
             } else {
+                $this->atualizarLocaldeRealizacaoDaPlanilha($idAbrangencia, $dadosAbrangencia["iduf"], $dadosAbrangencia["idmunicipioibge"]);
 
-                // buscar municipio e estado desta abrangencia
-                $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
-                $abrangencia = $tblAbrangencia->findby(array('idabrangencia' => $idAbrangencia));
-
-                // atualizar itens orcamentarios desta abrangencia
-                if (!empty($abrangencia)) {
-
-                    $dadosAbrangenciaPlanilha = array(
-                        'UfDespesa' => $dadosAbrangencia["iduf"],
-                        'MunicipioDespesa' => $dadosAbrangencia["idmunicipioibge"]
-                    );
-                    $wherePlanilha = array('idProjeto = ?' => $this->idPreProjeto, 'idEtapa = ?' => 1, 'UfDespesa = ?' => $abrangencia['idUF'], 'MunicipioDespesa = ?' => $abrangencia['idMunicipioIBGE']);
-
-                    $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-                    $retorno = $tbPlanilhaProposta->update($dadosAbrangenciaPlanilha, $wherePlanilha);
-
-                    $msg = "Local de realiza&ccedil;&atilde;o alterado com sucesso!";
-                }
-
+                $msg = "Local de realiza&ccedil;&atilde;o alterado com sucesso!";
                 $whereAbrangencia['idAbrangencia = ?'] = $idAbrangencia;
                 $retorno = $tblAbrangencia->update($dadosAbrangencia, $whereAbrangencia);
             }
-        }
 
-        parent::message($msg, "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
+            parent::message($msg, "/proposta/localderealizacao/index?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
+        }
+    }
+
+    public function atualizarLocaldeRealizacaoDaPlanilha($idAbrangencia, $idUf, $idMunicipio)
+    {
+        // buscar municipio e estado desta abrangencia
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $abrangencia = $tblAbrangencia->findby(array('idabrangencia' => $idAbrangencia));
+
+        // atualizar itens orcamentarios desta abrangencia
+        if (!empty($abrangencia)) {
+
+            $dadosAbrangenciaPlanilha = array(
+                'UfDespesa' => $idUf,
+                'MunicipioDespesa' => $idMunicipio
+            );
+            $wherePlanilha = array('idProjeto = ?' => $this->idPreProjeto, 'UfDespesa = ?' => $abrangencia['idUF'], 'MunicipioDespesa = ?' => $abrangencia['idMunicipioIBGE']);
+
+            $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $retorno = $tbPlanilhaProposta->update($dadosAbrangenciaPlanilha, $wherePlanilha);
+
+            return true;
+        }
     }
 }

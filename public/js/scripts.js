@@ -1130,7 +1130,10 @@ function JSBloquearAlteracaoFormulario()
         $(this).replaceWith("<input type='button' class='btn_aprovar-off' name='btn_desabilitado' id='btn_desabilitado'>");
    });
 
-    $('form').find('input, textarea, button, select').attr('disabled','disabled');
+    $('form').find('input, textarea, button, select, .btn').attr('disabled','disabled');
+
+    $('.coll-produto').find('.btn').attr('disabled','disabled');
+
 }
 
 
