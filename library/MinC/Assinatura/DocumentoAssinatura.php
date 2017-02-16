@@ -1,15 +1,23 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: vinnyfs89
- * Date: 08/02/17
- * Time: 11:48
- *
- * @todo Tentar criar namespaces usando o composer.
- */
 class MinC_Assinatura_DocumentoAssinatura
 {
+    public function criarDocumentoAssinatura($idPronac, $idTipoDoAtoAdministrativo)
+    {
+        $auth = Zend_Auth::getInstance();
+
+        $conteudo = $this->gerarConteudo($idPronac, $idTipoDoAtoAdministrativo);
+
+        $dadosDocumentoAssinatura = array(
+            'IdPRONAC' => $idPronac,
+            'idTipoDoAtoAdministrativo' => $idTipoDoAtoAdministrativo,
+            'conteudo' => $conteudo,
+            'idCriadorDocumento' => $auth->getIdentity()->usu_codigo
+        );
+        $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
+        $objModelDocumentoAssinatura->inserir($dadosDocumentoAssinatura);
+    }
+
     public function gerarConteudo($idPronac, $idTipoDoAto)
     {
         $view = new Zend_View();
@@ -36,51 +44,20 @@ class MinC_Assinatura_DocumentoAssinatura
         $view->areaCultural = $mapperArea->findBy(array(
             'Codigo' => $view->projeto['Area']
         ));
-
         $objSegmentocultural = new Segmentocultural();
-        $view->segmentoCultural = $objSegmentocultural->findBy(array(
-            'Codigo' => $view->projeto['Segmento']
-        ));
-
-        $objPlanoDistribuicaoProduto = new Projeto_Model_vwPlanoDeDistribuicaoProduto();
-        $view->dadosProducaoProjeto = $objPlanoDistribuicaoProduto->obterProducaoProjeto(array(
-            'IdPRONAC = ?' => $idPronac
-        ));
-
-        $objEnquadramento = new Admissibilidade_Model_Enquadramento();
-        $arrayPesquisa = array(
-            'AnoProjeto' => $view->projeto['AnoProjeto'],
-            'Sequencial' => $view->projeto['Sequencial'],
-            'IdPRONAC' => $idPronac
+        $view->segmentoCultural = $objSegmentocultural->findBy(
+            array(
+                'Codigo' => $view->projeto['Segmento']
+            )
         );
-
-        $view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
         $view->titulo = $this->obterTituloPorTipoDoAto($idTipoDoAto);
-
-        $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-        $view->assinaturas = $objAssinatura->obterAssinaturas($idPronac, $idTipoDoAto);
-
-        $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-        $view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($idTipoDoAto);
-
-        $this->view->valoresProjeto = $objProjeto->obterValoresProjeto($idPronac);
+        $view->valoresProjeto = $objProjeto->obterValoresProjeto($idPronac);
+        $view->templateTipoDocumento = $this->carregarTemplatePorTipoDoAto(
+            $idTipoDoAto,
+            $idPronac
+        );
 
         return $view->render('documento-assinatura.phtml');
-    }
-
-    public function criarDocumentoAssinatura($idPronac, $idTipoDoAtoAdministrativo)
-    {
-        $auth = Zend_Auth::getInstance();
-
-        $conteudo = $this->gerarConteudo($idPronac, $idTipoDoAtoAdministrativo);
-        $dadosDocumentoAssinatura = array(
-            'IdPRONAC' => $idPronac,
-            'idTipoDoAtoAdministrativo' => $idTipoDoAtoAdministrativo,
-            'conteudo' => $conteudo,
-            'idCriadorDocumento' => $auth->getIdentity()->usu_codigo
-        );
-        $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
-        $objModelDocumentoAssinatura->inserir($dadosDocumentoAssinatura);
     }
 
     protected function obterTituloPorTipoDoAto($idTipoDoAto)
@@ -96,5 +73,42 @@ class MinC_Assinatura_DocumentoAssinatura
         }
 
         return $titulo;
+    }
+
+    public function carregarTemplatePorTipoDoAto($idTipoDoAto, $idPronac)
+    {
+        switch ($idTipoDoAto) {
+            case Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO:
+                return $this->carregarTemplateEnquadramento($idPronac);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private function carregarTemplateEnquadramento($idPronac) {
+        $view = new Zend_View();
+        $view->setScriptPath(APPLICATION_PATH . '/../library/MinC/Assinatura/templates/tipo_documento');
+
+        $objPlanoDistribuicaoProduto = new Projeto_Model_vwPlanoDeDistribuicaoProduto();
+        $view->dadosProducaoProjeto = $objPlanoDistribuicaoProduto->obterProducaoProjeto(array(
+            'IdPRONAC = ?' => $idPronac
+        ));
+
+        $objProjeto = new Projeto_Model_DbTable_Projetos();
+        $dadosProjeto = $objProjeto->findBy(array(
+            'IdPRONAC' => $idPronac
+        ));
+
+        $objEnquadramento = new Admissibilidade_Model_Enquadramento();
+        $arrayPesquisa = array(
+            'AnoProjeto' => $dadosProjeto['AnoProjeto'],
+            'Sequencial' => $dadosProjeto['Sequencial'],
+            'IdPRONAC' => $idPronac
+        );
+
+        $view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+
+        return $view->render('enquadramento.phtml');
     }
 }
