@@ -599,10 +599,10 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, 109);
-            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, false, 109);
+            $outrasfontes = $planilhaproposta->somarPlanilhaProposta($this->idPreProjeto, false, 109);
 
-            $this->view->valorsolicitadoincentivo = !empty( $fonteincentivo['soma'] ) ? $fonteincentivo['soma'] : 0;
-            $this->view->valoroutrasfontes = !empty( $outrasfontes['soma'] ) ? $outrasfontes['soma'] : 0;
+            $this->view->valorsolicitadoincentivo = !empty($fonteincentivo['soma']) ? $fonteincentivo['soma'] : 0;
+            $this->view->valoroutrasfontes = !empty($outrasfontes['soma']) ? $outrasfontes['soma'] : 0;
         }
 
     }
@@ -646,9 +646,9 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $idPreProjeto = $params['idPreProjeto'];
 
-        if( empty($idPreProjeto)) {
+        if (empty($idPreProjeto)) {
             parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
-       }
+        }
 
         $validacao = new stdClass();
         $listaValidacao = array();
@@ -687,9 +687,10 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 }
             }
 
-            if  ( $params['confirmarenvioaominc']==true) {
-                if ( $validado ) {
-                     # Consultar percentual de valor captado
+            if ($params['confirmarenvioaominc'] == true) {
+                if ($validado) {
+
+                    # Consultar percentual de valor captado
                     $percentualCaptado = $this->percentualCaptadoByProposta($idPreProjeto, $idPronac);
 
                     if ($percentualCaptado >= 20) {
@@ -698,8 +699,15 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                         $situacao = 'E12';
                     }
 
+                    if ($projeto['area'] == 2) {
+                        $orgaoUsuario = 171;
+                    } else {
+                        $orgaoUsuario = 262;
+                    }
+
                     $tblSituacao = new Situacao();
                     $rsSituacao = $tblSituacao->buscar(array('Codigo=?' => $situacao))->current();
+
                     if (!empty($rsSituacao)) {
                         $providencia = $rsSituacao->Descricao;
                     }
@@ -707,8 +715,11 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                     # alterar a situacao do projeto
                     $tblProjetos->alterarSituacao($idPronac, '', $situacao, $providencia);
 
+                    $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
+                    $tbAvaliacao->inserirAvaliacao($idPronac, $orgaoUsuario);
+
                     parent::message("Projeto encaminhado com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/listarprojetos/listarprojetos", "CONFIRM");
-                }else {
+                } else {
                     parent::message("Alguns erros encontrados no envio do projeto", "/proposta/manterpropostaincentivofiscal/encaminharprojetoaominc/idPreProjeto/" . $idPreProjeto, "ERROR");
                 }
             }
@@ -732,7 +743,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         $this->verificarPermissaoAcesso(true, false, false);
 
-        if($this->isEditarProjeto){
+        if ($this->isEditarProjeto) {
             parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
 
