@@ -236,10 +236,9 @@ if ($this->isEditavel) {
     }
 
     $(document).ready(function () {
-
         <?php if (!$this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
-        JSBloquearAlteracaoFormulario();
+             JSBloquearAlteracaoFormulario();
 
             $("textarea.editor").each(function () {
                 $(this).editorRico({
@@ -248,7 +247,6 @@ if ($this->isEditavel) {
             });
 
         <?php endif; ?>
-
         $('.planilha').click(function () {
             $(this).next().toggle('fast');
         });
@@ -344,6 +342,31 @@ if ($this->isEditavel) {
 
         return false;
     }
+
+    function JSPrazoDeAlterarExpirado() {
+        var text = 'O prazo para alterar o projeto expirou!';
+
+        $('<div id="modalEnviarProposta"></div>').appendTo($("#left-sidebar-nav")).html(text)
+
+        $("#modalEnviarProposta").dialog("destroy");
+        $("#modalEnviarProposta").dialog
+        ({
+            width: 450,
+            height: 200,
+            position: 'center',
+            EscClose: false,
+            modal: true,
+            buttons: {
+                'OK': function () {
+                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterorcamento/produtoscadastrados/idPreProjeto/<?php echo $idPreProjeto; ?>";
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        return false;
+    }
+
     <?php if( isset($this->layout['prazoAlterarProjeto'])) : ?>
         var segundos = new Number();
         var segundos = <?php print $this->layout['prazoAlterarProjeto']; ?>;
@@ -351,6 +374,7 @@ if ($this->isEditavel) {
 
     function contagemregressiva()
     {
+
         if( ( segundos - 1 ) >= 0 )
         {
             segundos = segundos - 1;
@@ -375,6 +399,8 @@ if ($this->isEditavel) {
             }
             else
             {
+                JSPrazoDeAlterarExpirado();
+                JSBloquearAlteracaoFormulario();
                 cronometro.innerText = 'Alterar projeto encerrado';
             }
             setTimeout( 'contagemregressiva()', 1000 );

@@ -1457,7 +1457,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
         $agentes = new Agente_Model_DbTable_Agentes();
 
         $whereAgente = array('a.idAgente = ?' => $idAgente[0]);
-        $dadosAgente = $agentes->buscarAgenteNome($whereAgente);
+        $dadosAgente = $agentes->buscarAgenteENome($whereAgente);
 
         $nomeParecerista = $dadosAgente[0]->Descricao;
         $cpfParecerista = $dadosAgente[0]->CNPJCPF;

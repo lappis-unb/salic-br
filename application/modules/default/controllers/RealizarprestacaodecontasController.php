@@ -984,7 +984,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $rsAgente = $tblAgente->buscar(array("CNPJCPF = ? "=>$rsProjeto[0]->CgcCpf))->current();
 
             if(!empty($rsAgente)){
-                $nomeProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsAgente->idAgente))->current();
+                $nomeProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsAgente->idAgente))->current();
             }
             if(!empty($nomeProponente)){
                 $nomeProponente = $nomeProponente->Descricao;
@@ -1000,9 +1000,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $rsParecerChefe   = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>132))->current();
             $rsParecerCoord   = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>125))->current();
 
-            $nomeTecnico = (!empty($rsParecerTecnico)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerTecnico->idAgente))->current() : '';
-            $nomeChefe   = (!empty($rsParecerChefe)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerChefe->idAgente))->current() : '';
-            $nomeCoord   = (!empty($rsParecerCoord)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerCoord->idAgente))->current() : '';
+            $nomeTecnico = (!empty($rsParecerTecnico)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerTecnico->idAgente))->current() : '';
+            $nomeChefe   = (!empty($rsParecerChefe)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerChefe->idAgente))->current() : '';
+            $nomeCoord   = (!empty($rsParecerCoord)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerCoord->idAgente))->current() : '';
 
             if(is_object($rsParecerTecnico)){
                 $this->view->parecerTecnico = $rsParecerTecnico;

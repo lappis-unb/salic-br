@@ -3048,7 +3048,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                 $this->view->valorparecerista = $parecerista['soma'];
 
-                $tbEnquadramento    = new Enquadramento();
+                $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                 $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                 if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){
@@ -4290,7 +4290,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                             }
 
-                            $tbEnquadramento    = new Enquadramento();
+                            $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                             $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                             if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){
@@ -5112,7 +5112,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                             }
 
-                            $tbEnquadramento    = new Enquadramento();
+                            $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                             $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                             if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){

@@ -89,7 +89,7 @@
                 /***********************************************************************************/
 
                 /** Verificar se o Produto principal já foi dado a consolidação ********************/
-                $enquadramentoDAO 		= new Enquadramento();
+                $enquadramentoDAO 		= new Admissibilidade_Model_Enquadramento();
                 $buscaEnquadramento 	= $enquadramentoDAO->buscarDados($d->IdPRONAC, null, false);
                 $countEnquadramentoP 	= count($buscaEnquadramento);
 

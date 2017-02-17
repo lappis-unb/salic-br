@@ -83,9 +83,9 @@
   color: #8b1014 !important;
 }
 
-.red {
+/*.red {
   background-color: #F44336 !important;
-}
+}*/
 
 .red-text {
   color: #F44336 !important;
@@ -643,9 +643,9 @@
   color: #304ffe !important;
 }
 
-.blue {
+/*.blue {
   background-color: #2196F3 !important;
-}
+}*/
 
 .blue-text {
   color: #2196F3 !important;
@@ -1091,9 +1091,9 @@
   color: #00bfa5 !important;
 }
 
-.green {
+/*.green {
   background-color: #4CAF50 !important;
-}
+}*/
 
 .green-text {
   color: #4CAF50 !important;
@@ -1651,9 +1651,9 @@
   color: #ffab00 !important;
 }
 
-.orange {
+/*.orange {
   background-color: #ff9800 !important;
-}
+}*/
 
 .orange-text {
   color: #ff9800 !important;
@@ -2115,9 +2115,9 @@
   color: #212121 !important;
 }
 
-.black {
+/*.black {
   background-color: #000000 !important;
-}
+}*/
 
 .black-text {
   color: #000000 !important;
@@ -2525,13 +2525,17 @@ optgroup {
  * Remove most spacing between table cells.
  */
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
+ /* border-collapse: collapse;
+  border-spacing: 0;*/
+
 }
 
-td,
-th {
-  padding: 0;
+table th {
+  background:#abda5d;
+  padding:8px;
+  color:#3a7300;
+  text-transform:uppercase;
+  font-size:11px;
 }
 
 html {
@@ -2879,14 +2883,18 @@ footer.page-footer .footer-copyright {
   background-color: rgba(51, 51, 51, 0.08);
 }
 
-table, th, td {
-  border: none;
-}
+/*  background: #abda5d;
+  padding: 8px;
+  color: #3a7300;
+  text-transform: uppercase;
+  font-size: 11px;
+}*/
 
 table {
-  width: 100%;
-  display: table;
+  margin: 0 auto;
+  background: #cccace;
 }
+
 
 table.bordered > thead > tr,
 table.bordered > tbody > tr {
@@ -2918,11 +2926,10 @@ thead {
 }
 
 td, th {
-  padding: 15px 5px;
-  display: table-cell;
-  text-align: left;
-  vertical-align: middle;
-  border-radius: 2px;
+  background:url(../img/bg-celulas.gif) repeat-x #ffffff;
+  padding:8px;
+  color:auto;
+
 }
 
 @media only screen and (max-width: 992px) {
