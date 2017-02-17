@@ -2369,10 +2369,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if ($this->idPerfil == 93) {
             $busca = $tbReadequacao->painelReadequacoesCoordenadorParecer($where, $order, $tamanho, $inicio, false, $filtro);
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
-            // t�cnico de acompanhamento ou parecerista de vinculada
+             // tecnico de acompanhamento ou parecerista de vinculada
             $busca = $tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where, $order, $tamanho, $inicio, false);
         }
-
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,
