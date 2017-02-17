@@ -100,7 +100,6 @@ Vue.component('my-component', {
         },
         //Preço Popular: Valor da inteira
         vlReceitaPopularIntegral: function() {
-            //console.log(this.qtPopularIntegral, this.vlUnitarioPopularIntegral);
             return parseInt(this.qtPopularIntegral) * parseFloat(this.vlUnitarioPopularIntegral);
         },
         vlReceitaPopularParcial: function() {
@@ -321,7 +320,7 @@ Vue.component('my-component', {
             $3.ajax({
                 type: "POST",
                 url: "/proposta/plano-distribuicao/detalhar-excluir/idPreProjeto/" + this.idpreprojeto,
-                data: {idDetalhaPlanoDistribuicao: index},
+                data: {idDetalhaPlanoDistribuicao: index, idPlanoDistribuicao: this.idplanodistribuicao},
             })
             .done(function() {
                 alert("Excluido com sucesso");
