@@ -18,6 +18,7 @@ Nome                              |  E-mail                          |  Cargo   
 Equipe Rup                        |           ?                      |            ?                 |      ?          | ~2010          | Equipe Politec
 tisomar                           |           ?                      |            ?                 |      ?          | ~2010          | Equipe Politec
 Jose Augusto                      |           ?                      |            ?                 |      ?          | ~2010          | Equipe Politec
+Jefferson Alessandro              |           ?                      |            ?                 |      ?          | ~2010          | Equipe Politec
 Guilherme Adler                   | guiadler@hotmail.com             | Estagiário - Desenvolvimento | 18/07/2016      | Atuando        | Estagiário do MINC
 Paulo Henrique                    | paulo.mendes00@hotmail.com       | Estagiário - Desenvolvimento | 01/11/2016      | Atuando        | Estagiário do MINC
 Pedro Philipe                     | pedrophilipe.ti@gmail.com        | Estagiário - Desenvolvimento | 20/10/2015      | Atuando        | Estagiário do MINC
