@@ -51,22 +51,20 @@
             <th>NOME</th>
             <th width="120">AÇÃO</th>
         </tr>	
-        <?php foreach ($this->dirigentes as $d): ?>
+        <?php
+        if(count($this->dirigentes) > 0):
+            foreach ($this->dirigentes as $d):
+        ?>
             <tr>
                 <td align="center"><a href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'visualizadirigente', 'id' => $this->id, 'idDirigente' => $d->idAgente)); ?>"><?php echo Mascara::addMaskCpf($d->CNPJCPF); ?></a></td>
                 <td><?php echo $d->Nome; ?></td>
                 <td align="center"><input type="button" class="btn_exclusao" value=" " onclick="confirmaExclusao('Deseja realmente desvincular o dirigente?', '<?php echo $this->url(array("controller" => "alterarprojeto", "action" => "desvinculadirigente", "id" => $this->id, 'idDirigente' => $d->idAgente)); ?>');" /></td>
             </tr>	
-        <?php endforeach; ?>
+        <?php
+            endforeach;
+        endif;
+        ?>
     </table>
-
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
-
-
-
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
-
 <br clear="all" />
