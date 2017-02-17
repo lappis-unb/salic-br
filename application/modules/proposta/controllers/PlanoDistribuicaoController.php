@@ -50,6 +50,18 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
 
     public function indexAction()
     {
+        $this->view->localRealizacao = true;
+
+        $arrBusca = array();
+        $arrBusca['idprojeto'] = $this->_idPreProjeto;
+        $arrBusca['stabrangencia'] = 1;
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
+
+        if (empty($rsAbrangencia)) {
+            $this->view->localRealizacao = false;
+        }
+
         $pag = 1;
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
