@@ -36,7 +36,7 @@
             } else {
 
                 $("#alerta").dialog("destroy");
-                $("#alerta").html('Deseja realmente enviar a solicita��o para o parecerista?');
+                $("#alerta").html('Deseja realmente enviar a solicita&ccedil;&atilde;o para o parecerista?');
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -51,7 +51,14 @@
                             $(this).dialog('close');
                             $.ajax({
                                 type: 'POST',
-                                url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'encaminhar-readequacao'), '', true); ?>',
+                                url: '<?php echo $this->url(
+                                    array(
+                                        'controller' => 'readequacoes',
+                                        'action' => 'encaminhar-readequacao'
+                                    ),
+                                    '',
+                                    true
+                                ); ?>',
                                 data: {
                                     parecerista: parecerista,
                                     idDistRead: idDistRead,
@@ -70,7 +77,7 @@
                                         $('.ui-dialog-titlebar-close').remove();
                                         window.setTimeout('location.reload()', 1000);
                                     } else {
-                                        alertaModal("N�o foi poss�vel encaminhar a readequa��o.");
+                                        alertaModal("N&atilde;o foi poss�vel encaminhar a readequa&ccedil;&atilde;o.");
                                     }
                                 },
                                 dataType : 'json'
@@ -87,7 +94,7 @@
                 idReadequacao = $(this).attr('idReadequacao');
 
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente finalizar a an�lise da readequa��o?<br /><br />Ao finalizar a readequa��o ser� devolvida ao MinC.');
+            $("#alerta").html('Deseja realmente finalizar a an&aacute;lise da readequa&ccedil;&atilde;o?<br /><br />Ao finalizar a readequa&ccedil;&atilde;o ser&aacute; devolvida ao MinC.');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -100,7 +107,14 @@
                     'Sim' : function(){
                         $.ajax({
                             type: 'POST',
-                            url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'coord-parecer-finalizar-readequacao'), '', true); ?>',
+                            url: '<?php echo $this->url(
+                                array(
+                                    'controller' => 'readequacoes',
+                                    'action' => 'coord-parecer-finalizar-readequacao'
+                                ),
+                                '',
+                                true
+                            ); ?>',
                             data: {
                                 idDistProj: idDistProj,
                                 idReadequacao: idReadequacao
@@ -118,7 +132,7 @@
                                     $('.ui-dialog-titlebar-close').remove();
                                     window.setTimeout('location.reload()', 1000);
                                 } else {
-                                    alertaModal("N�o foi poss�vel finalizar a readequa��o.");
+                                    alertaModal("N&atilde;o foi poss�vel finalizar a readequa��o.");
                                 }
                             },
                             dataType : 'json'
@@ -132,7 +146,12 @@
 
         $('.avaliacaoParecerista').click(function(){
             var id = $(this).attr('idReadequacao');
-            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'form-avaliar-readequacao')); ?>?id="+id;
+            window.location = "<?php echo $this->url(
+                array(
+                    'controller' => 'readequacoes',
+                    'action' => 'form-avaliar-readequacao'
+                )
+            ); ?>?id="+id;
         });
 
         $('.imgRegularidade').click(function(){
@@ -146,29 +165,28 @@
     });
 </script>
 
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="alerta" class="sumir"></div>
 
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In�cio">In�cio</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In�cio">In&iacute;cio</a></li>
         <li>Avaliar Readequa&ccedil;&otilde;es</li>
-        <li class="last"><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando An�lise'; ?></li>
+        <li class="last"><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando An&aacute;lise'; ?></li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-
-<!-- ========== IN�CIO T�TULO ========== -->
 <div id="titulo">
-    <div><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando An�lise'; ?></div>
+    <div><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando An&aacute;lise'; ?></div>
 </div>
 
-
-<!-- ========== IN�CIO CONTE�DO ========== -->
 <div id="conteudo">
     <?php if($this->idPerfil == 93){ ?>
-    <form name="formPesquisa" id="formPesquisa" action="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes'));?>" method="get">
+    <form name="formPesquisa" id="formPesquisa" action="<?php echo $this->url(
+        array(
+            'controller' => 'readequacoes',
+            'action' => 'painel-readequacoes'
+        )
+    );?>" method="get">
         <table class="tabela">
             <tr>
                 <th colspan="2">Filtro de Pesquisa</th>
@@ -177,7 +195,7 @@
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
                 <td>
                     <select name="tipoFiltro" style="width: 160px;" class="input_simples">
-                        <option value="">Aguardando An�lise</option>
+                        <option value="">Aguardando An&aacute;lise</option>
                         <option value="analisados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='analisados')?'selected="selected"':''; ?>>Analisados</option>
                     </select>
                     <input type="button" name="btn_pesquisar" id="btn_pesquisar" class="btn_pesquisar" value="" style="margin-left: 10px;">
