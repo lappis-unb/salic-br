@@ -180,7 +180,7 @@ gerarBreadCrumb($links);
                     <tr>
                         <td>
                             <?php if (!empty($projetos->idProjeto)) : ?>
-                                <?php if ($projetos->Situacao == 'E90') :  ?>
+                                <?php if ($projetos->LiberarEdicao) :  ?>
                                     <a class="btn small waves-effect waves-light tooltipped btn-primary"
                                        data-tooltip="Alterar projeto" target="_blank"
                                        href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $projetos->idProjeto)); ?>">

@@ -21,7 +21,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
 
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Enquadramento();
+        $enquadramento = new Admissibilidade_Model_Enquadramento();
 
         $this->view->dados = array();
         $ordenacao = array("projetos.DtSituacao asc");
@@ -88,7 +88,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
             $get = $this->getRequest()->getParams();
             $authIdentity = array_change_key_case((array)$auth->getIdentity());
-            $objEnquadramento = new Enquadramento();
+            $objEnquadramento = new Admissibilidade_Model_Enquadramento();
             $arrayDadosEnquadramento = $objEnquadramento->findBy(array('IdPRONAC = ?'=>$projeto['IdPRONAC']));
             $arrayArmazenamentoEnquadramento = array(
                 'AnoProjeto' => $projeto['AnoProjeto'],
@@ -100,7 +100,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 'IdPRONAC' => $get['IdPRONAC']
             );
 
-            $objEnquadramento = new Enquadramento();
+            $objEnquadramento = new Admissibilidade_Model_Enquadramento();
             if(!$arrayDadosEnquadramento) {
                 $objEnquadramento->inserir($arrayArmazenamentoEnquadramento);
             } else {
@@ -182,7 +182,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             throw new Exception("N&atilde;o foram encontradas Segmentos Culturais para o PRONAC informado.");
         }
 
-        $objEnquadramento = new Enquadramento();
+        $objEnquadramento = new Admissibilidade_Model_Enquadramento();
         $arrayPesquisa = array(
             'AnoProjeto' => $projeto['AnoProjeto'],
             'Sequencial' => $projeto['Sequencial'],
@@ -220,35 +220,43 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     private function encaminharProjetoEnquadradoParaAssinatura($IdPRONAC) {
 
-        $objProjeto = new Projetos();
-        $projeto = $objProjeto->findBy(array('IdPRONAC' => $IdPRONAC));
+        $objTbProjetos = new Projeto_Model_DbTable_Projetos();
+        $dadosProjeto = $objTbProjetos->findBy(array('IdPRONAC' => $IdPRONAC));
 
-        if(!$projeto) {
+        if(!$dadosProjeto) {
             throw new Exception("Projeto n&atilde;o encontrado.");
         }
 
-        if($projeto['Situacao'] != 'B02' && $projeto['Situacao'] != 'B03') {
+        if($dadosProjeto['Situacao'] != 'B02' && $dadosProjeto['Situacao'] != 'B03') {
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
         $auth = Zend_Auth::getInstance();
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
-        $objProjeto = new Projetos();
-        $arrayDadosProjeto = array(
-            'Situacao' => 'B04',
-            'DtSituacao' => $objProjeto->getExpressionDate(),
-            'ProvidenciaTomada' => 'Projeto encamihado para Portaria.',
-            'logon' => $authIdentity['usu_codigo'],
-            'Orgao' => $orgaoDestino
+
+        $objDocumentoAssinatura = new MinC_Assinatura_DocumentoAssinatura();
+        $idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
+        $objDocumentoAssinatura->criarDocumentoAssinatura(
+            $IdPRONAC,
+            $idTipoDoAtoAdministrativo,
+            $authIdentity['usu_codigo']
         );
 
-        $arrayWhere = array('IdPRONAC = ?' => $projeto['IdPRONAC']);
-        $objProjeto->update($arrayDadosProjeto, $arrayWhere);
+        $objProjeto = new Projetos();
+        $objProjeto->alterarSituacao($dadosProjeto['IdPRONAC'], null, 'B04', 'Projeto encamihado para Portaria.');
+
+        $orgaoDestino = 166;
+        $objOrgaos = new Orgaos();
+        $dadosOrgaoSuperior = $objOrgaos->obterOrgaoSuperior($dadosProjeto['Orgao']);
+        if ($dadosOrgaoSuperior['Codigo'] == Orgaos::ORGAO_SUPERIOR_SEFIC) {
+            $orgaoDestino = 262;
+        }
+        $objTbProjetos->alterarOrgao($orgaoDestino, $dadosProjeto['IdPRONAC']);
     }
 
     private function carregarListaEncaminhamentoPortaria() {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Enquadramento();
+        $enquadramento = new Admissibilidade_Model_Enquadramento();
 
         $this->view->dados = array();
         $ordenacao = array("dias desc");
@@ -257,7 +265,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $this->view->codOrgao = $this->grupoAtivo->codOrgao;
     }
 
-   //@TODO TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL
+   /**
+    * @todo TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL
+    */
     public function desistenciaRecursalAction()
     {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
@@ -266,7 +276,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$GrupoAtivo->codOrgao))->current();
 
         $area = 1;
-        if($idSecretaria->idSecretaria == 160){
+        if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SAV){
             $area = 2;
         }
 
@@ -303,6 +313,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $recurso->save();
 
-        parent::message('Projeto enviado para portaria.', "/admissibilidade/enquadramento/desistencia-recursal");
+        parent::message('Projeto enviado para portaria.', "/admissibilidade/enquadramento/desistencia-recursal", 'CONFIRM');
     }
 }

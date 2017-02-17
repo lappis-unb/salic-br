@@ -190,7 +190,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
         $where = array('a.CNPJCPF = ?' =>$CgcCpf);
 
-        $agente = $agentes->buscarAgenteNome($where)->toArray();
+        $agente = $agentes->buscarAgenteENome($where)->toArray();
 
         if(count($agente) == 0 ){
             echo json_encode(array('agente'=>false));

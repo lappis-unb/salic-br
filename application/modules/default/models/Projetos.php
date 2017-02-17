@@ -1,13 +1,7 @@
 <?php
 
-/**
- * Description of Projetos
- *
- * @author augusto
- */
 class Projetos extends MinC_Db_Table_Abstract
 {
-
     protected $_name = 'projetos';
     protected $_schema = 'sac';
     protected $_primary = 'IdPRONAC';
@@ -2652,7 +2646,9 @@ class Projetos extends MinC_Db_Table_Abstract
 
         // grava no hist?rico a situa??o atual do projeto caso a trigger HISTORICO_INSERT esteja desabilitada
         $HistoricoInsert = new HistoricoInsert();
+
         if ($HistoricoInsert->statusHISTORICO_INSERT() == 1) { // desabilitada
+
             // busca a situa??o atual do projeto
             $p = $this->buscarSituacaoAtual($idPronac, $pronac);
 
@@ -2726,7 +2722,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from($this->_name, "(AnoProjeto+Sequencial) AS pronac");
 
-// busca pelo id pronac
         if (!empty($idPronac)) {
             $select->where("IdPRONAC = ?", $idPronac);
         }
@@ -2740,7 +2735,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from($this->_name, array("AnoProjeto", "Sequencial"));
 
-// busca pelo id pronac
         if (!empty($idPronac)) {
             $select->where("IdPRONAC = ?", $idPronac);
         }
@@ -2748,7 +2742,6 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchRow($select);
     }
 
-// fecha m?todo buscarPronac()
 
     /**
      * M?todo para buscar o idPronac de acordo com um pronac
@@ -2762,7 +2755,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from($this->_name, "idpronac");
 
-// busca pelo pronac
         if (!empty($pronac)) {
             $select->where("(anoprojeto " . parent::getConcatExpression() . " sequencial) = ?", $pronac);
 //            $select->where("(anoprojeto+sequencial) = ?", $pronac);
@@ -2779,8 +2771,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where("(AnoProjeto+Sequencial) = ?", $pronac);
         return $this->fetchAll($select);
     }
-
-// fecha m?todo buscarIdPronac()
 
     /**
      * M?todo para buscar os projetos para solicita??o de recurso (UC33)
@@ -3805,7 +3795,7 @@ class Projetos extends MinC_Db_Table_Abstract
                         sac.dbo.fnCustoProjeto (pr.AnoProjeto,pr.Sequencial) as ValorCaptado,
                         CASE
                             WHEN inab.Habilitado = 'S' THEN 'Sim'
-                            WHEN inab.Habilitado = 'N' THEN 'N�o'
+                            WHEN inab.Habilitado = 'N' THEN 'N&atilde;o'
                             WHEN inab.Habilitado = '' THEN 'Sim'
                             WHEN inab.Habilitado is null THEN 'Sim'
                         END AS Habilitado, pr.Situacao, si.Descricao AS dsSituacao
@@ -5639,7 +5629,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $a->joinInner(
@@ -5673,7 +5664,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $b->joinInner(
@@ -5717,7 +5709,8 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFimExecucao as DtFinalDeExecucao',
                 'Mecanismo',
                 'idProjeto',
-                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac')
+                New Zend_Db_Expr('a.AnoProjeto + a.Sequencial as Pronac'),
+                New Zend_Db_Expr('dbo.fnChecarLiberacaoDaAdequacaoDoProjeto(a.IdPRONAC) as LiberarEdicao')
             )
         );
         $c->joinInner(
@@ -6014,7 +6007,8 @@ class Projetos extends MinC_Db_Table_Abstract
                             s.Descricao as Segmento, p.Mecanismo as idMecanismo, m.Descricao as Mecanismo,p.Situacao + ' - ' + si.Descricao as Situacao,
                             convert(varchar(10),DtSituacao,103) as DtSituacao,
                             CAST(p.ProvidenciaTomada AS TEXT) AS ProvidenciaTomada,
-                            isnull(sac.dbo.fnValorDaProposta(idProjeto),sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)) as ValorProposta,
+                            isnull(sac.dbo.fnValorDaProposta(idProjeto),
+                            sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)) as ValorProposta,
                             sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial) as ValorSolicitado,
                             sac.dbo.fnOutrasFontes(p.idPronac) as OutrasFontes,
                             case
@@ -7312,7 +7306,6 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-
     public function obterInteressadoProjeto($idPronac) {
 
         $objQuery = $this->select();
@@ -7331,6 +7324,12 @@ class Projetos extends MinC_Db_Table_Abstract
         $objQuery->where('Projetos.IdPRONAC = ?', $idPronac);
 
         return $this->_db->fetchRow($objQuery);
+    }
+
+    public function verificarLiberacaoParaAdequacao($idPronac){
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchOne('select sac.dbo.fnChecarLiberacaoDaAdequacaoDoProjeto (?)', $idPronac);
     }
 
 }

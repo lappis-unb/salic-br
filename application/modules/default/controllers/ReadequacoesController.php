@@ -2559,7 +2559,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $Projetos = new Projetos();
             $Projetos->update($d, $where);
 
-            $enquadramentoDAO = new Enquadramento();
+            $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
             $buscaEnquadramento = $enquadramentoDAO->buscarDados($idPronac, null, false);
 
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
@@ -2932,7 +2932,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         try {
 
             $Projetos = new Projetos();
-            $enquadramentoDAO = new Enquadramento();
+            $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
             $buscaEnquadramento = $enquadramentoDAO->buscarDados($idPronac, null, false);
 
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));

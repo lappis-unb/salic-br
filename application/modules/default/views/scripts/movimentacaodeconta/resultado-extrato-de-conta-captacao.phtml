@@ -21,7 +21,7 @@
             $('#addCampoXls').remove();
             $('#formImpressao').submit();
         });
-        
+
         $('.btn_xls').click(function(){
             $('#addCampoXls').remove();
             $('#formImpressao').append('<input id="addCampoXls" type="hidden" name="xls" value="1">');
@@ -119,10 +119,8 @@
     });
 </script>
 
-
 <div id="msgAlerta"></div>
 
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'), '', true); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -130,21 +128,14 @@
         <li class="last">Transfer&ecirc;ncia de Recurso</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-
-<!-- ========== IN�CIO T�TULO ========== -->
 <div id="titulo">
     <div>Transfer&ecirc;ncia de Recurso <!--<span class="voltar"><a href="<?php //echo $this->url(array('controller'=>'movimentacaodeconta', 'action'=>'form-extrato-de-conta-captacao')); ?>" title="Ir para p�gina anterior">Voltar</a></span>--></div>
 </div>
-<!-- ========== FIM T�TULO ========== -->
 
-
-<!-- ========== IN�CIO CONTE�DO ========== -->
 <div id="conteudo">
-
     <table class="tabela">
-	<tr>
+        <tr>
             <td class="destacar bold" width="1" align="center">PRONAC</td>
             <td width="220" align="center">
                 <input type="text" class="input_simples" name="pronacPesquisa" id="pronacPesquisa" maxlength="7" style="width: 90px;" value="<?php echo $this->pronacProjeto;?>">
@@ -217,7 +208,7 @@
     </center>
     <!-- ========== FIM PAGINA��O ========== -->
     <?php } ?>
-    
+
 
     <?php if($this->qtdRegistros > 0){ ?>
     <table class="tabela tablesorter" >
@@ -264,7 +255,7 @@
                 <td class="centro"><?php echo $projeto->NumeroRecibo; ?></td>
                 <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtChegadaRecibo)); ?></td>
                 <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtRecibo)); ?></td>O
-                <td><?php echo $projeto->TipoApoio; ?></td>
+                <td><?php echo utf8_decode($projeto->TipoApoio); ?></td>
                 <td class="centro"><?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 'Sim' : '<span style="color:red; font-weight: bold;">N&atilde;o</span>'; ?></td>
                 <td class="direita"><?php echo $projeto->Percentual; ?></td>
                 <td class="direita" nowrap><?php echo "R$ ".number_format($projeto->CaptacaoReal,'2',',','.'); ?></td>
@@ -274,12 +265,12 @@
                         <?php $arrPrazo = $this->prazoRespostaDiligencia($projeto->IdPRONAC, 183);
                         $icone = $arrPrazo['iconeDiligencia']['icone'];
                         $title = $arrPrazo['iconeDiligencia']['title']; ?>
-                        <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
+                        <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta','controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
                     <?php } else if( !isset($this->pronacProjeto) || empty($this->pronacProjeto) ){ ?>
                         <?php $arrPrazo = $this->prazoRespostaDiligencia($projeto->IdPRONAC, 183);
                         $icone = $arrPrazo['iconeDiligencia']['icone'];
                         $title = $arrPrazo['iconeDiligencia']['title']; ?>
-                        <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
+                        <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta','controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
                     <?php } ?>
                 </td>
                 <td class="centro">
@@ -383,7 +374,7 @@
 
 
 </div><!-- fecha div resultado ajax -->
-    
+
 <!-- ========== FIM CONTE�DO ========== -->
 
 <!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->

@@ -5,7 +5,8 @@
         "vinnyfs89/rEnc": "dev-master"
     },
     "require": {
-        "opauth/opauth": ">=0.2.0"
+        "opauth/opauth": ">=0.2.0",
+        "aferrandini/phpqrcode": "1.0.1"
     },
     "autoload" : {
         "psr-0" : {
