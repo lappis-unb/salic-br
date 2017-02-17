@@ -10,6 +10,12 @@
                         $this->layout['listagem'],
                         array('Plano de Distribui&ccedil;&atilde;o' => '')
                     )); ?>
+
+               <div class="row">
+                   <div class="col s12 center" >
+                        <a class="btn white black-text" href="<?php echo $this->url(array('module' => 'proposta', 'controller'=>'plano-distribuicao','action' => 'index')) ?>">Voltar</a>
+                   </div>
+               </div>
                 <?php $totalExemplares=0; $totalReceita=0; ?>
                     <?php foreach($this->planosDistribuicao as $planoDistribuicao) : ?>
                         <?php
@@ -69,6 +75,11 @@
                     <?php endforeach ?>
                 </div>
             </div>
+               <div class="row">
+                   <div class="col s12 center" >
+                        <a class="btn white black-text" href="<?php echo $this->url(array('module' => 'proposta', 'controller'=>'plano-distribuicao','action' => 'index')) ?>">Voltar</a>
+                   </div>
+               </div>
                 </div>
             </div>
         </div>

@@ -1,14 +1,10 @@
 <?php
 /**
  * DAO PlanoDistribuicaoProduto
- * @since 16/03/2011
- * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  *
-
  */
 
 class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
@@ -45,7 +41,7 @@ class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         $a->where('b.IdPRONAC = ?', $idPronac);
         return $this->fetchAll($a);
     }
-    
+
     public function buscarProdutosProjeto($idPronac) {
         $a = $this->select();
         $a->setIntegrityCheck(false);
@@ -68,7 +64,7 @@ class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         $a->where('b.IdPRONAC = ?', $idPronac);
         $a->where('d.idPronac = ?', $idPronac);
         $a->order(array('1 DESC', '3 ASC'));
-        
+
         //xd($a->assemble());
         return $this->fetchAll($a);
     }
@@ -89,8 +85,8 @@ class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
             array(''), 'SAC.dbo'
         );
         $a->where('c.IdPRONAC = ?', $idPronac);
-        
-        
+
+
         $b = $this->select();
         $b->setIntegrityCheck(false);
         $b->from(
@@ -104,8 +100,8 @@ class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
             array(''), 'SAC.dbo'
         );
         $b->where('c.IdPRONAC = ?', $idPronac);
-        
-        
+
+
         $slctUnion = $this->select()
             ->union(array('('.$a.')', '('.$b.')'))
             ->order('1','2');
@@ -141,4 +137,34 @@ class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         return $db->fetchAll($select);
     }
 
+    public function insertConsolidacaoPlanoDeDistribuicao($idPlanoDistribuicao)
+    {
+        $cols = array(
+            'sum(qtExemplares) as QtdeProduzida',
+            'sum(qtGratuitaDivulgacao) as qQtdeProponente',
+            'sum(qtGratuitaPatrocinador) as QtdePatrocinador',
+            'sum(qtGratuitaPopulacao) as QtdeOutros',
+            'sum(qtPopularIntegral) as QtdeVendaPopularNormal',
+            'sum(qtPopularParcial) as QtdeVendaPopularPromocional',
+            'sum(vlUnitarioPopularIntegral) as vlUnitarioPopularNormal',
+            'sum(vlReceitaPopularIntegral) ReceitaPopularNormal',
+            'sum(vlReceitaPopularParcial) as ReceitaPopularPromocional',
+            'sum(qtProponenteIntegral) as QtdeVendaNormal',
+            'sum(qtProponenteParcial) as QtdeVendaPromocional',
+            'avg(vlUnitarioProponenteIntegral) vlUnitarioNormal',
+            'sum(vlReceitaProponenteIntegral) as PrecoUnitarioNormal',
+            'sum(vlReceitaProponenteParcial) as PrecoUnitarioPromocional',
+            '(sum(vlReceitaPopularParcial) + sum(vlReceitaPopularIntegral)+  sum(vlReceitaProponenteIntegral)+ sum(vlReceitaProponenteParcial)) as  PrecoUnitarioPromocional'
+        );
+
+        $sql = $this->select()
+            ->from(
+                array('tbDetalhaPlanoDistribuicao'),
+                $cols,
+                'sac.dbo'
+            )
+            ->where('idPlanoDistribuicao = ?', $idPlanoDistribuicao);
+        echo $sql;die;
+        return $this->fetchRow($sql);
+    }
 }
