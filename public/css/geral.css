@@ -547,10 +547,10 @@ table caption {
 
 #conteudo table {
 	margin:0 auto;
-	background: #bfbdc1;
+	background: #cc2525;
 }
 #conteudo table td {
-	background:url(../img/bg-celulas.gif) repeat-x #fdfaff;
+	background:url(../img/bg-celulas.gif) repeat-x #000000;
 	padding:8px;
 	color:auto;
 }
