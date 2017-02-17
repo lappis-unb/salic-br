@@ -1,125 +1,121 @@
 <?php $frmplanoHref = $this->url(array('module' => 'proposta' , 'controller' => 'plano-distribuicao', 'action' => 'frm-plano-distribuicao')).'?idPreProjeto='.$_GET['idPreProjeto']; ?>
 
 <div class="container-fluid">
-
     <div class="row">
-
         <?php echo $this->partial("inc/menu.phtml", $this); ?>
-
         <div class="content col s10 m12 l10 planilha-produtos">
+            <?php if( $this->localRealizacao): ?>
+                <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
+                <?php
+                gerarBreadCrumb(array(
+                    $this->layout['listagem'],
+                    array('Plano de Distribui&ccedil;&atilde;o' => '')
+                )); ?>
 
-            <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
-            <?php
-            gerarBreadCrumb(array(
-                $this->layout['listagem'],
-                array('Plano de Distribui&ccedil;&atilde;o' => '')
-            )); ?>
+                <div id="titulo">
+                    <div>Plano de Distribui&ccedil;&atilde;o</div>
+                </div>
 
-            <div id="titulo">
-                <div>Plano de Distribui&ccedil;&atilde;o</div>
-            </div>
+                <div id="conteudo">
+                    <div id="div_form"></div>
 
-            <div id="conteudo">
-                <div id="div_form"></div>
-
-                    <?php //var_dump($this->planosDistribuicao) ?>
-                    <?php $totalExemplares=0; $totalReceita=0; ?>
-                    <?php if(!empty($this->planosDistribuicao)){ ?>
-                        <?php foreach($this->planosDistribuicao as $planoDistribuicao){ ?>
-                            <?php
-                            $totalExemplares += $planoDistribuicao->QtdeProduzida;
-                            $receita = ($planoDistribuicao->QtdeVendaNormal*$planoDistribuicao->PrecoUnitarioNormal)+($planoDistribuicao->QtdeVendaPromocional*$planoDistribuicao->PrecoUnitarioPromocional);
-                            $totalReceita += $receita;
-                            ?>
-                <table class="tabela">
-                    <tr class="titulo_tabela">
-                        <th width="25%">Nome do Evento / Produto</th>
-                        <th width="25%">&Aacute;rea</th>
-                        <th width="15%">Segmento</th>
-                        <th width="15%">Principal</th>
-                        <th width="20%">A&ccedil;&otilde;es</th>
-                    </tr>
-                        <tr class="fundo">
-                            <td class="centro"><?php echo $planoDistribuicao->Produto; ?></td>
-                            <td class="centro"><?php echo $planoDistribuicao->DescricaoArea; ?></td>
-                            <td align="right"><?php echo $planoDistribuicao->DescricaoSegmento; ?></td>
-                            <td align="right"><?php echo ($planoDistribuicao->stPrincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
-                            <td class="centro" nowrap>
-                                <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>)"/>&nbsp;
-                                <input type="button" class="btn_exclusao" id="btn_excluir" onclick="confirma('<?php echo $this->urlApagar; ?>&idPlanoDistribuicao=<?php echo $planoDistribuicao['idPlanoDistribuicao']; ?>')"/></td>
+                        <?php //var_dump($this->planosDistribuicao) ?>
+                        <?php $totalExemplares=0; $totalReceita=0; ?>
+                        <?php if(!empty($this->planosDistribuicao)){ ?>
+                            <?php foreach($this->planosDistribuicao as $planoDistribuicao){ ?>
+                                <?php
+                                $totalExemplares += $planoDistribuicao->QtdeProduzida;
+                                $receita = ($planoDistribuicao->QtdeVendaNormal*$planoDistribuicao->PrecoUnitarioNormal)+($planoDistribuicao->QtdeVendaPromocional*$planoDistribuicao->PrecoUnitarioPromocional);
+                                $totalReceita += $receita;
+                                ?>
+                    <table class="tabela">
+                        <tr class="titulo_tabela">
+                            <th width="25%">Nome do Evento / Produto</th>
+                            <th width="25%">&Aacute;rea</th>
+                            <th width="15%">Segmento</th>
+                            <th width="15%">Principal</th>
+                            <th width="20%">A&ccedil;&otilde;es</th>
                         </tr>
-                        <tr class="fundo">
-                            <td colspan="5">
-                                <table class="tabela">
-                                    <tr>
-                                        <th class="centro">Quantidade de Exemplar / Ingresso</th>
-                                        <th class="centro">
-                                            Divulgação
-                                        </th>
-                                        <th class="centro">
-                                            Patrocinador
-                                        </th>
-                                        <th class="centro">
-                                            População
-                                        </th>
-                                        <th class="centro">
-                                            Quantidade  de Inteira
-                                        </th>
-                                        <th class="centro">
-                                            Quantidade de Meia Entrada
-                                        </th>
-                                        <th class="centro">
-                                            Preço Unitário do Ingresso
-                                        </th>
-                                        <th class="centro">
-                                            Receita da Inteira
-                                        </th>
-                                        <th class="centro">
-                                            Valor da Meia Entrada
-                                        </th>
-                                        <th class="centro">
-                                            Quantidade  de Inteira
-                                        </th>
-                                        <th class="centro">
-                                            Quantidade de Meia Entrada
-                                        </th>
-                                        <th class="centro">
-                                            Preço em média simples
-                                        </th>
-                                        <th class="centro">
-                                            Receita da Inteira
-                                        </th>
-                                        <th class="centro">
-                                            Receita da Meia Entrada
-                                        </th>
-                                        <th class="centro">
-                                            Receita Prevista
-                                        </th>
-                                    </tr>
-                                    <tr class="fundo">
-                                        <td class="centro"><?php echo $planoDistribuicao->QtdeProduzida ; ?></td>
-                                        <td><?php echo $planoDistribuicao->QtdeProponente	?></th>
-                                        <td><?php echo $planoDistribuicao->QtdePatrocinador	?></th>
-                                        <td><?php echo $planoDistribuicao->QtdeOutros	?></th>
-                                        <td><?php echo $planoDistribuicao->QtdeVendaPopularNormal?></th>
-                                        <td><?php echo $planoDistribuicao->QtdeVendaPopularPromocional?></th>
-                                        <td><?php echo $planoDistribuicao->vlUnitarioPopularNormal?>	</th>
-                                        <td><?php echo $planoDistribuicao->ReceitaPopularNormal	?></th>
-                                        <td><?php echo $planoDistribuicao->ReceitaPopularPromocional	?></th>
-                                        <td><?php echo $planoDistribuicao->QtdeVendaNormal	?></th>
-                                        <td><?php echo $planoDistribuicao->QtdeVendaPromocional	?></th>
-                                        <td><?php echo $planoDistribuicao->vlUnitarioNormal	?></th>
-                                        <td><?php echo $planoDistribuicao->PrecoUnitarioNormal	?></th>
-                                        <td><?php echo $planoDistribuicao->PrecoUnitarioPromocional?></th>
-                                        <td><?php echo $planoDistribuicao->PrecoUnitarioPromocional?></th>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+                            <tr class="fundo">
+                                <td class="centro"><?php echo $planoDistribuicao->Produto; ?></td>
+                                <td class="centro"><?php echo $planoDistribuicao->DescricaoArea; ?></td>
+                                <td align="right"><?php echo $planoDistribuicao->DescricaoSegmento; ?></td>
+                                <td align="right"><?php echo ($planoDistribuicao->stPrincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
+                                <td class="centro" nowrap>
+                                    <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>)"/>&nbsp;
+                                    <input type="button" class="btn_exclusao" id="btn_excluir" onclick="confirma('<?php echo $this->urlApagar; ?>&idPlanoDistribuicao=<?php echo $planoDistribuicao['idPlanoDistribuicao']; ?>')"/></td>
+                            </tr>
+                            <tr class="fundo">
+                                <td colspan="5">
+                                    <table class="tabela">
+                                        <tr>
+                                            <th class="centro">Quantidade de Exemplar / Ingresso</th>
+                                            <th class="centro">
+                                                Divulga&ccedil;atilde;o
+                                            </th>
+                                            <th class="centro">
+                                                Patrocinador
+                                            </th>
+                                            <th class="centro">
+                                                Populaatilde;o
+                                            </th>
+                                            <th class="centro">
+                                                Quantidade  de Inteira
+                                            </th>
+                                            <th class="centro">
+                                                Quantidade de Meia Entrada
+                                            </th>
+                                            <th class="centro">
+                                                Pre&ccedil;o Unitário do Ingresso
+                                            </th>
+                                            <th class="centro">
+                                                Receita da Inteira
+                                            </th>
+                                            <th class="centro">
+                                                Valor da Meia Entrada
+                                            </th>
+                                            <th class="centro">
+                                                Quantidade  de Inteira
+                                            </th>
+                                            <th class="centro">
+                                                Quantidade de Meia Entrada
+                                            </th>
+                                            <th class="centro">
+                                                Pre&ccedil;o em média simples
+                                            </th>
+                                            <th class="centro">
+                                                Receita da Inteira
+                                            </th>
+                                            <th class="centro">
+                                                Receita da Meia Entrada
+                                            </th>
+                                            <th class="centro">
+                                                Receita Prevista
+                                            </th>
+                                        </tr>
+                                        <tr class="fundo">
+                                            <td class="centro"><?php echo $planoDistribuicao->QtdeProduzida ; ?></td>
+                                            <td><?php echo $planoDistribuicao->QtdeProponente	?></th>
+                                            <td><?php echo $planoDistribuicao->QtdePatrocinador	?></th>
+                                            <td><?php echo $planoDistribuicao->QtdeOutros	?></th>
+                                            <td><?php echo $planoDistribuicao->QtdeVendaPopularNormal?></th>
+                                            <td><?php echo $planoDistribuicao->QtdeVendaPopularPromocional?></th>
+                                            <td><?php echo $planoDistribuicao->vlUnitarioPopularNormal?>	</th>
+                                            <td><?php echo $planoDistribuicao->ReceitaPopularNormal	?></th>
+                                            <td><?php echo $planoDistribuicao->ReceitaPopularPromocional	?></th>
+                                            <td><?php echo $planoDistribuicao->QtdeVendaNormal	?></th>
+                                            <td><?php echo $planoDistribuicao->QtdeVendaPromocional	?></th>
+                                            <td><?php echo $planoDistribuicao->vlUnitarioNormal	?></th>
+                                            <td><?php echo $planoDistribuicao->PrecoUnitarioNormal	?></th>
+                                            <td><?php echo $planoDistribuicao->PrecoUnitarioPromocional?></th>
+                                            <td><?php echo $planoDistribuicao->PrecoUnitarioPromocional?></th>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <?php } ?>
                         <?php } ?>
-                    <?php } ?>
-                </table>
-
+                    </table>
                 <div id="miolo"> <!-- ========== INICIO MIOLO IDENTIFICACAO ========== -->
                     <table class="tabela" style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
                         <tr>
@@ -131,6 +127,15 @@
                         </tr>
                     </table>
                 </div>
+            <?php else: ?>
+                <div class="row">
+                    <div class="col s12">
+                        <p>Preencher primeiro o <a href="<?php echo $this->url(array('module'=>'proposta', 'controller'=>'localderealizacao', 'action'=> 'index')) ?>">
+                            local de realiza&ccedil;&atilde;o</a>
+                         </p>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             </div><!-- ========== FIM CONTEUDO ========== -->
 
