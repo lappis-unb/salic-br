@@ -61,7 +61,7 @@ class Analise_Model_DbTable_vwProjetosAdequadosRealidadeExecucao extends MinC_Db
             $sql->limitPage($start, $limit);
         }
 
-        return $db->fetchAll($sql);
+        return $db->fetchOne($sql);
     }
 
 }
