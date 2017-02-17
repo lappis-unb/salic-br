@@ -547,12 +547,12 @@ table caption {
 
 #conteudo table {
 	margin:0 auto;
-	background: #bfbdc1;
+	background: #cc2525;
 }
 #conteudo table td {
-	background:url(../img/bg-celulas.gif) repeat-x #fdfaff;
+	background:url(../img/bg-celulas.gif) repeat-x ;
 	padding:8px;
-	color:auto;
+	/*color:auto;*/
 }
 #conteudo table tr.linha:hover td {
 	background: #f81e30;
