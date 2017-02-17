@@ -550,9 +550,9 @@ table caption {
 	background: #cc2525;
 }
 #conteudo table td {
-	background:url(../img/bg-celulas.gif) repeat-x #000000;
+	background:url(../img/bg-celulas.gif) repeat-x ;
 	padding:8px;
-	color:auto;
+	/*color:auto;*/
 }
 #conteudo table tr.linha:hover td {
 	background: #f81e30;
