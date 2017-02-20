@@ -3,8 +3,28 @@ $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
 $auth = Zend_Auth::getInstance();
 $arrAuth = $auth->getIdentity();
 $intQtd = 0;
+//$arrResult = $dbTable->getAllBy(array(
+//    'tbMensagemProjeto.idDestinatario' => $arrAuth->usu_codigo,
+//    'tbMensagemProjeto.idMensagemOrigem IS NULL' => '',
+//    'dsMensagem IS NULL' => '',
+//));
+$dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
+$arrResult = $dbTable->findAllCustom(
+    array(
+        'vwPainelDeMensagens.stAtivo' => 1,
+        'tbMensagemProjetoResposta.dsMensagem IS NULL' => '',
+        'vwPainelDeMensagens.idDestinatarioUnidade' => $arrAuth->usu_orgao,
+//        'vwPainelDeMensagens.idDestinatario IS NULL' => '',
+    )
+//    ),
+//    array(
+//        'vwPainelDeMensagens.stAtivo' => 1,
+//        'tbMensagemProjetoResposta.dsMensagem IS NULL' => '',
+//        'vwPainelDeMensagens.idDestinatario' => $arrAuth->usu_codigo,
+//    )
+);
 if (isset($arrAuth->usu_codigo)) {
-    $intQtd = count($dbTable->getAllBy(array('tbMensagemProjeto.idDestinatario' => $arrAuth->usu_codigo, 'tbMensagemProjeto.idMensagemOrigem IS NULL' => '')));
+    $intQtd = count($arrResult);
 }
 //$intQtd = count($dbTable->getAllBy(array('idDestinatario' => $arrAuth->usu_codigo, 'tbMensagemProjeto.idUnidade => $arrAuth->usu_orgao')));
 if ($intQtd > 99) {
@@ -26,7 +46,7 @@ if ($intQtd > 99) {
     }
     .notificacao a {
         position: relative;
-        padding: 0px !important;
+        padding: 0 !important;
         padding-top: 5px;
     }
     .notificacao .btn-floating {
