@@ -4,8 +4,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 {
     private $idTipoDoAtoAdministrativo;
 
-    public function init()
-    {
+    private function validarPerfis() {
         $auth = Zend_Auth::getInstance();
 
         $PermissoesGrupo = array();
@@ -17,8 +16,12 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         $PermissoesGrupo[] = 152;
 
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
+    }
 
+    public function init()
+    {
         parent::init();
+
         $this->auth = Zend_Auth::getInstance();
         $this->grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
         $this->idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
@@ -26,11 +29,13 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     public function indexAction()
     {
+        $this->validarPerfis();
         $this->redirect("/{$this->moduleName}/enquadramento/gerenciar-projetos");
     }
 
     public function gerenciarProjetosAction()
     {
+        $this->validarPerfis();
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
         $enquadramento = new Admissibilidade_Model_Enquadramento();
 
@@ -45,6 +50,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     public function visualizarProjetoAction()
     {
+
         $get = Zend_Registry::get('get');
         try {
             if (!filter_input(INPUT_GET, 'IdPRONAC')) {
@@ -110,6 +116,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     public function devolverProjetoAction()
     {
+        $this->validarPerfis();
         $get = Zend_Registry::get('get');
         try {
 
@@ -206,6 +213,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     public function assinarProjetoAction()
     {
+        $this->validarPerfis();
         $get = Zend_Registry::get('get');
 
         try {
@@ -285,7 +293,9 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
         }
     }
 
-    private function assinarProjeto($idPronac, $password, $dsManifestacao) {
+    private function assinarProjeto($idPronac, $password, $dsManifestacao)
+    {
+        $this->validarPerfis();
 
         if (!filter_input(INPUT_POST, 'dsManifestacao')) {
             throw new Exception ("Campo \"De acordo do Assinante\" &eacute; de preenchimento obrigat&oacute;rio.");
@@ -359,6 +369,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
     public function finalizarAssinaturaAction()
     {
+        $this->validarPerfis();
         $get = Zend_Registry::get('get');
         try {
             if (!filter_input(INPUT_GET, 'IdPRONAC')) {
