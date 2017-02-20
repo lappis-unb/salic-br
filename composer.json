@@ -1,8 +1,8 @@
 {
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
-        "vinnyfs89/xDump": "dev-master",
-        "vinnyfs89/rEnc": "dev-master"
+        "vinnyfs89/x-dump": "dev-master",
+        "vinnyfs89/r-enc": "dev-master"
     },
     "require": {
         "opauth/opauth": ">=0.2.0",
@@ -13,16 +13,6 @@
             "MinC" : "library/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "https://github.com/vinnyfs89/xDump"
-        },
-        {
-            "type": "vcs",
-            "url":  "https://github.com/vinnyfs89/rEnc"
-        }
-    ],
     "archive": {
         "exclude": ["/demos", "/documentation", "/tests"]
     },
