@@ -2753,11 +2753,10 @@ class Projetos extends MinC_Db_Table_Abstract
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from($this->_name, "idpronac");
+        $select->from($this->_name, "IdPRONAC");
 
         if (!empty($pronac)) {
             $select->where("(anoprojeto " . parent::getConcatExpression() . " sequencial) = ?", $pronac);
-//            $select->where("(anoprojeto+sequencial) = ?", $pronac);
         }
 
         return $this->fetchRow($select);

@@ -615,7 +615,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 //                $tbDistribuicaoProjetoComissao = new tbDistribuicaoProjetoComissao();
 //                $tbDistribuicaoProjetoComissao->update($e, $w);
 
-                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
 
