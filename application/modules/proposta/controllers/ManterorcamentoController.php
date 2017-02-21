@@ -111,7 +111,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
         $listaEtapa = $manterOrcamento->buscarEtapas('P');
         $this->view->EtapasProduto = $this->reordenaretapas($listaEtapa);
-        $this->view->ItensProduto = $this->objectsToArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
+        $this->view->ItensProduto = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
 
         $arrBusca = array(
             'idprojeto' => $this->idPreProjeto,
@@ -312,10 +312,10 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $this->_helper->layout->disableLayout();
 
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
-        $itens = $this->objectsToArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
+        $itens = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
 
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $listaEtapa = $this->objectsToArray($manterOrcamento->buscarEtapas('P'));
+        $listaEtapa = converterObjetosParaArray($manterOrcamento->buscarEtapas('P'));
 
         $this->view->EtapaCusto = $manterOrcamento->buscarEtapas("A");
         $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
@@ -453,7 +453,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
         $buscarProdutos = $tbPlanilhaProposta->buscarDadosEditarProdutos($idPreProjeto, $params['etapa'], $params['produto'], $params['planilhaitem'], null, $params['uf'], $params['municipio']);
-        $buscarProdutos = $this->objectsToArray($buscarProdutos);
+        $buscarProdutos = converterObjetosParaArray($buscarProdutos);
 
         if ($buscarProdutos && !in_array($params['idPlanilhaProposta'], array_column($buscarProdutos, 'idPlanilhaProposta'))) {
             $return['msg'] = "Item duplicado na mesma etapa. Transa&ccedil;&atilde;o cancelada!";
