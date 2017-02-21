@@ -492,10 +492,13 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
 
         # Planilha orcamentaria
-        $metaPlanilha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
+        $metaPlanilha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhapropostas');
         if (!$metaPlanilha) {
+
             $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
-            $this->view->PlanilhaSalvo = $this->salvarObjetoSerializado($TPP, $idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
+            $dadosPlanilhaCompleta = $TPP->buscarItensCompletosPlanilha($idPreProjeto);
+
+            $this->view->PlanilhaSalvo = $this->salvarArraySerializado($dadosPlanilhaCompleta, $idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
         } else {
             $this->view->PlanilhaSalvo = true;
         }
@@ -504,7 +507,8 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $metaAbrangencia = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_abrangencia');
         if (!$metaAbrangencia) {
             $TPA = new Proposta_Model_DbTable_Abrangencia();
-            $this->view->AbrangenciaSalvo = $this->salvarObjetoSerializado($TPA, $idPreProjeto, 'alterarprojeto_abrangencia');
+            $abrangenciaCompleta = $TPA->buscar(array('idProjeto' => $idPreProjeto));
+            $this->view->AbrangenciaSalvo = $this->salvarArraySerializado($abrangenciaCompleta, $idPreProjeto, 'alterarprojeto_abrangencia');
         } else {
             $this->view->AbrangenciaSalvo = true;
         }
@@ -512,8 +516,9 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         # Deslocamento
         $metaDeslocamento = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_deslocamento');
         if (!$metaDeslocamento) {
-            $TPA = new Proposta_Model_DbTable_TbDeslocamento();
-            $this->view->DeslocamentoSalvo = $this->salvarObjetoSerializado($TPA, $idPreProjeto, 'alterarprojeto_deslocamento');
+            $TPD = new Proposta_Model_DbTable_TbDeslocamento();
+            $deslocamentoCompleto = $TPD->buscarDeslocamentosGeral(array('idProjeto' => $idPreProjeto));
+            $this->view->DeslocamentoSalvo = $this->salvarArraySerializado($deslocamentoCompleto, $idPreProjeto, 'alterarprojeto_deslocamento');
         } else {
             $this->view->DeslocamentoSalvo = true;
         }
@@ -521,8 +526,9 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         # Plano distribuicao
         $metaPlanoDistribuicao = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_planodistribuicaoproduto');
         if (!$metaPlanoDistribuicao) {
-            $TPD = new PlanoDistribuicao();
-            $this->view->PlanoDistribuicaoSalvo = $this->salvarObjetoSerializado($TPD, $idPreProjeto, 'alterarprojeto_planodistribuicaoproduto');
+            $TPDC = new PlanoDistribuicao();
+            $planoDistribuicaoCompleto = $TPDC->buscar(array('idProjeto = ?' => $idPreProjeto))->toArray();
+            $this->view->PlanoDistribuicaoSalvo = $this->salvarArraySerializado($planoDistribuicaoCompleto, $idPreProjeto, 'alterarprojeto_planodistribuicaoproduto');
         } else {
             $this->view->PlanoDistribuicaoSalvo = true;
         }
@@ -530,8 +536,6 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         # Plano de distribuicao Detalhado
         $metaPlanoDistribuicaoDetalha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao');
         if (!$metaPlanoDistribuicaoDetalha) {
-
-//            $where = array('idPlanoDistribuicao' => $idPreProjeto);
             $TPD = new PlanoDistribuicao();
             $PlanoDetalhado = $TPD->buscarPlanoDistribuicaoDetalhadoByIdProjeto($idPreProjeto);
 
@@ -598,7 +602,6 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         }
 
         return true;
-
     }
 
     /**

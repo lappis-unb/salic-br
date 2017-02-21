@@ -657,7 +657,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         # verifica se existe alguma pendencia no checklist de proposta
         $validaProposta = $sp->checklistEnvioProposta($idPreProjeto, true);
-        $pendencias = in_array('PENDENTE', array_column($this->objectsToArray($validaProposta), 'Observacao'));
+        $pendencias = in_array('PENDENTE', array_column(converterObjetosParaArray($validaProposta), 'Observacao'));
 
         if ($pendencias) {
             $this->view->resultado = $validaProposta;

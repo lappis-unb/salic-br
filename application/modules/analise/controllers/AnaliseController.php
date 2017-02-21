@@ -92,7 +92,8 @@ class Analise_AnaliseController extends Analise_GenericController
             'recordsFiltered' => $recordsFiltered ? $recordsFiltered : 0));
     }
 
-    public function visualizarprsojetoAction(){
+    public function visualizarprsojetoAction()
+    {
 
         $idPronac = $this->getRequest()->getParam('idpronac');
 
@@ -108,8 +109,6 @@ class Analise_AnaliseController extends Analise_GenericController
                 'IdPRONAC' => $idPronac
             ));
             $this->view->projeto = $projeto;
-
-            xd($this->view->projeto);
 
             $this->view->valoresProjeto = $objTbProjetos->obterValoresProjeto($idPronac);
 
@@ -199,7 +198,7 @@ class Analise_AnaliseController extends Analise_GenericController
 
             // Busca na tabela apoio ExecucaoImediata stproposta
             $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-            if( !empty($this->view->itensGeral[0]->stProposta))
+            if (!empty($this->view->itensGeral[0]->stProposta))
                 $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
 
             $Pronac = null;
@@ -253,30 +252,82 @@ class Analise_AnaliseController extends Analise_GenericController
             $historico['detalhestecnicos'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_detalhestecnicos'));
             $historico['outrasinformacoes'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_outrasinformacoes'));
 
-            $historico['planilha'] = converterArrayParaObjeto($historico['planilha']);
+//xd($historico['planilhaitens']);
+//            xd($historico['planilhaitens']);
+//            $historico['planilha'] = converterArrayParaObjetos($historico['planilha']);
+//
+//            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+//            $listaEtapa = $manterOrcamento->buscarEtapas('P');
+//
+//            $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
 
-            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-            $listaEtapa = $manterOrcamento->buscarEtapas('P');
+//            $this->view->historico = $historico;
 
-            $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
+//            $planilha['fontederecurso'] = $buscarRecurso->buscarFonteRecurso();
+//
+//            $planilha['abrangencias'] = $historico['abrangencia'];
+//
+//            $planilha['produtos'] = $historico['planodistribuicaoproduto'];
+//
+//            $planilha['etapas'] = converterObjetosParaArray($listaEtapa);
+//
+//            $planilha['itens'] = $historico['planilhaitens'];
+//
+//            $fontes = converterObjetosParaArray($planilha['fontederecurso'], 'idverificacao');
+//
+//            $planilha['fontederecurso'] = $this->filtrarArrayPlanilha($fontes, 'idverificacao', $planilha['itens'], 'FonteRecurso');
+//
+//            $planilha['abrangencias']= $this->filtrarArrayPlanilha($planilha['abrangencias'], 'idMunicipioIBGE', $planilha['itens'], 'MunicipioDespesa');
+//
+//            $planilha['produtos'] = $this->filtrarArrayPlanilha($planilha['produtos'], 'idProduto', $planilha['itens'], 'idProduto');
+//
+//            $planilha['etapas'] = $this->filtrarArrayPlanilha($planilha['etapas'], 'idEtapa', $planilha['itens'], 'idEtapa');
 
-            $this->view->historico = $historico;
-
-            $planilha['fontederecurso'] = $buscarRecurso->buscarFonteRecurso();
-
-            $planilha['abrangencias'] = $historico['abrangencia'];
-
-            $planilha['produtos'] = $historico['tbdetalhaplanodistribuicao'];
-
-            $planilha['etapas'] = $listaEtapa;
-
-            $planilha['itens'] = $historico['planilhaitens'];
-
-//            xd($planilha['itens']);
-
-            //@todo parei aqui
 
 
+//            $tblUF = new Agente_Model_DbTable_UF();
+//            $tblMunicipios = new Agente_Model_DbTable_Municipios();
+//            $novasAbrangencias = array();
+//            foreach ($planilha['abrangencias'] as $local) {
+//
+////                if( $local['idProduto'] > 0) {
+////
+////                    $detalhaLocal = $tblUF->buscar(array( 'idUF' => $local['idUF']));
+////
+////                    if($detalhaUF) {
+////                        $novasAbrangencias[] = array_merge($local, (array) $detalhaLocal);
+////                    }
+////
+////                    $detalhaLocal = $tblMunicipios->buscar(array('idMunicipioIBGE' => $local['idMunicipioIBGE']));
+////
+////                    if($detalhaLocal) {
+////                        $novasAbrangencias[] = array_merge($local, (array) $detalhaLocal);
+////                    }
+////                }
+//            }
+//
+////            xd($novasAbrangencias);
+
+
+//            $tblPlanoDistribuicao = new PlanoDistribuicao();
+//            $novosProdutos = array();
+//            foreach ($planilha['produtos'] as $produto) {
+//
+//                if( $produto['idProduto'] > 0) {
+//
+//                    $detalhaProduto = $tblPlanoDistribuicao->buscarProdutos($produto['idProduto']);
+//
+//                    if($detalhaProduto) {
+//                        $novosProdutos[] = array_merge($produto, (array) $detalhaProduto);
+//                    }
+//                }
+//            }
+
+//            $planilha['produtos'] = $novosProdutos;
+//
+//            xd($planilha);
+
+//            die;
 
             // planilha novos
 
@@ -286,7 +337,7 @@ class Analise_AnaliseController extends Analise_GenericController
             $this->view->Produtos = $tbPreprojeto->listarProdutos($idPreProjeto);
 
 
-            $this->view->ItensProduto = $this->objectsToArray($tbPreprojeto->listarItensProdutos($idPreProjeto));
+            $this->view->ItensProduto = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($idPreProjeto));
             $arrBusca = array(
                 'idprojeto' => $idPreProjeto,
                 'stabrangencia' => 1
@@ -366,5 +417,32 @@ class Analise_AnaliseController extends Analise_GenericController
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
         }
+
     }
+
+    protected function filtrarArrayPlanilha($array, $key1, $array2, $key2)
+    {
+        $array2 = array_column($array2, $key2);
+
+        foreach ($array as $key => $item) {
+            if (!in_array($item[$key1], $array2))
+                unset($array[$key]);
+        }
+
+        return array_values($array);
+    }
+
+    protected function buscarValorItemArray($array, $key, $param, $keyValue = null)
+    {
+        if( empty($keyValue))
+            $keyValue = $key;
+
+        foreach ($array as $item) {
+            if($item[$key] == $param)
+                return $item[$keyValue];
+        }
+
+        return false;
+    }
+
 }

@@ -234,13 +234,30 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 
     public function buscarPlanoDistribuicaoDetalhadoByIdProjeto($idPreProjeto, $where = array(), $order = null)
     {
+
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array("p" => $this->_name), array(), $this->_schema);
+        $slct->from(array("p" => 'PlanoDistribuicaoProduto'), $this->_getCols(), $this->_schema);
 
         $slct->joinInner(array("d" => "tbDetalhaPlanoDistribuicao"),
             "p.idPlanoDistribuicao = d.idPlanoDistribuicao",
             '*', $this->_schema);
+
+        $slct->joinInner(array('uf' => 'uf'), 'uf.CodUfIbge = d.idUF', 'uf.descricao AS DescricaoUf', $this->_schema);
+
+        $slct->joinInner(array('mun' => 'municipios'), 'mun.idmunicipioibge = d.idMunicipio','mun.descricao as DescricaoMunicipio', $this->getSchema('agentes'));
+
+        $slct->joinInner(array("b"=>"produto"),
+            "p.idproduto = b.codigo",
+            array("Produto"=>"b.descricao"),
+            $this->_schema);
+
+        $slct->joinInner(array("ar"=>"area"),
+            "p.area = ar.codigo",
+            array("DescricaoArea"=>"ar.descricao"),  $this->_schema);
+        $slct->joinInner(array("s"=>"segmento"),
+            "p.segmento = s.codigo",
+            array("DescricaoSegmento"=>"s.descricao"),  $this->_schema);
 
         $slct->where('p.idProjeto = ?', $idPreProjeto);
 

@@ -1,12 +1,12 @@
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function(){
         carregarEnquadramento();
     });
 
-    function carregarEnquadramento() {
+    function carregarEnquadramento(){
         var segmento = '<?php echo $this->projetosEN->cdSegmento; ?>';
-        var listaCodSegmento = ['11', '12', '13', '14', '15', '17', '23', '26', '2A', '2B', '2E', '2F', '2G', '2H', '2I', '2J', '2K', '2L', '32', '33', '36', '4B', '4D', '5A', '5D', '5E', '5F', '5G', '5H', '5I', '5J', '5K', '5L', '5M', '5N', '5O', '5P', '62', '65', '68', '6C', '6D', '6E', '6G', '6H'];
-        if (in_array(segmento, listaCodSegmento)) {
+        var listaCodSegmento = [ '11','12','13','14','15','17','23','26','2A','2B','2E','2F','2G','2H','2I','2J','2K','2L','32','33','36','4B','4D','5A','5D','5E','5F','5G','5H','5I','5J','5K','5L','5M','5N','5O','5P','62','65','68','6C','6D','6E','6G','6H' ];
+        if(in_array(segmento, listaCodSegmento)){
             $('#enquadramentoProjeto').val('2');
             $('#enquadramentoText').html('Artigo 18');
         } else {
@@ -27,11 +27,8 @@
 
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>"
-                             title="Ir para Inï¿½cio">Início</a></li>
-        <li>
-            <a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'painel-recursos'), '', true); ?>"
-               title="Avalialiar Recurso">Avalialiar Recurso</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Início</a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'painel-recursos'), '', true); ?>" title="Avalialiar Recurso">Avalialiar Recurso</a></li>
         <li class="last">Visualizar Recurso</li>
     </ul>
 </div>
@@ -40,8 +37,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Visualizar Recurso - <?php echo $this->nmPagina; ?> <span class="voltar"><a
-                href="javascript:voltar()">Voltar</a></span></div>
+    <div>Visualizar Recurso - <?php echo $this->nmPagina; ?> <span class="voltar"><a href="javascript:voltar()">Voltar</a></span></div>
 </div>
 
 <?php //xd($this->dados); //xd($this->projeto->IdPRONAC); ?>
@@ -54,8 +50,7 @@
         </tr>
         <tr>
             <td align="center">
-                <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo $this->projeto->IdPRONAC; ?>"
-                   target="_blank">
+                <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projeto->IdPRONAC; ?>" target="_blank">
                     <?php echo $this->projeto->pronac; ?>
                 </a>
             </td>
@@ -64,13 +59,12 @@
     </table>
 
     <table class="tabela">
-        <tr>
-            <td><input type="button" name="grid1" id="g1_1" class="btn_adicionar" title="Expandir"/>DADOS DA SOLICITAÇÃO
-            </td>
-        </tr>
-    </table>
-    <div id="div_g1_1" class="sumir">
-        <table class="tabela">
+		<tr>
+			<td><input type="button" name="grid1" id="g1_1" class="btn_adicionar" title="Expandir" />DADOS DA SOLICITAÇÃO</td>
+		</tr>
+	</table>
+	<div id="div_g1_1" class="sumir">
+		<table class="tabela">
             <tr>
                 <td class="destacar bold" colspan="3">Recurso</td>
             </tr>
@@ -88,16 +82,14 @@
                 <td><?php echo Data::tratarDataZend($this->dados->dtSolicitacaoRecurso, 'Brasileira'); ?></td>
             </tr>
         </table>
-    </div>
+	</div>
 
     <table class="tabela">
-        <tr>
-            <td><input type="button" name="grid1" id="g1_2" class="btn_adicionar" title="Expandir"/>AVALIAÇÃO DO
-                COORDENADOR
-            </td>
-        </tr>
-    </table>
-    <div id="div_g1_2" class="sumir">
+		<tr>
+			<td><input type="button" name="grid1" id="g1_2" class="btn_adicionar" title="Expandir" />AVALIAÇÃO DO COORDENADOR</td>
+		</tr>
+	</table>
+	<div id="div_g1_2" class="sumir">
         <table class="tabela">
             <tr>
                 <td class="destacar bold" colspan="3">Descrição</td>
@@ -117,7 +109,7 @@
     </div>
 
     <?php //***** PROJETO INDEFERIDO *****// ?>
-    <?php if ($this->dados->tpSolicitacao == 'PI' || $this->dados->tpSolicitacao == 'EO' || $this->dados->tpSolicitacao == 'OR') { ?>
+    <?php if($this->dados->tpSolicitacao == 'PI' || $this->dados->tpSolicitacao == 'EO' || $this->dados->tpSolicitacao == 'OR'){ ?>
         <script type="text/javascript">
             function AbrirFecharPlanilha(elemento) {
                 $('.' + elemento).toggle();
@@ -130,81 +122,82 @@
                 }
             }
 
-            function formatReal(int) {
-                var tmp = int + '';
+            function formatReal( int ){
+                var tmp = int+'';
                 var neg = false;
-                if (tmp.indexOf("-") == 0) {
+                if(tmp.indexOf("-") == 0)
+                {
                     neg = true;
-                    tmp = tmp.replace("-", "");
+                    tmp = tmp.replace("-","");
                 }
 
-                if (tmp.length == 1) tmp = "0" + tmp
+                if(tmp.length == 1) tmp = "0"+tmp
 
                 tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
-                if (tmp.length > 6)
+                if( tmp.length > 6)
                     tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
 
-                if (tmp.length > 9)
-                    tmp = tmp.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, ".$1.$2,$3");
+                if( tmp.length > 9)
+                    tmp = tmp.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g,".$1.$2,$3");
 
-                if (tmp.length > 12)
-                    tmp = tmp.replace(/([0-9]{3}).([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, ".$1.$2.$3,$4");
+                if( tmp.length > 12)
+                    tmp = tmp.replace(/([0-9]{3}).([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g,".$1.$2.$3,$4");
 
-                if (tmp.indexOf(".") == 0) tmp = tmp.replace(".", "");
-                if (tmp.indexOf(",") == 0) tmp = tmp.replace(",", "0,");
+                if(tmp.indexOf(".") == 0) tmp = tmp.replace(".","");
+                if(tmp.indexOf(",") == 0) tmp = tmp.replace(",","0,");
 
-                return (neg ? '-' + tmp : tmp);
+                return (neg ? '-'+tmp : tmp);
             }
 
-            $(document).ready(function () {
-                $(".icn_menos").click(function () {
+            $(document).ready(function(){
+                $(".icn_menos").click(function(){
                     var tipo = $(this).attr('tipo');
                     var aberto = $(this).attr('aberto');
-                    if (aberto == 'true') {
+                    if(aberto == 'true'){
                         adisplay = 'none';
-                        $(this).attr('aberto', 'false')
+                        $(this).attr('aberto','false')
                         $(this).removeClass('icn_menos').addClass('icn_mais')
                     }
-                    else {
+                    else{
                         adisplay = '';
-                        $(this).attr('aberto', 'true')
+                        $(this).attr('aberto','true')
                         $(this).removeClass('icn_mais').addClass('icn_menos')
                     }
-                    if (tipo == 'fonte') {
+                    if(tipo == 'fonte'){
                         fonte = $(this).attr('fonte');
-                        $(".master[fonte='" + fonte + "']").css('display', adisplay);
+                        $(".master[fonte='"+fonte+"']").css('display', adisplay);
                         $(".clickproduto").removeClass('icn_mais').addClass('icn_menos');
                     }
-                    if (tipo == 'produto') {
+                    if(tipo == 'produto'){
                         fonte = $(this).attr('fonte');
                         produto = $(this).attr('produto');
-                        $(".produto[produto='" + produto + "'][fonte='" + fonte + "']").css('display', adisplay);
+                        $(".produto[produto='"+produto+"'][fonte='"+fonte+"']").css('display', adisplay);
                     }
-                    if (tipo == 'etapa') {
+                    if(tipo == 'etapa'){
                         fonte = $(this).attr('fonte');
                         produto = $(this).attr('produto');
                         etapa = $(this).attr('etapa');
-                        $(".etapa[produto='" + produto + "'][etapa='" + etapa + "'][fonte='" + fonte + "']").css('display', adisplay);
+                        $(".etapa[produto='"+produto+"'][etapa='"+etapa+"'][fonte='"+fonte+"']").css('display', adisplay);
                     }
-                    if (tipo == 'cidade') {
+                    if(tipo == 'cidade'){
                         fonte = $(this).attr('fonte');
                         produto = $(this).attr('produto');
                         etapa = $(this).attr('etapa');
                         cidade = $(this).attr('cidade');
-                        $(".cidade[produto='" + produto + "'][etapa='" + etapa + "'][cidade='" + cidade + "'][fonte='" + fonte + "']").css('display', adisplay);
+                        $(".cidade[produto='"+produto+"'][etapa='"+etapa+"'][cidade='"+cidade+"'][fonte='"+fonte+"']").css('display', adisplay);
                     }
                 });
-                $(".item").mouseover(function () {
+                $(".item").mouseover(function(){
                     $(this).addClass('fundo_linha3');
                 });
-                $(".item").mouseout(function () {
+                $(".item").mouseout(function(){
                     $(this).removeClass('fundo_linha3');
                 });
-                $(".item").click(function () {
-                    if ($(this).hasClass('fundo_linha4')) {
+                $(".item").click(function(){
+                    if($(this).hasClass('fundo_linha4')){
                         $(this).removeClass('fundo_linha4');
                     }
-                    else {
+                    else{
                         $(this).addClass('fundo_linha4');
                     }
                 });
@@ -217,17 +210,17 @@
             </tr>
         </table>
 
-    <?php $habilitarAnaliseDeCusto = false; ?>
-    <?php foreach ($this->produtos as $produto){ ?>
-    <?php
-    if ($produto->stPrincipal) { //Verifica se é o produto principal
-        if ($produto->ParecerFavoravel) { //Verifica se o parecer desse produto principal é favorável
-            $habilitarAnaliseDeCusto = true;
-        }
-    }
-    ?>
+        <?php $habilitarAnaliseDeCusto = false; ?>
+        <?php foreach ($this->produtos as $produto){ ?>
+        <?php
+            if($produto->stPrincipal){ //Verifica se é o produto principal
+                if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal é favorável
+                    $habilitarAnaliseDeCusto = true;
+                }
+            }
+        ?>
 
-    <?php if ($this->dados->tpSolicitacao != 'OR'){ ?>
+        <?php if($this->dados->tpSolicitacao != 'OR'){ ?>
         <table class="tabela">
             <tr>
                 <td class="bold centro fundo_linha2">Produtos</td>
@@ -235,10 +228,7 @@
         </table>
         <table class="tabela">
             <tr>
-                <td style="font-weight: bold;"><input type="button" name="grid1"
-                                                      id="p_<?php echo $produto->idProduto; ?>" class="btn_adicionar"
-                                                      title="Expandir"/><?php echo $produto->Produto; ?> <?php echo ($produto->stPrincipal) ? '<font style="color: red;">(produto principal)</font>' : ''; ?>
-                </td>
+                <td style="font-weight: bold;"><input type="button" name="grid1" id="p_<?php echo $produto->idProduto; ?>" class="btn_adicionar" title="Expandir" /><?php echo $produto->Produto; ?> <?php echo ($produto->stPrincipal) ? '<font style="color: red;">(produto principal)</font>' : ''; ?></td>
             </tr>
         </table>
         <div id="div_p_<?php echo $produto->idProduto; ?>" class="sumir">
@@ -247,20 +237,13 @@
                     <td>
                         <table class="tabela">
                             <tr>
-                                <td><input type="button" name="grid1"
-                                           id="analiseconteudo_<?php echo $produto->idProduto; ?>" class="btn_remover"
-                                           title="Expandir"
-                                           onclick="EnquadramentoFavoravel('<?php echo $produto->idProduto; ?>', '<?php echo $produto->ParecerFavoravel; ?>');"/>Análise
-                                    de Conteúdo
-                                </td>
+                                <td><input type="button" name="grid1" id="analiseconteudo_<?php echo $produto->idProduto; ?>" class="btn_remover" title="Expandir" onclick="EnquadramentoFavoravel('<?php echo $produto->idProduto; ?>', '<?php echo $produto->ParecerFavoravel; ?>');" />Análise de Conteúdo</td>
                             </tr>
                         </table>
                         <div id="div_analiseconteudo_<?php echo $produto->idProduto; ?>">
                             <table class="tabela">
                                 <tr>
-                                    <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento
-                                        Favorável? *
-                                    </td>
+                                    <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento Favorável? *</td>
                                 </tr>
                                 <tr>
                                     <td colspan="6">
@@ -277,33 +260,33 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <?php echo ($produto->Lei8313 == 1) ? 'Sim' : 'Não'; ?>
+                                        <?php echo ($produto->Lei8313 == 1) ? 'Sim' : 'Não';  ?>
                                     </td>
                                     <td>
-                                        <?php echo ($produto->Artigo3 == 1) ? 'Sim' : 'Não'; ?>
+                                        <?php echo ($produto->Artigo3 == 1) ? 'Sim' : 'Não';  ?>
                                     </td>
                                     <td>
                                         <?php switch ($produto->IncisoArtigo3) {
-                                            case 1:
-                                                $inciso = 'Inciso I';
-                                                break;
-                                            case 2:
-                                                $inciso = 'Inciso II';
-                                                break;
-                                            case 3:
-                                                $inciso = 'Inciso III';
-                                                break;
-                                            case 4:
-                                                $inciso = 'Inciso IV';
-                                                break;
-                                            case 5:
-                                                $inciso = 'Inciso V';
-                                                break;
-                                            default :
-                                                $inciso = '';
-                                                break;
-                                        }
-                                        echo $inciso;
+                                                case 1:
+                                                    $inciso = 'Inciso I';
+                                                    break;
+                                                case 2:
+                                                    $inciso = 'Inciso II';
+                                                    break;
+                                                case 3:
+                                                    $inciso = 'Inciso III';
+                                                    break;
+                                                case 4:
+                                                    $inciso = 'Inciso IV';
+                                                    break;
+                                                case 5:
+                                                    $inciso = 'Inciso V';
+                                                    break;
+                                                default :
+                                                    $inciso = '';
+                                                    break;
+                                                }
+                                            echo $inciso;
                                         ?>
                                     </td>
                                     <td id="AlineaArtigo3"><?php echo $produto->AlineaArtigo3; ?></td>
@@ -318,29 +301,13 @@
                                     <td class="destacar bold">Inciso(s)</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4"><?php echo ($produto->Lei5761 == 1) ? 'Sim' : 'Não'; ?></td>
-                                    <td id="Artigo27"><?php echo ($produto->Artigo27 == 1) ? 'Sim' : 'Não'; ?></td>
+                                    <td colspan="4"><?php echo ($produto->Lei5761 == 1) ? 'Sim' : 'Não';  ?></td>
+                                    <td id="Artigo27"><?php echo ($produto->Artigo27 == 1) ? 'Sim' : 'Não';  ?></td>
                                     <td id="IncisoArtigo27">
-                                        <input
-                                            type="checkbox" <?php echo ($produto->IncisoArtigo27_I == 1) ? 'checked="checked"' : ''; ?>
-                                            style="margin-right: 3px;" value="1"
-                                            name="IncisoArtigo27_I_<?php echo $produto->idProduto; ?>"
-                                            disabled="disabled"/>I &nbsp;&nbsp;&nbsp;
-                                        <input
-                                            type="checkbox" <?php echo ($produto->IncisoArtigo27_II == 1) ? 'checked="checked"' : ''; ?>
-                                            style="margin-right: 3px;" value="1"
-                                            name="IncisoArtigo27_II_<?php echo $produto->idProduto; ?>"
-                                            disabled="disabled"/>II &nbsp;&nbsp;&nbsp;
-                                        <input
-                                            type="checkbox" <?php echo ($produto->IncisoArtigo27_III == 1) ? 'checked="checked"' : ''; ?>
-                                            style="margin-right: 3px;" value="1"
-                                            name="IncisoArtigo27_III_<?php echo $produto->idProduto; ?>"
-                                            disabled="disabled"/>III &nbsp;&nbsp;&nbsp;
-                                        <input
-                                            type="checkbox" <?php echo ($produto->IncisoArtigo27_IV == 1) ? 'checked="checked"' : ''; ?>
-                                            style="margin-right: 3px;" value="1"
-                                            name="IncisoArtigo27_IV_<?php echo $produto->idProduto; ?>"
-                                            disabled="disabled"/>IV
+                                        <input type="checkbox" <?php echo ($produto->IncisoArtigo27_I == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_I_<?php echo $produto->idProduto; ?>" disabled="disabled" />I &nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" <?php echo ($produto->IncisoArtigo27_II == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_II_<?php echo $produto->idProduto; ?>" disabled="disabled" />II &nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" <?php echo ($produto->IncisoArtigo27_III == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_III_<?php echo $produto->idProduto; ?>" disabled="disabled" />III &nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" <?php echo ($produto->IncisoArtigo27_IV == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_IV_<?php echo $produto->idProduto; ?>" disabled="disabled" />IV
                                     </td>
                                 </tr>
                                 <tr>
@@ -355,10 +322,10 @@
                 </tr>
             </table>
         </div>
-    <?php } ?>
-    <?php } ?>
+        <?php } ?>
+        <?php } ?>
 
-    <?php if ($habilitarAnaliseDeCusto){ ?>
+        <?php if($habilitarAnaliseDeCusto){ ?>
         <table class="tabela">
             <tr>
                 <td class="bold centro fundo_linha2">Planilha Orçamentária</td>
@@ -366,9 +333,7 @@
         </table>
         <table class="tabela">
             <tr>
-                <td style="font-weight: bold;"><input type="button" name="grid1" id="p_planilha_orcamentaria"
-                                                      class="btn_adicionar" title="Expandir"/>Análise de Custo
-                </td>
+                <td style="font-weight: bold;"><input type="button" name="grid1" id="p_planilha_orcamentaria" class="btn_adicionar" title="Expandir" />Análise de Custo</td>
             </tr>
         </table>
         <div id="div_p_planilha_orcamentaria" class="sumir">
@@ -377,14 +342,11 @@
                 $nrfonte = 0;
                 $TotalSolicitado = 0;
                 $TotalSugerido = 0;
-                if (is_array($this->planilha) && count($this->planilha) > 0) foreach ($this->planilha as $fonte => $planilha) { //ForeachFonteIncentivo
+                if(is_array($this->planilha) && count($this->planilha)>0) foreach ($this->planilha as $fonte => $planilha) { //ForeachFonteIncentivo
                     ?>
                     <tr>
                         <td>
-                            <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos"
-                                 style="width:90%"><span class="red del_link"
-                                                         style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span>
-                            </div>
+                            <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos" style="width:90%"><span class="red del_link" style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span></div>
                         </td>
                     </tr>
                     <?php
@@ -395,11 +357,7 @@
                         ?>
                         <tr class='master' fonte="<?php echo $nrfonte; ?>">
                             <td class='master'>
-                                <div tipo="produto" aberto="true" fonte="<?php echo $nrfonte; ?>"
-                                     produto="<?php echo $nrproduto; ?>" class="icn_menos clickproduto"
-                                     style="width:98%; margin-left:2%;"><span class="green del_link"
-                                                                              style="font-size: 16pt; font-weight: 800;"><?php echo $produto; ?></span>
-                                </div>
+                                <div  tipo="produto" aberto="true" fonte="<?php echo $nrfonte; ?>" produto ="<?php echo $nrproduto; ?>" class="icn_menos clickproduto" style="width:98%; margin-left:2%;"><span class="green del_link" style="font-size: 16pt; font-weight: 800;"><?php echo $produto; ?></span></div>
                             </td>
                         </tr>
                         <?php
@@ -409,17 +367,9 @@
                         foreach ($this->planilha[$fonte][$produto] as $etapa => $planilha) {
                             $valoretapasolicitado = 0;
                             ?>
-                            <tr class="master produto" produto="<?php echo $nrproduto; ?>"
-                                fonte="<?php echo $nrfonte; ?>">
+                            <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                                 <td>
-                                    <div>
-                                        <div tipo="etapa" fonte="<?php echo $nrfonte; ?>"
-                                             produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"
-                                             aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span
-                                                class="orange del_link"
-                                                style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span>
-                                        </div>
-                                    </div>
+                                    <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                                 </td>
                             </tr>
                             <?php
@@ -428,20 +378,12 @@
                             $valorSugeridoTotalEtapa = 0;
                             foreach ($this->planilha[$fonte][$produto][$etapa] as $cidade => $planilha) {
                                 ?>
-                                <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>"
-                                    etapa="<?php echo $nretapa; ?>" fonte="<?php echo $nrfonte; ?>">
+                                <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                                     <td>
-                                        <div tipo="cidade" fonte="<?php echo $nrfonte; ?>"
-                                             produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"
-                                             cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos"
-                                             style="width:94%; margin-left:6%;"><span class="black del_link"
-                                                                                      style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span>
-                                        </div>
+                                        <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
                                     </td>
                                 </tr>
-                                <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"
-                                    etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"
-                                    fonte="<?php echo $nrfonte; ?>">
+                                <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte; ?>">
                                     <td>
                                         <table class="tabela">
                                             <tr>
@@ -482,7 +424,7 @@
                                                 ?>
                                                 <tr class="item">
                                                     <td style="width: 5%;"><?php echo $planilha['Seq']; ?></td>
-                                                    <td style="width: 20%;"><?php echo $planilha['Item']; ?></td>
+                                                    <td  style="width: 20%;"><?php echo $planilha['Item']; ?></td>
                                                     <td class="direita"><?php echo @number_format($planilha['vlSolicitado'], 2, ",", "."); ?></td>
                                                     <td class="direita textDias"><?php echo $planilha['QtdeDias']; ?></td>
                                                     <td class="direita textQuantidade"><?php echo $planilha['Quantidade']; ?></td>
@@ -498,11 +440,9 @@
                                             ?>
                                             <tr>
                                                 <td colspan="2" class="black" style="font-size: 14pt;">Total da UF</td>
-                                                <td class="black" style="font-size: 12pt; font-weight: 600;"
-                                                    align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
+                                                <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
                                                 <td colspan="4"></td>
-                                                <td class="black" style="font-size: 12pt; font-weight: 600;"
-                                                    align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
+                                                <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
                                                 <td colspan="2"></td>
                                             </tr>
                                         </table>
@@ -511,19 +451,14 @@
                                 <?php
                             } //fechaForeachcidade
                             ?>
-                            <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>"
-                                etapa="<?php echo $nretapa; ?>" fonte="<?php echo $nrfonte; ?>">
+                            <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>">
                                 <td>
                                     <table class="tabela">
                                         <tr>
-                                            <td colspan="2" class="orange" style="width: 25%; font-size: 14pt;">Total da
-                                                Etapa
-                                            </td>
-                                            <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;"
-                                                align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
+                                            <td colspan="2" class="orange" style="width: 25%; font-size: 14pt;">Total da Etapa</td>
+                                            <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
                                             <td colspan="4">&nbsp;</td>
-                                            <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;"
-                                                align="right"><?php echo @number_format($valorSugeridoTotalEtapa, 2, ",", "."); ?></td>
+                                            <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalEtapa, 2, ",", "."); ?></td>
                                             <td colspan="2" style="width: 40%">&nbsp;</td>
                                         </tr>
                                     </table>
@@ -533,18 +468,14 @@
                             $nretapa++;
                         } //fechaForeachetapa
                         ?>
-                        <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"
-                            fonte="<?php echo $nrfonte; ?>">
+                        <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>">
                             <td>
                                 <table class="tabela">
                                     <tr>
-                                        <td colspan="2" class="green" style="width: 25%; font-size: 14pt;">Total
-                                            da <?php echo $produto; ?></td>
-                                        <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;"
-                                            align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
-                                        <td colspan="4">&nbsp;</td>
-                                        <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;"
-                                            align="right"><?php echo @number_format($valorSugeridoTotalProduto, 2, ",", "."); ?></td>
+                                        <td colspan="2" class="green" style="width: 25%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                                        <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
+                                            <td colspan="4">&nbsp;</td>
+                                        <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalProduto, 2, ",", "."); ?></td>
                                         <td style="width: 40%" colspan="2">&nbsp;</td>
                                     </tr>
                                 </table>
@@ -553,18 +484,14 @@
                         <? $nrproduto++;
                     } //fechaForeachproduto
                     ?>
-                    <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"
-                        fonte="<?php echo $nrfonte; ?>">
+                    <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>">
                         <td>
                             <table class="tabela">
                                 <tr>
-                                    <td colspan="2" class="red" style="width: 25%; font-size: 14pt;">Total
-                                        do <?php echo $fonte; ?></td>
-                                    <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;"
-                                        align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
+                                    <td colspan="2" class="red" style="width: 25%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                                    <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
                                     <td colspan="4">&nbsp;</td>
-                                    <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;"
-                                        align="right"><?php echo @number_format($valorSugeridoTotalIncentivo, 2, ",", "."); ?></td>
+                                    <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSugeridoTotalIncentivo, 2, ",", "."); ?></td>
                                     <td style="width: 40%" colspan="2">&nbsp;</td>
                                 </tr>
                             </table>
@@ -573,31 +500,28 @@
                     <? $nrfonte++;
                 }//fechaForeachFonteIncentivo
                 ?>
-                <?php if (is_array($this->planilha) && count($this->planilha) > 0): ?>
-                    <tr>
-                        <td>
-                            <table class="tabela">
-                                <tr>
-                                    <td colspan="2" class="blue" style="width: 25%; font-size: 14pt;">Total do Projeto
-                                    </td>
-                                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;"
-                                        align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
-                                    <td colspan="4">&nbsp;</td>
-                                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;"
-                                        align="right"><?php echo @number_format($TotalSugerido, 2, ",", "."); ?></td>
-                                    <td style="width: 40%" colspan="2">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+                <?php if(is_array($this->planilha) && count($this->planilha)>0): ?>
+                <tr>
+                    <td>
+                        <table class="tabela">
+                            <tr>
+                                <td colspan="2" class="blue" style="width: 25%; font-size: 14pt;">Total do Projeto</td>
+                                <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
+                                <td colspan="4">&nbsp;</td>
+                                <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSugerido, 2, ",", "."); ?></td>
+                                <td style="width: 40%" colspan="2">&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
                 <?php else: ?>
-                    <tr>
-                        <td align="center"><em>Dados n&atilde;o informados!</em></td>
-                    </tr>
+                <tr>
+                    <td align="center"><em>Dados n&atilde;o informados!</em></td>
+                </tr>
                 <?php endif; ?>
             </table>
         </div>
-    <?php } ?>
+        <?php } ?>
     <?php } ?>
     <?php //***** FIM PROJETO INDEFERIDO *****// ?>
 
@@ -605,38 +529,38 @@
 
 
     <?php //***** ENQUADRAMENTO *****// ?>
-    <?php if ($this->dados->tpSolicitacao == 'EN' || $this->dados->tpSolicitacao == 'EO' || $this->dados->tpSolicitacao == 'OR' || $this->dados->tpSolicitacao == 'PI') { ?>
+    <?php if($this->dados->tpSolicitacao == 'EN' || $this->dados->tpSolicitacao == 'EO' || $this->dados->tpSolicitacao == 'OR' || $this->dados->tpSolicitacao == 'PI'){ ?>
 
-        <?php $habilitarAnaliseDeCusto = false; ?>
-        <?php if (count($this->produtos) > 0) { ?>
-            <?php foreach ($this->produtos as $produto) {
-                if ($produto->stPrincipal) { //Verifica se é o produto principal
-                    if ($produto->ParecerFavoravel) { //Verifica se o parecer desse produto principal é favorável
-                        $habilitarAnaliseDeCusto = true;
-                    }
-                }
-            } ?>
-        <?php } ?>
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                carregarEnquadramento();
-            });
-
-            function carregarEnquadramento() {
-                var segmento = '<?php echo $this->projetosEN->cdSegmento; ?>';
-                var listaCodSegmento = ['11', '12', '13', '14', '15', '17', '23', '26', '2A', '2B', '2E', '2F', '2G', '2H', '2I', '2J', '2K', '2L', '32', '33', '36', '4B', '4D', '5A', '5D', '5E', '5F', '5G', '5H', '5I', '5J', '5K', '5L', '5M', '5N', '5O', '5P', '62', '65', '68', '6C', '6D', '6E', '6G', '6H'];
-                if (in_array(segmento, listaCodSegmento)) {
-                    $('#enquadramentoProjeto').val('2');
-                    $('#enquadramentoText').html('Artigo 18');
-                } else {
-                    $('#enquadramentoProjeto').val('1');
-                    $('#enquadramentoText').html('Artigo 26');
-                }
+    <?php $habilitarAnaliseDeCusto = false; ?>
+    <?php if(count($this->produtos)>0){ ?>
+    <?php foreach ($this->produtos as $produto){
+        if($produto->stPrincipal){ //Verifica se é o produto principal
+            if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal é favorável
+                $habilitarAnaliseDeCusto = true;
             }
-        </script>
+        }
+    } ?>
+    <?php } ?>
 
-        <table class="tabela">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            carregarEnquadramento();
+        });
+
+        function carregarEnquadramento(){
+            var segmento = '<?php echo $this->projetosEN->cdSegmento; ?>';
+            var listaCodSegmento = [ '11','12','13','14','15','17','23','26','2A','2B','2E','2F','2G','2H','2I','2J','2K','2L','32','33','36','4B','4D','5A','5D','5E','5F','5G','5H','5I','5J','5K','5L','5M','5N','5O','5P','62','65','68','6C','6D','6E','6G','6H' ];
+            if(in_array(segmento, listaCodSegmento)){
+                $('#enquadramentoProjeto').val('2');
+                $('#enquadramentoText').html('Artigo 18');
+            } else {
+                $('#enquadramentoProjeto').val('1');
+                $('#enquadramentoText').html('Artigo 26');
+            }
+        }
+    </script>
+
+    <table class="tabela">
             <tr>
                 <td colspan="4" class="bold centro fundo_linha2">Enquadramento</td>
             </tr>
@@ -649,10 +573,7 @@
                 <td align="right" class="destacar bold w150">Dt. Parecer</td>
                 <td><?php echo Data::tratarDataZend($this->Parecer->DtParecer, 'Brasileira'); ?></td>
             </tr>
-            <?php $sumir = '';
-            if ($this->dados->tpSolicitacao == 'OR') {
-                $sumir = 'class="sumir"';
-            } ?>
+            <?php $sumir = ''; if($this->dados->tpSolicitacao == 'OR'){ $sumir = 'class="sumir"'; } ?>
             <tr <?php echo $sumir; ?>>
                 <td align="right" class="destacar bold w150">Área</td>
                 <td valign="top" width="200px"><?php echo $this->projetosEN->area; ?></td>
@@ -662,8 +583,7 @@
             <tr <?php echo $sumir; ?>>
                 <td align="right" class="destacar bold w150">Enquadramento</td>
                 <td width="250" colspan="3">
-                    <input type="hidden" name="enquadramentoProjeto" id="enquadramentoProjeto" value=""
-                           class="obrigatorio"/>
+                    <input type="hidden" name="enquadramentoProjeto" id="enquadramentoProjeto" value="" class="obrigatorio" />
                     <span id="enquadramentoText"></span>
                 </td>
             </tr>
@@ -674,12 +594,11 @@
     <?php } ?>
     <?php //***** FIM ENQUADRAMENTO *****// ?>
 
-    <?php } ?>
 
-    <br clear="all"/>
+    <br clear="all" />
 </div>
 
 <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
 <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
-<br clear="all"/>
+<br clear="all" />

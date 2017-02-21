@@ -870,6 +870,11 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         }
     }
 
+    /**
+     * @param $objects
+     * @return array
+     * @deprecated Utilizar funcao com o nome converterObjetosParaArray localizada em FuncoesGerais.php
+     */
     protected function objectsToArray($objects){
 
         foreach($objects as $object)
