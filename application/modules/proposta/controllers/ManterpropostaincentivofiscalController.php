@@ -560,7 +560,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             $arrBusca['a.idagente = ?'] = $post->idAgente;
             $tblAgente = new Agente_Model_DbTable_Agentes();
-            $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
+            $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
             if ($rsProponente) {
                 $rsProponente = array_change_key_case($rsProponente->toArray());
 
