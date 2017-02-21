@@ -28,7 +28,7 @@ Cleber Costa dos Santos           | oclebersantos@gmail.com          | Desenvolv
 Jorge Luiz Jr.                    | juninhoecb@gmail.com             | SubCoordenador de Projetos   | 15/06/2016      | Atuando        | UFABC - LABLIVRE
 Ruy Junior Ferreira Silva         | ruyjfs@gmail.com                 | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
 Vinícius Feitosa da Silva         | viniciusfesil@gmail.com          | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
-Wouerner Brandão                  | wouerner@protonmail.com          | Desenvolvedor Pleno          | 19/05/2016      | Atuando        | UFABC - LABLIVRE
+Wouerner Brandão                  | wouerner@protonmail.com          |            ?                 | 19/05/2016      | Atuando        | UFABC - LABLIVRE
 Hygor Fellipe Moreira             | hygorfellipe95@gmail.com         | Estagiário - Desenvolvimento | 28/11/2016      | Atuando        | Estagiário do MINC                             
 Rômulo Menhô Barbosa              | romulo.barbosa@cultura.gov.br    |            ?                 | ?               | Atuando        | MINC
 Christian Moryah Contiero Miranda | christian.miranda@cultura.gov.br |            ?                 | ?               | Atuando        | MPOG
