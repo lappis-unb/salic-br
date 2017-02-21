@@ -314,7 +314,11 @@
 			<?php endforeach; ?>
 			<?php else: ?>
 			<?php foreach ($Pareceristas as $Parecerista): ?>
-			<option value="<?php echo $Parecerista->idParecerista; ?>" <?php echo ($d->idAgente == $Parecerista->idParecerista) ? 'selected="selected"' : ''; ?>><?php echo $Parecerista->Nome; ?></option>
+<?php if (isset($Parecerista->idParecerista)) { ?>                
+                    <option value="<?php echo $Parecerista->idParecerista; ?>" <?php echo ($d->idAgente == $Parecerista->idParecerista) ? 'selected="selected"' : ''; ?>><?php echo $Parecerista->Nome; ?></option>
+<?php } else { ?>
+                    <option value="<?php echo $Parecerista->id; ?>" <?php echo ($d->idAgente == $Parecerista->id) ? 'selected="selected"' : ''; ?>><?php echo $Parecerista->nome; ?></option>
+<?php } ?>
 			<?php endforeach; ?>
 			<?php endif; ?>
                     </select>
