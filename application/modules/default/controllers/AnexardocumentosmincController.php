@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Controller Anexar Documentos - Lado do Minc
@@ -107,8 +107,9 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         $this->_helper->viewRenderer->setNoRender(TRUE); ;
     }
 
-    public function buscarProjetosAnexosAction() {
-        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+    public function buscarProjetosAnexosAction()
+    {
+        $this->_helper->layout->disableLayout();
         $pronac = Mascara::delMaskCPFCNPJ($_POST['pronac']);
 
         $projetos = new Projetos();
@@ -132,10 +133,8 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
                     $dados['Anexos'][$key]['idDocumentosAgentes'] = $value->idDocumentosAgentes;
                     $dados['Anexos'][$key]['NoArquivo'] = utf8_encode($value->NoArquivo);
                     $dados['Anexos'][$key]['AgenteDoc'] = $value->AgenteDoc;
-                    //$dados['Anexos'][$key] = $value;
                     $i++;
                 }
-                //xd($dados);
 
                 $jsonEncode = json_encode($dados);
                 echo json_encode(array('resposta'=>true,'conteudo'=>$dados));
@@ -207,18 +206,18 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
                 $Arquivo->inserirUploads($dadosArquivo);
             }
             parent::message("Anexo cadastrado com sucesso!", "anexardocumentosminc", "CONFIRM");
-            
+
         } catch (Exception $e){
             parent::message("Erro ao salvar os dados.", "anexardocumentosminc", "ERROR");
         }
     }
 
     public function excluirAction() {
-        
+
     }
 
     public function excluirArquivoAction(){
-        
+
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
 
