@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "inc/menu.inc.php"; ?>
 <script type="text/javascript">
 
@@ -50,25 +50,25 @@ function buscaragente(cpf)
                                         <?php } else{?>
                                             window.location = '<?php echo $this->url(array("controller"=>"alterarprojeto", "action"=>"visualizadirigente","id" => $this->id)); ?>/idDirigente/'+ data[0].idAgente;
                                         <?php } ?>
-                } 
+                }
                 else if (data[0].msgCPF == 'invalido')
                 {
                     $('#erroCpf').html('CPF/CNPJ Inválido');
                 }
-                else if (data[0].msgCPF == 'novo') 
+                else if (data[0].msgCPF == 'novo')
                 {
                 	$('#novo').html('Preencha os dados abaixo!');
                 	$('.novo').show();
-                } 
-                
+                }
+
             },
             error: function (data)
             {
                 alert("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
             }
-        }); 
+        });
 
-    } 
+    }
 }
 
 
@@ -98,19 +98,19 @@ function buscarcep(cep)
         // enquanto estiver processando bloqueia os campos
         if (ajax.readyState > 0 && ajax.readyState <= 3 && cep.length == 10)
         {
-            
+
             $("#logradouro").attr("disabled" , "disabled");
             $("#tipoLogradouro").attr("disabled" , "disabled");
             $("#bairro").attr("disabled" , "disabled");
             $("#cidade").attr("disabled" , "disabled");
             $("#uf").attr("disabled" , "disabled");
-			
+
             logradouro.value               = "carregando...";
             tipoLogradouro.options[0].text = "carregando...";
             bairro.value                   = "carregando...";
             cidade.options[0].text         = "carregando...";
             uf.options[0].text             = "...";
-            
+
             $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
         }
         if (ajax.readyState == 4 && ajax.status == 200 && cep.length == 10)
@@ -216,7 +216,7 @@ function buscarcep(cep)
                 {
                     // deixa apenas um elemento no combo, os outros são excluídos
                     document.getElementById("cidade").options.length = 0;
-	
+
                     // cria um novo option
                     var novo   = document.createElement("option");
                     novo.value = txtCodCidade; // atribui um valor ao option
@@ -224,13 +224,13 @@ function buscarcep(cep)
                     document.getElementById("cidade").options.add(novo);
                 }
             } // fecha if
-            
+
         } // fecha else
-        
+
     } // fecha onreadystatechange
 
     ajax.send(null);
-    
+
 } // fecha função buscar_cep()
 
 
@@ -272,9 +272,9 @@ function buscarcep(cep)
 
 <div id="novocadastro">
 	<form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'salvadirigentegeral')); ?>?pronac=<?php echo $_GET['pronac']?>">
-			
-		<input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />	
-		
+
+		<input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />
+
 		<table id="tabDados" class="tabela">
 			<tr>
 				<th colspan="6">DADOS PRINCIPAIS</th>
@@ -283,29 +283,29 @@ function buscarcep(cep)
 				<td>
 					<label for="cpf">CPF *</label>
 					<br />
-					<input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14" 
-							onkeyup="mascara(this, format_cpf);" 
-							onclick="limpar_campo(this, ' ');" 
+					<input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14"
+							onkeyup="mascara(this, format_cpf);"
+							onclick="limpar_campo(this, ' ');"
 		                    onkeypress="limpar_campo(this, ' ');"
-		                    onblur="buscaragente(this.value);" 
-		                    onmouseout="restaurar_campo(this, ' ');" 
+		                    onblur="buscaragente(this.value);"
+		                    onmouseout="restaurar_campo(this, ' ');"
 		                    value=""  />
-		                     
+
 					&nbsp; <span id="erroCpf" class="spanError"></span>
 					<input type="hidden" id="idAgente" name="idAgente" />
 				</td>
 				<td>
 					<label for="nome">Nome *</label>
 					<br />
-					<input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50" 
+					<input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50"
 		                   onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
 		   				   onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" />
-					
+
 				    &nbsp; <span id="erroNome" class="spanError"></span>
 			    </td>
 				<td align="center">
 					<label for="visao"> Informe a visão do Agente: </label>
-                        
+
 					<select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo;?>);" class="input_simples" style="width: 250px;">
 						<option value="198" selected="selected">Dirigente de instituição</option>
 					</select>
@@ -314,8 +314,8 @@ function buscarcep(cep)
 				</td>
 			</tr>
 		</table>
-		
-		
+
+
 		<!-- ========== INÍCIO FORMULÁRIO ENDERECO ========== -->
 		<table id="tabEndereco" class="tabela">
 				<tr>
@@ -324,27 +324,29 @@ function buscarcep(cep)
 				<tr>
 					<td width="30%">
 						<label for="cep">CEP *</label><br />
-						<input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);" 
+						<input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
 							onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
 							onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" value=" " />
-						
+
 			            &nbsp; <span id="erroCep" class="spanError"></span>
 					</td>
 					<td width="30%">
 						<label for="uf">UF *</label> <br />
 						<select name="uf" id="uf" disabled="disabled" class="input_simples" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('controller' => 'cidade', 'action' => 'combo'));?>',' - Selecione primeiro o UF - ');"	>
-			
+
 							<?php if (!isset($this->uf) || empty($this->uf)) { ?>
 							<option value="0"> -- </option>
 							<?php } ?>
-			
-							<?php foreach ($this->comboestados as $comboestado): ?>
-							<option value="<?php echo $comboestado->id; ?>"
-								<?php if ($this->uf == $comboestado->id) echo "selected=\"selected\""; ?> >
-								<?php echo $comboestado->descricao; ?>
-							</option>
-							<?php endforeach; ?>
-			
+
+							<?php if ($this->comboestados) : ?>
+                                <?php foreach ($this->comboestados as $comboestado): ?>
+                                    <option value="<?php echo $comboestado->id; ?>"
+                                        <?php if ($this->uf == $comboestado->id) echo "selected=\"selected\""; ?> >
+                                        <?php echo $comboestado->descricao; ?>
+                                    </option>
+                                <?php endforeach; ?>
+							<?php endif; ?>
+
 						</select>
 						<span id="erroUf" class="spanError"></span>
 					</td>
@@ -352,15 +354,17 @@ function buscarcep(cep)
 						<label for="cidade">Cidade *</label> <br />
 						<select name="cidade" disabled="disabled" id="cidade" class="input_simples" style="width: 250px;">
 							<option value="0"> - Selecione - </option>
-			
-							<?php foreach ($this->combocidades as $combocidade): ?>
-							<option value="<?php echo $combocidade->id; ?>"
-								id="<?php echo $combocidade->idUF; ?>"
-								<?php if ($this->cidade == $combocidade->id) echo "selected=\"selected\""; ?>>
-								<?php echo $combocidade->descricao; ?>
-							</option>
-							<?php endforeach; ?>
-			
+
+							<?php if ($this->combocidades) : ?>
+                                <?php foreach ($this->combocidades as $combocidade): ?>
+                                    <option value="<?php echo $combocidade->id; ?>"
+                                        id="<?php echo $combocidade->idUF; ?>"
+                                        <?php if ($this->cidade == $combocidade->id) echo "selected=\"selected\""; ?>>
+                                        <?php echo $combocidade->descricao; ?>
+                                    </option>
+                                <?php endforeach; ?>
+							<?php endif; ?>
+
 						</select>
 						<span id="erroCidade" class="spanError"></span>
 					</td>
@@ -369,36 +373,36 @@ function buscarcep(cep)
 					<td>
 						<label for="tipoEndereco">Tipo de Endereço *</label> <br />
 						<select name="tipoEndereco" id="tipoEndereco" class="input_simples" style="width: 250px;">
-			
+
 							<?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
 							<option value="0"> - Selecione - </option>
 							<?php } ?>
-			
+
 							<?php foreach ($this->combotiposenderecos as $combotipoendereco): ?>
 							<option value="<?php echo $combotipoendereco->id; ?>"
 								<?php if ($this->tipoEndereco == $combotipoendereco->id) echo "selected=\"selected\""; ?>>
 								<?php echo $combotipoendereco->descricao; ?>
 							</option>
 							<?php endforeach; ?>
-			
+
 						</select>
 						<span id="erroTipoEndereco" class="spanError"></span>
 					</td>
 					<td>
 						<label for="tipoLogradouro">Tipo de Logradouro *</label> <br />
 						<select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" style="width: 250px;">
-			
+
 							<?php if (!isset($this->tipoLogradouro) || empty($this->tipoLogradouro)) { ?>
 							<option value="0"> - Selecione - </option>
 							<?php } ?>
-			
+
 							<?php foreach ($this->combotiposlogradouros as $combotipologradouro): ?>
 							<option value="<?php echo $combotipologradouro->id; ?>"
 								<?php if ($this->tipoLogradouro == $combotipologradouro->id) echo "selected=\"selected\""; ?>>
 								<?php echo $combotipologradouro->descricao; ?>
 							</option>
 							<?php endforeach; ?>
-			
+
 						</select>
 						<span id="erroTipoLogradouro" class="spanError"></span>
 					</td>
@@ -409,7 +413,7 @@ function buscarcep(cep)
 					</td>
 				</tr>
 				<tr>
-					
+
 					<td>
 						<label for="numero">Número *</label> <br />
 						<input class="input_simples" type="text" name="numero" id="numero" maxlength="10" size="30" />
@@ -437,9 +441,9 @@ function buscarcep(cep)
 				</tr>
 			</table>
 		<!-- ========== FIM FORMULÁRIO ENDERECO ========== -->
-		
-		
-		
+
+
+
 		<!-- ========== INÍCIO FORMULÁRIO FONE ========== -->
 		<table id="tabFone" class="tabela">
 				<tr>
@@ -451,13 +455,13 @@ function buscarcep(cep)
 						<br />
 						<select name="tipoFone" id="tipoFone" class="input_simples">
 							<option value=""> - Selecione - </option>
-			
+
 							<?php foreach ($this->combotipostelefones as $combotipotelefone){ ?>
 							<option value="<?php echo $combotipotelefone->id; ?>"><?php echo $combotipotelefone->descricao; ?></option>
 							<?php } ?>
-			
+
 						</select>
-						
+
 						&nbsp; <span id="erroTipoFone" class="spanError"></span>
 					</td>
 					<td>
@@ -465,13 +469,13 @@ function buscarcep(cep)
 						<br />
 						<select name="ufFone" id="ufFone" class="input_simples" onchange="carregar_combo(this.value,'dddFone','<?php echo $this->url(array('controller' => 'ddd', 'action' => 'combo'));?>');">
 							<option value="0"> -- </option>
-			
+
 							<?php foreach ($this->comboestados as $combouffone){ ?>
 							<option value="<?php echo $combouffone->id; ?>"><?php echo $combouffone->descricao; ?></option>
 							<?php } ?>
-			
+
 						</select>
-						
+
 						&nbsp; <span id="erroUfFone" class="spanError"></span>
 					</td>
 					<td>
@@ -480,80 +484,80 @@ function buscarcep(cep)
 						<select name="dddFone" id="dddFone" class="input_simples">
 							<option value=""> -- </option>
 						</select>
-						
+
 						&nbsp; <span id="erroDddFone" class="spanError"></span>
 					</td>
 					<td>
 						<label for="fone">Telefone *</label>
 						<br />
-						<input type="text" name="fone" id="fone" maxlength="9" class="input_simples w100" onkeyup="mascara(this, format_tel);" 
-							onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');" 
+						<input type="text" name="fone" id="fone" maxlength="9" class="input_simples w100" onkeyup="mascara(this, format_tel);"
+							onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
 							onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" value=" " />
-							
+
 						&nbsp; <span id="erroFone" class="spanError"></span>
 					</td>
 					<td>
 						<label>Divulgar? *</label>
 						<br />
-						<input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
-						<label for="divulgarFoneS">Sim</label> 
-						<input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
+						<input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
+						<label for="divulgarFoneS">Sim</label>
+						<input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
 						<label for="divulgarFoneN">Não</label>
 					</td>
 				</tr>
-		
+
 				<tr>
 					<th colspan="5">E-MAIL</th>
 				</tr>
 				<tr>
 						<td>
-							<label for="tipoEmail">Tipo *</label> 
+							<label for="tipoEmail">Tipo *</label>
 							<br />
 							<select name="tipoEmail" id="tipoEmail" class="input_simples">
 								<option value="0">- Selecione - </option>
-				
+
 								<?php foreach ($this->combotiposemails as $combotipoemail){ ?>
 								<option value="<?php echo $combotipoemail->id; ?>"><?php echo $combotipoemail->descricao; ?></option>
 								<?php } ?>
-				
+
 							</select>
-							
+
 							&nbsp; <span id="erroTipoEmail" class="spanError"></span>
 						</td>
 						<td>
 							<label for="email">E-mail *</label>
 							<br />
-				        	<input type="text" name="email" id="email" class="input_simples w200" size="50" maxlength="70" 
-								onclick="limpar_campo(this, ' ');" 
-								onkeypress="limpar_campo(this, ' ');" 
-								onblur="restaurar_campo(this, ' ');" 
-								onmouseout="restaurar_campo(this, ' ');" 
+				        	<input type="text" name="email" id="email" class="input_simples w200" size="50" maxlength="70"
+								onclick="limpar_campo(this, ' ');"
+								onkeypress="limpar_campo(this, ' ');"
+								onblur="restaurar_campo(this, ' ');"
+								onmouseout="restaurar_campo(this, ' ');"
 								value=" " />
-								
-							&nbsp; <span id="erroEmail" class="spanError"></span>	
+
+							&nbsp; <span id="erroEmail" class="spanError"></span>
 						</td>
 						<td colspan="3">
-							<label>Posso Divulgar? *</label> 
+							<label>Posso Divulgar? *</label>
 							<br />
-							<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
-							<label for="divulgarEmailS">Sim</label> 
-							<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/> 
+							<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
+							<label for="divulgarEmailS">Sim</label>
+							<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
 							<label for="divulgarEmailN">Não</label>
 						</td>
 					</tr>
-		
+
 		</table>
 		<!-- ========== FIM FORMULÁRIO E-MAIL ========== -->
-		
+
 		<table class="tabela">
 			<tr>
 				<td class="centro"><input type="button" class="btn_salvar" value=" " onclick="validaDirigenteNovo();"  /></td>
 			</tr>
 		</table>
-	
+
 	</form>
 
-</div>		
+</div>
 
 
 </div>
