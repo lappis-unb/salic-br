@@ -1,3 +1,6 @@
+Release 1.15.2
+  * Fix: [Recursos] Lista de pareceristas quebrava página de vinculada do IPHAN
+
 Release 1.15.1
   * Fix: [Movimentação bancária] Corrigindo inconsistência de conta bancária
 
