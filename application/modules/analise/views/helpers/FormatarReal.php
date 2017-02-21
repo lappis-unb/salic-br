@@ -21,7 +21,8 @@ class Zend_View_Helper_FormatarReal
 	function formatarReal($moeda)
 	{
 		$moeda = number_format($moeda, 2, ',', '.');
-		return "R$ " . $moeda;
+
+		return $moeda;
 	} // fecha método formatarReal()
 
 } // fecha class
