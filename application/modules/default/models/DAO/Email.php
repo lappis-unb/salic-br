@@ -13,12 +13,12 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
     protected $_schema = 'agentes';
 
 	/**
-	 * M�todo para buscar todos os e-mails de um conselheiro
+	 * Metodo para buscar todos os e-mails de um conselheiro
 	 * @access public
 	 * @param integer $idAgente
 	 * @return object $db->fetchAll($sql)
 	 */
-	public static function buscar($idAgente)
+	public function buscar($idAgente)
 	{
 		$sql = "SELECT * ";
 		$sql.= "FROM AGENTES.dbo.Internet ";
@@ -55,9 +55,9 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 			$db->closeConnection();
 			return true;
 		}
-		catch (Zend_Exception_Db $e)
+		catch (Zend_Exception_Db $objException)
 		{
-			$this->view->message = "Erro ao cadastrar E-mails do Proponente: " . $e->getMessage();
+			throw new Exception("Erro ao cadastrar E-mails do Proponente: " . $objException->getMessage(), 0, $objException);
 			return false;
 		}
 	}
@@ -80,7 +80,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
     }
 
 	/**
-	 * M�todo para excluir e-mail de um conselheiro
+	 * Metodo para excluir e-mail de um conselheiro
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -94,18 +94,16 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		}
-		catch (Zend_Exception_Db $e)
+		catch (Zend_Exception_Db $objException)
 		{
-			$this->view->message = "Erro ao excluir E-mail do Proponente: " . $e->getMessage();
+			throw new Exception("Erro ao excluir E-mail do Proponente: " . $objException->getMessage(), 0, $objException);
 		}
 
 		return $db->fetchAll($sql);
-	} // fecha m�todo excluir()
-
-
+	}
 
 	/**
-	 * M�todo para excluir todos os emails de um conselheiro
+	 * Metodo para excluir todos os emails de um conselheiro
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -120,10 +118,9 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 			$i = $db->query($sql);
 		}
-		catch (Zend_Exception_Db $e)
+		catch (Zend_Exception_Db $objException)
 		{
-			$this->view->message = "Erro ao excluir E-mail do Proponente: " . $e->getMessage();
+			throw new Exception("Erro ao excluir E-mail do Proponente: " . $objException->getMessage(), 0, $objException);
 		}
-	} // fecha m�todo excluirTodos()
-
-} // fecha class
+	}
+}

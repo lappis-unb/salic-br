@@ -64,12 +64,10 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         parent::init();
     }
 
-// fecha m�todo init()
 
     public function indexAction() {
         $this->_redirect("relatorio/proposta");
     }
-
 
 
     public function relatorioprojetopareceristaAction() {
@@ -1227,7 +1225,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $post   = Zend_Registry::get('post');
 
         $arrDados = array();
-        $this->_forward("listar-propostas-analise-visual-tecnico", "admissibilidade", null, array("view"=>"/relatorio/listarpropostasanalisevisualtecnico.phtml"));
+        $this->_forward("listar-propostas-analise-visual-tecnico", "admissibilidade", "admissibilidade", array("view"=>"/relatorio/listarpropostasanalisevisualtecnico.phtml"));
     }
 
     public function prepararXlsAction(){
