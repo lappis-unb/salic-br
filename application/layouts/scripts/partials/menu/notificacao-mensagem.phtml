@@ -8,21 +8,21 @@ $intQtd = 0;
 //    'tbMensagemProjeto.idMensagemOrigem IS NULL' => '',
 //    'dsMensagem IS NULL' => '',
 //));
-$dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
-$arrResult = $dbTable->findAllCustom(
-    array(
-        'vwPainelDeMensagens.stAtivo' => 1,
-        'tbMensagemProjetoResposta.dsMensagem IS NULL' => '',
-        'vwPainelDeMensagens.idDestinatarioUnidade' => $arrAuth->usu_orgao,
-//        'vwPainelDeMensagens.idDestinatario IS NULL' => '',
-    )
-//    ),
+//$dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
+//$arrResult = $dbTable->findAllCustom(
 //    array(
 //        'vwPainelDeMensagens.stAtivo' => 1,
 //        'tbMensagemProjetoResposta.dsMensagem IS NULL' => '',
-//        'vwPainelDeMensagens.idDestinatario' => $arrAuth->usu_codigo,
+//        'vwPainelDeMensagens.idDestinatarioUnidade' => $arrAuth->usu_orgao,
+////        'vwPainelDeMensagens.idDestinatario IS NULL' => '',
 //    )
-);
+////    ),
+////    array(
+////        'vwPainelDeMensagens.stAtivo' => 1,
+////        'tbMensagemProjetoResposta.dsMensagem IS NULL' => '',
+////        'vwPainelDeMensagens.idDestinatario' => $arrAuth->usu_codigo,
+////    )
+//);
 if (isset($arrAuth->usu_codigo)) {
     $intQtd = count($arrResult);
 }
