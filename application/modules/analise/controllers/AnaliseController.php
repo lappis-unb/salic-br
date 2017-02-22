@@ -18,7 +18,6 @@ class Analise_AnaliseController extends Analise_GenericController
         $PermissoesGrupo[] = Autenticacao_Model_Grupos::COORDENADOR_ANALISE;
         $PermissoesGrupo[] = Autenticacao_Model_Grupos::TECNICO_ANALISE;
 
-
         if (!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
         }
@@ -28,7 +27,7 @@ class Analise_AnaliseController extends Analise_GenericController
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
         isset($auth->getIdentity()->usu_codigo) ? $this->idUsuario = $auth->getIdentity()->usu_codigo : $this->idUsuario = $auth->getIdentity()->IdUsuario;
-        //$this->idUsuario = $auth->getIdentity()->usu_codigo;
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
         if (isset($auth->getIdentity()->usu_codigo)) {
 
@@ -41,7 +40,6 @@ class Analise_AnaliseController extends Analise_GenericController
 
     public function listarprojetosAction()
     {
-
     }
 
     public function listarProjetosAjaxAction()
@@ -92,77 +90,8 @@ class Analise_AnaliseController extends Analise_GenericController
             'recordsFiltered' => $recordsFiltered ? $recordsFiltered : 0));
     }
 
-    public function visualizarprsojetoAction()
-    {
-
-        $idPronac = $this->getRequest()->getParam('idpronac');
-
-        try {
-            if (empty($idPronac)) {
-                throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
-            }
-
-            $this->view->IdPRONAC = $idPronac;
-
-            $objTbProjetos = new Projeto_Model_DbTable_Projetos();
-            $projeto = $objTbProjetos->findBy(array(
-                'IdPRONAC' => $idPronac
-            ));
-            $this->view->projeto = $projeto;
-
-            $this->view->valoresProjeto = $objTbProjetos->obterValoresProjeto($idPronac);
-
-            $objAgentes = new Agente_Model_DbTable_Agentes();
-            $dadosAgente = $objAgentes->buscarFornecedor(array(
-                'a.CNPJCPF = ?' => $this->view->projeto['CgcCpf']
-            ));
-            $arrayDadosAgente = $dadosAgente->current();
-            $this->view->nomeAgente = $arrayDadosAgente['nome'];
-
-            $mapperArea = new Agente_Model_AreaMapper();
-            $this->view->areaCultural = $mapperArea->findBy(array(
-                'Codigo' => $this->view->projeto['Area']
-            ));
-
-            $objSegmentocultural = new Segmentocultural();
-            $this->view->segmentoCultural = $objSegmentocultural->findBy(array(
-                'Codigo' => $this->view->projeto['Segmento']
-            ));
-
-            $objPlanoDistribuicaoProduto = new Projeto_Model_vwPlanoDeDistribuicaoProduto();
-            $this->view->dadosProducaoProjeto = $objPlanoDistribuicaoProduto->obterProducaoProjeto(array(
-                'IdPRONAC = ?' => $idPronac
-            ));
-
-            $objEnquadramento = new Admissibilidade_Model_Enquadramento();
-            $arrayPesquisa = array(
-                'AnoProjeto' => $this->view->projeto['AnoProjeto'],
-                'Sequencial' => $this->view->projeto['Sequencial'],
-                'IdPRONAC' => $idPronac
-            );
-            $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
-
-            $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-            $this->view->assinaturas = $objAssinatura->obterAssinaturas($idPronac, $this->idTipoDoAtoAdministrativo);
-
-            $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
-            $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($this->idTipoDoAtoAdministrativo);
-
-            $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
-            $this->view->documentoAssinatura = $objModelDocumentoAssinatura->findBy(
-                array(
-                    'IdPRONAC' => $idPronac,
-                    'idTipoDoAtoAdministrativo' => $this->idTipoDoAtoAdministrativo
-                )
-            );
-        } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
-        }
-    }
-
     public function visualizarprojetoAction()
     {
-
         $idPronac = $this->getRequest()->getParam('idpronac');
 
         try {
@@ -229,146 +158,48 @@ class Analise_AnaliseController extends Analise_GenericController
             $this->view->mandatos = $arrMandatos;
             //============== fim codigo dirigente ================
 
-//            $propostaPorEdital = false;
-//            if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
-//                $propostaPorEdital = true;
-//            }
-//            $this->view->isEdital = $propostaPorEdital;
             $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
             $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
             $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
             $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
             $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
-            $this->view->itensPlanoDivulgacao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
 
+            # informacoes atuais
+            $TPDC = new PlanoDistribuicao();
+            $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $TPA = new Proposta_Model_DbTable_Abrangencia();
+            $TPD = new Proposta_Model_DbTable_TbDeslocamento();
+            $atual['itensPlanosDistribuicao'] = $TPDC->buscar(array('idProjeto = ?' => $idPreProjeto))->toArray();
+            $atual['planilhaProjeto'] = $TPP->buscarPlanilhaCompleta($idPreProjeto);
+            $atual['itensLocalRealizacao'] = $TPA->buscar(array('idProjeto' => $idPreProjeto));
+            $atual['itensDeslocamento'] = $TPD->buscarDeslocamentosGeral(array('idProjeto' => $idPreProjeto));
+            $this->view->atual = $atual;
+
+            # informacoes do historico
             $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
-
-            $historico['planilhaitens'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhaproposta'));
-            $historico['abrangencia'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_abrangencia'));
-            $historico['planodistribuicaoproduto'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_planodistribuicaoproduto'));
+            $historico['planilhaProjeto'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhaproposta'));
+            $historico['itensLocalRealizacao'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_abrangencia'));
+            $historico['itensDeslocamento'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_deslocamento'));
+            $historico['itensPlanosDistribuicao'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_planodistribuicaoproduto'));
             $historico['tbdetalhaplanodistribuicao'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao'));
-            $historico['identificacaoproposta'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_identificacaoproposta'));
-            $historico['responsabilidadesocial'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_responsabilidadesocial'));
-            $historico['detalhestecnicos'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_detalhestecnicos'));
-            $historico['outrasinformacoes'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_outrasinformacoes'));
+            $historico['geral'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_identificacaoproposta'));
+            $historico['geral'] += unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_responsabilidadesocial'));
+            $historico['geral'] += unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_detalhestecnicos'));
+            $historico['geral'] += unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_outrasinformacoes'));
 
-//xd($historico['planilhaitens']);
-//            xd($historico['planilhaitens']);
-//            $historico['planilha'] = converterArrayParaObjetos($historico['planilha']);
-//
-//            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-//            $listaEtapa = $manterOrcamento->buscarEtapas('P');
-//
-//            $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
+            $this->view->historico = $historico;
 
-//            $this->view->historico = $historico;
-
-//            $planilha['fontederecurso'] = $buscarRecurso->buscarFonteRecurso();
-//
-//            $planilha['abrangencias'] = $historico['abrangencia'];
-//
-//            $planilha['produtos'] = $historico['planodistribuicaoproduto'];
-//
-//            $planilha['etapas'] = converterObjetosParaArray($listaEtapa);
-//
-//            $planilha['itens'] = $historico['planilhaitens'];
-//
-//            $fontes = converterObjetosParaArray($planilha['fontederecurso'], 'idverificacao');
-//
-//            $planilha['fontederecurso'] = $this->filtrarArrayPlanilha($fontes, 'idverificacao', $planilha['itens'], 'FonteRecurso');
-//
-//            $planilha['abrangencias']= $this->filtrarArrayPlanilha($planilha['abrangencias'], 'idMunicipioIBGE', $planilha['itens'], 'MunicipioDespesa');
-//
-//            $planilha['produtos'] = $this->filtrarArrayPlanilha($planilha['produtos'], 'idProduto', $planilha['itens'], 'idProduto');
-//
-//            $planilha['etapas'] = $this->filtrarArrayPlanilha($planilha['etapas'], 'idEtapa', $planilha['itens'], 'idEtapa');
-
-
-
-//            $tblUF = new Agente_Model_DbTable_UF();
-//            $tblMunicipios = new Agente_Model_DbTable_Municipios();
-//            $novasAbrangencias = array();
-//            foreach ($planilha['abrangencias'] as $local) {
-//
-////                if( $local['idProduto'] > 0) {
-////
-////                    $detalhaLocal = $tblUF->buscar(array( 'idUF' => $local['idUF']));
-////
-////                    if($detalhaUF) {
-////                        $novasAbrangencias[] = array_merge($local, (array) $detalhaLocal);
-////                    }
-////
-////                    $detalhaLocal = $tblMunicipios->buscar(array('idMunicipioIBGE' => $local['idMunicipioIBGE']));
-////
-////                    if($detalhaLocal) {
-////                        $novasAbrangencias[] = array_merge($local, (array) $detalhaLocal);
-////                    }
-////                }
-//            }
-//
-////            xd($novasAbrangencias);
-
-
-//            $tblPlanoDistribuicao = new PlanoDistribuicao();
-//            $novosProdutos = array();
-//            foreach ($planilha['produtos'] as $produto) {
-//
-//                if( $produto['idProduto'] > 0) {
-//
-//                    $detalhaProduto = $tblPlanoDistribuicao->buscarProdutos($produto['idProduto']);
-//
-//                    if($detalhaProduto) {
-//                        $novosProdutos[] = array_merge($produto, (array) $detalhaProduto);
-//                    }
-//                }
-//            }
-
-//            $planilha['produtos'] = $novosProdutos;
-//
-//            xd($planilha);
-
-//            die;
-
-            // planilha novos
-
-            $this->view->EtapasProduto = $listaEtapa;
-
-            $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
-            $this->view->Produtos = $tbPreprojeto->listarProdutos($idPreProjeto);
-
-
-            $this->view->ItensProduto = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($idPreProjeto));
-            $arrBusca = array(
-                'idprojeto' => $idPreProjeto,
-                'stabrangencia' => 1
-            );
-
-            $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
-            $locais = $tblAbrangencia->buscar($arrBusca);
-
-
-            // Remove outros paises para cadastro na planilha
-            $novosLocais = array();
-            foreach ($locais as $key => $local) {
-                if (isset($local['idPais']) && $local['idPais'] == 31) {
-                    $novosLocais[] = $local;
-                }
-            }
-            $this->view->localRealizacao = $novosLocais;
-
-            // fim planilha novos
-
-            //DOCUMENTOS ANEXADOS PROPOSTA
+            # documentos anexados proposta
             $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
             $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $idPreProjeto));
             $this->view->arquivosProposta = $rs;
 
-            //DOCUMENTOS ANEXADOS PROPONENTE
+            # documentos anexados proponente
             $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
             $rsA = $tbA->buscarDocumentos(array("idAgente = ?" => $dados[0]->idAgente));
             $this->view->arquivosProponente = $rsA;
 
-            //DOCUMENTOS ANEXADOS NA DILIGENCIA
+            # documentos anexados na diligencia
             $tblAvaliacaoProposta = new AvaliacaoProposta();
             $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
             $tbArquivo = new tbArquivo();
@@ -383,7 +214,7 @@ class Analise_AnaliseController extends Analise_GenericController
             $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
             $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
 
-            //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
+            # pegando relacao de documentos exigidos(geral)
             $tblDocumentosExigidos = new DocumentosExigidos();
             $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
             $arrDocumentosExigidos = array();
@@ -392,57 +223,11 @@ class Analise_AnaliseController extends Analise_GenericController
             }
             $this->view->documentosExigidos = $arrDocumentosExigidos;
             $this->view->itensHistorico = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
-            $this->view->itensPlanilhaOrcamentaria = Proposta_Model_AnalisarPropostaDAO::buscarPlanilhaOrcamentaria($idPreProjeto);
-
-            $buscarProduto = ManterorcamentoDAO::buscarProdutos($idPreProjeto);
-            $this->view->Produtos = $buscarProduto;
-
-            $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-            $buscarEtapa = $tbPlanilhaEtapa->listarEtapasProdutos($idPreProjeto);
-
-            $this->view->Etapa = $buscarEtapa;
-
-            $preProjeto = new Proposta_Model_DbTable_PreProjeto();
-
-            $buscarItem = $preProjeto->listarItensProdutos($idPreProjeto);
-            $this->view->AnaliseCustos = Proposta_Model_DbTable_PreProjeto::analiseDeCustos($idPreProjeto);
-
-            $this->view->idPreProjeto = $idPreProjeto;
-            $pesquisaView = $this->_getParam('pesquisa');
-            if ($pesquisaView == 'proposta') {
-                $this->view->menu = 'inativo';
-                $this->view->tituloTopo = 'Consultar dados da proposta';
-            }
 
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
         }
 
-    }
-
-    protected function filtrarArrayPlanilha($array, $key1, $array2, $key2)
-    {
-        $array2 = array_column($array2, $key2);
-
-        foreach ($array as $key => $item) {
-            if (!in_array($item[$key1], $array2))
-                unset($array[$key]);
-        }
-
-        return array_values($array);
-    }
-
-    protected function buscarValorItemArray($array, $key, $param, $keyValue = null)
-    {
-        if( empty($keyValue))
-            $keyValue = $key;
-
-        foreach ($array as $item) {
-            if($item[$key] == $param)
-                return $item[$keyValue];
-        }
-
-        return false;
     }
 
 }

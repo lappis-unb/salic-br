@@ -55,12 +55,12 @@ class Proposta_Model_DbTable_TbDeslocamento extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('de' => $this->_name), '*', $this->_schema)
-            ->joinInner(array('pao' => 'pais'), 'de.idpaisorigem = pao.idpais', array('*'), $this->getSchema('agentes'))
-            ->joinInner(array('ufO' => 'uf'), 'de.iduforigem = ufo.iduf', array('*'), $this->getSchema('agentes'))
-            ->joinInner(array('muO' => 'municipios'), 'de.idmunicipioorigem = muo.idmunicipioibge', array('*'), $this->getSchema('agentes'))
-            ->joinInner(array('paD' => 'pais'), 'de.idpaisdestino = pad.idpais', array('*'), $this->getSchema('agentes'))
-            ->joinInner(array('ufD' => 'uf'), 'de.idufdestino = ufd.iduf', array('*'), $this->getSchema('agentes'))
-            ->joinInner(array('muD' => 'municipios'), 'de.idmunicipiodestino = mud.idmunicipioibge', array('*'), $this->getSchema('agentes'))
+            ->joinLeft(array('pao' => 'pais'), 'de.idpaisorigem = pao.idpais', array('continente as continenteorigem', 'descricao as paisorigem'), $this->getSchema('agentes'))
+            ->joinLeft(array('ufO' => 'uf'), 'de.iduforigem = ufo.iduf', array('descricao as uforigem'), $this->getSchema('agentes'))
+            ->joinLeft(array('muO' => 'municipios'), 'de.idmunicipioorigem = muo.idmunicipioibge', array('descricao as municipioorigem'), $this->getSchema('agentes'))
+            ->joinLeft(array('paD' => 'pais'), 'de.idpaisdestino = pad.idpais', array('continente as continentedestino', 'descricao as paisodestino'), $this->getSchema('agentes'))
+            ->joinLeft(array('ufD' => 'uf'), 'de.idufdestino = ufd.iduf', array('descricao as ufdestino'), $this->getSchema('agentes'))
+            ->joinLeft(array('muD' => 'municipios'), 'de.idmunicipiodestino = mud.idmunicipioibge', array('descricao as municipiodestino'), $this->getSchema('agentes'))
         ;
         foreach ($where as $coluna => $valor) {
             $select->where($coluna . ' = ?', $valor);

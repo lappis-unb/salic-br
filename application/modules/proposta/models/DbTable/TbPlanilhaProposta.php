@@ -581,10 +581,25 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         return $db->fetchRow($select);
     }
 
-    public function buscarItensCompletosPlanilha($idPreProjeto = null, $idEtapa = null, $idProduto = null, $idItem = null, $idPlanilhaProposta=null, $idUf = null, $municipio = null,
+    public function buscarPlanilhaCompleta($idPreProjeto = null, $idEtapa = null, $idProduto = null, $idItem = null, $idPlanilhaProposta=null, $idUf = null, $municipio = null,
                                               $unidade = null, $qtd = null, $ocorrencia = null, $valor = null, $qtdDias = null, $fonte = null) {
 
         $db = Zend_Db_Table::getDefaultAdapter();
+
+        $pp = array(
+            'pp.idplanilhaproposta as idPlanilhaProposta',
+            'pp.idetapa as idEtapa',
+            'pp.ufdespesa AS IdUf',
+            'pp.municipiodespesa as Municipio',
+            'pp.idplanilhaitem AS idItem',
+            'pp.fonterecurso as Recurso',
+            'pp.quantidade as Quantidade',
+            'pp.ocorrencia as Ocorrencia',
+            'pp.valorunitario as ValorUnitario',
+            'CAST(pp.dsjustificativa AS TEXT) as Justificativa',
+            'pp.qtdedias as QtdDias',
+            'pp.unidade as Unidade',
+        );
 
         $sacSchema = $this->_schema;
         $sql = $db->select()->from(array('pp' => 'tbplanilhaproposta'), $this->_getCols(), $sacSchema)
@@ -644,7 +659,9 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             $sql->where('pp.fonterecurso = ?', $fonte);
         }
 
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $sql->order(array('DescricaoRecurso', 'DescricaoProduto', 'DescricaoEtapa', 'DescricaoUf', 'DescricaoItem'));
+
+        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
         return $db->fetchAll($sql);
     }

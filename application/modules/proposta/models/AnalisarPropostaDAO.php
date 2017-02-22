@@ -231,7 +231,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     {
         $sql = "SELECT
                 CASE a.idPais
-                WHEN 0 THEN 'N�o � poss�vel informar o local de realiza��o do projeto'
+                WHEN 0 THEN 'N&atilde;o&eacute; poss&iacute;vel informar o local de realiza&ccedil;&atilde;o do projeto'
                 ELSE p.Descricao
                 END as Pais,
                 u.Descricao as UF,
@@ -359,7 +359,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                 INNER JOIN tabelas.dbo.Usuarios u on (p.idTecnico = u.usu_codigo)
                 WHERE ConformidadeOK < 9
                 UNION ALL
-                SELECT idProjeto,0,'Proponente' as Tecnico, convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao,'Proposta Cultural ENVIADA ao Minist�rio da Cultura para Conformidade Visual' as Avaliacao, '' as dtResposta, '' as dsResposta
+                SELECT idProjeto,0,'Proponente' as Tecnico, convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao,'Proposta Cultural ENVIADA ao Minist&eacute;rio da Cultura para Conformidade Visual' as Avaliacao, '' as dtResposta, '' as dsResposta
                 FROM SAC.dbo.tbMovimentacao
                 WHERE Movimentacao=96
             ) as slctPrincipal
@@ -410,7 +410,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     {
         try {
 
-            //update do estado das outras avalia��es
+            //update do estado das outras avaliacoes
             $sql = "UPDATE sac.dbo.tbAvaliacaoProposta
                     SET stEstado = 1
                     WHERE idProjeto = $IdProjeto AND stEstado <> 1";
@@ -430,7 +430,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     {
         try {
 
-            //update do estado das outras avalia��es
+            //update do estado das outras avaliacoes
             $sql = "UPDATE sac.dbo.tbMovimentacao
                     SET stEstado = 1
                     WHERE idProjeto = $IdProjeto AND stEstado <> 1";
