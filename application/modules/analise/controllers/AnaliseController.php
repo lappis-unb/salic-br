@@ -105,6 +105,8 @@ class Analise_AnaliseController extends Analise_GenericController
             ));
             $this->view->projeto = $projeto;
 
+//            xd($this->view->projeto);
+
             $idPreProjeto = $projeto['idProjeto'];
             $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
             $this->view->itensGeral = $dados;
@@ -227,6 +229,21 @@ class Analise_AnaliseController extends Analise_GenericController
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
         }
+
+    }
+
+    public function formavaliaradequacaoAction(){
+
+        $this->_helper->layout->disableLayout();
+
+        $idPronac = $this->getRequest()->getParam('idpronac');
+
+        $objTbProjetos = new Projeto_Model_DbTable_Projetos();
+        $projeto = $objTbProjetos->findBy(array(
+            'IdPRONAC' => $idPronac
+        ));
+
+        $this->view->projeto = $projeto;
 
     }
 
