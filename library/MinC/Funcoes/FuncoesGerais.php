@@ -265,7 +265,7 @@ function retornaBaseUrl($controller) {
 function montaBotaoVoltar($controller, $links) {
     $link = retornaBaseUrl($controller) . '/principal/';
     $ultimoLink = count($links);
-    
+
     if (isset($links[$ultimoLink - 2])) {
         foreach ($links[$ultimoLink - 2] as $key => $value) {
             $titulo = $key;
@@ -288,11 +288,11 @@ function montaBotaoVoltar($controller, $links) {
 function proponenteInabilitado($cpf)
 {
 	$inabilitadoDAO = new Inabilitado();
-	
+
 	$where['CgcCpf 		= ?'] = $cpf;
 	$where['Habilitado 	= ?'] = 'N';
 	$busca = $inabilitadoDAO->Localizar($where);
-	
+
 	if(count($busca) > 0){
 		return true;
 	} else {
@@ -409,6 +409,25 @@ function isCnpjValid($cnpj) {
         } else {
             return true;
         }
+    }
+}
+
+
+function converterArrayParaObjeto($array)
+{
+    if(!sizeof($array))
+    {
+        return null;
+    }
+    else
+    {
+        $object = new stdClass();
+
+        foreach ($array as $field => $value)
+        {
+            $object->$field = (object) $value;
+        }
+        return $object;
     }
 }
 

@@ -509,6 +509,15 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             $this->view->AbrangenciaSalvo = true;
         }
 
+        # Deslocamento
+        $metaDeslocamento = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_deslocamento');
+        if (!$metaDeslocamento) {
+            $TPA = new Proposta_Model_DbTable_TbDeslocamento();
+            $this->view->DeslocamentoSalvo = $this->salvarObjetoSerializado($TPA, $idPreProjeto, 'alterarprojeto_deslocamento');
+        } else {
+            $this->view->DeslocamentoSalvo = true;
+        }
+
         # Plano distribuicao
         $metaPlanoDistribuicao = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_planodistribuicaoproduto');
         if (!$metaPlanoDistribuicao) {

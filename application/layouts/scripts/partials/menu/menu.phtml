@@ -463,6 +463,12 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'label' => 'Avalia&ccedil;&atilde;o'
 );
 $arrMenu['admissibilidade']['menu'][] = array(
+'grupo' => array(92,97,131),
+'url' => $this->url(array('module' => 'default','controller' => 'manterregularidadeproponente', 'action' => 'index')),
+'title' => 'Ir para Certid&otilde;es Negativas',
+'label' => 'Certid&otilde;es Negativas'
+);
+$arrMenu['admissibilidade']['menu'][] = array(
     'grupo' => array(92,131),
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'gerenciar-enquadramento')),
     'title' => 'Ir para Enquadramento',
@@ -480,13 +486,7 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'title' => 'Ir para Recurso',
     'label' => 'Recurso'
 );
-// =======  TEC. DE ACOMPANHAMENTO / COORD. ADMISSIBLIDADE / TECNICO ADMISSBILIDADE ============
-//$arrMenu['admissibilidade']['menu'][] = array(
-    //'grupo' => array(92,97,131),
-    //'url' => "javascript:window.open('{$this->url(array('module' => 'default','controller' => 'manterregularidadeproponente', 'action' => 'index'))}",
-    //'title' => 'Ir para Certid&otilde;es Negativas',
-    //'label' => 'Certid&otilde;es Negativas'
-//);
+
 $arrMenu['admissibilidade']['menu'][] = array(
     'grupo' => array(92,131),
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-assinatura')),
@@ -505,15 +505,16 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'title' => 'Redistribuir An&aacute;lise',
     'label' => 'Redistribuir An&aacute;lise'
 );
-//$arrMenu['admissibilidade']['menu'][] = array(
-    //'grupo' => array(97,131),
-    //'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciamentodepropostas')),
-    //'title' => 'Gerenciar Proposta',
-    //'label' => 'Gerenciar Proposta'
-//);
 
 $arrMenu['admissibilidade']['menu'][] = array(
-    'grupo' => array(131),
+    'grupo' => array(97,131),
+    'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'redistribuiranalise')),
+    'title' => 'Gerenciar Propostas',
+    'label' => 'Gerenciar Propostas'
+);
+
+$arrMenu['admissibilidade']['menu'][] = array(
+    'grupo' => array(97,131),
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')),
     'title' => 'Gerenciar Analistas',
     'label' => 'Gerenciar Analistas'

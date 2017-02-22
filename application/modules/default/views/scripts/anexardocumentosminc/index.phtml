@@ -102,7 +102,7 @@
                     <select class="select_simples obrigatorio" name="tpDocumento" id="tpDocumento">
                         <option value=""> - Selecione - </option>
                         <?php foreach ($this->tpDocumentos as $tipos) { ?>
-                        <option value="<?php echo $tipos->idTipoDocumento; ?>"><?php echo $tipos->dsTipoDocumento; ?></option>
+                        <option value="<?php echo $tipos['idTipoDocumento']; ?>"><?php echo $tipos['dsTipoDocumento']; ?></option>
                         <?php } ?>
                     </select>
                 </td>

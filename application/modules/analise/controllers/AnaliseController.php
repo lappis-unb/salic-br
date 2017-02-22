@@ -77,6 +77,7 @@ class Analise_AnaliseController extends Analise_GenericController
                 $projetos->Segmento = utf8_encode($projetos->Segmento);
                 $projetos->Proponente = utf8_encode($projetos->Proponente);
                 $projetos->Enquadramento = utf8_encode($projetos->Enquadramento);
+                $projetos->Area = utf8_encode($projetos->Area);
                 $projetos->VlSolicitado = number_format(($projetos->VlSolicitado), 2, ",", ".");
                 $aux[$key] = $projetos;
             }
@@ -92,7 +93,6 @@ class Analise_AnaliseController extends Analise_GenericController
     }
 
     public function visualizarprsojetoAction(){
-
 
         $idPronac = $this->getRequest()->getParam('idpronac');
 
@@ -244,7 +244,7 @@ class Analise_AnaliseController extends Analise_GenericController
 
             $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
 
-            $historico['planilha'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhaproposta'));
+            $historico['planilhaitens'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhaproposta'));
             $historico['abrangencia'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_abrangencia'));
             $historico['planodistribuicaoproduto'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_planodistribuicaoproduto'));
             $historico['tbdetalhaplanodistribuicao'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao'));
@@ -253,7 +253,59 @@ class Analise_AnaliseController extends Analise_GenericController
             $historico['detalhestecnicos'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_detalhestecnicos'));
             $historico['outrasinformacoes'] = unserialize($PPM->buscarMeta($idPreProjeto, 'alterarprojeto_outrasinformacoes'));
 
+            $historico['planilha'] = converterArrayParaObjeto($historico['planilha']);
+
+            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+            $listaEtapa = $manterOrcamento->buscarEtapas('P');
+
+            $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
+
             $this->view->historico = $historico;
+
+            $planilha['fontederecurso'] = $buscarRecurso->buscarFonteRecurso();
+
+            $planilha['abrangencias'] = $historico['abrangencia'];
+
+            $planilha['produtos'] = $historico['tbdetalhaplanodistribuicao'];
+
+            $planilha['etapas'] = $listaEtapa;
+
+            $planilha['itens'] = $historico['planilhaitens'];
+
+//            xd($planilha['itens']);
+
+            //@todo parei aqui
+
+
+
+            // planilha novos
+
+            $this->view->EtapasProduto = $listaEtapa;
+
+            $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
+            $this->view->Produtos = $tbPreprojeto->listarProdutos($idPreProjeto);
+
+
+            $this->view->ItensProduto = $this->objectsToArray($tbPreprojeto->listarItensProdutos($idPreProjeto));
+            $arrBusca = array(
+                'idprojeto' => $idPreProjeto,
+                'stabrangencia' => 1
+            );
+
+            $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+            $locais = $tblAbrangencia->buscar($arrBusca);
+
+
+            // Remove outros paises para cadastro na planilha
+            $novosLocais = array();
+            foreach ($locais as $key => $local) {
+                if (isset($local['idPais']) && $local['idPais'] == 31) {
+                    $novosLocais[] = $local;
+                }
+            }
+            $this->view->localRealizacao = $novosLocais;
+
+            // fim planilha novos
 
             //DOCUMENTOS ANEXADOS PROPOSTA
             $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();

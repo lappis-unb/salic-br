@@ -984,7 +984,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
         $dadosEndereco = Agente_Model_EnderecoNacionalDAO::buscarEnderecoNacional($rsPreProjeto->idAgente);
 
-        $dadosEmail = Agente_Model_Email::buscar($rsPreProjeto->idAgente);
+        $objEmail = new Agente_Model_Email();
+        $dadosEmail = $objEmail->buscar($rsPreProjeto->idAgente);
 
         $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
 

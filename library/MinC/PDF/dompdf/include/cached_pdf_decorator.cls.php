@@ -111,8 +111,12 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
     $this->_pdf->circle($x, $y, $r1, $color, $width, $style, $fill);
   }
 
-  function image($img_url, $x, $y, $w = null, $h = null) {
-    $this->_pdf->image($img_url, $x, $y, $w, $h);
+  function image($img_url, $extension, $x, $y, $w = null, $h = null) {
+      if(!$extension) {
+          $path_info = pathinfo($img_url);
+          $extension = $path_info['extension'];
+      }
+    $this->_pdf->image($img_url, $extension, $x, $y, $w, $h);
   }
   
   function text($x, $y, $text, $font, $size, $color = array(0,0,0), $adjust = 0, $angle = 0) {
@@ -150,8 +154,8 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
     $this->_current_page_id = $this->_pdf->open_object();
     return $this->_current_page_id;
   }
-  
-  function stream($filename) {
+
+  function stream($filename, $options = null) {
     // Store the last page in the page cache
     if ( !is_null($this->_current_page_id) ) {
       $this->_pdf->close_object();
@@ -163,11 +167,11 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
       $this->_current_page_id = null;
     }
     
-    $this->_pdf->stream($filename);
+    $this->_pdf->stream($filename, $options);
     
   }
   
-  function &output() {
+  function &output($options = null) {
     // Store the last page in the page cache
     if ( !is_null($this->_current_page_id) ) {
       $this->_pdf->close_object();
@@ -178,7 +182,7 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
       $this->_current_page_id = null;
     }
     
-    return $this->_pdf->output();
+    return $this->_pdf->output($options);
   }
   
   function get_messages() { return $this->_pdf->get_messages(); }
