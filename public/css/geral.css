@@ -1779,7 +1779,7 @@ div.plan span {
 }
 
 header {
-    /*margin-bottom: 10px;*/
+    margin-bottom: 1em;
 	position: relative;
 	display: block;
 	clear: both;
