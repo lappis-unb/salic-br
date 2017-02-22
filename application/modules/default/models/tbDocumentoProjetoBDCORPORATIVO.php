@@ -14,16 +14,6 @@ class tbDocumentoProjetoBDCORPORATIVO extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "scCorp";
+	protected $_schema  = "BDCORPORATIVO.scCorp";
 	protected $_name    = "tbDocumentoProjeto";
-
-
-        /**
-	 * M�todo para consultar
-	 * @access public
-	 * @param array $dados
-	 * @param integer $where
-	 * @return integer (quantidade de registros alterados)
-	 */
-    
-} // fecha class
+}

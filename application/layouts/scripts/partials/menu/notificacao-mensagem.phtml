@@ -28,6 +28,7 @@ if ($intQtd > 99) {
     .notificacao {
         /*margin-left: 15px;*/
         /*margin-top: 5px;*/
+
         /*display: inline;*/
     }
     .notificacao a {
@@ -55,6 +56,7 @@ if ($intQtd > 99) {
         z-index: 1;
         font-size: 9px !important;
     }
+
     .notificacao .btn-floating p {
 /*        display: block;*/
 /*        text-align: center;*/
@@ -66,7 +68,7 @@ if ($intQtd > 99) {
 </style>
 <?php if ($intQtd > 0): ?>
 <li class="notificacao">
-    <a class="white-text tooltipped" data-position="left" data-delay="50" data-tooltip="Ir para mensagens" href="/admissibilidade/mensagem/perguntas-usuario">
+    <a class="white-text tooltipped" data-position="left" data-delay="50" data-tooltip="Ir para mensagens" href="/admissibilidade/mensagem">
         <i class="material-icons left">mail</i>
         <span class="btn-floating waves-effect waves-light orange darken-1"><?php echo $intQtd ?></span>
     </a>
