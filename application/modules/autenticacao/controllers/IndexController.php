@@ -29,6 +29,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function loginAction()
     {
         $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
         try {
             $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
             $password = $this->getParam('Senha', null);
@@ -57,7 +58,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $this->orgaoAtivo = $GrupoAtivo->codOrgao;
 
 //                    return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
-                    $this->_helper->viewRenderer->setNoRender(true);
                     echo json_encode(array('status' => 1, 'msg' => 'Login realizado com sucesso!','redirect' => '/principal'));
                 } else {
                         //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.

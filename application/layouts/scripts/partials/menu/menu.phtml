@@ -74,194 +74,16 @@ $arrMenuProponente['usuario']['menu'][] = array('label' => 'Alterar Dados', 'tit
     'grupo' => array()
 );
 // ========== FIM MENU PROTOCOLO ==========
+
 // ========== INICIO MENU MANUAIS ==========
-$arrMenuProponente['manuais'] = array(
-    'id' => 'manuais',
-    'label' => 'Manuais',
-    'title' => 'Ir para Manuais',
-    'menu' => array(),
-    'grupo' => array(),
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Administrativo', 'title' => 'Ir para Administrativo',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Administrativo.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Comprova&ccedil;&atilde;o Financeira', 'title' => 'Ir para Comprova&ccedil;&atilde;o Financeira',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Comprovacao_Financeira.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Envio de Marcas', 'title' => 'Ir para Envio de Marcas',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Envio_de_Marcas.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Projeto', 'title' => 'Ir para Projeto',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Projeto.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Manual - Como Apresentar sua Proposta Cultural', 'title' => 'Ir para Proposta',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Proposta.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Prorroga&ccedil;&atilde;o da Capta&ccedil;&atilde;o', 'title' => 'Ir para Prorroga&ccedil;&atilde;o da Capta&ccedil;&atilde;o',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Prorrogacao_da_Captacao.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Readequa&ccedil;&atilde;o 20%', 'title' => 'Ir para Readequa&ccedil;&atilde;o 20%',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Readequacao_20.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array('label' => 'Readequa&ccedil;&atilde;o Solicita&ccedil;&otilde;es Gerais', 'title' => 'Ir para Solicita&ccedil;&otilde;es Gerais',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/MANUAL_DE_READEQUACAO.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array(
-    'label' => 'Recurso',
-    'title' => 'Ir para Recurso',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Recurso.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array(
-    'label' => 'Relat&oacute;rio de Comprova&ccedil;&atilde;o do Objeto',
-    'title' => 'Ir para Relat&oacute;rio de Comprova&ccedil;&atilde;o do Objeto',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Relatorio_de_Comprovacao_do_Objeto.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array(
-    'label' => 'Relat&oacute;rio Trimestral',
-    'title' => 'Ir para Relat&oacute;rio Trimestral',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Relatorio_Trimestral.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
-$arrMenuProponente['manuais']['menu'][] = array(
-    'label' => 'Responder Dilig&ecirc;ncia',
-    'title' => 'Ir para Responder Dilig&ecirc;ncia',
-    'url' => "window.open('{$this->url(array('controller' => 'public', 'action' => 'manuais'), '', true)}/Responder_Diligencia.pdf', '_blank')",
-    'grupo' => array(),
-    'target' => '_blank'
-);
+include_once(APPLICATION_PATH . '/layouts/scripts/partials/menu/menu-manuais.phtml');
 // ========== FIM MENU MANUAIS ==========
 
 // Default
 // Analise
-$arrMenu['analise'] = array(
-    'id' => 'analise',
-    'label' => 'An&aacute;lise',
-    'title' => 'Ir para An&aacute;lise',
-    'menu' => array(),
-    'grupo' => array(93,94,97,103,110,118,119,120,127,128,132,133,137,141,142,143),
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Realizar An&aacute;lise', 'title' => 'Ir para An&aacute;lise do Membro da Comiss&atilde;o',
-    'url' => $this->url(array('controller' => 'areadetrabalho', 'action' => 'index'), '', true),
-    'grupo' => array(118)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Avaliar adequa&ccedil;&atilde;o de projeto', 'title' => 'Ir para Avaliar adequa&ccedi;&atilde;o de projeto',
-    'url' => $this->url(array('module' => 'analise', 'controller' => 'analise', 'action' => 'listarprojetos'), '', true),
-    'grupo' => array(103, 110)
-);
+include_once(APPLICATION_PATH . '/layouts/scripts/partials/menu/menu-analise.phtml');
+// Analise
 
-$arrMenu['analise']['menu'][] = array('label' => 'Reuni&atilde;o CNIC', 'title' => 'Ir para Gerenciar Pauta da Reuni&atilde;o',
-    'url' => $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpautareuniao'), '', true),
-    'grupo' => array(118,133)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Reuni&atilde;o CNIC', 'title' => 'Ir para Gerenciar Pauta da Reuni&atilde;o',
-    'url' => $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpresidenteemreuniao'), '', true),
-    'grupo' => array(119)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Reuni&atilde;o CNIC', 'title' => 'Ir para Gerenciar Pauta da Reuni&atilde;o',
-    'url' => $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciaradministrativo'), '', true),
-    'grupo' => array(120)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Gerenciar Pareceres', 'title' => 'Ir para Gerenciar Pareceres',
-    'url' => $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'index'), '', true),
-    'grupo' => array(103, 110)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Imprimir Parecer T&eacute;cnico', 'title' => 'Ir para Imprimir Parecer T&eacute;cnico',
-    'url' => $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'imprimir-parecer-tecnico'), '', true),
-    'grupo' => array(93,97,103,137)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Gerenciar Componente da Comiss&atilde;o', 'title' => 'Ir para Gerenciar Componente da Comiss&atilde;o',
-    'url' => $this->url(array('controller' => 'projetosgerenciar', 'action' => 'index'), '', true),
-    'grupo' => array(103)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Gerar Termo de Decis&atilde;o', 'title' => 'Ir para Gerar Termo de Decis&atilde;o',
-    'url' => $this->url(array('controller' => 'gerartermodeaprovacao', 'action' => 'index'), '', true),
-    'grupo' => array(103,110,120,127)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'CheckList para Publica&ccedil;&atilde;o', 'title' => 'Ir para CheckList para Publica&ccedil;&atilde;o',
-    'url' => $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true),
-    'grupo' => array(103,110,127)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Certid&otilde;es Negativas', 'title' => 'Ir para Certid&otilde;es Negativas',
-    'url' => "javascript:window.open('{$this->url(array('module' => 'default', 'controller' => 'manterregularidadeproponente', 'action' => 'index'))}",
-    'grupo' => array(103,110,127)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Gerar Publica&ccedil;&atilde;o para DOU', 'title' => 'Ir para Gerar Publica&ccedil;&atilde;o para DOU',
-    'url' => $this->url(array('controller' => 'publicacaodou', 'action' => 'index'), '', true),
-    'grupo' => array(128)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Atualiza&ccedil;&atilde;o de Portaria', 'title' => 'Ir para Atualiza&ccedil;&atilde;o de Portaria',
-    'url' => $this->url(array('controller' => 'publicacaodou', 'action' => 'consultar-portaria'), '', true),
-    'grupo' => array(128)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Cadastrar Projetos FNC', 'title' => 'Ir para Cadastrar Projetos FNC',
-    'url' => $this->url(array('controller' => 'cadastrar-projeto', 'action' => 'index'), '', true),
-    'grupo' => array(142)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Calend&aacute;rio CNIC', 'title' => 'Ir para Calend&aacute;rio CNIC',
-    'url' => $this->url(array('controller' => 'mantercalendariocnic', 'action' => 'index'), '', true),
-    'grupo' => array(120)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Gerenciar Pareceres', 'title' => 'Ir para Gerenciar Pareceres',
-    'url' => $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), '', true),
-    'grupo' => array(93)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'An&aacute;lise T&eacute;cnica Inicial', 'title' => 'Ir para An&aacute;lise T&eacute;cnica Inicial',
-    'url' => $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true),
-    'grupo' => array(94)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Parecer T&eacute;cnico FNC', 'title' => 'Ir para Parecer T&eacute;cnico FNC',
-    'url' => $this->url(array('controller' => 'aprovacaoeparecer', 'action' => 'index'), '', true),
-    'grupo' => array(143)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Aprova&ccedil;&atilde;o FNC', 'title' => 'Ir para Aprova&ccedil;&atilde;o FNC',
-    'url' => $this->url(array('controller' => 'aprovacaoeparecer', 'action' => 'index'), '', true),
-    'grupo' => array(141,142)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Recurso', 'title' => 'Ir para Recurso',
-    'url' => $this->url(array('controller' => 'recurso', 'action' => 'index'), '', true),
-    'grupo' => array(103,127)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Avaliar Recursos', 'title' => 'Ir para Avaliar Recursos',
-    'url' => $this->url(array('controller' => 'recurso', 'action' => 'painel-recursos'), '', true),
-    'grupo' => array(93, 94, 110)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Avaliar Readequa&ccedil;&otilde;es', 'title' => 'Ir para Avaliar Readequa&ccedil;&otilde;es',
-    'url' => $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes'), '', true),
-    'grupo' => array(93, 94, 110)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Avaliar Readequa&ccedil;&otilde;es', 'title' => 'Ir para Avaliar Readequa&ccedil;&otilde;es',
-    'url' => $this->url(array('controller' => 'recurso', 'action' => 'analisar-recursos-cnic'), '', true),
-    'grupo' => array(118)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Avaliar Recursos', 'title' => 'Ir para Avaliar Recursos',
-    'url' => $this->url(array('controller' => 'readequacoes', 'action' => 'analisar-readequacoes-cnic'), '', true),
-    'grupo' => array(118)
-);
-$arrMenu['analise']['menu'][] = array('label' => 'Configurar Assinatura', 'title' => 'Ir para Configurar Assinatura',
-    'url' => $this->url(array('controller' => 'configuracoes', 'action' => 'secretarios'), '', true),
-    'grupo' => array(128)
-);
 // ========== INICIO MENU ACOMPANHAMENTO ==========
 $arrMenu['acompanhamento'] = array(
     'id' => 'acompanhamento',
@@ -272,7 +94,7 @@ $arrMenu['acompanhamento'] = array(
 );
 $arrMenu['acompanhamento']['menu'][] = array('label' => 'CheckList para Publica&ccedil;&atilde;o', 'title' => 'Ir para CheckList de Publica&ccedil;&atilde;o',
     'url' => $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true),
-    'grupo' => array(103,110,121,122,123,127)
+    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE,110,121,122,123,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO)
 );
 $arrMenu['acompanhamento']['menu'][] = array('label' => 'Movimenta&ccedil;&atilde;o Banc&aacute;ria', 'title' => 'Ir para Movimenta&ccedil;&atilde;o Banc&aacute;ria',
     'url' => $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao'), '', true),
@@ -380,11 +202,11 @@ $arrMenu['administrativo'] = array(
     'label' => 'Administrativo',
     'title' => 'Ir para Administrativo',
     'menu' => array(),
-    'grupo' => array(93,94,97,103,118,120,121,122,123,137),
+    'grupo' => array(93,94,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,118,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,137),
 );
 $arrMenu['administrativo']['menu'][] = array('label' => 'Manter Agentes', 'title' => 'Ir para Manter Agentes',
     'url' => $this->url(array('module'=>'agente', 'controller' => 'agentes', 'module'=>'agente', 'action' => 'agentes'), '', true),
-    'grupo' => array(97, 120, 121, 122, 123)
+    'grupo' => array(97, Autenticacao_Model_Grupos::COORDENADOR_CNIC, 121, 122, 123)
 );
 $arrMenu['administrativo']['menu'][] = array('label' => 'Gerenciar meus dados', 'title' => 'Ir para Gerenciar meus dados',
     'url' => $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes'), '', true),
@@ -392,11 +214,11 @@ $arrMenu['administrativo']['menu'][] = array('label' => 'Gerenciar meus dados', 
 );
 $arrMenu['administrativo']['menu'][] = array('label' => 'Desvincular Agentes', 'title' => 'Ir para Desvincular Agentes',
     'url' => $this->url(array('controller' => 'desvincularagentes', 'action' => 'index'), '', true, '', true),
-    'grupo' => array(103, 120, 122)
+    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE, Autenticacao_Model_Grupos::COORDENADOR_CNIC, 122)
 );
 $arrMenu['administrativo']['menu'][] = array('label' => 'Analisar Procura&ccedil;&atilde;o', 'title' => 'Ir para Analisar Procura&ccedil;&atilde;o',
     'url' => $this->url(array('controller' => 'procuracao', 'action' => 'analisar'), '', true, '', true),
-    'grupo' => array(122, 103)
+    'grupo' => array(122, Autenticacao_Model_Grupos::COORDENADOR_ANALISE)
 );
 $arrMenu['administrativo']['menu'][] = array('label' => 'Manter Parecerista', 'title' => 'Ir para Manter Parecerista',
     'url' => $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'painelcredenciamento'), '', true),
@@ -463,6 +285,12 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'label' => 'Avalia&ccedil;&atilde;o'
 );
 $arrMenu['admissibilidade']['menu'][] = array(
+'grupo' => array(92,97,131),
+'url' => $this->url(array('module' => 'default','controller' => 'manterregularidadeproponente', 'action' => 'index')),
+'title' => 'Ir para Certid&otilde;es Negativas',
+'label' => 'Certid&otilde;es Negativas'
+);
+$arrMenu['admissibilidade']['menu'][] = array(
     'grupo' => array(92,131),
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'gerenciar-enquadramento')),
     'title' => 'Ir para Enquadramento',
@@ -480,13 +308,7 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'title' => 'Ir para Recurso',
     'label' => 'Recurso'
 );
-// =======  TEC. DE ACOMPANHAMENTO / COORD. ADMISSIBLIDADE / TECNICO ADMISSBILIDADE ============
-//$arrMenu['admissibilidade']['menu'][] = array(
-    //'grupo' => array(92,97,131),
-    //'url' => "javascript:window.open('{$this->url(array('module' => 'default','controller' => 'manterregularidadeproponente', 'action' => 'index'))}",
-    //'title' => 'Ir para Certid&otilde;es Negativas',
-    //'label' => 'Certid&otilde;es Negativas'
-//);
+
 $arrMenu['admissibilidade']['menu'][] = array(
     'grupo' => array(92,131),
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-assinatura')),
@@ -505,15 +327,16 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'title' => 'Redistribuir An&aacute;lise',
     'label' => 'Redistribuir An&aacute;lise'
 );
-//$arrMenu['admissibilidade']['menu'][] = array(
-    //'grupo' => array(97,131),
-    //'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciamentodepropostas')),
-    //'title' => 'Gerenciar Proposta',
-    //'label' => 'Gerenciar Proposta'
-//);
 
 $arrMenu['admissibilidade']['menu'][] = array(
-    'grupo' => array(131),
+    'grupo' => array(97,131),
+    'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'redistribuiranalise')),
+    'title' => 'Gerenciar Propostas',
+    'label' => 'Gerenciar Propostas'
+);
+
+$arrMenu['admissibilidade']['menu'][] = array(
+    'grupo' => array(97,131),
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')),
     'title' => 'Gerenciar Analistas',
     'label' => 'Gerenciar Analistas'
@@ -554,64 +377,64 @@ $arrMenu['relatorios'] = array(
     'label' => 'Relat&oacute;rios',
     'title' => 'Ir para Relat&oacute;rios',
     'menu' => array(),
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(92,93,97,103,110,114,118,119,127,131,133),
+    'grupo' => array(92,93,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,110,114,118,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,131,Autenticacao_Model_Grupos::MEMBROS_NATOS_CNIC),
     'url' => $this->url(array('controller' => 'gerarrelatorios', 'action' => 'index'), '', true),
     'title' => 'Ir para Edital',
     'label' => 'Edital'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
     'url' => $this->url(array('controller' => 'relatorio', 'action' => 'index'), '', true),
     'title' => 'Ir para Propostas',
     'label' => 'Propostas'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
     'url' => $this->url(array('controller' => 'relatorio', 'action' => 'projeto'), '', true),
     'title' => 'Ir para Projetos',
     'label' => 'Projetos'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
     'url' => $this->url(array('controller' => 'operacional', 'action' => 'index'), '', true),
     'title' => 'Ir para Operacional',
     'label' => 'Operacional'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
     'url' => $this->url(array('controller' => 'relatorio', 'action' => 'gerencial'), '', true),
     'title' => 'Ir para Gerencial',
     'label' => 'Gerencial'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
     'url' => $this->url(array('controller' => 'relatorio', 'action' => 'desembolso'), '', true),
     'title' => 'Ir para Consultar Pontos Culturais',
     'label' => 'Ponto de Cultura'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
     'url' => $this->url(array('controller' => 'gerarrelatorioreuniao', 'action' => 'gerarrelatorioreuniao'), '', true),
     'title' => 'Ir para Gerenciar Relat&oacute;rio Reuni&atilde;o',
     'label' => 'Relat&oacute;rio de resultado CNIC'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139),
+    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139),
     'url' => $this->url(array('controller' => 'gerarrelatorioparecerista', 'action' => 'geraldeanalise'), '', true),
     'title' => 'Ir para Relat&oacute;rio geral de an&aacute;lise',
     'label' => 'Relat&oacute;rio geral de an&aacute;lise'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(93,97,127,137),
+    'grupo' => array(93,97,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,137),
     'url' => $this->url(array('controller' => 'consultarpareceristas', 'action' => 'consultardadospareceristas'), '', true),
     'title' => 'Consultar Dados do Parecerista',
     'label' => 'Consultar Dados do Parecerista'
 );
 $arrMenu['relatorios']['menu'][] = array(
-    'grupo' => array(127,137),
+    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,137),
     'url' => $this->url(array('controller' => 'gerarrelatorioparecerista', 'action' => 'geraldeanalise'), '', true),
     'title' => 'Gerar Relat&oacute;rio Parecerista',
     'label' => 'Gerar Relat&oacute;rio Parecerista'
@@ -682,10 +505,10 @@ $arrMenu['assinatura']['menu'][] = array(
 //        'label' => 'Mensagens',
 //        'title' => 'Ir para Mensagens',
 //        'menu' => array(),
-//        'grupo' => array(92, 93, 94, 103, 110, 118, 121, 122, 123, 124, 125, 129, 131, 132),
+//        'grupo' => array(92, 93, 94, Autenticacao_Model_Grupos::COORDENADOR_ANALISE, 110, 118, 121, 122, 123, 124, 125, 129, 131, 132),
 //    );
 //    $arrMenu['relatorios']['menu'][] = array(
-//        'grupo' => array(92, 93, 94, 103, 110, 118, 121, 122, 123, 124, 125, 129, 131, 132),
+//        'grupo' => array(92, 93, 94, Autenticacao_Model_Grupos::COORDENADOR_ANALISE, 110, 118, 121, 122, 123, 124, 125, 129, 131, 132),
 //        'url' => "$this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem'), '', true)/idpronac/{$this->idPronac}",
 //        'title' => 'Ir para Manter Mensagens',
 //        'label' => 'Manter Mensagens'
