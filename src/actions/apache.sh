@@ -1,21 +1,21 @@
 
-echo "[******] Copying and enable virtualhost 'salic.conf'";
-cp ./src/actions/virtual-host/salic.conf /etc/apache2/sites-available/salic.conf
+echo "[******] Copying and enable virtualhost 'site.conf'";
+cp /tmp/src/actions/virtual-host/site.conf /etc/apache2/sites-available/site.conf
 
+a2ensite site.conf
 
-echo "[******] Changing Apache Enviroment Variable";
-echo "Is Production? (S/n)"
-read isProduction
-if [ "$isProduction" = "S" ] || [ "$isProduction" = "s" ] || [ "$isProduction" = "" ]
-then
-    sed -i \"s/development/production/g\" /etc/apache2/sites-available/salic.conf
-fi
-
-a2ensite local.salic.conf
-a2ensite salic.conf
-
-# Disable default virtualhost '000-default.conf'
+echo "[******] Disable default virtualhost '000-default.conf'";
 a2dissite 000-default.conf
 
-# Starts Apache using Foreground Mode
+echo "[******] Enable Apache Mod Rewrite";
+a2enmod rewrite
+
+echo "[******] Enable Apache Mod Headers";
+a2enmod headers
+
+echo "[******] Restarting Apache 2 Service";
+service apache2 reload
+
+echo "[******] Starts Apache using Foreground Mode";
 apache2ctl -D FOREGROUND
+#exec apache2 -DFOREGROUND
