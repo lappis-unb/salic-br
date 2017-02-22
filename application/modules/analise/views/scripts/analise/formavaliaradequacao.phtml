@@ -1,0 +1,51 @@
+<div class="container-salic">
+    <div class="row">
+        <div class="col s12">
+            <div class="section">
+                <h5>Avaliar readequa&ccedil;&atilde;o do projeto: <b><?php echo $this->projeto['NomeProjeto']?> (<?php echo $this->projeto['AnoProjeto'] . $this->projeto['Sequencial']; ?>)</b></h5>
+            </div>
+
+            <form name="form" id="form" method="post" action ="<?php echo $this->url(array('module'=>'analise', 'controller' => 'analise', 'action' => 'salvaravaliacaadequacao')); ?>">
+                <input type="hidden" name="idProjeto" id="idProjeto" value="<?php echo $this->projeto['IdPRONAC']; ?>" />
+                <div class="row">
+                    <div class="col s4">
+                        <label for="planilhaitem" class="black-text">O projeto est&aacute; em conformidade de adequa&ccedil;&atilde;o?</label>
+                    </div>
+                    <div class="col s4">
+                        <select id="conformidade" name="conformidade" class="valida browser-default input_simples">
+                            <option value="0">N&atilde;o, devolver para o proponente</option>
+                            <option value="1">Sim, enviar para vinculada</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <b>Avalia&ccedil;&atilde;o</b> *
+                        <textarea cols="80" id="despacho" name="despacho" class="despacho editor" rows="10"></textarea>
+                        <br>
+                    </div>
+                </div>
+
+                <?php //if ($this->avaliar) : ?>
+                    <div class="row">
+                        <div class="input-field col s12 center-align">
+                            <a class="modal-action modal-close waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
+                            <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
+                                <i class="material-icons right">send</i>
+                            </a>
+                        </div>
+                    </div>
+                <?php //endif; ?>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("textarea.editor").each(function () {
+            $(this).editorRico({altura: 200});
+        });
+    });
+</script>

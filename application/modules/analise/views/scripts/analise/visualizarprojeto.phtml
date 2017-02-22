@@ -15,11 +15,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
 <div class="row">
     <div class="col s12">
         <div class="center">
-            <?php if ((isset($_GET['realizar_analise']) && $_GET['realizar_analise'] == "sim")): ?>
-                <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
-                    Avaliar <i class="material-icons right">gavel</i>
-                </button>
-            <?php endif; ?>
             <iframe name="esconde" id="esconde" class="sumir"></iframe>
             <br>
             <a href="/analise/analise/listarprojetos"
@@ -812,7 +807,7 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                             </div>
                             <div class="col s6">
                                 <fieldset>
-                                    <legend>Anterior</legend>
+                                    <legend>Atual</legend>
                                     <table class="tabela">
                                         <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
                                             <tr>
@@ -958,6 +953,7 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
     </div>
 </div>
 
+<?php echo $this->partial("analise/inc/menususpenso.phtml", $this); ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.avaliarProposta').click(function () {
