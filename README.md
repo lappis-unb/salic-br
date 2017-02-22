@@ -28,8 +28,12 @@ Or You you can also execute the same command above, but arranging using docker-c
 @todo fill here
 ```
 
-# More
+## Extra
 
 If you wanna check something inside your container you can access using the command below:
 ```
+docker exec -it salic-webv1.0 bash
 ```
+
+See the authors of this repo:
+* [Authors](./Authors.md).
