@@ -32,14 +32,3 @@ WORKDIR /var/www/
 
 RUN echo "[ ***** ***** ***** ] - Begin of Actions inside Image ***** ***** ***** "
 CMD /tmp/src/actions/start.sh
-
-### docker build -t salic-web:1.0 .
-### docker run -it -v $(pwd):/var/www --name salic-web___ -e APPLICATION_ENV="development" -p 80:80 salic-web:1.0 bash
-
-####DockerCompose.yml
-#version: '2'
-#services:
-#  man:
-#    build: .
-#    image: salic-web:1.0
-
