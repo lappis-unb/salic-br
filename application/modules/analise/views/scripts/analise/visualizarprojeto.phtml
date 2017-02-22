@@ -1,7 +1,17 @@
 <?php
 $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'incluiravaliacao'));
 ?>
+<style>
+    .alterado {
+        background: #719e70;
+        color: #fff;
+    }
 
+    .semborda fieldset td {
+        border: none !important;
+        padding: 0px !important;
+    }
+</style>
 <div class="row">
     <div class="col s12">
         <div class="center">
@@ -11,7 +21,7 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </button>
             <?php endif; ?>
             <iframe name="esconde" id="esconde" class="sumir"></iframe>
-
+            <br>
             <a href="/analise/analise/listarprojetos"
                class="waves-effect waves-light btn white black-text" title="" alt="">
                 <i class="material-icons" title="Voltar para lista de projetos">undo</i>
@@ -27,53 +37,22 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 <legend>Identifica&ccedil;&atilde;o</legend>
                 <table class="">
                     <tr>
-
+                        <td width="100px"><b>N&ordm; da Proposta</b></td>
+                        <td width="80px" nowrap><b>PRONAC</b></td>
+                        <td width="130px" nowrap><b>T&iacute;tulo da Proposta</b></td>
+                    </tr>
+                    <tr>
                         <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                            <td width="100px"><b>N&ordm; da Proposta</b></td>
                             <td width="70px"><?php echo $this->itensGeral[0]->idPreProjeto ?></td>
-
-                            <td width="80px" nowrap><b>PRONAC</b></td>
                             <td width="80px" nowrap>
                                 <?php echo (isset($this->Pronac) && !empty($this->Pronac)) ? $this->Pronac : ''; ?>
                             </td>
-
-                            <td width="130px" nowrap><b>T&iacute;tulo da Proposta</b></td>
                             <td nowrap><?php echo $this->itensGeral[0]->NomeProjeto ?></td>
                         <?php } ?>
-
                     </tr>
                 </table>
             </fieldset>
-            <fieldset>
-                <legend>Informa&ccedil;&otilde;es Complementares</legend>
-                <table class="tabela">
-                    <tr class="destacar">
-                        <td><b>&Eacute; proposta de audiovisual?</b></td>
-                        <td><b>Mecanismo</b></td>
-                        <td><b>Ag&ecirc;ncia Banc&aacute;ria</b></td>
 
-                    </tr>
-                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                        <tr>
-                            <td><?php if ($this->itensGeral[0]->AreaAbrangencia == 1) echo "Sim"; else echo "N&atilde;o"; ?></td>
-                            <td><?php if ($this->itensGeral[0]->Mecanismo == 1) echo "Incentivo Fiscal Federal"; ?></td>
-                            <td><?php echo $this->itensGeral[0]->AgenciaBancaria ?></td>
-                        </tr>
-                    <?php } ?>
-                </table>
-                <table class="tabela">
-                    <tr class="destacar">
-                        <td><b>Prorroga&ccedil;&atilde;o autom&aacute;tica?</b></td>
-                        <td><b>Tipo de execu&ccedil;&atilde;o</b></td>
-                    </tr>
-                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                        <tr>
-                            <td><?php if($this->itensGeral[0]->tpProrrogacao == 1) echo "Sim"; else echo "N&atilde;o"; ?></td>
-                            <td><?php echo $this->itensGeral[0]->ExecucaoImediata ?></td>
-                        </tr>
-                    <?php } ?>
-                </table>
-            </fieldset>
             <fieldset>
                 <legend>Informa&ccedil;&otilde;es sobre tombamento</legend>
                 <table class="tabela">
@@ -99,23 +78,76 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
             </fieldset>
 
             <fieldset>
-                <legend>Per&iacute;odo de execu&ccedil;&atilde;o</legend>
+                <legend>Informa&ccedil;&otilde;es Complementares</legend>
                 <table class="tabela">
                     <tr class="destacar">
-                        <td><b>Dt. In&iacute;cio Execu&ccedil;&atilde;o</b></td>
-                        <td><b>Dt. Final Execu&ccedil;&atilde;o</b></td>
+                        <td><b>&Eacute; proposta de audiovisual?</b></td>
+                        <td><b>Mecanismo</b></td>
+                        <td><b>Ag&ecirc;ncia Banc&aacute;ria</b></td>
+
+                    </tr>
+                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                        <tr>
+                            <td><?php if ($this->itensGeral[0]->AreaAbrangencia == 1) echo "Sim"; else echo "N&atilde;o"; ?></td>
+                            <td><?php if ($this->itensGeral[0]->Mecanismo == 1) echo "Incentivo Fiscal Federal"; ?></td>
+                            <td><?php echo $this->itensGeral[0]->AgenciaBancaria ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <table class="tabela">
+                    <tr class="destacar">
+                        <td><b>Prorroga&ccedil;&atilde;o autom&aacute;tica?</b></td>
+                        <td><b>Tipo de execu&ccedil;&atilde;o</b></td>
                         <td><b>Dt. Fixa</b></td>
                     </tr>
-                    <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
+                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
                         <tr>
-                            <td><?php echo substr($this->itensGeral[0]->DtInicioDeExecucao,0,10) ?></td>
-                            <td><?php echo substr($this->itensGeral[0]->DtFinalDeExecucao,0,10) ?></td>
-                            <td><?php if($this->itensGeral[0]->stDataFixa == 1) echo "Sim"; else echo "N&atilde;o"; ?></td>
+                            <td><?php if ($this->itensGeral[0]->tpProrrogacao == 1) echo "Sim"; else echo "N&atilde;o"; ?></td>
+                            <td><?php echo $this->itensGeral[0]->ExecucaoImediata ?></td>
+                            <td><?php if ($this->itensGeral[0]->stDataFixa == 1) echo "Sim"; else echo "N&atilde;o"; ?></td>
                         </tr>
-                    <?php }?>
+                    <?php } ?>
                 </table>
             </fieldset>
 
+            <div class="row">
+                <div class="col s6">
+                    <fieldset>
+                        <legend>Per&iacute;odo de execu&ccedil;&atilde;o anterior</legend>
+                        <table class="tabela">
+                            <tr class="destacar">
+                                <td><b>Dt. In&iacute;cio Execu&ccedil;&atilde;o</b></td>
+                                <td><b>Dt. Final Execu&ccedil;&atilde;o</b></td>
+                            </tr>
+                            <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                <tr>
+                                    <td><?php echo substr($this->historico['geral']['dtiniciodeexecucao'], 0, 10) ?></td>
+                                    <td><?php echo substr($this->historico['geral']['dtfinaldeexecucao'], 0, 10) ?></td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </fieldset>
+                </div>
+                <div class="col s6">
+                    <fieldset>
+                        <legend>Per&iacute;odo de execu&ccedil;&atilde;o atual</legend>
+                        <table class="tabela">
+                            <tr class="destacar">
+                                <td><b>Dt. In&iacute;cio Execu&ccedil;&atilde;o</b></td>
+                                <td><b>Dt. Final Execu&ccedil;&atilde;o</b></td>
+
+                            </tr>
+                            <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                <tr>
+                                    <td><?php echo substr($this->itensGeral[0]->DtInicioDeExecucao, 0, 10) ?></td>
+                                    <td><?php echo substr($this->itensGeral[0]->DtFinalDeExecucao, 0, 10) ?></td>
+
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
             <table>
                 <tr onclick="abrirDinamico('#proponente', $(this))" style="cursor:pointer">
                     <th>
@@ -350,15 +382,15 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                                     </tr>
                                     <?php foreach ($this->arquivosProposta as $arquivosProposta) { ?>
                                     <tr>
-                                        <td><?php echo $arquivosProposta->Descricao; ?></td>
-                                        <td align="center"><?php echo Data::tratarDataZend($arquivosProposta->Data, 'Brasileira'); ?></td>
+                                        <td><?php echo $arquivosProposta['descricao']; ?></td>
+                                        <td align="center"><?php echo Data::tratarDataZend($arquivosProposta['data'], 'Brasileira'); ?></td>
                                         <td>
                                             <?php $arrayTipos = array(1, 2, 3);
-                                            if (in_array($arquivosProposta->tpDoc, $arrayTipos)) { ?>
-                                                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'abrir-documentos-anexados-admissibilidade')); ?>?id=<?php echo $arquivosProposta->idDocumentosPreprojetos; ?>&tipo=<?php echo $arquivosProposta->tpDoc; ?>"
-                                                   title="Abrir arquivo"><?php echo $arquivosProposta->NoArquivo; ?></a>
+                                            if (in_array($arquivosProposta['tpdoc'], $arrayTipos)) { ?>
+                                                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'abrir-documentos-anexados-admissibilidade')); ?>?id=<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>&tipo=<?php echo $arquivosProposta['tpdoc']; ?>"
+                                                   title="Abrir arquivo"><?php echo $arquivosProposta['noarquivo']; ?></a>
                                             <?php } else { ?>
-                                                <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivosProposta->idDocumentosPreprojetos; ?>"><?php echo $arquivosProposta->NoArquivo; ?></a>
+                                                <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>"><?php echo $arquivosProposta['']; ?></a>
                                             <?php } ?>
                                         </td>
                                         <?php } ?>
@@ -400,42 +432,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
             </table>
 
             <table>
-                <tr onclick="abrirDinamico('#tdFichaTecnica', $(this));" style="cursor:pointer">
-                    <th>
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
-                             align="left"/>
-                        Ficha T&eacute;cnica
-                    </th>
-                </tr>
-                <tr id="tdFichaTecnica" style="display: none;">
-                    <td>
-                        <div class="row">
-                            <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->FichaTecnica)) != "") ? strip_tags($this->itensGeral[0]->FichaTecnica, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
-                            </div>
-                            <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->historico['detalhestecnicos']['FichaTecnica'])) != "") ? strip_tags($this->historico['detalhestecnicos']['FichaTecnica'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
-                            </div>
-
-                        </div>
-
-                    </td>
-                </tr>
-            </table>
-
-            <table>
                 <tr onclick="abrirDinamico('#tdResumo', $(this));" style="cursor:pointer">
                     <th>
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
@@ -456,9 +452,14 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->atual['itensPlanosDistribuicao'] == $this->historico['itensPlanosDistribuicao'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdPlanoDistribuicao', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Plano de Distribui&ccedil;&atilde;o do Produto
@@ -468,10 +469,16 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                     <td>
                         <div class="row">
                             <div class="col s12">
-                                <?php echo $this->partial("analise/inc/planodistribuicao.phtml", $this); ?>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <?php echo $this->partial("analise/inc/planodistribuicao.phtml", $this->historico); ?>
+                                </fieldset>
                             </div>
                             <div class="col s12">
-                                <?php echo $this->partial("analise/inc/planodistribuicao.phtml", $this); ?>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <?php echo $this->partial("analise/inc/planodistribuicao.phtml", $this->atual); ?>
+                                </fieldset>
                             </div>
                         </div>
 
@@ -479,38 +486,14 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
             </table>
 
-            <table>
-                <tr onclick="abrirDinamico('#tdFonteRecurso', $(this));" style="cursor:pointer">
-                    <th>
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
-                             align="left"/>
-                        Fonte de Recurso
-                    </th>
-                </tr>
-                <tr id="tdFonteRecurso" style="display: none;">
-                    <td>
-
-                        <table class="bordered striped responsive-table">
-                            <tr class="destacar">
-                                <td align="left"><b>Fonte de Recurso</b></td>
-                                <td align="right"><b>Valor</b></td>
-                            </tr>
-                            <?php if (is_array($this->itensFonteRecurso) and count($this->itensFonteRecurso) > 0)
-                                foreach ($this->itensFonteRecurso as $fonte) { ?>
-                                    <tr>
-                                        <td><?php echo $fonte->Descricao ?></td>
-                                        <td align="right"><?php echo number_format($fonte->valor, 2, ',', '.') ?></td>
-                                    </tr>
-                                <?php } ?>
-                        </table>
-
-                    </td>
-                </tr>
-            </table>
-
+            <?php
+            $alterado = true;
+            if ($this->itensGeral[0]->DemocratizacaoDeAcesso == $this->historico['geral']['DemocratizacaoDeAcesso'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdDemocratizacaoAcesso', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Democratiza&ccedil;&atilde;o de Acesso
@@ -518,24 +501,30 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
                 <tr id="tdDemocratizacaoAcesso" style="display: none;">
                     <td>
-                        <div class="row">
+                        <div class="row semborda">
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso)) != "") ? strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->historico['geral']['DemocratizacaoDeAcesso'])) != "") ? strip_tags($this->historico['geral']['DemocratizacaoDeAcesso'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->historico['responsabilidadesocial']['DemocratizacaoDeAcesso'])) != "") ? strip_tags($this->historico['responsabilidadesocial']['DemocratizacaoDeAcesso'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso)) != "") ? strip_tags($this->itensGeral[0]->DemocratizacaoDeAcesso, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
@@ -553,18 +542,9 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 <tr id="tdObjetivos" style="display: none;">
                     <td>
                         <div class="row">
-                            <div class="col s6">
+                            <div class="col s12">
                                 <table class="tabela">
                                     <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Objetivos)) != "") ? strip_tags($this->itensGeral[0]->Objetivos, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
-                            </div>
-                            <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { // @todo alterar  ?>
                                         <tr>
                                             <td><?php echo (trim(strip_tags($this->itensGeral[0]->Objetivos)) != "") ? strip_tags($this->itensGeral[0]->Objetivos, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
                                         </tr>
@@ -577,9 +557,14 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->itensGeral[0]->EtapaDeTrabalho == $this->historico['geral']['EtapaDeTrabalho'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdEtapaTrabalho', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Etapa de Trabalho
@@ -587,33 +572,44 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
                 <tr id="tdEtapaTrabalho" style="display: none;">
                     <td>
-                        <div class="row">
+                        <div class="row semborda">
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EtapaDeTrabalho)) != "") ? strip_tags($this->itensGeral[0]->EtapaDeTrabalho, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->historico['geral']['EtapaDeTrabalho'])) != "") ? strip_tags($this->historico['geral']['EtapaDeTrabalho'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EtapaDeTrabalho)) != "") ? strip_tags($this->itensGeral[0]->EtapaDeTrabalho, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->itensGeral[0]->EtapaDeTrabalho)) != "") ? strip_tags($this->itensGeral[0]->EtapaDeTrabalho, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->itensGeral[0]->Acessibilidade == $this->historico['geral']['Acessibilidade'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdAcessibilidade', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Acessibilidade
@@ -621,33 +617,44 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
                 <tr id="tdAcessibilidade" style="display: none;">
                     <td>
-                        <div class="row">
+                        <div class="row semborda">
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Acessibilidade)) != "") ? strip_tags($this->itensGeral[0]->Acessibilidade, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->historico['geral']['Acessibilidade'])) != "") ? strip_tags($this->historico['geral']['Acessibilidade'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Acessibilidade)) != "") ? strip_tags($this->itensGeral[0]->Acessibilidade, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->itensGeral[0]->Acessibilidade)) != "") ? strip_tags($this->itensGeral[0]->Acessibilidade, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->itensGeral[0]->Sinopse == $this->historico['geral']['Sinopse'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdSinopseObra', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Sinopse de Obra
@@ -655,33 +662,44 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
                 <tr id="tdSinopseObra" style="display: none;">
                     <td>
-                        <div class="row">
+                        <div class="row semborda">
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Sinopse)) != "") ? strip_tags($this->itensGeral[0]->Sinopse, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->historico['geral']['Sinopse'])) != "") ? strip_tags($this->historico['geral']['Sinopse'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Sinopse)) != "") ? strip_tags($this->itensGeral[0]->Sinopse, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->itensGeral[0]->Sinopse)) != "") ? strip_tags($this->itensGeral[0]->Sinopse, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->itensGeral[0]->EstrategiaDeExecucao == $this->historico['geral']['EstrategiadeExecucao'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdEspecificacoesTecnicas', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Especifica&ccedil;&otilde;es t&eacute;cnicas do produto
@@ -689,33 +707,44 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
                 <tr id="tdEspecificacoesTecnicas" style="display: none;">
                     <td>
-                        <div class="row">
+                        <div class="row semborda">
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EstrategiaDeExecucao)) != "") ? strip_tags($this->itensGeral[0]->EstrategiaDeExecucao, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->historico['geral']['EstrategiadeExecucao'])) != "") ? strip_tags($this->historico['geral']['EstrategiadeExecucao'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EstrategiaDeExecucao)) != "") ? strip_tags($this->itensGeral[0]->EstrategiaDeExecucao, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->itensGeral[0]->EstrategiaDeExecucao)) != "") ? strip_tags($this->itensGeral[0]->EstrategiaDeExecucao, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->itensGeral[0]->EspecificacaoTecnica == $this->historico['geral']['EspecificacaoTecnica'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdOutrasInformacoes', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Outras Informa&ccedil;&otilde;es
@@ -723,33 +752,44 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
                 <tr id="tdOutrasInformacoes" style="display: none;">
                     <td>
-                        <div class="row">
+                        <div class="row semborda">
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EspecificacaoTecnica)) != "") ? strip_tags($this->itensGeral[0]->EspecificacaoTecnica, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->historico['geral']['EspecificacaoTecnica'])) != "") ? strip_tags($this->historico['geral']['EspecificacaoTecnica'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->EspecificacaoTecnica)) != "") ? strip_tags($this->itensGeral[0]->EspecificacaoTecnica, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->itensGeral[0]->EspecificacaoTecnica)) != "") ? strip_tags($this->itensGeral[0]->EspecificacaoTecnica, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->itensGeral[0]->ImpactoAmbiental == $this->historico['geral']['ImpactoAmbiental'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#tdImpactoAmbiental', $(this));" style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Impacto Ambiental
@@ -757,24 +797,30 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
                 <tr id="tdImpactoAmbiental" style="display: none;">
                     <td>
-                        <div class="row">
+                        <div class="row semborda">
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->ImpactoAmbiental)) != "") ? strip_tags($this->itensGeral[0]->ImpactoAmbiental, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->historico['geral']['ImpactoAmbiental'])) != "") ? strip_tags($this->historico['geral']['ImpactoAmbiental'], "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->ImpactoAmbiental)) != "") ? strip_tags($this->itensGeral[0]->ImpactoAmbiental, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <table class="tabela">
+                                        <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
+                                            <tr>
+                                                <td><?php echo (trim(strip_tags($this->itensGeral[0]->ImpactoAmbiental)) != "") ? strip_tags($this->itensGeral[0]->ImpactoAmbiental, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
@@ -792,16 +838,7 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 <tr id="tdJustificativa" style="display: none;">
                     <td>
                         <div class="row">
-                            <div class="col s6">
-                                <table class="tabela">
-                                    <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
-                                        <tr>
-                                            <td><?php echo (trim(strip_tags($this->itensGeral[0]->Justificativa)) != "") ? strip_tags($this->itensGeral[0]->Justificativa, "<b></b><ul></ul><li></li><strong></strong><i></i><p></p><br>") : "N&atilde;o informado."; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
-                            </div>
-                            <div class="col s6">
+                            <div class="col s12">
                                 <table class="tabela">
                                     <?php if (is_array($this->itensGeral) and count($this->itensGeral) > 0) { ?>
                                         <tr>
@@ -815,10 +852,15 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->atual['itensLocalRealizacao'] == $this->historico['itensLocalRealizacao'])
+                $alterado = false;
+            ?>
             <table>
-                <tr onclick="abrirDinamico('#localRealizacao', $(this)); abrirDinamico('#deslocamento', $(this));"
+                <tr onclick="abrirDinamico('#localRealizacao', $(this));"
                     style="cursor:pointer">
-                    <th>
+                    <th class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Local de Realiza&ccedil;&atilde;o / Deslocamento
@@ -828,19 +870,30 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                     <td>
                         <div class="row">
                             <div class="col s6">
-                                <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this); ?>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this->atual); ?>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this); ?>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this->historico); ?>
+                                </fieldset>
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
 
+            <?php
+            $alterado = true;
+            if ($this->atual['planilhaProjeto'] == $this->historico['planilhaProjeto'])
+                $alterado = false;
+            ?>
             <table>
                 <tr onclick="abrirDinamico('#planilhaOrcamentaria', $(this));" style="cursor:pointer">
-                    <th align="center">
+                    <th align="center" class="<?php echo $alterado ? 'alterado' : ''; ?>">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
                              align="left"/>
                         Planilha Or&ccedil;ament&aacute;ria
@@ -850,38 +903,18 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                     <td>
                         <div class="row">
                             <div class="col s6">
-                                <?php echo $this->partial("analise/inc/planilhaorcamentaria.phtml", $this); ?>
+                                <fieldset>
+                                    <legend>Anterior</legend>
+                                    <?php echo $this->partial("analise/inc/planilhaorcamentaria.phtml", $this->historico); ?>
+                                </fieldset>
                             </div>
                             <div class="col s6">
-                                <?php echo $this->partial("analise/inc/planilhaorcamentaria.phtml", $this); ?>
+                                <fieldset>
+                                    <legend>Atual</legend>
+                                    <?php echo $this->partial("analise/inc/planilhaorcamentaria.phtml", $this->atual); ?>
+                                </fieldset>
                             </div>
                         </div>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr onclick="abrirDinamico('#planoDivulgacao', $(this))" style="cursor:pointer">
-                    <th>
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"
-                             align="left"/>
-                        Plano de Divulga&ccedil;&atilde;o
-                    </th>
-                </tr>
-                <tr id="planoDivulgacao" style="display: none;">
-                    <td>
-                        <table class="bordered striped responsive-table">
-                            <tr class="destacar">
-                                <td align="left"><b>Pe&ccedil;a de Divulga&ccedil;&atilde;o</b></td>
-                                <td align="left"><b>Ve&iacute;culo de Divulga&ccedil;&atilde;o</b></td>
-                            </tr>
-                            <?php if (is_array($this->itensPlanoDivulgacao) and count($this->itensPlanoDivulgacao) > 0)
-                                foreach ($this->itensPlanoDivulgacao as $divulgacao) { ?>
-                                    <tr>
-                                        <td align="left"><?php echo $divulgacao->Peca ?></td>
-                                        <td align="left"><?php echo $divulgacao->Veiculo ?></td>
-                                    </tr>
-                                <?php } ?>
-                        </table>
                     </td>
                 </tr>
             </table>

@@ -492,11 +492,11 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
 
         # Planilha orcamentaria
-        $metaPlanilha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhapropostas');
+        $metaPlanilha = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
         if (!$metaPlanilha) {
 
             $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
-            $dadosPlanilhaCompleta = $TPP->buscarItensCompletosPlanilha($idPreProjeto);
+            $dadosPlanilhaCompleta = $TPP->buscarPlanilhaCompleta($idPreProjeto);
 
             $this->view->PlanilhaSalvo = $this->salvarArraySerializado($dadosPlanilhaCompleta, $idPreProjeto, 'alterarprojeto_tbplanilhaproposta');
         } else {
