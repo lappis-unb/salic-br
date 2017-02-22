@@ -8,21 +8,8 @@ $intQtd = 0;
 //    'tbMensagemProjeto.idMensagemOrigem IS NULL' => '',
 //    'dsMensagem IS NULL' => '',
 //));
-//$dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
-//$arrResult = $dbTable->findAllCustom(
-//    array(
-//        'vwPainelDeMensagens.stAtivo' => 1,
-//        'tbMensagemProjetoResposta.dsMensagem IS NULL' => '',
-//        'vwPainelDeMensagens.idDestinatarioUnidade' => $arrAuth->usu_orgao,
-////        'vwPainelDeMensagens.idDestinatario IS NULL' => '',
-//    )
-////    ),
-////    array(
-////        'vwPainelDeMensagens.stAtivo' => 1,
-////        'tbMensagemProjetoResposta.dsMensagem IS NULL' => '',
-////        'vwPainelDeMensagens.idDestinatario' => $arrAuth->usu_codigo,
-////    )
-//);
+$dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
+$arrResult = $dbTable->carregarPerguntasSemResposta($arrAuth->usu_codigo, $arrAuth->usu_orgao);
 if (isset($arrAuth->usu_codigo)) {
     $intQtd = count($arrResult);
 }

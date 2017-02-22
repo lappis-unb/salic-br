@@ -72,26 +72,11 @@ class Admissibilidade_Model_DbTable_VwPainelDeMensagens extends MinC_Db_Table_Ab
                 $this->_name . '.idDestinatarioUnidade = OrgaosDestinatario.Codigo',
                 'Sigla as destinatarioUnidadeNome',
                 $this->getSchema('sac'));
-        parent::setWhere($select, $arrWhere);
-        parent::setWhere($select, $arrOrWhere, 'orWhere');
+        $select->where('vwPainelDeMensagens.idMensagemOrigem IS NULL');
+        $select->where('vwPainelDeMensagens.stAtivo = ?', 1);
+        $select->where('tbMensagemProjetoResposta.dsMensagem IS NULL');
+        $select->where("vwPainelDeMensagens.idDestinatario = {$intIdUsuario} OR (vwPainelDeMensagens.idDestinatario IS NULL AND vwPainelDeMensagens.idDestinatarioUnidade = {$intIdOrgao})");
         $arrResult = ($arrResult = $this->fetchAll($select))? $arrResult->toArray() : array();
-        foreach ($arrResult as &$arrValue) {
-            $arrValue['dsMensagem'] = strip_tags($arrValue['dsMensagem']);
-            $arrValue['dsResposta'] = strip_tags($arrValue['dsResposta']);
-            if (strlen($arrValue['dsMensagem']) > 50)
-                $arrValue['dsMensagem'] = substr($arrValue['dsMensagem'], 0, 50) . '...';
-            if (strlen($arrValue['dsResposta']) > 50)
-                $arrValue['dsResposta'] = substr($arrValue['dsResposta'], 0, 50) . '...';
-            $date = new DateTime( $arrValue['dtMensagem'] );
-            if ($arrValue['dtResposta']){
-                $date2 = new DateTime( $arrValue['dtResposta'] );
-            } else {
-                $date2 = new DateTime();
-            }
-            $arrValue['tempoResposta'] = $date->diff( $date2 )->days;
-//            $arrValue['dtResposta'] = strip_tags($arrValue['dsMensagem']);
-        }
-
         return $arrResult;
     }
 
@@ -162,7 +147,7 @@ class Admissibilidade_Model_DbTable_VwPainelDeMensagens extends MinC_Db_Table_Ab
             if (strlen($arrValue['dsResposta']) > 50)
                 $arrValue['dsResposta'] = substr($arrValue['dsResposta'], 0, 50) . '...';
             $date = new DateTime( $arrValue['dtMensagem'] );
-            if ($arrValue['dtResposta']){
+            if ($arrValue['dtResposta']) {
                 $date2 = new DateTime( $arrValue['dtResposta'] );
             } else {
                 $date2 = new DateTime();

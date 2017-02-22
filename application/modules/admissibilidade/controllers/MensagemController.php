@@ -117,6 +117,26 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $this->view->arrBreadCrumb = $arrBreadCrumb;
     }
 
+    /**
+     * @name indexAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  05/12/2016
+     */
+    public function perguntasUsuarioAction()
+    {
+        $arrBreadCrumb = array();
+        $arrBreadCrumb[] = array('url' => '/principal', 'title' => 'In&iacute;cio', 'description' => 'Ir para in&iacute;cio');
+        if ($this->arrProjeto) {
+            $arrBreadCrumb[] = array('url' => '/admissibilidade/enquadramento/gerenciar-enquadramento', 'title' => 'Enquadramentos', 'description' => 'Ir para a tela de enquadramentos');
+            $arrBreadCrumb[] = array('url' => '', 'title' => "Perguntas: {$this->arrProjeto['AnoProjeto']}{$this->arrProjeto['Sequencial']} - {$this->arrProjeto['NomeProjeto']}", 'description' => 'Tela atual: N&uacute;mero do Pronac - Nome do projeto');
+        } else {
+            $arrBreadCrumb[] = array('url' => '', 'title' => 'Dirimir d&uacute;vidas', 'description' => 'Tela atual');
+        }
+        $this->view->idPronac = $this->getRequest()->getParam('idPronac', null);
+        $this->view->arrBreadCrumb = $arrBreadCrumb;
+    }
+
     public function listarAction()
     {
         $this->_helper->layout->disableLayout();
@@ -128,13 +148,28 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
         if (empty($intIdPronac)) {
             $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL AND tbMensagemProjeto.idDestinatario = ?' => $intUsuCodigo);
-            $arrOrWhere = array("tbMensagemProjeto.idDestinatario = {$intUsuCodigo} AND tbMensagemProjeto.idDestinatarioUnidade = ?" => $intUsuOrgao);
+            $arrOrWhere = array("tbMensagemProjeto.idMensagemOrigem IS NULL AND tbMensagemProjeto.idDestinatario = {$intUsuCodigo} AND tbMensagemProjeto.idDestinatarioUnidade = ?" => $intUsuOrgao);
             $this->view->arrResult = $dbTable->getAllBy($arrWhere, $arrOrWhere);
         } else {
             $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL' => '');
             $arrWhere['tbMensagemProjeto.IdPRONAC'] = $intIdPronac;
             $this->view->arrResult = $dbTable->getAllBy($arrWhere);
         }
+        $this->view->usuCodigo = $intUsuCodigo;
+        $this->view->usuOrgao = $intUsuOrgao;
+        $this->view->idPronac = $intIdPronac;
+    }
+
+    public function listarPerguntasUsuarioAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $intIdPronac = $this->getRequest()->getParam('idPronac', null);
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $intUsuCodigo = $arrAuth['usu_codigo'];
+        $intUsuOrgao = $arrAuth['usu_orgao'];
+        $dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
+        $this->view->arrResult =  $dbTable->carregarPerguntasSemResposta($intUsuCodigo, $intUsuOrgao);
         $this->view->usuCodigo = $intUsuCodigo;
         $this->view->usuOrgao = $intUsuOrgao;
         $this->view->idPronac = $intIdPronac;
@@ -231,11 +266,14 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function responderAction()
     {
+        $strActionBack = $this->getRequest()->getParam('actionBack');
+        $strActionBack = ($strActionBack) ? $strActionBack : 'index';
+
         if ($this->getRequest()->isPost()) {
             $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
-            $strUrl = '/admissibilidade/mensagem/index';
+            $strUrl = '/admissibilidade/mensagem/' . $strActionBack;
             $strUrl .= ($this->arrProjeto)? '?idPronac=' . $this->arrProjeto['IdPRONAC'] : '';
             echo json_encode(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessages(), 'redirect' => $strUrl));
         } else {
@@ -243,7 +281,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
                 'idDestinatario' => array('disabled' => true),
                 'idDestinatarioUnidade' => array('disabled' => true),
                 'dsMensagem' => array('disabled' => true),
-            ));
+            ), '', $strActionBack);
             if ($this->arrProjeto) {
                 $this->arrBreadCrumb[] = array('url' => '/admissibilidade/enquadramento/listar', 'title' => 'Enquadramentos', 'description' => 'Ir para a tela de enquadramentos');
                 $arrBreadCrumb[] = array('url' => '', 'title' => "Perguntas: {$this->arrProjeto['AnoProjeto']}{$this->arrProjeto['Sequencial']} - {$this->arrProjeto['NomeProjeto']}", 'description' => 'Ir para a tela de perguntas');
@@ -264,7 +302,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  12/12/2016
      */
-    public function prepareForm($arrConfig = array(), $strUrlAction = '')
+    public function prepareForm($arrConfig = array(), $strUrlAction = '', $strActionBack = 'index')
     {
         if ($this->arrProjeto) {
 //            $this->view->title = "Perguntas: {$this->arrProjeto['NomeProjeto']} ({$this->arrProjeto['IdPRONAC']})";
@@ -291,6 +329,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
             'id' => $intId,
             'idPronac' => $idPronac,
             'urlAction' => $strUrlAction,
+            'strActionBack' => $strActionBack,
         );
     }
 
