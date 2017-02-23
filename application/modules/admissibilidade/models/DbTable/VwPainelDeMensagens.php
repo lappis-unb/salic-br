@@ -1,26 +1,17 @@
 <?php
 
-/**
- * @name Admissibilidade_Model_DbTable_VwPainelDeMensagens
- * @package modules/admissibilidade
- * @subpackage models/DbTable
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/02/2017
- *
- * @link http://salic.cultura.gov.br
- */
 class Admissibilidade_Model_DbTable_VwPainelDeMensagens extends MinC_Db_Table_Abstract
 {
-    protected $_schema    = 'sac';
+    protected $_schema    = 'SAC';
     protected $_name      = 'vwPainelDeMensagens';
-    protected $_primary   = 'idMensagemProjeto';
+    protected $_primary   = 'IdPRONAC';
 
     public function carregarPerguntasSemResposta($intIdUsuario, $intIdOrgao)
     {
-        $select = $this->select()
-            ->setIntegrityCheck(false)
-            ->from($this->_name,
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            $this->_name,
                 array(
                     'IdPRONAC',
                     'PRONAC',
@@ -76,6 +67,7 @@ class Admissibilidade_Model_DbTable_VwPainelDeMensagens extends MinC_Db_Table_Ab
         $select->where('vwPainelDeMensagens.stAtivo = ?', 1);
         $select->where('tbMensagemProjetoResposta.dsMensagem IS NULL');
         $select->where("vwPainelDeMensagens.idDestinatario = {$intIdUsuario} OR (vwPainelDeMensagens.idDestinatario IS NULL AND vwPainelDeMensagens.idDestinatarioUnidade = {$intIdOrgao})");
+
         $arrResult = ($arrResult = $this->fetchAll($select))? $arrResult->toArray() : array();
         return $arrResult;
     }
@@ -138,6 +130,7 @@ class Admissibilidade_Model_DbTable_VwPainelDeMensagens extends MinC_Db_Table_Ab
                 $this->getSchema('sac'));
         parent::setWhere($select, $arrWhere);
         parent::setWhere($select, $arrOrWhere, 'orWhere');
+
         $arrResult = ($arrResult = $this->fetchAll($select))? $arrResult->toArray() : array();
         foreach ($arrResult as &$arrValue) {
             $arrValue['dsMensagem'] = strip_tags($arrValue['dsMensagem']);

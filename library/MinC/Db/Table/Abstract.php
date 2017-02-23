@@ -279,14 +279,9 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         xd($sql);
     }
 
-
-
-
     /**
      * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
      * @return MinC_Db_Table_Select
-     * @author Wouerner <wouerner@gmail.com>
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public function select($withFromPart = self::SELECT_WITHOUT_FROM_PART)
     {
