@@ -20,7 +20,7 @@ This code `-t salic-web:1.0` means you will create a image named 'salic-web' and
 
 You can execute the command below to create a new container using this new image created. Note: `$(pwd)` means your current directory. You can also change it, if you want.
 ```
-docker run -it -v $(pwd):/var/www --name salic-webv1.0 -e APPLICATION_ENV="development" -p 80:80 salic-web:1.0 bash
+docker run -it -v $(pwd):/var/www --name salic-webv1.0 -e APPLICATION_ENV="development" -p 80:80 -p 9000:9000 salic-web:1.0 bash
 ```
 
 Or You you can also execute the same command above, but arranging using docker-compose:
