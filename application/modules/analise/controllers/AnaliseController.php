@@ -105,8 +105,6 @@ class Analise_AnaliseController extends Analise_GenericController
             ));
             $this->view->projeto = $projeto;
 
-//            xd($this->view->projeto);
-
             $idPreProjeto = $projeto['idProjeto'];
             $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
             $this->view->itensGeral = $dados;
@@ -232,7 +230,8 @@ class Analise_AnaliseController extends Analise_GenericController
 
     }
 
-    public function formavaliaradequacaoAction(){
+    public function formavaliaradequacaoAction()
+    {
 
         $this->_helper->layout->disableLayout();
 
@@ -247,4 +246,80 @@ class Analise_AnaliseController extends Analise_GenericController
 
     }
 
+    /**
+     * Se a avaliação for negativa, o sistema devolverá o projeto para o proponente e enviará e-mail com as observações da avaliação feitas pelo TÉCNICO DE ANÁLISE.
+     *
+     * Se a avaliação for positiva, o sistema enviará o projeto para a Entidade Vinculada para receber a avaliação técnica.
+     * No ato do envio, o sistema deverá dar carga na tabela de análise de conteúdo e na planilha do parecerista.
+     * Essa funções deverão ser executadas em princípio por SP.
+     *
+     */
+    public function salvaravaliacaadequacaoAction()
+    {
+
+        $this->_helper->layout->disableLayout();
+        $params = $this->getRequest()->getParams();
+
+        try {
+            if (empty($params['idpronac'])) {
+                throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
+            }
+
+            if ($params['conformidade'] == 0) {
+                parent::message("Projeto encaminhado para o proponente com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
+            } else if ($params['conformidade'] == 1) {
+                parent::message("Projeto encaminhado para o avaliador com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
+            }
+
+        } catch (Exception $objException) {
+            parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
+        }
+
+    }
+
+    public function redistribuiranaliseitemAction()
+    {
+        $params = $this->getRequest()->getParams();
+        try {
+
+            if (empty($params['idpronac']))
+                throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
+
+            if ($this->getRequest()->isPost()) {
+
+                if (empty($params['idNovoTecnico']) || empty($params['tecnicoAtual']))
+                    throw new Exception ("Id do t&eacute;cnico &eacute; necess&aacute;rio para acessar essa funcionalidade.");
+
+                $dados = array(
+                    'idTecnico' => $params['idNovoTecnico'],
+                    'dtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                );
+
+                xd($params);
+                $where = array('idPronac' => $params['idpronac'], 'idTecnico' => $params['tecnicoAtual']);
+
+                $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
+                $tbAvaliacao->update($dados, $where);
+
+                parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
+            } else {
+
+                $auth = Zend_Auth::getInstance(); // instancia da autenticacao
+
+                $vw = new vwUsuariosOrgaosGrupos();
+
+                $vwPainelAvaliar = new Analise_Model_DbTable_vwProjetosAdequadosRealidadeExecucao();
+
+                $where['idpronac = ?'] = $params['idpronac'];
+
+                $projetos = $vwPainelAvaliar->projetos($where, array(), 0, 1);
+                $this->view->projeto = $projetos[0];
+
+                $this->view->novosAnalistas = $vw->carregarTecnicosPorUnidadeEGrupo($auth->getIdentity()->usu_orgao, 110);
+            }
+
+        } catch (Exception $objException) {
+            parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
+        }
+    }
 }

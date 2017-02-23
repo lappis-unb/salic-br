@@ -279,6 +279,10 @@ main {
     flex: 1 0 auto;
 }
 
+.no-margin {
+    margin: 0px !important;
+}
+
 
 input:not([type]).invalid, input:not([type]):focus.invalid,
 input[type=text].invalid,

@@ -233,5 +233,31 @@ class vwUsuariosOrgaosGrupos extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
+
+    public function carregarTecnicosPorUnidadeEGrupo($intIdUnidade, $intIdGrupo)
+    {
+        $sql = $this->select();
+        $sql->setIntegrityCheck(false);
+        $sql->from(
+            'vwusuariosorgaosgrupos',
+            array
+            (
+                'usu_codigo',
+                'usu_nome',
+                'usu_orgao',
+                'usu_orgaolotacao',
+                'org_superior',
+            ),
+            $this->_schema
+        );
+        $sql->where("uog_status = ?", 1);
+        $sql->where("sis_codigo = ?", 21);
+        $sql->where("uog_orgao = ?", $intIdUnidade);
+        $sql->where("gru_codigo = ?", $intIdGrupo);
+        $sql->order('usu_orgao ASC');
+        $sql->order('usu_nome ASC');
+        $arrResult = $this->fetchAll($sql);
+        return $arrResult;
+    }
 }
 

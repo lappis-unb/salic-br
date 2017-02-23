@@ -867,13 +867,14 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                             <div class="col s6">
                                 <fieldset>
                                     <legend>Anterior</legend>
-                                    <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this->atual); ?>
+                                    <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this->historico); ?>
                                 </fieldset>
                             </div>
                             <div class="col s6">
                                 <fieldset>
                                     <legend>Atual</legend>
-                                    <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this->historico); ?>
+                                    <?php echo $this->partial("analise/inc/localderealizacao.phtml", $this->atual); ?>
+
                                 </fieldset>
                             </div>
                         </div>
