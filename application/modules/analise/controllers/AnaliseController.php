@@ -223,7 +223,6 @@ class Analise_AnaliseController extends Analise_GenericController
             }
             $this->view->documentosExigidos = $arrDocumentosExigidos;
             $this->view->itensHistorico = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
-
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
         }

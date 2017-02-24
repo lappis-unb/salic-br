@@ -23,7 +23,8 @@ class Proposta_Model_DbTable_PreProjetoMeta extends MinC_Db_Table_Abstract
             return false;
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
+
+        $db->query('SET TEXTSIZE 2147483647 ');
 
         $sql = $db->select()
             ->from($this->_name, 'metaValue', $this->_schema)
