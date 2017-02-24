@@ -2758,7 +2758,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
 
                 if (!empty($minimo90)) {
-                    $validacao->Descricao = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de início de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
+                    $validacao->Descricao = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de in&iacute;cio de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url =  array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
