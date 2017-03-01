@@ -111,6 +111,68 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         return $result;
     }
+    
+    
+    
+    /**
+     * painelReadequacoesCoordenadorAcompanhamento
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $qtdeTotal
+     * @param bool $filtro
+     * @access public
+     * @return void
+     */
+    public function painelReadequacoesCoordenadorAcompanhamento($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $select= array();
+        $result= array();
+        $total= array();
+        
+        switch($filtro){
+            case 'aguardando_distribuicao':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoAguardandoAnalise');
+                break;
+            case 'em_analise':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoEmAnalise');
+                break;
+            case 'analisados':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoAnalisados');
+                break;
+            case 'aguardando_publicacao':
+                $select = $this->selectView('vwPainelReadequacaoAguardandoPublicacao');
+                break;
+        }
+        
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+
+        //paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+        
+        $stmt = $db->query($select);
+
+        while ($o = $stmt->fetchObject()) {
+            $result[] = $o;
+        }
+        
+        return $result;
+    }
 
     /**
      * @param string $vw
@@ -757,8 +819,38 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
             return $db->fetchAll($select);
         } catch (Exception $objException) {
-xd($objException->getMessage());
+            xd($objException->getMessage());
             throw new Exception($objException->getMessage(), 0, $objException);
         }
     }
+    /**
+     * painelReadequacoesCoordenadorAcompanhamentoCount
+     *
+     * @param bool $where
+     * @param bool $filtro
+     * @access public
+     * @return int
+     */
+    public function painelReadequacoesCoordenadorAcompanhamentoCount($where=array(), $filtro = null)
+    {
+        $tbReadequacao = New tbReadequacao();
+        $total = null;
+        
+        switch($filtro){
+            case 'aguardando_distribuicao':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAguardandoAnalise' , $where);
+                break;
+            case 'em_analise':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoEmAnalise' , $where);
+                break;
+            case 'analisados':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
+                break;
+            case 'aguardando_publicacao':
+                $total = $tbReadequacao->count('vwPainelReadequacaoAguardandoPublicacao', $where);
+                break;
+        }
+
+        return $total;
+    }    
 }
