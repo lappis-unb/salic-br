@@ -266,6 +266,22 @@ class Analise_AnaliseController extends Analise_GenericController
             }
 
             if ($params['conformidade'] == 0) {
+
+                $situacao = 'E90'; # projeto liberado para ajustes
+
+                $tblSituacao = new Situacao();
+                $rsSituacao = $tblSituacao->buscar(array('Codigo=?' => $situacao))->current();
+
+                if (!empty($rsSituacao)) {
+                    $providencia = $rsSituacao->Descricao;
+                }
+
+                # encaminhar e-mail para o proponente com o despacho do avaliador.
+
+                # alterar a situacao do projeto
+                $tblProjetos = new Projetos();
+                $tblProjetos->alterarSituacao($params['idpronac'], '', $situacao, $providencia);
+
                 parent::message("Projeto encaminhado para o proponente com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
             } else if ($params['conformidade'] == 1) {
                 parent::message("Projeto encaminhado para o avaliador com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
