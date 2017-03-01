@@ -661,7 +661,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         if ($pendencias) {
             $this->view->resultado = $validaProposta;
-
         } else {
 
             $tblProjetos = new Projetos();
@@ -711,12 +710,17 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                     if (!empty($rsSituacao)) {
                         $providencia = $rsSituacao->Descricao;
                     }
+                    # verificar se o projeto já possui avaliador
+                    $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
+                    $avaliacao = $tbAvaliacao->findBy(array('idPronac' => $idPronac));
+
+                    if (empty($avaliacao)) {
+                        $tbAvaliacao->inserirAvaliacao($idPronac, $orgaoUsuario);
+                    }
 
                     # alterar a situacao do projeto
                     $tblProjetos->alterarSituacao($idPronac, '', $situacao, $providencia);
 
-                    $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
-                    $tbAvaliacao->inserirAvaliacao($idPronac, $orgaoUsuario);
 
                     parent::message("Projeto encaminhado com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/listarprojetos/listarprojetos", "CONFIRM");
                 } else {
