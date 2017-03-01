@@ -67,10 +67,11 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('a'=>$this->_schema.'.'.$this->_name),
+            array('a'=>$this->_name),
             array(
                 new Zend_Db_Expr('c.usu_codigo AS id, c.usu_nome AS nome')
-            )
+            ),
+            $this->_schema
         );
         $select->joinInner(
             array('b'=>'Agentes'), 'a.idAgente = b.idAgente',
@@ -82,7 +83,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
         );
         $select->where('a.stConselheiro = ?', "A");
         $select->order('c.usu_nome');
-
+        
         return $this->fetchAll($select);
     }
 
