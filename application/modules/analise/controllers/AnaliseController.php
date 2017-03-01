@@ -30,7 +30,8 @@ class Analise_AnaliseController extends Analise_GenericController
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
         if (isset($auth->getIdentity()->usu_codigo)) {
-
+            // LEMBRAR :
+            // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
             $this->codGrupo = $GrupoAtivo->codGrupo;
             $this->codOrgao = $GrupoAtivo->codOrgao;
             $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : null;
@@ -294,8 +295,7 @@ class Analise_AnaliseController extends Analise_GenericController
                     'dtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
                 );
 
-                xd($params);
-                $where = array('idPronac' => $params['idpronac'], 'idTecnico' => $params['tecnicoAtual']);
+                $where = array('idPronac = ?' => $params['idpronac'], 'idTecnico = ?' => $params['tecnicoAtual']);
 
                 $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
                 $tbAvaliacao->update($dados, $where);
@@ -314,7 +314,7 @@ class Analise_AnaliseController extends Analise_GenericController
                 $projetos = $vwPainelAvaliar->projetos($where, array(), 0, 1);
                 $this->view->projeto = $projetos[0];
 
-                $this->view->novosAnalistas = $vw->carregarTecnicosPorUnidadeEGrupo($auth->getIdentity()->usu_orgao, 110);
+                $this->view->novosAnalistas = $vw->carregarTecnicosPorUnidadeEGrupo($this->codOrgao, 110);
             }
 
         } catch (Exception $objException) {
