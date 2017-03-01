@@ -56,7 +56,7 @@ class Analise_AnaliseController extends Analise_GenericController
         $vwPainelAvaliar = new Analise_Model_DbTable_vwProjetosAdequadosRealidadeExecucao();
 
         if (Autenticacao_Model_Grupos::TECNICO_ANALISE == $this->codGrupo) {
-            $where['idUsuario = ?'] = $this->idUsuario;
+            $where['idTecnico = ?'] = $this->idUsuario;
         }
 
         $orgao = new Orgaos();
