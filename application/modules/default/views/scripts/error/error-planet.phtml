@@ -1,17 +1,18 @@
-<!--<style>-->
-<!--    fieldset{-->
-<!--        background-color: rgba(0, 0, 0, 0.85);-->
-<!--        box-shadow: 0px 0px 10px #FFFFFF;-->
-<!--        border: 1px;-->
-<!--        border-radius: 5px;-->
-<!--    }-->
-<!--    fieldset legend {-->
-<!--        color: #FFFFFF;-->
-<!--        top: 15px;-->
-<!--        position: relative;-->
-<!--        text-shadow: 0px 0px 1px #FFF;-->
-<!--    }-->
-<!--</style>-->
+<style>
+    fieldset{
+        background-color: rgba(0, 0, 0, 0.85);
+        box-shadow: 0px 0px 10px #FFFFFF;
+        border: 1px;
+        border-radius: 5px;
+        margin: 10px;
+    }
+    fieldset legend {
+        color: #FFFFFF;
+        top: 8px;
+        position: relative;
+        text-shadow: 0px 0px 1px #FFF;
+    }
+</style>
 <?php if ($this->errorType == 'pagina' || $this->errorType == 'permissao' || $this->errorType == 'login') : ?>
     <div class="msg-error <?= $this->errorType ?>">
         <h3><?php echo $this->message ?></h3>
@@ -19,24 +20,24 @@
 <?php else: ?>
     <div class="msg-error exception">
     <span>
-        <h3>CGTIs, n&oacute;s temos um problema!</h3>
+        <h3>CGTEC, n&oacute;s temos um problema!</h3>
         <p>Erros processados pela requisi&ccedil;&atilde;o:</p>
     </span>
     </div>
     <?php if (isset($this->message)) echo "<p>{$this->message}!!</p>" ?>
     <?php if (isset($this->exception)): ?>
         <div class="msg-exception">
-            <fieldset style="margin: 0; background-color: #000000;">
+            <fieldset>
                 <legend>Exce&ccedil;&atilde;o</legend>
                 <b>Descri&ccedil;&atilde;o:</b> <?php echo $this->exception->getMessage() ?>
             </fieldset>
 
-            <fieldset style="margin: 0; background-color: #000000;">
+            <fieldset>
                 <legend>Rastreamento do erro</legend>
                 <pre><?php echo $this->exception->getTraceAsString() ?></pre>
             </fieldset>
 
-            <fieldset style="margin: 0; background-color: #000000;">
+            <fieldset>
                 <legend>Par&acirc;metros requisitados</legend>
                 <pre><?php echo var_export($this->request->getParams(), true) ?></pre>
             </fieldset>
