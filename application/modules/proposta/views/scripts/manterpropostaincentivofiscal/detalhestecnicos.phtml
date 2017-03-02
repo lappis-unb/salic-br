@@ -118,7 +118,12 @@
 
 
         $("textarea.editor").each(function () {
-            $(this).editorRico({altura: 400});
+            $(this).editorRico({
+                altura: 400,
+                maxchar: 8000,
+                isLimitarCarateres : true,
+                isDesabilitarEdicao: 0
+            });
         });
     });
 </script>

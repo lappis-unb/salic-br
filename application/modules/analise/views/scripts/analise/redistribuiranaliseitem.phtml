@@ -60,7 +60,8 @@
                             <?php if ($this->novosAnalistas) : ?>
                                 <select class="select_simples" name="idNovoTecnico">
                                     <?php foreach ($this->novosAnalistas as $analista) : ?>
-                                        <option value="<?php echo $analista->usu_cod ?>"><?php echo $analista->usu_nome ?></option>
+                                        <?php if( $analista->usu_codigo == $this->projeto->idTecnico)  continue; ?>
+                                        <option value="<?php echo $analista->usu_codigo ?>"><?php echo $analista->usu_nome ?></option>
                                     <?php endforeach ?>
                                 </select>
                             <?php endif ?>

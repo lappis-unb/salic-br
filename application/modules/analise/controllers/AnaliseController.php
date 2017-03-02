@@ -30,7 +30,8 @@ class Analise_AnaliseController extends Analise_GenericController
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
         if (isset($auth->getIdentity()->usu_codigo)) {
-
+            // LEMBRAR :
+            // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
             $this->codGrupo = $GrupoAtivo->codGrupo;
             $this->codOrgao = $GrupoAtivo->codOrgao;
             $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : null;
@@ -56,7 +57,7 @@ class Analise_AnaliseController extends Analise_GenericController
         $vwPainelAvaliar = new Analise_Model_DbTable_vwProjetosAdequadosRealidadeExecucao();
 
         if (Autenticacao_Model_Grupos::TECNICO_ANALISE == $this->codGrupo) {
-            $where['idUsuario = ?'] = $this->idUsuario;
+            $where['idTecnico = ?'] = $this->idUsuario;
         }
 
         $orgao = new Orgaos();
@@ -265,6 +266,22 @@ class Analise_AnaliseController extends Analise_GenericController
             }
 
             if ($params['conformidade'] == 0) {
+
+                $situacao = 'E90'; # projeto liberado para ajustes
+
+                $tblSituacao = new Situacao();
+                $rsSituacao = $tblSituacao->buscar(array('Codigo=?' => $situacao))->current();
+
+                if (!empty($rsSituacao)) {
+                    $providencia = $rsSituacao->Descricao;
+                }
+
+                # encaminhar e-mail para o proponente com o despacho do avaliador.
+
+                # alterar a situacao do projeto
+                $tblProjetos = new Projetos();
+                $tblProjetos->alterarSituacao($params['idpronac'], '', $situacao, $providencia);
+
                 parent::message("Projeto encaminhado para o proponente com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
             } else if ($params['conformidade'] == 1) {
                 parent::message("Projeto encaminhado para o avaliador com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
@@ -294,8 +311,7 @@ class Analise_AnaliseController extends Analise_GenericController
                     'dtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
                 );
 
-                xd($params);
-                $where = array('idPronac' => $params['idpronac'], 'idTecnico' => $params['tecnicoAtual']);
+                $where = array('idPronac = ?' => $params['idpronac'], 'idTecnico = ?' => $params['tecnicoAtual']);
 
                 $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
                 $tbAvaliacao->update($dados, $where);
@@ -314,7 +330,7 @@ class Analise_AnaliseController extends Analise_GenericController
                 $projetos = $vwPainelAvaliar->projetos($where, array(), 0, 1);
                 $this->view->projeto = $projetos[0];
 
-                $this->view->novosAnalistas = $vw->carregarTecnicosPorUnidadeEGrupo($auth->getIdentity()->usu_orgao, 110);
+                $this->view->novosAnalistas = $vw->carregarTecnicosPorUnidadeEGrupo($this->codOrgao, 110);
             }
 
         } catch (Exception $objException) {
