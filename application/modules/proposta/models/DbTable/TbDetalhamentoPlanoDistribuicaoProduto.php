@@ -29,7 +29,32 @@ class Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto extends MinC
 
     public function listarPorMunicicipioUF($dados)
     {
+        $cols = array(
+            'idDetalhaPlanoDistribuicao',
+            'idPlanoDistribuicao',
+            'idUF' ,
+            'idMunicipio' ,
+            'stDistribuicao' ,
+            'dsProduto' ,
+            'qtExemplares' ,
+            'qtGratuitaDivulgacao' ,
+            'qtGratuitaPatrocinador' ,
+            'qtGratuitaPopulacao' ,
+            'qtPopularIntegral' ,
+            'qtPopularParcial' ,
+            "FORMAT(vlUnitarioPopularIntegral, 'N') as vlUnitarioPopularIntegral",
+            "FORMAT(vlReceitaPopularIntegral, 'N') as vlReceitaPopularIntegral",
+            "FORMAT(vlReceitaPopularParcial, 'N') as vlReceitaPopularParcial",
+            'qtProponenteIntegral' ,
+            'qtProponenteParcial' ,
+            "FORMAT(vlUnitarioProponenteIntegral, 'N') as  vlUnitarioProponenteIntegral",
+            "FORMAT(vlReceitaProponenteIntegral, 'N') as vlReceitaProponenteIntegral",
+            "FORMAT(vlReceitaProponenteParcial, 'N') as vlReceitaProponenteParcial",
+            "FORMAT(vlReceitaPrevista, 'N') as vlReceitaPrevista"
+        );
+
         $sql = $this->select()
+            ->from($this->_name, $cols, $this->_schema)
             ->where(' idUF= ?', $dados['idUF'])
             ->where(' idMunicipio= ?', $dados['idMunicipio'])
             ->where('idPlanoDistribuicao = ?', $dados['idPlanoDistribuicao']);
