@@ -28,7 +28,7 @@
 }));
 
 // switch between locales
-numeral.locale('pt-br');
+//numeral.locale('pt-br');
 
 // register
 Vue.component('input-money', {
@@ -118,8 +118,9 @@ Vue.component('my-component', {
             return parseFloat( ( this.vlUnitarioProponenteIntegral * 0.5 ) * this.qtProponenteParcial).toFixed(2);
         },
         vlReceitaPrevista: function() {
-            return parseFloat(this.vlReceitaPopularIntegral) + parseFloat(this.vlReceitaPopularParcial)
-                + parseFloat(this.vlReceitaProponenteIntegral) + parseFloat(this.vlReceitaProponenteParcial);
+            var total =  (parseFloat(this.vlReceitaPopularIntegral) + parseFloat(this.vlReceitaPopularParcial)
+                + parseFloat(this.vlReceitaProponenteIntegral) + parseFloat(this.vlReceitaProponenteParcial)).toFixed(2);
+            return numeral(total).format('0,0.00');
         },
         // Total de exemplares
         qtExemplaresTotal: function() {
@@ -211,10 +212,11 @@ Vue.component('my-component', {
             }
             return numeral(total).format('0,0.00');
         },
-        receitaPrevistaTotal:function(){
-            total = 0 ;
+        receitaPrevistaTotal: function() {
+            var total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                total += parseFloat(this.produtos[i]['vlReceitaPrevista']);
+                var vl = this.produtos[i]['vlReceitaPrevista'];
+                total += numeral(vl).value();
             }
             return numeral(total).format('0,0.00');
         },
@@ -268,6 +270,7 @@ Vue.component('my-component', {
         t: function(){
             var vue = this;
 
+            this.$data.produtos = [];
             url = "/proposta/plano-distribuicao/detalhar-mostrar/idPreProjeto/"+this.idpreprojeto+"?idPlanoDistribuicao=" + this.idplanodistribuicao + "&idMunicipio=" + this.idmunicipioibge +"&idUF=" + this.iduf
             $3.ajax({
               type: "GET",
@@ -300,32 +303,34 @@ Vue.component('my-component', {
                 vlUnitarioProponenteIntegral : this.vlUnitarioProponenteIntegral,
                 vlReceitaProponenteIntegral : this.vlReceitaProponenteIntegral,
                 vlReceitaProponenteParcial : this.vlReceitaProponenteParcial,
-                vlReceitaPrevista : this.vlReceitaPrevista,
+                vlReceitaPrevista : numeral(this.vlReceitaPrevista).format('0.00'),
             }
 
-            vue = this;
+            var vue = this;
             $3.ajax({
               type: "POST",
               url: "/proposta/plano-distribuicao/detalhar-salvar/idPreProjeto/" + this.idpreprojeto,
               data: p,
             })
             .done(function() {
+                vue.t();
+                alert('Salvo com sucesso');
             })
             .fail(function(){ alert('error'); });
-            this.t();
         },
         excluir: function(index){
             //this.produtos.splice(index, 1)
 
+            var vue = this;
             $3.ajax({
                 type: "POST",
                 url: "/proposta/plano-distribuicao/detalhar-excluir/idPreProjeto/" + this.idpreprojeto,
                 data: {idDetalhaPlanoDistribuicao: index, idPlanoDistribuicao: this.idplanodistribuicao},
             })
             .done(function() {
+                vue.t();
                 alert("Excluido com sucesso");
             });
-            this.t();
         },
         populacaoValidate: function(val){
             quantidade = this.qtExemplares * 0.1;
