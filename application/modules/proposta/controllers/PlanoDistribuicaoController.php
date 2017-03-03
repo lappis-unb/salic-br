@@ -308,6 +308,7 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         $dados = $this->getRequest()->getParams();
         $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
         $dados = $detalhamento->listarPorMunicicipioUF($dados);
+        sleep(1);
 
         $this->_helper->json(array('data' => $dados->toArray(), 'success' => 'true'));
     }
