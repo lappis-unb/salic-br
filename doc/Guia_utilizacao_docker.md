@@ -31,7 +31,7 @@ https://hub.docker.com/r/culturagovbr/web-apache-php5-debian/
 
 Docker Run Command : 
 ```
-docker run -it -v /var/www/:/var/www/ --name webserver-apache-php5-debian --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1 --add-host homolog.cultura.gov.br:10.0.0.13 --add-host mailapp.cultura.gov.br:192.168.10.25 --add-host id.cultura.gov.br:192.168.11.32 -p 80:80 culturagovbr/web-apache-php5-debian:latest
+docker run -it -v /var/www/:/var/www/ --name webserver-apache-php5-debian --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1 --add-host homolog.cultura.gov.br:10.0.0.13 --add-host mailapp.cultura.gov.br:192.168.11.44 --add-host id.cultura.gov.br:192.168.11.32 -p 80:80 culturagovbr/web-apache-php5-debian:latest
 ```
 
 Docker Pull Command :

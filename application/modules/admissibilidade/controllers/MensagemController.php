@@ -142,9 +142,11 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $this->_helper->layout->disableLayout();
         $intIdPronac = $this->getRequest()->getParam('idPronac', null);
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
+
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intUsuCodigo = $arrAuth['usu_codigo'];
-        $intUsuOrgao = $arrAuth['usu_orgao'];
+        $grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+        $intUsuOrgao = $grupoAtivo->codGrupo;
         $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
         if (empty($intIdPronac)) {
             $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL AND tbMensagemProjeto.idDestinatario = ?' => $intUsuCodigo);
@@ -167,7 +169,8 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intUsuCodigo = $arrAuth['usu_codigo'];
-        $intUsuOrgao = $arrAuth['usu_orgao'];
+        $grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+        $intUsuOrgao = $grupoAtivo->codGrupo;
         $dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
         $this->view->arrResult =  $dbTable->carregarPerguntasSemResposta($intUsuCodigo, $intUsuOrgao);
         $this->view->usuCodigo = $intUsuCodigo;
