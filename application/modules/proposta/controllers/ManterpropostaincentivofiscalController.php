@@ -710,29 +710,27 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                     if (!empty($rsSituacao)) {
                         $providencia = $rsSituacao->Descricao;
                     }
+
                     # verificar se o projeto já possui avaliador
                     $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
-                    $avaliacao = $tbAvaliacao->findBy(array('idPronac' => $idPronac));
+                    $avaliacao = $tbAvaliacao->buscarUltimaAvaliacao($idPronac);
 
-                    if (empty($avaliacao)) {
+                    if (!empty($avaliacao)) {
+                        $tbAvaliacao->inserirAvaliacao($idPronac, $orgaoUsuario, $avaliacao['idTecnico']);
+                    } else {
                         $tbAvaliacao->inserirAvaliacao($idPronac, $orgaoUsuario);
                     }
 
                     # alterar a situacao do projeto
                     $tblProjetos->alterarSituacao($idPronac, '', $situacao, $providencia);
 
-
                     parent::message("Projeto encaminhado com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/listarprojetos/listarprojetos", "CONFIRM");
                 } else {
                     parent::message("Alguns erros encontrados no envio do projeto", "/proposta/manterpropostaincentivofiscal/encaminharprojetoaominc/idPreProjeto/" . $idPreProjeto, "ERROR");
                 }
             }
-
-
             $this->view->resultado = $listaValidacao;
             $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/encaminharprojetoaominc";
-
-
         }
     }
 

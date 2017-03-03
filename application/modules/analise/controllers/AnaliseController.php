@@ -256,14 +256,18 @@ class Analise_AnaliseController extends Analise_GenericController
      */
     public function salvaravaliacaadequacaoAction()
     {
-
         $this->_helper->layout->disableLayout();
         $params = $this->getRequest()->getParams();
 
+        $idPronac = $params['idpronac'];
         try {
-            if (empty($params['idpronac'])) {
+            if (empty($idPronac)) {
                 throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
             }
+
+            # verificar se o projeto já possui avaliador
+            $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
+            $avaliacao = $tbAvaliacao->buscarUltimaAvaliacao($idPronac);
 
             if ($params['conformidade'] == 0) {
 
@@ -282,15 +286,23 @@ class Analise_AnaliseController extends Analise_GenericController
                 $tblProjetos = new Projetos();
                 $tblProjetos->alterarSituacao($params['idpronac'], '', $situacao, $providencia);
 
+                if (!empty($avaliacao)) {
+                    $tbAvaliacao->atualizarAvaliacaoNegativa($idPronac, $avaliacao['idTecnico'], $params['observacao']);
+                }
+
                 parent::message("Projeto encaminhado para o proponente com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
             } else if ($params['conformidade'] == 1) {
+
+                if (!empty($avaliacao)) {
+                    $tbAvaliacao->atualizarAvaliacaoPositiva($idPronac, $avaliacao['idTecnico'], $params['observacao']);
+                }
+
                 parent::message("Projeto encaminhado para o avaliador com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
             }
 
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
         }
-
     }
 
     public function redistribuiranaliseitemAction()
@@ -318,8 +330,6 @@ class Analise_AnaliseController extends Analise_GenericController
 
                 parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
             } else {
-
-                $auth = Zend_Auth::getInstance(); // instancia da autenticacao
 
                 $vw = new vwUsuariosOrgaosGrupos();
 
