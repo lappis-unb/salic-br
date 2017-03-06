@@ -218,7 +218,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     /**
      *
      */
-    private function validarCadastrar()
+    private function validarCadastrar($exterior = false)
     {
         if (!$this->fornecedor) {
             throw new Exception('Fornecedor inv�lido.');
@@ -243,8 +243,11 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
             throw new Exception('A data do documento deve estar dentro do per�odo de execu��o do projeto.');
         }
 
-        if (!$this->comprovanteTipo) {
-            throw new Exception('Forma de pagamento inv�lida.');
+        // caso seja comprova��o de pagamento a empresa do exterior, n�o precisa comprovar
+        if (!$exterior) {
+            if (!$this->comprovanteTipo) {
+                throw new Exception('Forma de pagamento inv�lida.');
+            }
         }
         if (!$this->comprovanteNumero) {
             throw new Exception('N�mero do comprovante inv�lido.');
@@ -283,13 +286,18 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     /**
      *
      */
-    public function atualizar($status = 4)
+    public function atualizar($status = 4, $atualizarArquivo = false)
     {
     	$this->validarCadastrar();
-
-        $arquivoModel = new ArquivoModel();
-        $arquivoModel->deletar($this->arquivo);
-        $arquivoModel->cadastrar('arquivo');
+        // somente mexer no arquivo se houver um arquivo
+        if ($atualizarArquivo) {
+            $arquivoModel = new ArquivoModel();
+            $arquivoModel->deletar($this->arquivo);
+            $arquivoModel->cadastrar('arquivo');
+            $arquivoId = $arquivoModel->getId();
+        } else {
+            $arquivoId = $this->arquivo;
+        }
 
         $this->update(
         	array(
@@ -307,7 +315,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
         	),
         	array('idComprovantePagamento = ?' => $this->comprovantePagamento)
         );
-        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovantePagamento);
+        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovanteValor, $this->comprovantePagamento);
     }
 
     /**
@@ -415,156 +423,107 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
      */
     public function pesquisarComprovantePorItem($item, $idPronac=false, $idEtapa=false, $idProduto = false, $idUFDespesa=false, $idMunicipioDespesa=false)
     {
-        #die($item);
-        /*$select = "SELECT
-                    comp.*,
-                    arq.nmArquivo,
-                    convert(char(10), comp.dtEmissao, 103) as dtEmissao,
-                    (
-                        CASE pa.idProduto
-                            WHEN 0 THEN ('Administra��o do projeto')
-                            ELSE prod.Descricao
-                        END
-                    ) as produtonome,
-                    pEtapa.Descricao as etapanome,
-                    pit.Descricao as itemnome,
-                    (
-                        CASE tpFormaDePagamento
-                            WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transfer�ncia Banc�ria')
-                            WHEN 3 THEN ('Saque/Dinheiro')
-                        END
-                    ) as tipoFormaPagamentoNome,
-                    (
-                        CASE tpDocumento
-                            WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                            WHEN 2 THEN ('Cupom Fiscal')
-                            WHEN 3 THEN ('Guia de Recolhimento')
-                            WHEN 4 THEN ('Nota Fiscal/Fatura')
-                            WHEN 5 THEN ('Recibo de Pagamento')
-                            WHEN 6 THEN ('RPA')
-                        END
-                    ) as tipoDocumentoNome,
-                    ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
-                    (
-                        SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                        WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
-                        GROUP BY a1.idPlanilhaAprovacao
-                    ) AS valorComprovado
-                FROM bdcorporativo.scSAC.tbComprovantePagamento AS comp
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
-                    INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
-                    INNER JOIN BDCORPORATIVO.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
-                    LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
-                WHERE
-                    pa.idPlanilhaAprovacao = ?
-                    AND pa.stAtivo = 'S'
-                ORDER BY prod.Descricao ASC";*/
-
-        $select = "SELECT
-                    comp.*,
-                    arq.nmArquivo,
-                    convert(char(10), comp.dtEmissao, 103) as dtEmissao,
-                    (
-                        CASE pa.idProduto
-                            WHEN 0 THEN ('Administra��o do projeto')
-                            ELSE prod.Descricao
-                        END
-                    ) as produtonome,
-                    pEtapa.Descricao as etapanome,
-                    pit.Descricao as itemnome,
-                    (
-                        CASE tpFormaDePagamento
-                            WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transfer�ncia Banc�ria')
-                            WHEN 3 THEN ('Saque/Dinheiro')
-                        END
-                    ) as tipoFormaPagamentoNome,
-                    (
-                        CASE tpDocumento
-                            WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                            WHEN 2 THEN ('Cupom Fiscal')
-                            WHEN 3 THEN ('Guia de Recolhimento')
-                            WHEN 4 THEN ('Nota Fiscal/Fatura')
-                            WHEN 5 THEN ('Recibo de Pagamento')
-                            WHEN 6 THEN ('RPA')
-                        END
-                    ) as tipoDocumentoNome,
-                    ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
-                    (
-                        SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                        WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
-                        GROUP BY a1.idPlanilhaAprovacao
-                    ) AS valorComprovado
-                FROM bdcorporativo.scSAC.tbComprovantePagamento AS comp
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
-                    INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
-                    INNER JOIN BDCORPORATIVO.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
-                    LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
-                WHERE
-                    pa.idPlanilhaItem = ?
-                    AND pa.nrFonteRecurso = 109 -- BATIZADO: Incentivo Fiscal Federal
-        ";
-
-        $select .= $idPronac ? " AND pa.idPronac = " . $idPronac . " " : "";
-        $select .= $idEtapa ? " AND pa.idEtapa = " . $idEtapa . " " : "";
-        $select .= $idProduto ? " AND pa.idProduto = " . $idProduto . " " : "";
-        $select .= $idUFDespesa ? " AND pa.idUFDespesa = " . $idUFDespesa . " " : "";
-        $select .= $idMunicipioDespesa ? " AND pa.idMunicipioDespesa = " . $idMunicipioDespesa . " " : "";
-        $select .= "
-                ORDER BY prod.Descricao ASC";
-
-        #die($select);
-        $statement = $this->getAdapter()->query($select, array($item));
 
 
-        return $statement->fetchAll();
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('comp' => $this->_name),
+            array('*',
+                'tpDocumento',
+                new Zend_Db_Expr('convert(char(10), comp.dtEmissao, 103) as dtEmissao'),
+                new Zend_Db_Expr('(
+                                        CASE pa.idProduto
+                                            WHEN 0 THEN (\'Administra��o do projeto\')
+                                            ELSE prod.Descricao
+                                        END
+                                     ) AS produtonome'),
+                new Zend_Db_Expr('pEtapa.Descricao AS etapanome'),
+                new Zend_Db_Expr('pit.Descricao AS itemnome'),
+                new Zend_Db_Expr('(
+                                            CASE tpFormaDePagamento
+                                                WHEN 1 THEN (\'Cheque\')
+                                                WHEN 2 THEN (\'Transfer�ncia Banc�ria\')
+                                                WHEN 3 THEN (\'Saque/Dinheiro\')
+                                            END
+                                         ) AS tipoFormaPagamentoNome'),
+                new Zend_Db_Expr('(
+                                            CASE tpDocumento
+                                                WHEN 1 THEN (\'Cupom Fiscal\')
+                                                WHEN 2 THEN (\'Guia de Recolhimento\')
+                                                WHEN 3 THEN (\'Nota Fiscal/Fatura\')
+                                                WHEN 4 THEN (\'Recibo de Pagamento\')
+                                                WHEN 5 THEN (\'RPA\')
+                                            END
+                                         ) AS tipoDocumentoNome'),
+                new Zend_Db_Expr('ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado'),
+                new Zend_Db_Expr('(
+                                            SELECT sum(b1.vlComprovacao) AS vlPagamento
+                                            FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                                            INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                                            INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                                            WHERE c1.stAtivo = \'S\' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
+                                            GROUP BY a1.idPlanilhaAprovacao
+                                   ) AS valorComprovado')
+            ),
+            'bdcorporativo.scSAC')
+            ->joinInner(array('cpxpa' => 'tbComprovantePagamentoxPlanilhaAprovacao'),
+                'cpxpa.idComprovantePagamento = comp.idComprovantePagamento',
+                array('cpxpa.stItemAvaliado'),
+                'bdcorporativo.scSAC')
+            ->joinInner(array('pa' => 'tbPlanilhaAprovacao'),
+                'pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('pit' => 'tbPlanilhaItens'),
+                'pit.idPlanilhaItens = pa.idPlanilhaItem',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('pEtapa' => 'tbPlanilhaEtapa'),
+                'pa.idEtapa = pEtapa.idPlanilhaEtapa',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('arq' => 'tbArquivo'),
+                'arq.idArquivo = comp.idArquivo',
+                array('nmArquivo'),
+                'BDCORPORATIVO.scCorp')
+            ->joinLeft(array('prod' => 'Produto'),
+                'pa.idProduto = prod.Codigo',
+                array(''),
+                'SAC.dbo')
+            ->where('pa.idPlanilhaItem = ?', $item)
+            ->where('pa.nrFonteRecurso = 109'); //BATIZADO: Incentivo Fiscal Federal
+
+        if($idPronac){
+            $select->where('pa.idPronac = ?', $idPronac);
+        }
+
+        if($idEtapa){
+            $select->where('pa.idEtapa = ?', $idEtapa);
+        }
+
+        if($idProduto){
+            $select->where('pa.idProduto = ?', $idProduto);
+        }
+
+        if($idUFDespesa){
+            $select->where('pa.idUFDespesa = ?', $idUFDespesa);
+        }
+
+        if($idMunicipioDespesa){
+            $select->where('pa.idMunicipioDespesa = ?', $idMunicipioDespesa);
+        }
+
+        $select->order('prod.Descricao ASC');
+
+        try {
+            $db = Zend_Registry::get('db');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $db->fetchAll($select);
     }
-
-
-    /**
-     * Author: Fernao Lopes Ginez de Lara
-     * Descri��o: Fun��o criada a pedido da �rea Finalistica em 13/04/2016
-     * @param $idPronac
-     */
-    public function atualizarComprovanteRecusado($idPronac) {
-      $db= Zend_Db_Table::getDefaultAdapter();
-      $db->setFetchMode(Zend_DB::FETCH_ASSOC);
-
-      try {
-
-	$update = "UPDATE bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao
-                   SET stItemAvaliado = 4
-                   FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a
-                   INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b ON b.idComprovantePagamento = a.idComprovantePagamento
-                   INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c ON c.idPlanilhaAprovacao = a.idPlanilhaAprovacao
-                   WHERE stItemAvaliado = 3
-                   AND IdPRONAC = $idPronac";
-
-	$db->fetchRow($update);
-
-	$update2 = "UPDATE sac.dbo.tbDiligencia
-                    SET DtResposta = GETDATE(),
-                    RESPOSTA  = 'O PROPONENTE J� REALIZOU O AJUSTE DOS COMPROVANTES QUE HAVIAM SIDO RECUSADOS PELO MINIST�RIO DA CULTURA.'
-                    WHERE idTipoDiligencia = 174 and idPronac = $idPronac AND stEstado = 0";
-
-	$db->fetchRow($update2);
-
-      } catch (Exception $e) {
-	die("ERRO: " . $e->getMessage());
-      }
-    }
-
 
     /**
      *
@@ -620,12 +579,15 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     /**
      * @todo remover esse metodo apos implementacao ideal planilha comprovacao
      */
-    private function comprovarPlanilhaAtualizarStatus($status, $idComprovantePagamento)
+    function comprovarPlanilhaAtualizarStatus($status, $vlComprovado, $idComprovantePagamento)
     {
         $comprovantePlanilha = new ComprovantePagamentoxPlanilhaAprovacao();
         $comprovantePlanilha->update(
-            array('stItemAvaliado' => $status), //aguardando analise
-            array('idComprovantePagamento = ?' => $idComprovantePagamento,)
+            array(
+                'stItemAvaliado' => $status,  //aguardando analise
+                'vlComprovado' => $vlComprovado
+            ),
+            array('idComprovantePagamento = ?' => $idComprovantePagamento)
         );
     }
 }

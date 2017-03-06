@@ -837,8 +837,10 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($idPronac, $tpPlanilhaAtiva);
 	    if(count($planilhaOrcamentaria)==0){
 	      $this->view->tipoPlanilha = 2;
-            }  else if ($tpPlanilhaAtiva == 6) {
-	      $this->view->tipoPlanilha = 6;
+        }  else if ($tpPlanilhaAtiva == 5) {
+            $this->view->tipoPlanilha = 5;
+        }  else if ($tpPlanilhaAtiva == 6) {
+            $this->view->tipoPlanilha = 6;
 	    } else {
 	      $this->view->tipoPlanilha = 3;
 	    }

@@ -69,6 +69,12 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
         $this->view->idUsuarioLogado = $idusuario;
 
         if ($this->_request->getParam("qtde")) {
+        if(!$this->_request->getParam("tipoFiltro")){
+            $this->view->tipoFiltro = 'aguardando_distribuicao';
+        }
+
+        //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+        if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
         }
         $order = array();
@@ -79,6 +85,8 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
                 $novaOrdem = "DESC";
             } else {
                 $novaOrdem = "ASC";
+            }else {
+                $novaOrdem = "DESC";
             }
         } else {
             $ordem = "ASC";

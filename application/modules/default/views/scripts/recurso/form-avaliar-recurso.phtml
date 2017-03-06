@@ -1176,7 +1176,7 @@
                 <td align="right" class="destacar bold w150">Parecer Favorável?</td>
                 <td colspan="3">
                     <input type="radio" name="parecerProjeto" value="2" checked="checked" /> <label for="parecerProjeto2" style="margin-right:25px; font-weight: normal;">Sim</label>
-                    <input type="radio" name="parecerProjeto" value="1" <?php echo ($this->Parecer->ParecerFavoravel == 1) ? 'checked="checked"' : ''; ?> /> <label for="parecerProjeto1" style="font-weight: normal;">Não</label>
+                                                                                          <input type="radio" name="parecerProjeto" value="1" <?php if (isset($this->Parecer->ParecerFavoravel)) { echo ($this->Parecer->ParecerFavoravel  == 1) ? 'checked="checked"' : '';} ?> /> <label for="parecerProjeto1" style="font-weight: normal;">Não</label>
                 </td>
             </tr>
             <?php if($this->dados->tpSolicitacao == 'OR'){ $sumir = 'class="sumir"'; } ?>
