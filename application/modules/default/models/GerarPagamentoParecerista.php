@@ -10,7 +10,7 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
     protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
-    public function buscarDespachos($where = array()) {
+    public function buscarDespachos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
 
         $select = $this->select()->distinct();
         $select->setIntegrityCheck(false);
@@ -21,17 +21,43 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
                                 'CONVERT(VARCHAR(10), gpp.dtEfetivacaoPagamento ,103) as dtEfetivacaoPagamento',
                                 'CONVERT(VARCHAR(10), gpp.dtOrdemBancaria ,103) as dtOrdemBancaria',
                                 'gpp.nrOrdemBancaria',
-                                'gpp.nrDespacho',
+                                'CONVERT(INT, gpp.nrDespacho) as nrDespacho',
                                 'gpp.siPagamento',
                                 'gpp.vlTotalPagamento',
                                 'gpp.idUsuario')
         );
+        $select->joinInner(array('pp'=> 'tbPagarParecerista'), "pp.idGerarPagamentoParecerista = gpp.idGerarPagamentoParecerista",
+            array(),'SAC.dbo'
+        );
+        $select->joinInner(array('ag'=> 'Agentes'), "pp.idParecerista = ag.idAgente",
+            array(''),'AGENTES.dbo'
+        );
+
+        $select->joinInner(array('nm'=> 'Nomes'), "ag.idAgente = nm.idAgente",
+            array(new Zend_Db_Expr('nm.Descricao AS nmParecerista')),'AGENTES.dbo'
+        );
+
 
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
 
-//        xd($select->assemble());
+        //Total de dados da pagina��o
+        if ($qtdeTotal) {
+            return $this->fetchAll($select)->count();
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+
+        // paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
 
         return $this->fetchAll($select);
     }

@@ -7,7 +7,8 @@ class Orgaos extends MinC_Db_Table_Abstract{
 
     const ORGAO_SUPERIOR_SAV = 160;
     const ORGAO_SUPERIOR_SEFIC = 251;
-
+    const ORGAO_SUPERIOR_IPHAN = 91;
+    
     public function pesquisarTodosOrgaos() {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -153,5 +154,22 @@ class Orgaos extends MinC_Db_Table_Abstract{
         if($resultado) {
             return $resultado->toArray();
         }
+    }
+
+    /*
+    * Busca superintendências do IPHAN
+    */
+    public function buscarSuperintendencias() {
+
+        $query = $this->select()
+            ->from($this,
+                array('Codigo', 'Sigla'));
+
+        $query->where('Vinculo = 1');
+        $query->where('idSecretaria = 91');
+        $query->order('Sigla');
+
+        return $this->fetchAll($query);
+
     }
 }
