@@ -71,10 +71,15 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $visoesNew = null;
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $authIdentity = array_change_key_case((array) $auth->getIdentity());
+
         if (isset($authIdentity['cpf'])) {
             $visoesNew[0]['idVerificacao'] = 144; //PROPONENTE
             $visoesNew[0]['Descricao'] = 'Proponente';
+
+            $this->view->ehProponente = true;
         } else {
+            $this->view->ehProponente = false;
+
             foreach ($visoes as $key => $visaoGrupo) {
                 if ($GrupoAtivo == 93 and ($visaoGrupo->idVerificacao == 209 or $visaoGrupo->idVerificacao == 216)) {
                     $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;

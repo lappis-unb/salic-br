@@ -23,11 +23,11 @@
                         $receita = ($planoDistribuicao->QtdeVendaNormal*$planoDistribuicao->PrecoUnitarioNormal)+($planoDistribuicao->QtdeVendaPromocional*$planoDistribuicao->PrecoUnitarioPromocional);
                         $totalReceita += $receita;
                         ?>
-                            <div class=" responsive-table col s12 ">
-                               <div class="row">
-                                <table class="  bordered">
+                        <div class="row">
+                            <div id="detalhamento" class="col s12">
+                                <table class="bordered">
                                     <thead>
-                                        <tr class="">
+                                        <tr>
                                             <th>Nome do Evento / Produto</th>
                                             <th>&Aacute;rea</th>
                                             <th>Segmento</th>
@@ -44,29 +44,29 @@
                                         <tr>
                                             <td colspan="4">
                                                 <?php foreach($this->abrangencias as $abrangencia): ?>
-                                                <div class=" col s12 ">
-                                                   <div class="row">
-                                                <table class="  bordered">
-                                                    <tbody>
-                                                            <tr>
-                                                                <td><?php echo $abrangencia['uf']?> - <?php echo $abrangencia['cidade']?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <my-component
-                                                                        idplanodistribuicao="<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>"
-                                                                        idpreprojeto="<?php echo $this->idPreProjeto; ?>"
-                                                                        iduf="<?php echo $abrangencia['idUF']?>"
-                                                                        idmunicipioibge="<?php echo $abrangencia['idMunicipioIBGE']?>"
-                                                                    ></my-component>
-                                                                </td>
-                                                            </tr>
-                                                    </tbody>
-                                                </table>
+                                                    <div class=" col s12 ">
+                                                       <div class="row">
+                                                            <table class="bordered">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><?php echo $abrangencia['uf']?> - <?php echo $abrangencia['cidade']?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <my-component
+                                                                                idplanodistribuicao="<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>"
+                                                                                idpreprojeto="<?php echo $this->idPreProjeto; ?>"
+                                                                                iduf="<?php echo $abrangencia['idUF']?>"
+                                                                                idmunicipioibge="<?php echo $abrangencia['idMunicipioIBGE']?>"
+                                                                            ></my-component>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 <?php endforeach; ?>
-                                            <td>
+                                            </td>
                                         </tr>
                                     <tbody>
                                 </table>
@@ -75,10 +75,10 @@
                     <?php endforeach ?>
                 </div>
             </div>
-               <div class="row">
-                   <div class="col s12 center" >
+            <div class="row">
+                <div class="col s12 center" >
                         <a class="btn white black-text" href="<?php echo $this->url(array('module' => 'proposta', 'controller'=>'plano-distribuicao','action' => 'index')) ?>">Voltar</a>
-                   </div>
+                  </div>
                </div>
                 </div>
             </div>
@@ -94,11 +94,10 @@
            <button class="btn" v-on:click.prevent="mostrar()"><i class="material-icons">{{icon}}</i></button>
        </div>
     </div>
-
-           <div v-show="active">
-    <div class="row">
+    <div v-show="active">
+    <div class="row" >
         <div class="col s12 center">
-            <table  class="bordered">
+            <table class="bordered">
                 <thead>
                     <tr>
                         <th rowspan="2">Categoria</th>
@@ -113,7 +112,6 @@
                             Proponente
                         </th>
                         <th rowspan="2">Receita Prevista</th>
-                        <th rowspan="2">A&ccedil;&otildees</th>
                     </tr>
                     <tr>
                         <th class="green lighten-4" >Divulga&ccedil;&atilde;o</th>
@@ -131,7 +129,7 @@
                         <th class="lime lighten-3" >Valor da meia entrada</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody  >
                     <tr v-for="( produto, index ) in produtos">
                         <td>{{ produto.dsProduto }}</td>
                         <td>{{ produto.qtExemplares }}</td>
@@ -179,130 +177,130 @@
             </table>
        </div>
     </div>
-                <form>
-                        <table class="bordered " >
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th class="center" colspan="8">At&eacute; 50%</th>
-                                    <th class="center" colspan="5">At&eacute; 50%</th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="2">Categoria</th>
-                                    <th rowspan="2">Quantidade de exemplar / Ingresso</th>
-                                    <th class="center green lighten-4" colspan="3">
-                                        Distribui&ccedil;&atilde;o Gratuita (no minimo 30%)
-                                    </th>
-                                    <th class="center red lighten-4"colspan="5">
-                                        Pre&ccedil;o Popular (at&eacute; 20%)
-                                    </th>
-                                    <th  class="center lime lighten-3" colspan="5">
-                                        Proponente
-                                    </th>
-                                    <th rowspan="2">Receita Prevista</th>
-                                    <th rowspan="2">A&ccedil;&otildees</th>
-                                </tr>
-                                <tr>
-                                    <th class="green lighten-4" >Divulga&ccedil;&atilde;o</th>
-                                    <th class="green lighten-4" >Patrocinador</th>
-                                    <th class="green lighten-4" >Popula&ccedil;&atilde;o</th>
-                                    <th class="red lighten-4">Quantidade de Inteira</th>
-                                    <th class="red lighten-4">Quantidade de Meia Entrada</th>
-                                    <th class="red lighten-4">Pre&ccedil;o Unitario do Ingresso</th>
-                                    <th class="red lighten-4">Valor da inteira</th>
-                                    <th class="red lighten-4">Valor da meia entrada</th>
-                                    <th class="lime lighten-3" >Quantidade de Inteira</th>
-                                    <th class="lime lighten-3" >Quantidade de Meia Inteira</th>
-                                    <th class="lime lighten-3" >Pre&ccedil;o Unitario do Ingresso</th>
-                                    <th class="lime lighten-3" >Valor da inteira</th>
-                                    <th class="lime lighten-3" >Valor da meia entrada</th>
-                                </tr>
-                                <tr>
-                                    <th class="green lighten-4" ></th>
-                                    <th class="green lighten-4" ></th>
-                                    <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
-                                    <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
-                                    <th class="green lighten-4" >de {{ (qtExemplares * 0.1) }} at&eacute; {{ (qtExemplares * 0.3) }}</th>
-                                    <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorIntegralLimite }}</th>
-                                    <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorParcialLimite }}</th>
-                                    <th class="green lighten-4" >At&eacute; 50,00</th>
-                                </tr>
-                            </thead>
-                            <tbody class=" green lighten-7">
-                            <tr>
-                                <td>
-                                    <div class="input-field  ">
-                                        <input  id="dsProduto" v-model="dsProduto">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-field">
-                                        <input  v-model.lazy="qtExemplares" >
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-field">
-                                        <input v-model.number="qtGratuitaDivulgacao" >
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-field">
-                                        <input v-model="qtGratuitaPatrocinador" ref="patrocinador">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-field">
-                                        <input v-model="qtGratuitaPopulacao"  v-on:blur="populacaoValidate(qtGratuitaPopulacao)">
-                                    </div>
-                                </td>
-                                <!-- Preço popular-->
-                                <td>
-                                    <div class="input-field">
-                                        <input v-model="qtPopularIntegral"  >
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-field">
-                                        <input v-model="qtPopularParcial"  >
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-field ">
-                                        <input-money
-                                             v-bind:value="vlUnitarioPopularIntegral"
-                                             v-on:ev="vlUnitarioPopularIntegral = $event">
-                                        </input-money>
-                                    </div>
-                                </td>
-                                <td>{{ vlReceitaPopularIntegral }}</td>
-                                <td>{{ vlReceitaPopularParcial }}</td>
-                                <!-- Preço popular-->
-                                <!-- Proponente-->
-                                <td>{{ qtProponenteIntegral }}</td>
-                                <td>{{ qtProponenteParcial }}</td>
-                                <td>
-                                    <div class="input-field ">
-                                        <input-money
-                                             v-bind:value="vlUnitarioProponenteIntegral"
-                                             v-on:ev="vlUnitarioProponenteIntegral = $event">
-                                        </input-money>
-                                    </div>
-                                </td>
-                                <td>{{ vlReceitaProponenteIntegral }}</td>
-                                <td>{{ vlReceitaProponenteParcial }}</td>
-                                <!-- Proponente-->
-                                <td>{{ qtProponenteIntegral }}</td>
-                                <td>{{ vlReceitaPrevista }}</td>
-                                <td>
-                                    <button class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
+            <form>
+                <table class="bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="center" colspan="9">At&eacute; 50%</th>
+                            <th class="center" colspan="6">At&eacute; 50%</th>
+                            <th rowspan="4">A&ccedil;&otildees</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="4">Categoria</th>
+                            <th rowspan="4">Quantidade de exemplar / Ingresso</th>
+                            <th class="center green lighten-4" colspan="3">
+                                Distribui&ccedil;&atilde;o Gratuita (no minimo 30%)
+                            </th>
+                            <th class="center red lighten-4"colspan="5">
+                                Pre&ccedil;o Popular (at&eacute; 20%)
+                            </th>
+                            <th  class="center lime lighten-3" colspan="5">
+                                Proponente
+                            </th>
+                            <th rowspan="3">Receita Prevista</th>
+                        </tr>
+                        <tr>
+                            <th class="green lighten-4" >Divulga&ccedil;&atilde;o</th>
+                            <th class="green lighten-4" >Patrocinador</th>
+                            <th class="green lighten-4" >Popula&ccedil;&atilde;o</th>
+                            <th class="red lighten-4">Quantidade de Inteira</th>
+                            <th class="red lighten-4">Quantidade de Meia Entrada</th>
+                            <th class="red lighten-4">Pre&ccedil;o Unitario do Ingresso</th>
+                            <th class="red lighten-4">Valor da inteira</th>
+                            <th class="red lighten-4">Valor da meia entrada</th>
+                            <th class="lime lighten-3" >Quantidade de Inteira</th>
+                            <th class="lime lighten-3" >Quantidade de Meia Inteira</th>
+                            <th class="lime lighten-3" >Pre&ccedil;o Unitario do Ingresso</th>
+                            <th class="lime lighten-3" >Valor da inteira</th>
+                            <th class="lime lighten-3" >Valor da meia entrada</th>
+                        </tr>
+                        <tr>
+                            <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
+                            <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
+                            <th class="green lighten-4" >de {{ (qtExemplares * 0.1) }} at&eacute; {{ (qtExemplares * 0.3) }}</th>
+                            <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorIntegralLimite }}</th>
+                            <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorParcialLimite }}</th>
+                            <th class="green lighten-4" >At&eacute; 50,00</th>
+                        </tr>
+                    </thead>
+                    <tbody class=" green lighten-7">
+                    <tr>
+                        <td>
+                            <div class="input-field  ">
+                                <input  id="dsProduto" v-model="dsProduto">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input  v-model.lazy="qtExemplares" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input v-model.number="qtGratuitaDivulgacao" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input v-model="qtGratuitaPatrocinador" ref="patrocinador">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input v-model="qtGratuitaPopulacao"  v-on:blur="populacaoValidate(qtGratuitaPopulacao)">
+                            </div>
+                        </td>
+                        <!-- Preço popular-->
+                        <td>
+                            <div class="input-field">
+                                <input v-model="qtPopularIntegral"  >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input v-model="qtPopularParcial"  >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field ">
+                                <input-money
+                                     v-bind:value="vlUnitarioPopularIntegral"
+                                     v-on:ev="vlUnitarioPopularIntegral = $event">
+                                </input-money>
+                            </div>
+                        </td>
+                        <td>{{ vlReceitaPopularIntegral }}</td>
+                        <td>{{ vlReceitaPopularParcial }}</td>
+                        <!-- Preço popular-->
+                        <!-- Proponente-->
+                        <td>{{ qtProponenteIntegral }}</td>
+                        <td>{{ qtProponenteParcial }}</td>
+                        <td>
+                            <div class="input-field ">
+                                <input-money
+                                     v-bind:value="vlUnitarioProponenteIntegral"
+                                     v-on:ev="vlUnitarioProponenteIntegral = $event">
+                                </input-money>
+                            </div>
+                        </td>
+                        <td>{{ vlReceitaProponenteIntegral }}</td>
+                        <td>{{ vlReceitaProponenteParcial }}</td>
+                        <!-- Proponente-->
+                        <td>{{ vlReceitaPrevista }}</td>
+                        <td>
+                            <button class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 </script>
 <script type="text/javascript" src="/public/scripts/proposta/plano-distribuicao/detalhar-plano-distribuicao.js"></script>
+<style>
+    #detalhamento table {
+        width: 100%;
+    }
+</style>
