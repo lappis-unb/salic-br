@@ -802,7 +802,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $select = $this->selectView('vwPainelReadequacaoTecnico');
-
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
             foreach ($where as $coluna => $valor) {
                 $select->where($coluna, $valor);
             }
