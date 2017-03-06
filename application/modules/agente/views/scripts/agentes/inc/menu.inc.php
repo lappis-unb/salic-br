@@ -112,7 +112,7 @@
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'credenciamento', 'id' => $this->id),'',true);?>" title="Ir para Credenciamento">Credenciar / Descredenciar</a>
                         <?php } ?>
 
-                        <?php if(($this->grupoativo != "94") && ($this->grupoativo != "118")&& ($this->grupoativo != "93")){ ?>
+                        <?php if(($this->grupoativo != "94") && ($this->grupoativo != "118")&& ($this->grupoativo != "93" && !$this->ehProponente)){ ?>
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'alterarvisao', 'id' => $this->id),'',true);?>" title="Ir para Vis&Otilde;es">Vis&otilde;es</a>
                         <?php } ?>
 

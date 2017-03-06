@@ -121,8 +121,13 @@
                         <tr>
                             <td align="center">
                                 <button type="button" class="btn thite-text" id="btn_novo">Novo</button>
-                                <a href="/proposta/plano-distribuicao/detalhar-plano-distribuicao/idPreProjeto/<?php echo $this->idPreProjeto ?>"
-                                        class="btn white-text" id="detalhar">Detalhar</button>
+                                <?php if(!empty($this->planosDistribuicao->toArray())): ?>
+                                    <a
+                                        href="/proposta/plano-distribuicao/detalhar-plano-distribuicao/idPreProjeto/<?php echo $this->idPreProjeto ?>"
+                                        class="btn white-text" id="detalhar">Detalhar</a>
+                                    <?php else: ?>
+                                        <button disabled class="btn white-text" >Detalhar</button>
+                                    <?php endif ?>
                             </td>
                         </tr>
                     </table>
