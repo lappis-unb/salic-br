@@ -2529,7 +2529,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $Projetos = new Projetos();
         $Projetos->update($d, $where);
 
-        $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+        $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+        $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
         $this->view->Unidade = $buscarUnidade;
 
         $tbReadequacaoXParecer = new tbReadequacaoXParecer();
