@@ -57,6 +57,9 @@
 <script type="text/javascript">
     (function ($) {
         $(document).ready(function () {
+
+            var usuarioEhCoordenador = <?php echo $this->usuarioEhCoordenador ? 1 : 0 ?>;
+
             $('#tabelaAnaliseFinal').DataTable(
                 {
                     "language": {
@@ -69,6 +72,12 @@
                 },
                     "processing": true,
                     "serverSide": true,
+                    columnDefs: [
+                        {
+                            targets: [9, 10],
+                            visible: usuarioEhCoordenador
+                        }
+                    ],
                     "columns": [
                         {
                             data: null,
@@ -139,7 +148,7 @@
                                     + '<i class="material-icons" '
                                     + 'title="Fazer An&aacute;lise Visual do Projeto" alt="Fazer An&aacute;lise Visual do Projeto">visibility</i></a>'
                             }
-                        },
+                        }
 
                     ]
                 }
