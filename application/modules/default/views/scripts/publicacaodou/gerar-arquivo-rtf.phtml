@@ -187,7 +187,7 @@ if($this->tipoPublicacao == 'readequacao') {
             }
             $relatorio .= '
                 <p class="saltoLinha">
-                    PRONAC: '. $portaria->pronac .' - ' . $portaria->NomeProjeto . ', publicado na portaria n&ordm; '. $dadosAprovacaoInicial->PortariaAprovacao .' de '. Data::tratarDataZend($dadosAprovacaoInicial->DtPortariaAprovacao, 'brasileira') .', publicada no D.O.U. em '. Data::tratarDataZend($dadosAprovacaoInicial->DtPublicacaoAprovacao, 'brasileira') .', para '. $dsSolicitacaoReadequacao .'.
+                    PRONAC: '. $portaria->pronac .' - ' . $portaria->NomeProjeto . ', publicado na portaria n&ordm; '. $dadosAprovacaoInicial->PortariaAprovacao .' de '. Data::tratarDataZend($dadosAprovacaoInicial->DtPortariaAprovacao, 'brasileira') .', no D.O.U. em '. Data::tratarDataZend($dadosAprovacaoInicial->DtPublicacaoAprovacao, 'brasileira') .', para '. $dsSolicitacaoReadequacao .'.
                 </p>
             ';
             $AtualIdTipoReadequacao = $idTipoReadequacao;

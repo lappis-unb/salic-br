@@ -100,40 +100,40 @@ $filtros = array(
     
         <table class="tabela gerenciar_pareceres">
             <tr class="titulo_tabela">
-                <th width="40">PRONAC</th>
-                <th>Nome do Projeto</th>
-                <th>Segmento Cultural</th>
-                <th>Vl.&nbsp;Incentivo<br />(S&oacute; Mecenato)</th>
-                <th width="250">Produto</th>
-                <th width="80">Produto principal?</th>
+                <th width="40"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=nrProjeto&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=NomeProjeto&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=Segmento&ordem='.$this->paginacao['novaOrdem'];?>">Segmento Cultural</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=Valor&ordem='.$this->paginacao['novaOrdem'];?>">Vl.&nbsp;Incentivo<br />(S&oacute; Mecenato)</a></th>
+                <th width="250"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=Produto&ordem='.$this->paginacao['novaOrdem'];?>">Produto</a></th>
+                <th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=stPrincipal&ordem='.$this->paginacao['novaOrdem'];?>">Produto principal?</a></th>
 		
 		<?php if ($this->tipoFiltro == 'aguardando_distribuicao') { ?>
-                <th width="80">Dt. Chegada &agrave; vinculada</th>
+                <th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=DtEnvioMincVinculada&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Chegada &agrave; vinculada</a></th>
 		<?php } else if ($this->tipoFiltro == 'em_analise' || $this->tipoFiltro == 'em_validacao') { ?>
-		<th width="80">Dt. distribui&ccedil;&atilde;o</th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=DtDistribuicao&ordem='.$this->paginacao['novaOrdem'];?>">Dt. distribui&ccedil;&atilde;o</a></th>
 		
 		<?php if ($this->tipoFiltro == 'em_validacao') { ?>
-		<th width="80">Dt. devolu&ccedil;&atilde;o</th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=DtDevolucao&ordem='.$this->paginacao['novaOrdem'];?>">Dt. devolu&ccedil;&atilde;o</a></th>
 		<?php } ?>
 		
-		<th width="80">Parecerista</th>
-		<th width="80">Tempo total de an&aacute;lise</th>
-		<th width="80">Tempo com parecerista</th>
-		<th width="80">Tempo diligenciado</th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=Parecerista&ordem='.$this->paginacao['novaOrdem'];?>">Parecerista</a></th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=TempoTotalAnalise&ordem='.$this->paginacao['novaOrdem'];?>">Tempo total de an&aacute;lise</a></th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=TempoParecerista&ordem='.$this->paginacao['novaOrdem'];?>">Tempo com parecerista</a></th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=TempoDiligencia&ordem='.$this->paginacao['novaOrdem'];?>">Tempo diligenciado</a></th>
 		
 		<?php if ($this->tipoFiltro == 'em_analise') { ?>
-		<th width="80">Dt. envio dilig&ecirc;ncia</th>
-		<th width="80">Dt. resposta dilig&ecirc;ncia</th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=dtEnvioDiligencia&ordem='.$this->paginacao['novaOrdem'];?>">Dt. envio dilig&ecirc;ncia</a></th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=dtRespostaDiligencia&ordem='.$this->paginacao['novaOrdem'];?>">Dt. resposta dilig&ecirc;ncia</a></th>
 		<?php } ?>
 		
 		<?php } else if ($this->tipoFiltro == 'validados') { ?>
-		<th width="80">T&eacute;cnico validador</th>
-		<th width="80">Dt. valida&ccedil;&atilde;o</th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=TecnicoValidador&ordem='.$this->paginacao['novaOrdem'];?>">T&eacute;cnico validador</a></th>
+		<th width="80"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=DtValidacao&ordem='.$this->paginacao['novaOrdem'];?>">Dt. valida&ccedil;&atilde;o</a></th>
 		<?php } else if ($this->tipoFiltro == 'devolvida') { ?>
-		<th width="50">Justificativa do componente</th>
-		<th width="50">Justificativa do atendimento</th>
-		<th width="50">Justificativa da Secretaria</th>
-		<th width="50">Parecerista</th>		
+		<th width="50"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=JustComponente&ordem='.$this->paginacao['novaOrdem'];?>">Justificativa do componente</a></th>
+		<th width="50"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=JustDevolucaoPedido&ordem='.$this->paginacao['novaOrdem'];?>">Justificativa do atendimento</a></th>
+		<th width="50"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=JustSecretaria&ordem='.$this->paginacao['novaOrdem'];?>">Justificativa da Secretaria</a></th>
+		<th width="50"><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?tipoFiltro='.$this->tipoFiltro.'&pag=1&qtde='.$this->paginacao['qtde'].'&campo=Parecerista&ordem='.$this->paginacao['novaOrdem'];?>">Parecerista</a></th>
 		<?php } ?>
 		
 		<th width="50">Distribuir / Encaminhar</th>
