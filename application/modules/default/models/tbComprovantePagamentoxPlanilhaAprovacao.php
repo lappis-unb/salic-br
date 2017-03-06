@@ -93,12 +93,11 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                             e.Descricao as Fornecedor,
                             b.DtPagamento as DtComprovacao,
                             CASE tpDocumento
-                                WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                                WHEN 2 THEN ('Cupom Fiscal')
-                                WHEN 3 THEN ('Guia de Recolhimento')
-                                WHEN 4 THEN ('Nota Fiscal/Fatura')
-                                WHEN 5 THEN ('Recibo de Pagamento')
-                                WHEN 6 THEN ('RPA')
+                                WHEN 1 THEN ('Cupom Fiscal')
+                                WHEN 2 THEN ('Guia de Recolhimento')
+                                WHEN 3 THEN ('Nota Fiscal/Fatura')
+                                WHEN 4 THEN ('Recibo de Pagamento')
+                                WHEN 5 THEN ('RPA')
                                 ELSE ''
                             END as tbDocumento,
                             b.nrComprovante,
@@ -282,7 +281,8 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			,array()
             ,"Agentes.dbo"
 		);
-		$select->where("c.idPronac = ?", $idPronac);
+
+        $select->where("c.idPronac = ?", $idPronac);
 
 		$select->order("Agentes.dbo.fnUFAgente(idFornecedor)");
 		$select->order("Agentes.dbo.fnMunicipioAgente(idFornecedor)");
