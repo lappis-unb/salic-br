@@ -16,7 +16,7 @@ class HistoricoInsert extends MinC_Db_Table_Abstract
 	protected $_primary = "Id";
 
 	/**
-	 * M&amp;eacute;todo para verificar se a trigger HISTORICO_INSERT est habilitada
+	 * Metodo para verificar se a trigger HISTORICO_INSERT esta habilitada
 	 * @access public
 	 * @param void
 	 * @return integer (0 = Habilitado e 1 = desabilitado)
