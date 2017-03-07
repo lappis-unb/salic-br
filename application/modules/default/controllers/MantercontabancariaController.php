@@ -145,91 +145,58 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $orgao = $GrupoAtivo->codOrgao;
-        $pronac = $_POST['Pronac'];
+        $pronac = $this->_request->getParam('Pronac');
         $he = new tbHistoricoExclusaoConta();
         $cb = new ContaBancaria();
         $resp = $cb->consultarDadosPorPronac($pronac, $orgao)->current();
 //            x($idagente->usu_codigo);
 //            xd($idagente->idAgente);
         $caminho = $this->_request->getParam("caminho"); //caminho de retorno caso a funcionalidade seja aberta em modal
-
-        if(isset($_POST['excluir'])){
-
-            //INSERE OS DADOS NA TABELA DE HISTï¿½RICO - SAC.dbo.tbHistoricoExclusaoConta
+        $ba = new BancoAgencia();
+        $AgenciaDados = $ba->buscar(array('Agencia = ?' => $this->_request->getParam('Agencia')));
+        
+        if(count($AgenciaDados) > 0){
+            
+            //INSERE OS DADOS NA TABELA DE HISTÓRICO - SAC.dbo.tbHistoricoExclusaoConta
             $dadosInsert = array(
                 'idContaBancaria' => $resp->IdContaBancaria,
                 'Banco' => $resp->Banco,
                 'Agencia' => $resp->Agencia,
                 'ContaBloqueada' => $resp->ContaBloqueada,
-                'ContaLivre' => $resp->ContaLivre,
+                    'ContaLivre' => $resp->ContaLivre,
                 'DtExclusao' => new Zend_Db_Expr('GETDATE()'),
-                'Motivo' => $_POST['justificativa'],
-                'idUsuario' => $idagente->usu_codigo,
-                'idPronac' => $resp->idPronac,
-                'tpAcao' => 2
+                'Motivo' => $this->_request->getParam('justificativa'),
+                'idUsuario' => $idagente->usu_codigo
             );
+            
             $id = $he->inserir($dadosInsert);
 
-            //ALETAR OS DADOS NA TABELA DE CONTA BANCï¿½RIA - SAC.dbo.ContaBancaria
-            $dadosUpdate = array(
-                'ContaBloqueada' => '000000000000',
-                'ContaLivre' => '000000000000'
+            $dados = array(
+                'Banco' => '001',
+                'Agencia' => $this->_request->getParam('Agencia'),
+                'ContaBloqueada' => $this->_request->getParam('ContaBloqueada'),
+                'ContaLivre' => $this->_request->getParam('ContaLivre'),
+                'Logon' => $idagente->usu_codigo,
+                'DtLoteRemessaCL' => new Zend_Db_Expr('GETDATE()'),
+                'DtLoteRemessaCB' => new Zend_Db_Expr('GETDATE()')
             );
-            $reg = $cb->alterar($dadosUpdate);
-
+            
+            $id = $cb->alterar($dados, array('idContaBancaria = ?' => $resp->IdContaBancaria));
+            
+            //parent::message("Cadastro realizado com sucesso!", "mantercontabancaria/alterar?pronac=$pronac", "CONFIRM");
+            
             if ( !empty($caminho) ){
-                parent::message("Exclus&atilde;o da(s) Conta(s) Banc&aacute;ria(s) realizada com sucesso!", $caminho, "CONFIRM");
+                parent::message("Cadastro realizado com sucesso!", $caminho, "CONFIRM");
             }else{
-                parent::message("Exclus&atilde;o da(s) Conta(s) Banc&aacute;ria(s) realizada com sucesso!", "mantercontabancaria/alterar?pronac=$pronac", "CONFIRM");
+                parent::message("Cadastro realizado com sucesso!", "mantercontabancaria/alterar?pronac=" . $pronac, "CONFIRM");
             }
-
+            
         } else {
-
-            $ba = new BancoAgencia();
-            $AgenciaDados = $ba->buscar(array('Agencia = ?' => $_POST['Agencia']));
-
-            if(count($AgenciaDados) > 0){
-
-                //INSERE OS DADOS NA TABELA DE HISTï¿½RICO - SAC.dbo.tbHistoricoExclusaoConta
-                $dadosInsert = array(
-                    'idContaBancaria' => $resp->IdContaBancaria,
-                    'Banco' => $resp->Banco,
-                    'Agencia' => $resp->Agencia,
-                    'ContaBloqueada' => $resp->ContaBloqueada,
-                    'ContaLivre' => $resp->ContaLivre,
-                    'DtExclusao' => new Zend_Db_Expr('GETDATE()'),
-                    'Motivo' => $_POST['justificativa'],
-                    'idUsuario' => $idagente->usu_codigo,
-                    'idPronac' => $resp->idPronac,
-                    'tpAcao' => 1
-                );
-                $id = $he->inserir($dadosInsert);
-
-                $dados = array(
-                    'Banco' => '001',
-                    'Agencia' => $_POST['Agencia'],
-                    'ContaBloqueada' => $_POST['ContaBloqueada'],
-                    'ContaLivre' => $_POST['ContaLivre'],
-                );
-                $id = $cb->alterar($dados, array('idContaBancaria = ?' => $resp->IdContaBancaria));
-
-                //parent::message("Cadastro realizado com sucesso!", "mantercontabancaria/alterar?pronac=$pronac", "CONFIRM");
-
-                if ( !empty($caminho) ){
-                    parent::message("Cadastro realizado com sucesso!", $caminho, "CONFIRM");
-                }else{
-                    parent::message("Cadastro realizado com sucesso!", "mantercontabancaria/alterar?pronac=" . $pronac, "CONFIRM");
-                }
-
-            } else {
-                if ( !empty($caminho) ){
-                    parent::message("Ag&ecirc;ncia n&atilde;o cadastrada!", $caminho, "ALERT");
-                }else{
-                    parent::message("Ag&ecirc;ncia n&atilde;o cadastrada!", "mantercontabancaria/alterar?pronac=$pronac", "ALERT");
-                }
+            if ( !empty($caminho) ){
+                parent::message("Ag&ecirc;ncia n&atilde;o cadastrada!", $caminho, "ALERT");
+            }else{
+                parent::message("Ag&ecirc;ncia n&atilde;o cadastrada!", "mantercontabancaria/alterar?pronac=$pronac", "ALERT");
             }
-
-
         }
     }
 

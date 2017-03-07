@@ -1,3 +1,89 @@
+Release 1.15.2
+  * Fix: [Recursos] Lista de pareceristas quebrava página de vinculada do IPHAN
+
+Release 1.15.1
+  * Fix: [Movimentação bancária] Corrigindo inconsistência de conta bancária
+
+Release 1.15.0
+  * Novo: [Recursos] Painel de projetos analisados na CNIC
+  * Fix: [Comprovação financeira] Adicionando novas situações
+  * Fix: [Comprovação de pagamento] Adicionando situações que podem realizar comprovação financeira
+  * Fix: [Manter dados bancários] alterando model
+  * Fix: [Recursos] Corrigindo link do painel de recuros analisados pela cnic
+  * Fix: [Recursos] Padronizando painel - botão de ver em todas as abas
+
+Release 1.14.9
+  * Fix: [Comprovação física do objeto] mensagens de erro quando estoura tamanho de upload
+  * Fix: [Publicação de portaria] pequeno ajuste no texto da portaria
+  * Fix: [Comprovação financeira] Atualizando valor na tabela ComprovantePagamentoxPlanilhaOrcamentaria quando edita uma comprovação
+
+Release 1.14.8
+  * Fix: [Consultar dados projeto] adicionando visualização de planilha específica para remanejamento
+
+Release 1.14.7
+  * Fix: [Readequações] Quando técnico fazia avaliação, inseria erroneamente uma entrada a mais em tbDistribuirReadequacao
+  * Fix: [Readequações] Corrigido erro na lista de pareceristas
+  * Fix: [Movimentação bancária] gravando dados corretos na tabela ContaBancaria
+  * Fix: [Movimentação bancária] Removendo botão excluir da tela "manter conta bancária"
+  * Fix: [Movimentação bancária] suprimindo regra que impede alteração de agência quando já há captação
+  * Fix: [Gerenciar Componente da Comissão] Conserto no encaminhamento de projeto de um componente para outro -> criando uma entrada para cada encaminhamento e desativando encaminhamentos anteriores
+  * Fix: [Movimentação bancária] corrigida funcionalidade de alterar agência bancária de um projeto
+  * Fix: [Movimentação bancária] suprimindo regra que impede alteração de agência quando já há captação'
+
+Release 1.14.6
+  * Fix: [Readequações] Correção no envio de plano de distribuição pelo proponente
+  * Fix: [Readequações] Técnico não conseguia finalizar avaliação de readequação
+
+Release 1.14.5
+  * Fix: [Recursos] Correção de código
+
+Release 1.14.4
+  * Fix: [Recursos] Gravando dtFechamento e melhorias de código
+
+Release 1.14.3
+  * Fix: [Recursos] Normalizando nomes das querys na montagem de combo de pareceristas
+
+Release 1.14.2
+  * Fix: [Recursos] Enviando para órgão correto quando coordenador finaliza
+  * Fix: [Readequações] Enviando para órgão correto quando coordenador finaliza
+  * Fix: [Readequações] Verifica limites orçamentários apenas se readequação for aprovada / #590
+
+Release 1.14.1
+  * Fix: [Recursos] Combos de pareceristas exibindo corretamente
+  * Fix: [Recursos] movendo restrições de busca apenas para caso "em análise"
+
+Release 1.14.0
+  * Novo: [Gerenciar pareceres] adicionado ordenação todas as colunas de gerenciar parecer
+  * Novo: [Pagamento de Pareceristas] Adicionado paginação e ordenação em Registrar ordem bancária
+  * Novo: [Pagamento de Pareceristas] Implementado ordenação nas colunas
+  * Novo: [Pagamento de Pareceristas] Adicionado paginação e ordenação em finalizar Pagamento de parecerista
+  * Novo: [[Recursos] Fluxo de recursos com órgãos/superindendências (iphan) funcional
+  * Fix: [Readequações] Vinculada finaliza readequação e envia para MinC corretamente
+  * Fix: [Nova Cotação] Aumento do valor máximo de Cotação
+  * Fix: [Comprovar pagamento] Alteração de query para esquema zend_db
+  * Fix: [Relação de pagamentos] Correção do tipo de documento em relação de pagamentos
+  * Fix: [Relatório de pareceres] Data de distribuição quando vazia mostrava data de hoje (incorreta)
+
+Release 1.13.5
+  * Fix: [Readequações] Fluxo completo do IPHAN para superintendências
+
+Release 1.13.4
+  * Fix: [Readequações] Correção nas telas do fluxo de readequação
+
+Release 1.13.3
+  * Fix: [Readequações] Encaminhando projetos corretamente
+
+Release 1.13.2
+  * Fix: [Readequações] corrigindo mensagem de encaminhar projeto
+
+Release 1.13.1
+  * Fix: [Readequações] corrigindo mensagem de encaminhar projeto
+
+Release 1.13.0
+  * Novo: [Readequações] IPHAN pode encaminhar para superintendências
+  * Novo: [Readequações] Devolvendo projeto da superintendência para IPHAN nacional
+  * Novo: [Readequações] Puxando lista de pareceristas das superintendências do IPHAN
+
 Release 1.12.4
   * Fix: [Recurso] correção de variável errada
 

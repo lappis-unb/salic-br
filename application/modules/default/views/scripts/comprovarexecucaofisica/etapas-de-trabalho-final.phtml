@@ -25,7 +25,33 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 }
 
    $(document).ready(function(){    
+       uploadMaxSize = '<?php echo file_upload_max_size(); ?>';
 
+       tamanhoSubido = function() {
+           var tamanhoUpload = 0;
+           $('input:file').each(function(inputIndex) {
+               if ($('input:file')[inputIndex].files[0]) {
+                   tamanhoUpload += $('input:file')[inputIndex].files[0].size;
+               }
+           });
+           
+           return tamanhoUpload;
+       }
+       
+       // adiciona verificador de tamanho de upload
+       $('input:file').each(function(inputIndex) {
+           $('#' + $('input:file')[inputIndex].id).change(function() {
+               
+               if (tamanhoSubido() > uploadMaxSize) {
+                   $('#' + $('input:file')[inputIndex].id).before('<span class="messages" style="color: red; font-size: 14px">Você ultrapassou o limite de upload, que é de <?php echo ini_get('post_max_size'); ?><br/></span>');
+               } else {
+                   $('.messages').hide();
+               }
+           });
+       });
+
+       // ao salvar, verificar se estourou o tamanho
+       
         //inicializao e configuração do editor tinyMCE
 
         tinymce.init({
@@ -222,6 +248,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
                 preenchimentouploadcampo1 = false,
                 preenchimentouploadcampo2 = false,
                 preenchimentouploadcampo3 = false,
+                uploadEstourado = false,
                 etapasConcluidas = CountCharacters('etapasConcluidas'),
                 medidasPreventivas = CountCharacters('medidasPreventivas'),
                 medidasAcessibilidade = CountCharacters('medidasAcessibilidade'),
@@ -238,7 +265,12 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
                 preenchimento = true;
             }
 
-
+            // verifica tamanho
+            uploadMaxSize = '<?php echo file_upload_max_size(); ?>';
+            if (tamanhoSubido() > uploadMaxSize) {
+                var uploadEstourado = true;                
+            }
+            
             if(medidasAcessibilidade >= 20) {
                 if ($('#arquivoAcessibilidadeFisica').val().length > 0 ){
                     if ($('#arquivoAcessibilidadeFisica').val() != null) {
@@ -293,10 +325,12 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 
 
 
-            if(!preenchimento || !preenchimentouploadcampo1 || !preenchimentouploadcampo2 || !preenchimentouploadcampo3) {
+            if(!preenchimento || !preenchimentouploadcampo1 || !preenchimentouploadcampo2 || !preenchimentouploadcampo3 || uploadEstourado) {
                 $("#camposObrigatorios").dialog("destroy");
                 if(!preenchimento) {
                     $("#camposObrigatorios").html("Favor preencher corretamente os campos obrigat&oacute;rios!");
+                } else if (uploadEstourado) {
+                    $("#camposObrigatorios").html("Você ultrapassou o limite de upload, que é de <?php echo ini_get('post_max_size'); ?>");
                 }else{
                     $("#camposObrigatorios").html("Favor inserir o arquivo nos campos preenchidos!!");
                 }

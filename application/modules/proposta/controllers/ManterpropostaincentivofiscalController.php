@@ -631,11 +631,10 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
      * Regras antes de encaminhar
      * 1. Validar o checklist da proposta
      *
-     * Regras após encaminhar
-     * 1. Se a captação do projeto for inferior a 20% o sistema por meio de rotina automatizada alterará novamente a situação do projeto para E12.
-     * 2. Se a captação do projeto for igual ou superior a 20%, o sistema por meio de rotina automatizada alterará a situação do projeto para B11.
-     * 3. Os projetos em situação B11 serão enviados, por meio de  rotina automatizada,  as unidades vinculadas de acordo com o segmento cultural
-     * do produto principal do projeto.
+     * Regras ao encaminhar
+     * Quando o proponente clicar na opção Encaminhar projeto ao MinC, o sistema deverá a alterar situação do projeto para B20,
+     * com a seguinte providencia tomada: Projeto ajustado pelo proponente e encaminhado ao MinC para avaliação.
+     *
      *
      */
     public function encaminharprojetoaomincAction()
@@ -692,47 +691,35 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                     # Consultar percentual de valor captado
                     $percentualCaptado = $this->percentualCaptadoByProposta($idPreProjeto, $idPronac);
 
-                    if ($percentualCaptado >= 20) {
-                        $situacao = 'B11';
-                    } else {
-                        $situacao = 'E12';
-                    }
 
                     if ($projeto['area'] == 2) {
-                        $orgaoUsuario = 171;
+                        $orgaoUsuario = 171; # 171 - SAV/DAP
                     } else {
-                        $orgaoUsuario = 262;
+                        $orgaoUsuario = 262; # 262 - SEFIC/DIAAPI
                     }
 
-                    $tblSituacao = new Situacao();
-                    $rsSituacao = $tblSituacao->buscar(array('Codigo=?' => $situacao))->current();
-
-                    if (!empty($rsSituacao)) {
-                        $providencia = $rsSituacao->Descricao;
-                    }
                     # verificar se o projeto já possui avaliador
                     $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
-                    $avaliacao = $tbAvaliacao->findBy(array('idPronac' => $idPronac));
+                    $avaliacao = $tbAvaliacao->buscarUltimaAvaliacao($idPronac);
 
-                    if (empty($avaliacao)) {
+                    if (!empty($avaliacao)) {
+                        $tbAvaliacao->inserirAvaliacao($idPronac, $orgaoUsuario, $avaliacao['idTecnico']);
+                    } else {
                         $tbAvaliacao->inserirAvaliacao($idPronac, $orgaoUsuario);
                     }
 
                     # alterar a situacao do projeto
-                    $tblProjetos->alterarSituacao($idPronac, '', $situacao, $providencia);
-
+                    $codigoSituacao = 'B20'; # B20 - Projeto adequado a realidade de execucao
+                    $providenciaTomada = "Projeto ajustado pelo proponente e encaminhado ao MinC para avaliação";
+                    $tblProjetos->alterarSituacao($idPronac, '', $codigoSituacao, $providenciaTomada);
 
                     parent::message("Projeto encaminhado com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/listarprojetos/listarprojetos", "CONFIRM");
                 } else {
                     parent::message("Alguns erros encontrados no envio do projeto", "/proposta/manterpropostaincentivofiscal/encaminharprojetoaominc/idPreProjeto/" . $idPreProjeto, "ERROR");
                 }
             }
-
-
             $this->view->resultado = $listaValidacao;
             $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/encaminharprojetoaominc";
-
-
         }
     }
 

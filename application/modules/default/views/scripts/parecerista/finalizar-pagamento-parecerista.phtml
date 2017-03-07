@@ -17,16 +17,64 @@
 
 <div id="conteudo">
     
-    <?php if(count($this->listaDePagamentos) > 0):?>
+    <?php if(count($this->dados) > 0):?>
+
+        <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+            <tr>
+                <td align="center">
+                    <form name="form1" id="form1" action="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista'));?>" method="get">
+                        <?php if($this->paginacao['pag']>1) { ?>
+                            <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
+                                   onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao']; ?>'">
+                        <?php } ?>
+                        <input id="btn_p_anterior" type="button"
+                            <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
+                            <?php }else { ?>
+                                class="btn_p_anterior" onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao']; ?>'"
+                            <?php } ?>>
+                        <input id="btn_p_proximo" type="button"
+                            <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
+                                class="btn_p_proximo-off"
+                            <?php }else { ?>
+                                class="btn_p_proximo" onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao']; ?>'"
+                            <?php } ?>>
+                        <?php if($this->paginacao['pag'] < $this->paginacao['totalPag']) { ?>
+                            <input class="btn_ultimo" id="btn_ultimo" type="button"
+                                   onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'];?>'">
+                        <?php } ?>
+                        Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                            <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
+                                <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
+                            <?php endfor; ?>
+                        </select>
+                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
+                        <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <center>
+            <?php
+            echo $this->paginacao['inicio']." a ";
+            echo ($this->paginacao['pag']-1)*$this->paginacao['Itenspag'] + $this->paginacao['tamanho'];
+            echo " de ". $this->paginacao['total']. " Registros listados";
+            ?>
+        </center>
+
+        <!-- ========== FIM PAGINAÇÃO ========== -->
+
         <table class="tabela">
             <tr>
-                <th width="100">Despacho</th>
-                <th>Parecerista</th>
-                <th width="110">Valor Total</th>
+                <th width="100"><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Despacho</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Parecerista</a></th>
+                <th width="110"><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Valor Total</a></th>
                 <th width="100"></th>
                 <th width="100"></th>
             </tr>
-            <?php foreach($this->listaDePagamentos as $pa):?>
+            <?php foreach($this->dados as $pa):?>
             <form id="form_<?php echo $pa['idGerarPagamentoParecerista']; ?>" action="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-despacho-pagamento-parecerista')); ?>" method="POST">
             <input type="hidden" name="idGerarPagamentoParecerista" value="<?php echo $pa['idGerarPagamentoParecerista']; ?>" />
             <tr>
@@ -86,14 +134,58 @@
             </tr>
             </form>     
     <?php endforeach; ?>
-        </table>
-        <!-- ========== PAGINAÇ?O ========== -->
-        <?php if($this->qtdlistaDePagamentos > 10){ echo "<p>" . $this->listaDePagamentos . "</p>"; } ?>
-        <!-- ========== FIM PAGINAÇ?O ========== -->
+
+            <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td align="center">
+                        <form name="form1" id="form1" action="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista'));?>" method="get">
+                            <?php if($this->paginacao['pag']>1) { ?>
+                                <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
+                                       onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao']; ?>'">
+                            <?php } ?>
+                            <input id="btn_p_anterior" type="button"
+                                <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
+                                <?php }else { ?>
+                                    class="btn_p_anterior" onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao']; ?>'"
+                                <?php } ?>>
+                            <input id="btn_p_proximo" type="button"
+                                <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
+                                    class="btn_p_proximo-off"
+                                <?php }else { ?>
+                                    class="btn_p_proximo" onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao']; ?>'"
+                                <?php } ?>>
+                            <?php if($this->paginacao['pag'] < $this->paginacao['totalPag']) { ?>
+                                <input class="btn_ultimo" id="btn_ultimo" type="button"
+                                       onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'];?>'">
+                            <?php } ?>
+                            Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                                <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
+                                    <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
+                                <?php endfor; ?>
+                            </select>
+                            &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                            <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
+                            <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <center>
+                <?php
+                echo $this->paginacao['inicio']." a ";
+                echo ($this->paginacao['pag']-1)*$this->paginacao['Itenspag'] + $this->paginacao['tamanho'];
+                echo " de ". $this->paginacao['total']. " Registros listados";
+                ?>
+            </center>
+
+            <!-- ========== FIM PAGINAÇÃO ========== -->
+
     <?php else: ?>
         <table class="tabela">
             <tr>
-                <td align="center"><b style="color: green">NENHUM REGISTRO ENCONTRADO!</b></td>
+                <td align="center">Nenhum registro encontrado.</td>
             </tr>
         </table>
     <?php endif; ?>

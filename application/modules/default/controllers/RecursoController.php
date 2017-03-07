@@ -105,14 +105,24 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
                     break;
                 case 'emanalise':
+                    $where['c.tpDistribuicao = ?'] = 'A';
+                    $where['c.stFecharAnalise = ?'] = '0';
+                    $where['c.stEstado = ?'] = '0';
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de An&aacute;lise; 4=Encaminhado para Parecerista /  T&eacute;cnico; 7=Encaminhado para o Componente da Comiss&atilde;o
+                    $where['a.siRecurso in (?)'] = array(3,4); // // 3=Encaminhado do MinC para a  Unidade de An�lise; 4=Encaminhado para Parecerista
                     $this->view->nmPagina = 'Em An&aacute;lise';
                     break;
                 case 'analisados':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siRecurso in (?)'] = array(6,10); // 6=Devolvido da Unidade de Analise para o MinC; 10=Devolvido pelo Tecnico para o Coordenador
+                    $where['a.stEstado = ?'] = '0'; // 0=Atual; 1=Historico
+                    $where['a.siRecurso in (?)'] = array(6, 7); // 6=Devolvido da Unidade de Analise para o MinC; T�cnico; 7=Encaminhado para o Componente da Comiss�o
                     $this->view->nmPagina = 'Analisados';
+                    break;
+                case 'analisados_cnic':
+                    $where['a.stEstado = ?'] = '1'; // 0=Atual; 1=Historico
+                    $where['a.siRecurso in (?)'] = array(8, 9, 15); // 9=Retornou da CNIC
+                    $where['b.Situacao in (?)'] = array('B11', 'D03', 'D20');
+                    $where['b.area <> ?'] = 2;
+                    $this->view->nmPagina = 'Aguardando CNIC';
                     break;
             }
         } else {
@@ -138,11 +148,11 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $where['b.Area = ?'] = 0;
             }
         }
-
+        
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-
+        
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -473,29 +483,34 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $where['a.stEstado = ?'] = 0;
         $where['a.stFecharAnalise = ?'] = 0;
         if($this->idOrgao == Orgaos::ORGAO_SUPERIOR_SAV){
-            $where['a.idUnidade in (?)'] = array(160,171);
+            $where['a.idUnidade in (?)'] = array(Orgaos::ORGAO_SUPERIOR_SAV,171);
         } else {
             $where['a.idUnidade = ?'] = $this->idOrgao;
         }
         $where['d.stEstado = ?'] = 0;
 
-        if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
-            $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
+        if(($this->_request->getParam('tipoFiltro') !== null) || ($this->_request->getParam('tipoFiltro') !== null)){
+            $filtro = ($this->_request->getParam('tipoFiltro') !== null) ? $this->_request->getParam('tipoFiltro') : $this->_request->getParam('tipoFiltro');
             $this->view->filtro = $filtro;
             switch ($filtro) {
-                case '':
-                    if($this->idPerfil == 93){ //Coord. de Parecer
-                        $where['d.siRecurso = ?'] = 3;
-                        $where['a.idAvaliador IS NULL'] = '';
-                    } else if($this->idPerfil == 94){
-                        $where['d.siRecurso = ?'] = 4;
-                        $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
-                    }
-                    break;
-                case 'analisados':
-                    $where['d.siRecurso = ?'] = 5;
-                    $this->view->nmPagina = 'Analisados';
-                    break;
+            case '':
+                if($this->idPerfil == 93){ //Coord. de Parecer
+                    $where['d.siRecurso = ?'] = 3;
+                    $where['a.idAvaliador IS NULL'] = '';
+                } else if($this->idPerfil == 94){
+                    $where['d.siRecurso = ?'] = 4;
+                    $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
+                }
+                break;
+            case 'emanalise':
+                $where['d.siRecurso = ?'] = 4;
+                $where['a.idAvaliador IS NOT NULL'] = '';
+                $this->view->nmPagina = 'Em an�lise';
+                break;
+            case 'analisados':
+                $where['d.siRecurso = ?'] = 5;
+                $this->view->nmPagina = 'Analisados';
+                break;
             }
         } else {
             $this->view->nmPagina = 'Aguardando An&aacute;lise';
@@ -505,7 +520,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
             } else if($this->idPerfil == 94 || $this->idPerfil == 110){
                 $where['d.siRecurso = ?'] = 4;
 
-                if($this->idPerfil == 110){
+                // se for iphan
+                $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
+                $pareceristaDoIphan = in_array($this->idOrgao, $outrasVinculadas) ? false : true;
+                if($this->idPerfil == 110 || ($this->idPerfil == 94 && $pareceristaDoIphan)){
                     $where['a.idAvaliador = ?'] = $this->idUsuario;
                 } else {
                     $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
@@ -551,33 +569,50 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function encaminharRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $vinculada = $this->idOrgao;
 
-        $post = Zend_Registry::get('post');
-        $idAvaliador = (int) $post->parecerista;
-        $idDistProj = (int) $post->idDistProj;
-        $idRecurso = (int) $post->idRecurso;
+        $idDistProj = $this->_request->getParam('idDistProj');
+        $idRecurso = $this->_request->getParam('idRecurso');
 
-        //Atualiza a tabela tbDistribuirProjeto
-        $dados = array();
-        $dados['idAvaliador'] = $idAvaliador;
-        $dados['idUsuario'] = $this->idUsuario;
-        $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
-        $where = "idDistribuirProjeto = $idDistProj";
-        $tbDistribuirProjeto = new tbDistribuirProjeto();
-        $return = $tbDistribuirProjeto->update($dados, $where);
+        $numIphan = 91;
+        //Atualiza a tabela tbDistribuirReadequacao
+        if ($this->idOrgao != $numIphan) { // todos os casos exceto IPHAN
+            $idAvaliador = $this->_request->getParam('parecerista');
 
-        //Atualiza a tabela tbRecurso
-        $dados = array();
-        $dados['siRecurso'] = 4; // Enviado para an�lise t�cnica
-        $where = "idRecurso = $idRecurso";
-        $tbRecurso = new tbRecurso();
-        $return2 = $tbRecurso->update($dados, $where);
+            $dados = array();
+            $dados['idAvaliador'] = $idAvaliador;
+            $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
+            $where = "idDistribuirProjeto = $idDistProj";
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $return = $tbDistribuirProjeto->update($dados, $where);
 
-        if($return && $return2){
-            echo json_encode(array('resposta'=>true));
+            //Atualiza a tabela tbRecurso
+            $dados = array();
+            $dados['siRecurso'] = 4; // Enviado para an�lise t�cnica
+            $where = array();
+            $where['idRecurso = ?'] = $idRecurso;
+            $tbRecurso = new tbRecurso();
+            $return2 = $tbRecurso->update($dados, $where);
+
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         } else {
-            echo json_encode(array('resposta'=>false));
+            // IPHAN
+            $idVinculada = $this->_request->getParam('parecerista');
+
+            $dados = array();
+            $dados['idUnidade'] = $idVinculada;
+            $where["idDistribuirProjeto = ? "] = $idDistProj;
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $return = $tbDistribuirProjeto->update($dados, $where);
+
+            if ($return) {
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         die();
 
@@ -763,21 +798,21 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
         $auth = Zend_Auth::getInstance();
         $idusuario = $auth->getIdentity()->usu_codigo;
-        $idPronac = $_POST['idPronac'];
-        $idRecurso = $_POST['idRecurso'];
-        $areaCultural = isset($_POST['areaCultural']) ? $_POST['areaCultural'] : null;
-        $segmentoCultural = isset($_POST['segmentoCultural']) ?  $_POST['segmentoCultural'] : null;
-        $enquadramentoProjeto = $_POST['enquadramentoProjeto'];
-        $parecerProjeto = $_POST['parecerProjeto'];
-        $dsParecer = $_POST['dsParecer'];
-
+        $idPronac = $this->_request->getParam('idPronac');
+        $idRecurso = $this->_request->getParam('idRecurso');
+        $areaCultural = (null !== $this->_request->getParam('areaCultural')) ? $this->_request->getParam('areaCultural') : null;
+        $segmentoCultural = (null !== $this->_request->getParam('segmentoCultural')) ?  $this->_request->getParam('segmentoCultural') : null;
+        $enquadramentoProjeto = $this->_request->getParam('enquadramentoProjeto');
+        $parecerProjeto = $this->_request->getParam('parecerProjeto');
+        $dsParecer = $this->_request->getParam('dsParecer');
+        
         try {
             //ATUALIAZA A �REA E SEGMENTO DO PROJETO
             $d = array();
-            if(isset($_POST['areaCultural'])){
+            if(null !== $this->_request->getParam('areaCultural')){
                 $d['Area'] = $areaCultural;
             }
-            if(isset($_POST['segmentoCultural'])){
+            if(null !== $this->_request->getParam('segmentoCultural')){
                 $d['Segmento'] = $segmentoCultural;
             }
             $where = "IdPRONAC = $idPronac";
@@ -856,8 +891,16 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirProjeto
                     $dadosDP = array();
-                    $dadosDP['dtDevolucao'] = new Zend_Db_Expr('GETDATE()');
+                    $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
+
+                    $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintend�ncias IPHAN
+                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central. Sen�o, permanece na unidade
+                    $perfilCoordenadorVinculada = 93;
+                    if (!in_array($this->idOrgao, $outrasVinculadas) && $this->idPerfil == $perfilCoordenadorVinculada) {
+                        $dadosDP['idUnidade'] = 91; // retorna para IPHAN (topo)
+                    }
+
                     $tbDistribuirProjeto = new tbDistribuirProjeto();
                     $x = $tbDistribuirProjeto->update($dadosDP, $whereDP);
 
@@ -922,9 +965,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             }
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
-            $Projetos->update($d, $where);
-
-	    $Projetos->alterarSituacao($idPronac, null, $d['situacao'], $d['ProvidenciaTomada']);
+            $Projetos->alterarSituacao($idPronac, null, $d['situacao'], $d['ProvidenciaTomada']);
 
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
@@ -1034,21 +1075,49 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function coordParecerFinalizarRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        
+        $idRecurso = $this->_request->getParam("idRecurso");
+        $idDistribuirProjeto = $this->_request->getParam("idDistProj");
 
-        $post = Zend_Registry::get('post');
-        $idRecurso = (int) $post->idRecurso;
+        // Se estiver com vinculada do IPHAN, volta para sede IPHAN
+        $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto superintend�ncias IPHAN
 
-        //Atualiza a tabela tbRecurso
-        $dados = array();
-        $dados['siRecurso'] = 6; // Devolvido para o coordenador geral de an�lise
-        $where = "idRecurso = $idRecurso";
-        $tbRecurso = new tbRecurso();
-        $return = $tbRecurso->update($dados, $where);
+        if (!in_array($this->idOrgao, $outrasVinculadas)) {
+            // retorna para o iphan e mantem siRecurso = 5
+            $dadosDP = array();
+            $whereDP = array();
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
+            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $dadosDP['idUnidade'] = 91; // retorna para IPHAN
+            $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
 
-        if($return){
-            echo json_encode(array('resposta'=>true));
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
+
         } else {
-            echo json_encode(array('resposta'=>false));
+            $dadosDP = array();
+            $whereDP = array();
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
+            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
+
+            //Atualiza a tabela tbRecurso
+            $dados = array();
+            $dados['siRecurso'] = 6; // Devolvido para o coordenador geral de an�lise
+            $where = "idRecurso = $idRecurso";
+            $tbRecurso = new tbRecurso();
+            $return2 = $tbRecurso->update($dados, $where);
+
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
