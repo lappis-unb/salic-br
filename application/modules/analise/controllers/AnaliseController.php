@@ -46,8 +46,6 @@ class Analise_AnaliseController extends Analise_GenericController
         if (Autenticacao_Model_Grupos::TECNICO_ANALISE == $this->codGrupo) {
             $this->view->usuarioEhCoordenador = false;
         }
-
-
     }
 
     public function listarProjetosAjaxAction()
@@ -287,7 +285,8 @@ class Analise_AnaliseController extends Analise_GenericController
                     $providencia = $rsSituacao->Descricao;
                 }
 
-                # @todo encaminhar e-mail para o proponente com o despacho do avaliador.
+                # emcaminha e-mail para o proponente com o despacho do avaliador.
+                $this->enviarEmail($idPronac, $params['observacao']);
 
                 # alterar a situacao do projeto
                 $tblProjetos = new Projetos();
@@ -310,6 +309,38 @@ class Analise_AnaliseController extends Analise_GenericController
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
         }
+    }
+
+    private function enviarEmail($idProjeto, $Mensagem, $pronac = null)
+    {
+        $auth = Zend_Auth::getInstance();
+        $tbTextoEmailDAO = new tbTextoEmail();
+
+        $tbProjetos = new Projetos();
+        $dadosProjeto = $tbProjetos->dadosProjetoDiligencia($idProjeto);
+
+        $tbHistoricoEmailDAO = new tbHistoricoEmail();
+
+        foreach ($dadosProjeto as $d) :
+            # para Producao comentar linha abaixo e para teste descomente ela
+            # $d->Email =   'salicweb@gmail.com';
+            $email = trim(strtolower($d->Email));
+            $mens = '<b>Pronac: ' . $d->pronac . ' - ' . $d->NomeProjeto . '<br>Proponente: ' . $d->Destinatario . '<br> </b>' . $Mensagem;
+            $assunto = 'Pronac:  ' . $d->pronac . ' - Avalia&ccedil;&atilde;o adequa&ccedil;&atilde;o do projeto';
+
+            $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens);
+
+            $dados = array(
+                'idProjeto' => $idProjeto,
+                'idTextoemail' => new Zend_Db_Expr('NULL'),
+                'iDAvaliacaoProposta' => new Zend_Db_Expr('NULL'),
+                'DtEmail' => new Zend_Db_Expr('getdate()'),
+                'stEstado' => 1,
+                'idUsuario' => $auth->getIdentity()->usu_codigo,
+            );
+
+            $tbHistoricoEmailDAO->inserir($dados);
+        endforeach;
     }
 
     public function redistribuiranaliseitemAction()
