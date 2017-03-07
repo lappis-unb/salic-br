@@ -276,21 +276,15 @@ class Analise_AnaliseController extends Analise_GenericController
 
             if ($params['conformidade'] == 0) {
 
-                $situacao = 'E90'; # projeto liberado para ajustes
-
-                $tblSituacao = new Situacao();
-                $rsSituacao = $tblSituacao->buscar(array('Codigo=?' => $situacao))->current();
-
-                if (!empty($rsSituacao)) {
-                    $providencia = $rsSituacao->Descricao;
-                }
-
                 # emcaminha e-mail para o proponente com o despacho do avaliador.
                 $this->enviarEmail($idPronac, $params['observacao']);
 
+                $situacao = 'E90'; # projeto liberado para ajustes
+                $providenciaTomada = 'Projeto liberado para o proponente adequar &agrave; realidade de execu&ccedil;&atilde;o,n&atilde;o podendo representar aumento de custo e observando as veda&ccedil;&otilde;es do Art. 42, conforme o Art. 72 da Instru&ccedil;&atilde;o Normativa.';
+
                 # alterar a situacao do projeto
                 $tblProjetos = new Projetos();
-                $tblProjetos->alterarSituacao($params['idpronac'], '', $situacao, $providencia);
+                $tblProjetos->alterarSituacao($params['idpronac'], '', $situacao, $providenciaTomada);
 
                 if (!empty($avaliacao)) {
                     $tbAvaliacao->atualizarAvaliacaoNegativa($idPronac, $avaliacao['idTecnico'], $params['observacao']);
