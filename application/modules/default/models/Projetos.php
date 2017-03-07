@@ -59,7 +59,6 @@ class Projetos extends MinC_Db_Table_Abstract
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
 
-//xd($consulta->__toString());
         return $this->fetchAll($consulta);
     }
 
@@ -114,7 +113,6 @@ class Projetos extends MinC_Db_Table_Abstract
             ))
             ->order(array('numero ASC'));
 
-//xd($select->__toString());
         return $this->fetchAll($select);
     }
 
@@ -131,7 +129,6 @@ class Projetos extends MinC_Db_Table_Abstract
         $select = $this->montarFiltrosExtrato($select, $objParam);
 
         # Busca o total de registros do banco.
-//xd($select->__toString());
         $rs = $this->fetchRow($select);
         if ($rs) {
             $total = (int)$rs->total;
@@ -216,7 +213,7 @@ class Projetos extends MinC_Db_Table_Abstract
     }
 
     /**
-     * M?todo para buscar os dados b?sicos de projetos e proponentes com projetos
+     * Metodo para buscar os dados b?sicos de projetos e proponentes com projetos
      * @access public
      * @param array $where
      * @return object
@@ -253,7 +250,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-// fecha m?todo buscarProjetoXProponente()
+// fecha metodo buscarProjetoXProponente()
 
     public function BuscarAreaSegmentoProjetos($idPronac)
     {
@@ -359,7 +356,6 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->where('ap.DtPublicacaoAprovacao IS NULL');
             $slct->where('ap.PortariaAprovacao IS NULL');
         }
-//        xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
@@ -1841,7 +1837,7 @@ class Projetos extends MinC_Db_Table_Abstract
     }
 
     /**
-     * M?todo para buscar o per?odo de execu??o de um determinado projeto
+     * Metodo para buscar o per?odo de execu??o de um determinado projeto
      * @access public
      * @param integer $idPronac
      * @param string $pronac
@@ -1879,10 +1875,10 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchRow($select);
     }
 
-// fecha m?todo buscarPeriodoExecucao()
+// fecha metodo buscarPeriodoExecucao()
 
     /**
-     * M?todo para buscar o per?odo de capta??o de um determinado projeto
+     * Metodo para buscar o per?odo de capta??o de um determinado projeto
      * @access public
      * @param integer $idPronac
      * @param string $pronac
@@ -1925,7 +1921,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
     }
 
-// fecha m?todo buscarPeriodoCaptacao()
+// fecha metodo buscarPeriodoCaptacao()
 
     public function buscaProjetosProdutosAnaliseInicial($where, $qtdTotal = false, $tamanho = -1, $inicio = -1)
     {
@@ -2443,7 +2439,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-// fecha m?todo buscarPeriodoCaptacao()
+// fecha metodo buscarPeriodoCaptacao()
 
     public function dadosFechar($usu_Codigo, $idpronac, $idDistribuirParecer)
     {
@@ -2504,7 +2500,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-// fecha m?todo buscarPeriodoCaptacao()
+// fecha metodo buscarPeriodoCaptacao()
 
     public function analiseDeCustos($idpronac, $idItem = null)
     {
@@ -2591,10 +2587,10 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-// fecha m?todo analiseDeCustos()
+// fecha metodo analiseDeCustos()
 
     /**
-     * M?todo para buscar a situa??o atual do projeto
+     * Metodo para buscar a situa??o atual do projeto
      * @access public
      * @param integer $idPronac
      * @param string $pronac
@@ -2627,10 +2623,10 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchRow($select);
     }
 
-// fecha m?todo buscarSituacaoAtual()
+// fecha metodo buscarSituacaoAtual()
 
     /**
-     * M?todo para alterar a situa??o do projeto
+     * Metodo para alterar a situa??o do projeto
      * @access public
      * @param integer $idPronac
      * @param string $pronac
@@ -2644,7 +2640,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $auth = Zend_Auth::getInstance();
         $Logon = $auth->getIdentity()->usu_codigo;
 
-        // grava no hist?rico a situa??o atual do projeto caso a trigger HISTORICO_INSERT esteja desabilitada
+        // grava no hist?rico a situacao atual do projeto caso a trigger HISTORICO_INSERT esteja desabilitada
         $HistoricoInsert = new HistoricoInsert();
 
         if ($HistoricoInsert->statusHISTORICO_INSERT() == 1) { // desabilitada
@@ -2692,10 +2688,10 @@ class Projetos extends MinC_Db_Table_Abstract
         }
     }
 
-// fecha m?todo alterarSituacao()
+// fecha metodo alterarSituacao()
 
     /**
-     * M?todo para alterar o Orgao do Projeto
+     * Metodo para alterar o Orgao do Projeto
      * @access public
      * @param integer $dados ($idDestino)
      * @param string $where ($idPronac)
@@ -2711,7 +2707,7 @@ class Projetos extends MinC_Db_Table_Abstract
     }
 
     /**
-     * M?todo para buscar o pronac de acordo com um idPronac
+     * Metodo para buscar o pronac de acordo com um idPronac
      * @access public
      * @param integer $idPronac
      * @return array
@@ -2744,7 +2740,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
 
     /**
-     * M?todo para buscar o idPronac de acordo com um pronac
+     * Metodo para buscar o idPronac de acordo com um pronac
      * @access public
      * @param string $pronac
      * @return array
@@ -2772,7 +2768,7 @@ class Projetos extends MinC_Db_Table_Abstract
     }
 
     /**
-     * M?todo para buscar os projetos para solicita??o de recurso (UC33)
+     * Metodo para buscar os projetos para solicita??o de recurso (UC33)
      * @access public
      * @param integer $idPronac
      * @param string $cpf_cnpj
@@ -2921,7 +2917,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-// fecha m?todo buscarProjetosSolicitacaoRecurso()
+// fecha metodo buscarProjetosSolicitacaoRecurso()
 
     public function buscaProjetosFiscalizacao($selectAb = null, $selectAp = null, $selectCa = null, $selectDOU = null, $where = array())
     {
@@ -3104,7 +3100,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-// fecha m?todo buscaProjetosFiscalizacao()
+// fecha metodo buscaProjetosFiscalizacao()
 
     public function buscarComboOrgaos($idOrgaoDestino, $idGrupo)
     {
@@ -6627,7 +6623,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-// fecha m?todo buscarProjetoXProponente()
+// fecha metodo buscarProjetoXProponente()
 
     /**
      *
