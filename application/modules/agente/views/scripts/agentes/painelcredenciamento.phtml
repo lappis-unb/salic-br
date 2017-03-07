@@ -1,6 +1,4 @@
 <?php require_once "inc/menu.inc.php"; ?>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.material.min.css"/>
 <!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -53,11 +51,8 @@
                     <td><?php echo $dado->Nome; ?></td>
                     <td><?php echo Mascara::addMaskCPF($dado->CNPJCPF); ?></td>
 
-                    <?php if(($this->grupoativo == "93")){ ?>
-                        <td align="center"><input type="button" value=" " class="btn_ver" style="width: 88px;" onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes','id' =>$p->idParecerista),'',true);?>')" /></td>
-                    <?php } else { ?>
-                        <td align="center"><input type="button" value=" " class="btn_editar" onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes','id' =>$p->idParecerista),'',true);?>')" /></td>
-                    <?php } ?>
+                        <td align="center"><input type="button" value=" " class="btn_editar" onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes','id' =>$dado->idParecerista),'',true);?>')" /></td>
+
                 </tr>
                 <?php endforeach; ?>
             </tbody>

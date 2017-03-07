@@ -57,7 +57,7 @@
             <table class="tabela">
                 <tr>
                     <td class="destacar w200 bold" align="right">N&uacute;mero da Cota&ccedil;&atilde;o<span style='color:red'>*</span></td>
-                    <td><input class="obrigatorio" type="text" size="20" maxlength="9" name="nrCotacao" sonumero="true" value="<?php echo $this->nrCotacao;?>" /></td>
+                    <td><input class="obrigatorio" type="text" size="13" maxlength="10" name="nrCotacao" sonumero="true" value="<?php echo $this->nrCotacao;?>" /></td>
                     <td class="destacar w200 bold" align="right">Data da Cota&ccedil;&atilde;o<span style='color:red'>*</span></td>
                     <td><input class="obrigatorio" type="text" name="dtCotacao" data="true" value="<?php echo $this->dtCotacao;?>"/></td>
                 </tr>
@@ -102,11 +102,11 @@
                             $readonly = ($this->$input == 1) ? 'readonly="readonly"' : null;
                             $input = "Descricao{$index}";
                         ?>
-                        <input class="obrigatorio" type="text" size="20" name="Descricao<?php echo $index; ?>" id="Descricao<?php echo $index; ?>" value="<?php echo $this->$input;?>" <?php echo $readonly; ?> />
+                        <input class="obrigatorio" type="text" size="13" name="Descricao<?php echo $index; ?>" id="Descricao<?php echo $index; ?>" value="<?php echo $this->$input;?>" <?php echo $readonly; ?> />
                     </td>
                     <td>
                         <?php $input = "vlCotacao{$index}"; ?>
-                        <input class="obrigatorio" type="text" size="10" dinheiro="true" maxlength="9" name="vlCotacao<?php echo $index; ?>" id="vlCotacao<?php echo $index; ?>" value="<?php echo $this->$input;?>"/>
+                        <input class="obrigatorio" type="text" size="13" dinheiro="true" maxlength="10" name="vlCotacao<?php echo $index; ?>" id="vlCotacao<?php echo $index; ?>" value="<?php echo $this->$input;?>"/>
                     </td>
                 </tr>
                 <?php endfor; ?>

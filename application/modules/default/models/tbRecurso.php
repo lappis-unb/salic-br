@@ -467,13 +467,17 @@ class tbRecurso extends MinC_Db_Table_Abstract
                                     WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                                     WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
-                                    WHEN tpSolicitacao = 'ER' THEN 'Enquadramento Recurso'
                                  END AS tpSolicitacao,
                                  CASE
                                     WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso, a.siRecurso
                 "),
+                new Zend_Db_Expr("c.idUnidade"),
+                new Zend_Db_Expr("CASE 
+                                    WHEN c.idUnidade IN(262,272,166,171,179) THEN 'SECRETARIA'
+                                    ELSE d.Sigla + '- '+ ISNULL(e.Descricao,'Aguardando distribui��o')
+                                 END as Vinculada, b.Situacao"),
             )
         );
 
@@ -482,7 +486,25 @@ class tbRecurso extends MinC_Db_Table_Abstract
             array(''), 'SAC.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        $select->joinLeft(
+            array('c' => 'tbDistribuirProjeto'),
+            'b.IdPRONAC = c.IdPRONAC',
+            array(''), 'SAC.dbo'
+        );
+
+        $select->joinLeft(
+            array('d' => 'Orgaos'),
+            'c.idUnidade = d.Codigo',
+            array(''), 'SAC.dbo'
+        );
+
+        $select->joinLeft(
+            array('e' => 'Nomes'),
+            'c.idAvaliador = e.idAgente',
+            array(''), 'AGENTES.dbo'
+        );
+
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }

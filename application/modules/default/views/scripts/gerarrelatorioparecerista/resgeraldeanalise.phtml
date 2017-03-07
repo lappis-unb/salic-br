@@ -27,7 +27,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Resultado do Relat&oacute;rio Geral de An&aacute;lsie <span class="voltar"><a href="<?php echo $this->url(array('controller' => 'gerarrelatorioparecerista', 'action' => 'geraldeanalise'), '', true); ?>">Voltar</a></span></div>
+    <div>Resultado do Relat&oacute;rio Geral de An&aacute;lise <span class="voltar"><a href="<?php echo $this->url(array('controller' => 'gerarrelatorioparecerista', 'action' => 'geraldeanalise'), '', true); ?>">Voltar</a></span></div>
 </div>
 
 
@@ -130,7 +130,7 @@
                 <td><?php echo $d->Produto; ?></td>
                 <td><?php echo Data::tratarDataZend($d->DtPrimeiroEnvio, 'Brasileira'); ?></td>
                 <td><?php echo Data::tratarDataZend($d->DtUltimoEnvio, 'Brasileira'); ?></td>
-                <td><?php echo Data::tratarDataZend($d->DtDistribuicao, 'Brasileira'); ?></td>
+		<td><?php echo(!is_null($d->DtDistribuicao) ? Data::tratarDataZend($d->DtDistribuicao, 'Brasileira') : ''); ?></td>
                 <td><?php echo $d->Parecerista; ?></td>
                 <td><?php echo $d->QtdeDiasParaDistribuir; ?></td>
                 <td><?php echo $d->QtdeDiasParaParecAnalisar; ?></td>

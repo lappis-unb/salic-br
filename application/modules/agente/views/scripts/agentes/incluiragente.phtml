@@ -115,22 +115,27 @@
                         &nbsp; <span id="erroNome" class="spanError"></span>
                     </td>
                     <td align="center">
-                        <label for="visao"> Informe a vis&atilde;o do Agente: </label>
-                        <select name="visao" id="visao"
-                                onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
-                                class="input_simples" style="width: 250px;">
-                            <?php if ($this->modulo != "movimentacaobancaria"): ?>
-                                <option value="0" selected="selected"> - Selecione -</option>
-                            <?php endif; ?>
-                            <?php if ($this->combovisoes): ?>
-                                <?php foreach ($this->combovisoes as $combovisoes): ?>
-                                    <option
-                                        value="<?php echo $combovisoes['idVerificacao']; ?>"> <?php echo $combovisoes['Descricao']; ?> </option>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </select>
-                        &nbsp; <span id="erroVisao" class="spanError"></span>
-                        &nbsp; <span id="spanVisao"></span>
+
+                        <?php if( !$this->ehProponente ) : ?>
+                            <label for="visao"> Informe a vis&atilde;o do Agente: </label>
+                            <select name="visao" id="visao"
+                                    onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
+                                    class="input_simples" style="width: 250px;">
+                                <?php if ($this->modulo != "movimentacaobancaria"): ?>
+                                    <option value="0" selected="selected"> - Selecione -</option>
+                                <?php endif; ?>
+                                <?php if ($this->combovisoes): ?>
+                                    <?php foreach ($this->combovisoes as $combovisoes): ?>
+                                        <option
+                                            value="<?php echo $combovisoes['idVerificacao']; ?>"> <?php echo $combovisoes['Descricao']; ?> </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                            &nbsp; <span id="erroVisao" class="spanError"></span>
+                            &nbsp; <span id="spanVisao"></span>
+                        <?php else : ?>
+                            <input type="hidden" name="visao" value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"
+                        <?php endif; ?>
                     </td>
                 </tr>
             </table>

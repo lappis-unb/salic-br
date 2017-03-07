@@ -149,17 +149,28 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
 
     public function encaminharprojetoAction() {
         $dpc = new DistribuicaoProjetoComissao();
-        $idpronac = $this->_request->getPost('idPRONAC');
+        $idPronac = $this->_request->getPost('idPRONAC');
         $justificativa = $this->_request->getPost('justificativa');
         $idAgente = $this->_request->getPost('idAgente');
-
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $idResponsavel = $auth->getIdentity()->usu_codigo;
+        
+        $dadosAnteriores = array(
+            'stDistribuicao' => 'I'
+        );
+        $where = 'idPRONAC = ' . $idPronac;
+        $dadosAnteriores = $dpc->alterar($dadosAnteriores, $where);
+        
         $dados = array(
+            'idPronac' => $idPronac,
             'idAgente' => $idAgente,
             'dtDistribuicao' => new Zend_Db_Expr('GETDATE()'),
-            'dsJustificativa' => $justificativa
-        );
-        $where = 'idPRONAC = ' . $idpronac;
-        $dados = $dpc->alterar($dados, $where);
+            'dsJustificativa' => $justificativa,
+            'stDistribuicao' => 'A',
+            'idResponsavel' => $idResponsavel
+        );        
+        
+        $dados = $dpc->insert($dados);
         if ($dados) {
             parent::message("O Projeto cultural foi encaminhado com sucesso!", "projetosgerenciar/index", "CONFIRM");
         } else {
