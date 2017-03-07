@@ -130,7 +130,8 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function orcamentariaProponente($idPronac)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        
         $a =array(
             'a.idPronac',
             'a.AnoProjeto',
@@ -194,6 +195,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function orcamentariaParecerista($idPronac)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $concat = MinC_Db_Expr::concat();
 
@@ -266,6 +268,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function orcamentariaAprovadaAtiva($idPronac)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $subA = array(
             'sum(b1.vlComprovacao) AS vlPagamento',
@@ -372,6 +375,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function cortesOrcamentariosAprovados($idPronac)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $a = array(
             new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE c.Descricao END as Produto"),
@@ -440,6 +444,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function remanejamentoMenor20($idPronac)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()->from(array('tbPlanilhaAprovacao'), '*', $this->_schema)
             ->where('idPronac = ?', $idPronac)
@@ -578,6 +583,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function readequacao($idPronac)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $a = array("*",);
 
