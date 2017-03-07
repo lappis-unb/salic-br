@@ -41,6 +41,13 @@ class Analise_AnaliseController extends Analise_GenericController
 
     public function listarprojetosAction()
     {
+        $this->view->usuarioEhCoordenador = true;
+
+        if (Autenticacao_Model_Grupos::TECNICO_ANALISE == $this->codGrupo) {
+            $this->view->usuarioEhCoordenador = false;
+        }
+
+
     }
 
     public function listarProjetosAjaxAction()
@@ -280,7 +287,7 @@ class Analise_AnaliseController extends Analise_GenericController
                     $providencia = $rsSituacao->Descricao;
                 }
 
-                # encaminhar e-mail para o proponente com o despacho do avaliador.
+                # @todo encaminhar e-mail para o proponente com o despacho do avaliador.
 
                 # alterar a situacao do projeto
                 $tblProjetos = new Projetos();
@@ -323,7 +330,7 @@ class Analise_AnaliseController extends Analise_GenericController
                     'dtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
                 );
 
-                $where = array('idPronac = ?' => $params['idpronac'], 'idTecnico = ?' => $params['tecnicoAtual']);
+                $where = array('idPronac = ?' => $params['idpronac'], 'idTecnico = ?' => $params['tecnicoAtual'], 'stEstado = ?' => true);
 
                 $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
                 $tbAvaliacao->update($dados, $where);
