@@ -68,7 +68,6 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
 
-        if ($this->_request->getParam("qtde")) {
         if(!$this->_request->getParam("tipoFiltro")){
             $this->view->tipoFiltro = 'aguardando_distribuicao';
         }
@@ -85,8 +84,6 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
                 $novaOrdem = "DESC";
             } else {
                 $novaOrdem = "ASC";
-            }else {
-                $novaOrdem = "DESC";
             }
         } else {
             $ordem = "ASC";
