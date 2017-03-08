@@ -1,4 +1,4 @@
-Cadastro a Transformação de proposta em projeto cultural
+teste Transformação de proposta em projeto cultural
 ========================================================
 
 Passo a passo do Teste de transformação de proposta em projeto cultural.
@@ -116,11 +116,17 @@ Passo a passo do Teste de transformação de proposta em projeto cultural.
 44°passo - Clicar no botão Salvar.
 
     <--===========TRANSFORMAR EM PROJETO==============-->
+
 45°passo - clicar no botão TRANSFORMAR EM PROJETO.
 
 46°passo - Clicar em SIM quando aparecer a mensagem "DESEJA TRANSFORMAR A PROPOSTA Nr.*****, EM PROJETO?".
 
 47°passo - Aguardar enquanto é gerado o PRONAC.
+
+47°passo - Clicar em ADMISSIBILIDADE ----> ENQUADRAMENTO.
+
+48°passo - verificar se o projeto que sofreu a transformação esta na lista.
+ 
 
     <--===========FIM DO PROCESSO DE CRIAÇÂO E TRANSFORMAÇAO===========-->
 
