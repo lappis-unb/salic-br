@@ -709,8 +709,9 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                     }
 
                     # alterar a situacao do projeto
-                    $codigoSituacao = 'B20'; # B20 - Projeto adequado a realidade de execucao
-                    $providenciaTomada = "Projeto ajustado pelo proponente e encaminhado ao MinC para avaliação";
+                    $codigoSituacao = 'B20'; #B20 - Projeto adequado a realidade de execucao
+                    $providenciaTomada = "Projeto ajustado pelo proponente e encaminhado ao MinC para avalia&ccedil;&atilde;o";
+
                     $tblProjetos->alterarSituacao($idPronac, '', $codigoSituacao, $providenciaTomada);
 
                     parent::message("Projeto encaminhado com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/listarprojetos/listarprojetos", "CONFIRM");
