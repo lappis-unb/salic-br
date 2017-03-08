@@ -34,6 +34,7 @@
 Vue.component('input-money', {
     template: '<div>\
                 <input\
+                    v-bind:disabled="false"\
                     v-bind:value="value"\
                     ref="input"\
                     v-on:input="updateMoney($event.target.value)"\
@@ -44,6 +45,10 @@ Vue.component('input-money', {
         value: {
           type: Number,
           default: 0
+        },
+        disabled: {
+          type: Boolean,
+          default: false
         }
     },
     data:function(){
@@ -53,6 +58,8 @@ Vue.component('input-money', {
     },
     mounted: function () {
         this.formatValue()
+        console.log(this.disabled);
+        this.$refs.input.disabled = this.disabled;
     },
     methods:{
         formatValue: function () {
@@ -62,6 +69,15 @@ Vue.component('input-money', {
             console.log(value);
             this.val = value;
             this.$emit('ev', this.val)
+        }
+    },
+    watch: {
+        disabled: function (){
+            console.log(this.disabled)
+            this.$refs.input.disabled = this.disabled;
+            if (this.disabled){
+                this.value= 0;
+            }
         }
     }
 })
@@ -85,7 +101,8 @@ Vue.component('my-component', {
             produto:{ }, // produto sendo manipulado
             produtos:  [], // lista de produtos
             active : false,
-            icon : 'add'
+            icon : 'add',
+            radio : 'n'
         }
     },
     props:['idpreprojeto','idplanodistribuicao', 'idmunicipioibge', 'iduf' ],
@@ -100,22 +117,37 @@ Vue.component('my-component', {
         },
         //Preço Popular: Valor da inteira
         vlReceitaPopularIntegral: function() {
-            return parseInt(this.qtPopularIntegral) * parseFloat(this.vlUnitarioPopularIntegral);
+            if (this.radio == 'n') {
+                return parseInt(this.qtPopularIntegral) * parseFloat(this.vlUnitarioPopularIntegral);
+            }
+            return 0;
         },
         vlReceitaPopularParcial: function() {
             return this.qtPopularParcial * ( this.vlUnitarioPopularIntegral * 0.5);
         },
         qtProponenteIntegral: function() {
-            return (this.qtExemplares * 0.5) * 0.6 ;
+            if (this.radio == 'n') {
+                return (this.qtExemplares * 0.5) * 0.6 ;
+            }
+            return 0;
         },
         qtProponenteParcial: function() {
-            return (this.qtExemplares * 0.5) * 0.4 ;
+            if (this.radio == 'n') {
+                return (this.qtExemplares * 0.5) * 0.4 ;
+            }
+            return 0;
         },
         vlReceitaProponenteIntegral: function() {
-            return parseFloat( this.vlUnitarioProponenteIntegral * this.qtProponenteIntegral ).toFixed(2);
+            if (this.radio == 'n') {
+                return parseFloat( this.vlUnitarioProponenteIntegral * this.qtProponenteIntegral ).toFixed(2);
+            }
+            return 0;
         },
         vlReceitaProponenteParcial: function(){
-            return parseFloat( ( this.vlUnitarioProponenteIntegral * 0.5 ) * this.qtProponenteParcial).toFixed(2);
+            if (this.radio == 'n'){
+                return parseFloat( ( this.vlUnitarioProponenteIntegral * 0.5 ) * this.qtProponenteParcial).toFixed(2);
+            }
+            return 0;
         },
         vlReceitaPrevista: function() {
             var total =  (parseFloat(this.vlReceitaPopularIntegral) + parseFloat(this.vlReceitaPopularParcial)
@@ -134,7 +166,7 @@ Vue.component('my-component', {
         qtGratuitaDivulgacaoTotal: function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                total += this.produtos[i]['qtGratuitaDivulgacao'];
+                total += parseInt(this.produtos[i]['qtGratuitaDivulgacao']);
             }
             return total;
         },
@@ -150,7 +182,7 @@ Vue.component('my-component', {
         qtGratuitaPopulacaoTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++) {
-                total += this.produtos[i]['qtGratuitaPopulacao'];
+                total += parseInt(this.produtos[i]['qtGratuitaPopulacao']);
             }
             return total;
         },
@@ -224,42 +256,97 @@ Vue.component('my-component', {
     watch:{
         //Quantidade de exemplar / Ingresso
         qtExemplares: function(val)  {
-            this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
-            this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
-            this.qtGratuitaPopulacao = parseInt(this.qtExemplares * 0.1);
-            this.qtPopularIntegral = ((this.qtExemplares * 0.5)  - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) * 0.6 ;
-            this.qtPopularParcial =  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
+            if (this.radio == 'n'){
+                this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
+                this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
+                this.qtGratuitaPopulacao = parseInt(this.qtExemplares * 0.1);
+                this.qtPopularIntegral = ((this.qtExemplares * 0.5)  - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) * 0.6 ;
+                this.qtPopularParcial =  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
+            } else {
+                this.qtGratuitaPopulacao = this.qtExemplares;
+            }
         },
         //Distribuição Gratuita: Divulgação
         qtGratuitaDivulgacao: function(val)  {
-            quantidade = this.qtExemplares * 0.1;
-            if(val > quantidade) {
-                alert("Valor n&atilde;o pode passar de: "+quantidade);
-                this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
+            if (this.radio == 'n'){
+                quantidade = this.qtExemplares * 0.1;
+                if(val > quantidade) {
+                    alert("Valor não pode passar de: "+quantidade);
+                    this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
+                }
+                return;
             }
+            this.qtGratuitaDivulgacao = 0;
         },
         //Distribuição Gratuita: Patrocinador
         patrocinador: function(val)  {
             quantidade = this.qtExemplares * 0.1;
-            if(val > quantidade) {
-                alert("Valor n&atilde;o pode passar de: "+quantidade);
-                this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
+
+            if (this.radio == 'n') {
+                if(val > quantidade) {
+                    alert("Valor não pode passar de: "+quantidade);
+                    this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
+                }
+                return;
             }
+            this.qtGratuitaPatrocinador = 0;
         },
         vlUnitarioPopularIntegral: function() {
-            if (this.vlUnitarioPopularIntegral > 50.00) {
-                alert('O valor não pode ser maior que 50.00');
-                this.vlUnitarioPopularIntegral = 50.00;
+            if (this.radio == 'n') {
+                if (this.vlUnitarioPopularIntegral > 50.00) {
+                    alert('O valor não pode ser maior que 50.00');
+                    this.vlUnitarioPopularIntegral = 50.00;
+                }
+                return;
             }
+            this.vlUnitarioPopularIntegral = 0;
         },
         qtPrecoPopularValorIntegral: function(val){
-            if (this.qtPrecoPopularValorIntegral > this.qtPrecoPopularValorIntegralLimite) {
-                alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorIntegralLimite);
+            if (this.radio == 'n') {
+                if (this.qtPrecoPopularValorIntegral > this.qtPrecoPopularValorIntegralLimite) {
+                    alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorIntegralLimite);
+                }
+                return ;
             }
+            this.qtPrecoPopularValorIntegral = 0;
         },
         qtPrecoPopularValorParcial: function(val){
-            if (this.qtPrecoPopularValorParcial > this.qtPrecoPopularValorParcialLimite) {
-                alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorParcialLimite);
+            if (this.radio == 'n') {
+                if (this.qtPrecoPopularValorParcial > this.qtPrecoPopularValorParcialLimite) {
+                    alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorParcialLimite);
+                }
+                return;
+            }
+            this.qtPrecoPopularValorParcial = 0;
+        },
+        radio : function(val){
+            if (this.radio == 's') {
+
+                console.log(this.radio);
+                this.qtGratuitaPopulacao = this.qtExemplares;
+
+                this.$refs.populacao.disabled = true;
+                this.$refs.divulgacao.disabled = true;
+                this.$refs.patrocinador.disabled = true;
+                this.$refs.qtPopularIntegral.disabled = true;
+                this.$refs.qtPopularParcial.disabled = true;
+
+                this.qtGratuitaDivulgacao = 0;
+                this.qtGratuitaPatrocinador = 0;
+                this.vlUnitarioPopularIntegral = 0.0; // Preço popular: Preço Unitario do Ingresso
+                this.qtPrecoPopularValorIntegral = 0; //Preço Popular: Quantidade de Inteira
+                this.qtPrecoPopularValorParcial =  0;//Preço Popular: Quantidade de meia entrada
+                this.vlUnitarioProponenteIntegral =  0;
+                this.qtPopularIntegral = 0,
+                this.qtPopularParcial = 0;
+                this.vlReceitaPopularIntegral = 0;
+
+            } else {
+                this.$refs.populacao.disabled = false;
+                this.$refs.divulgacao.disabled = false;
+                this.$refs.patrocinador.disabled = false;
+                this.$refs.qtPopularIntegral.disabled = false;
+                this.$refs.qtPopularParcial.disabled = false;
             }
         }
     },
@@ -281,7 +368,7 @@ Vue.component('my-component', {
             })
             .fail(function(){ alert('error'); });
         },
-        salvar:function(event){
+        salvar: function (event) {
 
             p = {
                 idPlanoDistribuicao: this.idplanodistribuicao,
@@ -333,15 +420,20 @@ Vue.component('my-component', {
             });
         },
         populacaoValidate: function(val){
-            quantidade = this.qtExemplares * 0.1;
-            if(val < quantidade) {
-                alert("Valor n&atilde;o pode ser menor que: "+quantidade);
-                this.qtGratuitaPopulacao = this.qtExemplares * 0.1;
-            }
+            if (this.radio == 'n'){
+                quantidade = this.qtExemplares * 0.1;
+                if(val < quantidade) {
+                    alert("Valor não pode ser menor que: "+quantidade);
+                    this.qtGratuitaPopulacao = this.qtExemplares * 0.1;
+                }
 
-            if((parseInt( this.qtGratuitaDivulgacao ) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao)) > (this.qtExemplares * 0.3)) {
-                alert("A soma dos valores de divulga&ccedil;&atilde;o, patrocinador e popula&ccedil;&atilde;o n&atilde;o pode passar de 30%");
-                this.$refs.patrocinador.focus();
+                if((parseInt( this.qtGratuitaDivulgacao ) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao)) > (this.qtExemplares * 0.3)) {
+                    alert("A soma dos valores de divulgação, patrocinador e população não pode passar de 30%");
+                    this.$refs.patrocinador.focus();
+                }
+            } else {
+
+                this.qtGratuitaPopulacao = this.qtExemplares;
             }
         },
         mostrar: function() {

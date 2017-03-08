@@ -301,11 +301,11 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             ->from(
                 array('tbDetalhaPlanoDistribuicao'),
                 $cols,
-                'sac.dbo'
+                $this->_schema
             )
             ->where('idPlanoDistribuicao = ?', $idPlanoDistribuicao);
         $dados =  $this->fetchRow($sql);
-        $dados = ($dados->toArray());
+        $dados = $dados->toArray();
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->update('planodistribuicaoproduto', $dados, "idPlanoDistribuicao = " . $idPlanoDistribuicao);
