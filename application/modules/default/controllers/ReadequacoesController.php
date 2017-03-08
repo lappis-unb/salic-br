@@ -142,7 +142,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $tbPlanilhaEtapa = new tbPlanilhaEtapa();
             $this->view->Etapas = $tbPlanilhaEtapa->buscar(array('stEstado = ?'=>1));
 
-            $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+            $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+            $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
             $this->view->Unidade = $buscarUnidade;
 
             $tbTipoReadequacao = new tbTipoReadequacao();
@@ -2532,7 +2533,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
         $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
         $this->view->Unidade = $buscarUnidade;
-
+        
         $tbReadequacaoXParecer = new tbReadequacaoXParecer();
         $this->view->Parecer = $tbReadequacaoXParecer->buscarPareceresReadequacao(array('a.idReadequacao = ?'=>$idReadequacao, 'b.idTipoAgente = ?'=>1))->current();
 
@@ -2910,7 +2911,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $dados->idPronac))->current();
         $this->view->projeto = $p;
 
-        $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+        $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+        $buscarUnidade =  $TbPlanilhaUnidade->buscarUnidade();        
         $this->view->Unidade = $buscarUnidade;
 
         //DADOS DA AVALIA��O T�CNICA ou PARECERISTA
@@ -4049,9 +4051,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $tbPlanilhaEtapa = new tbPlanilhaEtapa();
             $this->view->Etapas = $tbPlanilhaEtapa->buscar(array('stEstado = ?'=>1));
 
-            $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+            $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+            $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
             $this->view->Unidade = $buscarUnidade;
-
+            
             $tbReadequacao = new tbReadequacao();
             $this->view->readequacao = $tbReadequacao->readequacoesCadastradasProponente(array(
                 'a.idPronac = ?'=>$idPronac,
