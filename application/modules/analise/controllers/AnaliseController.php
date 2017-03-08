@@ -320,7 +320,7 @@ class Analise_AnaliseController extends Analise_GenericController
             # $d->Email =   'salicweb@gmail.com';
             $email = trim(strtolower($d->Email));
             $mens = '<b>Pronac: ' . $d->pronac . ' - ' . $d->NomeProjeto . '<br>Proponente: ' . $d->Destinatario . '<br> </b>' . $Mensagem;
-            $assunto = 'Pronac:  ' . $d->pronac . ' - Avalia&ccedil;&atilde;o adequa&ccedil;&atilde;o do projeto';
+            $assunto = 'Pronac:  ' . $d->pronac . ' - Avaliação adequação do projeto';
 
             $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens);
 
