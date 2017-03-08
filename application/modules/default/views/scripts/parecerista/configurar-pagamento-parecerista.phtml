@@ -1,9 +1,9 @@
-<?php include_once 'scripts/parecerista/inc/menu-coordenador.inc.php'; ?>
+<?php //include_once 'scripts/parecerista/inc/menu-coordenador.inc.php'; ?>
  
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true); ?>" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true); ?>" title="Ir para Inï¿½cio">In&iacute;cio</a></li>
         <li class="last">Configurar Despacho</li>
     </ul>
 </div>
@@ -12,11 +12,11 @@
 <div id="modal"></div>
 <div id="confirma"></div>
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-    <div>Configurar Despacho <span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span></div>
+    <div>Configurar Despacho <span class="voltar"><a href="javascript:voltar();" title="Pï¿½gina Anterior">Voltar</a></span></div>
 </div>
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 
 <div id="conteudo">
     
@@ -33,14 +33,14 @@
                 <td colspan="3" class="titulo_tabela"></td>
             </tr>
             <tr>
-                <td colspan="3" class=""><?php echo $this->ultimoDespachoDoAno == '' ? 'Nenhum despacho gerado até o momento!': 'Último despacho gerado: '.$this->ultimoDespachoDoAno; ?></td>
+                <td colspan="3" class=""><?php echo $this->ultimoDespachoDoAno == '' ? 'Nenhum despacho gerado atï¿½ o momento!': 'ï¿½ltimo despacho gerado: '.$this->ultimoDespachoDoAno; ?></td>
             </tr>
             <tr>
-                <td width="160">Número despacho inicial:</td>
+                <td width="160">Nï¿½mero despacho inicial:</td>
                 <td colspan="2"><input type="text" class="input_simples" id="nrDespachoInicial" name="nrDespachoInicial" value="<?php echo $this->ultimoDespachoDoAno == '' ? '1': $this->ultimoDespachoDoAno+1; ?>" maxlength="4" onblur="contarNumeracao();" onkeyup="contarNumeracao();" onkeypress="mascara(this, format_num);" /></td>
             </tr>
             <tr>
-                <td>Número despacho Final:</td>
+                <td>Nï¿½mero despacho Final:</td>
                 <td colspan="2" id="lbnrDespachoFinal"><?php echo $this->ultimoDespachoDoAno+$this->qtdDePagamentos; ?></td>
             </tr>
             <tr>
@@ -125,7 +125,7 @@
             <th width="300">Produto</th>
             <th>Vinculada</th>
             <th width="130">Valor a ser Pago</th>
-            <th width="1">Ação</th>
+            <th width="1">Aï¿½ï¿½o</th>
         </tr>
         <?php $i = 1;?>
         <?php $total = 0;?>
@@ -157,9 +157,9 @@
         </tr>
     </table>
     <?php endforeach; ?>
-    <!-- ========== PAGINAÇAO ========== -->
+    <!-- ========== PAGINAï¿½AO ========== -->
     <?php if($this->qtdDePagamentos > 10){ echo "<p>" . $this->listaDePagamentos . "</p>"; } ?>
-    <!-- ========== FIM PAGINAÇ?O ========== -->
+    <!-- ========== FIM PAGINAï¿½?O ========== -->
     <?php else: ?>
         <table class="tabela">
             <tr>
@@ -169,10 +169,10 @@
     <?php endif; ?>
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
 <div id="confirmacao-exclusao" class="sumir">
-    Tem certeza que deseja excluir o registro?<br />Se sim, informe o número do Pronac antes de confirmar a ação.
+    Tem certeza que deseja excluir o registro?<br />Se sim, informe o nï¿½mero do Pronac antes de confirmar a aï¿½ï¿½o.
     <br clear="all" /><br clear="all" />
     <form id="formExcluirRegistroPagamento" action="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'excluir-registro-pagamento')); ?>" method="POST">
         <table class="tabela">
@@ -187,9 +187,9 @@
 </div>
 
 <div id="dialog"></div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 <br clear="all" />
 
 <script>
@@ -207,7 +207,7 @@
 //        var i = 0;
 //        // Percorre todas as linhas da tabela
 //        $("#sortable tbody").each(function(i){
-//        // Adiciona uma com o número corrente
+//        // Adiciona uma com o nï¿½mero corrente
 //            $(this).append(" " + (++i) + "");
 //        });
     });
@@ -225,7 +225,7 @@
                 draggable: false,
                 resizable: false,
                 closeOnEscape: false,
-                title: 'Confirmação',
+                title: 'Confirmaï¿½ï¿½o',
                 buttons: { 
                     Cancelar:function() {
                         $(this).dialog('close');
@@ -254,7 +254,7 @@
                 draggable: false,
                 resizable: false,
                 closeOnEscape: false,
-                title: 'Confirmação',
+                title: 'Confirmaï¿½ï¿½o',
                 buttons: { 
                     Cancelar:function() {
                         $(this).dialog('close');
@@ -267,7 +267,7 @@
                             $("#formExcluirRegistroPagamento").submit();
                         } else {
                             $('#campoNrConfirmacao').val('');
-                            $('#campoTxtConfirmacao').html('O número do Pronac não confere.');
+                            $('#campoTxtConfirmacao').html('O nï¿½mero do Pronac nï¿½o confere.');
                         }
                     }
                 }
@@ -288,7 +288,7 @@
             draggable: false,
             resizable: false,
             closeOnEscape: false,
-            title: 'Confirmação',
+            title: 'Confirmaï¿½ï¿½o',
             buttons: { 
                 Cancelar:function() {
                     $(this).dialog('close');
@@ -341,7 +341,7 @@
         var nrDespachoInicial   = parseInt($('#nrDespachoInicial').val());
         
         if(nrDespachoInicial <= ultimoDespachoDoAno){
-            $("#dialog").html('Número despacho inicial não pode ser menor ou igual ao Último despacho gerado!');
+            $("#dialog").html('Nï¿½mero despacho inicial nï¿½o pode ser menor ou igual ao ï¿½ltimo despacho gerado!');
         
             $("#dialog").dialog("destroy");
             $("#dialog").dialog({
@@ -371,9 +371,9 @@
             draggable: false,
             resizable: false,
             closeOnEscape: false,
-            title: 'Confirmação',
+            title: 'Confirmaï¿½ï¿½o',
             buttons: { 
-                Não:function() {
+                Nï¿½o:function() {
                     $(this).dialog('close');
                 },
                 Sim:function() {
