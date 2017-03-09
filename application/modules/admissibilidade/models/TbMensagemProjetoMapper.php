@@ -65,7 +65,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
                 $model->setIdRemetenteUnidade($intUsuOrgao);
-                $model->setCdTipoMensagem(1);
+                $model->setCdTipoMensagem('R');
                 $arrMensagemOrigem = $this->getDbTable()->findBy($arrData['idMensagemOrigem']);
                 $model->setIdDestinatario($arrMensagemOrigem['idRemetente']);
                 $model->setIdDestinatarioUnidade($arrMensagemOrigem['idRemetenteUnidade']);
