@@ -1,12 +1,13 @@
-<?php 
-require_once "scripts/consultardadosprojeto/inc/menu.inc.php"; // menu de consultar dados do projeto
+<?php
+
+echo $this->partial("consultardadosprojeto/inc/menu.inc.php", $this); // menu de consultar dados do projeto
 
     if(isset($this->idPreProjeto)){
         $cod = "?idPreProjeto=".$this->idPreProjeto;
     }elseif(isset($_GET['idPreProjeto'])){
         $cod = "?idPreProjeto=".$this->idPreProjeto;
     }
-    
+
     if(isset($this->idPronac)){
         $cod = "?idPronac=".$this->idPronac;
     }elseif(isset($_GET['idPronac'])){
@@ -105,7 +106,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".$this->idPronac : "";
     <br clear="all" />
 </div>
 
-<!-- ========== IN???CIO RODAP??? DO CONTE???DO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP??? DO CONTE???DO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 <br clear="all" />

@@ -555,7 +555,7 @@ table caption {
 	/*color:auto;*/
 }
 #conteudo table tr.linha:hover td {
-	background: #f81e30;
+	background: #f6f5f8;
 }
 #conteudo table tr.destacar td, table td.destacar {
 	background:#dfefc2;
