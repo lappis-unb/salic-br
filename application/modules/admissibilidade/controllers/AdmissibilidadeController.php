@@ -2447,7 +2447,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     /**
      * @todo: Testar e refatorar esse metodo.
      */
-    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso, $stEstado) {
+    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso, $stProposta) {
+
+        $propostaNormal = 610;
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -2504,7 +2506,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                  AND Correspondencia = 1";
             } else {
                 $sqlInteressado = "  UPDATE SAC.dbo.Interessado
-                                        SET Endereco = e.Logradouro + ' - ' + e.Bairro,
+                                        SET
+                                            Nome     = b.Descricao,
+                                            Endereco = e.Logradouro + ' - ' + e.Bairro,
                                             Cidade   = u.Municipio,
                                             UF       = u.UF,
                                             CEP      = e.CEP,
@@ -2536,6 +2540,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                                         end
                                             FROM SAC.dbo.Interessado i
                                                  INNER JOIN Agentes.dbo.Agentes a on (i.CgcCpf = a.CNPJCPF)
+                                                 INNER JOIN Agentes.dbo.Nomes            b on (a.idAgente = b.idAgente)
                                                  INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
                                                  INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
                                                   LEFT JOIN SAC.dbo.vwNatureza n on (a.idAgente =n.idAgente)
@@ -2566,8 +2571,13 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $sequencial = $objSequencial->Sequencial;
             $AnoProjeto = date("y");
             $NrProjeto = str_pad($sequencial, 4, "0", STR_PAD_LEFT);
-            $situacaoProjeto = 'B11'; #atinga situacao B01
+            $situacaoProjeto = Projeto_Model_Situacao::PROPOSTA_TRANSFORMADA_EM_PROJETO;
             $providenciaTomada = 'Proposta transformada em projeto cultural';
+
+            if( $stProposta !== $propostaNormal) {
+                $situacaoProjeto = Projeto_Model_Situacao::ENCAMINHADO_PARA_ANALISE_TECNICA;
+                $providenciaTomada = 'Projeto encamihado a unidade vinculada para an&aacute;lise e emiss&atilde;o de parecer t&eacute;cnico';
+            }
 
             $sqlProjetos = "INSERT INTO SAC.dbo.Projetos
                                   (AnoProjeto,Sequencial,UFProjeto,Area,Segmento,Mecanismo,NomeProjeto,CgcCpf,Situacao,DtProtocolo,DtAnalise,
@@ -2591,25 +2601,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $idPronac = $db->lastInsertId();
 
-            if( $stEstado !== 610) {
-
-                # CARREGA PLANILHA PARA O PARECERISTA -- tbPlanilhaProjeto
-                $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
-                                     (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
-                                     TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
-                                   SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
-                                        Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
-                                        MunicipioDespesa, 0
-                                        FROM SAC.dbo.tbPlanilhaProposta
-                                        WHERE idProjeto = {$idPreProjeto}";
-                $resultado = $db->query($sqlParecerista);
-
-                # CARREGA A TABELA DE ANÁLISE DE CONTEÚDO PARA O PARECERISTA  -- tbAnaliseDeConteudo
-                $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
-                                         SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
-                                          WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
-                                          GROUP BY idProduto";
-                $resultado = $db->query($sqlAnaliseDeConteudo);
+            if( $stProposta !== $propostaNormal) {
 
                 # CARREGA A TABELA DE TBDISTRIBUIRPARECER
                 $sqlVinculada = "SELECT idOrgao as idVinculada 
@@ -2623,8 +2615,27 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                           WHERE idProjeto = {$idPreProjeto}";
                 $resultado = $db->query($sqlDistribuirParecer);
 
+                # CARREGA A TABELA DE ANÁLISE DE CONTEÚDO PARA O PARECERISTA  -- tbAnaliseDeConteudo
+                $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
+                                         SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
+                                          WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
+                                          GROUP BY idProduto";
+                $resultado = $db->query($sqlAnaliseDeConteudo);
+
+                # CARREGA PLANILHA PARA O PARECERISTA -- tbPlanilhaProjeto
+                $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
+                                     (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
+                                     TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
+                                   SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+                                        Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+                                        MunicipioDespesa, 0
+                                        FROM SAC.dbo.tbPlanilhaProposta
+                                        WHERE idProjeto = {$idPreProjeto}";
+                $resultado = $db->query($sqlParecerista);
+
             }
 
+            # INSERIR INFORMAÇÕES NA TABELA CONTABANCARIA
             $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
                                  SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario}
                                    FROM SAC.dbo.PreProjeto
@@ -2635,6 +2646,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 throw new Exception ("Não é possível incluir mais de %d registros na ContaBancaria");
             }
 
+            # CARREGAR INFORMAÇÕES PARA ENVIAR EMAIL
             $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
                                   idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
             $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
