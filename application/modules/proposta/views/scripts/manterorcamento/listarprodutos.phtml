@@ -40,7 +40,7 @@
 
                                                 ?>
 
-                                                <div id="etapa<?php echo $verificador ?>" class="col s12 etapa-<?php echo $etapa->idEtapa; ?>">
+                                                <div id="etapa<?php echo $verificador ?>" class="col s12 etapa-<?php echo $etapa->idEtapa; ?> coluna-etapa">
 
                                                     <table class="itens bordered striped centered" style="margin: 0px;">
 
@@ -48,10 +48,10 @@
                                                             <tr class="center">
                                                                 <th class="left-align">Item</th>
                                                                 <th>Unidade</th>
-                                                                <th>Qtd</th>
+                                                                <th title="Quantidade">Qtd</th>
                                                                 <th>Ocorr&ecirc;ncia</th>
-                                                                <th class="right-align" width="10%">Valor Unit&aacute;rio (R$)</th>
-                                                                <th class="right-align" width="10%">Total (R$)</th>
+                                                                <th class="right-align" width="12%" title="Valor Unit&aacute;rio">Vlr Unit&aacute;rio (R$)</th>
+                                                                <th class="right-align" width="12%">Total (R$)</th>
                                                                 <?php if ($this->isEditavel) : ?><th colspan="2" width="10%">A&ccedil;&otilde;es</th><?php endif; ?>
                                                             </tr>
                                                         </thead>
