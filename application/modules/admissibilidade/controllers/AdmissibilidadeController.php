@@ -77,7 +77,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     public function validarAcessoAdmissibilidade()
     {
         if (empty($this->idPreProjeto)) {
-            parent::message("Necessário informar o n�mero da proposta.", "/admissibilidade/admissibilidade/listar-propostas", "ALERT");
+            parent::message("Necessário informar o n&uacute;mero da proposta.", "/admissibilidade/admissibilidade/listar-propostas", "ALERT");
         }
     }
 
@@ -622,7 +622,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $retorno = array();
         try {
-            $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+            $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso, $rsProposta->stProposta);
             $tblProjeto = new Projetos();
             $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
             if (!empty($rsProjeto)) {
@@ -2447,7 +2447,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     /**
      * @todo: Testar e refatorar esse metodo.
      */
-    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso) {
+    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso, $stEstado) {
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -2566,14 +2566,16 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $sequencial = $objSequencial->Sequencial;
             $AnoProjeto = date("y");
             $NrProjeto = str_pad($sequencial, 4, "0", STR_PAD_LEFT);
+            $situacaoProjeto = 'B11'; #atinga situacao B01
+            $providenciaTomada = 'Proposta transformada em projeto cultural';
 
             $sqlProjetos = "INSERT INTO SAC.dbo.Projetos
                                   (AnoProjeto,Sequencial,UFProjeto,Area,Segmento,Mecanismo,NomeProjeto,CgcCpf,Situacao,DtProtocolo,DtAnalise,
                                    OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
                                    idProjeto,Processo,Logon)
                                 SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
-                                   Mecanismo, NomeProjeto, a.CNPJCPF, 'B01', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
-                                   'Proposta transformada em projeto cultural', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
+                                   Mecanismo, NomeProjeto, a.CNPJCPF, {$situacaoProjeto}, getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
+                                   {$providenciaTomada}, ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
                                    SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
                                    FROM SAC.dbo.PreProjeto p
                                    INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
@@ -2589,21 +2591,39 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $idPronac = $db->lastInsertId();
 
-//            $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
-//                                 (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
-//                                 TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
-//                               SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
-//                                    Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
-//                                    MunicipioDespesa, 0
-//                                    FROM SAC.dbo.tbPlanilhaProposta
-//                                    WHERE idProjeto = {$idPreProjeto}";
-//            $resultado = $db->query($sqlParecerista);
+            if( $stEstado !== 610) {
 
-//            $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
-//                                     SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
-//                                      WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
-//                                      GROUP BY idProduto";
-//            $resultado = $db->query($sqlAnaliseDeConteudo);
+                # CARREGA PLANILHA PARA O PARECERISTA -- tbPlanilhaProjeto
+                $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
+                                     (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
+                                     TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
+                                   SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+                                        Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+                                        MunicipioDespesa, 0
+                                        FROM SAC.dbo.tbPlanilhaProposta
+                                        WHERE idProjeto = {$idPreProjeto}";
+                $resultado = $db->query($sqlParecerista);
+
+                # CARREGA A TABELA DE ANÁLISE DE CONTEÚDO PARA O PARECERISTA  -- tbAnaliseDeConteudo
+                $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
+                                         SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
+                                          WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
+                                          GROUP BY idProduto";
+                $resultado = $db->query($sqlAnaliseDeConteudo);
+
+                # CARREGA A TABELA DE TBDISTRIBUIRPARECER
+                $sqlVinculada = "SELECT idOrgao as idVinculada 
+                                    FROM sac.dbo.PlanoDistribuicaoProduto t 
+                                    INNER JOIN vSegmento s on (t.Segmento = s.Codigo)
+                                    WHERE t.stPrincipal = 1 and idProjeto = '{$idPreProjeto}'";
+                $idVinculada = $db->fetchOne($sqlVinculada);
+
+                $sqlDistribuirParecer = "INSERT INTO SAC.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
+                                         SELECT {$idPronac},idProduto, 3,{$idVinculada},getdate(), stPrincipal FROM SAC.dbo.PlanoDistribuicaoProduto
+                                          WHERE idProjeto = {$idPreProjeto}";
+                $resultado = $db->query($sqlDistribuirParecer);
+
+            }
 
             $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
                                  SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario}
@@ -2612,7 +2632,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $resultado = $db->query($sqlContaBancaria);
 
             if($resultado->rowCount() < 1) {
-                throw new Exception ("Não é possível incluir mais de %d registros na ContaBancari");
+                throw new Exception ("Não é possível incluir mais de %d registros na ContaBancaria");
             }
 
             $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
@@ -2649,6 +2669,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
     }
+
+
 
     public function listarPropostasAjaxAction()
     {
