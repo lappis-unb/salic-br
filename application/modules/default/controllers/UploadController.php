@@ -8,7 +8,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
 class UploadController extends MinC_Controller_Action_Abstract {
 
@@ -34,13 +34,13 @@ class UploadController extends MinC_Controller_Action_Abstract {
 
         $this->limiteTamanhoArq = 1024 * 1024 * 10;
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if (isset($auth->getIdentity()->usu_codigo)) {
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -53,7 +53,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
         // verifica as permiss?es
         /* $PermissoesGrupo = array();
           $PermissoesGrupo[] = 97;  // Gestor do SALIC
-          $PermissoesGrupo[] = 103; // Coordenador de An�lise
+          $PermissoesGrupo[] = 103; // Coordenador de Analise
           $PermissoesGrupo[] = 124;
           $PermissoesGrupo[] = 125;
           $PermissoesGrupo[] = 126;
@@ -83,7 +83,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
             $this->faseDoProjeto($idPronac);
             $this->view->intFaseProjeto = $this->intFaseProjeto;
 
-            /*             * * Valida��o do Proponente Inabilitado *********************************** */
+            /*             * * Validacao do Proponente Inabilitado *********************************** */
             $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
             $this->cpfLogado = $cpf;
 
@@ -107,7 +107,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
             $this->view->dados = $tbdados;
 
             // Busca na SGCAcesso
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
             // Busca na Agentes
@@ -121,7 +121,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
                 $this->idAgente = $buscaAgente[0]->idAgente;
             }
 
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
             $idagente = $Usuario->getIdUsuario('', $cpf);
             $this->idAgente = (isset($idagente['idAgente']) && !empty($idagente['idAgente'])) ? $idagente['idAgente'] : 0;
             $ag = new Agente_Model_DbTable_Agentes();
@@ -138,7 +138,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
                 $respProponente = 'P';
             }
 
-            // Verificando se o Proponente est� inabilitado
+            // Verificando se o Proponente esta inabilitado
             $inabilitadoDAO = new Inabilitado();
             $where['CgcCpf 		= ?'] = $cpfProponente;
             $where['Habilitado 	= ?'] = 'N';
@@ -150,7 +150,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
 
             if (!empty($idPreProjeto)) {
 
-                // Se for Respons�vel verificar se tem Procura��o
+                // Se for Responsavel verificar se tem Procuracao
                 $procuracaoDAO = new Procuracao();
                 $procuracaoValida = 'N';
 
@@ -174,13 +174,13 @@ class UploadController extends MinC_Controller_Action_Abstract {
         }
         $this->view->blnProponente = $this->blnProponente;
 
-        //$this->orgaoAutorizado = "272"; //correto � 272
+        //$this->orgaoAutorizado = "272"; //correto e 272
         $this->orgaoAutorizado = "251";
         $this->orgaoLogado = !isset($auth->getIdentity()->IdUsuario) ? $_SESSION['Zend_Auth']['storage']->usu_orgao : 0;
     }
 
     /**
-     * M�todo para abrir um arquivo bin�rio
+     * Metodo para abrir um arquivo binario
      * @access public
      * @param void
      * @return void
@@ -190,7 +190,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $id = (int) isset($get->id) ? $get->id : $this->_request->getParam('id');
 
-        // Configura��o o php.ini para 10MB
+        // Configuracao o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -205,7 +205,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
             $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
             $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
             die("N&atilde;o existe o arquivo especificado");
-            $this->view->message = 'N�o foi poss�vel abrir o arquivo!';
+            $this->view->message = 'N&atilde;o foi poss&iacute;vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
             // l� os cabe�alhos formatado
@@ -346,7 +346,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $id = (int) $get->id;
         $busca = $this->_request->getParam('busca'); //$get->busca;
-        // Configura��o o php.ini para 10MB
+        // Configuracao o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -368,10 +368,10 @@ class UploadController extends MinC_Controller_Action_Abstract {
             $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
             $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
             die("N&atilde;o existe o arquivo especificado");
-            $this->view->message = 'N�o foi poss�vel abrir o arquivo!';
+            $this->view->message = 'N&atilde;o foi poss&iacute;vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
-            // l� os cabe�alhos formatado
+            // os cabecalhos formatado
             foreach ($resultado as $r) {
                 $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
                 $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
@@ -413,7 +413,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $id = (int) $get->id;
         $busca = $this->_request->getParam('busca'); //$get->busca;
-        // Configura��o o php.ini para 10MB
+        // Configuracao o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -435,10 +435,10 @@ class UploadController extends MinC_Controller_Action_Abstract {
             $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
             $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
             die("N&atilde;o existe o arquivo especificado");
-            $this->view->message = 'N�o foi poss�vel abrir o arquivo!';
+            $this->view->message = 'N&atilde;o foi poss&iacute;vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
-            // l� os cabe�alhos formatado
+            // os cabecalhos formatado
             foreach ($resultado as $r) {
                 $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
                 $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
@@ -513,7 +513,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
-        // pega as informa��es do arquivo
+        // pega as informacoes do arquivo
         $post = Zend_Registry::get('post');
 
         $observacao = $post->observacao;
@@ -537,13 +537,13 @@ class UploadController extends MinC_Controller_Action_Abstract {
 
             if ($_FILES['arquivo']['tmp_name']) {
                 $arquivoNome = $_FILES['arquivo']['name']; // nome
-                $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
+                $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporario
                 $arquivoTipo = $_FILES['arquivo']['type']; // tipo
                 $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
                 if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens�o
-                    $arquivoBinario = Upload::setBinario($arquivoTemp); // bin�rio
+                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
+                    $arquivoBinario = Upload::setBinario($arquivoTemp); // binario
                     $arquivoHash = Upload::setHash($arquivoTemp); // hash
                 }
 
@@ -854,7 +854,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
             /* nunca esteve na situacao E10 e nao ha registros na tabela captacao, os projetos por edital nao podem ser inclusos nessa condicao
              * para diferenciar pre-projetos de edital e fiscal quando o projeto nao tiver idProjeto deve-se utilizar o Mecanismo = 1
              * situacoes dessa fase = B11,B14,C10,C20,C30,D03,D11,D27
-             * ENTENDIMENTO ATUAL - N�o ha registro na tabela aprovacao
+             * ENTENDIMENTO ATUAL - Nao ha registro na tabela aprovacao
              */
 
             //FASE DE EXECUCAO
