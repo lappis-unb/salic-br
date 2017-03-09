@@ -12,7 +12,7 @@
 
 /* inclui o menu lateral caso não venha através do proponente */
 if (!isset($this->dadosProjeto) && !empty($this->arrayGrupoProponente)) :
-	require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php';
+	echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this);
 
 	$urlInicio = $this->url(array('controller' => 'principal', 'action' => ''), null, true);
 else :
