@@ -25,7 +25,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function init() {
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->idOrgao = $GrupoAtivo->codOrgao;
         $this->idPerfil = $GrupoAtivo->codGrupo;
 
@@ -33,8 +33,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = '1111'; //Permissao para proponentes.
 
-        // pega o idAgente do usu�rio logado
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        // pega o idAgente do usuário logado
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
         $this->view->usuarioInterno = false;
         
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
@@ -42,7 +42,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $this->idUsuario = $auth->getIdentity()->usu_codigo;
 
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -78,14 +78,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Tela de cadastro de readequa��es - vis�o do proponente
+     * Tela de cadastro de readequações - visão do proponente
      * @require idPronac
      */
     public function indexAction() {
-        //FUN��O ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         $this->view->idPerfil = $this->idPerfil;
         if($this->idPerfil != 1111){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         if(isset($_POST['iduf'])) {
@@ -149,7 +149,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $tbTipoReadequacao = new tbTipoReadequacao();
             $this->view->TiposReadequacao = $tbTipoReadequacao->buscarTiposReadequacoesPermitidos($idPronac);
 
-            // na listagem de 'outras solicita��es' n�o listar planilha or�ament�ria (idTipoReadequacao 2)
+            // na listagem de 'outras solicitações' não listar planilha orçamentária (idTipoReadequacao 2)
             $tbReadequacao = new tbReadequacao();
             $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12, 'a.idTipoReadequacao != ?' => 2), array(1));
             
@@ -163,7 +163,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 06/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � acessada para alterar o item da planilha or�ament�ria.
+     * Essa função é acessada para alterar o item da planilha orçamentária.
      */
     public function alterarItemSolicitacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -263,7 +263,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 14/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse fun��o � usada pelo proponente para solicitar a exclus�o de um item da planilha or�ament�ria.
+     * Esse função é usada pelo proponente para solicitar a exclusão de um item da planilha orçamentária.
      */
     public function excluirItemSolicitacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -276,7 +276,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
-        //VERIFICA SE J� POSSUI A PLANILHA TIPO SR. SE N�O TIVER, CRIA, E DEPOIS DELETA O ITEM DESEJADO.
+        //VERIFICA SE JÁ POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, CRIA, E DEPOIS DELETA O ITEM DESEJADO.
         if(count($verificarPlanilhaSR)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
@@ -312,7 +312,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO L�GICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpAcao'] = 'E';
 
@@ -353,7 +353,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
-        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE N�O TIVER, COPIA A ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         if(count($verificarPlanilhaSR)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
@@ -390,7 +390,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
 
         $idAgente = 0;
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
         $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->Cpf));
         if($rsAgente->count() > 0){
@@ -400,7 +400,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $newValorUnitario = str_replace('.', '', $_POST['newValorUnitario']);
         $newValorUnitario = str_replace(',', '.', $newValorUnitario);
 
-        /* DADOS DO ITEM PARA INCLUS�O DA READEQUA��O */
+        /* DADOS DO ITEM PARA INCLUSÃO DA READEQUAÇÃO */
         $dadosInclusao = array();
         $dadosInclusao['tpPlanilha'] = 'SR';
         $dadosInclusao['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
@@ -441,12 +441,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 06/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para alterar os dados do item da planilha or�ament�ria.
+     * Essa função é usada para alterar os dados do item da planilha orçamentária.
      */
     public function salvarAvaliacaoDoItemAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
         $cpf = isset($auth->getIdentity()->Cpf) ? $auth->getIdentity()->Cpf : $auth->getIdentity()->usu_identificacao;
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
@@ -528,7 +528,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 18/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada pelos t�cnicos, pareceristas e componentes da comiss�o para alterarem os itens da planilha or�ament�ria.
+     * Essa função é usada pelostécnicos, pareceristas e componentes da comissão para alterarem os itens da planilha orçamentária.
      */
     public function alteracoesTecnicasNoItemAction() {
         $this->_helper->layout->disableLayout();
@@ -569,7 +569,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 18/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada pelos t�cnicos, pareceristas e componentes da comiss�o para alterarem os locais de realiza��o.
+     * Essa função é usada pelostécnicos, pareceristas e componentes da comissão para alterarem os locais de realização.
      */
     public function alteracoesTecnicasNoLocalDeRealizacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -578,10 +578,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbAbrangencia = new tbAbrangencia();
         $editarItem = $tbAbrangencia->buscar(array('idAbrangencia=?'=>$_POST['idAbrangencia']))->current();
 
-        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e T�cnico de Acompanhamento
+        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e Técnico de Acompanhamento
             $editarItem->tpAnaliseTecnica = $_POST['tpAcao'];
 
-        } else if($this->idPerfil == 118){ //Componente da Comiss�o
+        } else if($this->idPerfil == 118){ //Componente da Comissão
             $editarItem->tpAnaliseComissao = $_POST['tpAcao'];
 
         } else if($this->idPerfil == 1111){ //Proponente
@@ -601,7 +601,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada pelos t�cnicos, pareceristas e componentes da comiss�o para alterarem os planos de divulga��o.
+     * Essa função é usada pelostécnicos, pareceristas e componentes da comissão para alterarem os planos de divulgação.
      */
     public function alteracoesTecnicasNoPlanoDeDivulgacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -610,10 +610,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPlanoDivulgacao = new tbPlanoDivulgacao();
         $editarItem = $tbPlanoDivulgacao->buscar(array('idPlanoDivulgacao=?'=>$_POST['idPlanoDivulgacao']))->current();
 
-        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e T�cnico de Acompanhamento
+        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e Técnico de Acompanhamento
             $editarItem->tpAnaliseTecnica = $_POST['tpAcao'];
 
-        } else if($this->idPerfil == 118){ //Componente da Comiss�o
+        } else if($this->idPerfil == 118){ //Componente da Comissão
             $editarItem->tpAnaliseComissao = $_POST['tpAcao'];
 
         } else if($this->idPerfil == 1111){ //Proponente
@@ -633,7 +633,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 1/04/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada pelos t�cnicos, pareceristas, proponente e componentes da comiss�o para alterarem os planos de distribui��o.
+     * Essa função é usada pelostécnicos, pareceristas, proponente e componentes da comissão para alterarem os planos de distribuição.
      */
     public function alteracoesTecnicasNoPlanoDeDistribuicaoAction() {
         $this->_helper->layout->disableLayout();
@@ -642,10 +642,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
         $editarItem = $tbPlanoDistribuicao->buscar(array('idPlanoDistribuicao=?'=>$_POST['idPlanoDistribuicao']))->current();
 
-        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e T�cnico de Acompanhamento
+        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e Técnico de Acompanhamento
             $editarItem->tpAnaliseTecnica = $_POST['tpAcao'];
 
-        } else if($this->idPerfil == 118){ //Componente da Comiss�o
+        } else if($this->idPerfil == 118){ //Componente da Comissão
             $editarItem->tpAnaliseComissao = $_POST['tpAcao'];
 
         } else if($this->idPerfil == 1111){ //Proponente
@@ -669,7 +669,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $valorPreCarregado = null;
 //        x($tipoReadequacao);
 
-        //ALTERA��O DE RAZ�O SOCIAL DO PROPONENTE
+        //ALTERAÇÃO DE RAZÃO SOCIAL DO PROPONENTE
         if($tipoReadequacao == 3){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscarDadosUC75($get->idPronac)->current();
@@ -729,7 +729,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 }
             }
 
-        //ESTRAT�GIA DE EXECU��O
+        //ESTRATÉGIA DE EXECUÇÃO
         } else if($tipoReadequacao == 8){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
@@ -742,7 +742,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 }
             }
 
-        //ALTERA��O DE PROPONENTE
+        //ALTERAÇÃO DE PROPONENTE
         } else if($tipoReadequacao == 10){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
@@ -760,7 +760,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $valorPreCarregado = $dadosProjeto->NomeProjeto;
             }
 
-        //PER�ODO DE EXECUCAO
+        //PERÍODO DE EXECUCAO
         } else if($tipoReadequacao == 13){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
@@ -770,7 +770,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $valorPreCarregado = $DtFimExecucao;
             }
 
-        //S�NTESE DO PROJETO
+        //SÍNTESE DO PROJETO
         } else if($tipoReadequacao == 15){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
@@ -917,11 +917,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 19/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para carregar os dados do locais de realiza��o do projeto.
+     * Essa função é usada para carregar os dados do locais de realização do projeto.
      */
     public function carregarLocaisDeRealizacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         if(isset($_POST['iduf'])) {
@@ -972,11 +972,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 27/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para carregar os dados do locais de realiza��o do projeto.
+     * Essa função é usada para carregar os dados do locais de realização do projeto.
      */
     public function carregarLocaisDeRealizacaoReadequacoesAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1024,7 +1024,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE N�O TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbAbrangencia = new tbAbrangencia();
         $readequacaoLR = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $locaisAtivos = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac);
@@ -1045,7 +1045,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if($_POST['newPaisLR'] == 31){
             if(empty($_POST['newUFLR']) && empty($_POST['newMunicipioLR'])){
-                $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e Munic�pio se tornam obrigat�rios no cadastro!');
+                $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e Município se tornam obrigatórios no cadastro!');
                 echo json_encode(array('resposta'=>false, 'msg'=>$msg)); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             $verificaLocalRepetido = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idPais=?'=>$_POST['newPaisLR'], 'idUF=?'=>$_POST['newUFLR'], 'idMunicipioIBGE=?'=>$_POST['newMunicipioLR']));
@@ -1054,7 +1054,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
 
         if(count($verificaLocalRepetido)==0){
-            /* DADOS DO ITEM PARA INCLUS�O DA READEQUA��O */
+            /* DADOS DO ITEM PARA INCLUSÃO DA READEQUAÇÃO */
             $dadosInclusao = array();
             $dadosInclusao['idReadequacao'] = NULL;
             $dadosInclusao['idPais'] = $_POST['newPaisLR'];
@@ -1071,7 +1071,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('resposta'=>false));
             }
         } else {
-            $msg = utf8_encode('Esse local de realiza��o j� foi cadastrado!');
+            $msg = utf8_encode('Esse local de realização já foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -1080,7 +1080,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 25/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse fun��o � usada pelo proponente para solicitar a exclus�o de um local de realiza��o.
+     * Esse função é usada pelo proponente para solicitar a exclusão de um local de realização.
      */
     public function excluirLocalDeRealizacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1093,7 +1093,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbAbrangencia = new tbAbrangencia();
         $readequacaoLR = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
 
-        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE N�O TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $locaisAtivos = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac);
         if(count($readequacaoLR)==0){
             $locaisCopiados = array();
@@ -1109,7 +1109,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO L�GICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpSolicitacao'] = 'E';
 
@@ -1149,11 +1149,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para carregar os dados do planos de divulga��o do projeto.
+     * Essa função é usada para carregar os dados do planos de divulgação do projeto.
      */
     public function carregarPlanosDeDivulgacaoAction(){
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1189,11 +1189,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 27/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para carregar os dados dos planos de divulga��o do projeto.
+     * Essa função é usada para carregar os dados dos planos de divulgação do projeto.
      */
     public function carregarPlanosDeDivulgacaoReadequacoesAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1233,7 +1233,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para que o proponente fa�a uma solicita��o de inclus�o de plano de divulga��o
+     * Essa função é usada para que o proponente faça uma solicitação de inclusão de plano de divulgação
      */
     public function incluirPlanosDeDivulgacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1242,7 +1242,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGA�AO NA TABELA tPlanoDivulgacao (READEQUACAO), SE N�O TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGAÇAO NA TABELA tPlanoDivulgacao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDivulgacao = new tbPlanoDivulgacao();
         $readequacaoPDD = $tbPlanoDivulgacao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDivulgacao->buscarPlanosDivulgacaoReadequacao($idPronac);
@@ -1262,7 +1262,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         $verificaPlanoRepetido = $tbPlanoDivulgacao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idPeca=?'=>$_POST['newPeca'], 'idVeiculo=?'=>$_POST['newVeiculo']));
         if(count($verificaPlanoRepetido)==0){
-            /* DADOS DO PLANO PARA INCLUS�O DA READEQUA��O */
+            /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
             $dadosInclusao = array();
             $dadosInclusao['idReadequacao'] = NULL;
             $dadosInclusao['idPeca'] = $_POST['newPeca'];
@@ -1278,7 +1278,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('resposta'=>false));
         }
         } else {
-            $msg = utf8_encode('Esse plano de divulga��o j� foi cadastrado!');
+            $msg = utf8_encode('Esse plano de divulgação já foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
     }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -1287,7 +1287,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse fun��o � usada pelo proponente para solicitar a exclus�o de um plano de divulga��o.
+     * Esse função é usada pelo proponente para solicitar a exclusão de um plano de divulgação.
      */
     public function excluirPlanoDeDivulgacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1297,7 +1297,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGA�AO NA TABELA tPlanoDivulgacao (READEQUACAO), SE N�O TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGAÇÃO NA TABELA tPlanoDivulgacao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDivulgacao = new tbPlanoDivulgacao();
         $readequacaoPDD = $tbPlanoDivulgacao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDivulgacao->buscarPlanosDivulgacaoReadequacao($idPronac);
@@ -1315,7 +1315,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO L�GICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpSolicitacao'] = 'E';
 
@@ -1354,11 +1354,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 31/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para carregar os dados do planos de distribui��o do projeto.
+     * Essa função é usada para carregar os dados do planos de distribuição do projeto.
      */
     public function carregarPlanosDeDistribuicaoAction(){
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1401,11 +1401,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 27/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para carregar os dados dos planos de divulga��o do projeto.
+     * Essa função é usada para carregar os dados dos planos de divulgação do projeto.
      */
     public function carregarPlanosDeDistribuicaoReadequacoesAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1439,7 +1439,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 31/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o � usada para que o proponente fa�a uma solicita��o de inclus�o de plano de distribui��o
+     * Essa função é usada para que o proponente faça uma solicitação de inclusão de plano de distribuição
      */
     public function incluirPlanosDeDistribuicaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1448,7 +1448,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUI��O NA TABELA tbPlanoDistribuicao (READEQUACAO), SE N�O TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUIÇÃO NA TABELA tbPlanoDistribuicao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
         $readequacaoPDDist = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac);
@@ -1483,7 +1483,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $preconormal = str_replace(",", ".", str_replace(".", "", $_POST['newVlNormal']));
             $precopromocional = str_replace(",", ".", str_replace(".", "", $_POST['newVlPromocional']));
 
-            /* DADOS DO PLANO PARA INCLUS�O DA READEQUA��O */
+            /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
             $dadosInclusao = array();
             $dadosInclusao['idReadequacao'] = NULL;
             $dadosInclusao['idProduto'] = $_POST['newPlanoDistribuicao'];
@@ -1511,7 +1511,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('resposta'=>false));
             }
         } else {
-            $msg = utf8_encode('Esse plano de distribui��o j� foi cadastrado!');
+            $msg = utf8_encode('Esse plano de distribuição já foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -1520,7 +1520,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse fun��o � usada pelo proponente para solicitar a exclus�o de um plano de distribui��o.
+     * Esse função é usada pelo proponente para solicitar a exclusão de um plano de distribuição.
      */
     public function excluirPlanoDeDistribuicaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1530,7 +1530,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUI��O NA TABELA tbPlanoDistribuicao (READEQUACAO), SE N�O TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUIÇÃO NA TABELA tbPlanoDistribuicao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
         $readequacaoPDDist = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac);
@@ -1559,7 +1559,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO L�GICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpSolicitacao'] = 'E';
 
@@ -1597,12 +1597,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 14/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o para incluir uma solicita��o de readequa��o.
+     * Essa função para incluir uma solicitação de readequação.
      */
     public function incluirSolicitacaoReadequacaoAction() {
-        //FUN��O ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1616,29 +1616,29 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $busca = array();
         
-        if($idTipoReadequacao == 2){ //Planilha Or�ament�ria
+        if($idTipoReadequacao == 2){ //Planilha Orçamentária
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
             $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao= ?' => $idReadequacao));
             if(count($planilhaReadequada)==0){
-                parent::message('N�o houve nenhuma altera��o na planilha or�ament�ria do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('Não houve nenhuma alteração na planilha orçamentária do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($idTipoReadequacao == 9){ //Local de Realiza��o
+        } else if($idTipoReadequacao == 9){ //Local de Realização
             $tbAbrangencia = new tbAbrangencia();
             $locaisReadequados = $tbAbrangencia->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($locaisReadequados)==0){
-                parent::message('N�o houve nenhuma altera��o nos locais de realiza��o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('Não houve nenhuma alteração nos locais de realização do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($idTipoReadequacao == 11){ //Planos de Distribui��o
+        } else if($idTipoReadequacao == 11){ //Planos de Distribuição
             $tbPlanoDistribuicao = new tbPlanoDistribuicao();
             $planosReadequados = $tbPlanoDistribuicao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
-                parent::message('N�o houve nenhuma altera��o nos planos de distribui��o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('Não houve nenhuma alteração nos planos de distribuição do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($idReadequacao == 14){ //Planos de Divulga��o
+        } else if($idReadequacao == 14){ //Planos de Divulgação
             $tbPlanoDivulgacao = new tbPlanoDivulgacao();
             $planosReadequados = $tbPlanoDivulgacao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
-                parent::message('N�o houve nenhuma altera��o nos planos de divulga��o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('Não houve nenhuma alteração nos planos de divulgação do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         }
 
@@ -1650,23 +1650,23 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             // ==================== Dados do arquivo de upload ===============================
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
             $idDocumento = null;
             if(!empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens�o
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin�rio
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
 
-                if ($arquivoExtensao != 'pdf' && $arquivoExtensao != 'PDF') // extens�o do arquivo
+                if ($arquivoExtensao != 'pdf' && $arquivoExtensao != 'PDF') // extensão do arquivo
                 {
-                    throw new Exception('A extens�o do arquivo � inv�lida, envie somente arquivos <strong>.pdf</strong>!');
+                    throw new Exception('A extensão do arquivo é inválida, envie somente arquivos <strong>.pdf</strong>!');
                 }
-                else if ($arquivoTamanho > 5242880) // tamanho m�ximo do arquivo: 5MB
+                else if ($arquivoTamanho > 5242880) // tamanho máximo do arquivo: 5MB
                 {
-                    throw new Exception('O arquivo n�o pode ser maior do que <strong>5MB</strong>!');
+                    throw new Exception('O arquivo não pode ser maior do que <strong>5MB</strong>!');
                 }
 
                 $dadosArquivo = array(
@@ -1691,7 +1691,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dados = array(
                         'idTipoDocumento' => 38,
                         'idArquivo' => $idArquivo,
-                        'dsDocumento' => 'Solicita��o de Readequa��o',
+                        'dsDocumento' => 'Solicitação de Readequação',
                         'dtEmissaoDocumento' => NULL,
                         'dtValidadeDocumento' => NULL,
                         'idTipoEventoOrigem' => NULL,
@@ -1702,14 +1702,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $idDocumento = $idDocumento['idDocumento'];
             }
 
-            $auth = Zend_Auth::getInstance(); // pega a autentica��o
+            $auth = Zend_Auth::getInstance(); // pega a autenticação
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
 
             if ($idTipoReadequacao == 2) {
                 $descJustificativa = $this->_request->getParam('descJustificativa');
 
-                // se for tipo planilha or�amentaria, somente atualiza tbReadequacao
+                // se for tipo planilha orçamentaria, somente atualiza tbReadequacao
                 $dadosReadequacao = array();
                 $dadosReadequacao['dsJustificativa'] = $descJustificativa;
 
@@ -1744,13 +1744,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             if ($idReadequacao && $idTipoReadequacao != 2) {
                 $acaoErro = 'cadastrar';
 
-                parent::message("Solicita��o cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message("Solicitação cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             }  else if ($idReadequacao && $idTipoReadequacao == 2) {
                 $acaoErro = 'alterar';
 
-                parent::message("Solicita��o alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message("Solicitação alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } else {
-                throw new Exception("Erro ao $acaoErro a readequa��o!");
+                throw new Exception("Erro ao $acaoErro a readequação!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1761,12 +1761,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 14/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa fun��o para excluir uma solicita��o de readequa��o.
+     * Essa função para excluir uma solicitação de readequação.
      */
     public function excluirSolicitacaoReadequacaoAction() {
-        //FUN��O ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1799,26 +1799,26 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 }
             }
 
-            //Se for readequa��o de planilha or�ament�ria, exclui a planilha SR gerada.
+            //Se for readequação de planilha orçamentária, exclui a planilha SR gerada.
             if($dados->idTipoReadequacao == 2){
                 $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
                 $tbPlanilhaAprovacao->delete(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao = ?'=>$get->idReadequacao));
             }
 
-            //Se for readequa��o de local de realiza��o, exclui os registros na tbAbrangencia.
+            //Se for readequação de local de realização, exclui os registros na tbAbrangencia.
             if($dados->idTipoReadequacao == 9){
                 $tbAbrangencia = new tbAbrangencia();
                 $tbAbrangencia->delete(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S'));
             }
 
-            //Se for readequa��o de plano de distribui��o, exclui os registros na tbPlanoDistribuicao.
+            //Se for readequação de plano de distribuição, exclui os registros na tbPlanoDistribuicao.
             if($dados->idTipoReadequacao == 11){
                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                 $tbPlanoDistribuicao->delete(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S'));
             }
 
-            //Se for readequa��o de plano de divulga��o, exclui os registros na tbPlanoDivulgacao.
+            //Se for readequação de plano de divulgação, exclui os registros na tbPlanoDivulgacao.
             if($dados->idTipoReadequacao == 14){
                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                 $tbPlanoDivulgacao->delete(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S'));
@@ -1828,12 +1828,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             if ($exclusao) {
                 if ($dados->idTipoReadequacao == 2) {
-                    parent::message('Tipo de readequa��o exclu�da com sucesso!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
                 } else {
-                    parent::message('Tipo de readequa��o exclu�da com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
                 }
             } else {
-                throw new Exception("Erro ao excluir o tipo de readequa��o!");
+                throw new Exception("Erro ao excluir o tipo de readequação!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1842,9 +1842,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     }
 
     public function finalizarSolicitacaoReadequacaoAction() {
-        //FUN��O ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1885,12 +1885,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 }
             }
             if($atualizar) {
-                //altera a situa��o do projeto
+                //altera a situação do projeto
                 //$alterarSituacao = ProjetoDAO::alterarSituacao($idPronac, 'D20');
-                parent::message('Solicita��o enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message('Solicitação enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } // fecha if
             else {
-                throw new Exception("Erro ao finalizar as readequa��es!");
+                throw new Exception("Erro ao finalizar as readequações!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1899,7 +1899,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * painelAction - Lista dos Projetos em nas situa��es: Aguardando An�lise, Em
+     * painelAction - Lista dos Projetos em nas situações: Aguardando Análise, Em
      * Analise, Analisados.
      *
      * @since Alterada em 30/06/16
@@ -1910,9 +1910,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
      */
     public function painelAction()
     {
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if($this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
         
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -1942,7 +1942,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $ordenacao = "&campo=".$campo."&ordem=".$ordem;
 
         } else {
-            // ordena��o padr�o
+            // ordenação padrão
             $order = array($campo." ".$ordem);
             $ordenacao = null;
         }
@@ -1964,7 +1964,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         
         $this->view->filtro = $filtro;
         
-        // lista apenas readequa��es do �rg�o atual
+        // lista apenas readequações do órgão atual
         if ($filtro == 'aguardando_distribuicao') {
             $where['idOrgao = ?'] = $this->idOrgao;
         } else {
@@ -2016,9 +2016,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
      */
     public function imprimirReadequacoesAction(){
 
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if($this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2048,7 +2048,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         } else {
             $campo = null;
-            $order = array(5); //Dt. Solicita��o
+            $order = array(5); //Dt. Solicitação
             $ordenacao = null;
         }
 
@@ -2089,14 +2089,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Alterada em 19/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o usada para o coordenador de acompanhamento deferir ou n�o a solicita��o de readequa��o.
+     * Função usada para o coordenador de acompanhamento deferir ou não a solicitação de readequação.
      */
     public function avaliarReadequacaoAction() {
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         $perfisAcesso = array(121, 122, 123);
 
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2177,7 +2177,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * salvarAvaliacaoAction Fun��o utilizada pleo Coord. de Acompanhamento para avaliar a readequa��o e encaminh�-la.
+     * salvarAvaliacaoAction Função utilizada pleo Coord. de Acompanhamento para avaliar a readequação e encaminhá-la.
      *
      * @since  Alterada em 11/03/14
      * @author Jefferson Alessandro <jeffersonassilva@gmail.com>
@@ -2188,9 +2188,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function salvarAvaliacaoAction() {
         $perfisAcesso = array(121, 122, 123);
 
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = $this->_request->getParam('idReadequacao');
@@ -2209,7 +2209,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             if($this->_request->getParam('stAtendimento') == 'I'){
                 // indeferida
-                $r->siEncaminhamento = 2; //2=Solicita��o indeferida
+                $r->siEncaminhamento = 2; //2=Solicitação indeferida
                 $r->stEstado = 1;
             } else if ($this->_request->getParam('stAtendimento') == 'DP') {
                 // devolvida ao proponente
@@ -2219,7 +2219,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             } else {
                 // deferida
                 if($this->_request->getParam('vinculada') == 262 || $this->_request->getParam('vinculada') == 166){
-                    $r->siEncaminhamento = 4; //4=Enviado para An�lise T�cnica (SAV, SEFIC)
+                    $r->siEncaminhamento = 4; //4=Enviado para Análise Técnica (SAV, SEFIC)
                     $dataEnvio = new Zend_Db_Expr('GETDATE()');
                     $r->idAvaliador = $this->_request->getParam('destinatario');
                 } else if($this->_request->getParam('vinculada') == 400) {
@@ -2234,7 +2234,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             if($this->_request->getParam('stAtendimento') == 'D'){
 
-                // busca readequacao para ver se existe. Se n�o existe, cria, sen�o atualiza
+                // busca readequacao para ver se existe. Se não existe, cria, senão atualiza
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $jaDistribuiu = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$r->idReadequacao))->current();
 
@@ -2284,13 +2284,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Alterada em 11/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * FUN��O ACESSADA PELO TECNICO DE ACOMPANHAMENTO
+     * FUNÇÃO ACESSADA PELO TECNICO DE ACOMPANHAMENTO
     */
     public function painelReadequacoesAction() {
 
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, PARECERISTA E TECNICO DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, PARECERISTA E TECNICO DE ACOMPANHAMENTO.
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2372,8 +2372,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     break;
             }
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
-            // t�cnico de acompanhamento ou parecerista de vinculada
-            $auth = Zend_Auth::getInstance(); // pega a autentica��o
+            // técnico de acompanhamento ou parecerista de vinculada
+            $auth = Zend_Auth::getInstance(); // pega a autenticação
             $where['idTecnicoParecerista = ?'] = $auth->getIdentity()->usu_codigo;
 
             $total = $tbReadequacao->count('vwPainelReadequacaoTecnico', $where);
@@ -2418,13 +2418,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
     /*
      * Alterada em 12/03/14
-     * Fun��o acessada pelo Coordenador de Parecer, Coordenador de Acompanhamento, e Coordenador Geral de Acomapanhamento.
+     * Função acessada pelo Coordenador de Parecer, Coordenador de Acompanhamento, e Coordenador Geral de Acomapanhamento.
     */
     public function visualizarReadequacaoAction() {
 
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, COORD. DE ACOMPANHAMETO E COORD. GERAL DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, COORD. DE ACOMPANHAMETO E COORD. GERAL DE ACOMPANHAMENTO.
         if($this->idPerfil != 93 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $id = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2444,7 +2444,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
      /*
      * Alterada em 13/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o acessada pelo Coordenador de Parecer para encaminhar a readequa��o para o Parecerista.
+     * Função acessada pelo Coordenador de Parecer para encaminhar a readequação para o Parecerista.
     */
     public function encaminharReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -2466,7 +2466,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             //Atualiza a tabela tbReadequacao
             $dados = array();
-            $dados['siEncaminhamento'] = 4; // Enviado para an�lise t�cnica
+            $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
             $where = array();
             $where['idReadequacao = ?'] = $idReadequacao;
             $tbReadequacao = new tbReadequacao();
@@ -2501,13 +2501,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o acessada pelo Parecerista ou T�cnico de acompanhamento para avaliar a readequa��o.
+     * Função acessada pelo Parecerista ou Técnico de acompanhamento para avaliar a readequação.
     */
     public function formAvaliarReadequacaoAction(){
         $perfisAcesso = array(94, 121);
 
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = (int) Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2517,14 +2517,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $dados = $tbReadequacao->buscarDadosReadequacoes(array('idReadequacao = ?'=>$idReadequacao))->current();
         if(!$dados){
-            parent::message("Readequa��o n�o encontrada!", "readequacoes/painel-readequacoes", "ERROR");
+            parent::message("Readequação não encontrada!", "readequacoes/painel-readequacoes", "ERROR");
         }
         $this->view->dados = $dados;
         $this->view->idPronac = $dados->idPronac;
 
         $this->view->nmPagina = $dados->dsReadequacao;
         $d = array();
-        $d['ProvidenciaTomada'] = 'Readequa��o enviado para avalia��o t�cnica.';
+        $d['ProvidenciaTomada'] = 'Readequação enviado para avaliação técnica.';
         $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
         $where = "IdPRONAC = $dados->idPronac";
         $Projetos = new Projetos();
@@ -2545,12 +2545,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Criada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o acessada pelo Parecerista ou T�cnico de acompanhamento para avaliar a readequa��o.
+     * Função acessada pelo Parecerista ou Técnico de acompanhamento para avaliar a readequação.
     */
     public function salvarParecerTecnicoAction()
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 121){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $_POST['idPronac'];
@@ -2563,7 +2563,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $dadosRead = $tbReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao))->current();
 
-        //SE FOR READEQUA��O DE PLANILHA OR�AMENT�RIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR�.
+        //SE FOR READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR.
         if($dadosRead->idTipoReadequacao == 2){
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
@@ -2590,9 +2590,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
 
         try {
-            //ATUALIAZA A SITUA��O, �REA E SEGMENTO DO PROJETO
+            //ATUALIAZA A SITUAÇÃO, ÁREA E SEGMENTO DO PROJETO
             $d = array();
-            $d['ProvidenciaTomada'] = 'Readequa��o em an�lise pela �rea t�cnica.';
+            $d['ProvidenciaTomada'] = 'Readequação em análise pela área técnica.';
             //$d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
@@ -2666,7 +2666,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
                     $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
 
-                    $siEncaminhamento = 5; //Devolvido da an�lise t�cnica
+                    $siencaminhamento = 5; //Devolvido da análise técnica
                     if($this->idPerfil == 121){
                         $siEncaminhamento = 10; //Devolver para Coordenador do MinC
                     }
@@ -2676,7 +2676,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $where = "idReadequacao = $idReadequacao";
                     $tbReadequacao->update($dados, $where);
                 }
-                parent::message("A avalia��o da readequa��o foi finalizada com sucesso! ", "readequacoes/painel-readequacoes", "CONFIRM");
+                parent::message("A avaliação da readequação foi finalizada com sucesso! ", "readequacoes/painel-readequacoes", "CONFIRM");
             }
             $idReadequacao = Seguranca::encrypt($idReadequacao);
             parent::message("Dados salvos com sucesso!", "readequacoes/form-avaliar-readequacao?id=$idReadequacao", "CONFIRM");
@@ -2711,7 +2711,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Alterada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o acessada pelos coordenadores para devolver para an�lise t�cnica.
+     * Função acessada pelos coordenadores para devolver para análise técnica.
     */
     public function devolverReadequacaoAction() {
         $dados = array();
@@ -2726,21 +2726,21 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         //RECURSOS TRATADOS POR PARECERISTA
         if($siEncaminhamento == 6){
             //Atualiza a tabela tbRecurso
-            $dados['siEncaminhamento'] = 3; // Encaminhado do MinC para Unidade de An�lise
+            $dados['siEncaminhamento'] = 3; // Encaminhado do MinC para Unidade de Análise
             $where = "idReadequacao = $idReadequacao";
         } else {
-            $dados['siEncaminhamento'] = 4; // Encaminhado para o T�cnico
+            $dados['siEncaminhamento'] = 4; // Encaminhado para o Técnico
             $where = "idReadequacao = $idReadequacao";
         }
         $tbReadequacao->update($dados, $where);
 
-        parent::message("Readequa��o devolvida com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
+        parent::message("Readequação devolvida com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
     }
 
     /*
      * Alterada em 14/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o acessada pelo coordenador de an�lise para finalizar a readequa��o e encaminhar para o componente da comiss�o.
+     * Função acessada pelo coordenador de análise para finalizar a readequação e encaminhar para o componente da comissão.
     */
     public function coordAnaliseFinalizarReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -2795,12 +2795,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Alterada em 14/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o acessada pelo componente da comiss�o para analisar as readequa��es - painel.
+     * Função acessada pelo componente da comissão para analisar as readequações - painel.
     */
     public function analisarReadequacoesCnicAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2843,7 +2843,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         $where = array();
         $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-        $where['a.siEncaminhamento = ?'] = 7; // 7=Encaminhar para ao Componente da Comiss�o
+        $where['a.siEncaminhamento = ?'] = 7; // 7=Encaminhar para ao Componente da Comissão
         $where['d.idUnidade = ?'] = 400; // CNIC
         $where['d.idAvaliador = ?'] = $this->idUsuario;
 
@@ -2884,12 +2884,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     /*
      * Alterada em 17/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Fun��o acessada pelo componente da comiss�o para avaliar as readequa��es.
+     * Função acessada pelo componente da comissão para avaliar as readequações.
     */
     public function formAvaliarReadequacaoCnicAction(){
 
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -2915,22 +2915,22 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $buscarUnidade =  $TbPlanilhaUnidade->buscarUnidade();        
         $this->view->Unidade = $buscarUnidade;
 
-        //DADOS DA AVALIA��O T�CNICA ou PARECERISTA
+        //DADOS DA AVALIAÇÃO TÉCNICA ou PARECERISTA
         $avaliacaoTecnica = $tbReadequacao->buscarDadosParecerReadequacao(array('a.idReadequacao = ?'=>$idReadequacao, 'c.idTipoAgente = ?'=>1))->current();
         $this->view->avaliacaoTecnica = $avaliacaoTecnica;
 
-        //DADOS DA AVALIA��O DO COMPONENTE
+        //DADOS DA AVALIAÇÃO DO COMPONENTE
         $avaliacaoConselheiro = $tbReadequacao->buscarDadosParecerReadequacao(array('a.idReadequacao = ?'=>$idReadequacao, 'c.idTipoAgente = ?'=>6))->current();
         $this->view->avaliacaoConselheiro = $avaliacaoConselheiro;
     }
 
     /*
      * Alterada em 15/05/2015
-     * Fun��o acessada pelo componente da comiss�o para avaliar as readequa��es.
+     * Função acessada pelo componente da comissão para avaliar as readequações.
     */
     public function componenteComissaoSalvarAvaliacaoAction(){
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $_POST['idPronac'];
@@ -2943,7 +2943,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $dadosRead = $tbReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao))->current();
 
-        //SE FOR READEQUA��O DE PLANILHA OR�AMENT�RIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR�.
+        //SE FOR READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR.
         if($dadosRead->idTipoReadequacao == 2){
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
@@ -2993,7 +2993,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'Atendimento' => 'S',
                     'idEnquadramento' => $buscaEnquadramento['IdEnquadramento'],
                     'stAtivo' => 1,
-                    'idTipoAgente' => 6, //Componente da Comiss�o
+                    'idTipoAgente' => 6, //Componente da Comissão
                     'Logon' => $this->idUsuario
                 );
 
@@ -3047,18 +3047,18 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                     $stEstado = 0;
                     if($_POST['plenaria']){
-                        $campoSiEncaminhamento = 8; // 8=Enviado � Plen�ria
+                        $campoSiEncaminhamento = 8; // 8=Enviado à Plenária
                     } else {
-                        $campoSiEncaminhamento = 9; // 9=Enviado para Checklist Publica��o
+                        $campoSiEncaminhamento = 9; // 9=Enviado para Checklist Publicação
                         if(!in_array($read->idTipoReadequacao, array(2,3,10,12,15))){
-                            $campoSiEncaminhamento = 15; // 15=Finaliza a readequa��o sem a necessidade de enviar para publica��o no DOU.
+                            $campoSiEncaminhamento = 15; // 15=Finaliza a readequação sem a necessidade de enviar para publicação no DOU.
                             $stEstado = 1;
                         }
                     }
 
                     //ATUALIZA A TABELA tbReadequacao
                     $dados = array();
-                    $dados['siEncaminhamento'] = $campoSiEncaminhamento; // Devolvido da an�lise t�cnica
+                    $dados['siEncaminhamento'] = $campoSiEncaminhamento; // Devolvido da análise técnica
                     $dados['idNrReuniao'] = $idNrReuniao;
                     $dados['stEstado'] = $stEstado;
                     if($parecerProjeto == 2){
@@ -3073,9 +3073,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                     if($campoSiEncaminhamento != 8){
 
-                        if($parecerProjeto == 2){ //Se for parecer favor�vel, atualiza os dados solicitados na readequa��o
+                        if($parecerProjeto == 2){ //Se for parecer favorável, atualiza os dados solicitados na readequação
 
-                            // READEQUA��O DE PLANILHA OR�AMENT�RIA
+                            // READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA
                             if($read->idTipoReadequacao == 2){
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3111,15 +3111,15 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => $TipoAprovacao,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'AprovadoReal' => $AprovadoReal,
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUA��O DE ALTERA��O DE RAZ�O SOCIAL
-                            } else if($read->idTipoReadequacao == 3){ //Se for readequa��o de altera��o de raz�o social, atualiza os dados na AGENTES.dbo.Nomes.
+                            // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
+                            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na AGENTES.dbo.Nomes.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3130,14 +3130,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUA��O DE AG�NCIA BANC�RIA
-                            } else if($read->idTipoReadequacao == 4){ //Se for readequa��o de ag�ncia banc�ria, atualiza os dados na SAC.dbo.PreProjeto.// READEQUA��O DE ALTERA��O DE RAZ�O SOCIAL
+                            // READEQUAÇÃO DE AGÊNCIA BANCÁRIA
+                            } else if($read->idTipoReadequacao == 4){ //Se for readequação de agência bancária, atualiza os dados na SAC.dbo.PreProjeto.// READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
                                 $agenciaBancaria = str_replace('-', '', $read->dsSolicitacao);
@@ -3160,8 +3160,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $whereDadosBancarios['Sequencial = ?'] = $dadosPrj->Sequencial;
                                 $tblContaBancaria->alterar($arrayDadosBancarios, $whereDadosBancarios);
 
-                            // READEQUA��O DE SINOPSE DA OBRA
-                            } else if($read->idTipoReadequacao == 5){ //Se for readequa��o de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE SINOPSE DA OBRA
+                            } else if($read->idTipoReadequacao == 5){ //Se for readequação de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3170,8 +3170,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->Sinopse = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE IMPACTO AMBIENTAL
-                            } else if($read->idTipoReadequacao == 6){ //Se for readequa��o de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE IMPACTO AMBIENTAL
+                            } else if($read->idTipoReadequacao == 6){ //Se for readequação de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3180,8 +3180,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->ImpactoAmbiental = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE ESPECIFICA��O T�CNICA
-                            } else if($read->idTipoReadequacao == 7){ //Se for readequa��o de especifica��o t�cnica, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE ESPECIFICAÇÃO TÉCNICA
+                            } else if($read->idTipoReadequacao == 7){ //Se for readequação de especificação técnica, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3190,8 +3190,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->EspecificacaoTecnica = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE ESTRAT�GIA DE EXECU��O
-                            } else if($read->idTipoReadequacao == 8){ //Se for readequa��o de estrat�gia de execu��o, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE ESTRATÉGIA DE EXECUÇÃO
+                            } else if($read->idTipoReadequacao == 8){ //Se for readequação de estratégia de execução, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3200,8 +3200,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->EstrategiadeExecucao = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE LOCAL DE REALIZA��O
-                            } else if($read->idTipoReadequacao == 9){ //Se for readequa��o de local de realiza��o, atualiza os dados na SAC.dbo.Abrangencia.
+                            // READEQUAÇÃO DE LOCAL DE REALIZAÇÃO
+                            } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
                                 $Abrangencia = new Abrangencia();
                                 $tbAbrangencia = new tbAbrangencia();
                                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3209,18 +3209,18 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     $Projetos = new Projetos();
                                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                    //Se n�o houve avali��o do conselheiro, pega a avalia��o t�cnica como referencia.
+                                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
                                     $avaliacao = $abg->tpAnaliseComissao;
                                     if($abg->tpAnaliseComissao == 'N'){
                                         $avaliacao = $abg->tpAnaliseTecnica;
                                     }
 
-                                    //Se a avalia��o foi deferida, realiza as mudan�as necess�rias na tabela original.
+                                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi exclu�da, atualiza os status da abrangencia na SAC.dbo.Abrangencia
+                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na SAC.dbo.Abrangencia
                                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                                        } else if($abg->tpSolicitacao == 'I') { //Se a abang�ncia foi inclu�da, cria um novo registro na tabela SAC.dbo.Abrangencia
+                                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela SAC.dbo.Abrangencia
                                             $novoLocalRead = array();
                                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3238,8 +3238,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $whereAbr = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                                 $tbAbrangencia->update($dadosAbr, $whereAbr);
 
-                            // READEQUA��O DE ALTERA��O DE PROPONENTE
-                            } else if($read->idTipoReadequacao == 10){ //Se for readequa��o de altera��o de proponente, atualiza os dados na SAC.dbo.Projetos.
+                            // READEQUAÇÃO DE ALTERAÇÃO DE PROPONENTE
+                            } else if($read->idTipoReadequacao == 10){ //Se for readequação de alteração de proponente, atualiza os dados na SAC.dbo.Projetos.
 
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3251,14 +3251,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUA��O DE PLANO DE DISTRIBUI��O
-                            } else if($read->idTipoReadequacao == 11){ //Se for readequa��o de plano de distribui��o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
+                            // READEQUAÇÃO DE PLANO DE DISTRIBUIÇÃO
+                            } else if($read->idTipoReadequacao == 11){ //Se for readequação de plano de distribuição, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
                                 $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                                 $planosDistribuicao = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3267,18 +3267,18 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     $Projetos = new Projetos();
                                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                    //Se n�o houve avali��o do conselheiro, pega a avalia��o t�cnica como referencia.
+                                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
                                     $avaliacao = $plano->tpAnaliseComissao;
                                     if($plano->tpAnaliseComissao == 'N'){
                                         $avaliacao = $plano->tpAnaliseTecnica;
                                     }
 
-                                    //Se a avalia��o foi deferida, realiza as mudan�as necess�rias na tabela original.
+                                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribui��o foi exclu�do, atualiza os status do plano na SAC.dbo.PlanoDistribuicaoProduto
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribuição foi excluído, atualiza os status do plano na SAC.dbo.PlanoDistribuicaoProduto
                                             $PlanoDistribuicaoProduto->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idProduto = ?'=>$plano->idProduto, 'Area = ?'=>$plano->cdArea, 'Segmento = ?'=>$plano->cdSegmento));
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribui��o foi inclu�do, cria um novo registro na tabela SAC.dbo.PlanoDistribuicaoProduto
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribuição foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDistribuicaoProduto
                                             $novoPlanoDistRead = array();
                                             $novoPlanoDistRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDistRead['idProduto'] = $plano->idProduto;
@@ -3307,8 +3307,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $wherePDD = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                                 $tbPlanoDistribuicao->update($dadosPDD, $wherePDD);
 
-                            // READEQUA��O DE NOME DO PROJETO
-                            } else if($read->idTipoReadequacao == 12){ //Se for readequa��o de nome do projeto, insere o registo na tela de Checklist de Publica��o.
+                            // READEQUAÇÃO DE NOME DO PROJETO
+                            } else if($read->idTipoReadequacao == 12){ //Se for readequação de nome do projeto, insere o registo na tela de Checklist de Publicação.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3319,22 +3319,22 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUA��O DE PER�ODO DE EXECU��O
-                            } else if($read->idTipoReadequacao == 13){ //Se for readequa��o de per�odo de execu��o, atualiza os dados na SAC.dbo.Projetos.
+                            // READEQUAÇÃO DE PERÍODO DE EXECUÇÃO
+                            } else if($read->idTipoReadequacao == 13){ //Se for readequação de período de execução, atualiza os dados na SAC.dbo.Projetos.
                                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
                                 $dadosPrj->DtFimExecucao = $dtFimExecucao;
                                 $dadosPrj->save();
 
-                            // READEQUA��O DE PLANO DE DIVULGA��O
-                            } else if($read->idTipoReadequacao == 14){ //Se for readequa��o de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
+                            // READEQUAÇÃO DE PLANO DE DIVULGAÇÃO
+                            } else if($read->idTipoReadequacao == 14){ //Se for readequação de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
                                 $PlanoDeDivulgacao = new PlanoDeDivulgacao();
                                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                                 $planosDivulgacao = $tbPlanoDivulgacao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3343,15 +3343,15 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     $Projetos = new Projetos();
                                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                    //Se n�o houve avali��o do conselheiro, pega a avalia��o t�cnica como referencia.
+                                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
                                     $avaliacao = $plano->tpAnaliseComissao;
                                     if($plano->tpAnaliseComissao == 'N'){
                                         $avaliacao = $plano->tpAnaliseTecnica;
                                     }
 
-                                    //Se a avalia��o foi deferida, realiza as mudan�as necess�rias na tabela original.
+                                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga��o foi exclu�do, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulgação foi excluído, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
                                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                                             $tbLogomarca = new tbLogomarca();
                                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3362,7 +3362,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                                 $PlanoDivulgacaoEmQuestao->delete();
                                             }
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga��o foi inclu�do, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulgação foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
                                             $novoPlanoDivRead = array();
                                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -3381,8 +3381,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $wherePDD = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                                 $tbPlanoDivulgacao->update($dadosPDD, $wherePDD);
 
-                            // READEQUA��O DE RESUMO DO PROJETO
-                            } else if($read->idTipoReadequacao == 15){ //Se for readequa��o de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE RESUMO DO PROJETO
+                            } else if($read->idTipoReadequacao == 15){ //Se for readequação de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3393,14 +3393,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUA��O DE OBJETIVOS
-                            } else if($read->idTipoReadequacao == 16){ //Se for readequa��o de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE OBJETIVOS
+                            } else if($read->idTipoReadequacao == 16){ //Se for readequação de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3409,8 +3409,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->Objetivos = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE JUSTIFICATIVA
-                            } else if($read->idTipoReadequacao == 17){ //Se for readequa��o de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE JUSTIFICATIVA
+                            } else if($read->idTipoReadequacao == 17){ //Se for readequação de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3419,8 +3419,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->Justificativa = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE ACESSIBILIDADE
-                            } else if($read->idTipoReadequacao == 18){ //Se for readequa��o de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE ACESSIBILIDADE
+                            } else if($read->idTipoReadequacao == 18){ //Se for readequação de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3429,8 +3429,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->Acessibilidade = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE DEMOCRATIZA��O DE ACESSO
-                            } else if($read->idTipoReadequacao == 19){ //Se for readequa��o de democratiza��o de acesso, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE DEMOCRATIZAÇÃO DE ACESSO
+                            } else if($read->idTipoReadequacao == 19){ //Se for readequação de democratização de acesso, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3439,8 +3439,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->DemocratizacaoDeAcesso = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE ETAPAS DE TRABALHO
-                            } else if($read->idTipoReadequacao == 20){ //Se for readequa��o de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE ETAPAS DE TRABALHO
+                            } else if($read->idTipoReadequacao == 20){ //Se for readequação de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3449,8 +3449,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->EtapaDeTrabalho = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUA��O DE FICHA T�CNICA
-                            } else if($read->idTipoReadequacao == 21){ //Se for readequa��o de ficha t�cnica, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÇÃO DE FICHA TÉCNICA
+                            } else if($read->idTipoReadequacao == 21){ //Se for readequação de ficha técnica, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3471,10 +3471,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                         $tbDistribuirReadequacao->update($dados, $where);
                     }
 
-                    parent::message("A avalia��o da readequa��o foi finalizada com sucesso!", "readequacoes/analisar-readequacoes-cnic", "CONFIRM");
+                    parent::message("A avaliação da readequação foi finalizada com sucesso!", "readequacoes/analisar-readequacoes-cnic", "CONFIRM");
 
                 } else {
-                    parent::message("Erro ao avaliar a readequa��o!", "form-avaliar-readequacao-cnic?id=$idReadequacao", "ERROR");
+                    parent::message("Erro ao avaliar a readequação!", "form-avaliar-readequacao-cnic?id=$idReadequacao", "ERROR");
                 }
             }
             $idReadequacao = Seguranca::encrypt($idReadequacao);
@@ -3488,12 +3488,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
     /*
      * Alterada em 15/05/2015
-     * Fun��o criada para finalizar ou encaminhar a readequa��o para checklist de publica��o.
+     * Função criada para finalizar ou encaminhar a readequação para checklist de publicação.
     */
     public function encaminharReadequacaoChecklistAction() {
 
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
         // TODO: quando finalizar, mantem filtro de pronac caso estiver marca
         $auth = Zend_Auth::getInstance();
@@ -3521,8 +3521,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $read = $tbReadequacao->buscarReadequacao(array('idReadequacao =?'=>$idReadequacao))->current();
 
-        if($parecerTecnico->ParecerFavoravel == 2){ //Se for parecer favor�vel, atualiza os dados solicitados na readequa��o
-            // READEQUA��O DE PLANILHA OR�AMENT�RIA
+        if($parecerTecnico->ParecerFavoravel == 2){ //Se for parecer favorável, atualiza os dados solicitados na readequação
+            // READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA
             if($read->idTipoReadequacao == 2){
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3549,13 +3549,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'CO') {
                     $TipoAprovacao = 2;
                     $dadosPrj->Situacao = 'D28';
-                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de complementa��o';
+                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de complementação';
                     $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
                 } else if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RE'){
                     // reducao
                     $TipoAprovacao = 4;
                     $dadosPrj->Situacao = 'D29';
-                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de redu��o';
+                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de redução';
                     $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
                 }
 
@@ -3570,7 +3570,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                         'Sequencial' => $dadosPrj->Sequencial,
                         'TipoAprovacao' => $TipoAprovacao,
                         'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                        'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                        'ResumoAprovacao' => 'Parecer favorável para readequação',
                         #'AprovadoReal' => $AprovadoReal,
                         'AprovadoReal' => $TipoDeReadequacao[0]['vlReadequado'], //Alterado pelo valor retornado pela Store
                         'Logon' => $auth->getIdentity()->usu_codigo,
@@ -3580,8 +3580,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 		    $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
                 }
 
-                // READEQUA��O DE ALTERA��O DE RAZ�O SOCIAL
-            } else if($read->idTipoReadequacao == 3){ //Se for readequa��o de altera��o de raz�o social, atualiza os dados na AGENTES.dbo.Nomes.
+                // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
+            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na AGENTES.dbo.Nomes.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3592,14 +3592,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUA��O DE AG�NCIA BANC�RIA
-            } else if($read->idTipoReadequacao == 4){ //Se for readequa��o de ag�ncia banc�ria, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE AGÊNCIA BANCÁRIA
+            } else if($read->idTipoReadequacao == 4){ //Se for readequação de agência bancária, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
                 $agenciaBancaria = str_replace('-', '', $read->dsSolicitacao);
@@ -3622,8 +3622,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $whereDadosBancarios['Sequencial = ?'] = $dadosPrj->Sequencial;
                 $tblContaBancaria->alterar($arrayDadosBancarios, $whereDadosBancarios);
 
-            // READEQUA��O DE SINOPSE DA OBRA
-            } else if($read->idTipoReadequacao == 5){ //Se for readequa��o de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE SINOPSE DA OBRA
+            } else if($read->idTipoReadequacao == 5){ //Se for readequação de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3632,8 +3632,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->Sinopse = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE IMPACTO AMBIENTAL
-            } else if($read->idTipoReadequacao == 6){ //Se for readequa��o de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE IMPACTO AMBIENTAL
+            } else if($read->idTipoReadequacao == 6){ //Se for readequação de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3642,8 +3642,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->ImpactoAmbiental = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE ESPECIFICA��O T�CNICA
-            } else if($read->idTipoReadequacao == 7){ //Se for readequa��o de especifica��o t�cnica, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE ESPECIFICAÇÃO TÉCNICA
+            } else if($read->idTipoReadequacao == 7){ //Se for readequação de especificação técnica, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3652,8 +3652,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->EspecificacaoTecnica = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE ESTRAT�GIA DE EXECU��O
-            } else if($read->idTipoReadequacao == 8){ //Se for readequa��o de estrat�gia de execu��o, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE ESTRATÉGIA DE EXECUÇÃO
+            } else if($read->idTipoReadequacao == 8){ //Se for readequação de estratégia de execução, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3662,8 +3662,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->EstrategiadeExecucao = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE LOCAL DE REALIZA��O
-            } else if($read->idTipoReadequacao == 9){ //Se for readequa��o de local de realiza��o, atualiza os dados na SAC.dbo.Abrangencia.
+            // READEQUAÇÃO DE LOCAL DE REALIZAÇÃO
+            } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
                 $Abrangencia = new Abrangencia();
 
                 $tbAbrangencia = new tbAbrangencia();
@@ -3672,18 +3672,18 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $Projetos = new Projetos();
                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                    //Se n�o houve avali��o do conselheiro, pega a avalia��o t�cnica como referencia.
+                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
                     $avaliacao = $abg->tpAnaliseComissao;
                     if($abg->tpAnaliseComissao == 'N'){
                         $avaliacao = $abg->tpAnaliseTecnica;
                     }
 
-                    //Se a avalia��o foi deferida, realiza as mudan�as necess�rias na tabela original.
+                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
                     if($avaliacao == 'D'){
-                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi exclu�da, atualiza os status da abrangencia na SAC.dbo.Abrangencia
+                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na SAC.dbo.Abrangencia
                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                        } else if($abg->tpSolicitacao == 'I') { //Se a abang�ncia foi inclu�da, cria um novo registro na tabela SAC.dbo.Abrangencia
+                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela SAC.dbo.Abrangencia
                             $novoLocalRead = array();
                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3701,8 +3701,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $whereAbr = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                 $tbAbrangencia->update($dadosAbr, $whereAbr);
 
-            // READEQUA��O DE ALTERA��O DE PROPONENTE
-            } else if($read->idTipoReadequacao == 10){ //Se for readequa��o de altera��o de proponente, atualiza os dados na SAC.dbo.Projetos.
+            // READEQUAÇÃO DE ALTERAÇÃO DE PROPONENTE
+            } else if($read->idTipoReadequacao == 10){ //Se for readequação de alteração de proponente, atualiza os dados na SAC.dbo.Projetos.
 
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3714,14 +3714,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUA��O DE PLANO DE DISTRIBUI��O
-            } else if($read->idTipoReadequacao == 11){ //Se for readequa��o de plano de distribui��o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
+            // READEQUAÇÃO DE PLANO DE DISTRIBUIÇÃO
+            } else if($read->idTipoReadequacao == 11){ //Se for readequação de plano de distribuição, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
                 $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                 $planosDistribuicaoReadequados = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3738,13 +3738,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                 foreach ($planosDistribuicaoReadequados as $planoReadequado) {
 
-                    //Se n�o houve avali��o do conselheiro, pega a avalia��o t�cnica como referencia.
+                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
                     $avaliacao = $planoReadequado->tpAnaliseComissao;
                     if($planoReadequado->tpAnaliseComissao == 'N'){
                         $avaliacao = $planoReadequado->tpAnaliseTecnica;
                     }
 
-                    //Se a avalia��o foi deferida, realiza as mudan�as necess�rias na tabela original.
+                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
                     if($avaliacao == 'D'){
                         $registroExiste = false;
 
@@ -3789,8 +3789,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $wherePDD['idReadequacao = ?'] = $idReadequacao;
                 $tbPlanoDistribuicao->update($dadosPDD, $wherePDD);
 
-            // READEQUA��O DE NOME DO PROJETO
-            } else if($read->idTipoReadequacao == 12){ //Se for readequa��o de nome do projeto, insere o registo na tela de Checklist de Publica��o.
+            // READEQUAÇÃO DE NOME DO PROJETO
+            } else if($read->idTipoReadequacao == 12){ //Se for readequação de nome do projeto, insere o registo na tela de Checklist de Publicação.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3801,22 +3801,22 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUA��O DE PER�ODO DE EXECU��O
-            } else if($read->idTipoReadequacao == 13){ //Se for readequa��o de per�odo de execu��o, atualiza os dados na SAC.dbo.Projetos.
+            // READEQUAÇÃO DE PERÍODO DE EXECUÇÃO
+            } else if($read->idTipoReadequacao == 13){ //Se for readequação de período de execução, atualiza os dados na SAC.dbo.Projetos.
                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
                 $dadosPrj->DtFimExecucao = $dtFimExecucao;
                 $dadosPrj->save();
 
-            // READEQUA��O DE PLANO DE DIVULGA��O
-            } else if($read->idTipoReadequacao == 14){ //Se for readequa��o de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
+            // READEQUAÇÃO DE PLANO DE DIVULGAÇÃO
+            } else if($read->idTipoReadequacao == 14){ //Se for readequação de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
                 $PlanoDeDivulgacao = new PlanoDeDivulgacao();
                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                 $planosDivulgacao = $tbPlanoDivulgacao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3825,15 +3825,15 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $Projetos = new Projetos();
                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                    //Se n�o houve avali��o do conselheiro, pega a avalia��o t�cnica como referencia.
+                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
                     $avaliacao = $plano->tpAnaliseComissao;
                     if($plano->tpAnaliseComissao == 'N'){
                         $avaliacao = $plano->tpAnaliseTecnica;
                     }
 
-                    //Se a avalia��o foi deferida, realiza as mudan�as necess�rias na tabela original.
+                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
                     if($avaliacao == 'D'){
-                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga��o foi exclu�do, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
+                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulgação foi excluído, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                             $tbLogomarca = new tbLogomarca();
                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3842,7 +3842,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                             }
                             $PlanoDivulgacaoEmQuestao->delete();
 
-                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga��o foi inclu�do, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
+                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulgação foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
                             $novoPlanoDivRead = array();
                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -3861,8 +3861,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $wherePDD = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                 $tbPlanoDivulgacao->update($dadosPDD, $wherePDD);
 
-            // READEQUA��O DE RESUMO DO PROJETO
-            } else if($read->idTipoReadequacao == 15){ //Se for readequa��o de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE RESUMO DO PROJETO
+            } else if($read->idTipoReadequacao == 15){ //Se for readequação de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3873,14 +3873,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favor�vel para readequa��o',
+                    'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUA��O DE OBJETIVOS
-            } else if($read->idTipoReadequacao == 16){ //Se for readequa��o de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE OBJETIVOS
+            } else if($read->idTipoReadequacao == 16){ //Se for readequação de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3889,8 +3889,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->Objetivos = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE JUSTIFICATIVA
-            } else if($read->idTipoReadequacao == 17){ //Se for readequa��o de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE JUSTIFICATIVA
+            } else if($read->idTipoReadequacao == 17){ //Se for readequação de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3899,8 +3899,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->Justificativa = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE ACESSIBILIDADE
-            } else if($read->idTipoReadequacao == 18){ //Se for readequa��o de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE ACESSIBILIDADE
+            } else if($read->idTipoReadequacao == 18){ //Se for readequação de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3909,8 +3909,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->Acessibilidade = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE DEMOCRATIZA��O DE ACESSO
-            } else if($read->idTipoReadequacao == 19){ //Se for readequa��o de democratiza��o de acesso, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE DEMOCRATIZAÇÃO DE ACESSO
+            } else if($read->idTipoReadequacao == 19){ //Se for readequação de democratização de acesso, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3919,8 +3919,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->DemocratizacaoDeAcesso = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE ETAPAS DE TRABALHO
-            } else if($read->idTipoReadequacao == 20){ //Se for readequa��o de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE ETAPAS DE TRABALHO
+            } else if($read->idTipoReadequacao == 20){ //Se for readequação de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3929,8 +3929,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->EtapaDeTrabalho = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUA��O DE FICHA T�CNICA
-            } else if($read->idTipoReadequacao == 21){ //Se for readequa��o de ficha t�cnica, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÇÃO DE FICHA TÉCNICA
+            } else if($read->idTipoReadequacao == 21){ //Se for readequação de ficha técnica, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3943,7 +3943,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //Atualiza a tabela tbReadequacao
         $dados = array();
-        $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publica��o no DOU.
+        $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
         $dados['stEstado'] = 1;
 
         $tiposParaChecklist = array(2,3,10,12,15);
@@ -3951,21 +3951,21 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             // se remanejamento orcamentario
 
             if ($read->idTipoReadequacao == 2 && $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
-                $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publica��o no DOU.
+                $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
                 $dados['stEstado'] = 1;
             } else {
                 // reducao ou complementacao orcamentaria
 
 		// verificacao do tipo de parecer.
 		// $parecerTecnico->ParecerFavoravel
-		// 1 = desfavor�vel
-		// 2 = favor�vel
+		// 1 = desfavorável
+		// 2 = favorável
 		if ($parecerTecnico->ParecerFavoravel === '1') { // desfavoravel
 		    $dados['siEncaminhamento'] = 15;
 		    $dados['stEstado'] = 1;
 		} else {
 		    $dados['stEstado'] = 0;
-		    $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publica��o
+		    $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
 		}
             }
         }
@@ -3992,24 +3992,24 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $return2 = $tbDistribuirReadequacao->update($dados, $where);
 
         if(!$return && !$return2){
-            parent::message("N�o foi poss�vel encaminhar a readequa��o para o Checklist de Publica��o", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "ERROR");
+            parent::message("Não foi possível encaminhar a readequação para o Checklist de Publicação", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "ERROR");
         }
-        parent::message("Readequa��o finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "CONFIRM");
+        parent::message("Readequação finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "CONFIRM");
     }
 
 
     /*
-     * P�gina de cria��o de planilha or�ament�ria
+     * Página de criação de planilha orçamentária
      * Criada em 02/06/2016
-     * @author: Fern�o Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
      * @return void
      */
     public function planilhaOrcamentariaAction() {
-        //FUN��O ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         $this->view->idPerfil = $this->idPerfil;
         if($this->idPerfil != 1111){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -4017,7 +4017,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        // verifica��o adicional na pagina se pode incluir nova planilha orcamentaria
+        // verificação adicional na pagina se pode incluir nova planilha orcamentaria
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
 
         $proj = new Projetos();
@@ -4068,11 +4068,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
 
     /*
-     * Fun��o para verificar e criar planilha or�ament�ria. Recebe flag opcional para criar a planilha
+     * Função para verificar e criar planilha orçamentária. Recebe flag opcional para criar a planilha
      * Criada em 31/05/2016
-     * @author: Fern�o Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
-     * @return Bool   True se foi poss�vel criar a planilha ou se ela existe
+     * @return Bool   True se foi possível criar a planilha ou se ela existe
      */
     public function verificarPlanilhaAtivaAction() {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
@@ -4084,7 +4084,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $idReadequacao = $post->idReadequacao;
         $criarNovaPlanilha = $post->criarNovaPlanilha;
 
-        // Se n�o possui idReadequacao, cria entrada na tabela tbReadequacao
+        // Se não possui idReadequacao, cria entrada na tabela tbReadequacao
         if ($idReadequacao == 0) {
 
             $tblAgente = new Agente_Model_DbTable_Agentes();
@@ -4105,12 +4105,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             try {
                 $idReadequacao = $tbReadequacao->inserir($dados);
             } catch (Zend_Exception $e) {
-                echo json_encode(array('msg' => 'Houve um erro na cria��o do registro de tbReadequacao'));
+                echo json_encode(array('msg' => 'Houve um erro na criação do registro de tbReadequacao'));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
 
-        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE N�O TIVER, COPIA A ORIGINAL
+        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
@@ -4156,7 +4156,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     )
                 );
             } catch (Zend_Exception $e) {
-                echo json_encode(array('msg' => 'Houve um erro na cria��o das planilhas SR'));
+                echo json_encode(array('msg' => 'Houve um erro na criação das planilhas SR'));
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
@@ -4222,18 +4222,18 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     }
 
     /*
-     * Encaminhar para an�lise t�cnica
+     * Encaminhar para análise técnica
      * Criada em 13/06/2016
-     * @author: Fern�o Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
      * @return void
      */
     public function encaminharAnaliseTecnicaAction() {
         $perfisAcesso = array(121, 122, 123);
 
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -4259,19 +4259,19 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * formEncaminharAnaliseTecnicaAction Fun��o utilizada pleo Coord. de Acompanhamento para encaminhar readequacao
+     * formEncaminharAnaliseTecnicaAction Função utilizada pleo Coord. de Acompanhamento para encaminhar readequacao
      *
      * @since  Criada em 13/06/2016
-     * @author Fern�o Lopes Ginez de Lara <fernao.lara@cultura.gov.br>
+     * @author Fernão Lopes Ginez de Lara <fernao.lara@cultura.gov.br>
      * @access public
      * @return void
      */
     public function formEncaminharAnaliseTecnicaAction() {
         $perfisAcesso = array(121, 122, 123);
 
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = $this->_request->getParam('idReadequacao');
@@ -4284,7 +4284,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         try {
             if (in_array($idUnidade, array(Orgaos::ORGAO_SAV, Orgaos::ORGAO_SEFIC))) {
-                // MUDAN�A DE TECNICO
+                // MUDANÇA DE TECNICO
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idAvaliador' => $destinatario,
@@ -4312,9 +4312,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
                 }
             } else {
-                // MUDAN�A DE VINCULADA
+                // MUDANÇA DE VINCULADA
 
-                // MUDAN�A DE TECNICO
+                // MUDANÇA DE TECNICO
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idUnidade' => $idUnidade,
@@ -4343,15 +4343,15 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             }
         } catch(Exception $e) {
             if ($this->idPerfil == 121) {
-                parent::message('Erro ao encaminhar readequa��o!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
+                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
             } else {
-                parent::message('Erro ao encaminhar readequa��o!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
+                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
             }
         }
     }
 
      /*
-      * verificarLimitesOrcamentarios Consulta ajax para verficiar limites or�ament�rios de readequa��o
+      * verificarLimitesOrcamentarios Consulta ajax para verficiar limites orçamentários de readequação
       * @since  31/08/2016
       * @author Fernao Lopes Ginez de Lara fernao.lara@cultura.gov.br
       * @access public
@@ -4378,12 +4378,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 'PENDENTE' => "O custo administrativo supera 15% do valor total do projeto. Para corrigir, reduza o valor da etapa em R$ ",
             ),
             'remuneracao' => array(
-                'OK' => "Remunera��o para capta��o de recursos est� dentro dos par�metros permitidos.",
-                'PENDENTE' => "A remunera��o para capta��o de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto � R$ "
+                'OK' => "Remuneração para captação de recursos está dentro dos parâmetros permitidos.",
+                'PENDENTE' => "A remuneração para captação de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto é R$ "
             ),
             'divulgacao' => array(
-                'OK' => "Divulga��o / Comercializa��o est� dentro dos par�metros permitidos.",
-                'PENDENTE' => "A divulga��o ou a comercializa��o supera 20%. Para corrigir, reduza o valor da etapa em R$ "
+                'OK' => "Divulgação / Comercialização está dentro dos parâmetros permitidos.",
+                'PENDENTE' => "A divulgação ou a comercialização supera 20%. Para corrigir, reduza o valor da etapa em R$ "
             )
         );
 
