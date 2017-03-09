@@ -146,7 +146,9 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intUsuCodigo = $arrAuth['usu_codigo'];
         $grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+
         $intUsuOrgao = $grupoAtivo->codGrupo;
+        //var_dump($intUsuOrgao, $grupoAtivo->codOrgao);die;
         $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
         if (empty($intIdPronac)) {
             $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL AND tbMensagemProjeto.idDestinatario = ?' => $intUsuCodigo);
@@ -170,7 +172,9 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intUsuCodigo = $arrAuth['usu_codigo'];
         $grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-        $intUsuOrgao = $grupoAtivo->codGrupo;
+        $intUsuOrgao = $grupoAtivo->codOrgao;
+        //$intUsuOrgao = $grupoAtivo->codGrupo;
+        //var_dump($intUsuOrgao, $grupoAtivo->codOrgao);die;
         $dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
         $this->view->arrResult =  $dbTable->carregarPerguntasSemResposta($intUsuCodigo, $intUsuOrgao);
         $this->view->usuCodigo = $intUsuCodigo;

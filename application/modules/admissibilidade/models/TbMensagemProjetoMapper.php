@@ -65,7 +65,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
                 $model->setIdRemetenteUnidade($intUsuOrgao);
-                $model->setCdTipoMensagem(1);
+                $model->setCdTipoMensagem('R');
                 $arrMensagemOrigem = $this->getDbTable()->findBy($arrData['idMensagemOrigem']);
                 $model->setIdDestinatario($arrMensagemOrigem['idRemetente']);
                 $model->setIdDestinatarioUnidade($arrMensagemOrigem['idRemetenteUnidade']);
@@ -122,7 +122,9 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                 $auth = Zend_Auth::getInstance(); // pega a autenticacao
                 $arrAuth = array_change_key_case((array)$auth->getIdentity());
                 $grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-                $intUsuOrgao = $grupoAtivo->codGrupo;
+                $intUsuOrgao = $grupoAtivo->codOrgao;
+                //$intUsuOrgao = $grupoAtivo->codGrupo;
+                //var_dump($intUsuOrgao, $grupoAtivo->codOrgao);die;
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
                 $model->setIdRemetenteUnidade($intUsuOrgao);
