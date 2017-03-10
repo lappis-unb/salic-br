@@ -1,17 +1,15 @@
 <!--
 /**
  * Folha de estilo principal do sistema
- * @author IVIA / POLITEC
- * @since 2010/2011
  * @version 1.0
- * @copyright � 2010/2011 Minist�rio da Cultura - Todos os direitos reservados.
+ * @copyright 2010/2011 Ministerio da Cultura - Todos os direitos reservados.
  * @package css
  * @link http://salic.cultura.gov.br
  */
 
 @charset "utf-8";
 
-/* ========== IN�CIO ESTRUTURA GERAL DO LAYOUT ========== */
+/* ========== INICIO ESTRUTURA GERAL DO LAYOUT ========== */
 * {
 	margin:0;
 	padding:0;
@@ -50,6 +48,10 @@ strong {
 }
 a:hover {
 	text-decoration:none;
+}
+
+select {
+	min-height: 30px;
 }
 
 /***************************************************************************************************
@@ -180,11 +182,23 @@ a:hover {
 	list-style-type:none;
 	padding:0 12px 1px 0;
 }
+
 #atalhos a {
 	color:#27360d;
 	text-decoration:none;
 	display:block;
 	text-indent:21px;
+}
+
+#atalhos a.btn-floating.small {
+	width: 25px;
+	height: 25px;
+	margin-top: 2px;
+}
+
+#atalhos .btn-floating.small i {
+	line-height: 28px;
+	font-size: 1.3rem;
 }
 
 #barra-brasil {
@@ -525,7 +539,7 @@ ul.fg-menu-footer {
 
 
 
-/* ========== IN�CIO JQUERY ========== */
+/* ========== INICIO JQUERY ========== */
 #Jquery {
 	margin:50px;
 	font:12px "Trebuchet MS", sans-serif;
@@ -534,7 +548,7 @@ ul.fg-menu-footer {
 
 
 
-/* ========== IN�CIO TABELAS ========== */
+/* ========== INICIO TABELAS ========== */
 table caption {
     border: 2px solid #cecece;
     border-bottom-width: 0px;
@@ -550,7 +564,8 @@ table caption {
 	background: #f8feff;
 }
 #conteudo table td {
-	background:url(../img/bg-celulas.gif) repeat-x ;
+	/*background:url(../img/bg-celulas.gif) repeat-x ;*/
+	background: #fff;
 	padding:8px;
 	/*color:auto;*/
 }
@@ -596,13 +611,13 @@ table tfoot td strong {
 .tabela_busca { /* tabela para consulta de dados centralizada na tela */
 	margin:100px auto;
 }
-.titulo_tabela { /* t�tulos de tabelas */
+.titulo_tabela { /* titulos de tabelas */
 	background:#36963f;
 	color:#fff;
 	font-weight:bold;
 	text-align:center;
 }
-.titulo_campo { /* t�tulos de campos */
+.titulo_campo { /* titulos de campos */
 	background:#fff url(../img/bg-celulas.gif) repeat-x;
 	font-weight:bold;
 	text-align:center;
@@ -623,7 +638,10 @@ table tfoot td strong {
 
 
 
-/* ========== IN�CIO ABAS ========== */
+/* ========== INICIO ABAS ========== */
+#tabs {
+	color: #212121;
+}
 div.simpleTabs {
 	padding:0 2px 0 0;
 	position:relative;
@@ -679,7 +697,7 @@ div.simpleTabsContent.currentTab {
 
 
 
-/* ========== IN�CIO FORMUL�RIOS ========== */
+/* ========== INICIO FORMUL�RIOS ========== */
 .input_simples, .textarea_simples, .select_simples, .input_simples2 {
 	background:#fff url(../img/input-bg.gif) repeat-x;
 	border:1px solid #ccc;
@@ -844,7 +862,7 @@ label {
 
 
 
-/* ========== IN�CIO TAMANHOS ========== */
+/* ========== INICIO TAMANHOS ========== */
 .w100 input { width:100px; }
 .w200 input { width:200px; }
 .w250 input { width:250px; }
@@ -912,7 +930,7 @@ label {
 
 
 
-/* ========== IN�CIO CORES ========== */
+/* ========== INICIO CORES ========== */
 .red, .red a       { color:#c30; }
 .green, .green a   { color:#096; }
 .blue, .blue a     { color:#06c; }
@@ -926,7 +944,7 @@ label {
 .bg_black   { background:#000; }
 .bg_white   { background:#fff; }
 .bold       { font-weight:bold; }
-.del_link a { text-decoration:none; color:auto; }
+.del_link a { text-decoration:none; color:inherit; }
 label.error { color:red; }
 
 /* cores conforme situacao */
@@ -937,7 +955,7 @@ label.error { color:red; }
 .AI { color:#f00; }
 .CS { color:#06f; }
 
-/* formata��o de planilhas */
+/* formatacao de planilhas */
 .planilha_incentivo div.plan, .total_planilha_incentivo {
 	color:#c30;
 	font-size:17pt;
@@ -978,7 +996,7 @@ div.plan span {
 
 
 
-/* ========== IN�CIO ALINHAMENTOS ========== */
+/* ========== INICIO ALINHAMENTOS ========== */
 .float_left  { float:left; }
 .float_right { float:right; }
 .esquerda    { text-align:left; }
@@ -989,7 +1007,7 @@ div.plan span {
 
 
 
-/* ========== IN�CIO EXIBI��ES E MENSAGENS DO SISTEMA ========== */
+/* ========== INICIO EXIBICOES E MENSAGENS DO SISTEMA ========== */
 .carregando, .msg, .msgALERT, .msgCONFIRM, .msgERROR, .carregando_ajax {
 	background:#ffc;
 	border:1px solid #ccc;
@@ -1041,11 +1059,11 @@ div.plan span {
 .sumir {
 	display:none;
 }
-/* ========== FIM EXIBI��ES E MENSAGENS DO SISTEMA ========== */
+/* ========== FIM EXIBICOES E MENSAGENS DO SISTEMA ========== */
 
 
 
-/* ========== IN�CIO MENU SANFONA ========== */
+/* ========== INICIO MENU SANFONA ========== */
 /* ajustes para ativa��o do highlight no menu 'sanfona' */
 .qmactive { background:url(../img/seta-menu-contexto-on.png) no-repeat !important; }
 #space_menu {
@@ -1056,7 +1074,7 @@ div.plan span {
 
 
 
-/* ========== IN�CIO LOADER ========== */
+/* ========== INICIO LOADER ========== */
 .loader {
 	background:url(../img/ajax.gif) no-repeat center;
 	padding:5px 0 50px;
@@ -1074,7 +1092,7 @@ div.plan span {
 
 
 
-/* ========== IN�CIO REGULARIDADE ========== */
+/* ========== INICIO REGULARIDADE ========== */
 #regularidade {
 	width:200px;
 	height:auto;
@@ -1116,7 +1134,7 @@ div.plan span {
 
 
 
-/* ========== IN�CIO BOT�ES ========== */
+/* ========== INICIO BOT�ES ========== */
 .btn_close, .btn_help {
 	float:right;
 	cursor:pointer;
@@ -1536,7 +1554,7 @@ div.plan span {
 	width:127px;
 }
 .btn_redistribuir_projetos,
-.btn_redistribuir_projetos,
+.btn_redistribuir_projetos
 {
 	width:127px;
 }
@@ -1821,6 +1839,15 @@ footer.green a {
 	/*border:none;*/
 /*}*/
 
+.ui-datepicker .ui-datepicker-title {
+	font-size: 20px;
+}
+
+.ui-datepicker td span, .ui-datepicker td a {
+	padding: 0.5em;
+	font-size: 18px;
+}
+
 .ui-dialog .ui-dialog-titlebar {
 	background: rgb(76,175,80);
 }
@@ -1848,4 +1875,8 @@ footer.green a {
 
 .ui-datepicker table > tbody > tr{
 	background: #388e3c;
+}
+
+.ui-datepicker th, .ui-datepicker td {
+	border-radius: 0;
 }
