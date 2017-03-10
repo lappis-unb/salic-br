@@ -4,9 +4,6 @@
  * @author emanuel.sampaio - Politec
  * @since 17/02/2011
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -14,10 +11,8 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
-	protected $_schema  = "dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbDiligencia";
-
-
 
 	 /**
 	 * M�todo para cadastrar
@@ -34,7 +29,7 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 	 * M�todo para buscarDados
 	 * @access public
 	 * @param array $dados
-	 * @return array 
+	 * @return array
 	 */
 	public function buscarDados($idPronac)
 	{
@@ -43,7 +38,7 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 		$select->from(
 			array('d' => $this->_name),
 		        array("*"));
-		
+
         $select->where("d.idPronac = ".$idPronac);
         $select->where("stEstado = 0");
         $select->where("DtResposta IS NULL");
@@ -73,35 +68,35 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 		                	  'd.stProrrogacao',
 		                	  'd.stEnviado')
 		);
-		
+
 		$select->joinInner(
 				array('p'=>'Projetos'),'d.idPronac = p.IdPRONAC',
 				array('(p.AnoProjeto + p.Sequencial) AS PRONAC',
 					  'p.NomeProjeto')
 		);
-		
+
 		$select->joinLeft(
 				array('doc'=>'DocumentosExigidos'),'d.idCodigoDocumentosExigidos = doc.Codigo',
 				array('doc.Opcao',
 					  'doc.Descricao as DocumentosExigidos')
 		);
-		                
+
 		$select->joinInner(
 				array('v'=>'Verificacao'),'d.idTipoDiligencia = v.idVerificacao',
 				array('v.Descricao')
-		);                
-		                
+		);
+
 		$select->joinLeft(
 				array('a'=>'tbArquivo'),'d.idArquivo = a.idArquivo',
 				array('a.nmArquivo','a.sgExtensao'),
 				'BDCORPORATIVO.scCorp'
-		);                
+		);
 
 
-		
-		
+
+
 		if($idPronac !=null || $idProduto !=null || $idSolicitante !=null || $idDiligencia !=null){
-                
+
                 if($idPronac !=null)
                 {
                 	$select->where('d.idPronac = ?', $idPronac);
@@ -118,18 +113,12 @@ class tbDiligencia extends MinC_Db_Table_Abstract
                     $select->where('d.idDiligencia = ?', $idDiligencia);
                 }
             }
-            		                
-        
+
+
         return $this->fetchAll($select);
 	} // fecha m�todo buscaDiligencia()
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	/**
 	 * M�todo para alterar
 	 * @access public
@@ -142,7 +131,6 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 		$where = "idDistribuirParecer = " . $where;
 		return $this->update($dados, $where);
 	} // fecha m�todo alterarDados()
-
 
 
 	/**
@@ -158,7 +146,6 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 	} // fecha m�todo excluirDados()
 
 
-
 	/**
 	 * Fun��o para checar o status da dilig�ncia
 	 */
@@ -168,7 +155,7 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->fetchAll($sql);	
+		return $db->fetchAll($sql);
 	} // fecha m�todo fnChecarDiligencia()
 
-} // fecha class
+}

@@ -48,13 +48,13 @@ $(document).ready( function() {
 			<td width="50%"><b>CPF / CNPJ</b></td>
 		</tr>
 		<tr>
-			<td><?php echo $this->agente[0]->Nome; ?></td>
+			<td><?php echo $this->agente[0]->nome; ?></td>
 			<td>
 				<?php
-				if (strlen($this->agente[0]->CNPJCPF) > 11) {
-					echo Mascara::addMaskCNPJ($this->agente[0]->CNPJCPF);
+				if (strlen($this->agente[0]->cnpjcpf) > 11) {
+					echo Mascara::addMaskCNPJ($this->agente[0]->cnpjcpf);
 				} else {
-					echo Mascara::addMaskCPF($this->agente[0]->CNPJCPF);
+					echo Mascara::addMaskCPF($this->agente[0]->cnpjcpf);
 				}
 				?>
 			</td>
@@ -71,7 +71,7 @@ $(document).ready( function() {
 		</tr>
 		<?php
 		foreach ($this->visoes as $visoes) {
-			echo "<tr><td>".$visoes->Descricao."</td>";
+			echo "<tr><td>".$visoes->descricao."</td>";
 			echo "<td>".$visoes->area."</td></tr>";
 		}
 		?>

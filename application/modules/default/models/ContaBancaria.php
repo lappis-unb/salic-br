@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Modelo que representa a tabela SAC.dbo.ContaBancaria 
+ * Modelo que representa a tabela SAC.dbo.ContaBancaria
  *
  * @author Danilo Lisboa
  */
 class ContaBancaria extends MinC_Db_Table_Abstract {
     protected  $_banco = 'SAC';
+    protected  $_schema = 'SAC';
     protected  $_name = 'ContaBancaria';
 
 
@@ -197,11 +198,11 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
 
             return $this->fetchRow($select);
 	}
-    
+
     public function painelContasBancarias($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('c' => $this->_name),
             array(
                 new Zend_Db_Expr("
@@ -223,9 +224,9 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
                     c.ContaLivre AS ContaMovimento,
                     c.DtLoteRemessaCB,
                     c.OcorrenciaCB,
-                    CASE 
+                    CASE
                         WHEN c.ContaBloqueada = '000000000000'
-                        THEN 0 
+                        THEN 0
                         ELSE 1
                     END AS TemCaptacao
                 ")
@@ -274,5 +275,5 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
 }

@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s9">
+            <form method="POST" id="formGerarPdf" name="formGerarPdf" target="_blank" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>" style="display:none">
+                <textarea name="html" id="conteudoImprimir"></textarea>
+            </form>
+
+            <h4>Resumo: An&aacute;lise visual por t&eacute;cnico</h4>
+
+            <div class="conteudoImprimivel" id="conteudoImprimivel">
+            <form action="<?php echo $this->urlGerarGrafico; ?>" method="post" name="frmGraficoResumo" id="frmGraficoResumo" target="_blank">
+                <table class="tabela" >
+                    <tr>
+                        <th width="70%">An&aacute;lises</th>
+                        <th width="20%">Registros</th>
+                        <th width="10%"><input type="submit" name="todos" class="btn_gerar_grafico" value="" /></th>
+                    </tr>
+                    <?php $totalGeral=0; $totalReavaliacao=0; $totalInicial=0;?>
+                    <tr class="destacar">
+                        <td><b>Reavalia&ccedil;&atilde;o</b></td>
+                        <td align="right" id="totalReavaliacao"></td>
+                        <td><input type="submit" name="reavaliacao" class="btn_gerar_grafico" value=""/></td>
+                    </tr>
+                    <?php foreach($this->resumoReavaliacao as $resumo=>$valor): ?>
+                    <tr>
+                        <td align="left"><?php echo $resumo; ?></td>
+                        <td align="right"><?php echo $valor; ?></td>
+                        <td width="10%"></td>
+                    </tr>
+                    <?php $totalReavaliacao+=$valor; $totalGeral+=$valor; ?>
+                    <?php endforeach; ?>
+                    <tr class="destacar">
+                        <td><b>Inicial</b></td>
+                        <td align="right" id="totalInicial"></td>
+                        <td><input type="submit" name="inicial" class="btn_gerar_grafico" value=""/></td>
+                    </tr>
+                    <?php foreach($this->resumoInicial as $resumo=>$valor): ?>
+                    <tr>
+                        <td align="left"><?php echo $resumo; ?></td>
+                        <td align="right"><?php echo $valor; ?></td>
+                        <td width="10%"></td>
+                    </tr>
+                    <?php $totalInicial+=$valor; $totalGeral+=$valor; ?>
+                    <?php endforeach; ?>
+                    <tr>
+                        <th align="left">Total Geral</th>
+                        <th align="right"><?php echo $totalGeral; ?></th>
+                        <th></th>
+                    </tr>
+                </table>
+
+            </div><!-- fecha conteudo imprimivel -->
+
+            <?php echo Grafico::formConfiguracao($this->baseUrl(),null,false) ; ?>
+            <?php foreach($this->resumoReavaliacao as $resumo=>$valor): ?>
+                <input type="hidden" name="gValReavaliacao_<?php echo $resumo; ?>" value="<?php echo $valor; ?>" />
+            <?php endforeach; ?>
+            <?php foreach($this->resumoInicial as $resumo=>$valor): ?>
+                <input type="hidden" name="gValInicial_<?php echo $resumo; ?>" value="<?php echo $valor; ?>" />
+            <?php endforeach; ?>
+            </form>
+            <table class="tabela" style="width: 40%;">
+            <tr>
+            <td class="centro">
+                <input type="button" title="Imprimir" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
+                <input type="button" title="Configurar Gr&aacute;fico" class="btn_configurar_grafico" id="btn_configurar_grafico" style="display: ;" onclick="$('#confGrafico').toggle(); $(this).hide();" />
+            </td>
+            </tr>
+            </table>
+        </div>
+</div>
+</div>
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+    $("#totalReavaliacao").html("<b>"+<?php echo $totalReavaliacao;?>+"</b>");
+    $("#totalInicial").html("<b>"+<?php echo $totalInicial;?>+"</b>");
+});
+//-->
+</script>

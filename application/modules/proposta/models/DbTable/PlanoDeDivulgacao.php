@@ -18,7 +18,7 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
     protected $_banco = 'sac';
     protected $_schema = 'sac';
     protected $_name  = 'planodedivulgacao';
-    protected $_primary  = 'idplanodivulgacao';
+    protected $_primary  = 'idPlanoDivulgacao';
 
     public static function buscarDigulgacao($idPreProjeto){
         $sql = "SELECT

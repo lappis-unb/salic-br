@@ -350,26 +350,26 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                     // cadastra dados do arquivo
                     $sql = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivo (nmArquivo, sgExtensao, dsTipo, nrTamanho, dtEnvio, dsHash, stAtivo) " .
                             "VALUES ('" . $arquivoNome . "', '" . $arquivoExtensao . "', '" . $arquivoTipo . "', '" . $arquivoTamanho . "', GETDATE(), '" . $arquivoHash . "', 'A')";
-                    $db = Zend_Registry :: get('db');
+                    $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $resultado = $db->query($sql);
 
                     // pega o id do arquivo
-                    $db = Zend_Registry :: get('db');
+                    $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $idGerado = $db->fetchOne("SELECT MAX(idArquivo) AS id FROM BDCORPORATIVO.scCorp.tbArquivo");
 
                     // insere o bin�rio do arquivo
                     $sql = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivoImagem " .
                             "VALUES ($idGerado, $arquivoBinario)";
-                    $db = Zend_Registry :: get('db');
+                    $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $resultado = $db->query($sql);
 
                     // insere informa��es do documento
                     $sql = "INSERT INTO BDCORPORATIVO.scSac.tbComprovanteExecucao (idPRONAC, idTipoDocumento, nmComprovante, dsComprovante, idArquivo, idSolicitante, dtEnvioComprovante, stParecerComprovante, stComprovante) " .
                             "VALUES ($pronac, $tipoDocumento, '$titulo', '$descricao', $idGerado, 9997, GETDATE(), 'AG', 'A')";
-                    $db = Zend_Registry :: get('db');
+                    $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $resultado = $db->query($sql);
 

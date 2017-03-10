@@ -7,7 +7,7 @@
 class AvaliacaoFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbAvaliacaoFiscalizacao';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
     public function buscaAvaliacaoFiscalizacao($idRelatorioFiscalizacao) {
@@ -42,4 +42,4 @@ class AvaliacaoFiscalizacao extends MinC_Db_Table_Abstract {
             return 'AvaliacaoFiscalizacao -> alteraAvaliacaoFiscalizacao. Erro:' . $e->getMessage();
         }
     }
-} // fecha class
+}

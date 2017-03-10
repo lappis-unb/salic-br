@@ -198,7 +198,7 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
             
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Lista_Secretarios.xls;");
+            header("Content-Disposition: inline; filename=Lista_Secretarios.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {

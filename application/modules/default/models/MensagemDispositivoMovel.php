@@ -8,12 +8,12 @@
 class MensagemDispositivoMovel extends GenericModel{
 
     protected $_name = 'tbMensagemDispositivoMovel';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
     /**
      * Lista todos os dispositivos por idPronac.
-     * 
+     *
      * @param integer $idPronac
      * @return array
      */
@@ -30,8 +30,8 @@ class MensagemDispositivoMovel extends GenericModel{
 //                'cpf',
 //                'idRegistration'))
 //        ;
-//        
+//
 //        return $this->fetchAll($consulta);
 //    }
-    
+
 }

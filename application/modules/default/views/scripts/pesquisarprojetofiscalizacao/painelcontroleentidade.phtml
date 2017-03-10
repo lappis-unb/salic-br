@@ -1,27 +1,19 @@
 <?php
 $pesquisarHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 'action' => 'parametropesquisa'));
-
-/* INICIO DA GUIA DE LINKS */
-$controller = 'Pesquisarprojetofiscalizacao';
 $links = array(
     array('Fiscaliza&ccedil;&atilde;o do Projeto' => array())
 );
-montaGuiaLinks('Pesquisarprojetofiscalizacao', $links);
-/* FIM DA GUIA DE LINKS */
+gerarBreadCrumb($links);
 ?>
 <div id="total" style="width: 100%;">
 
     <div>
-        <!-- início: #titulo -->
         <div id="titulo">
             <div>
                 Fiscaliza&ccedil;&atilde;o do Projeto
                 <?php echo montaBotaoVoltar($controller, $links); ?>
             </div>
         </div>
-
-        <!-- final: #titulo -->
-        <!-- início: área principal #conteudo -->
         <div id="conteudo">
             <div id='painel'>
                 <?php
@@ -54,16 +46,15 @@ montaGuiaLinks('Pesquisarprojetofiscalizacao', $links);
                         $primeiro++;
                     }
                     if (count($valor['projetos']) <= 0) {
-                    	echo "<tr><th>NÃO EXISTE(M) PROJETO(S)</th></tr>";
+                    	echo "<tr><th>Nï¿½O EXISTE(M) PROJETO(S)</th></tr>";
                     }
                     echo "</table>";
                     echo "</div>";
                 }
                 ?>
             </div>
-        </div><!-- final: conteúdo principal #conteudo -->
+        </div>
         <div id="rodapeConteudo" ><span></span></div>
-        <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
     </div>
     <br clear="all" />
 </div>

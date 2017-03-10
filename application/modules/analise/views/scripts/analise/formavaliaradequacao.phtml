@@ -1,0 +1,86 @@
+<div class="container-salic">
+    <div class="row">
+        <div class="col s12">
+            <div class="section">
+                <h5>Avaliar readequa&ccedil;&atilde;o do projeto: <b><?php echo $this->projeto['NomeProjeto']?> (<?php echo $this->projeto['AnoProjeto'] . $this->projeto['Sequencial']; ?>)</b></h5>
+            </div>
+
+            <form name="formAvaliarAdequacao" id="formAvaliarAdequacao" class="materialize" method="post" action ="<?php echo $this->url(array('module'=>'analise', 'controller' => 'analise', 'action' => 'salvaravaliacaadequacao')); ?>">
+                <input type="hidden" name="idProjeto" id="idProjeto" value="<?php echo $this->projeto['IdPRONAC']; ?>" />
+                <div class="row no-padding no-margin">
+                    <div class="input-field col s6 m6">
+                        <select id="conformidade" name="conformidade" class="no-margin">
+                            <option value="0">N&atilde;o, devolver para o proponente.</option>
+                            <option value="1">Sim, enviar para vinculada.</option>
+                        </select>
+                        <label for="conformidade">O projeto est&aacute; em conformidade de adequa&ccedil;&atilde;o?</label>
+                    </div>
+                </div>
+                <div class="row no-padding no-margin">
+                    <div class="col s12">
+                        <b>Avalia&ccedil;&atilde;o</b> *
+                        <textarea cols="80" id="observacao" name="observacao" class="observacao editor" rows="10"></textarea>
+                        <br>
+                    </div>
+                </div>
+
+                <?php //if ($this->avaliar) : ?>
+                    <div class="row no-padding no-margin">
+                        <div class="input-field col s12 center-align">
+                            <a class="modal-action modal-close waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">
+                                Salvar <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                <?php //endif; ?>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        tinymce.remove();
+
+        var editorRico = $("#observacao").editorRico({
+            altura: 200,
+            isLimitarCarateres: true
+        });
+
+        $("#formAvaliarAdequacao").validate({
+            rules: {
+                observacao: {
+                    validarPreenchimento: true,
+                    validarPreenchimentoMaximo: true
+                }
+            },
+            messages: {
+                observacao: {
+                    validarPreenchimento: "Avalia&ccedil;&atilde;o &eacute; obrigat&oacute;ria",
+                    validarPreenchimentoMaximo: "Limite excedido"
+                }
+            },
+
+            submitHandler: function (form) {
+                $("#container-progress").show();
+                form.submit();
+            },
+            invalidHandler: function (event, validator) {
+                Materialize.toast(validator.submitted.observacao, 4000);
+            }
+        });
+
+        $.validator.addMethod("validarPreenchimento", function (value, element) {
+            if (editorRico.contarCaracteres() > 0) {
+                return true;
+            }
+        });
+        $.validator.addMethod("validarPreenchimentoMaximo", function (value, element) {
+            if (editorRico.contarCaracteres() <= 1000) {
+                return true;
+            }
+        });
+
+    });
+</script>

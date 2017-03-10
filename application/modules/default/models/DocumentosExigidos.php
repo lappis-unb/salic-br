@@ -11,8 +11,9 @@
  */
 class DocumentosExigidos extends MinC_Db_Table_Abstract {
     protected $_name   = 'DocumentosExigidos';
-    protected $_schema = 'dbo';
+    protected $_schema = 'sac';
     protected $_banco  = 'SAC';
+    protected $_primary = 'Codigo';
 
     function listarDocumentosExigido($idCodigoDocumentosExigidos = ''){
         $select = $this->select();
@@ -30,8 +31,20 @@ class DocumentosExigidos extends MinC_Db_Table_Abstract {
         $select->where('Opcao in ?', new Zend_Db_Expr('(1,2)'));
         if($idCodigoDocumentosExigidos)
             $select->where('Codigo = ?',$idCodigoDocumentosExigidos);
+
+
         return $this->fetchAll($select);
     }
+
+    function listaDocumentosObrigatoriosPF() {
+
+    }
+
+    function listaDocumentosObrigatoriosPJ() {
+
+    }
+
+
     
 }
 ?>

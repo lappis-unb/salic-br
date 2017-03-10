@@ -156,8 +156,8 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
     {
         $sql = "SELECT usu_codigo
 					,idAgente
-				FROM " . UsuarioDAO::getStaticTableName('tabelas', 'usuarios') . " u
-					INNER JOIN " . UsuarioDAO::getStaticTableName('agentes', 'agentes') . " a ON (u.usu_identificacao = a.cnpjcpf)
+				FROM " . UsuarioDAO::getStaticTableName('tabelas') . ".USUARIOS u
+					INNER JOIN " . UsuarioDAO::getStaticTableName('agentes') . ".AGENTES a ON (u.usu_identificacao = a.cnpjcpf)
 				WHERE usu_codigo = $usu_codigo";
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -179,7 +179,8 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
      */
     public static function buscarUsuarioScriptcase($idusuario)
     {
-        return (new Autenticacao_Model_Sgcacesso())->buscar(array('idusuario = ?' => $idusuario));
+        $objSGCAcesso = new Autenticacao_Model_Sgcacesso();
+        return $objSGCAcesso->buscar(array('idusuario = ?' => $idusuario));
     }
 
     public static function buscarUsuario($cod)

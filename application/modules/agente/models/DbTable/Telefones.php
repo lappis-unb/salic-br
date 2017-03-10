@@ -38,7 +38,7 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idtelefone';
+    protected $_primary = 'idTelefone';
 
 
 
@@ -55,7 +55,7 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
         $tblAgentes = new Agente_Model_DbTable_Agentes();
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        $tl = [
+        $tl = array(
             'tl.idtelefone',
             'tl.tipotelefone',
             'tl.numero',
@@ -72,19 +72,18 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
                     THEN 'Fax'
                     END as dstelefone
             ")
-        ];
+        );
 
-        $ddd = [
+        $ddd = array(
             'ddd.codigo as ddd',
             'ddd.codigo as codigo',
-        ];
+        );
 
         $sql = $db->select()->distinct()
-            ->from(['tl' => $this->_name], $tl, $this->_schema)
-            ->join(['uf' => 'uf'], 'uf.iduf = tl.uf', ['uf.sigla as ufsigla'], $this->_schema)
-            ->join(['ag' => 'agentes'], 'ag.idagente = tl.idagente', ['ag.idagente'], $this->_schema)
-            ->joinLeft(['ddd' => 'ddd'], 'tl.ddd = ddd.codigo', $ddd, $this->_schema)
-        ;
+            ->from(array('tl' => $this->_name), $tl, $this->_schema)
+            ->join(array('uf' => 'uf'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $this->_schema)
+            ->join(array('ag' => 'agentes'), 'ag.idagente = tl.idagente', array('ag.idagente'), $this->_schema)
+            ->joinLeft(array('ddd' => 'ddd'), 'tl.ddd = ddd.codigo', $ddd, $this->_schema);
 
         if (!empty($idAgente)) { // busca de acordo com o id do agente
             $sql->where('tl.idagente = ?', $idAgente);

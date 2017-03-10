@@ -1,12 +1,13 @@
-<?php 
+<?php
 /*
  * Classe: Composi��o
  * Modulo: Editais
- * Criado por: Emanuel Melo 
+ * Criado por: Emanuel Melo
  */
 class Composicao extends MinC_Db_Table_Abstract {
-    
+
     protected  $_banco = 'SAC';
+    protected  $_schema = 'SAC';
     protected  $_name = 'tbComposicao';
 
     /*
@@ -17,7 +18,7 @@ class Composicao extends MinC_Db_Table_Abstract {
     public function buscarComposicao($where = array(), $order = array(), $dbg = null){
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        
+
         foreach ($where as $coluna => $valor) :
             $select->where($coluna, $valor);
         endforeach;

@@ -3,18 +3,14 @@
  * DAO Orgaos
  * @since 16/03/2011
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbOrgaos extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "TABELAS";
-	protected $_schema = "dbo";
+	protected $_banco  = "tabelas";
+	protected $_schema = "tabelas";
 	protected $_name   = "Orgaos";
-
 
 	public function orgaosXprojetos($idOrgao){
         $select = $this->select();
@@ -28,4 +24,4 @@ class tbOrgaos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-} // fecha class
+}

@@ -14,7 +14,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 {
     protected $_name='tbsolicitaritem';
     protected $_schema = 'sac';
-    protected $_primary = 'idsolicitaritem';
+    protected $_primary = 'idSolicitarItem';
     /**
      * exibirprodutoetapaitem
      *
@@ -74,10 +74,19 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()->distinct()
-            ->from(['p' => 'tbitensplanilhaproduto'], null, $this->_schema)
-            ->join(['pr' => 'produto'], '(p.idproduto = pr.codigo)', ['pr.codigo as idProduto', 'pr.descricao as Produto'], $this->_schema)
-            ->join(['i' => 'tbplanilhaitens'], '(p.idplanilhaitens = i.idplanilhaitens)', null, $this->_schema)
-            ->join(['e' => 'tbplanilhaetapa'], '(p.idplanilhaetapa = e.idplanilhaetapa)', null, $this->_schema)
+            ->from(array('p' => 'tbitensplanilhaproduto'), null, $this->_schema)
+            ->join(
+                array('pr' => 'produto')
+                ,'(p.idproduto = pr.codigo)'
+                , array(
+                    'pr.codigo as idProduto'
+                    ,'pr.descricao as Produto'
+                    ,'i.descricao as NomeDoItem'
+                )
+                , $this->_schema
+            )
+            ->join(array('i' => 'tbplanilhaitens'), '(p.idplanilhaitens = i.idplanilhaitens)', null, $this->_schema)
+            ->join(array('e' => 'tbplanilhaetapa'), '(p.idplanilhaetapa = e.idplanilhaetapa)', null, $this->_schema)
             ;
 
 
@@ -110,13 +119,13 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()->distinct();
-        $sql->from(['p' => 'tbitensplanilhaproduto'], null, $this->_schema
+        $sql->from(array('p' => 'tbitensplanilhaproduto'), null, $this->_schema
         );
         $sql->joinInner(array('pr'=>'produto'), 'p.idproduto = pr.codigo', null, $this->_schema);
 
         $sql->joinInner(array('i'=>'tbplanilhaitens'), 'p.idplanilhaitens = i.idplanilhaitens', null, $this->_schema);
 
-        $sql->joinInner(array('e'=>'tbplanilhaetapa'), 'p.idplanilhaetapa = e.idplanilhaetapa',  ['e.idplanilhaetapa as idEtapa', 'e.descricao as Etapa'], $this->_schema);
+        $sql->joinInner(array('e'=>'tbplanilhaetapa'), 'p.idplanilhaetapa = e.idplanilhaetapa',  array('e.idplanilhaetapa as idEtapa', 'e.descricao as Etapa'), $this->_schema);
 
         $sql->where('p.idproduto = ?', $idProduto);
         $sql->order('Etapa ASC');
@@ -178,10 +187,10 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['p' => 'tbitensplanilhaproduto'], 'p.idplanilhaitens', $this->_schema)
-            ->join(['pr' => 'produto'], '(p.idproduto = pr.codigo)', ['pr.codigo as idProduto','pr.descricao as Produto'], $this->_schema)
-            ->join(['i' => 'tbplanilhaitens'], '(p.idplanilhaitens = i.idplanilhaitens)', ['i.descricao as NomeDoItem'], $this->_schema)
-            ->join(['e' => 'tbplanilhaetapa' ], '(p.idplanilhaetapa = e.idplanilhaetapa)', ['e.idplanilhaetapa as idEtapa', 'e.descricao as Etapa' ], $this->_schema)
+            ->from(array('p' => 'tbitensplanilhaproduto'), 'p.idplanilhaitens', $this->_schema)
+            ->join(array('pr' => 'produto'), '(p.idproduto = pr.codigo)', array('pr.codigo as idProduto','pr.descricao as Produto'), $this->_schema)
+            ->join(array('i' => 'tbplanilhaitens'), '(p.idplanilhaitens = i.idplanilhaitens)', array('i.descricao as NomeDoItem'), $this->_schema)
+            ->join(array('e' => 'tbplanilhaetapa'), '(p.idplanilhaetapa = e.idplanilhaetapa)', array('e.idplanilhaetapa as idEtapa', 'e.descricao as Etapa'), $this->_schema)
             ;
 
         //$sql = "SELECT
@@ -232,7 +241,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['produto'], ['codigo as codproduto', 'descricao as Produto'], $this->_schema)
+            ->from(array('produto'), array('codigo as codproduto', 'descricao as Produto'), $this->_schema)
             ->where('stestado = 0')
             ->order('produto')
             ;
@@ -264,7 +273,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as codetapa', 'descricao as Etapa'], $this->_schema)
+            ->from(array('tbplanilhaetapa'), array('idplanilhaetapa as codetapa', 'descricao as Etapa'), $this->_schema)
             ;
 
         return $db->fetchAll($sql);
@@ -291,7 +300,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from('tbplanilhaitens', ['idplanilhaitens as coditens', 'descricao as Item', 'idusuario'], $this->_schema)
+            ->from('tbplanilhaitens', array('idplanilhaitens as coditens', 'descricao as Item', 'idusuario'), $this->_schema)
             ->order('descricao');
 
         return $db->fetchAll($sql);
@@ -364,7 +373,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $col = [
+        $col = array(
             'prod.codigo as idproduto',
             'prod.descricao as produto',
             'et.idplanilhaetapa',
@@ -381,13 +390,13 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
                 ELSE 'Negado'
             END as estado"),
             new Zend_Db_Expr('resposta')
-            ];
+        );
 
         $sql = $db->select()
-            ->from(['sol' => 'tbsolicitaritem'], $col, $this->_schema)
-            ->join(['prod' => 'produto'], 'sol.idproduto = prod.codigo', null, $this->_schema)
-            ->join(['et' => 'tbplanilhaetapa'], 'sol.idetapa = et.idplanilhaetapa', null, $this->_schema)
-            ->joinLeft(['it' => 'tbplanilhaitens'],  'sol.idplanilhaitens = it.idplanilhaitens', null, $this->_schema)
+            ->from(array('sol' => 'tbsolicitaritem'), $col, $this->_schema)
+            ->join(array('prod' => 'produto'), 'sol.idproduto = prod.codigo', null, $this->_schema)
+            ->join(array('et' => 'tbplanilhaetapa'), 'sol.idetapa = et.idplanilhaetapa', null, $this->_schema)
+            ->joinLeft(array('it' => 'tbplanilhaitens'),  'sol.idplanilhaitens = it.idplanilhaitens', null, $this->_schema)
             ->where('sol.idagente = ?', $idAgente)
             ->order('sol.idsolicitaritem')
             ;
@@ -397,7 +406,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
     public function cadastraritem($dadosassociar) {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 
@@ -519,7 +528,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cols = [
+        $cols = array(
             'prod.codigo as idProduto',
             'prod.descricao as Produto',
             'et.idplanilhaetapa',
@@ -536,13 +545,13 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
                 ELSE 'Negado'
             END as Estado"),
             new Zend_Db_Expr('resposta')
-        ];
+        );
 
         $sql = $db->select()
-            ->from(['sol' => 'tbsolicitaritem'], $cols, $this->_schema)
-            ->join(['prod' => 'produto'], 'sol.idproduto = prod.codigo', null,$this->_schema)
-            ->join(['et' => 'tbplanilhaetapa'], 'sol.idetapa = et.idplanilhaetapa', null, $this->_schema)
-            ->joinLeft(['it' => 'tbplanilhaitens'] , 'sol.idplanilhaitens = it.idplanilhaitens', null,$this->_schema)
+            ->from(array('sol' => 'tbsolicitaritem'), $cols, $this->_schema)
+            ->join(array('prod' => 'produto'), 'sol.idproduto = prod.codigo', null,$this->_schema)
+            ->join(array('et' => 'tbplanilhaetapa'), 'sol.idetapa = et.idplanilhaetapa', null, $this->_schema)
+            ->joinLeft(array('it' => 'tbplanilhaitens'), 'sol.idplanilhaitens = it.idplanilhaitens', null,$this->_schema)
             ;
 
         foreach ($where as $coluna=>$valor)

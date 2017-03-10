@@ -31,12 +31,16 @@ class MinC_Db_Mapper
         return $this->arrMessages;
     }
 
-    public function setMessage($mixMessage)
+    public function setMessage($mixMessage, $strIndice = null)
     {
         if (is_array($mixMessage)) {
             $this->arrMessages = array_merge($this->arrMessages, $mixMessage);
         } else {
-            $this->arrMessages[] = $mixMessage;
+            if ($strIndice) {
+                $this->arrMessages[$strIndice] = $mixMessage;
+            } else {
+                $this->arrMessages[] = $mixMessage;
+            }
         }
         return $this;
     }
@@ -132,7 +136,7 @@ class MinC_Db_Mapper
         }
     }
 
-    public function isValid()
+    public function isValid($model)
     {
         return true;
     }
@@ -149,13 +153,16 @@ class MinC_Db_Mapper
      */
     public function save($model)
     {
-        if ($this->isValid()) {
+        if ($this->isValid($model)) {
 
             $table = $this->getDbTable();
             $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
+//            $pk = strtolower($pk);
             $method = 'get' . ucfirst($pk);
             $pkValue = $model->$method();
-            $data = array_filter($model->toArray(), 'strlen');
+//            $data = array_filter($model->toArray(), 'strlen');
+            $data = array_filter($model->toArray(), function($value){return ($value !== null);});
+//            $data = array_filter($model->toArray());($model->toArray());
 
             if ($table->getSequence()) {
                 unset($data[$pk]);
@@ -173,20 +180,6 @@ class MinC_Db_Mapper
             }
 
         }
-    }
-
-    public function find()
-    {
-        $result = $this->getDbTable()->find($id);
-//        if (0 == count($result)) {
-//            return;
-//        }
-//        $row = $result->current();
-//        $agentes->setId($row->id)
-//            ->setEmail($row->email)
-//            ->setComment($row->comment)
-//            ->setCreated($row->created);
-        return $result;
     }
 
     /**
@@ -207,23 +200,4 @@ class MinC_Db_Mapper
         return $this->getDbTable()->fetchPairs($key, $value, $where, $order);
     }
 
-    public function fetchAll()
-    {
-        $resultSet = $this->getDbTable()->fetchAll();
-//        $entries   = array();
-//        foreach ($resultSet as $row) {
-//            $entry = new Agente_Model_DbTable_Agentes();
-//            $entry->setId($row->id)
-//                ->setEmail($row->email)
-//                ->setComment($row->comment)
-//                ->setCreated($row->created);
-//            $entries[] = $entry;
-//        }
-//        echo '<pre>';
-//        var_dump('$entry');
-//        var_dump($entry);
-//        exit;
-//        return $entries;
-        return $resultSet;
-    }
 }

@@ -13,7 +13,7 @@ class HistoricoDAO extends Zend_Db_Table
 				WHERE  IdPRONAC = " . $pronac . " 
 				ORDER By Data";
 		
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
@@ -37,7 +37,7 @@ class HistoricoDAO extends Zend_Db_Table
  				where mp.stAtivo = 'A' and Pr.IdPRONAC = '$pronac'
 				order by mp.dtEncaminhamento desc ";
 					
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		

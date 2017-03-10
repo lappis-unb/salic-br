@@ -11,8 +11,8 @@
  */
 class Reuniao extends MinC_Db_Table_Abstract{
 
-    protected $_banco = 'SAC';
-    protected $_name  = 'dbo.tbReuniao';
+    protected $_schema = 'SAC';
+    protected $_name  = 'tbReuniao';
 
     /**
      * Retorna a Ultima Reiniao Aberta
@@ -68,8 +68,10 @@ class Reuniao extends MinC_Db_Table_Abstract{
                 "stPlenaria",
                 "DtInicio",
                 "DtFinal"
-            )
+            ),
+            $this->_schema
         );
+
         $select->order($order);
 
         return $this->fetchAll($select);
@@ -94,4 +96,3 @@ class Reuniao extends MinC_Db_Table_Abstract{
     
 }
 
-?>

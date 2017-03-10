@@ -25,7 +25,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
         $sql = "SELECT idProjeto FROM sac.dbo.Projetos WHERE idPronac = $idpronac";
         try
         {
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_ASSOC);
             return $db->fetchRow($sql);
         }
@@ -48,7 +48,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
 
         try
         {
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_ASSOC);
             return $db->fetchRow($sql);
         }
@@ -113,7 +113,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
 //
 //        try
 //        {
-//            $db = Zend_Registry :: get('db');
+//            $db = Zend_Db_Table::getDefaultAdapter();
 //            $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 //            return $db->fetchAll($sql);
 //        }

@@ -142,7 +142,6 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         }
 
         if ($this->_request->getParam("modal") == "s") {
-            header("Content-Type: text/html; charset=ISO-8859-1");
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $this->view->modal = "n";
         } else {
@@ -998,9 +997,8 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         }
     }
 
-    public function calculadataemissaoduracaoAction() {
-
-        //$data = $this->_request->getParam("dtIni");
+    public function calculadataemissaoduracaoAction()
+    {
         $tipo = $this->_request->getParam("tipo");
         $duracao = $this->_request->getParam("duracao");
         $dtEmissao = $this->_request->getParam("dtEmissao");
@@ -1008,7 +1006,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         if (empty($dtEmissao) && strlen($dtEmissao) < 10) {
             $result['data'] = false;
             echo json_encode($result);
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+            $this->_helper->json($result);
         }
 
         if (!empty($duracao)) {
@@ -1019,12 +1017,12 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             if (!empty($data)) {
                 $result['existe'] = true;
                 $result['data'] = $data;
-                echo json_encode($result);
-                $this->_helper->viewRenderer->setNoRender(TRUE);
+
+                $this->_helper->json($result);
+
             } else {
                 $result['data'] = false;
-                echo json_encode($result);
-                $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json($result);
             }
         }
 
@@ -1034,8 +1032,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         if ($dtTemp > date("Ymd")) {
             $result['error'] = true;
             $result['msg'] = utf8_encode("Data de emiss&atilde;o deve ser menor ou igual a data atual");
-            echo json_encode($result);
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+            $this->_helper->json($result);
         } else {
 
             if (!empty($tipo)) {
@@ -1055,16 +1052,12 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
                 $result['existe'] = true;
                 $result['error'] = false;
                 $result['data'] = $dtEmissao;
-                echo json_encode($result);
-                $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json($result);
             } else {
                 $result['data'] = false;
                 $result['error'] = false;
-                echo json_encode($result);
-                $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json($result);
             }
         }
     }
-
-// fecha m�todo manterregularidadeproponenteAction()
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwPainelCoordenadorAvaliacaoTrimestral
  * @since 17/12/2012
@@ -13,11 +13,10 @@ class vwPainelCoordenadorAvaliacaoTrimestral extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwPainelCoordenadorAvaliacaoTrimestral';
     protected $_primary = 'IdPRONAC';
 
-    
     public function excluirArquivo($idArquivo) {
         $where = "idArquivo = " . $idArquivo;
         return $this->delete($where);
@@ -56,4 +55,4 @@ class vwPainelCoordenadorAvaliacaoTrimestral extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 
-} // fecha class
+}

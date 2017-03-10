@@ -1,32 +1,11 @@
 <?php
 
-/**
- * Class Agente_Model_DbTable_UF
- *
- * @name Agente_Model_DbTable_UF
- * @package Modules/Agente
- * @subpackage Models/DbTable
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 01/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
 {
-    protected $_banco = "agentes";
+    protected $_banco = 'AGENTES';
     protected $_name = 'uf';
-    protected $_schema = 'agentes';
+    protected $_schema = 'AGENTES';
 
-    /**
-     * Metodo para buscar os estados
-     * @access public
-     * @param void
-     * @return array
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
-     */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
         $select = $this->select();
@@ -39,21 +18,12 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
         );
         $select->order('sigla');
         try {
-            $db = Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            return $db->fetchAll($select);
+            return $this->fetchAll($select);
         } catch (Zend_Exception_Db $objException) {
             throw new Exception("Erro ao buscar Estados: " . $objException->getMessage(), 0, $objException);
         }
     }
 
-    /**
-     * Metodo para buscar os estados de acordo com a regiao
-     * @access public
-     * @param void
-     * @return array
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
-     */
     public function buscarRegiao($regiao)
     {
         $objEstado = self::obterInstancia();
@@ -79,7 +49,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from($this->_name, ['iduf AS id', 'sigla AS descricao'], $this->_schema);
+            ->from($this->_name, array('iduf AS id', 'sigla AS descricao'), $this->_schema);
 
         if (!empty($id)) {
             $sql->where('iduf = ?', $id);

@@ -19,30 +19,47 @@
         p{
             padding:15px;
         }
+
+        table.identificacao tr {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
 <body style="paddig:20px">
-<center><h1>Proposta Cultural</h1></center>
+<?php if( $this->isEditarProjeto ) : ?>
+    <center><h1>Alterar Projeto</h1></center>
+<?php else : ?>
+    <center><h1>Proposta Cultural</h1></center>
+<?php endif; ?>
 <br>
 <h2>Identifica&ccedil;&atilde;o </h2>
-<table>
+<table class="identificacao">
     <tr>
         <td width="300px">
             N. da Proposta: <br><b><?php echo $this->id_projeto; ?></b>
         </td>
         <td>
-            Nome da Proposta: <br><b></b><?php echo $this->rsDadosProjeto['nomeprojeto']; ?></b>
+            Nome da Proposta: <br><b><?php echo $this->rsDadosProjeto['nomeprojeto']; ?></b>
         </td>
     </tr>
     <tr>
         <td width="300px">
-            Proponente: <br><b></b><?php echo $this->rsDadosProjeto['cnpjcpf'].' - '.$this->rsDadosProjeto['nomeagente']; ?></b>
+            Mecanismo: <br>
+            <b><?php echo $this->mecanismo; ?></b>
         </td>
         <td>
-            Mecanismo: <br>
-            <b></b><?php echo $this->mecanismo; ?></b>
-
+            Proponente: <br><b><?php echo $this->rsDadosProjeto['cnpjcpf'];?> - <?php echo utf8_encode($this->rsDadosProjeto['nomeagente']); ?></b>
+        </td>
+        <br>
+    </tr>
+    <tr>
+        <td width="300px">
+            Prorroga&ccedil;&atilde;o autom&aacute;tica: <br><b><?php echo ($this->rsDadosProjeto['tpprorrogacao']) ? 'Sim' : 'N;&atilde;o'; ?></b>
+        </td>
+        <td>
+            Plano de execu&ccedil;&atilde;o imediata: <br>
+            <b><?php echo utf8_encode($this->ExecucaoImediata['Descricao']); ?></b>
         </td>
     </tr>
 </table>
@@ -132,19 +149,19 @@
     <p><?php echo tratatexto($this->rsDadosProjeto['impactoambiental']); ?></p>
     <h2>Especifica&ccedil;&otilde;es t&eacute;cnicas do produto</h2>
     <p><?php echo tratatexto($this->rsDadosProjeto['especificacaotecnica']); ?></p>
-    <h2>Plano b&aacute;sico de Divulga&ccedil;&atilde;o</h2>
-    <p>
-        <table cellpadding="3" style="width:100%">
+<!--    <h2>Plano b&aacute;sico de Divulga&ccedil;&atilde;o</h2>-->
+<!--    <p>-->
+<!--        <table cellpadding="3" style="width:100%">-->
 
-            <?php foreach ($this->rsPlanoDivulgacao as $divulgacao) : ?>
-                <tr bgcolor="#EEEEEE">
-                    <td width="80%"><?php echo $divulgacao['peca']; ?></td>
-                    <td><?php echo $divulgacao['veiculo']; ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    </p>
-    <br><br>
+            <?php //foreach ($this->rsPlanoDivulgacao as $divulgacao) : ?>
+<!--                <tr bgcolor="#EEEEEE">-->
+<!--                    <td width="80%">--><?php //echo $divulgacao['peca']; ?><!--</td>-->
+<!--                    <td>--><?php //echo $divulgacao['veiculo']; ?><!--</td>-->
+<!--                </tr>-->
+            <?php //endforeach; ?>
+<!--        </table>-->
+<!--    </p>-->
+<!--    <br><br>-->
     <h2>Plano de distribui&ccedil;&atilde;o de produtos culturais</h2>
     <p>
         <table cellpadding="3" style="width:100%">
@@ -180,35 +197,34 @@
                 $receitapro      = 0;
                 $receitaprevista = 0;
 
+                $DadosDistribuicao->PrecoUnitarioNormal = str_replace('$','', $DadosDistribuicao->PrecoUnitarioNormal);
+                $DadosDistribuicao->PrecoUnitarioPromocional = str_replace('$','', $DadosDistribuicao->PrecoUnitarioPromocional);
 
-                $DadosDistribuicao->precounitarionormal = str_replace('$','', $DadosDistribuicao->precounitarionormal);
-                $DadosDistribuicao->precounitariopromocional = str_replace('$','', $DadosDistribuicao->precounitariopromocional);
-
-                $receitanormal   = ($DadosDistribuicao->qtdevendanormal*$DadosDistribuicao->precounitarionormal);
-                $receitapro      = ($DadosDistribuicao->qtdevendapromocional*$DadosDistribuicao->precounitariopromocional);
+                $receitanormal   = ($DadosDistribuicao->QtdeVendaNormal*$DadosDistribuicao->PrecoUnitarioNormal);
+                $receitapro      = ($DadosDistribuicao->QtdeVendaPromocional*$DadosDistribuicao->PrecoUnitarioPromocional);
                 $receitaprevista = $receitanormal + $receitapro;
 
-                $QtdeOutrosTotal                = $QtdeOutrosTotal + $DadosDistribuicao->qtdeoutros;
-                $QtdeVendaNormalTotal           = $QtdeVendaNormalTotal + $DadosDistribuicao->qtdevendanormal;
-                $QtdeVendaPromocionalTotal      = $QtdeVendaPromocionalTotal + $DadosDistribuicao->qtdevendapromocional;
-                $QtdeProduzidaTotal             = $QtdeProduzidaTotal + $DadosDistribuicao->qtdeproduzida;
-                $PrecoUnitarioPromocionalTotal  = $PrecoUnitarioPromocionalTotal + $DadosDistribuicao->precounitariopromocional;
-                $PrecoUnitarioNormalTotal       = $PrecoUnitarioNormalTotal + $DadosDistribuicao->precounitarionormal;
+                $QtdeOutrosTotal                = $QtdeOutrosTotal + $DadosDistribuicao->QtdeOutros;
+                $QtdeVendaNormalTotal           = $QtdeVendaNormalTotal + $DadosDistribuicao->QtdeVendaNormal;
+                $QtdeVendaPromocionalTotal      = $QtdeVendaPromocionalTotal + $DadosDistribuicao->QtdeVendaPromocional;
+                $QtdeProduzidaTotal             = $QtdeProduzidaTotal + $DadosDistribuicao->QtdeProduzida;
+                $PrecoUnitarioPromocionalTotal  = $PrecoUnitarioPromocionalTotal + $DadosDistribuicao->PrecoUnitarioPromocional;
+                $PrecoUnitarioNormalTotal       = $PrecoUnitarioNormalTotal + $DadosDistribuicao->PrecoUnitarioNormal;
                 $ReceitaNormalTotal             = $ReceitaNormalTotal + $receitanormal;
                 $ReceitaProTotal                = $ReceitaProTotal + $receitapro;
                 $Total++;
 
                 ?>
                     <tr bgcolor="#EEEEEE">
-                        <td><?php echo $DadosDistribuicao->produto; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdeproponente; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdepatrocinador; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdeoutros; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdevendanormal; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdevendapromocional; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdeproduzida; ?></td>
-                        <td><?php echo number_format($DadosDistribuicao->precounitariopromocional,"2",",","."); ?></td>
-                        <td><?php echo number_format($DadosDistribuicao->precounitarionormal,"2",",","."); ?></td>
+                        <td><?php echo $DadosDistribuicao->Produto; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeProponente; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdePatrocinador; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeOutros; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeVendaNormal; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeVendaPromocional; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeProduzida; ?></td>
+                        <td><?php echo number_format($DadosDistribuicao->PrecoUnitarioPromocional,"2",",","."); ?></td>
+                        <td><?php echo number_format($DadosDistribuicao->PrecoUnitarioNormal,"2",",","."); ?></td>
                         <td><?php echo number_format($receitanormal,"2",",","."); ?></td>
                         <td><?php echo number_format($receitapro,"2",",","."); ?></td>
                     </tr>
@@ -240,7 +256,7 @@
         //busca dados de orcamento do preprojeto
         foreach ($this->rsOrcamento as $Orcamento) : ?>
 
-            <?php if (($etapa != $Orcamento->idetapa or $Produto != $Orcamento->idproduto) and $Produto != -1) : ?>
+            <?php if (($etapa != $Orcamento->idEtapa or $Produto != $Orcamento->idProduto) and $Produto != -1) : ?>
 
                 <tr>
                     <th colspan="9" align="left" style="font-size:9pt;">Total Produto: <?php echo number_format($TotalProduto,2,',','.'); ?></th>
@@ -252,7 +268,7 @@
                 $TotalProduto = 0;
             endif;
 
-            if ($etapa != $Orcamento->idetapa and $etapa != -1) : ?>
+            if ($etapa != $Orcamento->idEtapa and $etapa != -1) : ?>
 
                 <tr>
                     <th colspan="9" align="left" style="font-size:11pt;">Total Etapa: <?php echo number_format($TotalEtapa,2,',','.'); ?></th>
@@ -263,7 +279,7 @@
                 $TotalEtapa = 0;
             endif; ?>
 
-            <?php if ($etapa != $Orcamento->idetapa or $Produto != $Orcamento->idproduto) : ?>
+            <?php if ($etapa != $Orcamento->idEtapa or $Produto != $Orcamento->idProduto) : ?>
 
                 <table border=0 cellpading="5" width="100%" style="font-size:6pt; margin-top:20px">
 
@@ -271,7 +287,7 @@
                         <th colspan="11" align="left" style="font-size:12pt;">Etapa: <?php echo $Orcamento->etapa; ?></th>
                     </tr>
                     <tr>
-                        <th colspan="11" align="left" style="font-size:12pt;">Produto: <?php echo $Orcamento->produtof; ?> </th>
+                        <th colspan="11" align="left" style="font-size:12pt;">Produto: <?php echo $Orcamento->ProdutoF; ?> </th>
                     </tr>
                     <tr>
                         <td bgcolor="#EEEEEE" align="center"><b>Item</b></td>
@@ -290,24 +306,24 @@
 
             <?php
 
-                $TotalProduto = $TotalProduto + (($Orcamento->quantidade)*($Orcamento->ocorrencia)*($Orcamento->valorunitario));
-                $etapa = $Orcamento->idetapa;
-                $Produto = $Orcamento->idproduto;
+                $TotalProduto = $TotalProduto + (($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario));
+                $etapa = $Orcamento->idEtapa;
+                $Produto = $Orcamento->idProduto;
 
             ?>
 
             <tr>
                 <td><?php echo $Orcamento->item; ?></td>
                 <td><?php echo $Orcamento->unidadef; ?></td>
-                <td><?php echo (int)$Orcamento->quantidade; ?></td>
-                <td><?php echo (int)$Orcamento->ocorrencia; ?></td>
-                <td><?php echo number_format($Orcamento->valorunitario,2,',','.'); ?></td>
-                <td><?php echo number_format(($Orcamento->quantidade)*($Orcamento->ocorrencia)*($Orcamento->valorunitario),2,',','.'); ?></td>
-                <td><?php echo $Orcamento->qtdedias; ?></td>
+                <td><?php echo (int)$Orcamento->Quantidade; ?></td>
+                <td><?php echo (int)$Orcamento->Ocorrencia; ?></td>
+                <td><?php echo number_format($Orcamento->ValorUnitario,2,',','.'); ?></td>
+                <td><?php echo number_format(($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario),2,',','.'); ?></td>
+                <td><?php echo $Orcamento->QtdeDias; ?></td>
                 <td><?php echo $Orcamento->fonterecursof; ?></td>
                 <td><?php echo $Orcamento->ufdespesaf; ?></td>
                 <td><?php echo $Orcamento->municipiodespesaf; ?></td>
-                <td><?php echo $Orcamento->dsjustificativa; ?></td>
+                <td><?php echo $Orcamento->dsJustificativa; ?></td>
             </tr>
 
             <tr>
@@ -316,7 +332,7 @@
 
         <?php endforeach;  // endforeach;
 
-        $TotalOrcamento = $TotalOrcamento + $TotalProduto; ?>
+        $TotalOrcamento = $TotalOrcamento + $TotalProduto;  ?>
 
         <table border=0 cellpading="5" width="100%" style="font-size:6pt;">
             <tr>
@@ -329,7 +345,7 @@
                 <th colspan="9" align="left" bgcolor="#EEEEEE" style="font-size:11pt; padding-top:10px;">Or&ccedil;amento Total: <?php echo number_format($TotalOrcamento,2,',','.'); ?></th>
             </tr>
         </table>
-        <?php endif; //Fim do IF para incentivo fiscal ?>
+        <?php endif;  //Fim do IF para incentivo fiscal ?>
     </div>
 </body>
 </html>

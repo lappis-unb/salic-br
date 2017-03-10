@@ -41,7 +41,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 
 		$sql.= " ORDER BY A.stTitular DESC, N.Descricao";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		return $db->fetchAll($sql);
@@ -54,7 +54,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 	{
 		$sql = "Select COUNT(*) as QTD FROM AGENTES.dbo.tbTitulacaoConselheiro where cdArea = ".$area." AND stTitular = 1 AND stConselheiro = 'A'";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		return $db->fetchAll($sql);
@@ -67,7 +67,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 	{
 		$sql = "Select COUNT(*) as QTD FROM AGENTES.dbo.tbTitulacaoConselheiro where cdArea = ".$area." AND stTitular = 0 AND stConselheiro = 'A'";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		return $db->fetchAll($sql);
@@ -79,7 +79,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 	{
 		$sql = "Select * From AGENTES.dbo.tbTitulacaoConselheiro where idAgente = ".$idAgente;
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		return $db->fetchAll($sql);
@@ -89,7 +89,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 
 	public static function atualizaComponente($idAgente, $dados)
 	{
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$where = "idAgente =".$idAgente;
 		$i = $db->update('AGENTES.dbo.tbTitulacaoConselheiro', $dados, $where);
@@ -99,7 +99,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 
 	public static function gravarComponente($dados)
 	{
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$i = $db->insert('AGENTES.dbo.tbTitulacaoConselheiro', $dados);
 	}

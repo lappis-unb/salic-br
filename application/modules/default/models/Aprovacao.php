@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
-*/
-
 /**
  * Description of aprovacao
  *
@@ -14,7 +9,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'Aprovacao';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
 
     public function inserirAprovacao($dados) {
         try {
@@ -79,7 +74,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         else
             return $this->fetchAll($selectAprovacao);
     }
-    
+
 
     public function buscaCompleta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
 
@@ -196,7 +191,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
     /*===========================================================================*/
     /*====================== ABAIXO - METODOS DA CNIC ===========================*/
     /*===========================================================================*/
-    
+
     public function buscarportaria($where=array(), $order=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -224,7 +219,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function consultaPortaria($where=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -246,15 +241,14 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                 'a.AnoProjeto = b.AnoProjeto AND a.Sequencial = b.Sequencial',
                 array('b.PortariaAprovacao'), 'SAC.dbo'
         );
-        
+
         foreach ($where as $comando => $valores) {
             $select->where($comando,$valores);
         }
-        
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
-    
+
     public function consultaPortariaReadequacoes($where=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -278,15 +272,15 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                 array('tpr' => 'tbTipoReadequacao'), 'tpr.idTipoReadequacao = r.idTipoReadequacao',
                 array('tpr.idTipoReadequacao','tpr.dsReadequacao'), 'SAC.dbo'
         );
-        
+
         foreach ($where as $comando => $valores) {
             $select->where($comando,$valores);
         }
-        
+
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function consultaPortariaImpressao($where=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -325,24 +319,24 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                 array('d' => 'Segmento'), 'd.Codigo = a.Segmento',
                 array(''), 'SAC.dbo'
         );
-        
+
         foreach ($where as $comando => $valores) {
             $select->where($comando,$valores);
         }
-        
+
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
-    
+
+
     public function buscarAprovados($mecanismo, $QntdPorPagina=null, $PaginaAtual=null) {
 
             $TotalReg = $PaginaAtual*$QntdPorPagina;
             $select =  new Zend_Db_Expr("select * from (select top ". $QntdPorPagina ." * from (SELECT TOP ". $TotalReg ."
                 ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Aprovacao AS ap
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."'  order by ap.idAprovacao) 
+            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."'  order by ap.idAprovacao)
             as tabela order by idAprovacao desc) as tabela order by idAprovacao");
-            
+
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -352,12 +346,12 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             //xd($select);
             return $db->fetchAll($select);
         }
-        
+
         public function buscarMecanismo($mecanismo) {
 
             $select =  new Zend_Db_Expr("SELECT ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Aprovacao AS ap
             INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = $mecanismo  order by ap.idAprovacao");
-            
+
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -367,11 +361,11 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             //xd($select);
             return $db->fetchAll($select);
         }
-        
+
         public static function buscaTotalAprovadoProjeto($anoProjeto, $sequencial) {
 
             $select =  new Zend_Db_Expr("SELECT SAC.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial') as total");
-            
+
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -381,7 +375,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             //xd($select);
             return $db->fetchAll($select);
         }
-    
+
     public function buscarAprovacao($idpronac = null, $tipoParecer = null, $usu_codigo = null) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -401,13 +395,13 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         {
         	$select->where('ap.Logon in(?)', $usu_codigo);
         }
-        
+
         $select->where('ap.IdPRONAC = ?', $idpronac);
 //        xd($select->assemble());
         $result = $this->fetchAll($select);
         return $result;
     }
-    
+
     public static function alterarAprovacao($dados, $idpronac)
     {
         try
@@ -422,7 +416,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             die("ERRO: AlterarAprovacao-Aprovacao. ".$e->getMessage());
         }
     }
-    
+
     public function fnTotalAprovadoProjeto($anoProjeto,$sequencial){
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -433,10 +427,10 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     'totalAprovado' => new Zend_Db_Expr(" SAC.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial')")
                 )
         );
-        
+
         return $this->fetchRow($select);
     }
-    
+
     public function buscarDatasCaptacao($pronac, $idProrrogacao) {
 
         $select =  new Zend_Db_Expr("
@@ -456,6 +450,3 @@ class Aprovacao extends MinC_Db_Table_Abstract {
     }
 }
 
-
-
-?>

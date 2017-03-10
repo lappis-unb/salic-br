@@ -81,7 +81,8 @@ class GenericModel extends Zend_Db_Table_Abstract
         $strName = 'dbo';
 
         if (!($db instanceof Zend_Db_Adapter_Pdo_Mssql)) {
-            $strName = $db->getConfig()['dbname'];
+            $config = $db->getConfig();
+            $strName = $config['dbname'];
         }
 
         return $strName;

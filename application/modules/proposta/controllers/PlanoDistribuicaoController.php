@@ -1,22 +1,10 @@
 <?php
-/**
- * Proposta_PlanoDistribuicaoController
- *
- * @uses GenericControllerNew
- * @package
- * @author wouerner <wouerner@gmail.com>
- */
-class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstract
-{
-        private $intTamPag;
-        private $_idPreProjeto = null;
 
-	/**
-	 * Reescreve o m�todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
+class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
+{
+    private $intTamPag;
+    private $_idPreProjeto = null;
+
 	public function init()
 	{
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
@@ -38,14 +26,14 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             // inicializando variaveis com valor padrao
             $this->intTamPag = 10;
 
-            //carregando variaveis vindas de GET
-            $get = Zend_Registry::get('get');
             if(!empty ($idPreProjeto)){
                 $this->_idPreProjeto = $idPreProjeto;
+                $this->view->idPreProjeto = $idPreProjeto;
+
                 //VERIFICA SE A PROPOSTA ESTA COM O MINC
                 $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
                 $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
-                $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
+                $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
             }else{
                 if($idPreProjeto != '0'){
                     parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
@@ -60,14 +48,20 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             $this->verificarPermissaoAcesso(true, false, false);
 	}
 
-    /**
-     * indexAction
-     *
-     * @access public
-     * @return void
-     */
     public function indexAction()
     {
+        $this->view->localRealizacao = true;
+
+        $arrBusca = array();
+        $arrBusca['idprojeto'] = $this->_idPreProjeto;
+        $arrBusca['stabrangencia'] = 1;
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
+
+        if (empty($rsAbrangencia)) {
+            $this->view->localRealizacao = false;
+        }
+
         $pag = 1;
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
@@ -99,15 +93,10 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
                         "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
                     );
 
+        $this->view->idPreProjeto = $this->_idPreProjeto;
         $this->montaTela("planodistribuicao/index.phtml", $arrDados);
     }
 
-    /**
-     * consultarComponenteAction
-     *
-     * @access public
-     * @return void
-     */
     public function consultarComponenteAction()
     {
         $get = Zend_Registry::get("get");
@@ -126,12 +115,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
     }
 
-    /**
-     * frmPlanoDistribuicaoAction
-     *
-     * @access public
-     * @return void
-     */
     public function frmPlanoDistribuicaoAction(){
 
         $this->_helper->viewRenderer->setNoRender(true);
@@ -142,7 +125,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $get = Zend_Registry::get("get");
         if(!empty($get->idPlanoDistribuicao)){
             $tblPlanoDistribuicao = new PlanoDistribuicao();
-            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscarPlanoDistribuicao(array('idplanodistribuicao = ?' =>$get->idPlanoDistribuicao));
+            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscarPlanoDistribuicao(array('idPlanoDistribuicao = ?' =>$get->idPlanoDistribuicao));
             $arrDados["planoDistribuicao"] = $rsPlanoDistribuicao;
         }
 
@@ -159,12 +142,11 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 
         if(!empty($arrPlanoDistribuicao)){
             $bln_exitePP = "true"; //Existe Produto Principal Cadastrado
+
+            $tblSegmento = new Segmento();
+            $arrDados["segmento"] = $tblSegmento->buscar(array("codigo=?" =>$arrPlanoDistribuicao[0]['Segmento']));
         }
 
-        $tblLogomarca = new Verificacao();
-        $rsLogomarcas = $tblLogomarca->buscar(array("idtipo=?"=>3));
-
-        $arrDados["combologomarcas"] = $rsLogomarcas;
         $arrDados["comboprodutos"] = $rsProdutos;
         $manterAgentes = new ManterAgentes();
         $arrDados["comboareasculturais"] = $manterAgentes->listarAreasCulturais();
@@ -176,12 +158,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $this->montaTela("planodistribuicao/formplanodistribuicao.phtml", $arrDados);
     }
 
-    /**
-     * salvarAction
-     *
-     * @access public
-     * @return void
-     */
     public function salvarAction(){
 
         $post = Zend_Registry::get("post");
@@ -192,7 +168,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
                  "Area"=>$post->areaCultural,
                  "idProjeto"=>$this->_idPreProjeto,
                  "idProduto"=>$post->produto,
-                 "idPosicaoDaLogo"=>$post->logomarca,
+//                 "idPosicaoDaLogo"=>$post->logomarca,
                  "Segmento"=>$post->segmentoCultural,
                  "QtdeProduzida"=>$QtdeProduzida,
                  "QtdeVendaNormal"=>$post->qtdenormal,
@@ -214,10 +190,10 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $arrBusca = array();
         $arrBusca['a.idProjeto = ?'] = $this->_idPreProjeto;
         $arrBusca['a.stPrincipal = ?'] = 1;
-       !empty( $post->idPlanoDistribuicao ) ? $arrBusca['idplanodistribuicao <> ?'] = $post->idPlanoDistribuicao :'' ;
+       !empty( $post->idPlanoDistribuicao ) ? $arrBusca['idPlanoDistribuicao <> ?'] = $post->idPlanoDistribuicao :'' ;
         //$arrBusca['idPlanoDistribuicao <> ?'] = $post->idPlanoDistribuicao;
-        $arrBusca['stplanodistribuicaoproduto = ?'] = 1;
-        $arrPlanoDistribuicao = $tblPlanoDistribuicao->buscar($arrBusca, array("idplanodistribuicao DESC"))->toArray();
+        $arrBusca['stPlanoDistribuicaoProduto = ?'] = 1;
+        $arrPlanoDistribuicao = $tblPlanoDistribuicao->buscar($arrBusca, array("idPlanoDistribuicao DESC"))->toArray();
 
         if( $post->patrocinador!=0 || $post->divulgacao!=0 || $post->beneficiarios!=0 || $post->qtdenormal!=0 || $post->qtdepromocional!=0){
             if(!empty($arrPlanoDistribuicao) && $post->prodprincipal == "1"){
@@ -260,12 +236,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
     }
 
-    /**
-     * apagarAction
-     *
-     * @access public
-     * @return void
-     */
     public function apagarAction(){
         $get = Zend_Registry::get("get");
         $tblPlanoDistribuicao = new PlanoDistribuicao();
@@ -278,19 +248,85 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
     }
 
-    /**
-     * testeAction
-     *
-     * @access public
-     * @return void
-     * @todo verificar uso dessa action
-     */
-    public function testeAction(){
+    public function detalharPlanoDistribuicaoAction() {
+        $pag = 1;
+        $get = Zend_Registry::get('get');
+        if (isset($get->pag)) $pag = $get->pag;
+        if (isset($get->tamPag)) $this->intTamPag = $get->tamPag;
+        $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+        $fim = $inicio + $this->intTamPag;
         $tblPlanoDistribuicao = new PlanoDistribuicao();
-        $rs = $tblPlanoDistribuicao->fetchAll();
-        echo "<pre>";
-        print_r($rs);
+        $total = $tblPlanoDistribuicao->pegaTotal(array("a.idProjeto = ?"=>$this->_idPreProjeto, "a.stPlanoDistribuicaoProduto = ?"=>1));
+        $tamanho = (($inicio+$this->intTamPag)<=$total) ? $this->intTamPag : $total - ($inicio) ;
 
-        die("<br>parando");
+        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(
+            array("a.idprojeto = ?" => $this->_idPreProjeto, "a.stplanodistribuicaoproduto = ?" => 1),
+            array("idplanodistribuicao DESC"),
+            $tamanho,
+            $inicio
+        );
+
+        if ($fim>$total) $fim = $total;
+        $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+        $arrDados = array(
+                        "pag"=>$pag,
+                        "total"=>$total,
+                        "inicio"=>($inicio+1),
+                        "fim"=>$fim,
+                        "totalPag"=>$totalPag,
+                        "planosDistribuicao"=>($rsPlanoDistribuicao),
+                        "formulario"=>$this->_urlPadrao."/proposta/plano-distribuicao/frm-plano-distribuicao?idPreProjeto=".$this->_idPreProjeto,
+                        "urlApagar"=>$this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto,
+                        "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
+                    );
+
+        $arrBusca['idprojeto'] = $this->_idPreProjeto;
+        $arrBusca['stabrangencia'] = 1;
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
+
+        $this->view->idPreProjeto = $this->_idPreProjeto;
+        $this->view->abrangencias = $rsAbrangencia;
+        $this->view->planosDistribuicao=($rsPlanoDistribuicao);
+    }
+
+    public function detalharSalvarAction()
+    {
+        $dados = $this->getRequest()->getPost();
+        $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+
+        try {
+            $detalhamento->salvar($dados);
+            $tblPlanoDistribuicao->updateConsolidacaoPlanoDeDistribuicao($dados['idPlanoDistribuicao']);
+        } catch(Exception $e) {
+            $this->_helper->json(array('data' => $dados, 'success' => 'false', 'error'=>$e));
+        }
+
+        $this->_helper->json(array('data' => $dados, 'success' => 'true'));
+    }
+
+    public function detalharMostrarAction()
+    {
+        $dados = $this->getRequest()->getParams();
+        $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+        $dados = $detalhamento->listarPorMunicicipioUF($dados);
+        sleep(1);
+
+        $this->_helper->json(array('data' => $dados->toArray(), 'success' => 'true'));
+    }
+
+    public function detalharExcluirAction()
+    {
+        $id = (int)$this->getRequest()->getParam('idDetalhaPlanoDistribuicao');
+        $idPlanoDistribuicao = (int)$this->getRequest()->getParam('idPlanoDistribuicao');
+
+        $detalhamento = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
+        $dados = $detalhamento->excluir($id);
+
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $tblPlanoDistribuicao->updateConsolidacaoPlanoDeDistribuicao($idPlanoDistribuicao);
+
+        $this->_helper->json(array('data' => $dados, 'success' => 'true'));
     }
 }

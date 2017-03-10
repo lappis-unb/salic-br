@@ -1,126 +1,105 @@
 <?php
-/**
- * DAO tbDistribuirParecer
- * @author emanuel.sampaio - Politec
- * @since 17/02/2011
- * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
 
 class Verificacao extends MinC_Db_Table_Abstract
 {
-	/**
-	 * Devolu��o ao Fundo Nacional de Cultura - FNC
-	 */
-	const DEVOLUCAO_JUDICIAL = 349;
-	const DEVOLUCAO_FUNDO_NACIONAL_CULTURA = 350;
-	const OUTRAS_DEVOLUCOES_DE_RECURSOS_CAPTADOS = 351;
+    /**
+     * Devolu&ccedil;&atilde;o ao Fundo Nacional de Cultura - FNC
+     */
+    const DEVOLUCAO_JUDICIAL = 349;
+    const DEVOLUCAO_FUNDO_NACIONAL_CULTURA = 350;
+    const OUTRAS_DEVOLUCOES_DE_RECURSOS_CAPTADOS = 351;
+    const APROVACAO_INICIAL_DO_PROJETO = 626;
 
-	protected $_schema  = "sac";
-	protected $_name    = "verificacao";
+    protected $_schema = "sac";
+    protected $_name = "verificacao";
 
+    /**
+     * @param array $dados
+     * @return integer (retorna o &uacute;ltimo id cadastrado)
+     */
+    public function cadastrarDados($dados)
+    {
+        return $this->insert($dados);
+    }
 
-	 /**
-	 * M�todo para cadastrar
-	 * @access public
-	 * @param array $dados
-	 * @return integer (retorna o �ltimo id cadastrado)
-	 */
-	public function cadastrarDados($dados)
-	{
-		return $this->insert($dados);
-	} // fecha m�todo cadastrarDados()
-
-        function tipoDiligencia($consulta = array()){
-
-            $select = $this->select();
-            $select->setIntegrityCheck(false);
-            $select->from(
-                            array($this->_name),
-                            array(
-                                    'idVerificacao',
-                                    'Descricao'
-                                 )
-                         );
+    function tipoDiligencia($consulta = array())
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array($this->_name), array('idVerificacao', 'Descricao'));
 //            $select->where('idTipo = ?', 8);
 //            $select->where('stEstado = ?', 1);
-            foreach ($consulta as $coluna=>$valor)
-            {
+        foreach ($consulta as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+        //xd($select->assemble());
+        return $this->fetchAll($select);
+
+    }
+
+
+    /**
+     * Busca por tipo
+     * @access public
+     * @param array $where (filtros)
+     * @param array $order (ordena&ccedil;&atilde;o)
+     * @return object
+     */
+    public function buscarTipos($where = array(), $order = array())
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('v' => $this->_schema . '.' . $this->_name)
+            , array('v.idVerificacao'
+            , 'LTRIM(v.Descricao) AS dsVerificacao')
+        );
+        $select->joinInner(
+            array('t' => 'Tipo')
+            , 'v.idTipo = t.idTipo'
+            , array('t.idTipo'
+            , 't.Descricao AS dsTipo')
+            , 'SAC.dbo'
+        );
+
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        $select->order($order);
+
+        return $this->fetchAll($select);
+    }
+
+    function combosNatureza($idTipo)
+    {
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array(new Zend_Db_Expr('Agentes.dbo.Verificacao')), // 'v' => $this->_schema . '.' . $this->_name),
+            array('idVerificacao', 'Descricao')
+        );
+        $select->where('idTipo = ?', $idTipo);
+        return $this->fetchAll($select);
+
+    }
+
+
+    function buscarOrigemRecurso($where = array())
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array(new Zend_Db_Expr('SAC.dbo.Verificacao')),
+            array('idVerificacao', 'Descricao'));
+
+        if ($where) {
+            foreach ($where as $coluna => $valor) :
                 $select->where($coluna, $valor);
-            }
-            //xd($select->assemble());
-            return $this->fetchAll($select);
-
+            endforeach;
         }
 
-
-
-	/**
-	 * Busca por tipo
-	 * @access public
-	 * @param array $where (filtros)
-	 * @param array $order (ordena��o)
-	 * @return object
-	 */
-	public function buscarTipos($where = array(), $order = array())
-	{
-		$select = $this->select();
-		$select->setIntegrityCheck(false);
-		$select->from(array('v' => $this->_schema . '.' . $this->_name)
-			,array('v.idVerificacao'
-				,'LTRIM(v.Descricao) AS dsVerificacao')
-		);
-		$select->joinInner(
-			array('t' => 'Tipo')
-			,'v.idTipo = t.idTipo'
-			,array('t.idTipo'
-				,'t.Descricao AS dsTipo')
-			,'SAC.dbo'
-		);
-
-		// adiciona quantos filtros foram enviados
-		foreach ($where as $coluna => $valor) :
-			$select->where($coluna, $valor);
-		endforeach;
-
-		// adicionando linha order ao select
-		$select->order($order);
-
-		return $this->fetchAll($select);
-	} // fecha m�todo buscarTipos()
-
-        function combosNatureza($idTipo){
-
-            $select = $this->select();
-            $select->setIntegrityCheck(false);
-            $select->from(
-                    array(new Zend_Db_Expr('Agentes.dbo.Verificacao')), // 'v' => $this->_schema . '.' . $this->_name),
-                    array('idVerificacao', 'Descricao')
-            );
-            $select->where('idTipo = ?', $idTipo);
-            return $this->fetchAll($select);
-
-        }
-
-
-        function buscarOrigemRecurso($where = array()){
-            $select = $this->select();
-            $select->setIntegrityCheck(false);
-            $select->from(  array(new Zend_Db_Expr('SAC.dbo.Verificacao')),
-                            array('idVerificacao', 'Descricao'));
-
-            if($where){
-                foreach ($where as $coluna => $valor) :
-                    $select->where($coluna, $valor);
-		endforeach;
-            }
-
-            return $this->fetchAll($select);
-        }
+        return $this->fetchAll($select);
+    }
 
 
 }

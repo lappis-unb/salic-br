@@ -64,7 +64,8 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $post = Zend_Registry::get('post');
             $cdarea = $post->area;
-            $dadosSegmento = Segmentocultural::buscar($cdarea);
+            $objSegmentocultural = new Segmentocultural();
+            $dadosSegmento = $objSegmentocultural->buscarSegmento($cdarea);
             $i = 0;
             foreach ($dadosSegmento as $segmento) {
                 $vSegmento[$i]['cdsegmento'] = $segmento->id;
@@ -151,7 +152,6 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         $ProcessoMascara = $post->nrprocesso;
         preg_match_all('#\d+#', $post->nrprocesso, $processo);
         $Processo = implode('',$processo[0]);
-        header("Content-Type: text/html; charset=ISO-8859-1", true);
         if(Validacao::validarNrProcesso($Processo)){
             $projeto = new Projetos();
             $where = array('Processo =  ?'=>$Processo);
@@ -179,7 +179,6 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
     }
 
     public function validaragenteAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $post = Zend_Registry::get('post');
@@ -191,7 +190,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
         $where = array('a.CNPJCPF = ?' =>$CgcCpf);
 
-        $agente = $agentes->buscarAgenteNome($where)->toArray();
+        $agente = $agentes->buscarAgenteENome($where)->toArray();
 
         if(count($agente) == 0 ){
             echo json_encode(array('agente'=>false));

@@ -188,7 +188,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $sql .= " AND pp.FonteRecurso = ".$fonte;
         }
 
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -237,7 +237,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $sql = $db->select()
-            ->from(['tpp' => 'tbplanilhaproposta'], 'tpp.idprojeto as idProposta', $this->getSchema('sac'))
+            ->from(array('tpp' => 'tbplanilhaproposta'), 'tpp.idprojeto as idProposta', $this->getSchema('sac'))
             ->where('tpp.idProjeto = ?', $idPreProjeto)
             ->limit(1)
             ;
@@ -407,7 +407,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['tbplanilhaetapa' ], ['idplanilhaetapa','descricao' ], $this->getSchema('sac'))
+            ->from(array('tbplanilhaetapa'), array('idplanilhaetapa','descricao'), $this->getSchema('sac'))
             ->where("tpcusto = 'A'")
             ->order('descricao')
             ;
@@ -477,7 +477,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         echo $sql; exit;
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db  = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -504,7 +504,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $pp = [
+        $pp = array(
             'pp.idetapa as idEtapa',
             'pp.idplanilhaitem as idItem',
             'pp.ufdespesa as IdUf',
@@ -513,18 +513,18 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             'pp.valorunitario',
             'pp.qtdedias',
             'pp.idplanilhaproposta',
-        ];
+        );
 
         $sql = $db->select()->distinct()
-            ->from(['pre' => 'preprojeto'], null, $this->getSchema('sac'))
-            ->join(['pp' => 'tbplanilhaproposta' ],  '(pre.idPreProjeto = pp.idProjeto)', $pp, $this->getSchema('sac'))
-            ->join(['p' => 'produto'], '(pp.idProduto = p.codigo)', ['p.codigo as CodigoProduto'], $this->getSchema('sac'))
-            ->join(['ti' => 'tbplanilhaitens'] , 'ti.idplanilhaitens = pp.idplanilhaitem', ['ti.descricao as DescricaoItem'], $this->getSchema('sac'))
-            ->join(['uf' => 'uf'],  'uf.codufibge = pp.ufdespesa', ['uf.descricao as DescricaoUf', 'uf.uf as SiglaUF'], $this->getSchema('sac'))
-            ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = pp.municipiodespesa', ['municipio.descricao as Municipio' ], $this->getSchema('agentes'))
-            ->join(['mec' => 'mecanismo'], 'mec.codigo = pre.mecanismo', ['mec.descricao as DescricaoMecanismo' ], $this->getSchema('sac'))
-            ->join(['un' => 'tbplanilhaunidade'],  'un.idunidade = pp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(['veri' => 'verificacao'],  'veri.idverificacao = pp.fonterecurso', ['veri.idverificacao as idFonteRecurso', 'veri.descricao as DescricaoFonteRecurso' ], $this->getSchema('sac'))
+            ->from(array('pre' => 'preprojeto'), null, $this->getSchema('sac'))
+            ->join(array('pp' => 'tbplanilhaproposta'),  '(pre.idPreProjeto = pp.idProjeto)', $pp, $this->getSchema('sac'))
+            ->join(array('p' => 'produto'), '(pp.idProduto = p.codigo)', array('p.codigo as CodigoProduto'), $this->getSchema('sac'))
+            ->join(array('ti' => 'tbplanilhaitens'), 'ti.idplanilhaitens = pp.idplanilhaitem', array('ti.descricao as DescricaoItem'), $this->getSchema('sac'))
+            ->join(array('uf' => 'uf'),  'uf.codufibge = pp.ufdespesa', array('uf.descricao as DescricaoUf', 'uf.uf as SiglaUF'), $this->getSchema('sac'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = pp.municipiodespesa', array('municipio.descricao as Municipio'), $this->getSchema('agentes'))
+            ->join(array('mec' => 'mecanismo'), 'mec.codigo = pre.mecanismo', array('mec.descricao as DescricaoMecanismo'), $this->getSchema('sac'))
+            ->join(array('un' => 'tbplanilhaunidade'),  'un.idunidade = pp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(array('veri' => 'verificacao'),  'veri.idverificacao = pp.fonterecurso', array('veri.idverificacao as idFonteRecurso', 'veri.descricao as DescricaoFonteRecurso'), $this->getSchema('sac'))
             ->where('idpreprojeto = ?', $idPreProjeto)
             ->order('ti.descricao')
             ;
@@ -697,9 +697,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarProdutos($idPreProjeto)
     {
-        $table = Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-        $select = $table->select()
+        $select = $db->select()
             ->from(array('pre' => 'PreProjeto'),
                 array(
                     new Zend_Db_Expr('p.Codigo AS CodigoProduto'),
@@ -720,7 +720,6 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->group('idPreProjeto')
             ->group('p.Descricao');
 
-        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($select);
@@ -735,11 +734,11 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['pre' => 'preprojeto'], ['pre.idpreprojeto as PreProjeto', 'pre.idpreprojeto as idProposta'], $this->getSchema('sac'))
-            ->join(['pd' => 'planodistribuicaoproduto'], '(pre.idpreprojeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', null, $this->getSchema('sac'))
-            ->join(['p' => 'produto'], '(pd.idproduto = p.codigo)', ['p.codigo as CodigoProduto', 'p.descricao as DescricaoProduto'],  $this->getSchema('sac'))
+            ->from(array('pre' => 'preprojeto'), array('pre.idpreprojeto as PreProjeto', 'pre.idpreprojeto as idProposta'), $this->getSchema('sac'))
+            ->join(array('pd' => 'planodistribuicaoproduto'), '(pre.idpreprojeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', null, $this->getSchema('sac'))
+            ->join(array('p' => 'produto'), '(pd.idproduto = p.codigo)', array('p.codigo as CodigoProduto', 'p.descricao as DescricaoProduto'),  $this->getSchema('sac'))
             ->where('idpreprojeto = ?', $idPreProjeto)
-            ->group(['p.codigo', 'p.descricao', 'idpreprojeto'])
+            ->group(array('p.codigo', 'p.descricao', 'idpreprojeto'))
             ;
 
         return $db->fetchAll($sql);
@@ -842,8 +841,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         $sql.= " ORDER BY tpe.Descricao ";
 
-        throw new Exception('Método transferido para tbplanilhaproposta')
-        $db= Zend_Db_Table::getDefaultAdapter();
+        throw new Exception('Método transferido para tbplanilhaproposta');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -907,7 +906,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $tpp = [
+        $tpp = array(
             'tpp.idusuario',
             'tpp.idprojeto as idProposta',
             'tpp.idplanilhaproposta',
@@ -915,41 +914,41 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             'tpp.ocorrencia',
             'tpp.valorunitario',
             'tpp.qtdedias',
-        ];
+        );
 
-        $tpe =[
+        $tpe = array(
             'tpe.tpcusto as custo',
             'tpe.descricao as etapa',
             'tpe.idplanilhaetapa as idEtapa',
             'tpe.tpcusto',
-        ];
+        );
 
-        $tpi = [
+        $tpi = array(
             'tpi.descricao as DescricaoItem',
             'tpi.idplanilhaitens as idItem',
-        ];
+        );
 
-        $uf =[
+        $uf = array(
             'uf.descricao as DescricaoUf',
             'uf.sigla as SiglaUF',
-        ];
+        );
 
-        $veri =[
+        $veri = array(
             'veri.idverificacao as idFonteRecurso',
             'veri.descricao as DescricaoFonteRecurso'
-        ];
+        );
 
         $sql = $db->select()
-            ->from(['tpp' => 'tbplanilhaproposta'], $tpp, $this->getSchema('sac'))
-            ->joinLeft(['pd' => 'produto'], 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
-            ->join(['tpe' => 'tbplanilhaetapa'], 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
-            ->join(['tpi' => 'tbplanilhaitens'], 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
-            ->join(['uf' => 'uf'], 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
-            ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = tpp.municipiodespesa','municipio.descricao as Municipio', $this->getSchema('agentes'))
-            ->join(['prep' => 'preprojeto'], 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
-            ->join(['mec' => 'mecanismo'], 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
-            ->join(['un' => 'tbplanilhaunidade'], 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(['veri' => 'verificacao'], 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->from(array('tpp' => 'tbplanilhaproposta'), $tpp, $this->getSchema('sac'))
+            ->joinLeft(array('pd' => 'produto'), 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
+            ->join(array('tpe' => 'tbplanilhaetapa'), 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
+            ->join(array('tpi' => 'tbplanilhaitens'), 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
+            ->join(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa','municipio.descricao as Municipio', $this->getSchema('agentes'))
+            ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
+            ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
+            ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(array('veri' => 'verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
             ->order('tpe.descricao')
@@ -964,7 +963,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from('tbplanilhaetapa', ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], ('sac'))
+            ->from('tbplanilhaetapa', array('idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'), ('sac'))
             ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
             ;
 
@@ -988,7 +987,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from('tbplanilhaetapa', ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
+            ->from('tbplanilhaetapa', array('idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'), $this->getSchema('sac'))
             ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
             ;
 

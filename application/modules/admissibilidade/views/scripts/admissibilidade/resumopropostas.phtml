@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s9 m9">
+            <h4>Resumo: admissibilidade de propostas</h4>
+            <form method="POST" id="formGerarPdf" name="formGerarPdf" target="_blank" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>" style="display:none">
+                <textarea name="html" id="conteudoImprimir"></textarea>
+            </form>
+            <div >
+                <div class="conteudoImprimivel" id="conteudoImprimivel">
+                <table>
+                    <tr>
+                        <th>Resumo</th>
+                        <th>Registros</th>
+                    </tr>
+                    <?php $totalGeral=0; ?>
+                    <?php foreach($this->resumo as $resumo=>$valor): ?>
+                    <tr>
+                        <td align="left">Proposta para An&aacute;lise&nbsp;<?php echo $resumo; ?></td>
+                        <td align="right"><?php echo $valor; ?></td>
+                    </tr>
+                    <?php $totalGeral+=$valor; ?>
+                    <?php endforeach; ?>
+                    <tr>
+                        <th align="left">Total Geral</th>
+                        <th align="right"><?php echo $totalGeral; ?></th>
+                    </tr>
+                </table>
+                </div><!-- fecha conteudo imprimivel -->
+
+            <form action="<?php echo $this->urlGerarGrafico; ?>" method="post" name="frmGraficoResumo" id="frmGraficoResumo" target="_blank">
+            <?php echo Grafico::formConfiguracao($this->baseUrl()) ; ?>
+            <?php foreach($this->resumo as $resumo=>$valor): ?>
+                <input type="hidden" name="gVal_<?php echo $resumo; ?>" value="<?php echo $valor; ?>" />
+            <?php endforeach; ?>
+            </form>
+                <table>
+                <tr>
+                <td class="centro">
+                    <input type="button" title="Imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'/>
+                    <input type="button" title="Configurar Gr&aacute;fico" class="btn_configurar_grafico" id="btn_configurar_grafico" style="display: ;" onclick="$('#confGrafico').toggle(); $(this).hide();" />
+                </td>
+                </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

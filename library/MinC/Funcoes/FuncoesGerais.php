@@ -204,38 +204,45 @@ function aplicaMascara($valor, $mascara) {
     return $novoValor;
 }
 
-function montaGuiaLinks($controller, $links = array()) {
+function gerarBreadCrumb($links = array()) {
     try {
-        $pattern = "#(.*?)/$controller#is";
-        if ($BASEURL = retornaBaseUrl($controller)) {
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $primeiroLink = null;
 
-            $guia = "<div id='breadcrumb'><ul>";
-            $guia .= "<li class='first'><a href='{$BASEURL}/principal/' title='In&iacute;cio'>In&iacute;cio</a></li>";
-            $qtdLinks = count($links);
-            $contador = 0;
-            if ($qtdLinks > 0) {
-                foreach ($links as $link) {
-                    foreach ($link as $key => $val) {
-                        $contador++;
-                        if ($contador == $qtdLinks) {
-                            $guia .= "<li class='last'>{$key}</li>";
-                        } else {
-                            $router = Zend_Controller_Front::getInstance()->getRouter();
-                            if (is_array($val)) {
-                                $url = $router->assemble(array('controller' => $val['controller'], 'action' => $val['action']));
-                            } else {
-                                $url = $val;
+        $auth = Zend_Auth::getInstance();
+        $primeiroLink =  $router->assemble(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''));
+        if( isset($auth->getIdentity()->usu_codigo ) ) {
+            $primeiroLink =  $router->assemble(array('module' => 'default', 'controller' => 'principal', 'action' => ''));
+        }
+
+        $guia = "<div id='breadcrumb'><ul>";
+        $guia .= "<li class='first'><a href='{$primeiroLink}' title='In&iacute;cio'>In&iacute;cio</a></li>";
+        $qtdLinks = count($links);
+
+        $contador = 0;
+        if ($qtdLinks > 0) {
+
+            foreach ($links as $link) {
+                foreach ($link as $nomeLink => $val) {
+                    $contador++;
+                    if ($contador == $qtdLinks) {
+                        $guia .= "<li class='last'>{$nomeLink}</li>";
+                    } else {
+                        $url = $val;
+                        if (is_array($val)) {
+                            $arrayLink = array('controller' => $val['controller'], 'action' => $val['action']);
+                            if(isset($val['module']) && !empty($val['module'])) {
+                                $arrayLink['module'] = $val['module'];
                             }
-                            $guia .= "<li><a href='" . $url . "' title='{$key}'>" . $key . "</a></li>";
+                            $url = $router->assemble($arrayLink);
                         }
+                        $guia .= "<li><a href='" . $url . "' title='{$nomeLink}'>" . $nomeLink . "</a></li>";
                     }
                 }
             }
-            $guia .= "</ul></div>";
-            print $guia;
-        } else {
-            print "<span style='color: red;'>Erro na apresenta�?o da guia! - controller invalido</span>";
         }
+        $guia .= "</ul></div>";
+        print $guia;
     } catch (Zend_Exception $objException) {
         throw new Exception("Erro ao montar guia de links", 0, $objException);
     }
@@ -258,7 +265,7 @@ function retornaBaseUrl($controller) {
 function montaBotaoVoltar($controller, $links) {
     $link = retornaBaseUrl($controller) . '/principal/';
     $ultimoLink = count($links);
-    
+
     if (isset($links[$ultimoLink - 2])) {
         foreach ($links[$ultimoLink - 2] as $key => $value) {
             $titulo = $key;
@@ -281,11 +288,11 @@ function montaBotaoVoltar($controller, $links) {
 function proponenteInabilitado($cpf)
 {
 	$inabilitadoDAO = new Inabilitado();
-	
+
 	$where['CgcCpf 		= ?'] = $cpf;
 	$where['Habilitado 	= ?'] = 'N';
 	$busca = $inabilitadoDAO->Localizar($where);
-	
+
 	if(count($busca) > 0){
 		return true;
 	} else {
@@ -406,6 +413,161 @@ function isCnpjValid($cnpj) {
 }
 
 
-// FIM DO METODO montaGuiaLinks
+function converterArrayParaObjetos($array)
+{
+    if(!sizeof($array))
+    {
+        return null;
+    }
+    else
+    {
+        $object = new stdClass();
+
+        foreach ($array as $field => $value)
+        {
+            $object->$field = (object) $value;
+        }
+        return $object;
+    }
+}
+
+
+function converterObjetosParaArray($objects){
+
+    if(empty($objects))
+        return false;
+
+    foreach($objects as $object)
+    {
+        $itens[] = get_object_vars( $object );
+    }
+    return $itens;
+
+}
+
+if (!function_exists('array_column')) {
+    /**
+     * Returns the values from a single column of the input array, identified by
+     * the $columnKey.
+     *
+     * Optionally, you may provide an $indexKey to index the values in the returned
+     * array by the values from the $indexKey column in the input array.
+     *
+     * @param array $input A multi-dimensional array (record set) from which to pull
+     *                     a column of values.
+     * @param mixed $columnKey The column of values to return. This value may be the
+     *                         integer key of the column you wish to retrieve, or it
+     *                         may be the string key name for an associative array.
+     * @param mixed $indexKey (Optional.) The column to use as the index/keys for
+     *                        the returned array. This value may be the integer key
+     *                        of the column, or it may be the string key name.
+     * @return array
+     */
+    function array_column($input = null, $columnKey = null, $indexKey = null)
+    {
+        // Using func_get_args() in order to check for proper number of
+        // parameters and trigger errors exactly as the built-in array_column()
+        // does in PHP 5.5.
+        $argc = func_num_args();
+        $params = func_get_args();
+        if ($argc < 2) {
+            trigger_error("array_column() expects at least 2 parameters, {$argc} given", E_USER_WARNING);
+            return null;
+        }
+        if (!is_array($params[0])) {
+            trigger_error(
+                'array_column() expects parameter 1 to be array, ' . gettype($params[0]) . ' given',
+                E_USER_WARNING
+            );
+            return null;
+        }
+        if (!is_int($params[1])
+            && !is_float($params[1])
+            && !is_string($params[1])
+            && $params[1] !== null
+            && !(is_object($params[1]) && method_exists($params[1], '__toString'))
+        ) {
+            trigger_error('array_column(): The column key should be either a string or an integer', E_USER_WARNING);
+            return false;
+        }
+        if (isset($params[2])
+            && !is_int($params[2])
+            && !is_float($params[2])
+            && !is_string($params[2])
+            && !(is_object($params[2]) && method_exists($params[2], '__toString'))
+        ) {
+            trigger_error('array_column(): The index key should be either a string or an integer', E_USER_WARNING);
+            return false;
+        }
+        $paramsInput = $params[0];
+        $paramsColumnKey = ($params[1] !== null) ? (string) $params[1] : null;
+        $paramsIndexKey = null;
+        if (isset($params[2])) {
+            if (is_float($params[2]) || is_int($params[2])) {
+                $paramsIndexKey = (int) $params[2];
+            } else {
+                $paramsIndexKey = (string) $params[2];
+            }
+        }
+        $resultArray = array();
+        foreach ($paramsInput as $row) {
+            $key = $value = null;
+            $keySet = $valueSet = false;
+            if ($paramsIndexKey !== null && array_key_exists($paramsIndexKey, $row)) {
+                $keySet = true;
+                $key = (string) $row[$paramsIndexKey];
+            }
+            if ($paramsColumnKey === null) {
+                $valueSet = true;
+                $value = $row;
+            } elseif (is_array($row) && array_key_exists($paramsColumnKey, $row)) {
+                $valueSet = true;
+                $value = $row[$paramsColumnKey];
+            }
+            if ($valueSet) {
+                if ($keySet) {
+                    $resultArray[$key] = $value;
+                } else {
+                    $resultArray[] = $value;
+                }
+            }
+        }
+        return $resultArray;
+    }
+}
+
+// Returns a file size limit in bytes based on the PHP upload_max_filesize
+// and post_max_size
+// Retirado de http://stackoverflow.com/questions/13076480/php-get-actual-maximum-upload-size
+function file_upload_max_size() {
+  static $max_size = -1;
+
+  if ($max_size < 0) {
+    // Start with post_max_size.
+    $max_size = parse_size(ini_get('post_max_size'));
+
+    // If upload_max_size is less, then reduce. Except if upload_max_size is
+    // zero, which indicates no limit.
+    $upload_max = parse_size(ini_get('upload_max_filesize'));
+
+    if ($upload_max > 0 && $upload_max < $max_size) {
+      $max_size = $upload_max;
+    }
+  }
+  return $max_size;
+}
+
+// Retirado de http://stackoverflow.com/questions/13076480/php-get-actual-maximum-upload-size
+function parse_size($size) {
+  $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+  $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+  if ($unit) {
+    // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+    return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+  }
+  else {
+    return round($size);
+  }
+}
 
 ?>

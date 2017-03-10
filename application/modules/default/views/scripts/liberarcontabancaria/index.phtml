@@ -1,5 +1,5 @@
 <!-- ========== MENU ========== -->
-<?php require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php'; ?>
+<?php echo $this->partial('/controlarmovimentacaobancaria/inc/menu.inc.php', $this); ?>
 
 <script type="text/javascript">
      $(document).ready(function(){
@@ -58,7 +58,7 @@
                 height:180,
                 modal:true,
                 buttons: {
-                    'Não': function(){
+                    'Nï¿½o': function(){
                         $("#msgAlerta").dialog("destroy");
                     },
                     'Sim': function() {
@@ -89,7 +89,7 @@
                                     //}, 1000);
                                 } else {
                                     $("#msgAlerta").dialog("destroy");
-                                    $("#msgAlerta").html('Ocorreu um erro durante a operação. Contate o administrador do sistema!');
+                                    $("#msgAlerta").html('Ocorreu um erro durante a operaï¿½ï¿½o. Contate o administrador do sistema!');
                                     $("#msgAlerta").dialog({
                                         resizable:false,
                                         title:'Alerta!',
@@ -176,21 +176,21 @@
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 <div id="msgAlerta" class="sumir"></div>
-<div id="visualizarTextoModal" title="Informações Adicionais do Projeto" class="sumir">
+<div id="visualizarTextoModal" title="Informaï¿½ï¿½es Adicionais do Projeto" class="sumir">
     <table class="tabela">
         <!--<tr>
             <th colspan="2">Dados do Projeto</th>
         </tr>-->
         <tr>
-            <td class="destacar bold" nowrap>Dt. Situação</td>
+            <td class="destacar bold" nowrap>Dt. Situaï¿½ï¿½o</td>
             <td><span id="dtsituacaoModal"></span></td>
         </tr>
         <tr>
-            <td class="destacar bold">Situação</td>
+            <td class="destacar bold">Situaï¿½ï¿½o</td>
             <td><span id="situacaoModal"></span></td>
         </tr>
         <tr>
-            <td class="destacar bold" width="1">Providência Tomada</td>
+            <td class="destacar bold" width="1">Providï¿½ncia Tomada</td>
             <td><span id="providenciaModal"></span></td>
         </tr>
     </table>
@@ -215,7 +215,7 @@
     </table>
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINAï¿½ï¿½O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -242,12 +242,12 @@
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'liberarcontabancaria', 'action' => 'index')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].'&pronac='.$this->pronac; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    Pï¿½g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por pï¿½gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="pronac" value="<?php echo $this->pronac;?>">
@@ -264,7 +264,7 @@
             echo " de ". $this->paginacao['total']. " projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
     <?php } ?>
 
 
@@ -274,7 +274,7 @@
             <tr class="titulo_tabela">
                 <th><a href="<?php echo $this->url(array('controller' => 'liberarcontabancaria', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=3&ordem='.$this->paginacao['novaOrdem'].'&pronac='.$this->pronac; ?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'liberarcontabancaria', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=5&ordem='.$this->paginacao['novaOrdem'].'&pronac='.$this->pronac; ?>">Nome do Projeto</a></th>
-                <th>Informações</th>
+                <th>Informaï¿½ï¿½es</th>
                 <th><a href="<?php echo $this->url(array('controller' => 'liberarcontabancaria', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=10&ordem='.$this->paginacao['novaOrdem'].'&pronac='.$this->pronac; ?>">Inabilitado</a></th>
                 <th nowrap><a href="<?php echo $this->url(array('controller' => 'liberarcontabancaria', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=8&ordem='.$this->paginacao['novaOrdem'].'&pronac='.$this->pronac; ?>">% Captado</a></th>
                 <th nowrap><a href="<?php echo $this->url(array('controller' => 'liberarcontabancaria', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=9&ordem='.$this->paginacao['novaOrdem'].'&pronac='.$this->pronac; ?>">Vl. Captado</a></th>
@@ -289,7 +289,7 @@
                 <td align="center"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => '')); ?>?idPronac=<?php echo $d->IdPRONAC; ?>" title="Consultar dados do projeto" target="_blank"><?php echo $d->Pronac; ?></a></td>
                 <td><?php echo $d->NomeProjeto; ?></td>
                 <td align="center">
-                    <img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" style="cursor:pointer;" class="visualizarTextoModal" Situacao="<?php echo $d->Situacao; ?>" DtSituacao="<?php echo Data::tratarDataZend($d->DtSituacao,'Brasileira'); ?>" ProvidenciaTomada="<?php echo $d->ProvidenciaTomada; ?>" alt="Visualizar Informações" />
+                    <img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" style="cursor:pointer;" class="visualizarTextoModal" Situacao="<?php echo $d->Situacao; ?>" DtSituacao="<?php echo Data::tratarDataZend($d->DtSituacao,'Brasileira'); ?>" ProvidenciaTomada="<?php echo $d->ProvidenciaTomada; ?>" alt="Visualizar Informaï¿½ï¿½es" />
                 </td>
                 <td align="center">
                     <?php if ($d->Inabilitado == 'SIM'){ ?>
@@ -332,7 +332,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINAï¿½ï¿½O ============ -->
         <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -367,12 +367,12 @@
                         <input class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'liberarcontabancaria', 'action' => 'index')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].'&pronac='.$this->pronac; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        Pï¿½g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por pï¿½gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="pronac" value="<?php echo $this->pronac;?>">
@@ -382,7 +382,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
 
     <?php } } ?>
 

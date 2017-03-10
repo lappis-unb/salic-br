@@ -7,9 +7,8 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
-
+include_once(APPLICATION_PATH . '/modules/default/models/dominio/TipoMensagem.php');
 class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 {
 	/**
@@ -104,7 +103,6 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 //verifica se a funcionadade devera abrir em modal
                 if ($this->_request->getParam("modal") == "s") {
                     $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-                    header("Content-Type: text/html; charset=ISO-8859-1");
                     $this->modal = "s";
                     $this->view->modal = "s";
                 } else {
@@ -399,13 +397,13 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     if(!empty($projeto->Agencia)){
                         $agencia = $projeto->Agencia;
                     } else {
-                        $agencia = '<em>N�o informada</em>';
+                        $agencia = '<em>N&atilde;o informada</em>';
                     }
 
                     if(!empty($projeto->ContaBloqueada)){
                         $conta = $projeto->ContaBloqueada;
                     } else {
-                        $conta = '<em>N�o informada</em>';
+                        $conta = '<em>N&atilde;o informada</em>';
                     }
 
                     $html .= '<tr>';
@@ -421,7 +419,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Relatorio_de_inconsistencias_de_conta_captacao.xls;");
+                header("Content-Disposition: inline; filename=Relatorio_de_inconsistencias_de_conta_captacao.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -1264,8 +1262,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->view->qtdRegistros  = $total;
             $this->view->dados         = $busca;
             $this->view->intTamPag     = $this->intTamPag;
-
-	} // fecha m�todo listarProjetosAction()
+	}
 
 
 	public function imprimirExtratoDeContaCaptacaoAction()
@@ -1401,7 +1398,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Transferencia_de_recurso.xls;");
+                header("Content-Disposition: inline; filename=Transferencia_de_recurso.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {

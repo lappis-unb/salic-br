@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="row">
+<?php echo $this->partial("admissibilidade/inc/menu.inc.php") ?>
+<div class="col s9">
+<h4>
+    Alterar a unidade de an&aacute;lise da proposta
+<h4>
+<div>
+    <form action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'frmalterarunianaliseproposta')); ?>" method="post" name="frmCon" id="frmCon">
+    <table class="tabela">
+        <tr>
+            <th>Digite o n&uacute;mero da proposta</th>
+        </tr>
+        <tr>
+            <td align="center">
+                <label for="nrProposta">Nr. da Proposta</label>
+                <input type="text" name="nrProposta" id="nrProposta" class="input_simples2" />
+            </td>
+        </tr>
+	</table>
+	<table class="tabela">
+        <tr>
+            <td class="centro">
+                <input type="submit" class="btn_confirmar" title="Confirmar" value=" " />
+            </td>
+        </tr>
+    </table>
+    </form>
+    <div id="retorno" align="center"></div>
+</div>
+</div>
+    </div>
+</div>
+

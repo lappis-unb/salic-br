@@ -1,5 +1,5 @@
-<?php 
-/* 
+<?php
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,9 +11,8 @@
  */
 class tbFormDocumento extends MinC_Db_Table_Abstract {
      protected $_banco   = "BDCORPORATIVO";
-     protected $_schema  = "scQuiz";
+     protected $_schema  = "BDCORPORATIVO.scQuiz";
      protected $_name = 'tbFormDocumento';
-
 
      public function buscaNrFormDocumento($idEdital){
 
@@ -69,4 +68,3 @@ class tbFormDocumento extends MinC_Db_Table_Abstract {
     }
 
 }
-?>

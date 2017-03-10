@@ -82,7 +82,6 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
 
     public function buscaAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        header("Content-Type: text/html; charset=ISO-8859-1");
 
         $relatorio    		= $this->_request->getParam("consulta");
         $idEdital    		= $this->_request->getParam("edital");
@@ -140,7 +139,7 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
 
         if($_POST) {
             header("Content-type: application/msexcel");
-            header("Content-Disposition: attachment; filename=documentos.xls");
+            header("Content-Disposition: attachment; filename=documentos.ods");
             echo $_POST['htmlxls'];
 
         }
@@ -150,7 +149,6 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
     public function listarselecionadosAction() {
 
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         /** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idusuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : 0;

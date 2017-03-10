@@ -1,14 +1,15 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- * Description of Orgaos
- * @author augusto
- */
 class Orgaos extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
     protected $_name  = 'Orgaos';
+    protected $_primary = 'Codigo';
+
+    const ORGAO_SUPERIOR_SAV = 160;
+    const ORGAO_SAV = 166;
+    const ORGAO_SEFIC = 262;
+    const ORGAO_SUPERIOR_SEFIC = 251;
+    const ORGAO_SUPERIOR_IPHAN = 91;
 
     public function pesquisarTodosOrgaos() {
         $select = $this->select();
@@ -35,7 +36,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
 
         return $this->fetchAll($select);
     }
-    
+
     public function pesquisarNomeOrgao($codOrgao){
     	$select = $this->select();
         $select->setIntegrityCheck(false);
@@ -59,7 +60,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
                             'o.Sigla',
                             'o.idSecretaria as Superior')
 		);
-        
+
 		$select->where("o.Codigo = ?", $codOrgao);
 
        return $this->fetchAll($select);
@@ -131,6 +132,47 @@ class Orgaos extends MinC_Db_Table_Abstract{
         $slct->where("se.Codigo = ?", $segmento);
         //xd($slct->assemble());
         return $this->fetchAll($slct);
+    }
+
+    public function obterOrgaoSuperior($codOrgao) {
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+
+        $objQuery->from(
+            array('OrgaoSuperior' => $this->_name),
+            'OrgaoSuperior.*',
+            $this->_schema
+        );
+
+        $objQuery->joinInner(
+            array('OrgaoFilho' => $this->_name),
+            'OrgaoFilho.idSecretaria = OrgaoSuperior.Codigo',
+            array(),
+            $this->_schema
+        );
+
+        $objQuery->where("OrgaoFilho.Codigo = ?", $codOrgao);
+        $resultado = $this->fetchRow($objQuery);
+        if($resultado) {
+            return $resultado->toArray();
+        }
+    }
+
+
+    /*
+     * Busca superintendências do IPHAN
+     */
+    public function buscarSuperintendencias() {
+
+        $query = $this->select()
+               ->from($this,
+                      array('Codigo', 'Sigla'));
+
+        $query->where('Vinculo = 1');
+        $query->where('idSecretaria = ' . ORGAO_SUPERIOR_IPHAN);
+        $query->order('Sigla');
+
+        return $this->fetchAll($query);
     }
 }
 ?>

@@ -1,0 +1,181 @@
+<table class="tabela">
+    <tr class="destacar">
+        <td class="centro"><b>PRONAC</b></td>
+        <td class="centro"><b>Nome do Projeto</b></td>
+        <td class="centro"><b>Proponente</b></td>
+    </tr>
+    <tr>
+        <td align="center"><?php echo isset($this->projeto['nrprojeto']) ? $this->projeto['nrprojeto'] : ''; ?></td>
+        <td align="center"><?php echo isset($this->proposta['nomeprojeto']) ? $this->proposta['nomeprojeto'] : ''; ?></td>
+        <td align="center"><?php echo !empty($this->proponente['descricao']) ? $this->proponente['descricao'] : ''; ?></td>
+    </tr>
+    <tr class="destacar">
+        <td class="centro"><b>UF</b></td>
+        <td class="centro"><b>CNPJ/CPF</b></td>
+        <td class="centro"><b>Mecanismo</b></td>
+    </tr>
+    <tr>
+        <td align="center"><?php echo empty($this->projeto['ufprojeto']) ? '<em>Dados n&atilde;o informados!</em>' : $this->projeto['ufprojeto']; ?></td>
+        <td align="center">
+            <?php
+            if ($this->projeto['cgccpf'])
+                echo (strlen($this->projeto['cgccpf']) > 11) ? Mascara::addMaskCNPJ($this->projeto['cgccpf']) : Mascara::addMaskCPF($this->projeto['cgccpf']);
+
+            ?>
+        </td>
+        <td align="center"><?php echo empty($this->projeto['mecanismo']) ? '<em>Dados n&atilde;o informados!</em>' : $this->projeto['mecanismo']; ?></td>
+    </tr>
+</table>
+
+<table class="tabela">
+    <tr class="destacar">
+        <td class="centro"><b>&Aacute;rea Cultural</b></td>
+        <td class="centro"><b>Segmento</b></td>
+        <?php if ($this->projeto['idmecanismo '] != 2 && $this->projeto['idmecanismo '] != 6) { ?>
+            <td class="centro"><b>Enquadramento</b></td>
+        <?php } ?>
+    </tr>
+    <tr>
+
+        <td align="center"><?php echo empty($this->projeto['area']) ? '<em>Dados n&atilde;o informados!</em>' : $this->projeto['area']; ?></td>
+        <td align="center"><?php echo empty($this->projeto['segmento']) ? '<em>Dados n&atilde;o informados!</em>' : $this->projeto['segmento']; ?></td>
+        <?php if ($this->projeto['idmecanismo '] != 2 && $this->projeto['idmecanismo '] != 6) { ?>
+            <td align="center"
+                class="bold"><?php echo empty($this->projeto['enquadramento']) ? '<em>Dados n&atilde;o informados!</em>' : $this->projeto['enquadramento']; ?></td>
+        <?php } ?>
+    </tr>
+</table>
+
+<table class="tabela">
+    <tr class="destacar">
+        <td class="centro"><b>Ag&ecirc;ncia</b></td>
+        <td class="centro"><b>Plano de execu&ccedil;&atilde;o imediata</b></td>
+        <td class="centro"><b>&Eacute; proposta de audiovisual</b></td>
+    </tr>
+    <tr>
+        <td align="center"><?php echo empty($this->proposta['agenciabancaria']) ? '<em>Dados n&atilde;o informados!</em>' : $this->proposta['agenciabancaria']; ?></td>
+        <td align="center"><?php echo empty($this->proposta['stproposta']) ? 'Proposta normal' : $this->listaExecucaoImediata[$this->proposta['stproposta']]; ?></td>
+        <td align="center">
+            <?php echo ($this->proposta['areaabrangencia'] == "1") ? 'Sim' : 'N&atilde;o'; ?>
+        </td>
+
+    </tr>
+</table>
+
+<table class="tabela">
+    <tr class="destacar">
+        <td align="center"><b>Vl. Solicitado Inicial</b></td>
+        <td align="center"><b>Vl. Solicitado Atual (A)</b></td>
+        <td align="center"><b>Vl. Outras Fontes (B)</b></td>
+        <td align="center"><b>Vl. Proposta (C = A + B)</b></td>
+        <td align="center"><b>Vl.Captado (E)</b></td>
+    </tr>
+    <tr>
+        <td align="center"><b><?php echo @number_format($this->projeto['valorsolicitado'], 2, ",", "."); ?></b></td>
+        <td align="center">
+            <b>
+                <a style="color: #009900 !important;"
+                   href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $this->proposta['idpreprojeto'])) ?>">
+                    <?php echo @number_format($this->valorsolicitadoincentivo, 2, ",", "."); ?>
+                </a>
+            </b>
+        </td>
+        <td align="center"><b><font
+                    color="#CC0000"><?php echo @number_format($this->valoroutrasfontes, 2, ",", "."); ?></font></b>
+        </td>
+        <td align="center">
+            <b><font
+                    color=\"#0000FF\"><?php echo @number_format(($this->valorsolicitadoincentivo + $this->valoroutrasfontes), 2, ",", "."); ?></font></b>
+        </td>
+        <td align="center"><b>
+                <?php if ($this->projeto['ValorCaptado'] > 0): ?>
+                    <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'dados-bancarios-captacao')); ?>?idPronac=<?php echo $this->projeto['nrprojeto']; ?>"
+                       style="color: blue !important;"><?php echo @number_format($this->projeto['ValorCaptado'], 2, ",", "."); ?></a>
+                <?php else : ?>
+                    <?php echo @number_format($this->projeto['ValorCaptado'], 2, ",", "."); ?>
+                <?php endif; ?>
+            </b>
+        </td>
+    </tr>
+</table>
+
+<table class="tabela" cellpadding="1" cellspacing="1">
+    <tr class="destacar centro">
+        <td colspan="5"><b>Resumo do Projeto</b></td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <?php if (isset($this->proposta['resumodoprojeto'])) echo $this->proposta['resumodoprojeto']; ?>
+        </td>
+    </tr>
+    <tr class="destacar centro">
+        <td colspan="5"><b>Objetivos *</b></td>
+    </tr>
+    <tr>
+        <td>
+            <?php if (isset($this->proposta['objetivos'])) echo $this->proposta['objetivos']; ?>
+        </td>
+    </tr>
+    <tr class="destacar centro">
+        <td colspan="5"><b>Justificativa *</b></td>
+    </tr>
+    <tr>
+        <td>
+            <?php if (isset($this->proposta['justificativa'])) echo $this->proposta['justificativa']; ?>
+        </td>
+    </tr>
+</table>
+
+<table class="tabela" cellpadding="1" cellspacing="1">
+    <tr class="destacar centro">
+        <td colspan="3"><b>Per&iacute;odo de Realiza&ccedil;&atilde;o</b></td>
+        <td colspan="2"><b>No caso de bem tombado</b></td>
+    </tr>
+    <tr>
+        <td class="centro"><label for="dtInicioDeExecucao">Data de In&iacute;cio *</label></td>
+        <td>
+            <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10"
+                   class="input_simples btn_calendario"
+                   value="<?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtiniciodeexecucaoform']; ?>"/>
+        </td>
+        <td>Prorroga&ccedil;&atilde;o autom&aacute;tica?
+            <?php echo ($this->proposta['tpprorrogacao'] == "1") ? "Sim" : "N&atilde;o"; ?>
+        </td>
+        <td><label for="nrAtoTombamento">N&uacute;mero do Ato </label></td>
+        <td>
+            <?php if (isset($this->proposta['idpreprojeto'])) echo trim($this->proposta['nratotombamento']); ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="centro"><label for="dtFinalDeExecucao">Data Final *</label></td>
+        <td>
+            <input type="text" name="dtFinalDeExecucao" id="dtFinalDeExecucao" maxlength="10"
+                   class="input_simples btn_calendario"
+                   value="<?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtfinaldeexecucaoform']; ?>"/>
+        </td>
+        <td></td>
+        <td><label for="dtAtoTombamento">Data do Ato </label></td>
+        <td>
+            <?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtatotombamentoform']; ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <span id="msgValidaData"></span>
+            <input type="hidden" name="blnDatasValidas" id="blnDatasValidas" value="true">
+        </td>
+        <td><label for="esferaTombamento">Esfera do Ato </label></td>
+        <td>
+            <?php
+
+            if ($this->proposta['esferatombamento'] == "1") {
+                echo "Municipal";
+            } else if ($this->proposta['esferatombamento'] == "2") {
+                echo "Estadual";
+            } else if ($this->proposta['esferatombamento'] == "3") {
+                echo "Federal";
+            }
+            ?>
+        </td>
+    </tr>
+</table>

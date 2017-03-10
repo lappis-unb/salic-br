@@ -46,7 +46,7 @@ class Testeprojeto extends Zend_Db_Table
 
 		try
 		{
-			$db = Zend_Registry :: get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 			return $db->fetchAll($sql);
 		}

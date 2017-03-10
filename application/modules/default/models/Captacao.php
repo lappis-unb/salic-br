@@ -7,10 +7,8 @@
 
 class Captacao extends MinC_Db_Table_Abstract {
     protected $_banco   = "SAC";
-    protected $_schema  = "dbo";
+    protected $_schema  = "SAC";
     protected $_name    = "Captacao";
-
-
 
     public function listaCaptacao($AnoProjeto,$Sequencial) {
 
@@ -179,7 +177,6 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         $select->where('c.AnoProjeto = ?', $AnoProjeto,'c.Sequencial = ?', $Sequencial);
 
-        //xd($this->fetchAll($select));
         return $this->fetchAll($select);
 
     } // fecha m�todo listasituacao()
@@ -291,8 +288,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                 array()
         );
 
-        $slct->where('p.IdPRONAC = ?',$idPronac );   
-        //xd($slct->assemble());
+        $slct->where('p.IdPRONAC = ?',$idPronac );
         //xd($this->fetchAll($slct));
 
 
@@ -310,7 +306,6 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         $select->where('AnoProjeto+Sequencial = ?', $pronac);
 
-        //xd($this->fetchAll($select));
         return $this->fetchAll($select);
 
     } // fecha m�todo listasituacao()
@@ -393,7 +388,6 @@ class Captacao extends MinC_Db_Table_Abstract {
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
@@ -413,7 +407,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slct->joinInner(
                             array('p'=>'Projetos'),
                             'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
-                            array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"), 
+                            array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"),
                                   "NomeProjeto"),
                             'SAC.dbo'
                           );
@@ -441,7 +435,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                             array("DescSegmento"=>"Descricao"),
                             "SAC.dbo"
                           );
-       
+
         /*$slct->joinInner(
                             array('r'=>'tbReuniao'),
                             't.idNrReuniao = r.idNrReuniao',
@@ -462,7 +456,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         //TOTAL DE REGISTRO - PARA PAGINACAO
         if($count && empty ($arrVlAutorizado)){
-        	
+
             $slctCount = $this->select();
             $slctCount->distinct();
             $slctCount->setIntegrityCheck(false);
@@ -522,7 +516,7 @@ class Captacao extends MinC_Db_Table_Abstract {
             $rs = $this->fetchAll($slctCount)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
-        
+
         //RETORNA SOMATORIO - VALOR AUTORIZADO
 		if($blnSomatorioVlAutorizado)
         {
@@ -568,19 +562,19 @@ class Captacao extends MinC_Db_Table_Abstract {
 	                            array(),
 	                            "SAC.dbo"
 	                          );
-	       
+
 	        $slctSA->joinInner(
 	                            array('uf'=>'UF'),
 	                            'p.UfProjeto = uf.Sigla',
 	                            array(),
 	                            "Agentes.dbo"
 	                          );
-	
+
 	        //adiciona quantos filtros foram enviados
 	        foreach ($where as $coluna => $valor) {
 	            $slctSA->where($coluna, $valor);
 	        }
-        
+
             $slctSomatorio = $this->select();
             $slctSomatorio->setIntegrityCheck(false);
             $slctSomatorio->from(
@@ -594,7 +588,7 @@ class Captacao extends MinC_Db_Table_Abstract {
             //x($slctSomatorio->assemble());
             return $this->fetchAll($slctSomatorio);
         }//Fim Somat�rio do Valor Autorizado
-        
+
         //RETORNA SOMATORIO - VALOR CAPTADO
 		if($blnSomatorioVlCaptado)
         {
@@ -613,7 +607,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slctSC->joinInner(
                             array('p'=>'Projetos'),
                             'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
-                            array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"), 
+                            array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"),
                                   "NomeProjeto"),
                             'SAC.dbo'
                           );
@@ -641,7 +635,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                             array("DescSegmento"=>"Descricao"),
                             "SAC.dbo"
                           );
-       
+
            /*$slct->joinInner(
                             array('r'=>'tbReuniao'),
                             't.idNrReuniao = r.idNrReuniao',
@@ -654,13 +648,13 @@ class Captacao extends MinC_Db_Table_Abstract {
                             array("Sigla"),
                             "Agentes.dbo"
                           );
-	                     
-	
+
+
 	        //adiciona quantos filtros foram enviados
 	        foreach ($where as $coluna => $valor) {
 	            $slctSC->where($coluna, $valor);
 	        }
-        
+
             $slctSomatorio = $this->select();
             $slctSomatorio->setIntegrityCheck(false);
             $slctSomatorio->from(
@@ -671,10 +665,9 @@ class Captacao extends MinC_Db_Table_Abstract {
             //adicionando linha order ao select
             $slctSomatorio->order($order);
 
-            //xd($slctSomatorio->assemble());
             return $this->fetchAll($slctSomatorio);
         }//Fim Somat�rio do Valor Captado
-        
+
         if(!empty($arrVlAutorizado))
         {
             $slctMaster = $this->select();
@@ -725,8 +718,8 @@ class Captacao extends MinC_Db_Table_Abstract {
             return $this->fetchAll($slct);
         }
     }
-    
-    /*  Busca Demonstativo de Capta��o de Recurso da CNIC  */ 
+
+    /*  Busca Demonstativo de Capta��o de Recurso da CNIC  */
     public function buscarDemonstrativoDeCaptacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $arrVlAutorizado=array())
     {
     	$slct = $this->select();
@@ -744,7 +737,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slct->joinInner(
                             array('p'=>'Projetos'),
                             'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
-                            array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"), 
+                            array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"),
                                   "NomeProjeto",
                                   "IdPRONAC"),
                             'SAC.dbo'
@@ -789,7 +782,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         //TOTAL DE REGISTRO - PARA PAGINACAO
         if($count && empty ($arrVlAutorizado)){
-        	
+
             $slctCount = $this->select();
             $slctCount->distinct();
             $slctCount->setIntegrityCheck(false);
@@ -845,20 +838,18 @@ class Captacao extends MinC_Db_Table_Abstract {
 	                          );
 	       $slctCount->group(array('p.AnoProjeto','p.Sequencial','p.IdPRONAC','ca.Sequencial','ca.AnoProjeto','p.NomeProjeto','ag.CNPJCPF',
 	                          'n.Descricao','a.Descricao','se.Descricao','uf.Sigla'));
-	
+
 	       //adiciona quantos filtros foram enviados
 	        foreach ($where as $coluna => $valor) {
 	            $slctCount->where($coluna, $valor);
 	        }
 
             //x($slctCount->__toString());
-            
+
             $rs = $this->fetchAll($slctCount);
-            //xd(count($rs));            
-            //xd($totalCount);
             if($rs){ return count($rs); }else{ return 0; }
-        }   
-        
+        }
+
         if(!empty($arrVlAutorizado))
         {
             $slctMaster = $this->select();
@@ -908,19 +899,19 @@ class Captacao extends MinC_Db_Table_Abstract {
             return $this->fetchAll($slct);
         }
     }
-    
+
     /* Somatorio do valor Captado */
     public function buscarDemonstrativoDeCaptacaoSomatorioValorCaptado($where=array(),$blnSomatorioVlCaptado)
     {
-    	//RETORNA SOMATORIO - VALOR CAPTADO		
+    	//RETORNA SOMATORIO - VALOR CAPTADO
         $slctSC = $this->select();
         $slctSC->setIntegrityCheck(false);
         $slctSC->distinct();
         $slctSC->from(
                         array('ca'=>$this->_schema.'.'.$this->_name),
                         array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)"),
-                        	  /*'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")	                       	  
-                        	  
+                        	  /*'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
+
                               'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
                               'vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")*/
                              )
@@ -958,9 +949,9 @@ class Captacao extends MinC_Db_Table_Abstract {
                             'p.UfProjeto = uf.Sigla',
                             array(),
                             "Agentes.dbo"
-                          );      
+                          );
 		$slctSC->group(array('p.AnoProjeto','p.Sequencial','ca.Sequencial','ca.AnoProjeto','p.NomeProjeto','ag.CNPJCPF',
-                          'n.Descricao','a.Descricao','se.Descricao','uf.Sigla'));               
+                          'n.Descricao','a.Descricao','se.Descricao','uf.Sigla'));
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -979,13 +970,13 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         //x($slctSC->assemble());
         return $this->fetchAll($slctSomatorio);
-        
+
     }
-    
+
     /* Somatorio do valor Autorizado */
 	public function buscarDemonstrativoDeCaptacaoSomatorioValorAutorizado($where=array(),$blnSomatorioVlCaptado)
     {
-    	//RETORNA SOMATORIO - VALOR AUTORIZADO		
+    	//RETORNA SOMATORIO - VALOR AUTORIZADO
  		$slctSA = $this->select();
         $slctSA->setIntegrityCheck(false);
         $slctSA->distinct();
@@ -993,7 +984,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                         array('ca'=>$this->_schema.'.'.$this->_name),
                         array('vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
                               /*'CaptacaoReal'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")
-                         
+
                               'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
                               'vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")*/
                              )
@@ -1028,7 +1019,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                             array(),
                             "SAC.dbo"
                           );
-       
+
         $slctSA->joinInner(
                             array('uf'=>'UF'),
                             'p.UfProjeto = uf.Sigla',
@@ -1036,13 +1027,13 @@ class Captacao extends MinC_Db_Table_Abstract {
                             "Agentes.dbo"
                           );
 		/*$slctSA->group(array('p.AnoProjeto','p.Sequencial','ca.Sequencial','ca.AnoProjeto','p.NomeProjeto','ag.CNPJCPF',
-                          'n.Descricao','a.Descricao','se.Descricao','uf.Sigla'));*/  
+                          'n.Descricao','a.Descricao','se.Descricao','uf.Sigla'));*/
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slctSA->where($coluna, $valor);
         }
-        
+
        $slctSomatorio = $this->select();
        $slctSomatorio->setIntegrityCheck(false);
        $slctSomatorio->from(
@@ -1055,18 +1046,18 @@ class Captacao extends MinC_Db_Table_Abstract {
 
        //x($slctSomatorio->assemble());
        return $this->fetchAll($slctSomatorio);
-    	
+
     }
-    
+
    /*  Pega o alor total do projeto pelo PRONAC
     *  Captado
     *  Autorizado
-    * 
-    */  
+    *
+    */
     public function valorTotal($tipo,$ano,$sequencial)
-    {       
+    {
     	$pronac = $ano.$sequencial;
-    	
+
     	if($tipo == 'captado')
     	{
     		$slct = $this->select();
@@ -1074,7 +1065,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slct->distinct();
 	        $slct->from(
 	                        array('ca'=>$this->_schema.'.'.$this->_name),
-	                        array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")	                              
+	                        array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")
 	                             )
 	                     );
 			$slct->where('AnoProjeto+Sequencial = ?' , $pronac);
@@ -1082,22 +1073,21 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $valor = $this->fetchAll($slct);
 	        foreach ($valor as $val){
 	        	$total = $val->vlCaptado;
-	        } 	    
-	        return $total;      
+	        }
+	        return $total;
         }
-        
+
         if($tipo == 'autorizado')
         {
-        	$db = Zend_Registry :: get('db');
+        	$db = Zend_Db_Table::getDefaultAdapter();
         	$db->setFetchMode(Zend_DB :: FETCH_OBJ);
         	$slct = "select SAC.dbo.fnTotalAprovadoProjeto('{$ano}','{$sequencial}')";
-        	$valor = $db->fetchAll($slct); 
+        	$valor = $db->fetchAll($slct);
         	return $valor[0]->computed;
-        }        
-        //xd($slct);
-        
+        }
+
     }
-    
+
     public function buscaExtratoCaptacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
 
         $slct = $this->select();
@@ -1110,7 +1100,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                           "c.DtRecibo",
                           "c.CaptacaoReal",
                           "c.NumeroRecibo",
-                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patroc�nio' WHEN c.TipoApoio = 2 then 'Doa��o' END "),
+                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patrocínio' WHEN c.TipoApoio = 2 then 'Doação' END "),
                           "Incentivador" =>  new Zend_Db_Expr("SAC.dbo.fnNome(a.idagente)"),
                           "DtLiberacao" =>  new Zend_Db_Expr("(SELECT TOP 1 DtLiberacao FROM SAC.dbo.Liberacao l WHERE c.AnoProjeto+c.Sequencial = l.AnoProjeto+l.Sequencial)"),
                           "Percentual" =>  new Zend_Db_Expr("SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial)"),
@@ -1187,11 +1177,10 @@ class Captacao extends MinC_Db_Table_Abstract {
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-    
-    
+
+
     public function buscaReciboCaptacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
 
         $slct = $this->select();
@@ -1257,7 +1246,6 @@ class Captacao extends MinC_Db_Table_Abstract {
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
@@ -1299,10 +1287,9 @@ class Captacao extends MinC_Db_Table_Abstract {
             $slct->where($coluna, $valor);
         }
 
-        //xd($slct->assemble());
         return $this->fetchRow($slct);
     }
-    
+
     public function fnTotalCaptadoProjeto($anoProjeto,$sequencial){
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -1313,10 +1300,10 @@ class Captacao extends MinC_Db_Table_Abstract {
                     "totalCaptado" => new Zend_Db_Expr(" SAC.dbo.fnTotalCaptadoProjeto('$anoProjeto', '$sequencial')")
                 )
         );
-        
+
         return $this->fetchRow($select);
     }
-    
+
     public function painelDadosBancariosCaptacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -1324,7 +1311,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                 array('c' => $this->_name),
                 array(
                     new Zend_Db_Expr("c.CgcCPfMecena, c.NumeroRecibo, c.DtTransferenciaRecurso, c.DtRecibo, c.CaptacaoReal"),
-                    new Zend_Db_Expr("CASE 
+                    new Zend_Db_Expr("CASE
                                         WHEN c.TipoApoio = '2'
                                              THEN 'Patroc�nio'
                                              ELSE 'Doa��o'
@@ -1349,7 +1336,7 @@ class Captacao extends MinC_Db_Table_Abstract {
             array(''), 'SAC.dbo'
         );
         $select->joinLeft(array('a' => 'agentes'), 'a.CNPJCPf = c.CgcCPfMecena', array('idAgente'), 'Agentes.dbo');
-        
+
        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
@@ -1371,7 +1358,6 @@ class Captacao extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-//        xd($select->assemble());
         return $this->fetchAll($select);
     }
-} // fecha class
+}

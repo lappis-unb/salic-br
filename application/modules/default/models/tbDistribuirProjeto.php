@@ -12,21 +12,21 @@
 class tbDistribuirProjeto extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbDistribuirProjeto";
 	protected $_primary   = "idDistribuirProjeto";
 
     public function painelRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $idPerfil=0) {
-        
+
         if($idPerfil == 110){
             $nome = 'c.usu_nome AS Parecerista';
         } else {
             $nome = 'c.Descricao AS Parecerista';
         }
-        
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("a.idDistribuirProjeto, a.IdPRONAC, b.AnoProjeto+b.Sequencial AS Pronac, b.NomeProjeto, a.dtEnvio, $nome, a.idAvaliador AS idAgente, CAST(d.dsSolicitacaoRecurso as TEXT) AS dsSolicitacaoRecurso, d.idRecurso")
@@ -37,7 +37,7 @@ class tbDistribuirProjeto extends MinC_Db_Table_Abstract
             array('b' => 'Projetos'), 'a.IdPRONAC = b.IdPRONAC',
             array(''), 'SAC.dbo'
         );
-        
+
         if($idPerfil == 110){
             $select->joinLeft(
                 array('c' => 'Usuarios'), 'a.idAvaliador = c.usu_codigo',
@@ -74,8 +74,8 @@ class tbDistribuirProjeto extends MinC_Db_Table_Abstract
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        
+
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-} // fecha class
+}

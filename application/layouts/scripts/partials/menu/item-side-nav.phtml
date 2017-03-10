@@ -1,0 +1,6 @@
+<li>
+    <a class="dropdown-button"  data-beloworigin="true" href="<?php echo ($this->url)? $this->url : 'javascript:void(0);'; ?>" data-activates="side-nav-<?php echo $this->id; ?>" title="<?php echo $this->title; ?>"><?php echo $this->label; ?></a>
+    <ul id="side-nav-<?php echo $this->id; ?>" class="dropdown-content">
+        <?php echo $this->partialLoop('partials/menu/subitem.phtml', $this->menu); ?>
+    </ul>
+</li>

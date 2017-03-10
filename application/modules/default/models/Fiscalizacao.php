@@ -7,9 +7,8 @@
 class Fiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbFiscalizacao';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
-
 
     public function buscaFiscalizacao($idFiscalizacao) {
         $select = $this->select();
@@ -71,4 +70,4 @@ class Fiscalizacao extends MinC_Db_Table_Abstract {
     }
 
 
-} // fecha class
+}

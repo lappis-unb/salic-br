@@ -1,17 +1,21 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * Description of tbTextoEmail
- *
- * @author 01610881125
- */
-class tbTextoEmail  extends MinC_Db_Table_Abstract {
-     protected $_banco   = "SAC";
-     protected $_schema  = "dbo";
-     protected $_name    = 'tbTextoEmail';
+class tbTextoEmail extends MinC_Db_Table_Abstract
+{
+    protected $_name = 'tbTextoEmail';
+    protected $_schema = "sac";
+    protected $_primary = "idTextoemail";
+
+    public function obterTextoPorIdentificador($idTextoEmail)
+    {
+        $objQuery = $this->select();
+        $objQuery->from(
+            $this->_name,
+            'dsTexto',
+            $this->_schema
+        );
+        $objQuery->where('idTextoemail = ?', $idTextoEmail);
+
+        return $this->fetchRow($objQuery);
+    }
 }
-?>

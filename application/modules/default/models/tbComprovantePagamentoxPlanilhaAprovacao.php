@@ -13,7 +13,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "scSAC";
+	protected $_schema  = "bdcorporativo.scsac";
 	protected $_name    = "tbComprovantePagamentoxPlanilhaAprovacao";
 
 
@@ -93,12 +93,11 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                             e.Descricao as Fornecedor,
                             b.DtPagamento as DtComprovacao,
                             CASE tpDocumento
-                                WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                                WHEN 2 THEN ('Cupom Fiscal')
-                                WHEN 3 THEN ('Guia de Recolhimento')
-                                WHEN 4 THEN ('Nota Fiscal/Fatura')
-                                WHEN 5 THEN ('Recibo de Pagamento')
-                                WHEN 6 THEN ('RPA')
+                                WHEN 1 THEN ('Cupom Fiscal')
+                                WHEN 2 THEN ('Guia de Recolhimento')
+                                WHEN 3 THEN ('Nota Fiscal/Fatura')
+                                WHEN 4 THEN ('Recibo de Pagamento')
+                                WHEN 5 THEN ('RPA')
                                 ELSE ''
                             END as tbDocumento,
                             b.nrComprovante,
@@ -283,18 +282,14 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
             ,"Agentes.dbo"
 		);
 
-        //Altera��o realizada no dia 25/02/2016 a pedido da area demandante.
-        #$select->where("c.stAtivo = ?", 'S');
         $select->where("c.idPronac = ?", $idPronac);
-		
+
 		$select->order("Agentes.dbo.fnUFAgente(idFornecedor)");
 		$select->order("Agentes.dbo.fnMunicipioAgente(idFornecedor)");
 		$select->group("Agentes.dbo.fnUFAgente(idFornecedor), Agentes.dbo.fnMunicipioAgente(idFornecedor)");
-        
-        #xd($select->assemble());
-
-		return $this->fetchAll($select);
-	} // fecha m�todo buscarDados()
+		
+        return $this->fetchAll($select);
+	}
     
     
 	public function buscarRelatorioBensDeCapital($idPronac)

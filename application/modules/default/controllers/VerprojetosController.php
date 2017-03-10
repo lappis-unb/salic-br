@@ -139,7 +139,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     }
 
                     //VALORES DO PROJETO
-                    $planilhaproposta = new PlanilhaProposta();
+                    $planilhaproposta = new Proposta_Model_DbTable_PlanilhaProposta();
                     $planilhaprojeto = new PlanilhaProjeto();
                     $planilhaAprovacao = new PlanilhaAprovacao();
 
@@ -232,7 +232,6 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                                 $wherePro['v.idUsuarioResponsavel = ?'] = $this->idResponsavel;
                                 $wherePro['p.siProcuracao = ?'] 		= 1;
                                 $buscaProcuracao = $procuracaoDAO->buscarProcuracaoProjeto($wherePro)->count();
-
                                 if($buscaProcuracao > 0)
                                 {
                                         $procuracaoValida 	= 'S';
@@ -564,9 +563,8 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
         $this->view->projeto = $rs;
 
-        $sv = new sVerificaValidadeCertidaoNegativa();
-        //$resultado = $sv->buscarDados($rs->CgcCpf);
-        $resultado = $sv->buscarDadosSemSP($rs->CgcCpf);
+        $sv = new certidaoNegativa();
+        $resultado = $sv->buscarCertidaoNegativa($rs->CgcCpf);
         $this->view->dados = $resultado;
     }
 
@@ -801,11 +799,9 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $projeto = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
         $this->view->projeto = $projeto;
 
-//        if(!empty($idPronac)) {
             $tbDoc = new paDocumentos();
             $rs = $tbDoc->marcasAnexadas($idPronac);
             $this->view->registros = $rs;
-//        }
     }
 
 	public function readequacaoAction()
@@ -1377,7 +1373,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".xls;");
+            header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -1443,7 +1439,8 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                                 $this->view->projetosENReconsideracao = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
                                 $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'descricao');
-                                $this->view->combosegmentosculturaisReconsideracao = Segmentocultural::buscarSegmento($this->view->projetosENReconsideracao->cdArea);
+                                $objSegmentocultural = new Segmentocultural();
+                                $this->view->combosegmentosculturaisReconsideracao = $objSegmentocultural->buscarSegmento($this->view->projetosENReconsideracao->cdArea);
 
                                 $parecer = new Parecer();
                                 $this->view->ParecerReconsideracao = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer in (?)' => array(1,7), 'stAtivo = ?' => 1))->current();
@@ -1481,7 +1478,8 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                                 $this->view->projetosENRecurso = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
                                 $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'descricao');
-                                $this->view->combosegmentosculturaisRecurso = Segmentocultural::buscarSegmento($this->view->projetosENRecurso->cdArea);
+                                $objSegmentocultural = new Segmentocultural();
+                                $this->view->combosegmentosculturaisRecurso = $objSegmentocultural->buscarSegmento($this->view->projetosENRecurso->cdArea);
 
                                 $parecer = new Parecer();
                                 $this->view->ParecerRecurso = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer = ?' => 7, 'stAtivo = ?' => 1))->current();
@@ -2991,7 +2989,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                 $this->view->valorparecerista = $parecerista['soma'];
 
-                $tbEnquadramento    = new Enquadramento();
+                $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                 $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                 if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){
@@ -4135,9 +4133,8 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         $Projetos = new Projetos();
                         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
 
-                        $sv = new sVerificaValidadeCertidaoNegativa();
-                        //$resultado = $sv->buscarDados($rs->CgcCpf);
-                        $resultado = $sv->buscarDadosSemSP($rs->CgcCpf);
+                        $sv = new certidaoNegativa();
+                        $resultado = $sv->buscarCertidaoNegativa($rs->CgcCpf);
                         $this->view->certidoes = $resultado;
                     }
 
@@ -4242,7 +4239,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                             }
 
-                            $tbEnquadramento    = new Enquadramento();
+                            $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                             $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                             if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){
@@ -5064,7 +5061,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                             }
 
-                            $tbEnquadramento    = new Enquadramento();
+                            $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                             $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                             if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){

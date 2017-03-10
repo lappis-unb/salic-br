@@ -4,20 +4,17 @@
  * @author jefferson.silva - XTI
  * @since 18/09/2013
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbAnaliseAprovacao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbAnaliseAprovacao";
-    
+
     public function copiandoPlanilhaRecurso($idPronac){
-        
+
         $sql = "INSERT INTO SAC.dbo.tbAnaliseAprovacao
                      (tpAnalise,dtAnalise,idAnaliseConteudo,IdPRONAC,idProduto,stLei8313,stArtigo3,nrIncisoArtigo3,dsAlineaArt3,stArtigo18,dsAlineaArtigo18,stArtigo26,stLei5761,
                       stArtigo27,stIncisoArtigo27_I,stIncisoArtigo27_II,stIncisoArtigo27_III,stIncisoArtigo27_IV,stAvaliacao,dsAvaliacao,idAgente,idAnaliseAprovacaoPai)
@@ -27,11 +24,11 @@ class tbAnaliseAprovacao extends MinC_Db_Table_Abstract
 
         ";
 //        xd($sql);
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
     }
 
-} // fecha class
+}

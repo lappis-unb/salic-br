@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwMemoriaDeCalculo
  * @since 01/03/2013
@@ -13,7 +13,7 @@ class vwMemoriaDeCalculo extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwMemoriaDeCalculo';
 
     public function busca($idPronac) {
@@ -32,4 +32,4 @@ class vwMemoriaDeCalculo extends MinC_Db_Table_Abstract {
         return $db->fetchAll($select);
     }
 
-} // fecha class
+}

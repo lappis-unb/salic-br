@@ -17,13 +17,13 @@
 
 </script>
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-    <div>Seja Bem Vindo ao SALIC! <span><?php echo $this->saudacao; ?></span></div>
+    <div>Seja bem-vindo(a) ao Salic! <span><?php echo $this->saudacao; ?></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo">
 <div id="confirma"></div>
 	<form id="formpronac" action="<?php echo $this->Url(array('controller' => 'principal', 'action' => 'buscarprojeto')) ?>" method="post">
@@ -37,32 +37,19 @@
 			</tr>
 		</table>
 	</form>
-
-
 <?php if(count($this->comunicados) > 0):?>
-
 	<div id="resultadoConsulta"><br><center>Aguarde, carregando dados...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br></div>
-
 <?php else:?>
 
 	<table class="tabela">
 		<tr>
-			<td align="center">
+			<td align="center" class="center-align logo-content">
 				<br /><br /><br /><br />
-				<img alt="" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png" />
+				<img alt="" src="<?php echo $this->baseUrl(); ?>/public/img/logo-500px.png" />
 				<br /><br /><br /><br />
 			</td>
 		</tr>
 	</table>
 	
 <?php endif;?>	
-	
 </div>
-
-<!-- ========== FIM CONTEÚDO ========== -->
-
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
-
-<br clear="all" />

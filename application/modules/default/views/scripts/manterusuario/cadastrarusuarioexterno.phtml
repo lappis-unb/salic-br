@@ -28,15 +28,15 @@
             messages:{
                 cpf:{
                     required: "Informe cpf",
-                    minlength: "O seu nome deve conter, no mínimo, 11 caracteres",
+                    minlength: "O seu CPF deve conter no m&iacute;nimo 11 caracteres",
                     verificaCPF: "Informe CPF v&aacute;lido"
                 },
                 nome:{
                     required: "Informe nome",
-                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                    minlength: "O seu nome deve conter no m&iacute;nimo 2 caracteres"
                 },
                 nomeusuario:{
-                    required: "Informe usuário"
+                    required: "Informe usu&aacute;rio"
                 },
                 unidade: '<br>Selecione unidade'
             }
@@ -58,7 +58,7 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">In&iacute;cio</a></li>
-        <li class="last">Cadastrar Usuário Externo</li>
+        <li class="last">Cadastrar Usu&aacute;rio Externo</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -66,19 +66,19 @@
 
 <!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-    <div>Cadastrar Usuário Externo<span></span> <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
+    <div>Cadastrar Usu&aacute;rio Externo<span></span> <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM Tï¿½TULO ========== -->
 
 
 <!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo" align="center">
-    <fieldset><legend>Informações</legend>
+    <fieldset><legend>Informa&ccedil;&atilde;es</legend>
         <form method="POST" action="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'cadastrarusuarioexterno')); ?>" name="cadastrarusuarioexterno" id="cadastrarusuarioexterno">
             <table class="tabela">
                 <thead>
                     <tr>
-                        <th colspan="2">Cadastrar Usuário Externo</th>
+                        <th colspan="2">Cadastrar Usu&aacute;rio Externo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +90,7 @@
                         <td>Nome Completo </td>
                         <td><input type="text" name="nome" id="nome" class="input_simples w400"/></td>
                     <tr>
-                        <td>Nome de Usuário </td>
+                        <td>Nome de Usu&aacute;rio </td>
                         <td><input type="text" name="nomeusuario" id="nomeusuario" class="input_simples w400"/></td>
                     </tr>
                     <tr>

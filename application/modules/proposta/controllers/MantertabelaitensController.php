@@ -5,7 +5,7 @@
  * @since 10/12/2010
  * @link http://www.cultura.gov.br
  */
-class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstract {
+class Proposta_MantertabelaitensController extends Proposta_GenericController {
 
     private $getIdUsuario = 0;
     private $idUsuario = 0;
@@ -40,10 +40,12 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         //recupera ID do pre projeto (proposta)
         if(!empty ($idPreProjeto)) {
             $this->idPreProjeto = $idPreProjeto;
+            $this->view->idPreProjeto = $idPreProjeto;
+
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
-            $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
+            $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
         }
     }
 
@@ -115,15 +117,13 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $produto = $post->produto;
 
             try {
-                //recupera nome do item
-                //$nomeItem = MantertabelaitensDAO:: buscaprodutoetapaitem($idPlanilhaItens);
                 $nomeItem = new MantertabelaitensDAO();
                 $nomeItem = $nomeItem->listarProdutoEtapaItem($idPlanilhaItens);
 
                 $dateFunc = MinC_Db_Expr::date();
                 $dadosassociar = array(
                     'idplanilhaitens' => $idPlanilhaItens,
-                    'nomedoitem' => $nomeItem->NomeDoItem,
+                    'nomedoitem' => $nomeItem[0]->NomeDoItem,
                     'descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
@@ -143,10 +143,11 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 );
 
                 if(!empty($idPlanilhaItens) && $idPlanilhaItens!="0") {
-                    $itemNome = $nomeItem->NomeDoItem;
+                    $itemNome = $nomeItem[0]->NomeDoItem;
                 }else {
                     $itemNome = $post->Descricao;
                 }
+
 
                 $arrBusca = array();
                 $arrBusca['prod.codigo'] = $produto;
@@ -155,7 +156,6 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 //$res = MantertabelaitensDAO::buscarSolicitacoes($arrBusca,$itemNome);
                 $res = new MantertabelaitensDAO();
                 $res = $res->listarSolicitacoes($arrBusca,$itemNome);
-
                 if(count($res)>0) {
                     throw new Exception("Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada!");
                 }

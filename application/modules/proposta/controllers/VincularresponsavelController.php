@@ -6,7 +6,7 @@
  * @author tisomar
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abstract
+class Proposta_VincularresponsavelController extends Proposta_GenericController
 {
 
     private $emailResponsavel = null;
@@ -46,14 +46,14 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
         // Busca na Agentes
         $tblAgentes = new Agente_Model_DbTable_Agentes();
-        $agente = $tblAgentes->findBy(['cnpjcpf' => $cpf]);
+        $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
         if ($acesso) {
-            $this->idResponsavel = $acesso['idusuario'];
-            $this->emailResponsavel = $acesso['email'];
+            $this->idResponsavel = $acesso['IdUsuario'];
+            $this->emailResponsavel = $acesso['Email'];
         }
         if ($agente) {
-            $this->idAgente = $agente['idagente'];
+            $this->idAgente = $agente['idAgente'];
         }
         if ($usuario) {
             $this->idUsuario = $usuario['usu_codigo'];

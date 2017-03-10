@@ -1,0 +1,91 @@
+<form id="form-mensagem" class="materialize" data-ajax-form="true" method="post" action="<?php echo $this->urlAction ?>">
+    <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
+    <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
+    <div class="row">
+        <div class="input-field col s12">
+            <select data-ajax-render="/admissibilidade/mensagem/usuarios"
+                    data-ajax-target="select[name=idDestinatario]"
+                    name="idDestinatarioUnidade" <?php if (isset($this->arrConfig['idDestinatarioUnidade']) && $this->arrConfig['idDestinatarioUnidade']['disabled']) echo 'disabled="disabled"' ?>>
+                <option value="" disabled selected>Selecione...</option>
+                <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
+                <?php foreach ($this->arrUnidades as $values): ?>
+                    <option <?php if (isset($this->dataForm['idDestinatarioUnidade']) && $this->dataForm['idDestinatarioUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
+                        value="<?php echo $values['Codigo'] ?>"><?php echo $values['Sigla'] ?>
+                    </option>
+                <?php endforeach; ?>
+                <!--                        </optgroup>-->
+            </select>
+            <label>Unidade</label>
+        </div>
+    </div>
+    <?php if (!isset($this->arrConfig['idDestinatario']) || $this->arrConfig['idDestinatario']['show'] === true): ?>
+        <div class="row" >
+            <div class="input-field col s12">
+                <select name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                    <option value="" disabled selected>Selecione...</option>
+                </select>
+                <label>Agente</label>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if(!isset($this->arrConfig['dsMensagem']['show']) || $this->arrConfig['dsMensagem']['show'] === true): ?>
+        <?php if (isset($this->arrConfig['dsMensagem']['disabled']) && $this->arrConfig['dsMensagem']['disabled']): ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="dsMensagem" class="active">Pergunta</label>
+                </div>
+                <div class="col s12">
+                    <?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?>
+                </div>
+            </div>
+            <?php else: ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <br />
+                    <textarea id="dsMensagem" class="materialize-textarea editor" name="dsMensagem" <?php if (isset($this->arrConfig['dsMensagem']) && $this->arrConfig['dsMensagem']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?>  </textarea>
+                    <br />
+                    <label for="dsMensagem" class="active">Pergunta</label>
+                    <br />
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if(!isset($this->arrConfig['dsMensagem']['show']) || $this->arrConfig['dsMensagem']['show'] === true): ?>
+        <?php if (isset($this->arrConfig['dsResposta']) && $this->arrConfig['dsResposta']['disabled']): ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="dsResposta" class="active">Resposta</label>
+                </div>
+                <div class="col s12">
+                    <?php echo ($this->dataForm['dsResposta'])? $this->dataForm['dsResposta'] : '<br />Sem resposta at&eacute; o momento.'; ?>
+                </div>
+            </div>
+        <?php elseif (isset($this->dataForm['dsResposta'])): ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <br />
+                    <textarea id="dsResposta" class="materialize-textarea editor" name="dsResposta" <?php if (isset($this->arrConfig['dsResposta']) && $this->arrConfig['dsResposta']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsResposta'])) echo $this->dataForm['dsResposta']; ?>  </textarea>
+                    <br />
+                    <label for="dsResposta" class="active">Resposta</label>
+                    <br />
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if(!isset($this->arrConfig['actions']['show']) || $this->arrConfig['actions']['show'] === true): ?>
+        <div class="row">
+            <div class="col s12 center-align">
+                <a href="javascript:$3.redirect('<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->strActionBack, 'idPronac' => $this->idPronac), null, true); ?>')"
+                   class="modal-action modal-close waves-effect waves-orange orange-text btn-flat">Voltar</a>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Enviar</button>
+            </div>
+        </div>
+    <?php endif; ?>
+</form>
+<script>
+    $(document).ready(function ($) {
+        $("textarea.editor").each(function(){
+            $(this).editorRico({altura: 200});
+        });
+    });
+</script>

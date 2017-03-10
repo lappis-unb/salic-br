@@ -31,7 +31,7 @@ $('th').attr("title","Clique aqui para ordenar");
 	<td><?php echo utf8_decode(htmlentities($b->c2)); ?></td>
 	<!--<td><?php //echo utf8_decode(htmlentities($b->c3)); ?></td>-->
         <?php if($this->relatorio != 3 ) { ?>
-        <td><a href="<?php echo $this->url(array('controller' => 'admissibilidade', 'action' => 'exibirpropostacultural')); ?>?idPreProjeto=<?php echo utf8_decode(htmlentities($b->c3))?>&pesquisa=proposta" target="_blank"><?php echo utf8_decode(htmlentities($b->c3))?></a></td>
+        <td><a href="<?php echo $this->url(array('module' => 'admissibilidade','controller' => 'admissibilidade', 'action' => 'exibirpropostacultural')); ?>?idPreProjeto=<?php echo utf8_decode(htmlentities($b->c3))?>&pesquisa=proposta" target="_blank"><?php echo utf8_decode(htmlentities($b->c3))?></a></td>
         <?php } else { ?>
         <td><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo utf8_decode(htmlentities($b->c10))?>" target="_blank"><?php echo utf8_decode(htmlentities($b->c3))?></a></td>
         <?php } ?>

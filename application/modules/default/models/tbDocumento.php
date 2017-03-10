@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Vinculo
  *
@@ -13,10 +7,10 @@
 class tbDocumento extends MinC_Db_Table_Abstract {
 
     protected $_banco = "BDCORPORATIVO";
-    protected $_schema = 'scCorp';
+    protected $_schema = 'BDCORPORATIVO.scCorp';
     protected $_name = "tbDocumento";
 
-    
+
     /**
      * M�todo para cadastrar
      * @access public
@@ -28,7 +22,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
             return $this->insert($dados);
     } // fecha m�todo cadastrarDados()
 
-    
+
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
      * @param array $dados - array com dados referentes as colunas da tabela no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
@@ -91,11 +85,10 @@ class tbDocumento extends MinC_Db_Table_Abstract {
 //        xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function excluir($where)
     {
         return $this->delete($where);
     }
 }
 
-?>

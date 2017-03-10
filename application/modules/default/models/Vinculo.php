@@ -124,12 +124,12 @@ class Vinculo extends MinC_Db_Table_Abstract {
         $arrBusca = array();
         $arrBusca['a.idAgente = ?'] = $post->idAgente;
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
+        $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
 
         if (count($rsProponente) > 0) {
             //xd($rsProponente);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
+            $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar"));
         } else {
 
@@ -297,14 +297,14 @@ class Vinculo extends MinC_Db_Table_Abstract {
         $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
+        $rsProponente = $tblAgente->buscarAgenteENome($arrBuscaProponete)->current();
 
         //xd($rsPreProjeto);
         $arrDados = array("proposta" => $rsPreProjeto,
             "proponente" => $rsProponente);
         return $arrDados;
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-        $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
+        $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
             "proposta" => $rsPreProjeto,
             "proponente" => $rsProponente));
     }
@@ -407,10 +407,10 @@ class Vinculo extends MinC_Db_Table_Abstract {
             $arrBuscaProponete = array();
             $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
             $tblAgente = new Agente_Model_DbTable_Agentes();
-            $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
+            $rsProponente = $tblAgente->buscarAgenteENome($arrBuscaProponete)->current();
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
+            $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
                 "proposta" => $rsPreProjeto,
                 "proponente" => $rsProponente));
         } else {
@@ -505,7 +505,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
+        $rsProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
 
@@ -1004,7 +1004,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         foreach ($rsVinculo as $cahve => $valor) {
             //Descobrindo os dados do Agente/Proponente
             //$rsAgente = $tblAgente->buscar(array("idAgente = ? "=>$valor->idAgenteProponente))->current();
-            $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ? " => $valor->idAgenteProponente))->current();
+            $rsProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ? " => $valor->idAgenteProponente))->current();
 
             $cpfCnpj = $rsProponente->CNPJCPF;
             if (strlen($cpfCnpj) > 11) {
@@ -1018,7 +1018,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         }
         //==== FIM MONTA COMBO COM TODOS OS PROPONENTES //
         //==== INCLUI NA COMBO O USUARIO LOGADO //
-        $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ? " => $idResponsavel))->current();
+        $rsProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ? " => $idResponsavel))->current();
         $cpfCnpj = $rsProponente->CNPJCPF;
         if (strlen($cpfCnpj) > 11) {
             $cpfCnpj = aplicaMascara($cpfCnpj, "99.999.999/9999-99");

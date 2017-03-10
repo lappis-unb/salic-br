@@ -1,30 +1,48 @@
-    <?php if ($this->modulo != "movimentacaobancaria") : ?>
-        <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
-        <div id="breadcrumb">
-            <ul>
-                <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
-                <li><a href="#" title="Agentes">Manter Agentes</a></li>
-                <li class="last">Principal</li>
-            </ul>
-        </div>
-        <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-        <!-- ========== INICIO TITULO ========== -->
-        <div id="titulo">
-            <div id="novo">Novo cadastro<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
-        </div>
-        <!-- ========== FIM TITULO ========== -->
-        <!-- ========== INICIO CONTEUDO ========== -->
-        <div id="conteudo">
-    <?php endif; ?>
+<?php if ($this->modulo != "movimentacaobancaria") : ?>
+    <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
+    <div id="breadcrumb">
+        <ul>
+            <li class="first"><a
+                    href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>"
+                    title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
+            <li><a href="#" title="Agentes">Manter Agentes</a></li>
+            <li class="last">Principal</li>
+        </ul>
+    </div>
+    <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+    </div>
+    <!-- ========== FIM CONTEUDO ========== -->
+    <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
+    <div id="rodapeConteudo"><span></span></div>
+    <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+    <br clear="all"/>
+    <?php $ponto = ''; ?>
+    <?php
+    if (empty($_GET['acao'])) {
+        $acao = "";
+    } else {
+        $acao = $_GET['acao'];
+    }
+    ?>
+    <?php $ponto = '*'; ?>
+    <?php echo $this->partial("agentes/inc/menu.inc.php", $this); ?>
+    <!-- ========== INICIO TITULO ========== -->
+    <div id="titulo">
+        <div id="novo">Novo cadastro<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+    </div>
+    <!-- ========== FIM TITULO ========== -->
+<?php endif; ?>
+<!-- ========== INICIO CONTEUDO ========== -->
+<div id="conteudo">
     <div id="confirma"></div>
     <div id="carregando" class="sumir">
         <table class="tabela">
             <tr>
                 <td align="center" style="font-size: 18px;">
-                    <?php if ( $this->modulo != "movimentacaobancaria" ) {?>
-                    <img alt="" src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /><br /><br />
+                    <?php if ($this->modulo != "movimentacaobancaria") { ?>
+                        <img alt="" src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"/><br/><br/>
                         <p>Agente j&aacute; cadastrado, aguarde...</p>
-                    <?php } else {?>
+                    <?php } else { ?>
                         <p>Agente j&aacute; cadastrado.</p>
                     <?php } ?>
                 </td>
@@ -32,22 +50,31 @@
         </table>
     </div>
     <div id="novocadastro">
-        <form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
-            <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />
-            <input type="hidden" name="acao" id="acao" value="<?php echo $acao; ?>" />
-            <input type="hidden" name="idResponsavel" id="idResponsavel" value="<?php echo $this->idResponsavelKeyLog; ?>" />
+        <form name="formCadAgentes" id="formCadAgentes" method="post"
+              action="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
+            <input type="hidden" name="grupologado" id="grupologado" class="input_simples"
+                   value="<?php echo $this->grupoativo; ?>"/>
+            <input type="hidden" name="acao" id="acao" value="<?php echo $acao; ?>"/>
+            <input type="hidden" name="idResponsavel" id="idResponsavel"
+                   value="<?php echo $this->idResponsavelKeyLog; ?>"/>
             <?php if ($this->modulo != "movimentacaobancaria") { ?>
-                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples" value="" />
+                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples"
+                       value=""/>
             <?php } else { ?>
-                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples" value="true" />
-                <input type="hidden" name="caminho" id="caminho" class="input_simples" value="<?php echo $this->caminho; ?>" />
-                <input type="hidden" name="modal" id="modal" class="input_simples" value="<?php echo $this->modal; ?>" />
+                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples"
+                       value="true"/>
+                <input type="hidden" name="caminho" id="caminho" class="input_simples"
+                       value="<?php echo $this->caminho; ?>"/>
+                <input type="hidden" name="modal" id="modal" class="input_simples" value="<?php echo $this->modal; ?>"/>
             <?php } ?>
-            <input type="hidden" name="idpronac" id="idpronac" class="input_simples" value="<?php echo $this->idpronac; ?>" />
+            <input type="hidden" name="idpronac" id="idpronac" class="input_simples"
+                   value="<?php echo $this->idpronac; ?>"/>
 
             <center>
                 <div id="cadDirigente" class="msgALERT sumir" style="width: 96%;">
-                    <div style="float: left;">Voc&ecirc; deve incluir pelo menos um dirigente ao finalizar seu cadastro!</div>
+                    <div style="float: left;">Voc&ecirc; deve incluir pelo menos um dirigente ao finalizar seu
+                        cadastro!
+                    </div>
                 </div>
             </center>
 
@@ -57,9 +84,14 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="radio" name="Tipo" id="0" value="0" class="checkradio tipos" style="background: none; border: 0%; float:none; clear:auto; display:inline;" checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();" /> <label for="0">CPF</label> &nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="Tipo" id="1" value="1" class="checkradio tipos" style="background: none; border: 0%; float:none; clear:auto; display:inline;" onclick="filtroCNPJ();" onkeypress="filtroCNPJ();" /> <label for="1">CNPJ</label>
-                        <br />
+                        <input type="radio" name="Tipo" id="0" value="0" class="with-gap"
+                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"
+                               checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();"/>  CPF&nbsp;&nbsp;
+                        <input type="radio" name="Tipo" id="1" value="1" class="with-gap"
+                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"
+                               onclick="filtroCNPJ();" onkeypress="filtroCNPJ();"/>
+                         CNPJ
+                        <br/>
                         <label for="cpf"> </label>
                         <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14"
                                onkeyup="mascara(this, format_cpf);"
@@ -67,63 +99,79 @@
                                onkeypress="limpar_campo(this, '');"
                                onblur="buscaragente(this.value);"
                                onmouseout="restaurar_campo(this, '');"
-                               value="<?php echo $this->cpf; ?>"  />
+                               value="<?php echo $this->cpf; ?>"/>
 
                         &nbsp; <span id="erroCpf" class="spanError"></span>
-                        <input type="hidden" id="idAgente" name="idAgente" />
+                        <input type="hidden" id="idAgente" name="idAgente"/>
                     </td>
                     <td>
                         <label for="nome">Nome *</label>
-                        <br />
-                        <input type="hidden" id="idPessoa" name="idPessoa" />
+                        <br/>
+                        <input type="hidden" id="idPessoa" name="idPessoa"/>
                         <input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50"
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
-                               onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" />
+                               onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');"/>
 
                         &nbsp; <span id="erroNome" class="spanError"></span>
                     </td>
                     <td align="center">
-                        <label for="visao"> Informe a vis&atilde;o do Agente: </label>
-                        <select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);" class="input_simples" style="width: 250px;">
-                            <?php if($this->modulo != "movimentacaobancaria"): ?>
-                            <option value="0" selected="selected"> - Selecione - </option>
-                            <?php endif;?>
-                            <?php foreach ($this->combovisoes as $combovisoes): ?>
-                                <option value="<?php echo $combovisoes['idVerificacao']; ?>"> <?php echo $combovisoes['Descricao']; ?> </option>
-                            <?php endforeach; ?>
-                        </select>
-                        &nbsp; <span id="erroVisao" class="spanError"></span>
-                        &nbsp; <span id="spanVisao"></span>
+
+                        <?php if( !$this->ehProponente ) : ?>
+                            <label for="visao"> Informe a vis&atilde;o do Agente: </label>
+                            <select name="visao" id="visao"
+                                    onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
+                                    class="input_simples" style="width: 250px;">
+                                <?php if ($this->modulo != "movimentacaobancaria"): ?>
+                                    <option value="0" selected="selected"> - Selecione -</option>
+                                <?php endif; ?>
+                                <?php if ($this->combovisoes): ?>
+                                    <?php foreach ($this->combovisoes as $combovisoes): ?>
+                                        <option
+                                            value="<?php echo $combovisoes['idVerificacao']; ?>"> <?php echo $combovisoes['Descricao']; ?> </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                            &nbsp; <span id="erroVisao" class="spanError"></span>
+                            &nbsp; <span id="spanVisao"></span>
+                        <?php else : ?>
+                            <input type="hidden" name="visao" value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"
+                        <?php endif; ?>
                     </td>
                 </tr>
             </table>
 
             <!-- ========== INICIO LISTA DE AREA ABERTA DE ACORDO COM A VISAO ========== -->
             <div id="visaocomponente" class="sumir">
-                <table id="tbvisaocomponente"  class="tabela sumir">
+                <table id="tbvisaocomponente" class="tabela sumir">
                     <tr class="titulo_tabela">
                         <th colspan="4">LISTA DE &Aacute;REA</th>
                     </tr>
                     <tr>
                         <td colspan="4" align="center">
-                            <input type="radio" name="titular" id="titularS" value="1" class="checkradio" checked="checked" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                            <label for="titularS">Titular</label>
-                            <input type="radio" name="titular" id="titularN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                            <label for="titularN">Suplente</label>
+                            <input type="radio" name="titular" id="titularS" value="1" class="checkradio with-gap"
+                                   checked="checked"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                            Titular
+                            <input type="radio" name="titular" id="titularN" value="0" class="checkradio with-gap"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                            Suplente
                             &nbsp; <span id="erroTitular" class="spanError"></span>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" valign="top">
                             <label for="areaCultural">&Aacute;rea Cultural *</label>
-                            <select name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma &Aacute;rea Cultural - '), buscarareasegmento();" class="input_simples" style="width: 200px;">
+                            <select name="areaCultural" id="areaCultural"
+                                    onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma &Aacute;rea Cultural - '), buscarareasegmento();"
+                                    class="input_simples" style="width: 200px;">
 
                                 <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-                                    <option value="0"> - Selecione - </option>
+                                    <option value="0"> - Selecione -</option>
                                 <?php } ?>
 
                                 <?php foreach ($this->comboareasculturais as $key => $value): ?>
-                                    <option value="<?php echo $key; ?>" <?php if ($this->areaCultural == $key) echo "selected=\"selected\""; ?>>
+                                    <option
+                                        value="<?php echo $key; ?>" <?php if ($this->areaCultural == $key) echo "selected=\"selected\""; ?>>
                                         <?php echo $value; ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -139,18 +187,20 @@
                         </td>
                         <td colspan="2" valign="top">
                             <label for="segmentoCultural">Segmento Cultural</label>
-                            <select name="segmentoCultural" id="segmentoCultural" onchange="buscarareasegmento();" class="input_simples" style="width: 200px;">
+                            <select name="segmentoCultural" id="segmentoCultural" onchange="buscarareasegmento();"
+                                    class="input_simples" style="width: 200px;">
 
                                 <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-                                    <option value="0"> - Selecione uma &Aacute;rea Cultural - </option>
+                                    <option value="0"> - Selecione uma &Aacute;rea Cultural -</option>
                                 <?php } else { ?>
 
                                     <?php if (!isset($this->segmentoCultural) || empty($this->segmentoCultural)) { ?>
-                                        <option value=""> - Selecione - </option>
+                                        <option value=""> - Selecione -</option>
                                     <?php } ?>
 
                                     <?php foreach ($this->combosegmentosculturais as $key => $combosegmentocultural): ?>
-                                        <option value="<?php echo $key; ?>" <?php if ($this->segmentoCultural == $key) echo "selected=\"selected\""; ?>>
+                                        <option
+                                            value="<?php echo $key; ?>" <?php if ($this->segmentoCultural == $key) echo "selected=\"selected\""; ?>>
                                             <?php echo $combosegmentocultural; ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -172,34 +222,37 @@
                 </tr>
                 <tr>
                     <td width="30%">
-                        <label for="cep">CEP *</label><br />
-                        <input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
+                        <label for="cep">CEP *</label><br/>
+                        <input class="input_simples" type="text" name="cep" id="cep" maxlength="10"
+                               onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
-                               onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value="" />
+                               onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value=""/>
 
                         &nbsp; <span id="erroCep" class="spanError"></span>
                     </td>
                     <td width="30%">
-                        <label for="uf">UF *</label> <br />
-                        <select name="uf" id="uf" class="input_simples" disabled="disabled" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');"	>
+                        <label for="uf">UF *</label> <br/>
+                        <select name="uf" id="uf" class="input_simples" disabled="disabled"
+                                onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');">
 
                             <?php if (!isset($this->uf) || empty($this->uf)) { ?>
-                                <option value="0"> -- </option>
+                                <option value="0"> --</option>
                             <?php } ?>
 
                             <?php foreach ($this->comboestados as $key => $comboestado): ?>
                                 <option value="<?php echo $key; ?>"
-                                        <?php if ($this->uf == $key) echo "selected=\"selected\""; ?> >
-                                            <?php echo $comboestado; ?>
+                                    <?php if ($this->uf == $key) echo "selected=\"selected\""; ?> >
+                                    <?php echo $comboestado; ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                         <span id="erroUf" class="spanError"></span>
                     </td>
                     <td>
-                        <label for="cidade">Cidade *</label> <br />
-                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
-                            <option value="0"> - Selecione - </option>
+                        <label for="cidade">Cidade *</label> <br/>
+                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples"
+                                style="width: 250px;">
+                            <option value="0"> - Selecione -</option>
 
                             <?php if ($this->combocidades): ?>
                                 <?php foreach ($this->combocidades as $key => $combocidade): ?>
@@ -215,17 +268,17 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="tipoEndereco">Tipo de Endere&ccedil;o *</label> <br />
+                        <label for="tipoEndereco">Tipo de Endere&ccedil;o *</label> <br/>
                         <select name="tipoEndereco" id="tipoEndereco" class="input_simples" style="width: 250px;">
 
                             <?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
-                                <option value="0"> - Selecione - </option>
+                                <option value="0"> - Selecione -</option>
                             <?php } ?>
 
                             <?php foreach ($this->combotiposenderecos as $key => $combotipoendereco): ?>
                                 <option value="<?php echo $key; ?>"
-                                        <?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
-                                            <?php echo $combotipoendereco; ?>
+                                    <?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
+                                    <?php echo $combotipoendereco; ?>
                                 </option>
                             <?php endforeach; ?>
 
@@ -233,17 +286,17 @@
                         <span id="erroTipoEndereco" class="spanError"></span>
                     </td>
                     <td>
-                        <label for="tipoLogradouro">Tipo de Logradouro *</label> <br />
+                        <label for="tipoLogradouro">Tipo de Logradouro *</label> <br/>
                         <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" style="width: 250px;">
 
                             <?php if (!isset($this->tipoLogradouro) || empty($this->tipoLogradouro)) { ?>
-                                <option value="0"> - Selecione - </option>
+                                <option value="0"> - Selecione -</option>
                             <?php } ?>
 
                             <?php foreach ($this->combotiposlogradouros as $key => $combotipologradouro): ?>
                                 <option value="<?php echo $key; ?>"
-                                        <?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
-                                            <?php echo ($combotipologradouro); ?>
+                                    <?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
+                                    <?php echo($combotipologradouro); ?>
                                 </option>
                             <?php endforeach; ?>
 
@@ -251,36 +304,44 @@
                         <span id="erroTipoLogradouro" class="spanError"></span>
                     </td>
                     <td>
-                        <label for="logradouro">Logradouro *</label> <br />
-                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro" maxlength="50" size="50" />
+                        <label for="logradouro">Logradouro *</label> <br/>
+                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro"
+                               maxlength="50" size="50"/>
                         <span id="erroLogradouro" class="spanError"></span>
                     </td>
                 </tr>
                 <tr>
 
                     <td>
-                        <label for="numero">N&uacute;mero *</label> <br />
-                        <input class="input_simples" type="text" name="numero" id="numero" maxlength="10" size="30" />
+                        <label for="numero">N&uacute;mero *</label> <br/>
+                        <input class="input_simples" type="text" name="numero" id="numero" maxlength="10" size="30"/>
                         <span id="erroNumero" class="spanError"></span>
                     </td>
                     <td>
-                        <label for="complemento">Complemento</label> <br />
-                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70" size="50" />
+                        <label for="complemento">Complemento</label> <br/>
+                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70"
+                               size="50"/>
                         <span id="erroComplemento" class="spanError"></span>
                     </td>
                     <td colspan="2">
-                        <label for="bairro">Bairro *</label> <br />
-                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro" maxlength="70" size="50" />
+                        <label for="bairro">Bairro *</label> <br/>
+                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro"
+                               maxlength="70" size="50"/>
                         <span id="erroBairro" class="spanError"></span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <label>Autorizo divulgar o endere&ccedil;o</label>
-                        <input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                        <label for="divulgarEnderecoS">Sim</label>
-                        <input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                        <label for="divulgarEnderecoN">N&atilde;o</label>
+                        <label>Autorizo divulgar o endere&ccedil;o?</label>&nbsp;
+                        <input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1"
+                               class="checkradio with-gap"
+                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                        &nbsp; Sim &nbsp;
+                        <input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0"
+                               class="checkradio with-gap"
+                               checked="checked"
+                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                        N&atilde;o
                     </td>
                 </tr>
             </table>
@@ -297,9 +358,9 @@
                     <tr>
                         <td>
                             <label for="tipoFone">Tipo *</label>
-                            <br />
+                            <br/>
                             <select name="tipoFone" id="tipoFone" class="input_simples">
-                                <option value=""> - Selecione - </option>
+                                <option value=""> - Selecione -</option>
 
                                 <?php foreach ($this->combotipostelefones as $key => $combotipotelefone) { ?>
                                     <option value="<?php echo $key; ?>"><?php echo $combotipotelefone; ?></option>
@@ -311,9 +372,10 @@
                         </td>
                         <td>
                             <label for="ufFone">UF *</label>
-                            <br />
-                            <select name="ufFone" id="ufFone" class="input_simples" onchange="carregar_combo(this.value,'dddFone','<?php echo $this->url(array('controller' => 'ddd', 'action' => 'combo')); ?>');">
-                                <option value="0"> -- </option>
+                            <br/>
+                            <select name="ufFone" id="ufFone" class="input_simples"
+                                    onchange="carregar_combo(this.value,'dddFone','<?php echo $this->url(array('controller' => 'ddd', 'action' => 'combo')); ?>');">
+                                <option value="0"> --</option>
 
                                 <?php foreach ($this->comboestados as $key => $combouffone) { ?>
                                     <option value="<?php echo $key; ?>"><?php echo $combouffone; ?></option>
@@ -325,29 +387,36 @@
                         </td>
                         <td>
                             <label for="dddFone">DDD *</label>
-                            <br />
+                            <br/>
                             <select name="dddFone" id="dddFone" class="input_simples">
-                                <option value=""> -- </option>
+                                <option value=""> --</option>
                             </select>
 
                             &nbsp; <span id="erroDddFone" class="spanError"></span>
                         </td>
                         <td>
                             <label for="fone">Telefone *</label>
-                            <br />
-                            <input type="text" name="fone" id="fone" maxlength="10" class="input_simples w100" onkeyup="mascara(this, format_tel);"
+                            <br/>
+                            <input type="text" name="fone" id="fone" maxlength="10" class="input_simples w100"
+                                   onkeyup="mascara(this, format_tel);"
                                    onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
-                                   onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value="" />
+                                   onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');"
+                                   value=""/>
 
                             &nbsp; <span id="erroFone" class="spanError"></span>
                         </td>
                         <td>
                             <label>Divulgar? *</label>
-                            <br />
-                            <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                            <label for="divulgarFoneS">Sim</label>
-                            <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                            <label for="divulgarFoneN">N&atilde;o</label>
+                            <br/>
+                            <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1"
+                                   class="checkradio with-gap"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                            Sim
+                            <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0"
+                                   class="checkradio with-gap"
+                                   checked="checked"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                            N&atilde;o
                         </td>
                     </tr>
 
@@ -357,9 +426,9 @@
                     <tr>
                         <td>
                             <label for="tipoEmail">Tipo *</label>
-                            <br />
+                            <br/>
                             <select name="tipoEmail" id="tipoEmail" class="input_simples">
-                                <option value="0">- Selecione - </option>
+                                <option value="0">- Selecione -</option>
 
                                 <?php foreach ($this->combotiposemails as $key => $combotipoemail) { ?>
                                     <option value="<?php echo $key; ?>"><?php echo $combotipoemail; ?></option>
@@ -371,63 +440,50 @@
                         </td>
                         <td>
                             <label for="email">E-mail *</label>
-                            <br />
-                            <input type="text" name="email" id="email" class="input_simples w200" size="50" maxlength="70"
+                            <br/>
+                            <input type="text" name="email" id="email" class="input_simples w200" size="50"
+                                   maxlength="70"
                                    onclick="limpar_campo(this, '');"
                                    onkeypress="limpar_campo(this, '');"
                                    onblur="restaurar_campo(this, '');"
                                    onmouseout="restaurar_campo(this, '');"
-                                   value="" />
+                                   value=""/>
 
                             &nbsp; <span id="erroEmail" class="spanError"></span>
                         </td>
                         <td colspan="3">
                             <label>Posso Divulgar? *</label>
-                            <br />
-                            <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                            <label for="divulgarEmailS">Sim</label>
-                            <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                            <label for="divulgarEmailN">N&atilde;o</label>
+                            <br/>
+                            <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"
+                                   class="with-gap"/>
+                            Sim &nbsp;
+                            <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0"
+                                   class="checkradio with-gap"
+                                   checked="checked"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                            N&atilde;o
                         </td>
                     </tr>
-
                 </table>
                 <!-- ========== FIM FORMULARIO E-MAIL ========== -->
             <?php } ?>
             <table class="tabela">
                 <tr>
-                    <td class="centro"><input type="button" class="btn_salvar" value=" " onclick="validaAgenteNovo();"  /></td>
+                    <td class="centro"><input type="button" class="btn_salvar" value=" " onclick="validaAgenteNovo();"/>
+                    </td>
                 </tr>
             </table>
         </form>
     </div>
-    <?php if ($this->modulo != "movimentacaobancaria") : ?>
-        </div>
-        <!-- ========== FIM CONTEUDO ========== -->
-        <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-        <div id="rodapeConteudo"><span></span></div>
-        <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-        <br clear="all" />
-    <?php endif ?>
-<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
-<?php $ponto = ''; ?>
-<?php
-if (empty($_GET['acao'])) {
-    $acao = "";
-} else {
-    $acao = $_GET['acao'];
-}
-?>
-<?php if ($this->modulo != "movimentacaobancaria") : ?>
-    <?php $ponto = '*'; ?>
-    <?php echo $this->partial("agentes/inc/menu.inc.php",$this) ; ?>
-<?php endif; ?>
+</div>
 
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
 <!-- Alysson - Adicionando Chamada ao WebService do Corporativo -->
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function () {
         // Vamos buscar os dados do CPF Agora!
-        $('#cpf').focusout(function(){
+        $('#cpf').focusout(function () {
             //alert( 'cxdcdcd' );
             $('#nome').val('');
             $('#cep').val('');
@@ -448,16 +504,16 @@ if (empty($_GET['acao'])) {
 
             $.ajax({
                 type: "POST",
-                url: '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'busca-pessoa')); ?>',
-                data: {cpf: $(this).val(), teste: 'xxxx', tipoPessoa:'fisica'},
+                url: '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'busca-pessoa')); ?>',
+                data: {cpf: $(this).val(), teste: 'xxxx', tipoPessoa: 'fisica'},
                 dataType: 'json',
-                success: function(data) {
-                    if(data != null && data.error != ''){
+                success: function (data) {
+                    if (data != null && data.error != '') {
                         $('#msgAjax').html(data.error);
                         $('#msgAjax').show();
                         $('#imgPF').hide();
-                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...[ "+data.error+" ]");
-                    }else{
+                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...[ " + data.error + " ]");
+                    } else {
                         // Preenche os dados
                         $('#idPessoa').val(data.dados.idPessoa);
                         $('#nome').val(data.dados.nome);
@@ -468,7 +524,7 @@ if (empty($_GET['acao'])) {
                         $('#cep').blur();
                     }
 
-                },error: function(data) {
+                }, error: function (data) {
                     $('#msgAjax').html(data.error);
                     $('#msgAjax').show();
                     $('#erroCpf').html(data.error);
@@ -485,27 +541,29 @@ if (empty($_GET['acao'])) {
 
 <script type="text/javascript">
 
-    function filtroCPF()
-    {
+    function filtroCPF() {
         document.getElementById('0').checked = true;
         document.getElementById('1').checked = false;
 
-        document.getElementById('cpf').value     = "";
+        document.getElementById('cpf').value = "";
         document.getElementById('cpf').maxLength = "14";
-        document.getElementById('cpf').onkeyup   = function() { mascara(document.formCadAgentes.cpf, format_cpf); };
+        document.getElementById('cpf').onkeyup = function () {
+            mascara(document.formCadAgentes.cpf, format_cpf);
+        };
         document.getElementById('cpf').focus();
         $('#cadDirigente').hide(); // oculta a aba com os dirigentes
 
     }
 
-    function filtroCNPJ()
-    {
+    function filtroCNPJ() {
         document.getElementById('0').checked = false;
         document.getElementById('1').checked = true;
 
-        document.getElementById('cpf').value     = "";
+        document.getElementById('cpf').value = "";
         document.getElementById('cpf').maxLength = "18";
-        document.getElementById('cpf').onkeyup   = function() { mascara(document.formCadAgentes.cpf, format_cnpj); };
+        document.getElementById('cpf').onkeyup = function () {
+            mascara(document.formCadAgentes.cpf, format_cnpj);
+        };
         document.getElementById('cpf').focus();
         <?php if($this->modulo != "movimentacaobancaria"): ?>
         $('#cadDirigente').show(); // mostra a aba com os dirigentes
@@ -525,49 +583,40 @@ if (empty($_GET['acao'])) {
     }
 
 
-    function buscaragente(cpf)
-    {
+    function buscaragente(cpf) {
         $('#erroCpf').html('Aguarde!');
 
         Tipo = "";
-        for (i = 0; i < document.formCadAgentes.Tipo.length; i++)
-        {
-            if (document.formCadAgentes.Tipo[i].checked)
-            {
+        for (i = 0; i < document.formCadAgentes.Tipo.length; i++) {
+            if (document.formCadAgentes.Tipo[i].checked) {
                 Tipo = document.formCadAgentes.Tipo[i].value;
             }
         }
 
         value = $("#cpf").val();
 
-        if (value == '')
-        {
+        if (value == '') {
             $('#erroCpf').html('Informe o CPF/CNPJ!');
         }
-        else if (Tipo == 0 && value.length != 14)
-        {
+        else if (Tipo == 0 && value.length != 14) {
             $('#erroCpf').html('CPF Incompleto!');
         }
-        else if (Tipo == 1 && value.length != 18)
-        {
+        else if (Tipo == 1 && value.length != 18) {
             $('#erroCpf').html('CNPJ Incompleto!');
         }
-        else if (Tipo == 0 && value.length != 14)
-        {
+        else if (Tipo == 0 && value.length != 14) {
             $('#erroCpf').html('CPF inv&aacute;lido!');
         }
-        else if (Tipo == 1 && value.length != 18)
-        {
+        else if (Tipo == 1 && value.length != 18) {
             $('#erroCpf').html('CNPJ inv&aacute;lido!');
         }
-        else
-        {
+        else {
             $('#erroCpf').html('');
             // retira as mascaras do cpf/cnpj
-            value = value.replace(".","");
-            value = value.replace(".","");
-            value = value.replace("/","");
-            cpf = value.replace("-","");
+            value = value.replace(".", "");
+            value = value.replace(".", "");
+            value = value.replace("/", "");
+            cpf = value.replace("-", "");
 
             // faz a verificacao do agente via post
             $.ajax({
@@ -578,32 +627,27 @@ if (empty($_GET['acao'])) {
                 },
                 url: '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentecadastrado")); ?>',
 
-                success: function (data)
-                {
-                    console.log(data);
-                    if (data[0].msgCPF == 'cadastrado')
-                    {
+                success: function (data) {
+                    if (data[0].msgCPF == 'cadastrado') {
+                        console.log(data);
                         $('#novocadastro').hide();
                         $('#carregando').show();
                         var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
                         document.dispatchEvent(event);
                         <?php if ($this->modulo != "movimentacaobancaria") : ?>
-                        window.location = '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentes")); ?>/id/'+ data[0].idAgente;
+                        window.location = '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentes")); ?>/id/' + data[0].idAgente;
                         <?php endif; ?>
                     }
-                    else if (data[0].msgCPF == 'invalido')
-                    {
+                    else if (data[0].msgCPF == 'invalido') {
                         $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
                     }
-                    else if (data[0].msgCPF == 'novo')
-                    {
+                    else if (data[0].msgCPF == 'novo') {
                         $('#novo').html('Preencha os dados abaixo!');
                         $('.novo').show();
                     }
 
                 },
-                error: function (data)
-                {
+                error: function (data) {
                     alert("Falha na recupera\xE7\xE3o dos dados.\nN\xE3o foi poss\xEDvel carregar agente!");
                 }
             });
@@ -611,58 +655,52 @@ if (empty($_GET['acao'])) {
         }
     }
 
-    function buscarcep(cep)
-    {
+    function buscarcep(cep) {
         // pega os dados a serem populados
-        logradouro     = document.getElementById("logradouro");
+        logradouro = document.getElementById("logradouro");
         tipoLogradouro = document.getElementById("tipoLogradouro");
-        bairro         = document.getElementById("bairro");
-        cidade         = document.getElementById("cidade");
-        uf             = document.getElementById("uf");
+        bairro = document.getElementById("bairro");
+        cidade = document.getElementById("cidade");
+        uf = document.getElementById("uf");
 
         ajax = xmlhttp(); // instancia ajax
-        ajax.open("GET", "<?php echo $this->url(array('module'=>'default','controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
-        ajax.onreadystatechange = function()
-        {
-            if (cep.length != 10)
-            {
+        ajax.open("GET", "<?php echo $this->url(array('module' => 'default', 'controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
+        ajax.onreadystatechange = function () {
+            if (cep.length != 10) {
                 $('#erroCep').html("O CEP informado é inv&aacute;lido!");
             }
-            else
-            {
+            else {
                 $('#erroCep').html("");
             }
 
             // enquanto estiver processando bloqueia os campos
-            if (ajax.readyState > 0 && ajax.readyState <= 3 && cep.length == 10)
-            {
+            if (ajax.readyState > 0 && ajax.readyState <= 3 && cep.length == 10) {
 
-                $("#logradouro").attr("disabled" , "disabled");
-                $("#tipoLogradouro").attr("disabled" , "disabled");
-                $("#bairro").attr("disabled" , "disabled");
-                $("#cidade").attr("disabled" , "disabled");
-                $("#uf").attr("disabled" , "disabled");
+                $("#logradouro").attr("disabled", "disabled");
+                $("#tipoLogradouro").attr("disabled", "disabled");
+                $("#bairro").attr("disabled", "disabled");
+                $("#cidade").attr("disabled", "disabled");
+                $("#uf").attr("disabled", "disabled");
 
-                logradouro.value               = "carregando...";
+                logradouro.value = "carregando...";
                 tipoLogradouro.options[0].text = "carregando...";
-                bairro.value                   = "carregando...";
-                cidade.options[0].text         = "carregando...";
-                uf.options[0].text             = "...";
+                bairro.value = "carregando...";
+                cidade.options[0].text = "carregando...";
+                uf.options[0].text = "...";
 
                 $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
             }
-            if (ajax.readyState == 4 && ajax.status == 200 && cep.length == 10)
-            {
+            if (ajax.readyState == 4 && ajax.status == 200 && cep.length == 10) {
                 // divide a string para colocar cada uma em seu campo
                 var s = ajax.responseText;
 
                 if (s == "") // caso os dados retornem vazios ou o cep nao exista
                 {
-                    logradouro.value               = " ";
+                    logradouro.value = " ";
                     tipoLogradouro.options[0].text = " - Selecione - ";
-                    bairro.value                   = " ";
-                    cidade.options[0].text         = " - Selecione - ";
-                    uf.options[0].text             = " -- ";
+                    bairro.value = " ";
+                    cidade.options[0].text = " - Selecione - ";
+                    uf.options[0].text = " -- ";
                     $('#erroCep').html("O CEP informado é inv&aacute;lido!");
                 }
                 else // caso o cep exista
@@ -682,35 +720,30 @@ if (empty($_GET['acao'])) {
 
                     // volta os textos dos combos
                     tipoLogradouro.options[0].text = " - Selecione - ";
-                    cidade.options[0].text         = " - Selecione - ";
-                    uf.options[0].text             = " -- ";
-                    if (txtUF == "" && txtCidade == "")
-                    {
+                    cidade.options[0].text = " - Selecione - ";
+                    uf.options[0].text = " -- ";
+                    if (txtUF == "" && txtCidade == "") {
                         cidade.options[0].text = " - Selecione primeiro o UF - ";
                     }
 
 
                     // logradouro
                     logradouro.value = txtLogradouro;
-                    if (txtLogradouro == "")
-                    {
+                    if (txtLogradouro == "") {
                         logradouro.disabled = false; // habilita para preenchimento
                     }
 
 
                     // tipoLogradouro
                     // seleciona o combo de acordo com a lista existente no formulario
-                    for (i = 0; i < tipoLogradouro.options.length; i++)
-                    {
-                        if (txtTipoLogradouro == tipoLogradouro.options[i].text)
-                        {
+                    for (i = 0; i < tipoLogradouro.options.length; i++) {
+                        if (txtTipoLogradouro == tipoLogradouro.options[i].text) {
                             // seleciona o item igual
                             tipoLogradouro.options[i].selected = true;
                         }
                     }
                     if (tipoLogradouro.options[tipoLogradouro.selectedIndex].value == "" ||
-                        tipoLogradouro.options[tipoLogradouro.selectedIndex].text != txtTipoLogradouro)
-                    {
+                        tipoLogradouro.options[tipoLogradouro.selectedIndex].text != txtTipoLogradouro) {
                         tipoLogradouro.options[0].selected = true; // seleciona o primeiro option
                         tipoLogradouro.disabled = false; // habilita para preenchimento
                     }
@@ -719,25 +752,21 @@ if (empty($_GET['acao'])) {
                     // bairro
                     bairro.value = txtBairro;
 
-                    if (txtBairro == "")
-                    {
+                    if (txtBairro == "") {
                         bairro.disabled = false; // habilita para preenchimento
                     }
 
 
                     // uf
                     // seleciona o combo de acordo com a lista existente no formulario
-                    for (i = 0; i < uf.options.length; i++)
-                    {
-                        if (txtUF == uf.options[i].text)
-                        {
+                    for (i = 0; i < uf.options.length; i++) {
+                        if (txtUF == uf.options[i].text) {
                             // seleciona o item igual
                             uf.options[i].selected = true;
                         }
                     }
                     if (uf.options[uf.selectedIndex].value == "" ||
-                        uf.options[uf.selectedIndex].text != txtUF)
-                    {
+                        uf.options[uf.selectedIndex].text != txtUF) {
                         uf.options[0].selected = true; // seleciona o primeiro option
                         uf.disabled = false; // habilita para preenchimento
                     }
@@ -745,21 +774,19 @@ if (empty($_GET['acao'])) {
 
                     // cidade
                     // verifica se a cidade veio vazia
-                    if (txtCidade == "")
-                    {
+                    if (txtCidade == "") {
                         cidade.disabled = false; // habilita para preenchimento
-                        carregar_combo($("#uf").val(), 'cidade','/cidade/combo', ' - Selecione - ');
+                        carregar_combo($("#uf").val(), 'cidade', '/cidade/combo', ' - Selecione - ');
                     }
                     // preenche o combo com a cidade
-                    else
-                    {
+                    else {
                         // deixa apenas um elemento no combo, os outros sao excluidos
                         document.getElementById("cidade").options.length = 0;
 
                         // cria um novo option
-                        var novo   = document.createElement("option");
+                        var novo = document.createElement("option");
                         novo.value = txtCodCidade; // atribui um valor ao option
-                        novo.text  = txtCidade; // atribui um texto ao option
+                        novo.text = txtCidade; // atribui um texto ao option
                         document.getElementById("cidade").options.add(novo);
                     }
                 } // fecha if
@@ -772,17 +799,15 @@ if (empty($_GET['acao'])) {
 
     } // fecha funcao buscar_cep()
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         var tipocpf = '<?php echo $this->tipocpf; ?>';
-        var cpf 	= '<?php echo $this->cpf; ?>';
+        var cpf = '<?php echo $this->cpf; ?>';
 
-        if(tipocpf == 'cnpj')
-        {
+        if (tipocpf == 'cnpj') {
             filtroCNPJ();
         }
-        if(tipocpf == 'cpf')
-        {
+        if (tipocpf == 'cpf') {
             filtroCPF();
         }
 

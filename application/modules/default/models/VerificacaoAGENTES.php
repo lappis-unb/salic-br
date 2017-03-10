@@ -6,7 +6,6 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -15,7 +14,7 @@ class VerificacaoAGENTES extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "AGENTES";
-	protected $_schema  = "dbo";
+	protected $_schema  = "AGENTES";
 	protected $_name    = "Verificacao";
 
 /**
@@ -33,13 +32,13 @@ class VerificacaoAGENTES extends MinC_Db_Table_Abstract
                 array("c"=>$this->_name),
                 array(  "idVerificacao",
                         "idTipo",
-                        "Descricao",                      
+                        "Descricao",
                         "Sistema")
                 );
         $slct->where('idTipo = ? ', 5);
         xd($slct->assemble());
-    
+
         return $this->fetchAll($slct);
     }
-    
-} // fecha class
+
+}

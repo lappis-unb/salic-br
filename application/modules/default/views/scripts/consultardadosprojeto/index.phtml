@@ -49,13 +49,12 @@
 </style>
 
 <?php
-require_once "scripts/consultardadosprojeto/inc/menu.inc.php"; // menu de consultar dados do projeto
+echo $this->partial("consultardadosprojeto/inc/menu.inc.php", $this); // menu de consultar dados do projeto
 
 $urlPronac = null;
 $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->idPronac) : "";
 
 ?>
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -63,20 +62,13 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
         <li class="last" id="caminhoLocalAtual">Consultar dados do Projeto</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
     <div>Consultar dados do Projeto <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TITULO ========== -->
-<!-- ========== INICIO CONTEUDO ========== -->
-
 <div id="conteudo">
     <?php //include_once 'scripts/consultardadosprojeto/inc/menu.inc.php';
     if(!isset($this->projeto)) {
-        echo '<div align="center">Projeto não encontrado.</div>';
+        echo '<div align="center">Projeto n&atilde;o encontrado.</div>';
     } else { ?>
 
     <br clear="all" />
@@ -105,7 +97,10 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
                <td align="center">
                <?php if ($this->projeto->CgcCPf) { ?>
                    <?php if ($this->usuarioInterno){ ?>
-                       <a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto'))."?cnpfcpf=".$this->projeto->CgcCPf; ?>"><?php echo (strlen($this->projeto->CgcCPf) > 11) ? Mascara::addMaskCNPJ($this->projeto->CgcCPf) : Mascara::addMaskCPF($this->projeto->CgcCPf); ?></a>
+                       <a href="<?php echo $this->url(array(
+                           'controller' => 'relatorio',
+                           'action' => 'resultado-projeto'
+                           ))."?cnpfcpf=".$this->projeto->CgcCPf; ?>"><?php echo (strlen($this->projeto->CgcCPf) > 11) ? Mascara::addMaskCNPJ($this->projeto->CgcCPf) : Mascara::addMaskCPF($this->projeto->CgcCPf); ?></a>
                    <?php } else { ?>
                        <?php echo (strlen($this->projeto->CgcCPf) > 11) ? Mascara::addMaskCNPJ($this->projeto->CgcCPf) : Mascara::addMaskCPF($this->projeto->CgcCPf); ?>
                    <?php } ?>
@@ -122,7 +117,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
             <tr class="destacar">
                 <td class="centro"><b>UF</b></td>
                 <td class="centro"><b>Mecanismo</b></td>
-                <td class="centro"><b>Área Cultural</b></td>
+                <td class="centro"><b>&Aacute;rea Cultural</b></td>
                 <td class="centro"><b>Segmento</b></td>
                 <td class="centro"><b>Processo</b></td>
                 <?php if($this->projeto->idMecanismo != 2 && $this->projeto->idMecanismo != 6) { ?>
@@ -149,7 +144,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
                 <td align="center"><b>Vl.Proposta (C = A + B)</b></td>
                 <td align="center"><b>Vl. Aprovado (D)</b></td>
                 <td align="center"><b>Vl.Projeto (E = B + D)</b></td>
-                <td align="center"><b><?php echo ($this->projeto->idMecanismo == 2 || $this->projeto->idMecanismo == 6) ? 'Vl. Convênio' : 'Vl. Captado (E)'?></b></td>
+                <td align="center"><b><?php echo ($this->projeto->idMecanismo == 2 || $this->projeto->idMecanismo == 6) ? 'Vl. Convï¿½nio' : 'Vl. Captado (E)'?></b></td>
                 <?php if($this->projeto->idMecanismo != 2 && $this->projeto->idMecanismo != 6) { ?>
                 <td align="center"><b>% Captado</b></td>
                 <td align="center"><b>Vl. Comprovado</b></td>
@@ -160,7 +155,10 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
                 <td align="center"><b><font color="#009900"><?php echo @number_format($this->projeto->ValorSolicitado, 2, ",", "."); ?></font></b></td>
                 <td align="center"><b><font color="#CC0000"><?php echo @number_format($this->projeto->OutrasFontes, 2, ",", "."); ?></font></b></td>
 
-                <td align="center"><b><?php echo "<a href=\"#\" onclick=\"carregaDados('".$this->url(array('controller' => 'consultardadosprojeto', 'action' => 'planilha-orcamentaria'))."?idPronac=".$this->idPronac."','conteudo'); return false\" title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">".@number_format(($this->projeto->ValorSolicitado + $this->projeto->OutrasFontes), 2, ",", ".")."</font></a>"; ?></b></td>
+                <td align="center"><b><?php echo "<a href=\"#\" onclick=\"carregaDados('".$this->url(array(
+                    'controller' => 'consultardadosprojeto',
+                    'action' => 'planilha-orcamentaria'
+                ))."?idPronac=".$this->idPronac."','conteudo'); return false\" title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">".@number_format(($this->projeto->ValorSolicitado + $this->projeto->OutrasFontes), 2, ",", ".")."</font></a>"; ?></b></td>
                 <td align="center"><b>
 		    <?php if ($this->projeto->ValorAprovado > 0): ?>
 		    <?php echo "<a href=\"#\" onclick=\"carregaDados('".$this->url(array('controller' => 'consultardadosprojeto', 'action' => 'planilha-orcamentaria-aprovada'))."?idPronac=".$this->idPronac."','conteudo'); return false\" title=\"Ir para Planilha or&ccedil;ament&aacute;ria\"> <font color=\"#0000FF\">".@number_format(($this->projeto->ValorAprovado), 2, ",", ".")."</font></a>"; ?>
@@ -238,12 +236,12 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
         <br clear="all" />
 
         <?php if($this->msgCNIC){ ?>
-        <div style="background-color: red; color: #fff; width: 90%; margin:   0 auto; font-size: 14px; padding: 7px;" class="bold centro">A T E N Ç Ã O: Projeto em análise pela Comissão Nacional de Incentivo à Cultura-CNIC. Aguardar resultado da avalição.</div>
+        <div style="background-color: red; color: #fff; width: 90%; margin:   0 auto; font-size: 14px; padding: 7px;" class="bold centro">A T E N ï¿½ ï¿½ O: Projeto em anï¿½lise pela Comissï¿½o Nacional de Incentivo ï¿½ Cultura-CNIC. Aguardar resultado da avaliï¿½ï¿½o.</div>
         <?php } else { ?>
         <table class="tabela">
             <tr class="destacar">
-                <td align="center"><b>Dt.Situação</b></td>
-                <td align="center"><b>Situação</b></td>
+                <td align="center"><b>Dt.Situa&ccedil;&atilde;o</b></td>
+                <td align="center"><b>Situa&ccedil;&atilde;o</b></td>
                 <td align="center"><b>Provid&ecirc;ncia Tomada</b></td>
                 <td align="center"><b>Localiza&ccedil;&atilde;o atual do projeto</b></td>
             </tr>

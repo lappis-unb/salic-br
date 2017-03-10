@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwPareceristasOrgao
  * @since 17/09/2013
@@ -11,10 +11,8 @@
 
 class vwPareceristasOrgao extends MinC_Db_Table_Abstract {
 
-    /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwPareceristasOrgao';
     protected $_primary = 'idParecerista';
-    
-} // fecha class
+}

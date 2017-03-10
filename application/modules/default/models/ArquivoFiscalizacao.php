@@ -1,9 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
-*/
-
 /**
  * Description of ArquivoFiscalizacao
  *
@@ -12,7 +7,7 @@
 class ArquivoFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbArquivoFiscalizacao';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
     public function buscarArquivo($where) {
@@ -36,4 +31,3 @@ class ArquivoFiscalizacao extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 }
-?>

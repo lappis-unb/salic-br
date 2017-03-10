@@ -1,8 +1,4 @@
-<?php 
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+<?php
 
 /**
  * Description of tbResposta
@@ -11,7 +7,6 @@
  */
 class tbResposta  extends MinC_Db_Table_Abstract {
      protected $_banco   = "BDCORPORATIVO";
-     protected $_schema  = "scQuiz";
+     protected $_schema  = "BDCORPORATIVO.scQuiz";
      protected $_name = 'tbResposta';
 }
-?>
