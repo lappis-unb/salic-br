@@ -176,7 +176,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
                 'Agencia' => $this->_request->getParam('Agencia'),
                 'ContaBloqueada' => $this->_request->getParam('ContaBloqueada'),
                 'ContaLivre' => $this->_request->getParam('ContaLivre'),
-                'Logon' => $idagente->usu_codigo,
+                'Logon' => $idagente['usu_codigo'],
                 'DtLoteRemessaCL' => new Zend_Db_Expr('GETDATE()'),
                 'DtLoteRemessaCB' => new Zend_Db_Expr('GETDATE()')
             );
