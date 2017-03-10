@@ -1959,4 +1959,13 @@ public function analisePorParecerista($where){
       return $db->fetchOne($sql);
     }
 
+    public function inserirDistribuicaoParaParecer($idPreProjeto, $idPronac, $idVinculada ) {
+        $sqlDistribuirParecer = "INSERT INTO SAC.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
+                                         SELECT {$idPronac},idProduto, 3,{$idVinculada},getdate(), stPrincipal FROM SAC.dbo.PlanoDistribuicaoProduto
+                                          WHERE idProjeto = {$idPreProjeto}";
+        $db= Zend_Db_Table::getDefaultAdapter();
+        return $db->query($sqlDistribuirParecer);
+    }
+
+
 }

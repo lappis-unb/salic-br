@@ -310,4 +310,15 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->update('planodistribuicaoproduto', $dados, "idPlanoDistribuicao = " . $idPlanoDistribuicao);
     }
+
+    public function buscarIdVinculada($idPreProjeto) {
+        $sqlVinculada = "SELECT idOrgao as idVinculada 
+                                    FROM sac.dbo.PlanoDistribuicaoProduto t 
+                                    INNER JOIN vSegmento s on (t.Segmento = s.Codigo)
+                                    WHERE t.stPrincipal = 1 and idProjeto = '{$idPreProjeto}'";
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        return $db->fetchOne($sqlVinculada);
+    }
+
 }
