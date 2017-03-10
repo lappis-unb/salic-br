@@ -105,7 +105,10 @@ gerarBreadCrumb($links);
             </tr>
             <tr>
                 <td align="center">
-                    <input class="btn_localizar" type="submit" value="" name="localizar" id="localizar">
+                    <button class="btn-localizar waves-effect waves-light btn btn-default small" type="submit"
+                            name="localizar" id="localizar">
+                        <i class="material-icons left">search</i>Localizar
+                    </button>
                 </td>
             </tr>
         </table>
@@ -191,7 +194,7 @@ gerarBreadCrumb($links);
                         </td>
                         <td>
                             <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo Seguranca::encrypt($this->escape($projetos->IdPRONAC)); ?>"
-                                target="_blanck" style="padding: 0 1rem">
+                               target="_blanck" style="padding: 0 1rem">
                                 <?php echo $this->escape($projetos->Pronac); ?>
                             </a>
                             <!--                        <td class="centro"><a href="-->
