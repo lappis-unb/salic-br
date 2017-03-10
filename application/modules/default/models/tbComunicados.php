@@ -1,15 +1,11 @@
 <?php
 
 /**
- * Modelo que representa a tabela SAC.dbo.tbComunicados 
+ * Modelo que representa a tabela SAC.dbo.tbComunicados
  *
  * @author Danilo Lisboa
  */
 class tbComunicados extends MinC_Db_Table_Abstract {
-   
-//    protected  $_banco  = 'SAC';
-//    protected  $_schema = 'dbo';
-//    protected  $_name   = 'tbComunicados';
 
     protected  $_banco  = 'sac';
     protected  $_schema = 'sac';
@@ -48,7 +44,7 @@ class tbComunicados extends MinC_Db_Table_Abstract {
 //					  "CONVERT(CHAR(10),dtInicioVigencia,103) AS dtInicioVigenciaPT",
 //					  "CONVERT(CHAR(10),dtTerminoVigencia, 103) AS dtTerminoVigenciaPT")
 		);
-                
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -82,7 +78,7 @@ class tbComunicados extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        
+
         //xd($slct->assemble());
 
         return $this->fetchAll($slct);

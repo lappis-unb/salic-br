@@ -4,6 +4,10 @@
             $('#formPesquisa').submit();
         });
 
+        $('.comboFiltro').change(function() {
+            $('#formPesquisa').submit();
+        });
+        
         $('.btn_imprimir').click(function(){
             $('#formImpressao').submit();
         });
@@ -12,7 +16,7 @@
             var id = $(this).attr('idRecurso');
             window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'visualizar-recurso')); ?>?id="+id;
         });
-        
+
         $('.encaminharRecursoCheckList').click(function(){
             var id = $(this).attr('idRecurso');
             $("#alerta").dialog("destroy");
@@ -34,7 +38,7 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
+
         $('.devolverRecurso').click(function(){
             var id = $(this).attr('idRecurso');
             $("#alerta").dialog("destroy");
@@ -165,10 +169,11 @@
                 </td>
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
                 <td width="200">
-                    <select name="tipoFiltro" style="width: 160px;" class="input_simples">
+                    <select name="tipoFiltro" style="width: 160px;" class="input_simples comboFiltro">
                         <option value="">Aguardando Análise</option>
                         <option value="emanalise" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='emanalise')?'selected="selected"':''; ?>>Em Análise</option>
                         <option value="analisados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='analisados')?'selected="selected"':''; ?>>Analisados</option>
+                        <option value="analisados_cnic" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='analisados_cnic')?'selected="selected"':''; ?>>Analisados CNIC</option>
                     </select>
                 </td>
                 <td colspan="6" align="rigth">
@@ -237,28 +242,39 @@
             <tr class="titulo_tabela">
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=3&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Solicita&ccedil;&atilde;o Recurso</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Solicita&ccedil;&atilde;o</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Recurso</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Recurso</a></th>	
+                <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Solicita&ccedil;&atilde;o</a></th>
+
+                <?php if($this->filtro == ''){ ?>
+		<th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Qtd. de dias aguardando distribui&ccedil;&atilde;o</a></th>
+		<?php } else if ($this->filtro == 'emanalise') { ?>
+		<th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Qtd. de dias em an&aacute;lise</a></th>
+		<?php } else if ($this->filtro == 'analisados') { ?>
+		<th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Total em dias p/ avaliar</a></th>
+		<?php } ?>
+		
                 <?php if($this->filtro == 'emanalise'){ ?>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Situação</a></th>
+		<th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Vinculada</a></th>
                 <?php } ?>
                 
+                <th>Ver</th>                                       
+
                 <?php if($this->filtro == 'analisados'){ ?>
-                <th style="width: 130px;">Visualizar</th>
                 <th>Componente da Comissão</th>
-                <?php } ?>
+                <?php } ?>	
                 
                 <?php if($this->filtro != 'emanalise'){ ?>
-                    <?php if($this->filtro == 'analisados'){ ?>
+                    <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>                                                             
                     <th>Ação</th>
-                    <?php } else { ?>
+                    <?php } else if ($this->filtro == '') { ?>
                     <th>Avaliar</th>
                     <?php } ?>
                 <?php } ?>
                 
-                <?php if($this->filtro == 'analisados'){ ?>
-                <th>Devolver</th>
+                <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>
+                <th>Devolver para análise</th>
                 <?php } ?>
             </tr>
         </thead>
@@ -271,9 +287,18 @@
                     </a>
                 </td>
                 <td><?php echo $d->NomeProjeto; ?></td>
-                <td align="center"><?php echo Data::tratarDataZend($d->dtSolicitacaoRecurso, 'Brasileira'); ?></td>
                 <td align="center"><?php echo $d->tpSolicitacao; ?></td>
                 <td align="center"><?php echo $d->tpRecurso; ?></td>
+                <td align="center"><?php echo Data::tratarDataZend($d->dtSolicitacaoRecurso, 'Brasileira'); ?></td>
+		
+		<?php if($this->filtro == ''){ // qtd dias ?>
+		<td align="center" style="width: 200px;"></td>
+		<?php } else if ($this->filtro == 'emanalise') { ?>
+		<td align="center" style="width: 200px;"></td>
+		<?php } else if ($this->filtro == 'analisados') { ?>
+		<td align="center" style="width: 200px;"></td>
+		<?php } ?>
+		
                 <?php if($this->filtro == 'emanalise'){ ?>
                 <td align="center">
                     <?php
@@ -290,13 +315,15 @@
                         }
                     ?>
                 </td>
+		<td align="center"><?php echo $d->Vinculada; ?></td>
                 <?php } ?>
-                
-                <?php if($this->filtro == 'analisados'){ ?>
-                <td align="center">
-                    <input type="button" class="btn_ver" idRecurso="<?php echo $d->idRecurso; ?>" />
-                </td>
 
+                <td align="center">
+		  <input type="button" class="btn_ver" idRecurso="<?php echo $d->idRecurso; ?>" />
+		</td>
+
+                <?php if($this->filtro == 'analisados'){ ?>
+		
                 <td align="center">
                     <?php if($this->filtro == 'analisados' && $d->siRecurso == 6){ ?>
                     <select name="tecnico" class="select_simples comboComponente">
@@ -305,25 +332,25 @@
                         <option value="<?php echo $conselheiro->id; ?>"><?php echo $conselheiro->nome; ?></option>
                         <?php } ?>
                     </select>
-                    <?php } else { echo '-'; } ?>
+                    <?php } else { echo 'Em análise na CNIC'; } ?>
                 </td>
                 <?php } ?>
-                
+		
                 <?php if($this->filtro != 'emanalise'){ ?>
+                    <!-- todos exceto em analise --> 
                 <td align="center">
-                    <?php if($this->filtro == 'analisados'){ ?>
+                    <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>
                         <?php if($d->siRecurso == 6){ ?>
                         <input type="button" name="btn_enviar" class="btn_enviar finalizarRecurso" idRecurso="<?php echo $d->idRecurso; ?>" title="Finalizar">
                         <?php } else { ?>
-                        <input type="button" name="btn_encaminhar" class="btn_gerarpublicacao encaminharRecursoCheckList" idRecurso="<?php echo $d->idRecurso; ?>" title="Encaminhar Checklist Publicação">
+                        <input type="button" name="btn_encaminhar" class="btn_finalizar encaminharRecursoCheckList" idRecurso="<?php echo $d->idRecurso; ?>" title="Encaminhar Checklist Publicação">
                         <?php } ?>
-                    <?php } else { ?>
+                    <?php } else if ($this->filtro == '') { ?>
                         <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_avaliar" recurso="<?php echo $d->idRecurso; ?>" pronac="<?php echo $d->PRONAC; ?>" nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Avaliar">
                     <?php } ?>
                 </td>
                 <?php } ?>
-                
-                <?php if($this->filtro == 'analisados'){ ?>
+                <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>
                 <td align="center">
                     <img src="<?php echo $this->baseUrl().'/public/img/desarquivar.gif'; ?>" style="cursor: pointer;" class="devolverRecurso" idRecurso="<?php echo $d->idRecurso; ?>" title="Devolver">
                 </td>

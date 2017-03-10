@@ -4,19 +4,16 @@
  * @author jeffersonassilva@gmail.com - XTI
  * @since 28/03/2014
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbPlanoDivulgacao";
 
-    /* 
+    /*
      * Criada em 03/14
      * @author: Jefferson Alessandro
      */
@@ -54,7 +51,7 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function buscarPlanosDivulgacaoConsolidadoReadequacao($idReadequacao)
 	{
 		$select = $this->select();
@@ -77,13 +74,12 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
             array('d' => 'Verificacao'), 'd.idVerificacao = b.idVeiculo',
             array(''), 'SAC.dbo'
         );
-		
+
         $select->where('b.idReadequacao = ?', $idReadequacao);
-        
+
 		return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
 
-    
     public function buscarDadosPlanosDivulgacaoAtual($where = array())
 	{
 		$select = $this->select();
@@ -94,7 +90,7 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('a.*')
             ), 'SAC.dbo'
 		);
-        
+
 		// adiciona quantos filtros foram enviados
 		foreach ($where as $coluna => $valor) :
 			$select->where($coluna, $valor);
@@ -103,5 +99,5 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
         //xd($select->assemble());
 		return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
-    
-} // fecha class
+
+}

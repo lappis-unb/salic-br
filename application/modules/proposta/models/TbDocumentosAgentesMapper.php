@@ -48,17 +48,16 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                 $this->setMessage('O arquivo não pode ser maior do que 10MB!');
                 $booResult = false;
             } else {
-
                 # Verifica se tipo de documento ja esta cadastrado
                 $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-                $dadosProjeto = $tbPreProjeto->findBy(array('idpreprojeto' => $arrPost['idpreprojeto']));
+                $dadosProjeto = $tbPreProjeto->findBy(array('idpreprojeto' => $arrPost['idPreProjeto']));
 
                 $where = array();
                 $where['codigodocumento'] = $arrPost['documento'];
-                if($arrPost['tipodocumento'] == 1){
-                    $where['idagente'] = $dadosProjeto['idagente'];
+                if($arrPost['tipoDocumento'] == 1){
+                    $where['idagente'] = $dadosProjeto['idAgente'];
                 } else {
-                    $where['idprojeto'] = $arrPost['idpreprojeto'];
+                    $where['idprojeto'] = $arrPost['idPreProjeto'];
                 }
 
                 $strPath = '/data/proposta/model/tbdocumentoagentes/';
@@ -66,21 +65,25 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
 
                 $dadosArquivo = array(
                     'codigodocumento' => $arrPost['documento'],
-                    'idprojeto' => $arrPost['idpreprojeto'],
+                    'idprojeto' => $arrPost['idPreProjeto'],
                     'data' => date('Y-m-d'),
                     'noarquivo' => $arquivoNome,
                     'taarquivo' => $arquivoTamanho,
                     'dsdocumento' => $arrPost['observacao'],
-                    'idagente' => $dadosProjeto['idagente'],
+                    'idagente' => $dadosProjeto['idAgente'],
                 );
+                //var_dump($dadosArquivo);die;
 
-                if ($arrPost['tipodocumento'] == 1) {
+                if ($arrPost['tipoDocumento'] == 1) {
                     $table = $this;
                     $model = new Proposta_Model_TbDocumentosAgentes();
+
                 } else {
                     $table = new Proposta_Model_TbDocumentosPreProjetoMapper();
                     $model = new Proposta_Model_TbDocumentosPreProjeto();
                 }
+//                xd($table->findBy($where));
+                $docCadastrado = $table->findBy($where);
 
                 if($table->findBy($where)){
                     $this->setMessage('Tipo de documento j&aacute; cadastrado!');
@@ -88,10 +91,12 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                 }
 
                 if ($this->getDbTable()->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
-                    $dadosArquivo['imdocumento'] = new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})");
+                    $dadosArquivo['imDocumento'] = new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})");
                     try {
-                        $model->setOptions($dadosArquivo);
-                        $table->save($model);
+                        if($booResult) {
+                            $model->setOptions($dadosArquivo);
+                            $table->save($model);
+                        }
                     } catch (Exception $e) {
                         $this->setMessage($e->getMessage());
                         $booResult = false;
@@ -101,21 +106,24 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                     $fileName = $strId . '.' . array_pop(explode('.', $file->getFileName()));
                     $dadosArquivo['imdocumento'] = $strPath . $fileName;
                     try {
-                        $model->setOptions($dadosArquivo);
-                        $table->save($model);
-                        $file->receive();
-                        copy($file->getFileName(), $strPathFull . $fileName);
+                        if($booResult) {
+                            $model->setOptions($dadosArquivo);
+                            $table->save($model);
+                            $file->receive();
+                            copy($file->getFileName(), $strPathFull . $fileName);
+                        }
                     } catch (Exception $e) {
                         $this->setMessage($e->getMessage());
                         $booResult = false;
                     }
                 }
 
+                //var_dump($arrPost);die;
                 # REMOVER AS PENDENCIAS DE DOCUMENTO
                 $tblDocumentosPendentesProjeto = new Proposta_Model_DbTable_DocumentosProjeto();
                 $tblDocumentosPendentesProponente = new Proposta_Model_DbTable_DocumentosProponente();
-                $tblDocumentosPendentesProjeto->delete("idprojeto = {$arrPost['idpreprojeto']} AND codigodocumento = {$arrPost['documento']}");
-                $tblDocumentosPendentesProponente->delete("idprojeto = {$arrPost['idpreprojeto']} AND codigodocumento = {$arrPost['documento']}");
+                $tblDocumentosPendentesProjeto->delete("idprojeto = {$arrPost['idPreProjeto']} AND codigodocumento = {$arrPost['documento']}");
+                $tblDocumentosPendentesProponente->delete("idprojeto = {$arrPost['idPreProjeto']} AND codigodocumento = {$arrPost['documento']}");
             }
         } else {
             $this->setMessage('Falha ao anexar arquivo! O tamanho m&aacute;ximo permitido &egrave; de 10MB.');

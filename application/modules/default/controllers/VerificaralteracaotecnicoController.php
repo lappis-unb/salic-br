@@ -144,7 +144,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -213,7 +213,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -297,7 +297,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->menumsg = 'true';
         //****************************************************
         
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -377,7 +377,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->menumsg = 'true';
         //****************************************************
         
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -448,7 +448,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -518,7 +518,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -591,7 +591,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -704,7 +704,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
                 $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                 $idAgente = $agente['idAgente'];
 
-                $db = Zend_Registry :: get('db');
+                $db = Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 //SQL PARA TRAZER OD DADOS DO REGISTRO EM QUEST�O
@@ -763,7 +763,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
                  $status = 'IN';
              }
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         try{
             $db->beginTransaction();
@@ -815,7 +815,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $IdPronac = $_POST['IdPronac'];
             $solicitacao = $_POST['solicitacao'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             // Chama o SQL

@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
 */
@@ -12,7 +12,7 @@
 class Acesso extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name  = 'tbAcesso';
 
     public function consultarAcessoPronac ($idPronac, $tpAcesso) {
@@ -27,7 +27,7 @@ class Acesso extends MinC_Db_Table_Abstract {
                 'a.qtPessoa',
                 'CAST(a.dsLocal AS TEXT) AS dsLocal',
                 'CAST(a.dsEstruturaSolucao AS TEXT) AS dsEstruturaSolucao',
-                'a.tpAcesso',                
+                'a.tpAcesso',
                 'a.idRelatorio',
                 'a.stAcesso',
                 'a.stQtPessoa',
@@ -46,7 +46,7 @@ class Acesso extends MinC_Db_Table_Abstract {
                 array('c'=>'tbRelatorioConsolidado'),
                 "b.idRelatorio = c.idRelatorio",
                 array('*')
-        );        
+        );
 
         $select->where("b.idPRONAC = ?", $idPronac);
         $select->where("a.tpAcesso = ?", $tpAcesso);
@@ -69,7 +69,3 @@ class Acesso extends MinC_Db_Table_Abstract {
     }
 
 }
-
-
-?>
-

@@ -37,25 +37,25 @@ class Zend_View_Helper_PrazoRespostaDiligencia
 		if (isset($idPronac) && !empty($idPronac)) :
 
 			$tbDiligencia = new tbDiligencia();
-                        
+
                         $arrBusca = array();
                         $arrBusca['IdPRONAC = ?'] = $idPronac;
                         if(!empty($idTipoDiligencia)){
-                            $arrBusca['idTipoDiligencia = ?'] = $idTipoDiligencia;    
+                            $arrBusca['idTipoDiligencia = ?'] = $idTipoDiligencia;
                         }
                         if(!empty($idDiligencia)){
-                            $arrBusca['idDiligencia = ?'] = $idDiligencia;    
+                            $arrBusca['idDiligencia = ?'] = $idDiligencia;
                         }
-                        
+
 			// busca a situação do projeto
 			$rsDiligencia = $tbDiligencia->buscar($arrBusca, array('DtSolicitacao DESC'))->current();
-                        
+
                         if(!empty($rsDiligencia)):
                             $prazoPadrao    = $this->prazoPadrao($rsDiligencia->idTipoDiligencia, $rsDiligencia->stProrrogacao);
                             $prazoResposta  = $this->prazoParaResposta($rsDiligencia->DtSolicitacao, $prazoPadrao);
                             $prazoRespostaCresc = $this->prazoParaResposta($rsDiligencia->DtSolicitacao, $prazoPadrao);
                             $prazoRespostaDesc  = $this->prazoParaResposta($rsDiligencia->DtSolicitacao, $prazoPadrao, true);
-                        
+
                             //retorna apenas o prazo padrao do sistema
                             if($blnPrazoPadrao)
                                 return $prazoPadrao;
@@ -63,26 +63,26 @@ class Zend_View_Helper_PrazoRespostaDiligencia
                             if($blnPrazoResposta)
                                 return ($prazoRespostaDesc == '-1') ? $prazoPadrao : $prazoRespostaDesc;
                             //retorna os dois prazos
-                            
+
                             $arrRetorno['prazoPadrao']   = $prazoPadrao;
                             $arrRetorno['prazoRespostaCrescente'] = ($prazoRespostaCresc == '-1') ? $prazoPadrao : $prazoRespostaCresc;
                             $arrRetorno['prazoRespostaDecrescente'] = ($prazoRespostaDesc == '-1') ? $prazoPadrao : $prazoRespostaDesc;
-            
+
                             //verifica os icones a serem utilizados
                             $arrIcones = $this->iconeDiligencia($rsDiligencia,$prazoPadrao,$prazoResposta);
-                            
+
                             $arrRetorno['iconeDiligencia']   = $arrIcones;
                             return $arrRetorno;
-                        
+
                         else:
                             return $arrRetorno;
-                        endif;        
+                        endif;
 
 		else :
 			return $arrRetorno;
 		endif;
 	}
-        
+
         //retorna o prazo padrao de resposta definido pelo sistema
         public function prazoPadrao($idTipoDiligencia = null, $stProrrogacao = null)
 	{
@@ -121,7 +121,7 @@ class Zend_View_Helper_PrazoRespostaDiligencia
 //                    return 30;
 //            }
         }
-        
+
         //retorna o prazo que o proponente tem para responder a diligencia
         public function prazoParaResposta($dtSolicitacao = null, $prazoPadrao = null, $bln_decrescente=false)
 	{
@@ -131,24 +131,24 @@ class Zend_View_Helper_PrazoRespostaDiligencia
                     $prazo = ((int)$prazoPadrao)-((int)$prazo); //caso a logica de contagem for regressiva
                 }
                 if($prazo > '0')      //prazo positivo
-                    return $prazo; 
+                    return $prazo;
                 elseif ($prazo <= '0')//prazo negativo
                     return '0';
                 else                  //prazo de resposta igual ao prazo padrao
-                    return '-1';      
+                    return '-1';
             else:
                 return '0';
             endif;
-            
+
         }
-        
+
         //retorna o icone que deve ser utilizado na view
         public function iconeDiligencia($rsDiligencia,$prazoPadrao,$prazoResposta)
         {
             //$prazoPadrao    = $this->prazoPadrao($rsDiligencia->idTipoDiligencia, $rsDiligencia->stProrrogacao);
             //$prazoResposta  = $this->prazoParaResposta($rsDiligencia->DtSolicitacao, $prazoPadrao);
             $arrIcones = array();
-            
+
             //diligenciado
             if ($rsDiligencia->DtSolicitacao && $rsDiligencia->DtResposta == NULL && $prazoResposta <= $prazoPadrao && $rsDiligencia->stEnviado == 'S')
             {
@@ -169,13 +169,13 @@ class Zend_View_Helper_PrazoRespostaDiligencia
                 {
                     $arrIcones['icone'] = "notice2.png";
                     $arrIcones['title'] = "Diligência não respondida";
-                
+
                 }else if($rsDiligencia->stEnviado == 'N' && $prazoResposta <= $prazoPadrao){
-                    
+
                     $arrIcones['icone'] = "notice.png";
                     $arrIcones['title'] = "Diligenciado";
                 }else{
-                    
+
                     $arrIcones['icone'] = "notice3.png";
                     $arrIcones['title']  = "Diligencia respondida";
                 }
@@ -185,8 +185,8 @@ class Zend_View_Helper_PrazoRespostaDiligencia
             {
                 $arrIcones['icone'] = "notice1.png";
                 $arrIcones['title']  = "A Diligenciar";
-            } 
+            }
             return $arrIcones;
         }
 
-} // fecha class
+}

@@ -20,9 +20,9 @@ class Proposta_Model_DbTable_TbPlanilhaUnidade extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(
             array($this->_name),
-            array('idunidade',
-                'sigla',
-                'descricao'
+            array('idUnidade',
+                'Sigla',
+                'Descricao'
                 ),
             $this->_schema
         );

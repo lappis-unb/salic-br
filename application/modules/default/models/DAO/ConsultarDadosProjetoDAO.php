@@ -45,7 +45,7 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                             CASE
                                 WHEN Enquadramento = \'1\' THEN \'Artigo 26\'
                                 WHEN Enquadramento = \'2\' THEN \'Artigo 18\'
-                                ELSE \'N�o enquadrado\'
+                                ELSE \'N&atilde;o enquadrado\'
                             END as Enquadramento')
                          ),
                     'SAC.dbo')
@@ -80,13 +80,12 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                 ->where('p.IdPRONAC = ?', $dados['idPronac']);
 
             try {
-                $db = Zend_Registry::get('db');
-                $db->setFetchMode(Zend_DB::FETCH_OBJ);
+                $table->setFetchMode(Zend_DB::FETCH_OBJ);
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = "Falha ao buscar projeto: " . $e->getMessage();
             }
 
-            $retorno = $db->fetchAll($select);
+            $retorno = $table->fetchAll($select);
         }
         return $retorno;
     }

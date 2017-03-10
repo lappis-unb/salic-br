@@ -1,8 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Pessoa
@@ -14,22 +10,23 @@ class Pessoas extends MinC_Db_Table_Abstract
 
 
     protected $_banco = "TABELAS";
+    protected $_schema = "TABELAS";
     protected $_name = "Pessoas";
 
     public function salvar($dados)
     {
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
         $tmpTblPessoas = new Pessoas();
-        
+
 
         //DECIDINDO SE SERA FEITA UM INSERT OU UPDATE
         if(isset($dados['pes_codigo'])){
             $tmpTblPessoas = $tmpTblPessoas->buscar(array("pes_codigo = ?" => $dados['pes_codigo']))->current();
-            
-            
+
+
         }else{
             $tmpTblPessoas = $tmpTblPessoas->createRow();
-            
+
         }
 
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
@@ -58,7 +55,7 @@ class Pessoas extends MinC_Db_Table_Abstract
 
     public function salvarDados($dados)
     {
-        
+
         //xd($dados);
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
         $tmpTblPessoas = new Pessoas();
@@ -83,7 +80,7 @@ class Pessoas extends MinC_Db_Table_Abstract
         if(isset($dados['pes_controle'])){ $tmpTblPessoas->pes_controle = $dados['pes_controle']; }
 
         $id = $tmpTblPessoas->save();
-        
+
         if($id){
             return $id;
         }else{
@@ -93,4 +90,3 @@ class Pessoas extends MinC_Db_Table_Abstract
     }
 
 }
-?>

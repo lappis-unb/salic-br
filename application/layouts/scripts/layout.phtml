@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+    <?php
+    $this->layout()->name = $this->layout()->getLayout();
+    echo $this->partial('partials/head.phtml');
+    ?>
+</head>
+<body>
+<header>
+    <?php $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); ?>
+    <div id="topo" style="height: 94px;">
+        <?php if (isset($auth['usu_codigo']) && !isset($auth['cpf'])): ?>
+        <?php $idAgente = isset($this->idAgente) ? $this->idAgente : "false"; ?>
+        <div id="combousuario" class="input-field">
+
+            <label for="perfilXgrupo">Perfil </label>
+            <select name="perfilXgrupo" id="perfilXgrupo" class="perfilXgrupo browser-default" onchange="alterarPerfil(this.value);">
+
+                <?php if ($this->arrayGrupos): ?>
+                    <?php foreach ($this->arrayGrupos as $g){ ?>
+                        <option value="<?php echo $g->gru_codigo; ?>:<?php echo $g->uog_orgao; ?>"
+                            <?php if ($g->gru_codigo == $this->grupoAtivo && $g->uog_orgao == $this->orgaoAtivo){ echo "selected=\"selected=\""; } ?>>
+                            &nbsp; <?php echo $g->org_siglaautorizado; ?> - <?php echo $g->gru_nome; ?> &nbsp;
+                        </option>
+                    <?php } ?>
+                <?php endif; ?>
+                <?php if(!empty($this->arrayGrupoProponente)){ ?>
+                    <option value="<?php echo $this->arrayGrupoProponente["gru_codigo"]; ?>:<?php echo $this->arrayGrupoProponente["uog_orgao"]; ?>">&nbsp; <?php echo $this->arrayGrupoProponente["gru_nome"]; ?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <script type="text/javascript">
+            /**
+             * Funcao para mudar o perfil (órgao) do usuario
+             */
+            function alterarPerfil(GrupoOrgao){
+                grupo = GrupoOrgao.substring(0, (i = GrupoOrgao.indexOf(':')));
+                orgao = GrupoOrgao.substring(++i);
+
+                url = '<?php echo $this->url(array('controller' => 'perfil', 'action' => 'alterarperfil', 'module' => 'autenticacao'), '', true); ?>';
+                url+= '?codGrupo=' + grupo;
+                url+= '&codOrgao=' + orgao;
+                redirecionar(url);
+            } // fecha funcao alterarPerfil()
+        </script>
+    <?php endif; ?>
+    <div id="atalhos">
+        <ul>
+            <?php if (!empty($this->usuario->usu_identificacao) && !empty($this->usuario->usu_nome)) : ?>
+                <li >Usu&aacute;rio <strong><?php echo $this->usuario->usu_nome; ?> [<?php echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?>]</strong></li>
+            <?php endif; ?>
+            <?php $user = array_change_key_case((array) $this->usuario); ?>
+            <?php if (!empty($user['cpf']) && !empty($user['nome'])) : ?>
+                <li>Usu&aacute;rio <strong><?php echo $user['nome']; ?> [<?php echo Validacao::mascaraCPFCNPJ($user['cpf']); ?>]</strong></li>
+            <?php endif; ?>
+            <li>
+                <a
+                    class="btn-floating small waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sair do Sistema"
+                    style="text-indent: 0; bottom: 8px;" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" onclick="logout(); return false;">
+                    <i class="material-icons">power_settings_new</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <?php
+    $logoLink =  $this->url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''), '', true);
+    if( isset($auth['usu_codigo']) && !isset($auth['cpf']) ) {
+        $logoLink =  $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => ''), '', true);
+    }
+    ?>
+    <div id="logo">
+        <h1><a href="<?php echo $logoLink; ?>" title="Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura">Salic</a></h1>
+    </div>
+    </div>
+        <?php
+            echo $this->partial('partials/menu/menu.phtml', array('grupoAtivo' => $this->grupoAtivo, 'idAgenteKeyLog' => $this->idAgenteKeyLog, 'menumsg' => $this->menumsg));
+        ?>
+    <div id="dialog-confirm" class="sumir" title="Acesso ao Sistema"><p>Deseja realmente sair do sistema?</p></div>
+    <script type="text/javascript">
+        function logout() {
+            $("#dialog").dialog("destroy");
+            $('html').css('overflow', 'hidden');
+            $("#dialog-confirm").dialog({
+                height: 230,
+                modal: true,
+                draggable: false,
+                resizable: false,
+                closeOnEscape: false,
+                buttons: {
+                    'N\xE3o': function () {
+                        $(this).dialog('close');
+                    },
+                    'Sim': function () {
+                        redirecionar('<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>');
+                    }
+                }
+            });
+            $('.ui-dialog-titlebar-close').remove();
+        } // fecha funcao logout()
+    </script>
+
+    <!-- ========== INICIO MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
+    <?php if (isset($this->message)) : ?>
+        <div class="msg<?php echo $this->message_type; ?>">
+            <div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem"
+                                            id="msg<?php echo $this->message_type; ?>"
+                                            onclick="$('.msg<?php echo $this->message_type; ?>').hide();"
+                                            onkeypress="$('.msg<?php echo $this->message_type; ?>').hide();"/></div>
+            <div><?php echo $this->message; ?></div>
+        </div>
+    <?php endif; ?>
+    <!-- ========== FIM MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
+    <!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUARIO ========== -->
+    <div class="msgALERT sumir" id="mensagensabertasprojeto">
+        <div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgALERT"
+                                        onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
+        <div>
+            Existe(m) mensagem(ns) para o(s) PRONAC(s) abaixo: <br/>
+            <span id="mensagensabertas"></span>
+        </div>
+    </div>
+    <div id="novas_mensagens"></div>
+    <!-- ========== FIM MENSAGENS DO PROJETO PARA O USUARIO ========== -->
+</header>
+<main>
+    <?php echo $this->layout()->content; ?>
+</main>
+<?php echo $this->render('partials/footer.phtml'); ?>
+</body>
+</html>

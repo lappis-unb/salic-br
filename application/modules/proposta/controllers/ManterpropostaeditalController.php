@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abstract {
+class Proposta_ManterpropostaeditalController extends Proposta_GenericController {
 
     private $getIdUsuario   = 0;
     private $idResponsavel  = 0;
@@ -65,6 +65,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
         //VALIDA ITENS DO MENU (Documento pendentes)
         if (!empty($idPreProjeto)) {
+            $this->view->idPreProjeto = $idPreProjeto;
 
             $tableDocumentosExigidos = new Proposta_Model_DbTable_DocumentosExigidos();
             $this->view->documentosPendentes = $tableDocumentosExigidos->buscarDocumentoPendente($idPreProjeto);
@@ -93,7 +94,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
             if (count($rsStatusAtual) > 0) {
-                $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
+                $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
             } else {
                 $this->view->movimentacaoAtual = null;
             }
@@ -420,15 +421,38 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $this->verificarPermissaoAcesso(true, false, false);
 
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
         $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
         $rs = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $idPreProjeto));
+
         $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
-        $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idagente']));
+        $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idAgente']));
         $this->view->arquivosProponente = $rsA;
+
+//        $tblDocumentos = new DocumentosExigidos();
+//
+//        $where = array(
+//            'stUpload = ?' => true,
+//            'Area = ?' => '4'
+//        );
+//
+//        $listaDeArquivos = $tblDocumentos->buscar($where, 'Descricao desc');
+//
+//        foreach ($listaDeArquivos  as $item) {
+//            $novoItem = $item->toArray();
+//
+//            if(in_array($item->Codigo, array_column($rs, 'codigodocumento')))
+//                $novoItem['Anexado'] = true;
+//            else
+//                $novoItem['Anexado'] = false;
+//            $novaLista[] = $novoItem;
+//        }
+//        $this->view->documentosObrigatorios = $novaLista;
+
     }
 
     /**
@@ -462,13 +486,13 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
     public function incluirAnexoAction()
     {
         if ($this->getRequest()->isPost()) {
-            $arrPost = array_change_key_case($this->getRequest()->getPost());
+            $arrPost = ($this->getRequest()->getPost());
             $mapperTbDocumentoAgentes = new Proposta_Model_TbDocumentosAgentesMapper();
             $file = new Zend_File_Transfer();
             if ($mapperTbDocumentoAgentes->saveCustom($arrPost, $file)) {
-                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "CONFIRM");
+                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idPreProjeto'] . "&edital=" . $arrPost['edital'], "CONFIRM");
             } else {
-                parent::message($mapperTbDocumentoAgentes->getMessage(), "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "ALERT");
+                parent::message($mapperTbDocumentoAgentes->getMessage(), "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idPreProjeto'] . "&edital=" . $arrPost['edital'], "ALERT");
             }
         } else {
             parent::message('Dados incorretos', "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
@@ -693,7 +717,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
-        $rsPreProjeto->stestado = 0;
+        $rsPreProjeto->stEstado = 0;
 
         if ($rsPreProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
@@ -954,13 +978,14 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $tblProponente = new Proponente();
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
+        $rsProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
 
         $dadosEndereco = Agente_Model_EnderecoNacionalDAO::buscarEnderecoNacional($rsPreProjeto->idAgente);
 
-        $dadosEmail = Agente_Model_Email::buscar($rsPreProjeto->idAgente);
+        $objEmail = new Agente_Model_Email();
+        $dadosEmail = $objEmail->buscar($rsPreProjeto->idAgente);
 
         $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
 
@@ -1288,11 +1313,11 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         if (isset($_GET['idArquivo']) && !empty($_GET['idArquivo']) && isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto']) && isset($_GET['tipoDocumento']) && !empty($_GET['tipoDocumento'])) :
             if($_GET['tipoDocumento'] == 'proposta'){
                 $tbDocumentosPreProjeto = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
-                $file = $tbDocumentosPreProjeto->findBy(['iddocumentospreprojetos' => $_GET['idArquivo']]);
+                $file = $tbDocumentosPreProjeto->findBy(array('iddocumentospreprojetos' => $_GET['idArquivo']));
                 $tbDocumentosPreProjeto->apagar(array('iddocumentospreprojetos = ?' => $_GET['idArquivo']));
             } else {
                 $tbDocumentosAgentes = new Proposta_Model_DbTable_TbDocumentosAgentes();
-                $file = $tbDocumentosAgentes->findBy(['iddocumentosagentes' => $_GET['idArquivo']]);
+                $file = $tbDocumentosAgentes->findBy(array('iddocumentosagentes' => $_GET['idArquivo']));
                 $tbDocumentosAgentes->apagar(array('iddocumentosagentes = ?' => $_GET['idArquivo']));
             }
             $filePath = APPLICATION_PATH . '/..' . $file['imdocumento'];
@@ -1300,7 +1325,13 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 unlink($filePath);
             }
 
-            parent::message('Exclus&atilde;o efetuada com sucesso!', 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
+            if( isset($_GET['request'] ) ) {
+                $request = $_GET['request'];
+            }else {
+                $request = 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'];
+            }
+
+            parent::message('Exclus&atilde;o efetuada com sucesso!', $request, 'CONFIRM');
         endif;
     }
 }

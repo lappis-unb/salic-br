@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwAnexarDocumentoAgente
  * @since 11/10/2013
@@ -8,12 +8,12 @@
  * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
- 
+
 class vwAnexarDocumentoAgente extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwAnexarDocumentoAgente';
     protected $_primary = 'idArquivo';
 
@@ -24,7 +24,7 @@ class vwAnexarDocumentoAgente extends MinC_Db_Table_Abstract {
     }
 
     public function inserirUploads($dados) {
-        
+
         $name                   = $dados['nmArquivo'];
         $fileType               = $dados['sgExtensao'];
         $nrTamanho              = $dados['nrTamanho']; // Null
@@ -38,13 +38,13 @@ class vwAnexarDocumentoAgente extends MinC_Db_Table_Abstract {
         $sql = "INSERT INTO ".$this->_banco.".".$this->_schema.".".$this->_name.
                "(nmArquivo, sgExtensao, nrTamanho, dtEnvio, stAtivo, biArquivo, idTipoDocumento, dsDocumento, idAgente, stAtivoDocumentoAgente) " .
                "VALUES ('$name', '$fileType', '$nrTamanho', GETDATE(), '$stAtivo', $biArquivo, $idTipoDocumento, '$dsDocumento', $idAgente, $stAtivoDocumentoAgente)";
-        
+
 //       xd($sql);
-        
+
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->query($sql);
     }
 
 
-} 
+}

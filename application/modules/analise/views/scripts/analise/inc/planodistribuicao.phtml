@@ -1,0 +1,85 @@
+<table class="bordered striped responsive-table">
+    <tr class="destacar">
+        <td style="font-size:11px">Nome do Evento / Produto</td>
+        <td style="font-size:11px">&Aacute;rea</td>
+        <td style="font-size:11px">Segmento</td>
+        <td style="font-size:11px">N&ordm; Exemplares/ Ingressos</td>
+        <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Patrocinador</td>
+        <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Divulga&ccedil;&atilde;o</td>
+        <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Benefici&aacute;rios</td>
+        <td style="font-size:11px">Total Venda Normal</td>
+        <td style="font-size:11px">Total Venda Promocional</td>
+        <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Normal</td>
+        <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Promocional</td>
+        <td style="font-size:11px">Receita Prevista Venda Normal (R$)</td>
+        <td style="font-size:11px">Receita Prevista Venda Promocional (R$)</td>
+        <td style="font-size:10px">Total de Receita Prevista (R$)</td>
+    </tr>
+    <?php
+    $vlQtdeProduzida = 0;
+    $vlQtdePatrocinador = 0;
+    $vlQtdeProponente = 0;
+    $vlQtdeOutros = 0;
+    $vlQtdeVendaNormal = 0;
+    $vlQtdeVendaPromocional = 0;
+    $vlPrecoUnitarioNormal = 0;
+    $vlPrecoUnitarioPromocional = 0;
+    $vlReceitaNormal = 0;
+    $vlReceitaPro = 0;
+    $vlReceitaPrevista = 0;
+
+    if (is_array($this->itensPlanosDistribuicao) and count($this->itensPlanosDistribuicao) > 0) :
+        foreach ($this->itensPlanosDistribuicao as $distribuicao) :
+
+            $destacar = "";
+            if ($distribuicao['stPrincipal'] == 1)
+                $destacar = 'style="color:#FF0000"';
+
+            ?>
+            <tr>
+                <td align="left" <?php echo $destacar ?>><?php echo $distribuicao['Produto'] ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['DescricaoArea'] ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['DescricaoSegmento'] ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['QtdeProduzida']; ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['QtdePatrocinador']; ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['QtdeProponente']; ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['QtdeOutros']; ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['QtdeVendaNormal']; ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $distribuicao['QtdeVendaPromocional']; ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $this->formatarReal($distribuicao['PrecoUnitarioNormal']); ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $this->formatarReal($distribuicao['PrecoUnitarioPromocional']); ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $this->formatarReal($distribuicao['ReceitaNormal']); ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $this->formatarReal($distribuicao['ReceitaPro']); ?></td>
+                <td align="center" <?php echo $destacar ?>><?php echo $this->formatarReal($distribuicao['ReceitaPrevista']); ?></td>
+            </tr>
+
+            <?php
+            $vlQtdeProduzida += $distribuicao['QtdeProduzida'];
+            $vlQtdePatrocinador += $distribuicao['QtdePatrocinador'];
+            $vlQtdeProponente += $distribuicao['QtdeProponente'];
+            $vlQtdeOutros += $distribuicao['QtdeOutros'];
+            $vlQtdeVendaNormal += $distribuicao['QtdeVendaNormal'];
+            $vlQtdeVendaPromocional += $distribuicao['QtdeVendaPromocional'];
+            $vlPrecoUnitarioNormal += $distribuicao['PrecoUnitarioNormal'];
+            $vlPrecoUnitarioPromocional += $distribuicao['PrecoUnitarioPromocional'];
+            $vlReceitaNormal += $distribuicao['ReceitaNormal'];
+            $vlReceitaPro += $distribuicao['ReceitaPro'];
+            $vlReceitaPrevista += $distribuicao['ReceitaPrevista'];
+            ?>
+        <?php endforeach; ?>
+        <tr>
+            <td align="center" colspan="3"><b>Total Geral</b></td>
+            <td align="center"><?php echo $vlQtdeProduzida; ?></td>
+            <td align="center"><?php echo $vlQtdePatrocinador; ?></td>
+            <td align="center"><?php echo $vlQtdeProponente; ?></td>
+            <td align="center"><?php echo $vlQtdeOutros; ?></td>
+            <td align="center"><?php echo $vlQtdeVendaNormal; ?></td>
+            <td align="center"><?php echo $vlQtdeVendaPromocional; ?></td>
+            <td align="center"><?php echo number_format($vlPrecoUnitarioNormal, 2, ',', '.'); ?></td>
+            <td align="center"><?php echo number_format($vlPrecoUnitarioPromocional, 2, ',', '.'); ?></td>
+            <td align="center"><?php echo number_format($vlReceitaNormal, 2, ',', '.'); ?></td>
+            <td align="center"><?php echo number_format($vlReceitaPro, 2, ',', '.'); ?></td>
+            <td align="center"><?php echo number_format($vlReceitaPrevista, 2, ',', '.'); ?></td>
+        </tr>
+    <?php endif; ?>
+</table>

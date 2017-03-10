@@ -1,0 +1,129 @@
+<div class="container-fluid white">
+    <div class="row">
+        <?php echo $this->partial("inc/menu.phtml", $this); // menu ?>
+        <div class="col s10 m12 l10">
+
+            <?php
+            gerarBreadCrumb(array(
+                $this->layout['listagem'],
+                array('Detalhes t&eacute;cnicos' => '')
+            ));
+            ?>
+
+            <div id="titulo" style="width: 100%;">
+                <div><?php echo $this->layout['titleFull']; ?> - Detalhes t&eacute;cnicos</div>
+            </div>
+            <div class="clear-fix"></div>
+            <div id="conteudo" class="section">
+                <div class="row">
+                    <form action="<?php echo $this->acao; ?>" method="post" id="frmProposta" name="frmProposta"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="idPreProjeto" id="idPreProjeto"
+                               value="<?php echo isset($this->proposta['idpreprojeto']) ? $this->proposta['idpreprojeto'] : '' ?>">
+                        <input type="hidden" name="acao" id="acao" value="alterar">
+                        <input type="hidden" name="idagente"
+                               value="<?php echo isset($this->proponente['idagente']) ? $this->proponente['idagente'] : '' ?>">
+                        <input type="hidden" name="url"
+                               value="<?php echo isset($this->url) ? $this->url : '' ?>">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <p class="caption">Enumere e descreva todas as fases do projeto, informando quando e
+                                    como pretende realiz&aacute;-las.</p>
+
+                                <textarea id="etapadetrabalho" class="browser-default editor"
+                                          name="etapadetrabalho" <?php echo isset($this->arrConfig['etapadetrabalho']['disabled']) ? 'disabled="disabled"' : '' ?>>
+                                 <?php if (isset($this->proposta['etapadetrabalho'])) echo $this->proposta['etapadetrabalho']; ?>
+                                </textarea>
+                                <label for="etapadetrabalho" class="active">Etapas de trabalho *</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <p class="caption">O proponente deve informa qual ser&aacute; sua fun&ccedil;&atilde;o
+                                    no projeto,
+                                    assim como a indica&ccedil;&atilde;o dos nomes, juntamente com os curr&iacute;culos
+                                    resumidos, do diretor/coordenador art&iacute;stico e dos artistas e/ou grupos
+                                    participantes.
+                                    Caso os nomes dos artistas ainda n&atilde;o estejam definidos, uma justificativa
+                                    pela falta dos mesmos faz-se necess&aacute;ria. *
+                                </p>
+                                <textarea id="fichatecnica" class="browser-default editor"
+                                          name="fichatecnica" <?php echo isset($this->arrConfig['fichatecnica']['disabled']) ? 'disabled="disabled"' : '' ?>>
+                                    <?php if (isset($this->proposta['fichatecnica'])) echo $this->proposta['fichatecnica']; ?>
+                                </textarea>
+                                <label for="fichatecnica" class="active">Ficha t&eacute;cnica *</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <p class="caption">Inserir o conte&uacute;do de todos os produtos do projeto que
+                                    necessitam de um breve resumo em rela&ccedil;&atilde;o ao seu assunto.
+                                    Como, por exemplo: semin&aacute;rios, palestras, livros, peri&oacute;dicos, espet&aacute;culo
+                                    de circo, pe&ccedil;a teatral, espet&aacute;culo de dan&ccedil;a, performance
+                                    de outra natureza, entre outros.
+                                </p>
+                                <textarea id="sinopse" class="browser-default editor"
+                                          name="sinopse" <?php echo isset($this->arrConfig['sinopse']['disabled']) ? 'disabled="disabled"' : '' ?>>
+                                    <?php if (isset($this->proposta['sinopse'])) echo $this->proposta['sinopse']; ?>
+                                </textarea>
+                                <label for="sinopse" class="active">Sinopse da obra *</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <p class="caption">Inserir as especifica&ccedil;&otilde;es t&eacute;cnicas de todos os
+                                    produtos do projeto que necessitam desse datalhamento.
+                                    Ou seja, especifica&ccedil;&otilde;es t&eacute;cnicas das pe&ccedil;as gr&aacute;ficas,
+                                    do s&iacute;tio de internet, dos workshops com curta dura&ccedil;&atilde;o e dos
+                                    cursos
+                                    de longa dura&ccedil;&atilde;o (projeto pedag&oacute;gico), entre outros.
+                                </p>
+                                <textarea id="especificacaotecnica" class="browser-default editor"
+                                          name="especificacaotecnica" <?php echo isset($this->arrConfig['especificacaotecnica']['disabled']) ? 'disabled="disabled"' : '' ?>>
+                                    <?php if (isset($this->proposta['especificacaotecnica'])) echo $this->proposta['especificacaotecnica']; ?>
+                                </textarea>
+                                <label for="especificacaotecnica" class="active">Especifica&ccedil;&otilde;es t&eacute;cnicas
+                                    do produto *</label>
+                            </div>
+                        </div>
+
+                        <?php if ($this->isEditavel) : ?>
+                            <div class="row">
+                                <div class="input-field col s12 center">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Salvar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function ($) {
+
+        <?php if (!$this->isEditavel) : ?>
+        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
+        JSBloquearAlteracaoFormulario();
+        <?php endif; ?>
+
+
+        $("textarea.editor").each(function () {
+            $(this).editorRico({
+                altura: 400,
+                maxchar: 8000,
+                isLimitarCarateres : true,
+                isDesabilitarEdicao: 0
+            });
+        });
+    });
+</script>

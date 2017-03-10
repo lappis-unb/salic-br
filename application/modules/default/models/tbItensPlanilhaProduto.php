@@ -171,33 +171,56 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
 //                   INNER JOIN SAC..tbPlanilhaItens b on (a.idPlanilhaItens = b.idPlanilhaItens)
 //                   WHERE idPlanilhaEtapa = " . $idEtapa . " ";
 
-        $select = $this->select();
+        $select = $this->select()->distinct();
         $select->setIntegrityCheck(false);
         $select->from(
             array('a' => $this->_name),
             array(
-                'a.idplanilhaitens',
-                'b.descricao'
+                'a.idPlanilhaItens',
+                'b.Descricao'
             ),
             $this->_schema
         );
         $select->joinInner(
-            array('b' => 'tbplanilhaitens'), 'a.idplanilhaitens = b.idplanilhaitens',
+            array('b' => 'tbplanilhaitens'), 'a.idPlanilhaItens = b.idPlanilhaItens',
             array(''), $this->_schema
         );
-        $select->where('idplanilhaetapa = ?',$idEtapa);
+        $select->where('idPlanilhaEtapa = ?',$idEtapa);
 
         if (!empty($idproduto)) {
-            $select->where('idproduto = ?',$idproduto);
+            $select->where('idProduto = ?',$idproduto);
         }
-        $select->order('b.descricao');
+        $select->order('b.Descricao');
 
-//        echo '<pre>';
-//        var_dump ($select->assemble());
-//        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($select);
+    }
+
+    public function buscarItem($where = array(), $order = array())
+    {
+
+        $select = $this->select()->distinct();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('i' => 'tbPlanilhaItens'),
+            array(
+                'idPlanilhaItens',
+                'Descricao'
+            ),
+            $this->_schema
+        );
+
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        $select->order($order);
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchRow($select);
     }
 }
 ?>

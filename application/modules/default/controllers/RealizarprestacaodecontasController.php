@@ -90,12 +90,14 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $this->codOrgao       = $_SESSION['GrupoAtivo']['codOrgao'];
             $this->view->codOrgao = $_SESSION['GrupoAtivo']['codOrgao'];
 
-            $this->view->comboestados = Estado::buscar();
+            $buscaEstados = new Agente_Model_DbTable_UF();
+
+            $this->view->comboestados = $buscaEstados->buscar();
 
             $idpronac = $this->_request->getParam("idPronac");
             if(!empty($idpronac)){
                 $tblEncaminhamentoPrestacaoContas = new tbEncaminhamentoPrestacaoContas();
-                $rsEPC = $tblEncaminhamentoPrestacaoContas->buscar(array("idPronac = ?"=>$idpronac, 'stAtivo=?'=>1))->current();
+                $rsEPC = $tblEncaminhamentoPrestacaoContas->buscar(array("idPronac = ? " => $idpronac, 'stAtivo= ? ' => 1))->current();
                 if(!empty($rsEPC)){
                     $this->situcaoEncaminhamentoAtual = $rsEPC->idSituacaoEncPrestContas;
                     $this->cdGruposDestinoAtual       = $rsEPC->cdGruposDestino;
@@ -982,7 +984,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $rsAgente = $tblAgente->buscar(array("CNPJCPF = ? "=>$rsProjeto[0]->CgcCpf))->current();
 
             if(!empty($rsAgente)){
-                $nomeProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsAgente->idAgente))->current();
+                $nomeProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsAgente->idAgente))->current();
             }
             if(!empty($nomeProponente)){
                 $nomeProponente = $nomeProponente->Descricao;
@@ -998,9 +1000,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $rsParecerChefe   = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>132))->current();
             $rsParecerCoord   = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>125))->current();
 
-            $nomeTecnico = (!empty($rsParecerTecnico)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerTecnico->idAgente))->current() : '';
-            $nomeChefe   = (!empty($rsParecerChefe)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerChefe->idAgente))->current() : '';
-            $nomeCoord   = (!empty($rsParecerCoord)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerCoord->idAgente))->current() : '';
+            $nomeTecnico = (!empty($rsParecerTecnico)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerTecnico->idAgente))->current() : '';
+            $nomeChefe   = (!empty($rsParecerChefe)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerChefe->idAgente))->current() : '';
+            $nomeCoord   = (!empty($rsParecerCoord)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerCoord->idAgente))->current() : '';
 
             if(is_object($rsParecerTecnico)){
                 $this->view->parecerTecnico = $rsParecerTecnico;
@@ -1469,7 +1471,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.xls;");
+            header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -2081,7 +2083,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
+                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -2651,7 +2653,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
+                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -3329,8 +3331,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             }
 
             $tblSituacao = new Situacao();
-            $rsSitucao = $tblSituacao->buscar(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
-	    
+            $rsSitucao = $tblSituacao->listasituacao(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
+            
             $this->view->situacoes = $rsSitucao;
             $this->intTamPag = 10;
 
@@ -3657,7 +3659,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.xls;");
+                header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.ods;");
                 echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
@@ -3904,7 +3906,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Manter_Assinantes.xls;");
+            header("Content-Disposition: inline; filename=Manter_Assinantes.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -3919,7 +3921,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $auth = Zend_Auth::getInstance();
         $this->usu_codigo = $auth->getIdentity()->usu_codigo;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -3948,7 +3950,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $auth = Zend_Auth::getInstance();
         $this->usu_codigo = $auth->getIdentity()->usu_codigo;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {

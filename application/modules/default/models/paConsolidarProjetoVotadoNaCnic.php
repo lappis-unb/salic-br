@@ -29,7 +29,7 @@ class paConsolidarProjetoVotadoNaCnic extends MinC_Db_Table_Abstract {
                 $sql = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . (int)$idPronac .",". (int)$idNrReuniao .",". "'".$nrReuniao."'" .",". (int)$tpResultadoVotacao .",". "'".$resultadoVotacao."'" .",". "'".$dsParecerConsolidado."'" .",". (int)$blnReadequacao .",". "'".$situacao."'".",". "'".$tpConsolidacaoVotacao."'".",". "'".$idTipoReadequacao."'";
                 //return  $this->getAdapter()->query($sql);
                 //xd($sql);
-                $db = Zend_Registry :: get('db');
+                $db = Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                 return $db->fetchAll($sql);
 

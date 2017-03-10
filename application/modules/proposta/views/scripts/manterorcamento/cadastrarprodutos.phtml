@@ -1,6 +1,6 @@
 <?php
-    header("Content-Type: text/html; charset={$this->charset}");
-    $SalvarProduto = $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvarprodutos'));
+header("Content-Type: text/html; charset={$this->charset}");
+$SalvarProduto = $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvarprodutos'));
 ?>
 <script type="text/javascript">
     //mascara('vlunitario', format_moeda);
@@ -9,45 +9,45 @@
 
 
 
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
-             //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
-             JSBloquearAlteracaoFormulario();
+        <?php if (!$this->isEditavel) : ?>
+        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
+        JSBloquearAlteracaoFormulario();
         <?php endif; ?>
 
-            $.ajax({
-                url : '<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
-                type: "POST",
-                data :{
-                    idetapa : $('#etapa').val(),
-                    idPreProjeto : <?php echo $this->idPreProjeto; ?>,
-                    idProduto : <?php echo $this->idProduto; ?>
-                },
-                success: function(valor){
-                    $("#item").find('option').remove();
-                    $("#item").append('<option value=""> - Selecione - </option>');
+        $.ajax({
+            url : '<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
+            type: "POST",
+            data :{
+                idetapa : $('#etapa').val(),
+                idPreProjeto : <?php echo $this->idPreProjeto; ?>,
+                idProduto : <?php echo $this->idProduto; ?>
+            },
+            success: function(valor){
+                $("#item").find('option').remove();
+                $("#item").append('<option value=""> - Selecione - </option>');
 
-                    for(a in valor){
-                        $("#item").append('<option value="'+valor[a].idItem+'">'+valor[a].nomeItem+'</option>');
-                    }
+                for(a in valor){
+                    $("#item").append('<option value="'+valor[a].idItem+'">'+valor[a].nomeItem+'</option>');
                 }
-                , dataType : 'json'
-            });
+            }
+            , dataType : 'json'
+        });
 
         $('.soma').keyup(function(){
             var soma = 0;
             var vlunitario = $("#vlunitario").val().replace('R$ ','');
 
-        	// retira os pontos e as virgulas, deixando somente numeros
+            // retira os pontos e as virgulas, deixando somente numeros
             vlunitario = vlunitario.replace(/\D/g, "");
             vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
 
-        	// adiciona o ponto na casa decimal
+            // adiciona o ponto na casa decimal
             vlunitario = vlunitario.replace(/(\d)(\d{2})$/, "$1.$2");
 
-        	// converte para float e adiciona precisao decimal
-        	qtd        = parseFloat($("#quantidade").val()).toFixed(2);
-        	ocorrencia = parseFloat($("#ocorrencia").val()).toFixed(2);
-        	valor      = parseFloat(vlunitario).toFixed(2);
+            // converte para float e adiciona precisao decimal
+            qtd        = parseFloat($("#quantidade").val()).toFixed(2);
+            ocorrencia = parseFloat($("#ocorrencia").val()).toFixed(2);
+            valor      = parseFloat(vlunitario).toFixed(2);
 
             soma = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
@@ -60,7 +60,7 @@
         });
 
         if($("#total").val() == 'R$ NaN'){
-			alert("Valores Invalidos");
+            alert("Valores Invalidos");
         }
 
         if($('#uf').val() != '' &&  $('#municipio').val() != '' && $('#item').val() != '' && $('#etapa').val() != '' ){
@@ -100,25 +100,25 @@
                 $("#error").dialog('open');
 
             } else {
-            	if($("#quantidade").val() == 0){
+                if($("#quantidade").val() == 0){
                     $("#error").html('Quantidade n&atilde;o pode ser igual a zero');
                     $("#error").dialog('open');
                     $("#quantidade").val('');
                     return false;
                 }
 
-            	if($("#ocorrencia").val() == 0){
+                if($("#ocorrencia").val() == 0){
                     $("#error").html('Ocorr&ecirc;ncia n&atilde;o pode ser igual a zero');
                     $("#error").dialog('open');
                     $("#ocorrencia").val('');
                     return false;
                 }
 
-            	var vlunitario = $("#vlunitario").val();
-            	vlunitario = vlunitario.replace(/\D/g, "");
-            	vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
+                var vlunitario = $("#vlunitario").val();
+                vlunitario = vlunitario.replace(/\D/g, "");
+                vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
 
-            	if(vlunitario == 0){
+                if(vlunitario == 0){
                     $("#error").html('Valor unit&aacute;rio n&atilde;o pode ser igual a zero');
                     $("#error").dialog('open');
                     $("#vlunitario").val('');
@@ -282,17 +282,17 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <body>
-    <!-- ========== INCIO TTULO ========== -->
-    <div id="titulo" style="width: 97%">
-        <div>Cadastrar Planilha por Produto</div>
-    </div>
-    <div id='error'></div>
-    <div id='justificativaErro' class="sumir"></div>
-    <div id="msg" class="sumir"></div>
-    <!-- ========== FIM TTULO ========== -->
-    <!-- ========== INCIO CONTEDO ========== -->
-    <div id="conteudo" style="width: 97%;"><!-- ========== INCIO TABELA DADOS ========== -->
-        <?php foreach ($this->Dados as $dados):?>
+<!-- ========== INCIO TTULO ========== -->
+<div id="titulo" style="width: 97%">
+    <div>Cadastrar Planilha por Produto</div>
+</div>
+<div id='error'></div>
+<div id='justificativaErro' class="sumir"></div>
+<div id="msg" class="sumir"></div>
+<!-- ========== FIM TTULO ========== -->
+<!-- ========== INCIO CONTEDO ========== -->
+<div id="conteudo" style="width: 97%;"><!-- ========== INCIO TABELA DADOS ========== -->
+    <?php foreach ($this->Dados as $dados):?>
         <form name="form" id="form" method="post" action ="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvarprodutos')); ?>">
             <input type="hidden" name="produto" id="produto" value="<?php echo $dados->codigoproduto ?>" />
             <input type="hidden" name="proposta" id="proposta" value="<?php echo $dados->idproposta ?>" />
@@ -303,9 +303,8 @@
                         <tr>
                             <td align="left"><label for="uf">FONTE DE RECURSO*:</label> <br />
                                 <select class="select_simples valida" style="width: 90%" id="fonterecurso" name="fonterecurso">
-                                    <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Recurso as $recurso) {?>
-                                    <option value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
+                                        <option <?php echo ($recurso->idverificacao == 109) ? 'selected' : ''; ?>  value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -321,7 +320,7 @@
                                 <select class="select_simples valida" id='uf' name="uf" style="width: 110px">
                                     <option> - Selecione - </option>
                                     <?php foreach($this->Estados as $estados) {?>
-                                    <option value="<?php echo $estados->id ?>"><?php echo $estados->descricao ?></option>
+                                        <option value="<?php echo $estados->id ?>"><?php echo $estados->descricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -329,7 +328,7 @@
                                 <label for="cidade">MUNIC&Iacute;PIO*</label><br />
                                 <select class="select_simples valida" style="width:200px" id='municipio' name='municipio'>
                                     <option> - Selecione uma UF - </option>
-                                        <?php if($this->Cidades):  ?>
+                                    <?php if($this->Cidades):  ?>
                                         <?php foreach($this->Cidades as $cidades) {
                                             if($dados->Municipio == $cidades->id) {?>
                                                 <option selected="selected" value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao ?></option>
@@ -337,7 +336,7 @@
                                                 <option value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao ?></option>
                                             <?php }
                                         } ?>
-                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 </select>
                             </td>
                         </tr>
@@ -368,7 +367,7 @@
                                 <select class="select_simples valida" id="unidade" name="unidade" style="width: 200px">
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Unidade as $unidade) {?>
-                                    <option value="<?php echo $unidade->idunidade ?>"><?php echo $unidade->descricao ?></option>
+                                        <option value="<?php echo $unidade->idUnidade ?>"><?php echo $unidade->Descricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -433,8 +432,8 @@
                 </td>
             </tr>
         </table>
-        <?php endforeach;?>
-    </div>
+    <?php endforeach;?>
+</div>
 <!-- ========== FIM CONTEDO ========== -->
 
 <!-- ========== INCIO RODAP DO CONTEDO ========== -->

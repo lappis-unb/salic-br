@@ -7,9 +7,6 @@
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 20/04/2012
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2012 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
@@ -17,10 +14,8 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbPlanoDistribuicao";
-
-
 
 	/**
 	 * Busca os produtos originais (aprovados)
@@ -68,7 +63,6 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarProdutosAprovados()
-
 
 
 	/**
@@ -120,7 +114,6 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarProdutosSolicitados()
-
 
 
 	/**
@@ -241,8 +234,8 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
 
-    
-    /* 
+
+    /*
      * Criada em 31/03/2014
      * @author: Jefferson Alessandro
      * Fun��o utilizada para buscar os planos de distribui��o do projeto para readequa��o.
@@ -282,7 +275,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
             array('c' => 'Produto'), 'c.Codigo = b.idProduto',
             array('c.Descricao as Produto'), 'SAC.dbo'
         );
-        
+
         if($tabela == 'PlanoDistribuicaoProduto'){
             $select->joinInner(
                 array('d' => 'Area'), 'b.Area = d.Codigo',
@@ -301,7 +294,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
                 array('e' => 'Segmento'), 'b.cdSegmento = e.Codigo',
                 array('e.Descricao as Segmento'), 'SAC.dbo'
             );
-            
+
         }
 
         $select->where('a.IdPRONAC = ?', $idPronac);
@@ -309,7 +302,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function buscarPlanosDistribuicaoConsolidadoReadequacao($idReadequacao)
 	{
 		$select = $this->select();
@@ -342,13 +335,13 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
             array('e' => 'Segmento'), 'b.cdSegmento = e.Codigo',
             array('e.Descricao as Segmento'), 'SAC.dbo'
         );
-		
+
         $select->where('b.idReadequacao = ?', $idReadequacao);
-        
+
 		return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
-    
-    
+
+
     public function buscarDadosPlanosDistribuicaoAtual($where = array())
 	{
 		$select = $this->select();
@@ -359,7 +352,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('a.*')
             ), 'SAC.dbo'
 		);
-        
+
 		// adiciona quantos filtros foram enviados
 		foreach ($where as $coluna => $valor) :
 			$select->where($coluna, $valor);
@@ -369,4 +362,4 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 		return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
 
-} // fecha class
+}

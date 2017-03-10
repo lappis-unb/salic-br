@@ -93,7 +93,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 
 		$sql.= "ORDER BY doc.dtEnvioComprovante DESC;";
 					
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha aguardandoavaliacao()
@@ -133,7 +133,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = '$pronac' 
 			ORDER BY doc.dtEnvioComprovante DESC";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha comprovantesemavaliacao()
@@ -168,7 +168,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND idComprovanteAnterior = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha subcomprovantesemavaliacao()
@@ -205,7 +205,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = $idPronac 
 				AND doc.idComprovante = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC;";
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha avaliarcomprovante()
@@ -235,7 +235,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = $idPronac 
 				AND doc.idComprovante = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC;";
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha avaliarcomprovante()
@@ -273,7 +273,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = $idPronac 
 				AND doc.idComprovante = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC;";
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha aprovarcomprovante()
@@ -307,7 +307,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = $idPronac 
 				AND doc.idComprovante = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC;";
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha avaliarcomprovantealterado()
@@ -369,7 +369,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 			ORDER BY doc.dtEnvioComprovante DESC;";
 		}
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha aprovarcomprovantealterado()
@@ -451,7 +451,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 
 		$sql.= "ORDER BY doc.dtEnvioComprovante DESC;";
 					
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha aguardandoaprovacao()
@@ -491,7 +491,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = '$pronac' 
 			ORDER BY doc.dtEnvioComprovante DESC";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha comprovantesemavaliacao()
@@ -526,7 +526,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND idComprovanteAnterior = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC";
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha subcomprovantesemavaliacao()
@@ -562,7 +562,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = $idPronac 
 				AND doc.idComprovante = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC;";
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha visualizarcomprovantedeferido()
@@ -598,7 +598,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = $idPronac 
 				AND doc.idComprovante = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC;";
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha visualizarcomprovanteindeferido()
@@ -633,7 +633,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				AND doc.idPRONAC = $idPronac 
 				AND doc.idComprovante = $idComprovante 
 			ORDER BY doc.dtEnvioComprovante DESC;";
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
 	} // fecha visualizarcomprovantesubstituido()

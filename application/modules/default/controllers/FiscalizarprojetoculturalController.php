@@ -51,7 +51,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
         $usuarios = new Autenticacao_Model_Usuario();
         $agente = $usuarios->getIdUsuario($idUsuario);
 
-        $idAgente = $agente->idAgente;
+        $idAgente = $agente['idAgente'];
 
         $aprovacaoDao = new Aprovacao();
         $selectAp = $aprovacaoDao->totalAprovadoProjeto(true);

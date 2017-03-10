@@ -1,0 +1,69 @@
+<?php
+$arrAction = ($this->arrAction)? $this->arrAction : array();
+$strTitle = ($this->strTitle)? $this->strTitle : '';
+$strTitleCard = ($this->strTitleCard)? $this->strTitleCard : '';
+
+?>
+<div class="container">
+    <!--<div class="container animated slideInUp">-->
+    <!--<div class="container animated zoomIn">-->
+    <?php if ($strTitle): ?>
+        <div id="title" class="row animated fadeIn">
+            <div class="col s12 l4"></div>
+            <div class="col s12 l4 center-align">
+                <h4 class="white-text"><?php echo $strTitle ?></h4>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div class="row">
+        <div class="col s12 m3 l3"></div>
+        <div class="col s12 m6 l6">
+            <!--        <div class="card z-depth-5 green darken-3">-->
+            <!--                <div class="card green-text text-darken-4 animated fadeInUp">-->
+            <div class="card animated fadeInUp">
+                <!--            <div class="card">-->
+                <!--                <div class="card-image">-->
+                <!--                    <img alt="Salic" src="-->
+                <?php //echo $this->baseUrl(); ?><!--/public/img/logo.png">-->
+                <!--                    <span class="card-title">Login</span>-->
+                <!--                </div>-->
+                <div class="card-content  white-text" style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat center 0 #acda5d ;">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12 center-align" >
+                            <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
+                        </div>
+                        <div class="col s12" >
+                            <span class="card-title"><b><?php echo $strTitleCard ?></b></span>
+                        </div>
+                    </div>
+                    <!--                    <span class="card-title activator grey-text text-darken-4">Login-->
+                </div>
+                <div class="card-content">
+                </div>
+                <div class="card-action center-align">
+                    <?php foreach($arrAction as $arrActionValue): ?>
+                    <a
+                        href="<?php echo $arrActionValue['url'] ?>"
+                        class="tooltipped" data-delay="50" data-tooltip="<?php echo $arrActionValue['description'] ?>">
+                        <?php echo $arrActionValue['title'] ?>
+                    </a>
+                    <a
+                        href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>');"
+                        class="tooltipped" data-delay="50" data-tooltip="Se cadastrar">
+                        N&atilde;o sou cadastrado
+                    </a>
+                    <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>');"
+                       class="tooltipped" data-delay="50" data-tooltip="Resetar senha">
+                        Esqueci a senha
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+                <!--                <div class="card-reveal">-->
+                <!--                    <span class="card-title grey-text text-darken-4">Login<i class="material-icons right">close</i></span>-->
+                <!--                    <p>Preencha o seu cpf e senha para acessar o sistema.</p>-->
+                <!--                </div>-->
+            </div>
+        </div>
+        <div class="col s12 m3 l3"></div>
+    </div>
+</div>

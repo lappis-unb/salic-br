@@ -38,7 +38,7 @@ $buscarVeiculo = $this->url(array('module' => 'proposta', 'controller' => 'divul
                         <?php foreach ($this->veiculo as $veiculoConteudo) :
                             $veiculoConteudo = array_change_key_case($veiculoConteudo);
                             ?>
-                        <option value="<?php echo $veiculoConteudo['idverificacaoveiculo'] ?>" <?php if ($this->idveiculo == $veiculoConteudo['idverificacaoveiculo']) echo 'selected'; ?> ><?php echo $veiculoConteudo['veiculodescicao'] ?></option>
+                        <option value="<?php echo $veiculoConteudo['idVerificacaoVeiculo'] ?>" <?php if ($this->idveiculo == $veiculoConteudo['idVerificacaoVeiculo']) echo 'selected'; ?> ><?php echo $veiculoConteudo['veiculodescicao'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>
@@ -55,7 +55,7 @@ $buscarVeiculo = $this->url(array('module' => 'proposta', 'controller' => 'divul
 <br clear="all"/>
 <script>
     $(document).ready(function () {
-        <?php if(isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if (!$this->isEditavel) : ?>
         //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
         JSBloquearAlteracaoFormulario();
         <?php endif; ?>

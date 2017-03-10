@@ -7,53 +7,57 @@
 
 CREATE SCHEMA IF NOT EXISTS controledeacesso AUTHORIZATION postgres;
 
-CREATE TABLE controledeacesso.dtproperties
+CREATE TABLE controledeacesso."dtproperties"
 (
-  id INT NOT NULL,
-  objectid INT,
-  property VARCHAR(64) NOT NULL,
-  value VARCHAR(255),
-  uvalue VARCHAR(255),
-  lvalue varchar,
-  version INT DEFAULT 0 NOT NULL,
-  CONSTRAINT pk_dtproperties PRIMARY KEY (id, property)
+  "id" INT NOT NULL,
+  "objectid" INT,
+  "property" VARCHAR(64) NOT NULL,
+  "value" VARCHAR(255),
+  "uvalue" VARCHAR(255),
+  "lvalue" varchar,
+  "version" INT DEFAULT 0 NOT NULL,
+  CONSTRAINT pk_dtproperties PRIMARY KEY ("id", "property")
 );
 
 create SEQUENCE controledeacesso.sgcacesso_idusuario_seq;
 
-CREATE TABLE controledeacesso.SGCacesso
+CREATE TABLE controledeacesso."SGCacesso"
 (
-  IdUsuario INT NOT NULL,
-  Cpf CHAR(11) PRIMARY KEY NOT NULL,
-  Nome VARCHAR(100) NOT NULL,
-  DtNascimento TIMESTAMP NOT NULL,
-  Email VARCHAR(60) NOT NULL,
-  Senha VARCHAR(255) NOT NULL,
-  DtCadastro TIMESTAMP NOT NULL,
-  Situacao INT NOT NULL,
-  DtSituacao TIMESTAMP NOT NULL
+  "IdUsuario" INT NOT NULL,
+  "Cpf" CHAR(11) PRIMARY KEY NOT NULL,
+  "Nome" VARCHAR(100) NOT NULL,
+  "DtNascimento" TIMESTAMP NOT NULL,
+  "Email" VARCHAR(60) NOT NULL,
+  "Senha" VARCHAR(255) NOT NULL,
+  "DtCadastro" TIMESTAMP NOT NULL,
+  "Situacao" INT NOT NULL,
+  "DtSituacao" TIMESTAMP NOT NULL
 );
-CREATE TABLE controledeacesso.SGCsistema
+
+CREATE TABLE controledeacesso."SGCsistema"
 (
-  IdSistema INT PRIMARY KEY NOT NULL,
-  NomeSistema VARCHAR(20),
-  DescricaoSistema VARCHAR(100)
+  "IdSistema" INT PRIMARY KEY NOT NULL,
+  "NomeSistema" VARCHAR(20),
+  "DescricaoSistema" VARCHAR(100)
 );
-CREATE TABLE controledeacesso.SGCusuarioXsistema
+
+CREATE TABLE controledeacesso."SGCusuarioXsistema"
 (
-  IdUsuario INT NOT NULL,
-  IdSistema INT NOT NULL,
-  CONSTRAINT PK_SGCusuarioXsistema PRIMARY KEY (IdUsuario, IdSistema)
+  "IdUsuario" INT NOT NULL,
+  "IdSistema" INT NOT NULL,
+  CONSTRAINT PK_SGCusuarioXsistema PRIMARY KEY ("IdUsuario", "IdSistema")
 );
-CREATE TABLE controledeacesso.sysdiagrams
+
+CREATE TABLE controledeacesso."sysdiagrams"
 (
-  name VARCHAR NOT NULL,
-  principal_id INT NOT NULL,
-  diagram_id INT PRIMARY KEY NOT NULL,
-  version INT,
-  definition BIT
+  "name" VARCHAR NOT NULL,
+  "principal_id" INT NOT NULL,
+  "diagram_id" INT PRIMARY KEY NOT NULL,
+  "version" INT,
+  "definition" BIT
 );
-CREATE UNIQUE INDEX UK_principal_name ON controledeacesso.sysdiagrams (principal_id, name);
+
+CREATE UNIQUE INDEX UK_principal_name ON controledeacesso."sysdiagrams" ("principal_id", "name");
 -- CREATE PROCEDURE dt_addtosourcecontrol(@vchSourceSafeINI VARCHAR, @vchProjectName VARCHAR, @vchComment VARCHAR, @vchLoginName VARCHAR, @vchPassword VARCHAR);
 -- CREATE PROCEDURE dt_addtosourcecontrol_u(@vchSourceSafeINI SYSNAME, @vchProjectName SYSNAME, @vchComment SYSNAME, @vchLoginName SYSNAME, @vchPassword SYSNAME);
 -- CREATE PROCEDURE dt_adduserobject();

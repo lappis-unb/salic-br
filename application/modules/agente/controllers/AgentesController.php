@@ -55,13 +55,12 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $mapperArea = new Agente_Model_AreaMapper;
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
         $mapperUF = new Agente_Model_UFMapper();
-
-        $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
+        $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
 
         //Monta o combo das visoes disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();
@@ -72,10 +71,15 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $visoesNew = null;
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $authIdentity = array_change_key_case((array) $auth->getIdentity());
+
         if (isset($authIdentity['cpf'])) {
             $visoesNew[0]['idVerificacao'] = 144; //PROPONENTE
             $visoesNew[0]['Descricao'] = 'Proponente';
+
+            $this->view->ehProponente = true;
         } else {
+            $this->view->ehProponente = false;
+
             foreach ($visoes as $key => $visaoGrupo) {
                 if ($GrupoAtivo == 93 and ($visaoGrupo->idVerificacao == 209 or $visaoGrupo->idVerificacao == 216)) {
                     $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
@@ -212,7 +216,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($arrAuth['usu_codigo']);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
         } else { // autenticacao scriptcase
-            $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
+            $this->getIdUsuario = (isset($_GET["IdUsuario"])) ? $_GET["IdUsuario"] : 0;
         }
 
         $Cpflogado = $this->getIdUsuario;
@@ -433,6 +437,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
         echo json_encode($retorno);
+        die;
     }
 
     /**
@@ -470,9 +475,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
 
         $modal  = $this->_request->getParam("modal");
-
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -492,7 +495,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $modal  = $this->_request->getParam("modal");
 
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -512,7 +514,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $modal  = $this->_request->getParam("modal");
 
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -527,7 +528,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function incluiragenteexternoAction() {
-        Zend_Layout::startMvc(array('layout' => 'layout_login'));
+        Zend_Layout::startMvc(array('layout' => 'open'));
         $this->incluir();
     }
 
@@ -1030,13 +1031,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
 
-
-//        $lista = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
-
-
         $modelInternet = new Agente_Model_DbTable_Internet();
         $lista = $modelInternet->buscarEmails($idAgente);
-//        var_dump($lista); die;
 
         $this->view->emails = $lista;
         $this->view->qtdEmail = count($lista);
@@ -1177,7 +1173,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
         endif;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -1302,7 +1298,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -1607,7 +1603,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -1825,7 +1821,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         } else {
             if (count($dados) != 0) {
                 foreach ($dados as $dado) {
-                    $dado = array_change_key_case((array) $dado);
+                    $dado = ((array) $dado);
                     array_walk($dado, function($value, $key) use (&$dado){
                         $dado[$key] = utf8_encode($value);
                     });
@@ -1859,6 +1855,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
         echo json_encode($novos_valores);
+        die;
     }
 
     /**
@@ -1872,35 +1869,38 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     private function salvaragente()
     {
-        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
-        $usuario = isset($arrAuth['idusuario']) ? $arrAuth['idusuario'] : $arrAuth['usu_codigo'];
-        $arrayAgente = array('cnpjcpf' => $this->_request->getParam("cpf"),
+        $arrAuth = (array) Zend_Auth::getInstance()->getIdentity();
+        $usuario = isset($arrAuth['IdUsuario']) ? $arrAuth['IdUsuario'] : $arrAuth['usu_codigo'];
+        $arrayAgente = array(
+            'cnpjcpf' => $this->_request->getParam("cpf"),
             'tipopessoa' => $this->_request->getParam("Tipo"),
             'status' => 0,
             'usuario' => $usuario
         );
         $mprAgentes = new Agente_Model_AgentesMapper();
-//        $tblAgentes = new Agente_Model_DbTable_Agentes();
         $mprNomes = new Agente_Model_NomesMapper();
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
         $mprAgentes->save($mdlAgente);
+
         $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
-        $idAgente = $agente['idagente'];
+        $idAgente = $agente['idAgente'];
         $nome = $this->_request->getParam("nome");
         $TipoNome = (strlen($mdlAgente->getCnpjcpf()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
         if($this->modal == "s"){
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
         try {
-            $arrNome = [
+            $arrNome = array(
                 'idagente' => $idAgente,
                 'tiponome' => $TipoNome,
                 'descricao' => $nome,
                 'status' => 0,
                 'usuario' => $usuario
-            ];
+            );
+
             $mprNomes->save(new Agente_Model_Nomes($arrNome));
+
         } catch (Exception $e) {
             parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
@@ -2089,7 +2089,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     				'siVinculo' => 0,
     				'idUsuarioResponsavel' => $arrAuth->getIdentity()->IdUsuario
     		);
-            var_dump($dadosVinculo);die;
     		$tbVinculo->inserir($dadosVinculo);
     	}
 
@@ -2122,6 +2121,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function salvaagentegeralAction() {
+
         $this->autenticacao();
         $this->salvaragente();
     }
@@ -2643,20 +2643,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $nome = $this->_request->getParam('nome');
         $cpf = Mascara::delMaskCPF($this->_request->getParam('cpf'));
 
-        // ========== INICIO PAGINACAO ==========
-        // criando a paginacao
         $buscar = $agentes->consultaPareceristasPainel($nome, $cpf);
 
-        Zend_Paginator::setDefaultScrollingStyle('Sliding');
-        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
-        $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
-        // pagina atual e quantidade de itens por pagina
-        $currentPage = $this->_getParam('page', 1);
-        $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(15);
-        // ========== FIM PAGINACAO ==========
-
-        $this->view->qtdpareceristas = count($buscar);
-        $this->view->pareceristas = $paginator;
+        $this->view->dados = $buscar;
+        $this->view->qtpareceristas = count($buscar);
 
         $orgaos = new Orgaos();
         $this->view->orgaos = $orgaos->pesquisarTodosOrgaos();
@@ -2716,6 +2706,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $visoes = $visaoTable->buscarVisao(null, null, true);
         $a = 0;
         $select = null;
+
         foreach ($visoes as $visaoGrupo) {
             if ($GrupoAtivo == 93 and ($visaoGrupo->idVerificacao == 209 or $visaoGrupo->idVerificacao == 216)) {
                 $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
@@ -2879,7 +2870,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $tbAgenteFisico->alterarDados($dados, $post->agente);
             } else {
                 $msg = 'cadastrados';
-                $tbAgenteFisico->inserir($dados);
+                $tbAgenteFisico->insert($dados);
             }
 
             parent::message("Dados $msg com sucesso!", "agente/agentes/info-adicionais/id/" . $post->agente, "CONFIRM");

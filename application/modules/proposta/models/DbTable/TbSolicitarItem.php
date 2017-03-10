@@ -11,7 +11,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
     protected  $_banco  = 'sac';
     protected  $_schema = 'sac';
     protected  $_name   = 'tbsolicitaritem';
-    protected  $_primary = 'idsolicitaritem';
+    protected  $_primary = 'idSolicitarItem';
 
 
     public function listaSolicitacoesItens($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
@@ -28,7 +28,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
                     '),
                     new Zend_Db_Expr("
                         CASE
-                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associa��o'
+                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associa&ccedil;&atilde;o'
                             ELSE 'Inclusão'
                        END as TipoSolicitacao
                     "),
@@ -417,7 +417,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
     public function cadastraritem($dadosassociar) {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 

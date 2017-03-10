@@ -1,0 +1,192 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s10 m10 l10">
+            <h4>Admissibilidade de propostas - Gerenciamento de propostas </h4>
+
+            <script type="text/javascript">
+            <!--
+            /*
+             * Fun��o respons�vel pela exibi��o ou ocultamento de conte�do,
+             * mudando a imagem.
+             **/
+            function abrirDinamico(elemento, obj) {
+                if($(elemento).css('display') == 'none') {
+                    $(elemento).fadeIn('fast', function() {
+                        $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png');
+                    });
+                } else {
+                    $(elemento).fadeOut('fast', function() {
+                        $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-baixo.PNG');
+                    });
+                }
+            }
+            function toogleAjax(id, url){
+                if(!url) {
+                    $('#'+id).toggle('slow');
+                } else {
+                    elemento = '#'+id;
+                    if($(elemento).css('display') == 'none') {
+                        $(elemento).html('<img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /> ');
+                        $(elemento).fadeIn('fast');
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                teste: 'testando'
+                            },
+                            url: url,
+                            success: function(data) {
+                                $(elemento).html(data);
+                            }
+                        });
+                    } else {
+                        $(elemento).fadeOut('fast');
+                    }
+                }
+            };
+            function imprimir()
+            {
+                $("#conteudoImprimir").val($(".conteudoPdf").html());
+                $("#formGerarPdf").submit();
+            }
+            //-->
+            </script>
+        <div>
+            <form method="POST" id="formGerarPdf" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>" style="display:none">
+                <textarea name="html" id="conteudoImprimir"></textarea>
+            </form>
+            <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
+                <table>
+                    <tr>
+                        <td>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Localizar"  type="button" name="action" onclick="window.location='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'localizar-gerenciamento-proposta')); ?>'">
+                                Localizar <i class="material-icons right">search</i>
+                            </button>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir"  type="button" name="action" onclick='$("#conteudoImprimir").val($(".conteudoPdf").html()); $("#formGerarPdf").submit();'>
+                                Imprimir <i class="material-icons right">print</i>
+                            </button>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo" id="btn_resumo" type="button" name="action" onclick="$('#frmResumo').submit();">
+                                Resumo <i class="material-icons right">description</i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="conteudoPdf">
+                    <table class="responsive-table bordered">
+                        <?php
+                        $html = '';
+                        if($this->mensagem) {
+                            $html .= "<tr><th>{$this->mensagem}</th></tr>";
+                        }
+                        if ($this->analistas) {
+                            $i = 0;
+                            $html = "
+                                 <tr>
+                                    <th>Gerenciamento de Propostas</th>
+                                 </tr>
+                            ";
+                            foreach ($this->analistas as $nomeAnalista => $projetos) {
+                                $qtd   = count($this->analistas[$nomeAnalista]);
+                                $html .= "
+                                         <tr onclick=\"abrirDinamico('#tr_{$i}', $(this))\" style=\"cursor:pointer\">
+                                         <td align=\"center\">
+                                             <img src=\"{$this->baseUrl()}/public/img/navigation-right.png\" id=\"imgDinamica\" align=\"left\"/>
+                                             Analista : {$nomeAnalista} ( {$qtd} )
+                                             <input type='hidden' name='{$nomeAnalista}' value='{$qtd}'/>
+                                         </td>
+                                     </tr>
+                                     <tr id='tr_{$i}' style='display:none'><td>";
+                                    $html .= '<table class="responsive-table bordered striped" id="tabelaGerenciamento_' . $i . '">
+                                                <tr>
+                                                    <th>Nr. Proposta</th>
+                                                    <th>Nome da Proposta</th>
+                                                    <th>CNPJ/CPF</th>
+                                                    <th>Admissibilidade</th>
+                                                    <th>Dias</th>
+                                                    <th>Plano Anual</th>
+                                                    <th>Outras</th>
+                                                </tr>';
+                                    foreach ($projetos as $idProjeto => $projeto) {
+                                        if($projeto['stPlanoAnual']){
+                                            $stPlano = 'Sim';
+                                        } else {
+                                            $stPlano = 'N&atilde;o';
+                                        }
+                                        $html.= '<tr>
+                                                <td align="center">
+                                                    <a class="black-text btn waves-effect waves-dark white" href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=' . $idProjeto . '">
+                                                    ' . $idProjeto . '
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    ' . $projeto['NomeProposta'] . '
+                                                </td>
+                                                <td align="center">';
+                                        if(strlen($projeto['CNPJCPF']) > 11)
+                                        {
+                                            $html .= aplicaMascara($projeto['CNPJCPF'], "99.999.999/9999-99");
+
+                                        }else{
+                                            $html .= aplicaMascara($projeto['CNPJCPF'], "999.999.999-99");
+                                        }
+                                        $html .= '
+                                                </td>
+                                                <td align="center">
+                                                    ' . $projeto['DtAdmissibilidade'] . '
+                                                </td>
+                                                <td align="center">
+                                                    ' . $projeto['dias'] . '
+                                                </td>
+                                                <td align="center">
+                                                    ' . $stPlano . '
+                                                </td>
+                                                <td align="center">
+                                                    <a class="btn waves-effect waves-darrk white black-text" href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/proposta-por-proponente?agente=' . $projeto['idAgente'] . '" title="Visualizar outras propostas deste proponente">
+                                                        <i class="material-icons" alt="Visualizar outras propostas deste proponente" >search</i>
+                                                    </a>
+                                                </td>
+                                                <!--td align="center">
+                                                    <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/devolverproposta?idPreProjeto=' . $idProjeto . '" title="Devolver proposta">
+                                                        <img src="' . $this->baseUrl() . '/public/img/voltar.png" alt="Devolver proposta" />
+                                                    </a>
+                                                </td>
+                                                <td align="center">
+                                                    <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/despacharproposta?idPreProjeto=' . $idProjeto . '" title="Visualizar despachos">
+                                                        <img src="' . $this->baseUrl() . '/public/img/ico/despacho.png" alt="Visualizar despachos" />
+                                                    </a>
+                                                </td-->
+                                            </tr>';
+                                    }
+                                    $html .='</table>';
+                                    echo '<script>setTimeout(\'$("#tabelaGerenciamento_' . $i . '").tablesorter()\',700);</script>';
+                                $html .= '</td></tr>';
+                                $i++;
+                            }
+                        }
+                        echo $html;
+                        ?>
+                    </table>
+                </div><!-- div de impressao -->
+                <table>
+                    <tr>
+                        <td>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Localizar"  type="button" name="action" onclick="window.location='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'localizar-gerenciamento-proposta')); ?>'">
+                                Localizar <i class="material-icons right">search</i>
+                            </button>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Imprimir"  type="button" name="action" onclick='$("#conteudoImprimir").val($(".conteudoPdf").html()); $("#formGerarPdf").submit();'>
+                                Imprimir <i class="material-icons right">print</i>
+                            </button>
+                            <button class="black-text btn waves-effect waves-dark white tooltipped" data-tooltip="Resumo" id="btn_resumo" type="button" name="action" onclick="$('#frmResumo').submit();">
+                                Resumo <i class="material-icons right">description</i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+
+

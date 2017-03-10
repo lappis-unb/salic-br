@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <?php echo $this->partial("analise/inc/menu.phtml"); ?>
+
+        <style type="text/css">
+            <!--
+            .mensagem {
+                padding: 8px;
+                border: darkgreen;
+                background: #e3e3c7;
+            }
+
+            -->
+        </style>
+        <div class="col s10 m10 l10 center-align">
+            <h4>Adequa&ccedil;&atilde;o de projeto - Redistribuir an&aacute;lise </h4>
+            <?php
+            if ($this->mensagem) {
+                echo "<div class='mensagem' align=center>{$this->mensagem}</div>";
+            }
+            ?>
+            <form id="frmRedistAnalise" method="post"
+                  action="<?php echo $this->baseUrl(); ?>/analise/analise/redistribuiranaliseitem">
+                <table class="bordered" width="100%">
+                    <tr>
+                        <th colspan="2">
+                            Projeto distribuidos para an&aacute;lise
+                        </th>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <b>Nr. Projeto</b>
+                            <br/>
+                            <input type="hidden" name="idpronac" value="<?php echo $this->projeto->IdPRONAC; ?>"/>
+                            <?php echo $this->projeto->Pronac; ?>
+                        </td>
+                        <td align="left">
+                            <b>Nome do Projeto</b>
+                            <br/>
+                            <?php echo $this->projeto->NomeProjeto; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <b>T&eacute;cnico Atual</b>
+                            <br/>
+
+                            <input type="hidden" name="tecnicoAtual" value="<?php echo $this->projeto->idTecnico; ?>"/>
+                        </td>
+                        <td align="left">
+                            <?php echo $this->projeto->Tecnico; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <b>Novo T&eacute;cnico *</b>
+                        </td>
+                        <td align="left">
+                            <?php if ($this->novosAnalistas) : ?>
+                                <select class="select_simples" name="idNovoTecnico">
+                                    <?php foreach ($this->novosAnalistas as $analista) : ?>
+                                        <?php if( $analista->usu_codigo == $this->projeto->idTecnico)  continue; ?>
+                                        <option value="<?php echo $analista->usu_codigo ?>"><?php echo $analista->usu_nome ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            <?php endif ?>
+                        </td>
+                    </tr>
+                </table>
+
+                <?php //if ($this->avaliar) : ?>
+                <div class="row no-padding no-margin">
+                    <div class="input-field col s12 center-align">
+                        <a href="/analise/analise/listarprojetos"
+                           class="modal-action modal-close waves-effect waves-teal btn btn-info">
+                            <i class="material-icons left">undo</i>Voltar</a>
+
+                        <button class="btn waves-effect waves-light" type="submit" name="action">
+                            Salvar <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+                <?php //endif; ?>
+            </form>
+
+        </div>
+    </div>
+</div>

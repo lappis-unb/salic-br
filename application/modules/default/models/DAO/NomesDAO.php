@@ -74,13 +74,13 @@ class NomesDAO extends MinC_Db_Table_Abstract
      */
     public function inserir($idAgente, $TipoNome, $Descricao, $Status, $Usuario)
     {
-        $dados = [
+        $dados = array(
             'idagente' => $idAgente,
             'tiponome' => $TipoNome,
             'descricao' => $Descricao,
             'status' => $Status,
             'usuario' => $Usuario
-        ];
+        );
 
         return $this->insert($dados);
     }

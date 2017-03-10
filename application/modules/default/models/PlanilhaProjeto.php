@@ -12,7 +12,7 @@
  */
 class PlanilhaProjeto extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'SAC';
+    protected $_schema = 'SAC';
     protected $_name = 'tbPlanilhaProjeto';
     
     public function alterar($dados, $where, $dbg=false) {
@@ -77,7 +77,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-        
+
         return $this->fetchRow($somar);
     }
     
@@ -215,7 +215,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
 				INNER JOIN SAC.dbo.tbPlanilhaProposta AS pro ON pro.idPlanilhaProposta = PP.idPlanilhaProposta
 				WHERE PP.idPronac = ".$idpronac;
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
     }
@@ -346,8 +346,21 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
     
-    
-    
+    public function inserirPlanilhaParaParecerista($idPreProjeto, $idPronac) {
+        $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
+                                     (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
+                                     TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
+                                   SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+                                        Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+                                        MunicipioDespesa, 0
+                                        FROM SAC.dbo.tbPlanilhaProposta
+                                        WHERE idProjeto = {$idPreProjeto}";
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        return $db->query($sqlParecerista);
+    }
+
+
 }
 
 ?>

@@ -1,12 +1,13 @@
-<?php 
+<?php
 /*
  * Classe: CriterioAvaliacao
  * Modulo: Editais
- * Criado por: Emanuel Melo 
+ * Criado por: Emanuel Melo
  */
 class CriteriosAvaliacao extends MinC_Db_Table_Abstract {
-    
+
     protected  $_banco = 'SAC';
+    protected  $_schema = 'SAC';
     protected  $_name = 'tbCritetriosAvaliacao';
 
     /*
@@ -20,7 +21,6 @@ class CriteriosAvaliacao extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 
-    
-    
+
+
 }
-?>

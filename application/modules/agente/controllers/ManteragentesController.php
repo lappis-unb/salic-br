@@ -75,22 +75,21 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($arrAuth['usu_codigo']);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
         } else { // autenticacao scriptcase
-            $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
+            $this->getIdUsuario = (isset($_GET["IdUsuario"])) ? $_GET["IdUsuario"] : 0;
         }
 
         if (!$this->getIdUsuario) {
-            $this->getIdUsuario = $arrAuth['idusuario'];
+            $this->getIdUsuario = $arrAuth['IdUsuario'];
         }
         $Cpflogado = $this->getIdUsuario;
         $this->view->cpfLogado = $Cpflogado;
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
-        $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
-
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
+        $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
 
         //Monta o combo das visees disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();
@@ -608,8 +607,6 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         header("Last-Modified: {$gmtDate} GMT");
         header("Cache-Control: no-cache, must-revalidate");
         header("Pragma: no-cache");
-        header("Content-Type: text/html; charset=ISO-8859-1", true);
-
         $this->_helper->layout->disableLayout(); // desabilita o layout
 
         $post = Zend_Registry::get('post');
@@ -721,11 +718,12 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
     {
         if ($this->getRequest()->isPost()) {
             $arrPost = array_change_key_case($this->getRequest()->getPost());
-            $arrPost['idusuario'] = $this->getIdUsuario;
+            $arrPost['IdUsuario'] = $this->getIdUsuario;
             $arrPost['cpf'] = Mascara::delMaskCPF(Mascara::delMaskCNPJ($arrPost['cpf']));
             if ($arrPost['idagente'] === '') {
                 $tblAgentes = new Agente_Model_DbTable_Agentes();
-                $arrPost['idagente'] = $tblAgentes->findBy(array('cnpjcpf' => $arrPost['cpf']))['idagente'];
+                $result = $tblAgentes->findBy(array('cnpjcpf' => $arrPost['cpf']));
+                $arrPost['idagente'] = $result['idagente'];
             }
 
             $mprNomes = new Agente_Model_NomesMapper();

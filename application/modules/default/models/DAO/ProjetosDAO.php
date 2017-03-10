@@ -46,7 +46,7 @@ class ProjetosDAO extends Zend_Db_Table
     public static function tbPlanilhaProjeto($idPronac)
     {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $sql = "	INSERT INTO SAC.dbo.tbPlanilhaAprovacao
@@ -108,7 +108,7 @@ class ProjetosDAO extends Zend_Db_Table
     public static function tbAnaliseDeConteudo($idPronac)
     {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $sqlAnaliseOriginal = "	INSERT INTO sac.dbo.tbAnaliseAprovacao
@@ -166,7 +166,7 @@ class ProjetosDAO extends Zend_Db_Table
     public static function balancear($idPronac)
     {
         try{
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $sqlProjetoAreaSegmento = "SELECT Pr.idPRONAC, 
@@ -272,7 +272,7 @@ class ProjetosDAO extends Zend_Db_Table
 
     public static function alteraProjeto($idPronac)
     {
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $dados = array('Situacao' => 'C10');
         $where = "IdPRONAC =" . $idPronac;

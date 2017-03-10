@@ -109,7 +109,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-        #xd( $idPronac );
 
         if(empty($idPronac)){
             $url = Zend_Controller_Front::getInstance()->getBaseUrl()."/listarprojetos/listarprojetos";
@@ -119,7 +118,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             JS::redirecionarURL($url);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
-        #xd('5555555555');
+
         if (!isset($auth->getIdentity()->usu_codigo)) {
 
             $this->view->blnProponente = $this->blnProponente;
@@ -130,7 +129,10 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
 
             $links = new fnLiberarLinks();
-            $linksXpermissao = $links->liberarLinks(2, $cpf, $idUsuarioLogado, $idPronac);
+            // @TODO REMOVER FUTURAMENTE ESSA FUNÇÃO
+            //$linksXpermissao = $links->liberarLinks(2, $cpf, $idUsuarioLogado, $idPronac);
+            $linksXpermissao = $links->links(2, $cpf, $idUsuarioLogado, $idPronac);
+
             $linksGeral = str_replace(' ', '', explode('-', $linksXpermissao->links));
 
             $arrayLinks = array(
@@ -236,6 +238,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $this->view->projeto = $rst[0];
                     $this->view->idpronac = $idPronac;
                     $this->view->idprojeto = $rst[0]->idProjeto;
+                    $this->view->codSituacao = $rst[0]->codSituacao;
                     if ($rst[0]->codSituacao == 'E12' || $rst[0]->codSituacao == 'E13' || $rst[0]->codSituacao == 'E15' || $rst[0]->codSituacao == 'E50' || $rst[0]->codSituacao == 'E59' || $rst[0]->codSituacao == 'E61' || $rst[0]->codSituacao == 'E62') {
                         $this->view->menuCompExec = 'true';
                     }
@@ -286,7 +289,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //VALORES DO PROJETO
-                    $planilhaproposta = new PlanilhaProposta();
+                    $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                     $planilhaprojeto = new PlanilhaProjeto();
                     $planilhaAprovacao = new PlanilhaAprovacao();
 
@@ -465,7 +468,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 if (count($rst) > 0) {
                     $this->view->projeto = $rst[0];
                     $this->view->idpronac = $idPronac;
-                    //xd($rst[0]);
                 } else {
                     parent::message("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado.", "listarprojetos/listarprojetos", "ERROR");
                 }
@@ -618,9 +620,8 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
         $this->view->projeto = $rs;
 
-        $sv = new sVerificaValidadeCertidaoNegativa();
-        //$resultado = $sv->buscarDados($rs->CgcCpf);
-        $resultado = $sv->buscarDadosSemSP($rs->CgcCpf);
+        $sv = new certidaoNegativa();
+        $resultado = $sv->buscarCertidaoNegativa($rs->CgcCpf);
         $this->view->dados = $resultado;
     }
 
@@ -647,7 +648,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $tblProposta = new Proposta_Model_DbTable_PreProjeto();
                 $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$rsProjeto->idProjeto))->current();
                 $this->view->proposta = $rsProposta;
-//                xd($rsProposta);
             }
         }
     }
@@ -835,11 +835,12 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 	    }
 	    $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
             $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($idPronac, $tpPlanilhaAtiva);
-	    // xd($planilhaOrcamentaria);
 	    if(count($planilhaOrcamentaria)==0){
 	      $this->view->tipoPlanilha = 2;
-            }  else if ($tpPlanilhaAtiva == 6) {
-	      $this->view->tipoPlanilha = 6;
+        }  else if ($tpPlanilhaAtiva == 5) {
+            $this->view->tipoPlanilha = 5;
+        }  else if ($tpPlanilhaAtiva == 6) {
+            $this->view->tipoPlanilha = 6;
 	    } else {
 	      $this->view->tipoPlanilha = 3;
 	    }
@@ -906,7 +907,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $this->view->dadosProdutos = $buscarDistribuicao;
 
 
-            $tblPlanilhaProposta = new PlanilhaProposta();
+            $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $tblPlanilhaProjeto = new PlanilhaProjeto();
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
             $tblProjetos = new Projetos();
@@ -920,7 +921,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $idPreProjeto = $rsProjeto->idProjeto;
 
             if(!empty ($idPreProjeto)){
-                $ppr = new PlanilhaProposta();
+                $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $pp = new PlanilhaProjeto();
                 $pr = new Projetos();
                 $PlanilhaDAO = new PlanilhaProjeto();
@@ -971,7 +972,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $idPreProjeto = $rsProjeto->idProjeto;
 
             if(!empty ($idPreProjeto)){
-                $ppr = new PlanilhaProposta();
+                $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $pp = new PlanilhaProjeto();
                 $pr = new Projetos();
                 $PlanilhaDAO = new PlanilhaProjeto();
@@ -1127,7 +1128,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $tblHistDoc = new tbHistoricoDocumento();
             $total = $tblHistDoc->buscarHistoricoTramitacaoProjeto(array("p.IdPronac =?"=>$idPronac), array(), null, null, true);
 
-            //xd($total);
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -1171,7 +1171,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $tblHistDoc = new tbHistoricoDocumento();
             $total = $tblHistDoc->buscarHistoricoTramitacaoDocumento($arrBusca, array(), null, null, true);
 
-            //xd($total);
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -1437,7 +1436,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".xls;");
+            header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -1502,7 +1501,8 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                 $this->view->projetosENReconsideracao = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
                                 $this->view->comboareasculturaisReconsideracao= $mapperArea->fetchPairs('codigo',  'descricao');
-                                $this->view->combosegmentosculturaisReconsideracao = Segmentocultural::buscarSegmento($this->view->projetosENReconsideracao->cdArea);
+                                $objSegmentocultural = new Segmentocultural();
+                                $this->view->combosegmentosculturaisReconsideracao = $objSegmentocultural->buscarSegmento($this->view->projetosENReconsideracao->cdArea);
 
                                 $parecer = new Parecer();
                                 $this->view->ParecerReconsideracao = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer in (?)' => array(1,7), 'stAtivo = ?' => 1))->current();
@@ -1540,7 +1540,8 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                 $this->view->projetosENRecurso = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
                                 $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-                                $this->view->combosegmentosculturaisRecurso = Segmentocultural::buscarSegmento($this->view->projetosENRecurso->cdArea);
+                                $objSegmentocultural = new Segmentocultural();
+                                $this->view->combosegmentosculturaisRecurso = $objSegmentocultural->buscarSegmento($this->view->projetosENRecurso->cdArea);
 
                                 $parecer = new Parecer();
                                 $this->view->ParecerRecurso = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer = ?' => 7, 'stAtivo = ?' => 1))->current();
@@ -1986,7 +1987,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $total = $rsCount->total;
             $totalGeralCaptado = $rsCount->totalGeralCaptado;
 
-            //xd($total);
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -2158,12 +2158,10 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
     public function relatorioFinalAction()
     {
-        #xd('ednehdoehodh');
         $idpronac = $this->_request->getParam("idPronac");
         if (strlen($idpronac) > 7) {
             $idpronac = Seguranca::dencrypt($idpronac);
         }
-        #xd($idpronac);
         //****** Dados do Projeto - Cabecalho *****//
         $projetos = new Projetos();
         $DadosProjeto = $projetos->dadosProjeto(array('idPronac = ?' => $idpronac))->current();
@@ -2174,7 +2172,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
         if(!empty($DadosRelatorio)){
             $this->view->DadosRelatorio = $DadosRelatorio;
-            #xd($idpronac);
             $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac);
             $this->view->LocaisDeRealizacao = $LocaisDeRealizacao;
             $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
@@ -2292,7 +2289,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
 	// verificar se j� existe planilha de remanejamento de 20%
 	$sql = "SELECT COUNT(*) FROM sac.dbo.tbPlanilhaAprovacao WHERE idPronac = " . $idPronac . " AND tpPlanilha = 'RP'";
-	$db = Zend_Registry :: get('db');
+	$db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 	$countTpPlanilhaRemanej = $db->fetchOne($sql);
 
@@ -2991,13 +2988,14 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                 $projeto = new Projetos();
                 $buscarPronac = $projeto->buscar(array('IdPRONAC = ?'=>$idPronac))->current()->toArray();
+
                 $idprojeto = !empty($buscarPronac['idProjeto']) ? $buscarPronac['idProjeto'] : 0;
 
                 $this->view->resultAnaliseProduto = GerenciarPareceresDAO::projetosConsolidadosParte2($idPronac);
-
                 $planilhaprojeto = new PlanilhaProjeto();
                 $planilhaAprovacao = new PlanilhaAprovacao();
-                $planilhaproposta = new PlanilhaProposta();
+//                xd($planilhaAprovacao);
+                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 /*$parecerista = $planilhaprojeto->somarPlanilhaProjeto($idPronac);
                 $this->view->valorparecerista = $parecerista['soma'];
 
@@ -3052,7 +3050,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                 $this->view->valorparecerista = $parecerista['soma'];
 
-                $tbEnquadramento    = new Enquadramento();
+                $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                 $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                 if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){
@@ -3095,7 +3093,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $arrWhereSomaPlanilha['idPronac = ?']=$idPronac;
                 if($this->bln_readequacao == "false"){
 //                    if(!empty($idprojeto)){
-                        $planilhaproposta = new PlanilhaProposta();
+                        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                         $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                         $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
 //                    }
@@ -3180,7 +3178,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $arrWhereSomaPlanilha['idPronac = ?']=$idPronac;
                 if($this->bln_readequacao == "false"){
 //                    if(!empty($idprojeto)){
-                        $planilhaproposta = new PlanilhaProposta();
+                        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                         $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                         $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
 //                    }
@@ -3289,7 +3287,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             //INICIAL
             if($tipoAnalise == "inicial")
             {
-                $ppr = new PlanilhaProposta();
+                $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $pp = new PlanilhaProjeto();
                 $pr = new Projetos();
                 $PlanilhaDAO = new PlanilhaProjeto();
@@ -3347,7 +3345,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     $tblPlanilhaAprovacao = new PlanilhaAprovacao();
                     $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-                    $tblPlanilhaProposta = new PlanilhaProposta();
+                    $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                     $tblPlanilhaProjeto = new PlanilhaProjeto();
                     $tblProjetos = new Projetos();
                     /******** Planilha aprovacao SR (Proponente - solicitada) ****************/
@@ -3358,7 +3356,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao PA (Parecerista) ****************/
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'PA', $arrBuscaPlanilha);
-                    //xd($buscarplanilhaPA);
                     foreach($buscarplanilhaPA as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                             $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['item'] = $resuplanilha->Item;
@@ -3374,7 +3371,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
-                    //xd($buscarplanilhaSR);
                     foreach($buscarplanilhaSR as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -3420,7 +3416,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             //CNIC
             if($tipoAnalise == "cnic")
             {
-                $tblPlanilhaProposta = new PlanilhaProposta();
+                $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $tblPlanilhaProjeto = new PlanilhaProjeto();
                 $tblPlanilhaAprovacao = new PlanilhaAprovacao();
                 $tblProjetos = new Projetos();
@@ -3510,7 +3506,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
-                    //xd($buscarplanilhaSR);
                     foreach($buscarplanilhaSR as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -3532,7 +3527,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao PA (Parecerista) ****************/
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'PA', $arrBuscaPlanilha);
-                    //xd($buscarplanilhaSR);
                     foreach($buscarplanilhaPA as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                             $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -3584,7 +3578,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             //PLENARIA
             /*if($tipoAnalise == "plenaria_OLD")
             {
-                $ppr = new PlanilhaProposta();
+                $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $pp = new PlanilhaProjeto();
                 $pa = new PlanilhaAprovacao();
                 $pr = new Projetos();
@@ -3652,7 +3646,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             //PLENARIA
             if($tipoAnalise == "plenaria")
             {
-                $tblPlanilhaProposta = new PlanilhaProposta();
+                $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $tblPlanilhaProjeto = new PlanilhaProjeto();
                 $tblPlanilhaAprovacao = new PlanilhaAprovacao();
                 $tblProjetos = new Projetos();
@@ -3739,7 +3733,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
-                    //xd($buscarplanilhaSR);
                     foreach($buscarplanilhaSR as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -3761,7 +3754,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao PA (Parecerista) ****************/
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'PA', $arrBuscaPlanilha);
-                    //xd($buscarplanilhaSR);
                     foreach($buscarplanilhaPA as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                             $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -3828,7 +3820,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $arrBusca['siVerificacao =?']= 1; //analise finalizada
             $rsPedidoAlteracao = $tbPedidoAlteracao->buscar($arrBusca);
             $this->view->dados = $rsPedidoAlteracao;
-            //xd($rsPedidoAlteracao);
         }
 
     }
@@ -3849,7 +3840,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $arrBusca['idPedidoAlteracao =?']= $idPedidoAlteracao; //analise finalizada
             $rsPedidoAlteracaoXTipoAlterecao = $tbPedidoAlteracaoXTipoAlterecao->buscaCompleta($arrBusca,array('ta.tpAlteracaoProjeto ASC'));
             $this->view->dados = $rsPedidoAlteracaoXTipoAlterecao;
-            //xd($rsPedidoAlteracaoXTipoAlterecao);
         }
 
     }
@@ -4196,9 +4186,8 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         $Projetos = new Projetos();
                         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
 
-                        $sv = new sVerificaValidadeCertidaoNegativa();
-                        //$resultado = $sv->buscarDados($rs->CgcCpf);
-                        $resultado = $sv->buscarDadosSemSP($rs->CgcCpf);
+                        $sv = new certidaoNegativa();
+                        $resultado = $sv->buscarCertidaoNegativa($rs->CgcCpf);
                         $this->view->certidoes = $resultado;
                     }
 
@@ -4295,7 +4284,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->valorparecerista = $parecerista['soma'];
 
                             if(!empty($idprojeto)){
-                                $planilhaproposta = new PlanilhaProposta();
+                                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                                 $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                                 $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
                                 $this->view->fontesincentivo  = $fonteincentivo['soma'];
@@ -4303,7 +4292,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                             }
 
-                            $tbEnquadramento    = new Enquadramento();
+                            $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                             $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                             if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){
@@ -4323,7 +4312,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->dadosAnaliseInicial = GerenciarPareceresDAO::pareceresTecnicos($idPronac);
 
                             // === INICIAL == ANALISE DE CUSTO
-                            $ppr = new PlanilhaProposta();
+                            $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                             $pp = new PlanilhaProjeto();
                             $pr = new Projetos();
                             $PlanilhaDAO = new PlanilhaProjeto();
@@ -4392,7 +4381,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->valorcomponenteCNIC  = $valor['soma'];
 
                             if(!empty($idprojeto)){
-                                $planilhaproposta = new PlanilhaProposta();
+                                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                                 $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                                 $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
                                 $this->view->fontesincentivoCNIC  = $fonteincentivo['soma'];
@@ -4420,7 +4409,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->dadosAnaliseCnic = $analise->buscarAnaliseProduto('CO', $idPronac, array('PDP.stPrincipal DESC'));
 
                             // === CNIC == ANALISE DE CUSTO
-                            $ppr = new PlanilhaProposta();
+                            $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                             $pp = new PlanilhaProjeto();
                             $pa = new PlanilhaAprovacao();
                             $pr = new Projetos();
@@ -4502,7 +4491,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->valorcomponentePlenaria  = $valor['soma'];
 
                             if(!empty($idprojeto)){
-                                $planilhaproposta = new PlanilhaProposta();
+                                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                                 $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                                 $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
                                 $this->view->fontesincentivoPlenaria  = $fonteincentivo['soma'];
@@ -4530,7 +4519,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->dadosAnalisePlenaria = $analise->buscarAnaliseProduto('SE', $idPronac, array('PDP.stPrincipal DESC'));
 
                             // === PLENARIA == ANALISE DE CUSTO
-                            $ppr = new PlanilhaProposta();
+                            $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                             $pp = new PlanilhaProjeto();
                             $pa = new PlanilhaAprovacao();
                             $pr = new Projetos();
@@ -5117,7 +5106,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->valorparecerista = $parecerista['soma'];
 
                             if(!empty($idprojeto)){
-                                $planilhaproposta = new PlanilhaProposta();
+                                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                                 $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                                 $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
                                 $this->view->fontesincentivo  = $fonteincentivo['soma'];
@@ -5125,7 +5114,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                 $this->view->valorproposta    = $fonteincentivo['soma'] + $outrasfontes['soma'];
                             }
 
-                            $tbEnquadramento    = new Enquadramento();
+                            $tbEnquadramento    = new Admissibilidade_Model_Enquadramento();
                             $verificaEnquadramento = $tbEnquadramento->buscarDados($idPronac, null, false);
 
                             if(is_object($verificaEnquadramento) && count($verificaEnquadramento) > 0 ){
@@ -5145,7 +5134,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->dadosAnaliseInicial = GerenciarPareceresDAO::pareceresTecnicos($idPronac);
 
                             // === INICIAL == ANALISE DE CUSTO
-                            $ppr = new PlanilhaProposta();
+                            $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                             $pp = new PlanilhaProjeto();
                             $pr = new Projetos();
                             $PlanilhaDAO = new PlanilhaProjeto();
@@ -5214,7 +5203,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->valorcomponenteCNIC  = $valor['soma'];
 
                             if(!empty($idprojeto)){
-                                $planilhaproposta = new PlanilhaProposta();
+                                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                                 $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                                 $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
                                 $this->view->fontesincentivoCNIC  = $fonteincentivo['soma'];
@@ -5242,7 +5231,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->dadosAnaliseCnic = $analise->buscarAnaliseProduto('CO', $idPronac, array('PDP.stPrincipal DESC'));
 
                             // === CNIC == ANALISE DE CUSTO
-                            $ppr = new PlanilhaProposta();
+                            $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                             $pp = new PlanilhaProjeto();
                             $pa = new PlanilhaAprovacao();
                             $pr = new Projetos();
@@ -5324,7 +5313,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->valorcomponentePlenaria  = $valor['soma'];
 
                             if(!empty($idprojeto)){
-                                $planilhaproposta = new PlanilhaProposta();
+                                $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                                 $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
                                 $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
                                 $this->view->fontesincentivoPlenaria  = $fonteincentivo['soma'];
@@ -5352,7 +5341,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->dadosAnalisePlenaria = $analise->buscarAnaliseProduto('SE', $idPronac, array('PDP.stPrincipal DESC'));
 
                             // === PLENARIA == ANALISE DE CUSTO
-                            $ppr = new PlanilhaProposta();
+                            $ppr = new Proposta_Model_DbTable_TbPlanilhaProposta();
                             $pp = new PlanilhaProjeto();
                             $pa = new PlanilhaAprovacao();
                             $pr = new Projetos();

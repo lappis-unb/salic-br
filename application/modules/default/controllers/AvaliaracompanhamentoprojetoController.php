@@ -167,8 +167,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $this->view->filtro         = $filtro;
         $this->view->tipoFiltro     = $tipoFiltro;
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
         $this->view->Usuarios = $usuarios;
     }
     
@@ -289,8 +290,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             }
             $html .= '</tr>';
 
-            $pa = new paUsuariosDoPerfil();
-            $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//            $pa = new paUsuariosDoPerfil();
+            $vw = new vwUsuariosOrgaosGrupos();
+            $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
             
             $i=1;
             foreach ($busca as $dp){
@@ -328,7 +330,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Analisar_Comprovacao_do_Objeto.xls;");
+            header("Content-Disposition: inline; filename=Analisar_Comprovacao_do_Objeto.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -336,8 +338,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $this->view->filtro = $filtro;
             $this->view->tipoFiltro = $tipoFiltro;
             
-            $pa = new paUsuariosDoPerfil();
-            $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//            $pa = new paUsuariosDoPerfil();
+            $vw = new vwUsuariosOrgaosGrupos();
+            $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
             $this->view->Usuarios = $usuarios;
         }
     }

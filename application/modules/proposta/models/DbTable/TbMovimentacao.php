@@ -11,13 +11,19 @@
  * @since 21/09/2016
  *
  * @link http://salic.cultura.gov.br
+ *
+  idMovimentacao
+  idProjeto
+  Movimentacao
+  DtMovimentacao
+  stEstado,Usuario
  */
 class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "sac";
     protected $_schema = 'sac';
     protected $_name = "tbmovimentacao";
-    protected $_primary = "idmovimentacao";
+    protected $_primary = "idMovimentacao";
 
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
@@ -62,6 +68,29 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         $slct->where('idprojeto = ? ', $idPreProjeto);
         $slct->where('stestado = ? ', 0);
         $slct->order(array("dtmovimentacao DESC"));
+        $arrResult = $this->fetchRow($slct);
+        return ($arrResult) ? $arrResult->toArray() : array();
+    }
+
+    public function buscarStatusPropostaNome($idPreProjeto)
+    {
+        $slct = $this->select();
+        $slct->setIntegrityCheck(false);
+        $slct->from(
+            array('mov' => $this->_name),
+            $this->_getCols(),
+            $this->_schema);
+
+        $slct->joinInner(
+            array('ver' => 'verificacao'),
+            'mov.Movimentacao = ver.idVerificacao',
+            array('Descricao as MovimentacaoNome'),
+            $this->_schema
+        );
+        $slct->where('mov.idprojeto = ? ', $idPreProjeto);
+        $slct->where('mov.stestado = ? ', 0);
+        $slct->order(array("mov.dtmovimentacao DESC"));
+
         $arrResult = $this->fetchRow($slct);
         return ($arrResult) ? $arrResult->toArray() : array();
     }
@@ -133,5 +162,16 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         //$slct->where('usu.usu_codigo <> ? ', $idusuario);
 //xd($slct->assemble());
         return $this->fetchAll($slct);
+    }
+
+    public function alterarConformidadeProposta($idPreProjeto, $idUsuario, $idVerificacao) {
+        $arrayInclusao = array(
+            'idProjeto' => $idPreProjeto,
+            'Movimentacao' => $idVerificacao,
+            'DtMovimentacao' => $this->getExpressionDate(),
+            'stEstado' => 0,
+            'Usuario' => $idUsuario,
+        );
+        $this->inserir($arrayInclusao);
     }
 }

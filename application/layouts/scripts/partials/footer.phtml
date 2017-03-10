@@ -1,0 +1,124 @@
+<?php
+if (getenv('APPLICATION_ENV') != 'production') {
+    $arrConf = array();
+    $arrDb['PDO_MSSQL'] = 'SQL Server';
+    $arrDb['PDO_PGSQL'] = 'Postgre SQL';
+
+    $arrEnv = array();
+    $arrEnv['development'] = 'Desenvolvimento';
+    $arrEnv['testing']     = 'Homologa&ccedil;&atilde;o';
+    $arrEnv['staging']     = 'Treinamento';
+
+    $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/application.ini', APPLICATION_ENV);
+    $strDb = $config->resources->db->adapter;
+    $strEnv = getenv('APPLICATION_ENV');
+} else {
+    $strDb = false;
+    $strEnv = false;
+}
+?>
+
+<div id="container-progress-part" style="display: none;" class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+</div>
+<div id="container-progress" class="progress" style="margin: 0; position: fixed; bottom: 0; display: none;">
+    <div class="indeterminate"></div>
+</div>
+<footer class="page-footer green darken-4">
+    <!--    <div class="container">-->
+    <!--        <div class="row">-->
+    <!--            <div class="col l6 s12">-->
+    <!--                <h5 class="white-text">Company Bio</h5>-->
+    <!--                <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>-->
+    <!---->
+    <!---->
+    <!--            </div>-->
+    <!--            <div class="col l3 s12">-->
+    <!--                <h5 class="white-text">Settings</h5>-->
+    <!--                <ul>-->
+    <!--                    <li><a class="white-text" href="#!">Link 1</a></li>-->
+    <!--                    <li><a class="white-text" href="#!">Link 2</a></li>-->
+    <!--                    <li><a class="white-text" href="#!">Link 3</a></li>-->
+    <!--                    <li><a class="white-text" href="#!">Link 4</a></li>-->
+    <!--                </ul>-->
+    <!--            </div>-->
+    <!--            <div class="col l3 s12">-->
+    <!--                <h5 class="white-text">Connect</h5>-->
+    <!--                <ul>-->
+    <!--                    <li><a class="white-text" href="#!">Link 1</a></li>-->
+    <!--                    <li><a class="white-text" href="#!">Link 2</a></li>-->
+    <!--                    <li><a class="white-text" href="#!">Link 3</a></li>-->
+    <!--                    <li><a class="white-text" href="#!">Link 4</a></li>-->
+    <!--                </ul>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="footer-copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col s4 l4">
+                    <a class="orange-text text-lighten-3 tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o portal do Minist&eacute;rio da Cultura" " target="_blank" href="http://cultura.gov.br">MINIST&Eacute;RIO DA CULTURA</a>
+                </div>
+                <div class="col s4 l4">
+                    <div class="center-align">
+                        <?php if ($strDb): ?>
+                            <?php echo $arrEnv[$strEnv]; ?> | <?php echo $arrDb[$strDb]; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col s4 l4">
+                    <div class="center-align">
+                        <?php echo $this->vcs(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- ========== IN�CIO RODAP� ========== -->
+<!--        <div id="rodape">-->
+<!--            <div><strong>MINIST&Eacute;RIO DA CULTURA</strong><!-- - Atendimento ao Usu&aacute;rio: (61) 2024-2115 - <a href="mailto:suporte.salic@cultura.gov.br?Subject=Suporte%20Salic" title="Enviar e-mail para suporte.salic@cultura.gov.br">suporte.salic@cultura.gov.br</a><br /></div>-->
+<!--        </div>-->
+<!-- ========== FIM RODAP� ========== -->
+
+<!--        <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">-->
+<!--            <ul id="menu-barra-temp" style="list-style:none;">-->
+<!--                <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED"><a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a></li>-->
+<!--                <li><a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->

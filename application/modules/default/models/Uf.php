@@ -7,8 +7,8 @@
  */
 class Uf extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'agentes';
-    protected $_name = 'uf';
+    protected $_primary = "idUF";
+    protected $_name = 'Uf';
     protected $_schema = 'agentes';
 
     public function buscarRegiao() {
@@ -30,7 +30,7 @@ class Uf extends MinC_Db_Table_Abstract {
         $select->from(
                 array('uf'=>$this->_name), array(
             'Regiao'
-                )
+                ), $this->_schema
         );
         $select->joinInner(array('p' => 'Projetos'), 'uf.Sigla = p.UfProjeto', array(), 'SAC.dbo');
 
@@ -48,7 +48,19 @@ class Uf extends MinC_Db_Table_Abstract {
      */
     public function buscar()
     {
-        $sql = 'SELECT idUF AS id, Sigla AS descricao ';
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('uf'=>$this->_name), array(
+            'idUF',
+            'Sigla'
+        ), $this->_schema
+        );
+        $select->order('Sigla ASC');
+
+        return $this->fetchAll($select);
+
+        /*$sql = 'SELECT idUF AS id, Sigla AS descricao ';
         //$sql .= 'FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name);
         $sql .= 'FROM ' . $this->getStaticTableName('agentes', 'uf') . ' ';
         $sql .= ' ORDER BY Sigla';
@@ -59,6 +71,6 @@ class Uf extends MinC_Db_Table_Abstract {
             return $db->fetchAll($sql);
         } catch (Zend_Exception_Db $objException) {
             throw new Exception("Erro ao buscar Estados: " . $objException->getMessage(), 0, $objException);
-        }
+        }*/
     }
 }

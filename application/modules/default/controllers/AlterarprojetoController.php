@@ -1,6 +1,7 @@
 <?php
 
-class AlterarprojetoController extends MinC_Controller_Action_Abstract {
+class AlterarprojetoController extends MinC_Controller_Action_Abstract
+{
 
     private $idusuario = 0;
     private $codGrupo = 0;
@@ -10,7 +11,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
     private $idAgente = null;
 
     /**
-     * Reescreve o m�todo init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
@@ -21,18 +22,18 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         $mapperUF = new Agente_Model_UFMapper();
         $mapperArea = new Agente_Model_AreaMapper();
 
-        $auth = Zend_Auth::getInstance(); // pega a autentica�?o
-        $this->view->title = "Salic - Sistema de Apoio ?s Leis de Incentivo ? Cultura"; // t�tulo da p�gina
-        // 3 => autentica�?o scriptcase e autentica�?o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $this->view->title = "Salic - Sistema de Apoio &aacute;s Leis de Incentivo &agrave; Cultura"; // titulo da pagina
+        // 3 => autentica�?o scriptcase e autenticacao/permiss?o zend (AMBIENTE PROPONENTE E MINC)
         // utilizar quando a Controller ou a Action for acessada via scriptcase e zend
         // define as permiss?es
 
         $this->idusuario = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
 
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
-        $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-        $this->codGrupo = $codGrupo; //  Grupo ativo na sess�o
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessao
+        $codOrgao = $GrupoAtivo->codOrgao; //  orgao ativo na sessao
+        $this->codGrupo = $codGrupo; //  Grupo ativo na sessao
         $this->codOrgao = $codOrgao;
         $this->view->codOrgao = $codOrgao;
         $this->view->codGrupo = $codGrupo;
@@ -85,7 +86,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         $this->view->tiposDocumento = $tbDocumentos->buscar(array(), 'dsTipoDocumento desc');
 
         $pronac = $this->_request->getParam("pronac");
-//        xd($pronac);
 
         if (!empty($pronac)) {
 
@@ -99,9 +99,9 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $tbProjeto = New Projetos();
             $buscaProjeto = $tbProjeto->buscar(array("AnoProjeto = ?" => $ano, "Sequencial = ?" => $sequencial));
 
-            if ( !empty( $buscaProjeto[0] ) ){
+            if (!empty($buscaProjeto[0])) {
                 $CgcCpf = $buscaProjeto[0]->CgcCpf;
-            }else{
+            } else {
                 parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
             }
 
@@ -128,7 +128,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                 $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
                 if (!$dados) {
-                    parent::message("Agente n�o encontrado!", "agentes/buscaragente", "ALERT");
+                    parent::message("Agente n&atilde;o encontrado!", "agentes/buscaragente", "ALERT");
                 }
 
                 $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
@@ -160,18 +160,19 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
 
         $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 2));
         $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
         $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
         $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
 
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-// fecha m�todo init()
+// fecha metodo init()
 
-    public function dirigentesAction() {
+    public function dirigentesAction()
+    {
 
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
@@ -221,13 +222,14 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function incluirdirigenteAction() {
+    public function incluirdirigenteAction()
+    {
 
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
         $idDirigente = $this->_request->getParam("idDirigente");
 
-        if ( !empty($idDirigente) ){
+        if (!empty($idDirigente)) {
             $this->view->idDirigente = "true";
         }
 
@@ -276,17 +278,18 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function salvadirigentegeralAction() {
+    public function salvadirigentegeralAction()
+    {
 
 
         $pronac = $this->_request->getParam("pronac");
 
-        $Usuario = $this->getIdUsuario; // id do usu�rio logado
+        $Usuario = $this->getIdUsuario; // id do usuario logado
         //$idAgenteGeral = $this->_request->getParam("id"); // id da instituicao
         $idAgenteGeral = $this->idAgente; // id da instituicao
-        // =============================================== IN�CIO SALVAR CPF/CNPJ ==================================================
+        // =============================================== INICIO SALVAR CPF/CNPJ ==================================================
 
-        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as m�scaras
+        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as mascaras
         $Tipo = $this->_request->getParam("Tipo");
 
         $arrayAgente = array('CNPJCPF' => $cpf,
@@ -303,10 +306,10 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         $idAgente = $Agente[0]->idAgente;
 
         // ================================================ FIM SALVAR CPF/CNPJ =====================================================
-        // ================================================ IN�CIO SALVAR NOME ======================================================
+        // ================================================ INICIO SALVAR NOME ======================================================
 
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa f�sica e 19 = pessoa jur�dica
+        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
 
         try {
             $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
@@ -315,13 +318,13 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
 
         // ================================================ FIM SALVAR NOME ======================================================
-        // ================================================ INICIO SALVAR VIS�O ======================================================
+        // ================================================ INICIO SALVAR VISAO ======================================================
         $Visao = $this->_request->getParam("visao");
         $grupologado = $this->_request->getParam("grupologado");
 
         /*
-         * Valida��o - Se for componente da comiss�o ele n�o salva a vis�o
-         * Regra o componente da comiss�o n�o pode alterar sua vis�o.
+         * Validacao - Se for componente da comissao ele nao salva a visao
+         * Regra o componente da comissao nao pode alterar sua visao.
          */
 
         if ($grupologado != 118):
@@ -339,19 +342,19 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
-                parent::message("Erro ao salvar a vis�o: " . $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
+                parent::message("Erro ao salvar a vis&atilde;o: " . $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
             }
 
 
-            // ================================================ FIM SALVAR VIS�O ======================================================
-            // ===================== IN�CIO SALVAR TITULA��O (�REA/SEGMENTO DO COMPONENTE DA COMISS�O) ================================
+            // ================================================ FIM SALVAR VISAO ======================================================
+            // ===================== INICIO SALVAR TITULACAO (AREA/SEGMENTO DO COMPONENTE DA COMISSAO) ================================
 
 
             $titular = $this->_request->getParam("titular");
             $areaCultural = $this->_request->getParam("areaCultural");
             $segmentoCultural = $this->_request->getParam("segmentoCultural");
 
-            // s� salva �rea e segmento para a vis�o de Componente da Comiss�o e se os campos titular e areaCultural forem informados
+            // so salva area e segmento para a visao de Componente da Comissao e se os campos titular e areaCultural forem informados
             if ((int) $Visao == 210 && ((int) $titular == 0 || (int) $titular == 1) && !empty($areaCultural)) {
                 $GravarComponente = array(// insert
                     'idAgente' => $idAgente,
@@ -364,11 +367,11 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     'cdArea' => $areaCultural,
                     'cdSegmento' => $segmentoCultural,
                     'stTitular' => $titular
-                        //'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?
+                    //'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?
                 );
 
                 try {
-                    // busca a titula��o do agente (titular/suplente de �rea cultural)
+                    // busca a titulacao do agente (titular/suplente de area cultural)
                     $busca = TitulacaoConselheiroDAO::buscarComponente($idAgente, $Visao);
 
                     if (!$busca) {
@@ -377,14 +380,14 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                         $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
                     }
                 } catch (Exception $e) {
-                    parent::message("Erro ao salvar a �rea e segmento: " . $e->getMessage(), $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
+                    parent::message("Erro ao salvar a &aacute;rea e segmento: " . $e->getMessage(), $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
                 }
             }
 
-        // ============================= FIM SALVAR TITULA��O (�REA/SEGMENTO DO COMPONENTE DA COMISS�O) ===========================
+        // ============================= FIM SALVAR TITULACAO (AREA/SEGMENTO DO COMPONENTE DA COMISSAO) ===========================
 
-        endif; // Fecha o if da regra do componente da comiss�o
-        // =========================================== INICIO SALVAR ENDERE�OS ====================================================
+        endif; // Fecha o if da regra do componente da comissao
+        // =========================================== INICIO SALVAR ENDERECOS ====================================================
 
         $cepEndereco = $this->_request->getParam("cep");
         $tipoEndereco = $this->_request->getParam("tipoEndereco");
@@ -419,12 +422,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
             $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endere�o: " . $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
+            parent::message("Erro ao salvar o endere&ccedil;o: " . $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
         }
-
-
-        // ============================================= FIM SALVAR ENDERE�OS ====================================================
-        // =========================================== INICIO SALVAR TELEFONES ====================================================
 
         $tipoFone = $this->_request->getParam("tipoFone");
         $ufFone = $this->_request->getParam("ufFone");
@@ -479,7 +478,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             // busca o dirigente vinculado ao cnpj/cpf
             $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
-            // caso o agente n�o esteja vinculado, realizar� a vincula��o
+            // caso o agente nao esteja vinculado, realizar a vinculacao
             if (!$dadosDirigente) {
                 // associa o dirigente ao cnpj/cpf
                 $dadosVinculacao = array(
@@ -499,12 +498,9 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         parent::message("Cadastro realizado com sucesso!", "alterarprojeto/dirigentes/pronac/" . $pronac, "CONFIRM");
     }
 
-    // Final da fun��o salvar dirigentes
+    public function desvinculadirigenteAction()
+    {
 
-    public function desvinculadirigenteAction() {
-
-
-        $Usuario = $this->getIdUsuario; // id do usu�rio logado
         $pronac = $this->_request->getParam("pronac");
         $idAgenteGeral = $this->_request->getParam("id");
         $idDirigente = $this->_request->getParam("idDirigente");
@@ -513,20 +509,19 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
             $vincular = new Agente_Model_DbTable_Vinculacao();
 
-            $where = "Idcaptacao = " . $where;
-
             $where = array('idAgente = ' . $idDirigente,
                 'idVinculado = ' . $idAgenteGeral);
 
             $desvincula = $vincular->Desvincular($where);
 
-            parent::message("Exclus�o realizada com sucesso! ", "alterarprojeto/dirigentes/pronac/" . $pronac, "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso! ", "alterarprojeto/dirigentes/pronac/" . $pronac, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "alterarprojeto/visualizadirigente/id/" . $idAgenteGeral . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "ERROR");
         }
     }
 
-    public function visualizadirigenteAction() {
+    public function visualizadirigenteAction()
+    {
 
         $idAgente = $this->_request->getParam("id");
         $pronac = $this->_request->getParam("pronac");
@@ -585,7 +580,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $this->view->dadosD = $dados;
 
             if (!$dados) {
-                parent::message("Agente n�o encontrado!", "alterarprojeto/buscaragentedirigente/pronac/" . $pronac, "ALERT");
+                parent::message("Agente n&atilde;o encontrado!", "alterarprojeto/buscaragentedirigente/pronac/" . $pronac, "ALERT");
             }
 
             $this->view->telefonesD = Agente_Model_ManterAgentesDAO::buscarFones($idDirigente);
@@ -608,12 +603,13 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $tbDirigenteMandato = new tbAgentesxVerificacao();
             $buscarMandato = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idAgente, 'idDirigente = ?' => $idDirigente, 'stMandato = ?' => 0));
             $this->view->mandatos = $buscarMandato;
-            $mandatoAtual = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idAgente,'idDirigente = ?' => $idDirigente, 'stMandato = ?' => 0), array('dtFimMandato DESC'))->current();
+            $mandatoAtual = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idAgente, 'idDirigente = ?' => $idDirigente, 'stMandato = ?' => 0), array('dtFimMandato DESC'))->current();
             $this->view->mandatosAtual = $mandatoAtual;
         }
     }
 
-    public function mandatoAction() {
+    public function mandatoAction()
+    {
 
         if (!empty($_POST)) {
             $idAgente = $this->_request->getParam("id");
@@ -622,21 +618,21 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
             $tbDirigenteMandato = new tbAgentesxVerificacao();
 
-            $idVerificacao      = $this->_request->getParam("idVerificacao");
-            $dsNumeroDocumento  = $this->_request->getParam("dsNumeroDocumento");
-            $idDirigente        = $this->_request->getParam("idDirigente");
-            $dtInicioVigencia   = $this->_request->getParam("dtInicioVigencia");
-            $dtInicioVigencia   = Data::dataAmericana($dtInicioVigencia);
-            $dtTerminoVigencia  = $this->_request->getParam("dtTerminoVigencia");
-            $dtTerminoVigencia  = Data::dataAmericana($dtTerminoVigencia);
-            $stMandato          = 0;
-            $idArquivo          = $this->_request->getParam("idArquivo");
+            $idVerificacao = $this->_request->getParam("idVerificacao");
+            $dsNumeroDocumento = $this->_request->getParam("dsNumeroDocumento");
+            $idDirigente = $this->_request->getParam("idDirigente");
+            $dtInicioVigencia = $this->_request->getParam("dtInicioVigencia");
+            $dtInicioVigencia = Data::dataAmericana($dtInicioVigencia);
+            $dtTerminoVigencia = $this->_request->getParam("dtTerminoVigencia");
+            $dtTerminoVigencia = Data::dataAmericana($dtTerminoVigencia);
+            $stMandato = 0;
+            $idArquivo = $this->_request->getParam("idArquivo");
 
-            //valida��o data do mandato
+            //validacao data do mandato
             $buscarMandato = $tbDirigenteMandato->mandatoRepetido($idAgente, $dtInicioVigencia, $dtTerminoVigencia);
 
             if (count($buscarMandato) > 0) {
-                parent::message("N�o poder� inserir um novo mandato, pois j� existe um mandato em vigor para esse dirigente!mandatos", "alterarprojeto/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "CONFIRM");
+                parent::message("N&atilde;o poder&aacute; inserir um novo mandato, pois j&aacute; existe um mandato em vigor para esse dirigente!mandatos", "alterarprojeto/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "CONFIRM");
             }
 
             if (count($_FILES) > 0) {
@@ -684,7 +680,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     'idEmpresa' => $idAgente,
                     'idDirigente' => $idDirigente
                 );
-//                xd($arrayMandato);
 
                 if ($idArquivo > 0) {
                     $arrayMandato['idArquivo'] = $idArquivo;
@@ -722,7 +717,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
      * @return void
      */
 
-    public function excluirmandatoAction() {
+    public function excluirmandatoAction()
+    {
 
         $tbDirigenteMandato = new tbAgentesxVerificacao();
 
@@ -737,13 +733,14 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $whereMandato['idAgentesxVerificacao = ?'] = $idMandato;
             $tbDirigenteMandato->alterar($arrayMandato, $whereMandato);
 
-            parent::message("Exclus�o realizada com sucesso!", "alterarprojeto/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "CONFIRM");
+            parent::message("Exclus&atildeo realizada com sucesso!", "alterarprojeto/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao excluir o mandato:" . $e->getMessage(), "alterarprojeto/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "ERROR");
         }
     }
 
-    public function cadastraranexo($arquivoNome, $arquivoTemp, $arquivoTipo, $arquivoTamanho) {
+    public function cadastraranexo($arquivoNome, $arquivoTemp, $arquivoTipo, $arquivoTamanho)
+    {
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
             $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens�o
             $arquivoBinario = Upload::setBinario($arquivoTemp); // bin�rio
@@ -761,11 +758,11 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             'stAtivo' => 'A');
         $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
 
-        // pega o id do �ltimo arquivo cadastrado
+        // pega o id do ultimo arquivo cadastrado
         $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
-        $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
+        $idUltimoArquivo = (int)$idUltimoArquivo[0]->id;
 
-        // cadastra o bin�rio do arquivo
+        // cadastra o binario do arquivo
         $dadosBinario = array(
             'idArquivo' => $idUltimoArquivo,
             'biArquivo' => $arquivoBinario);
@@ -774,40 +771,42 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         return $idUltimoArquivo;
     }
 
-    public function buscaragentedirigenteAction() {
+    public function buscaragentedirigenteAction()
+    {
 
-        // caso o formul�rio seja enviado via post
+        // caso o formulario seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // recebe os dados do formul�rio
+            // recebe os dados do formulario
             $post = Zend_Registry::get('post');
-            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a m�scara
+            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a mascara
             $nome = $post->nome;
 
             try {
-                // valida��o dos campos
+                // validacao dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigat�rios n�o informados:<br /><br />� necess�rio informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigat&aacute;rios n&atilde;o informados:<br /><br />&Eacute; necess&aacute;rio informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) { // valida cnpj/cpf
-                    throw new Exception("O CPF/CNPJ informado � inv�lido!");
+                    throw new Exception("O CPF/CNPJ informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) { // valida cpf
-                    throw new Exception("O CPF informado � inv�lido!");
+                    throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) { // valida cnpj
-                    throw new Exception("O CNPJ informado � inv�lido!");
+                    throw new Exception("O CNPJ informado &eacute; inv&aacute;lido!");
                 } else {
-                    // redireciona para a p�gina com a busca dos dados com pagina��o
+                    // redireciona para a pagina com a busca dos dados com paginacao
                     $this->_redirect("agentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
                 } // fecha else
             } // fecha try
             catch (Exception $e) {
                 $this->view->message = $e->getMessage();
                 $this->view->message_type = "ERROR";
-                $this->view->cpf = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a m�scara
+                $this->view->cpf = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a mascara
                 $this->view->nome = $nome;
             }
         } // fecha if
     }
 
-    public function agentecadastradoAction() {
+    public function agentecadastradoAction()
+    {
         //$this->autenticacao();
         $this->_helper->layout->disableLayout(); // desabilita o layout
         $this->_helper->viewRenderer->setNoRender(true);
@@ -834,11 +833,12 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         echo json_encode($novos_valores);
     }
 
-// fecha m�todo buscaragentedirigenteAction()
+// fecha metodo buscaragentedirigenteAction()
 
-    public function vinculadirigenteAction() {
+    public function vinculadirigenteAction()
+    {
 
-        $Usuario = $this->getIdUsuario; // id do usu�rio logado
+        $Usuario = $this->getIdUsuario; // id do usuario logado
         $pronac = $this->_request->getParam("pronac");
         $idAgenteGeral = $this->_request->getParam("id");
         $idDirigente = $this->_request->getParam("idDirigente");
@@ -847,7 +847,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             // busca o dirigente vinculado ao cnpj/cpf
             $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
 
-            // caso o agente n�o esteja vinculado, realizar� a vincula��o
+            // caso o agente nao esteja vinculado, realizara a vinculacao
             if (count($dadosDirigente) == 0) {
                 // associa o dirigente ao cnpj/cpf
                 $dadosVinculacao = array(
@@ -857,9 +857,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     'Usuario' => $Usuario
                 );
 
-
                 $vincular = Agente_Model_ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
-                //xd($vincular);
             }
 
             parent::message("Cadastrado realizado com sucesso! ", "alterarprojeto/dirigentes/id/" . $idAgenteGeral . "/pronac/" . $pronac, "CONFIRM");
@@ -868,16 +866,19 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
         $this->_redirect("/alterarprojeto/consultarprojeto");
     }
 
-    public function consultarprojetoAction() {
+    public function consultarprojetoAction()
+    {
         $pronac = $this->_request->getParam("pronac");
         $this->view->pronac = $pronac;
     }
 
-    public function alterarprojetoAction() {
+    public function alterarprojetoAction()
+    {
 
         $post = Zend_Registry::get('post');
 
@@ -920,13 +921,13 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ALERT");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto!", "Alterarprojeto/consultarprojeto", "ALERT");
         }
     }
 
-    public function situacaoAction() {
+    public function situacaoAction()
+    {
         $get = Zend_Registry::get('get');
         //$pronac = addslashes($get->pronac);
         $pronac = $this->_request->getParam("pronac");
@@ -968,7 +969,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function imprimirsituacaoAction() {
+    public function imprimirsituacaoAction()
+    {
         $get = Zend_Registry::get('get');
         //verficia se o pronac esta criptografado
         $pronac = $get->pronac;
@@ -1009,7 +1011,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();// Desabilita o Zend Layout
     }
 
-    public function sinteseAction() {
+    public function sinteseAction()
+    {
         $get = Zend_Registry::get('get');
         $pronac = $this->_request->getParam("pronac");
         //verficia se o pronac esta criptografado
@@ -1048,7 +1051,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function areasegmentoAction() {
+    public function areasegmentoAction()
+    {
         $mapperArea = new Agente_Model_AreaMapper();
 
         $get = Zend_Registry::get('get');
@@ -1071,8 +1075,9 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $this->view->parecer = $listaparecer[0];
             $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
 
-            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-            $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($listaparecer[0]->Area);
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
+            $objSegmentocultural = new Segmentocultural();
+            $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($listaparecer[0]->Area);
 
             $documentoDao = new tbHistoricoAlteracaoProjeto();
             $where = array(
@@ -1090,7 +1095,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function orgaoAction() {
+    public function orgaoAction()
+    {
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
         $pronac = Seguranca::dencrypt($pronac);
@@ -1129,7 +1135,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function habilitarprojetoAction() {
+    public function habilitarprojetoAction()
+    {
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
         $pronac = Seguranca::dencrypt($pronac);
@@ -1175,7 +1182,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function enquadramentoAction() {
+    public function enquadramentoAction()
+    {
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
         $pronac = Seguranca::dencrypt($pronac);
@@ -1204,7 +1212,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $this->view->documentos = $documentos;
 
             if ($listaparecer[0]->Mecanismo != 1) {
-                parent::message("N&tilde;o � permitido enquadramento para este PRONAC", "Alterarprojeto/consultarprojeto", "ERROR");
+                parent::message("N&tilde;o &eacute; permitido enquadramento para este PRONAC", "Alterarprojeto/consultarprojeto", "ERROR");
             }
         } else {
             parent::message("Dados obrigat&oacute;rios n&atilde;o informados", "Alterarprojeto/consultarprojeto", "ERROR");
@@ -1214,7 +1222,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function periododeexecucaoAction() {
+    public function periododeexecucaoAction()
+    {
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
         $pronac = Seguranca::dencrypt($pronac);
@@ -1250,7 +1259,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function anexosAction() {
+    public function anexosAction()
+    {
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
         $pronac = Seguranca::dencrypt($pronac);
@@ -1281,7 +1291,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function proponenteAction() {
+    public function proponenteAction()
+    {
 
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
@@ -1301,7 +1312,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         if (count($validapronac) > 0) {
             $listaparecer = $projeto->buscarTodosDadosProjeto($validapronac[0]->IdPRONAC);
             $agente = new Agente_Model_DbTable_Agentes();
-            $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $listaparecer[0]->CgcCpf));
+            $agente = $agente->buscarAgenteENome(array("CNPJCPF = ?" => $listaparecer[0]->CgcCpf));
             if (count($agente) > 0) {
                 $this->view->agente = $agente[0]['Descricao'];
             } else {
@@ -1325,7 +1336,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function buscaragenteAction() {
+    public function buscaragenteAction()
+    {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
         $get = Zend_Registry::get('get');
@@ -1334,7 +1346,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
         if (strlen($cpf) == 11 or strlen($cpf) == 14) {
             $agente = new Agente_Model_DbTable_Agentes();
-            $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $cpf));
+            $agente = $agente->buscarAgenteENome(array("CNPJCPF = ?" => $cpf));
 
             $inabilitados = new Inabilitado();
 
@@ -1360,9 +1372,10 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function salvaalterarprojetoAction() {
+    public function salvaalterarprojetoAction()
+    {
         $post = Zend_Registry::get('post');
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
 
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
@@ -1394,15 +1407,14 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             parent::message("Dados obrigat&oacute;rios n&atilde;o informados", "alterarprojeto/consultarprojeto", "ERROR");
         }
 
-        // Verificando se o Projeto atual est� desabilitado e se pode ser habilitado!
+        // Verificando se o Projeto atual esta desabilitado e se pode ser habilitado!
         if ((!empty($post->habilitado)) && ($post->habilitado == 'S')) {
             $tbl = new Inabilitado();
 
             $whereI['AnoProjeto = ?'] = $dadosProjeto->AnoProjeto;
             $whereI['Sequencial = ?'] = $dadosProjeto->Sequencial;
             $retorno = $tbl->Localizar($whereI);
-            $msg = 'O proponente n�o pode ser habilitado � presente data. Para habilit�-lo, favor anexar documento.';
-
+            $msg = 'O proponente não pode ser habilitado à presente data. Para habilitá-lo, favor anexar documento.';
             if ((count($retorno) > 0) && ($retorno[0]->idTipoInabilitado > 0) && ($retorno[0]->idTipoInabilitado <= 7) && ($retorno[0]->Anos < 1)) {
                 parent::message($msg, "alterarprojeto/" . $post->pagina . "?pronac=" . Seguranca::encrypt($dadosProjeto->pronac) . "&menu=" . $post->menu, "ALERT");
             } else if ((count($retorno) > 0) && ($retorno[0]->idTipoInabilitado >= 4) && ($retorno[0]->idTipoInabilitado <= 5) && ($retorno[0]->Anos < 2)) {
@@ -1443,7 +1455,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $dados['dsProvidenciaTomada'] = $post->NomeProjeto;
         }
         if (!empty($post->sinteseProjeto)) {
-            $dados['dsProvidenciaTomada'] = "Sintese do Projeto -> ".$post->sinteseProjeto;
+            $dados['dsProvidenciaTomada'] = "Sintese do Projeto -> " . $post->sinteseProjeto;
         }
         if (!empty($post->Situacao)) {
             $dados['cdSituacao'] = $dadosProjeto->Situacao;
@@ -1540,9 +1552,9 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
                 $Agentes = new Agente_Model_DbTable_Agentes();
                 $tbDocumentosAgentes = new Proposta_Model_DbTable_TbDocumentosAgentes();
-                $ag = $Agentes->buscar(array('CNPJCPF = ?'=> Mascara::delMaskCPFCNPJ($post->CGCCPF)))->current();
-                $docs = $tbDocumentosAgentes->buscarDocumentos(array('a.idAgente = ?'=>$ag->idAgente));
-                if(count($docs) == 0){
+                $ag = $Agentes->buscar(array('CNPJCPF = ?' => Mascara::delMaskCPFCNPJ($post->CGCCPF)))->current();
+                $docs = $tbDocumentosAgentes->buscarDocumentos(array('a.idAgente = ?' => $ag->idAgente));
+                if (count($docs) == 0) {
                     parent::message("Os documentos do novo proponente n�o est�o cadastrados no sistema. Favor anexar os documentos!", "alterarprojeto/" . $post->pagina . "?pronac=" . Seguranca::encrypt($dadosProjeto->pronac) . "&menu=" . $post->menu, "ALERT");
                 }
             }
@@ -1634,7 +1646,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     'DtEnquadramento' => date("Y-m-d H:i:s"),
                     'Logon' => $this->idusuario
                 );
-                $tblEnquadramento = new Enquadramento();
+                $tblEnquadramento = new Admissibilidade_Model_Enquadramento();
                 $idEnquadramento = $tblEnquadramento->alterarEnquadramento($dados);
             }
 
@@ -1656,7 +1668,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function incluirarquivoAction() {
+    public function incluirarquivoAction()
+    {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $post = Zend_Registry::get('post');
         $idArquivo = $this->anexararquivo();
@@ -1711,15 +1724,14 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $this->view->erro = "erro " . $e;
         }
 
-
-        //xd("<script>windows.parent.inserir();alert('".$dadosarquivo."')</script>");
     }
 
-    public function alterarplanodistribuicaoAction() {
+    public function alterarplanodistribuicaoAction()
+    {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-	$post = Zend_Registry::get('post');
+        $post = Zend_Registry::get('post');
 
-	$pronac = $post->pronac;
+        $pronac = $post->pronac;
         //verficia se o pronac esta criptografado
         if (strlen($pronac) > 12) {
             $pronac = Seguranca::dencrypt($pronac);
@@ -1740,46 +1752,47 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         );
         $tblProjeto = new Projetos();
         $validapronac = $tblProjeto->VerificaPronac($arrBusca);
-	$idPronac = $validapronac[0]->IdPRONAC;
+        $idPronac = $validapronac[0]->IdPRONAC;
 
         if (count($validapronac) == 0) {
             parent::message("Dados obrigat&oacute;rios n&atilde;o informados", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
         }
 
-	$dados = Null;
-	$dados = array(//Monta dados para o historico
-		       'idPlanoDistribuicao'       => $post->idPlanoDistribuicao,
-		       'idProjeto'                 => $post->idProjeto,
-		       'Area'                      => $post->areaCultural,
-		       'Segmento'                  => $post->segmentoCultural,
-		       'QtdePatrocinador'          => $post->qtdPatrocinador,
-		       'QtdeProponente'            => $post->qtdDivulgacao,
-		       'QtdeOutros'                => $post->qtdBeneficiarios,
-		       'QtdeVendaNormal'           => $post->qtdenormal,
-		       'QtdeVendaPromocional'      => $post->qtdepromocional,
-		       'QtdeProduzida'             => $post->qtdenormal+$post->qtdePromocional + $post->qtdePatrocinador + $post->qtdBeneficiarios + $post->qtdDivulgacao,
-		       'PrecoUnitarioNormal'       => str_replace(",", ".", str_replace('/\./g', "", $post->preconormal)),
-		       'PrecoUnitarioPromocional'  => str_replace(",", ".", str_replace('/\./g', "", $post->precopromocional)),
-		       );
-	$tblPlanoDistribuicao = new PlanoDistribuicao();
-	$planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
+        $dados = Null;
+        $dados = array(//Monta dados para o historico
+            'idPlanoDistribuicao' => $post->idPlanoDistribuicao,
+            'idProjeto' => $post->idProjeto,
+            'Area' => $post->areaCultural,
+            'Segmento' => $post->segmentoCultural,
+            'QtdePatrocinador' => $post->qtdPatrocinador,
+            'QtdeProponente' => $post->qtdDivulgacao,
+            'QtdeOutros' => $post->qtdBeneficiarios,
+            'QtdeVendaNormal' => $post->qtdenormal,
+            'QtdeVendaPromocional' => $post->qtdepromocional,
+            'QtdeProduzida' => $post->qtdenormal + $post->qtdePromocional + $post->qtdePatrocinador + $post->qtdBeneficiarios + $post->qtdDivulgacao,
+            'PrecoUnitarioNormal' => str_replace(",", ".", str_replace('/\./g', "", $post->preconormal)),
+            'PrecoUnitarioPromocional' => str_replace(",", ".", str_replace('/\./g', "", $post->precopromocional)),
+        );
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
 
-	$retorno = $tblPlanoDistribuicao->salvar($dados);
-	$pronac = Seguranca::encrypt($pronac);
-	if($retorno > 0){
-	  $this->view->pronac = $pronac;
-	  parent::message("Opera��o realizada com sucesso!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "CONFIRM");
-	} else {
-	  $this->view->pronac = $pronac;
-	  parent::message("N�o foi poss�vel realizar a opera��o!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
-	}
+        $retorno = $tblPlanoDistribuicao->salvar($dados);
+        $pronac = Seguranca::encrypt($pronac);
+        if ($retorno > 0) {
+            $this->view->pronac = $pronac;
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "CONFIRM");
+        } else {
+            $this->view->pronac = $pronac;
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
+        }
     }
 
 
     /*
      *
      */
-    public function planodistribuicaoAction() {
+    public function planodistribuicaoAction()
+    {
         $pronac = $this->_request->getParam("pronac");
 
         if (strlen($pronac) > 12) {
@@ -1814,24 +1827,24 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                 "nmProjeto is not null" => '?'
             );
 
-	    $buscarIdPronac = $Projetos->buscarIdPronac($pronac);
-	    $idPronac = $buscarIdPronac->IdPRONAC;
+            $buscarIdPronac = $Projetos->buscarIdPronac($pronac);
+            $idPronac = $buscarIdPronac->IdPRONAC;
 
-	    if(!empty($idPronac)){
-	      $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
-	      $this->view->planoDistribuicao = $planoDistribuicao;
-	    }
+            if (!empty($idPronac)) {
+                $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
+                $this->view->planoDistribuicao = $planoDistribuicao;
+            }
 
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ALERT");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto!", "Alterarprojeto/consultarprojeto", "ALERT");
         }
     }
 
-    private function validasituacao($dadosProjeto) {
+    private function validasituacao($dadosProjeto)
+    {
 
         $post = Zend_Registry::get('post');
         $tbl = new Captacao();
@@ -1876,7 +1889,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    private function salvahabilitado($dadosProjeto) {
+    private function salvahabilitado($dadosProjeto)
+    {
         $post = Zend_Registry::get('post');
         $dados = array(
             'CgcCpf' => $dadosProjeto->CgcCpf,
@@ -1892,7 +1906,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         $retorno = $tbl->BuscarInabilitado($dadosProjeto->CgcCpf, $dadosProjeto->AnoProjeto, $dadosProjeto->Sequencial);
 
         if (count($retorno) > 0) {
-            $retorno2 = $tbl->alterar($dados, array('AnoProjeto = ?'=>$dadosProjeto->AnoProjeto, 'Sequencial = ?'=>$dadosProjeto->Sequencial));
+            $retorno2 = $tbl->alterar($dados, array('AnoProjeto = ?' => $dadosProjeto->AnoProjeto, 'Sequencial = ?' => $dadosProjeto->Sequencial));
         } else {
             $retorno2 = $tbl->inserir($dados);
         }
@@ -1903,18 +1917,19 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    private function anexararquivo() {
-        // pega as informa��es do arquivo
+    private function anexararquivo()
+    {
+        // pega as informacoes do arquivo
         $idUltimoArquivo = 'null';
         $post = Zend_Registry::get('post');
         if (is_file($_FILES['arquivo']['tmp_name'])) {
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporario
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
             if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens�o
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin�rio
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // binario
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -1930,11 +1945,11 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                 'stAtivo' => 'I');
             $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
 
-            // pega o id do �ltimo arquivo cadastrado
+            // pega o id do ultimo arquivo cadastrado
             $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
-            $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
+            $idUltimoArquivo = (int)$idUltimoArquivo[0]->id;
 
-            // cadastra o bin�rio do arquivo
+            // cadastra o binario do arquivo
             $dadosBinario = array(
                 'idArquivo' => $idUltimoArquivo,
                 'biArquivo' => $arquivoBinario);

@@ -64,12 +64,10 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         parent::init();
     }
 
-// fecha m�todo init()
 
     public function indexAction() {
         $this->_redirect("relatorio/proposta");
     }
-
 
 
     public function relatorioprojetopareceristaAction() {
@@ -507,7 +505,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Resultado_Relatorio_Propostas.xls;");
+            header("Content-Disposition: inline; filename=Resultado_Relatorio_Propostas.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -961,7 +959,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Resultado_Relatorio_Projetos.xls;");
+            header("Content-Disposition: inline; filename=Resultado_Relatorio_Projetos.ods;");
             echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
@@ -1000,7 +998,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function resultadoExtratorAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 
@@ -1074,7 +1071,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function resultadoDesembolsoAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 
@@ -1146,7 +1142,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function resultadoPcRegiaoUfCidadeAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 
@@ -1219,18 +1214,18 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $codPerfil  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
         $codOrgao  = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
 
-        $tbl = new paUsuariosDoPerfil();
-        $rs = $tbl->buscarUsuarios($codPerfil, $codOrgao);
+//        $tbl = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $rs = $vw->buscarUsuarios($codPerfil, $codOrgao);
         $this->view->tecnicos = $rs;
     }
 
     public function resultadoVisualTecnicoAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 
         $arrDados = array();
-        $this->_forward("listar-propostas-analise-visual-tecnico", "admissibilidade", null, array("view"=>"/relatorio/listarpropostasanalisevisualtecnico.phtml"));
+        $this->_forward("listar-propostas-analise-visual-tecnico", "admissibilidade", "admissibilidade", array("view"=>"/relatorio/listarpropostasanalisevisualtecnico.phtml"));
     }
 
     public function prepararXlsAction(){

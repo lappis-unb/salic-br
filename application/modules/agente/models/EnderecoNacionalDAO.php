@@ -24,7 +24,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     public static function buscarEnderecoNacional($idAgente)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $e = [
+        $e = array(
             'idEndereco',
             'idAgente',
             'TipoEndereco',
@@ -41,7 +41,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
             'Status',
             'Divulgar' ,
             'Usuario'
-        ];
+        );
 
         $sql = $db->select()
             ->from('EnderecoNacional', $e, 'AGENTES.dbo')
@@ -114,7 +114,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         try
         {
             $db = Zend_Db_Table::getDefaultAdapter();
-            return $resultado = $db->delete('AGENTES.dbo.EnderecoNacional', ['idEndereco = ? '=> $idEndereco]);
+            return $resultado = $db->delete('AGENTES.dbo.EnderecoNacional', array('idEndereco = ? '=> $idEndereco));
 
         }
         catch (Zend_Exception $e)
@@ -138,7 +138,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         {
             $db = Zend_Db_Table::getDefaultAdapter();
 
-            return $resultado = $db->update('AGENTES.dbo.EnderecoNacional', ['Status = ?' => 0],['idAgente = ?' => $idAgente]);
+            return $resultado = $db->update('AGENTES.dbo.EnderecoNacional', array('Status = ?' => 0), array('idAgente = ?' => $idAgente));
         }
         catch (Zend_Exception $e)
         {
@@ -164,7 +164,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
                     WHERE idAgente = ".$idAgente."
                     AND idEndereco = (select MIN(idEndereco) as valor from AGENTES.dbo.EnderecoNacional  where idAgente = ".$idAgente.")";
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)

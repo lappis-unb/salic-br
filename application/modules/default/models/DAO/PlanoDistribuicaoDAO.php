@@ -171,8 +171,6 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
         if ($alterar) {
             return true;
         }
-        else {
-            return false;
-        }
-    } // fecha m�todo alterar()
-} // fecha class
+        return false;
+    }
+}

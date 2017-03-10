@@ -10,7 +10,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
      * Zend Table
      */
     protected $_banco = 'bdcorporativo';
-    protected $_schema = 'scSAC';
+    protected $_schema = 'bdcorporativo.scSAC';
     protected $_name = 'tbComprovantePagamento';
 
     function __construct(
@@ -51,21 +51,21 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
     }
 
     /**
-     * 
+     *
      */
     private function validarCadastrar()
     {
         if (!$this->getFornecedor()) {
-            throw new Exception('Fornecedor inválido.');
+            throw new Exception('Fornecedor invï¿½lido.');
         }
         if (!$this->getItem()) {
-            throw new Exception('Item inválido.');
+            throw new Exception('Item invï¿½lido.');
         }
         if (!$this->getTipoDocumento()) {
-            throw new Exception('Comprovante inválido.');
+            throw new Exception('Comprovante invï¿½lido.');
         }
         if (!$this->getNif()) {
-            throw new Exception('NIF inválido.');
+            throw new Exception('NIF invï¿½lido.');
         }
 
         # validar periodo
@@ -74,13 +74,13 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         $projeto = $projetoModel->find($itemModel->find($this->item)->current()->IdPRONAC)->current();
         $dtInicioExecucao = new DateTime($projeto->DtInicioExecucao);
         $dtFimExecucao = new DateTime($projeto->DtFimExecucao);
-        
+
         if (!$this->dataEmissao || ($this->dataEmissao < $dtInicioExecucao) || ($this->dataEmissao > $dtFimExecucao)) {
-            throw new Exception('A data do documento deve estar dentro do período de execução do projeto.');
+            throw new Exception('A data do documento deve estar dentro do perï¿½odo de execuï¿½ï¿½o do projeto.');
         }
-        
+
         if (!$this->comprovanteValor) {
-            throw new Exception('Valor do item inválido.');
+            throw new Exception('Valor do item invï¿½lido.');
         }
     }
 
@@ -122,11 +122,11 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
                 Zend_Db_Table::getDefaultAdapter()->rollBack();
             } catch (PDOException $ex) {
                 /*
-                 * Ao fazer o rollback o driver PDO do linux lança um
-                 * PDOException, aparentemente sem motivo, já que o mesmo
+                 * Ao fazer o rollback o driver PDO do linux lanï¿½a um
+                 * PDOException, aparentemente sem motivo, jï¿½ que o mesmo
                  * consegue por vias de fato realizar o rollback. Neste ponto
-                 * faço esse tratamento vazio para que não suba a exceção para
-                 * o Controller e que este por sua vez mostre ao usuário na tela
+                 * faï¿½o esse tratamento vazio para que nï¿½o suba a exceï¿½ï¿½o para
+                 * o Controller e que este por sua vez mostre ao usuï¿½rio na tela
                  */
             }
         }
@@ -144,7 +144,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         } else {
             $arquivoId = $this->arquivo;
         }
-        
+
         $this->update(
         	array(
                 'idFornecedorExterior' => $this->fornecedor,
@@ -161,7 +161,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         	),
         	array('idComprovantePagamento = ?' => $this->comprovantePagamento)
         );
-        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovantePagamento);
+        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovanteValor, $this->comprovantePagamento);
     }
-    
+
 }

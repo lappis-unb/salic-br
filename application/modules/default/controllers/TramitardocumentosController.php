@@ -195,7 +195,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                           (" . $idpronac . ", 0, null, " . $tipo_doc . ", " . $idusuario . ", GETDATE(), '" . $arquivoNome . "', " . $arquivoTamanho . ", null, null, " . $this->codOrgao . ", '" . $cod_ect . "', " . $arquivoBinario . ")
                            ";
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
@@ -306,7 +306,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $data = date('Y/m/d H:i:s');
         $idDestino = $this->_request->getParam("Destino");
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -419,7 +419,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
         $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-        
+
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /*         * *************************************************************** */
@@ -428,7 +428,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $idLote = $get->idLote;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -490,7 +490,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $idLote = $get->idLote;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -541,7 +541,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $idDocumento = $get->idDocumento;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -596,7 +596,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $idLote = $get->idLote;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -652,7 +652,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $idDocumento = $get->idDocumento;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -688,10 +688,17 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         }
     }
 
-    public function recebereanexarAction() {
-
+    /**
+     * RecebereanexarAction
+     *
+     * @access public
+     * @return void
+     * @todo remover chamadas diretas da model desse metodo
+     */
+    public function recebereanexarAction()
+    {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance();
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
@@ -707,7 +714,8 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
         $idLote = $get->idLote;
 
-        $db = Zend_Registry :: get('db');
+        //$db = Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -787,7 +795,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
         if ($_POST) {
             $idDocumento = $_POST['idDoc'];
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
             $acao = '2,3';
             try {
@@ -956,7 +964,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
 //		$this->view->lotes = TramitarDocumentosDAO::buscarLotes($this->codOrgao, 2);
 //		$docs = TramitarDocumentosDAO::buscarDocumentosEnviados($this->idUsuarioLogado,$lote->idLote, 1);
-//		
+//
         function formatadata($data) {
             if ($data) {
                 $dia = substr($data, 0, 2);
@@ -998,7 +1006,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
 
                 $this->view->dados = $paginator;
-                $this->view->qtdDocumentos = count($busca); // quantidade			   			
+                $this->view->qtdDocumentos = count($busca); // quantidade
             }
         } catch (Zend_Exception $ex) {
             parent::message($ex->getMessage(), "tramitardocumentos/guias", "ERROR");
@@ -1186,7 +1194,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $idDoc = $get->iddoc;
         $action = $get->action;
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -1300,4 +1308,4 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
 }
 
-// fecha class
+

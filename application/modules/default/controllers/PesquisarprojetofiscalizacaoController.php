@@ -160,8 +160,9 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios(134, $this->codOrgao);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios(134, $this->codOrgao);
         $this->view->Usuarios = $usuarios;
     }
 
@@ -608,8 +609,9 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
         if ($this->view->infoProjeto[0]->idFiscalizacao)
             $this->view->arquivos = $ArquivoFiscalizacaoDao->buscarArquivo(array('arqfis.idFiscalizacao = ?' => $this->view->infoProjeto[0]->idFiscalizacao));
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios(134, $this->view->orgaoAtivo);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios(134, $this->view->orgaoAtivo);
         $this->view->Usuarios = $usuarios;
     }
 
@@ -687,7 +689,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 
         $auth = Zend_Auth::getInstance();
         $tpDemandante = 0;
-        if ($auth->getIdentity()->usu_orgao == 160)
+        if ($auth->getIdentity()->usu_orgao == Orgaos::ORGAO_SUPERIOR_SAV)
             $tpDemandante = 1; //'SAV';
         if ($post->oficializar) {
             $dados['stFiscalizacaoProjeto'] = 1;
@@ -804,7 +806,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 
     public function enviaremailAction() {
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $post = Zend_Registry::get('post');

@@ -1,38 +1,22 @@
 <?php
 $linkProjetosProdutos = $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'projetosprodutos'));
 
-/* INICIO DA GUIA DE LINKS */
-$controller = 'Analisarprojetoparecer';
 $links = array();
 $links[] = array('Projetos/Produtos para An�lise' => array());
-montaGuiaLinks($controller, $links);
-/* FIM DA GUIA DE LINKS */
+gerarBreadCrumb($links);
 ?>
 
 
-<!-- ========== INA� CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="total">
 
-    <!-- ========== FIM BREADCRUMB (LINKS TOPO)========== -->
     <br clear="all">
-    <div id="divDestao">
-
-    </div>
-
-    <!-- ==========INA� CIO TA� TULO========== -->
-
+    <div id="divDestao"></div>
     <div id="titulo">
         <div>
-            Projetos/Produtos para An�lise
+            Projetos/Produtos para An&aacute;lise
             <?php echo montaBotaoVoltar($controller, $links); ?>
         </div>
-
     </div>
-
-    <!-- ========== FIM TA� TULO ========== -->
-
-    <!-- ========== INA� CIO CONTEAšDO ==========-->
-
 
     <div id="conteudo">
         <table class="tabela">
@@ -40,8 +24,8 @@ montaGuiaLinks($controller, $links);
                 <td>
                     <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> A diligenciar</div>
                     <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Diligenciado</div>
-                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Dilig�ncia n�o respondida</div>
-                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Dilig�ncia respondida</div>
+                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Dilig&ecirc;ncia n&atilde;o respondida</div>
+                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Dilig&ecirc;ncia respondida</div>
                 </td>
             </tr>
         </table>
@@ -56,10 +40,10 @@ montaGuiaLinks($controller, $links);
 				<th width="100">Tipo de produto</th>
 				<th width="120">Data de Recebimento</th>
 				<th width="90">Tempo Restante</th>
-				<th width="70">Dilig�ncia</th>
-				<th width="120">Tempo da Dilig�ncia</th>
+				<th width="70">Dilig&ecirc;ncia</th>
+				<th width="120">Tempo da Dilig&ecirc;ncia</th>
 				<th width="70">Historico</th>
-				<th width="70">Conclus�o</th>
+				<th width="70">Conclus&atilde;o</th>
 			</tr>
 			<?php 
 				$contador = 1; 
@@ -87,20 +71,27 @@ montaGuiaLinks($controller, $links);
 			        	$Titlediligenciado = "Diligencia respondida";
 			        	break;
 			     }
-				
-				
 			?>
 			<tr>
 				<td><?php echo $contador; ?></td>
 				<td align="center">
-					<a target="_blank" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'),'',true); ?>?idPronac=<?php echo $d->IdPRONAC?>"><?php if($d->PRONAC != $rp){echo $d->PRONAC;}else{echo '';} ?></a>
+					<a target="_blank" href="<?php echo $this->url(array(
+						'controller' => 'consultardadosprojeto',
+						'action' => 'index'
+					),'',true); ?>?idPronac=<?php echo $d->IdPRONAC?>"><?php if($d->PRONAC != $rp){echo $d->PRONAC;}else{echo '';} ?></a>
 				</td>
 				<td><?php if($d->PRONAC != $rp){echo $d->NomeProjeto;}else{echo '';} ?></td>
-				<td><a href="<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'produto')); ?>?nrRelatorio=<?php echo '1'; ?>&idPronac=<?php echo $d->IdPRONAC; ?>&idProduto=<?php echo $d->idProduto; ?>&stPrincipal=<?php echo $d->stPrincipal; ?>" > <?php echo $d->dsProduto; ?></a></td>
+				<td><a href="<?php echo $this->url(array(
+					'controller' => 'Analisarprojetoparecer',
+					'action' => 'produto'
+					)); ?>?nrRelatorio=<?php echo '1'; ?>&idPronac=<?php echo $d->IdPRONAC; ?>&idProduto=<?php echo $d->idProduto; ?>&stPrincipal=<?php echo $d->stPrincipal; ?>" > <?php echo $d->dsProduto; ?></a></td>
 				<td align="center"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $d->stPrincipal == 0 ? '':'ok_16x16.png'; ?>" width="20px" /></td>
 				<td align="center"><?php echo $d->DtEnvio; ?></td>
 				<td align="center"><?php echo $d->tempoFimParecer; ?></td>
-				<td align="center"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $diligenciado; ?>" title="<?php echo $Titlediligenciado; ?>" width="30px" onclick="redirecionar('<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>')" /></td>
+				<td align="center"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $diligenciado; ?>" title="<?php echo $Titlediligenciado; ?>" width="30px" onclick="redirecionar('<?php echo $this->url(array(
+					'controller' => 'diligenciar',
+					'action' => 'listardiligenciaanalista'
+					))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>')" /></td>
 				<td align="center"><?php echo $d->tempoFimDiligencia; ?></td>
 				<td align="center">
 					<img src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" />
@@ -116,10 +107,8 @@ montaGuiaLinks($controller, $links);
 			?>
 		</table>
 		
-			<!-- ========== PAGINA��O ========== -->
-			<?php if($this->qtdRegistro > 5){ echo "<p>" . $this->buscar . "</p>"; } ?>
-			<!-- ========== FIM PAGINA��O ========== -->
-		
+		<?php if($this->qtdRegistro > 5){ echo "<p>" . $this->buscar . "</p>"; } ?>
+
 		<?php else: ?>
 		<table class="tabela" style="width: 95%;">
 			<tr>
@@ -127,16 +116,7 @@ montaGuiaLinks($controller, $links);
 			</tr>
 		</table>	
 		<?php endif; ?>    
-		   
-        
-        
     </div>
-    <!-- ========== FIM CONTEAšDO ========== -->
-
-    <!-- ========== INA� CIO RODAPA‰ DO CONTEAšDO ========== // -->
-
     <div id="rodapeConteudo_com_menu" ><span></span></div>
-    <!-- ========== FIM RODAP� DO CONTE�DO ========== -->
     <br clear="all" />
 </div>
-

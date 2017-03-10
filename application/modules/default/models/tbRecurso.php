@@ -1,22 +1,13 @@
 <?php
 /**
- * DAO Recurso
- * @author emanuel.sampaio - Politec
  * @since 18/02/2011
- * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbRecurso extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbRecurso";
-
-
 
 	/**
 	 * M�todo para buscar o(s) recursos(s)
@@ -117,7 +108,6 @@ class tbRecurso extends MinC_Db_Table_Abstract
 	} // fecha m�todo buscarDados()
 
 
-
 	/**
 	 * M�todo para cadastrar
 	 * @access public
@@ -127,8 +117,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha m�todo cadastrarDados()
-
+	}
 
 
 	/**
@@ -143,7 +132,6 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$where = "idRecurso = " . $where;
 		return $this->update($dados, $where);
 	} // fecha m�todo alterarDados()
-
 
 
 	/**
@@ -169,7 +157,6 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
 		return $this->delete($where);
 	} // fecha m�todo excluirDados()
-
 
 
 	/**
@@ -199,7 +186,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 				,"CONVERT(CHAR(10),Pr.DtInicioExecucao,103) AS DataInicio"
 				,"CONVERT(CHAR(10),Pr.DtFimExecucao,103) AS DataFim"
                 ,"NomeProponente" => new Zend_Db_Expr("
-					CASE 
+					CASE
 						WHEN N.Descricao IS NULL
 							THEN I.Nome
 						ELSE N.Descricao
@@ -292,8 +279,8 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarSolicitacaoRecurso()
-    
-    
+
+
 	/**
 	 * M�todo para buscar os projetos com solicita��o de recurso
 	 * @access public
@@ -310,18 +297,18 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			,array(
                 new Zend_Db_Expr("
                     CASE
-                        WHEN tp.tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                        WHEN tp.tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento' 
-                        WHEN tp.tpSolicitacao = 'OR' THEN 'Or�amento' 
+                        WHEN tp.tpSolicitacao = 'EN' THEN 'Enquadramento'
+                        WHEN tp.tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                        WHEN tp.tpSolicitacao = 'OR' THEN 'Or�amento'
                         WHEN tp.tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                     END AS tpSolicitacao,
                     tp.stAnalise,
-                    (pr.AnoProjeto+pr.Sequencial) AS pronac, 
-                    pr.NomeProjeto, 
-                    pr.IdPRONAC, 
-                    ar.Descricao AS area, 
+                    (pr.AnoProjeto+pr.Sequencial) AS pronac,
+                    pr.NomeProjeto,
+                    pr.IdPRONAC,
+                    ar.Descricao AS area,
                     seg.Descricao AS segmento,
-                    par.ParecerFavoravel, 
+                    par.ParecerFavoravel,
                     nm.Descricao AS nomeComponente,
                     tp.idRecurso,
                     tp.tpSolicitacao as tipoSolicitacao")
@@ -360,11 +347,10 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$select->where("par.TipoParecer = ?", 7);
 		$select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE tp.idNrReuniao = cv.idNrReuniao and tp.IdPRONAC = cv.IdPRONAC)", '');
 		$select->order(array(8,2));
-        
+
         //xd($select->assemble());
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarSolicitacaoRecurso()
-
 
 
 	/**
@@ -436,13 +422,13 @@ class tbRecurso extends MinC_Db_Table_Abstract
 					LEFT JOIN SAC.dbo.tbPlanilhaUnidade UNI ON (PAP.idUnidade = UNI.idUnidade)
 					LEFT JOIN SAC.dbo.Produto PD ON (PAP.idProduto = PD.Codigo)
 					INNER JOIN SAC.dbo.Verificacao TI ON TI.idverificacao = PAP.nrFonteRecurso AND TI.idTipo = 5
-					INNER JOIN SAC.dbo.tbAnaliseAprovacao ap ON ap.idpronac = pro.idpronac AND tpAnalise = '$tpPlanilha' 
+					INNER JOIN SAC.dbo.tbAnaliseAprovacao ap ON ap.idpronac = pro.idpronac AND tpAnalise = '$tpPlanilha'
 					LEFT JOIN SAC.dbo.tbRecursoXPlanilhaAprovacao RPA ON RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
 					LEFT JOIN SAC.dbo.tbRecurso Rec ON Rec.idRecurso = RPA.idRecurso
 
 				WHERE ap.stAvaliacao = 1
 					AND PAP.tpPlanilha = '$tpPlanilha'
-					AND PAP.idPlanilhaItem NOT IN (206) 
+					AND PAP.idPlanilhaItem NOT IN (206)
 					AND (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario) <> (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario)"; // vl solicitado != vl sugerido parecerista
 
 		if (!empty($idPronac))
@@ -455,38 +441,43 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
-	} // fecha m�todo buscarPlanilhaDeCustos()
+	}
 
 
     public function buscarRecursoProjeto($idPronac) {
         $sql = "SELECT  idRecurso, IdPRONAC, dtSolicitacaoRecurso, CAST(dsSolicitacaoRecurso AS TEXT) AS dsSolicitacaoRecurso,
                         idAgenteSolicitante, dtAvaliacao, dsAvaliacao, stAtendimento,
                         tpSolicitacao, idAgenteAvaliador
-                FROM SAC.dbo.tbRecurso WHERE IdPRONAC = $idPronac";
+                FROM SAC.dbo.tbRecurso WHERE IdPRONAC = {$idPronac}";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha m�todo buscarPlanilhaDeCustos()
-    
+    }
+
     public function painelRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
-                new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso"),
+                new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso,a.tpSolicitacao as tipo"),
                 new Zend_Db_Expr("CASE
-                                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento' 
+                                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
+                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                                     WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
                                  END AS tpSolicitacao,
                                  CASE
-                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera��o'
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso, a.siRecurso
                 "),
+                new Zend_Db_Expr("c.idUnidade"),
+                new Zend_Db_Expr("CASE 
+                                    WHEN c.idUnidade IN(262,272,166,171,179) THEN 'SECRETARIA'
+                                    ELSE d.Sigla + '- '+ ISNULL(e.Descricao,'Aguardando distribui��o')
+                                 END as Vinculada, b.Situacao"),
             )
         );
 
@@ -495,7 +486,25 @@ class tbRecurso extends MinC_Db_Table_Abstract
             array(''), 'SAC.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        $select->joinLeft(
+            array('c' => 'tbDistribuirProjeto'),
+            'b.IdPRONAC = c.IdPRONAC',
+            array(''), 'SAC.dbo'
+        );
+
+        $select->joinLeft(
+            array('d' => 'Orgaos'),
+            'c.idUnidade = d.Codigo',
+            array(''), 'SAC.dbo'
+        );
+
+        $select->joinLeft(
+            array('e' => 'Nomes'),
+            'c.idAvaliador = e.idAgente',
+            array(''), 'AGENTES.dbo'
+        );
+
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -519,31 +528,33 @@ class tbRecurso extends MinC_Db_Table_Abstract
 //        xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
-    public function buscarDadosRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
+
+    public function buscarDadosRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             new Zend_Db_Expr("
-                a.idRecurso, 
-                a.IdPRONAC, 
-                a.dtSolicitacaoRecurso, 
-                CAST(a.dsSolicitacaoRecurso AS TEXT) AS dsSolicitacaoRecurso, 
-                a.idAgenteSolicitante, 
+                a.idRecurso,
+                a.IdPRONAC,
+                a.dtSolicitacaoRecurso,
+                CAST(a.dsSolicitacaoRecurso AS TEXT) AS dsSolicitacaoRecurso,
+                a.idAgenteSolicitante,
                 a.dtAvaliacao,
                 CAST(a.dsAvaliacao AS TEXT) AS dsAvaliacao,
                 a.tpRecurso,
                 CASE
-                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera��o'
+                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera&ccedil;&atilde;o'
                     WHEN tpRecurso = 2 THEN 'Recurso'
                 END AS tpRecursoDesc,
                 a.tpSolicitacao,
                 CASE
-                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento' 
+                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
+                    WHEN tpSolicitacao = 'OR' THEN 'Orçamento'
                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&ccedil;amento'
+                    WHEN tpSolicitacao = 'ER' THEN 'Recurso Enquadramento'
                 END AS tpSolicitacaoDesc,
                 a.idAgenteAvaliador,
                 a.stAtendimento,
@@ -552,7 +563,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 a.siFaseProjeto
             ")
         );
-        
+
         $select->joinInner(
             array('b' => 'tbTipoEncaminhamento'), 'a.siRecurso = b.idTipoEncaminhamento',
             array('dsEncaminhamento AS siRecursoDesc'), 'SAC.dbo'
@@ -582,17 +593,17 @@ class tbRecurso extends MinC_Db_Table_Abstract
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function recursosNaoSubmetidos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso, a.tpSolicitacao"),
                 new Zend_Db_Expr("CASE
-                                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento' 
+                                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
+                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                                     WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
                                  END AS descTpSolicitacao,
@@ -646,7 +657,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 //        xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function atualizarRecursosProximaPlenaria($idNrReuniao) {
         $sql = "UPDATE SAC.dbo.tbRecurso
                      SET idNrReuniao = idNrReuniao + 1
@@ -659,7 +670,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $resultado = $db->fetchAll($sql);
         return $resultado;
     } // fecha m�todo buscarPlanilhaDeCustos()
-    
+
     public function atualizarStatusRecursosNaoSubmetidos($idNrReuniao) {
         $sql = "UPDATE SAC.dbo.tbRecurso
                     SET stEstado = 1
@@ -674,5 +685,122 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $resultado = $db->fetchAll($sql);
         return $resultado;
     } // fecha m�todo buscarPlanilhaDeCustos()
-    
-} // fecha class
+
+    public function painelRecursosEnquadramento($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('a' => $this->_name),
+            array(
+                new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso,a.tpSolicitacao as tipo"),
+                new Zend_Db_Expr("CASE
+                                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
+                                    WHEN tpSolicitacao = 'OR' THEN 'Or&Ccedil;amento'
+                                    WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
+                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&Ccedil;amento'
+                                    WHEN tpSolicitacao = 'ER' THEN 'Enquadramento Recurso'
+                                 END AS tpSolicitacao,
+                                 CASE
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera&ccedil;&atilde;o'
+                                    WHEN tpRecurso = 2 THEN 'Recurso'
+                                 END AS tpRecurso, a.siRecurso
+                "),
+            )
+        );
+
+        $select->joinInner(
+            array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
+            array(''), 'SAC.dbo'
+        );
+
+       //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        if ($qtdeTotal) {
+            return $this->fetchAll($select)->count();
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+
+        return $this->fetchAll($select);
+    }
+
+    public function existeRecursoIndeferido($idPronac)
+    {
+        $select = $this->select();
+        $select->from(array('a' => $this->_name), '*', $this->_schema);
+
+        $select->where('a.idPronac = ?', $idPronac);
+        $select->where('a.stEstado = ?', 1);
+        $select->where('a.siRecurso = ?', 15);
+        $select->where('a.siFaseProjeto = ?', 1);
+        $select->limit(1);
+
+        return $this->fetchRow($select);
+    }
+
+    public function buscarAvaliacaoRecurso($idPronac) {
+
+        $objQuery = $this->select();
+
+        $objQuery->from(
+            array('tbRecurso' => $this->_name),
+            'dsAvaliacao',
+            $this->_schema
+        );
+
+        $objQuery->where('IdPRONAC = ?', $idPronac)
+            ->where('stEstado= ?', '0');
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchOne($objQuery);
+    }
+
+    public function finalizarRecurso($idPronac) {
+
+        $arrayAlteracaoRecurso = array(
+            'siRecurso' => 15,
+            'stEstado' => 1
+        );
+
+        $arrayBuscaRecurso = array(
+            'IdPRONAC = ?' => $idPronac,
+            'stEstado = 0'
+        );
+        $this->update($arrayAlteracaoRecurso, $arrayBuscaRecurso);
+    }
+
+    /**
+     * Retorna o projetos com desistencia recursal apenas fase 1
+     *
+     * @param mixed $idPronac
+     * @access public
+     * @return void
+     */
+    public function desistenciaRecursal($area)
+    {
+        $select = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(array('r' => $this->_name), '*', $this->_schema)
+            ->join(array('p' => 'projetos'),'r.IdPRONAC = p.IdPRONAC', '*', $this->_schema)
+            ->where('stEstado = 0')
+            ->where("tpSolicitacao = 'DR'")
+            ->where('siFaseProjeto = 1')
+        ;
+
+        if ($area == '2'){
+            $select->where("area = 2");
+        } else {
+            $select->where("area <> 2");
+        }
+
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $this->_db->fetchAll($select);
+    }
+}

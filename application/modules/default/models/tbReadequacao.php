@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DAO tbReadequacao
  * @author jeffersonassilva@gmail.com - XTI
@@ -9,33 +10,26 @@
  * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-
 class tbReadequacao extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
-	protected $_name   = "tbReadequacao";
+    protected $_schema = "sac";
+    protected $_name = "tbReadequacao";
+    protected $_primary = "idReadequacao";
 
 
-	/**
-	 * M�todo para alterar
-	 * @access public
-	 * @param array $dados
-	 * @param integer $where
-	 * @return integer (quantidade de registros alterados)
-	 */
-	public function alterarDados($dados, $where)
-	{
-		$where = "idRecurso = " . $where;
-		return $this->update($dados, $where);
-	} // fecha m�todo alterarDados()
-
-
-    /*
-     * Criada em 03/14
-     * @author: Jefferson Alessandro
+    /**
+     * @param array $dados
+     * @param integer $where
+     * @return integer (quantidade de registros alterados)
      */
-    public function readequacoesCadastradasProponente($where=array(), $order=array()) {
+    public function alterarDados($dados, $where)
+    {
+        $where = "idRecurso = " . $where;
+        return $this->update($dados, $where);
+    }
+
+    public function readequacoesCadastradasProponente($where = array(), $order = array())
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -58,41 +52,32 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array(''), 'BDCORPORATIVO.scCorp'
         );
 
-       //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
 
-        //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
     /**
-     * painelReadequacoes
-     *
      * @param bool $where
      * @param bool $order
      * @param mixed $tamanho
      * @param mixed $inicio
      * @param bool $qtdeTotal
      * @param bool $filtro
-     * @since Alterada em 06/03/14
-     * @author Jefferson Alessandro
-     * @author wouerner <wouerner@gmail.com>
-     * @access public
      * @return void
      */
-    public function painelReadequacoes($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro = null)
+    public function painelReadequacoes($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false, $filtro = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $select= array();
-        $result= array();
-        $total= array();
+        $select = array();
+        $result = array();
+        $total = array();
 
-        switch($filtro){
+        switch ($filtro) {
             case '':
                 $select = $this->selectView('vwPainelCoordenadorReadequacaoAguardandoAnalise');
                 break;
@@ -104,15 +89,12 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                 break;
         }
 
-        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
 
-        //adicionando linha order ao select
         $select->order($order);
 
-        //paginacao
         if ($tamanho > -1) {
             $tmpInicio = 0;
             if ($inicio > -1) {
@@ -129,21 +111,81 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         return $result;
     }
+    
+    
+    
+    /**
+     * painelReadequacoesCoordenadorAcompanhamento
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $qtdeTotal
+     * @param bool $filtro
+     * @access public
+     * @return void
+     */
+    public function painelReadequacoesCoordenadorAcompanhamento($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $select= array();
+        $result= array();
+        $total= array();
+        
+        switch($filtro){
+            case 'aguardando_distribuicao':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoAguardandoAnalise');
+                break;
+            case 'em_analise':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoEmAnalise');
+                break;
+            case 'analisados':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoAnalisados');
+                break;
+            case 'aguardando_publicacao':
+                $select = $this->selectView('vwPainelReadequacaoAguardandoPublicacao');
+                break;
+        }
+        
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+
+        //paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+        
+        $stmt = $db->query($select);
+
+        while ($o = $stmt->fetchObject()) {
+            $result[] = $o;
+        }
+        
+        return $result;
+    }
 
     /**
-     * selectView - Retorna um select completo da tabela.
-     *
      * @param string $vw
-     * @access private
      * @return Zend_Db_Select
      */
-    private function selectView($vw){
+    private function selectView($vw)
+    {
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $select = $db->select()->from(
             array('a' => $vw),
             array('*'),
-            $this->_banco.'.'.$this->_schema
+            $this->_schema
         );
 
         return $select;
@@ -156,13 +198,14 @@ class tbReadequacao extends MinC_Db_Table_Abstract
      * @access public
      * @return int
      */
-    public function count($table, $where){
+    public function count($table, $where)
+    {
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $select = $db->select()->from(
             array('a' => $table),
             array('*'),
-            $this->_banco.'.'.$this->_schema
+            $this->_schema
         );
 
         //adiciona quantos filtros foram enviados
@@ -177,7 +220,8 @@ class tbReadequacao extends MinC_Db_Table_Abstract
     /*
      * Busca os dados da readequacao com os campos de VARCHAR(MAX) convertidos e completos.
      */
-    public function buscarReadequacao($idReadequacao) {
+    public function buscarReadequacao($idReadequacao)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -212,7 +256,8 @@ class tbReadequacao extends MinC_Db_Table_Abstract
      * Alterada em 06/03/14
      * @author: Jefferson Alessandro
      */
-    public function buscarDadosReadequacoes($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
+    public function buscarDadosReadequacoes($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -254,7 +299,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array(''), 'BDCORPORATIVO.scCorp'
         );
 
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -262,11 +307,12 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-            //xd($select->assemble());
+        //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
-    public function visualizarReadequacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
+    public function visualizarReadequacao($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -312,7 +358,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 //            array(''), 'SAC.dbo'
 //        );
 
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -329,7 +375,8 @@ class tbReadequacao extends MinC_Db_Table_Abstract
      * @author: Jefferson Alessandro
      * Fun��o usada para detalhar a readequa��o para an�lise do componente da comiss�o.
      */
-    public function buscarDadosReadequacoesCnic($where=array(), $order=array()) {
+    public function buscarDadosReadequacoesCnic($where = array(), $order = array())
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -376,7 +423,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array(''), 'SAC.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -392,8 +439,9 @@ class tbReadequacao extends MinC_Db_Table_Abstract
      * Criada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
      */
-    public function painelReadequacoesAnalise($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $idPerfil=0) {
-        if($idPerfil == 121){
+    public function painelReadequacoesAnalise($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false, $idPerfil = 0)
+    {
+        if ($idPerfil == 121) {
             $nome = 'd.usu_nome AS Tecnico';
         } else {
             $nome = 'd.Descricao AS Tecnico';
@@ -416,7 +464,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array('c.CgcCpf'), 'SAC.dbo'
         );
 
-        if($idPerfil == 121){
+        if ($idPerfil == 121) {
             $select->joinLeft(
                 array('d' => 'Usuarios'), 'a.idAvaliador = d.usu_codigo',
                 array(''), 'TABELAS.dbo'
@@ -433,7 +481,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array(''), 'SAC.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -463,7 +511,8 @@ class tbReadequacao extends MinC_Db_Table_Abstract
      * @author: Jefferson Alessandro
      * Fun��o acessada pelo componente da comiss�o.
      */
-    public function painelReadequacoesComponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
+    public function painelReadequacoesComponente($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -485,7 +534,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array(''), 'SAC.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -511,7 +560,8 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    public function readequacoesNaoSubmetidas($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
+    public function readequacoesNaoSubmetidas($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -542,7 +592,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array(''), 'SAC.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -568,7 +618,8 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    public function buscarDadosParecerReadequacao($where=array(), $order=array()) {
+    public function buscarDadosParecerReadequacao($where = array(), $order = array())
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -590,7 +641,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array(''), 'TABELAS.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -602,7 +653,8 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    public function buscarReadequacoesEnviadosPlenaria($idNrReuniao) {
+    public function buscarReadequacoesEnviadosPlenaria($idNrReuniao)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -649,26 +701,28 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         $select->where('a.idNrReuniao = ? ', $idNrReuniao);
         $select->where('a.siEncaminhamento = ? ', 8);
         $select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE a.idNrReuniao = cv.idNrReuniao AND a.idPronac = cv.IdPRONAC AND a.idTipoReadequacao = cv.tpTipoReadequacao)", '');
-		$select->order(array(6,1));
+        $select->order(array(6, 1));
 
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
-    public function atualizarReadequacoesProximaPlenaria($idNrReuniao) {
+    public function atualizarReadequacoesProximaPlenaria($idNrReuniao)
+    {
         $sql = "UPDATE SAC.dbo.tbReadequacao
                      SET idNrReuniao = idNrReuniao + 1
                 FROM  SAC.dbo.tbReadequacao a
                 INNER JOIN SAC.dbo.Projetos c on (a.idPronac = c.IdPRONAC)
                 WHERE siEncaminhamento = 8
                       AND NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
     } // fecha m�todo buscarPlanilhaDeCustos()
 
-    public function atualizarStatusReadequacoesNaoSubmetidos($idNrReuniao) {
+    public function atualizarStatusReadequacoesNaoSubmetidos($idNrReuniao)
+    {
         $sql = "UPDATE SAC.dbo.tbReadequacao
                     SET stEstado = 1
                FROM  SAC.dbo.tbReadequacao a
@@ -677,10 +731,126 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                     (a.siEncaminhamento = 9 and a.idNrReuniao = $idNrReuniao ) or
                     (a.siEncaminhamento = 8 and a.stEstado = 0
                     AND EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.idPronac = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
     } // fecha m�todo buscarPlanilhaDeCustos()
 
-} // fecha class
+    /**
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $qtdeTotal
+     * @param bool $filtro
+     * @return void
+     */
+    public function painelReadequacoesCoordenadorParecer($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false, $filtro = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $select = array();
+        $result = array();
+
+        switch ($filtro) {
+            case 'aguardando_distribuicao':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise');
+                break;
+            case 'em_analise':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerEmAnalise');
+                break;
+            case 'analisados':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerAnalisados');
+                break;
+        }
+
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        $select->order($order);
+
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+
+        $stmt = $db->query($select);
+
+        while ($o = $stmt->fetchObject()) {
+            $result[] = $o;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $qtdeTotal
+     * @param bool $filtro
+     * @return void
+     */
+    public function painelReadequacoesTecnicoAcompanhamento($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
+    {
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $select = $this->selectView('vwPainelReadequacaoTecnico');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            foreach ($where as $coluna => $valor) {
+                $select->where($coluna, $valor);
+            }
+
+            $select->order($order);
+
+            if ($tamanho > -1) {
+                $tmpInicio = 0;
+                if ($inicio > -1) {
+                    $tmpInicio = $inicio;
+                }
+                $select->limit($tamanho, $tmpInicio);
+            }
+
+            return $db->fetchAll($select);
+        } catch (Exception $objException) {
+            xd($objException->getMessage());
+            throw new Exception($objException->getMessage(), 0, $objException);
+        }
+    }
+    /**
+     * painelReadequacoesCoordenadorAcompanhamentoCount
+     *
+     * @param bool $where
+     * @param bool $filtro
+     * @access public
+     * @return int
+     */
+    public function painelReadequacoesCoordenadorAcompanhamentoCount($where=array(), $filtro = null)
+    {
+        $tbReadequacao = New tbReadequacao();
+        $total = null;
+        
+        switch($filtro){
+            case 'aguardando_distribuicao':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAguardandoAnalise' , $where);
+                break;
+            case 'em_analise':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoEmAnalise' , $where);
+                break;
+            case 'analisados':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
+                break;
+            case 'aguardando_publicacao':
+                $total = $tbReadequacao->count('vwPainelReadequacaoAguardandoPublicacao', $where);
+                break;
+        }
+
+        return $total;
+    }    
+}

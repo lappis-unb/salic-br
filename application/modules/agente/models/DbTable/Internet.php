@@ -1,48 +1,23 @@
 <?php
 
-/**
- * Class Agente_Model_DbTable_Internet
- *
- * @name Agente_Model_DbTable_Internet
- * @package Modules/Agente
- * @subpackage Models/DbTable
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 {
     /**
-     * _schema
-     *
      * @var string
-     * @access protected
      */
     protected $_schema = 'agentes';
 
     /**
-     * _name
-     *
      * @var bool
-     * @access protected
      */
     protected $_name = 'internet';
 
     /**
-     * _primary
-     *
      * @var bool
-     * @access protected
      */
-    protected $_primary = 'idinternet';
+    protected $_primary = 'idInternet';
 
     /**
-     * M�todo para envio de e-mail
-     * @access public
      * @param string $email
      * @param string $assunto
      * @param string $texto
@@ -135,19 +110,19 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         $tblAgentes = new Agente_Model_DbTable_Agentes();
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        $i = [
+        $i = array(
             'i.idinternet',
             'i.idagente',
             'i.tipointernet',
             'i.descricao',
             'i.status',
             'i.divulgar'
-        ];
+        );
 
         $sql = $db->select()
-            ->from(['i' => 'internet'], $i, $this->_schema)
-            ->join(['v' => 'verificacao'], 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $this->_schema)
-            ->join(['t' => 'tipo'], 't.idtipo = v.idtipo', null, $this->_schema);
+            ->from(array('i' => 'internet'), $i, $this->_schema)
+            ->join(array('v' => 'verificacao'), 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $this->_schema)
+            ->join(array('t' => 'tipo'), 't.idtipo = v.idtipo', null, $this->_schema);
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
 
@@ -193,4 +168,22 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         return $this->delete($where);
     }
 
+    public function obterEmailProponentesPorPreProjeto($idPreProjeto) {
+
+        $select = $this->select();
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array("Internet"),
+            array('Internet.Descricao'),
+            $this->_schema
+        );
+
+        $select->joinInner(array("PreProjeto" => "PreProjeto"), 'PreProjeto.idAgente = Internet.idAgente', array(), $this->getSchema("sac"));
+        $select->where("PreProjeto.idPreProjeto = ?", array($idPreProjeto));
+        $select->where("Internet.Status = ?", array(1));
+
+        return $this->_db->fetchAll($select);
+    }
 }

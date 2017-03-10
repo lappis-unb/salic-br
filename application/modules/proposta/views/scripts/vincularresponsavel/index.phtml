@@ -151,30 +151,25 @@
 <!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li><a href="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Solicitar v&iacute;nculo</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Solicitar v&iacute;nculo <span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
 </div>
-<!-- ========== FIM Tï¿½TULO ========== -->
-
-<div id="conteudo">
-
-    <fieldset><legend> Informações do Proponente </legend>
+<div id="conteudo" >
+    <fieldset>
+        <legend> Informa&ccedil;&otilde;es do Proponente </legend>
         <form id="formBuscar" name="formBuscar" method="post" action="#">
-            <table class="tabela" style="margin:1% auto; width:40%;" summary="Esta tabela contém o campo para pesquisa de Agentes Vinculados a Instituição. Para que a pesquisa tenha efeito é necessário que seja feita através do CNPJ ou o nome da Instituição que consta nos campos abaixo">
+            <table class="tabela" style="margin:1% auto; " summary="Esta tabela contém o campo para pesquisa de Agentes Vinculados a Instituição. Para que a pesquisa tenha efeito é necessário que seja feita através do CNPJ ou o nome da Instituição que consta nos campos abaixo">
                 <tr>
                     <th colspan="2" class="w800">PESQUISAR PROPONENTE</th>
                 </tr>
                 <tr>
-                    <td class="center destacar bold" tabindex="2" nowrap><label for="cnpj" >CPF / CNPJ:</label></td>
+                    <td class="destacar bold" tabindex="2" nowrap><label for="cnpj" >CPF / CNPJ:</label></td>
                     <td>
                         <input class="input_simples" type="text" name="cnpjcpf" id="cnpjcpf" maxlength="18"  tabindex="3" onkeyup="mascaraCnpjCpf(this);"class="input w500" />
                     </td>
@@ -198,5 +193,3 @@
         <div id="mostraproponente"></div>
     </fieldset>
 </div>
-<div id="rodapeConteudo"><span></span></div>
-<br clear="all" />

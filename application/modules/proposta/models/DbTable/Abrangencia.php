@@ -13,6 +13,17 @@
  *
  * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
+
+    idAbrangencia
+    idProjeto
+    idPais
+    idUF
+    idMunicipioIBGE
+    Usuario
+    stAbrangencia
+    siAbrangencia
+    dsJustificativa
+    dtInicioRealizacaodtFimRealizacao
  */
 class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 {
@@ -38,7 +49,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idabrangencia';
+    protected $_primary = 'idAbrangencia';
 
 
     /**
@@ -53,10 +64,10 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
     {
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(['a' => 'abrangencia'], $this->_getCols(), $this->_schema)
-            ->join(['p' => 'pais'], 'a.idpais = p.idpais and a.stabrangencia = 1', 'p.descricao as pais', $this->getSchema('agentes'))
-            ->joinLeft(['u' => 'uf'], '(a.iduf = u.iduf)', 'u.descricao as uf', $this->getSchema('agentes'))
-            ->joinLeft(['m' => 'municipios'], '(a.idmunicipioibge = m.idmunicipioibge)', 'm.descricao as cidade', $this->getSchema('agentes'));
+            ->from(array('a' => 'abrangencia'), $this->_getCols(), $this->_schema)
+            ->join(array('p' => 'pais'), 'a.idpais = p.idpais and a.stabrangencia = 1', 'p.descricao as pais', $this->getSchema('agentes'))
+            ->joinLeft(array('u' => 'uf'), '(a.iduf = u.iduf)', 'u.descricao as uf', $this->getSchema('agentes'))
+            ->joinLeft(array('m' => 'municipios'), '(a.idmunicipioibge = m.idmunicipioibge)', 'm.descricao as cidade', $this->getSchema('agentes'));
         foreach ($where as $coluna => $valor) {
             $sql->where($coluna . '= ?', $valor);
         }
@@ -107,17 +118,17 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
         if (!empty($dados['idProjeto'])) {
-            $rsAbrangencia->idprojeto = $dados['idProjeto'];
+            $rsAbrangencia->idProjeto = $dados['idProjeto'];
         }
         if (!empty($dados['idPais'])) {
-            $rsAbrangencia->idpais = $dados['idPais'];
+            $rsAbrangencia->idPais = $dados['idPais'];
         }
-        $rsAbrangencia->iduf = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
-        $rsAbrangencia->idmunicipioibge = $dados['idMunicipioIBGE'];//if(!empty($dados['idmunicipioibge'])) { $rsAbrangencia->idmunicipioibge = $dados['idmunicipioibge']; }
+        $rsAbrangencia->idUF = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
+        $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE'];//if(!empty($dados['idmunicipioibge'])) { $rsAbrangencia->idmunicipioibge = $dados['idmunicipioibge']; }
         if (!empty($dados['Usuario'])) {
-            $rsAbrangencia->usuario = $dados['Usuario'];
+            $rsAbrangencia->Usuario = $dados['Usuario'];
         }
-        $rsAbrangencia->stabrangencia = 1;
+        $rsAbrangencia->stAbrangencia = 1;
 
         //SALVANDO O OBJETO
         $id = $rsAbrangencia->save();
@@ -308,7 +319,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
                         idProjeto = $idProjeto
                         and idPais = $idPais
                         and idUF = $idUF
-                        and idMunicipioIBGE = $idMunicipioIBGE 
+                        and idMunicipioIBGE = $idMunicipioIBGE
                         and stAbrangencia = 1
                     ";
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -491,7 +502,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.
 LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemAbragencia tasia ON (tasia.idAbrangencia = abran.idAbrangencia AND tasia.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
 LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasipa.idAvaliacaoSubItemPedidoAlteracao = tasia.idAvaliacaoSubItemPedidoAlteracao AND tasipa.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
                 WHERE
-                    proj.IdPRONAC = $idpedidoalteracao and tpa.tpAlteracaoProjeto = 4  and abran.tpAcao != 'N' 
+                    proj.IdPRONAC = $idpedidoalteracao and tpa.tpAlteracaoProjeto = 4  and abran.tpAcao != 'N'
                     --AND taipa.stAvaliacaoItemPedidoAlteracao in ('EA', 'AG')
                 ) as tabelas ORDER BY pais, uf, mun, idAvaliacaoItemPedidoAlteracao DESC  ";
         } // fecha else
@@ -544,7 +555,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                         SAC.dbo.tbAbrangencia ta,
                         BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpa,
                         BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao paxta
-                    WHERE 
+                    WHERE
                         tpa.idPronac = $idpedidoalteracao AND
                         uf.idUF = ta.idUF AND
                         mun.idMunicipioIBGE = ta.idMunicipioIBGE and
@@ -582,7 +593,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                         pais.idPais = ta.idPais AND
                         ta.idPedidoAlteracao = tpa.idPedidoAlteracao AND
                         paxta.idPedidoAlteracao = tpa.idPedidoAlteracao
-                        AND paxta.tpAlteracaoProjeto = 4 
+                        AND paxta.tpAlteracaoProjeto = 4
                         ";
 
         if (!empty($tpAcao)) :

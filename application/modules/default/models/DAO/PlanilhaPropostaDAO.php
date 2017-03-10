@@ -22,19 +22,21 @@ class PlanilhaPropostaDAO extends Zend_Db_Table
 	 * @static
 	 * @param integer $idPlanilha
 	 * @return object
+	 * @deprecated 
 	 */
 	public static function buscar($idPlanilha)
 	{	
+		throw new Exception('Função não está sendo utilizada!');
+		
 		$sql = "SELECT * 
 				FROM SAC.dbo.tbPlanilhaProposta PL
 				left join SAC.dbo.tbAnaliseDeConteudo AN on PL.idProjeto = AN.IdPRONAC
 				inner join SAC.dbo.Parecer PA on PL.idProjeto = PA.idPRONAC AND PL.idPlanilhaProjeto = " . $idPlanilha;
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
-	} // fecha método buscar()
-	
+	} 
 	
  	public function parecerFavoravel($idpronac, $idproduto = null) 
         {
@@ -50,16 +52,14 @@ class PlanilhaPropostaDAO extends Zend_Db_Table
 		
 		if(!empty($idproduto))
 		{
-			// Faz as cópias dos custos administrativos!
 			$sql .= " AND PP.idProduto in (0, ".$idproduto.") ";
 			
-			// Original			$sql .= " AND PP.idProduto = ".$idproduto;
 		}
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		return $db->query($sql);
         }
 	
 
-} // fecha class
+    }

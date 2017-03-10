@@ -3,7 +3,6 @@
 /**
  * Controle Gen?rico (Utilizado por todos os controles)
  * Trata as mensagens do sistema
- * @author Equipe RUP - Politec
  * @since 12/08/2010
  * @version 2.0
  * @package application
@@ -11,40 +10,17 @@
  * @copyright ? 2010 - Minist?rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class MinC_Controller_Action_Abstract extends Zend_Controller_Action
+abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 {
-    /**
-     * Vari?vel com a mensagem
-     * @var $_msg
-     */
     protected $_msg;
-
-
-    /**
-     * Vari?vel com a p?gina de redirecionamento
-     * @var $_url
-     */
     protected $_url;
-
-
-    /**
-     * Vari?vel com o tipo de mensagem
-     * Valores: ALERT, CONFIRM, ERROR ou vazio
-     * @var $_type
-     */
     protected $_type;
-
-
-    /**
-     * Vari?vel com a URL padrao do sistema
-     * @var $_urlPadrao
-     */
     protected $_urlPadrao;
-
-
     private $idResponsavel = 0;
     private $idAgente = 0;
     private $idUsuario = 0;
+
+    protected $moduleName;
 
     /**
      * Reescreve o metodo init() para aceitar
@@ -103,10 +79,10 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
             if ($acessos) {
-                $this->idResponsavel = $acessos['idusuario'];
+                $this->idResponsavel = $acessos['idUsuario'];
             }
             if ($agente) {
-                $this->idAgente = $agente['idagente'];
+                $this->idAgente = $agente['idAgente'];
             }
             if ($usuario) {
                 $this->idUsuario = $usuario['usu_codigo'];
@@ -116,6 +92,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $this->view->idResponsavelKeyLog = $this->idResponsavel;
             $this->view->idUsuarioKeyLog = $this->idUsuario;
         }
+
+        $this->moduleName = $this->getRequest()->getModuleName();
     }
 
     /**
@@ -316,7 +294,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
                 # ====== NICIO AUTENTICACAO MIGRACAO ==========
                 # configuracoes do layout padrao para o proponente
-                Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//                Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
                 $UsuarioAtivo->codUsuario = $codUsuario;
 
                 # tenta fazer a autenticacao do usuario logado no scriptcase para o zend
@@ -334,7 +312,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 # ========== INICIO AUTENTICACAO ZEND ==========
                 # caso o usuario nao esteja autenticado pelo scriptcase
                 # verifica se o grupo ativo esta no array de permissoes
-                if (!in_array($GrupoAtivo->codgrupo, $permissoes)) {
+                if (!in_array($GrupoAtivo->codGrupo, $permissoes)) {
                     $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
 
@@ -486,7 +464,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
         $html = $_POST['html'];
         header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: inline; filename=file.xls;");
+        header("Content-Disposition: inline; filename=file.ods;");
         echo $html;
     }
 
@@ -604,11 +582,11 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $msgERRO = '';
         $auth = Zend_Auth::getInstance()->getIdentity(); // pega a autentica??o
         $arrAuth = array_change_key_case((array) $auth);
-
         if (!isset($arrAuth['usu_codigo'])) { // autenticacao novo salic
             //Verifica Permissao de Projeto
+
             if ($projeto) {
-                $msgERRO = 'Você não tem permissão para acessar esse Projeto!';
+                $msgERRO = 'Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar esse Projeto!';
                 $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPronac = $this->_request->getParam('idpronac') ? $this->_request->getParam('idpronac') : $this->_request->getParam('idPronac');
                 if (strlen($idPronac) > 7) {
@@ -620,10 +598,9 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             }
             //Verifica Permissao de Proposta
             if ($proposta) {
-                $msgERRO = 'Voce nao tem permissao para acessar essa Proposta!';
+                $msgERRO = 'Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa Proposta!';
                 $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPreProjeto = $this->_request->getParam('idPreProjeto');
-
                 $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();
                 $consulta = $fnVerificarPermissao->verificarPermissaoProposta($idPreProjeto, $idUsuarioLogado);
                 $permissao = $consulta->Permissao;
@@ -664,7 +641,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idPlanilhaProposta'] = $resuplanilha->idPlanilhaProposta;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Item'] = $resuplanilha->Item;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['vlSolicitado'] = $resuplanilha->vlSolicitado;
-                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['JustProponente'] = $resuplanilha->JustProponente;
+                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['JustProponente'] = utf8_decode($resuplanilha->JustProponente);
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['QtdeDias'] = $resuplanilha->QtdeDias;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Quantidade'] = $resuplanilha->Quantidade;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Ocorrencia'] = $resuplanilha->Ocorrencia;
@@ -891,5 +868,20 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         if($oauthConfigArray && $oauthConfigArray['OAuth']['servicoHabilitado'] == true) {
             return $oauthConfigArray['OAuth'];
         }
+    }
+
+    /**
+     * @param $objects
+     * @return array
+     * @deprecated Utilizar funcao com o nome converterObjetosParaArray localizada em FuncoesGerais.php
+     */
+    protected function objectsToArray($objects){
+
+        foreach($objects as $object)
+        {
+            $itens[] = get_object_vars( $object );
+        }
+        return $itens;
+
     }
 }

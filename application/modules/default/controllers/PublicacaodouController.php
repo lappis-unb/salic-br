@@ -2,13 +2,11 @@
 
 /**
  * PublicacaoDouController
- * @author Equipe RUP - Politec
  * @since 20/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
 class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
@@ -26,7 +24,6 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-// fecha meodo init()
 
     /**
      * Redireciona para o fluxo inicial
@@ -80,15 +77,15 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+        $orgaoAtivo = $GrupoAtivo->codOrgao;
 
         $Orgaos = new Orgaos();
         $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoAtivo)->current();
 
         $wherenaopublicados = array();
 
-        if($orgaoSuperior->Superior == 251){
+        if($orgaoSuperior->Superior == Orgaos::ORGAO_SUPERIOR_SEFIC){
             $wherenaopublicados['pr.Area <> ?'] = 2;
         } else {
             $wherenaopublicados['pr.Area = ?'] = 2;
@@ -197,7 +194,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
 
         $wherepublicados["ap.dtPortariaAprovacao IS NOT NULL OR DtPublicacaoAprovacao IS NOT NULL or ap.PortariaAprovacao <> ''"] = '';
-        if($orgaoSuperior->Superior == 251){
+        if($orgaoSuperior->Superior == Orgaos::ORGAO_SUPERIOR_SEFIC){
             $wherepublicados['pr.Area <> ?'] = 2;
         } else {
             $wherepublicados['pr.Area = ?'] = 2;
@@ -301,11 +298,9 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         }
     }
 
-// fecha meodo indexAction()
 
     public function gerarportariaAction() {
         ini_set('memory_limit', '-1');
-//        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $aprovacao = new Aprovacao();
         $projeto = new Projetos();
         if ($this->getRequest()->isPost()) {
@@ -354,7 +349,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                     $DtPublicacaoAprovacao = strftime("%Y-%m-%d %H:%M:%S", strtotime("+3 days"));
                 }
             } else {
-                // feriado na sexta (supondo que hoje � quinta)
+                // feriado na sexta (supondo que hoje &eacute; quinta)
                 if (in_array(strftime("%Y-%m-%d", strtotime("+1 days")), $feriados) && !in_array(strftime("%Y-%m-%d", strtotime("+4 days")), $feriados)) {
                     $DtPublicacaoAprovacao = strftime("%Y-%m-%d %H:%M:%S", strtotime("+4 days"));
                 }
@@ -389,7 +384,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                     }
                     // dados para realizar a publicacao
                     $dadosPortaria = array(
-                        'PortariaAprovacao' => $post->nrPortaria.'/'.date('y'),
+                        'PortariaAprovacao' => $this->getRequest()->getParam('nrPortaria').'/'.date('y'),
                         'DtPortariaAprovacao' => $DtPortariaAprovacao,
                         'DtPublicacaoAprovacao' => $DtPublicacaoAprovacao,
                         'DtInicioCaptacao' => $DtPublicacaoAprovacao,
@@ -502,16 +497,14 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                 $this->view->tipoPublicacao = $tipoPublicacao;
                 $this->view->textoPortaria = $textoPortaria;
 
-                parent::message("Portaria n� ".$nrPortaria."/".$ano2Digitos." foi gerada com sucesso!", "publicacaodou/consultar-portaria?portaria=".$nrPortaria."/".$ano2Digitos."&situacao=".$tipoPublicacao, "CONFIRM");
+                parent::message("Portaria n&deg; ".$nrPortaria."/".$ano2Digitos." foi gerada com sucesso!", "publicacaodou/consultar-portaria?portaria=".$nrPortaria."/".$ano2Digitos."&situacao=".$tipoPublicacao, "CONFIRM");
 
-            } // fecha try
+            }
             catch (Exception $e) {
                 parent::message($e->getMessage(), "publicacaodou?situacao=".$tipoPublicacao, "ERROR");
             }
-        } // fecha if
+        }
     }
-
-// fecha meodo gerarportariaAction()
 
     public function retirarportariaAction() {
         ini_set('memory_limit', '-1');
@@ -590,7 +583,6 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         } // fecha if
     }
 
-// fecha meodo retirarportariaAction()
 
     /**
      * Faz a publica��o na portaria
@@ -650,7 +642,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 	        // REDU��O OU COMPLEMENTACAO
                 if($TipoAprovacao == 2 || $TipoAprovacao == 4) {
 		  $where = array();
-		  if($orgaoSuperior->Superior == 251){
+		  if($orgaoSuperior->Superior == Orgaos::ORGAO_SUPERIOR_SEFIC){
 		    $where['a.Area <> ?'] = 2;
 		  } else {
 		    $where['a.Area = ?'] = 2;
@@ -706,7 +698,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                 } else if($TipoAprovacao == 8){
 
                     $where = array();
-                    if($orgaoSuperior->Superior == 251){
+                    if($orgaoSuperior->Superior == Orgaos::ORGAO_SUPERIOR_SEFIC){
                         $where['a.Area <> ?'] = 2;
                     } else {
                         $where['a.Area = ?'] = 2;
@@ -803,17 +795,17 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         if($_GET){
 
             if(isset($numeroPortaria) && empty($numeroPortaria)){
-                parent::message("Favor informar o n�mero da portaria!", "publicacaodou/consultar-portaria", "ALERT");
+                parent::message("Favor informar o número da portaria!", "publicacaodou/consultar-portaria", "ALERT");
             }
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-            $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+            $orgaoAtivo = $GrupoAtivo->codOrgao;
 
             $Orgaos = new Orgaos();
             $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoAtivo)->current();
 
             $where = array();
-            if($orgaoSuperior->Superior == 251){
+            if($orgaoSuperior->Superior == Orgaos::ORGAO_SUPERIOR_SEFIC){
                 $where['a.Area <> ?'] = 2;
             } else {
                 $where['a.Area = ?'] = 2;
@@ -868,9 +860,6 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
             $this->view->projetosPublicados = $buscaportaria;
             $this->view->portaria = $numeroPortaria;
 
-//            $buscaCargosPublicacao = PublicacaoDouDAO::buscaCargosPublicacao();
-//            $this->view->cargosPublicacao = $buscaCargosPublicacao;
-
             $tbManterPortaria = new tbManterPortaria();
             $this->view->nomesPublicacao = $tbManterPortaria->buscar(array('stEstado = ?'=>1));
         }
@@ -915,7 +904,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoAtivo)->current();
 
         $where = array();
-        if($orgaoSuperior->Superior == 251){
+        if($orgaoSuperior->Superior == Orgaos::ORGAO_SUPERIOR_SEFIC){
             $where['a.Area <> ?'] = 2;
         } else {
             $where['a.Area = ?'] = 2;
@@ -963,7 +952,5 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         $this->view->portaria = $_POST['nrportaria'];
     }
 
-// fecha meodo publicarportariaAction()
 }
 
-// fecha class

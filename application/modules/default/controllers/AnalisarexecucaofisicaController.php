@@ -249,8 +249,9 @@ class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
         $this->view->Usuarios = $usuarios;
     }
 

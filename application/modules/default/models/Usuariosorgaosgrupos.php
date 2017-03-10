@@ -1,18 +1,9 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Usuariosorgaosgrupos
- *
- * @author augusto
- */
 class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Tabelas';
+    protected $_schema = 'Tabelas';
     protected $_name = 'UsuariosXOrgaosXGrupos';
 
     public function buscarUsuariosOrgaosGrupos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
@@ -278,11 +269,11 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
         $tmpTblUsuariosOrgaosGrupos = new Usuariosorgaosgrupos();
 
-        if ($comando == 1) 
+        if ($comando == 1)
         {
             $tmpTblUsuariosOrgaosGrupos = $tmpTblUsuariosOrgaosGrupos->createRow();
-        } 
-        else 
+        }
+        else
         {
             $tmpTblUsuariosOrgaosGrupos = $this->buscar(
                             array('uog_usuario = ?' => $dados['uog_usuario'],
@@ -358,11 +349,11 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
         $select->where('uog.uog_status = ?', 1);
-        
+
         $select->where('uog.sis_codigo = ?', 21);
-        
+
 
         $select->order(array('uog.usu_nome'));
         return $this->fetchAll($select);
@@ -391,6 +382,33 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         $select->order('uog_status DESC');
         return $this->fetchRow($select);
     }
+
+    public function obterGruposPorUsuarioEOrgao($usu_codigo, $usu_orgao) {
+//        select * --grupos.
+//    from tabelas.dbo.UsuariosXOrgaosXGrupos associativa
+//   inner join tabelas.dbo.Grupos grupos on grupos.gru_codigo = associativa.uog_grupo
+
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            array('usuariosOrgaoGrupo' => 'UsuariosXOrgaosXGrupos'),
+            '',
+            $this->_schema
+        );
+        $objQuery->joinInner(
+            array('grupos' => 'Grupos'),
+            'grupos.gru_codigo = usuariosOrgaoGrupo.uog_grupo',
+            'grupos.*',
+            $this->_schema
+        );
+        $objQuery->where('usuariosOrgaoGrupo.uog_usuario = ?', $usu_codigo);
+        $objQuery->where('usuariosOrgaoGrupo.uog_orgao = ?', $usu_orgao);
+        $objQuery->where('usuariosOrgaoGrupo.uog_status = ?', 1);
+        $objQuery->order('grupos.gru_nome ASC');
+        $resultado = $this->fetchAll($objQuery);
+        if($resultado) {
+            return $resultado->toArray();
+        }
+    }
 }
 
-?>

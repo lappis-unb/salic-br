@@ -7,6 +7,18 @@
  * @author wouerner <wouerner@gmail.com>
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
+ *
+ *
+    IdUsuario
+    Cpf
+    Nome
+    DtNascimento
+    Email
+    Senha
+    DtCadastro
+    Situacao
+    DtSituacao
+    id_login_cidadao
  */
 class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 {
@@ -14,7 +26,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     protected $_banco = 'controledeacesso';
     protected $_schema = 'controledeacesso';
     protected $_name = 'sgcacesso';
-    protected $_primary = 'idusuario';
+    protected $_primary = 'Cpf';
 
     /**
      * @var Zend_Db_Table
@@ -153,39 +165,6 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
         }
     }
 
-
-    /**
-     * Retorna registros do banco de dados
-     * @param array $where - array com dados where no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
-     * @param array $order - array com orders no formado "coluna_1 desc","coluna_2"...
-     * @param int $tamanho - numero de registros que deve retornar
-     * @param int $inicio - offset
-     * @return Zend_Db_Table_Rowset_Abstract
-     */
-    public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
-    {
-        $select = $this->select()->from($this->_name, $this->_getCols(), $this->_schema);
-
-        //adiciona quantos filtros foram enviados
-        foreach ($where as $coluna => $valor) {
-            if ($valor) {
-                $select->where($coluna, $valor);
-            }
-        }
-        $select->order($order);
-
-        // paginacao
-        if ($tamanho > -1) {
-            $tmpInicio = 0;
-            if ($inicio > -1) {
-                $tmpInicio = $inicio;
-            }
-            $select->limit($tamanho, $tmpInicio);
-        }
-
-        return $this->fetchAll($select);
-    }
-
     public function loginSemCript($username, $password) {
         // busca o usu?rio de acordo com o login e a senha
 
@@ -241,23 +220,23 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
      * @param array $dados
      * @return mixed
      */
-    public function salvar(array $dados)
+    public function salvar($dados)
     {
         try {
-            if (isset($dados['idusuario'])) {
-                $objSgcAcesso = $this->buscar(array("idusuario = ?" => $dados['idusuario']))->current();
+            if (isset($dados['IdUsuario'])) {
+                $objSgcAcesso = $this->buscar(array("IdUsuario = ?" => $dados['IdUsuario']))->current();
             } else {
                 $objSgcAcesso = $this->createRow();
             }
 
-            if (isset($dados['cpf'])) $objSgcAcesso->cpf = $dados['cpf'];
-            if (isset($dados['nome'])) $objSgcAcesso->nome = $dados['nome'];
-            if (isset($dados['dtnascimento'])) $objSgcAcesso->dtnascimento = $dados['dtnascimento'];
-            if (isset($dados['email'])) $objSgcAcesso->email = $dados['email'];
-            if (isset($dados['senha'])) $objSgcAcesso->senha = $dados['senha'];
-            if (isset($dados['dtcadastro'])) $objSgcAcesso->dtcadastro = $dados['dtcadastro'];
-            if (isset($dados['situacao'])) $objSgcAcesso->situacao = $dados['situacao'];
-            if (isset($dados['dtsituacao'])) $objSgcAcesso->dtsituacao = $dados['dtsituacao'];
+            if (isset($dados['Cpf'])) $objSgcAcesso->Cpf = $dados['Cpf'];
+            if (isset($dados['Nome'])) $objSgcAcesso->Nome = $dados['Nome'];
+            if (isset($dados['DtNascimento'])) $objSgcAcesso->DtNascimento = $dados['DtNascimento'];
+            if (isset($dados['Email'])) $objSgcAcesso->Email = $dados['Email'];
+            if (isset($dados['Senha'])) $objSgcAcesso->Senha = $dados['Senha'];
+            if (isset($dados['DtCadastro'])) $objSgcAcesso->DtCadastro = $dados['DtCadastro'];
+            if (isset($dados['Situacao'])) $objSgcAcesso->Situacao = $dados['Situacao'];
+            if (isset($dados['DtSituacao'])) $objSgcAcesso->DtSituacao = $dados['DtSituacao'];
             if (isset($dados['id_login_cidadao'])) $objSgcAcesso->id_login_cidadao = $dados['id_login_cidadao'];
             return $objSgcAcesso->save();
         } catch (Exception $objException) {

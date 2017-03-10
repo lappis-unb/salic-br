@@ -1,72 +1,101 @@
 <?php
 
-/**
- * Modelo Segmentocultural
- * @author Equipe RUP - Politec
- * @since 29/03/2010
- * @version 1.0
- * @package application
- * @subpackage application.models
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-class Segmentocultural extends Zend_Db_Table {
+class Segmentocultural extends MinC_Db_Table_Abstract
+{
 
-    protected $_name = 'SAC.dbo.Segmento'; // nome da tabela
+    protected $_name = 'Segmento';
+    protected $_schema = 'sac';
+    protected $_primary = 'Codigo';
 
-    /**
-     * M�todo para buscar os segmentos culturais de uma determinada �rea
-     * @access public
-     * @param integer $idArea
-     * @return object $db->fetchAll($sql)
-     */
-
-    public static function buscar($idArea) {
-        $sql = "SELECT S.Codigo AS id, S.Descricao AS descricao ";
-        $sql.= "FROM SAC.dbo.Area AS A, SAC.dbo.Segmento AS S ";
-        $sql.= "WHERE LEFT(S.Codigo, 1) = A.Codigo ";
-        $sql.= "AND A.Codigo = " . $idArea . " ";
-        $sql.= "ORDER BY S.Descricao;";
-
-        try {
-            $db= Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        } catch (Zend_Exception_Db $e) {
-            $this->view->message = "Erro ao buscar Segmento Cultural: " . $e->getMessage();
-        }
-        return $db->fetchAll($sql);
-    }
-
-    public static function buscarSegmento($idArea) {
-        $db= Zend_Db_Table::getDefaultAdapter();
+    public function buscarSegmento($idArea)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = "select Codigo AS id, Segmento AS descricao ";
-        $sql.= "from SAC.dbo.vSegmento ";
-        $sql.= "where Area = '$idArea'";
-        return $db->fetchAll($sql);
+        $viewVSegmento = $this->obterViewVSegmento(array(), true);
+
+        $objSelect = $this->select();
+        $objSelect->isUseSchema(false);
+        $objSelect->setIntegrityCheck(false);
+
+        $objSelect->from(
+            array('vSegmento' => new Zend_Db_Expr("({$viewVSegmento})")),
+            array(
+                'id' => 'Codigo',
+                'descricao' => 'Descricao',
+                'tp_enquadramento'
+            )
+        );
+        $objSelect->where("Area = ?", $idArea);
+
+        return $db->fetchAll($objSelect);
     }
 
-// fecha buscar()
+    /**
+     * Este método representa a view SAC.dbo.vSegmento
+     */
+    public function obterViewVSegmento($where = array(), $isRetornarObjeto = false)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-    public static function carregarSegmentosArea(StdClass $dados = null) {
-        $sql = "select Codigo as codigo, Segmento as descricao from SAC.dbo.vSegmento";
-        if($dados){
-        	$sql .= " where Area = {$dados->codigo}";
+        $querySegmentoCultural = $this->select();
+
+        $querySegmentoCultural->setIntegrityCheck(false);
+        $querySegmentoCultural->from('Segmento', array(
+            new Zend_Db_Expr(
+                "CASE WHEN substring(Codigo,1,1)='8' THEN '2'
+                 ELSE substring(Codigo,1,1)
+                  END as Area"
+            ),
+            'Codigo',
+            'Descricao',
+            'idOrgao',
+            'tp_enquadramento'
+        ), $this->getSchema("sac"));
+        $querySegmentoCultural->where("stEstado = ?", 1);
+        if (count($where) > 0) {
+            foreach ($where as $condicao => $valor) {
+                $querySegmentoCultural->where($condicao, $valor);
+            }
         }
-        
-        $sql .= " order by 2";
 
+        if (!$isRetornarObjeto) {
+            return $db->fetchAll($querySegmentoCultural);
+        }
+        return $querySegmentoCultural;
+    }
+
+    public function carregarSegmentosArea($idArea)
+    {
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+            $viewVSegmento = $this->obterViewVSegmento(array(), true);
+
+            $objSelect = $this->select();
+            $objSelect->isUseSchema(false);
+            $objSelect->setIntegrityCheck(false);
+
+            $objSelect->from(
+                array('vSegmento' => new Zend_Db_Expr("({$viewVSegmento})")),
+                array(
+                    'codigo' => 'Codigo',
+                    'descricao' => 'Descricao',
+                    'tp_enquadramento'
+                )
+            );
+            if ($idArea) {
+                $objSelect->where("Area = ?", $idArea);
+            }
+            $objSelect->order("order by 2 desc");
+
+            return $db->fetchAll($objSelect);
+
+
         } catch (Zend_Exception_Db $e) {
-            $this->view->message = "Erro ao buscar Segmento Cultural: " . $e->getMessage();
+            throw new Exception("Erro ao buscar Segmento Cultural: " . $e->getMessage());
         }
-
-        return $db->fetchAll($sql);
     }
-
 }
-
-// fecha class

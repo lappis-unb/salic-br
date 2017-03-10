@@ -37,7 +37,8 @@ echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); //
                 <td><b>Resposta</b></td>
             </tr>
 
-            <?php foreach($this->solicitacao as $tbsolicitacao): ?>
+            <?php
+            foreach($this->solicitacao as $tbsolicitacao): ?>
             <tr>
                 <td><?php echo $tbsolicitacao->produto;?>
                 <input type="hidden" name="produto" value="<?php echo $tbsolicitacao->produto;?>"/>
