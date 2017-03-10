@@ -43,8 +43,8 @@
                         <td class="center-align">
                             <?php
                             $corMensagem = 'green';
-                            if ($dado->mensagens_nao_respondidas == '0' && $dado->mensagens_respondidas == '0') {
-                                $corMensagem = 'blue';
+                            if ((int)$dado->mensagens_nao_respondidas == (int)'0' && (int)$dado->mensagens_respondidas == (int)'0') {
+                                $corMensagem = '  blue accent-1 ';
                             } elseif ($dado->mensagens_nao_respondidas <> $dado->mensagens_respondidas) {
                                 $corMensagem = 'amber darken-1';
                             }

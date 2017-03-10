@@ -13,7 +13,8 @@ $intQtd = 0;
 $grupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 if (isset($arrAuth->usu_codigo) && isset($arrAuth->usu_orgao)) {
     $dbTable = new Admissibilidade_Model_DbTable_VwPainelDeMensagens();
-    $arrResult = $dbTable->carregarPerguntasSemResposta($arrAuth->usu_codigo, $grupoAtivo->codGrupo);
+    $arrResult = $dbTable->carregarPerguntasSemResposta($arrAuth->usu_codigo, $grupoAtivo->codOrgao);
+
     if (isset($arrAuth->usu_codigo)) {
         $intQtd = count($arrResult);
     }
