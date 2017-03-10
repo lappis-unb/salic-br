@@ -533,6 +533,27 @@ table > tbody > tr:hover {
 }
 
 
+td, th {
+    /*background:url(../img/bg-celulas.gif) repeat-x #ffffff;*/
+    /*padding:8px;*/
+    /*color:inherit;*/
+}
+
+table {
+    /* border-collapse: collapse;
+     /*border-spacing: 0;*!*/
+}
+
+table th {
+    /*background:#abda5d;*/
+    /*padding:8px;*/
+    /*color:#3a7300;*/
+    /*text-transform:uppercase;*/
+    /*font-size:11px;*/
+}
+
+
+
 /**** Sidebar ***/
 
 ul.sidebar-nav {
@@ -641,6 +662,7 @@ ul.sidebar-nav ul {
 #frmProposta .input-field label {
     color: #212121;
     font-size: 16px;
+    line-height: 23px;
 }
 
 #frmProposta .input-field .caption {
@@ -648,7 +670,7 @@ ul.sidebar-nav ul {
 }
 
 #frmProposta .mce-tinymce {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 
 }
 #tinymce  {
