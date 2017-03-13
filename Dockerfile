@@ -21,6 +21,10 @@ RUN docker-php-ext-install gd
 RUN docker-php-ext-install soap
 RUN docker-php-ext-configure mssql --with-libdir=/lib/x86_64-linux-gnu && docker-php-ext-install mssql
 RUN docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu && docker-php-ext-install pdo_dblib
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-configure pdo_pgsql --with-pgsql
+RUN docker-php-ext-install pgsql pdo_pgsql
 
 
 RUN chmod +x -R /tmp/src/
