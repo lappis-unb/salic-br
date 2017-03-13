@@ -29,107 +29,24 @@
         margin-top: 15px;
     }
 
-    /*#menuContexto {*/
-        /*width: 100%;*/
-        /*background: none;*/
-        /*padding-top: 10px;*/
-        /*padding-bottom: 10px;*/
-        /*border: 1px solid #D2D2D2;*/
-        /*box-shadow:  0px 0px 2px #a2a2a2;*/
-        /*margin-left: 10px;*/
-        /*border-radius: 10px;*/
-    /*}*/
-
-    /*#menuContexto #qm0 {*/
-        /*width: 100%;*/
-        /*!*padding-top: 10px;*!*/
-        /*!*padding-bottom: 10px;*!*/
-
-    /*}*/
-
-    /*#menuContexto .qmmc #qm0 {*/
-        /*border: none;*/
-        /*box-shadow: none;*/
-    /*}*/
-
-    /*#menuContexto #qm0 a {*/
-        /*position: relative !important;*/
-        /*!*width: 100%;*!*/
-        /*!*background-position: center center;*!*/
-        /*background-image: none;*/
-        /*!*border: none;*!*/
-        /*!*padding: 10px 5px;*!*/
-        /*!*margin: 0px 15px;*!*/
-        /*!*font-size: 13px;*!*/
-        /*!*font-family: "Roboto", sans-serif;*!*/
-        /*!*width:88%;*!*/
-        /*border-bottom: 1px solid #d2d2d2;*/
-    /*}*/
-    /*#menuContexto #qm0 a:not(.no_seta):before {*/
-        /*content: "";*/
-        /*display: block;*/
-        /*position: absolute;*/
-        /*right: 16px;*/
-        /*width: 0;*/
-        /*border-width: 6px 0 6px 6px;*/
-        /*border-style: solid;*/
-        /*border-color: transparent #666;*/
-    /*}*/
-
-    /*#menuContexto #qm0 div,*/
-    /*#menuContexto #qm0.sanfonaDiv a {*/
-        /*width: 90% !important;*/
-    /*}*/
-
-    /*#menuContexto #qm0.sanfonaDiv a:not(.no_seta):before {*/
-        /*border: none;*/
-    /*}*/
-
-    /*!*#menuContexto #qm0 a:hover {*!*/
-        /*!*!*background: inherit;*!*!*/
-        /*!*!*color: #ffffff;*!*!*/
-    /*!*}*!*/
-
-    /*#menuContexto #qm0 a:last-child {*/
-        /*border-bottom: none;*/
-    /*}*/
-
-    /*#menuContexto .top {*/
-        /*background: none;*/
-        /*height: 0;*/
-    /*}*/
-
-    /*#menuContexto .bottom {*/
-        /*background: none;*/
-        /*height: 0;*/
-    /*}*/
-
-    /*.sidebar aside h3:after {*/
-        /*content: "";*/
-        /*display: block;*/
-        /*position: absolute;*/
-        /*bottom: -9px;*/
-        /*left: 10px;*/
-        /*width: 0;*/
-        /*border-width: 9px 9px 0px 9px;*/
-        /*border-style: solid;*/
-        /*border-color: #0c451a transparent;*/
-    /*}*/
-
     #rodapeConteudo_com_menu {
         display: none;
     }
 
+    table {
+        width: 100%;
+    }
+
     table th {
         font-size: 14px;
-        padding: 16px;
-        background: transparent;
+        padding: 16px 10px;
+        background: #e3e3e3;
         color: #212121;
         text-transform: none;
     }
 
     table td {
-        padding: 16px;
+        padding: 16px 10px;
         color: #212121;
     }
 
@@ -142,22 +59,33 @@
         padding-top: 7px;
         padding-bottom: 7px;
     }
+
+    .collapsible-body .coluna-etapa {
+        padding: 0px;
+        margin-bottom: 20px;
+    }
     .collapsible {
         box-shadow: none;
-        border-right: none;
-        border-left: none;
+        /*border-right: none;*/
+        /*border-left: none;*/
     }
     .collapsible-header {
         padding: 8px;
+    }
+    .collapsible-header:hover {
+        background: #fdfbfb;
     }
 
     .collapsible-header.produto {
         text-transform: uppercase;
     }
 
-
     .collapsible .collapsible .collapsible-header {
         padding-left: 40px;
+    }
+
+    .collapsible .collapsible-body .row {
+         margin-bottom: 0px;
     }
 
     table .left-align {
@@ -353,8 +281,7 @@
                     <a id="btn-restaurar-planilha" class="btn-floating waves-effect waves-light btn tooltipped btn-info" data-tooltip="Restaurar planilha"><i class="material-icons left">restore</i></a>
                 </p>
             <?php endif; ?>
-            <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'><p class="center align">Carregando or&ccedil;amento ...</p></div>
-
+            <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'>
             <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
         </div>
     </div>

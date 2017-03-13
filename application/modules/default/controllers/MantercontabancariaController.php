@@ -157,7 +157,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         
         if(count($AgenciaDados) > 0){
             
-            //INSERE OS DADOS NA TABELA DE HISTÓRICO - SAC.dbo.tbHistoricoExclusaoConta
+            //INSERE OS DADOS NA TABELA DE HISTï¿½RICO - SAC.dbo.tbHistoricoExclusaoConta
             $dadosInsert = array(
                 'idContaBancaria' => $resp->IdContaBancaria,
                 'Banco' => $resp->Banco,
@@ -166,7 +166,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
                     'ContaLivre' => $resp->ContaLivre,
                 'DtExclusao' => new Zend_Db_Expr('GETDATE()'),
                 'Motivo' => $this->_request->getParam('justificativa'),
-                'idUsuario' => $idagente->usu_codigo
+                'idUsuario' => $idagente['usu_codigo']
             );
             
             $id = $he->inserir($dadosInsert);
@@ -176,7 +176,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
                 'Agencia' => $this->_request->getParam('Agencia'),
                 'ContaBloqueada' => $this->_request->getParam('ContaBloqueada'),
                 'ContaLivre' => $this->_request->getParam('ContaLivre'),
-                'Logon' => $idagente->usu_codigo,
+                'Logon' => $idagente['usu_codigo'],
                 'DtLoteRemessaCL' => new Zend_Db_Expr('GETDATE()'),
                 'DtLoteRemessaCB' => new Zend_Db_Expr('GETDATE()')
             );

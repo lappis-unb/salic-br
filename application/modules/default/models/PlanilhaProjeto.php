@@ -346,8 +346,21 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
     
-    
-    
+    public function inserirPlanilhaParaParecerista($idPreProjeto, $idPronac) {
+        $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
+                                     (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
+                                     TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
+                                   SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+                                        Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+                                        MunicipioDespesa, 0
+                                        FROM SAC.dbo.tbPlanilhaProposta
+                                        WHERE idProjeto = {$idPreProjeto}";
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        return $db->query($sqlParecerista);
+    }
+
+
 }
 
 ?>
