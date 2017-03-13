@@ -1,15 +1,4 @@
-<?php 
-/**
- * Formulário de geração do extrato bancário
- * @author emanuel.sampaio - Politec
- * @since 20/01/2011
- * @version 1.0
- * @package application
- * @subpackage application.views.scripts.controlarmovimentacaobancaria
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
+<?php
 /* inclui o menu lateral caso não venha através do proponente */
 if (!isset($this->dadosProjeto) && !empty($this->arrayGrupoProponente)) :
 	echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this);
@@ -145,7 +134,7 @@ endif;
 
 
 		// calendário
-		$.datepicker.regional['pt-BR'] = 
+		$.datepicker.regional['pt-BR'] =
 		{
 			closeText: 'Fechar',
 			prevText: '&#x3c;Anterior',
@@ -173,8 +162,8 @@ endif;
 
 
 	<!-- ========== INÍCIO FORMULÁRIO DE CONSULTA ========== -->
-	<form name="formBuscar" id="formBuscar" method="post" 
-		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'pesquisar')); ?>" 
+	<form name="formBuscar" id="formBuscar" method="post"
+		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'pesquisar')); ?>"
 		enctype="multipart/form-data">
 
 		<table class="tabela w700">
@@ -188,7 +177,7 @@ endif;
 					<?php } else { ?>
 					<input type="text" class="input_simples w200" name="nr_pronac" id="nr_pronac" maxlength="7" /> &nbsp;
 					<input type="hidden" name="id_pronac" id="id_pronac" value="" />
-					<?php } ?> 
+					<?php } ?>
 					<?php if ($this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123 || $this->grupoAtivo == 129 || $this->grupoAtivo == 124 || $this->grupoAtivo == 125 || $this->grupoAtivo == 126) : ?>
 					<input type="checkbox" name="conta_rejeitada" id="conta_rejeitada" /> <label for="conta_rejeitada">Movimenta&ccedil;&atilde;o Rejeitada</label>
 					<?php endif; ?>
@@ -214,7 +203,7 @@ endif;
 						</select>
 					</span>
 					<span id="faixa_de_periodo" class="float_right sumir">
-						<label for="periodo1">De</label> <input type="text" class="select_simples btn_calendario" name="periodo[]" id="periodo1" maxlength="10" title="Selecione uma data v&aacute;lida!" /> 
+						<label for="periodo1">De</label> <input type="text" class="select_simples btn_calendario" name="periodo[]" id="periodo1" maxlength="10" title="Selecione uma data v&aacute;lida!" />
 						<label for="periodo2">&agrave;</label> <input type="text" class="select_simples btn_calendario" name="periodo[]" id="periodo2" maxlength="10" title="Selecione uma data v&aacute;lida!" />
 					</span>
 				</td>
@@ -234,7 +223,7 @@ endif;
 		<table class="tabela w700">
 			<tr>
 				<td align="center">
-					<input type="reset" title="Cancelar" class="btn_cancelar" value=" " onclick="voltar();" /> &nbsp; 
+					<input type="reset" title="Cancelar" class="btn_cancelar" value=" " onclick="voltar();" /> &nbsp;
 					<input type="submit" id="enviar" title="Gerar Extrato de Movimenta&ccedil;&atilde;o Banc&aacute;ria" class="btn_gerar_extrato" value=" " />
 				</td>
 			</tr>

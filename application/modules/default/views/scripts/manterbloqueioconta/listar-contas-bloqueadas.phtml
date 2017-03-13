@@ -12,7 +12,7 @@
                 form.submit();
             }
         });
-        
+
         $(".btn_xls").click(function(){
             $('#conteudoXLS_PDF').val($('#conteudoImprimivel').html());
             $('#formGerarXlsPdf').attr("action",'<?php echo $this->url(array('controller' => 'manterbloqueioconta', 'action' => 'gerar-xls')); ?>');
@@ -23,12 +23,10 @@
             $('#formGerarXlsPdf').attr("action",'<?php echo $this->url(array('controller' => 'manterbloqueioconta', 'action' => 'imprimir')); ?>');
             $('#formGerarXlsPdf').submit();
         });
-        
+
     });
 </script>
-<?php 
-    require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php';
-?>
+<?php echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this) ?>
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -77,11 +75,11 @@
                             <!--<td align="center">18015</td>
                             <td align="center">000000225169</td>-->
                             <td align="center">
-                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioExecucao, 'brasileiro')); ?> a 
+                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioExecucao, 'brasileiro')); ?> a
                                 <?php echo $this->escape(Data::tratarDataZend($projeto->DtFimExecucao, 'brasileiro')); ?>
                             </td>
                             <td align="center">
-                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioCaptacao, 'brasileiro')); ?> a 
+                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioCaptacao, 'brasileiro')); ?> a
                                 <?php echo $this->escape(Data::tratarDataZend($projeto->DtFimCaptacao, 'brasileiro')); ?>
                             </td>
                             <td align="center" class="<?php echo (empty($projeto->Habilitado) || $projeto->Habilitado == "S") ? "green" : "red";?>">
