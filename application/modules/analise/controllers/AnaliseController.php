@@ -293,8 +293,30 @@ class Analise_AnaliseController extends Analise_GenericController
                 parent::message("Projeto encaminhado para o proponente com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
             } else if ($params['conformidade'] == 1) {
 
+                $Projetos = new Projetos();
+                $dadosProjeto = $Projetos->buscar(array('idPronac = ?' => $idPronac))->current();
+
                 if (!empty($avaliacao)) {
+
                     $tbAvaliacao->atualizarAvaliacaoPositiva($idPronac, $avaliacao['idTecnico'], $params['observacao']);
+
+                    $tbPlanoDistribuicao = new PlanoDistribuicao();
+                    $idVinculada = $tbPlanoDistribuicao->buscarIdVinculada($dadosProjeto['idProjeto']);
+
+                    $tbDistribuirParecer = new tbDistribuirParecer();
+                    $jaExiste = $tbDistribuirParecer->buscar(array('idPronac = ?' => $idPronac))->current();
+                    if (!empty($jaExiste))
+                        $tbDistribuirParecer->inserirDistribuicaoParaParecer($dadosProjeto['idProjeto'], $idPronac, $idVinculada);
+
+                    $tbAnaliseDeConteudo = new tbAnaliseDeConteudo();
+                    $jaExiste = $tbAnaliseDeConteudo->buscar(array('idPronac = ?' => $idPronac))->current();
+                    if (!empty($jaExiste))
+                        $tbAnaliseDeConteudo->inserirAnaliseConteudoParaParecerista($dadosProjeto['idProjeto'], $idPronac);
+
+                    $PlanilhaProjeto = new PlanilhaProjeto();
+                    $jaExiste = $PlanilhaProjeto->buscar(array('idPronac = ?' => $idPronac))->current();
+                    if (!empty($jaExiste))
+                        $PlanilhaProjeto->inserirPlanilhaParaParecerista($dadosProjeto['idProjeto'], $idPronac);
                 }
 
                 parent::message("Projeto encaminhado para o avaliador com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
