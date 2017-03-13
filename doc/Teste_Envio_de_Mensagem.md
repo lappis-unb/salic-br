@@ -17,13 +17,13 @@ Passo a passo do teste Envio de Mensagem de dúvida do enquadramento
 
 4°passo - Clicar no botão ESCREVER PERGUNTA no canto inferior direito.
 
-5°passo - Seleciona a unidade de destino da pergunta.
+5°passo - Selecione a unidade de destino da pergunta.
 
 6°passo - Escrever no editor rico a pergunta a ser enviada.
 
 7°passo - Clicar no botão enviar.
 
-    <--============ENVIO DE PERGUNTA============-->
+    <--============FIM ENVIO DE PERGUNTA============-->
 
 ****AUTOR:** ANDERSON ALVES DA SILVA PEREIRA** 
 ****AUTOR:** HYGOR FELLIPE MOREIRA** 
