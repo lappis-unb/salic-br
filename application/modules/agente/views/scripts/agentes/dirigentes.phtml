@@ -26,7 +26,7 @@
 
 		<table class="tabela">
 			<tr>
-				<th style="font-size: 14px; font-family: sans-serif;">Dirigentes da instituição: <?php echo $this->dados[0] ->Nome; ?> CNPJ: <?php echo Mascara::addMaskCNPJ($this->dados[0] ->CNPJCPF); ?></th>
+				<th style="font-size: 14px; font-family: sans-serif;">Dirigentes da instituição: <?php echo $this->dados[0]->nome; ?> CNPJ: <?php echo Mascara::addMaskCNPJ($this->dados[0]->cnpjcpf); ?></th>
 			</tr>
 		</table>
 
@@ -43,13 +43,20 @@
 				<th>NOME</th>
 				<th width="120">AÇÃO</th>
 			</tr>
-			<?php foreach($this->dirigentes as $d):?>
-			<tr>
-				<td align="center"><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'visualizadirigente', 'id' => $this->id, 'idDirigente' => $d->idAgente));?>"><?php echo Mascara::addMaskCpf($d->CNPJCPF); ?></a></td>
-				<td><?php echo $d->Nome; ?></td>
-				<td align="center"><input type="button" class="btn_exclusao" value=" " onclick="confirmaExclusao('Deseja realmente desvincular o dirigente?', '<?php echo $this->url(array("controller"=>"agentes", "action"=>"desvinculadirigente","id" => $this->id, 'idDirigente' => $d->idAgente)); ?>');" /></td>
-			</tr>
-			<?php endforeach;?>
+			<?php if ($this->dirigentes) : ?>
+				<?php foreach($this->dirigentes as $d):?>
+				<tr>
+					<td align="center"><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'visualizadirigente', 'id' => $this->id, 'idDirigente' => $d->idAgente));?>"><?php echo Mascara::addMaskCpf($d->CNPJCPF); ?></a></td>
+					<td><?php echo $d->Nome; ?></td>
+					<td align="center"><input type="button" class="btn_exclusao" value=" " onclick="confirmaExclusao('Deseja realmente desvincular o dirigente?', '<?php echo $this->url(array("controller"=>"agentes", "action"=>"desvinculadirigente","id" => $this->id, 'idDirigente' => $d->idAgente)); ?>');" /></td>
+				</tr>
+				<?php endforeach;?>
+			<?php else: ?>
+				<tr>
+					<td colspan="3" align="center">Nenhum dirigente cadastrado!</td>
+				</tr>
+
+			<?php endif; ?>
 		</table>
 
 </div>
