@@ -13,7 +13,7 @@
             }
         });
     });
-    
+
     function JSMostraOcultaElemento(idInconsistencia)
     {
         $('.' + idInconsistencia).toggle();
@@ -27,11 +27,11 @@
         {
                 $('#' + idInconsistencia).addClass('btn_adicionar');
                 $('#' + idInconsistencia).removeClass('btn_remover');
-        }            
+        }
     }
-        
+
     function JSDesbloquearConta(idPronac,tipo){
-          
+
         $('html').css('overflow', 'hidden');
         $("body").append("<div id='divDinamicaDesbloqueio'></div>");
         $("#divDinamicaDesbloqueio").html("");
@@ -49,9 +49,9 @@
             type : 'post'
 
         });
-        
+
         var title = (tipo == 1) ? "Desbloqueio da conta do Projeto" : "Desbloqueio judicial da conta do Projeto";
-        
+
         //jqAjaxLink("/operacional/resultado-projetos-por-situacao?situacao=" + situacao, null, "divDinamicaDesbloqueio");
         $("#divDinamicaDesbloqueio").dialog({
             resizable: true,
@@ -82,9 +82,8 @@
         });
     }
 </script>
-<?php 
-    require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php';
-?>
+<?php //require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php'; ?>
+<?php echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php'); ?>
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -139,11 +138,11 @@
                             <!--<td align="center">18015</td>
                             <td align="center">000000225169</td>-->
                             <td align="center">
-                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioExecucao, 'brasileiro')); ?> a 
+                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioExecucao, 'brasileiro')); ?> a
                                 <?php echo $this->escape(Data::tratarDataZend($projeto->DtFimExecucao, 'brasileiro')); ?>
                             </td>
                             <td align="center">
-                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioCaptacao, 'brasileiro')); ?> a 
+                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioCaptacao, 'brasileiro')); ?> a
                                 <?php echo $this->escape(Data::tratarDataZend($projeto->DtFimCaptacao, 'brasileiro')); ?>
                             </td>
                             <td align="center" class="<?php echo (empty($projeto->Habilitado) || $projeto->Habilitado == "S") ? "green" : "red";?>">
@@ -159,7 +158,7 @@
             </table>
         </div>
     </div>
-    
+
     <!-- =================================================-->
     <!-- ================ GRID 02 ========================-->
     <!-- =================================================-->
@@ -198,11 +197,11 @@
                             <!--<td align="center">18015</td>
                             <td align="center">000000225169</td>-->
                             <td align="center">
-                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioExecucao, 'brasileiro')); ?> a 
+                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioExecucao, 'brasileiro')); ?> a
                                 <?php echo $this->escape(Data::tratarDataZend($projeto->DtFimExecucao, 'brasileiro')); ?>
                             </td>
                             <td align="center">
-                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioCaptacao, 'brasileiro')); ?> a 
+                                <?php echo $this->escape(Data::tratarDataZend($projeto->DtInicioCaptacao, 'brasileiro')); ?> a
                                 <?php echo $this->escape(Data::tratarDataZend($projeto->DtFimCaptacao, 'brasileiro')); ?>
                             </td>
                             <td align="center" class="<?php echo (empty($projeto->Habilitado) || $projeto->Habilitado == "S") ? "green" : "red";?>">

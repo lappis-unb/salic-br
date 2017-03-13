@@ -14,7 +14,7 @@ function mascara($mask,$str){
 ?>
 
 <script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
-<?php require_once"inc/menu.inc.php"; ?>
+<?php echo $this->partial("inc/menu.inc.php"); ?>
 <div id="breadcrumb">
     <ul>
        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para p&aacute;gina inicial">Início</a></li>
@@ -139,7 +139,7 @@ function mascara($mask,$str){
         $vlUn = $valoresComprovados->vlComprovacao+$vlcpTotal;
         $vlcpTotal = $vlUn;
     } ?>
-        
+
     <table class="tabela">
         <tbody>
             <tr>
@@ -171,7 +171,7 @@ function mascara($mask,$str){
             $comprovanteNodeId = "comprovantePagamento{$comprovante->idComprovantePagamento}";
                 $editable = true;
     ?>
-	
+
     <form id="frmValidar" name="frmValidar" action="<?php echo $actionForm; ?>" method="post">
         <input type="hidden" name="comprovantePagamento[<?php echo $comprovante->idPlanilhaAprovacao; ?>][idComprovantePagamento]" value="<?php echo $comprovante->idComprovantePagamento;?>" />
         <input type="hidden" name="comprovantePagamento[<?php echo $comprovante->idPlanilhaAprovacao; ?>][idPlanilhaAprovacao]" value="<?php echo $comprovante->idPlanilhaAprovacao;?>" />
@@ -180,12 +180,12 @@ function mascara($mask,$str){
                     if (4 == $comprovante->stItemAvaliado) :
                         echo 'class="naoAnalisado"';
                     elseif (3 == $comprovante->stItemAvaliado) :
-                        echo 'class="itemRecusado"'; 
+                        echo 'class="itemRecusado"';
                     endif;
                     ?>>
                     <a href="<?php echo "#{$comprovanteNodeId}"; ?>">
                         <?php
-                            echo $this->tipoComprovante[$comprovante->tpDocumento] , ' ' , 
+                            echo $this->tipoComprovante[$comprovante->tpDocumento] , ' ' ,
                                 $comprovante->nrComprovante , ' - ', number_format($comprovante->vlComprovacao, 2, ',', '.');
                             ?>
                     </a>
@@ -271,7 +271,7 @@ function mascara($mask,$str){
                     <tr>
                         <td class="destacar" align="right"><b>Ocorrência do Técnico</b></td>
                         <td colspan="5">
-                                <textarea 
+                                <textarea
                                     name="comprovantePagamento[<?php echo $comprovante->idPlanilhaAprovacao; ?>][observacao]"
 				    id="comprovantePagamento_<?php echo $comprovante->idPlanilhaAprovacao; ?>_observacao"
                                     rows="10" cols="100"

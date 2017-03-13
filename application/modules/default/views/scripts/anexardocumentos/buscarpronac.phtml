@@ -1,17 +1,5 @@
-<?php
-/**
- * Busca PRONAC
- * @author Equipe RUP - Politec
- * @since 28/04/2010
- * @version 1.0
- * @package application
- * @subpackage application.views.scripts.execucaofisicaprojeto
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
-require_once "inc/menu.inc.php"; // menu
-?>
+<?php //require_once "inc/menu.inc.php"; ?>
+<?php echo $thiss->partial("inc/menu.inc.php"); ?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
@@ -39,9 +27,9 @@ require_once "inc/menu.inc.php"; // menu
 
 
 	<!-- ========== FORMULÁRIO PARA BUSCA ========== -->
-	<form name="formBuscar" id="formBuscar" method="post" 
+	<form name="formBuscar" id="formBuscar" method="post"
 		action="<?php echo $this->url(array('controller' => 'anexardocumentos','action' => 'buscarpronac')); ?>">
-	
+
 		<table class="tabela" style="margin:100px auto; width:400px;">
 			<tr class="titulo_tabela">
 				<th colspan="2">COMPROVAÇÃO DE EXECUÇÃO FÍSICA DO PROJETO</th>
@@ -49,27 +37,27 @@ require_once "inc/menu.inc.php"; // menu
 			<tr>
 				<th class="center" width="100"><label for="pronac">Nº PRONAC:</label></th>
 				<td>
-					<input type="text" name="pronac" id="pronac" maxlength="20" 
+					<input type="text" name="pronac" id="pronac" maxlength="20"
 						onkeyup="mascara(this, format_num);"  />
 					<input type="submit" title=" Pesquisar " class="btn_pesquisar" value=" " />
 				</td>
 			</tr>
 		</table>
-	
+
 	</form>
 	<!-- ========== FIM FORMULÁRIO DE BUSCA ========== -->
-	
-	
-	
+
+
+
 	<table class="tabela" style="margin:5px auto; width:1000px;">
-	
-	
-	
-		<td align="right"> 	<a href="javascript:window.print()"><img src="<?php echo $this->baseUrl(); ?>/public/img/imprimir.gif" /> </a></td>	
+
+
+
+		<td align="right"> 	<a href="javascript:window.print()"><img src="<?php echo $this->baseUrl(); ?>/public/img/imprimir.gif" /> </a></td>
 		<td align="right"> 	<a href="javascript:history.go(-1);" style="text-decoration:none;"><img src="<?php echo $this->baseUrl(); ?>/public/img/adm_btn_voltar.gif" /> Voltar</a></td>
-	
-	
-	
+
+
+
 	</table>
 
 
