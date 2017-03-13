@@ -9,6 +9,17 @@
 
 @charset "utf-8";
 
+/*
+
+Sugestão de organização do css, ajustar conforme o uso
+
+----------------------------------------------------------------
+>>> ÍNDICE:
+----------------------------------------------------------------
+1 - ESTRUTURA BÁSICA
+
+--------------------------------------------------------------*/
+
 /* ========== INICIO ESTRUTURA GERAL DO LAYOUT ========== */
 * {
 	margin:0;
@@ -559,33 +570,40 @@ table caption {
     font-size: 11px;
 }
 
-#conteudo table {
+table {
 	margin:0 auto;
 	background: #f8feff;
+	width: 100%;
 }
-#conteudo table td {
+table td {
 	/*background:url(../img/bg-celulas.gif) repeat-x ;*/
 	background: #fff;
 	padding:8px;
 	/*color:auto;*/
 }
-#conteudo table tr.linha:hover td {
+table tr.linha:hover td {
 	background: #f6f5f8;
 }
-#conteudo table tr.destacar td, table td.destacar {
+table tr.destacar td, table td.destacar {
 	background:#dfefc2;
 }
-#conteudo table td a:not(.btn) {
+
+table tr img{
+	margin-right: 10px;
+}
+
+table td a:not(.btn) {
 	color:#333 !important;
 }
-#conteudo table th {
+
+table th {
 	background:#abda5d;
 	padding:8px;
 	color:#3a7300;
 	text-transform:uppercase;
 	font-size:11px;
 }
-#conteudo table tfoot td {
+table tfoot td {
 	background:#f3f3f3;
 	text-align:center;
 	word-spacing:.8em;
