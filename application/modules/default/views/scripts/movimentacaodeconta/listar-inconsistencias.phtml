@@ -4,21 +4,21 @@
             $('#addCampoXls').remove();
             $('#formImpressao').submit();
         });
-        
+
         $('.btn_xls').click(function(){
             $('#addCampoXls').remove();
             $('#formImpressao').append('<input id="addCampoXls" type="hidden" name="xls" value="1">');
             $('#formImpressao').submit();
         });
-        
+
         $('.verinconsistencia').click(function(){
             var url = $(this).attr('url-inconsistencia');
             window.open(url, '_blank');
         });
     });
 </script>
-    
-<?php require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php'; ?>
+
+<?php echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php'); ?>
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'), '', true); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -45,7 +45,7 @@
             </tr>
         </table>
     </form>
-    
+
     <?php if(count($this->dados)>0){ ?>
     <!-- ============ PAGINAÇÃO ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
@@ -98,7 +98,7 @@
     </center>
     <!-- ========== FIM PAGINAÇÃO ========== -->
     <?php } ?>
-    
+
     <?php if($this->qtdRegistros > 0){ ?>
     <table class="tabela tablesorter">
         <thead>
@@ -152,9 +152,9 @@
             <?php } ?>
         </tbody>
     </table>
-    
+
     <?php if(count($this->dados)>0){ ?>
-    
+
         <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -216,7 +216,7 @@
     </table>
     <?php } ?>
     <br clear="all" />
-    
+
     <form target="_blank" class="form" name="formImpressao" id="formImpressao" method="post" action='<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'imprimir-lista-inconsistencias-captacao')); ?>'>
         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
@@ -224,7 +224,7 @@
         <input type="hidden" name="qtde" value="<?php echo $this->intTamPag;?>">
         <input type="hidden" name="pronac" value="<?php echo $this->pronac;?>">
     </form>
-    
+
 </div>
 <div id="rodapeConteudo"><span></span></div>
 <br clear="all" />
