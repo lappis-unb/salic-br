@@ -1,7 +1,7 @@
 teste Envio de Mensagem de dúvida do enquadramento
-========================
+==================================================
 
-Passo a passo do teste Envio de Mensagem de dúvida do enquadramento
+Passo a passo do teste Envio de Mensagem de dúvida do enquadramento.
 
 
 ```
@@ -23,7 +23,7 @@ Passo a passo do teste Envio de Mensagem de dúvida do enquadramento
 
 7°passo - Clicar no botão enviar.
 
-    <--============FIM ENVIO DE PERGUNTA============-->
+    <--============ FIM ENVIO DE PERGUNTA============-->
 
 ****AUTOR:** ANDERSON ALVES DA SILVA PEREIRA** 
 ****AUTOR:** HYGOR FELLIPE MOREIRA** 
