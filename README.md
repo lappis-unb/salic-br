@@ -10,6 +10,11 @@ For this repo will be used a Postgres driver
 
 For Each extension installed inside DockerFile, PHP will be compiled again.
 
+Inside DockerFile:
+* The command 'docker-php-ext-configure' will be used to set the location path to each module configurations.
+* The command 'docker-php-ext-install' will be used to install and recompile PHP with setted modules. 
+
+
 ## How to build - New image
 * Enter inside this cloned repository;
 * Execute the commando below to create a new image.
