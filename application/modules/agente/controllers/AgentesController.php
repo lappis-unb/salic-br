@@ -275,7 +275,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 }
             }
 
-            if ($dados[0]->TipoPessoa == 1) {
+            if ($dados[0]->tipopessoa == 1) {
                 $dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgente);
                 $qtdDirigentes = count($dirigentes);
                 $this->view->dirigentes = $dirigentes;
@@ -2213,23 +2213,19 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as mascaras
         $Tipo = $this->_request->getParam("Tipo");
 
-
-        $arrayAgente = array('CNPJCPF' => $cpf,
-            'TipoPessoa' => $Tipo,
-            'Status' => 0,
-            'Usuario' => $Usuario
+        $arrayAgente = array(
+            'cnpjcpf' => $cpf,
+            'tipopessoa' => $Tipo,
+            'status' => 0,
+            'usuario' => $Usuario
         );
 
-        // Retorna o idAgente cadastrado
+        $mprAgentes = new Agente_Model_AgentesMapper();
+        $mdlAgente = new Agente_Model_Agentes($arrayAgente);
+        $mprAgentes->save($mdlAgente);
 
-        $Agentes = new Agente_Model_DbTable_Agentes();
-
-        $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
-
-        $Agente = $Agentes->BuscaAgente($cpf);
-
-        $idAgente = $Agente[0]->idAgente;
-
+        $agente = $mprAgentes->findBy(array('cnpjcpf' => $cpf));
+        $idAgente = $agente['idAgente'];
 
         // ================================================ FIM SALVAR CPF/CNPJ =====================================================
         // ================================================ INICIO SALVAR NOME ======================================================
@@ -2238,7 +2234,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
 
         try {
-            $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
+            $mprNomes = new Agente_Model_NomesMapper();
+            $arrNome = array(
+                'idagente' => $idAgente,
+                'tiponome' => $TipoNome,
+                'descricao' => $nome,
+                'status' => 0,
+                'usuario' => $Usuario
+            );
+
+            $mprNomes->save(new Agente_Model_Nomes($arrNome));
+
         } catch (Exception $e) {
             parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
@@ -2362,20 +2368,21 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $Fone = $this->_request->getParam("fone");
         $divulgarFone = $this->_request->getParam("divulgarFone");
 
+
         try {
             $arrayTelefones = array(
-                'idAgente' => $idAgente,
-                'TipoTelefone' => $tipoFone,
-                'UF' => $ufFone,
-                'DDD' => $dddFone,
-                'Numero' => $Fone,
-                'Divulgar' => $divulgarFone,
-                'Usuario' => $Usuario
+                'idagente' => $idAgente,
+                'tipotelefone' => $tipoFone,
+                'uf' => $ufFone,
+                'ddd' => $dddFone,
+                'numero' => $Fone,
+                'divulgar' => $divulgarFone,
+                'usuario' => $Usuario
             );
 
+            $insereTelefone = new Agente_Model_DbTable_Telefones();
+            $insere = $insereTelefone->insert($arrayTelefones);
 
-
-            $insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
         } catch (Exception $e) {
             parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
@@ -2391,15 +2398,16 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEmail = array(
-                'idAgente' => $idAgente,
-                'TipoInternet' => $tipoEmail,
-                'Descricao' => $Email,
-                'Status' => $enviarEmail,
-                'Divulgar' => $divulgarEmail,
-                'Usuario' => $Usuario
+                'idagente' => $idAgente,
+                'tipointernet' => $tipoEmail,
+                'descricao' => $Email,
+                'status' => $enviarEmail,
+                'divulgar' => $divulgarEmail,
+                'usuario' => $Usuario
             );
 
-            $insere = Email::cadastrar($arrayEmail);
+            $insere = new Agente_Model_Email();
+            $insere = $insere->inserir($arrayEmail);
         } catch (Exception $e) {
             parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
@@ -2500,7 +2508,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             $desvincula = $vincular->Desvincular($where);
 
-            parent::message("Exclusão realizada com sucesso! ", "agente/agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso! ", "agente/agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agente/agentes/visualizadirigente/id/" . $idAgenteGeral . "/idDirigente/" . $idDirigente, "ERROR");
         }
