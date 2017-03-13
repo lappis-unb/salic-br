@@ -2447,7 +2447,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     /**
      * @todo: Testar e refatorar esse metodo.
      */
-    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso, $stProposta) {
+    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso, $stProposta = null) {
 
         $propostaNormal = 610;
 
@@ -2548,7 +2548,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             }
 
             $resultado = $db->query($sqlInteressado);
-            if($resultado->rowCount() < 1) {
+            if(!$resultado) {
                 throw new Exception ("Erro ao tentar incluir ou alterar %d registros na tabela Interessado.");
             }
 
@@ -2561,14 +2561,13 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             if($resultado->rowCount() < 1) {
                 $sqlSequencialProjetos = " INSERT INTO SAC.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
                 $resultado = $db->query($sqlSequencialProjetos);
-                if($resultado->rowCount() < 1) {
+                if(!$resultado) {
                     throw new Exception ("Não é possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
                 }
             }
 
             $sqlSequencial = "select Sequencial from sac.dbo.SequencialProjetos where ano = '{$ano}'";
-            $objSequencial = $db->fetchRow($sqlSequencial);
-            $sequencial = $objSequencial->Sequencial;
+            $sequencial = $db->fetchOne($sqlSequencial);
             $AnoProjeto = date("y");
             $NrProjeto = str_pad($sequencial, 4, "0", STR_PAD_LEFT);
             $situacaoProjeto = Projeto_Model_Situacao::PROPOSTA_TRANSFORMADA_EM_PROJETO;
@@ -2584,8 +2583,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                    OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
                                    idProjeto,Processo,Logon)
                                 SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
-                                   Mecanismo, NomeProjeto, a.CNPJCPF, {$situacaoProjeto}, getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
-                                   {$providenciaTomada}, ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
+                                   Mecanismo, NomeProjeto, a.CNPJCPF, '{$situacaoProjeto}', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
+                                   '{$providenciaTomada}', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
                                    SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
                                    FROM SAC.dbo.PreProjeto p
                                    INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
@@ -2595,85 +2594,78 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                      AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
 
             $resultado = $db->query($sqlProjetos);
-            if($resultado->rowCount() < 1) {
-                throw new Exception ("Não há registro para incluir / alterar registro na tabela Interessado");
+            if(!$resultado) {
+                throw new Exception ("N&atilde;o h&aacute; registro para incluir / alterar registro na tabela projetos");
             }
 
             $idPronac = $db->lastInsertId();
+            if (!empty($idPronac)) {
 
-            if( $stProposta !== $propostaNormal) {
+                if ($stProposta !== $propostaNormal) {
 
-                # CARREGA A TABELA DE TBDISTRIBUIRPARECER
-                $sqlVinculada = "SELECT idOrgao as idVinculada 
-                                    FROM sac.dbo.PlanoDistribuicaoProduto t 
-                                    INNER JOIN vSegmento s on (t.Segmento = s.Codigo)
-                                    WHERE t.stPrincipal = 1 and idProjeto = '{$idPreProjeto}'";
-                $idVinculada = $db->fetchOne($sqlVinculada);
+                    $tbPlanoDistribuicao = new PlanoDistribuicao();
+                    $idVinculada = $tbPlanoDistribuicao->buscarIdVinculada($idPreProjeto);
 
-                $sqlDistribuirParecer = "INSERT INTO SAC.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
-                                         SELECT {$idPronac},idProduto, 3,{$idVinculada},getdate(), stPrincipal FROM SAC.dbo.PlanoDistribuicaoProduto
-                                          WHERE idProjeto = {$idPreProjeto}";
-                $resultado = $db->query($sqlDistribuirParecer);
+                    $tbDistribuirParecer = new tbDistribuirParecer();
+                    $resultado = $tbDistribuirParecer->inserirDistribuicaoParaParecer($idPreProjeto, $idPronac, $idVinculada);
 
-                # CARREGA A TABELA DE ANÁLISE DE CONTEÚDO PARA O PARECERISTA  -- tbAnaliseDeConteudo
-                $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
-                                         SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
-                                          WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
-                                          GROUP BY idProduto";
-                $resultado = $db->query($sqlAnaliseDeConteudo);
+                    $tbAnaliseDeConteudo = new tbAnaliseDeConteudo();
+                    $resultado = $tbAnaliseDeConteudo->inserirAnaliseConteudoParaParecerista($idPreProjeto, $idPronac);
 
-                # CARREGA PLANILHA PARA O PARECERISTA -- tbPlanilhaProjeto
-                $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
-                                     (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
-                                     TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
-                                   SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
-                                        Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
-                                        MunicipioDespesa, 0
-                                        FROM SAC.dbo.tbPlanilhaProposta
-                                        WHERE idProjeto = {$idPreProjeto}";
-                $resultado = $db->query($sqlParecerista);
+                    $PlanilhaProjeto = new PlanilhaProjeto();
+                    $resultado = $PlanilhaProjeto->inserirPlanilhaParaParecerista($idPreProjeto, $idPronac);
 
-            }
-
-            # INSERIR INFORMAÇÕES NA TABELA CONTABANCARIA
-            $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
-                                 SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario}
-                                   FROM SAC.dbo.PreProjeto
-                                  WHERE idPreProjeto = {$idPreProjeto}";
-            $resultado = $db->query($sqlContaBancaria);
-
-            if($resultado->rowCount() < 1) {
-                throw new Exception ("Não é possível incluir mais de %d registros na ContaBancaria");
-            }
-
-            # CARREGAR INFORMAÇÕES PARA ENVIAR EMAIL
-            $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
-                                  idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
-            $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
-            if(!$arrayHistoricoEmail) {
-                $idTextoEmail = 12;
-                $sqlInsertHistoricoEmail = "INSERT INTO SAC.dbo.tbHistoricoEmail (idPronac,idTextoemail,DtEmail,stEstado,idUsuario)
-                                            VALUES ({$idPronac}, {$idTextoEmail}, getdate(), 1, {$idUsuario})";
-
-                $resultado = $db->query($sqlInsertHistoricoEmail);
-                if($resultado->rowCount() < 1) {
-                    throw new Exception ("Não é permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
                 }
 
-                $objTbTextoEmail = new tbTextoEmail();
-                $resultadoTetoEmail = $objTbTextoEmail->obterTextoPorIdentificador($idTextoEmail);;
+                # INSERIR INFORMAÇÕES NA TABELA CONTABANCARIA
+                $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
+                                     SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario}
+                                       FROM SAC.dbo.PreProjeto
+                                      WHERE idPreProjeto = {$idPreProjeto}";
+                $resultado = $db->query($sqlContaBancaria);
 
-                $objProjetos = new Projetos();
+                if(!$resultado) {
+                    throw new Exception ("N&atilde;o &eacute; poss&iacute;vel incluir mais de %d registros na ContaBancaria");
+                }
 
-                $resultadoMensagem = $objProjetos ->obterInteressadoProjeto($idPronac);
+                # CARREGAR INFORMAÇÕES PARA ENVIAR EMAIL
+                $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
+                                      idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
+                $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
+                if(!$arrayHistoricoEmail) {
+                    $idTextoEmail = 12;
 
-                $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$resultadoMensagem->NomeProjeto} <br> Proponente: {$resultadoMensagem->Nome}<br> </b>{$resultadoTetoEmail->dsTexto}";
+                    $objTbTextoEmail = new tbTextoEmail();
+                    $resultadoTetoEmail = $objTbTextoEmail->obterTextoPorIdentificador($idTextoEmail);;
 
-                $objInternet = new Agente_Model_DbTable_Internet();
-                $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($idPreProjeto);
+                    $objProjetos = new Projetos();
 
-                foreach($arrayEmails as $email) {
-                    EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
+                    $resultadoMensagem = $objProjetos ->obterInteressadoProjeto($idPronac);
+
+                    $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$resultadoMensagem['NomeProjeto']} <br>Proponente: {$resultadoMensagem['Nome']}<br> </b>{$resultadoTetoEmail->dsTexto}";
+
+                    $objInternet = new Agente_Model_DbTable_Internet();
+                    $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($idPreProjeto);
+
+                    foreach($arrayEmails as $email) {
+                        EmailDAO::enviarEmail(trim(strtolower($email->Descricao)), "Projeto Cultural", $mensagemEmail);
+                    }
+
+                    $dados = array(
+                        'idPRONAC' => $idPronac,
+                        'idTextoemail' => $idTextoEmail,
+                        'idAvaliacaoProposta' => new Zend_Db_Expr('NULL'),
+                        'DtEmail' => new Zend_Db_Expr('getdate()'),
+                        'stEstado' => 1,
+                        'idUsuario' => $idUsuario,
+                    );
+
+                    $tbHistoricoEmailDAO = new tbHistoricoEmail();
+                    $resultado = $tbHistoricoEmailDAO->inserir($dados);
+
+                    if(!$resultado) {
+                        throw new Exception ("N&atilde;o &eacute; permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
+                    }
                 }
             }
         } catch (Exception $objException) {
@@ -2681,8 +2673,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
     }
-
-
 
     public function listarPropostasAjaxAction()
     {

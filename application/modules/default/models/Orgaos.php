@@ -169,9 +169,9 @@ class Orgaos extends MinC_Db_Table_Abstract{
                       array('Codigo', 'Sigla'));
 
         $query->where('Vinculo = 1');
-        $query->where('idSecretaria = ' . ORGAO_SUPERIOR_IPHAN);
+        $query->where('idSecretaria = ' . Orgaos::ORGAO_SUPERIOR_IPHAN);
         $query->order('Sigla');
-
+        
         return $this->fetchAll($query);
     }
 }

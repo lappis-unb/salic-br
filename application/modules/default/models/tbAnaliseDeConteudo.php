@@ -12,18 +12,18 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
     protected $_name   = "tbAnaliseDeConteudo";
 
     /**
-     * M�todo para cadastrar
+     * Metodo para cadastrar
      * @access public
      * @param array $dados
      * @return integer (retorna o �ltimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    } // fecha metodo cadastrarDados()
 
 
     /**
-     * M�todo para alterar
+     * Metodo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -32,7 +32,7 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
     public function alterarDados($dados, $where) {
         $where = "idAnaliseDeConteudo = " . $where;
         return $this->update($dados, $where);
-    } // fecha m�todo alterarDados()
+    } // fecha metodo alterarDados()
 
 
     public function buscarOutrasInformacoes($idPronac)
@@ -46,22 +46,22 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
                      END as Enquadramento,
                    CASE
                       WHEN IncisoArtigo27_I = 0
-                           THEN 'N�o'
+                           THEN 'N&atilde;o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_I,
                   CASE
                       WHEN IncisoArtigo27_II = 0
-                           THEN 'N�o'
+                           THEN 'N&atilde;o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_II,
                    CASE
                       WHEN IncisoArtigo27_III = 0
-                           THEN 'N�o'
+                           THEN 'N&atilde;o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_III,
                    CASE
                       WHEN IncisoArtigo27_IV = 0
-                           THEN 'N�o'
+                           THEN 'N&atilde;o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_IV
             FROM tbAnaliseDeConteudo a
@@ -78,50 +78,61 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
 
     public function cidadoBuscarOutrasInformacoes($idPronac) {
 
-            $select = $this->select();
-            $select->setIntegrityCheck(false);
-            $select->from(
-                array('a' => $this->_name),
-                array(
-                    New Zend_Db_Expr("
-                        a.idPronac,
-                        p.Descricao AS Produto,
-                        CASE
-                            WHEN Artigo18 = 1
-                                THEN 'Artigo 18'
-                                ELSE 'Artigo 26'
-                            END as Enquadramento,
-                        CASE
-                            WHEN IncisoArtigo27_I = 0
-                                THEN 'N�o'
-                                ELSE 'Sim'
-                            END as IncisoArtigo27_I,
-                        CASE
-                            WHEN IncisoArtigo27_II = 0
-                                THEN 'N�o'
-                                ELSE 'Sim'
-                            END as IncisoArtigo27_II,
-                        CASE
-                            WHEN IncisoArtigo27_III = 0
-                                THEN 'N�o'
-                                ELSE 'Sim'
-                            END as IncisoArtigo27_III,
-                        CASE
-                            WHEN IncisoArtigo27_IV = 0
-                                THEN 'N�o'
-                                ELSE 'Sim'
-                            END as IncisoArtigo27_IV
-                    ")
-                )
-            );
-            $select->joinInner(
-                array('p' => 'Produto'),'a.idProduto = p.Codigo',
-                array(''), 'SAC.dbo'
-            );
-            $select->where('a.idPronac = ?', $idPronac);
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('a' => $this->_name),
+            array(
+                New Zend_Db_Expr("
+                    a.idPronac,
+                    p.Descricao AS Produto,
+                    CASE
+                        WHEN Artigo18 = 1
+                            THEN 'Artigo 18'
+                            ELSE 'Artigo 26'
+                        END as Enquadramento,
+                    CASE
+                        WHEN IncisoArtigo27_I = 0
+                            THEN 'N&atilde;o'
+                            ELSE 'Sim'
+                        END as IncisoArtigo27_I,
+                    CASE
+                        WHEN IncisoArtigo27_II = 0
+                            THEN 'N&atilde;o'
+                            ELSE 'Sim'
+                        END as IncisoArtigo27_II,
+                    CASE
+                        WHEN IncisoArtigo27_III = 0
+                            THEN 'N&atilde;o'
+                            ELSE 'Sim'
+                        END as IncisoArtigo27_III,
+                    CASE
+                        WHEN IncisoArtigo27_IV = 0
+                            THEN 'N&atilde;o'
+                            ELSE 'Sim'
+                        END as IncisoArtigo27_IV
+                ")
+            )
+        );
+        $select->joinInner(
+            array('p' => 'Produto'),'a.idProduto = p.Codigo',
+            array(''), 'SAC.dbo'
+        );
+        $select->where('a.idPronac = ?', $idPronac);
 
-            //xd($select->assemble());
-            return $this->fetchAll($select);
-        }
+        //xd($select->assemble());
+        return $this->fetchAll($select);
+    }
+
+    public function inserirAnaliseConteudoParaParecerista($idPreProjeto, $idPronac) {
+
+        $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
+                                         SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
+                                          WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
+                                          GROUP BY idProduto";
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        return $db->query($sqlAnaliseDeConteudo);
+    }
 
 }
