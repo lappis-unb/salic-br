@@ -105,7 +105,7 @@
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
-    <?php require_once "inc/cabecalho.php";?>
+    <?php echo $this->partial('inc/cabecalho.php', $this)?>
     <?php
         $arrayIdVisao = array();
         // array com o id das visoes do agente

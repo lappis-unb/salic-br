@@ -396,7 +396,7 @@
 </script>
 
 
-<?php require_once "inc/menu.inc.php"; // menu ?>
+<?php echo $this->partial('inc/menu.inc.php', $this) // menu ?>
 
 <?php 
     if (!empty($this->buscastatus) && $this->buscastatus['stPedidoAlteracao'] == "A") {
