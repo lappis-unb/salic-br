@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  *
  */
-require_once "inc/menu.inc.php"; // menu 
+echo $this->partial('inc/menu.inc.php', $this) // menu 
 ?>
 
 <div id="breadcrumb">
@@ -33,7 +33,7 @@ require_once "inc/menu.inc.php"; // menu
 
 
 
-    <?php require_once "inc/menu_abas.inc.php"; // menu ?>
+    <?php echo $this->partial('inc/menu_abas.inc.php', $this) // menu ?>
 
     <br />
     <div><!-- ========== Inicio Parecer Consolidado ========== -->

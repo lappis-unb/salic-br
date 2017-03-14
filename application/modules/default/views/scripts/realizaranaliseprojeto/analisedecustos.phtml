@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
-require_once "inc/menu.inc.php"; // menu vertical
+echo $this->partial('inc/menu.inc.php', $this) // menu vertical
 
 if($this->bln_readequacao == "true"):
     $urlForm = $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'analisedecustosreadequacao'));
@@ -401,7 +401,7 @@ endif;
 </div>
 <!-- ========== FIM TITULO ========== -->
 <div id="conteudo">
-    <?php require_once "inc/menu_abas.inc.php"; // menu    ?>
+    <?php echo $this->partial('inc/menu_abas.inc.php', $this) // menu    ?>
     <div id="dialog-valor" class="sumir" title="Valor Inv&aacute;lido">
         <div class="msgERROR">
             <div>Valor de remanejamento maior que o permitido! M&aacute;ximo : <?php echo $this->formatarReal($this->totalproponente - $this->totalcomponente);?></div>

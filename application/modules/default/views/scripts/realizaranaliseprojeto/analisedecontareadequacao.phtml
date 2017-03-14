@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-require_once "inc/menu.inc.php"; // menu 
+echo $this->partial('inc/menu.inc.php', $this) // menu 
 ?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -37,7 +37,7 @@ require_once "inc/menu.inc.php"; // menu
 
 
 
-    <?php require_once "inc/menu_abas.inc.php"; // menu   ?>
+    <?php echo $this->partial('inc/menu_abas.inc.php', $this) // menu   ?>
 
     <!-- ========== SCRIPT MODAL ========== -->
     <script type="text/javascript">
