@@ -367,7 +367,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
     #conteudo ul li input{ border: 1px solid #cecece; text-align: center;  height: 31px; width: 150px; }
     #cke_empregosGerados { margin-top: 10px; }
 </style>
-<?php require_once "scripts/comprovarexecucaofisica/inc/menu-relatorio-final.php"; ?>
+<?php echo $this->partial('comprovarexecucaofisica/inc/menu-relatorio-final.php', $this) ?>
 <div id="camposObrigatorios" class="sumir"></div>
 
 <div id="breadcrumb">
