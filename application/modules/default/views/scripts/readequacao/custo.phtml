@@ -10,7 +10,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-require_once "inc/menu.inc.php"; // menu
+echo $this->partial('inc/menu.inc.php', $this) // menu
 // define o tipo de custo
 $tpCusto = empty($this->idProduto) ? 'Custo administrativo' : 'Custo por produtos';
 $dsCusto = empty($this->idProduto) ? 'Custo administrativo' : 'Nome do produto: ' . $this->Produto;

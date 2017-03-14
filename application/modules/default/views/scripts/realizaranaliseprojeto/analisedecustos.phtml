@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
-require_once "inc/menu.inc.php"; // menu vertical
+echo $this->partial('inc/menu.inc.php', $this) // menu vertical
 
 if($this->bln_readequacao == "true"):
     $urlForm = $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'analisedecustosreadequacao'));

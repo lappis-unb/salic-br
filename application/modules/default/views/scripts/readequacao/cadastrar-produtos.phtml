@@ -9,7 +9,7 @@
      * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
      * @link http://salic.cultura.gov.br
      */
-    require_once "inc/menu.inc.php"; // menu
+    echo $this->partial('inc/menu.inc.php', $this) // menu
     // pega o id do produto, e, define os valores dos campos do formulário, se será lido o dado original ou o dado readequado
     $idProduto = $this->idProduto;
 
