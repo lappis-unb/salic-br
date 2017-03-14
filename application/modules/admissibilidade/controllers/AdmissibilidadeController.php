@@ -110,7 +110,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         // Busca na tabela apoio ExecucaoImediata stproposta
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        if( !empty($this->view->itensGeral[0]->stProposta))
+        if (!empty($this->view->itensGeral[0]->stProposta))
             $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
 
         $Pronac = null;
@@ -756,7 +756,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         // Busca na tabela apoio ExecucaoImediata stproposta
         //  xd($this->idPreProjeto);
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        if( !empty($this->view->itensGeral[0]->stProposta))
+        if (!empty($this->view->itensGeral[0]->stProposta))
             $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
 
         $Pronac = null;
@@ -978,27 +978,27 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function redistribuiranaliseAction()
     {
-            $orgao = new Orgaos();
-            $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
+        $orgao = new Orgaos();
+        $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
 
-            $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
-            $orgaoSuperior = $orgao[0]['Superior'];
+        $orgao = $orgao->codigoOrgaoSuperior($this->codOrgao);
+        $orgaoSuperior = $orgao[0]['Superior'];
 
-            $where['idSecretaria = ?'] = $orgaoSuperior;
+        $where['idSecretaria = ?'] = $orgaoSuperior;
 
-            $analistas = $vwPainelAvaliar->propostas($where,null, null,null);
+        $analistas = $vwPainelAvaliar->propostas($where, null, null, null);
 
 
-            $this->view->analistas = array();
-            $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
-            $i = 0;
-            foreach ($analistas as $analista) {
-                $this->view->analistas[$analista->Tecnico][$i]['nrProposta'] = $analista->idProjeto;
-                $this->view->analistas[$analista->Tecnico][$i]['NomeProjeto'] = $analista->NomeProposta;
-                $this->view->analistas[$analista->Tecnico][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
-                $this->view->analistas[$analista->Tecnico][$i]['fase'] = $analista->Fase;
-                $i++;
-            }
+        $this->view->analistas = array();
+        $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
+        $i = 0;
+        foreach ($analistas as $analista) {
+            $this->view->analistas[$analista->Tecnico][$i]['nrProposta'] = $analista->idProjeto;
+            $this->view->analistas[$analista->Tecnico][$i]['NomeProjeto'] = $analista->NomeProposta;
+            $this->view->analistas[$analista->Tecnico][$i]['DtMovimentacao'] = ConverteData($analista->DtAdmissibilidade, 5);;
+            $this->view->analistas[$analista->Tecnico][$i]['fase'] = $analista->Fase;
+            $i++;
+        }
     }
 
     public function redistribuiranaliseitemAction()
@@ -1011,7 +1011,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/admissibilidade/admissibilidade/redistribuiranalise", "CONFIRM");
         }
 
-        if ($_REQUEST['idProjeto'] ) {
+        if ($_REQUEST['idProjeto']) {
             $this->view->analista = AdmissibilidadeDAO::consultarProposta($this->getRequest()->getParam('idProjeto'));
 
             $params = new stdClass();
@@ -1216,8 +1216,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     {
         $get = Zend_Registry::get("get");
         $idAgente = $get->agente;
-        $this->view->idPreProjeto = !empty($get->idPreProjeto) ? $get->idPreProjeto:null;
-        $this->view->realizar_analise = !empty($get->realizar_analise) ? $get->realizar_analise:null;
+        $this->view->idPreProjeto = !empty($get->idPreProjeto) ? $get->idPreProjeto : null;
+        $this->view->realizar_analise = !empty($get->realizar_analise) ? $get->realizar_analise : null;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsPropostas = $tblProposta->buscar(array("idagente = ?" => $idAgente), array("nomeprojeto ASC"));
@@ -1794,7 +1794,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
 
-        if (Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo){
+        if (Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo) {
             $where['idUsuario = ?'] = $this->idUsuario;
         }
 
@@ -2447,17 +2447,18 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     /**
      * @todo: Testar e refatorar esse metodo.
      */
-    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso, $stProposta = null) {
+    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso, $stProposta = null)
+    {
 
         $propostaNormal = 610;
 
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         try {
             $objInteressado = new Interessado();
             $arrayInteressados = $objInteressado->findAll(array('CgcCpf' => $cnpjcpf));
 
-            if(!$arrayInteressados) {
+            if (!$arrayInteressados) {
                 $sqlInteressado = "INSERT INTO SAC.dbo.Interessado (CgcCpf,TipoPessoa,Nome,Responsavel,Endereco,Cidade,UF,CEP,Natureza,Esfera,Administracao,Utilidade)
                                   SELECT TOP 1 p.CNPJCPF,
                                      case
@@ -2548,7 +2549,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             }
 
             $resultado = $db->query($sqlInteressado);
-            if(!$resultado) {
+            if (!$resultado) {
                 throw new Exception ("Erro ao tentar incluir ou alterar %d registros na tabela Interessado.");
             }
 
@@ -2558,10 +2559,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $resultado = $db->query($sqlSequencialProjetos);
             $ano = date('Y');
-            if($resultado->rowCount() < 1) {
+            if ($resultado->rowCount() < 1) {
                 $sqlSequencialProjetos = " INSERT INTO SAC.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
                 $resultado = $db->query($sqlSequencialProjetos);
-                if(!$resultado) {
+                if (!$resultado) {
                     throw new Exception ("Não é possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
                 }
             }
@@ -2573,7 +2574,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $situacaoProjeto = Projeto_Model_Situacao::PROPOSTA_TRANSFORMADA_EM_PROJETO;
             $providenciaTomada = 'Proposta transformada em projeto cultural';
 
-            if( $stProposta !== $propostaNormal) {
+            if (!empty($stProposta) && $stProposta !== $propostaNormal) {
                 $situacaoProjeto = Projeto_Model_Situacao::ENCAMINHADO_PARA_ANALISE_TECNICA;
                 $providenciaTomada = 'Projeto encamihado a unidade vinculada para an&aacute;lise e emiss&atilde;o de parecer t&eacute;cnico';
             }
@@ -2594,14 +2595,14 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                      AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
 
             $resultado = $db->query($sqlProjetos);
-            if(!$resultado) {
+            if (!$resultado) {
                 throw new Exception ("N&atilde;o h&aacute; registro para incluir / alterar registro na tabela projetos");
             }
 
             $idPronac = $db->lastInsertId();
             if (!empty($idPronac)) {
 
-                if ($stProposta !== $propostaNormal) {
+                if (!empty($stProposta) && $stProposta !== $propostaNormal) {
 
                     $tbPlanoDistribuicao = new PlanoDistribuicao();
                     $idVinculada = $tbPlanoDistribuicao->buscarIdVinculada($idPreProjeto);
@@ -2624,7 +2625,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                       WHERE idPreProjeto = {$idPreProjeto}";
                 $resultado = $db->query($sqlContaBancaria);
 
-                if(!$resultado) {
+                if (!$resultado) {
                     throw new Exception ("N&atilde;o &eacute; poss&iacute;vel incluir mais de %d registros na ContaBancaria");
                 }
 
@@ -2632,7 +2633,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
                                       idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
                 $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
-                if(!$arrayHistoricoEmail) {
+                if (!$arrayHistoricoEmail) {
                     $idTextoEmail = 12;
 
                     $objTbTextoEmail = new tbTextoEmail();
@@ -2640,14 +2641,14 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
                     $objProjetos = new Projetos();
 
-                    $resultadoMensagem = $objProjetos ->obterInteressadoProjeto($idPronac);
+                    $resultadoMensagem = $objProjetos->obterInteressadoProjeto($idPronac);
 
                     $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$resultadoMensagem['NomeProjeto']} <br>Proponente: {$resultadoMensagem['Nome']}<br> </b>{$resultadoTetoEmail->dsTexto}";
 
                     $objInternet = new Agente_Model_DbTable_Internet();
                     $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($idPreProjeto);
 
-                    foreach($arrayEmails as $email) {
+                    foreach ($arrayEmails as $email) {
                         EmailDAO::enviarEmail(trim(strtolower($email->Descricao)), "Projeto Cultural", $mensagemEmail);
                     }
 
@@ -2663,7 +2664,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     $tbHistoricoEmailDAO = new tbHistoricoEmail();
                     $resultado = $tbHistoricoEmailDAO->inserir($dados);
 
-                    if(!$resultado) {
+                    if (!$resultado) {
                         throw new Exception ("N&atilde;o &eacute; permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
                     }
                 }
@@ -2683,11 +2684,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $order = $this->getRequest()->getParam('order');
         $columns = $this->getRequest()->getParam('columns');
 
-        $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' '. $order[0]['dir']) : array("DtAvaliacao DESC");
+        $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' ' . $order[0]['dir']) : array("DtAvaliacao DESC");
 
         $vwPainelAvaliar = new Admissibilidade_Model_DbTable_VwPainelAvaliarPropostas();
 
-        if (Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo){
+        if (Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo) {
             $where['idUsuario = ?'] = $this->idUsuario;
         }
 
@@ -2703,12 +2704,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         if (!empty($propostas)) {
             $zDate = new Zend_Date();
-            foreach($propostas as $key => $proposta){
+            foreach ($propostas as $key => $proposta) {
                 $zDate->set($proposta->DtMovimentacao);
 
                 $proposta->NomeProposta = utf8_encode($proposta->NomeProposta);
                 $proposta->Tecnico = utf8_encode($proposta->Tecnico);
-                $proposta->DtMovimentacao= $zDate->toString('dd/MM/y h:m');
+                $proposta->DtMovimentacao = $zDate->toString('dd/MM/y h:m');
                 $aux[$key] = $proposta;
             }
 
@@ -2720,7 +2721,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             "data" => !empty($aux) ? $aux : 0,
             'recordsTotal' => $recordsTotal ? $recordsTotal->total : 0,
             'draw' => $draw,
-            'recordsFiltered' => $recordsFiltered ? $recordsFiltered->total : 0 ));
+            'recordsFiltered' => $recordsFiltered ? $recordsFiltered->total : 0));
     }
 
     public function exibirpropostaculturalAjaxAction()
@@ -2749,7 +2750,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         // Busca na tabela apoio ExecucaoImediata stproposta
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        if( !empty($this->view->itensGeral[0]->stProposta))
+        if (!empty($this->view->itensGeral[0]->stProposta))
             $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
 
         $Pronac = null;
