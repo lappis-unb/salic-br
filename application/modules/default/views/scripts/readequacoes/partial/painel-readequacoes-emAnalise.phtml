@@ -38,14 +38,13 @@
           $Pareceristas = array();
 		    if(count($dadosProjetos)>0){
                 $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
-                $a = new Agentes();
-
+                
                 if (!in_array($this->idOrgao, $outrasVinculadas)) {
-                    $a = new Agentes();
+                    $a = new Agente_Model_DbTable_Agentes();
                     $Pareceristas = array();
                     $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
                 } else {
-                    $a = new Agentes();
+                    $a = new Agente_Model_DbTable_Agentes();
                     $Pareceristas = array();
                     $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
                 }
