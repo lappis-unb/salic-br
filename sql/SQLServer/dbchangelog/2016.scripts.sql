@@ -14,8 +14,6 @@ WHERE idPlanilhaEtapa=5;
 -- Remove Not Null na coluna idPolicaoDaLogo
 ALTER TABLE sac.dbo.PlanoDistribuicaoProduto ALTER COLUMN idPosicaoDaLogo INT;
 
-
-
 -- cria itens para a lista de execução imediata
 INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta normal', 1);
 INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proteção do patrimônio material', 1);
