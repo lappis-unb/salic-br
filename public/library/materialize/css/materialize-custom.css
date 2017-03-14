@@ -169,6 +169,16 @@ table.tabela td.destacar span,
 }
 
 
+#conteudoImpressao .tabela tr td span.red,
+#conteudoImpressao .tabela tr td.red,
+#conteudoImpressao .tabela tr td span.blue,
+#conteudoImpressao .tabela tr td.blue,
+#conteudoImpressao .tabela tr td.orange,
+#conteudoImpressao .tabela tr td span.orange,
+#conteudoImpressao .tabela tr td.black,
+#conteudoImpressao .tabela tr td span.black,
+#conteudoImpressao .tabela tr td span.green,
+#conteudoImpressao .tabela tr td.green,
 #planilhaOrcamentaria .tabela tr td span.red,
 #planilhaOrcamentaria .tabela tr td.red,
 #planilhaOrcamentaria .tabela tr td span.blue,

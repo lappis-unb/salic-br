@@ -382,6 +382,89 @@ select {
 	background:url(../img/voltar.png) no-repeat;
 	padding-left:17px;
 }
+
+.container-fluid #breadcrumb {
+    left: 0px;
+}
+.container-fluid #novo-titulo {
+	background: transparent;
+	/*border-left: 5px solid #35953f;*/
+	font-size: 24px;
+	border-bottom: 1px solid #35953f;
+	color: #1D5B22;
+	width: 100%;
+    display: block;
+    clear: both;
+	padding: 10px;
+	position: relative;
+	top: 0px;
+	left: 0px;
+    margin-bottom: 20px;
+}
+
+.container-fluid #novo-titulo div {
+	background: transparent;
+	padding: 0px;
+}
+
+.container-fluid #novo-titulo .voltar {
+    background: transparent;
+    color: #1D5B22;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.container-fluid #novo-titulo .voltar i {
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.container-fluid table {
+    margin: 0px;
+    width: 100%;
+    background: transparent;
+}
+
+.container-fluid table td {
+    background: transparent;
+}
+
+.container-fluid table.tabela .btn-localizar {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.container-fluid form#frmNovaProposta table th {
+    background: #abda5d;
+    padding: 10px;
+    color: #3a7300;
+    text-transform: uppercase;
+    font-size: 13px;
+    border-bottom: 3px solid #dddddd;
+    background: transparent;
+}
+
+.container-fluid form#frmNovaProposta table td {
+    padding: 20px 0px;
+}
+
+.container-fluid table td a:not(.btn) {
+	text-decoration: underline;
+}
+
+.container-fluid form#frmNovaProposta table td .btn {
+    margin-right: 15px;
+}
+
+.container-fluid .loading {
+	text-align: center;
+}
+
+.container-fluid .loading {
+	width: 600px;
+	margin: 0 auto;
+}
+
 #menuContexto {
 	width:224px;
 	position:relative;
@@ -597,11 +680,11 @@ table td a:not(.btn) {
 }
 
 table th {
-	background:#abda5d;
-	padding:8px;
-	color:#3a7300;
+	background: #4caf50;
+	padding: 8px;
+	color: #f8f8f8;
 	text-transform:uppercase;
-	font-size:11px;
+	font-size:14px;
 }
 table tfoot td {
 	background:#f3f3f3;
