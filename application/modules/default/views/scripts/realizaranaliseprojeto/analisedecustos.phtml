@@ -401,7 +401,7 @@ endif;
 </div>
 <!-- ========== FIM TITULO ========== -->
 <div id="conteudo">
-    <?php require_once "inc/menu_abas.inc.php"; // menu    ?>
+    <?php echo $this->partial('inc/menu_abas.inc.php', $this) // menu    ?>
     <div id="dialog-valor" class="sumir" title="Valor Inv&aacute;lido">
         <div class="msgERROR">
             <div>Valor de remanejamento maior que o permitido! M&aacute;ximo : <?php echo $this->formatarReal($this->totalproponente - $this->totalcomponente);?></div>
