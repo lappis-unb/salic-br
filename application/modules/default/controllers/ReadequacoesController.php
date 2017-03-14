@@ -136,7 +136,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $buscarEstado = $uf->buscar();
             $this->view->UFs = $buscarEstado;
 
-            $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+            $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
             $tbPlanilhaEtapa = new tbPlanilhaEtapa();
@@ -3259,7 +3259,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                             // READEQUAÇÃO DE PLANO DE DISTRIBUIÇÃO
                             } else if($read->idTipoReadequacao == 11){ //Se for readequação de plano de distribuição, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
-                                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+                                $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                                 $planosDistribuicao = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
 
@@ -3722,7 +3722,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             // READEQUAÇÃO DE PLANO DE DISTRIBUIÇÃO
             } else if($read->idTipoReadequacao == 11){ //Se for readequação de plano de distribuição, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
-                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                 $planosDistribuicaoReadequados = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
 
@@ -4045,7 +4045,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $buscarEstado = EstadoDAO::buscar();
             $this->view->UFs = $buscarEstado;
 
-            $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+            $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
             $tbPlanilhaEtapa = new tbPlanilhaEtapa();

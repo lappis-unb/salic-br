@@ -96,7 +96,7 @@
 </script>
 
 <?php if(in_array($this->grupoAtivo, array(90,93,97,103,104,110,113,114,115,121,122,123,124,125,126,127,128,132,134,135,136,137,138,139))){
-    require_once "inc/menu.inc.php"; // menu
+    echo $this->partial('inc/menu.inc.php', $this) // menu
 }?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->

@@ -10,7 +10,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-require_once "inc/menu.inc.php"; // menu
+echo $this->partial('inc/menu.inc.php', $this) // menu
 
 $urlPronac = null;
 $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->idPronac) : "";

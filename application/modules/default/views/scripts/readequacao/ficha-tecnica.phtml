@@ -10,7 +10,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-require_once "inc/menu.inc.php"; // menu
+echo $this->partial('inc/menu.inc.php', $this) // menu
 // define os valores dos campos do formulário, se será lido o dado original ou o dado readequado
 $FichaAP        = !empty($this->dadosAP['FichaTecnica'])  ? strip_tags($this->dadosAP['FichaTecnica']) : 'Não Aplicável';
 $FichaSR        = isset($this->dadosSR['dsFichaTecnica']) ? $this->dadosSR['dsFichaTecnica']           : '';

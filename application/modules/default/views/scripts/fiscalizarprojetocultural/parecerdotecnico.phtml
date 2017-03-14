@@ -1,6 +1,6 @@
 <?php
 $projeto = $this->projeto[0];
-require_once "inc/menu.inc.php";
+echo $this->partial('inc/menu.inc.php', $this)
 
 $relatorio = $this->relatorioFiscalizacao;
 $historicoDevolucao = $this->historicoDevolucao;
