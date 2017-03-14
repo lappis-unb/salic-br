@@ -38,7 +38,15 @@
                         <form class="materialize" name="inicial" id="inicial"
                               onsubmit="return validaSenha();"
                               method="POST"
-                              action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'login'), null, true); ?>">
+                              action="<?php echo $this->url(
+                                  array(
+                                      'module' => 'autenticacao',
+                                      'controller' => 'index',
+                                      'action' => 'login'
+                                  )
+                                  , null
+                                  , true
+                              ); ?>">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">account_circle</i>
@@ -64,8 +72,7 @@
                         </form>
                     </div>
                     <div class="card-action center-align">
-                        <a
-                            href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>');"
+                        <a  href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>');"
                             class="tooltipped" data-delay="50" data-tooltip="Se cadastrar">
                             N&atilde;o sou cadastrado
                         </a>
