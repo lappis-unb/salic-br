@@ -26,7 +26,7 @@
                     $("#td-grupo-d").html(data.dadosPlanilha.GrupoD);
                 } else {
                     $("#alerta").dialog("destroy");
-                    $("#alerta").html("Não foi possível fazer os cálculos da planilha.<br />Tente novamente mais tarde!");
+                    $("#alerta").html("Nï¿½o foi possï¿½vel fazer os cï¿½lculos da planilha.<br />Tente novamente mais tarde!");
                     $("#alerta").dialog({
                         resizable: false,
                         title: 'Alerta!',
@@ -105,14 +105,14 @@
         
         $('#finalizarRemanejamento').click(function(){
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente finalizar o remanejamento?<br /><br />Após a confirmação, você não terá mais acesso a essa funcionalidade.');
+            $("#alerta").html('Deseja realmente finalizar o remanejamento?<br /><br />Apï¿½s a confirmaï¿½ï¿½o, vocï¿½ nï¿½o terï¿½ mais acesso a essa funcionalidade.');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width:370,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'Nï¿½o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -151,7 +151,7 @@
                         atualizarDiferencaDeValores();
                         atualizaDadosGrupos();
                     } else {
-                        //ABRE O MODAL DE CONFIRMAÇÃO DA AÇÃO REALIZADA
+                        //ABRE O MODAL DE CONFIRMAï¿½ï¿½O DA Aï¿½ï¿½O REALIZADA
                         $("#modalItem").dialog('close');
                         $("#alerta").dialog("destroy");
                         $("#alerta").html('Ocorreu um erro durante o processo.<br />Favor entrar em contato com o administrador do sistema!');
@@ -177,14 +177,14 @@
             var idPronac = $(this).attr('idPronac');
             $("#modalItem").dialog('close');
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente cancelar todas as modificações feitas nos itens da planilha?');
+            $("#alerta").html('Deseja realmente cancelar todas as modificaï¿½ï¿½es feitas nos itens da planilha?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width:330,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'Nï¿½o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -198,7 +198,7 @@
                                 if(data.resposta){
                                     location.reload();
                                 } else {
-                                    //ABRE O MODAL DE CONFIRMAÇÃO DA AÇÃO REALIZADA
+                                    //ABRE O MODAL DE CONFIRMAï¿½ï¿½O DA Aï¿½ï¿½O REALIZADA
                                     $("#modalItem").dialog('close');
                                     $("#alerta").dialog("destroy");
                                     $("#alerta").html(data.msg);
@@ -228,7 +228,7 @@
             var idPlanilhaAprovacao = $(this).attr('idPlanilhaAprovacao'),
                 itemClicado = $(this);
                 
-            //AO ABRIR A MODAL, LIMPA TODOS OS CAMPOS EDITÁVEIS
+            //AO ABRIR A MODAL, LIMPA TODOS OS CAMPOS EDITï¿½VEIS
             $('.modalObrigatorios').each(function(){
                 $(this).css('border-color', '#CCCCCC');
                 $(this).val('');
@@ -238,7 +238,7 @@
             $('#TotalCalculado').css('color','#222222');
             $('#textoErroValores').html('');
 
-            //BUSCA OS DADOS DO ITEM PARA VISUALIZAÇÃO DOS NA MODAL
+            //BUSCA OS DADOS DO ITEM PARA VISUALIZAï¿½ï¿½O DOS NA MODAL
             $.ajax({
                 type: 'POST',
                 url: '<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'remanejamento-alterar-item'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>',
@@ -282,7 +282,7 @@
                             valorParaMsgErro = data.dadosPlanilhaAtiva.TotalSolicitado,
                             mensagem = '';
                     
-                        //MOSTRA OS DADOS NA MODAL APÓS ABRI-LA
+                        //MOSTRA OS DADOS NA MODAL APï¿½S ABRI-LA
                         $("#modalItem").dialog("destroy");
                         $("#modalItem").dialog({
                             resizable: false,
@@ -315,13 +315,13 @@
                                     });
                                     
                                     if(obrigatorios > 0){
-                                        mensagem += '- Favor preencher os dados obrigatórios.<br/>';
+                                        mensagem += '- Favor preencher os dados obrigatï¿½rios.<br/>';
                                     }
 
                                     var TotalCalculadoComponente = $('#TotalCalculado').html().replace(/[^\d]/g, "");
                                     if(parseInt(TotalCalculadoComponente) < parseInt(vlComprovadoDoItemValidacao)){
                                         //$('#TotalCalculado').css('color','red');
-                                        mensagem += '- O valor total do item não pode ser menor do que o valor comprovado de '+data.valoresDoItem.vlComprovadoDoItem+'.<br/>';
+                                        mensagem += '- O valor total do item nï¿½o pode ser menor do que o valor comprovado de '+data.valoresDoItem.vlComprovadoDoItem+'.<br/>';
                                         erros++;
                                     }
                                     
@@ -330,11 +330,11 @@
                                         erros++;
                                         var vlComp = parseInt(vlComprovadoDoItemValidacao+'00');
                                         if(vlComp < data.dadosPlanilhaAtiva.ValorMinimoProItemValidacao){
-                                            mensagem += '- O valor total do item não pode ser menor que '+data.dadosPlanilhaAtiva.ValorMinimoProItem+'.<br/>';
+                                            mensagem += '- O valor total do item nï¿½o pode ser menor que '+data.dadosPlanilhaAtiva.ValorMinimoProItem+'.<br/>';
                                         }
                                     }
                                     if(parseInt(TotalCalculadoComponente) > parseInt(valorMaximoValidacao)){
-                                        mensagem += '- O valor total do item não pode ser maior que '+data.dadosPlanilhaAtiva.ValorMaximoProItem+'.<br/>';
+                                        mensagem += '- O valor total do item nï¿½o pode ser maior que '+data.dadosPlanilhaAtiva.ValorMaximoProItem+'.<br/>';
                                         erros++;
                                     }
 
@@ -374,31 +374,31 @@
                                                 valorSolicitado: valorParaMsgErro
                                             },
                                             success: function(data){
-                                                // recebe os valores do formulário
+                                                // recebe os valores do formulï¿½rio
                                                 var qtd = Quantidade,
                                                     ocorrencia = Ocorrencia,
                                                     valor = ValorUnitario,
                                                     Total = 0;
 
-                                                // retira os pontos e as vírgulas, deixando somente números
+                                                // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
                                                 valor = valor.replace(/\D/g, "")
                                                 .replace(/(\d{0})(\d)/, "$1$2")
                                                 // adiciona o ponto na casa decimal
                                                 .replace(/(\d)(\d{2})$/, "$1.$2");
 
-                                                // converte para float e adiciona precisão decimal
+                                                // converte para float e adiciona precisï¿½o decimal
                                                 qtd = parseFloat(qtd).toFixed(2);
                                                 ocorrencia = parseFloat(ocorrencia).toFixed(2);
                                                 valor = parseFloat(valor).toFixed(2);
 
-                                                // variável com o resultado
+                                                // variï¿½vel com o resultado
                                                 Total = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-                                                // se não for número
+                                                // se nï¿½o for nï¿½mero
                                                 if (isNaN(Total)){
                                                     Total = '';
                                                 }
-                                                // caso seja número
+                                                // caso seja nï¿½mero
                                                 else {
                                                     // formata para real
                                                     Total = Total.replace(/\D/g, "");
@@ -428,7 +428,7 @@
                                                     atualizaDadosGrupos();
                                                 }
                                                 
-                                                //ABRE O MODAL DE CONFIRMAÇÃO DA AÇÃO REALIZADA
+                                                //ABRE O MODAL DE CONFIRMAï¿½ï¿½O DA Aï¿½ï¿½O REALIZADA
                                                 $("#modalItem").dialog('close');
                                                 $("#alerta").dialog("destroy");
                                                 $("#alerta").html(data.msg);
@@ -462,31 +462,31 @@
         });
         
         $('.multiplicarValores').keyup(function(){
-            // recebe os valores do formulário
+            // recebe os valores do formulï¿½rio
             var qtd = $('#modalQuantidade').val(),
                 ocorrencia = $('#modalOcorrencia').val(),
                 valor = $('#modalValorUnitario').val();
 
-            // retira os pontos e as vírgulas, deixando somente números
+            // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
             valor = valor.replace(/\D/g, "")
             .replace(/(\d{0})(\d)/, "$1$2")
             // adiciona o ponto na casa decimal
             .replace(/(\d)(\d{2})$/, "$1.$2");
 
-            // converte para float e adiciona precisão decimal
+            // converte para float e adiciona precisï¿½o decimal
             qtd        = parseFloat(qtd).toFixed(2);
             ocorrencia = parseFloat(ocorrencia).toFixed(2);
             valor      = parseFloat(valor).toFixed(2);
 
-            // variável com o resultado
+            // variï¿½vel com o resultado
             resultado = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-            // se não for número
+            // se nï¿½o for nï¿½mero
             if (isNaN(resultado))
             {
                 resultado = '';
             }
-            // caso seja número
+            // caso seja nï¿½mero
             else
             {
                 // formata para real
@@ -514,7 +514,8 @@
 
 </script>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -544,24 +545,24 @@
     
     <table class="tabela">
         <tr class="destacar">
-            <td align="center"><span class="bold">Grupo A</span><br /><span style="font-size: 12px;">Pré-Produçao / Preparação &AMP; Produção / Execução</span></td>
-            <td align="center"><span class="bold">Grupo B</span><br /><span style="font-size: 12px;">Divulgação / Comercialização</span></td>
+            <td align="center"><span class="bold">Grupo A</span><br /><span style="font-size: 12px;">Pr&eacute;-Produ&ccedil;ao / Prepara&ccedil;&atilde;o &AMP; Produ&ccedil;&atilde;o / Execu&ccedil;&atilde;o</span></td>
+            <td align="center"><span class="bold">Grupo B</span><br /><span style="font-size: 12px;">Divulga&ccedil;&atilde;o / Comercializa&ccedil;&atilde;o</span></td>
             <td align="center"><span class="bold">Grupo C</span><br /><span style="font-size: 12px;">Custos / Administrativos</span></td>
             <td align="center"><span class="bold">Grupo D</span><br /><span style="font-size: 12px;">Recolhimentos</span></td>
             <td align="center" class="w200 bold">Valor da Planilha Remanejada (R$)<br />&nbsp;</td>
             <td align="center" style="width: 4px;" class="bold">Reintegrar<br />&nbsp;</td>
         </tr>
         <tr>
-            <td align="center" id="td-grupo-a"><span class="bold black">R$ 0,00</span></td>
-            <td align="center" id="td-grupo-b"><span class="bold black">R$ 0,00</span></td>
-            <td align="center" id="td-grupo-c"><span class="bold black">R$ 0,00</span></td>
-            <td align="center" id="td-grupo-d"><span class="bold black">R$ 0,00</span></td>
+            <td align="center" id="td-grupo-a"><span class= "bold black-text" >R$ 0,00</span></td>
+            <td align="center" id="td-grupo-b"><span class= "bold black-text">R$ 0,00</span></td>
+            <td align="center" id="td-grupo-c"><span class= "bold black-text">R$ 0,00</span></td>
+            <td align="center" id="td-grupo-d"><span class= "bold black-text">R$ 0,00</span></td>
             <td align="center">
                 <?php /***** CARREGA VALOR ENTRE AS PLANILHAS ATIVA E REMANEJADA *****/ ?>
                 <script type="text/javascript">
                     jqAjaxLink('<?php echo $this->Url(array('controller' => 'consultardadosprojeto', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
                 </script>
-                <div id="valorEntrePlanilhas"><span class="bold black">R$ 0,00</span></div>
+                <div id="valorEntrePlanilhas"><span class="bold black-text">R$ 0,00</span></div>
                 <?php /****** FIM VALOR ENTRE AS PLANILHAS ATIVA E REMANEJADA ******/ ?>
             </td>
             <td class="centro">
@@ -581,7 +582,7 @@
             ?>
             <tr>
                 <td>
-                    <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos" style="width:90%"><span class="red del_link" style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span></div>
+                    <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos" style="width:90%"><span class="red-text del_link" style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span></div>
                 </td>
             </tr>
             <?php
@@ -594,7 +595,7 @@
                 ?>
                 <tr class='master' fonte="<?php echo $nrfonte; ?>">
                     <td class='master'>
-                        <div  tipo="produto" aberto="true" fonte="<?php echo $nrfonte; ?>" produto ="<?php echo $nrproduto; ?>" class="icn_menos clickproduto" style="width:98%; margin-left:2%;"><span class="green del_link" style="font-size: 16pt; font-weight: 800;"><?php echo $produto; ?></span></div>
+                        <div  tipo="produto" aberto="true" fonte="<?php echo $nrfonte; ?>" produto ="<?php echo $nrproduto; ?>" class="icn_menos clickproduto" style="width:98%; margin-left:2%;"><span class="green-text del_link" style="font-size: 16pt; font-weight: 800;"><?php echo $produto; ?></span></div>
                     </td>
                 </tr>
                 <?php
@@ -608,7 +609,7 @@
                     ?>
                     <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                         <td>
-                            <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
+                            <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                         </td>
                     </tr>
                     <?php
@@ -621,7 +622,7 @@
                         ?>
                         <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                             <td>
-                                <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
+                                <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black-text del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
                             </td>
                         </tr>
                         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -675,8 +676,8 @@
                                     $nrcidade++;
                                     ?>
                                     <tr>
-                                        <td colspan="6" class="black" style="font-size: 14pt;">Total da UF</td>
-                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalUf, 2, ",", "."); ?></td>
+                                        <td colspan="6" class="black-text" style="font-size: 14pt;">Total da UF</td>
+                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalUf, 2, ",", "."); ?></td>
                                         <td colspan="3"></td>
                                     </tr>
                                 </table>
@@ -689,8 +690,8 @@
                         <td>
                             <table class="tabela">
                                 <tr>
-                                    <td colspan="6" class="orange" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
-                                    <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
+                                    <td colspan="6" class="orange-text" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
+                                    <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
                                     <td colspan="3" style="width: 40%;">&nbsp;</td>
                                 </tr>
                             </table>
@@ -704,8 +705,8 @@
                     <td>
                         <table class="tabela">
                             <tr>
-                                <td colspan="6" class="green" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
-                                <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
+                                <td colspan="6" class="green-text" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                                <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
                                 <td style="width: 40%" colspan="2">&nbsp;</td>
                             </tr>
                         </table>
@@ -718,8 +719,8 @@
                 <td>
                     <table class="tabela">
                         <tr>
-                            <td colspan="6" class="red" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
-                            <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
+                            <td colspan="6" class="red-text" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                            <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
                             <td style="width: 40%" colspan="2">&nbsp;</td>
                         </tr>
                     </table>
@@ -733,8 +734,8 @@
             <td>
                 <table class="tabela">
                     <tr>
-                        <td colspan="6" class="blue" style="width: 18%; font-size: 14pt;">Total do Projeto</td>
-                        <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalAprovado, 2, ",", "."); ?></td>
+                        <td colspan="6" class="blue-text" style="width: 18%; font-size: 14pt;">Total do Projeto</td>
+                        <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalAprovado, 2, ",", "."); ?></td>
                         <td style="width: 40%" colspan="2">&nbsp;</td>
                     </tr>
                 </table>
@@ -753,7 +754,7 @@
     </table>
 </div>
 
-<?php //MODAL DE AVALIAÇÃO DO ITEM ?>
+<?php //MODAL DE AVALIAï¿½ï¿½O DO ITEM ?>
 <div id="modalItem" class="sumir">
     <table class="tabela">
 <!--        <tr>
@@ -782,8 +783,8 @@
         <tr class="centro">
             <td class="destacar bold">Unidade</td>
             <td class="destacar bold">Qtd</td>
-            <td class="destacar bold">Ocorrência</td>
-            <td class="destacar bold">Vl. Unitário</td>
+            <td class="destacar bold">Ocorrï¿½ncia</td>
+            <td class="destacar bold">Vl. Unitï¿½rio</td>
             <td class="destacar bold">Dias</td>
             <td class="destacar bold">Total</td>
             <td class="destacar bold" style="width: 1px;">Reintegrar</td>
@@ -802,8 +803,8 @@
     </table>
     <table class="tabela">
         <tr class="centro">
-            <td class="destacar bold">Vl. Mínimo</td>
-            <td class="destacar bold">Vl. Máximo</td>
+            <td class="destacar bold">Vl. Mï¿½nimo</td>
+            <td class="destacar bold">Vl. Mï¿½ximo</td>
             <td class="destacar bold">Vl. Comprovado</td>
         </tr>
         <tr class="centro">
@@ -819,12 +820,12 @@
         <tr class="centro">
             <!--<td class="destacar bold">Unidade</td>-->
             <td class="destacar bold">Qtd</td>
-            <td class="destacar bold">Ocorrência</td>
-            <td class="destacar bold">Vl. Unitário</td>
+            <td class="destacar bold">Ocorrï¿½ncia</td>
+            <td class="destacar bold">Vl. Unitï¿½rio</td>
             <!--<td class="destacar bold">Dias</td>-->
             <td class="destacar bold">Total</td>
-<!--            <td class="destacar bold">Vl. Mínimo</td>
-            <td class="destacar bold">Vl. Máximo</td>-->
+<!--            <td class="destacar bold">Vl. Mï¿½nimo</td>
+            <td class="destacar bold">Vl. Mï¿½ximo</td>-->
         </tr>
         <tr>
 <!--            <td class="centro">
@@ -854,7 +855,7 @@
         </tr>
     </table>
 </div>
-<?php //FIM MODAL DE AVALIAÇÃO DO ITEM ?>
+<?php //FIM MODAL DE AVALIAï¿½ï¿½O DO ITEM ?>
 
 <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
