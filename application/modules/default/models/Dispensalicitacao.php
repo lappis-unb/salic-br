@@ -12,7 +12,7 @@
 class Dispensalicitacao extends MinC_Db_Table_Abstract {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbDispensaLicitacao';
-    protected $_schema  = 'scSAC';
+    protected $_schema  = 'bdcorporativo.scSAC';
 
     public function inserirDispensaLicitacao($data){
         $insert = $this->insert($data);
@@ -33,7 +33,7 @@ class Dispensalicitacao extends MinC_Db_Table_Abstract {
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('dis'=>$this->_schema.'.'.$this->_name),
+        $select->from(array('dis'=>$this->_name),
                             array('dis.idDispensaLicitacao','dis.nrDispensaLicitacao','CAST(dis.dsDispensaLicitacao as TEXT) as dsDispensaLicitacao','dis.dtContrato')
                           );
 
@@ -65,7 +65,7 @@ class Dispensalicitacao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('dis'=>$this->_schema.'.'.$this->_name),
+                        array('dis'=>$this->_name),
                         array(
                                 'dis.idDispensaLicitacao','dis.nrDispensaLicitacao','CAST(dis.dsDispensaLicitacao as TEXT) as dsDispensaLicitacao','dis.dtContrato','dis.vlContratado'
                               )
