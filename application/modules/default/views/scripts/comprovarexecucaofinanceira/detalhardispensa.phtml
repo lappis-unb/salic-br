@@ -14,7 +14,7 @@
     $corpo  = 'incluirdispensaAjax';
     $inputID = '<input type="hidden" name="'.$idNome.'" id="'.$idNome.'" value="'.$this->iddispensa.'"/><input type="hidden" name="idpronac" id="idpronac" value="'.$this->idpronac.'"/>';
     $idformulario = 'formularioDispensa';
-    include_once 'scripts/comprovarexecucaofinanceira/inc/menu.inc.php';
+    echo $this->partial('comprovarexecucaofinanceira/inc/menu.inc.php', $this);
 ?>
 
 <div id="breadcrumb">
