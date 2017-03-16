@@ -13,7 +13,7 @@
     if($this->idcontrato != ''){
         $verificacao = false;
     }
-    include_once 'scripts/comprovarexecucaofinanceira/inc/menu.inc.php';
+    echo $this->partial('comprovarexecucaofinanceira/inc/menu.inc.php', $this);
 ?>
 <style>
 <!--
