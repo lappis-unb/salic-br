@@ -411,6 +411,8 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
                 WHERE
                     cpxpa.idComprovantePagamento = ?";
+        $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         $statement = $this->getAdapter()->query($select, array($idComprovante));
         return $statement->fetchAll();
     }
@@ -517,7 +519,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
         $select->order('prod.Descricao ASC');
 
         try {
-            $db = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
