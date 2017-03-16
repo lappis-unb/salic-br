@@ -3,8 +3,13 @@
  * @author Caio Lucena <caioflucena@gmail.com>
  */
 
-class FornecedorModel extends Agente_Model_Agentes
+class FornecedorModel extends Minc_Db_Table_Abstract
 {
+    protected $_banco = 'agentes';
+    protected $_name = 'agentes';
+    protected $_schema = 'agentes';
+    protected $_primary = 'idAgente';
+    
     public function pesquisarFornecedorItem($item)
     {
         $select = "SELECT 'COTAÇÃO' as Modalidade, b.idAgente,e.CNPJCPF,F.Descricao AS Fornecedor,c.idPlanilhaAprovacao,d.IdPRONAC
