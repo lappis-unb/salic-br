@@ -28,7 +28,7 @@ class Contrato  extends MinC_Db_Table_Abstract {
     public function buscarContrato($idContrato){
         $slct = $this->select();
         $slct->from(
-                 array('ct'=>$this->_schema.'.'.$this->_name),
+                 array('ct'=>$this->_name),
                  array(
                     'ct.idContrato','ct.nrContratoSequencial','ct.tpAquisicao','ct.nrContratoAno','ct.dtPublicacao','CAST(ct.dsObjetoContrato AS TEXT) AS dsObjetoContrato','ct.vlGlobal','ct.dtInicioVigencia','ct.dtFimVigencia','ct.dtAssinatura'
                  )
@@ -42,7 +42,7 @@ class Contrato  extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('con'=>$this->_schema.'.'.$this->_name),
+                        array('con'=>$this->_name),
                         array(
                                 'con.idContrato','con.nrContratoSequencial','con.nrContratoAno','con.dtPublicacao'
                               )
@@ -80,7 +80,7 @@ class Contrato  extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('con'=>$this->_schema.'.'.$this->_name),
+                        array('con'=>$this->_name),
                         array(
                                 'con.idContrato','con.nrContratoSequencial','con.nrContratoAno'
                               )
