@@ -675,29 +675,4 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         }
         return true;
     }
-
-    protected function calcularPercentualCaptado($valorTotal, $valorCaptado)
-    {
-        if (empty($valorCaptado) || $valorCaptado <= 0)
-            return 0;
-
-        return number_format(($valorCaptado * 100) / $valorTotal, 2, ",", ".");
-    }
-
-    protected function percentualCaptadoByProposta($idPreProjeto, $idProjeto)
-    {
-        if (empty($idProjeto) || empty($idPreProjeto))
-            return false;
-
-        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-        $total = $planilhaproposta->somarPlanilhaProposta($idPreProjeto)->toArray();
-
-        $rsProjeto = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => $idProjeto));
-
-        $valorTotal = $total['soma'];
-        $valorcaptado = $rsProjeto[0]->ValorCaptado;
-
-        return $this->calcularPercentualCaptado($valorTotal, $valorcaptado);
-    }
-
 }
