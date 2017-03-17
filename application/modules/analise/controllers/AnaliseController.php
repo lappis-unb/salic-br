@@ -251,17 +251,11 @@ class Analise_AnaliseController extends Analise_GenericController
 
     }
 
-    /**
-     * Se a avaliação for negativa, o sistema devolverá o projeto para o proponente e enviará e-mail com as observações da avaliação feitas pelo TÉCNICO DE ANÁLISE.
-     *
-     * Se a avaliação for positiva, o sistema enviará o projeto para a Entidade Vinculada para receber a avaliação técnica.
-     * No ato do envio, o sistema deverá dar carga na tabela de análise de conteúdo e na planilha do parecerista.
-     * Essa funções deverão ser executadas em princípio por SP.
-     *
-     */
     public function salvaravaliacaadequacaoAction()
     {
-        $this->_helper->layout->disableLayout();
+        $auth = Zend_Auth::getInstance();
+        $Logon = $auth->getIdentity()->usu_codigo;
+
         $params = $this->getRequest()->getParams();
 
         $idPronac = $params['idpronac'];
@@ -269,6 +263,9 @@ class Analise_AnaliseController extends Analise_GenericController
             if (empty($idPronac)) {
                 throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
             }
+
+            # alterar a situacao do projeto
+            $tbProjetos = new Projetos();
 
             # verificar se o projeto já possui avaliador
             $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
@@ -279,54 +276,85 @@ class Analise_AnaliseController extends Analise_GenericController
                 # emcaminha e-mail para o proponente com o despacho do avaliador.
                 $this->enviarEmail($idPronac, $params['observacao']);
 
-                $situacao = 'E90'; # projeto liberado para ajustes
+                $situacao = Projeto_Model_Situacao::PROJETO_LIBERADO_PARA_AJUSTES;
                 $providenciaTomada = 'Projeto liberado para o proponente adequar &agrave; realidade de execu&ccedil;&atilde;o,n&atilde;o podendo representar aumento de custo e observando as veda&ccedil;&otilde;es do Art. 42, conforme o Art. 72 da Instru&ccedil;&atilde;o Normativa.';
 
-                # alterar a situacao do projeto
-                $tblProjetos = new Projetos();
-                $tblProjetos->alterarSituacao($params['idpronac'], '', $situacao, $providenciaTomada);
+                $tbProjetos->alterarSituacao($params['idpronac'], '', $situacao, $providenciaTomada);
 
                 if (!empty($avaliacao)) {
                     $tbAvaliacao->atualizarAvaliacaoNegativa($idPronac, $avaliacao['idTecnico'], $params['observacao']);
                 }
 
-                parent::message("Projeto encaminhado para o proponente com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
+                parent::message($providenciaTomada, "{$this->moduleName}/analise/listarprojetos", "CONFIRM");
+
             } else if ($params['conformidade'] == 1) {
 
-                $Projetos = new Projetos();
-                $dadosProjeto = $Projetos->buscar(array('idPronac = ?' => $idPronac))->current();
+                $dadosProjeto = $tbProjetos->buscar(array('idPronac = ?' => $idPronac))->current();
+                $idPreProjeto = $dadosProjeto['idProjeto'];
 
                 if (!empty($avaliacao)) {
 
                     $tbAvaliacao->atualizarAvaliacaoPositiva($idPronac, $avaliacao['idTecnico'], $params['observacao']);
 
                     $tbPlanoDistribuicao = new PlanoDistribuicao();
-                    $idVinculada = $tbPlanoDistribuicao->buscarIdVinculada($dadosProjeto['idProjeto']);
+                    $idVinculada = $tbPlanoDistribuicao->buscarIdVinculada($idPreProjeto);
 
                     $tbDistribuirParecer = new tbDistribuirParecer();
                     $jaExiste = $tbDistribuirParecer->buscar(array('idPronac = ?' => $idPronac))->current();
-                    if (!empty($jaExiste))
-                        $tbDistribuirParecer->inserirDistribuicaoParaParecer($dadosProjeto['idProjeto'], $idPronac, $idVinculada);
+                    if (empty($jaExiste))
+                        $tbDistribuirParecer->inserirDistribuicaoParaParecer($idPreProjeto, $idPronac, $idVinculada);
 
                     $tbAnaliseDeConteudo = new tbAnaliseDeConteudo();
                     $jaExiste = $tbAnaliseDeConteudo->buscar(array('idPronac = ?' => $idPronac))->current();
-                    if (!empty($jaExiste))
-                        $tbAnaliseDeConteudo->inserirAnaliseConteudoParaParecerista($dadosProjeto['idProjeto'], $idPronac);
+                    if (empty($jaExiste))
+                          $tbAnaliseDeConteudo->inserirAnaliseConteudoParaParecerista($idPreProjeto, $idPronac);
 
                     $PlanilhaProjeto = new PlanilhaProjeto();
                     $jaExiste = $PlanilhaProjeto->buscar(array('idPronac = ?' => $idPronac))->current();
-                    if (!empty($jaExiste))
-                        $PlanilhaProjeto->inserirPlanilhaParaParecerista($dadosProjeto['idProjeto'], $idPronac);
+                    if (empty($jaExiste))
+                        $PlanilhaProjeto->inserirPlanilhaParaParecerista($idPreProjeto, $idPronac);
 
-                    # alterar a situacao do projeto
-                    # valor do projeto, SolicitadoReal, DtInicioExecucao, DtFimExecucao, ,ProvidenciaTomada, Logon
+                    # Consultar percentual de valor captado
+                    $percentualCaptado = $this->percentualCaptadoByProposta($idPreProjeto, $idPronac);
+
+                    $providenciaTomada = "O Projeto aguardar&aacute; o percentual m&iacute;nimo de capta&ccedil;&atilde;o e depois ser&aacute; encaminhado para unidade vinculada!";
+
+                    if ($percentualCaptado >= 10) {
+
+                        # alterar a situacao do projeto
+                        $situacao = Projeto_Model_Situacao::ENCAMINHADO_PARA_ANALISE_TECNICA;
+                        $providenciaTomada = 'Projeto encamihado a unidade vinculada para an&aacute;lise e emiss&atilde;o de parecer t&eacute;cnico';
+
+                        $tbProjetos->alterarSituacao($idPronac, '', $situacao, $providenciaTomada);
+                    }
+
+                    $tbProposta = new Proposta_Model_DbTable_PreProjeto();
+                    $proposta = $tbProposta->findBy(array('idpreprojeto' => $idPreProjeto));
+
+                    # Faz a soma da planilha da proposta
+                    $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
+                    $somaPlanilhaPropostaProdutos = $TPP->somarPlanilhaPropostaProdutos($idPreProjeto, 109);
+
+                    $dados = array(
+                        'DtInicioExecucao' => $proposta['DtInicioDeExecucao'],
+                        'DtFimExecucao' => $proposta['DtFinalDeExecucao'],
+                        'SolicitadoReal' => $somaPlanilhaPropostaProdutos['soma'],
+                        'Logon' => $Logon
+                    );
+
+                    if (!empty($idPronac)) {
+                        $where = array("IdPRONAC = ?" => $idPronac);
+                    }
+
+                    if (!empty($where))
+                        $tbProjetos->update($dados, $where);
                 }
 
-                parent::message("Projeto encaminhado para o avaliador com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");
+                parent::message($providenciaTomada, "{$this->moduleName}/analise/listarprojetos", "CONFIRM");
             }
 
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
+            parent::message($objException->getMessage(), "{$this->moduleName}/analise/listarprojetos", "ERROR");
         }
     }
 
@@ -403,5 +431,29 @@ class Analise_AnaliseController extends Analise_GenericController
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/analise/listarprojetos", "ERROR");
         }
+    }
+
+    public function calcularPercentualCaptado($valorTotal, $valorCaptado)
+    {
+        if (empty($valorCaptado) || $valorCaptado <= 0)
+            return 0;
+
+        return number_format(($valorCaptado * 100) / $valorTotal, 2, ",", ".");
+    }
+
+    public function percentualCaptadoByProposta($idPreProjeto, $idProjeto)
+    {
+        if (empty($idProjeto) || empty($idPreProjeto))
+            return false;
+
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+        $total = $planilhaproposta->somarPlanilhaProposta($idPreProjeto)->toArray();
+
+        $rsProjeto = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => $idProjeto));
+
+        $valorTotal = $total['soma'];
+        $valorcaptado = $rsProjeto[0]->ValorCaptado;
+
+        return $this->calcularPercentualCaptado($valorTotal, $valorcaptado);
     }
 }
