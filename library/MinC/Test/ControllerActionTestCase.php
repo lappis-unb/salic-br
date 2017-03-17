@@ -39,6 +39,10 @@ abstract class MinC_Test_ControllerActionTestCase extends MinC_Test_Abstract
         $this->resetRequest()
             ->resetResponse();
 
+        if (empty($config->test->params->login) || empty($config->test->params->password)){
+            throw new exception('test.username e test.password');
+        }
+
         $this->request->setMethod('POST')
             ->setPost(array(
                 'Login' => ($login) ? $login : $config->test->params->login,
