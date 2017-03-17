@@ -688,10 +688,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             if ($params['confirmarenvioaominc'] == true) {
                 if ($validado) {
 
-                    # Consultar percentual de valor captado
-                    $percentualCaptado = $this->percentualCaptadoByProposta($idPreProjeto, $idPronac);
-
-
                     if ($projeto['area'] == 2) {
                         $orgaoUsuario = 171; # 171 - SAV/DAP
                     } else {
