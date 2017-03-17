@@ -2497,7 +2497,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
             $dadosPlanilha = array();
             if($PlanilhaAtivaGrupoA->Total == $PlanilhaRemanejadaGrupoA->Total){
-                $dadosPlanilha['GrupoA'] = utf8_encode('<span class="black bold">R$ '.number_format($valorTotalGrupoA, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoA'] = utf8_encode('<span class="bold">R$ '.number_format($valorTotalGrupoA, 2, ',', '.')).'</span>';
             } else if($PlanilhaAtivaGrupoA->Total < $PlanilhaRemanejadaGrupoA->Total){
                 $dadosPlanilha['GrupoA'] = utf8_encode('<span class="red bold">R$ '.number_format($valorTotalGrupoA, 2, ',', '.')).'</span>';
             } else {
@@ -2505,7 +2505,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             }
 
             if($PlanilhaAtivaGrupoB->Total == $PlanilhaRemanejadaGrupoB->Total){
-                $dadosPlanilha['GrupoB'] = utf8_encode('<span class="black bold">R$ '.number_format($valorTotalGrupoB, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoB'] = utf8_encode('<span class="bold">R$ '.number_format($valorTotalGrupoB, 2, ',', '.')).'</span>';
             } else if($PlanilhaAtivaGrupoB->Total < $PlanilhaRemanejadaGrupoB->Total){
                 $dadosPlanilha['GrupoB'] = utf8_encode('<span class="red bold">R$ '.number_format($valorTotalGrupoB, 2, ',', '.')).'</span>';
             } else {
@@ -2513,7 +2513,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             }
 
             if($PlanilhaAtivaGrupoC->Total == $PlanilhaRemanejadaGrupoC->Total){
-                $dadosPlanilha['GrupoC'] = utf8_encode('<span class="black bold">R$ '.number_format($valorTotalGrupoC, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoC'] = utf8_encode('<span class="bold">R$ '.number_format($valorTotalGrupoC, 2, ',', '.')).'</span>';
             } else if($PlanilhaAtivaGrupoC->Total < $PlanilhaRemanejadaGrupoC->Total){
                 $dadosPlanilha['GrupoC'] = utf8_encode('<span class="red bold">R$ '.number_format($valorTotalGrupoC, 2, ',', '.')).'</span>';
             } else {
@@ -2521,7 +2521,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             }
 
             if($PlanilhaAtivaGrupoD->Total == $PlanilhaRemanejadaGrupoD->Total){
-                $dadosPlanilha['GrupoD'] = utf8_encode('<span class="black bold">R$ '.number_format($valorTotalGrupoD, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoD'] = utf8_encode('<span class="bold">R$ '.number_format($valorTotalGrupoD, 2, ',', '.')).'</span>';
             } else if($PlanilhaAtivaGrupoD->Total < $PlanilhaRemanejadaGrupoD->Total){
                 $dadosPlanilha['GrupoD'] = utf8_encode('<span class="red bold">R$ '.number_format($valorTotalGrupoD, 2, ',', '.')).'</span>';
             } else {
@@ -2529,10 +2529,10 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             }
 
             if(empty($PlanilhaRemanejada->Total) || $PlanilhaRemanejada->Total == 0){
-                $dadosPlanilha['GrupoA'] = utf8_encode('<span class="black bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
-                $dadosPlanilha['GrupoB'] = utf8_encode('<span class="black bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
-                $dadosPlanilha['GrupoC'] = utf8_encode('<span class="black bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
-                $dadosPlanilha['GrupoD'] = utf8_encode('<span class="black bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoA'] = utf8_encode('<span class="bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoB'] = utf8_encode('<span class="bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoC'] = utf8_encode('<span class="bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
+                $dadosPlanilha['GrupoD'] = utf8_encode('<span class="bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
             }
             echo json_encode(array('resposta'=>true, 'dadosPlanilha'=>$dadosPlanilha));
 
