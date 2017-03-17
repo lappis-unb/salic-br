@@ -9,7 +9,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     private $_movimentacaoAlterarProposta = '95';
 
-    private $_situacaoAlterarProjeto = 'E90'; // @todo situacao correta 'E90'
+    private $_situacaoAlterarProjeto = Projeto_Model_Situacao::PROJETO_LIBERADO_PARA_AJUSTES;
 
     private $_diasParaAlterarProjeto = 10;
 
