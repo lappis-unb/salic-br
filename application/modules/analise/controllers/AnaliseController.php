@@ -332,13 +332,13 @@ class Analise_AnaliseController extends Analise_GenericController
                     $proposta = $tbProposta->findBy(array('idpreprojeto' => $idPreProjeto));
 
                     # Faz a soma da planilha da proposta
-                    $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
-                    $somaPlanilhaPropostaProdutos = $TPP->somarPlanilhaPropostaProdutos($idPreProjeto, 109);
+//                    $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
+//                    $somaPlanilhaPropostaProdutos = $TPP->somarPlanilhaPropostaProdutos($idPreProjeto, 109);
 
                     $dados = array(
                         'DtInicioExecucao' => $proposta['DtInicioDeExecucao'],
                         'DtFimExecucao' => $proposta['DtFinalDeExecucao'],
-                        'SolicitadoReal' => $somaPlanilhaPropostaProdutos['soma'],
+                        'SolicitadoReal' => $proposta->valorTotalSolicitadoNaProposta($idPreProjeto),
                         'Logon' => $Logon
                     );
 
