@@ -317,6 +317,9 @@ class Analise_AnaliseController extends Analise_GenericController
                     $jaExiste = $PlanilhaProjeto->buscar(array('idPronac = ?' => $idPronac))->current();
                     if (!empty($jaExiste))
                         $PlanilhaProjeto->inserirPlanilhaParaParecerista($dadosProjeto['idProjeto'], $idPronac);
+
+                    # alterar a situacao do projeto
+                    # valor do projeto, SolicitadoReal, DtInicioExecucao, DtFimExecucao, ,ProvidenciaTomada, Logon
                 }
 
                 parent::message("Projeto encaminhado para o avaliador com sucesso", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");

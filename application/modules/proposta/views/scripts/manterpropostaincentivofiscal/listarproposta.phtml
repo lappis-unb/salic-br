@@ -36,7 +36,7 @@
                             &nbsp;&nbsp;&nbsp;CPF Proponente:&nbsp;
 
                             <select name="propronente" id="propronente" class="input_simples">
-                                <option value="">- Selecione -</option>
+                                <option value="">- Todos -</option>
                                 <?php if (!empty($this->dadosCombo)): ?>
                                     <?php $idProponente = ''; ?>
                                     <?php foreach ($this->dadosCombo as $dc): ?>
@@ -77,11 +77,23 @@
             </form>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col s12 m12 l12">
-                <div id="propostasCadastradas"></div>
-                <div id="divMsg"></div>
+    <div id="conteudo">
+        <div class="row">
+            <?php //echo $this->partial("analise/inc/menu.phtml", $this); ?>
+            <div class="col s12 m12 l12">
+                <table class="bordered striped conteudoImprimivel" id="tabelaAnaliseFinal">
+                    <thead>
+                    <tr>
+                        <th>Proposta</th>
+                        <th>Nome da Proposta</th>
+                        <th>Nome do Proponente</th>
+                        <th>Situa&ccedil;&atilde;o</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -146,28 +158,65 @@
             }
         });
 
-        $("#localizar").click(function () {
-
-            $("#msgValidaProponente").html("");
-            var url = "<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'localizar-proposta')); ?>?idAgente=" + $('#propronente').val() + "&mecanismo=" + $('#mecanismo').val();
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    //idProduto: id
-                },
-                success: function (data) {
-                    $("#divMsg").hide();
-                    $('#propostasCadastradas').html(data);
-                },
-                error: function (data) {
-                    $("#divMsg").html("Falha na recupera&ccedil;&atilde;o dos dados!");
-                }
-            });
-
-            $("#propostasCadastradas").html("<div class='loading'>Carregando dados...<br><div class='teal lighten-5 progress'><div class='teal lighten-1  indeterminate'></div></div>");
-        });
     });
 </script>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+
+            var table =  $('#tabelaAnaliseFinal').DataTable(
+                {
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+                    }
+                    , "lengthChange": true
+                    , "ajax": {
+                        url: "/proposta/manterpropostaincentivofiscal/listar-propostas-ajax",
+                        data: {"idagente": function (d) {
+                            return $('#propronente').val();
+                        }},
+                        type: "POST"
+                },
+                    "processing": true,
+                    "serverSide": true,
+                    "columns": [
+                        {
+                            data: null,
+                            "name": "idpreprojeto",
+                            render: function (data, type, row) {
+                                return '<a class="btn waves-effect waves-darrk white black-text small" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta')); ?>/idPreProjeto/' + data.idpreprojeto + '">'
+                                    + data.idpreprojeto + '</a>'
+                            }
+                        },
+                        {
+                            "name": "nomeprojeto",
+                            "data": "nomeprojeto"
+
+                        },
+                        {
+                            "name": "nomeproponente",
+                            "data": "nomeproponente"
+
+                        },
+                        {
+                            "name": "situacao",
+                            "data": "situacao"
+
+                        }
+                    ]
+                }
+            );
+
+
+            $("#localizar").click(function () {
+                table.ajax.reload();
+            });
+
+        });
+    }($.noConflict(true)));
+</script>
