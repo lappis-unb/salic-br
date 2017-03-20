@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col s12 m12 l12">
             <form name="frmNovaProposta" id="frmNovaProposta"
-                  action="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'declaracaonovaproposta')); ?>"
+                  action="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'declaracaonovaproposta')); ?>"
                   method="post">
 
                 <table class="tabela">
@@ -77,38 +77,34 @@
             </form>
         </div>
     </div>
-    <div id="conteudo">
+    <div class="content">
         <div class="row">
-            <?php //echo $this->partial("analise/inc/menu.phtml", $this); ?>
             <div class="col s12 m12 l12">
-                <table class="bordered striped conteudoImprimivel" id="tabelaAnaliseFinal">
-                    <thead>
-                    <tr>
-                        <th>Proposta</th>
-                        <th>Nome da Proposta</th>
-                        <th>Nome do Proponente</th>
-                        <th>Situa&ccedil;&atilde;o</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div  id="propostasCadastradas">
+                    <table class="bordered striped conteudoImprimivel" id="tabelaAnaliseFinal">
+                        <thead>
+                        <tr>
+                            <th>Proposta</th>
+                            <th>Nome da Proposta</th>
+                            <th>Nome do Proponente</th>
+                            <th>Situa&ccedil;&atilde;o</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-<!--<div id="titulo">-->
-<!--    <div>Listar propostas<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>-->
-<!--</div>-->
-<!-- ========== FIM TITULO ========== -->
 
 <style type="text/css">
-    label.error {
-        color: red;
-        font-weight: normal;
-    }
+    /*label.error {*/
+        /*color: red;*/
+        /*font-weight: normal;*/
+    /*}*/
     select {
         height: 35px;
         font-size: 15px;
@@ -116,10 +112,6 @@
     }
 
 </style>
-
-<!-- ========== FIM ======== -->
-<div id="rodapeConteudo"><span></span></div>
-<br clear="all"/>
 
 <script type="text/javascript">
     $(document).ready(function () {

@@ -130,9 +130,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         }
         $this->view->localRealizacao = $novosLocais;
 
-        $this->view->idPreProjeto = $this->idPreProjeto;
+//        $this->view->idPreProjeto = $this->idPreProjeto;
 
-        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+//        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
     }
 
     /**
