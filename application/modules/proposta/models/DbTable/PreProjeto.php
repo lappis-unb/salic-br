@@ -3302,4 +3302,16 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
         return $db->fetchOne($sqlFinal);
     }
+
+    public function valorTotalSolicitadoNaProposta($idPreProjeto) {
+
+         $select = new Zend_Db_Expr("SELECT sac.dbo.fnSolicitadoNaProposta({$idPreProjeto}) as valorTotalSolicitado");
+
+        try {
+            $db= Zend_Db_Table::getDefaultAdapter();
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $db->fetchOne($select);
+    }
 }
