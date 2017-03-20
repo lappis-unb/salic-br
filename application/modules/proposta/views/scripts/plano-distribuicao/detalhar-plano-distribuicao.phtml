@@ -1,7 +1,6 @@
 <?php $frmplanoHref = $this->url(array('module' => 'proposta' , 'controller' => 'plano-distribuicao', 'action' => 'frm-plano-distribuicao')).'?idPreProjeto='.$_GET['idPreProjeto']; ?>
 <div class="container-fluid">
     <div class="row">
-        <?php //echo $this->partial("inc/menu.phtml", $this); ?>
         <div class="">
            <div class="row">
                <div class="col s12" id="example">
@@ -18,14 +17,9 @@
                </div>
                 <?php $totalExemplares=0; $totalReceita=0; ?>
                     <?php foreach($this->planosDistribuicao as $planoDistribuicao) : ?>
-                        <?php
-                        $totalExemplares += $planoDistribuicao->QtdeProduzida;
-                        $receita = ($planoDistribuicao->QtdeVendaNormal*$planoDistribuicao->PrecoUnitarioNormal)+($planoDistribuicao->QtdeVendaPromocional*$planoDistribuicao->PrecoUnitarioPromocional);
-                        $totalReceita += $receita;
-                        ?>
                         <div class="row">
-                            <div id="detalhamento" class="col s12">
-                                <table class="bordered" style="style= table-layout: fixed">
+                            <div id="detalhamento-plano" class="col s12">
+                                <table class="bordered" >
                                     <thead>
                                         <tr>
                                             <th>Nome do Evento / Produto</th>
@@ -49,11 +43,12 @@
                                                             <table class="bordered">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td><?php echo $abrangencia['uf']?> - <?php echo $abrangencia['cidade']?></td>
+                                                                        <td><?php echo $abrangencia['uf']?> - <?php echo $abrangencia['cidade']?> </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
                                                                             <my-component
+                                                                                disabled="<?php echo $this->isEditavel ?>"
                                                                                 idplanodistribuicao="<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>"
                                                                                 idpreprojeto="<?php echo $this->idPreProjeto; ?>"
                                                                                 iduf="<?php echo $abrangencia['idUF']?>"
@@ -96,7 +91,7 @@
         </div>
         <div v-show="active">
             <div class="row" >
-                <div class="col s12 center">
+                <div class=" center">
                     <table class="bordered">
                         <thead>
                             <tr>
@@ -112,6 +107,7 @@
                                     Proponente
                                 </th>
                                 <th rowspan="2">Receita Prevista</th>
+                                <th rowspan="2">A&ccedil;&otildees</th>
                             </tr>
                             <tr>
                                 <th class="green lighten-4" >Divulga&ccedil;&atilde;o</th>
@@ -129,49 +125,59 @@
                                 <th class="lime lighten-3 black-text" >Valor da meia entrada</th>
                             </tr>
                         </thead>
-                        <tbody  >
-                            <tr v-for="( produto, index ) in produtos">
-                                <td>{{ produto.dsProduto }}</td>
-                                <td>{{ produto.qtExemplares }}</td>
-                                <td>{{ produto.qtGratuitaDivulgacao }}</td>
-                                <td>{{ produto.qtGratuitaPatrocinador }}</td>
-                                <td>{{ produto.qtGratuitaPopulacao }}</td>
-                                <!--Preço Popular -->
-                                <td>{{ produto.qtPopularIntegral }}</td>
-                                <td>{{ produto.qtPopularParcial }}</td>
-                                <td>{{ produto.vlUnitarioPopularIntegral }}</td>
-                                <td>{{ produto.vlReceitaPopularIntegral }}</td>
-                                <td>{{ produto.vlReceitaPopularParcial }}</td>
-                                <!--Preço Popular -->
-                                <td>{{ produto.qtProponenteIntegral }}</td>
-                                <td>{{ produto.qtProponenteParcial }}</td>
-                                <td>{{ produto.vlUnitarioProponenteIntegral }}</td>
-                                <td>{{ produto.vlReceitaProponenteIntegral }}</td>
-                                <td>{{ produto.vlReceitaProponenteParcial }}</td>
-                                <td>{{ produto.vlReceitaPrevista }}</td>
-                                <td><button class="btn red white-text" v-on:click="excluir(produto.idDetalhaPlanoDistribuicao)"><i class="material-icons">delete</i></button></td>
+                        <tbody v-if="produtos.length > 0">
+                                <tr  v-for="( produto, index ) in produtos">
+                                    <td>{{ produto.dsProduto }}</td>
+                                    <td class="right-align">{{ produto.qtExemplares }}</td>
+                                    <td class="right-align">{{ produto.qtGratuitaDivulgacao }}</td>
+                                    <td class="right-align">{{ produto.qtGratuitaPatrocinador }}</td>
+                                    <td class="right-align">{{ produto.qtGratuitaPopulacao }}</td>
+                                    <!--Preço Popular -->
+                                    <td class="right-align">{{ produto.qtPopularIntegral }}</td>
+                                    <td class="right-align">{{ produto.qtPopularParcial }}</td>
+                                    <td class="right-align">{{ produto.vlUnitarioPopularIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaPopularIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaPopularParcial }}</td>
+                                    <!--Preço Popular -->
+                                    <td class="right-align">{{ produto.qtProponenteIntegral }}</td>
+                                    <td class="right-align">{{ produto.qtProponenteParcial }}</td>
+                                    <td class="right-align">{{ produto.vlUnitarioProponenteIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaProponenteIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaProponenteParcial }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaPrevista }}</td>
+                                    <td>
+                                        <button class="btn red white-text" v-bind:disabled="!disabled"
+                                            v-on:click="excluir(produto.idDetalhaPlanoDistribuicao)">
+                                            <i class="material-icons">delete</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                        <tbody v-else>
+                            <tr>
+                                <td colspan="16">Sem dados</td>
                             </tr>
                         </tbody>
                         <tfoot class=" grey lighten-1">
                             <tr>
                                 <td><b>Totais</b></td>
-                                <td><b>{{ qtExemplaresTotal }}</b></td>
-                                <td><b>{{ qtGratuitaDivulgacaoTotal }}</b></td>
-                                <td><b>{{ qtGratuitaPatrocinadorTotal }}</b></td>
-                                <td><b>{{ qtGratuitaPopulacaoTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtExemplaresTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtGratuitaDivulgacaoTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtGratuitaPatrocinadorTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtGratuitaPopulacaoTotal }}</b></td>
                                 <!--Preço Popular -->
-                                <td><b>{{ qtPopularIntegralTotal }}</b></td>
-                                <td><b>{{ qtPopularParcialTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtPopularIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtPopularParcialTotal }}</b></td>
                                 <td> - </td>
-                                <td><b>{{ vlReceitaPopularIntegralTotal }}</b></td>
-                                <td><b>{{ vlReceitaPopularParcialTotal }}</b></td>
+                                <td class="right-align"><b>{{ vlReceitaPopularIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ vlReceitaPopularParcialTotal }}</b></td>
                                 <!--Fim: Preço Popular -->
-                                <td><b>{{ qtProponenteIntegralTotal }}</b></td>
-                                <td><b>{{ qtProponenteParcialTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtProponenteIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtProponenteParcialTotal }}</b></td>
                                 <td> - </td>
-                                <td><b>{{ vlReceitaProponenteIntegralTotal }}</b></td>
-                                <td><b>{{ vlReceitaProponenteParcialTotal }}</b></td>
-                                <td><b>{{ receitaPrevistaTotal }}</b></td>
+                                <td class="right-align"><b>{{ vlReceitaProponenteIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ vlReceitaProponenteParcialTotal }}</b></td>
+                                <td class="right-align"><b>{{ receitaPrevistaTotal }}</b></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -244,33 +250,33 @@
                         </td>
                         <td>
                             <div class="input-field">
-                                <input  v-model.lazy="qtExemplares" >
+                                <input   class="right-align" v-model.lazy="qtExemplares" >
                             </div>
                         </td>
                         <td>
                             <div class="input-field">
-                                <input v-model.number="qtGratuitaDivulgacao" ref="divulgacao">
+                                <input  class="right-align" v-model.number="qtGratuitaDivulgacao" ref="divulgacao">
                             </div>
                         </td>
                         <td>
                             <div class="input-field">
-                                <input v-model="qtGratuitaPatrocinador" ref="patrocinador">
+                                <input  class="right-align" v-model="qtGratuitaPatrocinador" ref="patrocinador">
                             </div>
                         </td>
                         <td>
                             <div class="input-field">
-                                <input v-model="qtGratuitaPopulacao" ref="populacao" v-on:blur="populacaoValidate(qtGratuitaPopulacao)">
+                                <input  class="right-align" v-model="qtGratuitaPopulacao" ref="populacao" v-on:blur="populacaoValidate(qtGratuitaPopulacao)">
                             </div>
                         </td>
                         <!-- Preço popular-->
                         <td>
                             <div class="input-field">
-                                <input v-model="qtPopularIntegral" ref="qtPopularIntegral">
+                                <input  class="right-align" v-model="qtPopularIntegral" ref="qtPopularIntegral">
                             </div>
                         </td>
-                        <td>
+                        <td class="right-align">
                             <div class="input-field">
-                                <input v-model="qtPopularParcial" ref="qtPopularParcial">
+                                <input class="right-align" v-model="qtPopularParcial" ref="qtPopularParcial">
                             </div>
                         </td>
                         <td>
@@ -282,13 +288,13 @@
                                 </input-money>
                             </div>
                         </td>
-                        <td>{{ vlReceitaPopularIntegral }}</td>
-                        <td>{{ vlReceitaPopularParcial }}</td>
+                        <td class="right-align">{{ vlReceitaPopularIntegral }}</td>
+                        <td class="right-align">{{ vlReceitaPopularParcial }}</td>
                         <!-- Preço popular-->
                         <!-- Proponente-->
-                        <td>{{ qtProponenteIntegral }}</td>
-                        <td>{{ qtProponenteParcial }}</td>
-                        <td>
+                        <td class="right-align">{{ qtProponenteIntegral }}</td>
+                        <td class="right-align">{{ qtProponenteParcial }}</td>
+                        <td class="right-align">
                             <div class="input-field ">
                                 <input-money
                                     v-bind:disabled="radio =='s'? true: false"
@@ -297,12 +303,12 @@
                                 </input-money>
                             </div>
                         </td>
-                        <td>{{ vlReceitaProponenteIntegral }}</td>
-                        <td>{{ vlReceitaProponenteParcial }}</td>
+                        <td class="right-align">{{ vlReceitaProponenteIntegral }}</td>
+                        <td class="right-align">{{ vlReceitaProponenteParcial }}</td>
                         <!-- Proponente-->
-                        <td>{{ vlReceitaPrevista }}</td>
-                        <td>
-                            <button class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>
+                        <td class="right-align">{{ vlReceitaPrevista }}</td>
+                        <td class="right-align">
+                            <button ref="add" class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>
                         </td>
                     </tr>
                     </tbody>
@@ -313,18 +319,31 @@
 </script>
 <script type="text/javascript" src="/public/scripts/proposta/plano-distribuicao/detalhar-plano-distribuicao.js"></script>
 <style>
-    #detalhamento table {
-        font-size: 9pt;
+    #detalhamento-plano table {
+        font-size: 8pt;
         width: 100%;
     }
-    #detalhamento button.btn {
+    #detalhamento-plano button.btn {
         margin: 1;
-        padding: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
     }
-    #detalhamento button.red {
+    #detalhamento-plano button.red {
         background-color: #c30;
     }
-    #detalhamento td, #detalhamento th{
-        padding: 1px;
+    #detalhamento-plano,
+    #detalhamento-plano table,
+    #detalhamento-plano td,
+    #detalhamento-plano th,
+    #detalhamento-plano thead,
+    #detalhamento-plano tbody,
+    #detalhamento-plano tr{
+        padding: 3px;
+        border: 1px solid #666;
+    }
+
+    #detalhamento-plano table {
+        border-spacing: 1;
+        border-radius: 0px;
     }
 </style>
