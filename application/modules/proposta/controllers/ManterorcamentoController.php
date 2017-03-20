@@ -1206,6 +1206,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $tbPlaninhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
         $valorMediana = $tbPlaninhaProposta->calcularMedianaItemOrcamento($params['idproduto'], $params['idunidade'], $params['idplanilhaitem'], $params['idufdespesa'], $params['idmunicipiodespesa']);
+        $valorMediana = isset($valorMediana['Mediana']) ? $valorMediana['Mediana'] : 0;
 
         $return['msg'] = 'O valor mediano deste item (R$ '. number_format($valorMediana, 2, ",", ".") . ')';
         $return['status'] = 1;
@@ -1213,7 +1214,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
         $params['vlunitario'] = str_replace(",", ".", str_replace(".", "", $params['vlunitario']));
 
-        if ($valorMediana < $params['vlunitario']) {
+        if (!empty($valorMediana) && $valorMediana < $params['vlunitario']) {
             $return['msg'] = utf8_encode('O valor unit&aacute;rio para este item, ultrapassa o valor(R$ '. number_format($valorMediana, 2, ",", ".") . ') aprovado pelo MinC. Justifique o motivo!');
             $return['status'] = 0;
         }
