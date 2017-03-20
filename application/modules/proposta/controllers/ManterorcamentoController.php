@@ -129,9 +129,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             }
         }
         $this->view->localRealizacao = $novosLocais;
-
+//
 //        $this->view->idPreProjeto = $this->idPreProjeto;
-
+//
 //        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
     }
 
@@ -1109,7 +1109,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
             if ($_POST['acao'] == 'alterar') {
 
-                $buscarCustos = new Proposta_Model_DbTable_PlanilhaProposta();
+                $buscarCustos = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
 
                 $buscarCustos->update($dados, $where);
@@ -1117,7 +1117,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 echo "Altera&ccedil;&atilde;o realizada com sucesso!";
                 die;
             } else {
-                $TPP = new Proposta_Model_DbTable_PlanilhaProposta();
+                $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $buscarCustos = $TPP->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio);
                 if ($buscarCustos) {
                     $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -1184,7 +1184,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
         $retorno = $_GET['retorno'];
 
-        $tbPlaninhaProposta = new Proposta_Model_DbTable_PlanilhaProposta();
+        $tbPlaninhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
         $where = 'idPlanilhaProposta = ' . $idPlanilhaProposta;
 
@@ -1197,6 +1197,29 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             parent::message("Erro ao excluir os dados", "/proposta/manterorcamento/" . $retorno . "?idPreProjeto=" . $this->idPreProjeto, "ERROR");
         }
         $this->view->idPreProjeto = $this->idPreProjeto;
+    }
+
+    public function buscarValorMedianaAjaxAction() {
+
+        $params = $idPreProjeto = $this->getRequest()->getParams();
+
+        $tbPlaninhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+
+        $valorMediana = $tbPlaninhaProposta->calcularMedianaItemOrcamento($params['idproduto'], $params['idunidade'], $params['idplanilhaitem'], $params['idufdespesa'], $params['idmunicipiodespesa']);
+
+        $return['msg'] = 'O valor mediano deste item (R$ '. number_format($valorMediana, 2, ",", ".") . ')';
+        $return['status'] = 1;
+        $return['valorMediana'] = $valorMediana;
+
+        $params['vlunitario'] = str_replace(",", ".", str_replace(".", "", $params['vlunitario']));
+
+        if ($valorMediana < $params['vlunitario']) {
+            $return['msg'] = utf8_encode('O valor unit&aacute;rio para este item, ultrapassa o valor(R$ '. number_format($valorMediana, 2, ",", ".") . ') aprovado pelo MinC. Justifique o motivo!');
+            $return['status'] = 0;
+        }
+
+        echo json_encode($return);
+        die;
     }
 
 
