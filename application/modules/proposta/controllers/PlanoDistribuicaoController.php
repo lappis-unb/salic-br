@@ -94,6 +94,7 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
                     );
 
         $this->view->idPreProjeto = $this->_idPreProjeto;
+        $this->view->isEditavel = $this->isEditavel($this->_idPreProjeto);
         $this->montaTela("planodistribuicao/index.phtml", $arrDados);
     }
 
@@ -302,6 +303,7 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         $this->view->idPreProjeto = $this->_idPreProjeto;
         $this->view->abrangencias = $rsAbrangencia;
         $this->view->planosDistribuicao=($rsPlanoDistribuicao);
+        $this->view->isEditavel = $this->isEditavel($this->_idPreProjeto);
     }
 
     public function detalharSalvarAction()
