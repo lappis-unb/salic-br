@@ -148,11 +148,11 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $where['b.Area = ?'] = 0;
             }
         }
-        
+
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -805,7 +805,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $enquadramentoProjeto = $this->_request->getParam('enquadramentoProjeto');
         $parecerProjeto = $this->_request->getParam('parecerProjeto');
         $dsParecer = $this->_request->getParam('dsParecer');
-        
+
         try {
             //ATUALIAZA A �REA E SEGMENTO DO PROJETO
             $d = array();
@@ -1075,7 +1075,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function coordParecerFinalizarRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
+
         $idRecurso = $this->_request->getParam("idRecurso");
         $idDistribuirProjeto = $this->_request->getParam("idDistProj");
 
@@ -2326,7 +2326,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     {
         //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.Coordenado Admissibilidade
         if($this->idPerfil != 103 && $this->idPerfil != 127 && $this->idPerfil != 131 && $this->idPerfil != 92){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $where = array();
