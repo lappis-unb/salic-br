@@ -11,7 +11,7 @@
  * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-class ManualLayoutController extends MinC_Controller_Action_Abstract
+class Manual_ManualLayoutController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * Reescreve o método init()
