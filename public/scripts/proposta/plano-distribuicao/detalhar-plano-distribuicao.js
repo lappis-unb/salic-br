@@ -126,9 +126,10 @@ Vue.component('my-component', {
         vlReceitaPopularParcial: function() {
             return this.qtPopularParcial * ( this.vlUnitarioPopularIntegral * 0.5);
         },
+        /*verificar esse calculo com mais cuidado*/
         qtProponenteIntegral: function() {
             if (this.radio == 'n') {
-                return (this.qtExemplares * 0.5) * 0.6 ;
+                return (this.qtExemplares * 0.5) * 0.5 ;
             }
             return 0;
         },
