@@ -22,7 +22,7 @@ class ManualLayoutController extends MinC_Controller_Action_Abstract
 	public function init()
 	{
 		// configurações do layout padrão
-		Zend_Layout::startMvc(array('layout' => 'layout_login'));
+//		Zend_Layout::startMvc(array('layout' => 'layout_login'));
 
 		parent::init(); // chama o init() do pai GenericControllerNew
 	} // fecha método init()
