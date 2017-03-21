@@ -34,6 +34,7 @@
 Vue.component('input-money', {
     template: '<div>\
                 <input\
+                    class="right-align"\
                     v-bind:disabled="false"\
                     v-bind:value="value"\
                     ref="input"\
@@ -105,7 +106,7 @@ Vue.component('my-component', {
             radio : 'n'
         }
     },
-    props:['idpreprojeto','idplanodistribuicao', 'idmunicipioibge', 'iduf' ],
+    props:['idpreprojeto','idplanodistribuicao', 'idmunicipioibge', 'iduf', 'disabled'],
     computed:{
         // Limite: preço popular: Quantidade de Inteira
         qtPrecoPopularValorIntegralLimite: function() {
@@ -352,6 +353,8 @@ Vue.component('my-component', {
     },
     mounted: function() {
         this.t();
+        console.log(this.disabled);
+        this.$refs.add.disabled = !this.disabled;
     },
     methods: {
         t: function(){
@@ -367,6 +370,7 @@ Vue.component('my-component', {
                 vue.$data.produtos = data.data;
             })
             .fail(function(){ alert('error'); });
+
         },
         salvar: function (event) {
 

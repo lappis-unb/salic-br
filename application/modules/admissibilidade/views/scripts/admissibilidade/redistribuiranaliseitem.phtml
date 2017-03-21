@@ -1,18 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-
         <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
-
-        <style type="text/css">
-            <!--
-            .mensagem {
-                padding: 8px;
-                border: darkgreen;
-                background: #e3e3c7;
-            }
-
-            -->
-        </style>
         <script type="text/javascript">
             <!--
             $(document).ready(function () {
@@ -82,7 +70,9 @@
             <table class="tabela">
                 <tr>
                     <td class="centro">
-                        <input type="button" class="btn_confirmar btArmazenar" title="Confirmar" value=" "/>
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller'=>'admissibilidade', 'action' => 'redistribuiranalise'))?>"
+                            class="btn red-text white" type="submit">Cancelar</a>
+                        <button class="btn btArmazenar" type="submit">Confirmar</button>
                     </td>
                 </tr>
             </table>
