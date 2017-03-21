@@ -206,14 +206,16 @@ Vue.component('my-component', {
         vlReceitaPopularIntegralTotal :function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                total += parseFloat(this.produtos[i]['vlReceitaPopularIntegral']);
+                var vl = (this.produtos[i]['vlReceitaPopularIntegral']);
+                total += numeral(vl).value();
             }
             return numeral(total).format('0,0.00');
         },
         vlReceitaPopularParcialTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++) {
-                total += parseFloat(this.produtos[i]['vlReceitaPopularParcial']);
+                var vl = (this.produtos[i]['vlReceitaPopularParcial']);
+                total += numeral(vl).value();
             }
             return numeral(total).format('0,0.00');
         },
@@ -234,14 +236,16 @@ Vue.component('my-component', {
         vlReceitaProponenteIntegralTotal:function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                  total += parseFloat(this.produtos[i]['vlReceitaProponenteIntegral']);
+                vl = (this.produtos[i]['vlReceitaProponenteIntegral']);
+                total += numeral(vl).value();
             }
             return numeral(total).format('0,0.00');
         },
         vlReceitaProponenteParcialTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
-                total += parseFloat(this.produtos[i]['vlReceitaProponenteParcial']);
+                var vl = (this.produtos[i]['vlReceitaProponenteParcial']);
+                total += numeral(vl).value();
             }
             return numeral(total).format('0,0.00');
         },

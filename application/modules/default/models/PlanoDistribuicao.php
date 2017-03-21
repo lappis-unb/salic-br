@@ -67,14 +67,21 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 
             $slct->setIntegrityCheck(false);
 
-            $slct->from(array("a"=> $this->_name), $this->_getCols(), $this->_schema);
+            $cols = array_merge($this->_getCols(), array(
+                "FORMAT(a.vlUnitarioPopularNormal, 'N') as vlUnitarioPopularNormal",
+                "FORMAT( a.vlUnitarioNormal, 'N') AS vlUnitarioNormal",
+                "FORMAT( a.ReceitaPopularNormal, 'N') AS ReceitaPopularNormal",
+                "FORMAT( a.ReceitaPopularPromocional, 'N') AS ReceitaPopularPromocional",
+                "FORMAT( a.PrecoUnitarioPromocional, 'N') AS PrecoUnitarioPromocional",
+                "FORMAT( a.PrecoUnitarioNormal, 'N') AS PrecoUnitarioNormal",
+                "FORMAT(( ReceitaPopularPromocional ) + ( ReceitaPopularNormal )+ ( PrecoUnitarioNormal )+ ( PrecoUnitarioPromocional ),'N') AS Receita"
+            ));
+
+            $slct->from(array("a"=> $this->_name), $cols, $this->_schema);
             $slct->joinInner(array("b"=>"produto"),
                             "a.idproduto = b.codigo",
                             array("Produto"=>"b.descricao"),
                             $this->_schema);
-//            $slct->joinLeft(array("c"=>"verificacao"),
-//                            "a.idposicaodalogo = c.idverificacao",
-//                            array("PosicaoLogomarca"=>"c.descricao"),  $this->_schema);
             $slct->joinInner(array("ar"=>"area"),
                             "a.area = ar.codigo",
                             array("DescricaoArea"=>"ar.descricao"),  $this->_schema);
@@ -103,6 +110,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
                     }
                     $slct->limit($tamanho, $tmpInicio);
             }
+            //echo $slct;die;
 
             //SETANDO A QUANTIDADE DE REGISTROS
             $this->_totalRegistros = $this->pegaTotal($where);
@@ -293,7 +301,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             'avg(vlUnitarioProponenteIntegral) vlUnitarioNormal',
             'sum(vlReceitaProponenteIntegral) as PrecoUnitarioNormal',
             'sum(vlReceitaProponenteParcial) as PrecoUnitarioPromocional',
-            '(sum(vlReceitaPopularParcial) + sum(vlReceitaPopularIntegral)+  sum(vlReceitaProponenteIntegral)+ sum(vlReceitaProponenteParcial)) as  PrecoUnitarioPromocional'
+            //'(sum(vlReceitaPopularParcial) + sum(vlReceitaPopularIntegral)+  sum(vlReceitaProponenteIntegral)+ sum(vlReceitaProponenteParcial)) as  PrecoUnitarioPromocional'
         );
 
         $sql = $this->select()
@@ -312,8 +320,8 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
     }
 
     public function buscarIdVinculada($idPreProjeto) {
-        $sqlVinculada = "SELECT idOrgao as idVinculada 
-                                    FROM sac.dbo.PlanoDistribuicaoProduto t 
+        $sqlVinculada = "SELECT idOrgao as idVinculada
+                                    FROM sac.dbo.PlanoDistribuicaoProduto t
                                     INNER JOIN vSegmento s on (t.Segmento = s.Codigo)
                                     WHERE t.stPrincipal = 1 and idProjeto = '{$idPreProjeto}'";
 

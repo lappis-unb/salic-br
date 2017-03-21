@@ -29,17 +29,17 @@ abstract class MinC_Test_ControllerActionTestCase extends MinC_Test_Abstract
         parent::tearDown();
     }
 
-    public function autenticar($login = null , $senha = null)
+    public function autenticar($login = null, $senha = null)
     {
         $config = new Zend_Config_Ini(
-            APPLICATION_PATH. '/configs/application.ini',
+            APPLICATION_PATH . '/configs/application.ini',
             APPLICATION_ENV
         );
 
         $this->resetRequest()
             ->resetResponse();
 
-        if (empty($config->test->params->login) || empty($config->test->params->password)){
+        if (empty($config->test->params->login) || empty($config->test->params->password)) {
             throw new exception('test.username e test.password');
         }
 
@@ -77,4 +77,60 @@ abstract class MinC_Test_ControllerActionTestCase extends MinC_Test_Abstract
         $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=1111&codOrgao=2222');
         $this->assertRedirectTo('/principalproponente');
     }
+
+    protected function mudarPerfil()
+    {
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        $this->request->setMethod('GET');
+        $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=131&codOrgao=171');
+        $this->assertRedirectTo('/principal');
+    }
+
+     protected function mudarPerfil1()
+    {
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        $this->request->setMethod('GET');
+        $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=93&codOrgao=93');
+        $this->assertRedirectTo('/principal');
+    }
+    protected function mudarPerfil2()
+    {
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        $this->request->setMethod('GET');
+        $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=131&codOrgao=171');
+        $this->assertRedirectTo('/principal');
+    }
+    protected function mudarPerfilTecnicoADM()
+    {
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        $this->request->setMethod('GET');
+        $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=92&codOrgao=262');
+        $this->assertRedirectTo('/principal');
+    }
+    protected function mudarPerfilCoordenadorADM()
+    {
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        $this->request->setMethod('GET');
+        $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=131&codOrgao=262');
+        $this->assertRedirectTo('/principal');
+    }
 }
+
+
+
+

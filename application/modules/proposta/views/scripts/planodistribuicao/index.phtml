@@ -58,21 +58,11 @@
                                             <th class="centro">
                                                 Patrocinador
                                             </th>
-                                            <th class="centro">
-                                                Popula&atilde;o
-                                            </th>
-                                            <th class="centro">
-                                                Quantidade  de Inteira
-                                            </th>
-                                            <th class="centro">
-                                                Quantidade de Meia Entrada
-                                            </th>
-                                            <th class="centro">
-                                                Pre&ccedil;o Unit&aacute;rio do Ingresso
-                                            </th>
-                                            <th class="centro">
-                                                Receita da Inteira
-                                            </th>
+                                            <th class="centro"> Popula&atilde;o </th>
+                                            <th class="centro"> Quantidade  de Inteira </th>
+                                            <th class="centro"> Quantidade de Meia Entrada </th>
+                                            <th class="centro"> Pre&ccedil;o Unit&aacute;rio do Ingresso </th>
+                                            <th class="centro"> Receita da Inteira </th>
                                             <th class="centro">
                                                 Valor da Meia Entrada
                                             </th>
@@ -85,32 +75,26 @@
                                             <th class="centro">
                                                 Pre&ccedil;o em m&eacute;dia simples
                                             </th>
-                                            <th class="centro">
-                                                Receita da Inteira
-                                            </th>
-                                            <th class="centro">
-                                                Receita da Meia Entrada
-                                            </th>
-                                            <th class="centro">
-                                                Receita Prevista
-                                            </th>
+                                            <th class="centro"> Receita da Inteira </th>
+                                            <th class="centro"> Receita da Meia Entrada </th>
+                                            <th class="centro"> Receita Prevista </th>
                                         </tr>
                                         <tr class="fundo">
                                             <td class="centro"><?php echo $planoDistribuicao->QtdeProduzida ; ?></td>
-                                            <td><?php echo $planoDistribuicao->QtdeProponente	?></th>
-                                            <td><?php echo $planoDistribuicao->QtdePatrocinador	?></th>
-                                            <td><?php echo $planoDistribuicao->QtdeOutros	?></th>
-                                            <td><?php echo $planoDistribuicao->QtdeVendaPopularNormal?></th>
-                                            <td><?php echo $planoDistribuicao->QtdeVendaPopularPromocional?></th>
-                                            <td><?php echo $planoDistribuicao->vlUnitarioPopularNormal?>	</th>
-                                            <td><?php echo $planoDistribuicao->ReceitaPopularNormal	?></th>
+                                            <td><?php echo $planoDistribuicao->QtdeProponente	?></td>
+                                            <td><?php echo $planoDistribuicao->QtdePatrocinador	?></td>
+                                            <td><?php echo $planoDistribuicao->QtdeOutros ?></td>
+                                            <td><?php echo $planoDistribuicao->QtdeVendaPopularNormal?></td>
+                                            <td><?php echo $planoDistribuicao->QtdeVendaPopularPromocional?></td>
+                                            <td><?php echo $planoDistribuicao->vlUnitarioPopularNormal?>	</td>
+                                            <td><?php echo $planoDistribuicao->ReceitaPopularNormal	?></td>
                                             <td><?php echo $planoDistribuicao->ReceitaPopularPromocional	?></th>
                                             <td><?php echo $planoDistribuicao->QtdeVendaNormal	?></th>
-                                            <td><?php echo $planoDistribuicao->QtdeVendaPromocional	?></th>
-                                            <td><?php echo $planoDistribuicao->vlUnitarioNormal	?></th>
-                                            <td><?php echo $planoDistribuicao->PrecoUnitarioNormal	?></th>
-                                            <td><?php echo $planoDistribuicao->PrecoUnitarioPromocional?></th>
-                                            <td><?php echo $planoDistribuicao->PrecoUnitarioPromocional?></th>
+                                            <td><?php echo $planoDistribuicao->QtdeVendaPromocional	?></td>
+                                            <td><?php echo $planoDistribuicao->vlUnitarioNormal	?></td>
+                                            <td><?php echo $planoDistribuicao->PrecoUnitarioNormal	?></td>
+                                            <td><?php echo $planoDistribuicao->PrecoUnitarioPromocional?></td>
+                                            <td><?php echo $planoDistribuicao->Receita?></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -122,12 +106,14 @@
                     <table class="tabela" style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td align="center">
-                                <button type="button" class="btn thite-text" id="btn_novo">Novo</button>
-                                <?php if(!empty($this->planosDistribuicao->toArray())): ?>
+
+                                <?php if(!empty($this->planosDistribuicao->toArray()) && $this->isEditavel): ?>
+                                    <button type="button" class="btn white-text" id="btn_novo">Novo</button>
                                     <a
                                         href="/proposta/plano-distribuicao/detalhar-plano-distribuicao/idPreProjeto/<?php echo $this->idPreProjeto ?>"
                                         class="btn white-text" id="detalhar">Detalhar</a>
                                     <?php else: ?>
+                                        <button disabled type="button" class="btn white-text" id="btn_novo">Novo</button>
                                         <button disabled class="btn white-text" >Detalhar</button>
                                     <?php endif ?>
                             </td>
