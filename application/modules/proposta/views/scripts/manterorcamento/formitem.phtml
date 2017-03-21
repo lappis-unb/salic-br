@@ -127,6 +127,7 @@
                     <input type="hidden" name="uf" id="uf" value="<?php echo $this->Estado['idUF']; ?>" />
                     <input type="hidden" name="municipio" id="municipio" value="<?php echo $this->Municipio['idMunicipioIBGE'] ?>" />
                     <input type="hidden" name="idPlanilhaEtapa" id="idPlanilhaEtapa" value="<?php echo $this->Etapa['idPlanilhaEtapa'] ?>" />
+                    <input type="hidden" name="valorMediana" id="valorMediana" value="" />
 
                     <div class="row">
                         <div class="col s4">
@@ -189,7 +190,7 @@
                             </select>
                         </div>
 
-                        <div class="input-field col s8">
+                        <div class="input-field col s8 justificativa">
                             <label for="edito1">Detalhamento / Justificativa / Observa&ccedil;&otilde;es (Opcional)</label>
                             <textarea cols="80" id="editor1" name="editor1" rows="7" class="materialize-textarea browser-default" placeholder=" "><?php echo $dados->Justificativa; ?></textarea>
                         </div>
@@ -199,7 +200,7 @@
                         <div class="row">
                             <div class="input-field col s12 center-align">
                                 <a class="btn-close-modal waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
-                                <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
+                                <a id="btn-salvar" href="javascript:void(0);" class="valida disabled btn waves-effect waves-light" name="action">Salvar
                                     <i class="material-icons right">send</i>
                                 </a>
                             </div>

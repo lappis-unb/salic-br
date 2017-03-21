@@ -665,4 +665,19 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
 
         return $db->fetchAll($sql);
     }
+
+    public function calcularMedianaItemOrcamento($idProduto, $idUnidade, $idPlanilhaItem, $idUFDespesa, $idMunicipioDespesa) {
+
+        if( empty($idPlanilhaItem) OR empty($idUnidade))
+            return false;
+
+        $exec = new Zend_Db_Expr("EXEC SAC.dbo.spCalcularMedianaItemOrcamentario {$idProduto}, {$idPlanilhaItem}, {$idUFDespesa}, {$idMunicipioDespesa}, {$idUnidade}");
+
+        try {
+            $db= Zend_Db_Table::getDefaultAdapter();
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $db->fetchRow($exec);
+    }
 }
