@@ -1208,7 +1208,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $valorMediana = $tbPlaninhaProposta->calcularMedianaItemOrcamento($params['idproduto'], $params['idunidade'], $params['idplanilhaitem'], $params['idufdespesa'], $params['idmunicipiodespesa']);
         $valorMediana = isset($valorMediana['Mediana']) ? $valorMediana['Mediana'] : 0;
 
-        $return['msg'] = 'O valor mediano deste item (R$ '. number_format($valorMediana, 2, ",", ".") . ')';
+        $return['msg'] = '';
         $return['status'] = 1;
         $return['valorMediana'] = $valorMediana;
 
