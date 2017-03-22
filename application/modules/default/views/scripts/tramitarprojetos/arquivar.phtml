@@ -9,7 +9,7 @@
             });
             if(validar == false){
                 $("#error").dialog("destroy");
-                $('#error').html('Dados obrigatórios n&atilde;o informados.');
+                $('#error').html('Dados obrigatï¿½rios n&atilde;o informados.');
                 $("#error").dialog({
                     modal: true,
                     draggable: false,
@@ -148,7 +148,7 @@
                         erro = 1;
                     }
                 } else {
-                    recebe.html('Este projeto já se encontra arquivado');
+                    recebe.html('Este projeto jï¿½ se encontra arquivado');
                     recebe.css("color", "red");
                     erro = 0;
                 }
@@ -173,7 +173,7 @@
                     }
                 } else {
                     if($("#pronac").val().length < 6){
-                        $("#error").html('Pronac tem que ter no mínimo 7 caracteres!');
+                        $("#error").html('Pronac tem que ter no mï¿½nimo 7 caracteres!');
                         $("#error").dialog('open');
                         $("#error").dialog({
                             modal: true,
@@ -201,16 +201,16 @@
     }
 </script>
 
-<?php echo $this->partial('inc/menu.inc.php', $this) // menu ?>
-<div id="confirm1" title="Alerta!" class="sumir">Dados obrigatórios não informados!</div>
-<div id="confirm2" title="Alerta!" class="sumir">Este projeto já se encontra Arquivado!</div>
+<?php echo echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu ?>
+<div id="confirm1" title="Alerta!" class="sumir">Dados obrigatï¿½rios nï¿½o informados!</div>
+<div id="confirm2" title="Alerta!" class="sumir">Este projeto jï¿½ se encontra Arquivado!</div>
 <div id="confirm4" title="Alerta!" class="sumir">Tem certeza que deseja arquivar este projeto?</div>
-<div id="confirm5" title="Alerta!" class="sumir">O número da caixa deve ser maior que 0.</div>
-<div id="confirm6" title="Alerta!" class="sumir">A caixa inicial não poder ser maior que a final!</div>
+<div id="confirm5" title="Alerta!" class="sumir">O nï¿½mero da caixa deve ser maior que 0.</div>
+<div id="confirm6" title="Alerta!" class="sumir">A caixa inicial nï¿½o poder ser maior que a final!</div>
 <div id="confirm7" title="Alerta!" class="sumir">Pronac Inexistente</div>
-<div id="confirm8" title="Alerta!" class="sumir">Pronac tem que ter no mínimo 6 caracteres!</div>
+<div id="confirm8" title="Alerta!" class="sumir">Pronac tem que ter no mï¿½nimo 6 caracteres!</div>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
@@ -221,14 +221,14 @@
 <!-- ========== FIM BRADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Arquivamento de projetos <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 <div id="error" class="sumir" title="Alerta!"></div>
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo">
     <form name="form" id="form" method="post" >
         <table class="tabela" width="50%" align="center">
@@ -258,10 +258,10 @@
         </table>
     </form>
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />

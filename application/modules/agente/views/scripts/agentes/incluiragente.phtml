@@ -118,6 +118,7 @@
 
                         <?php if( !$this->ehProponente ) : ?>
                             <label for="visao"> Informe a vis&atilde;o do Agente: </label>
+
                             <select name="visao" id="visao"
                                     onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
                                     class="input_simples" style="width: 250px;">
