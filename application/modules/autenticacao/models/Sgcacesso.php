@@ -1,32 +1,11 @@
 <?php
 
-/**
- * Description of Sgcacesso
- *
- * @author augusto
- * @author wouerner <wouerner@gmail.com>
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
- *
- *
-    IdUsuario
-    Cpf
-    Nome
-    DtNascimento
-    Email
-    Senha
-    DtCadastro
-    Situacao
-    DtSituacao
-    id_login_cidadao
- */
 class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 {
 
-    protected $_banco = 'controledeacesso';
-    protected $_schema = 'controledeacesso';
     protected $_name = 'sgcacesso';
-    protected $_primary = 'Cpf';
+    protected $_schema = 'controledeacesso';
+    protected $_primary = 'cpf';
 
     /**
      * @var Zend_Db_Table
@@ -34,10 +13,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     private static $instancia;
 
     /**
-     * Responsavel por implementar o Singleton, retornando apenas uma instancia da classe
-     * utilizando uma chamada estatica.
      * @return Autenticacao_Model_Sgcacesso
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public static function obterInstancia()
     {
@@ -223,7 +199,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     public function salvar($dados)
     {
         try {
-            if (isset($dados['IdUsuario'])) {
+            if (isset($dados['IdUsuario']) && !empty($dados['IdUsuario'])) {
                 $objSgcAcesso = $this->buscar(array("IdUsuario = ?" => $dados['IdUsuario']))->current();
             } else {
                 $objSgcAcesso = $this->createRow();
