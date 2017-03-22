@@ -340,7 +340,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
         $error = "";
         $msg = "Distribui��o Realizada com sucesso!";
 
-        $db = Zend_Registry:: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $db->beginTransaction();
         $projetos = new Projetos();
@@ -545,7 +545,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
         $buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
 
         $error = '';
-        $db = Zend_Registry:: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $db->beginTransaction();
         $projetos = new Projetos();
@@ -681,7 +681,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
                 "ALERT");
         }
 
-        $db = Zend_Registry:: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $projetos = new Projetos();

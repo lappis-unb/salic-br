@@ -28,7 +28,7 @@
                 EscClose:false,
                 modal:true,
                 buttons:{
-                    'Não':function(){
+                    'Nï¿½o':function(){
                         $(this).dialog('close');
                     },
                     'Sim':function(){
@@ -104,7 +104,7 @@
                     EscClose:false,
                     modal:true,
                     buttons:{
-                        'Não':function(){
+                        'Nï¿½o':function(){
                             $(this).dialog('close');
                         },
                         'Sim':function(){
@@ -141,7 +141,7 @@
         $("#nome").html(NomeProjeto);
         $("#lote").val(lote);
         $("#idOrigem").val(idOrigem);
-        document.getElementById("modalJustificativa").title = "Justificativa para a Solcitação";
+        document.getElementById("modalJustificativa").title = "Justificativa para a Solcitaï¿½ï¿½o";
 
         // modal com os ddos do dirigente
         $("#modalJustificativa").dialog("destroy");
@@ -188,17 +188,17 @@
     }
 </script>
 
-<?php echo $this->partial('inc/menu.inc.php', $this) // menu ?>
+<?php echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu ?>
 
-<div id="confirm1" title="Alerta!" class="sumir">Favor preencher os dados obrigatórios!</div>
+<div id="confirm1" title="Alerta!" class="sumir">Favor preencher os dados obrigatï¿½rios!</div>
 <div id="confirm2" title="Alerta!" class="sumir">Tem certeza que deseja recusar este projeto?</div>
 <div id="confirm3" title="Alerta!" class="sumir">Tem certeza que deseja cancelar o recebimento deste Projeto?</div>
 <div id="confirm4" title="Alerta!" class="sumir">Tem certeza que deseja arquivar este projeto?</div>
-<div id="confirm5" title="Alerta!" class="sumir">O número da caixa deve ser maior que 0.</div>
-<div id="confirm6" title="Alerta!" class="sumir">A caixa inicial não poder ser maior que a final!</div>
+<div id="confirm5" title="Alerta!" class="sumir">O nï¿½mero da caixa deve ser maior que 0.</div>
+<div id="confirm6" title="Alerta!" class="sumir">A caixa inicial nï¿½o poder ser maior que a final!</div>
 <div id="VisualizarDespacho" title="Vizualizar Despacho" class="sumir"></div>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
@@ -208,13 +208,13 @@
 </div>
 <!-- ========== FIM BRADCRUMB (LINKS TOPO) ========== -->
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Receber projetos <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <!-- Modal para encaminhar o projeto -->
 
 <div class="sumir" id="modalJustificativa" title="Justificativa de Recusa do Projeto" >
@@ -232,7 +232,7 @@
 
         <table class="tabela">
             <tr>
-                <td><span style="color: red;">*</span> Por favor informe uma justificativa da solicitação de cancelamento de envio.</td>
+                <td><span style="color: red;">*</span> Por favor informe uma justificativa da solicitaï¿½ï¿½o de cancelamento de envio.</td>
             </tr>
        	</table>
 
@@ -267,7 +267,7 @@
        	</table>
 
        	* Por favor informe a Caixa Inicial e a Caixa Final para o arquivamento do Projeto:
-       	<br />	<br><label for="cx">Informações Adicionais</label><br>
+       	<br />	<br><label for="cx">Informaï¿½ï¿½es Adicionais</label><br>
         <table class="tabela">
             <tr>
                 <td width="120"><label for="name">Cx Inicial *</label></td>
@@ -387,7 +387,7 @@
         <table class="tabela">
             <tr>
                 <td class="centro">
-				Não há Projetos para serem Recebidos!
+				Nï¿½o hï¿½ Projetos para serem Recebidos!
                 </td>
             </tr>
         </table>
@@ -395,17 +395,17 @@
         <?php
 }
     ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINAï¿½ï¿½O ============ -->
 <?php if ($this->qtdDoc > 5) {
     echo $this->Destino;
 } ?>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
 
 
-</div><!-- ========== FIM CONTEÚDO ========== -->
+</div><!-- ========== FIM CONTEï¿½DO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />
