@@ -5,7 +5,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 
     protected $_name = 'sgcacesso';
     protected $_schema = 'controledeacesso';
-    protected $_primary = 'cpf';
+    protected $_primary = 'Cpf';
 
     /**
      * @var Zend_Db_Table
