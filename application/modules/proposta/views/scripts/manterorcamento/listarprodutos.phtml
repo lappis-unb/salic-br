@@ -170,19 +170,19 @@
         $3('.collapsible').collapsible();
 
         $3('ul.tabs').tabs({
-            onShow: function(event, ui) {
-                if(history.pushState) {
-                    history.pushState(null, null, this.hash);
-                }
-                else {
-                    location.hash = this.hash;
-                }
-            }
+//            onShow: function(event, ui) {
+////                if(history.pushState) {
+////                    history.pushState(null, null, this.hash);
+////                }
+////                else {
+////                    location.hash = this.hash;
+////                }
+//            }
         });
 
         $3('.modal').find('select').material_select();
 
-        expandAll();
+        collapseAll();
     });
 
     function expandAll(){
