@@ -68,12 +68,12 @@ private $intTamPag = 10;
                 $scgAcesso = $sgcAcessoBuscar->toArray();
                 $json = json_encode($scgAcesso);
                 echo $json;
-                $this->_helper->viewRenderer->setNoRender(TRUE); 
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 $dados['semdados'] = 'semdados';
                 $json = json_encode($dados);
                 echo $json;
-                $this->_helper->viewRenderer->setNoRender(TRUE); 
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
     }
@@ -94,10 +94,10 @@ private $intTamPag = 10;
             {
                 $usuariosDados = $usuariosBuscar->toArray();
                 $dados = array(
-		                        "usu_codigo" 			=> $usuariosDados['usu_codigo'],
-		                        "usu_identificacao" 	=> $usuariosDados['usu_identificacao'],
-		                        "usu_senha" 			=> $senhaFinal[0]->senha,
-		                        "usu_data_atualizacao" 	=> date("Y-m-d")
+                    "usu_codigo" 			=> $usuariosDados['usu_codigo'],
+                    "usu_identificacao" 	=> $usuariosDados['usu_identificacao'],
+                    "usu_senha" 			=> $senhaFinal,
+                    "usu_data_atualizacao" 	=> date("Y-m-d")
                 );
 
                 $usuariosSave = $usuarios->salvar($dados);
@@ -132,7 +132,7 @@ private $intTamPag = 10;
                 $dados['semdados'] = 'semdados';
                 $json = json_encode($dados);
                 echo $json;
-                $this->_helper->viewRenderer->setNoRender(TRUE); 
+                $this->_helper->viewRenderer->setNoRender(TRUE);
 
             }
 
@@ -144,7 +144,7 @@ private $intTamPag = 10;
                 $dados['semdados'] = 'semdados';
                 $json = json_encode($dados);
                 echo $json;
-                $this->_helper->viewRenderer->setNoRender(TRUE); 
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
             $idAgente = $agentesBuscar['idAgente'];
@@ -157,7 +157,7 @@ private $intTamPag = 10;
                   $dados['sememail'] = 'sememail';
                   $json = json_encode($dados);
                   echo $json;
-                  $this->_helper->viewRenderer->setNoRender(TRUE); 
+                  $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
             $json = array('error' => false);
@@ -169,7 +169,7 @@ private $intTamPag = 10;
                 $json = json_encode($mesclagem);
             }
             echo $json;
-            $this->_helper->viewRenderer->setNoRender(TRUE); 
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
