@@ -38,7 +38,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         if ($todasVisoes) {
-            $sql = "select distinct idverificacao, descricao from  " . GenericModel::getStaticTableName('agentes', 'verificacao') . "  where idtipo = 16 and sistema = 21 ";
+            $sql = "select distinct idVerificacao, Descricao from  " . GenericModel::getStaticTableName('agentes', 'verificacao') . "  where idtipo = 16 and sistema = 21 ";
             $dados = $db->fetchAll($sql);
         } else {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -52,8 +52,8 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             );
             $objSelect->joinInner(
                 array('ver' => 'verificacao'),
-                "ver.idverificacao = vis.visao",
-                array('ver.descricao', 'ver.idverificacao'),
+                "ver.idVerificacao = vis.visao",
+                array('ver.Descricao', 'ver.idVerificacao'),
                 $this->getSchema('agentes')
             );
             $objSelect->joinLeft(
@@ -68,7 +68,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
                 array('area' => 'ar.descricao'),
                 $this->getSchema('sac')
             );
-            $objSelect->where('ver.idverificacao = vis.visao');
+            $objSelect->where('ver.idVerificacao = vis.visao');
             $objSelect->where('ver.idtipo = ? ', 16);
             $objSelect->where('sistema = ? ', 21);
 
