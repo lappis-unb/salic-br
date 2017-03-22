@@ -134,7 +134,7 @@
 <?php } ?>
     
 <?php if(in_array($this->tipoReadequacao, array(5,6,7,8,15,16,17,18,19,20,21))){ ?>
-    <textarea type="text" name="descSolicitacao" id="descSolicitacao"><?php echo $this->valorPreCarregado; ?></textarea><span class="red"></span>
+    <textarea type="text" name="descSolicitacao" id="descSolicitacao"><?php echo $this->valorPreCarregado; ?></textarea><span class="red-text"></span>
     <script type="text/javascript">
         var editor = CKEDITOR.instances['descSolicitacao'];
         if (editor) { delete CKEDITOR.instances['descSolicitacao']; }
@@ -206,7 +206,7 @@
         <?php } else if($this->tipoReadequacao == 21){ ?>
         texto = 'Ficha Técnica';
         <?php } ?>
-        $("#campoCriadoTipoReadequacao").append('<span class="red" id="textAjuda"></span>');
+        $("#campoCriadoTipoReadequacao").append('<span class="red-text" id="textAjuda"></span>');
         $("#textAjuda").html(texto);
     });
 </script>
