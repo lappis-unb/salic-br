@@ -88,11 +88,12 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
      *
      * @name produtoscadastradosAction
      */
-    public function produtoscadastradosAction()
+   public function produtoscadastradosAction()
     {
         $this->view->idPreProjeto = $this->idPreProjeto;
 
         $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+
     }
 
     /**
@@ -130,9 +131,8 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         }
         $this->view->localRealizacao = $novosLocais;
 //
-//        $this->view->idPreProjeto = $this->idPreProjeto;
-//
-//        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+//     $this->view->idPreProjeto = $this->idPreProjeto;
+//     $this->view->charset = Zend_Registry::get('config')->db->params->charset;
     }
 
     /**
