@@ -129,7 +129,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $Projetos = new Projetos();
             $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
 
-            $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+//            $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+
+            $tbVerificao = new Proposta_Model_DbTable_Verificacao();
+            $buscarRecurso = $tbVerificao->buscarFonteRecurso();
+
             $this->view->Recursos = $buscarRecurso;
 
             $uf = new Agente_Model_DbTable_UF();
@@ -139,7 +143,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
-            $tbPlanilhaEtapa = new tbPlanilhaEtapa();
+            $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
             $this->view->Etapas = $tbPlanilhaEtapa->buscar(array('stEstado = ?'=>1));
 
             $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
@@ -4048,7 +4052,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
-            $tbPlanilhaEtapa = new tbPlanilhaEtapa();
+            $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
             $this->view->Etapas = $tbPlanilhaEtapa->buscar(array('stEstado = ?'=>1));
 
             $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
