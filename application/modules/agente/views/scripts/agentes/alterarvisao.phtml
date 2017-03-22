@@ -128,8 +128,8 @@
                     <label for="visao"> </label>
                     <select class="select w300" name="visao[]" id="visao" multiple="multiple" size="7">
                         <?php foreach ($this->visao as $visao) : ?>
-                            <?php if(!in_array($visao['idVerificacao'], $arrayIdVisao)) : // só mostra as visoes que o agente NAO possui ?>
-                            <option value="<?php echo $visao['idVerificacao']; ?>"><?php echo $visao['Descricao']; ?></option>
+                            <?php if(!in_array($visao['idverificacao'], $arrayIdVisao)) : // só mostra as visoes que o agente NAO possui ?>
+                            <option value="<?php echo $visao['idverificacao']; ?>"><?php echo $visao['descricao']; ?></option>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select>

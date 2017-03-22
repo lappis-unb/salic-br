@@ -2716,37 +2716,37 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $select = null;
 
         foreach ($visoes as $visaoGrupo) {
-            if ($GrupoAtivo == 93 and ($visaoGrupo->idVerificacao == 209 or $visaoGrupo->idVerificacao == 216)) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+            if ($GrupoAtivo == 93 and ($visaoGrupo->idverificacao == 209 or $visaoGrupo->idverificacao == 216)) {
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['Descricao'] = $visaoGrupo->descricao;
             }
-            if ($GrupoAtivo == 94 and $visaoGrupo->idVerificacao == 209) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+            if ($GrupoAtivo == 94 and $visaoGrupo->idverificacao == 209) {
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['descricao'] = $visaoGrupo->descricao;
             }
-            if ($GrupoAtivo == 137 and $visaoGrupo->idVerificacao == 209) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+            if ($GrupoAtivo == 137 and $visaoGrupo->idverificacao == 209) {
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['descricao'] = $visaoGrupo->descricao;
             }
             if ($GrupoAtivo == 97) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['descricao'] = $visaoGrupo->descricao;
             }
-            if ($GrupoAtivo == 120 and $visaoGrupo->idVerificacao == 210) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+            if ($GrupoAtivo == 120 and $visaoGrupo->idverificacao == 210) {
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['descricao'] = $visaoGrupo->descricao;
             }
-            if ($GrupoAtivo == 118 and $visaoGrupo->idVerificacao == 210) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+            if ($GrupoAtivo == 118 and $visaoGrupo->idverificacao == 210) {
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['descricao'] = $visaoGrupo->descricao;
             }
-            if ($GrupoAtivo == 122 and ($visaoGrupo->idVerificacao == 210 or $visaoGrupo->idVerificacao == 216 or $GrupoAtivo == 123)) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+            if ($GrupoAtivo == 122 and ($visaoGrupo->idverificacao == 210 or $visaoGrupo->idverificacao == 216 or $GrupoAtivo == 123)) {
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['descricao'] = $visaoGrupo->descricao;
             }
             if ($GrupoAtivo == 121) {
-                $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
+                $select[$a]['descricao'] = $visaoGrupo->descricao;
             }
             $a++;
         }
