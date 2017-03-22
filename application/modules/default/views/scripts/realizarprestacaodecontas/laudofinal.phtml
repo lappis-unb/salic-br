@@ -1,4 +1,4 @@
-<?php require_once"inc/menu.inc.php"; ?>
+<?php echo $this->partial("inc/menu.inc.php"); ?>
 <style>
     .tabela p { font: 12px/14pt "Trebuchet MS",Georgia,"Times New Roman",Times,serif; }
 </style>
@@ -7,7 +7,7 @@
         $('.btn_cancelar').click(function(){
             window.location = "<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'index')); ?>";
         });
-        
+
         $("#btn_salvar").click(function() {
             isLaudoAprovado = $("[name=IN]:checked").val();
 
@@ -30,7 +30,7 @@
                         'OK' : function(){
                             $(this).dialog('close');
                         }
-                    } 
+                    }
                 });
                 return false;
             } else {
@@ -83,7 +83,7 @@
         $("#formLaudoFinal").submit();
         <?php endif; ?>
     });
-    
+
     function retornarTela(){
         window.location = "<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'painel')); ?>?msg=sucessoLaudoFinal";
     }
@@ -130,7 +130,7 @@
 </div>
 <div id="titulo">
     <div>
-        Laudo final de presta&ccedil;&atilde;o de contas 
+        Laudo final de presta&ccedil;&atilde;o de contas
         <span class="voltar" style="float:right;">
             <a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria'),'',true) , "?idPronac={$this->idPronac}"; ?>" title="Ir para p&aacute;gina anterior">Voltar</a>
         </span>
@@ -210,7 +210,7 @@
                                 ?>
                             <input type="hidden" name="manifestacaoChefeDeDivisao" value="<?php echo $parecerDoChefeDeDivisao; ?>"/>
                             <span style="color: #35953F; font-size: 16px; font-weight: bold; padding: 5px;">Pronunciamento: </span>
-                            <?php 
+                            <?php
                                 echo $parecerDoChefeDeDivisao;
                             endif;
                             ?>

@@ -85,7 +85,7 @@
     }
 
     .collapsible .collapsible-body .row {
-         margin-bottom: 0px;
+        margin-bottom: 0px;
     }
 
     table .left-align {
@@ -238,7 +238,7 @@
     }
 
     #custosvinculados .preloader-wrapper{
-        display: none;
+        /*display: none;*/
 
     }
 
@@ -254,6 +254,28 @@
 
     .table.bordered > thead > tr.outrasfontes, table.bordered > tbody > tr.outrasfontes {
         background: rgba(205, 200, 230, 0.45);
+    }
+
+    .danger.input-field {
+        color: #ef6c00;
+    }
+
+    .danger.input-field input {
+        border-bottom: 1px solid #ef6c00;
+    }
+
+    .danger.input-field input[type=text]:focus:not([readonly]) {
+        border-bottom: 1px solid #ef6c00;
+        box-shadow: 0 1px 0 0 #ef6c00;
+    }
+
+    .danger.input-field label,
+    .danger.input-field label,
+    .danger.input-field label:hover,
+    .danger.input-field:active,
+    .danger.input-field:hover,
+    .danger.input-field {
+        color: #ef6c00 !important;
     }
 
 
@@ -281,7 +303,7 @@
                     <a id="btn-restaurar-planilha" class="btn-floating waves-effect waves-light btn tooltipped btn-info" data-tooltip="Restaurar planilha"><i class="material-icons left">restore</i></a>
                 </p>
             <?php endif; ?>
-            <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'>
+            <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
             <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
         </div>
     </div>
@@ -321,7 +343,7 @@ $(document).ready(function(){
     <?php endif; ?>
 });
 
-$3( document ).ajaxStart(function() {
+$3(document).ajaxStart(function() {
     $3('#modal-pre-loader').modal('open');
 });
 
@@ -374,6 +396,13 @@ $3(document).ready(function () {
                 $3("#qtdDias").focusin();
                 return false;
             }
+
+            if ($3("#editor.valida").val() == '') {
+                Materialize.toast('Justificativa neste caso &eacute; obrigat&oacute;ria!', 4000);
+                $3("#editor").focus();
+                return false;
+            }
+
 
             $3.post($3('#form').attr('action'), $3('#form').serialize(), function (result) {
                 result = $3.parseJSON(result);
@@ -466,5 +495,46 @@ $3(document).ready(function () {
 
         });
     <?php endif; ?>
+
+    $3('body').on('focusout', '#vlunitario', function () {
+        if($3(this).val() == 0)
+            return false;
+
+        var urlAction = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'buscar-valor-mediana-ajax')); ?>";
+
+        var dados = {
+            idproduto: $3("#produto").val(),
+            idplanilhaitem: $3("#planilhaitem").val(),
+            idunidade: $3("#unidade").val(),
+            idufdespesa: $3("#uf").val(),
+            idmunicipiodespesa: $3("#municipio").val(),
+            vlunitario: $3("#vlunitario").val(),
+        };
+
+        $.post(urlAction, dados, function (result) {
+            result = $3.parseJSON(result)
+            if (result.status == '1') {
+                Materialize.toast(result.msg, 5000, 'green white-text');
+                $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled');
+                $3(".valor-mediana").remove();
+                $3("#vlunitario").parent().removeClass("danger");
+                $3(".justificativa label").text('Detalhamento / Justificativa / Observa\xE7\xF5es (Opcional)').parent().removeClass("danger");
+
+            } else {
+                $3("#btn-salvar").addClass('disabled').removeClass('btn-salvar ');
+                Materialize.toast(result.msg, 9000, 'orange darken-3 white-text');
+                $3("#vlunitario").parent().addClass("danger");
+                $3(".justificativa label").text('Justificativa para valor unit\xE1rio maior que R$ ' + result.valorMediana + ' (Obrigat\xF3rio)').parent().addClass("danger");
+            }
+
+        });
+        return false;
+    });
+
+    $3('body').on('keyup', '#editor1', function () {
+        if ($3("#editor").val() != '') {
+            $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled valida');
+        }
+    });
 });
 </script>

@@ -15,7 +15,7 @@
     $inputID = '<input type="hidden" name="'.$idNome.'" id="'.$idNome.'" value="'.$this->idcotacao.'"/><input type="hidden" name="idpronac" id="idpronac" value="'.$this->idpronac.'"/>';
     $idformulario = 'formularioCotacao';
 
-    include_once 'scripts/comprovarexecucaofinanceira/inc/menu.inc.php';
+    echo $this->partial('comprovarexecucaofinanceira/inc/menu.inc.php', $this);
 ?>
 <div id="breadcrumb">
     <ul>

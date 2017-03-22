@@ -1,5 +1,5 @@
 
-<?php require_once "inc/menu.inc.php"; ?>
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
 
 <script type="text/javascript">
 
@@ -37,7 +37,7 @@
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
-    <?php require_once "inc/cabecalho.php";?>
+    <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
 
     <table class="tabela">
         <tr>

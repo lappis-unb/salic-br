@@ -39,7 +39,7 @@ error_reporting(0);
 
 if (!isset($_GET["tpAgente"])) {
 
-	require_once "inc/menu.inc.php"; // menu de consultar dados do projeto
+	echo $this->partial('inc/menu.inc.php', $this) // menu de consultar dados do projeto
 	
 }
 

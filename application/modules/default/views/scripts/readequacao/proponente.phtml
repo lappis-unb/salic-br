@@ -10,7 +10,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-    require_once "inc/menu.inc.php"; // menu
+    echo $this->partial('inc/menu.inc.php', $this) // menu
     // define os valores dos campos do formulário, se será lido o dado original ou o dado readequado
     $CNPJCPF        = isset($this->dadosSR['CNPJCPF'])         ? Validacao::mascaraCPFCNPJ($this->escape($this->dadosSR['CNPJCPF'])) : Validacao::mascaraCPFCNPJ($this->escape($this->dadosAP['CNPJCPF']));
     $NomeProponente = isset($this->dadosSR['NomeProponente'])  ? $this->escape($this->dadosSR['NomeProponente'])                     : $this->escape($this->dadosAP['NomeProponente']);

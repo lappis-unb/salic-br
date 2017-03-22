@@ -1,4 +1,4 @@
-<?php require_once "inc/menu.inc.php"; ?>
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
 
 <!-- ========== IN&Iacute;CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
@@ -28,7 +28,7 @@
 <div id="conteudo">
     <div id="confirma"></div>
     <div>
-        <?php require_once "inc/cabecalho.php";?>
+        <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
         <table class="tabela <?php echo $this->dados[0]->idendereco ? 'sumir' : ''; ?>">
             <tr>
                 <th>ENDERE&Ccedil;OS</th>
