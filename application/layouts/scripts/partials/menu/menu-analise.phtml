@@ -20,7 +20,7 @@ $arrMenu['analise'] = array(
         137,
         141,
         142,
-        143),
+        143,148,151),
 );
 
 $arrMenu['analise']['menu'][] = array('label' => 'Realizar An&aacute;lise', 'title' => 'Ir para An&aacute;lise do Membro da Comiss&atilde;o',
@@ -42,11 +42,11 @@ $arrMenu['analise']['menu'][] = array('label' => 'Reuni&atilde;o CNIC', 'title' 
 );
 $arrMenu['analise']['menu'][] = array('label' => 'Reuni&atilde;o CNIC', 'title' => 'Ir para Gerenciar Pauta da Reuni&atilde;o',
     'url' => $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciaradministrativo'), '', true),
-    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_CNIC)
+    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_CNIC,148,151)
 );
 $arrMenu['analise']['menu'][] = array('label' => 'Gerenciar Pareceres', 'title' => 'Ir para Gerenciar Pareceres',
     'url' => $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'index'), '', true),
-    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE, Autenticacao_Model_Grupos::TECNICO_ANALISE)
+    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE, Autenticacao_Model_Grupos::TECNICO_ANALISE,148,151)
 );
 $arrMenu['analise']['menu'][] = array('label' => 'Imprimir Parecer T&eacute;cnico', 'title' => 'Ir para Imprimir Parecer T&eacute;cnico',
     'url' => $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'imprimir-parecer-tecnico'), '', true),
@@ -54,7 +54,7 @@ $arrMenu['analise']['menu'][] = array('label' => 'Imprimir Parecer T&eacute;cnic
 );
 $arrMenu['analise']['menu'][] = array('label' => 'Gerenciar Componente da Comiss&atilde;o', 'title' => 'Ir para Gerenciar Componente da Comiss&atilde;o',
     'url' => $this->url(array('controller' => 'projetosgerenciar', 'action' => 'index'), '', true),
-    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE)
+    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE,148,151)
 );
 $arrMenu['analise']['menu'][] = array('label' => 'Gerar Termo de Decis&atilde;o', 'title' => 'Ir para Gerar Termo de Decis&atilde;o',
     'url' => $this->url(array('controller' => 'gerartermodeaprovacao', 'action' => 'index'), '', true),
@@ -62,7 +62,7 @@ $arrMenu['analise']['menu'][] = array('label' => 'Gerar Termo de Decis&atilde;o'
 );
 $arrMenu['analise']['menu'][] = array('label' => 'CheckList para Publica&ccedil;&atilde;o', 'title' => 'Ir para CheckList para Publica&ccedil;&atilde;o',
     'url' => $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true),
-    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE,Autenticacao_Model_Grupos::TECNICO_ANALISE,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO)
+    'grupo' => array(Autenticacao_Model_Grupos::COORDENADOR_ANALISE,Autenticacao_Model_Grupos::TECNICO_ANALISE,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,148,151)
 );
 $arrMenu['analise']['menu'][] = array('label' => 'Certid&otilde;es Negativas', 'title' => 'Ir para Certid&otilde;es Negativas',
     'url' => "javascript:window.open('{$this->url(array('module' => 'default', 'controller' => 'manterregularidadeproponente', 'action' => 'index'))}",
