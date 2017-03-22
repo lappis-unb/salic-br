@@ -265,7 +265,8 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
 
 
         # FASE 4 - DA LIBERAÇÃO DA CONTA ATÉ A DATA FINAL DO PERÍODO DE EXECUCAO
-        $dataAtualBanco = new Zend_Db_Expr('SELECT CONVERT( CHAR(8), GETDATE(), 112)');
+        $sqlDataAtualBanco = new Zend_Db_Expr('SELECT CONVERT( CHAR(8), GETDATE(), 112)');
+        $dataAtualBanco = $db->fetchOne($sqlDataAtualBanco);
 
         if($contaLiberada == 'S' AND $dadosProjeto->DtFinalExecucao >= $dataAtualBanco) {
             $Analise = 1;
