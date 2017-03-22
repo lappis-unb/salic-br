@@ -6,7 +6,7 @@
                 $(".btn_pesquisar").click();
             }
         });
-        
+
         $(".btn_pesquisar").click(function(){
             //$("#resultadoConsulta").html("");
             //jqAjaxForm(document.getElementById("frmExtratoCaptacao"), "resultadoConsulta");
@@ -52,11 +52,11 @@
             $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
             $(".cmpData").datepicker($.datepicker.regional['pt-BR']);
         });
-        
+
         $(".cmpNumerico").numeric().attr("maxlength", "9");
-           
+
     });
-    
+
     function JSTravaCampos(obj){
 
         var id = $(obj).attr("id");
@@ -68,15 +68,15 @@
             $("#dtCaptacao_Final").attr("disabled",true);
             $("#tpDtLote").attr("disabled",true);
             $("#tpDtCaptacao").attr("disabled",true);
-            
+
             $("#dtLote").val('');
             $("#dtLote_Final").val('');
             $("#dtCaptacao").val('');
             $("#dtCaptacao_Final").val('');
             $("#tpDtLote").val('');
             $("#tpDtCaptacao").val('');
-            
-            $('#camposDataDtLote').hide(); 
+
+            $('#camposDataDtLote').hide();
             $('#camposDataDtCaptacao').hide();
         }else{
             $("#dtLote").attr("disabled",false);
@@ -87,7 +87,7 @@
             $("#tpDtCaptacao").attr("disabled",false);
         }
     }
-    
+
     function JSLiberaCampos(){
         $("#dtLote").attr("disabled",false);
         $("#dtLote_Final").attr("disabled",false);
@@ -97,9 +97,7 @@
         $("#tpDtCaptacao").attr("disabled",false);
     }
 </script>
-<?php 
-    require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php';
-?>
+<?php echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this) ?>
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -151,7 +149,7 @@
                 </td>
                 <td align="left">
                     <span id="camposDataDtLote" style="display: none;">
-                        <input name="dtLote" id="dtLote" value="" class="input_simples cmpData" onkeyup="mascara(this, format_data);"/> 
+                        <input name="dtLote" id="dtLote" value="" class="input_simples cmpData" onkeyup="mascara(this, format_data);"/>
                         <span id="spandtLote" style="display: none;">&nbsp;e&nbsp;<input name="dtLote_Final" id="dtLote_Final" value="" class="input_simples cmpData"  onkeyup="mascara(this, format_data);"/></span>
                          (dd/mm/aaaa)
                     </span>
@@ -198,7 +196,7 @@
     </form>
     <br>
 <div id="resultadoConsulta"></div>
-    
+
 </div>
 
 <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->

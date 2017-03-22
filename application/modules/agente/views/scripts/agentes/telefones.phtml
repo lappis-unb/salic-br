@@ -1,4 +1,4 @@
-<?php require_once "inc/menu.inc.php"; ?>
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
 <script type="text/javascript">
 
 //    $(document).ready(function(){
@@ -55,7 +55,7 @@
 
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
-    <?php require_once "inc/cabecalho.php";?>
+    <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
     <table class="tabela">
         <tr>
             <td>Para adicionar um novo telefone, clique em novo ao lado!</td>

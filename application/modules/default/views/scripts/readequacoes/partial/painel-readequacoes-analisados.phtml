@@ -63,11 +63,11 @@
           $o = new Orgaos();
           $superindendencias = $o->buscarSuperintendencias();
       } else if (!in_array($this->idOrgao, $outrasVinculadas)) {
-          $a = new Agentes();
+          $a = new Agente_Model_DbTable_Agentes();
           $Pareceristas = array();
           $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
 	  } else {
-          $a = new Agentes();
+          $a = new Agente_Model_DbTable_Agentes();
           $Pareceristas = array();
           $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
 	  }

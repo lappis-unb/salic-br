@@ -10,7 +10,7 @@ class spSelecionarPlanilhaOrcamentariaAtiva extends MinC_Db_Table_Abstract {
     protected $_name  = 'spSelecionarPlanilhaOrcamentariaAtiva';
 
     public function exec($idPronac){
-      $sql = "exec ".$this->_banco.".dbo.".$this->_name." $idPronac";
+      $sql = "exec ".$this->_banco.".".$this->_name." $idPronac";
       return $this->getAdapter()->fetchOne($sql);
     }
 }

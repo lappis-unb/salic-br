@@ -103,7 +103,7 @@
                         <?php } ?>
 
                         <!-- Se for CNPJ -->
-                        <?php if(($this->dados[0]->TipoPessoa == 1) or ($this->Instituicao == 'sim')){ ?>
+                        <?php if(($this->dados[0]->tipopessoa == 1) or ($this->Instituicao == 'sim')){ ?>
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'dirigentes', 'id' => $this->id),'',true);?>" title="Ir para Dirigentes">Dirigentes <span style="float: right;"> (<?php echo $this->qtdDirigentes;?>) </span></a>
                         <?php } ?>
 
@@ -117,7 +117,7 @@
                         <?php } ?>
 
 
-                        <?php if(($this->dados[0]->TipoPessoa == 1)){ ?>
+                        <?php if(($this->dados[0]->tipopessoa == 1)){ ?>
                             <!-- Se for CNPJ -->
                             <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'natureza', 'id' => $this->id),'',true);?>" title="Ir para Natureza">Natureza</a>
                         <?php } else { ?>

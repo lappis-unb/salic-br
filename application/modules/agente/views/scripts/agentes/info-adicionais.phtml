@@ -1,4 +1,4 @@
-<?php require_once "inc/menu.inc.php"; ?>
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -87,7 +87,7 @@
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
-    <?php //require_once "inc/cabecalho.php";?>
+    <?php //echo $this->partial('agentes/inc/cabecalho.php', $this)?>
     <div id="formNovo">
         <form id="formInfoAdicionais" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvar-info-adicionais'));?>" method="post">
             <table class="tabela" style="width:40%;">

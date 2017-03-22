@@ -29,16 +29,12 @@
     $carregarSelectHref = $this->url(\array_merge($urlArray, array('action' => 'carregaselectajax')));
 
 
-    echo $this->headScript()
-        ->appendFile("{$this->baseUrl()}/public/js/jquery/jquery.formatCurrency-1.4.0.min.js")
-        ->appendFile("{$this->baseUrl()}/public/js/jquery/jquery.formatCurrency.pt-BR.js")
-        ->appendScript(
-            "var planilhaItem = {$this->itemPlanilhaAprovacao->idPlanilhaAprovacao}"
-        )
-    ;
+    echo '<script type="text/javascript" language="javascript" src="' . $this->baseUrl() . '/public/js/jquery/jquery.formatCurrency-1.4.0.min.js"></script>';
+    echo '<script type="text/javascript" language="javascript" src="' . $this->baseUrl() . '/public/js/jquery/jquery.formatCurrency.pt-BR.js"></script>';
+    echo '<script type="text/javascript" language="javascript">var planilhaItem = ' . $this->itemPlanilhaAprovacao->idPlanilhaAprovacao . '</script>';
 
     if (!$this->vrSituacao) {
-        include_once 'scripts/comprovarexecucaofinanceira/inc/menu.inc.php';
+        echo $this->partial('comprovarexecucaofinanceira/inc/menu.inc.php', $this);
     }
 
     # tratamento para liberar edicao de comprovante
@@ -507,7 +503,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                                         >
                                     <input type="button" value="" class="btn_editar" />
                                 </a>
-                                <a
+                            <a
                                     href="
                                         <?php echo $this->url(
                                                 array(
@@ -516,10 +512,9 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                                                     'comprovante' => $comprovante->idComprovantePagamento,
                                                 )
                                             );
-                                        ?>"
-                                        >
-                                    <input type="button" value="" class="btn_exclusao" />
-                                </a>
+                                        ?>">
+                      <input type="button" value="" class="btn_exclusao">
+                                                                               
 				<?php else: ?>
                                 <span class="bold"><?php echo $comprovacaoTexto[$comprovante->stItemAvaliado]; ?></span>
 				<?php endif; ?>
@@ -914,23 +909,23 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
 	    }
             return msg;
         }
-
+        
         $('#tabelaComprovantePagamento tbody tr td a .btn_exclusao').closest('a').each(function(){
             $(this).unbind('click').click(function(event){
                 event.preventDefault();
                 $("#alerta").dialog("destroy");
                 $("#alerta").html('Deseja realmente excluir esse comprovante?');
                 $("#alerta").dialog({
-                    resizable: false,
-                    title: 'Alerta!',
-                    width:340,
-                    modal: true,
-                    buttons : {
-                        'OK' : function(){
+                  resizable: false,
+                        title: 'Alerta!',
+                        width:340,
+                        modal: true,
+                        buttons : {
+                      'OK' : function(){
                             deletarItem($(event.target).parent());
                             $(this).dialog('close');
                         },
-                        'Cancelar' : function(){ $(this).dialog('close'); }
+                            'Cancelar' : function(){ $(this).dialog('close'); }
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
@@ -988,3 +983,4 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
     }
 
 </script>
+<div id="alerta"></div>

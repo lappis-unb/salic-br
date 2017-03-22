@@ -5792,7 +5792,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($a);
     }
 
-    public function buscarLocaisDeRealizacao($idPronac)
+    public function buscarLocaisDeRealizacao($idPronac, $idLocal = null)
     {
 
         $a = $this->select();
@@ -5815,6 +5815,10 @@ class Projetos extends MinC_Db_Table_Abstract
         $a->where('a.IdPRONAC = ?', $idPronac);
         $a->where('b.stAbrangencia = ?', 1);
         $a->order('b.idAbrangencia');
+
+        if($idLocal){
+             $a->where('b.idAbrangencia = ?', $idLocal);
+        }
 //        $a->order('b.siAbrangencia');
 //        $a->order('c.Descricao');
 //        $a->order('d.Descricao');

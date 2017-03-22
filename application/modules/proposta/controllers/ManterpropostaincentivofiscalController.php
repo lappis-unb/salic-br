@@ -688,10 +688,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             if ($params['confirmarenvioaominc'] == true) {
                 if ($validado) {
 
-                    # Consultar percentual de valor captado
-                    $percentualCaptado = $this->percentualCaptadoByProposta($idPreProjeto, $idPronac);
-
-
                     if ($projeto['area'] == 2) {
                         $orgaoUsuario = 171; # 171 - SAV/DAP
                     } else {
@@ -1457,6 +1453,44 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         } else {
             echo "<table class='tabela'><tr><td class='centro'>N&atilde;o foi encontrado nenhum registro.</td></tr></table>";
         }
+    }
+
+    public function listarPropostasAjaxAction()
+    {
+        $idAgente = $this->getRequest()->getParam('idagente');
+        $start = $this->getRequest()->getParam('start');
+        $length = $this->getRequest()->getParam('length');
+        $draw = (int) $this->getRequest()->getParam('draw');
+        $search = $this->getRequest()->getParam('search');
+        $order = $this->getRequest()->getParam('order');
+        $columns = $this->getRequest()->getParam('columns');
+        $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' ' . $order[0]['dir']) : array("idpreprojeto DESC");
+
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+
+        $rsPreProjeto = $tblPreProjeto->propostas($this->idAgente, $this->idResponsavel, $idAgente, array(), $order, $start, $length, $search);
+
+
+        $recordsTotal = 0;
+        $recordsFiltered = 0;
+        $aux = array();
+        if (!empty($rsPreProjeto)) {
+            foreach ($rsPreProjeto as $key => $proposta) {
+                $proposta->nomeproponente = utf8_encode($proposta->nomeproponente);
+                $proposta->nomeprojeto = utf8_encode($proposta->nomeprojeto);
+                $proposta->situacao = utf8_encode($proposta->situacao);
+
+                $aux[$key] = $proposta;
+            }
+            $recordsFiltered = $tblPreProjeto->propostasTotal($this->idAgente, $this->idResponsavel, $idAgente, array(), null, null, null, $search);
+            $recordsTotal = $tblPreProjeto->propostasTotal($this->idAgente, $this->idResponsavel, $idAgente);
+        }
+
+        $this->_helper->json(array(
+            "data" => !empty($aux) ? $aux : 0,
+            'recordsTotal' => $recordsTotal ? $recordsTotal : 0,
+            'draw' => $draw,
+            'recordsFiltered' => $recordsFiltered ? $recordsFiltered : 0));
     }
 
     /**

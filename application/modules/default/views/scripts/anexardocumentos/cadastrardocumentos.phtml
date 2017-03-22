@@ -1,17 +1,4 @@
-<?php
-/**
- * Busca os documentos do PRONAC informado
- * @author Equipe RUP - Politec
- * @since 28/04/2010
- * @version 1.0
- * @package application
- * @subpackage application.views.scripts.anexardocumentos
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
-require_once "inc/menu.inc.php"; // menu
-?>
+<?php echo $this->partial("inc/menu.inc.php"); ?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
@@ -48,7 +35,7 @@ require_once "inc/menu.inc.php"; // menu
 
 		<?php foreach ($this->buscarcomprovantes as $doc): ?>
 		<tr class="fundo_linha2" <?php echo $this->corLinhaOnMouseOver(); ?>>
-			<td> <?php echo $doc->dsTipoDocumento; ?> </td>		
+			<td> <?php echo $doc->dsTipoDocumento; ?> </td>
 			<td class="centro"><?php echo $doc->dtEnvioComprovante; ?></td>
 			<td class="centro"><a href="<?php echo $this->url(array('controller' => 'upload','action' => 'abrir')); ?>?id=<?php echo $doc->idArquivo; ?>"><?php echo $doc->nmArquivo; ?></a></td>
 		</tr>
@@ -59,7 +46,7 @@ require_once "inc/menu.inc.php"; // menu
 
 
 
-	<form name="formBuscar" id="formBuscar" method="post" 
+	<form name="formBuscar" id="formBuscar" method="post"
 		action="cadastrardocumentos?pronac=<?php echo $getPronac; ?>" enctype="multipart/form-data">
 
 	<table class="tabela">
@@ -89,7 +76,7 @@ require_once "inc/menu.inc.php"; // menu
 					<option value="<?php echo $comboTipoDocumento->idTipoDocumento ?>" <?php echo (isset($this->tipoDocumento) && $this->tipoDocumento == $comboTipoDocumento->idTipoDocumento) ? 'selected="selected"' : ''; ?>><?php echo $comboTipoDocumento->dsTipoDocumento ?></option>
 					<?php endforeach; ?>
 
-				</select>		
+				</select>
 			</td>
 		</tr>
 		<tr>
@@ -114,7 +101,7 @@ require_once "inc/menu.inc.php"; // menu
 		<tr>
 			<td>
 				<div align="center">
-					<input type="submit" title="Salvar" class="btn_incluir" value=" " /> 	<input type="reset" title="Salvar" class="btn_cancelar" value=" " /> 
+					<input type="submit" title="Salvar" class="btn_incluir" value=" " /> 	<input type="reset" title="Salvar" class="btn_cancelar" value=" " />
 				</div>
 			</td>
 		</tr>
@@ -123,10 +110,10 @@ require_once "inc/menu.inc.php"; // menu
 	</form>
 
 
-	
+
 	<!-- ========== FIM FORMULÁRIO DE CADASTRO ========== -->
-	
-	
+
+
 	<table class="tabela">
 		<tr>
 			<td class="centro"> 	<a href="javascript:window.print()"><img src="<?php echo $this->baseUrl(); ?>/public/img/imprimir.gif" alt="Imprimir"/> </a></td>

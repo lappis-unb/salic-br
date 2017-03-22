@@ -32,7 +32,7 @@
     ;
 
     if (!$this->vrSituacao) {
-        include_once 'scripts/comprovarexecucaofinanceira/inc/menu.inc.php';
+        echo $this->partial('comprovarexecucaofinanceira/inc/menu.inc.php', $this);
     }
 
     # tratamento para liberar edicao de comprovante
@@ -873,3 +873,4 @@
 
     toggleTabelaComprovacaoPagamentoInvoice();
 </script>
+<div id="alerta"></div>

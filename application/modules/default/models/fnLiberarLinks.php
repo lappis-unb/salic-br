@@ -348,7 +348,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
 
             /* ===== CHECAR SE EXISTE RELATORIO DE CUMPRIMENTO DO OBJETO PARA SER ENVIADO ===== */
             $relatorioDeCumprimento = $db->select()
-                ->from('tbCumprimento',
+                ->from('tbCumprimentoobjeto',
                     array(new Zend_Db_Expr('TOP 1 idCumprimentoObjeto')),
                     $this->_schema)
                 ->where('siCumprimentoObjeto <> ?', 1)
@@ -367,7 +367,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             /* ===== CHECAR SE EXISTE READEQUAÇAO DE 20% ===== */
             $readequacaoFase5 = $db->select()
                 ->from(array('a' => 'tbReadequacao'),
-                    array(new Zend_Db_Expr('TOP 1 idTipoReadequacao')),
+                    array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
                     $this->_schema)
                 ->joinInner(array('b' => 'tbTipoReadequacao'),
                     'a.idTipoReadequacao = b.idTipoReadequacao',

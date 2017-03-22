@@ -1,4 +1,4 @@
-<?php require_once "inc/menu.inc.php"; ?>
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
 
 <script type="text/javascript">
     function cancelamentoferias(valor){
@@ -218,7 +218,7 @@
     <input type="hidden" name="dias" id="dias" value="<?php echo $this->totalDias; ?>" />
     <input type="hidden" name="novosdias" id="novosdias"  />
 
-    <?php require_once "inc/cabecalho.php";?>
+    <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
     <table class="tabela">
         <tr>
             <th colspan="2">Solicitação de Férias / Alteração </th>

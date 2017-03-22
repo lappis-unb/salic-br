@@ -1,5 +1,5 @@
-<?php //include_once 'scripts/parecerista/inc/menu-coordenador.inc.php'; ?>
- 
+<?php echo $this->partial('parecerista/inc/menu-coordenador.inc.php', $this); ?>
+
 <!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -19,7 +19,7 @@
 <!-- ========== IN�CIO CONTE�DO ========== -->
 
 <div id="conteudo">
-    
+
     <?php if($this->qtdDePagamentos > 0): ?>
     <form id="formConfigurarPagamento" action="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'configurou-pagamento-parecerista')); ?>" method="POST">
         <input type="hidden" name="nrDespachos" id="nrDespachos" value="<?php echo $this->qtdDePagamentos; ?>" />
@@ -27,7 +27,7 @@
         <input type="hidden" name="nrDespachoFinal" id="nrDespachoFinal" />
         <input type="hidden" name="ultimoDespachoDoAno" id="ultimoDespachoDoAno" value="<?php echo $this->ultimoDespachoDoAno == '' ? '0':$this->ultimoDespachoDoAno; ?>" />
         <input type="hidden" name="assinanteCargoRemove" id="assinanteCargoRemove" />
-        
+
         <table class="tabela">
             <tr>
                 <td colspan="3" class="titulo_tabela"></td>
@@ -82,7 +82,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        
+
         <table class="tabela">
             <tr>
                 <td style="text-align: center;"><input type="button" id="btnGerarDespachos" value=" " class="btn_gerar_despachos" onclick="gerarDespachos();"></td>
@@ -95,9 +95,9 @@
             </tr>
         </table>
         <?php endif; ?>
-        
+
     </form>
-    
+
     <br />
 
     <table class="tabela">
@@ -193,9 +193,9 @@
 <br clear="all" />
 
 <script>
-    
+
     $(function() {
-        
+
         $("#sortable tbody").sortable({
             update: function() {
                 var idConfigurarPagamento = $('#idConfigurarPagamento').val();
@@ -203,7 +203,7 @@
                 $("#info").load("atualiza-lista-assinantes/usuarioId/"+order+"/idConfigurarPagamento/"+idConfigurarPagamento);
             }
         }).disableSelection();
-        
+
 //        var i = 0;
 //        // Percorre todas as linhas da tabela
 //        $("#sortable tbody").each(function(i){
@@ -213,11 +213,11 @@
     });
 
     $(document).ready(function(){
-        
+
         $('#btnAddAssinante').click(function(){
-            
+
             $("#dialog").html('Deseja adicionar a assinatura?');
-        
+
             $("#dialog").dialog("destroy");
             $("#dialog").dialog({
                 width: '400px',
@@ -226,7 +226,7 @@
                 resizable: false,
                 closeOnEscape: false,
                 title: 'Confirma��o',
-                buttons: { 
+                buttons: {
                     Cancelar:function() {
                         $(this).dialog('close');
                     },
@@ -239,14 +239,14 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
+
         $('.excluirPagamento').click(function(){
             $('#campoNrConfirmacao').val('');
             $('#campoTxtConfirmacao').html('');
-            
+
             var idPagamento = $(this).attr('idexclusao'),
                 pronac = $(this).attr('pronac');
-            
+
             $("#confirmacao-exclusao").dialog("destroy");
             $("#confirmacao-exclusao").dialog({
                 width: '500px',
@@ -255,7 +255,7 @@
                 resizable: false,
                 closeOnEscape: false,
                 title: 'Confirma��o',
-                buttons: { 
+                buttons: {
                     Cancelar:function() {
                         $(this).dialog('close');
                     },
@@ -274,13 +274,13 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
+
     });
 
     function removeAssinante(valor){
-        
+
         $("#dialog").html('Deseja remover a assinatura?');
-        
+
         $("#dialog").dialog("destroy");
         $("#dialog").dialog({
             width: '400px',
@@ -289,7 +289,7 @@
             resizable: false,
             closeOnEscape: false,
             title: 'Confirma��o',
-            buttons: { 
+            buttons: {
                 Cancelar:function() {
                     $(this).dialog('close');
                 },
@@ -300,17 +300,17 @@
                 }
             }
         });
-        
+
         $('.ui-dialog-titlebar-close').remove();
 
-        
+
     }
-    
+
 
     function visualizarPagamentos(id){
         $('.pagamentos').hide();
         $('#t_'+id).show();
-        
+
         $('#btnAbrir_'+id).hide();
         $('#btnFechar_'+id).show();
     }
@@ -324,11 +324,11 @@
     function contarNumeracao(){
         var nrDespachoInicial   = parseInt($('#nrDespachoInicial').val());
         var nrDespachoGeral     = parseInt($('#nrDespachos').val());
-        
+
         var conta = (nrDespachoGeral) + (nrDespachoInicial);
         $('#nrDespachoFinal').val(conta -1);
         $('#lbnrDespachoFinal').html(conta -1);
-       
+
         if($('#nrDespachoInicial').val() === ''){
             $('#nrDespachoFinal').val('0');
             $('#lbnrDespachoFinal').html('0');
@@ -336,13 +336,13 @@
     }
 
     function gerarDespachos(){
-        
+
         var ultimoDespachoDoAno   = parseInt($('#ultimoDespachoDoAno').val());
         var nrDespachoInicial   = parseInt($('#nrDespachoInicial').val());
-        
+
         if(nrDespachoInicial <= ultimoDespachoDoAno){
             $("#dialog").html('N�mero despacho inicial n�o pode ser menor ou igual ao �ltimo despacho gerado!');
-        
+
             $("#dialog").dialog("destroy");
             $("#dialog").dialog({
                 width: '400px',
@@ -351,7 +351,7 @@
                 resizable: false,
                 closeOnEscape: false,
                 title: 'Alerta',
-                buttons: { 
+                buttons: {
                     Fechar:function() {
                         $(this).dialog('close');
                     }
@@ -361,9 +361,9 @@
             $('.ui-dialog-titlebar-close').remove();
             return false;
         }
-        
+
         $("#dialog").html('Deseja realmente gerar os despachos?');
-        
+
         $("#dialog").dialog("destroy");
         $("#dialog").dialog({
             width: '400px',
@@ -372,7 +372,7 @@
             resizable: false,
             closeOnEscape: false,
             title: 'Confirma��o',
-            buttons: { 
+            buttons: {
                 N�o:function() {
                     $(this).dialog('close');
                 },
@@ -384,9 +384,9 @@
         });
 
         $('.ui-dialog-titlebar-close').remove();
-        
-       
-        
+
+
+
     }
-    
+
 </script>

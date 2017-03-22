@@ -13,7 +13,7 @@ class Licitacao extends MinC_Db_Table_Abstract {
 
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbLicitacao';
-    protected $_schema  = 'scSAC';
+    protected $_schema  = 'bdcorporativo.scSAC';
 
     public function inserirLicitacao($data){
         $insert = $this->insert($data);
@@ -38,7 +38,7 @@ class Licitacao extends MinC_Db_Table_Abstract {
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('lic'=>$this->_schema.'.'.$this->_name), array('lic.idLicitacao','lic.nrLicitacao','lic.tpModalidade','lic.dtAberturaLicitacao'));
+        $select->from(array('lic'=>$this->_name), array('lic.idLicitacao','lic.nrLicitacao','lic.tpModalidade','lic.dtAberturaLicitacao'));
         $select->joinInner(array('lpa'=>'tbLicitacaoxPlanilhaAprovacao'), 'lic.idLicitacao = lpa.idLicitacao', array(), 'BDCORPORATIVO.scSAC');
         $select->joinInner(array('pa'=>'tbPlanilhaAprovacao'), 'lpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao', array('pa.IdPRONAC'), 'SAC.dbo');
         $select->where('pa.IdPRONAC = ?', $idpronac);
@@ -51,7 +51,7 @@ class Licitacao extends MinC_Db_Table_Abstract {
     public function buscarLicitacao($idLicitacao){
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('lic'=>$this->_schema.'.'.$this->_name),
+        $slct->from(array('lic'=>$this->_name),
                     array('idLicitacao',
                           'tpCompra',
                           'tpModalidade',

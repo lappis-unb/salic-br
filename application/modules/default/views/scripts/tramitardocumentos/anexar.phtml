@@ -4,16 +4,12 @@ function sumiraqui(id)
 {
 	$('img[class='+id+']').toggle();
 	$('tr[class='+id+']').toggle();
-	
+
 }
 
 </script>
 
-<?php
-
-
-require_once "inc/menu.inc.php"; // menu
-?>
+<?php echo $this->partial("inc/menu.inc.php"); ?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
@@ -72,7 +68,7 @@ require_once "inc/menu.inc.php"; // menu
                 <td colspan="7" align="left">
                     <img src="<?php echo $this->baseUrl(); ?>/public/img/icn_menos.gif" class="<?php echo $registro->idLote; ?>" style="cursor:pointer;" onclick="sumiraqui('<?php echo $registro->idLote; ?>');" />
                     <img src="<?php echo $this->baseUrl(); ?>/public/img/icn_mais.gif" class="<?php echo $registro->idLote; ?>" style="cursor:pointer; display:none;" onclick="sumiraqui('<?php echo $registro->idLote; ?>');" />
-                    &nbsp;&nbsp;&nbsp;&nbsp; <strong>Lote Nr:</strong> <?php echo $registro->idLote; ?> - Origem: <?php echo $registro->Origem; ?> | 
+                    &nbsp;&nbsp;&nbsp;&nbsp; <strong>Lote Nr:</strong> <?php echo $registro->idLote; ?> - Origem: <?php echo $registro->Origem; ?> |
                     <a href="<?php echo $this->url(array('controller' => 'tramitardocumentos', 'action' => 'anexarlote')); ?>?idLote=<?php echo $registro->idLote; ?>">Anexar Lote </a>
                 </td>
             </tr>
