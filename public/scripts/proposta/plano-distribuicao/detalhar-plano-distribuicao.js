@@ -135,7 +135,7 @@ Vue.component('my-component', {
         },
         qtProponenteParcial: function() {
             if (this.radio == 'n') {
-                return (this.qtExemplares * 0.5) * 0.4 ;
+                return (this.qtExemplares * 0.5) * 0.5 ;
             }
             return 0;
         },

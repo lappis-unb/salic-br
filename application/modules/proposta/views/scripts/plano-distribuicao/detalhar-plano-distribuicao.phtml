@@ -190,10 +190,10 @@
                             <th colspan="3">Distribui&ccedil;&atilde;o ser&acirc; totalmente gratuita?</th>
                             <td colspan="14">
                                 <p>
-                                  <input name="group1" type="radio" id="test1" value="s" v-model="radio"/>
-                                  <label for="test1">Sim</label>
-                                  <input name="group1" type="radio" id="test2" value="n"  v-model="radio"/>
-                                  <label for="test2">N&atilde;o</label>
+                                  <input name="group1" type="radio" :id=" _uid + '1' " value="s" v-model="radio"/>
+                                  <label :for="_uid + '1'">Sim</label>
+                                  <input name="group1" type="radio" :id=" _uid + '2' " value="n"  v-model="radio"/>
+                                  <label :for="_uid + '2'">N&atilde;o</label>
                                 </p>
                              </td>
                         </tr>
