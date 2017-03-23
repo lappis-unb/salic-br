@@ -16,7 +16,11 @@
       <th style="width: 130px;">Encaminhar</th>
   </thead>
   <tbody>
-    <?php foreach($this->dados as $d): ?>
+  <?php  $p = new Projetos();
+        $o = new Orgaos();
+  $a = new Agentes();
+  ?>
+    <?php  foreach($this->dados as $d): ?>
     <tr>
       <td align="center">
         <a href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo ($d->idPronac); ?>' target="_blank">
@@ -29,23 +33,22 @@
       <td align="center"><?php echo $d->qtDiasAguardandoDistribuicao; ?></td>
       <td align="center">
 	<input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
-      </td>	
+      </td>
       <td style="align: center">
 	  <?php
-	   $p = new Projetos();
+
 	   $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
-	
+
 	  if(count($dadosProjetos)>0){
           $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
           if ($this->idOrgao == 91) { // especificidade do IPHAN
-              $o = new Orgaos();
+
               $superindendencias = $o->buscarSuperintendencias();
           } else if (!in_array($this->idOrgao, $outrasVinculadas)) {
-              $a = new Agentes();
+
               $Pareceristas = array();
               $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
           } else {
-              $a = new Agentes();
               $Pareceristas = array();
               $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
           }

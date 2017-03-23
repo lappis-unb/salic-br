@@ -32,23 +32,19 @@
 		</td>	
 		<td>
           <?php 
-             $p = new Projetos();
-             $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
 
           $Pareceristas = array();
-		    if(count($dadosProjetos)>0){
                 $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
                 
                 if (!in_array($this->idOrgao, $outrasVinculadas)) {
                     $a = new Agente_Model_DbTable_Agentes();
                     $Pareceristas = array();
-                    $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+                    $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $d->Area, $d->Segmento);
                 } else {
                     $a = new Agente_Model_DbTable_Agentes();
                     $Pareceristas = array();
-                    $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+                    $Pareceristas = $a->buscarPareceristas($this->idOrgao, $d->Area, $d->Segmento);
                 }
-            }
           ?>
 	  <select name="tecnico" id="tecnico-<?php echo $d->idDistribuirReadequacao ?>" class="select_simples comboTecnico">			
             <option value=""> - Selecione - </option>
