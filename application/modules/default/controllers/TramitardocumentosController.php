@@ -189,10 +189,11 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
 
+            $objAcesso = new Acesso();
             $dados = "Insert into SAC.dbo.tbDocumento
                           (idPronac, stEstado, imDocumento, idTipoDocumento, idUsuario, dtDocumento, NoArquivo, TaArquivo, idUsuarioJuntada, dtJuntada, idUnidadeCadastro, CodigoCorreio, biDocumento)
                           values
-                          (" . $idpronac . ", 0, null, " . $tipo_doc . ", " . $idusuario . ", GETDATE(), '" . $arquivoNome . "', " . $arquivoTamanho . ", null, null, " . $this->codOrgao . ", '" . $cod_ect . "', " . $arquivoBinario . ")
+                          (" . $idpronac . ", 0, null, " . $tipo_doc . ", " . $idusuario . ", {$objAcesso->getExpressionDate()}, '" . $arquivoNome . "', " . $arquivoTamanho . ", null, null, " . $this->codOrgao . ", '" . $cod_ect . "', " . $arquivoBinario . ")
                            ";
 
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -798,6 +799,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
             $acao = '2,3';
+            $objAcesso = new Acesso();
             try {
                 $db->beginTransaction();
                 $docs = TramitarDocumentosDAO::buscarDocumentoUnico($idDocumento, $acao);
@@ -813,7 +815,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                         'idUsuarioEmissor' => $d->idUsuarioEmissor,
                         'meDespacho' => null,
                         'idLote' => $d->idLote,
-                        'dtTramitacaoRecebida' => new Zend_Db_Expr('GETDATE()'),
+                        'dtTramitacaoRecebida' => $objAcesso->getExpressionDate(),
                         'idUsuarioReceptor' => $idusuario,
                         'Acao' => 4,
                         'stEstado' => 1,

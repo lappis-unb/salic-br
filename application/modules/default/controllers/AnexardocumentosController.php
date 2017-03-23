@@ -342,14 +342,15 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                 }
                 else if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
                 {
-                    throw new Exception("O arquivo n�o pode ser maior do que 10MB!");
+                    throw new Exception("O arquivo n&atilde;o pode ser maior do que 10MB!");
                 }
                 // faz o cadastro no banco de dados
                 else
                 {
+                    $objAcesso = new Acesso();
                     // cadastra dados do arquivo
                     $sql = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivo (nmArquivo, sgExtensao, dsTipo, nrTamanho, dtEnvio, dsHash, stAtivo) " .
-                            "VALUES ('" . $arquivoNome . "', '" . $arquivoExtensao . "', '" . $arquivoTipo . "', '" . $arquivoTamanho . "', GETDATE(), '" . $arquivoHash . "', 'A')";
+                            "VALUES ('" . $arquivoNome . "', '" . $arquivoExtensao . "', '" . $arquivoTipo . "', '" . $arquivoTamanho . "', {$objAcesso->getExpressionDate()}, '" . $arquivoHash . "', 'A')";
                     $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $resultado = $db->query($sql);
@@ -367,8 +368,9 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                     $resultado = $db->query($sql);
 
                     // insere informa��es do documento
+                    $objAcesso = new Acesso();
                     $sql = "INSERT INTO BDCORPORATIVO.scSac.tbComprovanteExecucao (idPRONAC, idTipoDocumento, nmComprovante, dsComprovante, idArquivo, idSolicitante, dtEnvioComprovante, stParecerComprovante, stComprovante) " .
-                            "VALUES ($pronac, $tipoDocumento, '$titulo', '$descricao', $idGerado, 9997, GETDATE(), 'AG', 'A')";
+                            "VALUES ($pronac, $tipoDocumento, '$titulo', '$descricao', $idGerado, 9997, {$objAcesso->getExpressionDate()}, 'AG', 'A')";
                     $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $resultado = $db->query($sql);

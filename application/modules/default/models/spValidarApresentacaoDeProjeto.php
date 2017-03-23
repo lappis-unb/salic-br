@@ -237,10 +237,11 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                     }
 
                     //-- VERIFICAR SE EXISTE NO MINIMO 90 DIAS ENTRE A DATA DE ENVIO E O INICIO DO PERIODO DE EXECUCAO DO PROJETO
+
                     $sql = $db->select()
                         ->from(array('PreProjeto'), '*', 'sac.dbo')
                         ->where('idPreProjeto = ?', $idPreProjeto)
-                        ->where('DATEDIFF(DAY,GETDATE(),DtInicioDeExecucao) < 90')
+                        ->where('DATEDIFF(DAY,'.$this->getDate().',DtInicioDeExecucao) < 90')
                         ->limit(1);
 
                     $minimo90 = $db->fetchAll($sql);
@@ -498,7 +499,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
             //INSERT INTO tbMovimentacao
                     //(idProjeto,Movimentacao,DtMovimentacao,stEstado,Usuario)
                     //VALUES (@IdProjeto,96,getdate(),0,@Usuario)
-            $insert = $db->insert('sac.dbo.tbMovimentacao', array($idPreProjeto, 96, new Zend_Db_Expr('getdate()'), 0,$usuario));
+            $insert = $db->insert('sac.dbo.tbMovimentacao', array($idPreProjeto, 96, $this->getExpressionDate(), 0,$usuario));
 
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINISTÉRIO DA CULTURA.</b></font>';
             $validacao->Observacao = 'OK';

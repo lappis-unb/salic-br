@@ -564,9 +564,10 @@ FROM         SAC.dbo.Projetos AS a
 	//-- Alterar a situa&ccedil;&atilde;o do projeto
 	public static function updateProjetos($idpronac)
 	{
+        $objAcesso= new Acesso();
 		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = 'B11', 
 						ProvidenciaTomada = 'Projeto encaminhado para novo parecer t�cnico na unidade de an�lise do MinC.', 
-						DtSituacao = getdate() 
+						DtSituacao = {$objAcesso->getDate()} 
       			WHERE idPronac = ".$idpronac;
 					
 		$db= Zend_Db_Table::getDefaultAdapter();

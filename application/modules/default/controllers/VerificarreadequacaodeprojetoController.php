@@ -1934,6 +1934,8 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             $listaProdutosAT = $this->tbPlanoDistribuicao->buscar($whereProdutoAT);
 
             //VERIFICA SE J� POSSUI PLANO DE DISTRIBUI��O DO TIPO AT PARA N�O GERAR OUTRA C�PIA DE AN�LISE T�CNICA
+
+        $objAcesso = new Acesso();
             if(count($listaProdutosAT) <= 0){
                 foreach ($listaProdutosSR as $d) {
                     if($d->tpAcao != 'N'){
@@ -1954,7 +1956,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                                 ,'stPrincipal'           => $d->stPrincipal
                                 ,'tpAcao'                => $d->tpAcao
                                 ,'tpPlanoDistribuicao'   => 'AT'
-                                ,'dtPlanoDistribuicao'   => new Zend_Db_Expr('GETDATE()')
+                                ,'dtPlanoDistribuicao'   => $objAcesso->getExpressionDate()
                         );
                         //INSERE UMA C�PIA QUE SER� ALTERADA PELO T�CNICO DE ACOMPANHAMENTO - AT
                         $this->tbPlanoDistribuicao->inserir($dadosCopia);
@@ -2229,6 +2231,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                             /* ========== BUSCA OS DADOS DA PROPOSTA VINCULADA ========== */
                             $idVinculo = $tbVinculoProposta->buscar(array('idPreProjeto = ?' => $idPreProjetoVinculo));
 
+                        $objAcesso = new Acesso();
                             /* ========== ATUALIZA O VINCULO DO PROPONENTE ========== */
                             if ( count($buscarVisao) > 0 && count($idVinculo) > 0 ) :
 
@@ -2236,7 +2239,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                                     $dadosVinculo = array(
                                             'idAgenteProponente' => $idNovoProponente
-                                            ,'dtVinculo'         => new Zend_Db_Expr('GETDATE()'));
+                                            ,'dtVinculo'         => $objAcesso->getExpressionDate());
 
                                     $tbVinculo->alterar($dadosVinculo, $whereVinculo);
                             else :
@@ -2363,12 +2366,13 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                         $DadosProj = $Projeto->buscar(array('IdPRONAC = ?' => $idPronac));
                         $Aprovacao = new Aprovacao();
                         $registro = $Aprovacao->buscar(array('AnoProjeto = ?' => $DadosProj[0]->AnoProjeto, 'Sequencial = ?' => $DadosProj[0]->Sequencial ));
+                        $objAcesso = new Acesso();
                         $dados = array(
                             'IdPRONAC' => $idPronac,
                             'AnoProjeto' => $DadosProj[0]->AnoProjeto,
                             'Sequencial' => $DadosProj[0]->Sequencial,
                             'TipoAprovacao' => 3,
-                            'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                            'DtAprovacao' => $objAcesso->getExpressionDate(),
                             // 'ResumoAprovacao' => 'Solicita��o de Readequa��o',
                             'DtInicioCaptacao' => $datas['dtInicioNovoPrazo'],
                             'DtFimCaptacao' => $datas['dtFimNovoPrazo'],
@@ -2620,10 +2624,11 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 $Distribuicao         = new DistribuicaoProjetoComissao();
                 $titulacaoConselheiro = new TitulacaoConselheiro();
                 $Rplanilhaprojeto = $planilhaAprovacao->buscar(array('idPRONAC = ?'=> $idPronac_Get, 'tpPlanilha = ?'=> 'PA', 'stAtivo = ?' => 'N'));
+                $objAcesso = new Acesso();
                 foreach ($Rplanilhaprojeto as $resu){
                     $data = array(
                         'tpPlanilha'             => 'CO'
-                        ,'dtPlanilha'            => new Zend_Db_Expr('GETDATE()')
+                        ,'dtPlanilha'            => $objAcesso->getExpressionDate()
                         ,'idPlanilhaProjeto'     => $resu->idPlanilhaProjeto
                         ,'idPlanilhaProposta'    => $resu->idPlanilhaProposta
                         ,'IdPRONAC'              => $resu->IdPRONAC
@@ -2653,10 +2658,11 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 $areaProjeto = $projetos->BuscarAreaSegmentoProjetos($idPronac_Get);
                 $Rtitulacao  = $titulacaoConselheiro->buscarComponenteBalanceamento($areaProjeto['area']);
                 $Distribuicao->alterar(array('stDistribuicao' => 'I'), array('idPRONAC = ?'=>$idPronac_Get));
+
                 $dados = array(
                         'idPRONAC'        => $idPronac_Get
                         ,'idAgente'       => $Rtitulacao[0]['idAgente']
-                        ,'dtDistribuicao' => new Zend_Db_Expr('GETDATE()')
+                        ,'dtDistribuicao' => $objAcesso->getExpressionDate()
                         ,'stDistribuicao' => 'A'
                         ,'idResponsavel'  => 0);
                 $Distribuicao->inserir($dados);
@@ -2704,7 +2710,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                         ,'Sequencial'          => $buscarPareceres[0]->Sequencial
                         ,'TipoParecer'         => $tipoParecer
                         ,'ParecerFavoravel'    => $stParecerFavoravel
-                        ,'DtParecer'           => new Zend_Db_Expr('GETDATE()')
+                        ,'DtParecer'           => $objAcesso->getExpressionDate()
                         ,'Parecerista'         => $idAgenteRemetente
                         ,'Conselheiro'         => null
                         ,'NumeroReuniao'       => null
@@ -3120,6 +3126,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 // busca o Plano de Distribui��o do Proponente
                 $b = PlanoDistribuicaoDAO::buscar($idPlano);
 
+                $objAcesso = new Acesso();
                 $dados = array(
                     'idPedidoAlteracao'     => $b[0]->idPedidoAlteracao
                     ,'idPlanoDistribuicao'  => $b[0]->idPlanoDistribuicao
@@ -3137,7 +3144,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     ,'stPrincipal'          => $b[0]->stPrincipal
                     ,'tpAcao'               => $b[0]->tpAcao
                     ,'tpPlanoDistribuicao'  => 'O'
-                    ,'dtPlanoDistribuicao'  => new Zend_Db_Expr('GETDATE()')
+                    ,'dtPlanoDistribuicao'  => $objAcesso->getExpressionDate()
                     ,'dsjustificativa'      => $b[0]->dsjustificativa
                 );
 

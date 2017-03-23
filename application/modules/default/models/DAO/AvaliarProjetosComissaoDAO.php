@@ -73,7 +73,8 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 	
 	public static function alterarNota($nota, $idPreProjeto){
 
-		$sql = "update BDCORPORATIVO.scSAC.tbAvaliacaoPreProjeto set nrNotaFinal = $nota, dtAvaliacao = GETDATE() where idPreProjeto = $idPreProjeto";
+        $objAcesso= new Acesso();
+		$sql = "update BDCORPORATIVO.scSAC.tbAvaliacaoPreProjeto set nrNotaFinal = $nota, dtAvaliacao = ".$objAcesso->getDate()." where idPreProjeto = $idPreProjeto";
 		
 		try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -88,8 +89,9 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 	
 	public static function aprovarProjeto ($idPreProjeto, $nrNotalFinal, $justificativa = null, $stAprovacao = null, $aprovacao = null){
 		
+        $objAcesso= new Acesso();
 		if(isset($aprovacao)){
-			$sql = "update BDCORPORATIVO.scSAC.tbAprovacaoPreProjeto set dtAvaliacao = GETDATE()";
+			$sql = "update BDCORPORATIVO.scSAC.tbAprovacaoPreProjeto set dtAvaliacao = ". $objAcesso->getDate();
 			if(isset($stAprovacao)){
 				$sql .= ", stAprovacao = $stAprovacao";
 			}
@@ -105,7 +107,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 			$sql = "insert into 
 					BDCORPORATIVO.scSAC.tbAprovacaoPreProjeto 
 					(idPreProjeto, nrNotaFinal, dsJustificativa, dtAvaliacao, stAprovacao) 
-					values($idPreProjeto, $nrNotalFinal, '$justificativa', GETDATE(), $stAprovacao)";
+					values($idPreProjeto, $nrNotalFinal, '$justificativa', ".$objAcesso->getDate().", $stAprovacao)";
 		}
 
 		try {

@@ -189,6 +189,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
 
     public static function gerenciamentodepropostas(stdClass $params)
     {
+        $objAcesso= new Acesso();
         $sql = "SELECT
                     idProjeto,
                     NomeProposta,
@@ -198,7 +199,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                     Tecnico,
                     idSecretaria,
                     CONVERT(CHAR(20),DtAdmissibilidade, 120) AS DtAdmissibilidade,
-                    DAY(DtAdmissibilidade - GETDATE()) as dias,
+                    DAY(DtAdmissibilidade - ".$objAcesso->getDate().") as dias,
                     idAvaliacaoProposta,
                     idMovimentacao,
                     stTipoDemanda
@@ -236,6 +237,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
             $meuOrder .= $valor;
         }
 
+        $objAcesso= new Acesso();
         $sql = "SELECT p.idPreProjeto AS idProjeto,
                            p.NomeProjeto AS NomeProposta,
                            p.stPlanoAnual,
@@ -245,7 +247,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                            SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico,
                            SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria,
                            CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade,
-                           DATEDIFF(d, x.DtAvaliacao, GETDATE()) as dias,
+                           DATEDIFF(d, x.DtAvaliacao, ".$objAcesso->getDate().") as dias,
                            x.idAvaliacaoProposta,
                            m.idMovimentacao,
                            p.stTipoDemanda

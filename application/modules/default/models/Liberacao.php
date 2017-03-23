@@ -199,7 +199,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
                                                             ELSE 'N�O'
                                                             END "),
                     'Certidao' => New Zend_Db_Expr("CASE
-                                                            WHEN EXISTS(SELECT top 1 CONVERT(CHAR(8),DtValidade,112) FROM CertidoesNegativas c WHERE p.CgcCpf = c.CgcCpf AND CodigoCertidao <> 244 AND CodigoCertidao <> 70 AND CONVERT(CHAR(8),DtValidade,112) <  GETDATE())
+                                                            WHEN EXISTS(SELECT top 1 CONVERT(CHAR(8),DtValidade,112) FROM CertidoesNegativas c WHERE p.CgcCpf = c.CgcCpf AND CodigoCertidao <> 244 AND CodigoCertidao <> 70 AND CONVERT(CHAR(8),DtValidade,112) <  {$this->getDate()})
                                                             THEN 'VENCIDA'
                                                             ELSE 'VALIDA'
                                                             END "),

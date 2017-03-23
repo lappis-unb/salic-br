@@ -966,7 +966,8 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	
 	public static function NovoLote()
 	{
-		$sql = "INSERT INTO SAC.dbo.tbLote (dtLote)values(GETDATE())";
+        $objAcesso= new Acesso();
+		$sql = "INSERT INTO SAC.dbo.tbLote (dtLote)values({$objAcesso->getDate()})";
 							
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

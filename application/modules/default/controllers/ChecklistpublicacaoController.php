@@ -771,17 +771,19 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
                 $rsVP = $tblVerificaProjeto->buscar(array('idPronac=?'=>$idpronac))->current();
                 $dadosVP = array();
                 if(empty($rsVP)){
+                    $objAcesso = new Acesso();
                     $dadosVP['idPronac'] = $idpronac;
                     $dadosVP['idOrgao'] = $this->codOrgao;
                     $dadosVP['idAprovacao'] = $idAprovacao;
                     $dadosVP['idUsuario'] = $this->getIdUsuario;
                     $dadosVP['stAnaliseProjeto'] = 3;
-                    $dadosVP['dtFinalizado'] = new Zend_Db_Expr('GETDATE()');
+                    $dadosVP['dtFinalizado'] = $objAcesso->getExpressionDate();
                     $dadosVP['stAtivo'] = 1;
                     $tblVerificaProjeto->inserir($dadosVP);
                 }else{
                     $rsVP->stAnaliseProjeto = '3';
-                    $rsVP->dtFinalizado = new Zend_Db_Expr('GETDATE()');
+                    $objAcesso =  new Acesso();
+                    $rsVP->dtFinalizado = $objAcesso->getExpressionDate();
                     $rsVP->save();
                 }
                 parent::message("An�lise finalizada com sucesso!", "checklistpublicacao/listas", "CONFIRM");
@@ -830,10 +832,11 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $alterarTabelaProjetos = ProjetosDAO::alterarDadosProjeto($dadosProjeto, $idpronac);
 
             //DADOS ENQUADRAMENTO
+            $objAcesso = new Acesso();
             $dadosEnquadramento = array(
                 "Enquadramento" => $enquadramento,
                 "Observacao" => $dsjustificativaEnquadramento,
-                "DtEnquadramento" => new Zend_Db_Expr('GETDATE()'),
+                "DtEnquadramento" => $objAcesso->getExpressionDate(),
                 "Logon" => $usuario
             );
             $alterarEnquadramento = EnquadramentoDAO::AlterarEnquadramento($dadosEnquadramento, $idpronac);
@@ -851,13 +854,14 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $tblVerificaProjeto = new tbVerificaProjeto();
             $rsVP = $tblVerificaProjeto->buscar(array('idPronac=?'=>$idpronac))->current();
             $dadosVP = array();
+            $objAcesso = new Acesso();
             if(empty($rsVP)){
                 $dadosVP['idPronac']    = $idpronac;
                 $dadosVP['idOrgao']     = $this->codOrgao;
                 $dadosVP['idAprovacao'] = $idAprovacao;
                 $dadosVP['idUsuario']    = $usuario;
                 $dadosVP['stAnaliseProjeto']=2;
-                $dadosVP['dtRecebido']  = new Zend_Db_Expr('GETDATE()');
+                $dadosVP['dtRecebido']  = $objAcesso->getExpressionDate();
                 //$dadosVP['dtFinalizado']= $idpronac;
                 //$dadosVP['dtPortaria']  = $idpronac;
                 $dadosVP['stAtivo']     = 1;

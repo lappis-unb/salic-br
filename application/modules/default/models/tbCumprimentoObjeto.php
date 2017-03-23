@@ -310,7 +310,7 @@ class tbCumprimentoObjeto extends MinC_Db_Table_Abstract
         if(empty($cumprimentoObjetoRow)){
             $cumprimentoObjetoRow = $this->createRow();
             $cumprimentoObjetoRow->idPronac = $this->getIdPronac();
-            $cumprimentoObjetoRow->dtCadastro = new Zend_Db_Expr('GETDATE()');
+            $cumprimentoObjetoRow->dtCadastro = $this->getExpressionDate();
             if ($this->getSituacao()) {
                 $cumprimentoObjetoRow->siCumprimentoObjeto = $this->getSituacao();
             }

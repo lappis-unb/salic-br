@@ -102,7 +102,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
                 $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $pkSgcAcessoSave));
                 $dadosVinculo = array(
                     'idAgenteProponente' => $idAgenteProp
-                    ,'dtVinculo' => new Zend_Db_Expr('GETDATE()')
+                    ,'dtVinculo' => $tbVinculo->getExpressionDate()
                     ,'siVinculo' => 2
                     ,'idUsuarioResponsavel' => $idResp[0]->IdUsuario
                 );

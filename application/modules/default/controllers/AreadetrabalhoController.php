@@ -208,12 +208,13 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
         try {
             if (!empty($idPronac) && !empty($motivo) && !empty($justificativa)) {
                 $tbRetirarDePauta = new tbRetirarDePauta();
+                $objAcesso = new Acesso();
                 $dados = array(
                         'MotivoRetirada'    => $motivo
                         ,'dsJustificativa'  => $justificativa
                         ,'idPronac'         => $idPronac
                         ,'idAgenteEnvio'    => $this->idAgente
-                        ,'dtEnvio'          => new Zend_Db_Expr('GETDATE()')
+                        ,'dtEnvio'          => $objAcesso->getExpressionDate()
                         ,'tpAcao'           => 1 // retirado de pauta pelo componente da comissao
                         ,'stAtivo'          => 1);
 
@@ -254,9 +255,10 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
         try {
             if (!empty($idRetirarDePauta)) {
                 $tbRetirarDePauta = new tbRetirarDePauta();
+                $objAcesso = new Acesso();
                 $dados = array(
                         'idAgenteEnvio'    => $this->idAgente
-                        ,'dtEnvio'         => new Zend_Db_Expr('GETDATE()')
+                        ,'dtEnvio'         => $objAcesso->getExpressionDate()
                         ,'tpAcao'          => 2 // cancelamento da retirada de pauta pelo componente da comissao
                         ,'stAtivo'         => 0);
                 $where = array('idRetirarDePauta = ?' => $idRetirarDePauta);

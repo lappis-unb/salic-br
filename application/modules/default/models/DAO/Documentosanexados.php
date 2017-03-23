@@ -58,9 +58,11 @@ Class Documentosanexados extends Zend_Db_Table{
 				{
 					
 				}
+
+            $objAcesso= new Acesso();
 			$tbArquivo = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivo " .
 								"(nmArquivo, sgExtensao, dsTipo, dtEnvio ,stAtivo)  " .
-							"VALUES ('$name', '$fileType', 'application/pdf', GETDATE(),'A')";
+							"VALUES ('$name', '$fileType', 'application/pdf', ".$objAcesso->getDate().",'A')";
 				$db = Zend_Db_Table::getDefaultAdapter();
 					$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 			$resultado = $db->query();

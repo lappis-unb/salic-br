@@ -181,13 +181,14 @@ class AprovacaoModel implements ModelInterface
      */
     public function salvar()
     {
+        $objAcesso = new Acesso();
         $dados = array(
                 'IdPRONAC' => $this->getIdPronac(),
                 'idProrrogacao' => $this->getIdProrrogacao(),
                 'AnoProjeto' => $this->getAnoProjeto(),
                 'Sequencial' => $this->getSequencial(),
                 'TipoAprovacao' => $this->getTipo(),
-                'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                'DtAprovacao' => $objAcesso->getExpressionDate(),
                 'ResumoAprovacao' => $this->getResumo(),
                 'Logon' => $this->getUsuarioLogado(),
          );

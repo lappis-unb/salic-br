@@ -152,7 +152,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->from(
                 array('D' => $this->_schema . "." . $this->_name), array(
             'D.idAgente',
-            'DATEDIFF(DAY,D.dtDistribuicao,GETDATE()) as Dias',
+            'DATEDIFF(DAY,D.dtDistribuicao,'.$this->getDate().') as Dias',
             'CONVERT(CHAR(10), D.dtDistribuicao,103) AS dtDistribuicao',
             'CONVERT(CHAR(10), D.dtDistribuicao,103) AS dtCompleta',
                 )

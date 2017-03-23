@@ -233,9 +233,9 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 			$url  = "consultar";
 		}
 		
-		
+		$objAcesso = new Acesso();
 		if(empty($dtInicioVigencia)){
-			$dtInicio  = new Zend_Db_Expr('GETDATE()');
+			$dtInicio  = $objAcesso->getExpressionDate();
 		}else{
 			$dtInicio  = Data::dataAmericana($dtInicioVigencia);
 		}

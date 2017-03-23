@@ -1597,7 +1597,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $m = array(
             new Zend_Db_Expr('CONVERT(CHAR(20),m.DtMovimentacao, 120) AS DtMovimentacao'),
-            new Zend_Db_Expr('DATEDIFF(d, m.DtMovimentacao, GETDATE()) AS diasDesdeMovimentacao'),
+            new Zend_Db_Expr('DATEDIFF(d, m.DtMovimentacao, '.$this->getDate().') AS diasDesdeMovimentacao'),
             'm.idMovimentacao',
             'm.Movimentacao AS CodSituacao',
         );
@@ -1617,7 +1617,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $x = array(
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
-            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
+            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, '.$this->getDate().') AS diasCorridos'),
             'x.idTecnico AS idUsuario',
             'x.DtAvaliacao',
             'x.idAvaliacaoProposta',
@@ -1631,8 +1631,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->joinInner(array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", $x, "SAC.dbo")
             ->joinInner(array("a" => "Agentes"), 'p.idAgente = a.idAgente', array('a.CNPJCPF'), $this->getSchema('agentes'))
             ->joinInner(array("y" => "Verificacao"), 'm.Movimentacao = y.idVerificacao', null,  $this->_schema)
-            ->joinLeft(array("ap1" => 'tbAvaliacaoProposta'), "p.idPreProjeto = ap1.idProjeto AND ap1.stEnviado = 'S'", array(new Zend_Db_Expr('DATEDIFF(d, ap1.DtEnvio, GETDATE()) AS diasDiligencia')),  $this->_schema)
-            ->joinLeft(array("ap2" => 'tbAvaliacaoProposta'), "p.idPreProjeto = ap2.idProjeto AND ap2.stEnviado = 'S'", array(new Zend_Db_Expr('DATEDIFF(d, ap2.dtResposta, GETDATE()) AS diasRespostaDiligencia')),  $this->_schema)
+            ->joinLeft(array("ap1" => 'tbAvaliacaoProposta'), "p.idPreProjeto = ap1.idProjeto AND ap1.stEnviado = 'S'", array(new Zend_Db_Expr('DATEDIFF(d, ap1.DtEnvio, '.$this->getDate().') AS diasDiligencia')),  $this->_schema)
+            ->joinLeft(array("ap2" => 'tbAvaliacaoProposta'), "p.idPreProjeto = ap2.idProjeto AND ap2.stEnviado = 'S'", array(new Zend_Db_Expr('DATEDIFF(d, ap2.dtResposta, '.$this->getDate().') AS diasRespostaDiligencia')),  $this->_schema)
             ->where(
                 new Zend_Db_Expr('NOT EXISTS
                     (
@@ -1676,13 +1676,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->joinInner(
                         array("m"=>"tbMovimentacao"),
                         "p.idPreProjeto = m.idProjeto AND m.stEstado = 0",
-                        array("idMovimentacao", "CodSituacao"=>"m.Movimentacao", "DtMovimentacao"=>"CONVERT(CHAR(20),m.DtMovimentacao, 120)", "diasDesdeMovimentacao"=>"DATEDIFF(d, m.DtMovimentacao, GETDATE())"),
+                        array("idMovimentacao", "CodSituacao"=>"m.Movimentacao", "DtMovimentacao"=>"CONVERT(CHAR(20),m.DtMovimentacao, 120)", "diasDesdeMovimentacao"=>"DATEDIFF(d, m.DtMovimentacao, ".$this->getDate().")"),
                         "SAC.dbo"
                         );
         $slct->joinLeft(
                         array("x"=>"tbAvaliacaoProposta"),
                         "p.idPreProjeto = x.idProjeto AND x.stEstado = 0",
-                        array("idAvaliacaoProposta", "DtAdmissibilidade"=>"CONVERT(CHAR(20),x.DtAvaliacao, 120)", "diasCorridos"=>"DATEDIFF(d, x.DtAvaliacao, GETDATE())"),
+                        array("idAvaliacaoProposta", "DtAdmissibilidade"=>"CONVERT(CHAR(20),x.DtAvaliacao, 120)", "diasCorridos"=>"DATEDIFF(d, x.DtAvaliacao, ".$this->getDate().")"),
                         "SAC.dbo"
                         );
         $slct->joinInner(
@@ -2051,7 +2051,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             "($tecnico) AS Tecnico",
             "($orgao) AS idSecretaria",
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
-            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
+            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, '.$this->getDate().') AS diasCorridos'),
             'x.idAvaliacaoProposta',
         );
 
@@ -2139,7 +2139,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             "($tecnico) AS Tecnico",
             "($orgao) AS idSecretaria",
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
-            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
+            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, '.$this->getDate().') AS diasCorridos'),
             'x.idAvaliacaoProposta',
         );
 
@@ -2750,7 +2750,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     ->limit(1);
 
                 if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
-                    $sql->where('DATEDIFF(DAY,GETDATE(),DtInicioDeExecucao) < 90');
+                    $sql->where('DATEDIFF(DAY,'.$this->getDate().',DtInicioDeExecucao) < 90');
                 } else {
                     $sql->where("DATE_PART('day', dtiniciodeexecucao - now()) < 90");
                 }

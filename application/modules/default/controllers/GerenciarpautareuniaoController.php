@@ -1350,7 +1350,8 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $d = array();
                     $d['situacao'] = 'B11';
                     $d['ProvidenciaTomada'] = 'Recurso enviado para avalia��o t�cnica.';
-                    $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                    $objAcesso = new Acesso();
+                    $d['dtSituacao'] = $objAcesso->getExpressionDate();
                     $where = "IdPRONAC = $dados->IdPRONAC";
                     $Projetos = new Projetos();
                     $Projetos->update($d, $where);

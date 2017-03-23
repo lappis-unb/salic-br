@@ -267,11 +267,12 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function inserirCopiaPlanilha($idPronac, $idPedidoAlteracao) {
+        $objAcesso= new Acesso();
         $sql = "insert into SAC.dbo.tbPlanilhaAprovacao
 
                     SELECT
                     'tpPlanilha' = 'PA',
-                    GETDATE(),
+                    {$objAcesso->getDate()},
                     idPlanilhaProjeto,
                     idPlanilhaProposta,
                     IdPRONAC,
@@ -516,8 +517,9 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public static function atualizaAvaliacaoItemPedidoAlteracao($dsJustificativaAvaliador, $stDeferimento, $idPedidoAlteracao) {
 
+        $objAcesso= new Acesso();
         $sql = "UPDATE BDCORPORATIVO.scSac.tbAvaliacaoItemPedidoAlteracao
-        SET stAvaliacaoSubItemPedidoAlteracao = $stDeferimento , dsAvaliacaoSubItemPedidoAlteracao = '$dsJustificativaAvaliador', dtInicioAvaliacao = getdate()
+        SET stAvaliacaoSubItemPedidoAlteracao = $stDeferimento , dsAvaliacaoSubItemPedidoAlteracao = '$dsJustificativaAvaliador', dtInicioAvaliacao = {$objAcesso->getDate()}
         WHERE idPedidoAlteracao = $idPedidoAlteracao";
     }
 

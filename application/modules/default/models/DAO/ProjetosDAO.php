@@ -48,6 +48,7 @@ class ProjetosDAO extends Zend_Db_Table
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $objAcesso= new Acesso();
 
         $sql = "	INSERT INTO SAC.dbo.tbPlanilhaAprovacao
                                                 (tpPlanilha,
@@ -79,7 +80,7 @@ class ProjetosDAO extends Zend_Db_Table
                                                  stAtivo)
                                                  SELECT
                                                  'CO',
-                                                 GETDATE(),
+                                                 {$objAcesso->getDate()},
                                                  idPlanilhaProjeto,
                                                  idPlanilhaProposta,
                                                  idPRONAC,
@@ -111,6 +112,7 @@ class ProjetosDAO extends Zend_Db_Table
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+        $objAcesso= new Acesso();
         $sqlAnaliseOriginal = "	INSERT INTO sac.dbo.tbAnaliseAprovacao
                                             (tpAnalise,
                                              dtAnalise,
@@ -133,7 +135,7 @@ class ProjetosDAO extends Zend_Db_Table
                                              stAvaliacao,
                                              dsAvaliacao)
                                              SELECT  'CO',
-                                             GETDATE(),
+                                             {$objAcesso->getDate()},
                                              idAnaliseDeConteudo,
                                              idPronac,
                                              idProduto,
@@ -235,11 +237,12 @@ class ProjetosDAO extends Zend_Db_Table
                 $menor = $dados->agente;
             }
 
+            $objAcesso= new Acesso();
             $dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
                     "(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
                     "values" .
-                    "($idPronac, $menor, GETDATE(), 7522);
-                    UPDATE SAC.dbo.Projetos SET dtSituacao=GETDATE(), Situacao = 'C10' WHERE IdPRONAC = $idPronac;";
+                    "($idPronac, $menor, {$objAcesso->getDate()}, 7522);
+                    UPDATE SAC.dbo.Projetos SET dtSituacao= {$objAcesso->getDate()}, Situacao = 'C10' WHERE IdPRONAC = $idPronac;";
 
             $insere = $db->query($dados);
             // Se tiver componente com a Area e Segmento do projeto ele faz...
@@ -247,11 +250,12 @@ class ProjetosDAO extends Zend_Db_Table
         else
         {
 
+            $objAcesso= new Acesso();
             $dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
                     "(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
                     "values" .
-                    "($idPronac, ".$AAS[0]->idAgente.", GETDATE(), 7522);
-                    UPDATE SAC.dbo.Projetos SET dtSituacao=GETDATE(), Situacao = 'C10',  WHERE IdPRONAC = $idPronac;";
+                    "($idPronac, ".$AAS[0]->idAgente.", {$objAcesso->getDate()}, 7522);
+                    UPDATE SAC.dbo.Projetos SET dtSituacao={$objAcesso->getDate()}, Situacao = 'C10',  WHERE IdPRONAC = $idPronac;";
             $insere = $db->query($dados);
         }
         }

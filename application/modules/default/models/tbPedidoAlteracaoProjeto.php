@@ -148,10 +148,10 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 'pr.DtFimExecucao',
                 'DtInicioCaptacao' => New Zend_Db_Expr("CASE WHEN DtInicioCaptacao IS NOT NULL
 														THEN ap.DtInicioCaptacao 
-														ELSE dateadd(day,1,getdate()) END"),
+														ELSE dateadd(day,1,{$this->getDate()}) END"),
                 'DtFimCaptacao' => New Zend_Db_Expr("CASE WHEN DtFimCaptacao IS NOT NULL THEN ap.DtFimCaptacao
-													WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31' THEN pr.DtFimExecucao 
-													ELSE CONVERT(char(4),year(getdate())) + '/12/31' END"),
+													WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' THEN pr.DtFimExecucao 
+													ELSE CONVERT(char(4),year({$this->getDate()})) + '/12/31' END"),
                 ),'SAC.dbo'
         );
         $slct->joinInner(array('ap' => 'Aprovacao'),
@@ -214,7 +214,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
 												WHEN vp.stAnaliseProjeto = '3' THEN 'An�lise Finalizada' 
 												WHEN vp.stAnaliseProjeto = '4' THEN 'Encaminhado para portaria' 
 												END "),
-                'DATEDIFF(day, vp.DtRecebido, GETDATE()) AS tempoAnalise',
+                'DATEDIFF(day, vp.DtRecebido, '.$this->getDate().') AS tempoAnalise',
                 'vp.dtRecebido'
                 ),
                 'SAC.dbo'

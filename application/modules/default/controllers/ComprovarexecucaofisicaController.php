@@ -1004,11 +1004,11 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             }
 
             $rs = $tbComprovanteTrimestral->buscarComprovantes(array('idPronac=?'=>$idpronac, 'siComprovanteTrimestral=?'=>1));
-
+            $objAcesso =  new Acesso();
             $arrayDados = array();
             if(empty($rs)){
                 $arrayDados['IdPRONAC'] = $idpronac;
-                $arrayDados['dtComprovante'] = new Zend_Db_Expr('GETDATE()');
+                $arrayDados['dtComprovante'] = $objAcesso->getExpressionDate();
                 $arrayDados['dtInicioPeriodo'] = $dtInicioPeriodo;
                 $arrayDados['dtFimPeriodo'] = $dtFimPeriodo;
                 $arrayDados['dsEtapasExecutadas'] = $_POST['etapasExecutadas'];
@@ -1474,9 +1474,10 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $rs = $tbTermoAceiteObra->buscarTermoAceiteObra(array('idPronac=?'=>$idpronac));
 
             $arrayDados = array();
+            $objAcesso = new Acesso();
             if(empty($rs)){
                 $arrayDados['idPronac'] = $idpronac;
-                $arrayDados['dtCadastroTermo'] = new Zend_Db_Expr('GETDATE()');
+                $arrayDados['dtCadastroTermo'] = $objAcesso->getExpressionDate();
                 $arrayDados['dsDescricaoTermoAceite'] = $_POST['descricaoTermoAceite'];
                 $arrayDados['stConstrucaoCriacaoRestauro'] = $_POST['construcaoCriacaoRestauro'];
                 $arrayDados['idDocumentoTermo'] = $dadosDocumento[0]->idDocumento;
@@ -1624,9 +1625,10 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $documentoAceite = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>25), array('idDocumento DESC'));
             }
 
+            $objAcesso = new Acesso();
             $dadosItem = array(
                 'idPronac' => $idpronac,
-                'dtCadastroDoacao' => new Zend_Db_Expr('GETDATE()'),
+                'dtCadastroDoacao' => $objAcesso->getExpressionDate(),
                 'idItemOrcamentario' => $_POST['itemOrcamentario'],
                 'tpBem' => 'M',
                 'idAgente' => $_POST['agenteMovel'],
@@ -1746,9 +1748,10 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $documentoAceite = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>25), array('idDocumento DESC'));
             }
 
+            $objAcesso =  new Acesso();
             $dadosItem = array(
                 'idPronac' => $idpronac,
-                'dtCadastroDoacao' => new Zend_Db_Expr('GETDATE()'),
+                'dtCadastroDoacao' => $objAcesso->getExpressionDate(),
                 'idItemOrcamentario' => $_POST['itemOrcamentario'],
                 'tpBem' => 'I',
                 'idAgente' => $_POST['agenteImovel'],
@@ -1874,8 +1877,8 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Projetos = new Projetos();
                 $d = array();
                 $d['situacao'] = 'E24';
-                $d['ProvidenciaTomada'] = 'Presta��o de Contas final apresentada, aguardando an�lise.';
-                $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                $d['ProvidenciaTomada'] = 'Presta&ccedil;&atilde;o de Contas final apresentada, aguardando an&aacute;lise.';
+                $d['dtSituacao'] = $Projetos->getExpressionDate();
                 $d['Logon'] = $idUsuario;
                 $w = "IdPRONAC = $idpronac";
                 $Projetos->update($d, $w);
@@ -1892,7 +1895,8 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 6 - Finalizado pelo Coordenador.
               */
 
-                $dados['DtEnvioDaPrestacaoContas'] = new Zend_Db_Expr('GETDATE()');
+              $objAcesso = new Acesso();
+                $dados['DtEnvioDaPrestacaoContas'] = $objAcesso->getExpressionDate();
                 $where = "idPronac = $idpronac ";
 
                 $tbCumprimentoObjeto = new tbCumprimentoObjeto();

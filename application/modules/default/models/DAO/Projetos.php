@@ -133,8 +133,9 @@ class Projetos extends Zend_Db_Table
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $objAcesso= new Acesso();
         $tbArquivo = "INSERT INTO scCorp.tbArquivo " .
-                "(nmArquivo, sgExtensao, dsTipo, dtEnvio ,stAtivo) values  ('$name', '$fileType', 'application/pdf', GETDATE(),'A')";
+                "(nmArquivo, sgExtensao, dsTipo, dtEnvio ,stAtivo) values  ('$name', '$fileType', 'application/pdf', {$objAcesso->getDate()},'A')";
         $resultado = $db->query($tbArquivo);
         return $resultado;
     }

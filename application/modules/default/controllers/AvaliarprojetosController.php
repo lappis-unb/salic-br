@@ -229,11 +229,12 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
             }
 //           parent::message("Dados salvos com sucesso!", "avaliarprojetos/index", "CONFIRM");
                     $tbAvaliacaoPreProjeto = new tbAvaliacaoPreProjeto();
+            $objAcesso = new Acesso();
                     $dadosAvaliacao = array(
                     	'idPreProjeto' => $_POST['idPreProjeto']
                     	,'idAvaliador' => $this->idusuario
                     	,'nrNotaFinal' => number_format($notas/$totalPeso , 2, '.', '')
-                    	,'dtAvaliacao' => new Zend_Db_Expr('GETDATE()')
+                    	,'dtAvaliacao' => $objAcesso->getExpressionDate()
                     	,'stAvaliacao' => 0);
                     	//xd($dadosAvaliacao);
 					try

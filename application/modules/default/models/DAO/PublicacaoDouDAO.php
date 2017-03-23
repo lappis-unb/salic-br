@@ -548,12 +548,12 @@ class PublicacaoDouDAO extends Zend_Db_Table
             if ($orgaoSuperior == Orgaos::ORGAO_SUPERIOR_SEFIC) {
                 $area = ' p.Area <> 2 ';
             }
-
+            $objAcesso= new Acesso();
             $sql = "
                 UPDATE SAC.dbo.Projetos
                 SET Situacao = '$novaSituacao',
                 ProvidenciaTomada = '$ProvidenciaTomada',
-                DtSituacao = GETDATE(),
+                DtSituacao = {$objAcesso->getDate()},
                 Logon = '$usuarioLogado'
                 FROM SAC.dbo.Projetos p 
                 INNER JOIN SAC.dbo.Aprovacao a ON (p.AnoProjeto = a.AnoProjeto AND p.Sequencial = a.Sequencial)

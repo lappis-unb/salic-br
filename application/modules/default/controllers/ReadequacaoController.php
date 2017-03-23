@@ -263,21 +263,23 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
 		// salva os dados do pedido
+        $objAcesso = new Acesso();
 		if (empty($this->_idPedidoAlteracao)) : // CADASTRA
 			$dadosPedido = array(
 				'idPedidoAlteracao'  => null
 				,'IdPRONAC'          => $this->_idPronac
 				,'idSolicitante'     => $this->_idAgenteProjeto
-				,'dtSolicitacao'     => new Zend_Db_Expr('GETDATE()')
+				,'dtSolicitacao'     => $objAcesso->getExpressionDate()
 				,'stPedidoAlteracao' => $stPedidoAlteracao
 				,'siVerificacao'     => $siVerificacao
 			);
 			$this->_idPedidoAlteracao = $this->tbPedidoAlteracaoProjeto->inserir($dadosPedido);
 		else : // ALTERA
+            $objAcesso = new Acesso();
 			$dadosPedido     = array(
 				'stPedidoAlteracao' => $stPedidoAlteracao
 				,'idSolicitante'    => $this->_idAgenteProjeto
-				,'dtSolicitacao'    => new Zend_Db_Expr('GETDATE()')
+				,'dtSolicitacao'    => $objAcesso->getExpressionDate()
 			);
 			$this->tbPedidoAlteracaoProjeto->alterar($dadosPedido, $whereItemPedido);
 		endif;
@@ -323,7 +325,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 						,'sgExtensao'        => $arquivoExtensao
 						,'dsTipoPadronizado' => $arquivoTipo
 						,'nrTamanho'         => $arquivoTamanho
-						,'dtEnvio'           => new Zend_Db_Expr('GETDATE()')
+						,'dtEnvio'           => $objAcesso->getExpressionDate()
 						,'dsHash'            => $arquivoHash
 						,'stAtivo'           => 'A');
 					$idUltimoArquivo = $this->tbArquivo->inserir($dadosArquivo); // pega o id do �ltimo arquivo cadastrado
@@ -554,9 +556,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
                 try {
                     // faz a altera��o na situa��o do pedido
+                    $objAcesso = new Acesso();
                     $dados = array(
                         'idSolicitante'      => $this->_idAgenteProjeto
-                        ,'dtSolicitacao'     => new Zend_Db_Expr('GETDATE()')
+                        ,'dtSolicitacao'     => $objAcesso->getExpressionDate()
                         ,'stPedidoAlteracao' => $stPedidoAlteracao
                     );
                     $where = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
@@ -838,6 +841,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     $whereProdutoSR = array('p.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'p.tpAcao <> ?' => 'E');
                     $buscarSR = $this->tbPlanoDistribuicao->buscarProdutosSolicitados($whereProdutoSR, $orderProdutoAP);
 
+                    $objAcesso = new Acesso();
                     if ( count($buscarSR) <= 0 && count($buscarAP) > 0 ) {
                         foreach ($buscarAP as $d) {
                             $dadosCopia = array(
@@ -856,7 +860,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                                     ,'vlUnitarioPromocional' => $d->vlUnitarioPromocional
                                     ,'stPrincipal'           => $d->stPrincipal
                                     ,'tpAcao'                => 'N'
-                                    ,'dtPlanoDistribuicao'   => new Zend_Db_Expr('GETDATE()')
+                                    ,'dtPlanoDistribuicao'   => $objAcesso->getExpressionDate()
                             );
                             //INSERE UMA C�PIA QUE NAO SER� ALTERADA - AP
                             $dadosCopia['tpPlanoDistribuicao'] = 'AP';
@@ -893,7 +897,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                                 ,'tpAcao'                => $tpAcao
                                 ,'tpPlanoDistribuicao'   => 'SR'
                                 ,'dsjustificativa'       => $justificativa
-                                ,'dtPlanoDistribuicao'   => new Zend_Db_Expr('GETDATE()')
+                                ,'dtPlanoDistribuicao'   => $objAcesso->getExpressionDate()
                         );
                         $this->tbPlanoDistribuicao->inserir($dadosItemPedido);
                     } else { // ALTERA ou EXCLUI
@@ -933,7 +937,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                                 ,'vlUnitarioPromocional' => $vlPromocional
                                 ,'tpAcao'                => $tpAcao
                                 ,'dsjustificativa'       => $justificativa
-                                ,'dtPlanoDistribuicao'   => new Zend_Db_Expr('GETDATE()')
+                                ,'dtPlanoDistribuicao'   => $objAcesso->getExpressionDate()
                             );
                             $this->tbPlanoDistribuicao->alterar($dadosItemPedido, $whereProduto);
                         }
@@ -1041,19 +1045,19 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 				// filtro para altera��o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
-
+                $objAcesso = new Acesso();
 				// salva os dados do item do pedido
 				if ( count($this->tbProposta->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
 					$dadosItemPedido = array(
 						'tpProposta'         => 'SA'
-						,'dtProposta'        => new Zend_Db_Expr('GETDATE()')
+						,'dtProposta'        => $objAcesso->getExpressionDate()
 						,'dsFichaTecnica'    => $fichaSolicitada
 						,'idPedidoAlteracao' => $this->_idPedidoAlteracao
 					);
 					$this->tbProposta->inserir($dadosItemPedido);
 				else : // ALTERA
 					$dadosItemPedido = array(
-						'dtProposta'      => new Zend_Db_Expr('GETDATE()')
+						'dtProposta'      => $objAcesso->getExpressionDate()
 						,'dsFichaTecnica' => $fichaSolicitada
 					);
 					$this->tbProposta->alterar($dadosItemPedido, $whereItemPedido);
@@ -1177,7 +1181,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 				// filtro para altera��o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
-
+        $objAcesso = new Acesso();
 				// faz a c�pia da tabela original para a solicitada caso n�o exista na solicitada, e, exista algum registro na aprovada
 				if ( count($this->tbAbrangencia->buscar(array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao))) <= 0 && count($buscarAP) > 0 ) :
 					foreach ($buscarAP as $d) :
@@ -1189,7 +1193,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 							,'tpAcao'              => 'N'
 							,'idAbrangenciaAntiga' => $d->idAbrangencia
 							,'idPedidoAlteracao'   => $this->_idPedidoAlteracao
-							,'dtRegistro'          => new Zend_Db_Expr('GETDATE()')
+							,'dtRegistro'          => $objAcesso->getExpressionDate()
 						);
 						$this->tbAbrangencia->inserir($dadosCopia);
 					endforeach;
@@ -1207,7 +1211,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 						,'idPais'            => $pais
 						,'idUF'              => $uf
 						,'idMunicipioIBGE'   => $cidade
-						,'dtRegistro'        => new Zend_Db_Expr('GETDATE()')
+						,'dtRegistro'        => $objAcesso->getExpressionDate()
 						,'idPedidoAlteracao' => $this->_idPedidoAlteracao
 						,'tpAcao'            => $tpAcao
 						,'dsExclusao'        => $dsExclusao
@@ -1215,7 +1219,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 					$this->tbAbrangencia->inserir($dadosItemPedido);
 				else : // ALTERA
 					$dadosItemPedido = array(
-						'dtRegistro'  => new Zend_Db_Expr('GETDATE()')
+						'dtRegistro'  => $objAcesso->getExpressionDate()
 						,'tpAcao'     => $tpAcao
 						,'dsExclusao' => $dsExclusao
 					);
@@ -1330,18 +1334,19 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				// filtro para altera��o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
+                $objAcesso = new Acesso();
 				// salva os dados do item do pedido
 				if ( count($this->tbProposta->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
 					$dadosItemPedido = array(
 						'tpProposta'         => 'SA'
-						,'dtProposta'        => new Zend_Db_Expr('GETDATE()')
+						,'dtProposta'        => $objAcesso->getExpressionDate()
 						,'nmProjeto'         => $nome
 						,'idPedidoAlteracao' => $this->_idPedidoAlteracao
 					);
 					$this->tbProposta->inserir($dadosItemPedido);
 				else : // ALTERA
 					$dadosItemPedido = array(
-						'dtProposta' => new Zend_Db_Expr('GETDATE()')
+						'dtProposta' => $objAcesso->getExpressionDate()
 						,'nmProjeto' => $nome
 					);
 					$this->tbProposta->alterar($dadosItemPedido, $whereItemPedido);
@@ -1713,11 +1718,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                         // filtro para altera��o
                         $whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
+                        $objAcesso = new Acesso();
                         // salva os dados do item do pedido
                         if ( count($this->tbProposta->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
                             $dadosItemPedido = array(
                                 'tpProposta'              => 'SA'
-                                ,'dtProposta'             => new Zend_Db_Expr('GETDATE()')
+                                ,'dtProposta'             => $objAcesso->getExpressionDate()
                                 ,'dsEspecificacaoTecnica' => $especificacaoSolicitada
                                 ,'dsEstrategiaExecucao'   => $estrategiaExecSolicitada
                                 ,'idPedidoAlteracao'      => $this->_idPedidoAlteracao
@@ -1725,7 +1731,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                             $this->tbProposta->inserir($dadosItemPedido);
                         else : // ALTERA
                             $dadosItemPedido = array(
-                                'dtProposta'              => new Zend_Db_Expr('GETDATE()')
+                                'dtProposta'              => $objAcesso->getExpressionDate()
                                 ,'dsEspecificacaoTecnica' => $especificacaoSolicitada
                                 ,'dsEstrategiaExecucao'   => $estrategiaExecSolicitada
                             );
@@ -1974,11 +1980,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     $wherePlanilhaSR  = array('PAP.tpPlanilha = ?' => 'SR', 'PAP.stAtivo = ?' => 'N', 'PAP.IdPRONAC = ?' => $this->_idPronac, 'PAP.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
                     $buscarPlanilhaAP = $this->tbPlanilhaAprovacao->buscarCustosReadequacao($wherePlanilhaAP);
                     $buscarPlanilhaSR = $this->tbPlanilhaAprovacao->buscarCustosReadequacao($wherePlanilhaSR);
+                    $objAcesso = new Acesso();
                     if ( count($buscarPlanilhaSR) <= 0 && count($buscarPlanilhaAP) > 0 ) :
                         foreach ($buscarPlanilhaAP as $d) :
                             $dadosCopia = array(
                                     'tpPlanilha'              => $tpPlanilha
-                                    ,'dtPlanilha'             => new Zend_Db_Expr('GETDATE()')
+                                    ,'dtPlanilha'             => $objAcesso->getExpressionDate()
                                     ,'idPlanilhaProjeto'      => $d->idPlanilhaProjeto
                                     ,'idPlanilhaProposta'     => $d->idPlanilhaProposta
                                     ,'IdPRONAC'               => $d->IdPRONAC
@@ -2009,10 +2016,11 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                         endforeach;
                     endif;
 
+                    $objAcesso = new Acesso();
                     // salva os dados do item do pedido
                     if ( $tpAcao == 'I' ) : // CADASTRA
                         $dadosItemPedido = array(
-                                'dtPlanilha'             => new Zend_Db_Expr('GETDATE()')
+                                'dtPlanilha'             => $objAcesso->getExpressionDate()
                                 ,'IdPRONAC'              => $this->_idPronac
                                 ,'idProduto'             => $idProduto
                                 ,'idEtapa'               => $etapa
@@ -2071,7 +2079,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                         $whereTbPlanilha['idPedidoAlteracao = ?']   = $this->_idPedidoAlteracao;
                         $whereTbPlanilha['tpPlanilha = ?']          = $tpPlanilha;
                         $dadosItemPedido = array(
-                                'dtPlanilha'             => new Zend_Db_Expr('GETDATE()')
+                                'dtPlanilha'             => $objAcesso->getExpressionDate()
                                 ,'idEtapa'               => $etapa
                                 ,'idPlanilhaItem'        => $item
                                 ,'dsItem'                => $dsItem

@@ -222,12 +222,13 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
         $tbManterPortaria = new tbManterPortaria();
 //        $dt = explode('/', $_POST['dataPortaria']);
 //        $data = $dt[2].'-'.$dt[1].'-'.$dt[0];
+        $objAcesso = new Acesso();
         $dados = array(
             'dsAssinante' => $_POST['nome'],
             'dsCargo' => $_POST['cargo'],
             'dsPortaria' => $_POST['portaria'],
 //            'dtPortariaPublicacao' => $data,
-            'dtPortariaPublicacao' => new Zend_db_Expr('GETDATE()'),
+            'dtPortariaPublicacao' => $objAcesso->getExpressionDate(),
             'stEstado' => 1
         );
         $tb = $tbManterPortaria->inserir($dados);
@@ -269,7 +270,8 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
         $d['dsCargo'] = $_POST['cargo'];
         $d['dsPortaria'] = $_POST['portaria'];
 //        $d['dtPortariaPublicacao'] = $data;
-        $d['dtPortariaPublicacao'] = new Zend_db_Expr('GETDATE()');
+        $objAcesso = new Acesso();
+        $d['dtPortariaPublicacao'] = $objAcesso->getExpressionDate();
         $d['stEstado'] = 1;
                 
         $where = "idManterPortaria = ".$_POST['idmp'];

@@ -51,7 +51,7 @@ class Inabilitado extends MinC_Db_Table_Abstract {
 	                		'idProjeto',
 	                		'idTipoInabilitado',
 	                		'dtInabilitado',
-	                	  	'DATEDIFF(DAY, dtInabilitado, GETDATE()) / 365 AS Anos')
+	                	  	'DATEDIFF(DAY, dtInabilitado, '.$this->getDate().') / 365 AS Anos')
         );
         
     	//adiciona quantos filtros foram enviados

@@ -37,7 +37,7 @@ class vwAnexarDocumentoAgente extends MinC_Db_Table_Abstract {
 
         $sql = "INSERT INTO ".$this->_banco.".".$this->_schema.".".$this->_name.
                "(nmArquivo, sgExtensao, nrTamanho, dtEnvio, stAtivo, biArquivo, idTipoDocumento, dsDocumento, idAgente, stAtivoDocumentoAgente) " .
-               "VALUES ('$name', '$fileType', '$nrTamanho', GETDATE(), '$stAtivo', $biArquivo, $idTipoDocumento, '$dsDocumento', $idAgente, $stAtivoDocumentoAgente)";
+               "VALUES ('$name', '$fileType', '$nrTamanho', {$this->getDate()}, '$stAtivo', $biArquivo, $idTipoDocumento, '$dsDocumento', $idAgente, $stAtivoDocumentoAgente)";
 
 //       xd($sql);
 

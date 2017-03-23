@@ -565,13 +565,14 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
             {
                 parent::message("O arquivo não pode ser maior do que 10MB!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
             }
+            $objAcesso = new Acesso();
             // cadastra dados do arquivo
             $dadosArquivo = array(
                 'nmArquivo' => $arquivoNome,
                 'sgExtensao' => $arquivoExtensao,
                 'dsTipoPadronizado' => $arquivoTipo,
                 'nrTamanho' => $arquivoTamanho,
-                'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                'dtEnvio' => $objAcesso->getExpressionDate(),
                 'dsHash' => $arquivoHash,
                 'stAtivo' => 'I');
             $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
@@ -1242,11 +1243,12 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
                     //PERSISTE DADOS DA MOVIMENTACAO
 
+                    $objAcesso = new Acesso();
                     $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
                     $dados = array("idProjeto" => $idPreProjeto,
                         "Movimentacao" => $movimentacaoDestino, //satus
                         //"DtMovimentacao" => date("Y/m/d H:i:s"),
-                        "DtMovimentacao" => new Zend_Db_Expr('GETDATE()'),
+                        "DtMovimentacao" => $objAcesso->getExpressionDate(),
                         "stEstado" => "0", //esta informacao estava fixa trigger
                         "Usuario" => $this->idUsuario);
 

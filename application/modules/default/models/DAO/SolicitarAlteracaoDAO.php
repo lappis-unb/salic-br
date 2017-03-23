@@ -24,6 +24,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
 	public function compararInserirAbrangencia($idProjeto,$idPedidoAlteracao)
 	{
+        $objAcesso= new Acesso();
        /*$sql = "insert into sac.dbo.tbAbrangencia(tpAbrangencia,idPais,idUF,idMunicipioIBGE,tpAcao,idAbrangenciaAntiga,idPedidoAlteracao,dtRegistro)
             select 'SA',a.idPais,a.idUF,a.idMunicipioIBGE,'N',a.idAbrangencia,'$idPedidoAlteracao',GETDATE()
             from SAC.dbo.Abrangencia a
@@ -32,7 +33,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
             (select COUNT(*) from SAC.dbo.tbAbrangencia ab where a.idAbrangencia = ab.idAbrangenciaAntiga) = 0
             and pr.idProjeto = $idProjeto";*/
         $sql = "insert into sac.dbo.tbAbrangencia(tpAbrangencia,idPais,idUF,idMunicipioIBGE,tpAcao,idAbrangenciaAntiga,idPedidoAlteracao,dtRegistro)
-        		SELECT 'SA',a.idPais,a.idUF,a.idMunicipioIBGE,'N',a.idAbrangencia,'$idPedidoAlteracao',GETDATE()
+        		SELECT 'SA',a.idPais,a.idUF,a.idMunicipioIBGE,'N',a.idAbrangencia,'$idPedidoAlteracao',{$objAcesso->getDate()}
             FROM SAC.dbo.Abrangencia a
             where a.idProjeto=$idProjeto AND a.stAbrangencia = 1";
 
@@ -161,8 +162,9 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function inserttbProposta($idPedidoAlteracao,$coluna,$value)
     {
+        $objAcesso= new Acesso();
         $sql = "insert into Sac.dbo.tbProposta (tpProposta,dtProposta,$coluna,idPedidoAlteracao)
-              values ('SA',GETDATE(),'$value',$idPedidoAlteracao)";
+              values ('SA',{$objAcesso->getDate()},'$value',$idPedidoAlteracao)";
 		$db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);

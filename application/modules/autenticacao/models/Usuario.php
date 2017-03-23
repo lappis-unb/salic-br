@@ -403,7 +403,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
             $sql = "UPDATE postgres.agentes.usuarios
                         SET usu_senha = Tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),
-                            usu_data_validade = getdate()+usu_duracao_senha,
+                            usu_data_validade = ".$this->getDate()."+usu_duracao_senha,
                             usu_seguranca = Tabelas.dbo.fnSegurancaUsuarios
                             (usu_codigo,usu_identificacao,usu_nome,usu_pessoa,
                              usu_orgao,usu_sala,usu_ramal,usu_nivel,usu_exibicao,

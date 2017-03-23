@@ -193,13 +193,14 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
+        $objAcesso = new Acesso();
         // cadastra dados do arquivo
         $dadosArquivo = array(
             'nmArquivo' => $arquivoNome,
             'sgExtensao' => $arquivoExtensao,
             'dsTipoPadronizado' => $arquivoTipo,
             'nrTamanho' => $arquivoTamanho,
-            'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+            'dtEnvio' => $objAcesso->getExpressionDate(),
             'dsHash' => $arquivoHash,
             'stAtivo' => 'A');
         $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
@@ -416,7 +417,8 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
     }
 
     public function gravaHistoricoDevolucao($dsJustificativa, $idRelatorioFiscalizacao) {
-        $dados = array('idRelatorioFiscalizacao' => $idRelatorioFiscalizacao, 'dsJustificativaDevolucao' => $dsJustificativa, 'dtEnvioDevolucao' => new Zend_Db_Expr('GETDATE()'));
+        $objAcesso =  new Acesso();
+        $dados = array('idRelatorioFiscalizacao' => $idRelatorioFiscalizacao, 'dsJustificativaDevolucao' => $dsJustificativa, 'dtEnvioDevolucao' => $objAcesso->getDate());
         $where = array('idRelatorioFiscalizacao = ?' => $idRelatorioFiscalizacao);
 
         $HistoricoDevolucaoDAO = new HistoricoDevolucaoFiscalizacao();

@@ -160,11 +160,12 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
         );
         $where = 'idPRONAC = ' . $idPronac;
         $dadosAnteriores = $dpc->alterar($dadosAnteriores, $where);
-        
+
+        $objAcesso = new Acesso();
         $dados = array(
             'idPronac' => $idPronac,
             'idAgente' => $idAgente,
-            'dtDistribuicao' => new Zend_Db_Expr('GETDATE()'),
+            'dtDistribuicao' => $objAcesso->getExpressionDate(),
             'dsJustificativa' => $justificativa,
             'stDistribuicao' => 'A',
             'idResponsavel' => $idResponsavel
@@ -212,11 +213,12 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
         $where['D.idAgente = ? '] = $idAgente;
         $where['D.idPRONAC not in(select IdPRONAC from BDCORPORATIVO.scSAC.tbPauta where IdPRONAC = D.idPRONAC)'] = '';
         $dadosdistribuicaoProjeto = $distribuicaoProjeto->buscarProjetosPorComponente($where);
+        $objAcesso = new Acesso();
         foreach ($dadosdistribuicaoProjeto as $resu) {
             $componente = $titulacaoConselheiro->buscarcomponentebalanceamento($buscarArea->cdArea);
             if (count($componente) > 0) {
                 $componente = $componente->current();
-                $dadosupdate = array('idAgente' => $componente->idAgente, "dtDistribuicao" => new Zend_Db_Expr('GETDATE()'));
+                $dadosupdate = array('idAgente' => $componente->idAgente, "dtDistribuicao" => $objAcesso->getExpressionDate());
                 $where = "idAgente =" . $idAgente . " AND idPronac=" . $resu->idPRONAC . " and stDistribuicao = 'A' ";
                 $dados = $distribuicaoProjeto->alterar($dadosupdate, $where);
             }
@@ -242,9 +244,10 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
         $whereUpdateSituacao = "idAgente =" . $idAgente;
         $UpdateSituacao = $titulacaoConselheiro->alterar($dadosUpdateSituacao, $whereUpdateSituacao);
 
+        $objAcesso = new Acesso();
         $dadosinserirhistorico = array(
             'idConselheiro' => $idAgente,
-            'dtHistorico' => new Zend_Db_Expr('GETDATE()'),
+            'dtHistorico' => $objAcesso->getExpressionDate(),
             'dsJustificativa' => $justificativa,
             'stConselheiro' => 'A',
             'idResponsavel' => $idresponsavel
@@ -482,7 +485,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
             $tbRetirarDePauta = new tbRetirarDePauta();
             $dados = array(
                     'idAgenteAnalise'         => $this->idAgente
-                    ,'dtAnalise'              => new Zend_Db_Expr('GETDATE()')
+                    ,'dtAnalise'              => $tbRetirarDePauta->getExpressionDate()
                     ,'dsJustificativaAnalise' => $justificativa
                     ,'tpAcao'                 => $tpAcao // cancelamento da retirada de pauta pelo coordenador de analise, devolvido para vinculada, outros
                     ,'stAtivo'                => 0);

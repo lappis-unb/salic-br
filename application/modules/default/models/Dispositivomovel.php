@@ -32,7 +32,8 @@ class Dispositivomovel extends GenericModel{
             if($cpf){
                 $dispositivoRow->nrCPF = $cpf;
             }
-            $dispositivoRow->dtAcesso = new Zend_Db_Expr('getdate()');
+            $objAcesso = new Acesso();
+            $dispositivoRow->dtAcesso = $objAcesso->getExpressionDate();
             $dispositivoRow->save();
             $dispositivo = $dispositivoRow->toArray();
         }

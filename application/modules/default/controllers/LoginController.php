@@ -217,9 +217,10 @@ class LoginController extends MinC_Controller_Action_Abstract {
                     $tbVinculo    = new Agente_Model_DbTable_TbVinculo();
                     $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do respons�vel cadastrado
 
+                    $objAcesso = new Acesso();
                     $dadosVinculo = array(
                             'idAgenteProponente'    => $idAgenteProp
-                            ,'dtVinculo'            => new Zend_Db_Expr('GETDATE()')
+                            ,'dtVinculo'            => $objAcesso->getExpressionDate()
                             ,'siVinculo'            => 2
                             ,'idUsuarioResponsavel' => $idResp[0]->IdUsuario);
                     $tbVinculo->inserir($dadosVinculo);

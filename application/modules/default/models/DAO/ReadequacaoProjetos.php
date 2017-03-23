@@ -81,7 +81,8 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function updateLocais($idPais, $idUF, $idMunicipioIBGE, $tpAcao, $idPedidoAlteracao, $idAbrangencia) {
-        $sql0 = "  update SAC.dbo.tbAbrangencia set idPais = $idPais, idUF= $idUF,idMunicipioIBGE = $idMunicipioIBGE,tpAcao = '$tpAcao',dtRegistro = GETDATE()
+        $objAcesso= new Acesso();
+        $sql0 = "  update SAC.dbo.tbAbrangencia set idPais = $idPais, idUF= $idUF,idMunicipioIBGE = $idMunicipioIBGE,tpAcao = '$tpAcao',dtRegistro = {$objAcesso->getDate()}
                     where idPedidoAlteracao = $idPedidoAlteracao and idAbrangencia= $idAbrangencia";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -89,7 +90,8 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function excluirLocais($idAbrangencia, $dsJustificativaExclusao) {
-        $sql0 = "  update SAC.dbo.tbAbrangencia set tpAcao = 'E', dtRegistro = GETDATE(), dsExclusao='".$dsJustificativaExclusao."'
+        $objAcesso= new Acesso();
+        $sql0 = "  update SAC.dbo.tbAbrangencia set tpAcao = 'E', dtRegistro = {$objAcesso->getDate()}, dsExclusao='".$dsJustificativaExclusao."'
                     where idAbrangencia= $idAbrangencia";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -97,8 +99,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function insertLocais($idPais, $idUF, $idMunicipioIBGE, $idPedidoAlteracao, $tpAcao = 'I') {
+        $objAcesso= new Acesso();
         $sql0 = " insert into SAC.dbo.tbAbrangencia (idPais,idUF,idMunicipioIBGE,tpAbrangencia,tpAcao,idPedidoAlteracao,dtRegistro)
-                    values ($idPais,$idUF,$idMunicipioIBGE,'SA','$tpAcao',$idPedidoAlteracao,GETDATE())";
+                    values ($idPais,$idUF,$idMunicipioIBGE,'SA','$tpAcao',$idPedidoAlteracao,{$objAcesso->getDate()})";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -223,11 +226,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function inserirProdutoPlano($idProjeto, $idPedidoAlteracao, $idProduto) {
-
+        $objAcesso= new Acesso();
         $sql = "insert into SAC.dbo.tbPlanoDistribuicao
                 (idPlanoDistribuicao, cdArea, cdSegmento, idPedidoAlteracao,idProduto,idPosicaoLogo,qtPatrocinador,qtProduzida,qtOutros,qtVendaNormal,qtVendaPromocional,vlUnitarioNormal,vlUnitarioPromocional,stPrincipal,tpAcao,tpPlanoDistribuicao,dtPlanoDistribuicao)
                 select
-                plano.idPlanoDistribuicao, plano.Area, plano.Segmento, pedido.idPedidoAlteracao,plano.idProduto,plano.idPosicaoDaLogo,plano.QtdePatrocinador,plano.QtdeProduzida,plano.QtdeOutros,plano.QtdeVendaNormal,plano.QtdeVendaPromocional,plano.PrecoUnitarioNormal,plano.PrecoUnitarioPromocional,stPrincipal,'N','S',GETDATE()   from SAC.dbo.PlanoDistribuicaoProduto as plano,
+                plano.idPlanoDistribuicao, plano.Area, plano.Segmento, pedido.idPedidoAlteracao,plano.idProduto,plano.idPosicaoDaLogo,plano.QtdePatrocinador,plano.QtdeProduzida,plano.QtdeOutros,plano.QtdeVendaNormal,plano.QtdeVendaPromocional,plano.PrecoUnitarioNormal,plano.PrecoUnitarioPromocional,stPrincipal,'N','S',{$objAcesso->getDate()}   from SAC.dbo.PlanoDistribuicaoProduto as plano,
                 BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto as pedido
                 inner join SAC.dbo.Projetos as projetos
                 on projetos.IdPRONAC = pedido.IdPRONAC
@@ -242,8 +245,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto (IdPRONAC, idSolicitante,dtSolicitacao,stPedidoAlteracao, siVerificacao)
-                VALUES ('$idPronac','$idSolicitante',GETDATE(),'$stPedido', '$siVerificacao')";
+                VALUES ('$idPronac','$idSolicitante',{$objAcesso->getDate()},'$stPedido', '$siVerificacao')";
 
 
         
@@ -455,8 +459,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function inserirProposta($dsEspecificacaotecnica, $idPedidoAlteracao) {
 
+        $objAcesso= new Acesso();
         $sql = "insert into SAC.dbo.tbProposta (tpProposta,dtProposta,dsEspecificacaoTecnica,idPedidoAlteracao)
-                values ('SA',GETDATE(),'$dsEspecificacaotecnica',$idPedidoAlteracao);";
+                values ('SA',{$objAcesso->getDate()},'$dsEspecificacaotecnica',$idPedidoAlteracao);";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -465,8 +470,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function alterarPedido($idPedidoAlteracao, $status) {
 
+        $objAcesso= new Acesso();
         $sql = "update BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto
-                set dtSolicitacao = GETDATE(),stPedidoAlteracao= '$status'
+                set dtSolicitacao = {$objAcesso->getDate()},stPedidoAlteracao= '$status'
                 where idPedidoAlteracao = $idPedidoAlteracao";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -527,7 +533,8 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function excluirProduto($idPedidoAlteracao, $idProduto, $dsJustificativa = null) {
-        $sql = "update SAC.dbo.tbPlanoDistribuicao  set tpAcao = 'E',dtPlanoDistribuicao = GETDATE(), dsjustificativa = '".$dsJustificativa."' 
+        $objAcesso= new Acesso();
+        $sql = "update SAC.dbo.tbPlanoDistribuicao  set tpAcao = 'E',dtPlanoDistribuicao = {$objAcesso->getDate()}, dsjustificativa = '".$dsJustificativa."' 
                 where idPedidoAlteracao = $idPedidoAlteracao and idProduto = $idProduto ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -1833,8 +1840,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLfinalprop2($idAvaliacao, $especificacao='.',$status, $tpAlteracaoProjeto = null) {
+        $objAcesso= new Acesso();
         $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                SET dtFimAvaliacao = GETDATE(), stAvaliacaoItemPedidoAlteracao = '$status', dsAvaliacao = '$especificacao'
+                SET dtFimAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = '$status', dsAvaliacao = '$especificacao'
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
 
 		if (!empty($tpAlteracaoProjeto)) :
@@ -1852,8 +1860,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLfinalprop4($idAvaliacao, $idOrgao,$idAgenteRemetente,$idPerfilRemetente) {
+        $objAcesso= new Acesso();
         $sql = "INSERT BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$idAvaliacao','','','3','$idOrgao','0','2',GETDATE(),'$idAgenteRemetente','$idPerfilRemetente')";
+                VALUES ('$idAvaliacao','','','3','$idOrgao','0','2',{$objAcesso->getDate()},'$idAgenteRemetente','$idPerfilRemetente')";
         return $sql;
     }
 
@@ -1863,17 +1872,18 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function stPropostaInicio($sqlDesejado, $idAvaliacao, $AgenteLogin) {
 
+        $objAcesso= new Acesso();
         if ($sqlDesejado == "readequacaoEA") {
             $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                    SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = GETDATE(), stAvaliacaoItemPedidoAlteracao = 'EA'
+                    SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'EA'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
         } else if ($sqlDesejado == "readequacaoAP") {
             $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                    SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = GETDATE(), stAvaliacaoItemPedidoAlteracao = 'AP'
+                    SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'AP'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
         } else if ($sqlDesejado == "readequacaoIN") {
             $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                    SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = GETDATE(), stAvaliacaoItemPedidoAlteracao = 'IN'
+                    SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'IN'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
         }
 
@@ -1891,8 +1901,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function diligenciarProposta($IdPronac, $solicitacao, $AgenteLogin) {
 
+        $objAcesso= new Acesso();
         $sql = "INSERT into SAC.dbo.tbDiligencia
-                VALUES ('$IdPronac','124',GETDATE(),'" . $solicitacao . "','$AgenteLogin','','','','0')";
+                VALUES ('$IdPronac','124',{$objAcesso->getDate()},'" . $solicitacao . "','$AgenteLogin','','','','0')";
         return $sql;
     }
 
@@ -1978,17 +1989,18 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function stReadequacaoInicio($sqlDesejado, $idPedidoAlteracao, $idAgente) {
 
+        $objAcesso= new Acesso();
         if ($sqlDesejado == "readequacaoEA") {
             $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                    SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = GETDATE(), stAvaliacaoItemPedidoAlteracao = 'EA'
+                    SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'EA'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlteracao ";
         } else if ($sqlDesejado == "readequacaoAP") {
             $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                    SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = GETDATE(), stAvaliacaoItemPedidoAlteracao = 'AP'
+                    SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'AP'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlteracao ";
         } else if ($sqlDesejado == "readequacaoIN") {
             $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                    SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = GETDATE(), stAvaliacaoItemPedidoAlteracao = 'IN'
+                    SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'IN'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlteracao ";
         }
 
@@ -2149,8 +2161,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
 //SQL PARA GERAR UMA A��O NA TABELA tbAcaoAvaliacaoItemPedidoAlteracao
     public static function retornaSQLtbAcao($idAvaliacaoItemPedidoAlteracao, $justificativa, $tipoAg, $Orgao, $idAgenteReceber, $idAgenteRemente, $idPerfilRemetente) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteReceber','" . $justificativa . "','$tipoAg','$Orgao','0','0',GETDATE(),'$idAgenteRemente','$idPerfilRemetente')";
+                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteReceber','" . $justificativa . "','$tipoAg','$Orgao','0','0',{$objAcesso->getDate()},'$idAgenteRemente','$idPerfilRemetente')";
         return $sql;
     }
 
@@ -2168,11 +2181,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     AND idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao ";
         }
 
-
+        $objAcesso= new Acesso();
         if ($sqlDesejado == "sqlCoordPareceristaEncaminhar") {
 
             $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                    VALUES ('$idAvaliacaoItemPedidoAlteracao','$agenteNovo','" . $justificativa . "','1','$Orgao','0','0',GETDATE(), '$idAgenteRemetente', '$idPerfilRemetente')";
+                    VALUES ('$idAvaliacaoItemPedidoAlteracao','$agenteNovo','" . $justificativa . "','1','$Orgao','0','0',{$objAcesso->getDate()}, '$idAgenteRemetente', '$idPerfilRemetente')";
         }
 
         return $sql;
@@ -2221,8 +2234,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
 
     public static function reencaminharPar3($idAvaliacaoItemPedidoAlteracao, $idAgente, $justificativa, $Orgao, $idAgenteRemetente, $idPerfilRemetente) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgente','" . $justificativa . "','1','$Orgao','0','0',GETDATE(), $idAgenteRemetente, $idPerfilRemetente)";
+                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgente','" . $justificativa . "','1','$Orgao','0','0',{$objAcesso->getDate()}, $idAgenteRemetente, $idPerfilRemetente)";
         return $sql;
     }
 
@@ -2236,8 +2250,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function reencaminharPar5($idAvaliacaoItemPedidoAlteracao, $idAgenteLogado, $justificativa, $Orgao, $idPerfil, $idAgente, $idGrupo) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteLogado','" . $justificativa . "','$idPerfil','$Orgao','0','0',GETDATE(), '$idAgente', '$idGrupo')";
+                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteLogado','" . $justificativa . "','$idPerfil','$Orgao','0','0',{$objAcesso->getDate()}, '$idAgente', '$idGrupo')";
         return $sql;
     }
 
@@ -2246,8 +2261,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
      * *********************************************************************** */
 
     public static function retornaSQLfinalizarPar($idPedidoAlteracao,$situacao,$justificativa) {
+        $objAcesso= new Acesso();
         $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
-                SET stAvaliacaoItemPedidoAlteracao = '".$situacao."', dtFimAvaliacao = GETDATE(), dsAvaliacao = '".$justificativa."'
+                SET stAvaliacaoItemPedidoAlteracao = '".$situacao."', dtFimAvaliacao = {$objAcesso->getDate()}, dsAvaliacao = '".$justificativa."'
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND dtFimAvaliacao = '1900-01-01 00:00:00.000' ";
         return $sql;
@@ -2271,15 +2287,17 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLfinalizarPar4($idAvaliacaoItemPedidoAlteracao, $idAgenteAvaliador, $idOrgao, $idAgenteRemetente, $idGrupoRemetente) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','','3','$idOrgao','0','2',GETDATE(), $idAgenteRemetente, $idGrupoRemetente) ";
+                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','','3','$idOrgao','0','2',{$objAcesso->getDate()}, $idAgenteRemetente, $idGrupoRemetente) ";
         return $sql;
     }
 
     //serve somente para o item de custo (IC)
     public static function retornaSQLfinalizarPar4IC($idAvaliacaoItemPedidoAlteracao, $idAgenteAvaliador, $idOrgao, $idAgenteRemetente, $idGrupoRemetente) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','','2','$idOrgao','0','2',GETDATE(), $idAgenteRemetente, $idGrupoRemetente) ";
+                VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','','2','$idOrgao','0','2',{$objAcesso->getDate()}, $idAgenteRemetente, $idGrupoRemetente) ";
         return $sql;
     }
 
@@ -2383,8 +2401,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLdevolverMinc5($id, $idOrgao, $idAgenteRemetente, $idPerfilRemetente) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$id','','','3','$idOrgao','0','3',GETDATE(),'$idAgenteRemetente','$idPerfilRemetente') ";
+                VALUES ('$id','','','3','$idOrgao','0','3',{$objAcesso->getDate()},'$idAgenteRemetente','$idPerfilRemetente') ";
         return $sql;
     }
 
@@ -2422,8 +2441,9 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLfinalizaGeral5($id, $idOrgao, $idAgenteRemetente, $idPerfilRemetente) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
-                VALUES ('$id','','','4','$idOrgao','1','4',GETDATE(),'$idAgenteRemetente','$idPerfilRemetente') ";
+                VALUES ('$id','','','4','$idOrgao','1','4',{$objAcesso->getDate()},'$idAgenteRemetente','$idPerfilRemetente') ";
         return $sql;
     }
 

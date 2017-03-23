@@ -7,6 +7,7 @@ class certidaoNegativa extends MinC_Db_Table_Abstract {
 
     public function buscarCertidaoNegativa($cpfcnpj){
         $select = $this->select();
+        $objAcesso = new Acesso();
         $select->from(array('c' => $this->_name),
             array(new Zend_Db_Expr("
                 CASE
@@ -31,8 +32,8 @@ class certidaoNegativa extends MinC_Db_Table_Abstract {
                 END AS Situacao,
                 CASE
                     WHEN c.CodigoCertidao = 244
-                    THEN DateDiff(dy,getdate(),c.DtEmissao)
-                    ELSE DateDiff(dy,getdate(),c.DtValidade)
+                    THEN DateDiff(dy,{$objAcesso->getDate()},c.DtEmissao)
+                    ELSE DateDiff(dy,{$objAcesso->getDate()},c.DtValidade)
                 END AS qtDias
             ")),
             $this->_schema)

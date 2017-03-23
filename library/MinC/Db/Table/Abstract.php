@@ -406,10 +406,15 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
     public function getExpressionDate()
     {
+        return new Zend_Db_Expr($this->getDate());
+    }
+
+    public function getDate()
+    {
         if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            return new Zend_Db_Expr('GETDATE()');
+            return 'GETDATE()';
         } else {
-            return new Zend_Db_Expr('NOW()');
+            return 'NOW()';
         }
     }
 

@@ -49,10 +49,11 @@ class AvaliacaoProposta extends MinC_Db_Table_Abstract
                     )
         );
 
-        $select->where('((DATEDIFF(day, DtAvaliacao, GETDATE()) > 20');
+        $objAcesso = new Acesso();
+        $select->where('((DATEDIFF(day, DtAvaliacao, '.$objAcesso->getDate().') > 20');
         $select->where("stProrrogacao =?)",'N');
 
-        $select->orWhere('(DATEDIFF(day, DtAvaliacao, GETDATE()) > 40');
+        $select->orWhere('(DATEDIFF(day, DtAvaliacao, '.$objAcesso->getDate().') > 40');
         $select->where("stProrrogacao =?))",'S');
         $select->where('stEnviado =?','N');
 

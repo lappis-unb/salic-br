@@ -26,9 +26,10 @@ class Arquivo extends MinC_Db_Table_Abstract {
         $dsDocumento = $dados['dsDocumento'];
         $IdPRONAC = $dados['idPronac'];
 
+        $objAcesso = new Acesso();
         $sql = "INSERT INTO SAC.dbo.vwAnexarMarca " .
                "(nmArquivo,sgExtensao,dtEnvio,stAtivo,biArquivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto) " .
-               "VALUES ('$name', '$fileType', GETDATE(),'I',$data,1,'$dsDocumento', $IdPRONAC,'E')";
+               "VALUES ('$name', '$fileType', {$objAcesso->getDate()},'I',$data,1,'$dsDocumento', $IdPRONAC,'E')";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -47,9 +48,10 @@ class Arquivo extends MinC_Db_Table_Abstract {
         $IdPRONAC = $dados['idPronac'];
         $idTipoDocumento = $dados['idTipoDocumento'];
 
+        $objAcesso = new Acesso();
         $sql = "INSERT INTO SAC.dbo.vwAnexarComprovantes " .
                "(nmArquivo,sgExtensao,dtEnvio,stAtivo,biArquivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto) " .
-               "VALUES ('$name', '$fileType', GETDATE(),'I',$data,$idTipoDocumento,'$dsDocumento', $IdPRONAC,'E')";
+               "VALUES ('$name', '$fileType', {$objAcesso->getDate()},'I',$data,$idTipoDocumento,'$dsDocumento', $IdPRONAC,'E')";
 
 //        xd($sql);
 

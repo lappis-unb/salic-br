@@ -209,14 +209,14 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         $select->where('A.idTipoAusencia = ?',$tipoAusencia);
         if($tipoAusencia == 1)
         {
-        	$select->where('A.dtInicioAusencia >= ?', new Zend_Db_Expr('DATEADD(DAY, -10, GETDATE())'));	
+        	$select->where('A.dtInicioAusencia >= ?', new Zend_Db_Expr('DATEADD(DAY, -10, '.$this->getDate().')'));
         }
         else 
         {
-        	$select->where('A.dtInicioAusencia <= ?', new Zend_Db_Expr('GETDATE()'));	
+        	$select->where('A.dtInicioAusencia <= ?', $this->getExpressionDate());
         }
         
-        $select->where('A.dtFimAusencia >= ?', new Zend_Db_Expr('GETDATE()'));
+        $select->where('A.dtFimAusencia >= ?', $this->getExpressionDate());
         $select->where('A.siAusencia = ?',1);
         
 		//xd($select->assemble());

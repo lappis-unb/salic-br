@@ -209,12 +209,13 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
             $this->view->unVinculada = $_GET['unVinculada'];
         }
 
+        $objAcesso = new Acesso();
         if((isset($_GET['qtDiasDistribuir']) && !empty($_GET['qtDiasDistribuir']))){
             if(!empty($_GET['qtDiasDistribuirVl'])){
                 if($_GET['qtDiasDistribuir'] == 1){
-                    $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE())) >= ?"] = $_GET['qtDiasDistribuirVl'];
+                    $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,{$objAcesso->getDate()})) >= ?"] = $_GET['qtDiasDistribuirVl'];
                 } else {
-                    $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE())) <= ?"] = $_GET['qtDiasDistribuirVl'];
+                    $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,{$objAcesso->getDate()})) <= ?"] = $_GET['qtDiasDistribuirVl'];
                 }
                 $this->view->qtDiasDistribuir = $_GET['qtDiasDistribuir'];
                 $this->view->qtDiasDistribuirVl = $_GET['qtDiasDistribuirVl'];
@@ -225,15 +226,15 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
             if(!empty($_GET['qtDiasAnalisarVl'])){
                 if($_GET['qtDiasDistribuir'] == 1){
                     $where["
-                        (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, GETDATE()) >= ".$_GET['qtDiasAnalisarVl'].") or
+                        (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()}) >= ".$_GET['qtDiasAnalisarVl'].") or
                         (d.DtDevolucao is not null and DATEDIFF(day, d.DtDistribuicao, d.DtDevolucao) >= ".$_GET['qtDiasAnalisarVl'].") or
-                        (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, GETDATE()) - DATEDIFF(day, p.dtSituacao, GETDATE()) >= ".$_GET['qtDiasAnalisarVl'].")
+                        (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()}) - DATEDIFF(day, p.dtSituacao, {$objAcesso->getDate()}) >= ".$_GET['qtDiasAnalisarVl'].")
                     "] = '';
                 } else {
                     $where["
-                        (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, GETDATE()) <= ".$_GET['qtDiasAnalisarVl'].") or
+                        (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()}) <= ".$_GET['qtDiasAnalisarVl'].") or
                         (d.DtDevolucao is not null and DATEDIFF(day, d.DtDistribuicao, d.DtDevolucao) <= ".$_GET['qtDiasAnalisarVl'].") or
-                        (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, GETDATE()) - DATEDIFF(day, p.dtSituacao, GETDATE()) <= ".$_GET['qtDiasAnalisarVl'].")
+                        (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()}) - DATEDIFF(day, p.dtSituacao, {$objAcesso->getDate()}) <= ".$_GET['qtDiasAnalisarVl'].")
                     "] = '';
                 }
                 $this->view->qtDiasAnalisar = $_GET['qtDiasAnalisar'];
@@ -244,9 +245,9 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         if((isset($_GET['qtDiasCoord']) && !empty($_GET['qtDiasCoord']))){
             if(!empty($_GET['qtDiasCoordVl'])){
                 if($_GET['qtDiasCoord'] == 1){
-                    $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,GETDATE()) >= ?"] = $_GET['qtDiasCoordVl'];
+                    $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,{$objAcesso->getDate()}) >= ?"] = $_GET['qtDiasCoordVl'];
                 } else {
-                    $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,GETDATE()) <= ?"] = $_GET['qtDiasCoordVl'];
+                    $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,{$objAcesso->getDate()}) <= ?"] = $_GET['qtDiasCoordVl'];
                 }
                 $this->view->qtDiasCoord = $_GET['qtDiasCoord'];
                 $this->view->qtDiasCoordVl = $_GET['qtDiasCoordVl'];
@@ -256,9 +257,9 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         if((isset($_GET['qtDiasIniExec']) && !empty($_GET['qtDiasIniExec']))){
             if(!empty($_GET['qtDiasIniExecVl'])){
                 if($_GET['qtDiasIniExec'] == 1){
-                    $where["DATEDIFF(day,GETDATE(), p.DtInicioExecucao) >= ?"] = $_GET['qtDiasIniExecVl'];
+                    $where["DATEDIFF(day,{$objAcesso->getDate()}, p.DtInicioExecucao) >= ?"] = $_GET['qtDiasIniExecVl'];
                 } else {
-                    $where["DATEDIFF(day,GETDATE(), p.DtInicioExecucao) <= ?"] = $_GET['qtDiasIniExecVl'];
+                    $where["DATEDIFF(day,{$objAcesso->getDate()}, p.DtInicioExecucao) <= ?"] = $_GET['qtDiasIniExecVl'];
                 }
                 $this->view->qtDiasIniExec = $_GET['qtDiasIniExec'];
                 $this->view->qtDiasIniExecVl = $_GET['qtDiasIniExecVl'];
@@ -349,12 +350,12 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
             $where["d.idOrgao = ?"] = $_POST['unVinculada'];
             $this->view->unVinculada = $_POST['unVinculada'];
         }
-
+        $objAcesso = new Acesso();
         if((isset($_POST['qtDiasDistribuir']) && !empty($_POST['qtDiasDistribuir']))){
             if($_POST['qtDiasDistribuir'] == 1){
-                $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE())) >= ?"] = $_POST['qtDiasDistribuirVl'];
+                $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,{$objAcesso->getDate()})) >= ?"] = $_POST['qtDiasDistribuirVl'];
             } else {
-                $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE())) <= ?"] = $_POST['qtDiasDistribuirVl'];
+                $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,{$objAcesso->getDate()})) <= ?"] = $_POST['qtDiasDistribuirVl'];
             }
             $this->view->qtDiasDistribuir = $_POST['qtDiasDistribuir'];
             $this->view->qtDiasDistribuirVl = $_POST['qtDiasDistribuirVl'];
@@ -363,15 +364,15 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         if((isset($_POST['qtDiasAnalisar']) && !empty($_POST['qtDiasAnalisar']))){
             if($_POST['qtDiasDistribuir'] == 1){
                 $where["
-                    (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, GETDATE()) >= ".$_POST['qtDiasAnalisarVl'].") or
+                    (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()} >= ".$_POST['qtDiasAnalisarVl'].") or
                     (d.DtDevolucao is not null and DATEDIFF(day, d.DtDistribuicao, d.DtDevolucao) >= ".$_POST['qtDiasAnalisarVl'].") or
-                    (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, GETDATE()) - DATEDIFF(day, p.dtSituacao, GETDATE()) >= ".$_POST['qtDiasAnalisarVl'].")
+                    (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()} - DATEDIFF(day, p.dtSituacao, {$objAcesso->getDate()} >= ".$_POST['qtDiasAnalisarVl'].")
                 "] = '';
             } else {
                 $where["
-                    (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, GETDATE()) <= ".$_POST['qtDiasAnalisarVl'].") or
+                    (d.DtDevolucao is null and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()}) <= ".$_POST['qtDiasAnalisarVl'].") or
                     (d.DtDevolucao is not null and DATEDIFF(day, d.DtDistribuicao, d.DtDevolucao) <= ".$_POST['qtDiasAnalisarVl'].") or
-                    (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, GETDATE()) - DATEDIFF(day, p.dtSituacao, GETDATE()) <= ".$_POST['qtDiasAnalisarVl'].")
+                    (Situacao = 'B14' and DATEDIFF(day, d.DtDistribuicao, {$objAcesso->getDate()} - DATEDIFF(day, p.dtSituacao, {$objAcesso->getDate()} <= ".$_POST['qtDiasAnalisarVl'].")
                 "] = '';
             }
             $this->view->qtDiasAnalisar = $_POST['qtDiasAnalisar'];
@@ -380,9 +381,9 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 
         if((isset($_POST['qtDiasCoord']) && !empty($_POST['qtDiasCoord']))){
             if($_POST['qtDiasCoord'] == 1){
-                $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,GETDATE()) >= ?"] = $_POST['qtDiasCoordVl'];
+                $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,{$objAcesso->getDate()}) >= ?"] = $_POST['qtDiasCoordVl'];
             } else {
-                $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,GETDATE()) <= ?"] = $_POST['qtDiasCoordVl'];
+                $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,{$objAcesso->getDate()}) <= ?"] = $_POST['qtDiasCoordVl'];
             }
             $this->view->qtDiasCoord = $_POST['qtDiasCoord'];
             $this->view->qtDiasCoordVl = $_POST['qtDiasCoordVl'];
@@ -390,9 +391,9 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 
         if((isset($_POST['qtDiasIniExec']) && !empty($_POST['qtDiasIniExec']))){
             if($_POST['qtDiasIniExec'] == 1){
-                $where["DATEDIFF(day,GETDATE(), p.DtInicioExecucao) >= ?"] = $_POST['qtDiasIniExecVl'];
+                $where["DATEDIFF(day,{$objAcesso->getDate()}, p.DtInicioExecucao) >= ?"] = $_POST['qtDiasIniExecVl'];
             } else {
-                $where["DATEDIFF(day,GETDATE(), p.DtInicioExecucao) <= ?"] = $_POST['qtDiasIniExecVl'];
+                $where["DATEDIFF(day,{$objAcesso->getDate()}, p.DtInicioExecucao) <= ?"] = $_POST['qtDiasIniExecVl'];
             }
             $this->view->qtDiasIniExec = $_POST['qtDiasIniExec'];
             $this->view->qtDiasIniExecVl = $_POST['qtDiasIniExecVl'];

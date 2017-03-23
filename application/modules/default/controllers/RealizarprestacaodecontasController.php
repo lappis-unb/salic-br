@@ -1614,7 +1614,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 'AnoProjeto' => $rsProjeto->AnoProjeto,
                 'Sequencial' => $rsProjeto->Sequencial,
                 'TipoAprovacao' => $TpApPrestacaoDeContas,
-                'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                'DtAprovacao' => $Aprovacao->getExpressionDate(),
                 'ResumoAprovacao' => $textoPrestacaoDeContas,
                 'Logon' => $idagente
             );
@@ -1653,7 +1653,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             if ($this->getRequest()->isPost() && !empty($post->dsjustificativa)) {
 
                 $idPronac               = $post->idPronac;
-                $dtInicioEncaminhamento = new Zend_Db_Expr('GETDATE()');
+                $dtInicioEncaminhamento = $objAcesso->getExpressionDate();
                 $dsJustificativa        = $post->dsjustificativa;
                 $idOrgaoOrigem          = $this->codOrgao;
                 $idOrgaoDestino         = $post->passaValor;
@@ -1694,7 +1694,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                         'idOrgaoOrigem'             => $idOrgaoOrigem,
                         'idOrgaoDestino'            => $idOrgaoDestino,
                         'dtInicioEncaminhamento'    => $dtInicioEncaminhamento,
-                        'dtFimEncaminhamento'       => new Zend_Db_Expr('GETDATE()'),
+                        'dtFimEncaminhamento'       => $objAcesso->getExpressionDate(),
                         'dsJustificativa'           => $dsJustificativa,
                         'cdGruposOrigem'            => $this->codGrupo,
                         'cdGruposDestino'           => $idGrupoDestino,
@@ -1829,7 +1829,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
 			$idPronac               = $post->idPronac;
 			$idAgenteOrigem         = $this->getIdAgenteLogado;
-			$dtInicioEncaminhamento = new Zend_Db_Expr ( 'GETDATE()' );
+			$dtInicioEncaminhamento = $objAcesso->getExpressionDate();
 			$dsJustificativa        = $post->dsjustificativa;
 			$idOrgaoDestino         = $post->passaValor;
 			$idAgenteDestino        = explode ( "/", $post->recebeValor );
@@ -1838,8 +1838,20 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 			$gru_codigo             = $GrupoUsuario;
 			$stSituacao             = 1;
 
+            $objAcesso = new Acesso();
 			// monta o array de dados para cadastro
-			$dados = array ('idPronac' => $idPronac, 'idAgenteOrigem' => $idAgenteOrigem, 'dtInicioEncaminhamento' => $dtInicioEncaminhamento, 'dsJustificativa' => $dsJustificativa, 'idOrgaoDestino' => $idOrgaoDestino, 'idAgenteDestino' => $idAgenteDestino, 'cdGruposDestino' => $GrupoUsuario, 'dtFimEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ), 'idSituacaoEncPrestContas' => $idSituacaoEncPrestContas, 'idSituacao' => "E27" );
+			$dados = array (
+			    'idPronac' => $idPronac,
+                'idAgenteOrigem' => $idAgenteOrigem,
+                'dtInicioEncaminhamento' => $dtInicioEncaminhamento,
+                'dsJustificativa' => $dsJustificativa,
+                'idOrgaoDestino' => $idOrgaoDestino,
+                'idAgenteDestino' => $idAgenteDestino,
+                'cdGruposDestino' => $GrupoUsuario,
+                'dtFimEncaminhamento' => $objAcesso->getExpressionDate(),
+                'idSituacaoEncPrestContas' => $idSituacaoEncPrestContas,
+                'idSituacao' => "E27"
+            );
 
 			// cadastra
 			$EncaminhamentoPrestacaoContas = new EncaminhamentoPrestacaoContas ( $idPronac );
@@ -2354,9 +2366,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 				//100: 12 CONJUR
 				// monta o array de dados para cadastro
 				$dados = array ('idPronac'                  =>  $idPronac,
-                                'dtInicioEncaminhamento'    =>  new Zend_Db_Expr ( 'GETDATE()' ),
+                                'dtInicioEncaminhamento'    =>  $objAcesso->getExpressionDate(),
                                 'dsJustificativa'           =>  $dsJustificativa,
-                                'dtFimEncaminhamento'       =>  new Zend_Db_Expr ( 'GETDATE()' ),
+                                'dtFimEncaminhamento'       =>  $objAcesso->getExpressionDate(),
                                 'idSituacaoEncPrestContas'  =>  $idSituacaoEncPrestContas,
                                 'idSituacao'                =>  $idSituacao,
                                 'idAgenteDestino'           =>  $idAgenteDestino,
@@ -2942,7 +2954,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 		    $tblProjeto->alterarSituacao($idPronac,'','E27');
 
 		    $tblEncaminhamento->update(array('stAtivo'=>0),array('idPronac = ?'=>$idPronac, 'idEncPrestContas != ?' => $rsEPC->idEncPrestContas));
-
+$objAcesso = new Acesso();
 		    //ENCAMINHA PROJETO PARA COORDENADOR
 		    $dados = array ('idPronac'          => $idPronac,
 	                            'idAgenteOrigem'    => $rsEPC->idAgenteOrigem,
@@ -2950,8 +2962,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 	                            'idOrgaoOrigem'     => $rsEPC->idOrgaoOrigem,
 	                            'idOrgaoDestino'    => $rsEPC->idOrgaoDestino,
 
-	                            'dtInicioEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ),
-	                            'dtFimEncaminhamento'    => new Zend_Db_Expr ( 'GETDATE()' ),
+	                            'dtInicioEncaminhamento' => $objAcesso->getExpressionDate(),
+	                            'dtFimEncaminhamento'    => $objAcesso->getExpressionDate(),
 
 	                            'dsJustificativa'   => $rsEPC->dsJustificativa,
 	                            'cdGruposOrigem'    => $rsEPC->cdGruposDestino,
@@ -2993,6 +3005,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 			$rsEPC->save();
 
 			try{
+                $objAcesso = new Acesso();
 				//GRUPO : ORGAO
 				//100: 177 AECI
 				//100: 12 CONJUR
@@ -3003,8 +3016,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                                 'idOrgaoOrigem'     => $rsEPC->idOrgaoOrigem,
                                 'idOrgaoDestino'    => $rsEPC->idOrgaoDestino,
 
-                                'dtInicioEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ),
-                                'dtFimEncaminhamento'    => new Zend_Db_Expr ( 'GETDATE()' ),
+                                'dtInicioEncaminhamento' => $objAcesso->getExpressionDate(),
+                                'dtFimEncaminhamento'    => $objAcesso->getExpressionDate(),
 
                                 'dsJustificativa'   => $rsEPC->dsJustificativa,
                                 'cdGruposOrigem'    => $rsEPC->cdGruposDestino,
@@ -3044,14 +3057,15 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 			$rsEPC->save();
 
 			//GRAVA REGISTRO COM NOVO STATUS
+            $objAcesso = new Acesso();
 			$dados = array ('idPronac'          => $pronac,
                             'idAgenteOrigem'    => $rsEPC->idAgenteOrigem,
                             'idAgenteDestino'   => $rsEPC->idAgenteDestino,
                             'idOrgaoOrigem'     => $rsEPC->idOrgaoOrigem,
                             'idOrgaoDestino'    => $rsEPC->idOrgaoDestino,
 
-                            'dtInicioEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ),
-                            'dtFimEncaminhamento'    => new Zend_Db_Expr ( 'GETDATE()' ),
+                            'dtInicioEncaminhamento' => $objAcesso->getExpressionDate(),
+                            'dtFimEncaminhamento'    => $objAcesso->getExpressionDate(),
 
                             'dsJustificativa'   => $rsEPC->dsJustificativa,
                             'cdGruposOrigem'    => $rsEPC->cdGruposOrigem,
@@ -3926,10 +3940,11 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
         try {
             $db->beginTransaction();
+            $objAcesso = new Acesso();
             $dados = array(
                 'nmAssinante'=> $post->nmAssinante,
                 'tpCargo'=> $post->tpCargo,
-                'dtCadastro'=> new Zend_Db_Expr('GETDATE()'),
+                'dtCadastro'=> $objAcesso->getExpressionDate(),
                 'idUsuario'=> $this->usu_codigo,
                 'stAtivo'=> 1
             );

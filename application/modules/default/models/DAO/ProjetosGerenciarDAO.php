@@ -77,12 +77,13 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+        $objAcesso= new Acesso();
 		$sqlProjetosDoComponente = "SELECT
                     P.idPRONAC,
                     D.idAgente,
                     P.AnoProjeto + P.Sequencial AS PRONAC,
                     P.NomeProjeto,
-                    DATEDIFF(DAY,D.dtDistribuicao,GETDATE()) as Dias,
+                    DATEDIFF(DAY,D.dtDistribuicao,{$objAcesso->getDate()}) as Dias,
                     CONVERT(CHAR(10), D.dtDistribuicao,103) AS dtDistribuicao,
                     CONVERT(CHAR(10), D.dtDistribuicao,103) AS dtCompleta
                     FROM SAC.dbo.Projetos P
@@ -105,8 +106,9 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+        $objAcesso= new Acesso();
 		$dados = "Update BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
-		" Set idAgente = $agenteNovo, dtDistribuicao = GETDATE(),  dsJustificativa='" . $justificativa . "'" .
+        " Set idAgente = $agenteNovo, dtDistribuicao = {$objAcesso->getDate()},  dsJustificativa='" . $justificativa . "'" .
 		" Where idAgente =" . $agenteAtual . " AND idPronac=" . $idPronac;
 //                die($dados);
 
@@ -162,11 +164,13 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 		$whereUpdateSituacao = "idAgente =" . $idAgente;
 		$UpdateSituacao = $db->update('AGENTES.dbo.tbTitulacaoConselheiro', $dadosUpdateSituacao, $whereUpdateSituacao);
 
+        $objAcesso= new Acesso();
+
 		// Grava na tabela de historico
 		$dadosInsereHistorico = "Insert into BDCORPORATIVO.scAGENTES.tbHistoricoConselheiro " .
 		"(idConselheiro, dtHistorico, dsJustificativa, stConselheiro, idResponsavel)" .
 		"values " .
-		"($idAgente, GETDATE(), '$justificativa', 'A', $usucodigo)";
+		"($idAgente, {$objAcesso->getDate()}, '$justificativa', 'A', $usucodigo)";
 
 		$InsereHistorico = $db->query($dadosInsereHistorico);
 		return true;
@@ -177,7 +181,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 	* ************************************************************************************************************************/
 
 	public static function balancear($idPronac) {
-
+        $objAcesso= new Acesso();
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
@@ -235,6 +239,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 			$projetos = $db->fetchAll($sqlMenor);
 
+
 			if (!empty ($projetos)) {
 				foreach ($projetos as $dados) {
 					$menor = $dados->agente;
@@ -243,7 +248,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 				$dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
 				"(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
 				"values" .
-				"($idPronac, $agenteP, GETDATE(), 7522)";
+				"($idPronac, $agenteP, {$objAcesso->getDate()}, 7522)";
 
 				$insere = $db->query($dados);
 				$db->closeConnection();
@@ -256,7 +261,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 					$dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
 					"(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
 					"values" .
-					"($idPronac, $menor, GETDATE(), 7522)";
+					"($idPronac, $menor, {$objAcesso->getDate()}, 7522)";
 
 					$insere = $db->query($dados);
 					$db->closeConnection();

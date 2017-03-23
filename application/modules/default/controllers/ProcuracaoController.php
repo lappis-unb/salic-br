@@ -194,12 +194,13 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         try{
 
 	        // ==================== Insere na Tabela tbArquivo ===============================
+            $objAcesso = new Acesso();
 	        $dadosArquivo = array(
 						           'nmArquivo' 			=> $arquivoNome,
 						           'sgExtensao' 		=> $arquivoExtensao,
 						           'dsTipoPadronizado' 	=> $arquivoTipo,
 						           'nrTamanho' 			=> $arquivoTamanho,
-						           'dtEnvio' 			=> new Zend_Db_Expr('GETDATE()'),
+						           'dtEnvio' 			=> $objAcesso->getExpressionDate(),
 						           'dsHash' 			=> $arquivoHash,
 						           'stAtivo' 			=> 'A'
 	        );
@@ -550,12 +551,13 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
             $tbProcuradorProjeto= new tbProcuradorProjeto();
 
             // ==================== Insere na Tabela tbArquivo ===============================
+            $objAcesso = new Acesso();
             $dadosArquivo = array(
                 'nmArquivo'         => $arquivoNome,
                 'sgExtensao'        => $arquivoExtensao,
                 'dsTipoPadronizado' => $arquivoTipo,
                 'nrTamanho'         => $arquivoTamanho,
-                'dtEnvio'           => new Zend_Db_Expr('GETDATE()'),
+                'dtEnvio'           => $objAcesso->getExpressionDate(),
                 'dsHash'            => $arquivoHash,
                 'stAtivo'           => 'A'
             );
@@ -582,10 +584,11 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
             $idDocumento = $idDocumento['idDocumento'];
 
             //Cadastra a procuracao
+            $objAcesso = new Acesso();
             $dadosProcuracao = array(
                 'idAgente' => $_POST['idAgenteProcurador'],
                 'idDocumento' => $idDocumento,
-                'dtProcuracao' => new Zend_Db_Expr('GETDATE()'),
+                'dtProcuracao' => $objAcesso->getExpressionDate(),
                 'siProcuracao' => 0,
                 'dsJustificativa' => $_POST['dsJustificativa'],
                 'idSolicitante' => $idUsuarioAtivo
@@ -614,8 +617,9 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $idProcProj = $_POST['idProcProj'];
         $idProc = $_POST['idProc'];
 
+        $objAcesso = new Acesso();
         $dados = array(
-            'dtDesvinculacao' => new Zend_Db_Expr('GETDATE()'),
+            'dtDesvinculacao' => $objAcesso->getExpressionDate(),
             'siEstado' => 3
         );
         $where = array('idProcuradorProjeto = ?' => $idProcProj);
@@ -667,10 +671,11 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $result1 = $tbProcuracao->update($dadostbProcuracao, array("idProcuracao = ?" => $idProcuracao));
 
 
+        $objAcesso = new Acesso();
         if($_POST['siProcuracao'] == 1){
             $dadostbProcuradorProjeto = array(
                 'siEstado' => 2, //Vinculado
-                'dtVinculacao' => new Zend_Db_Expr('GETDATE()') //Vinculado
+                'dtVinculacao' => $objAcesso->getExpressionDate() //Vinculado
             );
         } else {
             $dadostbProcuradorProjeto = array(

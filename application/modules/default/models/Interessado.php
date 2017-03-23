@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 
-/**
- * Description of Interessado
- *
- * @author augusto
- */
 class Interessado extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';

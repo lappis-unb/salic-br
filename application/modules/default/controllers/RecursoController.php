@@ -303,7 +303,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
             $r->stAtendimento = $_POST['stAtendimento'];
             $r->dsAvaliacao = $_POST['dsAvaliacao'];
-            $r->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $r->dtAvaliacao = $objAcesso->getExpressionDate();
             $r->idAgenteAvaliador = $this->idUsuario;
 
             if($_POST['stAtendimento'] == 'I'){
@@ -318,7 +319,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $w = array();
                 $w['situacao'] = $dadosHist->Situacao;
                 $w['ProvidenciaTomada'] = 'Recurso indeferido.';
-                $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                $w['dtSituacao'] = $objAcesso->getExpressionDate();
                 $w['Logon'] = $this->idUsuario;
                 $where = "IdPRONAC = $dp->IdPRONAC";
                 $Projetos->update($w, $where);
@@ -339,8 +340,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     //ATUALIZA A SITUA��O DO PROJETO
                     $w = array();
                     $w['situacao'] = 'B11';
-                    $w['ProvidenciaTomada'] = 'Recurso encaminhado para avalia��o da unidade vinculada.';
-                    $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                    $w['ProvidenciaTomada'] = 'Recurso encaminhado para avalia&ccedil;&atilde;o da unidade vinculada.';
+                    $w['dtSituacao'] = $objAcesso->getExpressionDate();
                     $w['Logon'] = $this->idUsuario;
                     $where = "IdPRONAC = $dp->IdPRONAC";
                     $Projetos->update($w, $where);
@@ -369,7 +370,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $dados = array(
                     'IdPRONAC' => $r->IdPRONAC,
                     'idUnidade' => $_POST['vinculada'],
-                    'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                    'dtEnvio' => $objAcesso->getExpressionDate(),
                     'idAvaliador' => isset($_POST['destinatario']) ? $_POST['destinatario'] : null,
                     'stEstado' => $stEstado,
                     'stFecharAnalise' => $stFecharAnalise,
@@ -580,7 +581,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
             $dados = array();
             $dados['idAvaliador'] = $idAvaliador;
-            $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dados['dtDistribuicao'] = $objAcesso->getExpressionDate();
             $where = "idDistribuirProjeto = $idDistProj";
             $tbDistribuirProjeto = new tbDistribuirProjeto();
             $return = $tbDistribuirProjeto->update($dados, $where);
@@ -888,10 +890,11 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $tbDistribuirProjeto = new tbDistribuirProjeto();
                 $dDP = $tbDistribuirProjeto->buscar(array('IdPRONAC = ?'=>$idPronac, 'stEstado = ?'=>0, 'tpDistribuicao = ?'=>'A'));
 
+                $objAcesso = new Acesso();
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirProjeto
                     $dadosDP = array();
-                    $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+                    $dadosDP['dtFechamento'] = $objAcesso->getExpressionDate();
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
 
                     $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintend�ncias IPHAN
@@ -1035,10 +1038,11 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $tbDistribuirProjeto = new tbDistribuirProjeto();
                 $dDP = $tbDistribuirProjeto->buscar(array('IdPRONAC = ?'=>$idPronac, 'stEstado = ?'=>1, 'stFecharAnalise = ?'=>1, 'tpDistribuicao = ?'=>'A'));
 
+                $objAcesso = new Acesso();
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirProjeto
                     $dadosDP = array();
-                    $dadosDP['dtDevolucao'] = new Zend_Db_Expr('GETDATE()');
+                    $dadosDP['dtDevolucao'] = $objAcesso->getExpressionDate();
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
                     $tbDistribuirProjeto = new tbDistribuirProjeto();
                     $x = $tbDistribuirProjeto->update($dadosDP, $whereDP);
@@ -1088,7 +1092,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $whereDP = array();
             $tbDistribuirProjeto = new tbDistribuirProjeto();
             $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
-            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dadosDP['dtFechamento'] = $objAcesso->getExpressionDate();
             $dadosDP['idUnidade'] = 91; // retorna para IPHAN
             $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
 
@@ -1103,7 +1108,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $whereDP = array();
             $tbDistribuirProjeto = new tbDistribuirProjeto();
             $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
-            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dadosDP['dtFechamento'] = $objAcesso->getExpressionDate();
             $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
 
             //Atualiza a tabela tbRecurso
@@ -1155,7 +1161,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
             //Atualiza a tabela tbDistribuirProjeto
             $dadosDP = array();
             $dadosDP['idUsuario'] = $this->idUsuario;
-            $dadosDP['dtFechamento'] =  new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dadosDP['dtFechamento'] =  $objAcesso->getExpressionDate();
             $dadosDP['stFecharAnalise'] =  1;
             $dadosDP['stEstado'] =  1;
             $whereDP = "idDistribuirProjeto = ".$dadosDistProj[0]->idDistribuirProjeto;
@@ -1393,8 +1400,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             //ATUALIAZA A SITUA��O, �REA E SEGMENTO DO PROJETO
             $d = array();
             $d['situacao'] = 'D20';
-            $d['ProvidenciaTomada'] = 'Recurso em an�lise pela Comiss�o Nacional de Incentivo � Cultura - CNIC.';
-            $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+            $d['ProvidenciaTomada'] = 'Recurso em an&aacute;lise pela Comiss&atilde;o Nacional de Incentivo &agrave; Cultura - CNIC.';
+            $objAcesso = new Acesso();
+            $d['dtSituacao'] = $objAcesso->getExpressionDate();
             $d['Area'] = $areaCultural;
             $d['Segmento'] = $segmentoCultural;
             $where = "IdPRONAC = $idPronac";
@@ -1876,13 +1884,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
 			$stAtendimento   		= $post->stAtendimento;
 			$idPronac      			= $post->idPronac;
 			$idRecurso           	= $post->idRecurso;
-			$dtAvaliacao           	= new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+			$dtAvaliacao           	= $objAcesso->getExpressionDate();
 			$idAgenteAvaliador   	= $this->getIdUsuario;
 
 			try
 			{
 				$dados = array(
-					'dtAvaliacao'       => new Zend_Db_Expr('GETDATE()'),
+					'dtAvaliacao'       => $objAcesso->getExpressionDate(),
 					'dsAvaliacao' 		=> Seguranca::tratarVarEditor($_POST['justificativa']),
 					'stAtendimento'   	=> $stAtendimento,
 					'dsAvaliacao'       => $justificativa,
@@ -1942,6 +1951,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	 */
 	public function reenquadramentoAction()
 	{
+	    $objAcesso = new Acesso();
 		if ($this->getRequest()->isPost())
 		{
 			// recebe os dados via post
@@ -1960,7 +1970,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 			{
 				// dados recurso
 				$dadosRecurso = array(
-					'dtAvaliacao'       => new Zend_Db_Expr('GETDATE()'),
+					'dtAvaliacao'       => $objAcesso->getExpressionDate(),
 					'dsAvaliacao' 		=> $justificativa,
 					'stAtendimento'   	=> $stAtendimento,
 					'dsAvaliacao'       => $justificativa,
@@ -1972,7 +1982,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 					'AnoProjeto'      					=> $AnoProjeto,
 					'Sequencial'           				=> $Sequencial,
 					'Enquadramento'           			=> $enquadramento,
-					'DtEnquadramento'           		=> new Zend_Db_Expr('GETDATE()'),
+					'DtEnquadramento'           		=> $objAcesso->getExpressionDate(),
 					'Observacao' 						=> $justificativa,
 					'Logon'           			 		=> $idAgenteAvaliador);
 
@@ -2165,9 +2175,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
 				$buscar = RecursoDAO::buscarPlanilhaAprovacao($idPlanilha);
 
 				// insere o novo registro na planilha de aprova��o (Ministro)
+                $objAcesso = new Acesso();
 				$dadosPlanilha = array(
 					'tpPlanilha'             => 'MI',
-					'dtPlanilha'             => new Zend_Db_Expr('GETDATE()'),
+					'dtPlanilha'             => $objAcesso->getExpressionDate(),
 					'idPlanilhaProjeto'      => $buscar[0]->idPlanilhaProjeto,
 					'idPlanilhaProposta'     => $buscar[0]->idPlanilhaProposta,
 					'IdPRONAC'               => $buscar[0]->IdPRONAC,
@@ -2290,11 +2301,12 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $tbRecurso = new tbRecurso();
         $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
 
+        $objAcesso = new Acesso();
         if($recurso){
 
             $recurso->stAtendimento = $stAtendimento;
             $recurso->dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
-            $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
+            $recurso->dtAvaliacao = $objAcesso->getExpressionDate();
             $recurso->idAgenteAvaliador = $this->idUsuario;
 
             if($stAtendimento == 'I'){
@@ -2311,7 +2323,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $projeto = array();
                 $projeto['situacao'] = 'B03';
                 $projeto['ProvidenciaTomada'] = 'Projeto enquadrado com recurso';
-                $projeto['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                $projeto['dtSituacao'] = $objAcesso->getExpressionDate();
                 $projeto['Logon'] = $this->idUsuario;
                 $where = "IdPRONAC = $recurso->IdPRONAC";
                 $tblProjetos->update($projeto, $where);
@@ -2407,11 +2419,12 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $tbRecurso = new tbRecurso();
         $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
 
+        $objAcesso = new Acesso();
         if($recurso){
 
             $recurso->stAtendimento = $stAtendimento;
             $recurso->dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
-            $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
+            $recurso->dtAvaliacao = $objAcesso->getExpressionDate();
             $recurso->idAgenteAvaliador = $this->idUsuario;
 
             if($stAtendimento == 'I'){
@@ -2428,7 +2441,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $projeto = array();
                 $projeto['situacao'] = 'B03';
                 $projeto['ProvidenciaTomada'] = 'Projeto enquadrado com recurso';
-                $projeto['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                $projeto['dtSituacao'] = $objAcesso->getExpressionDate();
                 $projeto['Logon'] = $this->idUsuario;
                 $where = "IdPRONAC = $recurso->IdPRONAC";
                 $tblProjetos->update($projeto, $where);

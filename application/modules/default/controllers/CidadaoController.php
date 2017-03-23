@@ -509,12 +509,13 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
     }
     
     public function inserirOpiniaoAction(){
+        $objAcesso = new Acesso();
         //INSERT NA TABELA SAC.dbo.tbOpinarProjeto
         $dados = array(
             'idPronac' => $_POST['idPronac'],
             'idVisao' => 197,
             'siFaseProjeto' => 2,
-            'dtOpiniao' => new Zend_Db_Expr('GETDATE()'),
+            'dtOpiniao' => $objAcesso->getExpressionDate(),
             'stQuestionamento_1' => isset($_POST['qst1']) ? $_POST['qst1'] : 0,
             'stQuestionamento_2' => isset($_POST['qst2']) ? $_POST['qst2'] : 0,
             'stQuestionamento_3' => isset($_POST['qst3']) ? $_POST['qst3'] : 0,

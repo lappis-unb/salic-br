@@ -60,8 +60,9 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         if($idMensagem){
             $modelMensagem = new Mensagem();
             $mensagem = $modelMensagem->find($idMensagem)->current();
+            $objAcesso = new Acesso();
             if(!$mensagem->dtAcesso){
-                $mensagem->dtAcesso = new Zend_Db_Expr('GETDATE()');
+                $mensagem->dtAcesso = $objAcesso->getExpressionDate();
                 $mensagem->save();
             }
             $result = (object)$mensagem->toArray();
@@ -77,8 +78,9 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         if($idMensagem){
             $modelMensagem = new Mensagem();
             $mensagem = $modelMensagem->find($idMensagem)->current();
+            $objAcesso = new Acesso();
             if(!$mensagem->dtExclusao){
-                $mensagem->dtExclusao = new Zend_Db_Expr('GETDATE()');
+                $mensagem->dtExclusao = $objAcesso->getExpressionDate();
                 $mensagem->save();
             }
             $result = (object)$mensagem->toArray();
