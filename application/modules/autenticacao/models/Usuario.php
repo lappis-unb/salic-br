@@ -993,14 +993,16 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $objUsuario = $this->select();
         $senha = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
+        $senhaScape = preg_replace("/'/", "''",$senha);
+
         $objUsuario->from(
             $this->_name,
-            new Zend_Db_Expr("'{$senha}' as senha"),
+            new Zend_Db_Expr("'{$senhaScape}' as senha"),
             $this->_schema
         );
 
-
         $objUsuario->where('usu_identificacao = ?', $username);
+
         $criptSenha = $this->fetchRow($objUsuario);
 
         $auxSenha = "";
