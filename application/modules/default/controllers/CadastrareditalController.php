@@ -292,12 +292,13 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             }
 
             $insereDadosEdital = new Edital();
+            $objAcesso = new Acesso();
             try{
                 if ( empty ( $_POST['idEdital'] ) ) // cadastro
                 {
                     $dados = array('idOrgao' => $orgao,
                     'NrEdital' => $numeroEdital,
-                    'DtEdital' => new Zend_Db_Expr('GETDATE()'),
+                    'DtEdital' => $objAcesso->getExpressionDate(),
                     'CelulaOrcamentaria' => $celulaOrcamentaria,
                     'Objeto' => $objeto,
                     'Logon' => $idusuario,
@@ -313,10 +314,11 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 }
                 else // altera��o
                 {
+                    $objAcesso = new Acesso();
                     $dados = array('idEdital' => $idEdital,
                     'idOrgao' => $orgao,
                     'NrEdital' => $numeroEdital,
-                    'DtEdital' => new Zend_Db_Expr('GETDATE()'),
+                    'DtEdital' => $objAcesso->getExpressionDate(),
                     'CelulaOrcamentaria' => $celulaOrcamentaria,
                     'Objeto' => $objeto,
                     'Logon' => $idusuario,
@@ -413,11 +415,12 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             {
                 if (empty($nrFormDocumento)) // cadastro
                 {
+                    $objAcesso = new Acesso();
                     $dadosFormDocumento = array('nrVersaoDocumento' => 1,
                         'nmFormDocumento' => $nomeEdital,
-                        'dsFormDocumento' => 'Formul�rio de Edital',
+                        'dsFormDocumento' => 'Formul&aacute;rio de Edital',
                         'stFormDocumento' => 'A',
-                        'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
+                        'dtCadastramento' => $objAcesso->getExpressionDate(),
                         'idClassificaDocumento' => $classificaDocumento,
                         'stModalidadeDocumento' => $modalidadeDocumento,
                         'idEdital' => $idEdital);
@@ -430,10 +433,11 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 }
                 else // altera��o
                 {
+                    $objAcesso = new Acesso();
                     $dadosFormDocumento = array('nmFormDocumento' => $nomeEdital,
-                        'dsFormDocumento' => 'Formul�rio de Edital',
+                        'dsFormDocumento' => 'Formul&aacute;rio de Edital',
                         'stFormDocumento' => 'A',
-                        'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
+                        'dtCadastramento' => $objAcesso->getExpressionDate(),
                         'idClassificaDocumento' => $classificaDocumento,
                         'stModalidadeDocumento' => $modalidadeDocumento);
                     $whereFormDocumento = array(
@@ -530,7 +534,8 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $vlMaxOpcao = $_POST['nrNotaFim'];
                 $vlVariacaoOpcao = $_POST['nrNotaVariacao'];
                 $idEdital = $_POST['idEdital'];
-                $dtCadastramento = new Zend_Db_Expr('GETDATE()');
+                $objAcesso = new Acesso();
+                $dtCadastramento = $objAcesso->getExpressionDate();
                 $idEdital = $_POST['idEdital'];
 
 				$tbFormDocumentoDAO =   new tbFormDocumento();
@@ -538,9 +543,9 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 					'idEdital'              =>  $idEdital,
 					'nrVersaoDocumento'     =>  $nrVersaoDocumento,
 					'nmFormDocumento'       =>  $_POST['dsPergunta'],
-					'dsFormDocumento'       =>  'Crit�rio de Avalia��o',
+					'dsFormDocumento'       =>  'Crit&eacute;rio de Avalia&ccedil;&atilde;o',
 					'idClassificaDocumento' =>  25,
-					'dtCadastramento'       =>  new Zend_Db_Expr('GETDATE()'),
+					'dtCadastramento'       =>  $objAcesso->getExpressionDate(),
 					'stFormDocumento'       =>  'A'
                 ));
                 $nrFormDocumentoCriterio   = $result['nrFormDocumento'];
@@ -612,7 +617,8 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $vlMinOpcao= $_POST['nrNotaInicio'];
                 $vlMaxOpcao = $_POST['nrNotaFim'];
                 $vlVariacaoOpcao = $_POST['nrNotaVariacao'];
-                $dtCadastramento = new Zend_Db_Expr('GETDATE()');
+                $objAcesso = new Acesso();
+                $dtCadastramento = $objAcesso->getExpressionDate();
                 $idEdital = $_POST['idEdital'];
                 $nrPergunta = $_POST['nrPergunta'];
 
@@ -623,10 +629,11 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $nrVersaoDocumentoCriterio = $buscarDadosTbPergunta[0]['nrVersaoDocumento'];
 
 				$tbFormDocumento = new tbFormDocumento();
+                $objAcesso = new Acesso();
                 $dadosFormDocumento = array('nmFormDocumento' => $dsPergunta,
-                    'dsFormDocumento' => 'Crit�rio de Avalia��o',
+                    'dsFormDocumento' => 'Crit&eacute;rio de Avalia&ccedil;&atilde;o',
                     'stFormDocumento' => 'A',
-                    'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
+                    'dtCadastramento' => $objAcesso->getExpressionDate(),
                     'idClassificaDocumento' => 25);
                 $whereFormDocumento = array(
                     'nrFormDocumento = ?'=>$nrFormDocumentoCriterio,
@@ -787,13 +794,14 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         if(isset($objNrformDocumento)){
            $nrFormDocumentoPagamento = $objNrformDocumento['nrFormDocumento'];
         }else{
+            $objAcesso = new Acesso();
             $dados = array(
                 'idEdital'=>                $idEdital,
                 'nrVersaoDocumento'=>       $nrVersaoDocumento,
                 'nmFormDocumento'=>         'Pagamento de Edital',
                 'dsFormDocumento'=>         'Pagamento de Edital',
                 'idClassificaDocumento'=>   '24',
-                'dtCadastramento'=>         new Zend_Db_Expr('GETDATE()'),
+                'dtCadastramento'=>         $objAcesso->getExpressionDate(),
                 'stFormDocumento'=>         'A',
             );
             $inserir = new tbFormDocumento();
@@ -819,7 +827,8 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             $nrVersaoDocumento = $_POST['nrVersaoDocumento'];
             $dsPergunta = $_POST['dsPergunta'];
             $idEdital = $_POST['idEdital'];
-            $dtCadastramento = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dtCadastramento = $objAcesso->getExpressionDate();
 
             $agentes = new Agente_Model_DbTable_Agentes();
 
@@ -1331,13 +1340,14 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $where = array('nrFormDocumento = ?'=>$nrFormDocumento,'nrVersaoDocumento = ?'=>$nrVersaoDocumento);
         switch ($operacao) {
             case "inserir":
+                $objAcesso = new Acesso();
                 $result = $tbFormDocumentoDAO->inserir(array(
                                                 'idEdital'              =>  $idEdital,
                                                 'nrVersaoDocumento'     =>  $nrVersaoDocumento,
                                                 'nmFormDocumento'       =>  $nmFormDocumento,
                                                 'dsFormDocumento'       =>  $dsFormDocumento,
                                                 'idClassificaDocumento' =>  23,
-                                                'dtCadastramento'       =>  new Zend_Db_Expr('GETDATE()'),
+                                                'dtCadastramento'       =>  $objAcesso->getExpressionDate(),
                                                 'stFormDocumento'       =>  'A'
                     ));
 
@@ -1689,11 +1699,12 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $auth = Zend_Auth::getInstance();// instancia da autentica??o
                 $idusuario = $auth->getIdentity()->usu_codigo;
 
+                $objAcesso = new Acesso();
                 $dados          =   array(
                                         'stTipoRespPergunta'=>  $this->stTipoRespPergunta,
                                         'dsPergunta'        =>  $dsPergunta,
                                         'idPessoaCadastro'  =>  $idusuario,
-                                        'dtCadastramento'   =>  new Zend_Db_Expr('GETDATE()')
+                                        'dtCadastramento'   =>  $objAcesso->getExpressionDate()
                                     );
 
                 $nrPergunta = $tbPerguntaDAO->inserir($dados);
@@ -1905,9 +1916,10 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         if(!($info['operacao'] == 'tipoCB' or $info['operacao'] == 'tipoRB'  or $info['operacao'] == 'tipoIR') )
             $where['nrOpcao = ?']   =   $info['nrOpcao'];
         $resposta = $tdRespostaDAO->buscar($where);
+        $objAcesso = new Acesso();
         if(is_object($resposta) and $resposta->count() > 0){
             $data = array(
-                        'dtResposta'        =>  new Zend_Db_Expr('GETDATE()'),
+                        'dtResposta'        =>  $objAcesso->getExpressionDate(),
                         'dsRespostaSubj'    =>  $info['dsRespostaSubj']
                     );
             switch ($info['operacao']){
@@ -1978,7 +1990,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                         'idProjeto'         =>  $info['idPreProjeto'],
                         'idPessoaCadastro'  =>  $info['idUsuario'],
                         'nrOpcao'           =>  $info['nrOpcao'],
-                        'dtResposta'        =>  new Zend_Db_Expr('GETDATE()'),
+                        'dtResposta'        =>  $objAcesso->getExpressionDate(),
                         'dsRespostaSubj'    =>  $info['dsRespostaSubj']
                      );
 

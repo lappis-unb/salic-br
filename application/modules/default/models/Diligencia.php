@@ -166,12 +166,12 @@ class Diligencia extends MinC_Db_Table_Abstract {
                 ,"SAC.dbo"
         );
 
-        $select->where('((((DATEDIFF(day, DtSolicitacao, GETDATE()) > 20');
+        $select->where('((((DATEDIFF(day, DtSolicitacao, '.$this->getDate().') > 20');
         $select->where("stProrrogacao =?)",'N');
-        $select->orWhere('(DATEDIFF(day, DtSolicitacao, GETDATE()) > 40');
+        $select->orWhere('(DATEDIFF(day, DtSolicitacao, '.$this->getDate().') > 40');
         $select->where("stProrrogacao =?))",'S');
         $select->where("idTipoDiligencia =?)",124);
-        $select->orWhere('(DATEDIFF(day, DtSolicitacao, GETDATE()) > 30');
+        $select->orWhere('(DATEDIFF(day, DtSolicitacao, '.$this->getDate().') > 30');
         $select->where("idTipoDiligencia != ?))",124);
         $select->where('DtResposta is null');
 

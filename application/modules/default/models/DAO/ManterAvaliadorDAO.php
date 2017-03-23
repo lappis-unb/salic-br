@@ -93,6 +93,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
     public static function listarEditaisAvaliador ()
     {
+        $objAcesso= new Acesso();
     	$sql = "SELECT distinct TOP 1000 a.idEdital
 				      ,[dtIniFase]
 				      ,[dtFimFase]
@@ -101,7 +102,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 				  FROM [BDCORPORATIVO].[scSAC].[tbEditalXtbFaseEdital] a
 				  inner join BDCORPORATIVO.scQuiz.tbFormDocumento b on (a.idEdital = b.idEdital)
 				  where  b.idClassificaDocumento not in (23,24,25) and
-				  a.dtFimFase >= GETDATE() and (idFaseEdital = 4)
+				  a.dtFimFase >= {$objAcesso->getDate()} and (idFaseEdital = 4)
 				  order by dtFimFase";
 		//xd($sql);
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -136,7 +137,8 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
 	public static function inserirAgente ($cpf, $idusuario)
     {
-    	$sql = "insert into AGENTES.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, GETDATE(), 0, $idusuario)";
+        $objAcesso= new Acesso();
+    	$sql = "insert into AGENTES.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, {$objAcesso->getDate()}, 0, $idusuario)";
 		//xd($sql);
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

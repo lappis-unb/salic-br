@@ -256,7 +256,8 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
             $resultado3 = $tbAvaliacaoItemPedidoAlteracao->buscar(array('idPedidoAlteracao = ?' => $resultado->idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 7))->current();
             $idAvaliacaoItemPedidoAlteracaoProduto = $resultado3->idAvaliacaoItemPedidoAlteracao;
 
-            $dadosAvaliacao = array('stAvaliacaoItemPedidoAlteracao' => 'AP', 'dtFimAvaliacao' => new Zend_Db_Expr('GETDATE()'));
+            $objAcesso = new Acesso();
+            $dadosAvaliacao = array('stAvaliacaoItemPedidoAlteracao' => 'AP', 'dtFimAvaliacao' => $objAcesso->getExpressionDate());
             $buscaInformacoes->atualizarAvaliacaopedido($dadosAvaliacao, array('idPedidoAlteracao = ?' => $resultado->idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 10));
 
             $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao";
@@ -284,7 +285,7 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
                 'idOrgao' => $orgao,
                 'stAtivo' => 0,
                 'stVerificacao' => 2,
-                'dtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                'dtEncaminhamento' => $objAcesso->getExpressionDate(),
                 'idAgenteRemetente' => $idAgenteRemetente,
                 'idPerfilRemetente' => $idPerfilRemetente,
             );

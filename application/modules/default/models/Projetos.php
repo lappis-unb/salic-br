@@ -300,8 +300,8 @@ class Projetos extends MinC_Db_Table_Abstract
             'pr.UfProjeto',
             'pr.DtInicioExecucao',
             'pr.DtFimExecucao',
-            'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,getdate())"),
-            'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year(getdate())) + '/12/31' end"),
+            'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,{$this->getDate()})"),
+            'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year({$this->getDate()})) + '/12/31' end"),
             'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
             'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
             'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
@@ -374,8 +374,8 @@ class Projetos extends MinC_Db_Table_Abstract
             'pr.UfProjeto',
             'pr.DtInicioExecucao',
             'pr.DtFimExecucao',
-            'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,getdate())"),
-            'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year(getdate())) + '/12/31' end"),
+            'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,{$this->getDate()})"),
+            'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year({$this->getDate()})) + '/12/31' end"),
             'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
             'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
             'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
@@ -451,12 +451,12 @@ class Projetos extends MinC_Db_Table_Abstract
             'pr.DtFimExecucao',
             'DtInicioCaptacao' => New Zend_Db_Expr("CASE WHEN DtInicioCaptacao IS NOT NULL
                                                                             THEN ap.DtInicioCaptacao
-                                                                            ELSE dateadd(day,1,getdate())
+                                                                            ELSE dateadd(day,1,{$this->getDate()})
                                                                        END"),
             'DtFimCaptacao' => New Zend_Db_Expr("CASE WHEN DtFimCaptacao IS NOT NULL THEN ap.DtFimCaptacao
-                                                                           WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31'
+                                                                           WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31'
                                                                                 THEN pr.DtFimExecucao
-                                                                                ELSE CONVERT(char(4),year(getdate())) + '/12/31'
+                                                                                ELSE CONVERT(char(4),year({$this->getDate()})) + '/12/31'
                                                                        END"),
         ), "SAC.dbo"
         );
@@ -513,7 +513,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                    WHEN vp.stAnaliseProjeto = '4'
                                                                         THEN 'Encaminhado para portaria'
                                                               END "),
-            'tempoAnalise' => New Zend_Db_Expr("DATEDIFF(day, vp.DtRecebido, GETDATE())"),
+            'tempoAnalise' => New Zend_Db_Expr("DATEDIFF(day, vp.DtRecebido, {$this->getDate()})"),
             "vp.dtRecebido"
         ), "SAC.dbo"
         );
@@ -547,10 +547,10 @@ class Projetos extends MinC_Db_Table_Abstract
             //'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,getdate())"),
             'DtInicioCaptacao' => New Zend_Db_Expr("CASE WHEN DtInicioCaptacao IS NOT NULL
                                                                           THEN ap.DtInicioCaptacao
-                                                                          ELSE dateadd(day,1,getdate()) END"),
+                                                                          ELSE dateadd(day,1,{$this->getDate()}) END"),
             'DtFimCaptacao' => New Zend_Db_Expr("CASE WHEN DtFimCaptacao IS NOT NULL THEN ap.DtFimCaptacao
-                                                                          WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31' THEN pr.DtFimExecucao
-                                                                          ELSE CONVERT(char(4),year(getdate())) + '/12/31' END"),
+                                                                          WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' THEN pr.DtFimExecucao
+                                                                          ELSE CONVERT(char(4),year({$this->getDate()})) + '/12/31' END"),
             /* 'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili1.DtSolicitacao desc)'),
               'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili2.DtSolicitacao desc)'),
               'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili3.DtSolicitacao desc)') */
@@ -601,7 +601,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                  WHEN vp.stAnaliseProjeto = '3' THEN 'An�lise Finalizada'
                                                                  WHEN vp.stAnaliseProjeto = '4' THEN 'Encaminhado para portaria'
                                                                  END "),
-            "DATEDIFF(day, vp.DtRecebido, GETDATE()) AS tempoAnalise",
+            "DATEDIFF(day, vp.DtRecebido, {$this->getDate()}) AS tempoAnalise",
             "vp.dtRecebido"
         ), "SAC.dbo"
         );
@@ -693,8 +693,8 @@ class Projetos extends MinC_Db_Table_Abstract
             'pr.Processo',
             'pr.Mecanismo',
             'pr.DtFimExecucao',
-            'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,getdate())"),
-            'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year(getdate())) + '/12/31' end")
+            'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,{$this->getDate()})"),
+            'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year({$this->getDate()})) + '/12/31' end")
         ), "SAC.dbo"
         );
 
@@ -2397,7 +2397,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'd.idAgenteParecerista',
                 'd.idOrgao',
                 'CONVERT(CHAR(10),d.DtDistribuicao,103) AS DtDistribuicao2',
-                'DATEDIFF(day, d.DtDistribuicao, GETDATE()) AS NrDias',
+                'DATEDIFF(day, d.DtDistribuicao, '.$this->getDate().') AS NrDias',
                 'd.Observacao',
                 'DescricaoAnalise' => new Zend_Db_Expr('CASE WHEN TipoAnalise = 0 THEN \'Cont?udo\' WHEN TipoAnalise = 1 THEN \'Custo do Produto\' ELSE \'Custo Administrativo\' END'),
                 'd.TipoAnalise',
@@ -2458,7 +2458,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'd.idAgenteParecerista',
                 'd.idOrgao',
                 'CONVERT(CHAR(10),d.DtDistribuicao,103) AS DtDistribuicao2',
-                'DATEDIFF(day, d.DtDistribuicao, GETDATE()) AS NrDias',
+                'DATEDIFF(day, d.DtDistribuicao, '.$this->getDate().') AS NrDias',
                 'd.Observacao',
                 'DescricaoAnalise' => new Zend_Db_Expr('CASE WHEN TipoAnalise = 0 THEN \'Cont?udo\' WHEN TipoAnalise = 1 THEN \'Custo do Produto\' ELSE \'Custo Administrativo\' END'),
                 'd.TipoAnalise',
@@ -2664,7 +2664,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         $dados = array(
             'Situacao' => $situacao
-        , 'DtSituacao' => new Zend_Db_Expr('GETDATE()')
+        , 'DtSituacao' => $this->getExpressionDate()
         , 'ProvidenciaTomada' => $ProvidenciaTomada
         , 'Logon' => $Logon);
 
@@ -4452,7 +4452,7 @@ class Projetos extends MinC_Db_Table_Abstract
                         order by DtSolicitacao desc
                  )"),
                     'p.DtFimExecucao',
-                    'QtdeDiasVencido' => new Zend_Db_Expr('DATEDIFF(day,GETDATE(), p.DtFimExecucao)'),
+                    'QtdeDiasVencido' => new Zend_Db_Expr('DATEDIFF(day,'.$this->getDate().', p.DtFimExecucao)'),
                     'PeriodoExecucao' => new Zend_Db_Expr("convert(char(10),p.DtInicioExecucao,103) + ' a ' + convert(char(10),p.DtFimExecucao,103)"),
                     'Parecerista' => new Zend_Db_Expr("ISNULL(n.Descricao,'')"),
                     'd.TipoAnalise',
@@ -4464,10 +4464,10 @@ class Projetos extends MinC_Db_Table_Abstract
                                                          WHEN TipoAnalise = 2
                                                             THEN 'Custo Administrativo'
                                                          END "),
-                    'QtdeTotalDiasAnalisar' => new Zend_Db_Expr("DATEDIFF(day, p.DtProtocolo, isnull(d.DtDevolucao,GETDATE()))"),
+                    'QtdeTotalDiasAnalisar' => new Zend_Db_Expr("DATEDIFF(day, p.DtProtocolo, isnull(d.DtDevolucao,{$this->getDate()}))"),
                     'QtdeDiasDevolvidosParaCoordenador' => new Zend_Db_Expr("CASE
                                                                                          WHEN d.DtDevolucao is not null and d.DtRetorno is null and d.FecharAnalise=0
-                                                                                            THEN DATEDIFF(day, d.DtDevolucao,GETDATE())
+                                                                                            THEN DATEDIFF(day, d.DtDevolucao,{$this->getDate()})
                                                                                          END "),
                     'QtdeDiasParaPareceristaAnalisar' => new Zend_Db_Expr("CASE
                                                                                      WHEN d.DtDevolucao is not null
@@ -4475,13 +4475,13 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                                      END"),
                     'QtdeDiasComParecerista' => new Zend_Db_Expr("CASE
                                                                              WHEN d.DtDevolucao is null
-                                                                                THEN DATEDIFF(day, d.DtDistribuicao, GETDATE())
+                                                                                THEN DATEDIFF(day, d.DtDistribuicao, {$this->getDate()})
                                                                              WHEN d.DtDevolucao is not  null
                                                                                 THEN DATEDIFF(day, d.DtDistribuicao, d.DtDevolucao)
                                                                              WHEN Situacao = 'B14'
-                                                                                THEN DATEDIFF(day, d.DtDistribuicao, GETDATE()) - DATEDIFF(day, p.dtSituacao, GETDATE())
+                                                                                THEN DATEDIFF(day, d.DtDistribuicao, {$this->getDate()}) - DATEDIFF(day, p.dtSituacao, {$this->getDate()})
                                                                              END"),
-                    'QtdeDiasParaDistribuir' => new Zend_Db_Expr("DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE()))"),
+                    'QtdeDiasParaDistribuir' => new Zend_Db_Expr("DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,{$this->getDate()}))"),
                     'PRONAC' => new Zend_Db_Expr("p.AnoProjeto+p.Sequencial"),
                     'Diligencia' => new Zend_Db_Expr("dbo.fnchecarDiligencia(p.idPronac)"),
                     'd.idDistribuirParecer',
@@ -4525,7 +4525,7 @@ class Projetos extends MinC_Db_Table_Abstract
                         order by DtSolicitacao desc
                  )"),
                     'p.IdPRONAC',
-                    'QtdeDiasVencido' => new Zend_Db_Expr('DATEDIFF(day,GETDATE(), p.DtFimExecucao)'),
+                    'QtdeDiasVencido' => new Zend_Db_Expr('DATEDIFF(day,'.$this->getDate().', p.DtFimExecucao)'),
                     'PeriodoExecucao' => new Zend_Db_Expr("convert(char(10),p.DtInicioExecucao,103) + ' a ' + convert(char(10),p.DtFimExecucao,103)"),
                     'Parecerista' => new Zend_Db_Expr("ISNULL(n.Descricao,'')"),
                     'd.TipoAnalise',
@@ -4537,10 +4537,10 @@ class Projetos extends MinC_Db_Table_Abstract
                                                          WHEN TipoAnalise = 2
                                                             THEN 'Custo Administrativo'
                                                          END "),
-                    'QtdeTotalDiasAnalisar' => new Zend_Db_Expr("DATEDIFF(day, p.DtProtocolo, isnull(d.DtDevolucao,GETDATE()))"),
+                    'QtdeTotalDiasAnalisar' => new Zend_Db_Expr("DATEDIFF(day, p.DtProtocolo, isnull(d.DtDevolucao,{$this->getDate()}))"),
                     'QtdeDiasDevolvidosCoordenador' => new Zend_Db_Expr("CASE
                                                                                          WHEN d.DtDevolucao is not null and d.DtRetorno is null and d.FecharAnalise=0
-                                                                                            THEN DATEDIFF(day, d.DtDevolucao,GETDATE())
+                                                                                            THEN DATEDIFF(day, d.DtDevolucao,{$this->getDate()})
                                                                                          END "),
                     'QtdeDiasPareceristaAnalisar' => new Zend_Db_Expr("CASE
                                                                                      WHEN d.DtDevolucao is not null
@@ -4548,13 +4548,13 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                                      END"),
                     'QtdeDiasComParecerista' => new Zend_Db_Expr("CASE
                                                                              WHEN d.DtDevolucao is null
-                                                                                THEN DATEDIFF(day, d.DtDistribuicao, GETDATE())
+                                                                                THEN DATEDIFF(day, d.DtDistribuicao, {$this->getDate()})
                                                                              WHEN d.DtDevolucao is not  null
                                                                                 THEN DATEDIFF(day, d.DtDistribuicao, d.DtDevolucao)
                                                                              WHEN Situacao = 'B14'
-                                                                                THEN DATEDIFF(day, d.DtDistribuicao, GETDATE()) - DATEDIFF(day, p.dtSituacao, GETDATE())
+                                                                                THEN DATEDIFF(day, d.DtDistribuicao, {$this->getDate()}) - DATEDIFF(day, p.dtSituacao, {$this->getDate()})
                                                                              END"),
-                    'QtdeDiasParaDistribuir' => new Zend_Db_Expr("DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE()))"),
+                    'QtdeDiasParaDistribuir' => new Zend_Db_Expr("DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,{$this->getDate()}))"),
                     'PRONAC' => new Zend_Db_Expr("p.AnoProjeto+p.Sequencial"),
                     'Diligencia' => new Zend_Db_Expr("dbo.fnchecarDiligencia(p.idPronac)"),
                     'd.idDistribuirParecer',
@@ -5857,7 +5857,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->from(
             array('p' => $this->_name), array('IdPRONAC', 'NomeProjeto', 'ResumoProjeto', 'DtInicioExecucao', 'DtFimExecucao', 'Situacao',
                 new Zend_Db_Expr('p.AnoProjeto+p.Sequencial as PRONAC'),
-                new Zend_Db_Expr('dbo.fnQtdeDeMesesDaUltimaCaptacao(p.AnoProjeto,p.Sequencial,getdate()) AS Meses'),
+                new Zend_Db_Expr('dbo.fnQtdeDeMesesDaUltimaCaptacao(p.AnoProjeto,p.Sequencial,'.$this->getDate().') AS Meses'),
                 new Zend_Db_Expr('dbo.fnPercentualCaptado(p.AnoProjeto,p.Sequencial) as Percentual')
             )
         );
@@ -5936,7 +5936,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                             THEN sac.dbo.fnValorAprovadoConvenio(pr.AnoProjeto,pr.Sequencial)
                                             ELSE sac.dbo.fnValorAprovado(pr.AnoProjeto,pr.Sequencial)
                                         END AS ValorAprovado"),
-                new Zend_Db_Expr("Datediff(day, vp.dtrecebido, GETDATE()) AS tempoAnalise")
+                new Zend_Db_Expr("Datediff(day, vp.dtrecebido, {$this->getDate()}) AS tempoAnalise")
             )
         );
 
@@ -6668,23 +6668,23 @@ class Projetos extends MinC_Db_Table_Abstract
                     d.DtEnvio AS DtUltimoEnvio,
                     d.DtDistribuicao,
                     d.dtDevolucao,
-                    DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE())) AS QtdeDiasParaDistribuir,
+                    DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,{$this->getDate()})) AS QtdeDiasParaDistribuir,
                     CASE
                         WHEN d.DtDevolucao is null
-                            THEN DATEDIFF(day, d.DtDistribuicao, GETDATE())
+                            THEN DATEDIFF(day, d.DtDistribuicao, {$this->getDate()})
                         WHEN d.DtDevolucao is not null
                             THEN DATEDIFF(day, d.DtDistribuicao, d.DtDevolucao)
                         WHEN Situacao = 'B14'
-                            THEN DATEDIFF(day, d.DtDistribuicao, GETDATE()) - DATEDIFF(day, p.dtSituacao, GETDATE())
+                            THEN DATEDIFF(day, d.DtDistribuicao, {$this->getDate()}) - DATEDIFF(day, p.dtSituacao, {$this->getDate()})
                     END as QtdeDiasParaParecAnalisar,
                     CASE
                         WHEN d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0
-                            THEN DATEDIFF(day, d.DtDevolucao,GETDATE())
+                            THEN DATEDIFF(day, d.DtDevolucao,{$this->getDate()})
                     END as QtdeDiasDevolvidosParaCoord,
                     ISNULL(n.Descricao,'') AS Parecerista,
                     p.DtInicioExecucao,
                     p.DtFimExecucao,
-                    DATEDIFF(day,GETDATE(),
+                    DATEDIFF(day,{$this->getDate()},
                     p.DtInicioExecucao) AS QtdeDiasVencido,
                     CASE
                         WHEN dbo.fnchecarDiligencia(p.idPronac) = 0
@@ -6765,7 +6765,7 @@ class Projetos extends MinC_Db_Table_Abstract
                         p.NomeProjeto,
                         p.Situacao,
                         e.dtInicioEncaminhamento,
-                        DATEDIFF(day, e.dtInicioEncaminhamento, GETDATE()) AS qtDiasAnalise
+                        DATEDIFF(day, e.dtInicioEncaminhamento, {$this->getDate()}) AS qtDiasAnalise
                     ")
                 )
             );

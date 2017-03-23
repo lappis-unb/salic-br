@@ -579,12 +579,13 @@ class UploadController extends MinC_Controller_Action_Abstract {
 
 
                     // ==================== PERSISTE DADOS DO ARQUIVO =================//
+                    $objAcesso = new Acesso();
                     $dadosArquivo = array(
                         'nmArquivo' => $arquivoNome,
                         'sgExtensao' => $arquivoExtensao,
                         'dsTipoPadronizado' => $arquivoTipo,
                         'nrTamanho' => $arquivoTamanho,
-                        'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                        'dtEnvio' => $objAcesso->getExpressionDate(),
                         'dsHash' => $arquivoHash,
                         'stAtivo' => 'I');
 

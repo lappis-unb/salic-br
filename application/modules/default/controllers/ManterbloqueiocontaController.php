@@ -141,7 +141,8 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
             $dados = array();
             $dados['IdPRONAC']          = $idPronac;
             $dados['tpAcao']            = 2; //bloqueio judicial
-            $dados['dtAcao']            = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dados['dtAcao']            = $objAcesso->getExpressionDate();
             $dados['dsJustificativa']   = $justificativa;
             $dados['idUsuario']         = $this->getIdUsuario;
             $dados['stEstado']          = 1;
@@ -198,12 +199,13 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
             }
 
             // ==================== PERSISTE DADOS DO ARQUIVO =================//
+            $objAcesso = new Acesso();
             $dadosArquivo = array(
                     'nmArquivo'         => $arquivoNome,
                     'sgExtensao'        => $arquivoExtensao,
                     'dsTipoPadronizado' => $arquivoTipo,
                     'nrTamanho'         => $arquivoTamanho,
-                    'dtEnvio'           => new Zend_Db_Expr('GETDATE()'),
+                    'dtEnvio'           => $objAcesso->getExpressionDate(),
                     'dsHash'            => $arquivoHash,
                     'stAtivo'           => 'A');
 
@@ -318,10 +320,11 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
             }//fecha if FILES
 
             //============== INSERE DESBLOQUEIO DE CONTA ==========
+            $objAcesso = new Acesso();
             $dados = array();
             $dados['IdPRONAC']          = $idPronac;
             $dados['tpAcao']            = 0; //desbloqueio
-            $dados['dtAcao']            = new Zend_Db_Expr('GETDATE()');
+            $dados['dtAcao']            = $objAcesso->getExpressionDate();
             $dados['dsJustificativa']   = $justificativa;
             $dados['idUsuario']         = $this->getIdUsuario;
             $dados['stEstado']  = 1;

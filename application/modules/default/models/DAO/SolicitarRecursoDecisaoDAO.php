@@ -266,8 +266,9 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
        	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+        $objAcesso= new Acesso();
       	$sql = "INSERT INTO SAC.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
-				VALUES ('$idpronac', GETDATE(), '$recurso', '$idagente', 'E', 'NA')";
+				VALUES ('$idpronac', {$objAcesso->getDate()}, '$recurso', '$idagente', 'E', 'NA')";
 
 		$resultado = $db->query($sql);
 		return $resultado;
@@ -281,8 +282,9 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
        	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+        $objAcesso= new Acesso();
       	$sql = "INSERT INTO SAC.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
-				VALUES ('$idpronac', GETDATE(), '$recurso', '$idagente', 'E', 'AE')";
+				VALUES ('$idpronac', {$objAcesso->getDate()}, '$recurso', '$idagente', 'E', 'AE')";
 
 		$resultado = $db->query($sql);
 		return $resultado;

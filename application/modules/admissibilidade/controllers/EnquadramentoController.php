@@ -305,7 +305,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $tbRecurso = new tbRecurso();
         $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
 
-        $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
+        $recurso->dtAvaliacao = $tbRecurso->getExpressionDate();
         $recurso->idAgenteAvaliador = $this->auth->IdUsuario;
         $recurso->stAtendimento = 'D';
         $recurso->siRecurso = 15;

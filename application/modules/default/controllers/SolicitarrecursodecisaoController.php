@@ -98,9 +98,10 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
                     $tpSolicitacao = 'PI';
                 }
 
+                $objAcesso = new Acesso();
                 $dados = array(
                     'IdPRONAC'              => $_POST['idPronac'],
-                    'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                    'dtSolicitacaoRecurso'  => $objAcesso->getExpressionDate(),
                     'dsSolicitacaoRecurso'  => $_POST['dsRecurso'],
                     'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
                     'stAtendimento'         => 'N',
@@ -196,10 +197,11 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
+        $objAcesso = new Acesso();
         if($post->deacordo){
             $dados = array(
                 'IdPRONAC'              => $post->idPronac,
-                'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                'dtSolicitacaoRecurso'  => $objAcesso->getExpressionDate(),
                 'dsSolicitacaoRecurso'  => 'Desistência do prazo recursal',
                 'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
                 'stAtendimento'         => 'N',
@@ -234,10 +236,11 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
+        $objAcesso = new Acesso();
         if($post->deacordo){
             $dados = array(
                 'IdPRONAC'              => $post->idPronac,
-                'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                'dtSolicitacaoRecurso'  => $objAcesso->getExpressionDate(),
                 'dsSolicitacaoRecurso'  => 'Desistência do prazo recursal',
                 'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
                 'stAtendimento'         => 'N',
@@ -322,11 +325,12 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             $StatusProjeto = $post->StatusProjeto;
             $auth = Zend_Auth::getInstance();
 
+            $objAcesso = new Acesso();
             try {
 
                 $dados = array(
                     'IdPRONAC'              => $_POST['idPronac'],
-                    'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                    'dtSolicitacaoRecurso'  => $objAcesso->getExpressionDate(),
                     'dsSolicitacaoRecurso'  => $_POST['dsRecurso'],
                     'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
                     'stAtendimento'         => 'N',
@@ -369,10 +373,11 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
+        $objAcesso = new Acesso();
         if($idPronac){
             $dados = array(
                 'IdPRONAC'              => $idPronac,
-                'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                'dtSolicitacaoRecurso'  => $objAcesso->getExpressionDate(),
                 'dsSolicitacaoRecurso'  => 'Desistência do prazo recursal',
                 'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
                 'stAtendimento'         => 'N',

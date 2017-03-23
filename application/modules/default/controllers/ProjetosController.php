@@ -76,10 +76,11 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 
                 //ANALISE DE CONTEUDO
                 $RanaliseConteudo = $analiseConteudo->dadosAnaliseconteudo($idPronac);
+                $objAcesso = new Acesso();
                 foreach ($RanaliseConteudo as $resu) {
                     $data = array(
                         'tpAnalise' 			=> 'CO',
-                        'dtAnalise' 			=> new Zend_Db_Expr('GETDATE()'),
+                        'dtAnalise' 			=> $objAcesso->getExpressionDate(),
                         'idAnaliseConteudo'             => $resu->idAnaliseDeConteudo,
                         'IdPRONAC' 			=> $idPronac,
                         'idProduto' 			=> $resu->idProduto,
@@ -110,10 +111,11 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 
                 //ANALISE DE CUSTO
                 $Rplanilhaprojeto = $planilhaProjeto->dadosPlanilhaProjeto($idPronac);
+                $objAcesso = new Acesso();
                 foreach ($Rplanilhaprojeto as $resu) {
                     $data = array(
                         'tpPlanilha'            => 'CO',
-                        'dtPlanilha'            => new Zend_Db_Expr('GETDATE()'),
+                        'dtPlanilha'            => $objAcesso->getExpressionDate(),
                         'idPlanilhaProjeto'     => $resu->idPlanilhaProjeto,
                         'idPlanilhaProposta'    => $resu->idPlanilhaProposta,
                         'IdPRONAC'              => $idPronac,
@@ -169,17 +171,18 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 }
             
                 $Rtitulacao = $titulacaoConselheiro->buscarcomponentebalanceamento($area)->current();
+                $objAcesso = new Acesso();
                 $dados = array(
                     'idPRONAC' 			=> $idPronac,
                     'idAgente' 			=> $Rtitulacao->idAgente,
-                    'dtDistribuicao' 	=> new Zend_Db_Expr('GETDATE()'),
+                    'dtDistribuicao' 	=> $objAcesso->getExpressionDate(),
                     'idResponsavel' 	=> 0//$tipousuario
                 );
                 $Distribuicao->inserir($dados);
                 // chama a funcao para alterar a situacao do projeto - Padrao C10
                 $data = array(
                     'Situacao' 		=> 'C10',
-                    'dtSituacao' 	=> new Zend_Db_Expr('GETDATE()')
+                    'dtSituacao' 	=> $objAcesso->getExpressionDate()
                 );
                 //$where = "IdPRONAC = $idPronac";
                 $where['IdPRONAC = ?'] = $idPronac;
@@ -272,10 +275,11 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 'biDocumento' 	=> $arquivoBinario
             );
 
+            $objAcesso = new Acesso();
             $dados = "Insert into SAC.dbo.tbDocumento
                   (idPronac, stEstado, imDocumento, idTipoDocumento, idUsuario, dtDocumento, NoArquivo, TaArquivo, idUsuarioJuntada, dtJuntada, idUnidadeCadastro, CodigoCorreio, biDocumento)
                   values
-                  (".$idPronac.", 0, null, ".$tipo_doc.", ".$idusuario.", GETDATE(), '".$arquivoNome."', ".$arquivoTamanho.", null, null, ".$codOrgao.", '".$cod_ect."', ".$arquivoBinario.")
+                  (".$idPronac.", 0, null, ".$tipo_doc.", ".$idusuario.", {$objAcesso->getExpressionDate()}, '".$arquivoNome."', ".$arquivoTamanho.", null, null, ".$codOrgao.", '".$cod_ect."', ".$arquivoBinario.")
             ";
 
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -455,10 +459,11 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
             $Distribuicao = new DistribuicaoProjetoComissao();
             $titulacaoConselheiro = new TitulacaoConselheiro();
             $Rplanilhaprojeto = $planilhaProjeto->buscar(array('idPRONAC = ?' => $idPronac));
+            $objAcesso = new Acesso();
             foreach ($Rplanilhaprojeto as $resu) {
                 $data = array(
                     'tpPlanilha' 			=> 'CO',
-                    'dtPlanilha' 			=> new Zend_Db_Expr('GETDATE()'),
+                    'dtPlanilha' 			=> $objAcesso->getExpressionDate(),
                     'idPlanilhaProjeto' 	=> $resu->idPlanilhaProjeto,
                     'idPlanilhaProposta' 	=> $resu->idPlanilhaProposta,
                     'IdPRONAC' 				=> $resu->idPRONAC,
@@ -486,10 +491,11 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
 
             $RanaliseConteudo = $analiseConteudo->buscar(array('IdPRONAC = ?' => $idPronac));
 
+            $objAcesso = new Acesso();
             foreach ($RanaliseConteudo as $resu) {
                 $data = array(
                     'tpAnalise' 			=> 'CO',
-                    'dtAnalise' 			=> new Zend_Db_Expr('GETDATE()'),
+                    'dtAnalise' 			=> $objAcesso->getExpressionDate(),
                     'idAnaliseConteudo' 	=> $resu->idAnaliseDeConteudo,
                     'IdPRONAC' 				=> $resu->idPronac,
                     'idProduto' 			=> $resu->idProduto,
@@ -527,10 +533,11 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 }
             
             $Rtitulacao = $titulacaoConselheiro->buscarComponenteBalanceamento($area);
+            $objAcesso = new Acesso();
             $dados = array(
                 'idPRONAC' 			=> $idPronac,
                 'idAgente' 			=> $Rtitulacao['idagente'],
-                'dtDistribuicao' 	=> new Zend_Db_Expr('GETDATE()'),
+                'dtDistribuicao' 	=> $objAcesso->getExpressionDate(),
                 'idResponsavel' 	=> 0
             );
 

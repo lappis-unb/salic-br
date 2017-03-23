@@ -10,7 +10,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from(
                         array('dpc'=>$this->_schema.'.'.$this->_name),
-                        array('DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        array('DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,'.$this->getDate().')'))
                      );
         $slct->joinInner(
                             array('pr'=>'Projetos'),
@@ -161,7 +161,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                         array('dpc'=>$this->_name),
                         array(new Zend_Db_Expr("'Analisado' as Analise"),
                         'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente',
-                        'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,'.$this->getDate().')'))
                      ,$this->_schema);
         $slctAnalisados->joinInner(
                             array('pa'=>'tbPauta'),
@@ -251,7 +251,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->setIntegrityCheck(false);
         $slctNaoAnalisados->from(
                         array('dpc'=>$this->_name),
-                        array(new Zend_Db_Expr("'Não analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        array(new Zend_Db_Expr("'Não analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,'.$this->getDate().')'))
                         ,$this->_schema
                      );
         $slctNaoAnalisados->joinInner(
@@ -416,7 +416,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,se.Descricao AS DescSegmento
                 ,p.DtInicioExecucao
                 ,p.DtFimExecucao
-                ,DATEDIFF(DAY,t.DtDistribuicao,GETDATE()) AS Dias
+                ,DATEDIFF(DAY,t.DtDistribuicao,{$this->getDate()}) AS Dias
                 ,null AS idNrReuniao
                 ,null as NrReuniao
                 ,null AS stAnalise
@@ -520,7 +520,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,se.Descricao AS DescSegmento
                 ,p.DtInicioExecucao
                 ,p.DtFimExecucao
-                ,DATEDIFF(DAY,z.DtDistribuicao,GETDATE()) AS Dias
+                ,DATEDIFF(DAY,z.DtDistribuicao,{$this->getDate()}) AS Dias
                 ,t.idNrReuniao
                 ,r.NrReuniao AS NrReuniao
                 ,stAnalise
@@ -758,7 +758,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,se.Descricao AS DescSegmento
                     ,p.DtInicioExecucao
                     ,p.DtFimExecucao
-                    ,DATEDIFF(DAY,t.DtDistribuicao,GETDATE()) AS Dias
+                    ,DATEDIFF(DAY,t.DtDistribuicao,{$this->getDate()}) AS Dias
                     ,null AS idNrReuniao
                     ,null as NrReuniao
                     ,null AS stAnalise
@@ -815,7 +815,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,se.Descricao AS DescSegmento
                     ,p.DtInicioExecucao
                     ,p.DtFimExecucao
-                    ,DATEDIFF(DAY,z.DtDistribuicao,GETDATE()) AS Dias
+                    ,DATEDIFF(DAY,z.DtDistribuicao,{$this->getDate()}) AS Dias
                     ,t.idNrReuniao
                     ,r.NrReuniao AS NrReuniao
                     ,stAnalise

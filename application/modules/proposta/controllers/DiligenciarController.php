@@ -315,8 +315,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
                 $vw->inserirUploads($dadosArquivo);
             }
 
+            $objAcesso= new Acesso();
             $dados = array(
-                'DtResposta' => new Zend_Db_Expr('GETDATE()'),
+                'DtResposta' => $objAcesso->getExpressionDate(),
                 'Resposta' => $_POST['dsResposta'],
                 'idProponente' => $this->usuarioLogado,
                 'stEnviado' => 'N'
@@ -516,11 +517,13 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
             }
             if ($situacao) {
                 $situacaoDesc = $SituacaoDAO->buscar(array('Codigo = ?' => $situacao));
-                if ($texto == '')
+                $objAcesso= new Acesso();
+                if ($texto == '') {
                     $texto = $situacaoDesc[0]->Descricao;
+                }
                 $data = array(
                     'Situacao' => $situacaoDesc[0]->Codigo,
-                    'DtSituacao' => new Zend_Db_Expr('GETDATE()'),
+                    'DtSituacao' => $objAcesso->getExpressionDate(),
                     'ProvidenciaTomada' => $texto
                 );
             }
@@ -601,8 +604,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
             else
                 $idCodigoDocumentosExigidos = new Zend_Db_Expr('null');
 
+            $objAcesso = new Acesso();
             $dados = array(
-                'DtResposta' => new Zend_Db_Expr('GETDATE()'),
+                'DtResposta' => $objAcesso->getExpressionDate(),
                 'Resposta' => $_POST['resposta'],
                 'idProponente' => $this->usuarioLogado,
                 'stEnviado' => $post->verificaEnviado
@@ -623,23 +627,17 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
                 $paramEdital = "&edital=sim";
             }
 
+            $objAcesso = new Acesso();
+            $dados = array(
+                'dtResposta' => $objAcesso->getExpressionDate(),
+                'dsResposta' => $post->resposta,
+                'idCodigoDocumentosExigidos' => $post->idCodigoDocumentosExigidos,
+                'stEnviado' => $post->verificaEnviado
+            );
             if(!empty ($idArquivo)){
-                $dados = array(
-                    'dtResposta' => new Zend_Db_Expr('GETDATE()'),
-                    'dsResposta' => $post->resposta,
-                    'idArquivo' => $idArquivo,
-                    'idCodigoDocumentosExigidos' => $post->idCodigoDocumentosExigidos,
-                    'stEnviado' => $post->verificaEnviado
-                );
+                $dados['idArquivo'] = $idArquivo;
             }
-            else{
-                $dados = array(
-                    'dtResposta' => new Zend_Db_Expr('GETDATE()'),
-                    'dsResposta' => $post->resposta,
-                    'idCodigoDocumentosExigidos' => $post->idCodigoDocumentosExigidos,
-                    'stEnviado' => $post->verificaEnviado
-                );
-            }
+
             $where = array('idAvaliacaoProposta = ?' => $post->idAvaliacaoProposta);
             $resp = $AvaliacaoPropostaDAO->update($dados, $where);
 
@@ -713,8 +711,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
             'stEnviado'         => 'N'
         );
 
+        $objAcesso = new Acesso();
         if($this->getRequest()->getParam('btnEnvio') == 1){
-            $dados['DtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
+            $dados['DtSolicitacao'] = $objAcesso->getExpressionDate();
             $dados['idSolicitante'] = $idagente;
             $dados['stEnviado'] = 'S';
         }
@@ -792,9 +791,10 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
                 $stEnviado = 'S';
             }
 
+            $objAcesso = new Acesso();
             $dados = array(
                 'idPronac'          => $post->idPronac,
-                'DtSolicitacao'     => new Zend_Db_Expr('GETDATE()'),
+                'DtSolicitacao'     => $objAcesso->getExpressionDate(),
                 'Solicitacao'       => $_POST['solicitacao'],
                 'idSolicitante'     => $idagente,
                 'idTipoDiligencia'  => $post->tpDiligencia,
@@ -895,11 +895,12 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
 
         $tbHistoricoEmailDAO = new tbHistoricoEmail();
 
+        $objAcesso = new Acesso();
         $dados = array(
                     'idPronac'=>$idPronac,
                     'idTextoemail'=>14,
                     'iDAvaliacaoProposta'=>new Zend_Db_Expr('NULL'),
-                    'DtEmail'=>new Zend_Db_Expr('getdate()'),
+                    'DtEmail'=> $objAcesso->getExpressionDate(),
                     'stEstado'=>1,
                     'idUsuario'=>$auth->getIdentity()->usu_codigo,
                  );
@@ -1106,8 +1107,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         }
         //resposta da diligencia Projeto
         $diligenciaProjeto = $diligenciaDao->diligenciasNaoRespondidas(true);
+        $objAcesso = new Acesso();
         $data = array(
-            'DtResposta'    => new Zend_Db_Expr('GETDATE()'),
+            'DtResposta'    => $objAcesso->getExpressionDate(),
             'stEnviado'     => 'S',
             'RESPOSTA'      => 'O PROPONENTE N?O RESPONDEU A DILIG?NCIA NO PRAZO DETERMINADO PELA IN 3 DE 30 DE DEZEMBRO DE 2010; ESPERANDO DECIS?O.'
         );
@@ -1116,8 +1118,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
 
         //resposta da diligencia Proposta
         $diligenciaProposta = $AvaliacaoPropostaDao->diligenciasNaoRespondidas(true);
+        $objAcesso = new Acesso();
         $data = array(
-            'dtResposta'    => new Zend_Db_Expr('GETDATE()'),
+            'dtResposta'    => $objAcesso->getExpressionDate(),
             'stEnviado'     => 'S',
             'dsResposta'    => 'O PROPONENTE N?O RESPONDEU A DILIG?NCIA NO PRAZO DETERMINADO PELA IN 3 DE 30 DE DEZEMBRO DE 2010; ESPERANDO DECIS?O.'
         );

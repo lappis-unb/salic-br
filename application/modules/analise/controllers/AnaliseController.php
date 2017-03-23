@@ -350,7 +350,7 @@ class Analise_AnaliseController extends Analise_GenericController
                 'idProjeto' => $idProjeto,
                 'idTextoemail' => new Zend_Db_Expr('NULL'),
                 'iDAvaliacaoProposta' => new Zend_Db_Expr('NULL'),
-                'DtEmail' => new Zend_Db_Expr('getdate()'),
+                'DtEmail' => $tbHistoricoEmailDAO->getExpressionDate(),
                 'stEstado' => 1,
                 'idUsuario' => $auth->getIdentity()->usu_codigo,
             );
@@ -364,6 +364,7 @@ class Analise_AnaliseController extends Analise_GenericController
         $params = $this->getRequest()->getParams();
         try {
 
+            $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
             if (empty($params['idpronac']))
                 throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
 
@@ -374,12 +375,11 @@ class Analise_AnaliseController extends Analise_GenericController
 
                 $dados = array(
                     'idTecnico' => $params['idNovoTecnico'],
-                    'dtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                    'dtEncaminhamento' => $tbAvaliacao->getExpressionDate(),
                 );
 
                 $where = array('idPronac = ?' => $params['idpronac'], 'idTecnico = ?' => $params['tecnicoAtual'], 'stEstado = ?' => true);
 
-                $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
                 $tbAvaliacao->update($dados, $where);
 
                 parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/{$this->moduleName}/analise/listarprojetos", "CONFIRM");

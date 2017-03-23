@@ -507,9 +507,10 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
                         $whereVinculo = array('idVinculo = ?' => $idVinculo[0]->idVinculo);
 
+                        $objAcesso = new Acesso();
                         $dadosVinculo = array(
                                 'idAgenteProponente' => $idNovoProponente
-                                ,'dtVinculo'         => new Zend_Db_Expr('GETDATE()'));
+                                ,'dtVinculo'         => $objAcesso->getExpressionDate());
 
                         $tbVinculo->alterar($dadosVinculo, $whereVinculo);
                     else :
@@ -636,12 +637,13 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                     $DadosProj = $Projeto->buscar(array('IdPRONAC = ?' => $idPronac));
                     $Aprovacao = new Aprovacao();
                     $registro = $Aprovacao->buscar(array('AnoProjeto = ?' => $DadosProj[0]->AnoProjeto, 'Sequencial = ?' => $DadosProj[0]->Sequencial ));
+                    $objAcesso = new Acesso();
                     $dados = array(
                             'IdPRONAC' => $idPronac,
                             'AnoProjeto' => $DadosProj[0]->AnoProjeto,
                             'Sequencial' => $DadosProj[0]->Sequencial,
                             'TipoAprovacao' => 3,
-                            'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                            'DtAprovacao' => $objAcesso->getExpressionDate(),
                             // 'ResumoAprovacao' => 'Solicita��o de Readequa��o',
                             'DtInicioCaptacao' => $datas['dtInicioNovoPrazo'],
                             'DtFimCaptacao' => $datas['dtFimNovoPrazo'],

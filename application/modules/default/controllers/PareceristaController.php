@@ -534,12 +534,12 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         
         // Dados da configuração de pagamento
         $configAtivo = $modelConfigurarPagamento->buscarConfiguracoes(array('stEstado = ?' => '1'));
-        
+        $objAcesso = new Acesso();
         if(count($configAtivo) == 0){
             
             $dados = array('nrDespachoInicial' => 0,
                             'nrDespachoFinal' => 0,
-                            'dtConfiguracaoPagamento' => new Zend_Db_Expr('GETDATE()'),
+                            'dtConfiguracaoPagamento' => $objAcesso->getExpressionDate(),
                             'stEstado' => 1,
                             'idUsuario' => $auth->getIdentity()->usu_codigo
             );
@@ -640,9 +640,10 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         try {
             
             // Dados da configuração de pagamento
+            $objAcesso = new Acesso();
             $dados = array('nrDespachoInicial'       => $nrDespachoInicial,
                            'nrDespachoFinal'         => $nrDespachoFinal,
-                           'dtConfiguracaoPagamento' => new Zend_Db_Expr('getDate()'),
+                           'dtConfiguracaoPagamento' => $objAcesso->getExpressionDate(),
                            'stEstado'                => 0,
                            'idUsuario'               => $auth->getIdentity()->usu_codigo
             );
@@ -657,12 +658,13 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
                 $vlTotalPagamento = $modelPagarParecerista->vlTotalPagamento(array('pp.idGerarPagamentoParecerista IS NULL' => NULL, 'idParecerista = ?' => $p->idParecerista));
 
+                $objAcesso = new Acesso();
                 // Gerar Pagamento Parecerista
                 $dados = array('nrDespacho'             => $di, 
                                'vlTotalPagamento'       => $vlTotalPagamento[0]->vlTotalPagamento, 
                                'idConfigurarPagamento'  => $idConfigurarPagamento, 
                                'siPagamento'            => 1, 
-                               'dtGeracaoPagamento'     => new Zend_Db_Expr('GETDATE()'), 
+                               'dtGeracaoPagamento'     => $objAcesso->getExpressionDate(),
                                'idUsuario'              => $auth->getIdentity()->usu_codigo
                 );
 
@@ -1194,11 +1196,12 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         
         try {
 
+            $objAcesso = new Acesso();
             // Gerar Pagamento Parecerista
             $dados = array('nrDespacho'         => $nrDespacho, 
                            'vlTotalPagamento'   => $vlTotal, 
                            'siPagamento'        => 1, 
-                           'dtGeracaoPagamento' => new Zend_Db_Expr('GETDATE()'), 
+                           'dtGeracaoPagamento' => $objAcesso->getExpressionDate(),
                            'idUsuario'          => $auth->getIdentity()->usu_codigo
             );
 
@@ -1513,7 +1516,8 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
                 $arquivoParecerista->inserirArquivodePagamento($idGerarPagamentoParecerista, $idUltimoArquivo, 1);
                 
                 // Mudar a situação do pagamento para 2 = pagamento efetivado
-                $dados = array('dtEfetivacaoPagamento'  => new Zend_Db_Expr('getDate()'), 
+                $objAcesso = new Acesso();
+                $dados = array('dtEfetivacaoPagamento'  => $objAcesso->getExpressionDate(),
                                'dtOrdemBancaria'        => $dtOrdemBancaria,
                                'nrOrdemBancaria'        => $nrOrdemBancaria,
                                'siPagamento'            => 4,

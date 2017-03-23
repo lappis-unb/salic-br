@@ -802,13 +802,14 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                         $atualizaHistorico = $tbHistoricoDocumento->alterar($dadosAlteracao, $whereAlteracao);
                     }
 
+                    $objAcesso = new Acesso();
                     //CADASTRA UM REGISTRO DE TRAMITACAO
                     $dados = array(
                         'idPronac' => $dadosProjeto->IdPRONAC,
                         'idDocumento' => 0,
                         'idOrigem' => $codOrgao,
                         'idUnidade' => $_POST['idunidade'],
-                        'dtTramitacaoEnvio' => new Zend_Db_Expr('GETDATE()'),
+                        'dtTramitacaoEnvio' => $objAcesso->getExpressionDate(),
                         'idUsuarioEmissor' => $idusuario,
                         'meDespacho' => $_POST['despacho'],
                         'Acao' => 1,

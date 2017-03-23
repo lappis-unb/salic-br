@@ -583,13 +583,14 @@ class SolicitarAlteracaoController extends MinC_Controller_Action_Abstract
                     $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin�rio
                     $arquivoHash     = Upload::setHash($arquivoTemp); // hash
 
+                    $objAcesso = new Acesso();
 	                // cadastra dados do arquivo
 	                $dadosArquivo = array(
 	                        'nmArquivo'         => $arquivoNome,
 	                        'sgExtensao'        => $arquivoExtensao,
 	                        'dsTipoPadronizado' => $arquivoTipo,
 	                        'nrTamanho'         => $arquivoTamanho,
-	                        'dtEnvio'           => new Zend_Db_Expr('GETDATE()'),
+	                        'dtEnvio'           => $objAcesso->getExpressionDate(),
 	                        'dsHash'            => $arquivoHash,
 	                        'stAtivo'           => 'A');
 	                $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);

@@ -132,7 +132,8 @@ class AnalisarsituacaoitemController extends MinC_Controller_Action_Abstract {
         $busca = $tbSolicitarItem->buscarDadosItem($_POST['idItem']);
 
         $busca->Resposta = $_POST['resposta'];
-        $busca->DtResposta = new Zend_Db_Expr('GETDATE()');
+        $objAcesso = new Acesso();
+        $busca->DtResposta = $objAcesso->getExpressionDate();
         $busca->stEstado = $_POST['avaliacao'];
         $busca->save();
 

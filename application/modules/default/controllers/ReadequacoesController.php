@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Controller Readequacoes
- * @author Jefferson Alessandro - jeffersonassilva@gmail.com
- * @since 14/11/2013
- * @version 1.0
- * @package application
- * @subpackage application.controller
- * @link http://www.cultura.gov.br
- * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
- */
 class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
@@ -280,9 +270,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if(count($verificarPlanilhaSR)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
+
+            $objAcesso = new Acesso();
+
             foreach ($planilhaAtiva as $value) {
                 $planilhaSR['tpPlanilha'] = 'SR';
-                $planilhaSR['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+                $planilhaSR['dtPlanilha'] = $objAcesso->getExpressionDate();
                 $planilhaSR['idPlanilhaProjeto'] = $value['idPlanilhaProjeto'];
                 $planilhaSR['idPlanilhaProposta'] = $value['idPlanilhaProposta'];
                 $planilhaSR['IdPRONAC'] = $value['IdPRONAC'];
@@ -354,12 +347,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
         //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        $objAcesso = new Acesso();
         if(count($verificarPlanilhaSR)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
+
             foreach ($planilhaAtiva as $value) {
                 $planilhaSR['tpPlanilha'] = 'SR';
-                $planilhaSR['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+                $planilhaSR['dtPlanilha'] = $objAcesso->getExpressionDate();
                 $planilhaSR['idPlanilhaProjeto'] = $value['idPlanilhaProjeto'];
                 $planilhaSR['idPlanilhaProposta'] = $value['idPlanilhaProposta'];
                 $planilhaSR['IdPRONAC'] = $value['IdPRONAC'];
@@ -400,10 +395,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $newValorUnitario = str_replace('.', '', $_POST['newValorUnitario']);
         $newValorUnitario = str_replace(',', '.', $newValorUnitario);
 
+
         /* DADOS DO ITEM PARA INCLUSÃO DA READEQUAÇÃO */
         $dadosInclusao = array();
         $dadosInclusao['tpPlanilha'] = 'SR';
-        $dadosInclusao['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+        $dadosInclusao['dtPlanilha'] = $objAcesso->getExpressionDate();
         $dadosInclusao['IdPRONAC'] = $idPronac;
         $dadosInclusao['idProduto'] = $_POST['newProduto'];
         $dadosInclusao['idEtapa'] = $_POST['newEtapa'];
@@ -467,12 +463,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
+        $objAcesso = new Acesso();
         if(count($verificarPlanilhaSR)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
             foreach ($planilhaAtiva as $value) {
                 $planilhaSR['tpPlanilha'] = 'SR';
-                $planilhaSR['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+                $planilhaSR['dtPlanilha'] = $objAcesso->getExpressionDate();
                 $planilhaSR['idPlanilhaProjeto'] = $value['idPlanilhaProjeto'];
                 $planilhaSR['idPlanilhaProposta'] = $value['idPlanilhaProposta'];
                 $planilhaSR['IdPRONAC'] = $value['IdPRONAC'];
@@ -1669,12 +1666,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     throw new Exception('O arquivo não pode ser maior do que <strong>5MB</strong>!');
                 }
 
+                $objAcesso = new Acesso();
                 $dadosArquivo = array(
                     'nmArquivo' => $arquivoNome,
                     'sgExtensao' => $arquivoExtensao,
                     'dsTipoPadronizado' => $arquivoTipo,
                     'nrTamanho' => $arquivoTamanho,
-                    'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                    'dtEnvio' => $objAcesso->getExpressionDate(),
                     'dsHash' => $arquivoHash,
                     'stAtivo' => 'A'
                 );
@@ -1725,7 +1723,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dados = array();
                 $dados['idPronac'] = $idPronac;
                 $dados['idTipoReadequacao'] = $idTipoReadequacao;
-                $dados['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
+                $dados['dtSolicitacao'] = $objAcesso->getExpressionDate();
                 $dados['idSolicitante'] = $rsAgente->idAgente;
                 $dados['dsJustificativa'] = $_POST['descJustificativa'];
                 $dados['dsSolicitacao'] = $_POST['descSolicitacao'];
@@ -2201,10 +2199,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $stValidacaoCoordenador = 0;
         $dataEnvio = null;
 
+        $objAcesso = new Acesso();
         if($r){
             $r->stAtendimento = $this->_request->getParam('stAtendimento');
             $r->dsAvaliacao = $this->_request->getParam('dsAvaliacao');
-            $r->dtAvaliador = new Zend_Db_Expr('GETDATE()');
+            $r->dtAvaliador = $objAcesso->getExpressionDate();
             $r->idAvaliador = $this->idUsuario;
 
             if($this->_request->getParam('stAtendimento') == 'I'){
@@ -2220,7 +2219,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 // deferida
                 if($this->_request->getParam('vinculada') == 262 || $this->_request->getParam('vinculada') == 166){
                     $r->siEncaminhamento = 4; //4=Enviado para Análise Técnica (SAV, SEFIC)
-                    $dataEnvio = new Zend_Db_Expr('GETDATE()');
+                    $dataEnvio = $objAcesso->getExpressionDate();
                     $r->idAvaliador = $this->_request->getParam('destinatario');
                 } else if($this->_request->getParam('vinculada') == 400) {
                     $stValidacaoCoordenador = 1;
@@ -2242,7 +2241,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $dados = array(
                         'idReadequacao' => $r->idReadequacao,
                         'idUnidade' => $this->_request->getParam('vinculada'),
-                        'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                        'DtEncaminhamento' => $objAcesso->getExpressionDate(),
                         'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
                         'dtEnvioAvaliador' => !empty($dqataEnvio) ? $dataEnvio : null,
                         'stValidacaoCoordenador' => $stValidacaoCoordenador,
@@ -2253,7 +2252,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 } else {
                     $dados = array(
                         'idUnidade' => $this->_request->getParam('vinculada'),
-                        'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                        'DtEncaminhamento' => $objAcesso->getExpressionDate(),
                         'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
                         'dtEnvioAvaliador' => !empty($dqataEnvio) ? $dataEnvio : null,
                         'stValidacaoCoordenador' => $stValidacaoCoordenador,
@@ -2459,7 +2458,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             $dados = array();
             $dados['idAvaliador'] = $idAvaliador;
-            $dados['DtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dados['DtEnvioAvaliador'] = $objAcesso->getExpressionDate();
             $where["idDistribuirReadequacao = ? "] = $idDistRead;
             $tbDistribuirReadequacao = new tbDistribuirReadequacao();
             $return = $tbDistribuirReadequacao->update($dados, $where);
@@ -2525,7 +2525,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $this->view->nmPagina = $dados->dsReadequacao;
         $d = array();
         $d['ProvidenciaTomada'] = 'Readequação enviado para avaliação técnica.';
-        $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+        $objAcesso = new Acesso();
+        $d['dtSituacao'] = $objAcesso->getExpressionDate();
         $where = "IdPRONAC = $dados->idPronac";
         $Projetos = new Projetos();
         $Projetos->update($d, $where);
@@ -2659,10 +2660,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dDP = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$idReadequacao));
 
+                $objAcesso = new Acesso();
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirReadequacao
                     $dadosDP = array();
-                    $dadosDP['DtRetornoAvaliador'] = new Zend_Db_Expr('GETDATE()');
+                    $dadosDP['DtRetornoAvaliador'] = $objAcesso->getExpressionDate();
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
                     $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
 
@@ -2756,18 +2758,19 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         $tbDistribuirReadequacao = new tbDistribuirReadequacao();
         $dadosDistRead = $tbDistribuirReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao));
+        $objAcesso = new Acesso();
         if(count($dadosDistRead)>0){
             //Atualiza a tabela tbDistribuirReadequacao
             $dadosDP = array();
             $dadosDP['stValidacaoCoordenador'] = 1;
-            $dadosDP['DtValidacaoCoordenador'] = new Zend_Db_Expr('GETDATE()');
+            $dadosDP['DtValidacaoCoordenador'] = $objAcesso->getExpressionDate();
             $dadosDP['idCoordenador'] = $this->idUsuario;
 
             // atualiza com dados para enviar para cnic
             $dadosDP['idUnidade'] = 400;
-            $dadosDP['DtEncaminhamento'] = new Zend_Db_Expr('GETDATE()');
+            $dadosDP['DtEncaminhamento'] = $objAcesso->getExpressionDate();
             $dadosDP['idAvaliador'] = $idComponente;
-            $dadosDP['dtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
+            $dadosDP['dtEnvioAvaliador'] = $objAcesso->getExpressionDate();
 
             $whereDP = "idDistribuirReadequacao = ".$dadosDistRead[0]->idDistribuirReadequacao;
             $distribuicao = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
@@ -3032,10 +3035,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dDP = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$idReadequacao, 'idUnidade =?'=>400, 'idAvaliador=?'=>$this->idUsuario));
 
+                $objAcesso = new Acesso();
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirReadequacao
                     $dadosDP = array();
-                    $dadosDP['DtRetornoAvaliador'] = new Zend_Db_Expr('GETDATE()');
+                    $dadosDP['DtRetornoAvaliador'] = $objAcesso->getExpressionDate();
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
                     $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
 
@@ -3110,7 +3114,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => $TipoAprovacao,
-                                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                                    'DtAprovacao' => $objAcesso->getExpressionDate(),
                                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'AprovadoReal' => $AprovadoReal,
                                     'Logon' => $this->idUsuario,
@@ -3129,7 +3133,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
-                                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                                    'DtAprovacao' => $objAcesso->getExpressionDate(),
                                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
@@ -3250,7 +3254,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
-                                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                                    'DtAprovacao' => $objAcesso->getExpressionDate(),
                                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
@@ -3318,7 +3322,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
-                                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                                    'DtAprovacao' => $objAcesso->getExpressionDate(),
                                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
@@ -3392,7 +3396,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
-                                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                                    'DtAprovacao' => $objAcesso->getExpressionDate(),
                                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
@@ -3464,7 +3468,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                         //Atualiza a tabela tbDistribuirReadequacao
                         $dados = array();
                         $dados['stValidacaoCoordenador'] = 1;
-                        $dados['DtValidacaoCoordenador'] = new Zend_Db_Expr('GETDATE()');
+                        $dados['DtValidacaoCoordenador'] = $objAcesso->getExpressionDate();
                         $dados['idCoordenador'] = $this->idUsuario;
                         $where = "idReadequacao = $idReadequacao";
                         $tbDistribuirReadequacao = new tbDistribuirReadequacao();
@@ -3569,7 +3573,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                         'AnoProjeto' => $dadosPrj->AnoProjeto,
                         'Sequencial' => $dadosPrj->Sequencial,
                         'TipoAprovacao' => $TipoAprovacao,
-                        'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                        $objAcesso = new Acesso();
+                        'DtAprovacao' => $objAcesso->getExpressionDate(),
                         'ResumoAprovacao' => 'Parecer favorável para readequação',
                         #'AprovadoReal' => $AprovadoReal,
                         'AprovadoReal' => $TipoDeReadequacao[0]['vlReadequado'], //Alterado pelo valor retornado pela Store
@@ -3591,7 +3596,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
-                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                    'DtAprovacao' => $tbAprovacao->getExpressionDate(),
                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
@@ -3713,7 +3718,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
-                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                    'DtAprovacao' => $tbAprovacao->getExpressionDate(),
                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
@@ -3800,7 +3805,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
-                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                    'DtAprovacao' => $tbAprovacao->getExpressionDate(),
                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
@@ -3872,7 +3877,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     'AnoProjeto' => $dadosPrj->AnoProjeto,
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
-                    'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                    'DtAprovacao' => $tbAprovacao->getExpressionDate(),
                     'ResumoAprovacao' => 'Parecer favorável para readequação',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
@@ -3985,7 +3990,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         //Atualiza a tabela tbDistribuirReadequacao
         $dados = array();
         $dados['stValidacaoCoordenador'] = 1;
-        $dados['DtValidacaoCoordenador'] = new Zend_Db_Expr('GETDATE()');
+        $dados['DtValidacaoCoordenador'] = $objAcesso->getExpressionDate();
         $dados['idCoordenador'] = $idCoordenador;
         $where = "idReadequacao = $idReadequacao";
         $tbDistribuirReadequacao = new tbDistribuirReadequacao();
@@ -4094,7 +4099,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $dados = array();
             $dados['idPronac'] = $idPronac;
             $dados['idTipoReadequacao'] = 2;
-            $dados['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dados['dtSolicitacao'] = $objAcesso->getExpressionDate();
             $dados['idSolicitante'] = $rsAgente->idAgente;
             $dados['dsJustificativa'] = '';
             $dados['dsSolicitacao'] = '';
@@ -4121,7 +4127,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             try {
                 foreach ($planilhaAtiva as $value) {
                     $planilhaSR['tpPlanilha'] = 'SR';
-                    $planilhaSR['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+                    $planilhaSR['dtPlanilha'] = $objAcesso->getExpressionDate();
                     $planilhaSR['idPlanilhaProjeto'] = $value['idPlanilhaProjeto'];
                     $planilhaSR['idPlanilhaProposta'] = $value['idPlanilhaProposta'];
                     $planilhaSR['IdPRONAC'] = $value['IdPRONAC'];
@@ -4288,7 +4294,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idAvaliador' => $destinatario,
-                    'DtEnvioAvaliador' => new Zend_Db_Expr('GETDATE()'),
+                    'DtEnvioAvaliador' => $tbDistribuirReadequacao->getExpressionDate(),
                     'dsOrientacao' => $dsOrientacao,
                     'idUnidade' => $idUnidade
                 );

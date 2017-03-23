@@ -38,12 +38,13 @@ class ArquivoModel
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
             if ($arquivoExtensao != 'doc' and $arquivoExtensao != 'docx' and $arquivoExtensao != '') {
                 // cadastra dados do arquivo
+                $objAcesso = new Acesso();
                 $dadosArquivo = array(
                     'nmArquivo' => $arquivoNome,
                     'sgExtensao' => $arquivoExtensao,
                     'dsTipoPadronizado' => $arquivoTipo,
                     'nrTamanho' => $arquivoTamanho,
-                    'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                    'dtEnvio' => $objAcesso->getDate(),
                     'dsHash' => $arquivoHash,
                     'stAtivo' => 'A'
                 );

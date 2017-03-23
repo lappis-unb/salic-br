@@ -1423,7 +1423,8 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $auth = Zend_Auth::getInstance();
                 $idusuario = $auth->getIdentity()->usu_codigo;
 
-                $dados = array('siTransferenciaRecurso' => 1, 'dtTransferenciaRecurso' => new Zend_Db_Expr('GETDATE()'), 'logon' => $idusuario);
+                $objAcesso = new Acesso();
+                $dados = array('siTransferenciaRecurso' => 1, 'dtTransferenciaRecurso' => $objAcesso->getExpressionDate(), 'logon' => $idusuario);
                 $where = array('Idcaptacao = ?' => $idCaptacao);
                 $captacao->update($dados, $where);
 
@@ -1525,7 +1526,8 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                 foreach ($dadosCaptacao as $d) {
                     $vlCaptado = $vlCaptado + $d->CaptacaoReal;
-                    $dados = array('siTransferenciaRecurso' => 1, 'dtTransferenciaRecurso' => new Zend_Db_Expr('GETDATE()'), 'logon' => $idusuario);
+                    $objAcesso = new Acesso();
+                    $dados = array('siTransferenciaRecurso' => 1, 'dtTransferenciaRecurso' => $objAcesso->getExpressionDate(), 'logon' => $idusuario);
                     $where = array('Idcaptacao = ?' => $d->Idcaptacao);
                     $captacao->update($dados, $where);
                 }

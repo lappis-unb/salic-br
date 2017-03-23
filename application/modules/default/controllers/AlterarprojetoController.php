@@ -747,13 +747,14 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
+        $objAcesso = new Acesso();
         // cadastra dados do arquivo
         $dadosArquivo = array(
             'nmArquivo' => $arquivoNome,
             'sgExtensao' => $arquivoExtensao,
             'dsTipoPadronizado' => $arquivoTipo,
             'nrTamanho' => $arquivoTamanho,
-            'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+            'dtEnvio' => $objAcesso->getExpressionDate(),
             'dsHash' => $arquivoHash,
             'stAtivo' => 'A');
         $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
@@ -765,7 +766,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         // cadastra o binario do arquivo
         $dadosBinario = array(
             'idArquivo' => $idUltimoArquivo,
-            'biArquivo' => $arquivoBinario);
+            'biArquivo' => $arquivoBinario
+        );
         $cadastrarBinario = ArquivoImagemDAO::cadastrar($dadosBinario);
 
         return $idUltimoArquivo;
@@ -1935,12 +1937,13 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
 
             // cadastra dados do arquivo
             // cadastra dados do arquivo
+            $objAcesso = new Acesso();
             $dadosArquivo = array(
                 'nmArquivo' => $arquivoNome,
                 'sgExtensao' => $arquivoExtensao,
                 'dsTipoPadronizado' => $arquivoTipo,
                 'nrTamanho' => $arquivoTamanho,
-                'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                'dtEnvio' => $objAcesso->getExpressionDate(),
                 'dsHash' => $arquivoHash,
                 'stAtivo' => 'I');
             $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);

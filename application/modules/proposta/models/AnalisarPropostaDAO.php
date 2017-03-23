@@ -448,10 +448,10 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     public static function inserirMovimentacao($dado)
     {
         try {
-
+            $movimentacao = new tbMovimentacaoBancaria();
             $sql = "INSERT INTO sac.dbo.tbMovimentacao
                 (idProjeto,Movimentacao,DtMovimentacao,stEstado,Usuario)
-                VALUES (" . $dado['idPreProjeto'] . "," . $dado['movimentacao'] . ",getdate(),0," . $dado['idTecnico'] . ");";
+                VALUES (" . $dado['idPreProjeto'] . "," . $dado['movimentacao'] . ",".$movimentacao->getDate().",0," . $dado['idTecnico'] . ");";
 
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -490,9 +490,10 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     public static function inserirDespacho($dado)
     {
         try {
+            $movimentacao = new tbMovimentacaoBancaria();
             $sql = "INSERT INTO sac.dbo.tbDespacho
                 (idProposta,Tipo,Data,Despacho,stEstado,idUsuario)
-                VALUES (" . $dado['idPreProjeto'] . ",129,getdate(),'" . $dado['despacho'] . "',0," . $dado['idTecnico'] . ");";;
+                VALUES (" . $dado['idPreProjeto'] . ",129,".$movimentacao->getDate().",'" . $dado['despacho'] . "',0," . $dado['idTecnico'] . ");";;
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
@@ -775,13 +776,12 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
 
     public function recuperarQtdePropostaTecnicoOrgao($idTecnico, $idOrgao)
     {
-
-        $sql = "
-                SELECT count(*) as qtdePropostas
+        $movimentacao = new tbMovimentacaoBancaria();
+        $sql = "SELECT count(*) as qtdePropostas
                 FROM tbAvaliacaoProposta a
                 INNER JOIN tabelas.dbo.vwUsuariosOrgaosGrupos  u ON (a.idTecnico = u.usu_Codigo)
                 WHERE uog_orgao={$idOrgao} AND idTecnico={$idTecnico} and sis_codigo=21 and gru_codigo=92 and
-                stEstado = 0 and year(DtAvaliacao)=year(Getdate()) and month(DtAvaliacao)=month(Getdate())";
+                stEstado = 0 and year(DtAvaliacao)=year(".$movimentacao->getDate().") and month(DtAvaliacao)=month(".$movimentacao->getDate().")";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

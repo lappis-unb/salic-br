@@ -67,7 +67,7 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('gpp'=>$this->_name), array('max(convert(int,(nrDespacho))) as UltimoDespachoDoAno'));
-        $select->where('YEAR([dtGeracaoPagamento]) = ?', new Zend_Db_Expr('YEAR(GETDATE())'));
+        $select->where('YEAR([dtGeracaoPagamento]) = ?', new Zend_Db_Expr('YEAR('.$this->getDate().')'));
         return $this->fetchRow($select);
     }
 

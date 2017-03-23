@@ -130,14 +130,15 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function arquivarProjeto($idPronac = null, $stAcao, $cxInicio = null, $cxFinal = null, $idusuario, $idArquivamento = null, $x = null) {
+        $objAcesso= new Acesso();
         if ($x) {
             $sql = "INSERT INTO 
 						sac.dbo.tbArquivamento (idPronac, Data, Edificio, CaixaInicio, CaixaFinal, stAcao, stEstado, idUsuario) 
-						VALUES ($idPronac, getdate(), 0, $cxInicio, $cxFinal, $stAcao, 1, $idusuario)";
+						VALUES ($idPronac, {$objAcesso->getDate()}, 0, $cxInicio, $cxFinal, $stAcao, 1, $idusuario)";
         } else {
             $sql = "INSERT INTO 
 							sac.dbo.tbArquivamento (idPronac, Data, Edificio, stAcao, stEstado, idUsuario, CaixaInicio, CaixaFinal) 
-						SELECT $idPronac, data = getdate(), Edificio, stAcao = $stAcao, stEstado = 1, idUsuario = $idusuario,";
+						SELECT $idPronac, data = {$objAcesso->getDate()}, Edificio, stAcao = $stAcao, stEstado = 1, idUsuario = $idusuario,";
 
             if (($cxInicio) && ($cxFinal)) {
                 $sql.= " CaixaInicio = $cxInicio, CaixaFinal = $cxFinal ";
@@ -415,10 +416,10 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function tramitarProjeto($idPronac, $idDestino, $idLote, $acaoA, $acaoB, $despacho) {
 
-
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO 
 					SAC.dbo.tbHistoricoDocumento (idPronac, idUnidade, dtTramitacaoEnvio, idUsuarioEmissor, idUsuarioReceptor, idLote, Acao, stEstado, meDespacho)
-					SELECT IdPRONAC, idUnidade = $idDestino, dtTramitacaoEnvio = GETDATE(), idUsuarioEmissor, idUsuarioReceptor, idLote = $idLote, Acao = $acaoB, stEstado = 1, meDespacho = '$despacho'
+					SELECT IdPRONAC, idUnidade = $idDestino, dtTramitacaoEnvio = {$objAcesso->getDate()}, idUsuarioEmissor, idUsuarioReceptor, idLote = $idLote, Acao = $acaoB, stEstado = 1, meDespacho = '$despacho'
 				";
 
         $sql .= " FROM SAC.dbo.tbHistoricoDocumento 
@@ -477,7 +478,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function insereLote() {
-        $sql = "INSERT INTO SAC.dbo.tbLote (dtLote) Values (GETDATE()) ";
+        $objAcesso= new Acesso();
+        $sql = "INSERT INTO SAC.dbo.tbLote (dtLote) Values ({$objAcesso->getDate()}) ";
 
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -512,16 +514,17 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function mudaStatus($idPronac, $destino, $pronac, $processo, $usuarios, $DtSituacao, $despacho, $origem = null) {
+        $objAcesso= new Acesso();
         if ($origem) {
             $sql = "insert into SAC.dbo.tbHistoricoDocumento 
 				(IdPRONAC, idOrigem, idUnidade, idUsuarioEmissor, Acao, stEstado, meDespacho, dtTramitacaoEnvio) 
 				values 
-				($idPronac, $origem, $destino, $usuarios, 1, 1, '$despacho', GETDATE()) ";
+				($idPronac, $origem, $destino, $usuarios, 1, 1, '$despacho', {$objAcesso->getDate()}) ";
         } else {
             $sql = "insert into SAC.dbo.tbHistoricoDocumento 
 				(IdPRONAC, idUnidade, idUsuarioEmissor, Acao, stEstado, meDespacho, dtTramitacaoEnvio) 
 				values 
-				($idPronac, $destino, $usuarios, 1, 1, '$despacho', GETDATE()) ";
+				($idPronac, $destino, $usuarios, 1, 1, '$despacho', {$objAcesso->getDate()}) ";
         }
 
 
@@ -597,9 +600,10 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function recusarProjeto($idPronac, $acao, $codOrgao, $despacho = null) {
+        $objAcesso= new Acesso();
         $sql = "INSERT INTO 
 					SAC.dbo.tbHistoricoDocumento (idPronac, idUnidade, dtTramitacaoEnvio, idLote, idUsuarioEmissor, Acao, stEstado, meDespacho)
-					SELECT IdPRONAC, idUnidade = $codOrgao, dtTramitacaoEnvio = GETDATE(), idLote, idUsuarioEmissor, Acao = $acao, stEstado = 1, meDespacho = '$despacho' 
+					SELECT IdPRONAC, idUnidade = $codOrgao, dtTramitacaoEnvio = {$objAcesso->getDate()}, idLote, idUsuarioEmissor, Acao = $acao, stEstado = 1, meDespacho = '$despacho' 
 					FROM SAC.dbo.tbHistoricoDocumento 
 					WHERE (Acao = 2 and idPronac = $idPronac) ";
 
@@ -696,10 +700,11 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function inserirSolicitacaoArquivamento($idPronac, $justificativa, $idusuario, $cxInicio, $cxFinal, $acao, $stEstado) {
+        $objAcesso= new Acesso();
         $sql = "insert into SAC.dbo.tbArquivamento 
 				(idPronac, Data, Edificio, CaixaInicio, CaixaFinal, stAcao, stEstado, idUsuario, dsJustificativa) 
 				values 
-				($idPronac, GETDATE(), 0, $cxInicio, $cxFinal, $acao, $stEstado, $idusuario, '$justificativa') ";
+				($idPronac, {$objAcesso->getDate()}, 0, $cxInicio, $cxFinal, $acao, $stEstado, $idusuario, '$justificativa') ";
 
         //xd($sql);
         try {

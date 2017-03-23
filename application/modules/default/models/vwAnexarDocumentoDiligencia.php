@@ -34,7 +34,7 @@ class vwAnexarDocumentoDiligencia extends MinC_Db_Table_Abstract {
 
         $sql = "INSERT INTO ".$this->_banco.".".$this->_schema.".".$this->_name.
                "(nmArquivo,sgExtensao,dtEnvio,stAtivo,biArquivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto,idDiligencia) " .
-               "VALUES ('$name', '$fileType', GETDATE(), 'I', $data, $idTipoDocumento, '$dsDocumento', $IdPRONAC, 'E', $idDiligencia)";
+               "VALUES ('$name', '$fileType', {$this->getDate()}, 'I', $data, $idTipoDocumento, '$dsDocumento', $IdPRONAC, 'E', $idDiligencia)";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

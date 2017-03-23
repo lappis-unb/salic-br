@@ -401,7 +401,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 'idProjeto' => $idProjeto,
                 'idTextoemail' => new Zend_Db_Expr('NULL'),
                 'iDAvaliacaoProposta' => new Zend_Db_Expr('NULL'),
-                'DtEmail' => new Zend_Db_Expr('getdate()'),
+                'DtEmail' => $tbHistoricoEmailDAO->getExpressionDate(),
                 'stEstado' => 1,
                 'idUsuario' => $auth->getIdentity()->usu_codigo,
             );
@@ -481,7 +481,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $tblAvaliacao->inserir($dadosAvaliacao);
             $where = array(
-                'CONVERT(VARCHAR,DtEnvio,103) = ?' => new Zend_Db_Expr('CONVERT(VARCHAR,GETDATE(),103)'),
+                'CONVERT(VARCHAR,DtEnvio,103) = ?' => new Zend_Db_Expr('CONVERT(VARCHAR,'.$tblAvaliacao->getDate().',103)'),
                 'idProjeto = ?' => $this->idPreProjeto,
                 'idCodigoDocumentosExigidos is not null' => ''
             );
@@ -2554,7 +2554,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $sqlSequencialProjetos = "UPDATE SAC.dbo.SequencialProjetos
                                          SET Sequencial = Sequencial + 1
-                                       WHERE Ano = YEAR(GETDATE())";
+                                       WHERE Ano = YEAR(".$objInteressado->getDate().")";
 
             $resultado = $db->query($sqlSequencialProjetos);
             $ano = date('Y');
@@ -2583,7 +2583,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                    OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
                                    idProjeto,Processo,Logon)
                                 SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
-                                   Mecanismo, NomeProjeto, a.CNPJCPF, '{$situacaoProjeto}', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
+                                   Mecanismo, NomeProjeto, a.CNPJCPF, '{$situacaoProjeto}', ".$objInteressado->getDate().", ".$objInteressado->getDate().", {$idOrgao}, {$idOrgao}, ".$objInteressado->getDate().",
                                    '{$providenciaTomada}', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
                                    SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
                                    FROM SAC.dbo.PreProjeto p
@@ -2630,7 +2630,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
                 # CARREGAR INFORMAÇÕES PARA ENVIAR EMAIL
                 $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
-                                      idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
+                                      idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),".$objInteressado->getDate().",111))";
                 $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
                 if(!$arrayHistoricoEmail) {
                     $idTextoEmail = 12;
@@ -2655,7 +2655,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                         'idPRONAC' => $idPronac,
                         'idTextoemail' => $idTextoEmail,
                         'idAvaliacaoProposta' => new Zend_Db_Expr('NULL'),
-                        'DtEmail' => new Zend_Db_Expr('getdate()'),
+                        'DtEmail' => $objInternet->getExpressionDate(),
                         'stEstado' => 1,
                         'idUsuario' => $idUsuario,
                     );

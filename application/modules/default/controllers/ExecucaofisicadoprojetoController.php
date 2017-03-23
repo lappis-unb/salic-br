@@ -259,6 +259,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 
 			try
 			{
+
 				// integração MODELO e VISÃO
 
 				// busca de acordo com o pronac no banco
@@ -317,13 +318,14 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 				// faz o cadastro no banco de dados
 				else
 				{
+                    $objAcesso = new Acesso();
 					// cadastra dados do arquivo
 					$dadosArquivo = array(
 						'nmArquivo'         => $arquivoNome,
 						'sgExtensao'        => $arquivoExtensao,
 						'dsTipoPadronizado' => $arquivoTipo,
 						'nrTamanho'         => $arquivoTamanho,
-						'dtEnvio'           => new Zend_Db_Expr('GETDATE()'),
+						'dtEnvio'           => $objAcesso->getExpressionDate(),
 						'dsHash'            => $arquivoHash,
 						'stAtivo'           => 'A');
 					$cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
@@ -347,7 +349,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 						'dsComprovante'        => $descricao,
 						'idArquivo'            => $idUltimoArquivo,
 						'idSolicitante'        => 9997, // ===== MUDAR ID =====
-						'dtEnvioComprovante'   => new Zend_Db_Expr('GETDATE()'),
+						'dtEnvioComprovante'   => $objAcesso->getExpressionDate(),
 						'stParecerComprovante' => 'AG',
 						'stComprovante'        => 'A');
 					$cadastrarComprovante = ComprovanteExecucaoFisicaDAO::cadastrar($dadosComprovante);
@@ -525,6 +527,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 				// faz a alteração no banco de dados
 				else
 				{
+				    $objAcesso = new Acesso();
 					// altera o arquivo caso o mesmo tenha sido enviado
 					if (!empty($arquivoTemp))
 					{
@@ -534,7 +537,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 							'sgExtensao'        => $arquivoExtensao,
 							'dsTipoPadronizado' => $arquivoTipo,
 							'nrTamanho'         => $arquivoTamanho,
-							'dtEnvio'           => new Zend_Db_Expr('GETDATE()'),
+							'dtEnvio'           => $objAcesso->getExpressionDate(),
 							'dsHash'            => $arquivoHash);
 						$alterarArquivo = ArquivoDAO::alterar($dadosArquivo, $idArquivo);
 
@@ -757,7 +760,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 							'idArquivo' => $idUltimoArquivo,
 							'biArquivo' => $arquivoBinario);
 						$substituirBinario = ArquivoImagemDAO::cadastrar($dadosBinario);
-
+                        $objAcesso = new Acesso();
 						// cadastra dados do comprovante
 						$dadosComprovante = array(
 							'idPRONAC'                   => $idPronac,
@@ -768,7 +771,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 							'dsJustificativaCoordenador' => $justificativaCoordenador,
 							'idArquivo'                  => $idUltimoArquivo,
 							'idSolicitante'              => 9997, // ===== MUDAR ID =====
-							'dtEnvioComprovante'         => new Zend_Db_Expr('GETDATE()'),
+							'dtEnvioComprovante'         => $objAcesso->getExpressionDate(),
 							'stParecerComprovante'       => 'AG',
 							'stComprovante'              => 'A',
 							'idComprovanteAnterior'      => $idComprovanteAnterior);

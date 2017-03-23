@@ -231,8 +231,9 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 
 
         $OrgaoFiscalizadorDao = new OrgaoFiscalizador();
+        $objAcesso = new Acesso();
         if ($this->view->infoProjeto[0]->idFiscalizacao) {
-            $OrgaoFiscalizadorDao->update(array('dtRecebimentoResposta' => new Zend_Db_Expr('GETDATE()')), array('dtRecebimentoResposta is ?' => new Zend_Db_Expr('null'), 'idFiscalizacao = ?' => $this->view->infoProjeto[0]->idFiscalizacao, 'idOrgao = ?' => $this->view->orgaoAtivo));
+            $OrgaoFiscalizadorDao->update(array('dtRecebimentoResposta' => $objAcesso->getExpressionDate()), array('dtRecebimentoResposta is ?' => new Zend_Db_Expr('null'), 'idFiscalizacao = ?' => $this->view->infoProjeto[0]->idFiscalizacao, 'idOrgao = ?' => $this->view->orgaoAtivo));
         }
         $ArquivoFiscalizacaoDao = new ArquivoFiscalizacao();
         if ($this->view->infoProjeto[0]->idFiscalizacao)
@@ -631,12 +632,13 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
             //if($arquivoExtensao != 'doc' and $arquivoExtensao != 'docx' and $arquivoExtensao != ''){
             // cadastra dados do arquivo
 
+            $objAcesso = new Acesso();
             $dadosArquivo = array(
                 'nmArquivo' => $arquivoNome,
                 'sgExtensao' => $arquivoExtensao,
                 'dsTipoPadronizado' => $arquivoTipo,
                 'nrTamanho' => $arquivoTamanho,
-                'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                'dtEnvio' => $objAcesso->getExpressionDate(),
                 'dsHash' => $arquivoHash,
                 'stAtivo' => 'A');
             $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
@@ -666,7 +668,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 //        xd($post);
 
         $OrgaoFiscalizadorDao = new OrgaoFiscalizador();
-        $OrgaoFiscalizadorDao->update(array('dtConfirmacaoFiscalizacao' => new Zend_Db_Expr('GETDATE()'), 'dsObservacao' => $post->dsObservacao, 'idParecerista' => $post->idAgente), array('idFiscalizacao = ?' => $post->idFiscalizacao, 'idOrgao = ?' => $this->view->orgaoAtivo));
+        $OrgaoFiscalizadorDao->update(array('dtConfirmacaoFiscalizacao' => $OrgaoFiscalizadorDao->getExpressionDate(), 'dsObservacao' => $post->dsObservacao, 'idParecerista' => $post->idAgente), array('idFiscalizacao = ?' => $post->idFiscalizacao, 'idOrgao = ?' => $this->view->orgaoAtivo));
     }
 
     public function cadastrarfiscalizacaoAction() {

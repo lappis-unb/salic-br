@@ -352,10 +352,11 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     }
 
     public static function inserirCopiaPlanilha($idPronac, $idPedidoAlteracao) {
+        $objAcesso= new Acesso();
         $sql = "insert into SAC.dbo.tbPlanilhaAprovacao
                     SELECT
                     'tpPlanilha' = 'SR',
-                    GETDATE(),
+                    {$objAcesso->getDate()},
                     idPlanilhaProjeto,
                     idPlanilhaProposta,
                     IdPRONAC,

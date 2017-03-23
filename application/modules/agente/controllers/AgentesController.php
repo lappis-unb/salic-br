@@ -347,7 +347,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
                 $dadosVinculo = array(
                     'idAgenteProponente' => $idAgenteCadastrado
-                    , 'dtVinculo' => new Zend_Db_Expr('GETDATE()')
+                    , 'dtVinculo' => $tbVinculo->getExpressionDate()
                     , 'siVinculo' => 2
                     , 'idUsuarioResponsavel' => $buscarResponsavel[0]->IdUsuario);
                 $tbVinculo->inserir($dadosVinculo);
@@ -798,13 +798,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arquivoHash     = Upload::setHash($arquivoTemp); // hash
         }
 
+        $agentes = new Agente_Model_DbTable_Agentes();
         // cadastra dados do arquivo
         $dadosArquivo = array(
                 'nmArquivo'         => $arquivoNome,
                 'sgExtensao'        => $arquivoExtensao,
                 'dsTipoPadronizado' => $arquivoTipo,
                 'nrTamanho'         => $arquivoTamanho,
-                'dtEnvio'           => new Zend_Db_Expr('GETDATE()'),
+                'dtEnvio'           => $agentes->getExpressionDate(),
                 'dsHash'            => $arquivoHash,
                 'stAtivo'           => 'A');
         $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
@@ -2072,7 +2073,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $tbVinculo = new Agente_Model_DbTable_TbVinculo();
                 $dadosVinculo = array(
                     'idAgenteProponente' => $idAgente,
-                    'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
+                    'dtVinculo' => $tbVinculo->getExpressionDate(),
                     'siVinculo' => 0,
                     'idUsuarioResponsavel' => $idResponsavel
                 );
@@ -2085,7 +2086,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     		$tbVinculo = new Agente_Model_DbTable_TbVinculo();
     		$dadosVinculo = array(
     				'idAgenteProponente' => $idAgente,
-    				'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
+    				'dtVinculo' => $tbVinculo->getExpressionDate(),
     				'siVinculo' => 0,
     				'idUsuarioResponsavel' => $arrAuth->getIdentity()->IdUsuario
     		);

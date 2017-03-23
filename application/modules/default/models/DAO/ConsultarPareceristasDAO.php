@@ -212,7 +212,8 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 	}
 	
 	public static function buscarAusencias($tpAusencia = null, $x = null, $idAgente, $dataInicio, $dataFim){
-		
+
+        $objAcesso= new Acesso();
 		$sql = "SELECT  
 					au.idAusencia, 
 					au.idTipoAusencia, 
@@ -224,9 +225,9 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 				WHERE au.idAgente = $idAgente";
 	
 		if($tpAusencia == 2 and $x == 1){
-			$sql .= " AND tp.idTipoAusencia = 2 AND CONVERT(date, au.dtInicioAusencia, 105) < CONVERT(date, GETDATE(), 105)";
+			$sql .= " AND tp.idTipoAusencia = 2 AND CONVERT(date, au.dtInicioAusencia, 105) < CONVERT(date, {$objAcesso->getDate()}, 105)";
 		}elseif ($tpAusencia == 2 and $x == 2){
-			$sql .= " AND tp.idTipoAusencia = 2 AND CONVERT(date, au.dtInicioAusencia, 105) > CONVERT(date, GETDATE(), 105)";
+			$sql .= " AND tp.idTipoAusencia = 2 AND CONVERT(date, au.dtInicioAusencia, 105) > CONVERT(date, {$objAcesso->getDate()}, 105)";
 		}
 		else if ($tpAusencia == 1 and $x == 3){
 			$sql .= " AND tp.idTipoAusencia = 1";

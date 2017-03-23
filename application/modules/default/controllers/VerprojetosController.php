@@ -2337,9 +2337,10 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $dadosReadequacao = array();
             $dadosReadequacao['idPronac'] = $idPronac;
             $dadosReadequacao['idTipoReadequacao'] = 1;
-            $dadosReadequacao['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
+            $objAcesso = new Acesso();
+            $dadosReadequacao['dtSolicitacao'] = $objAcesso->getExpressionDate();
             $dadosReadequacao['idSolicitante'] = $rsAgente->idAgente;
-            $dadosReadequacao['dsJustificativa'] = 'Readequa��o at� 20%';
+            $dadosReadequacao['dsJustificativa'] = 'Readequa&ccedil;&atilde;o at&eacute; 20%';
             $dadosReadequacao['stAtendimento'] = 'D';
             $dadosReadequacao['siEncaminhamento'] = 11;
             $dadosReadequacao['stEstado'] = 0;
@@ -2352,7 +2353,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                 $dadosReadequacaoTipo['idTipoReadequacao'] = 1;
                 $dadosReadequacaoTipo['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
                 $dadosReadequacaoTipo['idSolicitante'] = $rsAgente->idAgente;
-                $dadosReadequacaoTipo['dsSolicitacao'] = 'Readequa��o at� 20%';
+                $dadosReadequacaoTipo['dsSolicitacao'] = 'Readequa&ccedil;&atilde;o at&eacute; 20%';
                 $idReadequacaoTipo = $tbReadequacaoXtbTipoReadequacao->inserir($dadosReadequacaoTipo);
             } else {
                 parent::message("Ocorreu um erro durante o cadastro do remanejamento!", "consultardadosprojeto?idPronac=$id", "ERROR");
@@ -2596,9 +2597,10 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             if($del > 0){
                 $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
                 $planilhaRP = array();
+                $objAcesso= new Acesso();
                 foreach ($planilhaAtiva as $value) {
                     $planilhaRP['tpPlanilha'] = 'RP';
-                    $planilhaRP['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+                    $planilhaRP['dtPlanilha'] = $objAcesso->getExpressionDate();
                     $planilhaRP['idPlanilhaProjeto'] = $value['idPlanilhaProjeto'];
                     $planilhaRP['idPlanilhaProposta'] = $value['idPlanilhaProposta'];
                     $planilhaRP['IdPRONAC'] = $value['IdPRONAC'];
@@ -2765,9 +2767,10 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         if(count($verificarPlanilhaRP)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaRP = array();
+            $objAcesso= new Acesso();
             foreach ($planilhaAtiva as $value) {
                 $planilhaRP['tpPlanilha'] = 'RP';
-                $planilhaRP['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+                $planilhaRP['dtPlanilha'] = $objAcesso->getExpressionDate();
                 $planilhaRP['idPlanilhaProjeto'] = $value['idPlanilhaProjeto'];
                 $planilhaRP['idPlanilhaProposta'] = $value['idPlanilhaProposta'];
                 $planilhaRP['IdPRONAC'] = $value['IdPRONAC'];

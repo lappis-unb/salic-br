@@ -154,7 +154,7 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
                   'projetos.DtFimExecucao',
                   'projetos.Situacao',
                   'projetos.DtSituacao',
-                  'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, GETDATE())'
+                  'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, '.$this->getDate().')'
             ),
             $this->_schema
         );
@@ -253,7 +253,7 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
                 'Projetos.Situacao',
                 'Projetos.DtSituacao',
                 'Projetos.Orgao',
-                'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, GETDATE())',
+                'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, '.$this->getDate().')',
                 '(' . $queryPlanilhaOrcamentaria->assemble() . ') as vlAprovado'
             ),
             $this->_schema

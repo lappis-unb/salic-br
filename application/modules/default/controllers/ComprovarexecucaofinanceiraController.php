@@ -2120,7 +2120,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
                 $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin�rio
                 $arquivoHash     = Upload::setHash($arquivoTemp); // hash
 
-
+            $objAcesso = new Acesso();
             // cadastra dados do arquivo
             if($arquivoExtensao != 'doc' and $arquivoExtensao != 'docx' and $arquivoExtensao != ''){
                 // cadastra dados do arquivo
@@ -2129,7 +2129,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
                         'sgExtensao'        => $arquivoExtensao,
                         'dsTipoPadronizado' => $arquivoTipo,
                         'nrTamanho'         => $arquivoTamanho,
-                        'dtEnvio'           => new Zend_Db_Expr('GETDATE()'),
+                        'dtEnvio'           => $objAcesso->getExpressionDate(),
                         'dsHash'            => $arquivoHash,
                         'stAtivo'           => 'A');
                 $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
@@ -2552,14 +2552,14 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
 
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
         $rsPA = $tblPlanilhaAprovacao->verificarComprovacao($this->getRequest()->getParam('idpronac'));
-
+        $objAcesso = new Acesso();
         if (count($rsPA)) {
             $this->_helper->flashMessenger->addMessage('N&atilde;o &eacute; poss&iacute;vel finalizar pois o valor comprovado &eacute; maior que o valor aprovado!');
             $this->_helper->flashMessengerType->addMessage('ERROR');
         } else {
             $ProjetosDao = new Projetos();
             $ProjetosDao->update(
-                array('Situacao'=>"E24", 'dtSituacao' => new Zend_Db_Expr('GETDATE()')),
+                array('Situacao'=>"E24", 'dtSituacao' => $objAcesso->getExpressionDate()),
                 "IdPRONAC = {$this->getRequest()->getParam('idpronac')}"
             );
             $this->_helper->flashMessenger->addMessage('Finalizado com sucesso!');

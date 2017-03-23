@@ -189,7 +189,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             $select->setIntegrityCheck(false);
             $select->from(
                     array('t' => $this->_name), array(
-                "DATEDIFF(DAY, t.DtDistribuicao, GETDATE()) AS DIAS",
+                "DATEDIFF(DAY, t.DtDistribuicao, {$this->getDate()}) AS DIAS",
                 "t.idDistribuirParecer",
                 "t.idOrgao",
                 "t.idAgenteParecerista",
@@ -1234,7 +1234,7 @@ public function analisePorParecerista($where){
         );
         $select->joinLeft(
                 array("au" => "tbAusencia")
-                ,"au.idAgente = dp.idAgenteParecerista and au.idTipoAusencia = 2 and au.dtFimAusencia >= GETDATE()"
+                ,"au.idAgente = dp.idAgenteParecerista and au.idTipoAusencia = 2 and au.dtFimAusencia >= {$this->getDate()}"
                 ,array(
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
@@ -1452,7 +1452,7 @@ public function analisePorParecerista($where){
         );
         $select->joinLeft(
                 array("au" => "tbAusencia")
-                ,"au.idAgente = dp.idAgenteParecerista and au.idTipoAusencia = 2 and au.dtFimAusencia >= GETDATE()"
+                ,"au.idAgente = dp.idAgenteParecerista and au.idTipoAusencia = 2 and au.dtFimAusencia >= {$this->getDate()}"
                 ,array(
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
@@ -1589,7 +1589,7 @@ public function analisePorParecerista($where){
         );
         $select->joinLeft(
                 array("au" => "tbAusencia")
-                ,"au.idAgente = dp.idAgenteParecerista and au.idTipoAusencia = 2 and au.dtFimAusencia >= GETDATE()"
+                ,"au.idAgente = dp.idAgenteParecerista and au.idTipoAusencia = 2 and au.dtFimAusencia >= {$this->getDate()}"
                 ,array(
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
@@ -1961,7 +1961,7 @@ public function analisePorParecerista($where){
 
     public function inserirDistribuicaoParaParecer($idPreProjeto, $idPronac, $idVinculada ) {
         $sqlDistribuirParecer = "INSERT INTO SAC.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
-                                         SELECT {$idPronac},idProduto, 3,{$idVinculada},getdate(), stPrincipal FROM SAC.dbo.PlanoDistribuicaoProduto
+                                         SELECT {$idPronac},idProduto, 3,{$idVinculada}, {$this->getDate()}, stPrincipal FROM SAC.dbo.PlanoDistribuicaoProduto
                                           WHERE idProjeto = {$idPreProjeto}";
         $db= Zend_Db_Table::getDefaultAdapter();
         return $db->query($sqlDistribuirParecer);

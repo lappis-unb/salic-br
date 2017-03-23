@@ -131,7 +131,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $vDiligencia = ($vDiligencia->idDiligencia) ? TRUE : FALSE;
 
         //Verificar se há recurso @TODO FAZER ESSA PARTE E DEIXAR PRO FIM
-        $data = new Zend_Db_Expr("SELECT DATEDIFF(DAY, '$dadosCnic->DtReuniao', GETDATE()) AS dado");
+        $data = new Zend_Db_Expr("SELECT DATEDIFF(DAY, '$dadosCnic->DtReuniao', {$this->getDate()}) AS dado");
         $data = $db->fetchOne($data);
 
         $situacoesRecurso = array('A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'A41', 'A42', 'D02', 'D03','D14');
@@ -172,7 +172,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $Recurso4 = new Zend_Db_Expr("SELECT (DATEDIFF(DAY,(
                                             SELECT dtFinal FROM sac.dbo.TBRecurso a
                                             INNER JOIN tbReuniao b on (a.idNrReuniao = b.idNrReuniao)
-                                            WHERE a.tpRecurso = 1 AND a.siRecurso <> 0 AND a.stEstado = 1 AND a.idPronac = $idPronac),GETDATE())
+                                            WHERE a.tpRecurso = 1 AND a.siRecurso <> 0 AND a.stEstado = 1 AND a.idPronac = $idPronac), {$this->getDate()})
                                 ) AS dado");
         $Recurso4 = $db->fetchRow($Recurso4);
 
@@ -211,7 +211,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             $Recurso4->dado = 90;
         }
 
-        $diasProjeto = new Zend_Db_Expr("SELECT DATEDIFF(DAY,'$dadosProjeto->DtSituacao',GETDATE()) as dias");
+        $diasProjeto = new Zend_Db_Expr("SELECT DATEDIFF(DAY,'$dadosProjeto->DtSituacao',{$this->getDate()}) as dias");
         $diasProjeto = $db->fetchRow($diasProjeto);
 
         if((($data <= 11 AND in_array($dadosProjeto->Situacao, $situacoesRecurso) AND !$recurso1->idRecurso AND !$recurso2->idRecurso)
@@ -265,7 +265,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
 
 
         # FASE 4 - DA LIBERAÇÃO DA CONTA ATÉ A DATA FINAL DO PERÍODO DE EXECUCAO
-        $dataAtualBanco = new Zend_Db_Expr('SELECT CONVERT( CHAR(8), GETDATE(), 112)');
+        $dataAtualBanco = new Zend_Db_Expr('SELECT CONVERT( CHAR(8), '.$this->getDate().', 112)');
 
         if($contaLiberada == 'S' AND $dadosProjeto->DtFinalExecucao >= $dataAtualBanco) {
             $Analise = 1;

@@ -214,6 +214,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
         }
 
         public static function salvarComentarioAlteracaoProj($dados){
+            $objAcesso= new Acesso();
             $sql = "insert into SAC.dbo.tbDiligencia
                         (
                             idPronac,
@@ -227,7 +228,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                         (
                             {$dados['idPronac']},
                             124,
-                            GETDATE(),
+                            {$objAcesso->getDate()},
                             '{$dados['Solicitacao']}',
                             {$dados['idSolicitante']},
                             0

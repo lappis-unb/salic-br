@@ -239,12 +239,13 @@ class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
             $Sequencial = $dados->Sequencial;
             $cgccpf = $dados->CgcCpf;
         }
+        $objAcesso = new Acesso();
         $dados = array(
             'AnoProjeto' => $AnoProjeto,
             'Sequencial' => $Sequencial,
             'Mecanismo' => $mecanismo,
-            'DtLiberacao' => new Zend_Db_Expr('GETDATE()'),
-            'DtDocumento' => new Zend_Db_Expr('GETDATE()'),
+            'DtLiberacao' => $objAcesso->getExpressionDate(),
+            'DtDocumento' => $objAcesso->getExpressionDate(),
             'NumeroDocumento' => '00000',
             'VlOutrasFontes' => '0,00',
             'Observacao' => 'Conta Liberada',

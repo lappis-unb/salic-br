@@ -20,7 +20,7 @@ class Analise_Model_DbTable_TbAvaliarAdequacaoProjeto extends MinC_Db_Table_Abst
 
         $dados = array(
             'idPronac' => $idPronac,
-            'dtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+            'dtEncaminhamento' => $this->getExpressionDate(),
             'idTecnico' => $idTecnico,
             'dtAvaliacao' => null,
             'dsAvaliacao' => null,
@@ -35,7 +35,7 @@ class Analise_Model_DbTable_TbAvaliarAdequacaoProjeto extends MinC_Db_Table_Abst
     public function atualizarAvaliacaoNegativa($idPronac, $idTecnico, $avaliacao)
     {
         $dados = array(
-            'dtAvaliacao' => new Zend_Db_Expr('GETDATE()'),
+            'dtAvaliacao' => $this->getExpressionDate(),
             'dsAvaliacao' => $avaliacao,
             'siEncaminhamento' => 16,
             'stAvaliacao' => 2,
@@ -56,7 +56,7 @@ class Analise_Model_DbTable_TbAvaliarAdequacaoProjeto extends MinC_Db_Table_Abst
     public function atualizarAvaliacaoPositiva($idPronac, $idTecnico, $avaliacao)
     {
         $dados = array(
-            'dtAvaliacao' => new Zend_Db_Expr('GETDATE()'),
+            'dtAvaliacao' => $this->getExpressionDate(),
             'dsAvaliacao' => $avaliacao,
             'siEncaminhamento' => 15,
             'stAvaliacao' => 1,

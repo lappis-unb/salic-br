@@ -18,8 +18,9 @@ class Lembretes extends Zend_Db_Table
        	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+        $objAcesso= new Acesso();
       	$sql = "INSERT INTO SAC.dbo.Lembrete (Logon, AnoProjeto, Sequencial, DtLembrete, Lembrete)
-				VALUES (75, '$anoprojeto', '$sequencial', GETDATE(), '$lembrete')"; 
+				VALUES (75, '$anoprojeto', '$sequencial', {$objAcesso->getDate()}, '$lembrete')";
        	
 		$resultado = $db->query($sql);
 		return $resultado;

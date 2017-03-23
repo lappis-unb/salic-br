@@ -258,7 +258,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                             $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsavel cadastrado
                             $dadosVinculo = array(
                                 'idAgenteProponente' => $idAgenteProp
-                            ,'dtVinculo' => new Zend_Db_Expr('GETDATE()')
+                            ,'dtVinculo' => $tbVinculo->getExpressionDate()
                             ,'siVinculo' => 2
                             ,'idUsuarioResponsavel' => $idResp[0]->IdUsuario
                             );

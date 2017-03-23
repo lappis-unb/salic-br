@@ -1,15 +1,5 @@
 <?php
 
-/**
- * RealizaranaliseprojetoController
- * @author Equipe RUP - Politec
- * @since 07/06/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller
- * @link http://www.cultura.gov.br
- * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
- */
 class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 {
     private $bln_readequacao = "false";
@@ -242,8 +232,9 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $auth = Zend_Auth::getInstance(); // pega a autenticacao
             $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $idagente['idAgente'];
+            $objAcesso = new Acesso();
             $dados = array(
-                'dtPlanilha' => new Zend_Db_Expr('GETDATE()'),
+                'dtPlanilha' => $objAcesso->getExpressionDate(),
                 'idUnidade' => $unidade,
                 'qtItem' => $qtdItem,
                 'nrOcorrencia' => $ocorrencia,
@@ -787,10 +778,11 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $idagente['idAgente'];
             // atualiza todos os campos caso siga a Lei 8313
+            $objAcesso = new Acesso();
             if ($stLei8313 == 1) {
                 $dados = array(
                     'tpAnalise' => $tpAnalise,
-                    'dtAnalise' => new Zend_Db_Expr('GETDATE()'),
+                    'dtAnalise' => $objAcesso->getExpressionDate(),
                     'stLei8313' => $stLei8313,
                     'stArtigo3' => $stArtigo3,
                     'nrIncisoArtigo3' => $nrIncisoArtigo3,
@@ -813,7 +805,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
                 $dados = array(
                     'tpAnalise' => $tpAnalise,
-                    'dtAnalise' => new Zend_Db_Expr('GETDATE()'),
+                    'dtAnalise' => $objAcesso->getExpressionDate(),
                     'stLei8313' => $stLei8313,
                     'stArtigo3' => 0,
                     'nrIncisoArtigo3' => NULL,
@@ -911,10 +903,10 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                 $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?' => $idPronac), array('dtPlanilha DESC'))->current();
                 $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
                 $this->view->tpPlanilha = $tpPlanilha;
-
+$objAcesso = new Acesso();
                 $dados = array(
                     'tpPlanilha' => $tpPlanilha,
-                    'dtPlanilha' => new Zend_Db_Expr('GETDATE()'),
+                    'dtPlanilha' => $objAcesso->getExpressionDate(),
                     'idUnidade' => $unidade,
                     'qtItem' => $qtdItem,
                     'nrOcorrencia' => $ocorrencia,
@@ -1297,12 +1289,13 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                 $idReuniao = $ConsultaReuniaoAberta['idNrReuniao'];
                 // verifica se ja esta na pauta
                 $verificaPauta = RealizarAnaliseProjetoDAO::retornaRegistro($idPronac, $idReuniao);
+                $objAcesso = new Acesso();
                 if (count($verificaPauta) == 0) {
                     // cadastra o projeto na pauta
                     $dados = array(
                         'idNrReuniao' => $idReuniao,
                         'IdPRONAC' => $idPronac,
-                        'dtEnvioPauta' => new Zend_Db_Expr('GETDATE()'),
+                        'dtEnvioPauta' => $objAcesso->getExpressionDate(),
                         'stEnvioPlenario' => $stEnvioPlenaria,
                         'tpPauta' => 1,
                         'stAnalise' => $TipoAprovacao,
@@ -1322,7 +1315,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                     // altera o projeto na pauta
                     $dados = array(
                         'idNrReuniao' => $idReuniao,
-                        'dtEnvioPauta' => new Zend_Db_Expr('GETDATE()'),
+                        'dtEnvioPauta' => $objAcesso->getExpressionDate(),
                         'stEnvioPlenario' => $stEnvioPlenaria,
                         'tpPauta' => 1,
                         'dsAnalise' => TratarString::escapeString($justificativa),
@@ -1341,12 +1334,12 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                     $dadosRecursoAtual = $tbRecurso->buscar(array('IdPRONAC = ?' => $idPronac, 'stAtendimento = ?' => 'N', 'tpSolicitacao =?' => 'EN'));
                     if (count($dadosRecursoAtual) > 0) {
                         $auth = Zend_Auth::getInstance(); // pega a autentica��o
-                        $this->idUsuario = $auth->getIdentity()->usu_codigo;
+                        $idUsuario = $auth->getIdentity()->usu_codigo;
                         //ATUALIZA��O DA TABELA RECURSO//
                         $dadosNovos = array(
-                            'dtAvaliacao' => new Zend_Db_Expr('GETDATE()'),
+                            'dtAvaliacao' => $objAcesso->getExpressionDate(),
                             'dsAvaliacao' => 'Recurso deferido conforme solicita��o do Proponente.',
-                            'idAgenteAvaliador' => $this->idUsuario
+                            'idAgenteAvaliador' => $idUsuario
                         );
                         $tbRecurso->update($dadosNovos, "idRecurso=" . $dadosRecursoAtual[0]->idRecurso);
 
@@ -1357,9 +1350,9 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                             $tpEnquadramento = ($dadosEnquadramentoAtual[0]->Enquadramento == 1) ? 2 : 1;
                             $dadosNovosEnquadramento = array(
                                 'Enquadramento' => $tpEnquadramento,
-                                'dtEnquadramento' => new Zend_Db_Expr('GETDATE()'),
-                                'Observacao' => 'Altera��o de Enquadramento conforme deferimento de recurso.',
-                                'Logon' => $this->idUsuario
+                                'dtEnquadramento' => $objAcesso->getExpressionDate(),
+                                'Observacao' => 'Altera&ccedil;&atilde;o de Enquadramento conforme deferimento de recurso.',
+                                'Logon' => $idUsuario
                             );
                             $Enquadramento->update($dadosNovosEnquadramento, "IdEnquadramento=" . $dadosEnquadramentoAtual[0]->IdEnquadramento);
                         }
@@ -1826,8 +1819,9 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $auth = Zend_Auth::getInstance(); // pega a autenticacao
             $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $idagente['idAgente'];
+            $objAcesso = new Acesso();
             $dados = array(
-                'dtPlanilha' => new Zend_Db_Expr('GETDATE()'),
+                'dtPlanilha' => $objAcesso->getExpressionDate(),
                 'idUnidade' => $unidade,
                 'qtItem' => $qtdItem,
                 'nrOcorrencia' => $ocorrencia,
@@ -2123,9 +2117,10 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                 $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
                 $this->view->tpPlanilha = $tpPlanilha;
 
+                $objAcesso = new Acesso();
                 $dados = array(
                     'tpPlanilha' => $tpPlanilha,
-                    'dtPlanilha' => new Zend_Db_Expr('GETDATE()'),
+                    'dtPlanilha' => $objAcesso->getExpressionDate(),
                     'idUnidade' => $unidade,
                     'qtItem' => $qtdItem,
                     'nrOcorrencia' => $ocorrencia,

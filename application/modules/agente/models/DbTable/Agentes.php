@@ -553,7 +553,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $dadosWhere["c.idCodigoSegmento = ?"] = $idSegmento;
         $dadosWhere["c.idverificacao = ?"] = 251;
         $dadosWhere["u.org_superior = ?"] = $idOrgao;
-        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE Getdate() BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
+        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE ".$this->getDate()." BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
 
         foreach ($dadosWhere as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -604,7 +604,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $dadosWhere["c.idCodigoSegmento = ?"] = $idSegmento;
         $dadosWhere["u.org_superior = ?"] = 91;
         $dadosWhere["u.usu_orgao = ?"] = $idOrgao;  // especificidade do IPHAN - puxa codigo do orgao 
-        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE Getdate() BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
+        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE ".$this->getDate()." BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
         
         foreach ($dadosWhere as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -699,7 +699,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array("au" => "tbAusencia")
-            , "au.idAgente = ag.idAgente and au.idTipoAusencia = 2 and au.dtFimAusencia >= GETDATE()"
+            , "au.idAgente = ag.idAgente and au.idTipoAusencia = 2 and au.dtFimAusencia >= " . $this->getDate()
             , array(
                 'au.dtFimAusencia',
                 'au.dtInicioAusencia',

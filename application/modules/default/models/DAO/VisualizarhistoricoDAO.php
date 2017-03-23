@@ -15,8 +15,9 @@ class VisualizarhistoricoDAO extends Zend_Db_Table
 	
     public function inserirMensagem($pronac,$componenteComissao,$mensagem)   
     {
+        $objAcesso= new Acesso();
        	$sql = "INSERT INTO BDCORPORATIVO.scSAC.tbMensagemProjeto (idPRONAC, idRemetente, idDestinatario, dtEncaminhamento, dsMensagem, stAtivo)
-					        VALUES ($pronac, 75, $componenteComissao, GETDATE(), '$mensagem', 'A')"; 
+					        VALUES ($pronac, 75, $componenteComissao, {$objAcesso->getDate()}, '$mensagem', 'A')";
        	//echo $sql; die();
        	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);

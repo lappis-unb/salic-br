@@ -158,6 +158,9 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
     }
 
     public static function buscaEditalConfirmar($array = array()) {
+
+        $objAcesso= new Acesso();
+
         $sql = " SELECT e.idEdital as idEditalTb,
                         convert(varchar(12),e.NrEdital)as NrEditalTb,
                         convert(char(4),YEAR(e.DtEdital)) as Ano,
@@ -173,7 +176,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
              INNER JOIN BDCORPORATIVO.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null and
-                        u.dtIniFase <= GETDATE() AND u.dtFimFase >= GETDATE()
+                        u.dtIniFase <= {$objAcesso->getDate()} AND u.dtFimFase >= {$objAcesso->getDate()}
                ORDER BY c.dsClassificaDocumento,v.Descricao,Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
 
         $db  = Zend_Db_Table::getDefaultAdapter();
@@ -208,6 +211,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
     }
 
     public static function listarEditalResumo($array = array()) {
+        $objAcesso= new Acesso();
         $sql = " SELECT f.nmFormDocumento,
                         count(f.nmFormDocumento) as qtd
                    FROM Sac.dbo.Edital e
@@ -217,7 +221,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
              INNER JOIN BDCORPORATIVO.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null and
-                        u.dtIniFase <= GETDATE() AND u.dtFimFase >= GETDATE()
+                        u.dtIniFase <= {$objAcesso->getDate()} AND u.dtFimFase >= {$objAcesso->getDate()}
                group by f.nmFormDocumento";
         $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
