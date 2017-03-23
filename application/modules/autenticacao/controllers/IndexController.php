@@ -489,7 +489,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
-                parent::message("Senha alterada com sucesso!", "/autenticacao", "CONFIRM");
+                parent::message("Senha alterada com sucesso!", "/autenticacao/index/alterarsenha", "CONFIRM");
             }
         }
     }
