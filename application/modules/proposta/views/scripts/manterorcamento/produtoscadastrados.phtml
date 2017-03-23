@@ -499,6 +499,10 @@ $3(document).ready(function () {
     $3('body').on('focusout', '#vlunitario', function () {
         if($3(this).val() == 0)
             return false;
+        $3('#modal-pre-loader').modal('open');
+
+        $3("#btn-salvar").removeClass('btn-salvar').addClass('disabled');
+        $3('#editor1').addClass('valida');
 
         var urlAction = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'buscar-valor-mediana-ajax')); ?>";
 
@@ -512,28 +516,34 @@ $3(document).ready(function () {
         };
 
         $.post(urlAction, dados, function (result) {
-            result = $3.parseJSON(result)
+            result = $3.parseJSON(result);
             if (result.status == '1') {
-                Materialize.toast(result.msg, 5000, 'green white-text');
+//                Materialize.toast(result.msg, 5000, 'green white-text');
                 $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled');
-                $3(".valor-mediana").remove();
+                $3('#editor1').removeClass('valida');
                 $3("#vlunitario").parent().removeClass("danger");
                 $3(".justificativa label").text('Detalhamento / Justificativa / Observa\xE7\xF5es (Opcional)').parent().removeClass("danger");
 
             } else {
                 $3("#btn-salvar").addClass('disabled').removeClass('btn-salvar ');
+                $3('#editor1').addClass('valida');
                 Materialize.toast(result.msg, 9000, 'orange darken-3 white-text');
                 $3("#vlunitario").parent().addClass("danger");
                 $3(".justificativa label").text('Justificativa para valor unit\xE1rio maior que R$ ' + result.valorMediana + ' (Obrigat\xF3rio)').parent().addClass("danger");
             }
+
+            $3('#modal-pre-loader').modal('close');
 
         });
         return false;
     });
 
     $3('body').on('keyup', '#editor1', function () {
-        if ($3("#editor").val() != '') {
-            $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled valida');
+        if ($3("#editor1.valida").val() != '') {
+            $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled');
+
+        }else{
+            $3("#btn-salvar").removeClass('btn-salvar').addClass('disabled');
         }
     });
 });
