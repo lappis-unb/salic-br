@@ -324,8 +324,8 @@
                                             <td><?php echo $desloca['mud'];?></td>
                                             <td><?php echo $desloca['qtde'];?></td>
                                             <td>
-                                                <input id="" type="button" title="Editar" class="btn_editar" value=" " onclick="location.href ='<?php echo $this->baseUrl(); ?>/proposta/deslocamento/index?s=s&verifica=S&idPreProjeto=<?php echo $this->idPreProjeto; ?>&id=<?php echo $desloca['iddeslocamento']; ?>'" />
-                                                <input id="" type="button" title="Excluir" class="btn_exclusao" value=" " onclick="confirma(<?php echo $this->idPreProjeto; ?>,<?php echo $desloca['iddeslocamento']; ?>);" />
+                                                <button type="button" title="Editar" class="btn" value=" " onclick="location.href ='<?php echo $this->baseUrl(); ?>/proposta/deslocamento/index?s=s&verifica=S&idPreProjeto=<?php echo $this->idPreProjeto; ?>&id=<?php echo $desloca['iddeslocamento']; ?>'" >Editar</button>
+                                                <button type="button" title="Excluir" class="btn red white-text" value=" " onclick="confirma(<?php echo $this->idPreProjeto; ?>,<?php echo $desloca['iddeslocamento']; ?>);">excluir</button>
                                             </td>
                                         </tr>
                                     <?php endforeach ?>
