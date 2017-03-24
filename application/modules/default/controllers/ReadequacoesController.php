@@ -2354,33 +2354,37 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         // hack!
         if ($this->idOrgao == 272) {
-            $where['idOrgao = ?'] = 262;
+            $where['idUnidade = ?'] = 262;
         } else {
-            $where['idOrgao = ?'] = $this->idOrgao;
+            $where['idUnidade = ?'] = $this->idOrgao;
         }
 
         $tbReadequacao = New tbReadequacao();
+        $tbDistribuirReadequacao = New tbDistribuirReadequacao();
 
         if ($this->idPerfil == 93) {
             // coordenador parecer
 
             switch($filtro){
                 case 'aguardando_distribuicao':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise' , $where);
+                    $total = count($tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAguardandoAnalise($where));
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise' , $where);
                     break;
                 case 'em_analise':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerEmAnalise' , $where);
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerEmAnalise' , $where);
+                    $total = count($tbReadequacao->buscarReadequacaoCoordenadorParecerEmAnalise($where));
                     break;
                 case 'analisados':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
+                    $total  = count($tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAnalisados($where));
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
                     break;
             }
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
             // técnico de acompanhamento ou parecerista de vinculada
             $auth = Zend_Auth::getInstance(); // pega a autenticação
-            $where['idTecnicoParecerista = ?'] = $auth->getIdentity()->usu_codigo;
+            $where['d.idAvaliador = ?'] = $auth->getIdentity()->usu_codigo;
 
-            $total = $tbReadequacao->count('vwPainelReadequacaoTecnico', $where);
+            $total = count($tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where));
 
             $this->filtro = '';
         }
@@ -2392,7 +2396,19 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         // coordenador de parecer
         if ($this->idPerfil == 93) {
-            $busca = $tbReadequacao->painelReadequacoesCoordenadorParecer($where, $order, $tamanho, $inicio, false, $filtro);
+
+            switch ($filtro) {
+                case 'aguardando_distribuicao':
+                        $busca = $tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAguardandoAnalise($where, $order, $tamanho, $inicio, false);
+                    break;
+                case 'em_analise':
+                    $busca = $tbReadequacao->buscarReadequacaoCoordenadorParecerEmAnalise($where, $order, $tamanho, $inicio, false);
+                    break;
+                case 'analisados':
+                    $busca = $tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAnalisados($where, $order, $tamanho, $inicio, false);
+                    break;
+            }
+
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
              // tecnico de acompanhamento ou parecerista de vinculada
             $busca = $tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where, $order, $tamanho, $inicio, false);
@@ -2418,6 +2434,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $this->view->intTamPag     = $this->intTamPag;
         $this->view->idPerfil      = $this->idPerfil;
         $this->view->idOrgao       = $this->idOrgao;
+
     }
 
     /*
