@@ -930,26 +930,26 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if(isset($_POST['iduf'])) {
             $iduf = $_POST['iduf'];
-            $cidade = CidadeDAO::buscar($iduf);
+
+            $mun = new Agente_Model_DbTable_Municipios();
+            $cidade = $mun->listar($iduf);
             $a = 0;
             $cidadeArray = array();
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
             echo json_encode($cidadeArray);
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+            die;
         }
 
         $idPronac = $this->_request->getParam("idPronac");
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-
         $tbAbrangencia = new tbAbrangencia();
         $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'tbAbrangencia');
-
         if(count($locais)==0){
             $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'Abrangencia');
         }
@@ -957,7 +957,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPais = new Pais();
         $this->view->Paises = $tbPais->buscar(array(), array(3));
 
-        $buscarEstado = EstadoDAO::buscar();
+//        $buscarEstado = EstadoDAO::buscar();
+        $uf = new Agente_Model_DbTable_UF();
+        $buscarEstado = $uf->buscar();
         $this->view->UFs = $buscarEstado;
 
         $get = Zend_Registry::get('get');

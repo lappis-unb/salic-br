@@ -2,31 +2,31 @@
 /**
  * DAO tbAbrangencia
  * OBS:
- * 	-> A tabela SAC.dbo.Abrangencia armazena os locais de realiza��o do projeto originais (aprovados)
- *  -> A tabela SAC.dbo.tbAbrangencia armazena os locais de realiza��o do projeto que foram solicitados na readequa��o
+ * 	-> A tabela SAC.dbo.Abrangencia armazena os locais de realizacao do projeto originais (aprovados)
+ *  -> A tabela SAC.dbo.tbAbrangencia armazena os locais de realizacao do projeto que foram solicitados na readequacao
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 18/04/2012
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright � 2012 - Minist�rio da Cultura - Todos os direitos reservados.
+ * @copyright  2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
 class tbAbrangencia extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "SAC";
-	protected $_schema  = "dbo";
+//	protected $_banco   = "SAC";
+	protected $_schema  = "sac";
 	protected $_name    = "tbAbrangencia";
-
+    protected $_primary = 'idAbrangencia';
 
 
 	/**
-	 * Busca os locais de abrang�ncia originais (aprovados)
+	 * Busca os locais de abrangencia originais (aprovados)
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordena��o)
+	 * @param array $order (ordenacao)
 	 * @return object
 	 */
 	public function buscarLocaisAprovados($where = array(), $order = array())
@@ -68,15 +68,15 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarLocaisAprovados()
+	} // fecha metodo buscarLocaisAprovados()
 
 
 
 	/**
-	 * Busca os locais de abrang�ncia solicitados (readequa��o)
+	 * Busca os locais de abrangencia solicitados (readequacao)
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordena��o)
+	 * @param array $order (ordenacao)
 	 * @return object
 	 */
 	public function buscarLocaisSolicitados($where = array(), $order = array())
@@ -119,7 +119,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarLocaisSolicitados()
+	} // fecha metodo buscarLocaisSolicitados()
 
 
 	public function buscarLocaisParaReadequacao($idPronac, $tabela = 'Abrangencia')
@@ -160,7 +160,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha m�todo historicoReadequacao()
+	} // fecha metodo historicoReadequacao()
     
 	public function buscarLocaisConsolidadoReadequacao($idReadequacao)
 	{
@@ -192,7 +192,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
         $select->where('b.idReadequacao = ?', $idReadequacao);
         
 		return $this->fetchAll($select);
-	} // fecha m�todo historicoReadequacao()
+	} // fecha metodo historicoReadequacao()
 
 	public function buscarDadosAbrangenciaAtual($where = array())
 	{
@@ -212,7 +212,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha m�todo historicoReadequacao()
+	} // fecha metodo historicoReadequacao()
 
 
 } // fecha class
