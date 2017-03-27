@@ -9,8 +9,7 @@ $salvarelatoriotecnico =   $this->url(array('controller' => 'fiscalizarprojetocu
 
 $selected = '';
 
-require_once"inc/menu.inc.php";
-
+echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
 ?>
 <div id="total" style="width: 100%;">
     <div>
@@ -686,14 +685,14 @@ require_once"inc/menu.inc.php";
                         </td>
                     </tr>
                 </table>
-                    
+
                         <p align="center">
                             <input id="Aprovar" class="btn" type="button" value="Aprovar" style="margin-left: 5px;">
                             <input id="DevolverTecnico" class="btn" type="submit" value="Devolver para Técnico" style="margin-left: 5px;">
                             <input id="Salvar" class="btn_salvar" type="button" style="margin-left: 5px;">
                             <input id="Cancelar" class="btn_cancelar" type="button" style="margin-left: 5px;">
                         </p>
-                
+
             </form>
         </div>
         <div id="rodapeConteudo" ><span></span></div>
@@ -791,7 +790,7 @@ require_once"inc/menu.inc.php";
             return false;
         });
 
-        $('#Salvar').click(function(){            
+        $('#Salvar').click(function(){
             $('#stAprovar').val(0);
             $('#stAvaliacao').val(1);
             $('#formParecerCoordenador').submit();
