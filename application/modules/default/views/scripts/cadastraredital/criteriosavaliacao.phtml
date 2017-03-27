@@ -395,7 +395,7 @@ else
 include_once 'inc/funcoes.inc.php';
 ?>
 
-    <?php include_once 'inc/menu.inc.php';?>
+    <?php echo $this->partial('cadastraredital/inc/menu.inc.php', $this);?>
 <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
 <div id="alerta" title="Confirma&ccedil;&atilde;o" style="display: none">Nota Inicial não pode ser maior que a Nota Final!</div>
 <div id="breadcrumb">

@@ -1,5 +1,5 @@
 <?php
-include_once 'inc/menu.inc.php';
+echo $this->partial('gerenciarpautareuniao/inc/menu.inc.php', $this);
 $verificar = $this->VerificarReuniao;
 $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
 ?>
