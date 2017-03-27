@@ -580,10 +580,10 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         );
 
         if (!empty($usu_codigo)) {
-//            $select->where("usu_codigo = ? ", $usu_codigo);
+            $select->where("usu_codigo = ? ", $usu_codigo);
         }
         if (!empty($usu_identificacao)) {
-//            $select->where("usu_identificacao = ? ", $usu_identificacao);
+            $select->where("usu_identificacao = ? ", $usu_identificacao);
         }
         try {
             $result = $this->fetchRow($select);
