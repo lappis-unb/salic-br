@@ -1536,9 +1536,9 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $i = 0;
 
         foreach ($rsVinculo as $rs) {
-            $dadosCombo[$i]['idResponsavel'] = $rs->idusuarioresponsavel;
-            $dadosCombo[$i]['idVinculo'] = $rs->idvinculo;
-            $dadosCombo[$i]['NomeResponsavel'] = $rs->nomeresponsavel;
+            $dadosCombo[$i]['idResponsavel'] = $rs->idUsuarioResponsavel;
+            $dadosCombo[$i]['idVinculo'] = $rs->idVinculo;
+            $dadosCombo[$i]['NomeResponsavel'] = $rs->NomeResponsavel;
             $i++;
         }
 
@@ -1552,7 +1552,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         //CASO RETORNE ALGUM RESULTADO, ADICIONA OS IDAGENTE'S DE CADA UM AO ARRAY
         if (count($rsVinculucao) > 0) {
             foreach ($rsVinculucao as $value) {
-                $dadosIdAgentes[] = $value->idagente;
+                $dadosIdAgentes[] = $value->idAgente;
             }
         }
 
