@@ -14,7 +14,7 @@ $visualizarGuiaHref         =   $this->url(array('controller' => 'cadastraredita
 
     <!-- in�cio: conte�do principal #container -->
     <div id="container">
-        <?php include_once 'inc/menu.inc.php';?>
+        <?php echo $this->partial('cadastraredital/inc/menu.inc.php', $this);?>
         <!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
 		<div id="breadcrumb">
 		    <ul>

@@ -930,26 +930,26 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if(isset($_POST['iduf'])) {
             $iduf = $_POST['iduf'];
-            $cidade = CidadeDAO::buscar($iduf);
+
+            $mun = new Agente_Model_DbTable_Municipios();
+            $cidade = $mun->listar($iduf);
             $a = 0;
             $cidadeArray = array();
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
             echo json_encode($cidadeArray);
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+            die;
         }
 
         $idPronac = $this->_request->getParam("idPronac");
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-
         $tbAbrangencia = new tbAbrangencia();
         $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'tbAbrangencia');
-
         if(count($locais)==0){
             $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'Abrangencia');
         }
@@ -957,7 +957,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPais = new Pais();
         $this->view->Paises = $tbPais->buscar(array(), array(3));
 
-        $buscarEstado = EstadoDAO::buscar();
+//        $buscarEstado = EstadoDAO::buscar();
+        $uf = new Agente_Model_DbTable_UF();
+        $buscarEstado = $uf->buscar();
         $this->view->UFs = $buscarEstado;
 
         $get = Zend_Registry::get('get');
@@ -2354,33 +2356,37 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         // hack!
         if ($this->idOrgao == 272) {
-            $where['idOrgao = ?'] = 262;
+            $where['idUnidade = ?'] = 262;
         } else {
-            $where['idOrgao = ?'] = $this->idOrgao;
+            $where['idUnidade = ?'] = $this->idOrgao;
         }
 
         $tbReadequacao = New tbReadequacao();
+        $tbDistribuirReadequacao = New tbDistribuirReadequacao();
 
         if ($this->idPerfil == 93) {
             // coordenador parecer
 
             switch($filtro){
                 case 'aguardando_distribuicao':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise' , $where);
+                    $total = count($tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAguardandoAnalise($where));
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise' , $where);
                     break;
                 case 'em_analise':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerEmAnalise' , $where);
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerEmAnalise' , $where);
+                    $total = count($tbReadequacao->buscarReadequacaoCoordenadorParecerEmAnalise($where));
                     break;
                 case 'analisados':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
+                    $total  = count($tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAnalisados($where));
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
                     break;
             }
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
             // técnico de acompanhamento ou parecerista de vinculada
             $auth = Zend_Auth::getInstance(); // pega a autenticação
-            $where['idTecnicoParecerista = ?'] = $auth->getIdentity()->usu_codigo;
+            $where['d.idAvaliador = ?'] = $auth->getIdentity()->usu_codigo;
 
-            $total = $tbReadequacao->count('vwPainelReadequacaoTecnico', $where);
+            $total = count($tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where));
 
             $this->filtro = '';
         }
@@ -2392,7 +2398,19 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         // coordenador de parecer
         if ($this->idPerfil == 93) {
-            $busca = $tbReadequacao->painelReadequacoesCoordenadorParecer($where, $order, $tamanho, $inicio, false, $filtro);
+
+            switch ($filtro) {
+                case 'aguardando_distribuicao':
+                        $busca = $tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAguardandoAnalise($where, $order, $tamanho, $inicio, false);
+                    break;
+                case 'em_analise':
+                    $busca = $tbReadequacao->buscarReadequacaoCoordenadorParecerEmAnalise($where, $order, $tamanho, $inicio, false);
+                    break;
+                case 'analisados':
+                    $busca = $tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAnalisados($where, $order, $tamanho, $inicio, false);
+                    break;
+            }
+
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
              // tecnico de acompanhamento ou parecerista de vinculada
             $busca = $tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where, $order, $tamanho, $inicio, false);
@@ -2418,6 +2436,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $this->view->intTamPag     = $this->intTamPag;
         $this->view->idPerfil      = $this->idPerfil;
         $this->view->idOrgao       = $this->idOrgao;
+
     }
 
     /*

@@ -11,68 +11,58 @@ $edital='';
 
 ?>
 <div class="container-fluid">
-
     <div class="row">
-
         <?php echo $this->partial("inc/menu.phtml", $this); ?>
-
         <div class="content col s10 m12 l10 planilha-produtos">
             <div id="msgExclusaoArq" class="sumir">Deseja realmente efetuar a exclus&atilde;o?</div>
-
-            <div id="titulo">
-                <div>Anexar Documentos<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
-            </div>
-            <div id="conteudo">
+            <h4>Anexar Documentos</h4>
+            <div id="">
                 <?php if( !$this->isEditarProjeto) : ?>
                     <form method="post" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'incluir-anexo')) ?>" id="formulario"  enctype="multipart/form-data">
-                    <input type="hidden" name="idPreProjeto" value="<?php echo $_GET['idPreProjeto'] ?>" >
-                    <input type="hidden" name="edital" value="<?php echo $edital ?>" />
-
-                     <table class="tabela">
-                        <tr>
-                            <th colspan="2">
-                                Novo Arquivo
-                            </th>
-                        </tr>
-                        <tr>
-                            <td class="bold destacar w150">Arquivo <span class="red">*</span></td>
-                            <td>
+                        <input type="hidden" name="idPreProjeto" value="<?php echo $_GET['idPreProjeto'] ?>" >
+                        <input type="hidden" name="edital" value="<?php echo $edital ?>" />
+                         <fieldset>
+                            <legend>Novo Arquivo</legend>
+                            <div class="row">
+                            <div class="input-field col s12">
+                                <label class="active">Arquivo <span class="red-text">*</span></label>
                                 <input type="file" name="arquivo" id="arquivo" class="input_simples">
                                 <span style="color:#f00" id="arquivoinvalido"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="bold destacar">Tipo do documento<span class="red-text">*</span></td>
-                            <td align="left">
-                                <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento1" value="1" /> Proponente
-                                <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento2" value="2" /> Proposta
-                                <span style="color:#f00" id="tipodocumentoinvalido"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="bold destacar">Documento <span class="red">*</span></td>
-                            <td align="left">
-                                <select id="documento" name="documento" class="select_simples">
-                                    <option value=""> - Selecione um Tipo de Documento - &nbsp;</option>
-                                </select>
-                                <span style="color:#f00" id="documentoinvalido"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" class="bold destacar">Observa&ccedil;&atilde;o</td>
-                            <td><textarea name="observacao" class="input_simples" style="width: 99%" cols="60" rows="5"></textarea></td>
-                        </tr>
-                    </table>
-                    <table class="tabela">
-                        <tr>
-                            <td align="center">
-                                <input class="btn_enviar" id="enviar" type="button" onclick="enviaform()" value="">
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label class="active">Tipo do documento<span class="red-text">*</span></label>
+                                    <p>
+                                        <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento1" value="1" /><label for="tipoDocumento1">Proponente</label>
+                                        <input type="radio"  name="tipoDocumento" class="tipoDocumento" id="tipoDocumento2" value="2" /><label for="tipoDocumento2">Proposta</label>
+                                        <span style="color:#f00" id="tipodocumentoinvalido"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label class="active">Documento <span class="red-text">*</span></label>
+                                    <select id="documento" name="documento" class="select_simples">
+                                        <option value=""> - Selecione um Tipo de Documento - &nbsp;</option>
+                                    </select>
+                                    <span style="color:#f00" id="documentoinvalido"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea name="observacao" class="materialize-textarea" cols="60" rows="5"></textarea>
+                                    <label class="active">Observa&ccedil;&atilde;o</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button class="btn" id="enviar" type="button" onclick="enviaform()" value="">Enviar</button>
+                            </div>
+                        </div>
                     </form>
                 <?php endif; ?>
-
                 <?php if(count($this->arquivosProposta)>0){ ?>
                 <table class="tabela">
                     <tr>
