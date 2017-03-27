@@ -44,7 +44,6 @@ if(!$this->codPerfil != 93)
         }
     }
 </script>
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
 		<li><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
@@ -52,24 +51,22 @@ if(!$this->codPerfil != 93)
 		<li class="last">Resultado da consulta</li>
 	</ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
 <div id="titulo">
     <div>Resultado da consulta<span></span> <span class="voltar"><a href="javascript:history.back();">Voltar</a></span></div>
 </div>
 <div id="conteudo" align="left">
     <br />
-    <?php 
+    <?php
         if($this->perfilAtual == 'CoordenadorParecerista') {
-            require_once "scripts/consultarpareceristas/subInterface/coordenadorParecerista.php";
+            echo $this->partial("consultarpareceristas/subInterface/coordenadorParecerista.php", $this);
         } else if($this->perfilAtual == 'CoordenadorPRONAC' && $this->prod) {
-            require_once "scripts/consultarpareceristas/relatoriomensaldepagamento.phtml";
-        } else if($this->perfilAtual == 'CoordenadorPRONAC'){ 
-        	require_once "scripts/consultarpareceristas/subInterface/coordenadorPronac.php";
+            echo $this->partial("consultarpareceristas/relatoriomensaldepagamento.phtml", $this);
+        } else if($this->perfilAtual == 'CoordenadorPRONAC'){
+        	echo $this->partial("consultarpareceristas/subInterface/coordenadorPronac.php", $this);
         }else if($this->perfilAtual == 'Parecerista' && $this->prod) {
-        	require_once "scripts/consultarpareceristas/tratardadosprodutos.phtml";
+        	echo $this->partial("consultarpareceristas/tratardadosprodutos.phtml", $this);
         }else if($this->perfilAtual == 'Parecerista'){
-        	require_once "scripts/consultarpareceristas/subInterface/parecerista.php";
+        	echo $this->partial("consultarpareceristas/subInterface/parecerista.php", $this);
         }
     ?>
     <br />
