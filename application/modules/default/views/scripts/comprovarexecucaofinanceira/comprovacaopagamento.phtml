@@ -853,7 +853,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
 	    var valorComprovado = parseFloat($("#totalComprovado").val());
 
             if (
-                (!$("#idComprovantePagamento").val() && (valorComprovado && (valorItem + valorComprovado) > valorAprovado))
+                (!$("#idComprovantePagamento").val() && (valorComprovado && (valorItem + valorComprovado).toFixed() > valorAprovado))
                 ||
                 ($("#idComprovantePagamento").val() && (valorComprovado && valorItem > valorAprovado))
             ) {
