@@ -1,33 +1,33 @@
 <?php 
-    $linkProjetosProdutos = $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'projetosprodutos'));
+   $linkProjetosProdutos = $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'projetosprodutos'));
 
     /* INICIO DA GUIA DE LINKS */
     $controller = 'Analisarprojetoparecer';
     $links = array();
-    $links[] = array('Projetos/Produtos para Análise' => array());
+    $links[] = array('Projetos/Produtos para An&aacute;lise' => array());
     //montaGuiaLinks($controller, $links);
     /* FIM DA GUIA DE LINKS */
 ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== IN&IATILDE;CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second">Análise Técnica Inicial</li>
-        <li class="last">Projetos/Produtos para Análise</li>
+        <li class="second">An&aacute;lise T&eacute;cnica Inicial</li>
+        <li class="last">Projetos/Produtos para An&aacute;lise</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== IN&IATILDE;CIO T&IATILDE;TULO ========== -->
 <div id="titulo">
-    <div>Projetos/Produtos para Análise <?php echo montaBotaoVoltar($controller, $links); ?></div>
+    <div>Projetos/Produtos para An&aacute;lise <?php echo montaBotaoVoltar($controller, $links); ?></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM T&IATILDE;TULO ========== -->
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== IN&IATILDE;CIO CONTE&UACUTE;DO ========== -->
 <div id="conteudo">
 
     <table class="tabela">
@@ -35,8 +35,8 @@
             <td>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left;"> A diligenciar</div>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice.png" width="20px"/></div><div style="margin-top: 2px;  margin-right: 15px; margin-left: 3px; float: left"> Diligenciado</div>
-                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Diligência respondida</div>
-                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Diligência não respondida</div>
+                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia respondida</div>
+                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia n&atilde;o respondida</div>
             </td>
         </tr>
     </table>
@@ -47,14 +47,15 @@
             <th width="5"></th>
             <th width="50">PRONAC</th>
             <th width="300">Nome do Projeto</th>
-            <th>Produto</th>
+            <th width="100">An&aacute;lise de Conte&uacute;do</th>
+            <th width="100">An&aacute;lise or&ccedil;ament&aacute;ria</th>
             <th width="100">Tipo de produto</th>
             <th width="120">Data de Recebimento</th>
             <th width="90">Tempo Restante</th>
-            <th width="70">Diligência</th>
-            <th width="120">Tempo da Diligência</th>
-            <th width="70">Histórico</th>
-            <th width="70">Conclusão</th>
+            <th width="70">Dilig&ecirc;ncia</th>
+            <th width="120">Tempo da Dilig&ecirc;ncia</th>
+            <th width="70">Hist&oacute;rico</th>
+            <th width="70">Conclus&atilde;o</th>
         </tr>
         <?php
             $contador = 1;
@@ -66,7 +67,7 @@
 
                 $tbDistribuirParecerDAO = new tbDistribuirParecer();
 
-                /** Verifica se tem produtos secundários não analizados ****************************/
+                /** Verifica se tem produtos secund&aacute;rios n&atilde;o analizados ****************************/
                 $dadosWhere["t.stEstado = ?"]                   = 0;
                 $dadosWhere["t.FecharAnalise = ?"]              = 0;
                 $dadosWhere["t.TipoAnalise = ?"]                = 3;
@@ -79,7 +80,7 @@
                 $pscount = count($SecundariosAtivos);
                 /***********************************************************************************/
 
-                /** Verificar se o Produto já foi dado o Parecer ***********************************/
+                /** Verificar se o Produto j&aacute; foi dado o Parecer ***********************************/
                 $tbAnaliseDeConteudoDAO = new Analisedeconteudo();
                 $where['IdPRONAC = ?'] = $d->IdPRONAC;
                 $where['idProduto = ?'] = $d->idProduto;
@@ -88,7 +89,7 @@
                 $countAnalizado = count($naoAnalisados);
                 /***********************************************************************************/
 
-                /** Verificar se o Produto principal já foi dado a consolidação ********************/
+                /** Verificar se o Produto principal j&aacute; foi dado a consolida&ccedil;&atilde;o ********************/
                 $enquadramentoDAO 		= new Admissibilidade_Model_Enquadramento();
                 $buscaEnquadramento 	= $enquadramentoDAO->buscarDados($d->IdPRONAC, null, false);
                 $countEnquadramentoP 	= count($buscaEnquadramento);
@@ -124,18 +125,23 @@
                     case 0:
                         $diligenciado = "notice1.png";
                         $Titlediligenciado = "A Diligenciar";
+                        $corDiligencia =  "light-green accent-3";
                         break;
                     case 1:
                         $diligenciado = "notice.png";
                         $Titlediligenciado = "Diligenciado";
+                        $corDiligencia = "yellow accent-3";
                         break;
                     case 2:
                         $diligenciado = "notice3.png";
                         $Titlediligenciado = "Diligencia respondida";
+                        $corDiligencia = "cyan lighten-1";
                         break;
                     case 3:
                         $diligenciado = "notice2.png";
-                        $Titlediligenciado = "Diligencia n?o respondida";
+                        $Titlediligenciado = "Diligencia n&atilde;o respondida";
+                        $corDiligencia = "amber accent-4";
+                        
                         break;
                 }
 
@@ -162,8 +168,8 @@
                         break;
                 }
 
-                /* Até 10 dias (Verde)
-                    -Entre 10 até 20 dias (amarelo)
+                /* At&eacute; 10 dias (Verde)
+                    -Entre 10 at&eacute; 20 dias (amarelo)
                     -Produto distribuido apos 20 dias (vermelho); *
                  */
 
@@ -182,20 +188,26 @@
                 <a target="_blank" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'),'',true); ?>?idPronac=<?php echo $d->IdPRONAC?>"><?php if($d->PRONAC != $rp) { echo $d->PRONAC; }else { echo ''; } ?></a>
             </td>
             <td><?php if($d->PRONAC != $rp) { echo $d->NomeProjeto; }else { echo ''; } ?></td>
-            <td><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'produto')); ?>?idPronac=<?php echo $d->IdPRONAC; ?>&idProduto=<?php echo $d->idProduto; ?>&stPrincipal=<?php echo $d->stPrincipal; ?>&idD=<?php echo $d->idDistribuirParecer; ?>" > <?php echo $d->dsProduto; ?></a></td>
+            <td align="center"><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'produto')); ?>?idPronac=<?php echo $d->IdPRONAC; ?>&idProduto=<?php echo $d->idProduto; ?>&stPrincipal=<?php echo $d->stPrincipal; ?>&idD=<?php echo $d->idDistribuirParecer; ?>" class="btn-primary waves-effect waves-light btn small" ><i class="material-icons medium">mode_edit</i></a>
+	    </td>
+	    <td align="center">
+                <a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'analise-orcamentaria'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>&situacao=<?php echo $d->situacao ;?>&tpDiligencia=124" class="btn-primary waves-effect waves-light btn small" title="<?php echo $Titlediligenciado; ?>" alt="<?php echo $Titlediligenciado; ?>"><i class="material-icons medium">mode_edit</i></a>
+	    </td>       
             <td align="center"><?php if($d->stPrincipal == 1): ?><img src="<?php echo $this->baseUrl(); ?>/public/img/ok_16x16.png" width="20px" style="cursor: pointer;" title="Produto principal" alt="Produto principal" /><?php endif;?></td>
             <td align="center"><?php echo Data::tratarDataZend($d->DtDistribuicao, 'Brasileira'); ?></td>
             <td align="center"><?php echo "<b style='color:".$tempoCor."'>".$tempoRestante." de 10</b>"; ?></td>
-            <td align="center"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $diligenciado; ?>" title="<?php echo $Titlediligenciado; ?>" width="30px" onclick="window.open('<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>&situacao=<?php echo $d->situacao ;?>&tpDiligencia=124')" style="cursor: pointer;" alt="Diligencia" /></td>
+            <td align="center">
+                <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>&situacao=<?php echo $d->situacao ;?>&tpDiligencia=124" class=" <?php echo $corDiligencia; ?> btn-primary waves-effect waves-light btn small" title="<?php echo $Titlediligenciado; ?>" alt="<?php echo $Titlediligenciado; ?>"><i class="material-icons medium">report_problem</i></a>
+            </td>
             <td align="center"><?php echo $d->tempoFimDiligencia; ?></td>
             <td align="center">
-                <img src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" style="cursor: pointer;" title="Histórico" alt="Histórico" onclick="redirecionar('<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'historico', 'idPronac'=> $d->IdPRONAC, 'stPrincipal'=> $d->stPrincipal, 'idProduto' => $d->idProduto)); ?>')" />
+                <a class="btn-primary waves-effect waves-light btn small" title="Hist&oacute;rico" alt="Hist&oacute;rico" href="<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'historico', 'idPronac'=> $d->IdPRONAC, 'stPrincipal'=> $d->stPrincipal, 'idProduto' => $d->idProduto)); ?>"><i class="material-icons">pageview</i></a>                
             </td>
             <td align="center">
                 <?php if(($pscount == 0) && ($d->stPrincipal == 1) && ($countAnalizado == 0) && ($countEnquadramentoP != 0) && ($countParecerP != 0) && ($dilig == 0)):?>
-                <img src="<?php echo $this->baseUrl(); ?>/public/img/save.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'fecharparecer', 'idPronac'=> $d->IdPRONAC, 'idD'=> $d->idDistribuirParecer, 'idProduto' => $d->idProduto, 'stPrincipal' => $d->stPrincipal)); ?>')" style="cursor: pointer;" title="Concluir Análise" alt="Concluir Análise" />
+                <img src="<?php echo $this->baseUrl(); ?>/public/img/save.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'fecharparecer', 'idPronac'=> $d->IdPRONAC, 'idD'=> $d->idDistribuirParecer, 'idProduto' => $d->idProduto, 'stPrincipal' => $d->stPrincipal)); ?>')" style="cursor: pointer;" title="Concluir An&aacute;lise" alt="Concluir An&aacute;lise" />
                 <?php elseif(($d->stPrincipal == 0) && ($countAnalizado == 0)  && ($dilig == 0)):?>
-                <img src="<?php echo $this->baseUrl(); ?>/public/img/save.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'fecharparecer', 'idPronac'=> $d->IdPRONAC, 'idD'=> $d->idDistribuirParecer, 'idProduto' => $d->idProduto, 'stPrincipal' => $d->stPrincipal)); ?>')" style="cursor: pointer;" title="Concluir Análise" alt="Concluir Análise"/>
+                <img src="<?php echo $this->baseUrl(); ?>/public/img/save.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'fecharparecer', 'idPronac'=> $d->IdPRONAC, 'idD'=> $d->idDistribuirParecer, 'idProduto' => $d->idProduto, 'stPrincipal' => $d->stPrincipal)); ?>')" style="cursor: pointer;" title="Concluir An&aacute;lise" alt="Concluir An&aacute;lise"/>
                 <?php endif; ?>
             </td>
         </tr>
@@ -205,9 +217,9 @@
         }
         ?>
     </table>
-    <!-- ========== PAGINAÇÃO ========== -->
+    <!-- ========== PAGINA&CCEDIL;&ATILDE;O ========== -->
     <?php if($this->qtdRegistro > 5){ echo "<p>" . $this->buscar . "</p>"; } ?>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&CCEDIL;&ATILDE;O ========== -->
 		
     <?php } else { ?>
     <table class="tabela" style="width: 95%;">
@@ -218,12 +230,12 @@
     <?php } ?>
         
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTE&UACUTE;DO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== IN&IATILDE;CIO RODAP&EACUTE; DO CONTE&UACUTE;DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&EACUTE; DO CONTE&UACUTE;DO ========== -->
 
 <br clear="all" />
 
