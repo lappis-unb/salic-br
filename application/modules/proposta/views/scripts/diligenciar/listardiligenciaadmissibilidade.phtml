@@ -7,9 +7,9 @@ $prorrogarHref              = $this->url(array('controller' => 'diligenciar', 'a
 <?php
 
 if($this->idPronac)
-    require_once "scripts/diligenciar/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+    echo $this->partial('diligenciar/inc/menu.inc.php', $this); // menu de manter proposta por incentivo fiscal
 if($this->idPreProjeto)
-    require_once "scripts/diligenciar/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+    echo $this->partial('diligenciar/inc/menu.inc.php', $this); // menu de manter proposta por incentivo fiscal
 ?>
 <div id="titulo">
     <div>Listagem das Dilig&ecirc;ncias <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>

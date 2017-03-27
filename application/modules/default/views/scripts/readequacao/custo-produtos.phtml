@@ -43,7 +43,7 @@ $idPronacCrip = Seguranca::encrypt($this->idPronac);
 <div id="conteudo">
 
     <!-- ========== INÍCIO TOPO PROJETO ========== -->
-    <?php require_once "inc/topo.inc.php"; ?>
+    <?php echo $this->partial('readequacao/inc/topo.inc.php', $this); ?>
     <!-- ========== FIM TOPO PROJETO ========== -->
 
     <!-- ========== INÍCIO GRID ========== -->
