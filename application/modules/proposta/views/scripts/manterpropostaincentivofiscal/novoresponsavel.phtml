@@ -78,9 +78,7 @@
 
 
 </script>
-
 <?php echo $this->partial("manterpropostaincentivofiscal/inc/menu_responsavel.inc.php", $this);?>
-
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -90,34 +88,24 @@
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
     <div>Novo Respons&aacute;vel <span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
 </div>
 <!-- ========== FIM TITULO ========== -->
-
 <div id="conteudo">
-
 <div id="confirma"></div>
-
-   <fieldset>
         <form id="formBuscar" name="formBuscar" method="post" action="#">
             <table class="tabela" style="margin:1% auto; width:40%;" summary="Esta tabela contém o campo para pesquisa de Agentes Vinculados a Instituição. Para que a pesquisa tenha efeito é necessário que seja feita através do CNPJ ou o nome da Instituição que consta nos campos abaixo">
                 <td colspan="2" class="titulo_tabela" tabindex="1">PESQUISAR RESPONS&Aacute;VEL</td>
                 <tr>
-
                     <th class="center" width="50%" tabindex="2"><label for="cnpj" >CPF</label></th>
                     <td>
                         <!--<input class="input_simples" type="text" name="cnpjcpf" id="cnpjcpf" maxlength="18"  tabindex="3" onkeyup="mascara(this, format_cpf);"class="input w500" />-->
                         <input class="input_simples" type="text" name="cnpjcpf" id="cnpjcpf" maxlength="18"  tabindex="3" class="input w500" />
                     </td>
                 </tr>
-
                 <tr>
-
                     <th class="center" width="50%" tabindex="4"><label for="nome">NOME:</label></th>
                     <td>
                         <input class="input_simples" type="text" name="nome" id="nome" tabindex="5" maxlength="70" value="" onkeypress="" class="input w500"/>
@@ -126,23 +114,15 @@
                 <tr>
                     <td colspan="2" class="centro">
                         <div id="error" class="sumir" style="color: red; text-align: center; font-weight: 600;">Dados obrigat&oacute;rios n&atilde;o informados!</div>
-                        <input type="button" title=" Pesquisar " tabindex="6" class="btn_pesquisar" id="btn_pesquisar" value=" " onclick="respnovoresponsavel();" />
-                        &nbsp;&nbsp;&nbsp;
-                        <input type="reset" title=" Cancelar " tabindex="7" class="btn_limpar" value=" " onclick="$('#error').html('');" />
+                        <button type="button" title=" Pesquisar " tabindex="6" class="btn" id="btn_pesquisar" value=" " onclick="respnovoresponsavel();" />
+                            Pesquisar
+                        </button>
+                        <button type="reset" title=" Cancelar " tabindex="7" class="btn white black-text" value="" onclick="$('#error').html('');" >Limpar</button>
                     </td>
                 </tr>
             </table>
         </form>
-
-		<br />
-
 		<div id="respnovoresponsavel"></div>
-
-    </fieldset>
-
 </div>
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-
 <br clear="all" />

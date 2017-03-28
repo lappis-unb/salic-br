@@ -9,28 +9,22 @@
             <li class="last">Principal</li>
         </ul>
     </div>
-    <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
     </div>
-    <!-- ========== FIM CONTEUDO ========== -->
-    <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
     <div id="rodapeConteudo"><span></span></div>
-    <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
     <br clear="all"/>
     <?php $ponto = ''; ?>
     <?php
-    if (empty($_GET['acao'])) {
-        $acao = "";
-    } else {
-        $acao = $_GET['acao'];
-    }
+        if (empty($_GET['acao'])) {
+            $acao = "";
+        } else {
+            $acao = $_GET['acao'];
+        }
     ?>
     <?php $ponto = '*'; ?>
     <?php echo $this->partial("agentes/inc/menu.inc.php", $this); ?>
-    <!-- ========== INICIO TITULO ========== -->
     <div id="titulo">
         <div id="novo">Novo cadastro<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
     </div>
-    <!-- ========== FIM TITULO ========== -->
 <?php endif; ?>
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
@@ -117,8 +111,7 @@
                     <td align="center">
                         <?php if (!$this->ehProponente) : ?>
                             <label for="visao"> Informe a vis&atilde;o do Agente: </label>
-                            <select name="visao" id="visao"
-                                    onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
+                            <select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
                                     class="input_simples" style="width: 250px;">
                                 <?php if ($this->modulo != "movimentacaobancaria"): ?>
                                     <option value="0" selected="selected"> - Selecione -</option>
@@ -253,8 +246,7 @@
                     </td>
                     <td>
                         <label for="cidade">Cidade *</label> <br/>
-                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples"
-                                style="width: 250px;">
+                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
                             <option value="0"> - Selecione -</option>
 
                             <?php if ($this->combocidades): ?>
@@ -290,7 +282,7 @@
                     </td>
                     <td>
                         <label for="tipoLogradouro">Tipo de Logradouro *</label> <br/>
-                        <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" style="width: 250px;">
+                        <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" >
 
                             <?php if (!isset($this->tipoLogradouro) || empty($this->tipoLogradouro)) { ?>
                                 <option value="0"> - Selecione -</option>
@@ -302,19 +294,16 @@
                                     <?php echo($combotipologradouro); ?>
                                 </option>
                             <?php endforeach; ?>
-
                         </select>
                         <span id="erroTipoLogradouro" class="spanError"></span>
                     </td>
                     <td>
                         <label for="logradouro">Logradouro *</label> <br/>
-                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro"
-                               maxlength="50" size="50"/>
+                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro" maxlength="50" size="30"/>
                         <span id="erroLogradouro" class="spanError"></span>
                     </td>
                 </tr>
                 <tr>
-
                     <td>
                         <label for="numero">N&uacute;mero *</label> <br/>
                         <input class="input_simples" type="text" name="numero" id="numero" maxlength="10" size="30"/>
@@ -322,14 +311,12 @@
                     </td>
                     <td>
                         <label for="complemento">Complemento</label> <br/>
-                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70"
-                               size="50"/>
+                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70" size="50"/>
                         <span id="erroComplemento" class="spanError"></span>
                     </td>
-                    <td colspan="2">
+                    <td colspan="">
                         <label for="bairro">Bairro *</label> <br/>
-                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro"
-                               maxlength="70" size="50"/>
+                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro" maxlength="70" size="40"/>
                         <span id="erroBairro" class="spanError"></span>
                     </td>
                 </tr>
@@ -473,7 +460,8 @@
             <?php } ?>
             <table class="tabela">
                 <tr>
-                    <td class="centro"><input type="button" class="btn_salvar" value=" " onclick="validaAgenteNovo();"/>
+                    <td class="centro">
+                        <button type="button" class="btn" value=" " onclick="validaAgenteNovo();"/>salvar</button>
                     </td>
                 </tr>
             </table>
