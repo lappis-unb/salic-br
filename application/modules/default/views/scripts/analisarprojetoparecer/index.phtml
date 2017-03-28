@@ -193,7 +193,7 @@
             <td align="center"><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'analise-conteudo')); ?>?idPronac=<?php echo $d->IdPRONAC; ?>&idProduto=<?php echo $d->idProduto; ?>&stPrincipal=<?php echo $d->stPrincipal; ?>&idD=<?php echo $d->idDistribuirParecer; ?>" class="btn-primary waves-effect waves-light btn small" ><i class="material-icons medium">mode_edit</i></a>	    
 	    </td>
 	    <td align="center">
-                <a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'analise-orcamentaria'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>&situacao=<?php echo $d->situacao ;?>&tpDiligencia=124" class="btn-primary waves-effect waves-light btn small" title="<?php echo $Titlediligenciado; ?>" alt="<?php echo $Titlediligenciado; ?>"><i class="material-icons medium">mode_edit</i></a>
+                <a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'analise-orcamentaria'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>&situacao=<?php echo $d->situacao ;?>&tpDiligencia=124&stPrincipal=<?php echo $d->stPrincipal; ?>" class="btn-primary waves-effect waves-light btn small" title="<?php echo $Titlediligenciado; ?>" alt="<?php echo $Titlediligenciado; ?>"><i class="material-icons medium">mode_edit</i></a>
 	    </td>       
             <td align="center"><?php if($d->stPrincipal == 1): ?><img src="<?php echo $this->baseUrl(); ?>/public/img/ok_16x16.png" width="20px" style="cursor: pointer;" title="Produto principal" alt="Produto principal" /><?php endif;?></td>
             <td align="center"><?php echo Data::tratarDataZend($d->DtDistribuicao, 'Brasileira'); ?></td>
