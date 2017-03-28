@@ -79,7 +79,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $idAgenteParecerista = $agente['idagente'];
 
         $situacao = $this->_request->getParam('situacao');
-
+        
         $projeto = new Projetos();
         $resp = $projeto->buscaProjetosProdutos(
             array(
@@ -858,9 +858,9 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                     $where['idProduto = ?'] = $idProduto;
                     $analisedeConteudoDAO->update($dados, $where);
 
-                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "Analisarprojetoparecer/produto/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "CONFIRM");
+                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "Analisarprojetoparecer/analise-conteudo/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "CONFIRM");
                 } catch (Exception $e) {
-                    parent::message($e->getMessage(), "Analisarprojetoparecer/produto/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "ERROR");
+                    parent::message($e->getMessage(), "Analisarprojetoparecer/analise-conteudo/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "ERROR");
                 }
                 break;
 
@@ -1286,5 +1286,31 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                 parent::message("Error: " . $e->getMessage(), "Analisarprojetoparecer/produto?idPronac=" . $idPronac . "&idProduto=" . $idProduto . "&stPrincipal=" . $stPrincipal, "ERROR");
             }
         }
+    }
+    
+    public function analiseConteudoAction() {
+        $mapperArea = new Agente_Model_AreaMapper();
+        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $idusuario = $auth->getIdentity()->usu_codigo;
+
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
+        $codGrupo = $GrupoAtivo->codGrupo;
+
+        $idPronac = $this->_request->getParam("idPronac");
+        $idProduto = $this->_request->getParam("idProduto");
+        $stPrincipal = $this->_request->getParam("stPrincipal");
+
+        $projetoDAO = new Projetos();
+
+        $whereProjeto['p.IdPRONAC = ?'] = $idPronac;
+        $whereProjeto['d.idProduto = ?'] = $idProduto;
+        $whereProjeto['d.stPrincipal = ?'] = $stPrincipal;
+
+        $projeto = $projetoDAO->buscaProjetosProdutosAnaliseInicial($whereProjeto);
+        $this->view->projeto = $projeto[0];
+        $this->view->dsArea = $projeto[0]->dsArea;
+        $this->view->dsSegmento = $projeto[0]->dsSegmento;
+        //xd($projeto);
     }
 }
