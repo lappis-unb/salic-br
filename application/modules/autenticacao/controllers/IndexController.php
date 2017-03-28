@@ -694,13 +694,13 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             $dataFinal = data::dataAmericana($dataNasc);
             $dados = array(
-                "idusuario" => $auth['idusuario'],
-                "cpf" => $cpf,
-                "nome" => $nome,
-                "dtnascimento" => $dataFinal . ' 00:00:00',
-                "email" => $email,
-                "dtcadastro" => date("Y-m-d"),
-                "dtsituacao" => date("Y-m-d")
+                "IdUsuario" => $auth['idusuario'],
+                "Cpf" => $cpf,
+                "Nome" => $nome,
+                "DtNascimento" => $dataFinal . ' 00:00:00',
+                "Email" => $email,
+                "DtCadastro" => date("Y-m-d"),
+                "DtSituacao" => date("Y-m-d")
             );
 
             $sgcAcessoSave = $sgcAcesso->salvar($dados);
