@@ -166,7 +166,7 @@ function trocarproponente()
                     <a class="no_seta" href="#" onclick="confirmaExcluir('<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'exluirproposta')) ?><?php echo $codProjeto; ?>')">Excluir Proposta</a>
                     <?php } ?>
                     <?php if($this->enviado == 'false'){ ?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'enviar-proposta-ao-minc')); ?><?php echo $codProjeto; ?>&edital=s">Enviar Proposta ao MINC</a>
+                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'enviar-proposta')); ?><?php echo $codProjeto; ?>&edital=s">Enviar Proposta ao MINC</a>
                     <?php }?>
 
                     <?php if($this->siVinculoProponente): ?>

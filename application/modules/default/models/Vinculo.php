@@ -442,7 +442,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         }
     }
 
-    public function enviarPropostaAoMincAction() {
+    public function enviarPropostaAction() {
         //recupera parametros
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
@@ -867,21 +867,21 @@ class Vinculo extends MinC_Db_Table_Abstract {
 
 //                    $db->commit();
 
-                    parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
+                    parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/manterpropostaincentivofiscal/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
                     die();
                 } catch (Exception $e) {
 //                    $db->rollback();
                     //xd($e->getMessage());
-                    parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+                    parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                     die();
                 }
             } else { //fecha IF se encontrou tecnicos para enviar a proposta
-                parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+                parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                 die();
             }
         } else {
             //xd($e->getMessage());
-            parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+            parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
         }
     }
 
