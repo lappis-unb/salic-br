@@ -7,170 +7,145 @@
 //    if($this->idPreProjeto)
 //        echo $this->partial( "diligenciar/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
 ?>
-
 <div class="container-fluid">
-
     <div class="row">
-
         <?php echo $this->partial("inc/menu.phtml", $this); ?>
-
         <div class="content col s10 m12 l10 planilha-produtos">
-
-            <div id="titulo">
-                <div>Listagem das Dilig&ecirc;ncias <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
-            </div>
-
-            <div id="conteudo">
+            <h4> Listagem das Dilig&ecirc;ncias </h4>
+            <div id="">
                 <form id="frImprimir" action="<?php echo $this->url(array('controller'=>'diligenciar', 'action'=>'imprimir')); ?>" method="post" target="_blank" >
                     <input type="hidden" name="idPronac" value="<?php echo $this->idPronac;?>"/>
                     <input type="hidden" name="idPreProjeto" value="<?php echo $this->idPreProjeto;?>"/>
-                    <?php if($this->diligenciasProposta) { ?>
-                    <table class="tabela">
-                        <tr>
-                            <td><input type="button" name="grid1" id="g1_1" class="btn_remover" title="Expandir" />Dilig&ecirc;ncia Proposta</td>
-                        </tr>
-                    </table>
-
-                    <div id="div_g1_1" class="miolo_grid_01">
+                    <?php if($this->diligenciasProposta) : ?>
                         <table class="tabela">
                             <tr>
-                                <th>IMPRIMIR</th>
-                                <th>VISUALIZAR</th>
-                                <th>RESPONDER</th>
-                                <th>NR PROPOSTA</th>
-                                <th>NOME DA PROPOSTA</th>
-                                <th>DATA DA SOLICITA&Ccedil;&Atilde;O</th>
-                                <? /*?><th>PRAZO DA RESPOSTA</th>
-                                <th>PRORROGAR PRAZO</th><? */ ?>
+                                <td><input type="button" name="grid1" id="g1_1" class="btn_remover" title="Expandir" />Dilig&ecirc;ncia Proposta</td>
                             </tr>
-                            <?php foreach ($this->diligenciasProposta as $value) { ?>
-                            <tr>
-                                <td style="text-align: center;">
-                                    <input type="checkbox" name="idAvaliacaoProposta[]" class="idDiligencia checkproposta" value="<?php echo $value->idDiligencia;?>" />
-                                </td>
-                                <td style="text-align: center;">
-                                    <img class="visualizarProposta" idAvaliacaoProposta="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" width="20" style="cursor: pointer;"/>
-                                </td>
-                                <td style="text-align: center;">
-                                    <?php
-                                        $qtdia = 20;
-                                        if($value->stProrrogacao == 'S')
-                                            $qtdia+=20;
-                                        $prazo = date('Y-m-d',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
-                                    ?>
-                                    <?php if($value->stEnviado == 'N' and date('Y-m-d') <= $prazo and !$this->diligencias) {?><img title="" class="alterarProposta" idAvaliacaoProposta="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/edit.png" width="20" style="cursor: pointer;"/><?php }?>
-                                </td>
-                                <td align="center">
-                                    <?php echo $value->pronac;?>
-                                </td>
-                                <td align="center">
-                                    <?php echo $value->nomeProjeto;?>
-                                </td>
-                                <td align="center">
-                                    <?php echo date('d/m/Y',strtotime($value->dataSolicitacao));?>
-                                </td>
-                                <? /*?><td align="center">
-                                    <?php
-                                        $qtdia = 40;
-                                        echo date('d/m/Y',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
-                                    ?>
-                                </td>
-                                <td>Prorrogado</td><? */ ?>
-                            </tr>
-                            <?php } ?>
                         </table>
-                    </div>
-                    <?php } if($this->diligencias) { ?>
-                    <table class="tabela">
-                        <tr>
-                            <td><input type="button" name="grid1" id="g1_2" class="btn_remover" title="Expandir" />Dilig&ecirc;ncia Projeto</td>
-                        </tr>
-                </table>
-
-                <div id="div_g1_2" class="miolo_grid_01">
+                        <div id="div_g1_1" class="miolo_grid_01">
+                            <table class="bordered">
+                                <tr>
+                                    <th>IMPRIMIR</th>
+                                    <th>VISUALIZAR</th>
+                                    <th>RESPONDER</th>
+                                    <th>NR PROPOSTA</th>
+                                    <th>NOME DA PROPOSTA</th>
+                                    <th>DATA DA SOLICITA&Ccedil;&Atilde;O</th>
+                                    <? /*?><th>PRAZO DA RESPOSTA</th>
+                                    <th>PRORROGAR PRAZO</th><? */ ?>
+                                </tr>
+                                <?php foreach ($this->diligenciasProposta as $value) : ?>
+                                    <tr>
+                                        <td style="text-align: center;">
+                                            <input id="<?php echo $value->idDiligencia;?>" type="checkbox" name="idAvaliacaoProposta[]" class="idDiligencia checkproposta" value="<?php echo $value->idDiligencia;?>" />
+                                            <label for="<?php echo $value->idDiligencia;?>"></label>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <img class="visualizarProposta" idAvaliacaoProposta="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" width="20" style="cursor: pointer;"/>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <?php
+                                                $qtdia = 20;
+                                                if($value->stProrrogacao == 'S')
+                                                    $qtdia+=20;
+                                                $prazo = date('Y-m-d',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
+                                            ?>
+                                            <?php if($value->stEnviado == 'N' and date('Y-m-d') <= $prazo and !$this->diligencias) {?><img title="" class="alterarProposta" idAvaliacaoProposta="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/edit.png" width="20" style="cursor: pointer;"/><?php }?>
+                                        </td>
+                                        <td align="center"> <?php echo $value->pronac;?> </td>
+                                        <td align="center"> <?php echo $value->nomeProjeto;?> </td>
+                                        <td align="center">
+                                            <?php echo date('d/m/Y',strtotime($value->dataSolicitacao));?>
+                                        </td>
+                                        <? /*?><td align="center">
+                                            <?php
+                                                $qtdia = 40;
+                                                echo date('d/m/Y',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
+                                            ?>
+                                        </td>
+                                        <td>Prorrogado</td><? */ ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                    <?php if($this->diligencias) : ?>
                         <table class="tabela">
                             <tr>
-                                <th>IMPRIMIR</th>
-                                <th>VISUALIZAR</th>
-                                <th>RESPONDER</th>
-                                <th>PRONAC</th>
-                                <th>NOME DO PROJETO</th>
-                                <th>PRODUTO</th>
-                                <th>TIPO DA DILIG&Ecirc;NCIA</th>
-                                <th>DATA DA SOLICITA&Ccedil;&Atilde;O</th>
-                                <th>DATA DA RESPOSTA</th>
-                                <th>PRAZO DA RESPOSTA</th>
-                                <th>PRORROGAR PRAZO</th>
+                                <td><input type="button" name="grid1" id="g1_2" class="btn_remover" title="Expandir" />Dilig&ecirc;ncia Projeto</td>
                             </tr>
-                            <?php foreach ($this->diligencias as $value) { ?>
-                            <tr>
-                                <td style="text-align: center;">
-                                    <input type="checkbox" name="idDiligencia[]" class="idDiligencia checkprojeto" value="<?php echo $value->idDiligencia;?>" />
-                                </td>
-                                <td style="text-align: center;">
-                                    <img class="visualizar" idDiligencia="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" width="20" style="cursor: pointer;"/>
-                                </td>
-                                <td style="text-align: center;">
-                                    <?php
-                                        $qtdia = 20;
-                                        if($value->stProrrogacao == 'S')
-                                            $qtdia+=20;
-                                        $prazo = date('Y-m-d-H-i',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
-                                        ?>
+                        </table>
+                        <div id="div_g1_2" class="miolo_grid_01">
+                            <table class="tabela">
+                                <tr>
+                                    <th>IMPRIMIR</th>
+                                    <th>VISUALIZAR</th>
+                                    <th>RESPONDER</th>
+                                    <th>PRONAC</th>
+                                    <th>NOME DO PROJETO</th>
+                                    <th>PRODUTO</th>
+                                    <th>TIPO DA DILIG&Ecirc;NCIA</th>
+                                    <th>DATA DA SOLICITA&Ccedil;&Atilde;O</th>
+                                    <th>DATA DA RESPOSTA</th>
+                                    <th>PRAZO DA RESPOSTA</th>
+                                    <th>PRORROGAR PRAZO</th>
+                                </tr>
+                                <?php foreach ($this->diligencias as $value) : ?>
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <input type="checkbox" name="idDiligencia[]" class="idDiligencia checkprojeto" value="<?php echo $value->idDiligencia;?>" />
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <img class="visualizar" idDiligencia="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" width="20" style="cursor: pointer;"/>
+                                    </td>
+                                    <td style="text-align: center;">
                                         <?php
+                                            $qtdia = 20;
+                                            if($value->stProrrogacao == 'S')
+                                                $qtdia+=20;
+                                            $prazo = date('Y-m-d-H-i',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
+                                            ?>
+                                            <?php
 
-                                        if( $this->verificarStatusDiligencia (null, $value->idDiligencia) == 'D') {?><img class="alterar" idDiligencia="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/edit.png" width="20" style="cursor: pointer;"/>  <?php  }
-                                        else {
-                                            echo '-';
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php echo $value->pronac;?>
-                                </td>
-                                <td>
-                                    <?php echo $value->nomeProjeto;?>
-                                </td>
-                                <td align="center">
-                                    <?php
-                                        if($value->produto)
-                                            echo $value->produto;
-                                        else
-                                            echo '-';
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php echo $value->tipoDiligencia;?>
-                                </td>
-                                <td>
-                                    <?php echo date('d/m/Y',strtotime($value->dataSolicitacao));?>
-                                </td>
-                                <td>
-                                    <?php  if($value->stEnviado == 'S' && !empty($value->dataResposta)) echo date('d/m/Y',strtotime($value->dataResposta));?>
-                                </td>
-                                <td align="center">
-                                    <?php
-                                        $qtdia = 40;
-                                        echo date('d/m/Y',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
-                                    ?>
-                                </td>
-                                <td>Prorrogado</td>
-                            </tr>
-                            <?php  } ?>
-                        </table>
-                    </div>
-                    <?php } ?>
+                                            if( $this->verificarStatusDiligencia (null, $value->idDiligencia) == 'D') {?><img class="alterar" idDiligencia="<?php echo $value->idDiligencia;?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/edit.png" width="20" style="cursor: pointer;"/>  <?php  }
+                                            else {
+                                                echo '-';
+                                            }
+                                        ?>
+                                    </td>
+                                    <td> <?php echo $value->pronac;?> </td>
+                                    <td> <?php echo $value->nomeProjeto;?> </td>
+                                    <td align="center">
+                                        <?php
+                                            if($value->produto)
+                                                echo $value->produto;
+                                            else
+                                                echo '-';
+                                        ?>
+                                    </td>
+                                    <td> <?php echo $value->tipoDiligencia;?> </td>
+                                    <td> <?php echo date('d/m/Y',strtotime($value->dataSolicitacao));?> </td>
+                                    <td> <?php  if($value->stEnviado == 'S' && !empty($value->dataResposta)) echo date('d/m/Y',strtotime($value->dataResposta));?> </td>
+                                    <td align="center">
+                                        <?php
+                                            $qtdia = 40;
+                                            echo date('d/m/Y',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
+                                        ?>
+                                    </td>
+                                    <td>Prorrogado</td>
+                                </tr>
+                                <?php  endforeach; ?>
+                            </table>
+                        </div>
+                    <?php endif ?>
                     <table class="tabela">
                         <tr align="center">
-                            <td><input type="submit" class="btn_imprimir" value="" /></td>
+                            <td><button type="submit" class="btn" value="" />Imprimir</button></td>
                         </tr>
                     </table>
-                    <br clear="all" />
                 </form>
-            </div><!-- final: conte�do principal #conteudo -->
-            <div id="rodapeConteudo" ><span></span></div>
+            </div>
             <br clear="all" />
-
             <form id="encaminhar" method="post">
                 <input type="hidden" name="idPronac" value="<?php echo $this->idPronac;?>"/>
                 <input type="hidden" name="idPreProjeto" value="<?php echo $this->idPreProjeto;?>" />

@@ -1,5 +1,5 @@
 <?php
-//require_once "scripts/diligenciar/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+//echo $this->partial('diligenciar/inc/menu.inc.php', $this); // menu de manter proposta por incentivo fiscal
 $visualizarDiligenciaHref = $this->url(array('controller' => 'diligenciar', 'action' => 'visualizardiligencia'));
 $cadastrarDiligenciaHref  = $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrardiligencia'));
 $alterarDiligenciaHref      = $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia'));
@@ -125,7 +125,7 @@ $qtdia = 40;
             </div>
         <?php endif; ?>
         <?php if ($diligenciaAberta) : ?>
-            <? else if (($this->situacao && $this->tpDiligencia)) : ?>
+            <?php elseif (($this->situacao && $this->tpDiligencia)) : ?>
                     <table class="tabela">
                         <tr>
                             <td >

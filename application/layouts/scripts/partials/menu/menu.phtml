@@ -195,6 +195,24 @@ $arrMenu['acompanhamento']['menu'][] = array(
     'title' => 'Avaliar Readequa&ccedil;&otilde;es',
     'label' => 'Avaliar Readequa&ccedil;&otilde;es'
 );
+
+$arrMenu['acompanhamento']['menu'][] = array(
+    'grupo' => array(
+     147
+    ,148
+    ,149
+    ,150
+    ,151
+    ,152
+    ),
+    'url' => $this->url(array(
+        'module' => 'assinatura',
+        'controller' => 'enquadramento',
+        'action' => 'gerenciar-projetos'
+    ), '', true),
+    'title' => 'Assinatura',
+    'label' => 'Assinatura'
+);
 // ========== FIM MENU ACOMPANHAMENTO ==========
 // ========== INICIO MENU Administrativo ==========
 $arrMenu['administrativo'] = array(
@@ -341,6 +359,24 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'title' => 'Gerenciar Analistas',
     'label' => 'Gerenciar Analistas'
 );
+
+$arrMenu['admissibilidade']['menu'][] = array(
+    'grupo' => array(
+     147
+    ,148
+    ,149
+    ,150
+    ,151
+    ,152
+    ),
+    'url' => $this->url(array(
+        'module' => 'assinatura',
+        'controller' => 'enquadramento',
+        'action' => 'gerenciar-projetos'
+    ), '', true),
+    'title' => 'Assinatura',
+    'label' => 'Assinatura'
+);
 // ========== FIM MENU ADMISSIBILIDADE ==========
 // ========== INICIO MENU Parecer ==========
 $arrMenu['parecer'] = array(
@@ -463,37 +499,38 @@ $arrMenu['relatorios']['menu'][] = array(
 );
 
 // ========== INICIO MENU ASSINATURA ==========
-$arrMenu['assinatura'] = array(
-    'id' => 'assinatura',
-    'label' => 'Assinatura',
-    'title' => 'Ir para Assinatura',
-    'menu' => array(),
-    'grupo' => array(
-        147
-    ,148
-    ,149
-    ,150
-    ,151
-    ,152
-    ),
-);
-$arrMenu['assinatura']['menu'][] = array(
-    'grupo' => array(
-        147
-    ,148
-    ,149
-    ,150
-    ,151
-    ,152
-    ),
-    'url' => $this->url(array(
-        'module' => 'assinatura',
-        'controller' => 'enquadramento',
-        'action' => 'gerenciar-projetos'
-    ), '', true),
-    'title' => 'Gerenciar Projetos Enquadrados',
-    'label' => 'Gerenciar Projetos Enquadrados'
-);
+//$arrMenu['assinatura'] = array(
+    //'id' => 'assinatura',
+    //'label' => 'Assinatura',
+    //'title' => 'Ir para Assinatura',
+    //'menu' => array(),
+    //'grupo' => array(
+        //147
+    //,148
+    //,149
+    //,150
+    //,151
+    //,152
+    //),
+//);
+
+//$arrMenu['assinatura']['menu'][] = array(
+    //'grupo' => array(
+        //147
+    //,148
+    //,149
+    //,150
+    //,151
+    //,152
+    //),
+    //'url' => $this->url(array(
+        //'module' => 'assinatura',
+        //'controller' => 'enquadramento',
+        //'action' => 'gerenciar-projetos'
+    //), '', true),
+    //'title' => 'Gerenciar Projetos Enquadrados',
+    //'label' => 'Gerenciar Projetos Enquadrados'
+//);
 
 // ========== FIM MENU EDITAIS ==========
 // ========== INICIO MENU MENSAGENS ==========
