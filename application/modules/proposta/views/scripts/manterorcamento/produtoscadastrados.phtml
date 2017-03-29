@@ -527,7 +527,7 @@ $3(document).ready(function () {
             } else {
                 $3("#btn-salvar").addClass('disabled').removeClass('btn-salvar ');
                 $3('#editor1').addClass('valida');
-                Materialize.toast(result.msg, 9000, 'orange darken-3 white-text');
+                Materialize.toast(result.msg, 20000, 'mensagem1 orange darken-3 white-text');
                 $3("#vlunitario").parent().addClass("danger");
                 $3(".justificativa label").text('Justificativa para valor unit\xE1rio maior que R$ ' + result.valorMediana + ' (Obrigat\xF3rio)').parent().addClass("danger");
             }
@@ -541,8 +541,9 @@ $3(document).ready(function () {
     $3('body').on('keyup', '#editor1', function () {
         if ($3("#editor1.valida").val() != '') {
             $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled');
-
+            $3('.mensagem1').tooltip('remove');
         }else{
+            $3('.mensagem1').tooltip('remove');
             $3("#btn-salvar").removeClass('btn-salvar').addClass('disabled');
         }
     });

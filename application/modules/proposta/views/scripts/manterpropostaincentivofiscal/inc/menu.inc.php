@@ -90,7 +90,7 @@
                     $(this).dialog('close');
                 },
                 'OK': function () {
-                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc/idPreProjeto/" + idPreProjeto;
+                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterpropostaincentivofiscal/enviar-proposta/idPreProjeto/" + idPreProjeto;
                     $(this).dialog('close');
                 }
             }
