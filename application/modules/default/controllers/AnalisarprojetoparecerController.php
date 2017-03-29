@@ -79,7 +79,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $idAgenteParecerista = $agente['idagente'];
 
         $situacao = $this->_request->getParam('situacao');
-
+        
         $projeto = new Projetos();
         $resp = $projeto->buscaProjetosProdutos(
             array(
@@ -858,9 +858,9 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                     $where['idProduto = ?'] = $idProduto;
                     $analisedeConteudoDAO->update($dados, $where);
 
-                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "Analisarprojetoparecer/produto/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "CONFIRM");
+                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "Analisarprojetoparecer/analise-conteudo/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "CONFIRM");
                 } catch (Exception $e) {
-                    parent::message($e->getMessage(), "Analisarprojetoparecer/produto/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "ERROR");
+                    parent::message($e->getMessage(), "Analisarprojetoparecer/analise-conteudo/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "ERROR");
                 }
                 break;
 
@@ -1286,5 +1286,206 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                 parent::message("Error: " . $e->getMessage(), "Analisarprojetoparecer/produto?idPronac=" . $idPronac . "&idProduto=" . $idProduto . "&stPrincipal=" . $stPrincipal, "ERROR");
             }
         }
+    }
+    
+    public function analiseConteudoAction() {
+        $mapperArea = new Agente_Model_AreaMapper();
+        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $idusuario = $auth->getIdentity()->usu_codigo;
+
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
+        $codGrupo = $GrupoAtivo->codGrupo;
+
+        $idPronac = $this->_request->getParam("idPronac");
+        $idProduto = $this->_request->getParam("idProduto");
+        $stPrincipal = $this->_request->getParam("stPrincipal");
+
+        $projetoDAO = new Projetos();
+
+        $whereProjeto['p.IdPRONAC = ?'] = $idPronac;
+        $whereProjeto['d.idProduto = ?'] = $idProduto;
+        $whereProjeto['d.stPrincipal = ?'] = $stPrincipal;
+
+        $projeto = $projetoDAO->buscaProjetosProdutosAnaliseInicial($whereProjeto);
+        $this->view->projeto = $projeto[0];
+    }
+
+    public function analiseOrcamentariaAction() {
+        $mapperArea = new Agente_Model_AreaMapper();
+        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $idusuario = $auth->getIdentity()->usu_codigo;
+
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
+        $codGrupo = $GrupoAtivo->codGrupo;
+
+        $idPronac = $this->_request->getParam("idPronac");
+        $idProduto = $this->_request->getParam("idProduto");
+        $stPrincipal = $this->_request->getParam("stPrincipal");
+
+        $projetoDAO = new Projetos();
+
+        $whereProjeto['p.IdPRONAC = ?'] = $idPronac;
+        $whereProjeto['d.idProduto = ?'] = $idProduto;
+        $whereProjeto['d.stPrincipal = ?'] = $stPrincipal;
+        
+        $projeto = $projetoDAO->buscaProjetosProdutosAnaliseInicial($whereProjeto);
+        $this->view->projeto = $projeto[0];
+        $this->view->dsArea = $projeto[0]->dsArea;
+        $this->view->dsSegmento = $projeto[0]->dsSegmento;
+
+        /* Analise de conte�do */
+        $analisedeConteudoDAO = new Analisedeconteudo();
+        $analisedeConteudo = $analisedeConteudoDAO->dadosAnaliseconteudo(false, array('idPronac = ?' => $idPronac, 'idProduto = ?' => $idProduto));
+
+        $PlanilhaDAO = new PlanilhaProjeto();
+        if ($stPrincipal == 1) {
+            //$where = array('PPJ.IdPRONAC = ?' => $idPronac);
+            $where = array('PPJ.IdPRONAC = ?' => $idPronac, 'PPJ.IdProduto in (0, ?)' => $idProduto);
+        } else {
+            $where = array('PPJ.IdPRONAC = ?' => $idPronac, 'PPJ.IdProduto = ?' => $idProduto, 'PD.Descricao is not null' => null);
+        }
+
+        $resp = $PlanilhaDAO->buscarAnaliseCustos($where);
+        $itensCusto = array('fonte' => array(), 'totalSolicitado' => 0, 'totalSugerido' => 0);
+        $cont = true;
+
+        foreach ($resp as $key => $val) {
+            $produto = $val->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $val->Produto;
+            if (!isset($itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['qtd'])) {
+                $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade] = array('qtd' => 0, 'totalUfSolicitado' => 0, 'totalUfSugerido' => 0, 'itens' => array(), 'totalSolicitado' => 0, 'totalSugerido' => 0);
+            }
+            $itensCusto['totalSolicitado'] += $val->VlSolicitado;
+            $itensCusto['totalSugerido'] += $val->VlSugeridoParecerista;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['qtd']++;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['totalUfSolicitado'] += $val->VlSolicitado;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['totalUfSugerido'] += $val->VlSugeridoParecerista;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['&nbsp;'] = $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['qtd'];
+
+            // So pode alterar se for incentivo fiscal - FonteRecurso = 109
+            if (($analisedeConteudo[0]->ParecerFavoravel == 1) && ($val->idEtapa != 4)) {
+                $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Item'] = "<a href='javascript:AlterarItem({$val->idPlanilhaProjeto},{$idPronac},{$idProduto},{$stPrincipal})'>{$val->Item}</a>";
+            } else if (($analisedeConteudo[0]->ParecerFavoravel == 1) && ($stPrincipal == 1)) {
+                $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Item'] = "<a href='javascript:AlterarItem({$val->idPlanilhaProjeto},{$idPronac},{$idProduto},{$stPrincipal})'>{$val->Item}</a>";
+            } else {
+                $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Item'] = "{$val->Item}";
+            }
+
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Dias'] = $val->diasprop;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Unidade'] = $val->UnidadeProposta;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Quantidade'] = number_format($val->quantidadeprop, 0, '.', ',');
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Ocorr�ncias'] = number_format($val->ocorrenciaprop, 0, '.', ',');
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Unit�rio'] = $val->valorUnitarioprop;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Solicitado'] = $val->VlSolicitado;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Justificativa do Proponente'] = $val->justificitivaproponente;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Sugerido pelo Parecerista'] = $val->VlSugeridoParecerista;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Justificativas do Parecerista'] = $val->dsJustificativaParecerista;
+        }
+        foreach ($itensCusto['fonte'] as $key => $value) {
+            foreach ($value as $key2 => $value2) {
+                foreach ($value2 as $key3 => $value3) {
+                    foreach ($value3 as $key4 => $value4) {
+
+                        if ($itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSolicitado'] != 0) {
+                            $itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSolicitado'] = $this->formatarReal($itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSolicitado']);
+                        } else {
+                            $itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSolicitado'] = "R$ 0,00";
+                        }
+
+                        if ($itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSugerido'] != 0) {
+                            $itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSugerido'] = $this->formatarReal($itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSugerido']);
+                        } else {
+                            $itensCusto['fonte'][$key][$key2][$key3][$key4]['totalUfSugerido'] = "R$ 0,00";
+                        }
+                    }
+                }
+            }
+        }
+        $valorPossivel = $itensCusto['totalSolicitado'] - $itensCusto['totalSugerido'];
+        $valorSolicitado = $itensCusto['totalSolicitado'];
+        if ($itensCusto['totalSolicitado'] != 0) {
+            $itensCusto['totalSolicitado'] = $this->formatarReal($itensCusto['totalSolicitado']);
+        } else {
+            $itensCusto['totalSugerido'] = "R$ 0,00";
+        }
+
+        if ($itensCusto['totalSugerido'] != 0) {
+            $itensCusto['totalSugerido'] = $this->formatarReal($itensCusto['totalSugerido']);
+        } else {
+            $itensCusto['totalSugerido'] = "R$ 0,00";
+        }
+
+        $this->view->itens = $itensCusto;
+        $this->view->stPrincipal = $stPrincipal;
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
+        $objSegmentocultural = new Segmentocultural();
+        $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($projeto[0]->Area);
+        $this->view->valorpossivel = $valorPossivel;
+        $this->view->vlSolicitado = $valorSolicitado;
+
+        /* Se for o produto principal, envia os dados dos secund�rios junto *******************************/
+        if ($stPrincipal == 1) {
+            $tbDistribuirParecerDAO = new tbDistribuirParecer();
+
+            $dadosWhere["t.stEstado = ?"] = 0;
+            $dadosWhere["t.TipoAnalise in (?)"] = array(1, 3);
+            $dadosWhere["p.Situacao IN ('B11', 'B14')"] = '';
+            $dadosWhere["p.IdPRONAC = ?"] = $idPronac;
+            $dadosWhere["t.stPrincipal = ?"] = 0;
+            $Secundarios = $tbDistribuirParecerDAO->dadosParaDistribuirSecundarios($dadosWhere);
+
+            $dadosWhere["t.DtDistribuicao is not null"] = '';
+            $dadosWhere["t.DtDevolucao is null"] = '';
+            $SecundariosAtivos = $tbDistribuirParecerDAO->dadosParaDistribuir($dadosWhere);
+            $pscount = count($SecundariosAtivos);
+
+            $i = 1;
+            foreach ($Secundarios as $ps) {
+                $wherePS['PAP.idPRONAC = ?'] = $ps->IdPRONAC;
+                $wherePS['PAP.idProduto = ?'] = $ps->idProduto;
+                $valorSugerido = $PlanilhaDAO->somaDadosPlanilha($wherePS);
+
+                $produtosSecundarios[$i]['IdPRONAC'] = $ps->IdPRONAC;
+                $produtosSecundarios[$i]['idProduto'] = $ps->idProduto;
+                $produtosSecundarios[$i]['stPrincipal'] = $ps->stPrincipal;
+                $produtosSecundarios[$i]['Produto'] = $ps->Produto;
+                $i++;
+            }
+
+            $this->view->produtosSecundarios = $Secundarios;
+            // $this->view->produtosSecundarios = $produtosSecundarios;
+            $this->view->produtosSecundariosEmAnalise = $pscount;
+
+            /** Verificar se o Produto principal j� foi dado a consolida��o ********************/
+            $consolidado = 'N';
+            $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
+            $buscaEnquadramento = $enquadramentoDAO->buscarDados($idPronac, null, false);
+            $countEnquadramentoP = count($buscaEnquadramento);
+
+            $parecerDAO = new Parecer();
+            $whereParecer['idPRONAC = ?'] = $idPronac;
+            $buscaParecer = $parecerDAO->buscar($whereParecer);
+            $countParecerP = count($buscaParecer);
+            /***********************************************************************************/
+            if (($countEnquadramentoP != 0) && ($countParecerP != 0)) {
+                $consolidado = 'S';
+            }
+
+            $this->view->consolidado = $consolidado;
+            $this->view->consolidacao = $buscaParecer;
+            $this->view->enquadramento = $buscaEnquadramento;
+        }
+
+        /***********************************************************************************/
+        $this->view->pscount = $pscount;
+        $this->view->countEnquadramentoP = $countEnquadramentoP;
+        $this->view->countParecerP = $countParecerP;
+
+        $this->view->idPronac = $idPronac;
+        $this->view->idProduto = $idProduto;
+        $this->view->idD = $this->_request->getParam('idD');
+        $this->view->Perfil = $codGrupo;
+        /***********************************************************************************/        
     }
 }
