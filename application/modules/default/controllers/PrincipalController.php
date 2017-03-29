@@ -138,7 +138,7 @@ class PrincipalController extends MinC_Controller_Action_Abstract
 			$proj = new Projetos();
             $resp = $proj->buscarIdPronac($Pronac);
             if(!empty($resp)){
-            	$this->_redirect('consultardadosprojeto/index?idPronac='.$resp->idpronac);
+            	$this->_redirect('consultardadosprojeto/index?idPronac='.$resp->IdPRONAC);
             }else{
             	parent::message("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado.", "principal/index", "ERROR");
             }

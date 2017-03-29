@@ -124,3 +124,21 @@ $arrMenu['analise']['menu'][] = array('label' => 'Configurar Assinatura', 'title
     'url' => $this->url(array('controller' => 'configuracoes', 'action' => 'secretarios'), '', true),
     'grupo' => array(Autenticacao_Model_Grupos::TECNICO_PORTARIA)
 );
+
+$arrMenu['analise']['menu'][] = array(
+    'grupo' => array(
+     147
+    ,148
+    ,149
+    ,150
+    ,151
+    ,152
+    ),
+    'url' => $this->url(array(
+        'module' => 'assinatura',
+        'controller' => 'enquadramento',
+        'action' => 'gerenciar-projetos'
+    ), '', true),
+    'title' => 'Assinatura',
+    'label' => 'Assinatura'
+);

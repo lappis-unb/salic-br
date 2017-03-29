@@ -1,28 +1,23 @@
-<div id="titulo">
-    <div>Visualizar Dilig&ecirc;ncia <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
-</div>
-
-<div id="conteudo">
-    <table class="tabela">
+<h4>Visualizar Dilig&ecirc;ncia</h4>
+<div class="container-fluid" id="">
+    <table class="bordered">
         <tr>
-            <th align="left"><?php echo $this->nmCodigo;?></th>
-            <th align="left">NOME <?php echo $this->nmTipo;?></th>
-            
+            <th><?php echo $this->nmCodigo;?></th>
+            <th>NOME <?php echo $this->nmTipo;?></th>
             <?php if($this->idDiligencia) { ?>
-            <th align="left">Produto</th>
+                <th align="left">Produto</th>
             <?php } ?>
         </tr>
         <tr>
             <td><?php echo $this->pronac;?></td>
             <td><?php echo $this->nomeProjeto;?></td>
-
             <?php if($this->idDiligencia) {?>
-            <td><?php if($this->produto)echo $this->produto;else echo '-'?></td>
+                <td><?php if($this->produto)echo $this->produto;else echo '-'?></td>
             <?php } ?>
         </tr>
         <tr>
             <?php if($this->idDiligencia) { ?>
-            <th align="left">TIPO DILIG&Ecirc;NCIA</th>
+                <th align="left">TIPO DILIG&Ecirc;NCIA</th>
             <?php } ?>
             <th align="left">DATA DA SOLICITA&Ccedil;&Atilde;O</th>
             <th align="left">DATA DA RESPOSTA</th>
@@ -60,29 +55,28 @@
             </tr>
         <?php endif; ?>
     </table>
-
-    <?php if(count($this->arquivos)>0) { ?>
-    <table class="tabela">
-        <tr>
-            <th colspan="3">Arquivos Anexados</th>
-        </tr>
-        <tr>
-            <td class="destacar bold">Arquivo</td>
-            <td class="destacar bold">Dt.Envio</td>
-        </tr>
-        <?php foreach ($this->arquivos as $arquivos) { ?>
-        <tr>
-            <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivos->idArquivo; ?>"><?php echo $arquivos->nmArquivo; ?></a></td>
-            <td><?php echo Data::tratarDataZend($arquivos->dtEnvio, 'Brasileira', true); ?></td>
-        </tr>
-        <?php } ?>
-    </table>
-    <?php } ?>
-
-    <p align="center"><input type="button" name="btn_imprimir" class="btn_imprimir" id="btn_imprimir" /></p>
-    <br clear="all" />
-
-</div><!-- final: conteúdo principal #conteudo -->
+    <?php if(count($this->arquivos)>0) : ?>
+        <table class="tabela">
+            <tr>
+                <th colspan="3">Arquivos Anexados</th>
+            </tr>
+            <tr>
+                <td class="destacar bold">Arquivo</td>
+                <td class="destacar bold">Dt.Envio</td>
+            </tr>
+            <?php foreach ($this->arquivos as $arquivos) : ?>
+                <tr>
+                    <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivos->idArquivo; ?>"><?php echo $arquivos->nmArquivo; ?></a></td>
+                    <td><?php echo Data::tratarDataZend($arquivos->dtEnvio, 'Brasileira', true); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+    <p class="center">
+        <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')).'?idPreProjeto'.$this->idPreProjeto?>" type="button" name="" class="btn white black-text" />Voltar</a>
+        <button type="button" name="btn_imprimir" class="btn" id="btn_imprimir" />imprimir</button>
+    </p>
+</div>
 <div id="rodapeConteudo" ><span></span></div>
 <br clear="all" />
 <form id="encaminhar" action="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => $this->retorno)); ?>" method="post">
@@ -92,8 +86,6 @@
     <input type="hidden" name="situacao"        value="<?php echo $this->situacao;?>" />
     <input type="hidden" name="tpDiligencia"    value="<?php echo $this->tpDiligencia;?>" />
 </form>
-
-<?php //xd($this->dadosDiligencia->idPronac); ?>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#btn_imprimir').click(function(){
