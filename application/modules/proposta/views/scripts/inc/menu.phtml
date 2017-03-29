@@ -157,7 +157,7 @@ if ($this->isEditavel) {
 <div class="col s2 m12 l2">
     <aside id="left-sidebar-nav">
         <ul class="sidebar-nav">
-            <li class="detalhes-proposta green darken-2 no-padding">
+            <li class="detalhes-proposta <?php echo (!$this->isEditavel) ? 'grey' : 'green'; ?> darken-2 no-padding">
                 <div class="row">
                     <div class="col s12 m12 l12">
                         <p class="white-text">
@@ -410,5 +410,3 @@ if ($this->isEditavel) {
     contagemregressiva();
     <?php endif; ?>
 </script>
-
-
