@@ -777,7 +777,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
-            if ($tbPreProjeto->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) { # @todo alterar quando, eh o contrario
+            if (!$tbPreProjeto->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
                 $arrResultado = $this->validarEnvioPropostaSemSp($idPreProjeto);
             } else {
                 $arrResultado = $this->validarEnvioPropostaComSp($idPreProjeto);
@@ -819,13 +819,26 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
      */
     public function validarEnvioPropostaComSp($idPreProjeto)
     {
-        $validacao = new stdClass();
-        $listaValidacao = array();
-
         try {
+            $validacao = new stdClass();
 
             $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $arrResultado = $tbPreProjeto->spChecklistParaApresentacaoDeProposta($idPreProjeto);
+
+            $validado= true;
+            foreach ($arrResultado as $item){
+                if($item->Observacao == 'PENDENTE') {
+                    $validado = false;
+                    break;
+                }
+            }
+
+            if($validado) {
+                $validacao->dsInconsistencia = 'A proposta cultural n&atilde;o possui pend&ecirc;ncias';
+                $validacao->Observacao = true;
+                $validacao->Url = '';
+                return $validacao;
+            }
 
             return $arrResultado;
 
