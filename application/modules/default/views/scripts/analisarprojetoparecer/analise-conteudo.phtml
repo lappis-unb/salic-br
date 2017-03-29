@@ -29,7 +29,7 @@
 
 <!-- ========== INÍCIO CONTE�DO ========== -->
 <div id="conteudo">
-    <table class="tabela" >
+    <table class="bordered" >
         <tr>
             <th colspan="6">
               Parecer T&eacute;cnico do Projeto      
@@ -70,7 +70,7 @@
                         <b>Parecer t&eacute;cnico*</b>
                         <p>
                         <center>
-                            <textarea class="textarea_simples" id="ParecerDeConteudo" name="ParecerDeConteudo" rows="10" style="width: 98%;"></textarea>
+                            <textarea class="browser-default" id="ParecerDeConteudo" name="ParecerDeConteudo" rows="10"></textarea>
                         </center>
                     </td>
                 </tr>
@@ -86,7 +86,11 @@
 		
                 <tr id="btSalvar">
                     <td colspan="6" align="center">
-                        <input type="button" id="btSalvarAnaliseDeConteudo" value=" " class="btn_salvar"/>
+                        <div class="input-field col s12 center">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Salvar
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -109,49 +113,40 @@
 
 <script type="text/javascript">
 
-    function carregarTextAreaCKEditor(){
-        CKEDITOR.replace( 'ParecerDeConteudo', { toolbar: [] } );
-        <?php if(($this->stPrincipal == 1) && ($this->produtosSecundariosEmAnalise == 0)){ ?>
-        CKEDITOR.replace( 'dsConsolidacao', { toolbar: [] } );
-        <?php } ?>
-    }
-
-    $(document).ready(function(){
-        
+    $(document).ready(function () {
         carregarAnaliseDeConteudo();
-        $('#btSalvarAnaliseDeConteudo').click(function(){
-            var parecer = CKEDITOR.instances['ParecerDeConteudo'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
-//            var parecer = $('#ParecerDeConteudo').val();
-            if( parecer.length  < 11){
-                alertar('O parecer t�cnico deve ter no m�nimo 11 caracter!');
-            } else {
-                $('#formAnaliseConteudo').submit();
+	
+	$("#formAnaliseConteudo").validate({
+	    rules: {
+                ParecerDeConteudo: {required: true}
+            },
+            messages: {
+                ParecerDeConteudo: {
+                    required: function () {
+                        return "<br>Dado obrigat&oacute;rio n&atilde;o informado"
+                    }
+                }
+            },
+            submitHandler: function (form) {
+                form.submit();
+
+            }, invalidHandler: function (event, validator) {
+
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    var message = errors == 1
+                        ? 'Voc&ecirc; possui 1 campo com erro. Ele foi destacado abaixo'
+                        : 'Voc&ecirc; possui ' + errors + ' campos com erros. Eles foram destacados abaixo';
+                    $("div.error span").html(message);
+                    $("div.error").show();
+                } else {
+                    $("div.error").hide();
+                }
             }
-            return false;
+
         });
 
-        window.setTimeout('carregarTextAreaCKEditor()', 1000);
-        
     }); //fecha document.ready
-
-    function recuperaTotalSugerido()
-    {
-        // pega o valor total do relator
-        var valor = $('.valorTotalSugerido').html();
-        valor = valor.replace('R$ ', '');
-
-        // retira os pontos e as virgulas, deixando somente numeros
-        valor = valor.replace(/\D/g, "");
-        valor = valor.replace(/(\d{0})(\d)/, "$1$2");
-
-        // adiciona o ponto na casa decimal
-        valor = valor.replace(/(\d)(\d{2})$/, "$1.$2");
-
-        // converte para float
-        valor = parseFloat(valor);
-
-        return valor;
-    }
 
     function carregarAnaliseDeConteudo()
     {
@@ -159,13 +154,13 @@
         return true;
     }
 
-    function recuperaFormulario(url,params){
+function recuperaFormulario(url,params){   
         if(params.length < 1)
         {
             params = {};
         }
         var btSalvar = false;
-        $.post(url,params,function(data){
+    $.post(url,params,function(data){
             if(data){
                 $('#formAnaliseConteudo').find('input, select, textarea').each(function(key, object){
                     if($(object).attr('type') == 'radio'){
@@ -181,11 +176,18 @@
                             }
                         }else{
                             btSalvar = true;
-//                            if($(object).attr('type') == 'textarea'){
-//                                console.debug(object);
-//                            } else {
+                            if($(object).attr('type') == 'textarea'){
+				$(object).text(data[$(object).attr('name')]);
+
+				$(object).editorRico({
+				    altura: 400,
+				    maxchar: 8000,
+				    isLimitarCarateres : true,
+				    isDesabilitarEdicao: 0
+				});
+			    } else {
                                 $(object).val(data[$(object).attr('name')]);
-//                            }
+			    }
                         }
                     }
                 });

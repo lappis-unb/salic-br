@@ -55,8 +55,8 @@
             <th width="70">Dilig&ecirc;ncia</th>
             <th width="120">Tempo da Dilig&ecirc;ncia</th>
             <th width="70">Hist&oacute;rico</th>
-            <th width="70">Conclus&atilde;o</th>
-	    <th width="70">Encaminhar</th>
+            <th width="70">Assinar</th>
+	    <th width="70">Devolver</th>
         </tr>
         <?php
             $contador = 1;
@@ -213,7 +213,7 @@
                 <?php endif; ?>
             </td>
 	    <td align="center">
-	       <a href="" class="btn-primary waves-effect waves-light btn small" title="Encaminhar" alt="Encaminhar"><i class="material-icons medium">assignment_ind</i></a>
+	      <a href="<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'devolver-parecer', 'idPronac'=> $d->IdPRONAC, 'idD'=> $d->idDistribuirParecer, 'idProduto' => $d->idProduto, 'stPrincipal' => $d->stPrincipal)); ?>" class="btn-primary waves-effect waves-light btn small" title="Devolver" alt="Devolver"><i class="material-icons medium">call_received</i></a>
 	    </td>
         </tr>
         <?php
