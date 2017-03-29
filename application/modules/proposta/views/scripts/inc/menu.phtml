@@ -129,7 +129,7 @@ if ($this->isEditavel) {
             'id' => 'enviarproposta',
             'label' => 'Enviar proposta ao MinC',
             'title' => '',
-            'url' => '',
+            'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'enviar-proposta', 'idPreProjeto' => $idPreProjeto)),
             'menu' => array(),
             'grupo' => array()
         );
@@ -284,33 +284,6 @@ if ($this->isEditavel) {
                 }
             }
         });
-        return false;
-    }
-
-    function JSEnviarProposta() {
-        var text = 'Deseja realmente enviar sua proposta?';
-
-        $('<div id="modalEnviarProposta"></div>').appendTo($("#left-sidebar-nav")).html(text)
-
-        $("#modalEnviarProposta").dialog("destroy");
-        $("#modalEnviarProposta").dialog
-        ({
-            width: 450,
-            height: 200,
-            position: 'center',
-            EscClose: false,
-            modal: true,
-            buttons: {
-                'Cancelar': function () {
-                    $(this).dialog('close');
-                },
-                'OK': function () {
-                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterpropostaincentivofiscal/enviar-proposta/idPreProjeto/<?php echo $idPreProjeto; ?>";
-                    $(this).dialog('close');
-                }
-            }
-        });
-
         return false;
     }
 
