@@ -130,7 +130,7 @@ class ManterpropostaincentivofiscalControllerTest extends MinC_Test_ControllerAc
         $this->assertQuery('html body div#titulo div', ' PROPOSTA ');
     }
 
-    public function testEnviarPropostaAoMincAction()
+    public function testEnviarPropostaAction()
     {
         $this->autenticar();
 
@@ -158,14 +158,14 @@ class ManterpropostaincentivofiscalControllerTest extends MinC_Test_ControllerAc
             ->resetResponse();
 
         // Acessando local de realizacao
-        $url = '/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto='. $idPreProjeto;
+        $url = '/proposta/manterpropostaincentivofiscal/enviar-proposta?idPreProjeto='. $idPreProjeto;
         $this->request->setMethod('GET');
         $this->dispatch($url);
         $this->assertNotRedirect();
 
         $this->assertModule('proposta');
         $this->assertController('manterpropostaincentivofiscal');
-        $this->assertAction('enviar-proposta-ao-minc');
+        $this->assertAction('enviar-proposta');
         $this->assertQuery('html body div#titulo div', 'Encaminhar Proposta Cultural ao Ministério da Cultura');
     }
 }

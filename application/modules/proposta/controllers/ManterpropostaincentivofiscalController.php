@@ -142,6 +142,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
      */
     public function indexAction()
     {
+        if($this->idPreProjeto) {
+            $this->redirect("/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $this->idPreProjeto);
+        } else {
+            $this->redirect("/proposta/manterpropostaincentivofiscal/listarproposta");
+        }
+
         $arrBusca = array();
         $arrBusca['stestado = ?'] = 1;
         $arrBusca['idusuario = ?'] = $this->idResponsavel;
@@ -655,7 +661,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $sp = new Proposta_Model_DbTable_PreProjeto();
 
         # verifica se existe alguma pendencia no checklist de proposta
-        $validaProposta = $sp->checklistEnvioProposta($idPreProjeto, true);
+        $validaProposta = $sp->checklistEnvioPropostaSemSp($idPreProjeto, true);
         $pendencias = in_array('PENDENTE', array_column(converterObjetosParaArray($validaProposta), 'Observacao'));
 
         if ($pendencias) {
@@ -751,394 +757,103 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     }
 
     /**
-     * enviarPropostaAoMincAction
+     * enviarPropostaAction
      *
      * @access public
      * @return void
      * @author wouerner <wouerner@gmail.com>
      */
-    public function enviarPropostaAoMincAction()
+    public function enviarPropostaAction()
     {
+        $arrResultado = array();
 
-        //VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO
         $this->verificarPermissaoAcesso(true, false, false);
+
+        $params = $this->getRequest()->getParams();
 
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         if (!empty($idPreProjeto)) {
-            $sp = new Proposta_Model_DbTable_PreProjeto();
 
-            $arrResultado = $sp->checklistEnvioProposta($idPreProjeto);
+            $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
-            //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela(
-                "manterpropostaincentivofiscal/enviarproposta.phtml",
-                array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar", "resultado" => $arrResultado)
-            );
+            if ($tbPreProjeto->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) { # @todo alterar quando, eh o contrario
+                $arrResultado = $this->validarEnvioPropostaSemSp($idPreProjeto);
+            } else {
+                $arrResultado = $this->validarEnvioPropostaComSp($idPreProjeto);
+            }
+
+            if ($params['confirmarenvioaominc'] == true && $arrResultado->Observacao === true) {
+                $proposta = $tbPreProjeto->findBy(array('idPreProjeto' => $idPreProjeto));
+
+                $dados = array(
+                    'idprojeto' => $idPreProjeto,
+                    'movimentacao' => 96,
+                    'dtmovimentacao' => MinC_Db_Expr::date(),
+                    'stestado' => 0,
+                    'usuario' => $proposta['idUsuario']
+                );
+
+                $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+                $insert = $tbMovimentacao->insert($dados);
+
+                parent::message("Proposta encaminhada com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $idPreProjeto, "CONFIRM");
+
+            }else {
+                $this->view->resultado = $arrResultado;
+            }
+
+            $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/enviar-proposta/idPreProjeto/" . $this->idPreProjeto ;
+
         } else {
             parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
     }
 
     /**
-     * validarEnvioPropostaAoMinc
+     * validarEnvioPropostaComSp
      *
      * @param mixed $idPreProjeto
      * @access public
      * @return void
      */
-    public function validarEnvioPropostaAoMinc($idPreProjeto)
+    public function validarEnvioPropostaComSp($idPreProjeto)
     {
-        /* }}} */
-        //BUSCA DADOS DO PROJETO
-        $arrBusca = array();
-        $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-        $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
-        /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
+        $validacao = new stdClass();
+        $listaValidacao = array();
 
-        $arrResultado = array();
+        try {
 
-        $arrResultado['erro'] = false;
+            $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+            $arrResultado = $tbPreProjeto->spChecklistParaApresentacaoDeProposta($idPreProjeto);
 
-        /*         * ******* MOVIMENTACAO ******** */
-        //VERIFICA SE A PROPOSTA ESTA COM O MINC
-        $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-        $rsMovimentacao = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
+            return $arrResultado;
 
-        if ($rsMovimentacao->Movimentacao != 95) {
-            $arrResultado['erro'] = true;
-            $arrResultado['movimentacao']['erro'] = false;
-            $arrResultado['movimentacao']['msg'] = "A Proposta Cultural encontra-se no Minist&eacute;rio da Cultura";
-        } else {
-            /* $arrResultado['erro'] = true;
-              $arrResultado['movimentacao']['erro'] = false;
-              $arrResultado['movimentacao']['msg'] = "A Proposta Cultural encontra-se no Minist&eacute;rio da Cultura"; */
+        } catch (Zend_Exception $ex) {
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! (comsp)" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
 
-        /*         * ******* DADOS DO PROPONENTE ******** */
+    }
 
-        $tblProponente = new Proponente();
-        //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
+    /**
+     * validarEnvioPropostaSemSp
+     *
+     * @param mixed $idPreProjeto
+     * @access public
+     * @return void
+     */
+    public function validarEnvioPropostaSemSp($idPreProjeto)
+    {
+        try {
 
-        $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
+            $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+            $arrResultado = $tbPreProjeto->checklistEnvioPropostaSemSp($idPreProjeto);
 
-        $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
+            return $arrResultado;
 
-        $dadosEndereco = Agente_Model_EnderecoNacionalDAO::buscarEnderecoNacional($rsPreProjeto->idAgente);
-
-        $dadosEmail = Email::buscar($rsPreProjeto->idAgente);
-
-        $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
-        //$dadosDirigente = ManterAgentes::buscaDirigentes($rsProponente->CNPJCPF);
-
-        $tblLocaisRealizacao = new Abrangencia();
-        $dadosLocais = $tblLocaisRealizacao->buscar(array("a.idProjeto" => $idPreProjeto, "a.stAbrangencia" => 1));
-
-        $tblPlanoDivulgacao = new PlanoDeDivulgacao();
-        $dadosPlanoDivulgacao = $tblPlanoDivulgacao->buscar(array("idProjeto =?" => $idPreProjeto))->toArray();
-
-        $tblPlanoDistribuicao = new PlanoDistribuicao();
-        $dadosPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("a.idProjeto = ?" => $idPreProjeto, "a.stPlanoDistribuicaoProduto = ?" => 1), array("idProduto ASC"))->toArray();
-
-
-        if (count($rsProponente) > 0) {
-
-            //VERIFICA SE O PROPONENTE ESTï¿½ VINCULADO
-            $vinculoProponente = new Agente_Model_DbTable_TbVinculoProposta();
-            $whereProp['VP.idPreProjeto = ?'] = $this->idPreProjeto;
-            $whereProp['VP.siVinculoProposta = ?'] = 2;
-            $rsVinculo = $vinculoProponente->buscarResponsaveisProponentes($whereProp);
-
-            if ($rsVinculo->count() > 0) {
-
-                if (isset($rsVinculo[0]->siVinculo) && $rsVinculo[0]->siVinculo == 0) {
-                    $msgProponente = "Aguardando o vínculo do Proponente";
-                } elseif (isset($rsVinculo[0]->siVinculo) && $rsVinculo[0]->siVinculo == 1) {
-                    $msgProponente = "O Proponente rejeitou o vínculo";
-                } elseif (isset($rsVinculo[0]->siVinculo) && $rsVinculo[0]->siVinculo == 2) {
-                    $msgProponente = "Proponente Vinculado";
-                } else {
-                    $msgProponente = "Proponente desvinculado";
-                }
-
-                if ($rsVinculo[0]->siVinculo == 2) {
-                    $arrResultado['vinculoproponente']['erro'] = false;
-                    $arrResultado['vinculoproponente']['msg'] = $msgProponente;
-                } else {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['vinculoproponente']['erro'] = true;
-                    $arrResultado['vinculoproponente']['msg'] = $msgProponente;
-                }
-            } else {
-                $arrResultado['erro'] = true;
-                $arrResultado['vinculoproponente']['erro'] = true;
-                $arrResultado['vinculoproponente']['msg'] = "Proponente desvinculado";
-            }
-            //REGULARIDADE DO PROPONENTE
-            if (count($regularidade) > 0) {
-                if ($regularidade[0]->Habilitado == "S") {
-                    $arrResultado['regularidadeproponente']['erro'] = false;
-                    $arrResultado['regularidadeproponente']['msg'] = "Proponente em situa&ccedil;&atilde;o REGULAR no Minist&eacute;rio da Cultura";
-                } else {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['regularidadeproponente']['erro'] = true;
-                    $arrResultado['regularidadeproponente']['msg'] = "Proponente em situa&ccedil;&atilde;o IRREGULAR no Minist&eacute;rio da Cultura";
-                }
-            } else {
-                $arrResultado['regularidadeproponente']['erro'] = false;
-                $arrResultado['regularidadeproponente']['msg'] = "Proponente em situa&ccedil;&atilde;o REGULAR no Minist&eacute;rio da Cultura";
-            }
-
-            //DADOS GERAIS DA PROPOSTA
-            if (!empty($rsPreProjeto)) {
-                if (trim($rsPreProjeto->Objetivos) == "" || trim($rsPreProjeto->Justificativa) == "" || trim($rsPreProjeto->Acessibilidade) == "" ||
-                    trim($rsPreProjeto->DemocratizacaoDeAcesso) == "" || trim($rsPreProjeto->EtapaDeTrabalho) == "" || trim($rsPreProjeto->FichaTecnica) == "" ||
-                    trim($rsPreProjeto->Sinopse) == "" || trim($rsPreProjeto->ImpactoAmbiental) == "" || trim($rsPreProjeto->EspecificacaoTecnica) == ""
-                ) {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['dadosgeraisproposta']['erro'] = true;
-                    $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta pendente. Os campos Objetivos, Justificativa, Acessibilidade, Democratiza&ccedil;&atilde;o de Acesso, Etapas de Trabalho, Ficha Técnica, Sinopse da obra, Impacto Ambiental e Especifica&ccedil;&atilde;o técnicas do produto, são de preenchimento obrigatório.";
-                } else {
-                    $arrResultado['dadosgeraisproposta']['erro'] = false;
-                    $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta";
-                }
-            } else {
-                $arrResultado['erro'] = true;
-                $arrResultado['dadosgeraisproposta']['erro'] = true;
-                $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta pendente. Os campos Objetivos, Justificativa, Acessibilidade, Democratiza&ccedil;&atilde;o de Acesso, Etapas de Trabalho, Ficha Técnica, Sinopse da obra, Impacto Ambiental e Especifica&ccedil;&atilde;o técnicas do produto, são de preenchimento obrigatório.";
-            }
-
-            //E-MAIL
-            $blnEmail = false;
-            if (count($dadosEmail) > 0) {
-                foreach ($dadosEmail as $email) {
-                    if ($email->Status == 1) {
-                        $blnEmail = true;
-                    }
-                }
-                if ($blnEmail === false) {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['email']['erro'] = true;
-                    $arrResultado['email']['msg'] = "E-mail do proponente inexistente";
-                } else {
-                    $arrResultado['email']['erro'] = false;
-                    $arrResultado['email']['msg'] = "E-mail do proponente";
-                }
-            } else {
-                $arrResultado['erro'] = true;
-                $arrResultado['email']['erro'] = true;
-                $arrResultado['email']['msg'] = "E-mail do proponente inexistente";
-            }
-
-            //ENDERECO
-            $blnEndCorrespondencia = false;
-            if (count($dadosEndereco) > 0) {
-                foreach ($dadosEndereco as $endereco) {
-                    if ($endereco->Status == 1) {
-                        $blnEndCorrespondencia = true;
-                    }
-                }
-                if ($blnEndCorrespondencia === false) {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['endereco']['erro'] = true;
-                    $arrResultado['endereco']['msg'] = "Dados cadastrais do proponente inexistente ou n&atilde;o h&aacute; endere&ccedil;o para correspond&ecirc;ncia selecionado";
-                } else {
-                    $arrResultado['endereco']['erro'] = false;
-                    $arrResultado['endereco']['msg'] = "Dados cadastrais do proponente";
-                }
-            } else {
-                $arrResultado['erro'] = true;
-                $arrResultado['endereco']['erro'] = true;
-                $arrResultado['endereco']['msg'] = "Dados cadastrais do proponente inexistente ou n&atilde;o h&aacute; endere&ccedil;o para correspond&ecirc;ncia selecionado";
-            }
-
-            //NATUREZA
-            if ($rsProponente->TipoPessoa == 1) {
-                $tblNatureza = new Natureza();
-                $dadosNatureza = $tblNatureza->buscar(array("idAgente = ?" => $rsPreProjeto->idAgente));
-
-                if (count($dadosNatureza) > 0) {
-                    $arrResultado['dirigente']['erro'] = false;
-                    $arrResultado['dirigente']['msg'] = "Natureza do proponente";
-                } else {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['dirigente']['erro'] = true;
-                    $arrResultado['dirigente']['msg'] = "Natureza do proponente";
-                }
-            }
-
-            //DIRIGENTE
-            if ($rsProponente->TipoPessoa == 1) {
-
-                if (count($dadosDirigente) > 0) {
-                    $arrResultado['dirigente']['erro'] = false;
-                    $arrResultado['dirigente']['msg'] = "Cadastro de Dirigente";
-                } else {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['dirigente']['erro'] = true;
-                    $arrResultado['dirigente']['msg'] = "Cadastro de Dirigente";
-                }
-            }
-
-            //LOCAIS DE RALIZACAO
-            if (count($dadosLocais) > 0) {
-                $arrResultado['locaisrealizacao']['erro'] = false;
-                $arrResultado['locaisrealizacao']['msg'] = "Local de realiza&ccedil;&atilde;o da proposta";
-            } else {
-                $arrResultado['erro'] = true;
-                $arrResultado['locaisrealizacao']['erro'] = true;
-                $arrResultado['locaisrealizacao']['msg'] = "O Local de realiza&ccedil;&atilde;o da proposta n&atilde;o foi preenchido";
-            }
-
-            //PLANO DE DIVULGACAO
-            if (count($dadosPlanoDivulgacao) > 0) {
-                $arrResultado['planodivulgacao']['erro'] = false;
-                $arrResultado['planodivulgacao']['msg'] = "Plano B&aacute;sico de Divulga&ccedil;&atilde;o";
-                $planinhaProposta = New PlanilhaProposta();
-
-                $get = Zend_Registry::get('get');
-                $idProjeto = $get->idPreProjeto;
-                $buscaPlanilhaPropostaDivulgacao = $planinhaProposta->somarPlanilhaPropostaDivulgacao($idProjeto, 109);
-                $buscaPlanilhaProposta = $planinhaProposta->somarPlanilhaProposta($idProjeto, 109);
-
-                $porcentProposta = ($buscaPlanilhaProposta->soma * 0.20);
-                $valorPropostaDivulgacao = $buscaPlanilhaPropostaDivulgacao->soma;
-                if ($valorPropostaDivulgacao > $porcentProposta) {
-                    $valorRetirar = $valorPropostaDivulgacao - $porcentProposta;
-                    $arrResultado['erro'] = true;
-                    $arrResultado['planodivulgacao']['erro'] = true;
-                    //$arrResultado['planodivulgacao']['msg'] = "Custo de Divulgacao/Comercializacao superior a 20% do valor total do projeto";
-                    $arrResultado['planodivulgacao']['msg'] = "Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirar, '2', ',', '.') . "</b> para enviar a sua proposta ao Ministï¿½rio da Cultura.";
-                }
-            } else {
-                $arrResultado['erro'] = true;
-                $arrResultado['planodivulgacao']['erro'] = true;
-                $arrResultado['planodivulgacao']['msg'] = "O Plano B&aacute;sico de Divulga&ccedil;&atilde;o n&atilde;o foi preenchido";
-            }
-
-            //PLANO DE DISTRIBUICAO
-            if (count($dadosPlanoDistribuicao) > 0) {
-
-                $arrResultado['planodistribuicao']['erro'] = false;
-                $arrResultado['planodistribuicao']['msg'] = "Plano Distribui&ccedil;&atilde;o de Produto";
-
-                //PLANILHA POR PRODUTO
-                //inicializando variaveis
-                $arrProdutoPlanilhaOrcamentaria = array();
-                $arrProdutoPlanilhaCustoAdmin = array();
-                $arrBuscaPlanilhaOrcamentaria = array(); //para planilhas orcamentarias onde idProduto <> 0
-                $arrBuscaPlanilhaCustoAdmin = array(); //para planilhas orcamentarias onde idProduto = 0
-                $qtdeProdutoPrincial = 0;
-                $valorProjeto = 0;
-                //instancia classe modelo PlanilhaProposta
-                $tblPlanilhaProposta = new PlanilhaProposta();
-                foreach ($dadosPlanoDistribuicao as $produto) {
-                    //=========== PLANILHA ORCAMENTARIA ===============
-                    $idProduto = $produto['idProduto'];
-                    $arrBuscaPlanilhaOrcamentaria['idProjeto = ?'] = $idPreProjeto;
-                    $arrBuscaPlanilhaOrcamentaria['idProduto = ?'] = $idProduto;
-                    //$arrBuscaPlanilhaOrcamentaria['idEtapa <> ?']=4;
-
-                    $planilhaOrcamentaria = $tblPlanilhaProposta->buscar($arrBuscaPlanilhaOrcamentaria);
-                    //$planilha = PlanilhaPropostaDAO::buscarPlanilhaPorProjetoProduto($idPreProjeto, $idProduto);
-
-                    if (count($planilhaOrcamentaria) > 0) {
-                        $arrProdutoPlanilhaOrcamentaria['CONTEM'][] = $idProduto;
-
-                        //realiza calculo para encontrar valor do projeto
-                        for ($i = 0; $i < sizeof($planilhaOrcamentaria); $i++) {
-                            $valorProjeto += ($planilhaOrcamentaria[$i]->Quantidade * $planilhaOrcamentaria[$i]->Ocorrencia * $planilhaOrcamentaria[$i]->ValorUnitario);
-                        }
-                    } else {
-                        $arrProdutoPlanilhaOrcamentaria['NAO_CONTEM'][] = $idProduto;
-                    }
-
-                    //=========== PRODUTO PRINCIPAL ==========
-                    if ($produto['stPrincipal'] == 1) {
-                        $qtdeProdutoPrincial++;
-                    }
-                }//fecha FOREACH de Plano Distribuicao
-
-                if (!empty($arrProdutoPlanilhaOrcamentaria['NAO_CONTEM'])) {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['planilhaproduto']['erro'] = true;
-                    $arrResultado['planilhaproduto']['msg'] = "Existe produto cadastrado sem a respectiva planilha or&ccedil;ament&aacute;ria lan&ccedil;ada";
-                }
-
-//@todo novaIN custosadministrativos
-                //=========== PLANILHA CUSTO ADMINISTRATIVO ==========
-//                $arrBuscaPlanilhaCustoAdmin['idProjeto = ?'] = $idPreProjeto;
-//                $arrBuscaPlanilhaCustoAdmin['idProduto = ?'] = 0; //planilha de custo admin. n&atilde;o tem produto
-//                $arrBuscaPlanilhaCustoAdmin['idEtapa = ?'] = 4; //etapa 4 = Custo/Adminitrativo
-//
-//                $planilhaCustoAdmin = $tblPlanilhaProposta->buscar($arrBuscaPlanilhaCustoAdmin);
-//                $valorCustoAdmin = 0;
-//                if (count($planilhaCustoAdmin) > 0) {
-//                    $arrResultado['planilhacustoadmin']['erro'] = false;
-//                    $arrResultado['planilhacustoadmin']['msg'] = "Planilha de custos administrativos lan&ccedil;ada";
-//
-//                    //realiza calculo para encontrar custo administrativo do projeto
-//                    for ($i = 0; $i < sizeof($planilhaCustoAdmin); $i++) {
-//                        $valorCustoAdmin += ( $planilhaCustoAdmin[$i]->Quantidade * $planilhaCustoAdmin[$i]->Ocorrencia * $planilhaCustoAdmin[$i]->ValorUnitario);
-//                    }
-//                } else {
-//                    $arrResultado['erro'] = true;
-//                    $arrResultado['planilhacustoadmin']['erro'] = true;
-//                    $arrResultado['planilhacustoadmin']['msg'] = "A planilha de custos administrativos da proposta n&atilde;o est&aacute; lan&ccedil;ada";
-//                }
-
-                //calcula percentual do custo administrativo
-//                $quinzecentoprojeto = ($valorProjeto * 0.15);
-
-                //if ($percentual > 15) {
-//                if ($valorCustoAdmin > $quinzecentoprojeto) {
-//                    $valorRetirarCustoAdm = $valorCustoAdmin - $quinzecentoprojeto;
-//                    $arrResultado['erro'] = true;
-//                    $arrResultado['percentualcustoadmin']['erro'] = true;
-//                    $arrResultado['percentualcustoadmin']['msg'] = "Custo administrativo  superior a 15% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirarCustoAdm, '2', ',', '.') . "</b> para enviar a sua proposta ao Ministï¿½rio da Cultura.";
-//                }
-                if ($qtdeProdutoPrincial <= 0) {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['produtoprincipal']['erro'] = true;
-                    $arrResultado['produtoprincipal']['msg'] = "N&atilde;o h&aacute; produto principal selecionado na proposta";
-                } elseif ($qtdeProdutoPrincial > 1) {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['produtoprincipal']['erro'] = true;
-                    $arrResultado['produtoprincipal']['msg'] = "S&oacute; poder&aacute; haver um produto principal em cada proposta, a sua est&aacute; com mais de um produto";
-                } else {
-                    $arrResultado['produtoprincipal']['erro'] = false;
-                    $arrResultado['produtoprincipal']['msg'] = "Produto principal";
-                }
-            } else {
-                $arrResultado['erro'] = true;
-                $arrResultado['planodistribuicao']['erro'] = true;
-                $arrResultado['planodistribuicao']['msg'] = "O Plano Distribui&ccedil;&atilde;o de Produto n&atilde;o foi preenchido";
-            }
-        } else {
-            $arrResultado['erro'] = true;
-            $arrResultado['proponente']['erro'] = true;
-            $arrResultado['proponente']['msg'] = "Dados cadastrais do proponente inexistente ou n&atilde;o h&aacute; endere&ccedil;o para correspond&ecirc;ncia selecionado";
+        } catch (Zend_Exception $ex) {
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! (semsp)" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
-        //=========== PLANO ANUAL==========
-        if ($rsPreProjeto->stProposta <> 0) {
-            $ano_envio = date("Y");
-            $ano_execucao = explode('/', data::formatarDataMssql($rsPreProjeto->DtInicioDeExecucao));
-            $ano_execucao = $ano_execucao[2];
-            $data_validacao = (int)date("Y") . '0930';
-            if (($data_validacao <= date('Ymd')) && ($ano_envio >= $ano_execucao)) {
-                $arrResultado['erro'] = true;
-                $arrResultado['planoanual']['erro'] = true;
-                $arrResultado['planoanual']['msg'] = "De acordo com a s&uacute;mula 10, projetos de plano anual s&oacute; poder&atilde;o ser enviados at&eacute; 30 de setembro do ano vigente, e o per&iacute;odo de execu&ccedil;&atilde;o dever&aacute; ser do ano seguinte a data de envio.";
-            } else {
-                $arrResultado['planoanual']['erro'] = false;
-                $arrResultado['planoanual']['msg'] = "Plano Anual";
-            }
-
-        }
-
-        return $arrResultado;
     }
 
     public function confirmarEnvioPropostaAoMincAction()
@@ -1149,135 +864,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
 
-        //recupera parametros
-        $get = Zend_Registry::get('get');
-        $idPreProjeto = $get->idPreProjeto;
-        $valida = $get->valida;
-        $idTecnico = null;
-        $rsTecnicos = array();
-
-        if (isset($_REQUEST['edital'])) {
-            $edital = "&edital=s";
-        } else {
-            $edital = "";
-        }
-        if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-            $tblAvaliacao = new Proposta_Model_AnalisarPropostaDAO();
-
-            //recupera dados do projeto
-            $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
-
-            if ($rsPreProjeto->AreaAbrangencia == 0) {
-                $idOrgaoSuperior = 262;
-            } else {
-                $idOrgaoSuperior = 171;
-            }
-            //verifica se a proposta ja foi recebida por um tecnico
-            $avaliacao = $tblAvaliacao->verificarAvaliacao($idPreProjeto);
-
-            //SE A PROPOSTA JA FOI AVALIADA POR UM TECNICO E O MESMO ESTIVER ATIVO, ATRIBUI A AVALIACAO A ELE
-            if (count($avaliacao) > 0) {
-                if ($avaliacao[0]->ConformidadeOK == 0 || $avaliacao[0]->ConformidadeOK == 1) {
-                    //verifica se o tecnico esta habilitado
-                    $arrBusca = array();
-                    $arrBusca['sis_codigo = '] = 21;
-                    $arrBusca['gru_codigo = '] = 92;
-                    $arrBusca['usu_codigo = '] = $avaliacao[0]->idTecnico;
-                    $analista = AdmissibilidadeDAO::buscarAnalistas($arrBusca);
-
-                    if (count($analista) > 0) {
-                        if ($analista[0]->uog_status == 1) {
-                            $idTecnico = $avaliacao[0]->idTecnico;
-                        } else {
-                            $idTecnico = null;
-                            //recupera todos os tecnicos do orgao para fazer o balanceamento
-                            $rsTecnicos = $tblPreProjeto->recuperarTecnicosOrgao($idOrgaoSuperior);
-                        }
-                    } else {
-                        $idTecnico = null;
-                        //recupera todos os tecnicos do orgao para fazer o balanceamento
-                        $rsTecnicos = $tblPreProjeto->recuperarTecnicosOrgao($idOrgaoSuperior);
-                    }
-                }
-            } else {
-                //recupera todos os tecnicos do orgao para fazer o balanceamento
-                $rsTecnicos = $tblPreProjeto->recuperarTecnicosOrgao($idOrgaoSuperior);
-            }
-
-            //SE A PROPOSTA NUNCA FOI AVALIADA OU SE O TECNICO Q A AVALIOU ESTA DESABILITADO FAZ O BALANCEAMENTO
-            if (count($rsTecnicos) > 0 && $idTecnico == null) {
-                $arrTecnicosPropostas = array();
-
-                foreach ($rsTecnicos as $tecnico) {
-                    $rsAvaliacaoPorTecnico = $tblAvaliacao->recuperarQtdePropostaTecnicoOrgao($tecnico->uog_orgao, $tecnico->usu_codigo);
-                    $arrTecnicosPropostas[$tecnico->usu_codigo] = $rsAvaliacaoPorTecnico[0]->qtdePropostas;
-                }
-                asort($arrTecnicosPropostas);
-
-                //PEGA O ID DO TECNICO Q TEM MENOS PROPOSTAS
-                $ct = 1;
-                foreach ($arrTecnicosPropostas as $chave => $valor) {
-                    if ($ct == 1) {
-                        $idTecnico = $chave;
-                        $ct++;
-                    } else {
-                        break;
-                    }
-                }
-            }
-
-            //INICIA PERSISTENCIA DOS DADOS
-            if ($idTecnico) {
-
-                try {
-
-                    //======== PERSXISTE DADOS DA MOVIMENTACAO ==========/
-                    //atualiza status da ultima movimentacao
-                    $tblAvaliacao->updateEstadoMovimentacao($idPreProjeto);
-
-                    //PERSISTE DADOS DA MOVIMENTACAO
-                    $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-                    $dados = array("idProjeto" => $idPreProjeto,
-                        "Movimentacao" => "96", //satus
-                        "DtMovimentacao" => date("Y/m/d H:i:s"),
-                        "stEstado" => "0", //esta informacao estava fixa trigger
-                        "Usuario" => $this->idResponsavel);
-
-                    $tblMovimentacao->salvar($dados);
-
-                    //======== PERSXISTE DADOS DA AVALIACAO ==========/
-                    //atualiza status da ultima avaliacao
-                    //$tblAvaliacao->updateEstadoAvaliacao($idPreProjeto); //COMENTANDO CODIGO PARA DEIXAR SP (SAC..tbMovimentacao.trMovimentacao_Insert) TRABALHAR
-
-                    $dados = array();
-                    $dados['idPreProjeto'] = $idPreProjeto;
-                    $dados['idTecnico'] = $idTecnico; //$this->idResponsavel;
-                    $dados['dtEnvio'] = "'" . date("Y/m/d H:i:s") . "'";
-                    $dados['dtAvaliacao'] = "'" . date("Y/m/d H:i:s") . "'";
-                    $dados['avaliacao'] = "";
-                    $dados['conformidade'] = 9;
-                    $dados['estado'] = 0;
-
-                    //PERSISTE DADOS DA AVALIACAO PROPOSTA
-                    //$tblAvaliacao->inserirAvaliacao($dados); //COMENTANDO CODIGO PARA DEIXAR SP (SAC..tbMovimentacao.trMovimentacao_Insert) TRABALHAR
-
-//                    $db->commit();
-
-                    parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
-                    die();
-                } catch (Exception $e) {
-//                    $db->rollback();
-                    parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
-                    die();
-                }
-            } else { //fecha IF se encontrou tecnicos para enviar a proposta
-                parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
-                die();
-            }
-        } else {
-            parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
-        }
     }
 
     /**
@@ -1362,21 +948,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     }
 
     /**
-     * listarPropostasAction
-     *
-     * @access public
-     * @return void
-     *
-     * @todo retirar futuramenteq
-     */
-    public function listarPropostasAction()
-    {
-
-        // Desativei essa view para a outra abaixo
-        $this->_redirect("proposta/manterpropostaincentivofiscal/listarproposta");
-    }
-
-    /**
      * listarpropostaAction
      *
      * @access public
@@ -1409,50 +980,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->view->dadosCombo = $dadosCombo;
         $this->view->idResponsavel = $this->idResponsavel;
         $this->view->idUsuario = $this->idUsuario;
-    }
-
-    /**
-     * localizarPropostaAction
-     *
-     * @access public
-     * @return void
-     * @todo retirar html
-     */
-    public function localizarPropostaAction()
-    {
-
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->_helper->layout->disableLayout();
-
-        $get = Zend_Registry::get('get');
-        $idAgente = $get->idAgente;
-
-        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-        $rsPreProjeto = $tblPreProjeto->listarPropostasResultado($this->idAgente, $this->idResponsavel, $idAgente);
-
-        $arrPropostas = array();
-        $i = 0;
-        $x = 0;
-        $identificadores = array();
-        foreach ($rsPreProjeto as $prop) {
-            if (!in_array($prop->idagente . $prop->idpreprojeto, $identificadores)) {
-                $arrPropostas[$x]['cnpjcpf'] = $prop->cnpjcpf;
-                $arrPropostas[$x]['idagente'] = $prop->idagente;
-                $arrPropostas[$x]['nomeproponente'] = $prop->nomeproponente;
-                $arrPropostas[$x]['idpreprojeto'] = $prop->idpreprojeto;
-                $arrPropostas[$x]['nomeprojeto'] = $prop->nomeprojeto;
-                $arrPropostas[$x]['movimentacao'] = $this->buscarStatusProposta($prop->idpreprojeto);
-                $x++;
-            }
-            $identificadores[$i] = $prop->idagente . $prop->idpreprojeto;
-            $i++;
-        }
-
-        if (count($rsPreProjeto) > 0) {
-            $this->montaTela("manterpropostaincentivofiscal/localizarproposta.phtml", array("propostas" => $arrPropostas));
-        } else {
-            echo "<table class='tabela'><tr><td class='centro'>N&atilde;o foi encontrado nenhum registro.</td></tr></table>";
-        }
     }
 
     public function listarPropostasAjaxAction()

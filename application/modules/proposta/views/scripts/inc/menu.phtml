@@ -129,7 +129,7 @@ if ($this->isEditavel) {
             'id' => 'enviarproposta',
             'label' => 'Enviar proposta ao MinC',
             'title' => '',
-            'url' => '',
+            'url' => $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'enviar-proposta', 'idPreProjeto' => $idPreProjeto)),
             'menu' => array(),
             'grupo' => array()
         );
@@ -157,7 +157,7 @@ if ($this->isEditavel) {
 <div class="col s2 m12 l2">
     <aside id="left-sidebar-nav">
         <ul class="sidebar-nav">
-            <li class="detalhes-proposta green darken-2 no-padding">
+            <li class="detalhes-proposta <?php echo (!$this->isEditavel) ? 'grey' : 'green'; ?> darken-2 no-padding">
                 <div class="row">
                     <div class="col s12 m12 l12">
                         <p class="white-text">
@@ -287,33 +287,6 @@ if ($this->isEditavel) {
         return false;
     }
 
-    function JSEnviarProposta() {
-        var text = 'Deseja realmente enviar sua proposta?';
-
-        $('<div id="modalEnviarProposta"></div>').appendTo($("#left-sidebar-nav")).html(text)
-
-        $("#modalEnviarProposta").dialog("destroy");
-        $("#modalEnviarProposta").dialog
-        ({
-            width: 450,
-            height: 200,
-            position: 'center',
-            EscClose: false,
-            modal: true,
-            buttons: {
-                'Cancelar': function () {
-                    $(this).dialog('close');
-                },
-                'OK': function () {
-                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc/idPreProjeto/<?php echo $idPreProjeto; ?>";
-                    $(this).dialog('close');
-                }
-            }
-        });
-
-        return false;
-    }
-
     function trocarproponente() {
 
         $('<div id="trocarproponente"></div>').appendTo($("#left-sidebar-nav")).html(text)
@@ -410,5 +383,3 @@ if ($this->isEditavel) {
     contagemregressiva();
     <?php endif; ?>
 </script>
-
-

@@ -2550,7 +2550,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @return void
      * @author wouerner <wouerner@gmail.com>
      */
-    public function checklistEnvioProposta($idPreProjeto, $alterarprojeto = false)
+    public function checklistEnvioPropostaSemSp($idPreProjeto, $alterarprojeto = false)
     {
         $validacao = new stdClass();
         $listaValidacao = array();
@@ -2558,25 +2558,28 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()
-            ->from($this->_name, $this->_getCols(), $this->_schema)
-            ->where('idPreProjeto = ?', $idPreProjeto);
-        $idAgente = $db->fetchRow($sql)->idAgente;
-        $sql = $db->select()
-            ->from(array('tbmovimentacao'), '*', $this->_schema)
-            ->where('idProjeto = ?', $idPreProjeto)
-            ->where('Movimentacao <> 95')
-            ->where('stEstado = 0')
-            ->limit(1);
 
-        $movimentacao = $db->fetchAll($sql);
+        #verificar se a proposta está com o proponente
+        $whereMovimentacao = array(
+            'idProjeto = ?' =>  $idPreProjeto,
+            'Movimentacao <> ?' => 95,
+            'stEstado = ?' => 0
+        );
+
+        $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+        $movimentacao = $tbMovimentacao->buscar($whereMovimentacao, array(), 1)->current();
 
         if (!empty( $movimentacao ) && !$alterarprojeto) {
-            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL ENCONTRA-SE NO MINIST&Eacute;RIO DA CULTURA.</b></font>';
+            $validacao->Descricao = 'A proposta cultural encontra-se no minist&eacute;rio da cultura';
             $validacao->Observacao = '';
             $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
         } else {
+
+            $sql = $db->select()
+                ->from($this->_name, $this->_getCols(), $this->_schema)
+                ->where('idPreProjeto = ?', $idPreProjeto);
+            $idAgente = $db->fetchRow($sql)->idAgente;
 
             $sql = $db->select()
                 ->from(array('tbavaliacaoproposta'), '*', $this->_schema)
@@ -2662,9 +2665,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $dataNasc = $db->fetchAll($sql);
 
                     if (empty($dataNasc)) {
-                        $validacao->Descricao ='Data de Nascimento inexistente.';
+                        $validacao->Descricao ='Data de nascimento inexistente.';
                         $validacao->Observacao =  'PENDENTE';
-                        $validacao->Url = array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterardados');
+                        $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'info-adicionais', 'id' => $idAgente);
                         $listaValidacao[] = clone($validacao);
                     }
                 }
@@ -2874,17 +2877,6 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             }
         }
 
-        $sql = $db->select()
-            ->from($this->_name, $this->_getCols(),  $this->_schema)
-            ->where('idPreProjeto =  ?', $idPreProjeto)
-            ;
-        $resultUsuario = $db->fetchAll($sql);
-
-        $usuario = null;
-        if(count($resultUsuario) > 0) {
-            $usuario = $resultUsuario[0]->idUsuario;
-        }
-
         $validado= true;
         foreach ($listaValidacao as $valido){
             if($valido->Observacao == 'PENDENTE') {
@@ -2894,22 +2886,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if($validado ) {
-
-            $dados = array(
-                'idprojeto' => $idPreProjeto,
-                'movimentacao' => 96,
-                'dtmovimentacao' => MinC_Db_Expr::date(),
-                'stestado' => 0,
-                'usuario' => $usuario
-            );
-
-            $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $insert = $tbMovimentacao->insert($dados);
-
-            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINIST&Eacute;RIO DA CULTURA.</b></font>';
-            $validacao->Observacao = 'OK';
+            $validacao->Descricao = 'A proposta cultural n&atilde;o possui pend&ecirc;ncias';
+            $validacao->Observacao = true;
             $validacao->Url = '';
-            $listaValidacao[] =  clone($validacao);
+            return $validacao;
+
         } else {
             $validacao->Descricao = '<font color=red><b> A PROPOSTA CULTURAL N&Atilde;O FOI ENVIADA AO MINIST&Eacute;RIO DA CULTURA DEVIDO &Agrave;S PEND&Ecirc;NCIAS ASSINALADAS ACIMA.</b></font>';
             $validacao->Observacao = '';
@@ -3314,4 +3295,20 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
         return $db->fetchOne($select);
     }
+
+
+    public function spChecklistParaApresentacaoDeProposta($idPreProjeto) {
+
+        $select = new Zend_Db_Expr("EXEC sac.dbo.spChecklistParaApresentacaoDeProposta {$idPreProjeto}");
+
+        try {
+            $db= Zend_Db_Table::getDefaultAdapter();
+            $result = $db->fetchAll($select);
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $result;
+    }
+
+
 }

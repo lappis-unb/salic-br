@@ -904,12 +904,12 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
     }
 
     /**
-     * enviarPropostaAoMincAction
+     * enviarPropostaAction
      *
      * @access public
      * @return void
      */
-    public function enviarPropostaAoMincAction() {
+    public function enviarPropostaAction() {
 
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -1268,18 +1268,18 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
                     //PERSISTE DADOS DA AVALIACAO PROPOSTA
                     $tblAvaliacao->inserirAvaliacao($dados);
 
-                    parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
+                    parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/proposta/manterpropostaedital/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
                     die();
                 } catch (Exception $e) {
-                    parent::message("O Projeto n&atilde;o foi enviado ao Minist&eacute;rio da Cultura!", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+                    parent::message("O Projeto n&atilde;o foi enviado ao Minist&eacute;rio da Cultura!", "/proposta/manterpropostaedital/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                     die();
                 }
             } else { //fecha IF se encontrou tecnicos para enviar a proposta
-                parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura. T&eacute;cnico n&atilde;o localizado", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+                parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura. T&eacute;cnico n&atilde;o localizado", "/proposta/manterpropostaedital/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                 die();
             }
         } else {
-            parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+            parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/proposta/manterpropostaedital/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
         }
     }
 
