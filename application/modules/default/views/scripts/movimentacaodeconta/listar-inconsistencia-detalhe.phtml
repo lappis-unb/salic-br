@@ -57,7 +57,7 @@
                     <td><?php echo $captacao->dtCredito; ?></td>
                     <td><?php echo $this->formatarReal($captacao->vlValorCredito); ?></td>
                     <td align="center">
-                        <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')) . '?idPronac=' . $captacao->IdPRONAC . '&situacao=E50&tpDiligencia=183'; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a>
+                        <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')) . '?idPronac=' . $captacao->IdPRONAC . '&situacao=E50&tpDiligencia=183'; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a>
                     </td>
                     <td align="center">
                         <a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'deposito-equivocado', 'captacao' => $captacao->idTmpCaptacao, 'format' => 'json')); ?>" data-acao="depositoEquivocado">

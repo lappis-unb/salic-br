@@ -72,13 +72,13 @@
 </div>
 
 <div id="titulo">
-    <div>Envio de Dilig&ecirc;ncia <span class="voltar"><a href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?>?idPronac=<?php echo $this->idPronac;?>&tpDiligencia=<?php echo $this->tpDiligencia;?>&situacao=<?php echo $this->situacao;?>">Voltar</a></span></div>
+    <div>Envio de Dilig&ecirc;ncia <span class="voltar"><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?>?idPronac=<?php echo $this->idPronac;?>&tpDiligencia=<?php echo $this->tpDiligencia;?>&situacao=<?php echo $this->situacao;?>">Voltar</a></span></div>
 </div>
 
 <div id="conteudo">
 
     <?php $link = isset($this->ultimo) ? 'salvardiligencia' : 'inserirdiligencia'; ?>
-    <form id="cadastro" action="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => $link)); ?>" method="post">
+    <form id="cadastro" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => $link)); ?>" method="post">
         <input type="hidden" name="idPronac" value="<?php echo $this->idPronac;?>" />
         <input type="hidden" name="idPreProjeto" value="<?php echo $this->idPreProjeto;?>" />
         <input type="hidden" name="idProduto" value="<?php echo $this->idProduto;?>" />

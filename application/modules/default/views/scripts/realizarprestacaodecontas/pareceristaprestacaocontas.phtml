@@ -299,7 +299,7 @@ window.onload = function() {areadetrabalho();};
                 <td class="centro"><?php echo "FNC"; ?></td>
 		<td align="center"><img style="cursor: pointer;" src="../public/img/btn_busca.jpg" onclick="return historicoEncaminhamento('<?php echo $prescontas->IdPRONAC; ?>')" alt="Encaminhar" />
 		<td align="center">
-                        <a href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $prescontas->IdPRONAC;?>" class="itenspronac" style="text-decoration: underline; cursor: pointer;">
+                        <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $prescontas->IdPRONAC;?>" class="itenspronac" style="text-decoration: underline; cursor: pointer;">
                             <img src="../public/img/table_multiple.png"></a></td>
 		<td align="center">
                     <?php //$qntdDias = round(Data::CompararDatas($AguardAnalise5->DataEnvio,date("Y-m-d")))+1;
