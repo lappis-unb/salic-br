@@ -213,7 +213,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                 ?>
             <tr>
                 <td colspan="11">
-                    <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos" style="width:90%"><span class="red del_link" style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span></div>
+                    <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos" style="width:90%"><span class="red-text del_link" style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span></div>
                 </td>
             </tr>
     <?php
@@ -222,7 +222,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                     ?>
             <tr class='master' fonte="<?php echo $nrfonte; ?>">
                 <td class='master' colspan="11">
-                    <div  tipo="produto" aberto="true" fonte="<?php echo $nrfonte; ?>" produto ="<?php echo $nrproduto; ?>" class="icn_menos clickproduto" style="width:98%; margin-left:2%;"><span class="green del_link" style="font-size: 16pt; font-weight: 800;"><?php echo $produto; ?></span></div>
+                    <div  tipo="produto" aberto="true" fonte="<?php echo $nrfonte; ?>" produto ="<?php echo $nrproduto; ?>" class="icn_menos clickproduto" style="width:98%; margin-left:2%;"><span class="green-text del_link" style="font-size: 16pt; font-weight: 800;"><?php echo $produto; ?></span></div>
                 </td>
             </tr>
         <?php
@@ -231,7 +231,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                         ?>
             <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                 <td colspan="11">
-                    <div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div>
+                    <div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div>
                 </td>
             </tr>
             <?php
@@ -241,7 +241,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
             <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                 <td colspan="11">
                     <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;">
-                        <span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span>
+                        <span class="black-text del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span>
                     </div>
                 </td>
             </tr>
@@ -288,11 +288,11 @@ $links[] = array('An&aacute;lise do Produto' => array());
                                         }
                                         ?>
                         <tr style="font-weight: bold;">
-                            <td class="esquerda black" style="font-size: 12pt; width: 12%;" colspan="7">Total de UF</td>
-                            <td class="esquerda black" style="font-size: 12pt; width: 15%;"><?php echo $planilha['totalUfSolicitado']; ?></td>
-                            <td class="esquerda black" style="font-size: 12pt; width: 12%;">&nbsp;</td>
-                            <td class="valorUfSugerido esquerda black" style="font-size: 12pt; width: 15%;"><?php echo $planilha['totalUfSugerido']; ?></td>
-                            <td class="esquerda black" style="font-size: 12pt; width: 12%;">&nbsp;</td>
+                            <td class="esquerda black-text" style="font-size: 12pt; width: 12%;" colspan="7">Total de UF</td>
+                            <td class="esquerda black-text" style="font-size: 12pt; width: 15%;"><?php echo $planilha['totalUfSolicitado']; ?></td>
+                            <td class="esquerda black-text" style="font-size: 12pt; width: 12%;">&nbsp;</td>
+                            <td class="valorUfSugerido esquerda black-text" style="font-size: 12pt; width: 15%;"><?php echo $planilha['totalUfSugerido']; ?></td>
+                            <td class="esquerda black-text" style="font-size: 12pt; width: 12%;">&nbsp;</td>
                         </tr>
                     </table>
                 </td>
@@ -315,8 +315,8 @@ $links[] = array('An&aacute;lise do Produto' => array());
                             <th colspan="6">Total Sugerido do produto - Todas as fontes de incentivo</th>
                         </tr>
                         <tr>
-                            <td class="centro black" style="font-size: 12pt; width: 12%; font-weight: bold;" colspan="5"><?php echo $this->itens['totalSolicitado']; ?></td>
-                            <td class="centro valorTotalSugerido esquerda black" style="font-size: 12pt; width: 12%; font-weight: bold;" colspan="6"><?php echo $this->itens['totalSugerido']; ?></td>
+                            <td class="centro black-text" style="font-size: 12pt; width: 12%; font-weight: bold;" colspan="5"><?php echo $this->itens['totalSolicitado']; ?></td>
+                            <td class="centro valorTotalSugerido esquerda black-text" style="font-size: 12pt; width: 12%; font-weight: bold;" colspan="6"><?php echo $this->itens['totalSugerido']; ?></td>
                         </tr>
                     </table>
                 </td>
@@ -350,7 +350,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
 
         <?php } else { ?>
             <tr>
-                <td align="center" style="color: red; font-size: 16px;">N&atilde;o h&aacute; produto secund&aacute;rio.</td>
+                <td align="center" style="color: red-text; font-size: 16px;">N&atilde;o h&aacute; produto secund&aacute;rio.</td>
             </tr>
         <?php } ?>
     </table>
