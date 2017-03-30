@@ -159,7 +159,11 @@
 
 <?php else: ?>
     <div class="valign-wrapper">
-        <p class="valign">Para preencher a planilha, &eacute; necess&aacute;rio <a href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $this->idPreProjeto)); ?>" titlte="Cadastrar produto">cadastrar um produto</a>.</p>
+        <?php if (empty($this->localRealizacao) ) : ?>
+            <p class="valign"> Para preencher a planilha, &eacute; necess&aacute;rio informar o <a href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' =>'index','idPreProjeto' => $this->idPreProjeto)); ?>" titlte="Preencher local de reali&ccedil;&atilde;o">local de realiza&ccedil;&atilde;o</a>.</p>
+        <?php else : ?>
+            <p class="valign">Para preencher a planilha, &eacute; necess&aacute;rio <a href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $this->idPreProjeto)); ?>" titlte="Cadastrar produto">cadastrar um produto</a>.</p>
+        <?php endif; ?>
     </div>
 <?php endif; ?>
 
