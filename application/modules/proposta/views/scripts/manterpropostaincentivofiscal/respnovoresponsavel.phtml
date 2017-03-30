@@ -45,7 +45,7 @@
             <td align="center"><?php echo $status; ?></td>
             <td align="center">
             <?php if(($d->siVinculo == null) || ($d->siVinculo == 3) || ($d->siVinculo == 1)): ?>
-                <input type="button" value=" " class="btn_vincular" style="width: 87px;" onclick="confirmarovinculo('<?php echo $d->idresponsavel; ?>');" />
+                <button type="button" value=" " class="btn" onclick="confirmarovinculo('<?php echo $d->idresponsavel; ?>');" >vincular</button>
             <?php endif; ?>
             </td>
         <?php else: ?>
