@@ -1,8 +1,8 @@
 <?php
 //echo $this->partial('diligenciar/inc/menu.inc.php', $this); // menu de manter proposta por incentivo fiscal
-$visualizarDiligenciaHref = $this->url(array('controller' => 'diligenciar', 'action' => 'visualizardiligencia'));
-$cadastrarDiligenciaHref  = $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrardiligencia'));
-$alterarDiligenciaHref      = $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia'));
+$visualizarDiligenciaHref = $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'visualizardiligencia'));
+$cadastrarDiligenciaHref  = $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'cadastrardiligencia'));
+$alterarDiligenciaHref      = $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia'));
 $qtdia = 40;
 ?>
 <div id="titulo">

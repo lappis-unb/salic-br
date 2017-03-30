@@ -244,7 +244,7 @@
                 <!-- ======================= DILIGENCIA ====================== -->
                 <?php if($this->fnLiberarLinks['Diligencia']){ ?>
                     <?php if ($this->respProponente == 'R') { ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')); ?><?php echo $codPronac; ?>">Responder Dilig&ecirc;ncia</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')); ?><?php echo $codPronac; ?>">Responder Dilig&ecirc;ncia</a>
                     <?php } else { ?>
                         <a class="no_seta" target="_blank" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem')); ?><?php echo $auxPronac; ?>">Mensagens</a>
                     <?php } ?>
