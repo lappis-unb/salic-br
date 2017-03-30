@@ -156,11 +156,11 @@ function trocarproponente()
                     <?php //if($this->verificarmenu == 1){ ?>
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'documentospendentesedital')); ?><?php echo $codProjeto; ?>&edital=s">Documentos Pendentes</a>
                     <?php //} ?>
-                    <!-- <a class="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')); ?><?php echo $codProjeto; ?>&edital=s">Dilig&ecirc;ncias</a> -->
+                    <!-- <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')); ?><?php echo $codProjeto; ?>&edital=s">Dilig&ecirc;ncias</a> -->
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'Gerarimprimirpdf', 'action' => 'index')); ?><?php echo $codProjeto; ?>">Imprimir/Gerar PDF</a>
                     <?php //if(isset($this->blnPossuiDiligencias) && $this->blnPossuiDiligencias > 0): ?>
                     <?php if($this->enviado != 'false'): ?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')).$codProjeto; ?>&edital=s" title="Visualizar dilig&ecirc;ncias">Dilig&ecirc;ncias</a>
+                    <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')).$codProjeto; ?>&edital=s" title="Visualizar dilig&ecirc;ncias">Dilig&ecirc;ncias</a>
                     <?php endif; ?>
                     <?php if($this->enviado == 'false'){ ?>
                     <a class="no_seta" href="#" onclick="confirmaExcluir('<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'exluirproposta')) ?><?php echo $codProjeto; ?>')">Excluir Proposta</a>
