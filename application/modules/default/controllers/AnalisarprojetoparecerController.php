@@ -375,6 +375,9 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $this->view->dsArea = $projeto[0]->dsArea;
         $this->view->dsSegmento = $projeto[0]->dsSegmento;
 
+        $nova_versao_pareceres = 17; // projetos anteriores a esse ano terão formulário mantido
+        $this->view->posterior2017 = ($projeto[0]->AnoProjeto >= $nova_versao_pareceres) ? true : false;
+        
         /* Analise de conte�do */
         $analisedeConteudoDAO = new Analisedeconteudo();
         $analisedeConteudo = $analisedeConteudoDAO->dadosAnaliseconteudo(false, array('idPronac = ?' => $idPronac, 'idProduto = ?' => $idProduto));
@@ -1356,7 +1359,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         }
 
         $projetos = new Projetos();
-        $dadosProjetoProduto = $projetos->dadosFechar($this->getIdUsuario, $idPronac, $idDistribuirParecer);
+        //$dadosProjetoProduto = $projetos->dadosFechar($this->getIdUsuario, $idPronac, $idDistribuirParecer);
 
         $this->view->dados = $dadosProjetoProduto;
         $this->view->idpronac = $idPronac;        
