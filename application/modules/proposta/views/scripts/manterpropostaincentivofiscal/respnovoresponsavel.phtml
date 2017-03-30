@@ -10,28 +10,29 @@
 	    <th width="200"></th>
 	</tr>
 	<?php
+        //xd ($this->dados );
         foreach ($this->dados as $d):
             $status = 'N&atilde;o vinculado';
 
             if($d->idAgenteProponente == $this->idAgenteProponente)
             {
-                if($d->sivinculo == null)
+                if($d->siVinculo == null)
                 {
                     $status = 'N&atilde;o vinculado';
                 }
-                elseif($d->sivinculo == 0)
+                elseif($d->siVinculo == 0)
                 {
                     $status = 'Solicitado';
                 }
-                elseif($d->sivinculo == 1)
+                elseif($d->siVinculo == 1)
                 {
                     $status = 'Vinculo Rejeitado';
                 }
-                elseif($d->sivinculo == 2)
+                elseif($d->siVinculo == 2)
                 {
                     $status = 'Vinculado';
                 }
-                elseif($d->sivinculo == 3)
+                elseif($d->siVinculo == 3)
                 {
                     $status = 'Desvinculado';
                 }
