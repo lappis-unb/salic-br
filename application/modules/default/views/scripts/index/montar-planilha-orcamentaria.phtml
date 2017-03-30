@@ -108,7 +108,7 @@ if($this->tipoPlanilha == 0){ ?>
             ?>
             <tr>
                 <td>
-                    <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos" style="width:90%"><span class="red del_link" style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span></div>
+                    <div tipo="fonte" fonte="<?php echo $nrfonte; ?>" aberto="true" class="icn_menos" style="width:90%"><span class="red-text del_link" style="font-size: 20pt; font-weight: 800;"><?php echo $fonte; ?></span></div>
                 </td>
             </tr>
             <?php
@@ -131,20 +131,22 @@ if($this->tipoPlanilha == 0){ ?>
                     ?>
                     <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                         <td>
-                            <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
+                            <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                         </td>
                     </tr>
                     <?php
                     $nrcidade = 0;
                     $valorSolicitadoTotalEtapa = 0;
                     $valorSugeridoTotalEtapa = 0;
-                    foreach ($this->planilha[$fonte][$produto][$etapa] as $cidade => $planilha) {
-                        ?>
-                        <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
-                            <td>
-                                <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
-                            </td>
-                        </tr>
+                    foreach ($this->planilha[$fonte][$produto][$etapa] as $cidade => $planilha) { ?>
+
+                        <?php if(strlen($cidade) > 3) : ?>
+                            <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
+                                <td>
+                                    <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
+                                </td>
+                            </tr>
+                            <?php endif; ?>
                         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte; ?>">
                             <td>
                                 <table class="tabela">
@@ -184,11 +186,13 @@ if($this->tipoPlanilha == 0){ ?>
                                     } //fechaForeachplanilha
                                     $nrcidade++;
                                     ?>
-                                    <tr>
-                                        <td colspan="6" class="black" style="font-size: 14pt;">Total da UF</td>
-                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
-                                        <td style="width: 20%;"></td>
-                                    </tr>
+                                    <?php if(strlen($cidade) > 3) : ?>
+                                        <tr>
+                                            <td colspan="6" class="black" style="font-size: 14pt;">Total da UF</td>
+                                            <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
+                                            <td style="width: 20%;"></td>
+                                        </tr>
+                                    <?php endif; ?>
                                 </table>
                             </td>
                         </tr>
@@ -199,8 +203,8 @@ if($this->tipoPlanilha == 0){ ?>
                         <td>
                             <table class="tabela">
                                 <tr>
-                                    <td colspan="6" class="orange" style="font-size: 14pt;">Total da Etapa</td>
-                                    <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
+                                    <td colspan="6" class="orange-text" style="font-size: 14pt;">Total da Etapa</td>
+                                    <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
                                     <td style="width: 20%">&nbsp;</td>
                                 </tr>
                             </table>
@@ -214,8 +218,8 @@ if($this->tipoPlanilha == 0){ ?>
                     <td>
                         <table class="tabela">
                             <tr>
-                                <td colspan="6" class="green" style="font-size: 14pt;">Total da <?php echo $produto; ?></td>
-                                <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
+                                <td colspan="6" class="green-text" style="font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                                <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
                                 <td style="width: 20%">&nbsp;</td>
                             </tr>
                         </table>
@@ -229,8 +233,8 @@ if($this->tipoPlanilha == 0){ ?>
                 <td>
                     <table class="tabela">
                         <tr>
-                            <td colspan="6" class="red" style="font-size: 14pt;">Total do <?php echo $fonte; ?></td>
-                            <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
+                            <td colspan="6" class="red-text" style="font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                            <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
                             <td style="width: 20%">&nbsp;</td>
                         </tr>
                     </table>
@@ -245,8 +249,8 @@ if($this->tipoPlanilha == 0){ ?>
             <td>
                 <table class="tabela">
                     <tr>
-                        <td colspan="6" class="blue" style="font-size: 14pt;">Total do Projeto</td>
-                        <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
+                        <td colspan="6" class="blue-text" style="font-size: 14pt;">Total do Projeto</td>
+                        <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
                         <td style="width: 20%">&nbsp;</td>
                     </tr>
                 </table>
@@ -295,7 +299,7 @@ else if($this->tipoPlanilha == 1){ ?>
                     ?>
                     <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                         <td>
-                            <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
+                            <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                         </td>
                     </tr>
                     <?php
@@ -363,8 +367,8 @@ else if($this->tipoPlanilha == 1){ ?>
                         <td>
                             <table class="tabela">
                                 <tr>
-                                    <td colspan="6" class="orange" style="font-size: 14pt;">Total da Etapa</td>
-                                    <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
+                                    <td colspan="6" class="orange-text" style="font-size: 14pt;">Total da Etapa</td>
+                                    <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
                                     <td style="width: 20%">&nbsp;</td>
                                 </tr>
                             </table>
@@ -378,8 +382,8 @@ else if($this->tipoPlanilha == 1){ ?>
                     <td>
                         <table class="tabela">
                             <tr>
-                                <td colspan="6" class="green" style="font-size: 14pt;">Total da <?php echo $produto; ?></td>
-                                <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
+                                <td colspan="6" class="green-text" style="font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                                <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
                                 <td style="width: 20%">&nbsp;</td>
                             </tr>
                         </table>
@@ -393,8 +397,8 @@ else if($this->tipoPlanilha == 1){ ?>
                 <td>
                     <table class="tabela">
                         <tr>
-                            <td colspan="6" class="red" style="font-size: 14pt;">Total do <?php echo $fonte; ?></td>
-                            <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
+                            <td colspan="6" class="red-text" style="font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                            <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
                             <td style="width: 20%">&nbsp;</td>
                         </tr>
                     </table>
@@ -409,8 +413,8 @@ else if($this->tipoPlanilha == 1){ ?>
             <td>
                 <table class="tabela">
                     <tr>
-                        <td colspan="6" class="blue" style="font-size: 14pt;">Total do Projeto</td>
-                        <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
+                        <td colspan="6" class="blue-text" style="font-size: 14pt;">Total do Projeto</td>
+                        <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
                         <td style="width: 20%">&nbsp;</td>
                     </tr>
                 </table>
@@ -459,7 +463,7 @@ else if($this->tipoPlanilha == 2){ ?>
                 ?>
                 <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                     <td>
-                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
+                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                     </td>
                 </tr>
                 <?php
@@ -551,10 +555,10 @@ else if($this->tipoPlanilha == 2){ ?>
                     <td>
                         <table class="tabela">
                             <tr>
-                                <td colspan="2" class="orange" style="width: 25%; font-size: 14pt;">Total da Etapa</td>
-                                <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
+                                <td colspan="2" class="orange-text" style="width: 25%; font-size: 14pt;">Total da Etapa</td>
+                                <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
                                 <td colspan="4">&nbsp;</td>
-                                <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalEtapa, 2, ",", "."); ?></td>
+                                <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalEtapa, 2, ",", "."); ?></td>
                                 <td colspan="2" style="width: 40%">&nbsp;</td>
                             </tr>
                         </table>
@@ -568,10 +572,10 @@ else if($this->tipoPlanilha == 2){ ?>
                 <td>
                     <table class="tabela">
                         <tr>
-                            <td colspan="2" class="green" style="width: 25%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
-                            <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
+                            <td colspan="2" class="green-text" style="width: 25%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                            <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
                                 <td colspan="4">&nbsp;</td>
-                            <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalProduto, 2, ",", "."); ?></td>
+                            <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalProduto, 2, ",", "."); ?></td>
                             <td style="width: 40%" colspan="2">&nbsp;</td>
                         </tr>
                     </table>
@@ -584,10 +588,10 @@ else if($this->tipoPlanilha == 2){ ?>
             <td>
                 <table class="tabela">
                     <tr>
-                        <td colspan="2" class="red" style="width: 25%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
-                        <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
+                        <td colspan="2" class="red-text" style="width: 25%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                        <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
                         <td colspan="4">&nbsp;</td>
-                        <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSugeridoTotalIncentivo, 2, ",", "."); ?></td>
+                        <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSugeridoTotalIncentivo, 2, ",", "."); ?></td>
                         <td style="width: 40%" colspan="2">&nbsp;</td>
                     </tr>
                 </table>
@@ -601,10 +605,10 @@ else if($this->tipoPlanilha == 2){ ?>
         <td>
             <table class="tabela">
                 <tr>
-                    <td colspan="2" class="blue" style="width: 25%; font-size: 14pt;">Total do Projeto</td>
-                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
+                    <td colspan="2" class="blue-text" style="width: 25%; font-size: 14pt;">Total do Projeto</td>
+                    <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
                     <td colspan="4">&nbsp;</td>
-                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSugerido, 2, ",", "."); ?></td>
+                    <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSugerido, 2, ",", "."); ?></td>
                     <td style="width: 40%" colspan="2">&nbsp;</td>
                 </tr>
             </table>
@@ -661,7 +665,7 @@ else if($this->tipoPlanilha == 3){ ?>
                 ?>
                 <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                     <td>
-                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
+                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                     </td>
                 </tr>
                 <?php
@@ -771,11 +775,11 @@ else if($this->tipoPlanilha == 3){ ?>
                     <td>
                         <table class="tabela">
                             <tr>
-                                <td colspan="2" class="orange" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
-                                <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
-                                <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalEtapa, 2, ",", "."); ?></td>
+                                <td colspan="2" class="orange-text" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
+                                <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalEtapa, 2, ",", "."); ?></td>
+                                <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalEtapa, 2, ",", "."); ?></td>
                                 <td colspan="4">&nbsp;</td>
-                                <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
+                                <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
                                 <td colspan="3" style="width: 40%;">&nbsp;</td>
                             </tr>
                         </table>
@@ -789,11 +793,11 @@ else if($this->tipoPlanilha == 3){ ?>
                 <td>
                     <table class="tabela">
                         <tr>
-                            <td colspan="2" class="green" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
-                            <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
-                            <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalProduto, 2, ",", "."); ?></td>
+                            <td colspan="2" class="green-text" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                            <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalProduto, 2, ",", "."); ?></td>
+                            <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalProduto, 2, ",", "."); ?></td>
                                 <td colspan="4">&nbsp;</td>
-                            <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
+                            <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
                             <td style="width: 40%" colspan="1">&nbsp;</td>
                         </tr>
                     </table>
@@ -806,11 +810,11 @@ else if($this->tipoPlanilha == 3){ ?>
             <td>
                 <table class="tabela">
                     <tr>
-                        <td colspan="2" class="red" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
-                        <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
-                        <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSugeridoTotalIncentivo, 2, ",", "."); ?></td>
+                        <td colspan="2" class="red-text" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                        <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSolicitadoTotalIncentivo, 2, ",", "."); ?></td>
+                        <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorSugeridoTotalIncentivo, 2, ",", "."); ?></td>
                         <td colspan="4">&nbsp;</td>
-                        <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
+                        <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
                         <td style="width: 40%" colspan="1">&nbsp;</td>
                     </tr>
                 </table>
@@ -824,11 +828,11 @@ else if($this->tipoPlanilha == 3){ ?>
         <td>
             <table class="tabela">
                 <tr>
-                    <td colspan="2" class="blue" style="width: 18%; font-size: 14pt;">Total do Projeto</td>
-                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
-                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSugerido, 2, ",", "."); ?></td>
+                    <td colspan="2" class="blue-text" style="width: 18%; font-size: 14pt;">Total do Projeto</td>
+                    <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
+                    <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSugerido, 2, ",", "."); ?></td>
                     <td colspan="3">&nbsp;</td>
-                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalAprovado, 2, ",", "."); ?></td>
+                    <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalAprovado, 2, ",", "."); ?></td>
                     <td style="width: 40%" colspan="1">&nbsp;</td>
                 </tr>
             </table>
@@ -879,7 +883,7 @@ else if($this->tipoPlanilha == 5){ ?>
                 ?>
                 <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                     <td>
-                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
+                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                     </td>
                 </tr>
                 <?php
@@ -964,9 +968,9 @@ else if($this->tipoPlanilha == 5){ ?>
                                 </tr>
                                 
                             <tr>
-                                <td colspan="6" class="orange" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
-                                <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
-				<td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorComprovadoTotalEtapa, 2, ",", "."); ?></td>
+                                <td colspan="6" class="orange-text" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
+                                <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
+				<td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorComprovadoTotalEtapa, 2, ",", "."); ?></td>
                                 <td colspan="3" style="width: 40%;">&nbsp;</td>
                             </tr>                                
                             </table>
@@ -988,9 +992,9 @@ else if($this->tipoPlanilha == 5){ ?>
 		      <th></th>
 		    </tr>            
                         <tr>
-                            <td colspan="6" class="green" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
-                            <td class="green" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
-                            <td class="green" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorComprovadoTotalProduto, 2, ",", "."); ?></td>
+                            <td colspan="6" class="green-text" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                            <td class="green-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
+                            <td class="green-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorComprovadoTotalProduto, 2, ",", "."); ?></td>
             <td colspan="3" style="width: 40%;">&nbsp;</td>
                         </tr>
                     </table>
@@ -1010,9 +1014,9 @@ else if($this->tipoPlanilha == 5){ ?>
 		</tr>            
 		
                     <tr>
-                        <td colspan="6" class="red" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
-                        <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
-			<td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorComprovadoTotalIncentivo, 2, ",", "."); ?></td>
+                        <td colspan="6" class="red-text" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                        <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
+			<td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorComprovadoTotalIncentivo, 2, ",", "."); ?></td>
 			<td colspan="3" style="width: 40%;">&nbsp;</td>			
                     </tr>
                 </table>
@@ -1034,9 +1038,9 @@ else if($this->tipoPlanilha == 5){ ?>
 		    </tr>            
 	    
                 <tr>
-                    <td colspan="6" class="blue" style="width: 18%; font-size: 14pt;">Total do Projeto</td>
-                    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalAprovado, 2, ",", "."); ?></td>
-		    <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalComprovado, 2, ",", "."); ?></td>
+                    <td colspan="6" class="blue-text" style="width: 18%; font-size: 14pt;">Total do Projeto</td>
+                    <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalAprovado, 2, ",", "."); ?></td>
+		    <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalComprovado, 2, ",", "."); ?></td>
 		    <td colspan="3" style="width: 40%;">&nbsp;</td>
                 </tr>
             </table>
@@ -1090,7 +1094,7 @@ else if($this->tipoPlanilha == 6){ ?>
                 ?>
                 <tr class="master produto" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>" >
                     <td>
-                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
+                        <div><div tipo="etapa" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:4%;"><span class="orange-text del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div></div>
                     </td>
                 </tr>
                 <?php
@@ -1242,9 +1246,9 @@ else if($this->tipoPlanilha == 6){ ?>
                     <td>
                         <table class="tabela">
                             <tr>
-                                <td colspan="2" class="orange" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
+                                <td colspan="2" class="orange-text" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
                                 <td colspan="4">&nbsp;</td>
-                                <td class="orange" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
+                                <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
                                 <td colspan="3" style="width: 40%;">&nbsp;</td>
                             </tr>
                         </table>
@@ -1257,9 +1261,9 @@ else if($this->tipoPlanilha == 6){ ?>
                 <td>
                     <table class="tabela">
                         <tr>
-                            <td colspan="2" class="green" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
+                            <td colspan="2" class="green-text" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
                             <td colspan="4">&nbsp;</td>			    
-                            <td class="green" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
+                            <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
                             <td style="width: 40%" colspan="1">&nbsp;</td>
                         </tr>
                     </table>
@@ -1272,9 +1276,9 @@ else if($this->tipoPlanilha == 6){ ?>
             <td>
                 <table class="tabela">
                     <tr>
-                        <td colspan="2" class="red" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
+                        <td colspan="2" class="red-text" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
                         <td colspan="4">&nbsp;</td>
-                        <td class="red" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
+                        <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
                         <td style="width: 40%" colspan="1">&nbsp;</td>
                     </tr>
                 </table>
