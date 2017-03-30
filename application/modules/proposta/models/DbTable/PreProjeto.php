@@ -2570,7 +2570,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $movimentacao = $tbMovimentacao->buscar($whereMovimentacao, array(), 1)->current();
 
         if (!empty( $movimentacao ) && !$alterarprojeto) {
-            $validacao->Descricao = 'A proposta cultural encontra-se no minist&eacute;rio da cultura';
+            $validacao->dsInconsistencia = 'A proposta cultural encontra-se no minist&eacute;rio da cultura';
             $validacao->Observacao = '';
             $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
@@ -2589,7 +2589,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $avaliacaoProposta = $db->fetchAll($sql);
             //if(( date('m') == 13 || date('m') == 1 ) && empty($avaliacaoProposta)) { @todo voltar esta linha, apenas para teste
             if( getenv('APPLICATION_ENV') == 'production' && empty($avaliacaoProposta)) {
-                $validacao->Descricao = 'Conforme Art 9&#176; da Instru&ccedil;&atilde;o Normativa n&#176; 1, de 24 de junho de 2013, nenhuma proposta poder&aacute; ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!';
+                $validacao->dsInconsistencia = 'Conforme Art 9&#176; da Instru&ccedil;&atilde;o Normativa n&#176; 1, de 24 de junho de 2013, nenhuma proposta poder&aacute; ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!';
                 $validacao->Observacao = 'PENDENTE';
                 $validacao->Url = '';
                 $listaValidacao[] =  clone($validacao);
@@ -2605,7 +2605,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                 //VERIFICAR AS INFORMACOES DO PROPONENTE
                 if (empty($vCadastrarProponente)) {
-                    $validacao->Descricao = 'Dados cadastrais do proponente inexistente ou não h&aacute; endereço para correspondência selecionado.';
+                    $validacao->dsInconsistencia = 'Dados cadastrais do proponente inexistente ou não h&aacute; endereço para correspondência selecionado.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                     $listaValidacao[] =  clone($validacao);
@@ -2624,7 +2624,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                 $regularidadeProponente = $db->fetchAll($sql);
                 if (!empty($regularidadeProponente)) {
-                    $validacao->Descricao ='Proponente em situa&ccedil;&atilde;o IRREGULAR no Minist&eacute;rio da Cultura.';
+                    $validacao->dsInconsistencia ='Proponente em situa&ccedil;&atilde;o IRREGULAR no Minist&eacute;rio da Cultura.';
                     $validacao->Observacao =  'PENDENTE';
                     $validacao->Url = '';
                     $listaValidacao[] =  clone($validacao);
@@ -2640,7 +2640,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     ;
                 $verificarEmail = $db->fetchAll($sql);
                 if (empty($verificarEmail)){
-                    $validacao->Descricao ='E-mail do proponente inexistente';
+                    $validacao->dsInconsistencia ='E-mail do proponente inexistente';
                     $validacao->Observacao =  'PENDENTE';
                     $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                     $listaValidacao[] =  clone($validacao);
@@ -2665,7 +2665,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $dataNasc = $db->fetchAll($sql);
 
                     if (empty($dataNasc)) {
-                        $validacao->Descricao ='Data de nascimento inexistente.';
+                        $validacao->dsInconsistencia ='Data de nascimento inexistente.';
                         $validacao->Observacao =  'PENDENTE';
                         $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'info-adicionais', 'id' => $idAgente);
                         $listaValidacao[] = clone($validacao);
@@ -2683,7 +2683,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                     $natureza = $db->fetchAll($sql);
                     if(empty($natureza)) {
-                        $validacao->Descricao = 'Natureza do proponente.';
+                        $validacao->dsInconsistencia = 'Natureza do proponente.';
                         $validacao->Observacao =  'PENDENTE';
                         $validacao->Url = '';
                         $listaValidacao[] =  clone($validacao);
@@ -2698,7 +2698,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                     $dirigenteCadastrado = $db->fetchAll($sql);
                     if (empty($dirigenteCadastrado)) {
-                        $validacao->Descricao = 'Cadastro de Dirigente.';
+                        $validacao->dsInconsistencia = 'Cadastro de Dirigente.';
                         $validacao->Observacao = 'PENDENTE';
                         $validacao->Url = '';
                         $listaValidacao[] =  clone($validacao);
@@ -2730,7 +2730,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $documento = $db->fetchRow($sql);
 
                     if (empty($documento)) {
-                        $validacao->Descricao = $msg;
+                        $validacao->dsInconsistencia = $msg;
                         $validacao->Observacao = 'PENDENTE';
                         $validacao->Url = array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
@@ -2748,7 +2748,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $local = $db->fetchAll($sql);
 
                 if (empty($local)) {
-                    $validacao->Descricao = 'O Local de realiza&ccedil;&atilde;o da proposta n&atilde;o foi preenchido.';
+                    $validacao->dsInconsistencia = 'O Local de realiza&ccedil;&atilde;o da proposta n&atilde;o foi preenchido.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'localderealizacao', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2769,7 +2769,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
 
                 if (!empty($minimo90)) {
-                    $validacao->Descricao = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de in&iacute;cio de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
+                    $validacao->dsInconsistencia = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de in&iacute;cio de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url =  array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2783,7 +2783,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                 $planoDistribuicao = $db->fetchAll($sql);
                 if (empty($planoDistribuicao)){
-                    $validacao->Descricao = 'O Plano Distribui&ccedil;&atilde;o de Produto n&atilde;o foi preenchido.';
+                    $validacao->dsInconsistencia = 'O Plano Distribui&ccedil;&atilde;o de Produto n&atilde;o foi preenchido.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2800,12 +2800,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $quantidade = count($db->fetchAll($sql));
 
                 if ($quantidade = 0){
-                    $validacao->Descricao = 'N&atilde;o h&aacute; produto principal selecionado na proposta.';
+                    $validacao->dsInconsistencia = 'N&atilde;o h&aacute; produto principal selecionado na proposta.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
                 } else if($quantidade > 1) {
-                    $validacao->Descricao = 'Só poder&aacute; haver um produto principal em cada proposta, a sua est&aacute; com mais de um produto.';
+                    $validacao->dsInconsistencia = 'Só poder&aacute; haver um produto principal em cada proposta, a sua est&aacute; com mais de um produto.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2822,7 +2822,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $planilhaOrcamentaria = $db->fetchAll($sql);
 
                 if (empty($planilhaOrcamentaria)) {
-                    $validacao->Descricao = 'N&atilde;o existe item or&ccedil;ament&aacute;rio referente a fonte de recurso - Incentivo Fiscal Federal.';
+                    $validacao->dsInconsistencia = 'N&atilde;o existe item or&ccedil;ament&aacute;rio referente a fonte de recurso - Incentivo Fiscal Federal.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2847,7 +2847,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $planilhaProduto = $db->fetchAll($sql);
 
                 if (!empty($planilhaProduto)) {
-                    $validacao->Descricao = 'Existe produto cadastrado sem a respectiva planilha orcament&aacute;ria cadastrada.';
+                    $validacao->dsInconsistencia = 'Existe produto cadastrado sem a respectiva planilha orcament&aacute;ria cadastrada.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2886,13 +2886,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if($validado ) {
-            $validacao->Descricao = 'A proposta cultural n&atilde;o possui pend&ecirc;ncias';
+            $validacao->dsInconsistencia = 'A proposta cultural n&atilde;o possui pend&ecirc;ncias';
             $validacao->Observacao = true;
             $validacao->Url = '';
             return $validacao;
 
         } else {
-            $validacao->Descricao = '<font color=red><b> A PROPOSTA CULTURAL N&Atilde;O FOI ENVIADA AO MINIST&Eacute;RIO DA CULTURA DEVIDO &Agrave;S PEND&Ecirc;NCIAS ASSINALADAS ACIMA.</b></font>';
+            $validacao->dsInconsistencia = '<font color=red><b> A PROPOSTA CULTURAL N&Atilde;O FOI ENVIADA AO MINIST&Eacute;RIO DA CULTURA DEVIDO &Agrave;S PEND&Ecirc;NCIAS ASSINALADAS ACIMA.</b></font>';
             $validacao->Observacao = '';
             $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
@@ -3303,6 +3303,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $result = $db->fetchAll($select);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();

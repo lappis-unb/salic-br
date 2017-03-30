@@ -4,39 +4,6 @@
         background: transparent;
     }
 
-    #toast-container div {
-        font-weight: bold;
-    }
-
-    #navglobal {
-        box-shadow: 0px 4px 7px #cac5c5;
-    }
-
-    header {
-        margin-bottom: 0px;
-        margin-bottom: -10px;
-    }
-
-    main {
-        margin-top: 15px;
-    }
-
-    #breadcrumb {
-        left: 0px;
-    }
-
-    #container-list {
-        margin-top: 15px;
-    }
-
-    #rodapeConteudo_com_menu {
-        display: none;
-    }
-
-    table {
-        width: 100%;
-    }
-
     table th {
         font-size: 14px;
         padding: 16px 10px;
@@ -104,7 +71,6 @@
         text-transform: uppercase;
         text-align: left;
         font-size: 17px;
-        /*color: #fff;*/
     }
 
     .tabs .tab a {
@@ -237,11 +203,6 @@
         margin-right: 30px;
     }
 
-    #custosvinculados .preloader-wrapper{
-        /*display: none;*/
-
-    }
-
     .modal.modal-pre-loader {
         width: 300px;
         height: 180px;
@@ -276,6 +237,26 @@
     .danger.input-field:hover,
     .danger.input-field {
         color: #ef6c00 !important;
+    }
+
+    #toast-container .toast {
+        cursor: pointer;
+        position: relative;
+        padding-right: 40px;
+    }
+    #toast-container .toast::after {
+        font-family: 'Material Icons';
+        content: "close";
+        -webkit-font-feature-settings: 'liga';
+        color: #dd2c00;
+        font-size: 1.5rem;
+        font-weight: bold;
+        float: right;
+        padding-left: 10px;
+        width: 100px;
+        position: absolute;
+        right: -55px;
+
     }
 
 
@@ -527,7 +508,7 @@ $3(document).ready(function () {
             } else {
                 $3("#btn-salvar").addClass('disabled').removeClass('btn-salvar ');
                 $3('#editor1').addClass('valida');
-                Materialize.toast(result.msg, 20000, 'mensagem1 orange darken-3 white-text');
+                Materialize.toast(result.msg, 60000, 'mensagem1 orange darken-3 white-text');
                 $3("#vlunitario").parent().addClass("danger");
                 $3(".justificativa label").text('Justificativa para valor unit\xE1rio maior que R$ ' + result.valorMediana + ' (Obrigat\xF3rio)').parent().addClass("danger");
             }
@@ -541,11 +522,19 @@ $3(document).ready(function () {
     $3('body').on('keyup', '#editor1', function () {
         if ($3("#editor1.valida").val() != '') {
             $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled');
-            $3('.mensagem1').tooltip('remove');
+            $3('.mensagem1').fadeOut(function(){
+                $(this).remove();
+            });
         }else{
-            $3('.mensagem1').tooltip('remove');
             $3("#btn-salvar").removeClass('btn-salvar').addClass('disabled');
         }
+    });
+
+    $3(document).on('click', '#toast-container .toast', function() {
+        $3(this).fadeOut(function(){
+            $(this).remove();
+        });
+
     });
 });
 </script>
