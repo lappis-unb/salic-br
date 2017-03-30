@@ -16,12 +16,14 @@
                                     <li>
                                         <div class="collapsible-header"><i class="material-icons">place</i><?php echo $local['cidade']; ?> - <?php echo $local['uf']; ?></div>
                                         <div class="collapsible-body">
-                                            <div class="cosl s12s">
-                                                <ul class="tabs tab-demo z-depth-1">
-                                                    <?php foreach ($this->EtapasProduto as $key => $etapa) : ?>
-                                                        <li class="tab col s3"><a href="#etapa<?php echo $produto->CodigoProduto . $etapa->idEtapa . $local['idMunicipioIBGE']; ?>"><?php echo $etapa->DescricaoEtapa; ?></a></li>
-                                                    <?php endforeach; ?>
-                                                </ul>
+                                            <div class="rosw">
+                                                <div class="csol s1s2">
+                                                    <ul class="tabs tab-demo z-depth-1">
+                                                        <?php foreach ($this->EtapasProduto as $key => $etapa) : ?>
+                                                            <li class="tab"><a href="#etapa<?php echo $produto->CodigoProduto . $etapa->idEtapa . $local['idMunicipioIBGE']; ?>"><?php echo $etapa->DescricaoEtapa; ?></a></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </div>
                                             </div>
 
                                             <?php foreach ($this->EtapasProduto as $etapa) : //idEtapa ?>
