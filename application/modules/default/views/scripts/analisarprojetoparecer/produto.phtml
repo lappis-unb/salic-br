@@ -75,7 +75,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
             <input type="hidden" id="stPrincipal" name="stPrincipal" value="<?php echo $this->projeto->stPrincipal; ?>"/>
             <input type="hidden" id="idD" name="idD" value="<?php echo $this->idD; ?>"/>
 
-            <table class="tabela" style="width: 95%; <?php if ($this->posterior2017) { echo 'display:none'; }; ?>">
+            <table class="tabela" style="width: 95%; <?php if ($this->IN2017) { echo 'display:none'; }; ?>">
                 <tr>
                     <th colspan="5" class="center">Enquadramento</th>
                 </tr>
@@ -174,6 +174,17 @@ $links[] = array('An&aacute;lise do Produto' => array());
                 </tr>
 	    </table>
             <table class="tabela" style="width: 95%;">
+	      <?php if ($this->IN2017): ?>
+                <tr>
+                    <td colspan="5">
+                        <b>A&ccedil;&otilde;es relevantes para o sucesso do projeto*</b>
+                        <p>
+                        <center>
+                            <textarea class="textarea_simples" id="AcoesRelevantes" name="AcoesRelevantes" rows="10" style="width: 98%;"></textarea>
+                        </center>
+                    </td>
+		</tr>
+		<?php endif; ?>
                 <tr>
                     <td colspan="5">
                         <b>Justificativa do enquadramento*</b>
@@ -259,7 +270,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
 
                                             foreach ($valPlanilha as $camp => $cont) {
                                                 $trCampo .= "<th>{$camp}</th>";
-                                                if ($camp == 'Valor Unit�rio' || $camp == 'Valor Solicitado' || $camp == 'Valor Sugerido pelo Parecerista') {
+                                                if ($camp == 'Valor Unit&aacute;rio' || $camp == 'Valor Solicitado' || $camp == 'Valor Sugerido pelo Parecerista') {
                                                     if ($camp == 'Valor Sugerido pelo Parecerista') {
                                                         $conteudo .= "<td class='ValorSugerido' style='width:10;'>{$this->formatarReal($cont)}</td>";
                                                     }
@@ -516,7 +527,8 @@ $links[] = array('An&aacute;lise do Produto' => array());
         }
     }
     function carregarTextAreaCKEditor(){
-        CKEDITOR.replace( 'ParecerDeConteudo', { toolbar: [] } );
+    CKEDITOR.replace( 'ParecerDeConteudo', { toolbar: [] } );
+    CKEDITOR.replace( 'AcoesRelevantes', { toolbar: [] } );
         <?php if(($this->stPrincipal == 1) && ($this->produtosSecundariosEmAnalise == 0)){ ?>
         CKEDITOR.replace( 'dsConsolidacao', { toolbar: [] } );
         <?php } ?>
@@ -526,10 +538,11 @@ $links[] = array('An&aacute;lise do Produto' => array());
         
         carregarAnaliseDeConteudo();
         $('#btSalvarAnaliseDeConteudo').click(function(){
-            var parecer = CKEDITOR.instances['ParecerDeConteudo'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
-//            var parecer = $('#ParecerDeConteudo').val();
+            var parecer = CKEDITOR.instances['ParecerDeConteudo'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
+		acoesRelevantes = CKEDITOR.instances['AcoesRelevantes'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
+	    
             if( parecer.length  < 11){
-                alertar('O parecer t�cnico deve ter no m�nimo 11 caracter!');
+                alertar('O parecer t&eacute;cnico deve ter no m�nimo 11 caracter!');
             } else {
                 $('#formAnaliseConteudo').submit();
             }
