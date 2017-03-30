@@ -25,8 +25,6 @@ class SegmentoController extends Zend_Controller_Action
      *
      * @access public
      *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author wouerner <wouerner@gmail.com>
      * @since  17/08/2016
      */
 	public function comboAction()
@@ -41,14 +39,13 @@ class SegmentoController extends Zend_Controller_Action
 		// integracao MODELO e VISAO
 		$Segmento = new Segmento();
 		$resultado = $Segmento->combo(array("a.codigo = '?'" => $idArea), array('s.segmento ASC'));
-
                 if(count($resultado)>0){
                     $html = '<option value=""> - Selecione - </option>';
                     foreach ($resultado as $value) {
                         if($idSegmento > 0 && $idSegmento == $value->id){
-                            $html = $html.'<option value="'.$value->id.'" selected="selected">'.($value->descricao).'</option>';
+                            $html = $html.'<option data-tp_enquadramento="'.$value->tp_enquadramento.'" value="'.$value->id.'" selected="selected">'.($value->descricao).'</option>';
                         } else {
-                            $html = $html.'<option value="'.$value->id.'">'.utf8_encode($value->descricao).'</option>';
+                            $html = $html.'<option data-tp_enquadramento="'.$value->tp_enquadramento.'" value="'.$value->id.'">'.utf8_encode($value->descricao).'</option>';
                         }
                     }
                     echo $html;
@@ -56,5 +53,5 @@ class SegmentoController extends Zend_Controller_Action
                     echo '<option value=""> - Selecione - </option>';
                 }
         $this->_helper->viewRenderer->setNoRender(TRUE);
-    } // fecha comboAction()
+    }
 }
