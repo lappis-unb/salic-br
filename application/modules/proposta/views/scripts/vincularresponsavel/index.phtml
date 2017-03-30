@@ -14,7 +14,7 @@
             closeOnEscape : false,
             title : 'Alerta',
             buttons: {
-                'NÃO': function(){
+                "Cancelar": function(){
                     $(this).dialog('close');
                 },
                 'SIM': function(){
@@ -183,9 +183,8 @@
                 <tr>
                     <td colspan="2" class="centro">
                         <div id="error" class="sumir" style="color: red; text-align: center; font-weight: 600;">Dados obrigat&oacute;rios n&atilde;o informados!</div>
-                        <input type="submit" title=" Pesquisar " tabindex="6" class="btn_pesquisar" id="btn_pesquisar" value=" " />
-                        &nbsp;&nbsp;&nbsp;
-                        <input type="reset" title=" Cancelar " tabindex="7" class="btn_limpar" value=" " />
+                        <button type="submit" title=" Pesquisar " tabindex="6" class="btn" id="btn_pesquisar" value=" " >Pesquisar</button>
+                        <button type="reset" title=" Cancelar " tabindex="7" class="btn white black-text" value=" " >Cancelar</button>
                     </td>
                 </tr>
             </table>
