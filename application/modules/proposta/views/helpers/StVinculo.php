@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class Zend_View_Helper_StVinculo
+class Proposta_View_Helper_StVinculo
 {
 	/**
 	 * Método com as cores alternativas das linhas da tabela
@@ -33,6 +33,5 @@ class Zend_View_Helper_StVinculo
                 $return =  "Desvinculado";
             }
             return $return;
-	} // fecha método corLinha()
-
-} // fecha class
+	}
+}
