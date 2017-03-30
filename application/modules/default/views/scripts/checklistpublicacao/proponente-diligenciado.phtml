@@ -123,7 +123,7 @@
                     $icone = $arrPrazo['iconeDiligencia']['icone'];
                     $title = $arrPrazo['iconeDiligencia']['title'];
                 ?>
-                <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto['idpronac'] . '&situacao=D25&tpDiligencia=181';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
+                <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto['idpronac'] . '&situacao=D25&tpDiligencia=181';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
                 <?php echo (!empty($arrPrazo['prazoPadrao']) && $title != "Diligencia respondida") ? $arrPrazo['prazoRespostaCrescente'] ." de ". $arrPrazo['prazoPadrao'] : "";?>
             </td>
             <td>

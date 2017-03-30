@@ -434,19 +434,19 @@
                 <?php if($this->filtro != 'finalizados'){ ?>
                 <td align="center">
                     <?php if($this->filtro == ''){ ?>
-                    <a href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
+                    <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
                         <img width="30px" title="A Diligenciar" src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png">
                     </a>
                     <?php } elseif($this->filtro == 'diligenciados') { ?>
-                    <a href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
+                    <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
                         <img width="30px" title="Diligenciado" src="<?php echo $this->baseUrl(); ?>/public/img/notice.png">
                     </a>
                     <?php } elseif($this->filtro == 'respondidos') { ?>
-                    <a href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
+                    <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
                         <img width="30px" title="Diligência respondida" src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png">
                     </a>
                     <?php } elseif($this->filtro == 'irregulares') { ?>
-                    <a href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
+                    <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'));?>/tipoAnalise/inicial?idPronac=<?php echo ($d->IdPRONAC); ?>&situacao=D25&tpDiligencia=181" target="_blank">
                         <img width="30px" title="A Diligenciar" src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png">
                     </a>
                     <?php } elseif($this->filtro == 'inabilitados') { ?>

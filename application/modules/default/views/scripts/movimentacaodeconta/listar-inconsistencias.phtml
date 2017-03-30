@@ -143,7 +143,7 @@
                     <td align="center"><?php echo!empty($projeto->Agencia) ? $projeto->Agencia : '<em>Não informada</em>'; ?></td>
                     <td align="center"><?php echo!empty($projeto->ContaBloqueada) ? $projeto->ContaBloqueada : '<em>Não informada</em>'; ?></td>
                     <td align="center">
-                        <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')) . '?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183'; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a>
+                        <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')) . '?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183'; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a>
                     </td>
                     <td align="center">
                         <input type="button" url-inconsistencia="<?php echo $inconsistenciaUrl; ?>" class="btn_ver verinconsistencia" />
