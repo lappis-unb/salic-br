@@ -170,7 +170,7 @@
                     <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'plano-de-distribuicao')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Plano de distribui&ccedil;&atilde;o">Plano de distribui&ccedil;&atilde;o</a>
                     <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'planilha-orcamentaria')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Planilha or&ccedil;ament&aacute;ria">Planilha or&ccedil;ament&aacute;ria</a>
                     <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'documentos-anexados')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Documentos anexados">Documentos anexados</a>
-                    <!--<a href='<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?><?php echo $codPronac;?>' target="_blank" title="Ir para Dilig&ecirc;ncias do projeto">Dilig&ecirc;ncias do projeto</a>-->
+                    <!--<a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?><?php echo $codPronac;?>' target="_blank" title="Ir para Dilig&ecirc;ncias do projeto">Dilig&ecirc;ncias do projeto</a>-->
                     <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'diligencias')); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Dilig&ecirc;ncias do projeto">Dilig&ecirc;ncias do projeto</a>
                     <?php if(in_array($this->intFaseProjeto,array('2','3','4'))):?>
                         <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'recurso')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Recursos">Recursos</a>
@@ -200,9 +200,9 @@
                 <!-- ======================= DILIGENCIA ====================== -->
                 <?php if(in_array($this->intFaseProjeto,array('1','2','3'))):?>
                     <?php if (($this->blnProponente) || (in_array($this->intFaseProjeto,array('1')) && $this->respProponente == 'R') || (!in_array($this->intFaseProjeto,array('1')) && $this->respProponente == 'R' && $this->procuracaoValida == 'S') ) { ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')); ?><?php echo $codPronac; ?>">Dilig&ecirc;ncias</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')); ?><?php echo $codPronac; ?>">Dilig&ecirc;ncias</a>
                     <?php } else { ?>
-                        <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?><?php echo $codPronac; ?>">Dilig&ecirc;ncias</a>
+                        <!--<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?><?php echo $codPronac; ?>">Dilig&ecirc;ncias</a>
                         <div class="sanfonaDiv" style="display: none;"></div>-->
                         <a class="no_seta" target="_blank" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem')); ?><?php echo $auxPronac; ?>">Mensagens</a>
                     <?php } ?>
