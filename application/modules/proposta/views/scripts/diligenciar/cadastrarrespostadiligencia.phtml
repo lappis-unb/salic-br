@@ -1,4 +1,4 @@
-<?php $updateDiligenciaHref = $this->url(array('controller' => 'diligenciar', 'action' => 'updatediligencia'));
+<?php $updateDiligenciaHref = $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'updatediligencia'));
     if($this->idPronac)
         echo $this->partial('diligenciar/inc/menu.inc.php', $this); // menu de manter proposta por incentivo fiscal
     if($this->idPreProjeto)
@@ -9,7 +9,7 @@
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
 
 <div id="titulo">
-    <div>Resposta da Dilig&ecirc;ncia <span class="voltar"><a href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaproponente'),'',true); ?>?idPronac=<?php echo $this->idPronac; ?>">Voltar</a></span></div>
+    <div>Resposta da Dilig&ecirc;ncia <span class="voltar"><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente'),'',true); ?>?idPronac=<?php echo $this->idPronac; ?>">Voltar</a></span></div>
 </div>
 
 <form id="cadastro" action="<?php echo $updateDiligenciaHref; ?>" method="post" enctype="multipart/form-data">
@@ -217,7 +217,7 @@
                         iddiligencia = $(".btn_exclusao").attr('diligencia');
                     $.ajax({
                         type: 'POST',
-                        url: '<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'excluirarquivo')); ?>',
+                        url: '<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'excluirarquivo')); ?>',
                         data: {
                             arquivo: idarquivo,
                             diligencia: iddiligencia
@@ -275,7 +275,7 @@
 
 
 <div id="uploadArquivo" class="sumir">
-    <form id="anexarArquivo" action="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia')); ?>" method="post" enctype="multipart/form-data">
+    <form id="anexarArquivo" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia')); ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="idPronac" value="<?php echo $this->idPronac;?>"/>
         <input type="hidden" name="idPreProjeto" value="<?php echo $this->idPreProjeto;?>" />
         <input type="hidden" name="idProduto" value="<?php echo $this->idProduto;?>" />

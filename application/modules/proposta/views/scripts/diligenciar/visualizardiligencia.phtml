@@ -79,7 +79,7 @@
 </div>
 <div id="rodapeConteudo" ><span></span></div>
 <br clear="all" />
-<form id="encaminhar" action="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => $this->retorno)); ?>" method="post">
+<form id="encaminhar" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => $this->retorno)); ?>" method="post">
     <input type="hidden" name="idPronac"        value="<?php echo $this->idPronac;?>"/>
     <input type="hidden" name="idPreProjeto"    value="<?php echo $this->idPreProjeto;?>" />
     <input type="hidden" name="idProduto"       value="<?php echo $this->idProduto;?>" />
@@ -98,7 +98,7 @@
     });
 
     $(".alterar").click(function(){
-        $('#encaminhar').attr('action','<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia')); ?>');
+        $('#encaminhar').attr('action','<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia')); ?>');
         $('#encaminhar').find('#idDiligencia').val($(this).attr('idDiligencia'));
         $('#encaminhar').submit();
     });

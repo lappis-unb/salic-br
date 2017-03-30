@@ -123,7 +123,7 @@
                 <?php $arrPrazo = $this->prazoRespostaDiligencia($dp->IdPRONAC, 171);
                 $icone = $arrPrazo['iconeDiligencia']['icone'];
                 $title = $arrPrazo['iconeDiligencia']['title']; ?>
-                <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $dp->IdPRONAC . '&situacao=E59&tpDiligencia=171';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
+                <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $dp->IdPRONAC . '&situacao=E59&tpDiligencia=171';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
             </td>
             <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $dp->idArquivo; ?>"><?php echo $dp->nmArquivo ?></a></td>
             <td><input type="button" class="btn_avaliar" onclick="window.location = '<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'detalhar', 'prorrogacao' => $dp->idProrrogacao));?>'"/></td>
