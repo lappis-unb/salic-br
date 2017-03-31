@@ -163,28 +163,18 @@ $links[] = array('An&aacute;lise do Produto' => array());
                         </p>
                     </td>
                 </tr>
+	    </table>
+            <table class="tabela" style="width: 95%;">
                 <tr>
                     <td colspan="5">
-                        <b>Enquadramento Favor&aacute;vel? *</b>
+                        <b>Parecer Favor&aacute;vel? *</b>
                         <p style="margin-top: 10px;">
                             <input type="radio" style="margin-right: 5px;" value="1" class="ParecerFavoravel" name="ParecerFavoravel" checked="checked" />Sim &nbsp;&nbsp;
                             <input type="radio" style="margin-right: 5px;" value="0" class="ParecerFavoravel" name="ParecerFavoravel" />N&atilde;o
                         </p>
                     </td>
                 </tr>
-	    </table>
-            <table class="tabela" style="width: 95%;">
-	      <?php if ($this->IN2017): ?>
-                <tr>
-                    <td colspan="5">
-                        <b>A&ccedil;&otilde;es relevantes para o sucesso do projeto*</b>
-                        <p>
-                        <center>
-                            <textarea class="textarea_simples" id="AcoesRelevantes" name="AcoesRelevantes" rows="10" style="width: 98%;"></textarea>
-                        </center>
-                    </td>
-		</tr>
-		<?php endif; ?>
+
                 <tr>
                     <td colspan="5">
                         <b>Justificativa do enquadramento*</b>
@@ -395,6 +385,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                     <input class="obrigatorioRadio" <?php if(count($this->consolidacao) > 0){ echo ($this->consolidacao[0]->ParecerFavoravel == 1) ? 'checked="checked"' : ''; } ?> type="radio" name="parecerProjeto" id="parecerProjeto1" value="1" /> <label for="parecerProjeto1">N&atilde;o</label>
                 </td>
             </tr>
+	    <?php if (!$this->IN2017): ?>
             <tr>
                 <td align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</td>
                 <td valign="top" width="300px">
@@ -445,6 +436,18 @@ $links[] = array('An&aacute;lise do Produto' => array());
                 <td align="left" class="destacar bold">Sugerido</td>
                 <td align="left" colspan="2"><?php echo $this->itens['totalSugerido']; ?></td>
             </tr>
+	    <?php else: ?>
+                <tr>
+                    <td colspan="5">
+                        <b>A&ccedil;&otilde;es relevantes para o sucesso do projeto*</b>
+                        <p>
+                        <center>
+                            <textarea class="textarea_simples" id="AcoesRelevantes" name="AcoesRelevantes" rows="10" style="width: 98%;"></textarea>
+                        </center>
+                    </td>
+		</tr>
+		<?php endif; ?>
+	    
             <tr>
                 <td colspan="3">
                     <textarea cols="80" id="dsConsolidacao" name="dsConsolidacao" rows="10" class="textarea_simples" style="width: 99%"><?php echo isset($this->consolidacao[0]->ResumoParecer) ? $this->consolidacao[0]->ResumoParecer : ''; ?></textarea>
@@ -528,7 +531,9 @@ $links[] = array('An&aacute;lise do Produto' => array());
     }
     function carregarTextAreaCKEditor(){
     CKEDITOR.replace( 'ParecerDeConteudo', { toolbar: [] } );
-    CKEDITOR.replace( 'AcoesRelevantes', { toolbar: [] } );
+	<?php if ($this->IN2017): ?>
+	CKEDITOR.replace( 'AcoesRelevantes', { toolbar: [] } );
+	<?php endif; ?>
         <?php if(($this->stPrincipal == 1) && ($this->produtosSecundariosEmAnalise == 0)){ ?>
         CKEDITOR.replace( 'dsConsolidacao', { toolbar: [] } );
         <?php } ?>
@@ -538,9 +543,10 @@ $links[] = array('An&aacute;lise do Produto' => array());
         
         carregarAnaliseDeConteudo();
         $('#btSalvarAnaliseDeConteudo').click(function(){
-            var parecer = CKEDITOR.instances['ParecerDeConteudo'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-		acoesRelevantes = CKEDITOR.instances['AcoesRelevantes'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
-	    
+            var parecer = CKEDITOR.instances['ParecerDeConteudo'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
+	    <?php if ($this->IN2017): ?>
+	    var acoesRelevantes = CKEDITOR.instances['AcoesRelevantes'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
+	    <?php endif; ?>
             if( parecer.length  < 11){
                 alertar('O parecer t&eacute;cnico deve ter no m�nimo 11 caracter!');
             } else {
