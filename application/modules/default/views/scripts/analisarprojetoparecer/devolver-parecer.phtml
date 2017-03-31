@@ -47,8 +47,8 @@
     <div id="breadcrumb">
         <ul>
           <li><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">In&iacute;cio</a></li>
-	  <li><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>" title="Ir para P&aacute;gina Inicial">Projetos/Produtos para An�lise</a></li>
-	  <li class="last">Concluir Parecer</li>
+	  <li><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>" title="Ir para P&aacute;gina Inicial">Projetos/Produtos para An&aacute;lise</a></li>
+	  <li class="last">Devolver Parecer</li>
         </ul>
     </div>
     <!-- ========== FIM BREADCRUMB (LINKS TOPO)========== -->
@@ -73,7 +73,7 @@
         <?php if ($this->totaldivulgacao != "true") { ?>
             <div class="msgERROR">
                 <div class="float_right"></div>
-                <div>Aten��o! Custo de Divulga��o/Comercializa��o superior a 20% do valor total do projeto. Favor readequar os custos em <b><?php echo $this->formatarReal($this->valorRetirar); ?></b> para finalizar sua an�lise. <br> Favor verificar em todos os produtos que possuem esta etapa!</div>
+                <div>Aten&ccedil;&atilde;o! Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total do projeto. Favor readequar os custos em <b><?php echo $this->formatarReal($this->valorRetirar); ?></b> para finalizar sua an&aacute;lise. <br> Favor verificar em todos os produtos que possuem esta etapa!</div>
             </div>
             <table class="tabela">
 	            <tr>
@@ -105,7 +105,7 @@
             </tr>
         </table>
     
-        <form id="form" name="form" method="post" action="<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'fecharparecer'), '', true); ?>">
+        <form id="form" name="form" method="post" action="<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'devolver-parecer'), '', true); ?>">
                 <table class="tabela">
                     <tr>
                         <th>Observa&ccedil;&atilde;o</th>
@@ -131,7 +131,7 @@
 
         <div class="msgALERT">
 			<div class="float_right"></div>
-			<div>O acerto dos custos administrativos s�o maiores que 15% do valor total do projeto.<br /> Favor ajustar <?php echo $this->formatarReal($this->verifica15porcento); ?>.</div>
+			<div>O acerto dos custos administrativos s&aacute;o maiores que 15% do valor total do projeto.<br /> Favor ajustar <?php echo $this->formatarReal($this->verifica15porcento); ?>.</div>
 		</div>
 		<table class="tabela">
             <tr>

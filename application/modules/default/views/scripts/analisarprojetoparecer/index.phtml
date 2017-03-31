@@ -206,7 +206,7 @@
                 <?php endif; ?>
             </td>
             <td align="center">
-	      <img id="img_encaminhar_parecer834782" style="cursor:pointer; " title="Distribuir Produtos" src="/public/img/table_multiple.png" onclick="redirecionar('<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'devolver-parecer'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>&situacao=<?php echo $d->situacao ;?>')">
+	      <img id="img_encaminhar_parecer834782" style="cursor:pointer; " title="Distribuir Produtos" src="/public/img/table_multiple.png" onclick="redirecionar('<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'devolver-parecer'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>&situacao=<?php echo $d->situacao ;?>&idD=<?php echo $d->idDistribuirParecer; ?>')">
 	    </td>             
         </tr>
         <?php

@@ -1352,38 +1352,37 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
 
             try {
                 $tbDistribuirParecer->getAdapter()->beginTransaction();
-                foreach ($buscaDadosProjeto as $dp):
-                
-                
-                // DEVOLVER PARA O COORDENADOR ( PARECERISTA )
-                
-                $dados = array(
-                    'idOrgao' => $dp->idOrgao,
-                    'DtEnvio' => $dp->DtEnvio,
-                    'idAgenteParecerista' => $dp->idAgenteParecerista,
-                    'DtDistribuicao' => $dp->DtDistribuicao,
-                    'DtDevolucao' => MinC_Db_Expr::date(),
-                    'DtRetorno' => null,
-                    'FecharAnalise' => 0,
-                    'Observacao' => $justificativa,
-                    'idUsuario' => $idusuario,
-                    'idPRONAC' => $dp->IdPRONAC,
-                    'idProduto' => $dp->idProduto,
-                    'TipoAnalise' => $dp->TipoAnalise,
-                    'stEstado' => 0,
-                    'stPrincipal' => $dp->stPrincipal,
-                    'stDiligenciado' => null
-                );
-                
-                $where['idDistribuirParecer = ?'] = $idDistribuirParecer;
-                $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
-                $insere = $tbDistribuirParecer->inserir($dados);
-                
-                endforeach;
+                foreach ($buscaDadosProjeto as $dp) {
+                    
+                    // DEVOLVER PARA O COORDENADOR ( PARECERISTA )
+                    
+                    $dados = array(
+                        'idOrgao' => $dp->idOrgao,
+                        'DtEnvio' => $dp->DtEnvio,
+                        'idAgenteParecerista' => $dp->idAgenteParecerista,
+                        'DtDistribuicao' => $dp->DtDistribuicao,
+                        'DtDevolucao' => MinC_Db_Expr::date(),
+                        'DtRetorno' => null,
+                        'FecharAnalise' => 3,
+                        'Observacao' => $justificativa,
+                        'idUsuario' => $idusuario,
+                        'idPRONAC' => $dp->IdPRONAC,
+                        'idProduto' => $dp->idProduto,
+                        'TipoAnalise' => $dp->TipoAnalise,
+                        'stEstado' => 0,
+                        'stPrincipal' => $dp->stPrincipal,
+                        'stDiligenciado' => null
+                    );
+                    
+                    $where['idDistribuirParecer = ?'] = $idDistribuirParecer;
+                    $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
+                    $insere = $tbDistribuirParecer->inserir($dados);
+                    
+                }
                 
                 $tbDistribuirParecer->getAdapter()->commit();
                 
-                parent::message("An�lise conclu�da com sucesso !", "Analisarprojetoparecer/index", "CONFIRM");
+                parent::message("An&aacute;lise conclu&iacute;da com sucesso !", "Analisarprojetoparecer/index", "CONFIRM");
                 
             } catch (Zend_Db_Exception $e) {
                 
@@ -1396,7 +1395,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         }
 
         $projetos = new Projetos();
-        //$dadosProjetoProduto = $projetos->dadosFechar($this->getIdUsuario, $idPronac, $idDistribuirParecer);
+        
+        $dadosProjetoProduto = $projetos->dadosFechar($this->getIdUsuario, $idPronac, $idDistribuirParecer);
 
         $this->view->dados = $dadosProjetoProduto;
         $this->view->idpronac = $idPronac;        
