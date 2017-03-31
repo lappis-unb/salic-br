@@ -808,6 +808,15 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                 foreach ($resp as $key => $val) {
                     $arrayRetorno[$key] = utf8_encode($val);
                 }
+                $projetos = new Projetos();
+                if ($projetos->verificarIN2017($idPronac)) {
+                    $tbAcaoAlcanceProjeto = new tbAcaoAlcanceProjeto();
+                    $buscarAcaoAlcanceProjeto = $tbAcaoAlcanceProjeto->buscar(array('idPronac = ?' => $idPronac));
+                    if (count($buscarAcaoAlcanceProjeto) > 0) {
+                        $arrayRetorno['AcoesRelevantes'] = $buscarAcaoAlcanceProjeto[0]['dsAcaoAlcanceProduto'];
+                    }                        
+                }
+                
                 echo json_encode($arrayRetorno);
                 break;
 
@@ -866,19 +875,25 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                         $whereB['idProduto = ?'] = $idProduto;
                         $busca = $analisedeConteudoDAO->buscar($whereB);                        
                         $idAnaliseDeConteudo = $busca[0]->idAnaliseDeConteudo;
-                        
-                        $tbAcaoAlcanceProjeto = new tbAcaoAlcanceProjeto();
-                        
+
                         $dadosAlcance = array(
                             'idPronac' => $idPronac,
                             'idParecer' => $idAnaliseDeConteudo,
                             'tpAnalise' => '1',
-                            'dtAnalise' => new Zend_Db_Expr("GETDATE())"),
+                            'dtAnalise' => new Zend_Db_Expr("GETDATE()"),
                             'dsAcaoAlcanceProduto' => $acoesRelevantes,
                             'idUsuario' => $idusuario,
                             'stEstado' => '1',
-                        );
-
+                        );                       
+                        
+                        $tbAcaoAlcanceProjeto = new tbAcaoAlcanceProjeto();
+                        $buscarAcaoAlcanceProjeto = $tbAcaoAlcanceProjeto->buscar(array('idPronac = ?' => $idPronac));
+                        if (count($buscarAcaoAlcanceProjeto) > 0) {
+                            $tbAcaoAlcanceProjeto->update($dadosAlcance, array('idPronac = ?' => $idPronac));
+                        } else {
+                            $tbAcaoAlcanceProjeto->insert($dadosAlcance);
+                        }
+                        
                         // TODO: adicionar IF para UPDATE
                         $tbAcaoAlcanceProjeto->insert($dadosAlcance);
                     }      
