@@ -459,7 +459,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
 
         $this->view->itens = $itensCusto;
         $this->view->stPrincipal = $stPrincipal;
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo', 'Descricao');
         $objSegmentocultural = new Segmentocultural();
         $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($projeto[0]->Area);
         $this->view->valorpossivel = $valorPossivel;
@@ -559,6 +559,16 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $buscaParecer = $parecerDAO->buscarParecer(null, $idPronac);
         $countParecerP = count($buscaParecer);
 
+        
+        $projetos = new Projetos();
+        if ($projetos->verificarIN2017($idPronac)) {
+            $tbAcaoAlcanceProjeto = new tbAcaoAlcanceProjeto();
+            $buscarAcaoAlcanceProjeto = $tbAcaoAlcanceProjeto->buscar(array('idPronac = ?' => $idPronac));
+            if (count($buscarAcaoAlcanceProjeto) > 0) {
+                $this->view->AcoesRelevantes = $buscarAcaoAlcanceProjeto[0]['dsAcaoAlcanceProduto'];
+            }                        
+        }
+        
         /***********************************************************************************/
         $this->view->pscount = $pscount;
         $this->view->countAnalizado = $countAnalizado;
@@ -793,7 +803,6 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $idusuario = $auth->getIdentity()->usu_codigo;
 
         $dsJustificativa = $this->_request->getParam("ParecerDeConteudo");
-        $acoesRelevantes = $this->_request->getParam("AcoesRelevantes");
         $stAcao = $this->_request->getParam("stAcao");
         $idPronac = $this->_request->getParam("idPRONAC");
         $idProduto = $this->_request->getParam("idProduto");
@@ -802,19 +811,10 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         
         switch ($stAcao) {
             case 1: /* CONSULTA */
-
                 $analisedeConteudoDAO = new Analisedeconteudo();
                 $resp = $analisedeConteudoDAO->dadosAnaliseconteudo(false, array('idPRONAC = ?' => $idPronac, 'idProduto = ?' => $idProduto))->current()->toArray();
                 foreach ($resp as $key => $val) {
                     $arrayRetorno[$key] = utf8_encode($val);
-                }
-                $projetos = new Projetos();
-                if ($projetos->verificarIN2017($idPronac)) {
-                    $tbAcaoAlcanceProjeto = new tbAcaoAlcanceProjeto();
-                    $buscarAcaoAlcanceProjeto = $tbAcaoAlcanceProjeto->buscar(array('idPronac = ?' => $idPronac));
-                    if (count($buscarAcaoAlcanceProjeto) > 0) {
-                        $arrayRetorno['AcoesRelevantes'] = $buscarAcaoAlcanceProjeto[0]['dsAcaoAlcanceProduto'];
-                    }                        
                 }
                 
                 echo json_encode($arrayRetorno);
@@ -867,36 +867,6 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                     $where['idPRONAC = ?'] = $idPronac;
                     $where['idProduto = ?'] = $idProduto;
                     $analisedeConteudoDAO->update($dados, $where);
-                    
-                    $projetos = new Projetos();
-                    if ($projetos->verificarIN2017($idPronac)) {
-
-                        $whereB['idPronac  = ?'] = $idPronac;
-                        $whereB['idProduto = ?'] = $idProduto;
-                        $busca = $analisedeConteudoDAO->buscar($whereB);                        
-                        $idAnaliseDeConteudo = $busca[0]->idAnaliseDeConteudo;
-
-                        $dadosAlcance = array(
-                            'idPronac' => $idPronac,
-                            'idParecer' => $idAnaliseDeConteudo,
-                            'tpAnalise' => '1',
-                            'dtAnalise' => new Zend_Db_Expr("GETDATE()"),
-                            'dsAcaoAlcanceProduto' => $acoesRelevantes,
-                            'idUsuario' => $idusuario,
-                            'stEstado' => '1',
-                        );                       
-                        
-                        $tbAcaoAlcanceProjeto = new tbAcaoAlcanceProjeto();
-                        $buscarAcaoAlcanceProjeto = $tbAcaoAlcanceProjeto->buscar(array('idPronac = ?' => $idPronac));
-                        if (count($buscarAcaoAlcanceProjeto) > 0) {
-                            $tbAcaoAlcanceProjeto->update($dadosAlcance, array('idPronac = ?' => $idPronac));
-                        } else {
-                            $tbAcaoAlcanceProjeto->insert($dadosAlcance);
-                        }
-                        
-                        // TODO: adicionar IF para UPDATE
-                        $tbAcaoAlcanceProjeto->insert($dadosAlcance);
-                    }      
                     
                     parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "Analisarprojetoparecer/produto/?idPronac={$idPronac}&idProduto={$idProduto}&stPrincipal={$stPrincipal}&idD={$idD}", "CONFIRM");
                 } catch (Exception $e) {
@@ -1250,8 +1220,14 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $sugeridoReal = Mascara::delMaskMoeda($this->_request->getParam('sugeridoReal'));
         $sugeridoReal = str_replace("R$", "", $sugeridoReal);
 
+        $projetos = new Projetos();
+        if ($projetos->verificarIN2017($idPronac)) {
+            $acoesRelevantes = $this->_request->getParam("AcoesRelevantes");
+        }
+        
         $pa = new paChecarLimitesOrcamentario();
         $resultadoCheckList = $pa->exec($idPronac, 2);
+        
         $i = 0;
         foreach ($resultadoCheckList as $resultado) {
             if ($resultado->Observacao == 'PENDENTE') {
@@ -1272,7 +1248,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                     $where['IdPRONAC = ?'] = $idPronac;
                     $alteraProjeto = $projetoDAO->update($dadosProjeto, $where);
                 }
-
+                
                 /** Gravando as informa��es do enquadramento do Projeto ***************************************/
                 $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
                 $dadosEnquadramento = array(
@@ -1284,17 +1260,18 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                     'Observacao' => '',
                     'Logon' => $idusuario
                 );
+                
                 $whereBuscarDados = array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $anoProjeto, 'Sequencial = ?' => $sequencial);
                 $buscarEnquadramento = $enquadramentoDAO->buscar($whereBuscarDados);
                 if (count($buscarEnquadramento) > 0) {
                     $buscarEnquadramento = $buscarEnquadramento->current();
-                    $whereUpdate = 'IdEnquadramento = ' . $buscarEnquadramento->IdEnquadramento;
+                    $whereUpdate = 'idEnquadramento = ' . $buscarEnquadramento->IdEnquadramento;
                     $alteraEnquadramento = $enquadramentoDAO->alterar($dadosEnquadramento, $whereUpdate);
                 } else {
                     $insereEnquadramento = $enquadramentoDAO->inserir($dadosEnquadramento);
                 }
                 $buscaEnquadramento = $enquadramentoDAO->buscarDados($idPronac, null, false);
-
+                
                 $parecerDAO = new Parecer();
                 $dadosParecer = array(
                     'idPRONAC' => $idPronac,
@@ -1321,6 +1298,41 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                 } else {
                     $insereParecer = $parecerDAO->inserir($dadosParecer);
                 }
+
+                // NOVA IN 2017 -> grava campos adicionais
+                $projetos = new Projetos();
+                if ($projetos->verificarIN2017($idPronac)) {
+                    
+                    $whereB['idPronac  = ?'] = $idPronac;
+                    $whereB['idProduto = ?'] = $idProduto;
+
+                    $analisedeConteudoDAO = new Analisedeconteudo();
+                    $busca = $analisedeConteudoDAO->buscar($whereB);                        
+                    $idAnaliseDeConteudo = $busca[0]->idAnaliseDeConteudo;
+                    
+                    $dadosAlcance = array(
+                        'idPronac' => $idPronac,
+                        'idParecer' => $idAnaliseDeConteudo,
+                        'tpAnalise' => '1',
+                        'dtAnalise' => new Zend_Db_Expr("GETDATE()"),
+                        'dsAcaoAlcanceProduto' => $acoesRelevantes,
+                        'idUsuario' => $idusuario,
+                        'stEstado' => '1',
+                    );
+                    
+                    $tbAcaoAlcanceProjeto = new tbAcaoAlcanceProjeto();
+                    $buscarAcaoAlcanceProjeto = $tbAcaoAlcanceProjeto->buscar(array('idPronac = ?' => $idPronac));
+                    if (count($buscarAcaoAlcanceProjeto) > 0) {
+                        $tbAcaoAlcanceProjeto->update($dadosAlcance, array('idPronac = ?' => $idPronac));
+                    } else {
+                        $tbAcaoAlcanceProjeto->insert($dadosAlcance);
+                    }
+                    
+                    $tbAcaoAlcanceProjeto->insert($dadosAlcance);
+                }      
+                    
+
+                
                 parent::message("Projeto consolidado com sucesso.", "Analisarprojetoparecer/produto?idPronac=" . $idPronac . "&idProduto=" . $idProduto . "&stPrincipal=" . $stPrincipal, "CONFIRM");
             } catch (Exception $e) {
                 parent::message("Error: " . $e->getMessage(), "Analisarprojetoparecer/produto?idPronac=" . $idPronac . "&idProduto=" . $idProduto . "&stPrincipal=" . $stPrincipal, "ERROR");
