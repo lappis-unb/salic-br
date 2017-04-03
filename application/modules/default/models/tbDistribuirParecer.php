@@ -147,6 +147,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             "DtRetorno",
             "stPrincipal",
             "DtDistribuicao",
+            "DtDevolucao",
             "CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT",
             "CAST(Observacao AS TEXT) AS Observacao",
             "SAC.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",

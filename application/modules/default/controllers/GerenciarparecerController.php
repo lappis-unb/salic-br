@@ -251,8 +251,9 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
             }
 
             $Pareceres['pareceres'][$cont]['Nome do Produto'] = "$val->dsProduto";
-            $Pareceres['pareceres'][$cont]['Unidade Respons�vel'] = "$val->Unidade";
-            $Pareceres['pareceres'][$cont]['Data'] = date('d/m/Y', strtotime($val->DtDistribuicao));
+            $Pareceres['pareceres'][$cont]['Unidade Respons&aacute;vel'] = "$val->Unidade";
+            $Pareceres['pareceres'][$cont]['Data Distribui&ccedil;&atilde;o'] = date('d/m/Y', strtotime($val->DtDistribuicao));
+            $Pareceres['pareceres'][$cont]['Data Devolu&ccedil;&atilde;o'] = ($val->DtDevolucao) ? date('d/m/Y', strtotime($val->DtDevolucao)) : null;
             $Pareceres['pareceres'][$cont]['Observa&ccedil;&otilde;es'] = $val->Observacao;
             $Pareceres['pareceres'][$cont]['Nome do Remetente'] = $val->nmUsuario;
             $Pareceres['pareceres'][$cont]['Nome do Parecerista'] = $val->nmParecerista;
