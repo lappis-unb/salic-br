@@ -14,19 +14,18 @@ Inside DockerFile:
 * The command 'docker-php-ext-configure' will be used to set the location path to each module configurations.
 * The command 'docker-php-ext-install' will be used to install and recompile PHP with setted modules. 
 
-
 ## How to build - New image
 * Enter inside this cloned repository;
 * Execute the commando below to create a new image.
 ```
-docker build -t salic-br:1.0 .
+docker build -t culturagovbr/salic-br:1.0 .
 ```
 
-This code `-t salic-br:1.0` means you will create a image named 'salic-br' and tag '1.0' and the `.` means your build will use the same folder.
+This code `-t culturagovbr/salic-br:1.0` means you will create a image named 'salic-br' and tag '1.0' and the `.` means your build will use the same folder.
 
 You can execute the command below to create a new container using this new image created. Note: `$(pwd)` means your current directory. You can also change it, if you want.
 ```
-docker run -it -v $(pwd):/var/www --name salic-brv1.0 -e APPLICATION_ENV="development" -p 80:80 -p 9000:9000 salic-br:1.0
+docker run -it -v $(pwd):/var/www --name salic-brv1.0 -e APPLICATION_ENV="development" -p 80:80 -p 9000:9000 culturagovbr/salic-br:1.0
 ```
 
 Or You you can also execute the same command above, but arranging using docker-compose:
