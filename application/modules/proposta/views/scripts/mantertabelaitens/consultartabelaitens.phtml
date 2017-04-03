@@ -1,16 +1,13 @@
 <div class="container-fluid">
-
     <div class="row">
-
         <?php echo $this->partial("inc/menu.phtml", $this); ?>
-
         <div class="content col s10 m12 l10 planilha-produtos">
             <?php
-                    $links = array(
-                        $this->layout['listagem'],
-                        array('Tabelas de Itens' => array())
-                    );
-            gerarBreadCrumb($links);
+                $links = array(
+                    $this->layout['listagem'],
+                    array('Tabelas de Itens' => array())
+                );
+                gerarBreadCrumb($links);
             ?>
             <!-- ========== INICIO TITULO ========== -->
             <div id="titulo">
@@ -60,10 +57,9 @@
                         </tr>
                         <tr  class="centro">
                             <td colspan="3" class="centro">
-                                <input type="submit" title=" Pesquisar " class="btn_pesquisar" value=" " />
-                                &nbsp;
-                                <input type="button" name="novo" class="btn_novo" value="" onclick="window.location='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'solicitaritens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>'">&nbsp;
-                                <input type="reset" title=" Cancelar " class="btn_limpar" value=" " />
+                                <button type="submit" title=" Pesquisar " class="btn" value=" " >pesquisar</button>
+                                <button type="button" name="novo" class="btn" value="" onclick="window.location='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'solicitaritens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>'">novo</button>
+                                <button type="reset" title=" Cancelar " class="btn white black-text" value=" ">cancelar</button>
                             </td>
                         </tr>
                     </table>
