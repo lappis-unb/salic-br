@@ -26,11 +26,9 @@ class paTransformarPropostaEmProjeto extends MinC_Db_Table_Abstract {
     #public function execSP($idProposta, $CNPJCPF, $idOrgao, $idUsuario){
     public function execSP($idProposta, $CNPJCPF, $idOrgao, $idUsuario, $nrProcesso){
         try{
-        #$rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario;
-        $rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario.',"'. $nrProcesso . '"';
-        #xd( $rodar);
-
-        return  $this->getAdapter()->query($rodar);
+            $rodar = "exec " . $this->_banco .".". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario.',"'. $nrProcesso . '"';
+            
+            return  $this->getAdapter()->query($rodar);
         }
         catch(Zend_Exception $e){
             return $e->getMessage();

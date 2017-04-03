@@ -27,7 +27,7 @@ class spValidarDepositoIdentificado extends MinC_Db_Table_Abstract {
     public function verificarInconsistencias($idUsuarioLogado) {
         try {
             // executa a sp
-            $executar = "EXEC " . $this->_banco . "." . $this->_schema . "." . $this->_name . " ".$idUsuarioLogado;
+            $executar = "EXEC " . $this->_banco . "." . $this->_name . " ".$idUsuarioLogado;
             return $this->getAdapter()->query($executar);
         }
         catch (Zend_Exception $e) {
