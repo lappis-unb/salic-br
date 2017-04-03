@@ -82,7 +82,6 @@ private $intTamPag = 10;
     {
         if ( isset ($_POST['alterar'] )  )
         {
-
             $cpf = Mascara::delMaskCPF($_POST['cpf']);
             $nome = $_POST['nome'];
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
@@ -166,7 +165,9 @@ private $intTamPag = 10;
                 $usuarioResultado = $usuariosBuscar->toArray();
                 $usuarioResultado["usu_nome"] = utf8_decode(htmlentities($usuarioResultado["usu_nome"]));
                 $mesclagem = array_merge($usuarioResultado, $internetBuscar[0]);
-                $json = json_encode($mesclagem);
+                $utf8Array = (array_map('utf8_encode', $mesclagem));
+
+                $json = json_encode($utf8Array);
             }
             echo $json;
             $this->_helper->viewRenderer->setNoRender(TRUE);
