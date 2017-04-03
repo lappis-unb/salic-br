@@ -6,7 +6,7 @@ For this repo will be used a Postgres driver
 ## Prerequisites
 * Docker - More information [here](http://pt.slideshare.net/vinnyfs89/docker-essa-baleia-vai-te-conquistar?qid=aed7b752-f313-4515-badd-f3bf811c8a35&v=&b=&from_search=1).
 
-## Datails
+## Details
 
 For Each extension installed inside DockerFile, PHP will be compiled again.
 
