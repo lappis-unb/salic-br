@@ -142,7 +142,7 @@
             }
             //$("#spanDtFinal").toggle();
         });
-        
+
         $('#uf').change(function(){
             if($(this).val() == 0){
                 $("#municipio").find('option').remove();
@@ -176,7 +176,7 @@
     		{
     			mascara(this, format_data); // data
     		});
-    		
+
             $.datepicker.regional['pt-BR'] = {
                 closeText: 'Fechar',
                 prevText: '&#x3c;Anterior',
@@ -199,8 +199,6 @@
     });
 
 </script>
-
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">In&iacute;cio</a></li>
@@ -208,14 +206,9 @@
         <li class="last">Projeto</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-<!-- ========== IN�CIO T�TULO ========== -->
 <div id="titulo">
     <div>Consulta de projeto cultural<span class="voltar"><a href="javascript:voltar()">Voltar</a></span></div>
 </div>
-<!-- ========== FIM T�TULO ========== -->
-
 <div id="conteudo" align="center">
     <form action="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')); ?>" method="get" name="frmRelatorio" id="frmRelatorio">
         <table class="tabela">
@@ -301,18 +294,18 @@
                     <td align="left" colspan="2">
                         <select style="width: 200px;" class="select_simples cmpDesabilitar" name="mecanismo" id="mecanismo">
                             <option value="">- Selecione -</option>
-                            <?php 
-                            foreach($this->mecanismos as $item): 
+                            <?php
+                            foreach($this->mecanismos as $item):
                                     if($item->Descricao == 'Mecenato'){
                             ?>
-                                    <option value="<?php echo $item->Codigo ?>">Incentivo Fiscal Federal</option>	
-                            <?php 
+                                    <option value="<?php echo $item->Codigo ?>">Incentivo Fiscal Federal</option>
+                            <?php
                                     }else{
-                            ?>                                
+                            ?>
                             <option value="<?php echo $item->Codigo ?>"><?php echo $item->Descricao ?></option>
-                            <?php 
-                                    } 
-                            endforeach; 
+                            <?php
+                                    }
+                            endforeach;
                             ?>
                         </select>
                     </td>
@@ -329,7 +322,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="120" class="destacar bold">Munic�pio</td>
+                    <td width="120" class="destacar bold">Munic&iacute;pio</td>
                     <td align="left" colspan="2">
                         <select name="municipio" id="municipio" style="width: 200px;" class="select_simples cmpDesabilitar">
                             <option value="">- Selecione -</option>
@@ -426,7 +419,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="120" class="destacar bold">Per�odo de Execu&ccedil;&atilde;o</td>
+                    <td width="120" class="destacar bold">Pero&iacute;do de Execu&ccedil;&atilde;o</td>
                     <td align="left" colspan="2">
                         <span id="camposDtInicioExec">
                             <input name="dtInicioExec" id="dtInicioExec" value="" maxlength="10" class="input_simples btn_calendario cmpData" />
@@ -467,19 +460,12 @@
         <table class="tabela">
             <tr>
                 <td align="center">
-                    <input type="button" class="btn_pesquisar" id="btn_pesquisar"/>
-                    <input type="reset" class="btn_limpar" id="btn_limpar" value=""/>
+                    <button type="button" class="btn" id="btn_pesquisar"/>pesquisar</button>
+                    <button type="reset" class="btn white black-text" id="btn_limpar" value="">limpar</button>
                 </td>
             </tr>
         </table>
     </form>
-
 </div>
-<!-- ========== FIM CONTE�DO ========== -->
-
-
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
-
 <br clear="all" />
