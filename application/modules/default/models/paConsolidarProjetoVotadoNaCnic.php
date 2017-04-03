@@ -26,7 +26,7 @@ class paConsolidarProjetoVotadoNaCnic extends MinC_Db_Table_Abstract {
     {
         try {
             if(!empty($idPronac) && !empty($idNrReuniao) && !empty($tpResultadoVotacao) && !empty($resultadoVotacao) && !empty($dsParecerConsolidado) && !empty($situacao)){
-                $sql = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . (int)$idPronac .",". (int)$idNrReuniao .",". "'".$nrReuniao."'" .",". (int)$tpResultadoVotacao .",". "'".$resultadoVotacao."'" .",". "'".$dsParecerConsolidado."'" .",". (int)$blnReadequacao .",". "'".$situacao."'".",". "'".$tpConsolidacaoVotacao."'".",". "'".$idTipoReadequacao."'";
+                $sql = "exec " . $this->_banco .".". $this->_name . ' ' . (int)$idPronac .",". (int)$idNrReuniao .",". "'".$nrReuniao."'" .",". (int)$tpResultadoVotacao .",". "'".$resultadoVotacao."'" .",". "'".$dsParecerConsolidado."'" .",". (int)$blnReadequacao .",". "'".$situacao."'".",". "'".$tpConsolidacaoVotacao."'".",". "'".$idTipoReadequacao."'";
                 //return  $this->getAdapter()->query($sql);
                 //xd($sql);
                 $db = Zend_Db_Table::getDefaultAdapter();
