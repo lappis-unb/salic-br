@@ -1856,6 +1856,35 @@ public function analisePorParecerista($where){
 			    );
 		$from = 'FROM sac.dbo.vwPainelCoordenadorVinculadasReanalisar';
                 break;
+
+        case 'impedimento_parecerista':
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorImpedimentoParecerista'),
+			    array(
+                    'IdPRONAC',
+                    'NrProjeto',
+                    'NomeProjeto',
+                    'idProduto',
+                    'Produto',
+                    'idArea',
+                    'Area',
+                    'idSegmento',
+                    'Segmento',
+                    'idDistribuirParecer',
+                    'idOrgao',
+                    'idAgenteParecerista',
+                    'Parecerista',
+                    'DtEnvioMincVinculada',
+                    'DtDistribuicao',
+                    'DtDevolucao',
+                    'JustParecerista',
+                    'Valor',
+                    'stPrincipal',
+                    'FecharAnalise'
+                    )
+			    );
+		$from = 'FROM dbo.vwPainelCoordenadorImpedimentoParecerista';
+                break;            
 	}
 
 	// se for totalizador
