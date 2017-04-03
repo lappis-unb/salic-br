@@ -3876,7 +3876,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->limit($tamanho, $tmpInicio);
         }
 
-//        xd($slct->assemble());
+        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
