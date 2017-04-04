@@ -838,8 +838,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                         $busca = $analisedeConteudoDAO->buscar($whereB);
 
                         if ($busca[0]->ParecerFavoravel == 0) {
-                            $copiaPlanilha = new Proposta_Model_DbTable_PlanilhaProposta;
-                            $copiaPlanilha->parecerFavoravel($idPronac, $idProduto); // TODO: método quebrado
+                            $copiaPlanilha = PlanilhaPropostaDAO::parecerFavoravel($idPronac, $idProduto);                            
                         }
                     }
                     
@@ -887,8 +886,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                         }
                     } else {
                         if ($busca[0]->ParecerFavoravel == 0) {
-                            $copiaPlanilha = new Proposta_Model_DbTable_PlanilhaProposta;
-                            $copiaPlanilha->parecerFavoravel($idPronac, $idProduto);
+                            $copiaPlanilha = PlanilhaPropostaDAO::parecerFavoravel($idPronac, $idProduto);
                         }
                     }
 
