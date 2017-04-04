@@ -6,11 +6,14 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
     public function init()
     {
+
+
         parent::init();
     }
 
     public function indexAction()
     {
+
         Zend_Layout::startMvc(array('layout' => 'open'));
         $oauthConfigArray = Zend_Registry::get("config")->toArray();
         $this->view->habilitarServicoLoginCidadao = false;
