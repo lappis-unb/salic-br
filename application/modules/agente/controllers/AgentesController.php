@@ -551,7 +551,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 ($this->GrupoAtivoSalic != 93) &&
                 ($this->GrupoAtivoSalic != 120) &&
                 ($this->GrupoAtivoSalic != 94)) {
-            parent::message("Você não tem permissão para essa funcionalidade!", "agente/agentes/sempermissao", "ALERT");
+            parent::message("Você n&atilde;o tem permiss&atilde;o para essa funcionalidade!", "agente/agentes/sempermissao", "ALERT");
         }
 
         $idAgente = $this->_request->getParam("id");
@@ -621,7 +621,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $this->view->dadosD = $dados;
 
             if (!$dados) {
-                parent::message("Agente não encontrado!", "agente/agentes/buscaragente", "ALERT");
+                parent::message("Agente n&atilde;o encontrado!", "agente/agentes/buscaragente", "ALERT");
             }
 
             $this->view->telefonesD = Agente_Model_ManterAgentesDAO::buscarFones($idDirigente);
@@ -678,7 +678,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $buscarMandato = $tbDirigenteMandato->mandatoRepetido($idAgente, $dtInicioVigencia, $dtTerminoVigencia);
 
             if (count($buscarMandato) > 0) {
-                parent::message("Não poderá inserir um novo mandato, pois já existe um mandato em vigor para esse dirigente!mandatos", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
+                parent::message("N&atilde;o poderá inserir um novo mandato, pois já existe um mandato em vigor para esse dirigente!mandatos", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
             }
 
             if(count($_FILES) > 0) {
@@ -775,7 +775,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $whereMandato['idAgentexVerificacao = ?'] = $idMandato;
             $tbDirigenteMandato->alterar($arrayMandato, $whereMandato);
 
-            parent::message("Exclusão realizada com sucesso!", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao excluir o mandato:" . $e->getMessage(), "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
         }
@@ -895,7 +895,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             parent::message("Cadastro realizado com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao salvar o endere&ccedil;o: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1424,8 +1424,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             // Alterar o ultimo registro cadastrado colocando o seu próprio id no campo idalteracao
             $altera = $tbAusencia->alteraAusencia($dados, $ultimoRegistro[0]->id);
 
-            parent::message("Suas férias foram agendas para " . $dtInicio . " à " . $dtFim . ". Aguarde Aprovação do Coordenador.
-							<br /> Caso não tenha resposta favor entre em contato com o mesmo!", "agente/agentes/ferias/id/" . $idAgente, "CONFIRM");
+            parent::message("Suas férias foram agendas para " . $dtInicio . " à " . $dtFim . ". Aguarde Aprova&ccedil;&atilde;o do Coordenador.
+							<br /> Caso n&atilde;o tenha resposta favor entre em contato com o mesmo!", "agente/agentes/ferias/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Error! " . $e->getMessage(), "agente/agentes/ferias/id/" . $idAgente, "ERROR");
         }
@@ -1470,7 +1470,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
                 if (count($repetida) > 0) {
-                    parent::message("Já existe férias marcada dentro desse período!", "agente/agentes/ferias/id/" . $idAgente, "ALERT");
+                    parent::message("Já existe férias marcada dentro desse per&iacute;odo!", "agente/agentes/ferias/id/" . $idAgente, "ALERT");
                 }
 
 
@@ -1494,7 +1494,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $insere = $tbAusencia->inserirAusencia($dados);
             }
 
-            parent::message("Alteração realizada com sucesso!", "agente/agentes/ferias/id/" . $idAgente, "CONFIRM");
+            parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "agente/agentes/ferias/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/ferias/id/" . $idAgente, "ERROR");
         }
@@ -1522,7 +1522,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             );
 
             $altera = $tbAusencia->alteraAusencia($dados, $idferias);
-            parent::message("Exclusão realizada com sucesso!", "agente/agentes/painelferias", "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "agente/agentes/painelferias", "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/painelferias", "ERROR");
         }
@@ -1698,7 +1698,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
 
         if (($this->GrupoAtivoSalic != 137) || ($this->getParecerista != 'sim')) {
-            parent::message("Você não tem permissão para essa funcionalidade!", "agente/agentes/sempermissao", "ALERT");
+            parent::message("Você n&atilde;o tem permiss&atilde;o para essa funcionalidade!", "agente/agentes/sempermissao", "ALERT");
         }
 
         $idAgente = $this->_request->getParam("id");
@@ -1925,7 +1925,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
-                parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
+                parent::message("Erro ao salvar a vis&atilde;o: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
             // ================================================ FIM SALVAR visao ======================================================
             // ===================== INICIO SALVAR TITULACAO (area/SEGMENTO DO COMPONENTE DA COMISSAO) ================================
@@ -1999,7 +1999,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $enderecoDAO = new Agente_Model_EnderecoNacionalDAO();
             $insere = $enderecoDAO->inserir($arrayEnderecos);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
+            parent::message("Erro ao salvar o endere&ccedil;o: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
         // ============================================= FIM SALVAR ENDERECOS ====================================================
         // =========================================== INICIO SALVAR TELEFONES ====================================================
@@ -2080,17 +2080,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             endif;
         }
         //================ FIM VINCULA O RESPONSAVEL COM O PROPONENTE CADASTRADO ========================
-    	if (isset($acao) && $acao != '') {
-    		// Retorna para o listar propostas
-    		$tbVinculo = new Agente_Model_DbTable_TbVinculo();
-    		$dadosVinculo = array(
-    				'idAgenteProponente' => $idAgente,
-    				'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
-    				'siVinculo' => 0,
-    				'idUsuarioResponsavel' => $arrAuth->getIdentity()->IdUsuario
-    		);
-    		$tbVinculo->inserir($dadosVinculo);
-    	}
+    if (isset($acao) && $acao != '') {
+        // Retorna para o listar propostas
+        $tbVinculo = new Agente_Model_DbTable_TbVinculo();
+        $dadosVinculo = array(
+                'idAgenteProponente' => $idAgente,
+                'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
+                'siVinculo' => 0,
+                'idUsuarioResponsavel' => $arrAuth['IdUsuario']
+        );
+        $tbVinculo->inserir($dadosVinculo);
+    }
 
         // Se vim do UC 10 - solicitar alteracao no Projeto
         // Chega aqui com o idpronac
@@ -2178,7 +2178,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             parent::message("Cadastro realizado com sucesso.", "cadastrarprojeto", "CONFIRM");
         } else if (($acao != '')) {
             parent::message(
-                'Proponente cadastrado com sucesso. Uma solicitação de vínculo foi enviada a ele.',
+                'Proponente cadastrado com sucesso. Uma solicita&ccedil;&atilde;o de v&iacute;nculo foi enviada a ele.',
                 'proposta/manterpropostaincentivofiscal/listarproposta',
                 'CONFIRM'
             );
@@ -2276,7 +2276,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
-                parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+                parent::message("Erro ao salvar a vis&atilde;o: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
             }
 
 
@@ -2355,7 +2355,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+            parent::message("Erro ao salvar o endere&ccedil;o: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
 
 
@@ -2532,7 +2532,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             try {
                 // validacao dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigatórios não informados:<br /><br />é necessário informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigatórios n&atilde;o informados:<br /><br />é necessário informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) { // valida cnpj/cpf
                     throw new Exception("O CPF/CNPJ informado é inválido!");
                 } else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) { // valida cpf
@@ -2571,7 +2571,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         if (!$buscar) {
             // redireciona para a pagina de cadastro de agentes, e, exibe uma notificacao relativa ao cadastro
-            parent::message("Agente não cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            parent::message("Agente n&atilde;o cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
             // ========== INICIO PAGINACAO ==========
             // criando a paginacao
@@ -2614,7 +2614,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         // erro ao abrir o arquivo
         if (!$resultado) {
-            $this->view->message = 'Não foi possível abrir o arquivo!';
+            $this->view->message = 'N&atilde;o foi poss&iacute;vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
             // le os cabecalhos formatado
@@ -2885,7 +2885,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             parent::message("Dados $msg com sucesso!", "agente/agentes/info-adicionais/id/" . $post->agente, "CONFIRM");
 
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operação!", "agente/agentes/info-adicionais/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a opera&ccedil;&atilde;o!", "agente/agentes/info-adicionais/id/" . $post->agente, "ERROR");
         }
     }
 
@@ -2951,7 +2951,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
             parent::message("Dados $msg com sucesso!", "agente/agentes/natureza/id/" . $post->agente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operação!", "agente/agentes/natureza/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a opera&ccedil;&atilde;o!", "agente/agentes/natureza/id/" . $post->agente, "ERROR");
         }
     }
 
@@ -3003,7 +3003,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
             parent::message("Dados $msg com sucesso!", "agente/agentes/area-cultural/id/" . $post->agente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operação!", "agente/agentes/area-cultural/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a opera&ccedil;&atilde;o!", "agente/agentes/area-cultural/id/" . $post->agente, "ERROR");
         }
     }
 }
