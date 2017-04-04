@@ -465,6 +465,11 @@ abstract class Zend_Db_Adapter_Abstract
             $bind = array($bind);
         }
 
+        $db = Zend_Db_Table::getDefaultAdapter();
+        if (! $db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            $sql = str_ireplace('.dbo', '', $sql);
+        }
+
         // prepare and execute the statement with profiling
         $stmt = $this->prepare($sql);
 
