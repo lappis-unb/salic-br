@@ -1147,9 +1147,13 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         }
 
         $projetos = new Projetos();
-        $dadosProjetoProduto = $projetos->dadosFechar($this->getIdUsuario, $idPronac, $idDistribuirParecer);
+        $dadosProjeto = $projetos->assinarParecer($idPronac);
 
-        $this->view->dados = $dadosProjetoProduto;
+        $this->view->dadosEnquadramento = $dadosProjeto['enquadramento'];
+        $this->view->dadosProdutos = $dadosProjeto['produtos'];
+        
+        $this->view->dados = $dadosProjeto;
+        
         $this->view->idpronac = $idPronac;
     }
 
