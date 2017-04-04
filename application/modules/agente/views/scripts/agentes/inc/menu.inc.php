@@ -45,7 +45,6 @@
             <div id="menuContexto">
                 <div class="top"></div>
                 <div id="qm0" class="qmmc">
-                        <?php var_dump( $this->grupoativo, $this->parecerista) ?>
                     <!-- Se for Parecerista, Coordenador de PRONAC ou Gestor Salic -->
                     <?php if(($this->grupoativo == "1111") or ($this->grupoativo == "144") or ($this->grupoativo == "122") or
                             ($this->grupoativo == "120") or ($this->grupoativo == "97")){ ?>
