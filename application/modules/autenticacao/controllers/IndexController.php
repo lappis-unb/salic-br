@@ -499,8 +499,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         parent::perfil(0);
         // autenticacao proponente (Novo Salic)
 
-        /* ========== INICIO ID DO USUARIO LOGADO ========== */
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $auth = Zend_Auth::getInstance();
         $Usuario = new Autenticacao_Model_Usuario();
 
         // verifica se o usuario logado e agente
@@ -550,10 +549,10 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $senhaAtualBanco = $buscarSenha[0]['usu_senha'];
 
             $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
-            $SenhaFinal = $comparaSenha[0]->senha;
+            $SenhaFinal = $comparaSenha;
 
             $comparaSenhaNova = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaNova);
-            $senhaNovaCript = $comparaSenhaNova[0]->senha;
+            $senhaNovaCript = $comparaSenhaNova;
 
             if (trim($senhaAtualBanco) != trim($SenhaFinal)) {
                 parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenhausuario?idUsuario=$idUsuario", "ALERT");

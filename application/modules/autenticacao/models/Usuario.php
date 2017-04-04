@@ -392,16 +392,14 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
      */
     public function alterarSenhaSalic($cpf, $password)
     {
-
-//        $db = Zend_Registry:: get('db');
-//        agentes.usuarios
-//        Agentes.dbo.usuarios
-        parent::name('ausuarios', 'agentes');
-        $this->_db->beginTransaction();
+        $cpf= trim($cpf);
+        $password = trim($password);
+        //parent::name('ausuarios', 'agentes');
+        //$this->_db->beginTransaction();
         try {
-            $db = Zend_Registry:: get('db');
+            $db = Zend_DB_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-            $sql = "UPDATE postgres.agentes.usuarios
+            $sql = "UPDATE tabelas.dbo.usuarios
                         SET usu_senha = Tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),
                             usu_data_validade = getdate()+usu_duracao_senha,
                             usu_seguranca = Tabelas.dbo.fnSegurancaUsuarios
