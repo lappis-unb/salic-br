@@ -546,9 +546,6 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
         $buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
 
         $error = '';
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-        $db->beginTransaction();
         $projetos = new Projetos();
 
         try {
@@ -558,12 +555,12 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
                 // invalida e redistribui
 
                 // se forem validados ou em valida��o, zera fecharAnalise
-                if ($tipoFiltro == 'devolvida' || $tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao') {
+                if ($tipoFiltro == 'devolvida' || $tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao' || $tipoFiltro == 'impedimento_parecerista') {
                     $dp->FecharAnalise = 0;
                 } else {
                     $dp->FecharAnalise;
                 }
-
+                
                 if ($tipoescolha == 2) {
                     // ALTERAR UNIDADE DE AN�LISE ( COORDENADOR DE PARECER )
 
@@ -615,21 +612,18 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
                         'stPrincipal' => $dp->stPrincipal,
                         'stDiligenciado' => null
                     );
-
+                    
                     $where['idDistribuirParecer = ?'] = $idDistribuirParecer;
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
-
                     $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Produto <strong>' . $dp->Produto . '</strong> encaminhado ao perito para an�lise t�cnica e emiss�o de parecer.');
 
                     parent::message("Distribui��o Realizada com sucesso!  ", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
             }
-            $db->commit();
 
         } catch (Zend_Exception $ex) {
-            $db->rollBack();
             parent::message("Error" . $ex->getMessage(), "gerenciarparecer/encaminhar/idpronac/" . $idPronac . "/tipoFiltro/" . $tipoFiltro . "/idproduto/" . $idProduto, "ERROR");
         }
 
