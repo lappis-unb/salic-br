@@ -52,7 +52,7 @@ private $intTamPag = 10;
                 $mens 		.= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
-                parent::message("A senha gerada é <b>".$senhaFormatada."</b> encaminhe ao proponente.", "/principal", "ALERT");
+                parent::message("A senha gerada &eacute; <b>".$senhaFormatada."</b> encaminhe ao proponente.", "/principal", "ALERT");
             }
         }
 
@@ -112,7 +112,7 @@ private $intTamPag = 10;
                 $mens 		.= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
                 $mens 		.= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
-                parent::message("A senha gerada é <b>".$senha."</b> encaminhe ao usuario.", "/principal", "ALERT");
+                parent::message("A senha gerada &eacute; <b>".$senha."</b> encaminhe ao usuario.", "/principal", "ALERT");
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
 
             }
@@ -163,10 +163,8 @@ private $intTamPag = 10;
             if($usuariosBuscar && $agentesBuscar && $internetBuscar)
             {
                 $usuarioResultado = $usuariosBuscar->toArray();
-                $usuarioResultado["usu_nome"] = utf8_decode(htmlentities($usuarioResultado["usu_nome"]));
                 $mesclagem = array_merge($usuarioResultado, $internetBuscar[0]);
                 $utf8Array = (array_map('utf8_encode', $mesclagem));
-
                 $json = json_encode($utf8Array);
             }
             echo $json;
