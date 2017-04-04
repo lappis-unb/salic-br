@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class Proposta_Model_DbTable_TbDeslocamento
+ * Class Proposta_Model_DbTable_TbPlanilhaProposta
  *
- * @name Proposta_Model_DbTable_TbDeslocamento
+ * @name Proposta_Model_DbTable_TbPlanilhaProposta
  * @package Modules/Agente
  * @subpackage Models/DbTable
  *
