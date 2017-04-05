@@ -1,24 +1,9 @@
 <?php
-/**
- * ManterAgentesController
- * @author Equipe RUP - Politec
- * @since 09/08/2010
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- * @link http://www.politec.com.br
- * @copyright � 2010 - Politec - Todos os direitos reservados.
- */
-
 class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 {
-	/**
-	 * @var integer (vari�vel com o id do usu�rio logado)
-	 * @access private
-	 */
 	private $getIdUsuario = 0;
-        private $intTamPag = 10;
-        
+    private $intTamPag = 10;
+
 	public function init()
 	{
 		$auth = Zend_Auth::getInstance(); // pega a autentica��o
@@ -30,10 +15,11 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		$PermissoesGrupo[] = 97;  // Gestor Salic
 		$PermissoesGrupo[] = 103;  // Coordenador de An�lise
 		$PermissoesGrupo[] = 110;  // T�cnico de An�lise
-		
+		$PermissoesGrupo[] = 151;
+		$PermissoesGrupo[] = 148;
+
 		parent::perfil(1, $PermissoesGrupo);
 
-		// pega o idAgente do usu�rio logado
 		if (isset($auth->getIdentity()->usu_codigo))
 		{
 			$this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -52,19 +38,19 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		}
 
 		parent::init();
-	} 
-	
+	}
+
 	public function gerarpdfAction()
 	{
-		$this->_helper->layout->disableLayout();       
+		$this->_helper->layout->disableLayout();
 	}
-	
+
 	public function gerarxlsAction()
 	{
-		$this->_helper->layout->disableLayout();       
+		$this->_helper->layout->disableLayout();
 	}
-	
-	
+
+
 	public function indexAction(){
         $this->view->tipos = TramitarDocumentosDAO::listaTipoDocumentos();
         /* ================== PAGINACAO ======================*/
@@ -104,7 +90,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-            
+
         /* ================== PAGINACAO ======================*/
 
         function formatadata($data){
@@ -291,7 +277,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         $this->view->intTamPag     = $this->intTamPag;
         $this->view->idusuario      = $idusuario; // idusuario
 	}
-    
+
 	public function imprimirPareceresAction(){
         $this->view->tipos = TramitarDocumentosDAO::listaTipoDocumentos();
         /* ================== PAGINACAO ======================*/
@@ -331,7 +317,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-            
+
         /* ================== PAGINACAO ======================*/
 
         function formatadata($data){
@@ -467,7 +453,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         $this->view->idusuario      = $idusuario; // idusuario
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 	}
-    
+
     public function xlsPareceresAction() {
         $this->view->tipos = TramitarDocumentosDAO::listaTipoDocumentos();
         /* ================== PAGINACAO ======================*/
@@ -507,7 +493,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-            
+
         /* ================== PAGINACAO ======================*/
 
         function formatadata($data){
@@ -629,7 +615,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                     <th width='100' align='center'>Nome do Proponente</th>
                     <th width='100' align='center'>Dt. Consolida��o</th>
                 </tr>";
-        
+
         foreach($busca as $d){
             $html .= "  <tr>
                             <td>".$d->PRONAC."</td>
@@ -643,58 +629,58 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         $this->view->html = $html;
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
     }
-	
+
 	public function desconsolidarparecerAction()
 	{
-		
+
 		$this->view->idpronac = $this->_request->getParam("idpronac");
 		$this->view->idproduto   = $this->_request->getParam("idproduto");
 		$this->view->tipoanalise = $this->_request->getParam("tipoanalise");
-		
-		$this->view->dados = GerenciarPareceresDAO::parecereConsolidar($this->_request->getParam("idpronac"), 
+
+		$this->view->dados = GerenciarPareceresDAO::parecereConsolidar($this->_request->getParam("idpronac"),
                 $this->_request->getParam("idproduto"),
                 $this->_request->getParam("tipoanalise"));
-		
+
 	}
-	
+
 	public function dadosdaanalisetecnicaAction()
 	{
 		/** Usuario Logado ************************************************/
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		/******************************************************************/
-		
+
 		$idPronac = $this->_request->getParam("idpronac");
-	 	
+
 	 	$this->view->dados = GerenciarPareceresDAO::projetosConsolidados($idPronac);
-	 	
+
 	 	$this->view->diligencias = GerenciarPareceresDAO::buscaDiligencias($idPronac);
-		
-		$this->view->idpronac = $idPronac;	
+
+		$this->view->idpronac = $idPronac;
 	}
-	
+
 	public function devolverparaanaliseAction()
 	{
                 $this->_helper->layout->disableLayout();
 		$this->view->idpronac = $this->_request->getParam("idpronac");
 		$this->view->dados = GerenciarPareceresDAO::produtoPrincipal($this->_request->getParam("idpronac") );
 	}
-	
-	
+
+
 	public function devolverprojetoAction() {
 
             /** Usuario Logado ************************************************/
             $auth = Zend_Auth::getInstance(); // instancia da autentica��o
             $idusuario 	= $auth->getIdentity()->usu_codigo;
             /******************************************************************/
-	    
+
             $idpronac   = $this->_request->getParam("idpronac");
             $idorgao    = $this->_request->getParam("idorgao");
             $observacao = $this->_request->getParam("observacao");
 
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-	    
+
             try {
                 $db->beginTransaction();
 
@@ -728,7 +714,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
                     $insere = $tbDistribuirParecer->inserir($dadosE);
                 }
-		
+
 		$orgaos = new Orgaos();
 
 		$orgao = $orgaos->pesquisarNomeOrgao($idorgao);
@@ -742,155 +728,155 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                 parent::message($ex->getMessage(), "gerenciarpareceres/devolverparaanalise/idpronac/".$idpronac ,	"ERROR");
             }
         }
-	
-	
+
+
 	public function devolveranaliseAction()
 	{
 		/** Usuario Logado ************************************************/
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
-		
+
 		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
 		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
 		$codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-		
-		
+
+
 		$this->view->codOrgao = $codOrgao;
 		$this->view->idUsuarioLogado = $idusuario;
 		/******************************************************************/
-		
+
 		$idpronac    = $this->_request->getParam("idpronac");
 		$idproduto   = $this->_request->getParam("idproduto");
 		$observacao  = $this->_request->getParam("observacao");
 		$tipoanalise = $this->_request->getParam("tipoanalise");
-		
+
 		if((strlen($observacao) < 11) or (strlen($observacao) > 505))
 		{
-			parent::message("Campo Justificativa deve conter no m�nimo 10 e no m�ximo 500 caracteres.", 
+			parent::message("Campo Justificativa deve conter no m�nimo 10 e no m�ximo 500 caracteres.",
 							"gerenciarpareceres/devolverparaanalise/idproduto/".$idproduto."/tipoanalise/".$tipoanalise."/idpronac/".$idpronac ,
 							"ALERT");
-		}	
-			
-			
+		}
+
+
 		$db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-        	
+
 		try
 		{
-			$db->beginTransaction();	
+			$db->beginTransaction();
 			$atualiza = GerenciarPareceresDAO::devolverParecer($idpronac, $idproduto, $observacao, $tipoanalise, $idusuario);
-				
+
 			$db->commit();
-			parent::message("Devolvido com sucesso!", "gerenciarpareceres/pareceresaconsolidar", "CONFIRM");	
+			parent::message("Devolvido com sucesso!", "gerenciarpareceres/pareceresaconsolidar", "CONFIRM");
 		}
 		catch(Zend_Exception $ex)
 		{
 			$db->rollBack();
-			parent::message("Erro ao devolver!", 
+			parent::message("Erro ao devolver!",
 								"gerenciarpareceres/desconsolidarparecer/idproduto/".$idproduto."/tipoanalise/".$tipoanalise."/idpronac/".$idpronac ,
 								"ERROR");
 		}
-		
+
 	}
-	
-	
+
+
 	public function dadosdopareceresAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-		
+
 		$idPronac = $this->_request->getParam("idpronac");
-	 		 	
+
 	 	$this->view->dados = GerenciarPareceresDAO::pareceresTecnicos($idPronac);
 	}
-	
+
 	public function visualizarparecerconsolidadoAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-		
+
 		/** Usuario Logado ************************************************/
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		/******************************************************************/
-		
+
 	 	$idPronac = $this->_request->getParam("idpronac");
-	 	
+
 	 	$this->view->dados = GerenciarPareceresDAO::projetosConsolidados($idPronac);
 	 	$this->view->dados2 = GerenciarPareceresDAO::projetosConsolidadosParte2($idPronac);
-	} 
-	
+	}
+
 	public function pareceresaconsolidarAction()
 	{
 		/** Usuario Logado ************************************************/
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
-		
+
 		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
 		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
 		$codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-		
+
 		$this->view->codOrgao = $codOrgao;
 		$this->view->idUsuarioLogado = $idusuario;
 		/******************************************************************/
-	 	
+
 	 	$busca = GerenciarPareceresDAO::parecereConsolidar();
-	 	
-	 	
+
+
 	 	Zend_Paginator::setDefaultScrollingStyle('Sliding');
 		Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 		$paginator = Zend_Paginator::factory($busca); // dados a serem paginados
 		$currentPage = $this->_getParam('page', 1);
 		$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(20);
-	 	
+
 	 	$this->view->dados = $paginator;
         $this->view->qtdDocumentos    = count($busca); // quantidade
-	  	
-	 	 
-	} 
-	
-	
+
+
+	}
+
+
 	public function pcvisualizartramitacaoAction()
 	{
 		/** Usuario Logado ************************************************/
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
-		
+
 		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
 		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
 		$codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-		
+
 		$this->view->codOrgao = $codOrgao;
 		$this->view->idUsuarioLogado = $idusuario;
 		/******************************************************************/
-	 	
-	 	
+
+
 	 	$idPronac 		= $this->_request->getParam("idpronac");
-	 	
+
 	 	$idProduto 		= $this->_request->getParam("idproduto");
-	
+
 		$tipoanalisetc 	= $this->_request->getParam("tipoanalisetc");
-	 	$tipoanalise 	= $this->_request->getParam("tipoanalise");	
- 	
+	 	$tipoanalise 	= $this->_request->getParam("tipoanalise");
+
 		$produtotc 	= $this->_request->getParam("produtotc");
-	 	$produto 	= $this->_request->getParam("produto");	
- 	
+	 	$produto 	= $this->_request->getParam("produto");
+
 		$orgaotc 	= $this->_request->getParam("orgaotc");
-	 	$orgao 	= $this->_request->getParam("orgao");	
- 	
+	 	$orgao 	= $this->_request->getParam("orgao");
+
 		$unidadetc 	= $this->_request->getParam("unidadetc");
-	 	$unidade 	= $this->_request->getParam("unidade");	
- 	
+	 	$unidade 	= $this->_request->getParam("unidade");
+
  		$busca = GerenciarPareceresDAO::historicoParecerProduto($idPronac, $idProduto, $tipoanalise, $produtotc, $produto, $orgaotc, $orgao, $unidadetc, $unidade);
- 		
+
 	 	Zend_Paginator::setDefaultScrollingStyle('Sliding');
 		Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 		$paginator = Zend_Paginator::factory($busca); // dados a serem paginados
 		$currentPage = $this->_getParam('page', 1);
 		$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(20);
-	 	
-		
+
+
 		$html = "<table cellspacing='0' cellpadding='2' border='1' align='center' width='99%'>
 					<tr>
 						<td colspan='6' height='30' align='center'>VISUALIZA��O DE TRAMITA��O</td>
@@ -903,7 +889,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 						<th width='150' align='left'>Observa��o</th>
 						<th width='100' align='left'>Usuario</th>
 					</tr>";
-					foreach($busca as $d): 
+					foreach($busca as $d):
 			$html.=	"<tr>
 						<td>".$d->Produto."</td>
 						<td>".$d->TipoAnalise."</td>
@@ -914,58 +900,58 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 					</tr>";
 					endforeach;
 		$html .="</table>";
-		
-		
+
+
 	 	$this->view->dados = $paginator;
         $this->view->qtdDocumentos    = count($busca); // quantidade
         $this->view->html    = $html; // htmlpdf
-	 	 
-	} 
-	
+
+	}
+
 	public function consolidarpareceresAction()
 	{
 		/** Usuario Logado ************************************************/
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
-		
+
 		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
 		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
 		$codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-		
+
 		$this->view->codOrgao = $codOrgao;
 		$this->view->idUsuarioLogado = $idusuario;
 		/******************************************************************/
-	 	
-	 	 
-	} 
-	
+
+
+	}
+
 	public function execconsolidacaoAction()
 	{
 		$exec = GerenciarPareceresDAO::execPareceres();
 		//O Procedimento foi executado, por�m, n�o retornou resultados
 		if($exec)
 		{
-			parent::message("O Procedimento foi executado com sucesso!", "gerenciarpareceres/consolidarpareceres", "ALERT");	
+			parent::message("O Procedimento foi executado com sucesso!", "gerenciarpareceres/consolidarpareceres", "ALERT");
 		}
 		else
 		{
 			parent::message("Erro ao executar o procedimento!", "gerenciarpareceres/consolidarpareceres", "ERROR");
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	public function planilhadecustosAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-		
+
 		$idPronac = $this->_request->getParam("idpronac");
 		$dados = GerenciarPareceresDAO::analiseDeCustos($idPronac);
 		$this->view->buscarProd = $dados;
 	}
-	
+
 	public function tramitacaoprojetoAction() {
 
             $idPronac = $this->_request->getParam("idpronac");
@@ -1080,80 +1066,80 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $this->view->PRONAC = $PRONAC;
             $this->view->idPronac = $idPronac;
         }
-	
+
 	public function buscarprojetoAction()
 	{
-		
+
 
 	}
-	
+
 	public function buscarprodutoAction()
 	{
-		
+
 
 	}
 
 	public function desconsolidarAction()
 	{
-		
+
 		$idpronac 	= $this->_request->getParam("idpronac");
 		$pronac 	= $this->_request->getParam("pronac");
 
 		Zend_Debug::dump($this->_request->getParams());
 		$this->_helper->viewRenderer->setNoRender(TRUE);
-		
+
 		if($idpronac && $pronac)
 		{
-			
+
 			// Tem que existir
 			$emPauta = GerenciarPareceresDAO::emPauta($idpronac);
-			
+
 			// N�o pode est�r aprovado
 			$projetoAprovado = GerenciarPareceresDAO::projetoAprovado($pronac);
-			
+
 			if(!$emPauta)
 			{
 				parent::message("O projeto n�o est� em situa��o de pauta e n�o pode ser desconsolidado.", "gerenciarpareceres/index", "ALERT");
 			}
-				
+
 			if($projetoAprovado)
 			{
 				parent::message("O projeto j� est� aprovado e n�o pode ser desconsolidado.", "gerenciarpareceres/index", "ALERT");
 			}
-			
+
 			$db = Zend_Db_Table::getDefaultAdapter();
 	        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-	        	
+
 			try
 			{
 				$db->beginTransaction();
-	
+
 				$delPerecer 				= GerenciarPareceresDAO::delPerecer($idpronac);
 				$delEnquadramento 			= GerenciarPareceresDAO::delEnquadramento($idpronac);
 				$updatetbAnaliseDeConteudo 	= GerenciarPareceresDAO::updatetbAnaliseDeConteudo($idpronac);
 				$updatetbPlanilhaProjeto 	= GerenciarPareceresDAO::updatetbPlanilhaProjeto($idpronac);
 				$updateProjetos 			= GerenciarPareceresDAO::updateProjetos($idpronac);
-				
+
 				$db->commit();
-				parent::message("O Projeto foi Desconsolidado.", "gerenciarpareceres/index", "CONFIRM");	
+				parent::message("O Projeto foi Desconsolidado.", "gerenciarpareceres/index", "CONFIRM");
 			}
 			catch(Zend_Exception $ex)
 			{
 				$db->rollBack();
 				parent::message("Erro ao desconsolidar o projeto.", "gerenciarpareceres/index", "CONFIRM");
 			}
-			
-					
+
+
 		}
 		else
 		{
 			parent::message("Projeto n�o encontrado!", "gerenciarpareceres/index", "ERROR");
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 
 	public function imprimirParecerTecnicoAction()
 	{
@@ -1168,17 +1154,17 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                    'pr.anoprojeto =?' => $ano,
                    'pr.sequencial =?' => $sequencial,
                );
-               
+
                $projeto = new Projetos();
                $rsProjeto = $projeto->buscarDadosParaImpressao($arrBusca)->current();
-               
+
                if(count($rsProjeto)<=0){
 
                     $this->montaTela("gerenciarpareceres/imprimirparecertecnico.phtml",
                                array("mensagem"=>"<font color='red'>Projeto inexistente</font>"));
                     return;
                }
-               
+
                $idPronac = $rsProjeto->IdPRONAC;
 
                $arrBuscaParecer = array(
@@ -1199,7 +1185,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                }
 
                $rsPlanilha = GerenciarPareceresDAO::analiseDeCustos($idPronac);
-               
+
                //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
                $this->montaTela("gerenciarpareceres/dadosimpressaoparecer.phtml",
                            array("dadosProjeto"=>$rsProjeto,
@@ -1214,7 +1200,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $this->montaTela("gerenciarpareceres/imprimirparecertecnico.phtml",
                        array());
 	}
-	
-	
+
+
 
 } // fecha class

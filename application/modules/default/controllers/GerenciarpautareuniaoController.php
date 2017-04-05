@@ -1,10 +1,4 @@
 <?php
-
-/**
- * Description of GerenciarPautaReuniao
- *
- * @author 01373930160
- */
 class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
     private $bln_readequacao = "false";
@@ -23,25 +17,26 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
 
         if ($auth->hasIdentity()) { // caso o usuario esteja autenticado
-// verifica as permissoes
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 133;
             $PermissoesGrupo[] = 118;
             $PermissoesGrupo[] = 119;
             $PermissoesGrupo[] = 120;
+            $PermissoesGrupo[] = 148;
+            $PermissoesGrupo[] = 151;
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo esta no array de permissoes
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-// pega as unidades autorizadas, orgaos e grupos do usuario (pega todos os grupos)
+            // pega as unidades autorizadas, orgaos e grupos do usuario (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-// manda os dados para a visao
+            // manda os dados para a visao
             $this->view->usuario = $auth->getIdentity(); // manda os dados do usuario para a visao
             $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuario para a visao
             $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
             $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
-        } // fecha if
+        }
         else {// caso o usuario nao esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -69,7 +64,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         /**** FIM - CODIGO DE READEQUACAO ****/
     }
 
-// fecha metodo init()
 
     public function gerenciarpautareuniaoAction() {
 
