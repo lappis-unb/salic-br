@@ -376,11 +376,11 @@ $links[] = array('An&aacute;lise do Produto' => array());
         <table class="tabela sumir" id="consolidacao" style="width:95%" width="95%">
         <?php if($this->Perfil == 94) { //Parecerista ?>
             <tr>
-                <th colspan="3">Consolida&ccedil;&atilde;o do Parecer T&eacute;cnico</th>
+                <th colspan="5">Consolida&ccedil;&atilde;o do Parecer T&eacute;cnico</th>
             </tr>
             <tr>
                 <td align="left" class="destacar bold" width="180">Parecer Favor&aacute;vel?</td>
-                <td colspan="2">
+                <td colspan="5">
                     <input class="obrigatorioRadio" <?php if(count($this->consolidacao) > 0){ echo ($this->consolidacao[0]->ParecerFavoravel == 2) ? 'checked="checked"' : ''; } ?> type="radio" name="parecerProjeto" id="parecerProjeto1" value="2" /> <label for="parecerProjeto2" style="margin-right:25px;">Sim</label>
                     <input class="obrigatorioRadio" <?php if(count($this->consolidacao) > 0){ echo ($this->consolidacao[0]->ParecerFavoravel == 1) ? 'checked="checked"' : ''; } ?> type="radio" name="parecerProjeto" id="parecerProjeto1" value="1" /> <label for="parecerProjeto1">N&atilde;o</label>
                 </td>
@@ -437,23 +437,71 @@ $links[] = array('An&aacute;lise do Produto' => array());
                 <td align="left" colspan="2"><?php echo $this->itens['totalSugerido']; ?></td>
             </tr>
 	    <?php if ($this->IN2017): ?>
-                <tr>
-                    <td colspan="5">
-                        <b>A&ccedil;&otilde;es relevantes para o sucesso do projeto*</b>
-                        <p>
-                        <center>
-                            <textarea class="textarea_simples" id="AcoesRelevantes" name="AcoesRelevantes" rows="10" style="width: 98%;"><?php if ($this->IN2017) { echo $this->AcoesRelevantes; } ?></textarea>
-                        </center>
-                    </td>
-		</tr>
-		<?php endif; ?>
-	    
+              <tr>
+		<td colspan="5" class="destacar bold">
+                  <strong>Mem&oacute;ria de C&aacute;lculo</strong>
+		</td>
+	      </tr>
+
+              <tr>
+		<td align="center" class="bold" colspan="2">Proponente</td>
+		<td>&nbsp;</td>
+		<td align="center" class="bold" colspan="2">T&eacute;cnico</td>
+	      </tr>
+	      
+              <tr>
+		<td align="center">vl. Solicitado:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlSolicitado); ?></td>
+		<td>&nbsp;</td>
+		<td align="center">Custo do Projeto:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->CustoProjeto); ?></td>
+	      </tr>
+	      
+              <tr>
+		<td align="center">vl. Outras Fontes:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlOutrasFontes); ?></td>
+		<td>&nbsp;</td>
+		<td align="center">vl. Outras Fontes</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlOutrasFontesAprovado); ?></td>
+	      </tr>	      
+
+              <tr>
+		<td align="center" class="bold">Vl. Projeto:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlProjeto); ?></td>
+		<td>&nbsp;</td>
+		<td align="center" class="bold">Custo Total</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->CustoProjeto); ?></td>		
+	      </tr>	      
+
+	    <tr>
+	      <td class="destacar bold" colspan="5">
+                 A&ccedil;&otilde;es relevantes para o sucesso do projeto*
+		 </td>
+	    </tr>    
             <tr>
-                <td colspan="3">
-                    <textarea cols="80" id="dsConsolidacao" name="dsConsolidacao" rows="10" class="textarea_simples" style="width: 99%"><?php echo isset($this->consolidacao[0]->ResumoParecer) ? $this->consolidacao[0]->ResumoParecer : ''; ?></textarea>
-                </td>
+              <td colspan="5">
+                <p>
+                  <center>
+                    <textarea class="textarea_simples" id="AcoesRelevantes" name="AcoesRelevantes" rows="10" style="width: 98%;"><?php if ($this->IN2017) { echo $this->AcoesRelevantes; } ?></textarea>
+                  </center>
+              </td>
+	    </tr>
+	    <?php endif; ?>
+
+	    <tr>
+	      <td class="destacar bold" colspan="5">
+                Parecer t&eacute;cnico*
+	      </td>
+	    </tr>    
+            <tr>
+              <td colspan="5">
+		<p>
+	
+                  <textarea cols="80" id="dsConsolidacao" name="dsConsolidacao" rows="10" class="textarea_simples" style="width: 99%"><?php echo isset($this->consolidacao[0]->ResumoParecer) ? $this->consolidacao[0]->ResumoParecer : ''; ?></textarea>
+              </td>
+	      </p>
             </tr>
-            <td colspan="3" align="center">
+            <td colspan="5" align="center">
                 <input type="button" id="btSalvarConsolidacao" value=" " class="btn_salvar"/>
             </td>
 
