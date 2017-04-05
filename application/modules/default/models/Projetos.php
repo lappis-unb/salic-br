@@ -2440,9 +2440,8 @@ class Projetos extends MinC_Db_Table_Abstract
     }
 
 // fecha metodo buscarPeriodoCaptacao()
-    public function assinarParecer($idpronac) {
-        $returnData = array();
-      
+
+    public function enquadramentoProjeto($idpronac) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -2471,7 +2470,14 @@ class Projetos extends MinC_Db_Table_Abstract
                 'p.IdEnquadramento'
             ));
         $select->where("p.idPronac = ?", $idpronac);
-        $returnData['enquadramento'] = $this->fetchAll($select);
+        return $this->fetchAll($select);        
+    }
+        
+    
+    public function assinarParecer($idpronac) {
+        $returnData = array();
+      
+        $returnData['enquadramento'] = $this->enquadramentoProjeto($idpronac);
 
         $select2 = $this->select();
         $select2->setIntegrityCheck(false);
@@ -2511,8 +2517,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select3->where("p.tpAnalise = ?", 1);
         $select3->where("p.idPronac = ?", $idpronac);        
         $returnData['alcance'] = $this->fetchAll($select3);
-
-
+        
         $select4 = $this->select();
         $select4->setIntegrityCheck(false);
         $select4->from(

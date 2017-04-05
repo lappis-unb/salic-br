@@ -97,6 +97,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por p�gina
         // ========== FIM PAGINA��O ==========
 
+        $projetos = new Projetos();
+        $this->view->IN2017 = $projetos->verificarIN2017($idPronac);
         $this->view->qtdRegistro = count($resp);
         $this->view->situacao = $situacao;
         $this->view->buscar = $paginator;
@@ -566,7 +568,9 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
             $buscarAcaoAlcanceProjeto = $tbAcaoAlcanceProjeto->buscar(array('idPronac = ?' => $idPronac));
             if (count($buscarAcaoAlcanceProjeto) > 0) {
                 $this->view->AcoesRelevantes = $buscarAcaoAlcanceProjeto[0]['dsAcaoAlcanceProduto'];
-            }                        
+            }
+
+            $this->view->dadosEnquadramento = $projetos->enquadramentoProjeto($idPronac);               
         }
         
         /***********************************************************************************/
@@ -979,6 +983,188 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         }
     }
 
+    public function assinarParecerAction() {
+        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $idusuario = $auth->getIdentity()->usu_codigo;
+        $dtAtual = Date("Y/m/d h:i:s");
+
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
+
+        $idPronac = $this->_request->getParam("idPronac");
+        $idProduto = $this->_request->getParam("idProduto");
+        $idDistribuirParecer = $this->_request->getParam("idD");
+        $stPrincipal = $this->_request->getParam("stPrincipal");
+        $this->view->totaldivulgacao = "true";
+
+        // Valida��o do 20%
+        //valor total do projeto V1
+
+        $planilhaProjeto = new PlanilhaProjeto();
+        $valorProjeto = $planilhaProjeto->somarPlanilhaProjeto($idPronac, 109);
+        //Validacao dos 20%
+        if ($valorProjeto['soma'] > 0 && $stPrincipal == "1") {
+            $this->view->totaldivulgacao = $this->validaRegra20Porcento($idPronac);
+        }
+
+        // Valida��o do 15%
+        if ($stPrincipal == "1") //avaliacao da regra dos 15% so deve ser feita quando a analise for do produto principal
+        {
+            $Situacao = false;
+
+            $V1 = '';
+            $V2 = '';
+            $V3 = '';
+            $V4 = '';
+            $V5 = '';
+            $V6 = '';
+
+            $tpPlanilha = 'CO'; // O que � isso?
+            $planilhaProjeto = new PlanilhaProjeto();
+
+            /* V1 */
+
+            $whereTotalV1['PAP.IdPRONAC = ?'] = $idPronac;
+            $whereTotalV1['PAP.FonteRecurso = ?'] = 109;
+            $whereTotalV1['PAP.idPlanilhaItem <> ? '] = 206;
+
+            $valorProjeto15 = $planilhaProjeto->somaDadosPlanilha($whereTotalV1);
+            //$this->view->totalsugerido = $valorProjeto['soma'] ? $valorProjeto['soma'] :0;
+            //echo 'Valor Total do Projeto :';
+            $V1 = $valorProjeto15['soma'];
+
+
+            /* V2 */
+            $whereTotalV2['PAP.IdPRONAC = ?'] = $idPronac;
+            $whereTotalV2['PAP.FonteRecurso = ?'] = 109;
+            $whereTotalV2['PAP.idEtapa = ? '] = 4;
+            $whereTotalV2['PAP.idProduto = ?'] = 0;
+            $whereTotalV2['PAP.idPlanilhaItem not in (?)'] = array(5249, 206, 1238);
+
+
+            $valoracustosadministrativos = $planilhaProjeto->somaDadosPlanilha($whereTotalV2);
+            //$this->view->totalsugerido = $valorProjeto['soma'] ? $valorProjeto['soma'] :0;
+            //echo 'Custo Administrativo :';
+            $V2 = $valoracustosadministrativos['soma'];
+
+
+            /* 15% */
+
+            if ($V1 > 0 and $valoracustosadministrativos['soma'] < $valorProjeto['soma']) {
+                //Calcula os 15% do valor total do projeto V3
+                $quinzecentoprojeto = $V1 * 0.15;
+
+                //x('15% = '.$this->formatarReal($quinzecentoprojeto));
+                //$this->view->V3 = $quinzecentoprojeto;
+                //Subtrai os custos administrativos pelos 15% do projeto (V2 - V3)
+                $verificacaonegativo = $valoracustosadministrativos['soma'] - $quinzecentoprojeto;
+                //$this->view->V4 = $verificacaonegativo;
+                //V4
+                if ($verificacaonegativo < 0) {
+                    //x(0);
+                    $this->view->verifica15porcento = 0;
+                } else {
+                    //V1 - V4 = V5
+                    /*V5*/
+                    $valorretirar = /*V1*/
+                        $V1 - /*V4*/
+                        $verificacaonegativo;
+                    //$this->view->V5 = $valorretirar;
+                    /*V6*/
+                    $quinzecentovalorretirar = /*V5*/
+                        $valorretirar * 0.15;
+                    //$this->view->V6 = $quinzecentovalorretirar;
+                    //V2 - V6
+                    //$valorretirarplanilha = $quinzecentoprojeto - $quinzecentovalorretirar; //(codigo antigo V3 - V6)
+                    $valorretirarplanilha = $valoracustosadministrativos['soma'] - $quinzecentovalorretirar; //(correcao V2 - V6)
+                    $this->view->verifica15porcento = $valorretirarplanilha;
+
+                    //x($this->formatarReal($valorretirarplanilha));
+                }
+
+            } else {
+                $this->view->verifica15porcento = $valoracustosadministrativos['soma'];
+                //x($valoracustosadministrativos['soma']);
+            }
+
+            //$this->view->verifica15porcento = 0;
+            //die();
+        }
+
+
+        if ($_POST) {
+            $justificativa = trim(strip_tags($this->_request->getParam("justificativa")));
+            $tbDistribuirParecer = new tbDistribuirParecer();
+            $dadosWhere["t.idDistribuirParecer = ?"] = $idDistribuirParecer;
+            $buscaDadosProjeto = $tbDistribuirParecer->dadosParaDistribuir($dadosWhere);
+
+            //xd($buscaDadosProjeto);
+
+            try {
+                $tbDistribuirParecer->getAdapter()->beginTransaction();
+                foreach ($buscaDadosProjeto as $dp):
+
+                    // DEVOLVER PARA O COORDENADOR ( PARECERISTA )
+
+                    $dados = array(
+                        'idOrgao' => $dp->idOrgao,
+                        'DtEnvio' => $dp->DtEnvio,
+                        'idAgenteParecerista' => $dp->idAgenteParecerista,
+                        'DtDistribuicao' => $dp->DtDistribuicao,
+                        'DtDevolucao' => MinC_Db_Expr::date(),
+                        'DtRetorno' => null,
+                        'FecharAnalise' => 0,
+                        'Observacao' => $justificativa,
+                        'idUsuario' => $idusuario,
+                        'idPRONAC' => $dp->IdPRONAC,
+                        'idProduto' => $dp->idProduto,
+                        'TipoAnalise' => $dp->TipoAnalise,
+                        'stEstado' => 0,
+                        'stPrincipal' => $dp->stPrincipal,
+                        'stDiligenciado' => null
+                    );
+
+                    $where['idDistribuirParecer = ?'] = $idDistribuirParecer;
+
+                    $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
+
+                    $insere = $tbDistribuirParecer->inserir($dados);
+
+                endforeach;
+
+                $tbDistribuirParecer->getAdapter()->commit();
+
+                parent::message("An�lise conclu�da com sucesso !", "Analisarprojetoparecer/index", "CONFIRM");
+
+            } catch (Zend_Db_Exception $e) {
+
+                $tbDistribuirParecer->getAdapter()->rollBack();
+                parent::message("Error" . $e->getMessage(), "Analisarprojetoparecer/fecharparecer/idD/" . $idDistribuirParecer, "ERROR");
+            }
+
+
+        } else {
+            $idPronac = $this->_request->getParam("idPronac");
+            $idProduto = $this->_request->getParam("idProduto");
+        }
+
+        $projetos = new Projetos();
+        $dadosProjetoProduto = $projetos->dadosFechar($this->getIdUsuario, $idPronac, $idDistribuirParecer);
+        $this->view->dados = $dadosProjetoProduto;
+        
+        $this->view->idpronac = $idPronac;
+      
+        $dadosProjeto = $projetos->assinarParecer($idPronac);
+
+        $this->view->dadosEnquadramento = $dadosProjeto['enquadramento'];
+        $this->view->dadosProdutos = $dadosProjeto['produtos'];
+        $this->view->dadosDiligencias = $dadosProjeto['diligencias'];
+        $this->view->dadosAlcance = $dadosProjeto['alcance'];
+        $this->view->dadosParecer = $dadosProjeto['parecer'];
+        $this->view->IN2017 = $projetos->verificarIN2017($idPronac);
+        
+    }
+    
     public function fecharparecerAction()
     {
 
@@ -1147,12 +1333,10 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         }
 
         $projetos = new Projetos();
-        $dadosProjeto = $projetos->assinarParecer($idPronac);
-
-        $this->view->dadosEnquadramento = $dadosProjeto['enquadramento'];
-        $this->view->dadosProdutos = $dadosProjeto['produtos'];
+        $dadosProjetoProduto = $projetos->dadosFechar($this->getIdUsuario, $idPronac, $idDistribuirParecer);
+        $this->view->dados = $dadosProjetoProduto;
         
-        $this->view->dados = $dadosProjeto;
+        $this->view->IN2017 = $projetos->verificarIN2017($idPronac);
         
         $this->view->idpronac = $idPronac;
     }
