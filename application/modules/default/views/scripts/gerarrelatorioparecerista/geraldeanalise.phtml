@@ -4,12 +4,12 @@
         $("#qtDiasDistribuirVl").numeric();
         $("#qtDiasAnalisarVl").numeric();
         $("#qtDiasCoordVl").numeric();
-        
+
         $('.btn_limpar').click(function(){
             $(".cmpDesabilitar").attr("disabled", "");
             $(".cmpDesabilitarSelect").attr("disabled", "");
         });
-        
+
         $("#pronac").keyup(function(){
             if($(this).val() != ""){
                 $(".cmpDesabilitar").attr("disabled", "disabled").val("");
@@ -19,7 +19,7 @@
                 $(".cmpDesabilitarSelect").attr("disabled", "");
             }
         });
-        
+
         $('#pronac').focusout(function(){
             if( $('#pronac').val() != ""){
                 $(".cmpDesabilitar").attr("disabled", "disabled").val("");
@@ -29,7 +29,7 @@
                 $(".cmpDesabilitarSelect").attr("disabled", "");
             }
         });
-        
+
         $('select.cmpDesabilitarSelect').change(function(){
             var campo = $(this),
                 nome = $(this).attr('name'),
@@ -45,7 +45,7 @@
                 $('input.cmpDesabilitar').attr("disabled", "");
             }
         });
-        
+
         $('.btn_localizar').click(function(){
             $('#formGeralAnalise').submit();
         });
@@ -60,7 +60,7 @@
 
 <?php
     if($this->idPerfil == 137){
-        echo $this->partial('gerarrelatorioparecerista/inc/menu.inc.php', $this)';
+        echo $this->partial('gerarrelatorioparecerista/inc/menu.inc.php', $this);
     }
 ?>
 

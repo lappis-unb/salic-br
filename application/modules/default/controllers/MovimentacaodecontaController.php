@@ -38,15 +38,11 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	private $tbDepositoIdentificadoCaptacao;
     private $tbTmpDepositoIdentificado;
 
-
-
 	/**
 	 * @access private
 	 * @var string (diret�rio onde se enconta o arquivo .txt)
 	 */
 	private $arquivoTXT = 'DepositoIdentificado';
-
-
 
 	/**
 	 * Reescreve o m�todo init()
@@ -65,11 +61,8 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		$PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
 		$PermissoesGrupo[] = 123; // Coordenador - Geral de Acompanhamento
 		$PermissoesGrupo[] = 129; // T�cnico de Acompanhamento
-		//$PermissoesGrupo[] = ; // Coordenador de Avalia��o
-		//$PermissoesGrupo[] = 134; // Coordenador de Fiscaliza��o
-		//$PermissoesGrupo[] = 124; // T�cnico de Presta��o de Contas
-		//$PermissoesGrupo[] = 125; // Coordenador de Presta��o de Contas
-		//$PermissoesGrupo[] = 126; // Coordenador - Geral de Presta��o de Contas
+		$PermissoesGrupo[] = 148;
+		$PermissoesGrupo[] = 151;
 		parent::perfil(1, $PermissoesGrupo); // perfil novo salic
 
 		// pega o idAgente do usu�rio logado
@@ -85,14 +78,12 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		}
 		/* ========== FIM PERFIL ==========*/
 
-
-
 		/* ========== IN�CIO �RG�O ========== */
 		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
 		$this->getIdGrupo = $GrupoAtivo->codGrupo; // id do grupo ativo
 		$this->getIdOrgao = $GrupoAtivo->codOrgao; // id do �rg�o ativo
 
-		if ($this->getIdOrgao != 166 && $this->getIdOrgao != 272) // aceita somente o �rg�o SEFIC/SACAV && SAV/CAP
+		if ($this->getIdOrgao != 166 && $this->getIdOrgao != 272 && $this->getIdOrgao != 340) // aceita somente o �rg�o SEFIC/SACAV && SAV/CAP
 		{
 			parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
 		}

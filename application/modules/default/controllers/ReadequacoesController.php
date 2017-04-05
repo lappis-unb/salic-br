@@ -18,12 +18,6 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     private $idOrgao = 0;
     private $idPerfil = 0;
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init() {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->idOrgao = $GrupoAtivo->codOrgao;
@@ -32,11 +26,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = '1111'; //Permissao para proponentes.
+        $PermissoesGrupo[] = '151'; //Permissao para proponentes.
+        $PermissoesGrupo[] = '148'; //Permissao para proponentes.
 
         // pega o idAgente do usuário logado
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $this->view->usuarioInterno = false;
-        
+
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             $this->view->usuarioInterno = true;
             $this->idUsuario = $auth->getIdentity()->usu_codigo;
@@ -156,7 +152,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             // na listagem de 'outras solicitações' não listar planilha orçamentária (idTipoReadequacao 2)
             $tbReadequacao = new tbReadequacao();
             $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12, 'a.idTipoReadequacao != ?' => 2), array(1));
-            
+
         } else {
             parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
         }
@@ -322,7 +318,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         $whereIdPlanilha = "idPlanilhaAprovacaoPai = $idPlanilhaAprovacao";
         $itemTipoPlanilha = $tbPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao=?'=>$idPlanilhaAprovacao))->current();
-        
+
         if($itemTipoPlanilha->tpAcao == 'I'){
             $exclusaoLogica = $tbPlanilhaAprovacao->delete(array('idPlanilhaAprovacao = ?'=>$idPlanilhaAprovacao));
         } else {
@@ -1378,7 +1374,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if(count($planosDistribuicao)==0){
             $planosDistribuicao = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac, 'PlanoDistribuicaoProduto');
         }
-        
+
         $Produtos = new Produto();
         $produtos = $Produtos->buscar(array('stEstado=?'=>0), array('Descricao'));
 
@@ -1621,7 +1617,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         $tbReadequacao = new tbReadequacao();
         $busca = array();
-        
+
         if($idTipoReadequacao == 2){ //Planilha Orçamentária
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
             $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao= ?' => $idReadequacao));
@@ -1917,10 +1913,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function painelAction()
     {
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if($this->idPerfil != 122 && $this->idPerfil != 123){
+        if($this->idPerfil != 122 && $this->idPerfil != 123 && $this->idPerfil != 151 && $this->idPerfil != 148){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -1932,7 +1928,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $ordem = $this->_request->getParam("ordem");
             if($ordem == "DESC") {
                 $novaOrdem = "ASC";
-            }else {
+            } else {
                 $novaOrdem = "DESC";
             }
         } else {
@@ -1940,7 +1936,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $ordem = "DESC";
             $novaOrdem = "ASC";
         }
-        
+
         //==== campo de ordenacao  ======//
         if($this->_request->getParam("campo")) {
             $campo = $this->_request->getParam("campo");
@@ -1967,9 +1963,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         } else {
             $filtro = 'aguardando_distribuicao';
         }
-        
+
         $this->view->filtro = $filtro;
-        
+
         // lista apenas readequações do órgão atual
         if ($filtro == 'aguardando_distribuicao') {
             $where['idOrgao = ?'] = $this->idOrgao;
@@ -1983,7 +1979,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
 
         $tbReadequacao = New tbReadequacao();
-        
+
         $total = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamentoCount($where, $filtro);
 
         $fim = $inicio + $this->intTamPag;
@@ -2556,7 +2552,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
         $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
         $this->view->Unidade = $buscarUnidade;
-        
+
         $tbReadequacaoXParecer = new tbReadequacaoXParecer();
         $this->view->Parecer = $tbReadequacaoXParecer->buscarPareceresReadequacao(array('a.idReadequacao = ?'=>$idReadequacao, 'b.idTipoAgente = ?'=>1))->current();
 
@@ -2935,7 +2931,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $this->view->projeto = $p;
 
         $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
-        $buscarUnidade =  $TbPlanilhaUnidade->buscarUnidade();        
+        $buscarUnidade =  $TbPlanilhaUnidade->buscarUnidade();
         $this->view->Unidade = $buscarUnidade;
 
         //DADOS DA AVALIAÇÃO TÉCNICA ou PARECERISTA
@@ -4077,7 +4073,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
             $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
             $this->view->Unidade = $buscarUnidade;
-            
+
             $tbReadequacao = new tbReadequacao();
             $this->view->readequacao = $tbReadequacao->readequacoesCadastradasProponente(array(
                 'a.idPronac = ?'=>$idPronac,

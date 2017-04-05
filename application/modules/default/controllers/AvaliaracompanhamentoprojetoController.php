@@ -26,6 +26,8 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $PermissoesGrupo[] = 139; // coordenador de avalia��o
             $PermissoesGrupo[] = 124; //Tecnico de Presta��o de Contas
             $PermissoesGrupo[] = 132; // Chefe de Divis�o
+            $PermissoesGrupo[] = 151;
+            $PermissoesGrupo[] = 148;
 
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est� no array de permiss�es
             {
@@ -42,7 +44,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
             $this->orgSup = $GrupoAtivo->codOrgao;
             $this->usu_orgao = $GrupoAtivo->codOrgao;
-            
+
             $this->getIdOrgao = $GrupoAtivo->codOrgao;
         } // fecha if
         else // caso o usu�rio n�o esteja autenticado
@@ -110,7 +112,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $where['AnoProjeto+Sequencial = ?'] = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
         }
-        
+
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $tipoFiltro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             switch ($tipoFiltro) {
@@ -172,11 +174,11 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
         $this->view->Usuarios = $usuarios;
     }
-    
+
     public function imprimirPainelAction() {
-        
+
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
-        
+
         //** Usuario Logado ************************************************/
         $auth               = Zend_Auth::getInstance(); // pega a autentica��o
         $idusuario          = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
@@ -293,7 +295,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 //            $pa = new paUsuariosDoPerfil();
             $vw = new vwUsuariosOrgaosGrupos();
             $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
-            
+
             $i=1;
             foreach ($busca as $dp){
 
@@ -304,7 +306,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
                 } else if($dp->Mecanismo != 6){
                     $mecanismo = 'Recursos do Tesouro';
                 }
-                
+
                 if(isset($tipoFiltro) && $tipoFiltro != 'aguardando'){
                     foreach ($usuarios as $user) {
                         if($user->idUsuario == $dp->idTecnicoAvaliador){
@@ -337,7 +339,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $this->view->dados = $busca;
             $this->view->filtro = $filtro;
             $this->view->tipoFiltro = $tipoFiltro;
-            
+
 //            $pa = new paUsuariosDoPerfil();
             $vw = new vwUsuariosOrgaosGrupos();
             $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
@@ -413,7 +415,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         if (strlen($idpronac) > 7) {
             $idpronac = Seguranca::dencrypt($idpronac);
         }
-        
+
         //****** Dados do Projeto - Cabecalho *****//
         $projetos = new Projetos();
         $DadosProjeto = $projetos->buscarProjetoXProponente(array('idPronac = ?' => $idpronac))->current();
@@ -498,8 +500,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
-
-        if($codPerfil!=139){
+        if($codPerfil!=139 && $codPerfil!=148 && $codPerfil!=151){
             parent::message("Voc� n�o tem permiss�o para acessar essa funcionalidade!", "principal", "ALERT");
         }
 
@@ -904,7 +905,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             'idChefiaImediata' => $_POST['chefiaImediata'],
             'siCumprimentoObjeto' => $siComprovante
         );
-        
+
         $whereFinal = 'idCumprimentoObjeto = '.$DadosRelatorio->idCumprimentoObjeto;
         $resultado = $tbCumprimentoObjeto->alterar($dados, $whereFinal);
 
