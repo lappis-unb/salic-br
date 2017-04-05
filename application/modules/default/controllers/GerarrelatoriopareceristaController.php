@@ -34,6 +34,8 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
           $PermissoesGrupo[] = 126; // Coordenador Geral de Presta��o de Contas
           $PermissoesGrupo[] = 134; // Coordenador de Fiscaliza�?o */
 
+          $PermissoesGrupo[] = 148; // Coordenador de Fiscaliza�?o
+          $PermissoesGrupo[] = 151; // Coordenador de Fiscaliza�?o
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
         $this->usuarioLogado = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;

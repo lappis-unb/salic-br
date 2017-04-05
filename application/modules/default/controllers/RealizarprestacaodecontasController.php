@@ -37,12 +37,6 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
         private $situcaoEncaminhamentoAtual = null;
 
-	/**
-	 * Reescreve o m�todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
 
 	public function init()
         {
@@ -61,6 +55,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $PermissoesGrupo [] = 82;
             $PermissoesGrupo [] = 132;
             $PermissoesGrupo [] = 100;
+            $PermissoesGrupo [] = 148;
+            $PermissoesGrupo [] = 151;
 
             parent::perfil ( 1, $PermissoesGrupo );
 
@@ -1239,7 +1235,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $GrupoUsuario = $GrupoAtivo->codGrupo;
 
-        if($GrupoUsuario != 126){ //Se o perfil for diferente de Coord. Geral de Presta��o de Contas, n�o permite o acesso dessa funcionalidade.
+        if($GrupoUsuario != 126 && $GrupoUsuario != 151 && $GrupoUsuario != 148){ //Se o perfil for diferente de Coord. Geral de Presta��o de Contas, n�o permite o acesso dessa funcionalidade.
             parent::message('Voc� n�o tem permiss�o para acessar essa funcionalidade.', "principal", 'ALERT');
         }
 
@@ -3332,7 +3328,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
             $tblSituacao = new Situacao();
             $rsSitucao = $tblSituacao->listasituacao(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
-            
+
             $this->view->situacoes = $rsSitucao;
             $this->intTamPag = 10;
 
@@ -3631,9 +3627,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                     if($mecanismo == 'Mecenato'){
                         $mecanismo = "Incentivo Fiscal";
                     }
-                    
 
-                    
+
+
                     $addValTec = '';
                     if(isset($filtro) && $filtro == 'emanalise'){
                         $addValTec = '<td style="border: 1px dotted black;">'.$projeto->usu_nome.'</td>';

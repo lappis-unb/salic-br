@@ -2,7 +2,6 @@
 
 class AlterarprojetoController extends MinC_Controller_Action_Abstract
 {
-
     private $idusuario = 0;
     private $codGrupo = 0;
     private $codOrgao = 0;
@@ -10,12 +9,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
     private $getParecerista = 'N';
     private $idAgente = null;
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init()
     {
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
@@ -68,6 +61,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         $PermissoesGrupo[] = 139;
         $PermissoesGrupo[] = 140;
         $PermissoesGrupo[] = 143;
+        $PermissoesGrupo[] = 151;
+        $PermissoesGrupo[] = 148;
 
         parent::perfil(1, $PermissoesGrupo);
         if (isset($auth->getIdentity()->usu_codigo)) {
