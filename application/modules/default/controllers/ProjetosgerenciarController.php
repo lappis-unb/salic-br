@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
 
@@ -19,13 +19,10 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
         if ($auth->hasIdentity()) { // caso o usuario esteja autenticado
             // verifica as permissaes
             $PermissoesGrupo = array();
-            //$PermissoesGrupo[] = 93;  // Coordenador de Parecerista
-            //$PermissoesGrupo[] = 94;  // Parecerista
             $PermissoesGrupo[] = 103; // Coordenador de Analise
             $PermissoesGrupo[] = 97; // Gestor SALIC
-            //$PermissoesGrupo[] = 118; // Componente da Comissao
-            //$PermissoesGrupo[] = 119; // Presidente da Mesa
-            //$PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
+            $PermissoesGrupo[] = 151;
+            $PermissoesGrupo[] = 148;
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo esta no array de permissaes
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &atilde;rea do sistema!", "principal/index", "ALERT");
             }
@@ -55,20 +52,6 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
 
         $idpronac = null;
         $idpronac = $this->_request->getParam("idpronac");
-        //VERIFICA SE O PROJETO ESTA NA FASE DE READEQUACAO
-        /*if(!empty($idpronac)){
-            $tbPedidoAlteracao = new tbPedidoAlteracaoProjeto();
-            $arrBusca = array();
-            $arrBusca['pa.idPronac = ?']          = $idpronac;
-            $arrBusca['pa.stPedidoAlteracao = ?'] = 'I'; //pedido enviado pelo proponente
-            $arrBusca['pa.siVerificacao = ?']     = '1';
-            $arrBusca['paxta.tpAlteracaoProjeto = ?']='10'; //tipo Readequacao de Itens de Custo
-            $rsPedidoAlteraco = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBusca, array('dtSolicitacao DESC'))->current(); 
-            if(!empty($rsPedidoAlteraco)){
-                $this->bln_readequacao = "true";
-                $this->view->bln_readequacao = "true";
-            }
-        }*/
         /**** FIM - CODIGO DE READEQUACAO ****/
     }
 
@@ -154,13 +137,13 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getPost('idAgente');
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $idResponsavel = $auth->getIdentity()->usu_codigo;
-        
+
         $dadosAnteriores = array(
             'stDistribuicao' => 'I'
         );
         $where = 'idPRONAC = ' . $idPronac;
         $dadosAnteriores = $dpc->alterar($dadosAnteriores, $where);
-        
+
         $dados = array(
             'idPronac' => $idPronac,
             'idAgente' => $idAgente,
@@ -168,8 +151,8 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
             'dsJustificativa' => $justificativa,
             'stDistribuicao' => 'A',
             'idResponsavel' => $idResponsavel
-        );        
-        
+        );
+
         $dados = $dpc->insert($dados);
         if ($dados) {
             parent::message("O Projeto cultural foi encaminhado com sucesso!", "projetosgerenciar/index", "CONFIRM");
@@ -349,7 +332,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                 /*$where = " idPRONAC           = " . $idpronac .
                          " and idAgente       = " . $rsDistProjComissao->idAgente .
                          " and stDistribuicao = '". $rsDistProjComissao->stDistribuicao."'";
-                
+
                 $tblDistProjComissao->apagar($where);*/
                 try {
 

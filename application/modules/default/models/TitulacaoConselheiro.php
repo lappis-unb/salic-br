@@ -1,18 +1,8 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
-*/
-
-/**
- * Description of TitulacaoConselheiro
- *
- * @author augusto
- */
 class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'agentes';
+    protected $_schema = 'agentes';
     protected $_name = 'tbTitulacaoConselheiro';
 
     public function buscarTitulacaoConselheiro($where=null,$order=array()) {
@@ -41,7 +31,7 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
                 $num++;
             }
         }
-        
+
         $select->order($order);
         return $this->fetchAll($select);
     }
@@ -159,4 +149,3 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
 
 }
 
-?>

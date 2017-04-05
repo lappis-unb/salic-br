@@ -132,7 +132,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         } else if (is_int(strpos($this->_schema, 'scSAC'))) {
             $this->_schema = str_replace('.scSAC', '', $this->_schema);
         }
-
     }
 
     /**
