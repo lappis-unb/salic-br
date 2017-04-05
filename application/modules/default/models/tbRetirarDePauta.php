@@ -1,30 +1,10 @@
 <?php
-/**
- * DAO tbRetirarDePauta 
- * @author emanuel.sampaio - XTI
- * @since 16/01/2012
- * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2012 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
 class tbRetirarDePauta extends MinC_Db_Table_Abstract
 {
-	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "scSAC";
+	protected $_schema  = "BDCORPORATIVO.scSAC";
 	protected $_name    = "tbRetirarDePauta";
 
-
-
-	/**
-	 * M�todo para buscar
-	 * @access public
-	 * @param integer $idPronac
-	 * @return object
-	 */
 	public function buscarDados($where=array(), $order=array())
 	{
 		$select = $this->select();
@@ -51,6 +31,5 @@ class tbRetirarDePauta extends MinC_Db_Table_Abstract
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarDados()
-
-} // fecha class
+	}
+}

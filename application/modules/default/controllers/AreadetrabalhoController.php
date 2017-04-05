@@ -18,12 +18,9 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
         if ($auth->hasIdentity()) { // caso o usuario esteja autenticado
             // verifica as permissoes
             $PermissoesGrupo = array();
-            //$PermissoesGrupo[] = 93;  // Coordenador de Parecerista
-            //$PermissoesGrupo[] = 94;  // Parecerista
-            //$PermissoesGrupo[] = 103; // Coordenador de Analise
             $PermissoesGrupo[] = 118; // Componente da Comissao
-            //$PermissoesGrupo[] = 119; // Presidente da Mesa
-            //$PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
+            $PermissoesGrupo[] = 148;
+            $PermissoesGrupo[] = 151;
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo esta no array de permissoes
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
@@ -45,19 +42,15 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
 
-        parent::init(); // chama o init() do pai GenericControllerNew
+        parent::init();
     }
-
-    // fecha metodo init()
-
-
 
     public function indexAction() {
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // titulo da pagina
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-        $idagente = $idagente['idAgente'];
+        $idagente = $idagente['idagente'];
         //-------------------------------------------------------------------------------------------------------------
         $reuniao = new Reuniao();
         $ConsultaReuniaoAberta = $reuniao->buscar(array("stEstado = ?" => 0));
