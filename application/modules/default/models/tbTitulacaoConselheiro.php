@@ -83,7 +83,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
         );
         $select->where('a.stConselheiro = ?', "A");
         $select->order('c.usu_nome');
-        
+
         return $this->fetchAll($select);
     }
 

@@ -15,14 +15,8 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
     private $getIdAgente  = 0;
     private $getIdGrupo   = 0;
     private $getIdOrgao   = 0;
-//    private $getIdUsuario = 0;
     private $intTamPag = 10;
-    /**
-     * Reescreve o m�todo init()
-     * @access public
-     * @param void
-     * @return void
-     */
+
     public function init() {
 
         // verifica as permiss�es
@@ -51,6 +45,8 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 137;
         $PermissoesGrupo[] = 138;
         $PermissoesGrupo[] = 139;
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 151;
         parent::perfil(1, $PermissoesGrupo);
 
         $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio

@@ -43,6 +43,8 @@ class RastrearagenteController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 137;
         $PermissoesGrupo[] = 138;
         $PermissoesGrupo[] = 139;
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 151;
 
         // defini��o do perfil
         parent::perfil(1, $PermissoesGrupo);

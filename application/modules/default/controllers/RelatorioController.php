@@ -15,12 +15,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
 
-    /**
-     * Reescreve o m�todo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init() {
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         if(empty($auth->getIdentity()->usu_codigo)){
@@ -59,11 +53,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 135; // Tec. De Fiscaliza��o
         $PermissoesGrupo[] = 138; // Coord. de Avalia��o
         $PermissoesGrupo[] = 139; // Tec. de Avalia��o
+        $PermissoesGrupo[] = 151; // Coord. de Avalia��o
+        $PermissoesGrupo[] = 148; // Tec. de Avalia��o
         parent::perfil(1, $PermissoesGrupo);
 
         parent::init();
     }
-
 
     public function indexAction() {
         $this->_redirect("relatorio/proposta");

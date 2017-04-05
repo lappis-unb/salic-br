@@ -1,10 +1,7 @@
-<!-- ========== INICIO MENU ========== -->
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
-
     <!-- inicio: conteudo principal #container -->
     <div id="container">
-
         <!-- inicio: navegacao local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
@@ -64,7 +61,7 @@
                     $("#corfirma").html($("#msg").val());
                     $("#corfirma").dialog('open');
                 });
-                
+
                 $('.ancoraTeste').click(function(){
                     $(this).next().toggle('fast');
                 });

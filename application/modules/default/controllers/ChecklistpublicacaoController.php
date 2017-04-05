@@ -1,15 +1,4 @@
 <?php
-/**
- * CheckListPublicacaoController
- * @author Equipe RUP - Politec
- * @since 30/09/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
 class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 {
     private $getIdUsuario = 0;
@@ -43,6 +32,8 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $PermissoesGrupo[] = 123;
             $PermissoesGrupo[] = 110;
             $PermissoesGrupo[] = 142;
+            $PermissoesGrupo[] = 151;
+            $PermissoesGrupo[] = 148;
 
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est� no array de permiss�es
             {
@@ -103,7 +94,6 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior))?$auth->getIdentity()->usu_org_max_superior:$auth->getIdentity()->usu_orgao;
     }
 
-    // fecha m�todo init()
     public function indexAction(){
 
     }

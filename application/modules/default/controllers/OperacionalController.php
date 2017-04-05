@@ -1,15 +1,4 @@
 <?php
-/**
- * OperacionalController
- * @author Equipe RUP - Politec
- * @since 15/05/2011
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- * @copyright ? 2010 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
 class OperacionalController extends MinC_Controller_Action_Abstract {
 	private $idUsuario = null;
 	private $codOrgaoSuperior = null;
@@ -17,13 +6,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
     private $idPerfil = 0;
     private $idOrgao = 0;
 
-
-	/**
-	 * Reescreve o m?todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
 	public function init() {
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
 		if(empty($auth->getIdentity()->usu_codigo)){
@@ -62,6 +44,8 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 135; // Tec. De Fiscaliza��o
         $PermissoesGrupo[] = 138; // Coord. de Avalia��o
         $PermissoesGrupo[] = 139; // Tec. de Avalia��o
+        $PermissoesGrupo[] = 148; // Coord. de Avalia��o
+        $PermissoesGrupo[] = 151; // Tec. de Avalia��o
 
 		parent::perfil(1, $PermissoesGrupo);
 		parent::init();

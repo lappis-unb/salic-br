@@ -42,6 +42,8 @@ class GerarRelatorioReuniaoController extends MinC_Controller_Action_Abstract {
             $PermissoesGrupo[] = 135; // Tec. De Fiscalização
             $PermissoesGrupo[] = 138; // Coord. de Avaliação
             $PermissoesGrupo[] = 139; // Tec. de Avaliação
+            $PermissoesGrupo[] = 148; // Coord. de Avaliação
+            $PermissoesGrupo[] = 150; // Tec. de Avaliação
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
@@ -62,7 +64,6 @@ class GerarRelatorioReuniaoController extends MinC_Controller_Action_Abstract {
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-// fecha método init()
 
     public function gerarrelatorioreuniaoAction() {
         $reuniao = new Reuniao();
