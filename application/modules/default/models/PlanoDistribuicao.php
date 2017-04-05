@@ -68,13 +68,21 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             $slct->setIntegrityCheck(false);
 
             $cols = array_merge($this->_getCols(), array(
-                "FORMAT(a.vlUnitarioPopularNormal, 'N') as vlUnitarioPopularNormal",
-                "FORMAT( a.vlUnitarioNormal, 'N') AS vlUnitarioNormal",
-                "FORMAT( a.ReceitaPopularNormal, 'N') AS ReceitaPopularNormal",
-                "FORMAT( a.ReceitaPopularPromocional, 'N') AS ReceitaPopularPromocional",
-                "FORMAT( a.PrecoUnitarioPromocional, 'N') AS PrecoUnitarioPromocional",
-                "FORMAT( a.PrecoUnitarioNormal, 'N') AS PrecoUnitarioNormal",
-                "FORMAT(( ReceitaPopularPromocional ) + ( ReceitaPopularNormal )+ ( PrecoUnitarioNormal )+ ( PrecoUnitarioPromocional ),'N') AS Receita"
+                "FORMAT(a.QtdeProponente, '0,0','pt-br') as QtdeProponente",
+                "FORMAT(a.QtdeProduzida, '0,0','pt-br') as QtdeProduzida",
+                "FORMAT(a.QtdePatrocinador, '0,0','pt-br') as QtdePatrocinador",
+                "FORMAT(a.QtdeOutros, '0,0','pt-br') as QtdeOutros",
+                "FORMAT(a.QtdeVendaPopularPromocional, '0,0','pt-br') as QtdeVendaPopularPromocional",
+                "FORMAT(a.QtdeVendaNormal, '0,0','pt-br') as QtdeVendaNormal",
+                "FORMAT(a.QtdeVendaPromocional, '0,0','pt-br') as QtdeVendaPromocional",
+                "FORMAT(a.QtdeVendaPopularNormal, '0,0','pt-br') as QtdeVendaPopularNormal",
+                "FORMAT(a.vlUnitarioPopularNormal, 'N','pt-br') as vlUnitarioPopularNormal",
+                "FORMAT( a.vlUnitarioNormal, 'N','pt-br') AS vlUnitarioNormal",
+                "FORMAT( a.ReceitaPopularNormal, 'N','pt-br') AS ReceitaPopularNormal",
+                "FORMAT( a.ReceitaPopularPromocional, 'N','pt-br') AS ReceitaPopularPromocional",
+                "FORMAT( a.PrecoUnitarioPromocional, 'N','pt-br') AS PrecoUnitarioPromocional",
+                "FORMAT( a.PrecoUnitarioNormal, 'N', 'pt-br') AS PrecoUnitarioNormal",
+                "FORMAT(( ReceitaPopularPromocional ) + ( ReceitaPopularNormal )+ ( PrecoUnitarioNormal )+ ( PrecoUnitarioPromocional ),'N','pt-br') AS Receita"
             ));
 
             $slct->from(array("a"=> $this->_name), $cols, $this->_schema);
