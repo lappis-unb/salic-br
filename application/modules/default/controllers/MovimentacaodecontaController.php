@@ -44,12 +44,6 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	 */
 	private $arquivoTXT = 'DepositoIdentificado';
 
-	/**
-	 * Reescreve o m�todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
 	public function init()
 	{
 		$this->view->title = 'Salic - Sistema de Apoio �s Leis de Incentivo � Cultura'; // t�tulo da p�gina
@@ -83,7 +77,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		$this->getIdGrupo = $GrupoAtivo->codGrupo; // id do grupo ativo
 		$this->getIdOrgao = $GrupoAtivo->codOrgao; // id do �rg�o ativo
 
-		if ($this->getIdOrgao != 166 && $this->getIdOrgao != 272 && $this->getIdOrgao != 340) // aceita somente o �rg�o SEFIC/SACAV && SAV/CAP
+		if ($this->getIdOrgao != 166 && $this->getIdOrgao != 272 && $this->getIdOrgao != 340&& $this->getIdOrgao != 341) // aceita somente o �rg�o SEFIC/SACAV && SAV/CAP
 		{
 			parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
 		}

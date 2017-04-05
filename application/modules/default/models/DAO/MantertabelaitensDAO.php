@@ -81,14 +81,13 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
                 , array(
                     'pr.codigo as idProduto'
                     ,'pr.descricao as Produto'
-                    ,'i.descricao as NomeDoItem'
+                    //,'i.descricao as NomeDoItem'
                 )
                 , $this->_schema
             )
             ->join(array('i' => 'tbplanilhaitens'), '(p.idplanilhaitens = i.idplanilhaitens)', null, $this->_schema)
             ->join(array('e' => 'tbplanilhaetapa'), '(p.idplanilhaetapa = e.idplanilhaetapa)', null, $this->_schema)
             ;
-
 
         if(!empty($nomeItem)) {
             $sql->where('i.descricao = ?', $nomeItem);
@@ -103,10 +102,12 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
             $sql->where('pr.codigo = ?', $idProduto);
         }
 
-        foreach ($where as $coluna => $valor) {
-            $sql->where($coluna, $valor);
+        if(!empty($where)){
+            foreach ($where as $coluna => $valor) {
+                $sql->where($coluna, $valor);
+            }
         }
-        
+
         $sql->order('pr.codigo ASC');
 
         return $db->fetchAll($sql);

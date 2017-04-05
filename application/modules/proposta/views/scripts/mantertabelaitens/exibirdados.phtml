@@ -93,19 +93,19 @@
                 <div class="conteudoImprimivel" id="conteudoImprimivel">
                     <?php if (count($this->pretitem) > 0) { ?>
                         <table class="tabela">
-                            <?php foreach ($this->pretitem as $Produto) { ?>
+                            <?php foreach ($this->pretitem as $Produto) : ?>
                                 <tr>
                                     <td><input type="button" class="btn_adicionar"
                                                id="mostraEtapas_<?php echo $Produto->idProduto; ?>"
-                                               onclick="mostraOcultaElemento('mostraEtapas_<?php echo $Produto->idProduto; ?>'), buscaEtabas('<?php echo $Produto->idProduto; ?>');"/><?php echo $Produto->Produto; ?>
+                                               onclick="mostraOcultaElemento('mostraEtapas_<?php echo $Produto->idProduto; ?>'), buscaEtabas('<?php echo $Produto->idProduto; ?>');"/>
+                                        <?php echo $Produto->Produto; ?>
                                     </td>
                                 </tr>
                                 <tr id="etapa_<?php echo $Produto->idProduto; ?>"
                                     class="mostraEtapas_<?php echo $Produto->idProduto; ?>" style="display:none;">
                                     <td id="divMsg"></td>
                                 </tr>
-
-                            <?php } ?>
+                            <?php endforeach; ?>
                         </table>
 
                     <?php } else { ?>
