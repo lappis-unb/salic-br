@@ -38,7 +38,7 @@
                                     <option value="negado" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='negado') ? 'selected="selected"':''; ?>>Negado</option>
                                     <option value="solicitado" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='solicitado') ? 'selected="selected"':''; ?>>Solicitado</option>
                                 </select>
-                                <input type="button" name="btn_pesquisar" id="btn_pesquisar" class="btn_pesquisar" value="">
+                                <button type="button" name="btn" id="btn_pesquisar" class="btn" value="">pesquisar</button>
                                 <input type="hidden" name="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>">
                             </td>
                         </tr>

@@ -505,18 +505,16 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
             //CODIGO ANTIGO
             //$tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item);
             $where = null;
-            if($tipoPesquisa==1) {
-                $where["i.descricao LIKE (?)"] = "%" . $item . "%";
-//                $where = "i.descricao LIKE '%".$item."%'";
-            }elseif($tipoPesquisa==2) {
-                $where["i.descricao LIKE (?)"] = "%" . $item;
-//                $where = "i.descricao LIKE '%".$item."'";
-            }elseif($tipoPesquisa==3) {
-                $where["i.descricao = ?"] = $item;
-//                $where = "i.descricao = '".$item."'";
-            }elseif($tipoPesquisa==4) {
-                $where["i.descricao <> ?"] = "%" . $item;
-//                $where = "i.descricao  <> '%".$item."'";
+            if ($item){
+                if($tipoPesquisa==1) {
+                    $where["i.descricao LIKE (?)"] = "%" . $item . "%";
+                }elseif($tipoPesquisa==2) {
+                    $where["i.descricao LIKE (?)"] = "%" . $item;
+                }elseif($tipoPesquisa==3) {
+                    $where["i.descricao = ?"] = $item;
+                }elseif($tipoPesquisa==4) {
+                    $where["i.descricao <> ?"] = "%" . $item;
+                }
             }
 
             $tbpretitem = new MantertabelaitensDAO();
