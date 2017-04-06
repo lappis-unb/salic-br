@@ -237,7 +237,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        // xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     } // fecha m�todo buscarProjetosCheckList()
 

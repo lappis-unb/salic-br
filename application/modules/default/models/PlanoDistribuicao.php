@@ -40,7 +40,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
         if(isset($dados['stPlanoDistribuicaoProduto'])){ $tmpRsPlanoDistribuicao->stPlanoDistribuicaoProduto = $dados['stPlanoDistribuicaoProduto'] ; }
 
 //        echo "<pre>";
-//        xd($tmpRsPlanoDistribuicao);
+
         //SALVANDO O OBJETO CRIADO
 
         $id = $tmpRsPlanoDistribuicao->save();

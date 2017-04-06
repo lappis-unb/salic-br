@@ -239,7 +239,7 @@ a.dsJustificativa,
 
 		$select->where('tbepc.idOrgao = ?',$idOrgao);
 		$select->where('tbepc.idPronac = ?',$idPronac);
-	   // xd($select->assemble());
+	   
 
 		return $this->fetchAll($select);
     }

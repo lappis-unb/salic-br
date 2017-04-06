@@ -1281,7 +1281,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                     'Acao' => 2,
                     'stEstado' => 1
                 );
-//                    xd($recebe);
+
                 $gravarHistorico = TramitarDocumentosDAO::GravarHistorico($recebe);
                 parent::message("Solicita��o n�o atendida!", "tramitardocumentos/solicitacoes", "CONFIRM");
             }
