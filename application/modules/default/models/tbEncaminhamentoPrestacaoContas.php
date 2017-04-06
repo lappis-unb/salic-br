@@ -280,7 +280,7 @@ a.dsJustificativa,
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
+        
         return $this->fetchAll($slct);
     }*/
 

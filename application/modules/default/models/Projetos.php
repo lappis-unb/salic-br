@@ -753,7 +753,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where('p.Situacao = ?', $Situacao);
 
 //$select->where ('p.idProjeto is not null','?');
-//xd($select);
+
         if (!empty($arrSituacao)) {
             $select->where('idEncPrestContas in (?)', $arrSituacao);
         }
@@ -3468,7 +3468,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -3503,7 +3503,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-//xd($slct->__toString());
+
         return $this->fetchAll($slct)->current();
     }
 
@@ -4086,7 +4086,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -4129,7 +4129,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -4403,7 +4403,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //            }
 //            $slct->limit($tamanho, $tmpInicio);
 //        }
-//        //xd($slct->__toString());
+//        
 //        return $this->fetchAll($slct);
 //    }
 
@@ -5137,7 +5137,7 @@ class Projetos extends MinC_Db_Table_Abstract
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        //xd($select);
+        
         return $db->fetchAll($select);
     }
 
@@ -5158,7 +5158,7 @@ class Projetos extends MinC_Db_Table_Abstract
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        //xd($select);
+        
         return $db->fetchAll($select);
     }
 

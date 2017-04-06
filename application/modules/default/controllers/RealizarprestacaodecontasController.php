@@ -357,7 +357,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, true);
 
-            //xd($total);
+            
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -522,7 +522,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, $bln_dadosDiligencia);
 
-            //xd($total);
+            
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;

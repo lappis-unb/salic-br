@@ -343,7 +343,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
             }
-            //xd($select);
+            
             return $db->fetchAll($select);
         }
 
@@ -358,7 +358,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
             }
-            //xd($select);
+            
             return $db->fetchAll($select);
         }
 
@@ -372,7 +372,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
             }
-            //xd($select);
+            
             return $db->fetchAll($select);
         }
 
@@ -445,7 +445,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        //xd($select);
+        
         return $db->fetchAll($select);
     }
 }

@@ -118,7 +118,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 
         $orgSuperior = GerenciarPareceresDAO::buscarUnidades($codOrgao);
         //$orgSuperior = GerenciarPareceresDAO::buscarUnidades($idusuario);
-        //xd($codOrgao);
+        
         $org_superior = $orgSuperior[0]->org_superior;
         /******************************************************************/
         $tblProjeto = new Projetos();
@@ -345,7 +345,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 
         $orgSuperior = GerenciarPareceresDAO::buscarUnidades($codOrgao);
         //$orgSuperior = GerenciarPareceresDAO::buscarUnidades($idusuario);
-        //xd($codOrgao);
+        
         $org_superior = $orgSuperior[0]->org_superior;
         /******************************************************************/
         $tblProjeto = new Projetos();
@@ -521,7 +521,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 
         $orgSuperior = GerenciarPareceresDAO::buscarUnidades($codOrgao);
         //$orgSuperior = GerenciarPareceresDAO::buscarUnidades($idusuario);
-        //xd($codOrgao);
+        
         $org_superior = $orgSuperior[0]->org_superior;
         /******************************************************************/
         $tblProjeto = new Projetos();

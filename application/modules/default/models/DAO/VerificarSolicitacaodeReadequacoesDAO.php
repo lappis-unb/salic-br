@@ -99,7 +99,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                 )
                         
                 ->where('pr.IdPRONAC= ?', $idPronac);
-                //xd($slct->__toString());
+                
         return $this->fetchAll($slct);
 
 //        $db= Zend_Db_Table::getDefaultAdapter();
