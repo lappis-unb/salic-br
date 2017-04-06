@@ -236,7 +236,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 		$select->order("d.Descricao");
 		$select->order("e.Descricao");
 
-        #xd($select->assemble());
+        
 
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
@@ -438,7 +438,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $a->group(array('a.CgcCpfMecena','c.Descricao'));
         $a->order(array('2','3'));
 
-        #xd($a->assemble());
+        
 
         return $this->fetchAll($a);
 	} // fecha m�todo buscarDados()

@@ -307,7 +307,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     'idAti' => $atiid
                     //, 'piDisponivel' => $PiDisponivel
                     );
-    //                xd($dados);
+    
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
                 else // altera��o
@@ -324,7 +324,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     'stAdmissibilidade' => 'S',
                     'cdTipoFundo' => $tipoFundo,
                     'idAti' => $atiid);
-    //                xd($dados);
+    
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
             }catch (Exception $e){
@@ -891,7 +891,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $idusuario = $auth->getIdentity()->usu_codigo;
         $this->view->idUsuario = $idusuario;
 
-//        xd($listaPerguntas);
+
         $this->view->listaPerguntas = $listaPerguntas;
     } // fecha m�todo listaformapagamentoAction()
 
@@ -952,7 +952,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $idUsuario = $post->idUsuario;
         $nrFormDocumentoPagamento = $post->nrFormDocumentoPagamento;
 
-//        xd($post);
+
         switch ($operacao) {
             case "inserirOpcao":
                 $this->_helper->layout->disableLayout();
@@ -1015,7 +1015,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $this->_helper->layout->disableLayout();
                 $pesquisaFormaPagamentoDao = new tbOpcaoResposta();
                 $valorArray = $pesquisaFormaPagamentoDao->pesquisaFormaPagamento($nrFormDocumento, $nrVersaoDocumento, $nrPergunta, $nrOpcao);
-//                xd($valorArray);
+
                 foreach ($valorArray as $key => $value){
                     $valorArray[$key] = Conversor::iso88591ParaUtf8_Array($value);
                 }
@@ -1283,7 +1283,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         $edital             =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$idEdital,
         														'idClassificaDocumento = ?'=>23));
-//        xd($edital);
+
         return $edital;
     } // fecha m�todo listaGuiaDigital($idEdital)
 
@@ -1977,7 +1977,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                         'dsRespostaSubj'    =>  $info['dsRespostaSubj']
                      );
 
-//            xd($dados);
+
             if($tdRespostaDAO->insert($dados)==0)
                 echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
             else

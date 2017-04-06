@@ -42,7 +42,7 @@ class tbDistribuicaoProduto extends MinC_Db_Table_Abstract
                              array('pd.Descricao')
                             );
             $slct->where('dp.idDistribuicaoProduto = ?', $idDistribuicaoProduto);
-//            xd($slct->assemble());
+
             return $this->fetchAll($slct);
 
         }
@@ -78,7 +78,7 @@ class tbDistribuicaoProduto extends MinC_Db_Table_Abstract
                              array('pd.Descricao')
                             );
             $slct->where('dp.idPlanoDistribuicao = ?', $idPlanoDistribuicao);
-//            xd($slct->assemble());
+
             return $this->fetchAll($slct);
 
         }

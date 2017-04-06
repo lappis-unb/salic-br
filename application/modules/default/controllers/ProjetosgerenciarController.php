@@ -121,10 +121,10 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
             $a++;
         }
 
-//        xd($componentes);
+
         $buscarcomponentedesabilitados = $titulacao->BuscarComponenteDesabilidados();
         $buscarArea = $ar->buscar();
-//        xd($buscarcomponentedesabilitados);
+
         $this->view->componentesdesabilitados = $buscarcomponentedesabilitados;
         $this->view->componenteshabilitados = $componentes;
         $this->view->area = $buscarArea;
@@ -517,7 +517,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                                         'FecharAnalise' => 2, //0=AnaliseAberta 1=AnaliseFechada 2=DevolvidoAoParecerista
                                         'DtRetorno'     => null,
                                         'idUsuario'     => $idusuario);
-//                                            xd($dados);
+
                                 $tbDistParecer->inserir($dados);
                             }
 

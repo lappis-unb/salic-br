@@ -602,8 +602,8 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 1
             );
 
-//            xd($post);
-//            xd($arrBusca);
+
+
 
             //busca os dados do banco e manda para a vis�o
             $tbTmpCaptacao = new tbTmpCaptacao();

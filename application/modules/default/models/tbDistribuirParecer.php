@@ -439,7 +439,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                         $select->where($coluna, $valor);
                 }
                         $select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
-                       // xd($select->assemble());
+                       
                         return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
@@ -629,7 +629,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $select->distinct('t.idDistribuirParecer');
 
         $select->order('t.stPrincipal desc');
-               // xd($select->assemble());
+               
 		return $this->fetchAll($select);
 
     } // fecha m�todo dadosParaDistribuir()
@@ -1281,7 +1281,7 @@ public function analisePorParecerista($where){
         $select->where('uog.uog_grupo = 94');
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
-           // xd($select->assemble());
+           
         }
         return $this->fetchAll($select);
     }

@@ -2130,7 +2130,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $arrComprovantesImpugnados = array();
         if (is_object($resposta)) {
             foreach ($resposta as $val) {
-		#xd($resposta);
+		
                 $modalidade = '';
                 if($val->idCotacao != '') {
                     $modalidade = 'Cota&ccedil;&atilde;o';

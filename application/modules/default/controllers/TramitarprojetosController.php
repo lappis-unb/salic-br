@@ -1231,7 +1231,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
 //        $destino = $historicodocumento->pesquisarOrgaosPorAcao(2, $idusuario);
         $destino = $historicodocumento->pesquisarOrgaosPorAcao(2);
-//        xd($destino);
+
         $this->view->Destino = $destino;
     }
 

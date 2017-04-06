@@ -84,7 +84,7 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
                 'BDCORPORATIVO.scCorp'
         );
         $slct->where('D.idRelatorioConsolidado = ?', $idRelatorioConsolidado);
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
 
     }

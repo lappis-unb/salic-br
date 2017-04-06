@@ -135,7 +135,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         if(!empty($orgao)){
             $slct->where('pr.Orgao = ?',$orgao );
         }
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 

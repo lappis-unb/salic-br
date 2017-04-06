@@ -1243,6 +1243,6 @@ $startPos = 72;
 //
 //        $tbl = new Projetos();
 //        $rs = $tbl->parecerProjetos();
-//        xd($rs);
+
 //    }
 }

@@ -72,7 +72,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
         public function regularidadeProponenteAction(){
-//            xd('aqui');
+
 	}
 
         public function consultarregularidadeproponenteAction() {
@@ -2724,7 +2724,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
         Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 //            $rs2 = $tbl->buscaProjetosEmPauta($arrBusca, $ordem, null, null, null, $statusAnalise);
         $tbl = new tbDistribuicaoProjetoComissao();
-//        xd($arrBusca);
+
         $rs2 = $tbl->buscaProjetosEmPautaXLS($arrBusca);
 
         //Envia os par�metros para outra fun��o sem a necessidade de criar uma tela .phtml
