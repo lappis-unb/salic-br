@@ -1,7 +1,7 @@
 <?php
 
 class ManteravaliadorController extends MinC_Controller_Action_Abstract {
-	
+
 	public function init() {
         $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
         $auth = Zend_Auth::getInstance(); // pega a autenticação
@@ -12,7 +12,7 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
             // verifica as permissões
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 114; //Coordenador de Editais
-	        
+
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
                 parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
             }
@@ -34,7 +34,7 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 
         parent::init(); // chama o init() do pai GenericControllerNew
     }
-    
+
     public function indexAction() {
         /** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
@@ -49,7 +49,7 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 
         /*         * *************************************************************** */
     }
-	
+
     public function cadastraravaliadorAction()
     {
     	/** Usuario Logado *********************************************** */
@@ -60,41 +60,41 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
         $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        
+
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
-        
+
         $Orgao = new Orgaos();
-        
+
         $NomeOrgao = $Orgao->pesquisarNomeOrgao($codOrgao);
         $this->view->nomeOrgao = $NomeOrgao;
 
         /*         * *************************************************************** */
-        
+
     }
-    
+
     public function manteravaliadorAction()
     {
 
     	/** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $idusuario = $auth->getIdentity()->usu_codigo;
-       	
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
         $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        
+
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
-        
+
         $Orgao = new Orgaos();
 
         $NomeOrgao = $Orgao->pesquisarNomeOrgao($codOrgao);
         $this->view->nomeOrgao = $NomeOrgao;
 
         /*         * *************************************************************** */
-        
-        if (isset($_POST['cpf']) || isset($_GET['cpf'])) { 
+
+        if (isset($_POST['cpf']) || isset($_GET['cpf'])) {
      		if(isset($_POST['cpf'])){
 	        	$cpf = $_POST['cpf'];
 	        	$this->view->cpf = $cpf;
@@ -106,7 +106,7 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 //			xd($cpf);
 		        $buscaIdAgente = ManterAvaliadorDAO::buscaIdAgente($cpf);
 		        $this->view->buscaIdAgente = $buscaIdAgente;
-		    if(!empty( $buscaIdAgente[0]) ){   
+		    if(!empty( $buscaIdAgente[0]) ){
 		        foreach($buscaIdAgente as $idAgente){
 		        	$idAgente = $idAgente->idAgente;
 		        }
@@ -115,8 +115,8 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 		        ;
 		        $avaliador = ManterAvaliadorDAO::buscaAvaliador($cpf, $idAgente);
 	        	$this->view->nomeAvaliador = $avaliador[0]->nome;
-	        	
-		        $this->view->idAgente = $idAgente; 
+
+		        $this->view->idAgente = $idAgente;
 		        if($idAgente){
 		        	$editais = ManterAvaliadorDAO::buscaEditaisAtivos($idAgente);
 		        	$this->view->editais = $editais;
@@ -138,22 +138,20 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
         	$idEdital = $_POST['idEdit'];
         	$cpf = $_POST['cpf2'];
         	$this->view->cpf = $cpf;
-        	//xd($cpf);
         	$alterar = new tbAvaliadorEdital();
         	$dados = array('stAtivo' => 'I');
             $where = "idAvaliador = $idAgente and idEdital = $idEdital";
             $atualizarProjeto = $alterar->alterarAvaliador($dados, $where);
-  
+
 	        	$buscaIdAgente = ManterAvaliadorDAO::buscaIdAgente($cpf);
 		        $this->view->buscaIdAgente = $buscaIdAgente;
-		        //xd($buscaIdAgente);
-		    if($buscaIdAgente){   
+		    if($buscaIdAgente){
 		        foreach($buscaIdAgente as $idAgente){
 		        	$idAgente = $idAgente->idAgente;
 		        }
 		        $avaliador = ManterAvaliadorDAO::buscaAvaliador($cpf, $idAgente);
 		        $this->view->dadosAvaliador = $avaliador;
-		        $this->view->idAgente = $idAgente; 
+		        $this->view->idAgente = $idAgente;
 		        if($idAgente){
 		        	$editais = ManterAvaliadorDAO::buscaEditaisAtivos($idAgente);
 		        	$this->view->editais = $editais;
@@ -167,16 +165,16 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
         	parent::message("Edital Desvinculado com Sucesso!", "/manteravaliador/manteravaliador?cpf={$cpf}", "CONFIRM");
 
         }
-        
+
     	if (isset($_POST['idAgente'])) { //VINCULAR
         	$idAgente= $_POST['idAgente'];
         	$idEdit= $_POST['idEdital2'];
-			
+
         	foreach($idEdit as $idEdital){
 //	        	$buscaEdital = ManterAvaliadorDAO::buscaEditais($idAgente, $idEdital);
 	        	$alterar = new tbAvaliadorEdital();
 	        	$vinculado = $alterar->buscar(array('idAvaliador = ?'=>$idAgente, 'idEdital = ?'=>$idEdital))->toArray();
-	        	
+
 	        	if($vinculado){
 	        		if($vinculado[0]['stAtivo'] == 'I'){
 			        	$dados = array('stAtivo' => 'A');
@@ -200,28 +198,28 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
         }
 
     }
-    
+
     public function incluireditalAction()
     {
     	/** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
         $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        
+
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
         $this->view->usuario = $idusuario;
-        
+
         $Orgao = new Orgaos();
 
         $NomeOrgao = $Orgao->pesquisarNomeOrgao($codOrgao);
         $this->view->nomeOrgao = $NomeOrgao;
 
         /* *************************************************************** */
-        
+
     }
 }

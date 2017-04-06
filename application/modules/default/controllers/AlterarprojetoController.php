@@ -211,7 +211,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto", "Alterarprojeto/consultarprojeto", "ERROR");
         }
@@ -267,7 +266,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto", "Alterarprojeto/consultarprojeto", "ERROR");
         }
@@ -561,12 +559,10 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto", "Alterarprojeto/consultarprojeto", "ERROR");
         }
 
-        //xd($idDirigente);
 
         if (isset($idAgente)) {
 
