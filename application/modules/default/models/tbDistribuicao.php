@@ -40,7 +40,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
         
-        //xd($this->fetchAll($slct));
+        
         return $this->fetchAll($slct);
     }
 
@@ -75,7 +75,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
         
-        //xd($this->fetchAll($slct));
+        
         return $this->fetchAll($slct);
     }
 
@@ -133,7 +133,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
         
-        //xd($this->fetchAll($slct));
+        
         return $this->fetchAll($slct);
     }
 
@@ -170,7 +170,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
         
-        //xd($this->fetchAll($slct));
+        
         return $this->fetchAll($slct);
     }
 

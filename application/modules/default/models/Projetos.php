@@ -3547,7 +3547,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-//xd($this->fetchAll($slct));
+
         return $this->fetchAll($slct);
     }
 
@@ -3737,7 +3737,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('dbo.fnchecarConclusao(pro.idPronac) = 1');
         $slct->where('not exists (Select * from Parecer pr where pro.idPronac=pr.idPronac)');
 
-//xd($this->fetchAll($slct));
+
 
 
         return $this->fetchAll($slct);
@@ -3793,7 +3793,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('idProjeto is not null');
         $slct->where('exists(Select * from Parecer pr where pro.idPronac=pr.idPronac)');
         
-//xd($this->fetchAll($slct));
+
 //return $this->fetchAll($slct);
 
 
@@ -3849,7 +3849,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('idProjeto is not null');
         $slct->where('exists(Select * from Parecer pr where pro.idPronac=pr.idPronac)');
 
-//xd($this->fetchAll($slct));
+
 
 
         return $this->fetchAll($slct);
@@ -4066,7 +4066,7 @@ class Projetos extends MinC_Db_Table_Abstract
             foreach ($where as $coluna => $valor) {
                 $slct2->where($coluna, $valor);
             }
-//xd($slct2->__toString());
+
             $rs = $this->fetchAll($slct2)->current();
             if ($rs) {
                 return $rs->total;
@@ -4172,7 +4172,7 @@ class Projetos extends MinC_Db_Table_Abstract
             foreach ($where as $coluna => $valor) {
                 $slct2->where($coluna, $valor);
             }
-//xd($slct2->__toString());
+
             $rs = $this->fetchAll($slct2)->current();
             if ($rs) {
                 return $rs->total;
@@ -4293,7 +4293,7 @@ class Projetos extends MinC_Db_Table_Abstract
             foreach ($where as $coluna => $valor) {
                 $slct2->where($coluna, $valor);
             }
-//xd($slct2->__toString());
+
             $rs = $this->fetchAll($slct2)->current();
             if ($rs) {
                 return $rs->total;
@@ -4319,7 +4319,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
 
-//xd($this->fetchAll($slct));
+
         return $this->fetchAll($slct);
     }
 
@@ -4387,7 +4387,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //            foreach ($where as $coluna => $valor) {
 //                $slct2->where($coluna, $valor);
 //            }
-//            //xd($slct2->__toString());
+//            
 //            $rs = $this->fetchAll($slct2)->current();
 //            if($rs){ return $rs->total; }else{ return 0; }
 //        }
@@ -4503,7 +4503,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         $slct->where('p.IdPRONAC = ?', $idPronac);
 
-//xd($this->fetchAll($slct));
+
 
 
         return $this->fetchAll($slct);

@@ -289,7 +289,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         );
 
         $slct->where('p.IdPRONAC = ?',$idPronac );
-        //xd($this->fetchAll($slct));
+        
 
 
         return $this->fetchAll($slct);

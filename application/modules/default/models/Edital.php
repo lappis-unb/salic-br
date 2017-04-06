@@ -74,7 +74,7 @@ class Edital extends MinC_Db_Table_Abstract{
             $slct->where($coluna, $valor);
         }
 //        xd($slct->assemble());
-        //xd($this->fetchAll($slct));
+        
         //return $this->fetchAll($slct);
 
     }

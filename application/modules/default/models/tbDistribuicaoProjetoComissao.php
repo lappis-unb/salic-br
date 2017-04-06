@@ -131,7 +131,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 $slct2->where($coluna, $valor);
             }
 
-            //xd($slct2->__toString());
+            
             $rs = $this->fetchAll($slct2)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
