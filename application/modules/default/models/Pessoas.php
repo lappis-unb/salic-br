@@ -56,7 +56,7 @@ class Pessoas extends MinC_Db_Table_Abstract
     public function salvarDados($dados)
     {
 
-        //xd($dados);
+        
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
         $tmpTblPessoas = new Pessoas();
 

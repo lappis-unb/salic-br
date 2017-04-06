@@ -1019,7 +1019,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     'idUsuario'=>$idUsuario
             );
             $db= Zend_Db_Table::getDefaultAdapter();
-            //xd($dados);
+            
             $db->insert('SAC.dbo.tbPlanilhaProposta', $dados);
             return $db->lastInsertId();
         }

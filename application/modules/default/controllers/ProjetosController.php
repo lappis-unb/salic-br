@@ -379,7 +379,7 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                         'stAvaliacao'=>$resu->ParecerFavoravel,
                         'dsAvaliacao'=>$resu->ParecerDeConteudo
                     );
-                    //xd($data);
+                    
                     $analiseaprovacao->inserir($data);
                 }
 

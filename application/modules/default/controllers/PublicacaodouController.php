@@ -783,7 +783,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         $buscarprojetos = $pr->buscarProjetosAprovados($where);
         $this->view->dados = $buscarprojetos;
         $this->view->portaria = $portaria;
-        //xd($buscarprojetos);
+        
     }
 
     public function consultarPortariaAction(){

@@ -1489,7 +1489,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
-//xd($notification->getResponse());
+
     }
 
     public function transferenciaColetivaContaCaptacaoAction(){

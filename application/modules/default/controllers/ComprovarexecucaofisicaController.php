@@ -328,7 +328,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $linkFinal = '-final';
         }
 //
-//xd(filter_input(INPUT_GET, 'relatoriofinal'));
+
         try{
 
         //** Verifica se o usu�rio logado tem permiss�o de acesso **//

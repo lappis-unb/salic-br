@@ -623,7 +623,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
           $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho */
 
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-            //xd($arquivoNome);
+            
             $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens?o
             $arquivoBinario = Upload::setBinario($arquivoTemp); // bin�rio
             $arquivoHash = Upload::setHash($arquivoTemp); // hash

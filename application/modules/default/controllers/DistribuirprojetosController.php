@@ -290,7 +290,7 @@ class DistribuirprojetosController extends MinC_Controller_Action_Abstract {
             $this->view->alerta = "Nenhum projeto selecionado";
             //$retorno = "Nenhum projeto selecionado";
         }
-        //xd($this->view->PreProjetos);
+        
      }
 
 
@@ -421,7 +421,7 @@ class DistribuirprojetosController extends MinC_Controller_Action_Abstract {
                  }
             }
         }
-//xd($novosvinculos);
+
        $listaprojetos = $this->listaprojetos($PreProjetos);
         if(strlen($error)){
 //        	parent::message($error, "/distribuirprojetos/redistribuir", "ALERT");
@@ -567,7 +567,7 @@ class DistribuirprojetosController extends MinC_Controller_Action_Abstract {
 
         $this->_helper->layout->disableLayout ();
         $this->_helper->viewRenderer->setNoRender(true);
-        //xd($_POST);
+        
         $idDistribuicao = !empty($_REQUEST['idDistribuicao']) ? (int)$_REQUEST['idDistribuicao'] : null;
         if(!empty($idDistribuicao) and $idDistribuicao > 0){
 
