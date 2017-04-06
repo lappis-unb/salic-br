@@ -23,7 +23,6 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $codOrgao = $GrupoAtivo->codOrgao; //  Orgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         //$this->view->idUsuarioLogado = $idusuario;
-        //xd($auth->getIdentity());
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC72
         if (isset($auth->getIdentity()->usu_codigo))
         {
@@ -329,7 +328,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
             }catch (Exception $e){
-                
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
             $arrFases[0][0] = $faseElabIni;
@@ -404,7 +403,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     }
                 } // fecha foreach fases
             }catch (Exception $e){
-                
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
 
@@ -447,7 +446,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/dadosgerais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
                 }
             }catch (Exception $e){
-                
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
         } // fecha if ($_POST)
@@ -805,7 +804,6 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 //        $ListaPerguntasDao = new tbPerguntaFormDocto();
 //        $listaPerguntas = $ListaPerguntasDao->listaPerguntas($nrFormDocumento, $nrVersaoDocumento);
 //        $this->view->listaPerguntas = $listaPerguntas;
-        //xd($listaPerguntas);
 
 //        if($nrPergunta){
 //            $FormaPagamentoDao = new tbPergunta();
@@ -1021,7 +1019,6 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 foreach ($valorArray as $key => $value){
                     $valorArray[$key] = Conversor::iso88591ParaUtf8_Array($value);
                 }
-//xd($valorArray);
                 echo Conversor::jsonEncodeParaIso88591($valorArray);
 
                 //$this->pesquisaFormaPagamento($this->formaPagamento);
@@ -1187,14 +1184,12 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                         }
                     }
                 }
-                //xd($verificar);
                 if($verificar){
                     $excluirPerguntaFormDoctoDAO = new tbPerguntaFormDocto();
                     $where = array('nrFormDocumento = ?' => $nrFormDocumento,
                                    'nrVersaoDocumento = ?' => $nrVersaoDocumento,
                                    'nrPergunta = ?' => $nrPergunta);
                     $excluirPerguntaFormDocto = $excluirPerguntaFormDoctoDAO->buscar($where);
-                    //xd($excluirPerguntaFormDocto);
                     if(count($excluirPerguntaFormDocto)>0) {
                     	$excluirPerguntaFormDoctoDAO->delete($where);
                         parent::message("Exclus&atilde;o realizada com sucesso!", "/Cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "CONFIRM");
@@ -2555,7 +2550,6 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 			$currentPage = $this->_getParam('page', 1);
 			$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(5);
 			$this->view->dadosEditalAvaliador = $paginator;
-        	//xd($paginator);
         	$this->view->qtdDoc    = count($dadosEdital); // quantidade
 
 			// ========== FIM PAGINA��O ==========

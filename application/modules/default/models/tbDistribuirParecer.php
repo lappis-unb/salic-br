@@ -36,7 +36,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
         $slct->where('p.IdPRONAC = ? ', $idPronac);
 
-        //xd($slct->assemble());
+        
         return $this->fetchRow($slct);
     }
     public function BuscarQtdAvaliacoes($idPronac, $idProduto)
@@ -52,7 +52,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $slct->where('t.idProduto = ? ', $idProduto);
         $slct->where('t.DtDevolucao is not null', '');
 
-        //xd($slct->assemble());
+        
         return $this->fetchRow($slct);
     }
 
@@ -74,7 +74,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 				 INNER JOIN TABELAS.dbo.usuarios AS usu ON usu.usu_identificacao = age.CNPJCPF
 				 WHERE (idPronac = '$idPronac') and d.idOrgao = $codOrgao and SAC.dbo.fnNomeUsuario(d.idUsuario) is not null";
 
-                //xd($sql);
+                
 		try
 		{
 			$db = Zend_Db_Table::getDefaultAdapter();
@@ -84,7 +84,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 		{
 			$this->view->message = "Erro ao buscar Projetos: " . $e->getMessage();
 		}
-		//xd($sql);
+		
 		return $db->fetchAll($sql);
     }// fecha m�todo buscarHistoricoDeAnalise()
 
@@ -1368,7 +1368,7 @@ public function analisePorParecerista($where){
 
             $slct->where('dp.idPRONAC = ?',$idpronac);
             $slct->where('gru.gru_codigo = 93 or gru.gru_codigo = 94');
-//xd($slct->assemble());
+
             return $this->fetchAll($slct);
         }
         public function analisePorPareceristaPagamento($where){
@@ -1697,7 +1697,7 @@ public function analisePorParecerista($where){
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -1953,7 +1953,7 @@ public function analisePorParecerista($where){
         $slct->group('a.idPRONAC,b.Descricao,c.Sigla,a.Observacao,convert(char(10),a.DtEnvio,121),convert(char(10),a.DtRetorno,121), DATEDIFF(DAY,a.DtEnvio,a.DtRetorno)');
         $slct->order(array('b.Descricao','c.Sigla','convert(char(10),a.DtRetorno,121)'));
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -1977,7 +1977,7 @@ public function analisePorParecerista($where){
         }
         $slct->group('a.idProduto');
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct)->count();
     }
 

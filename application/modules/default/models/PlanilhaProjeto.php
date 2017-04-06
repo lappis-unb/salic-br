@@ -53,7 +53,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         );
         
         $slct->where('pp.idPRONAC = ? ', $idPronac);
-        //xd($slct->assemble());
+        
         return $this->fetchRow($slct);
     }
 	

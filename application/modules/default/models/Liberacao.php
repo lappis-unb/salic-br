@@ -42,7 +42,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
 
         $slct->where('p.IdPRONAC = ?',$idPronac );
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct)->current();
     }
 
@@ -253,7 +253,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 

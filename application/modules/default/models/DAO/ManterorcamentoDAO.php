@@ -72,7 +72,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-        //xd($sql);
+        
         return $db->fetchAll($sql);
     }
 
@@ -281,7 +281,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                        and pp.idPlanilhaProposta = {$array['idPlanilhaProposta']}";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        //xd($sql);
+        
 
         throw new Exception('Utilizar buscarDadosCustos em Proposta_Model_DbTable_TbPlanilhaProposta');
         return $db->fetchAll($sql);
@@ -346,7 +346,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-        //xd($sql);
+        
         return $db->fetchAll($sql);
     }
 
@@ -397,7 +397,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         }
 
         throw new Exception("Método transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
-        //xd($sql);
+        
         return $db->fetchAll($sql);
     }
 
@@ -646,7 +646,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 //        }
 
         //$sql .= " order by 2 asc";
-		//xd($sql);
+		
         throw new Exception('Método transferido para tbItensPlanilhaProduto');
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -758,7 +758,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 WHERE idPreProjeto = {$idPreProjeto}
                 GROUP BY p.Codigo, p.Descricao, idPreProjeto, p.Codigo, pp.FonteRecurso ";
 
-        //xd($sql);
+        
         $sql.= " ORDER BY p.Descricao ";
 
         $db= Zend_Db_Table::getDefaultAdapter();

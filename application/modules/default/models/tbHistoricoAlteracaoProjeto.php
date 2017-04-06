@@ -83,7 +83,7 @@ class tbHistoricoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//xd($slct->assemble());
+
             
         return $this->fetchAll($slct);
        

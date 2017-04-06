@@ -122,7 +122,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
         }
 
         $sql .= implode(" AND ", $filtros);
-        //xd($sql);
+        
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -307,7 +307,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 			$sql .= " AND hd.idDocumento=".$idDocumento."";
 		}
 		
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
@@ -340,7 +340,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 						INNER JOIN SAC.dbo.Projetos pro			ON doc.idPronac = pro.IdPRONAC
 						INNER JOIN SAC.dbo.tbTipoDocumento td	ON doc.idTipoDocumento = td.idTipoDocumento
 						WHERE hd.Acao in ($acao) AND hd.stEstado = 1 AND hd.idDocumento <> 0 AND hd.idDocumento = ".$idDocumento;
-		//xd($sql);					
+							
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
@@ -775,7 +775,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		$sql = "select Processo, nomeprojeto , TABELAS.dbo.fnEstruturaOrgao(orgao,0) localizacao, Orgao, IdPRONAC
 				from sac.dbo.projetos p
 				where anoprojeto+sequencial = '$pronac'";
-		//xd($sql);
+		
 						
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -824,7 +824,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}						
 		
 		
-//		//xd($sql);					
+//							
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -939,7 +939,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 								WHERE  (h.idDocumento <> 0) AND (h.idDocumento is not null) AND p.Orgao = ".$orgao;	
 		 
 	
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);

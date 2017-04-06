@@ -64,7 +64,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         //adicionando linha order ao select
         $slct->order($order);
 
-        //xd($slct->assemble());
+        
         // retornando os registros
         return $this->fetchAll($slct);
 
@@ -102,7 +102,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
                         FROM SAC.dbo.tbPlanilhaAprovacao
                         WHERE idPronac = '$idPronac'
         ";
-        //xd($sql);
+        
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 

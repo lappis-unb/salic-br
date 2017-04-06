@@ -671,7 +671,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -707,7 +707,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         $slct->where('pr.IdPRONAC = ?', $idPronac);
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -1831,7 +1831,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-//xd($slct->assemble());
+
 
         return $this->fetchAll($slct);
     }
@@ -3525,7 +3525,7 @@ class Projetos extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -3546,7 +3546,7 @@ class Projetos extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//xd($slct->assemble());
+
 //xd($this->fetchAll($slct));
         return $this->fetchAll($slct);
     }
@@ -3580,7 +3580,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
         $slct->order('app.nrNotaFinal desc');
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -3736,7 +3736,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('idProjeto is not null');
         $slct->where('dbo.fnchecarConclusao(pro.idPronac) = 1');
         $slct->where('not exists (Select * from Parecer pr where pro.idPronac=pr.idPronac)');
-//xd($slct->assemble());
+
 //xd($this->fetchAll($slct));
 
 
@@ -3792,7 +3792,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('dbo.fnDtEnvioVinculada(pro.idPronac) is not null');
         $slct->where('idProjeto is not null');
         $slct->where('exists(Select * from Parecer pr where pro.idPronac=pr.idPronac)');
-        //xd($slct->assemble());
+        
 //xd($this->fetchAll($slct));
 //return $this->fetchAll($slct);
 
@@ -3848,7 +3848,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('dbo.fnDtEnvioVinculada(pro.idPronac) is not null');
         $slct->where('idProjeto is not null');
         $slct->where('exists(Select * from Parecer pr where pro.idPronac=pr.idPronac)');
-//xd($slct->assemble());
+
 //xd($this->fetchAll($slct));
 
 
@@ -3970,7 +3970,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -4318,7 +4318,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->limit($tamanho, $tmpInicio);
         }
 
-//xd($slct->assemble());
+
 //xd($this->fetchAll($slct));
         return $this->fetchAll($slct);
     }
@@ -4477,7 +4477,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFinal')
         );
 
-//xd($slct->assemble());
+
 // paginacao
         if ($inicio <= 0)
             return $this->fetchAll($slct);
@@ -4502,7 +4502,7 @@ class Projetos extends MinC_Db_Table_Abstract
         );
 
         $slct->where('p.IdPRONAC = ?', $idPronac);
-//xd($slct->assemble());
+
 //xd($this->fetchAll($slct));
 
 
@@ -4685,7 +4685,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
         $slct->order(array('p.AnoProjeto', 'p.Sequencial', 'd.idProduto', 'd.TipoAnalise'));
 
-//xd($slct->assemble());
+
 
         $selectAux = $this->select();
         $selectAux->setIntegrityCheck(false);
