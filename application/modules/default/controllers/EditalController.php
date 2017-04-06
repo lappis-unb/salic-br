@@ -62,7 +62,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelTextoEdital = new tbTextoEdital();
         $editalMontado = $modelTextoEdital->buscarTextoEdital($idEdital);
         $this->view->editalmontado = $editalMontado;
-//        xd($editalMontado);
+
         $modelCriterioAvaliacao = new tbCriteriosAvaliacao();
         $criterioAvaliacao  =   $modelCriterioAvaliacao->buscarcriterioporidEdital($idEdital);
         $this->view->criterioavaliacao = $criterioAvaliacao;
@@ -303,7 +303,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
             $dadosEdital = $tbEdital->buscar(array('idEdital = ?' => $idEdital))->current();
             $this->view->dadosEdital = $dadosEdital;
             
-//            xd($dadosEdital);
+
             
             $tbEditalTipoParticipacao = new tbEditalTipoParticipacao();
             $dadosParticipacaoEdital = $tbEditalTipoParticipacao->buscar(array('idEdital = ?' => $idEdital));
@@ -472,7 +472,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
 //        $listaMunicipios = $modelMunicipios->buscar(array(), array('idUFIBGE','Descricao'));
         $this->view->listaMunicipios = $listaMunicipios;
         
-//        xd(count($listaMunicipios));
+
         
         $criterioParticipacao = $modelCriterioParticipacao->buscarCriterioPorIdCategoria($idCategoria);
         $this->view->criterioParticipacao = $criterioParticipacao;
@@ -984,7 +984,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelCriterioParticipacao          = new tbCriterioParticipacao();
         $modelRegiaoCriterioParticipacao    = new tbRegiaoCriterioParticipacao();
 
-//        xd($this->getRequest()->getParams());
+
         
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->beginTransaction();
@@ -1192,7 +1192,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $qtParcela              = $this->_request->getParam('qtdParcelas'); 
         $parcelas               = $this->_request->getParam('parcela'); 
         
-//        xd($this->_request->getParams());
+
         
         $this->view->idEdital   = $idEdital;
         
@@ -1556,7 +1556,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
                 'idTpPremiacao'         => $tipoPremiacao
             );
 
-//            xd($dados);
+
             $where = array('idEdital = ?' => $idEdital);
             //Atualizando informações na tabela tbEdital
             $nEdital->salvardadosgerais($dados, $where);
@@ -1678,7 +1678,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
             'txCriterioAvaliacao'   => $txtCriterio
         );
 
-//        xd($dados);
+
         $nEdital = new tbCriteriosAvaliacao();
         
         

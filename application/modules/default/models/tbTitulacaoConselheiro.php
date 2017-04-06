@@ -32,7 +32,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
                             'AGENTES.dbo'
                            );
         $select->order('nm.Descricao');
-       // xd($select->assemble());
+       
         if($retornaSQL)
             return $select;
         else

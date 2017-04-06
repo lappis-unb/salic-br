@@ -224,7 +224,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                              array('pd.Descricao')
                             );
             $slct->where('dp.idDistribuicaoProduto = ?', $idDistribuicaoProduto);
-//            xd($slct->assemble());
+
             return $this->fetchAll($slct);
 
         }

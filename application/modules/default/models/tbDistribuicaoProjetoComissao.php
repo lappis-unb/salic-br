@@ -480,7 +480,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 
         //RETORNA RESULTADO DA PRIMEIRA QUERY - PROJETO NAO ANALISADOS
         if($analise == "1"){
-//            xd($slctNaoAnalisados->assemble());
+
             if($count){
                 return $this->fetchAll($slctNaoAnalisados)->count();
             }

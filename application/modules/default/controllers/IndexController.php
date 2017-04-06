@@ -291,7 +291,7 @@ class IndexController extends MinC_Controller_Action_Abstract
             }
         }
         $qtdmensagem = count($verificarmensagem);
-//                xd($verificarmensagem);
+
         if($qtdmensagem > 0){
             $a = 0;
             $idpronac = 0;
