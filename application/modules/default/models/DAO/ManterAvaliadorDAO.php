@@ -21,7 +21,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
                                         INNER JOIN AGENTES.dbo.Nomes as n on n.idAgente = a.idAgente
                                 where usu_identificacao = '$cpf'";    
             
-        //xd($sql);
+        
     	$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -60,7 +60,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
 		$sql = "select * from SAC.dbo.Edital where idEdital = $idEdital and NrEdital is not null";
 		
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -84,7 +84,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 //			        inner join BDCORPORATIVO.scQuiz.tbFormDocumento c on c.idEdital = b.idEdital 
 //			    where  c.stFormDocumento = 'A' and b.idOrgao = $codOrgao
 //			    order by b.NrEdital,nmFormDocumento asc ";
-//		//xd($sql);
+//		
 //		$db= Zend_Db_Table::getDefaultAdapter();
 //        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
@@ -103,7 +103,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 				  where  b.idClassificaDocumento not in (23,24,25) and
 				  a.dtFimFase >= GETDATE() and (idFaseEdital = 4)
 				  order by dtFimFase";
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -116,7 +116,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     	if($idEdital){
     		$sql .= " and idEdital = $idEdital";
     	}
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -127,7 +127,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     public static function buscaEditaisAtivos ($idAgente = null)
     {
     	$sql = "select * from BDCORPORATIVO.scSAC.tbAvaliadorEdital where idAvaliador = $idAgente and stAtivo = 'A'";
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -137,7 +137,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 	public static function inserirAgente ($cpf, $idusuario)
     {
     	$sql = "insert into AGENTES.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, GETDATE(), 0, $idusuario)";
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -147,7 +147,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 	public static function inserirEmail ($idAgente, $email, $idusuario)
     {
     	$sql = "insert into AGENTES.dbo.Internet (idAgente, TipoInternet, Descricao, Status, Divulgar, Usuario) values ($idAgente, 28, '$email', 0, 1, $idusuario)";
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -157,7 +157,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 	public static function atualizarEmail ($idAgente, $email, $idusuario)
     {
     	$sql = "update AGENTES.dbo.Internet set Descricao = '$email' where idAgente = $idAgente and TipoInternet = 28 and Usuario = $idusuario";
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -167,7 +167,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 	public static function inserirNome ($idAgente, $nome, $idusuario)
     {
     	$sql = "insert into AGENTES.dbo.Nomes (idAgente, TipoNome, Descricao, Status, Usuario) values ($idAgente, 18, '$nome', 0, $idusuario)";
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -177,7 +177,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 	public static function atualizarNome ($idAgente, $nome, $idusuario)
     {
     	$sql = "update AGENTES.dbo.Nomes set Descricao = '$nome' where idAgente = $idAgente and TipoNome = 18 and Usuario = $idusuario";
-		//xd($sql);
+		
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

@@ -246,7 +246,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $rs = $tbl->buscar(array("stEstado = ?"=>0),$ordem, null, null);
 
                                     $total = count($rs);
-                                    //xd($total);
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
@@ -853,7 +852,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		if(!empty($post->diligenciado)){
 			$arrBusca["Diligenciado = ?"] = $post->diligenciado;
 		}
-		//xd($pag);
 
 		$tblProrrogacao = new Prorrogacao();
 
@@ -876,7 +874,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                 } else {
                     $total = $tblProrrogacao->pegaTotal($arrBusca);
                 $total = $total["total"];
-                    //xd($total);
                     //if ($fim>$total) $fim = $total;
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
@@ -886,7 +883,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('idProrrogacao DESC');}
 
                     $rs = $tblProrrogacao->buscar($arrBusca, $ordem, $tamanho, $inicio);
-                    //xd($rs);
                 }
 		$this->view->prorrogacoes 	 = $rs;
 		$this->view->pag 			 = $pag;
@@ -896,7 +892,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$this->view->totalPag        = $totalPag;
 		$this->view->parametrosBusca = $_POST;
 		$this->view->urlPaginacao    = $this->_urlPadrao."/operacional/pedido-prorrogacao";
-		//xd($rs);
 	}
 
 	public function agenciaBancariaAction(){
@@ -1032,9 +1027,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 				}
 			}
 		}
-		//xd($arrBusca);
                 $tbl   = new ContaBancaria();
-		//xd($_POST);
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho = -1;
@@ -1061,7 +1054,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                     $total = $tbl->pegaTotal($arrBusca);
                     $total = $total["total"];
 
-                    //xd($total);
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
@@ -1070,7 +1062,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('Descricao ASC');}
 
                     $rs = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
-                    //xd($total);
                 }
 		$this->view->contasBancarias = $rs;
 		$this->view->pag 			 = $pag;
@@ -1107,7 +1098,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		if(!empty($post->tipoParecer)){ $arrBusca["pa.TipoParecer = ?"] = $post->tipoParecer; }
 		if(!empty($post->area)){ $arrBusca["a.Codigo = ?"] = $post->area; }
 		if(!empty($post->situacao)){ $arrBusca["s.Codigo = ?"] = $post->situacao; }
-		//xd($arrBusca);
 
 		foreach($_POST["visaoAgente"] as $campo){
 			$arrCampos = explode("_", $campo);
@@ -1117,7 +1107,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 				}
 			}
 		}
-		//xd($campos);
 		//        foreach($_POST["visaoAgente"] as $campo){
 		//            $arrCampos = explode("_", $campo);
 		//            if($arrCampos[0] == "cmpsOrd"){
@@ -1127,8 +1116,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		//            }
 		//        }
 		//$campos = implode(", ", $campos);
-		//xd($campos);
-		//xd($_POST);
                  $tbl   = new Projetos();
 
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
@@ -1160,13 +1147,11 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                     $total = $tbl->pegaTotalProjetosPautaReuniao($arrBusca);
                     $total = $total["total"];
 
-                    //xd($total);
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
 
                     $rs = $tbl->buscarProjetosPautaReuniao($arrBusca, array(new Zend_Db_expr("Area ASC")), $tamanho, $inicio);
-                    //xd($rs);
                 }
 		$this->view->projetos 		 = $rs;
 		$this->view->pag 		 = $pag;
@@ -1423,7 +1408,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                     foreach($rs as $item){
                             $arr[$item->FundoNome][$item->dsClassificaDocumento][$item->Edital][] = $item;
                     }
-                    //xd($arr);
                 }
 		$this->view->registros 		 = $arr;
 		$this->view->pag 			 = $pag;
@@ -1462,7 +1446,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
 
 			$rs    = $tbl->diagnostico($arrBusca,$ordem);
-			//xd(count($rs));
 			$this->_forward('gerar-pdf-xls-diagnostico',null,null,array('valores'=>$rs,'gerar'=>'html'));
 		} else if(isset($post->xls) && !empty($post->xls) && $post->xls == 'xls'){
 			$arrBusca = array();
@@ -1470,7 +1453,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
 
 			$rs    = $tbl->diagnostico($arrBusca,$ordem);
-			//xd(count($rs));
 			$this->_forward('gerar-pdf-xls-diagnostico',null,null,array('valores'=>$rs,'gerar'=>'xls'));
 		}
 		//$arrBusca = array("o.Status = ?"=>0, "s.StatusProjeto <> ?"=>0, "o.idSecretaria = ?"=>$this->codOrgaoSuperior);
@@ -1563,7 +1545,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 		//montando parametros de busca dos campos de data
 		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
-		//xd($arrBusca);
 
 		foreach($_POST["visaoAgente"] as $campo){
 			$arrCampos = explode("_", $campo);
@@ -1573,7 +1554,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 				}
 			}
 		}
-		//xd($campos);
 		//        foreach($_POST["visaoAgente"] as $campo){
 		//            $arrCampos = explode("_", $campo);
 		//            if($arrCampos[0] == "cmpsOrd"){
@@ -1583,8 +1563,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		//            }
 		//        }
 		//$campos = implode(", ", $campos);
-		//xd($campos);
-		//xd($_POST);
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho = -1;
@@ -1612,13 +1590,11 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
                     $total = $tbl->extratoPautaItercambio($arrBusca, $ordem, null, null, true);
 
-                    //xd($total);
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
 
                     $rs = $tbl->extratoPautaItercambio($arrBusca, $ordem, $tamanho, $inicio);
-                    //xd($rs);
                 }
 		$this->view->projetos 		 = $rs;
 		$this->view->pag 			 = $pag;
@@ -1765,7 +1741,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 		//BUSCA PARA DATAS
 		//$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtDistribuicao", "dtDistribuicao", "dpc.DtDistribuicao", "dtDistribuicao_Final", $arrBusca);
-		//xd($arrBusca);
 
 
                  $tbl   = new tbDistribuicaoProjetoComissao();
@@ -1841,7 +1816,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
                     $total = $tbl->buscarProjetoEmPauta($arrBusca, array(), null, null, true, $statusAnalise);
 
-                    //xd($total);
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
@@ -2116,7 +2090,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 				if(!empty($post->componente)){ $arrBusca["z.idAgente <> ?"] = $post->componente; }
 			}
 		}
-		//xd($arrBusca);
 
 		if(!empty($post->orgao)){
 			if($post->tipoPesqEntidade == 'EIG'){
@@ -2177,7 +2150,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
                     $total = $tbl->buscarProjetosAvaliados($arrBusca, array(), null, null, true);
 
-                    //xd($total);
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
@@ -2211,7 +2183,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			$rs = $tbl->buscarProjetosAvaliados($arrBusca, $ordem);
 			$this->resumoProjetosAvaliadosCnic($rs);
 		}
-		//xd($rs);
 
 		$this->view->registros 		  = $rs;
 		$this->view->arrQtdeRegistros = $arrQtdeRegistros;
@@ -2404,7 +2375,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
                     $total = $tbl->buscarProjetosVotoAlterado($arrBusca, array(), null, null, true);
 
-                    //xd($total);
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
@@ -2809,7 +2779,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 //		ini_set('max_execution_time', 900);
 //		$this->_response->clearHeaders();
 //		$dados = $this->_getAllParams();
-//		//xd($dados);
 //		$this->view->projetos 	= $dados;
 //		$this->view->gerar 		= $dados;
 //	}
@@ -3030,7 +2999,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$fim    = $inicio + $this->intTamPag;
 
 		$total = $tbl->buscarDemonstrativoDeCaptacao($arrBusca, array(), null, null, true,$arrBuscaValor);
-		//xd($total);
 
 		$totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
 		$tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
@@ -3106,7 +3074,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 				$lista[$i]['Sigla'] 				= $d->Sigla;
 				$i++;
 			}
-			//xd($lista);
 
 			$rsSomatorioAutorizado = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorAutorizado($arrBusca, $arrBuscaValor);
 			$rsSomatorioCaptado    = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorCaptado($arrBusca, $arrBuscaValor);
@@ -3126,7 +3093,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			foreach ($teto as $valorRenuncia){$vlRenunciaTotal = $valorRenuncia->somatorioAnoBusca;}
 			foreach ($rsSomatorioCaptado as $valorCaptado)   {$vlCaptado = $valorCaptado->somatorioVlCaptado;}
 
-			//xd($vlCaptado);
 			$valorRenunciaFiscal = $vlRenunciaTotal - $vlCaptado;
 
 			//Envia os par�metros para outra fun��o sem a necessidade de criar uma tela .phtml
@@ -3136,7 +3102,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 																  'teto'=>$teto,
 																  'renuncia'=>$valorRenunciaFiscal,
 																  'gerar'=>'html'));
-		//xd('sdf');
 		}
 
 		if(isset($post->gerarXls) && $post->gerarXls == 'xls')
@@ -3196,7 +3161,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 		//Passa os valores para a view
 		$rs = $tbl->buscarDemonstrativoDeCaptacao($arrBusca, $ordem, $tamanho, $inicio, null,$arrBuscaValor);
-		//xd($rs);
 
 		$i     = 0;
 		$lista = array();
@@ -3216,7 +3180,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			$lista[$i]['Sigla'] 				= $d->Sigla;
 			$i++;
 		}
-		//xd($lista);
 
 		//Dados para view e para a pagina��o
 		$this->view->registros       = $lista;
@@ -3254,7 +3217,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		ini_set('max_execution_time', 900);
 		$this->_response->clearHeaders();
 		$teste = $this->_getAllParams();
-		//xd($teste);
 		$this->view->registros 			 = $teste;
 		$this->view->valorAltorizado     = $teste;
 		$this->view->valorCaptado        = $teste;
@@ -3266,7 +3228,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	public function resumoDemonstrativoCaptacaoRecurso($recordset){
 		$arrQtdeRegistros = array();
 		$qtde = 1;
-		//xd(count($recordset));
 
 		//UTIL PARA GERACAO DO GRAFICO
 		foreach($recordset as $registros) {
@@ -3283,12 +3244,10 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 				$arrQtdeRegistros[$pronac] = $registros['vlAutorizado'];
 			}
 		}
-		//xd($arrQtdeRegistros);
 		$arrDados = array(
                             "registros"=>$arrQtdeRegistros,
                             "urlGerarGrafico"=>$this->_urlPadrao."/operacional/grafico-demonstrativo-captacao-recurso"
                             );
-                            //xd($arrDados);
                             $this->montaTela("operacional/resumo-demonstrativo-captacao-recurso.phtml", $arrDados);
 	}
 

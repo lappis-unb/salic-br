@@ -157,7 +157,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
                     }
                     $slct->limit($tamanho, $tmpInicio);
             }
-            //xd($slct->assemble());
+            
             return $this->fetchAll($slct);
         }
 
@@ -195,7 +195,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
             $slct->where('dp.stAtivoDocumentoProjeto = ?', 'E');
             $slct->where('p.Orgao = ?', $orgao);
             $slct->order(new Zend_Db_Expr('p.AnoProjeto + p.Sequencial'));
-            //xd($slct->assemble());
+            
 
             return $this->fetchAll($slct);
         }

@@ -138,7 +138,7 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//xd($slct->assemble());
+
         $slct->order($order);
         if (!isset($total)) {
             return $this->fetchAll($slct);

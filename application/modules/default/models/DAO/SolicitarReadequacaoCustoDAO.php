@@ -187,7 +187,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                 ->where('pr.IdPRONAC= ?', $idPronac)
                 ->where('pd.Descricao IS NOT NULL');
 
-    //xd($slct->assemble());
+    
        return $this->fetchAll($slct);
     }
 
