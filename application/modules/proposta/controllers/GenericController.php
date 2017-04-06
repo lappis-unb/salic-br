@@ -38,7 +38,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                 'titleShort' => 'Proposta',
                 'titleFull' => 'Proposta Cultural',
                 'projeto' => $idPreProjeto,
-                'listagem' => array('Lista de propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                'listagem' => array('Lista de propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listarproposta')),
             );
 
             // Alterar projeto

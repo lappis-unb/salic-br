@@ -24,15 +24,8 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     private $cpfLogado = null;
     private $usuarioProponente = "N";
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init()
     {
-
         $auth = Zend_Auth::getInstance();
         $arrAuth = array_change_key_case((array)$auth->getIdentity());
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
