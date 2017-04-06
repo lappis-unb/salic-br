@@ -53,7 +53,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-//        xd($sql);
+//        
         return $db->fetchAll($sql);
 	}
 	

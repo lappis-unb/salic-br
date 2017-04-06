@@ -28,7 +28,7 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
         if ($idRelatorio) {
             $select->where('a.idRelatorio = ?', $idRelatorio);
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -46,7 +46,7 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
                 'nrRelatorioTrimestral')
         );
         $select->where('a.idRelatorioTrimestral = ?', $idRelatorioTrimestral);
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

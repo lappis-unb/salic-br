@@ -49,7 +49,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
                                         INNER JOIN AGENTES.dbo.Nomes as n on n.idAgente = a.idAgente
                                 where usu_identificacao = '$cpf' and a.idAgente = $idAgente";
             
-//    	xd($sql);
+//    	
     	$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

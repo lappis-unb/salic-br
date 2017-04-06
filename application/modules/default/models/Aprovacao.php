@@ -397,7 +397,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         }
 
         $select->where('ap.IdPRONAC = ?', $idpronac);
-//        xd($select->assemble());
+
         $result = $this->fetchAll($select);
         return $result;
     }

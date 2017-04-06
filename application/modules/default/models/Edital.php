@@ -161,7 +161,7 @@ class Edital extends MinC_Db_Table_Abstract{
 				WHERE
 					ed.idAti=$idAti";
 
-//		xd($sql);
+//		
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -176,7 +176,7 @@ class Edital extends MinC_Db_Table_Abstract{
 
 		$sql = "SELECT ati.atiorcamento/100 as valor FROM BDSIMEC.pde.atividade ati WHERE ati.atiid = $idAti";
 
-//		xd($sql);
+//		
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -217,7 +217,7 @@ class Edital extends MinC_Db_Table_Abstract{
 	public static function buscarIdPi($idEdital){
         $sql = "SELECT idAti FROM SAC.dbo.Edital where idEdital = $idEdital";
 
-//		xd($sql);
+//		
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

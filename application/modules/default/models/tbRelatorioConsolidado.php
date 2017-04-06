@@ -93,7 +93,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 'c.idRelatorioConsolidado = a.idRelatorioConsolidado',
                 array('*')
         );
-//        xd($select->assemble());
+
         //xd($this->fetchAll($select));
         return $this->fetchAll($select);
 
@@ -126,7 +126,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 'c.idRelatorioConsolidado = a.idRelatorioConsolidado',
                 array('*')
         );
-//        xd($select->assemble());
+
         //xd($this->fetchAll($select));
         return $this->fetchAll($select);
 

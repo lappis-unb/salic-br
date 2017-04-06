@@ -31,7 +31,7 @@ class Pessoaidentificacoes extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor){
             $select->where($coluna, $valor);
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

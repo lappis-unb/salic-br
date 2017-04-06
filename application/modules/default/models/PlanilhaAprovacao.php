@@ -130,7 +130,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
 //        $select->group('pa.idProduto');
 //        $select->group('pa.idUnidade');
 
-//        xd($select->assemble());
+
 
         if($retornaSelect)
             return $select;

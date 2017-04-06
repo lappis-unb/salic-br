@@ -82,7 +82,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
         if ($idnrdocumento) {
             $select->where('d.idDocumento = ?', $idnrdocumento);
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

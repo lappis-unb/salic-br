@@ -170,7 +170,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 			{
 				$sql .=" AND hd.Acao = ".$acao;
 			}
-// xd($sql);
+// 
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -378,7 +378,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 					INNER JOIN SAC.dbo.tbDocumento doc ON hd.idDocumento = doc.idDocumento
 					INNER JOIN SAC.dbo.Projetos pro ON hd.idPronac = pro.IdPRONAC
 						WHERE Acao = 4 AND hd.stEstado = 1 AND hd.idDocumento <> 0 AND doc.idUnidadeCadastro=".$codOrgao;
-//		xd($sql);					
+//							
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
@@ -405,7 +405,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 			$sql .= " and h.idLote = $lote";
 		}
 		
-		// xd($sql);				
+		// 				
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
@@ -443,7 +443,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		{
 			$this->view->message = "Erro ao salvar Projeto: " . $e->getMessage();
 		}
-//		xd($sql);
+//		
 		return $db->fetchAll($sql);
 	}
 	
@@ -467,7 +467,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		{
 			$this->view->message = "Erro ao salvar Projeto: " . $e->getMessage();
 		}
-//                xd($sql);
+//                
 		return $db->fetchAll($sql);
 	}
 	
@@ -505,7 +505,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 			$sql .=" AND idHistorico = $idHistorico";
 		}						
 
-//		xd($sql);
+//		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
@@ -524,7 +524,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 
                 //and hd.idUsuarioEmissor = $idusuario
 		
-//		xd($sql);
+//		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
@@ -546,7 +546,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 			$sql .= " and hd.idOrigem = $orgao";
 		}
 		
-//		xd($sql);
+//		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -566,7 +566,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 			$sql .= " and hd.idUnidade = $orgao";
 		}
 		
-//		xd($sql);
+//		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -642,7 +642,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}
 
 		$sql .= " order by h.idOrigem";
-//		xd($sql);
+//		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -728,7 +728,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}			
 		
 		$sql .= " order by h.idOrigem";
-//		xd($sql);
+//		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -922,7 +922,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		
 		$sql .= " order by h.idOrigem";
 		
-//		xd($sql);
+//		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);

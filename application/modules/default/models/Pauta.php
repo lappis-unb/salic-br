@@ -77,7 +77,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $select->order('pr.Area');
         $select->order('pr.Segmento');
         $select->order('pr.IdPRONAC');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

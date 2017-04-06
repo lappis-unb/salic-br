@@ -83,7 +83,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                 }
             }
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -131,7 +131,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         );
         $select->where("a.idPRONAC = '" . $idpronac . "'");
         $select->where("b.stRelatorioTrimestral = 1");
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }
@@ -159,7 +159,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         $select->where("a.idPRONAC = '" . $idpronac . "'");
         $select->where("a.idAgenteAvaliador IS NOT NULL ");
         $select->order('a.idRelatorio DESC');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -186,7 +186,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         $select->where("a.tpRelatorio = 'T'");
         $select->where("b.stRelatorioTrimestral = 1");
         $select->where("c.tpAcesso = $tpAcesso ");
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -305,7 +305,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                            );
         $select->where('a.IdPRONAC = ?', $idPronac);
         $select->where('c.stRelatorioTrimestral != 1');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

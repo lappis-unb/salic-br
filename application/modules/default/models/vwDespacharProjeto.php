@@ -20,7 +20,7 @@ class vwDespacharProjeto extends MinC_Db_Table_Abstract {
         $sql = "INSERT INTO ".$this->_banco.".dbo.".$this->_name."
                 (idPronac,idUnidade,idUsuarioEmissor,meDespacho)
                 VALUES ('$idPronac',$idUnidade,$idUsuarioEmissor,'$meDespacho')";
-//        xd($sql);
+//        
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);
