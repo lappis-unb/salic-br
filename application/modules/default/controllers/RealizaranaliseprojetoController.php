@@ -215,7 +215,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         // caso o formulario seja enviado via post
         // atualiza a planilha
         if ($this->getRequest()->isPost()) {
-//                    xd($_POST);
+
             // recebe os dados via post
             $post = Zend_Registry::get('post');
             $idPlanilha = $post->idPlanilha;

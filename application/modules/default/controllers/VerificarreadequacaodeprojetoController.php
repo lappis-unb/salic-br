@@ -65,7 +65,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$idavaliacao = $_POST['idavaliacao'];
 		$ListaRegistros =  ReadequacaoProjetos::retornaSQLHistoricoLista($idavaliacao);
 		$this->view->ListaRegistros = $db->fetchAll($ListaRegistros);
-//                xd($this->view->ListaRegistros);
+
 	}
 
 /**************************************************************************************************************************
@@ -2111,7 +2111,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 //            $new = new tbProposta();
 //            $ss = $new->finalizarReadequacaoDeProposta('119720');
-//            xd($ss);
+
 
             //retorna o id do agente logado
             $idAgenteRemetente = $this->getIdUsuario;

@@ -1273,7 +1273,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac,$idLocal);
         $this->view->LocaisDeRealizacao = $LocaisDeRealizacao;
 
-      //  xd($LocaisDeRealizacao);
+      
 
         $pais = new Pais();
         $paises = $pais->buscar(array(), 'Descricao');

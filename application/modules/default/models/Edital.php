@@ -73,7 +73,7 @@ class Edital extends MinC_Db_Table_Abstract{
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//        xd($slct->assemble());
+
         
         //return $this->fetchAll($slct);
 
@@ -139,7 +139,7 @@ class Edital extends MinC_Db_Table_Abstract{
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 

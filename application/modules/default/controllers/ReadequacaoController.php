@@ -2583,7 +2583,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN'));
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProposta->historicoReadequacao($where, $order);
-//                xd($buscar);
+
 
 		// varre os dados para anexar os arquivos
 		$dados = array();

@@ -62,7 +62,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                     'SAC.dbo'
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
-//            xd($select->query());
+
             return $this->fetchAll($select);
         }
 
@@ -198,7 +198,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 

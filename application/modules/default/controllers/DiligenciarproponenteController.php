@@ -136,7 +136,7 @@ class DiligenciarProponenteController extends MinC_Controller_Action_Abstract
                                         $diligencia = new Diligencia();
 
                                         $respostaDiligencia = $diligencia->buscar(array('idPronac = ?'=>$idpronac));
-//                                        xd($respostaDiligencia);
+
 					// manda os dados para a visão
 					//$this->view->buscar          = $buscar;
 

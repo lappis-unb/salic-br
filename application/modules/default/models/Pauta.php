@@ -240,7 +240,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         if ($aprovacao) {
             $select->where('(tp.idPRONAC not in (select idpronac from sac.dbo.aprovacao where idpronac = tp.idPRONAC))', '');
         }
-//        xd($select->__toString());
+
         return $this->fetchAll($select);
     }
 

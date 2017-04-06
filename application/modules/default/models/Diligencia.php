@@ -47,7 +47,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -83,7 +83,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 

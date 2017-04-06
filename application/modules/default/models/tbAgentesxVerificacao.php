@@ -104,7 +104,7 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
         $slct->where("'{$dtFim}' BETWEEN dtInicioMandato AND dtFimMandato");
         $slct->where('stMandato = ?','0');
 
-//        xd($slct->assemble());
+
         $rs = $this->fetchAll($slct)->current();
 
         return $this->fetchAll($slct);

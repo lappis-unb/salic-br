@@ -38,7 +38,7 @@ class Ddd extends MinC_Db_Table_Abstract
 			$this->view->message = "Erro ao buscar DDDs: " . $e->getMessage();
 		}
 
-        #xd( $sql );
+        
 		return $db->fetchAll($sql);
 	} // fecha buscar()
 } // fecha class

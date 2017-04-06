@@ -275,7 +275,7 @@ class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
     }
 
     public function contasLiberadasAction() {
-//        xd('aaa');
+
     }
 
     public function localizarprojetosAction() {

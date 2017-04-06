@@ -229,7 +229,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
             $slct->where('dp.idTipoDocumento = ?', 1); // 1 = Marcas
             $slct->where("$whereArea");
             $slct->order(new Zend_Db_Expr('p.AnoProjeto + p.Sequencial'));
-//            xd($slct->assemble());
+
 
             return $this->fetchAll($slct);
         }
@@ -261,7 +261,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
 
             $slct->where('dp.idTipoDocumento = ?', 1);
             $slct->where('p.AnoProjeto + p.Sequencial = ?', $pronac);
-//            xd($slct->assemble());
+
             return $this->fetchAll($slct);
         }
 
