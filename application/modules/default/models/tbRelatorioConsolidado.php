@@ -94,7 +94,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 array('*')
         );
 
-        //xd($this->fetchAll($select));
+        
         return $this->fetchAll($select);
 
         }
@@ -127,7 +127,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 array('*')
         );
 
-        //xd($this->fetchAll($select));
+        
         return $this->fetchAll($select);
 
         }

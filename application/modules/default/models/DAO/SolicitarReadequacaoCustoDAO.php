@@ -804,7 +804,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                 );
         //$slctItens->where("tpPlanilha = ?", 'SR');
         $slctItens->where('tpa.idPronac = ?', $idPronac);
-        //xd($slctItens->assemble());
+        
         return $this->fetchAll($slctItens);
     }
 

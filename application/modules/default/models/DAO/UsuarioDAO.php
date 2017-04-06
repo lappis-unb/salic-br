@@ -247,7 +247,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
         // configuracaes do banco de dados (seta uma nova conexao no arquivo config.ini)
 //        $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
 
-        //xd($config);
+        
 //        $db = Zend_Db::factory($config->db);;
 //        Zend_Db_Table::setDefaultAdapter($db);,
 

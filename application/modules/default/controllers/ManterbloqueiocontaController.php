@@ -375,7 +375,7 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
     }
     
     public function imprimirAction(){
-        //xd($_POST['html']);
+        
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $this->view->titulo = $_POST['titulo'];
         $this->view->html = $_POST['html'];

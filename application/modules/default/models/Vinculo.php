@@ -127,7 +127,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
 
         if (count($rsProponente) > 0) {
-            //xd($rsProponente);
+            
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela("manterpropostaincentivofiscal/identificacaodaproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar"));
@@ -275,7 +275,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
             return;
         } catch (Zend_Exception $ex) {
             //$db->rollback();
-            //xd($ex->getMessage());
+            
             parent::message("N?o foi poss�vel realizar a opera�?o!", "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
     }
@@ -299,7 +299,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteENome($arrBuscaProponete)->current();
 
-        //xd($rsPreProjeto);
+        
         $arrDados = array("proposta" => $rsPreProjeto,
             "proponente" => $rsProponente);
         return $arrDados;
@@ -452,7 +452,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
 
         if (!empty($idPreProjeto)) {
             $arrResultado = $this->validarEnvioPropostaAoMinc($idPreProjeto);
-            //xd($arrResultado);
+            
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela("manterpropostaincentivofiscal/enviarproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
                 "erro" => $arrResultado['erro'],
@@ -991,10 +991,10 @@ class Vinculo extends MinC_Db_Table_Abstract {
         //$arrBusca['idUsuarioResponsavel = ?'] = $idResponsavel;
         $arrBusca['idUsuarioResponsavel = ?'] = $this->idUsuario;
         $arrBusca['sivinculo = ?'] = 1;
-        //xd($arrBusca);
+        
         $tblVinculo = new Vinculo();
         $rsVinculo = $tblVinculo->buscar($arrBusca);
-        //xd($rsVinculo->toArray());
+        
         $options = "";
         $optionsTemp = "";
         $idsProponente = 0;
@@ -1076,7 +1076,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
                 } else {
                     $arrBusca['a.idAgente = ?'] = $idAgente;
                 }
-                //xd($arrBusca);
+                
                 $tblPreProjeto = new Proposta_Model_Preprojeto();
                 //$rsPreProjeto = $tblPreProjeto->buscar($arrBusca,  array("idAgente ASC"));
                 $rsPreProjeto = $tblPreProjeto->buscaCompleta($arrBusca, array("a.idAgente ASC"));

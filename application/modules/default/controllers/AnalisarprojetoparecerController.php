@@ -1098,7 +1098,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
             $dadosWhere["t.idDistribuirParecer = ?"] = $idDistribuirParecer;
             $buscaDadosProjeto = $tbDistribuirParecer->dadosParaDistribuir($dadosWhere);
 
-            //xd($buscaDadosProjeto);
+            
 
             try {
                 $tbDistribuirParecer->getAdapter()->beginTransaction();
@@ -1282,7 +1282,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
             $dadosWhere["t.idDistribuirParecer = ?"] = $idDistribuirParecer;
             $buscaDadosProjeto = $tbDistribuirParecer->dadosParaDistribuir($dadosWhere);
 
-            //xd($buscaDadosProjeto);
+            
 
             try {
                 $tbDistribuirParecer->getAdapter()->beginTransaction();
