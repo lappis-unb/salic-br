@@ -113,7 +113,7 @@ class Edital extends MinC_Db_Table_Abstract{
         {
             $slct->where('edi.idEdital = ?', $idEdital);
         }
-//xd($slct->__toString());
+
         return $this->fetchAll($slct);
 
     }

@@ -224,7 +224,7 @@ class GenericModel extends Zend_Db_Table_Abstract
 //        var_dump($this->fetchAll($select)->toArray());
 //        var_dump($this->fetchRow($select)->toArray());
 //        exit;
-//xd($slct->__toString());
+
 
         try {
             $this->fetchAll($select);

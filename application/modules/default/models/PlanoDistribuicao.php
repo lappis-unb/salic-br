@@ -107,7 +107,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 
             // adicionando linha order ao select
             $slct->order($order);
-                //xd($slct->__toString());
+                
             // paginacao
             if ($tamanho > -1)
             {

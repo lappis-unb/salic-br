@@ -25,7 +25,7 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
             $slct->where($coluna, $valor);
         }
         $slct->order($order);
-        //xd($slct->__toString());
+        
         return $this->fetchAll($slct);
     }
 
@@ -232,7 +232,7 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         }
 
         $slct->order($order);
-        //xd($slct->__toString());
+        
         return $this->fetchAll($slct);
     }
 

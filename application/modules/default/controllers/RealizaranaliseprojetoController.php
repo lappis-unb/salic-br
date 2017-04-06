@@ -2247,7 +2247,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $resuplanilha = null;
             $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+            
             foreach ($buscarplanilhaSR as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -2274,7 +2274,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $resuplanilha = null;
             $count = 0;
             $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+            
             foreach ($buscarplanilhaPA as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
