@@ -224,7 +224,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->where('a.stRelatorioConsolidado = ?', $status);
             $select->where('b.tpRelatorio = ?', 'C');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 
@@ -250,7 +250,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->where('b.tpRelatorio = ?', 'C');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 
@@ -276,7 +276,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                     'SAC.dbo'
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 } // fecha class

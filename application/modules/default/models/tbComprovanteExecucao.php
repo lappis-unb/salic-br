@@ -86,7 +86,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
             $select->where('f.stRelatorioTrimestral = 1');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }
@@ -239,7 +239,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
 
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }

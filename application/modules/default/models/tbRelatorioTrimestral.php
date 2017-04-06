@@ -129,7 +129,7 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->order('b.idRelatorio desc');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 
@@ -154,7 +154,7 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
                     );
             $select->where('b.idRelatorio = ?', $idRelatorio);
             $select->where('a.stRelatorioTrimestral = ?', 1);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 
@@ -167,7 +167,7 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
                     array('a.idRelatorioTrimestral', 'a.idRelatorio', 'CAST(a.dsParecer AS TEXT) AS dsParecer', 'CAST(a.dsObjetivosMetas AS TEXT) AS dsObjetivosMetas', 'a.dtCadastro', 'a.stRelatorioTrimestral', 'a.nrRelatorioTrimestral')
             );
             $select->where('a.idRelatorioTrimestral = ?', $idRelatorioTrimestral);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 
@@ -193,7 +193,7 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->where('a.stRelatorioTrimestral = ?', 1);
             $select->where('b.tpRelatorio = ?', 'T');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 

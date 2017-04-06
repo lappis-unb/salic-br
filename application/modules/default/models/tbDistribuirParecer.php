@@ -240,7 +240,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
             }
             $select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc', 't.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
