@@ -33,7 +33,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-        //xd($somar->assemble());
+        
         //$somar->where('aa.tpAnalise = ?', $tpPlanilha); //(condigo antigo) retirado pois nao estava atualizando os custos adminitrativos
         return $this->fetchRow($somar);
     }
@@ -60,7 +60,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-        //xd($somar->assemble());
+        
         return $this->fetchRow($somar);
     }
 
@@ -79,7 +79,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         if ($outras) {
             $somar->where('FonteRecurso <> ?', $outras);
         }
-        //xd($somar->assemble());
+        
         return $this->fetchRow($somar);
     }
 

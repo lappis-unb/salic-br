@@ -409,7 +409,6 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                 if (count($rst) > 0) {
                     $this->view->projeto = $rst[0];
                     $this->view->idpronac = $idPronac;
-                    //xd($rst[0]);
                 } else {
                     parent::message("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado.", "listarprojetos/listarprojetos", "ERROR");
                 }
@@ -1063,7 +1062,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $tblHistDoc = new tbHistoricoDocumento();
             $total = $tblHistDoc->buscarHistoricoTramitacaoProjeto(array("p.IdPronac =?"=>$idPronac), array(), null, null, true);
 
-            
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -1107,7 +1106,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $tblHistDoc = new tbHistoricoDocumento();
             $total = $tblHistDoc->buscarHistoricoTramitacaoDocumento($arrBusca, array(), null, null, true);
 
-            
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -1932,7 +1931,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $total = $rsCount->total;
             $totalGeralCaptado = $rsCount->totalGeralCaptado;
 
-            
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -3295,7 +3294,6 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao PA (Parecerista) ****************/
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'PA', $arrBuscaPlanilha);
-                    //xd($buscarplanilhaPA);
                     foreach($buscarplanilhaPA as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                             $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['item'] = $resuplanilha->Item;
@@ -3311,7 +3309,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
-                    
+
                     foreach($buscarplanilhaSR as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -3447,7 +3445,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
-                    
+
                     foreach($buscarplanilhaSR as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -3469,7 +3467,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao PA (Parecerista) ****************/
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'PA', $arrBuscaPlanilha);
-                    
+
                     foreach($buscarplanilhaPA as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                             $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -3676,7 +3674,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
-                    
+
                     foreach($buscarplanilhaSR as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -3698,7 +3696,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao PA (Parecerista) ****************/
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'PA', $arrBuscaPlanilha);
-                    
+
                     foreach($buscarplanilhaPA as $resuplanilha){
                             $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                             $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -3765,7 +3763,6 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $arrBusca['siVerificacao =?']= 1; //analise finalizada
             $rsPedidoAlteracao = $tbPedidoAlteracao->buscar($arrBusca);
             $this->view->dados = $rsPedidoAlteracao;
-            //xd($rsPedidoAlteracao);
         }
 
     }
@@ -3786,7 +3783,6 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $arrBusca['idPedidoAlteracao =?']= $idPedidoAlteracao; //analise finalizada
             $rsPedidoAlteracaoXTipoAlterecao = $tbPedidoAlteracaoXTipoAlterecao->buscaCompleta($arrBusca,array('ta.tpAlteracaoProjeto ASC'));
             $this->view->dados = $rsPedidoAlteracaoXTipoAlterecao;
-            //xd($rsPedidoAlteracaoXTipoAlterecao);
         }
 
     }

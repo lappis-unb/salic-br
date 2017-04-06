@@ -1779,7 +1779,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
     
     public function salvarPlanilhaOrcamentariaAction(){
 
-        //xd($this->_request->getParams());
+        
         
         //Recupera os parametros que vem da View
         $idEdital                   = $this->_request->getParam('idEdital');
@@ -1792,7 +1792,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $valorUnitarioItemEdital    = $this->_request->getParam('valorUnitarioItemEdital');
         $dsOutro                    = $this->_request->getParam('dsOutro');
         
-        //xd($this->_request->getParams());
+        
         
         $modelPlanilhaOrcamentaria      = new tbPlanilhaOrcamentaria();
         $modelPlanilhaItemPlanilhaEtapa = new tbPlanilhaItemPlanilhaEtapa();
