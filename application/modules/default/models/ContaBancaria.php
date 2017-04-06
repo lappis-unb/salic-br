@@ -256,7 +256,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
 
@@ -272,7 +272,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

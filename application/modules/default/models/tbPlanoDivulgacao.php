@@ -48,7 +48,7 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
 
         $select->where('a.IdPRONAC = ?', $idPronac);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -96,7 +96,7 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
 			$select->where($coluna, $valor);
 		endforeach;
 
-        //xd($select->assemble());
+        
 		return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
 

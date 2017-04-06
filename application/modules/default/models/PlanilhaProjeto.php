@@ -309,7 +309,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
                     'CID.Descricao'
                 )
         );
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
     

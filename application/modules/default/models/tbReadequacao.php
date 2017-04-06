@@ -248,7 +248,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         $select->where('idReadequacao = ?', $idReadequacao);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -307,7 +307,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -366,7 +366,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -431,7 +431,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -502,7 +502,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -540,7 +540,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
 
@@ -556,7 +556,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -598,7 +598,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
 
@@ -614,7 +614,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -649,7 +649,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -703,7 +703,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         $select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE a.idNrReuniao = cv.idNrReuniao AND a.idPronac = cv.IdPRONAC AND a.idTipoReadequacao = cv.tpTipoReadequacao)", '');
         $select->order(array(6, 1));
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

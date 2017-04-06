@@ -144,7 +144,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
 		$select->order("(t.nrAnoProjeto+t.nrSequencial)");
 		$select->order("t.dtChegadaRecibo");
 		$select->order("t.dtCredito");
-//xd($select->assemble());
+
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
 
@@ -344,7 +344,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
             );
             $select->where('a.idTmpCaptacao = ?', $idTmpCaptacao);
 
-            //xd($select->assemble());
+            
             return $this->fetchRow($select);
 
 	} // fecha m�todo buscarDados()

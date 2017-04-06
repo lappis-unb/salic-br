@@ -100,7 +100,7 @@ class tbFiscalizacao extends MinC_Db_Table_Abstract {
 
 
 
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

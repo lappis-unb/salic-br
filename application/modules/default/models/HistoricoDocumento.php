@@ -94,7 +94,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
             $select->where("h.idOrigem = ?", $orgao);
         }
         $select->group(array('h.idLote','h.idUnidade','h.idOrigem'));
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
     
@@ -349,7 +349,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
             $select->where(' h.idUsuarioEmissor = ? ', $idUsuario);
         }
         $select->order('h.idHistorico');
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
         
     }

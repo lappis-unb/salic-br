@@ -26,7 +26,7 @@ class tbModulo extends MinC_Db_Table_Abstract {
                 ->from('tbModulo', array('idModulo','dsModulo'))
                 ->join('tbEditalModulo', 'tbEditalModulo.idModulo = tbModulo.idModulo' , array(), 'sac.dbo')
                 ->where('idEdital = ?', $idEdital);
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
     

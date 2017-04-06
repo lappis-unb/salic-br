@@ -1204,7 +1204,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $chave => $valor) {
             $select->where($chave, $valor);
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -1313,7 +1313,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 'CID.Descricao'
                 )
         );
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

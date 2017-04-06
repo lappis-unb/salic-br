@@ -1084,7 +1084,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             }// fecha try
             catch (Exception $e)
             {
-                //xd($e->getMessage());
+                
                 parent::message("Ocorreu um erro ao inativar a distribui��o desse Projeto feita ao Componente, mas as outras a��es foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
             }
             echo "<script>msg();</script>";
@@ -1158,7 +1158,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
 
         } // fecha try
         catch (Exception $e) {
-            //xd($e->getMessage());
+            
             echo json_encode(array('error' => true, 'descricao' => "N&atilde;o foi poss&iacute;vel consolidar a vota&ccedil;&atilde;o do Projeto. <br />".$e->getMessage()));
             $this->_helper->viewRenderer->setNoRender(TRUE); 
         }

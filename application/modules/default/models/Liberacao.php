@@ -74,7 +74,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
                       );
 
         $select->where('l.AnoProjeto+l.Sequencial = ?', $pronac);
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -107,7 +107,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
             $select->where('i.Habilitado = ?', 'N');
         }
         //$select->Where("p.Situacao = 'E12' or p.Situacao = 'E13'");
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -340,7 +340,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -373,7 +373,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
             $select->where($coluna, $valor);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchRow($select);
     }
 

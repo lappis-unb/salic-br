@@ -329,7 +329,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
             }catch (Exception $e){
-                //xd($e->getMessage());
+                
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
             $arrFases[0][0] = $faseElabIni;
@@ -404,7 +404,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     }
                 } // fecha foreach fases
             }catch (Exception $e){
-                //xd($e->getMessage());
+                
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
 
@@ -447,7 +447,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/dadosgerais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
                 }
             }catch (Exception $e){
-                //xd($e->getMessage());
+                
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
         } // fecha if ($_POST)

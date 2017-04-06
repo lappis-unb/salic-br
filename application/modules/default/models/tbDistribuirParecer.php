@@ -175,7 +175,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         }
 
         $select->order('idDistribuirParecer DESC');
-		//xd($select->assemble());
+		
         return $this->fetchAll($select);
     }// fecha m�todo buscarHistorico()
 
@@ -289,7 +289,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
         }
 		$select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc','t.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
-                //xd($select->assemble());
+                
 		return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
@@ -348,7 +348,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
         }
 		$select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
-                //xd($select->assemble());
+                
 		return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
@@ -505,7 +505,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 }
 
                 $select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
-                //xd($select->assemble());
+                
                 return $this->fetchAll($select);
 
 	} // fecha m�todo()
@@ -1095,7 +1095,7 @@ public function aguardandoparecerresumo($where) {
         $select->where('t.FecharAnalise = 1');
         $select->where('t.TipoAnalise <> 2');
         $select->where('(p.AnoProjeto + p.Sequencial) = ?',$pronac);
-        //xd($select->assemble());
+        
         //xd($this->fetchAll($select));
 
         return $this->fetchAll($select);
@@ -1151,7 +1151,7 @@ public function aguardandoparecerresumo($where) {
         $select->where('t.FecharAnalise = 1');
         $select->where('t.TipoAnalise <> 2');
         $select->where('(p.AnoProjeto + p.Sequencial) = ?',$pronac);
-        //xd($select->assemble());
+        
         //xd($this->fetchAll($select));
 
         return $this->fetchAll($select);
@@ -1505,7 +1505,7 @@ public function analisePorParecerista($where){
             $select->where($coluna, $valor);
 
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
     public function analiseParecerista($where){
@@ -1642,7 +1642,7 @@ public function analisePorParecerista($where){
             $select->where($coluna, $valor);
 
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
