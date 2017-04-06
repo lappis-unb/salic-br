@@ -14,7 +14,7 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
     	$select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('tbepc'=>$this->_schema.'.'.$this->_name),
+                        array('tbepc'=>$this->_name),
                         array(
                               'tbepc.idAgenteDestino','tbepc.idAgenteOrigem',
                               'tbepc.dtInicioEncaminhamento','tbepc.idOrgao',
@@ -60,7 +60,7 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
     	//xd($idOrgao."-".$idAgenteDestino);
     	$select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('tbepc'=>$this->_schema.'.'.$this->_name),
+        $select->from(array('tbepc'=>$this->_name),
                         array(
 						      'idAgenteOrigem',
 						      'dtInicioEncaminhamento',
@@ -178,7 +178,7 @@ a.dsJustificativa,
     public function BuscaEmitirParecerPrestacaoContas($idPronac,$idOrgao){
     	$select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('tbepc'=>$this->_schema.'.'.$this->_name),
+        $select->from(array('tbepc'=>$this->_name),
                         array(
                               'idAgenteDestino',
                               'idAgenteOrigem',
@@ -290,7 +290,7 @@ a.dsJustificativa,
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('epc'=>$this->_schema.'.'.$this->_name),
+                        array('epc'=>$this->_name),
                         array()
                       );
 

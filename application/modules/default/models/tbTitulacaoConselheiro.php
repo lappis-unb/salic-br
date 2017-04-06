@@ -21,7 +21,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('tc'=>$this->_schema.'.'.$this->_name),
+                        array('tc'=>$this->_name),
                         array('tc.cdArea','tc.stTitular')
                       );
 

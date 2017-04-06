@@ -235,7 +235,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('rel'=>$this->_schema.'.'.$this->_name),
+                        array('rel'=>$this->_name),
                         array()
                       );
 
@@ -287,7 +287,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('a'=>$this->_schema.'.'.$this->_name),
+                        array('a'=>$this->_name),
                         array()
                       );
 
@@ -313,7 +313,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('a'=>$this->_schema.'.'.$this->_name),
+                        array('a'=>$this->_name),
                         array()
                       );
 
@@ -332,7 +332,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('a'=>$this->_schema.'.'.$this->_name),
+                        array('a'=>$this->_name),
                         array()
                       );
 
@@ -351,7 +351,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('a'=>$this->_schema.'.'.$this->_name),
+                        array('a'=>$this->_name),
                         array()
                       );
 
