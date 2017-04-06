@@ -2147,7 +2147,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-//            xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -2375,7 +2375,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-//            xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
