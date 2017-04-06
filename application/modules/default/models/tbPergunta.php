@@ -27,7 +27,7 @@ class tbPergunta extends MinC_Db_Table_Abstract {
                      );
 
         $select->where('p.nrPergunta=?', $nrPergunta);
-        //xd($select->__toString());
+        
         return $this->fetchRow($select);
     }
 
@@ -88,7 +88,7 @@ class tbPergunta extends MinC_Db_Table_Abstract {
             }
 
             $select->order($order);
-        //xd($select->__toString());
+        
         return $this->fetchAll($select);
     } // fecha m�todo buscarDados
 

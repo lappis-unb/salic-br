@@ -106,7 +106,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                 {
 
                     //                                    $auth = Zend_Auth::getInstance(); // instancia da autentica��o
-                    //xd($auth->getIdentity());
+                    
                     //                                    // registra o primeiro grupo do usu�rio (pega unidade autorizada, org�o e grupo do usu�rio)
                     //                                    $Usuario = new Autenticacao_Model_Usuario();
                     //                                    $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usu�rio
@@ -434,7 +434,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
         // verifica se o usu�rio logado � agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->usu_identificacao);
         if ( isset($auth->getIdentity()->usu_identificacao) ) {
-            //xd($auth->getIdentity());
+            
             // caso n�o tenha idAgente, atribui o idUsuario
             $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->usu_codigo;
             //$this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;

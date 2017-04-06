@@ -169,7 +169,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 array('*')
         );
         $select->where("b.idPRONAC = ?", $idPronac);
-//xd($select->__toString());
+
         return $this->fetchAll($select);
         }
 

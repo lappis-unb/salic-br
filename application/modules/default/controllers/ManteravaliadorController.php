@@ -79,7 +79,7 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
     	/** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $idusuario = $auth->getIdentity()->usu_codigo;
-       	//xd($auth->getIdentity());
+       	
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
         $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão

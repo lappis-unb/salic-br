@@ -34,7 +34,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
 
 
         $select->group(array('h.idLote','h.idUnidade','h.idOrigem', 'h.Acao'));
-        //xd($select->__toString());
+        
         return $this->fetchAll($select);
     }
     
@@ -52,7 +52,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                 )
         );
         $select->where('h.Acao = ?', 6);
-        //xd($select->__toString());
+        
         //$select->where('h.idLote is not null');
 
 
@@ -62,7 +62,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
         }
 
         $select->group(array('h.idLote','h.idUnidade','h.idOrigem'));
-        //xd($select->__toString());
+        
         return $this->fetchAll($select);
     }
     */
@@ -253,7 +253,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
             $select->where(' p.Orgao = ? ', $orgaologado);
         }
         $select->order('h.idHistorico');
-        //xd($select->__toString());
+        
         return $this->fetchAll($select);
     }
     
