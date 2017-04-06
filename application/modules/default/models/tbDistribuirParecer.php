@@ -655,7 +655,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $rstbDistribuirParecer->idUsuario = $dados['idUsuario'];
         $rstbDistribuirParecer->idAgenteParecerista = $dados['idAgenteParecerista'];
 
-        //xd($rstbDistribuirParecer);
+        
 
         //SALVANDO O OBJETO
         $id = $rstbDistribuirParecer->save();
@@ -686,7 +686,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $rstbDistribuirParecer->idUsuario 		= $dados['idUsuario'];
         $rstbDistribuirParecer->idOrgao 		= $dados['idOrgao'];
 
-        //xd($rstbDistribuirParecer);
+        
 
         //SALVANDO O OBJETO
         $id = $rstbDistribuirParecer->save();
@@ -716,7 +716,7 @@ public function concluirParecer($dados) {
         $rstbDistribuirParecer->Observacao 		= $dados['Observacao'];
         $rstbDistribuirParecer->idUsuario 		= $dados['idUsuario'];
 
-        //xd($rstbDistribuirParecer);
+        
         //SALVANDO O OBJETO
         $id = $rstbDistribuirParecer->save();
 
@@ -1096,7 +1096,7 @@ public function aguardandoparecerresumo($where) {
         $select->where('t.TipoAnalise <> 2');
         $select->where('(p.AnoProjeto + p.Sequencial) = ?',$pronac);
         
-        //xd($this->fetchAll($select));
+        
 
         return $this->fetchAll($select);
 
@@ -1152,7 +1152,7 @@ public function aguardandoparecerresumo($where) {
         $select->where('t.TipoAnalise <> 2');
         $select->where('(p.AnoProjeto + p.Sequencial) = ?',$pronac);
         
-        //xd($this->fetchAll($select));
+        
 
         return $this->fetchAll($select);
 

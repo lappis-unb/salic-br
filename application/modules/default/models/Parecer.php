@@ -81,7 +81,7 @@ class Parecer extends MinC_Db_Table_Abstract
         if (isset($dados['idTipoAgente'])) {
             $tmpRsParecer->idTipoAgente = $dados['idTipoAgente'];
         }
-//xd($tmpRsParecer);
+
 //        echo "<pre>";
 
 

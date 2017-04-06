@@ -139,7 +139,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
 
         $select->group('pItens.Descricao');
         */
-        //xd($select->query());
+        
 
         return $this->fetchAll($select);
 

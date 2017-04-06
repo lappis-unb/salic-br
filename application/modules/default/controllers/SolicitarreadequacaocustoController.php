@@ -379,7 +379,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
 //            Zend_Debug::dump($resultadoProduto); $this->_helper->viewRenderer->setNoRender(TRUE); 
 //            $this->view->buscaproduto = $resultadoProduto;
             $resultadoItensCadastrados = $buscaInformacoes->buscarItensCadastrados($idPronac);
-//xd($resultadoItensCadastrados);
+
             $i = 0;
 
             if (empty($resultadoProduto[0]->produto)) {

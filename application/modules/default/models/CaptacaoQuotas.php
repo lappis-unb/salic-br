@@ -63,7 +63,7 @@ class CaptacaoQuotas extends MinC_Db_Table_Abstract {
 
             $select->where('c.AnoProjeto = ?', $AnoProjeto,'c.Sequencial = ?', $Sequencial);
 
-            //xd($this->fetchAll($select));
+            
             return $this->fetchAll($select);
 
 	} // fecha m�todo listasituacao()

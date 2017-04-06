@@ -219,7 +219,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         
         $slctUnion = $this->select()->union(array('('.$a.')', '('.$b.')', '('.$c.')'));
 
-        //xd($slctUnion->assemble());
+        
         return $this->fetchRow($slctUnion);
     }
 

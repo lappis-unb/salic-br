@@ -44,7 +44,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
         $slct->order('idDocumento desc');
         $slct->limit('1', '0');
 
-        //xd($slct->query());
+        
 
         return $this->fetchRow($slct);
     }

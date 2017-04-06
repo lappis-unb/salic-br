@@ -465,7 +465,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
             $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
-        //xd($arrBusca);
+        
         $projetosAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
         $arrProjetosAprovadosInic = $projetosAprovadosInic->toArray();
         $this->view->BuscarAprovadosRegularesAprovadosInic = $arrProjetosAprovadosInic;
@@ -1093,7 +1093,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         $tblTecnicos = new Usuariosorgaosgrupos();
         $rsTecnicos = $tblTecnicos->buscarUsuariosOrgaosGrupos($arrBusca, array('u.usu_nome ASC', 'g.gru_nome ASC'));
         $this->view->tecnicos = $rsTecnicos;
-        //xd($rsProjetos);
+        
     }
 
     function redistribuirProjetoAction()
@@ -1102,7 +1102,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         $post = Zend_Registry::get('post');
         $arrPronacs = $post->idpronac;
         $idTecnico = $post->novoTecnico;
-        //xd($post);
+        
 
         $tblVerificaProjeto = new tbVerificaProjeto();
         try{

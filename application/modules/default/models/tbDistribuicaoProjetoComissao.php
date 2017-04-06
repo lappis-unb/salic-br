@@ -147,7 +147,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->getPart(Zend_Db_Select::COLUMNS));
+        
         
         return $this->fetchAll($slct);
     }
