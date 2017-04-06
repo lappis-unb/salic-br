@@ -89,6 +89,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             'CAST(pp.dsjustificativa AS TEXT) as Justificativa',
             'pp.qtdedias as QtdDias',
             'pp.unidade as Unidade',
+            'pp.stCustoPraticado as stCustoPraticado',
         );
 
         $sacSchema = $this->_schema;
