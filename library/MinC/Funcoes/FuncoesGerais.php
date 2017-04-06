@@ -437,6 +437,10 @@ function converterObjetosParaArray($objects){
     if(empty($objects))
         return false;
 
+    if(count($objects) == 1) {
+        return (array) $objects;
+    }
+
     foreach($objects as $object)
     {
         $itens[] = get_object_vars( $object );
