@@ -1006,7 +1006,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         /**
          * $select->from(
-         * array('p'=>$this->_schema.'.'.$this->_name),
+         * array('p'=>$this->_name),
          * array(
          * 'p.AnoProjeto','p.Sequencial','p.UfProjeto','p.NomeProjeto','p.IdPRONAC'
          * )
@@ -2470,13 +2470,13 @@ class Projetos extends MinC_Db_Table_Abstract
                 'p.IdEnquadramento'
             ));
         $select->where("p.idPronac = ?", $idpronac);
-        return $this->fetchAll($select);        
+        return $this->fetchAll($select);
     }
-        
-    
+
+
     public function assinarParecer($idpronac) {
         $returnData = array();
-      
+
         $returnData['enquadramento'] = $this->enquadramentoProjeto($idpronac);
 
         $select2 = $this->select();
@@ -2499,7 +2499,7 @@ class Projetos extends MinC_Db_Table_Abstract
             ));
         $select2->where("p.idPronac = ?", $idpronac);
         $returnData['produtos'] = $this->fetchAll($select2);
-        
+
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $sql = "exec ".$this->_banco.".spDiligenciasEnviadasAoProjeto " . $idpronac;
@@ -2515,9 +2515,9 @@ class Projetos extends MinC_Db_Table_Abstract
                 'p.dsAcaoAlcanceProduto'
             ));
         $select3->where("p.tpAnalise = ?", 1);
-        $select3->where("p.idPronac = ?", $idpronac);        
+        $select3->where("p.idPronac = ?", $idpronac);
         $returnData['alcance'] = $this->fetchAll($select3);
-        
+
         $select4 = $this->select();
         $select4->setIntegrityCheck(false);
         $select4->from(
@@ -2530,11 +2530,11 @@ class Projetos extends MinC_Db_Table_Abstract
         $select4->where("p.idTipoagente = ?", 1);
         $select4->where("p.idPronac = ?", $idpronac);
         $returnData['parecer'] = $this->fetchAll($select4);
-        
+
         return $returnData;
     }
 
-    
+
     public function dadosFechar($usu_Codigo, $idpronac, $idDistribuirParecer)
     {
         $select = $this->select();

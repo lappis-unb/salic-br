@@ -9,7 +9,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                        array('dpc'=>$this->_schema.'.'.$this->_name),
+                        array('dpc'=>$this->_name),
                         array('DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
                      );
         $slct->joinInner(
@@ -72,7 +72,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             $slct2 = $this->select();
             $slct2->setIntegrityCheck(false);
             $slct2->from(
-                            array('dpc'=>$this->_schema.'.'.$this->_name),
+                            array('dpc'=>$this->_name),
                             array('total'=>'count(*)')
                          );
             $slct2->joinInner(
@@ -907,7 +907,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
 
         $select->from(
-                        array('dpc'=>$this->_schema.'.'.$this->_name),
+                        array('dpc'=>$this->_name),
                         array()
                       );
 

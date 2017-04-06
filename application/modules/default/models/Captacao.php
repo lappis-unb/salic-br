@@ -397,7 +397,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
         $slct->distinct();
         $slct->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                         array('DtRecibo',
                               'CaptacaoReal',
                               'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
@@ -524,7 +524,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slctSA->setIntegrityCheck(false);
 	        $slctSA->distinct();
 	        $slctSA->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                        array('vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
 	                        	  'DtRecibo',
 	                              'CaptacaoReal',
@@ -596,7 +596,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slctSC->setIntegrityCheck(false);
 	        $slctSC->distinct();
 	        $slctSC->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                        array('vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
 		                       	  'DtRecibo',
 	                              'CaptacaoReal',
@@ -726,7 +726,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
         $slct->distinct();
         $slct->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                          array(
                               'CaptacaoReal'=>new Zend_Db_Expr('SUM(CaptacaoReal)'),
                         	  'p.AnoProjeto',
@@ -791,7 +791,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                         array('total'=>'count(*)')
                      );*/
 	        $slctCount->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                         array('total'=>'count(*)',
 	                               'CaptacaoReal'=>new Zend_Db_Expr('SUM(CaptacaoReal)'),
 			                       'p.AnoProjeto',
@@ -908,7 +908,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slctSC->setIntegrityCheck(false);
         $slctSC->distinct();
         $slctSC->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                         array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)"),
                         	  /*'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
 
@@ -981,7 +981,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slctSA->setIntegrityCheck(false);
         $slctSA->distinct();
         $slctSA->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                         array('vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
                               /*'CaptacaoReal'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")
 
@@ -1064,7 +1064,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slct->setIntegrityCheck(false);
 	        $slct->distinct();
 	        $slct->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                        array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")
 	                             )
 	                     );
