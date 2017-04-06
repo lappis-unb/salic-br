@@ -164,7 +164,7 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
             parent::message("Conta(s) bloqueada(s) com sucesso!", "manterbloqueioconta", "CONFIRM");
             
         }catch(Exception $e){
-            //xd($e->getMessage());
+            
             parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "manterbloqueioconta", "ERROR");
         }
     }
@@ -344,7 +344,7 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
             parent::message("Conta(s) desbloqueada(s) com sucesso!", "manterbloqueioconta/listar-contas-desbloqueio", "CONFIRM");
             
         }catch(Exception $e){
-            //xd($e->getMessage());
+            
             parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "manterbloqueioconta/listar-contas-desbloqueio", "ERROR");
         }
     }

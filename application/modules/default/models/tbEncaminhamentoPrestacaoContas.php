@@ -130,7 +130,7 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                 $select->where('tbepc.idAgenteDestino = ?',$idAgenteDestino);
 		        $select->where('tbepc.idSituacaoEncPrestContas = ?',$situacao);
 		//$select->where('tbepc.idTipoAgente = ?',11);
-	    //xd($select->assemble());
+	    
 
 		return $this->fetchAll($select);
     }

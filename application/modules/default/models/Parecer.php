@@ -447,7 +447,7 @@ class Parecer extends MinC_Db_Table_Abstract
         $select->where('p.idTipoAgente = ?', 1);
         $select->where('p.idPronac = ?', $idPronac);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

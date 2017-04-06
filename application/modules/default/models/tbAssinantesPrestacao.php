@@ -57,7 +57,7 @@ class tbAssinantesPrestacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

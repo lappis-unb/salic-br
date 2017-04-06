@@ -226,7 +226,7 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
 
         $select->group('pEtapa.idPlanilhaEtapa');
         $select->group('pEtapa.Descricao');
-//xd($select->assemble());
+
         return $this->fetchAll($select);
 
     }

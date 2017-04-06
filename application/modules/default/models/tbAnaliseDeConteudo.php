@@ -120,7 +120,7 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
         );
         $select->where('a.idPronac = ?', $idPronac);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

@@ -1120,7 +1120,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         } // fecha try
         catch (Exception $e)
         {
-            //xd($e->getMessage());
+            
             parent::message("Erro ao redistribuir projeto(s). ".$e->getMessage(), "checklistpublicacao/listas", "ERROR");
             return;
         }

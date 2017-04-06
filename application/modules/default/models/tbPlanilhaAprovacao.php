@@ -143,7 +143,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach($where as $key=>$valor){
             $select->where($key, $valor);
         }
-        //xd($select->assemble());
+        
 
         return $this->fetchAll($select);
     }
@@ -161,7 +161,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach($where as $key=>$valor){
             $select->where($key, $valor);
         }
-        //xd($select->assemble());
+        
 
         return $this->fetchAll($select);
     }

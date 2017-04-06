@@ -82,7 +82,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         );
 
         $select->where('pap.IdPRONAC = ?', $idPronac);
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -106,7 +106,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -261,7 +261,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select->where('c.tpAlteracaoProjeto = ?', 7);
         $select->where('b.tpAcao = ?', 'I');
         $select->where(new Zend_Db_Expr("NOT EXISTS(SELECT TOP 1 * FROM SAC.DBO.tbPlanilhaAprovacao d WHERE d.tpPlanilha = 'SR' AND d.stAtivo = 'N' AND b.idProduto = d.idProduto AND a.idPronac = d.idPronac)"));
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -300,7 +300,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         }
 
         if ($qtdeTotal){
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
 
@@ -316,7 +316,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -357,7 +357,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             $select->where($coluna, $valor);
         }
         if ($qtdeTotal){
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
         //adicionando linha order ao select
@@ -370,7 +370,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

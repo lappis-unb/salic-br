@@ -216,7 +216,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         foreach ($order as $valores) {
             $select->order($valores);
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -277,7 +277,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $select->where($comando,$valores);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -324,7 +324,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $select->where($comando,$valores);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

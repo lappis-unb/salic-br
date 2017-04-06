@@ -1285,7 +1285,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
                     }// fecha try
                     catch (Exception $e) {
-                        //xd($e->getMessage());
+                        
                         parent::message("Erro ao ativar Planilha readequada. " . $e->getMessage(), "realizaranaliseprojeto/emitirparecer" . $query_string, "ERROR");
                     }
                 }
@@ -1370,7 +1370,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
             } // fecha try
             catch (Exception $e) {
-                //xd($e->getMessage());
+                
                 parent::message("Erro ao incluir projeto na Pauta. " . $e->getMessage(), "realizaranaliseprojeto/emitirparecer" . $query_string, "ERROR");
             }
         } // fecha if
@@ -2516,7 +2516,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
         } // fecha try
         catch (Exception $e) {
-            //xd($e->getMessage());
+            
             parent::message("Erro ao efetuar altera&ccedil;&atilde;o! " . $e->getMessage(), "realizaranaliseprojeto/" . $url . "/idpronac/" . $idPronac, "ERROR");
         }
     }

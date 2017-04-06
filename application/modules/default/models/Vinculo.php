@@ -871,7 +871,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
                     die();
                 } catch (Exception $e) {
 //                    $db->rollback();
-                    //xd($e->getMessage());
+                    
                     parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                     die();
                 }
@@ -880,7 +880,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
                 die();
             }
         } else {
-            //xd($e->getMessage());
+            
             parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
         }
     }
