@@ -1729,7 +1729,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 //		$iframe      = isset($dados[0]->CNPJCPF) ? $dados[0]->CNPJCPF : 0;
 //
 //		//VERIFICA O STATUS DA SOLICITA��O
-////xd($dados);
+//
 //		$sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 //		$stResult = $db->fetchAll($sqlStatusReadequacao);
 //

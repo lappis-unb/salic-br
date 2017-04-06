@@ -164,7 +164,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
     }
 
     public function projetosDespachados($acao = array(), $idDestino = null, $lote = null, $idpronac=null, $orgaologado=null) {
-    	//xd($idDestino);
+    	
         $select = $this->select();
         $select->setIntegrityCheck(false);
         //$select->distinct();
@@ -258,7 +258,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
     }
     
     public function projetosDespachadosListagem($acao = array(), $idDestino = null, $lote = null, $idpronac=null, $idUsuario=null) {
-    	//xd($idDestino);
+    	
         $select = $this->select();
         $select->setIntegrityCheck(false);
         //$select->distinct();

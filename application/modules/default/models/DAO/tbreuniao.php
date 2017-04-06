@@ -49,14 +49,14 @@ class tbreuniao extends MinC_Db_Table_Abstract{
 
         //SETANDO A QUANTIDADE DE REGISTROS
         $this->_totalRegistros = $this->pegaTotal($where,$order);
-        //xd($slct->query());
+        
 
         return $this->fetchAll($slct);
     }
 
     public function atualizarreuniao($dados)
 	{
-                //xd($dados);
+                
                 $rsReuniao = $this->find($dados['idNrReuniao'])->current();
 
                 $rsReuniao->NrReuniao   = $dados['NrReuniao'];
@@ -117,7 +117,7 @@ class tbreuniao extends MinC_Db_Table_Abstract{
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("SAC.dbo.tbReuniao", $dados);
-                //xd($dados);
+                
 		if ($cadastrar)
 		{
 			return true;

@@ -83,7 +83,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         $slct2->setIntegrityCheck(false);
         $slct2->from($slct, array("count(*) AS total"));
 
-        //xd($slct2->assemble());
+        
         return $this->fetchAll($slct2)->current();
     }
 

@@ -65,7 +65,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 //        $this->view->nomeproponente = $buscaAcessos[0]->Nome;
         //x($this->idResponsavel);
         //x($this->idAgente);
-        //xd($this->idUsuario);
+        
 
         parent::init();
     }

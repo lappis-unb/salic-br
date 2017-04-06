@@ -413,7 +413,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->getPart(Zend_Db_Select::COLUMNS));
+        
         
         return $this->fetchAll($slct);
     }
@@ -947,7 +947,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             ->union(array('('.$slct1.')', '('.$slct2.')', '('.$slct3.')'))
                             ->order('3');
 
-        //xd($slctUnion->assemble());
+        
         return $this->fetchAll($slctUnion);
     }
 

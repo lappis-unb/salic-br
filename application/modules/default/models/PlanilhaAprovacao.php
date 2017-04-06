@@ -682,7 +682,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         $selectFinal->setIntegrityCheck(false);
         $selectFinal->from($select, array("vlComprovado","valor"));
         $selectFinal->where('vlComprovado>valor');
-        //xd($selectFinal->query());
+        
         return $this->fetchAll($selectFinal);
     }
 

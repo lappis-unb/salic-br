@@ -25,7 +25,7 @@ class tbParcelaFormaPagamento extends MinC_Db_Table_Abstract {
 //        $select->where('idCriterioParticipacao = ?', $idCriterioParticipacao);
 //          
 //        if($dbg){
-//            xd($select->assemble());
+
 //        }
 //        
 //        return $this->fetchAll($select)->toArray();

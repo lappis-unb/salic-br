@@ -208,7 +208,7 @@ class Projetos extends MinC_Db_Table_Abstract
         if (!empty($pronac)) {
             $consulta->where('a.IdPRONAC = ?', $pronac);
         }
-//xd($consulta->assemble());
+
         return $this->fetchRow($consulta);
     }
 
@@ -1150,9 +1150,9 @@ class Projetos extends MinC_Db_Table_Abstract
     public function salvar($dados)
     {
 //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        //xd($dados);
+        
         $tmpTbl = new Projetos();
-//xd($dados);
+
         $tmpTbl = $tmpTbl->find($dados['idPRONAC'])->current();
 
 //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
@@ -2147,7 +2147,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-//            xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -2375,7 +2375,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-//            xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -2774,7 +2774,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         //x("Se voce esta vendo esta mensagem, favor entrar em contato com o Everton ou Danilo Lisboa urgentemente! <br>Informe tambem os dados abaixo, se houver! ");
-        //xd($where);
+        
         if (!empty($where)) {
             return $this->update($dados, $where);
         } else {
@@ -5422,7 +5422,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-            //xd($selectAux2->assemble());
+            
             return $this->fetchAll($selectAux2);
         }
     }
