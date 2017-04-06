@@ -1,6 +1,6 @@
 <?php
 
-class MinC_Assinatura_DocumentoAssinatura
+class MinC_Assinatura_Assinatura
 {
     public function criarDocumentoAssinatura($idPronac, $idTipoDoAtoAdministrativo)
     {

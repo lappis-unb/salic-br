@@ -234,7 +234,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $auth = Zend_Auth::getInstance();
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
 
-        $objDocumentoAssinatura = new MinC_Assinatura_DocumentoAssinatura();
+        $objDocumentoAssinatura = new MinC_Assinatura_Assinatura();
         $idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
         $objDocumentoAssinatura->criarDocumentoAssinatura(
             $IdPRONAC,
