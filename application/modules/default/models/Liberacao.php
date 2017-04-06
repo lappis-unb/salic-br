@@ -260,7 +260,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
     public function buscarCaptacao($pronac) {
         $sql = "SELECT sac.dbo.fnPercentualCaptado(p.AnoProjeto, p.Sequencial) AS captacao
 				FROM Sac.dbo.Projetos AS p where p.AnoProjeto+p.Sequencial = '$pronac'";
-//    	xd($sql);
+//    	
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

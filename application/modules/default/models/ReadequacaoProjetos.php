@@ -1344,7 +1344,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     WHERE b.IdPRONAC = $id_Pronac 
                     AND g.tpAlteracaoProjeto = 6
                     AND g.stVerificacao in (0,2) ) as tabela ";
-//            xd($sql);
+//            
 
         }
 

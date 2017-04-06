@@ -345,7 +345,7 @@ a.dsJustificativa,
 
         $select->where('idPronac = ?', $idPronac);
         //$select->where('usu2.usu_codigo <> ?', $idusuario);
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 }

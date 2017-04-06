@@ -1590,7 +1590,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         $select->order('p.AnoProjeto');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3132,7 +3132,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->order('Projetos.idProjeto');
         $select->order('tbFiscalizacao.idFiscalizacao');
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3345,7 +3345,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where("a.IdPRONAC = '" . $idpronac . "'");
         $select->where("b.stPlanoDistribuicaoProduto = 1");
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3371,7 +3371,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where("a.IdPRONAC = '" . $idpronac . "'");
         $select->where("b.stPlanoDistribuicaoProduto = 1");
         $select->order("a.IdPRONAC DESC");
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -4849,7 +4849,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->where($key, $val);
         }
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -5165,7 +5165,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //        public function cadastrarProjetoFNC(array $dados){
 //
 //            $sql = "EXEC SAC.dbo.paGravarProjeto '{$dados['AnoProjeto']}','{$dados['Sequencial']}','{$dados['UfProjeto']}','{$dados['Area']}','{$dados['Segmento']}','{$dados['NomeProjeto']}','{$dados['Processo']}','{$dados['CgcCpf']}','{$dados['Orgao']}','{$dados['Modalidade']}','NULL','{$dados ['Situacao']}','{$dados ['ProvidenciaTomada']}','NULL','{$dados ['Mecanismo']}','0.00',{$dados['VlCusteio']},{$dados['VlCapital']},'{$dados['Usuario']}','{$dados ['DtProtocolo']}'";
-////          xd($sql);
+////          
 //            $db= Zend_Db_Table::getDefaultAdapter();
 //            $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //            return $db->fetchAll($sql);
@@ -5518,7 +5518,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $select->limit($tamanho, $tmpInicio);
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

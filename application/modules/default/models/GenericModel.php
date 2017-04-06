@@ -279,7 +279,7 @@ class GenericModel extends Zend_Db_Table_Abstract
             }
             $sql .= "\n" . $where;
         }
-        xd($sql);
+        
     }
 
     protected function _getCols()

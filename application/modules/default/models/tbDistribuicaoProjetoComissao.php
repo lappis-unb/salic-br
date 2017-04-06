@@ -896,7 +896,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         )
         ORDER BY 6 ASC ";
 
-//        xd($sql);
+//        
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
