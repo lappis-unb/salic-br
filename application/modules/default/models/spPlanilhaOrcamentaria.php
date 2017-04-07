@@ -35,8 +35,10 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
         switch($tipoPlanilha){
         case 0:
-        case 1:
             return $this->planilhaOrcamentariaProposta($idPronac);
+            break;
+        case 1:
+            return $this->orcamentariaProponente($idPronac);
             break;
         case 2:
             return $this->orcamentariaParecerista($idPronac);
