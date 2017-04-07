@@ -1,3 +1,11 @@
+Release 2.0.0
+  * Novo: Implementação da Nova IN 2017
+  * Novo: Alterações de modularização
+
+Release 1.15.3
+  * Fix: [Comprovação financeira] Corrigindo erro em que soma ultrapassava valor total (erro de ponto flutuante)
+  * Fix: Removendo php info
+
 Release 1.15.2
   * Fix: [Recursos] Lista de pareceristas quebrava página de vinculada do IPHAN
 
