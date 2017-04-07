@@ -163,7 +163,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
-//        xd(array($where, $order, $tamanho, $inicio));
+
         $busca = $modelGerarPagamentoParecerista->buscarProjetosFinalizados($where, $order, $tamanho, $inicio);
 
         $paginacao = array(

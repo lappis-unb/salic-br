@@ -46,7 +46,7 @@ class tbBeneficiario extends MinC_Db_Table_Abstract
                     array('a.idRelatorio', 'CAST(a.dsBeneficiario AS TEXT) AS dsBeneficiario', 'a.tpBeneficiario', 'tpBeneficiario', 'a.nrCNPJ', 'a.nrCPF', 'CAST(a.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'CAST(a.dsEntrega AS TEXT) AS dsEntrega')
             );
             $select->where('a.idRelatorio = ?', $idRelatorio);
-    //            xd($select->assemble());
+    
             return $this->fetchAll($select);
         }
 
@@ -71,7 +71,7 @@ class tbBeneficiario extends MinC_Db_Table_Abstract
                         )
             );
             $select->where('a.idRelatorio = ?', $idRelatorio);
-    //            xd($select->assemble());
+    
             return $this->fetchAll($select);
         }
 

@@ -166,7 +166,6 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                     if ( isset($post->dtExecucao_Final) && !empty($post->dtExecucao_Final)) {$arrBusca['p.DtFimExecucao <= ?'] = Data::dataAmericana($post->dtExecucao_Final) . " 23:59:59.999";}
                 }
             }
-            //xd($arrBusca);
             //$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpPeriodoExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
 
             if(!empty($post->area)){
@@ -357,7 +356,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, true);
 
-            //xd($total);
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -522,7 +521,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, $bln_dadosDiligencia);
 
-            //xd($total);
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -2131,7 +2130,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $arrComprovantesImpugnados = array();
         if (is_object($resposta)) {
             foreach ($resposta as $val) {
-		#xd($resposta);
+		
                 $modalidade = '';
                 if($val->idCotacao != '') {
                     $modalidade = 'Cota&ccedil;&atilde;o';
@@ -2897,7 +2896,6 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 				if(count($rst)>0){
 					$this->view->projeto  = $rst[0];
 					$this->view->idpronac = $_REQUEST['idPronac'];
-					//xd($rst[0]);
 				}else{
 					parent::message("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado.", "listarprojetos/listarprojetos", "ERROR");
 					return;
@@ -3163,7 +3161,6 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 		$data         = date('d/m/Y H:i:s');
 		//buscaProjeto
 		$docs         = TramitarprojetosDAO::buscaProjetoPDF($idpronac);
-		//xd($docs);
 		foreach ($docs as $d):
 
 		//$idDocumento = $d->idDocumento;

@@ -41,7 +41,7 @@ class Prorrogacao extends MinC_Db_Table_Abstract {
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -63,7 +63,7 @@ class Prorrogacao extends MinC_Db_Table_Abstract {
             $slct->where($coluna, $valor);
         }
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct)->current();
     }
 
@@ -75,7 +75,7 @@ class Prorrogacao extends MinC_Db_Table_Abstract {
         );
         $select->where('idProrrogacao = ?', $idProrrogacao);
 
-        //xd($select->assemble());
+        
         return $this->fetchRow($select);
     }
 
@@ -106,7 +106,7 @@ class Prorrogacao extends MinC_Db_Table_Abstract {
         );
         $slct->where('idPronac = ?', $idPronac);
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 

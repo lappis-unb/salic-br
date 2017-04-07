@@ -221,7 +221,6 @@ function gerarBreadCrumb($links = array()) {
 
         $contador = 0;
         if ($qtdLinks > 0) {
-
             foreach ($links as $link) {
                 foreach ($link as $nomeLink => $val) {
                     $contador++;
@@ -234,7 +233,11 @@ function gerarBreadCrumb($links = array()) {
                             if(isset($val['module']) && !empty($val['module'])) {
                                 $arrayLink['module'] = $val['module'];
                             }
+
+                            // @todo: não é possivel nesse momento otimizar essa rotina.
                             $url = $router->assemble($arrayLink);
+                            $url = explode('/', $url);
+                            $url = ('/'.$url[1] . '/' . $url[2] .'/'.$url[3]);
                         }
                         $guia .= "<li><a href='" . $url . "' title='{$nomeLink}'>" . $nomeLink . "</a></li>";
                     }
@@ -436,6 +439,10 @@ function converterObjetosParaArray($objects){
 
     if(empty($objects))
         return false;
+
+    if(count($objects) == 1) {
+        return (array) $objects;
+    }
 
     foreach($objects as $object)
     {

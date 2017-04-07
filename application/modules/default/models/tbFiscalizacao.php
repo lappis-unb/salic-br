@@ -15,7 +15,7 @@ class tbFiscalizacao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('fisc'=>$this->_schema.'.'.$this->_name),
+                        array('fisc'=>$this->_name),
                         array()
                       );
 
@@ -100,7 +100,7 @@ class tbFiscalizacao extends MinC_Db_Table_Abstract {
 
 
 
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

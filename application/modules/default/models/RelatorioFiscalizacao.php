@@ -77,7 +77,7 @@ class RelatorioFiscalizacao extends MinC_Db_Table_Abstract {
         );
 
         $select->where('rf.idFiscalizacao = ?', $idFiscalizacao);
-        //xd($select->assemble());
+        
         return $this->fetchRow($select);
     }
 

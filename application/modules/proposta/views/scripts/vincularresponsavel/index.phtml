@@ -33,7 +33,7 @@
                             if(!data.error){
                                 confirma('Sua solicita&ccedil;&atilde;o de vínculo foi enviada com sucesso.',
                                     function(){
-                                        window.location = 'manterpropostaincentivofiscal/listar-propostas';
+                                        window.location = 'manterpropostaincentivofiscal/listarproposta';
                                     }
                                 );
                             } else {
@@ -152,7 +152,7 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li><a href="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
+        <li><a href="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listarproposta')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Solicitar v&iacute;nculo</li>
     </ul>
 </div>

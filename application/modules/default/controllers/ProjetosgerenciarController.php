@@ -121,10 +121,10 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
             $a++;
         }
 
-//        xd($componentes);
+
         $buscarcomponentedesabilitados = $titulacao->BuscarComponenteDesabilidados();
         $buscarArea = $ar->buscar();
-//        xd($buscarcomponentedesabilitados);
+
         $this->view->componentesdesabilitados = $buscarcomponentedesabilitados;
         $this->view->componenteshabilitados = $componentes;
         $this->view->area = $buscarArea;
@@ -340,7 +340,6 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                     $tblDistProjComissao->alterar(array('stDistribuicao'=>'I'), $where);
                 }
                 catch(Zend_Exception $ex) {
-                    //xd($ex->getMessage());
                     parent::message("Erro ao inativar a distribui&ccedil;&atilde;o do Projeto para o Componente - ".$ex->getMessage(), "projetosgerenciar/index","ERROR");
                 }
             }
@@ -364,7 +363,6 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                     $tblPlanilha->apagar($where);
                 }
                 catch(Zend_Exception $ex) {
-                    //xd($ex->getMessage());
                     parent::message("Erro ao apagar a planilha do Componente - ".$ex->getMessage(), "projetosgerenciar/index","ERROR");
                 }
             }
@@ -385,7 +383,6 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                     $tblAnalise->apagar($where);
                 }
                 catch(Zend_Exception $ex) {
-                    //xd($ex->getMessage());
                     parent::message("Erro ao apagar a an&aacute;lise  do Componente - ".$ex->getMessage(), "projetosgerenciar/index","ERROR");
                 }
             }
@@ -402,7 +399,6 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                     $tblParecer->apagar($where);
                 }
                 catch(Zend_Exception $ex) {
-                    //xd($ex->getMessage());
                     parent::message("Erro ao excluir o parecer do Componente - ".$ex->getMessage(), "projetosgerenciar/index","ERROR");
                 }
             }
@@ -422,7 +418,6 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                     $tblParecer->apagar($where);
                 }
                 catch(Zend_Exception $ex) {
-                    //xd($ex->getMessage());
                     parent::message("Erro ao excluir o parecer do Parecerista - ".$ex->getMessage(), "projetosgerenciar/index","ERROR");
                 }
             }
@@ -435,14 +430,12 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
 
             }
             catch(Zend_Exception $ex) {
-                //xd($ex->getMessage());
                 parent::message("Erro ao alterar a situa&ccedil;&atilde;o do Projeto - ".$ex->getMessage(), "projetosgerenciar/index","ERROR");
             }
 
             parent::message("Devolvido com sucesso!", "projetosgerenciar/index/","CONFIRM");
         }
         catch(Zend_Exception $ex) {
-            //xd($ex->getMessage());
             parent::message("Erro ao devolver projeto - ".$ex->getMessage(), "projetosgerenciar/index","ERROR");
         }
     }
@@ -524,7 +517,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                                         'FecharAnalise' => 2, //0=AnaliseAberta 1=AnaliseFechada 2=DevolvidoAoParecerista
                                         'DtRetorno'     => null,
                                         'idUsuario'     => $idusuario);
-//                                            xd($dados);
+
                                 $tbDistParecer->inserir($dados);
                             }
 

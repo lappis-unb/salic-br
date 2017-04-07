@@ -447,7 +447,8 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             'UfDespesa' => $params['uf'],
             'MunicipioDespesa' => $params['municipio'],
             'dsJustificativa' => substr($justificativa, 0, 510),
-            'idUsuario' => $this->idUsuario
+            'idUsuario' => $this->idUsuario,
+            'stCustoPraticado' => $params['stCustoPraticado']
         );
 
         $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();

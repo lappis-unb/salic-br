@@ -20,7 +20,7 @@ class tbOrgaos extends MinC_Db_Table_Abstract
                 array('org_superior')
         );
         $select->where('oxp.org_codigo = ?', $idOrgao);
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

@@ -152,7 +152,7 @@ class AvaliarprojetoscomissaoController extends MinC_Controller_Action_Abstract 
 
         $pag = 1;
         $get = Zend_Registry::get('get');
-        //xd($get);
+        
         if (isset($get->pag)) $pag = $get->pag;
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
@@ -173,7 +173,7 @@ class AvaliarprojetoscomissaoController extends MinC_Controller_Action_Abstract 
         //==== campo de ordenacao  ======//
         if($this->_request->getParam("campo")){
             $campo = $this->_request->getParam("campo");
-            //xd($campo);
+            
             $order = array($campo." ".$ordem);
             $ordenacao = "&campo=".$campo."&ordem=".$ordem;
 

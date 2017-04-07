@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -33,7 +33,7 @@ class Contratoxagentes extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('cxa'=>$this->_schema.'.'.$this->_name),
+                        array('cxa'=>$this->_name),
                         array('cxa.idAgente')
                       );
 
@@ -57,4 +57,3 @@ class Contratoxagentes extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 }
-?>

@@ -23,10 +23,10 @@
                                 <td width="90%">
                                     <?php if (is_array($valor->Url)) : ?>
                                         <a href="<?php echo $this->url($valor->Url, null, true); ?>">
-                                            <?php echo $valor->Descricao; ?>
+                                            <?php echo $valor->dsInconsistencia; ?>
                                         </a>
                                     <?php else: ?>
-                                        <?php echo $valor->Descricao; ?>
+                                        <?php echo $valor->dsInconsistencia; ?>
                                     <?php endif; ?>
                                 </td>
 

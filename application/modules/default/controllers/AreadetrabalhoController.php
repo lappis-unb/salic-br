@@ -92,12 +92,12 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
 //        $arrProjetosAnalisados['dpc.idAgente = ?']= $idagente;
 //        $arrProjetosAnalisados['par.TipoParecer = ?']= 1; /**parecer de analise inicial**/
 //        $rsProjAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrProjetosAnalisados, $ordem, null, null, false, null, null, 1);
-//        xd($rsProjAnalisados);
+
 //
 //        $arrProjetosAnalisadosReadequados['dpc.idAgente = ?']= $idagente;
 //        $arrProjetosAnalisadosReadequados['par.TipoParecer <> ?'] = 1; /**parecer de readequacao**/
 //        $rsProjAnalisadosReadequados = $tblDistribuicao->buscarProjetoEmPauta($arrProjetosAnalisadosReadequados, $ordem, null, true, false, null, null, 1);
-        //xd($rsProjAnalisados->toArray());
+        
 
 //        $this->view->qtdfinalizados = $rsProjAnalisados->count();
 //        $this->view->qtdfinalizadosreadequados = $rsProjAnalisadosReadequados->count();

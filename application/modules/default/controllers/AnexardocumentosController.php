@@ -149,7 +149,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                     $resultComprovantes = $Documentos->documentosAnexados($idpronac);
 
 //                    $resultComprovantes = AnexardocumentosDAO::buscarArquivos($idpronac);
-//                    xd($resultComprovantes);
+
 
                     // caso n�o existam comprovantes cadastrados
                     if (count($resultComprovantes) == 0)

@@ -149,7 +149,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
                 $this->view->historicoDevolucao = array();
             }
         }
-        //xd($this->view->relatorioFiscalizacao);
+        
     }
 
     public function parecerdocoordenadorAction() {

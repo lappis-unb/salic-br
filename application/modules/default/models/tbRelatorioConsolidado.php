@@ -62,7 +62,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                     'SAC.dbo'
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
-//            xd($select->query());
+
             return $this->fetchAll($select);
         }
 
@@ -93,8 +93,8 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 'c.idRelatorioConsolidado = a.idRelatorioConsolidado',
                 array('*')
         );
-//        xd($select->assemble());
-        //xd($this->fetchAll($select));
+
+        
         return $this->fetchAll($select);
 
         }
@@ -126,8 +126,8 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 'c.idRelatorioConsolidado = a.idRelatorioConsolidado',
                 array('*')
         );
-//        xd($select->assemble());
-        //xd($this->fetchAll($select));
+
+        
         return $this->fetchAll($select);
 
         }
@@ -169,7 +169,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 array('*')
         );
         $select->where("b.idPRONAC = ?", $idPronac);
-//xd($select->__toString());
+
         return $this->fetchAll($select);
         }
 
@@ -198,7 +198,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -224,7 +224,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->where('a.stRelatorioConsolidado = ?', $status);
             $select->where('b.tpRelatorio = ?', 'C');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 
@@ -250,7 +250,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->where('b.tpRelatorio = ?', 'C');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 
@@ -276,7 +276,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                     'SAC.dbo'
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
         }
 } // fecha class

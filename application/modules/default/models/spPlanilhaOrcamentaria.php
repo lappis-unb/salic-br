@@ -35,10 +35,8 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
         switch($tipoPlanilha){
         case 0:
-            return $this->planilhaOrcamentariaProposta($idPronac);
-            break;
         case 1:
-            return $this->orcamentariaProponente($idPronac);
+            return $this->planilhaOrcamentariaProposta($idPronac);
             break;
         case 2:
             return $this->orcamentariaParecerista($idPronac);
@@ -89,6 +87,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             'ROUND((b.quantidade * b.ocorrencia * b.valorunitario),2) as vlSolicitado',
             'b.fonterecurso as idFonte',
             'b.qtdedias as QtdeDias',
+            'b.stCustoPraticado as stCustoPraticado',
             new Zend_Db_Expr(MinC_Db_Expr::convertOrToChar('b.dsjustificativa').' as JustProponente'),
         );
 

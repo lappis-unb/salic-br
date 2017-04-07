@@ -69,7 +69,7 @@ class tbDocumentoAceitacao extends MinC_Db_Table_Abstract
                     );
 
             $select->where('c.idPRONAC = ?', $idpronac);
-//            xd($select->query());
+
             return $this->fetchAll($select);
 
         }

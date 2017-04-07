@@ -65,7 +65,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 //        $this->view->nomeproponente = $buscaAcessos[0]->Nome;
         //x($this->idResponsavel);
         //x($this->idAgente);
-        //xd($this->idUsuario);
+        
 
         parent::init();
     }
@@ -532,7 +532,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         if (!in_array(strtolower($arquivoExtensao), $tipos)) {
             parent::message("Favor selecionar o arquivo da Procura&ccedil;&atilde;o em formato PDF!", "procuracao/cadastramento", "ERROR");
         }
-//        xd($arquivoExtensao);
+
 //
 //        if ($arquivoExtensao > 1024) {
 //            parent::message("Favor selecionar o arquivo da Procura&ccedil;&atilde;o em formato PDF!", "procuracao/cadastramento", "ERROR");
