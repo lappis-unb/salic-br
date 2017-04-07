@@ -73,6 +73,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
         $listaExecucaoImediata = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 23), array('idVerificacao'));
         $this->view->listaExecucaoImediata = $listaExecucaoImediata;
+        $this->view->listaExecucaoImediata = $listaExecucaoImediata;
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;

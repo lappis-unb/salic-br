@@ -171,8 +171,12 @@ if($this->tipoPlanilha == 0){ ?>
                                         $valorSolicitadoTotalProduto += $planilha['vlSolicitado'];
                                         $valorSolicitadoTotalIncentivo += $planilha['vlSolicitado'];
                                         $TotalSolicitado += $planilha['vlSolicitado'];
+
+                                        $valorMaiorQueOPraticado = '';
+                                        if( $planilha['stCustoPraticado'] == 1)
+                                            $valorMaiorQueOPraticado = 'orange accent-3 black-text'
                                         ?>
-                                        <tr class="item">
+                                        <tr class="item <?php echo $valorMaiorQueOPraticado; ?>">
                                             <td style="width: 5%;"><?php echo $planilha['Seq']; ?></td>
                                             <td  style="width: 20%;"><?php echo $planilha['Item']; ?></td>
                                             <td class="direita textDias"><?php echo $planilha['QtdeDias']; ?></td>
