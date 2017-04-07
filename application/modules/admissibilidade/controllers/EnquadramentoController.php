@@ -265,9 +265,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $this->view->codOrgao = $this->grupoAtivo->codOrgao;
     }
 
-   /**
-    * @todo TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL
-    */
     public function desistenciaRecursalAction()
     {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');

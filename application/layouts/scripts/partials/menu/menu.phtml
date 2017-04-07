@@ -369,11 +369,15 @@ $arrMenu['admissibilidade']['menu'][] = array(
     ,151
     ,152
     ),
-    'url' => $this->url(array(
+    'url' => $this->url(
+        array(
         'module' => 'assinatura',
         'controller' => 'enquadramento',
         'action' => 'gerenciar-projetos'
-    ), '', true),
+        ),
+        '',
+        true
+    ),
     'title' => 'Assinatura',
     'label' => 'Assinatura'
 );
