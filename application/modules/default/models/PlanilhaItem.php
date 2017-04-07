@@ -11,7 +11,7 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
      */
     public function pesquisar($item)
     {
-        #xd($item);
+        
         /*$select = "SELECT
                     pa.*,
                     (
@@ -60,7 +60,7 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
                     AND pa.nrFonteRecurso = 109 -- BATIZADO: Incentivo Fiscal Federal
                 ORDER BY prod.Descricao ASC";
 
-        #xd($select);
+        
 
         $statement = $this->getAdapter()->query($select, array($item));
 

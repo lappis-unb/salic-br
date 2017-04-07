@@ -348,7 +348,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE tp.idNrReuniao = cv.idNrReuniao and tp.IdPRONAC = cv.IdPRONAC)", '');
 		$select->order(array(8,2));
 
-        //xd($select->assemble());
+        
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarSolicitacaoRecurso()
 
@@ -525,7 +525,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -590,7 +590,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -654,7 +654,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

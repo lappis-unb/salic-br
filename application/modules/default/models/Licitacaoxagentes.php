@@ -1,8 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Licitacaoxagentes
@@ -33,7 +29,7 @@ class Licitacaoxagentes extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('lxa'=>$this->_schema.'.'.$this->_name),
+                        array('lxa'=>$this->_name),
                         array(
                                 'lxa.idAgente','lxa.stVencedor'
                               )
@@ -56,4 +52,3 @@ class Licitacaoxagentes extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 }
-?>

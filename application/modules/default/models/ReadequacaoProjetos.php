@@ -1344,7 +1344,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     WHERE b.IdPRONAC = $id_Pronac 
                     AND g.tpAlteracaoProjeto = 6
                     AND g.stVerificacao in (0,2) ) as tabela ";
-//            xd($sql);
+//            
 
         }
 
@@ -2274,7 +2274,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
             //$sql = "select org_codigo as Codigo,org_sigla as Sigla from Orgaos ORDER BY org_sigla";
             //$sql = "SELECT DISTINCT uog_orgao as Codigo,org_siglaautorizado as Sigla FROM vwUsuariosOrgaosGrupos ORDER BY org_siglaautorizado";
         }
-//xd($sql);
+
         return $sql;
     }
 
@@ -3050,7 +3050,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     ORDER BY a.idPlano";
 
         }
-        //xd($sql);
+        
         return $sql;
     }
 

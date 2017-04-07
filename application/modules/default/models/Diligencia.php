@@ -47,7 +47,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -83,7 +83,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -146,7 +146,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
             $select->where('D.DtResposta is null');
         }
         $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from SAC..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -239,7 +239,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

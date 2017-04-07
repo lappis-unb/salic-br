@@ -108,7 +108,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
         //$post = Zend_Registry::get('post');
 
-        //xd($_POST['html']);
         $pdf = new PDFCreator($_POST['html']);
 
         $pdf->gerarPdf();
@@ -907,7 +906,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtLiberacao", "dtLiberacao", "SAC.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial)", "dtLiberacao_Final", $arrBusca);
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "SAC.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial)", "dtPortaria_Final", $arrBusca);
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "SAC.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial)", "dtPublicacao_Final", $arrBusca);
-//xd($arrBusca);
         $total = $tbl->extratorProjeto($arrBusca, array(), null, null);
         $total = count($total);
 
@@ -1169,7 +1167,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
 		$_POST['html'] = str_replace('display:none', '', $_POST['html']);
 	    $_POST['html'] = str_replace('type="button"', 'type="hidden"', $_POST['html']);
-        //xd($_POST['html']);
 
         $UF = new Uf();
         $b = $UF->buscar();
@@ -1246,6 +1243,6 @@ $startPos = 72;
 //
 //        $tbl = new Projetos();
 //        $rs = $tbl->parecerProjetos();
-//        xd($rs);
+
 //    }
 }

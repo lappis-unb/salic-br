@@ -20,7 +20,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
 
 
         $slct->from(
-                        array('t'=>$this->_schema.'.'.$this->_name),
+                        array('t'=>$this->_name),
                         array('idNrReuniao', 'IdPronac', 'VlAprovado'=>"({$slctVlAprovado})", "stAnalise")
                      );
         $slct->joinInner(
@@ -160,7 +160,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slct2 = $this->select();
             $slct2->setIntegrityCheck(false);
             $slct2->from(
-                            array('t'=>$this->_schema.'.'.$this->_name),
+                            array('t'=>$this->_name),
                             array('total'=>"count(*)")
                          );
             $slct2->joinInner(
@@ -235,7 +235,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 $slct2->where($coluna, $valor);
             }
 
-            //xd($slct2->__toString());
+            
             $rs = $this->fetchAll($slct2)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
@@ -251,7 +251,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -269,7 +269,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slctInterno->where("IdPRONAC = p.idPronac and stAtivo='S' and nrFonteRecurso=109");
 
         $slct->from(
-                        array('t'=>$this->_schema.'.'.$this->_name),
+                        array('t'=>$this->_name),
                         array('idNrReuniao', 'IdPronac', 'VlAprovado'=>"({$slctInterno})", "stAnalise")
                      );
         $slct->joinInner(
@@ -335,7 +335,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slct2 = $this->select();
             $slct2->setIntegrityCheck(false);
             $slct2->from(
-                            array('t'=>$this->_schema.'.'.$this->_name),
+                            array('t'=>$this->_name),
                             array('total'=>"count(*)")
                          );
             $slct2->joinInner(
@@ -397,7 +397,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 $slct2->where($coluna, $valor);
             }
 
-            //xd($slct2->__toString());
+            
             $rs = $this->fetchAll($slct2)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
@@ -413,8 +413,8 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->getPart(Zend_Db_Select::COLUMNS));
-        //xd($slct->assemble());
+        
+        
         return $this->fetchAll($slct);
     }
 
@@ -486,7 +486,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slctContador = $this->select();
             $slctContador->setIntegrityCheck(false);
             $selectCount->from(
-                            array('p'=>$this->_schema.'.'.$this->_name),
+                            array('p'=>$this->_name),
                             array('total'=>"count(*)")
                          );
             $slctContador->joinInner(
@@ -647,7 +647,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slctContador = $this->select();
             $slctContador->setIntegrityCheck(false);
             $selectCount->from(
-                            array('p'=>$this->_schema.'.'.$this->_name),
+                            array('p'=>$this->_name),
                             array('total'=>"count(*)")
                          );
             $slctContador->joinInner(
@@ -719,7 +719,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -795,7 +795,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slctContador = $this->select();
             $slctContador->setIntegrityCheck(false);
             $selectCount->from(
-                            array('tp'=>$this->_schema.'.'.$this->_name),
+                            array('tp'=>$this->_name),
                             array('total'=>"count(*)")
                          );
             $slctContador->joinInner(
@@ -947,7 +947,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             ->union(array('('.$slct1.')', '('.$slct2.')', '('.$slct3.')'))
                             ->order('3');
 
-        //xd($slctUnion->assemble());
+        
         return $this->fetchAll($slctUnion);
     }
 

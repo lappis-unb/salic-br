@@ -255,7 +255,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 					AND   stestado    = 0";
 
 
-		//xd($sql);
+		
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

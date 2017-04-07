@@ -215,7 +215,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         // caso o formulario seja enviado via post
         // atualiza a planilha
         if ($this->getRequest()->isPost()) {
-//                    xd($_POST);
+
             // recebe os dados via post
             $post = Zend_Registry::get('post');
             $idPlanilha = $post->idPlanilha;
@@ -743,7 +743,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
         $rs = $tbAnaliseAprovacao->buscarAnaliseProduto($tpPlanilha, $idPronac, null, array('aa.idAnaliseAprovacao=?' => $idAnaliseAprovacao))->current();
         $this->view->analise = $rs;
-        //xd($rs);
         $this->view->parametrosBusca = $_POST;
     }
 
@@ -1285,7 +1284,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
                     }// fecha try
                     catch (Exception $e) {
-                        //xd($e->getMessage());
+
                         parent::message("Erro ao ativar Planilha readequada. " . $e->getMessage(), "realizaranaliseprojeto/emitirparecer" . $query_string, "ERROR");
                     }
                 }
@@ -1370,7 +1369,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
             } // fecha try
             catch (Exception $e) {
-                //xd($e->getMessage());
+
                 parent::message("Erro ao incluir projeto na Pauta. " . $e->getMessage(), "realizaranaliseprojeto/emitirparecer" . $query_string, "ERROR");
             }
         } // fecha if
@@ -1859,7 +1858,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
 
             $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac, $tpplanilha, $arrBuscaPlanilha);
-            //xd($buscarplanilhaCO);
             $buscarAnaliseConta = array();
             $cont = 0;
             foreach ($buscarplanilhaCO as $resuplanilha) {
@@ -2200,7 +2198,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
 
             $buscarplanilhaCO = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, $tipoplanilha, $arrBuscaPlanilha);
-            //xd($buscarplanilhaCO);
 
             $planilhaaprovacao = array();
             $count = 0;
@@ -2247,7 +2244,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $resuplanilha = null;
             $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+
             foreach ($buscarplanilhaSR as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -2274,7 +2271,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $resuplanilha = null;
             $count = 0;
             $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+
             foreach ($buscarplanilhaPA as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -2307,7 +2304,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             //$buscarsomaprojeto = $tblPlanilhaProjeto->somarPlanilhaProjeto($idpronac, 109);
             $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
             $this->view->planilhaUnidade = $buscarPlanilhaUnidade;
-            $this->view->planilha = $planilhaaprovacao; //xd($planilhaaprovacao);
+            $this->view->planilha = $planilhaaprovacao;
             $this->view->projeto = $buscarprojeto;
             $this->view->totalcomponente = $buscarsomaaprovacao['soma'];
             $this->view->totalparecerista = $buscarsomaprojeto['soma'];
@@ -2516,7 +2513,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
         } // fecha try
         catch (Exception $e) {
-            //xd($e->getMessage());
+
             parent::message("Erro ao efetuar altera&ccedil;&atilde;o! " . $e->getMessage(), "realizaranaliseprojeto/" . $url . "/idpronac/" . $idPronac, "ERROR");
         }
     }

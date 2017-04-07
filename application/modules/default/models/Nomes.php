@@ -137,7 +137,7 @@ class Nomes extends MinC_Db_Table_Abstract
                 if($idOrgao)
                     $select->where('uxoxg.uog_orgao = ?',$idOrgao);
                 $select->group(array('nm.Descricao','age.idAgente'));
-//                xd($select->__toString());
+
                 return $this->fetchAll($select);
 
 	}

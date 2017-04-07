@@ -48,7 +48,7 @@ class Mensagemprojeto extends MinC_Db_Table_Abstract {
 
     public function inserirMensagemProjeto($dados) {
         try {
-//            xd($this->dbg($dados));
+
             $inserir = $this->insert($dados);
             return $inserir;
         } catch (Zend_Db_Adapter_Exception $e) {

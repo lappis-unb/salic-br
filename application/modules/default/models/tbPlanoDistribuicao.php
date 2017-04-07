@@ -191,7 +191,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 
 		// adicionando linha order ao select
 		$select->order($order);
-                //xd($select->assemble());
+                
 		return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
 
@@ -299,7 +299,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 
         $select->where('a.IdPRONAC = ?', $idPronac);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -358,7 +358,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			$select->where($coluna, $valor);
 		endforeach;
 
-        //xd($select->assemble());
+        
 		return $this->fetchAll($select);
 	} // fecha m�todo historicoReadequacao()
 

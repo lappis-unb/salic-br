@@ -32,9 +32,9 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
               $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
               $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
         }
-        
+
         $this->idusuario = $this->getIdUsuario;
-        
+
         $idorgao = $auth->getIdentity()->usu_orgao;
         $usu_identificacao = $auth->getIdentity()->usu_identificacao;
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
@@ -49,7 +49,7 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
 
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 130; //Avaliador de Editais
-       
+
 
         parent::perfil(1, $PermissoesGrupo);
         if (isset($auth->getIdentity()->usu_codigo)) {
@@ -71,7 +71,7 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
     public function indexAction(){
         $IdOrgao = $this->codOrgao;
         $idusuario = $this->idusuario;
-        
+
         $tbprojetos = new Projetos();
 
         $where = array(
@@ -92,10 +92,10 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
 
         $idusuario = $this->idusuario;
         $IdOrgao = $this->codOrgao;
-        
+
         //x($idusuario);
         //x($IdOrgao);
-        
+
         $tbprojetos = new Projetos();
         $nrFormDocumento = $_GET['nrFormDocumento'];
         $nrVersaoDocumento = $_GET['nrVersaoDocumento'];
@@ -114,13 +114,13 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
 
         $dadosFD = array('nrFormDocumento = ?' => $nrFormDocumento, 'nrVersaoDocumento = ?' => $nrVersaoDocumento);
         $FD = new tbFormDocumento();
-        $buscarFD = $FD->buscar($dadosFD)->toArray(); 
+        $buscarFD = $FD->buscar($dadosFD)->toArray();
         $idEdital = $buscarFD[0]['idEdital'];
 
 
         $listaProjetos = $tbprojetos->listaProjetosPainelAvaliador($where)->current();
         $this->view->listaProjetos = $listaProjetos;
-        
+
             $where = array(
                 'b.nrFormDocumento = ?' => $nrFormDocumento,
                 'b.nrVersaoDocumento = ?' => $nrVersaoDocumento,
@@ -146,7 +146,6 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
         $tblRes = new tbResposta();
 
         if($_POST){
-//xd($_POST);
 			// pega o id do edital
 			$tbFormDocumento = new tbFormDocumento();
 			$idEdital = $tbFormDocumento->buscar( array('nrFormDocumento = ?' => $_POST['nrFormDocumento']
@@ -218,7 +217,6 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
                         'idProjeto'         => $_POST['idPreProjeto'],
                         'dsRespostaSubj'    => $_POST['nota_'.$value]
                     );*/
-                    //xd($dados);
                     /*try{
                         $tblRes->inserir($dados);
                         }catch (Exception $e){
@@ -235,7 +233,6 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
                     	,'nrNotaFinal' => number_format($notas/$totalPeso , 2, '.', '')
                     	,'dtAvaliacao' => new Zend_Db_Expr('GETDATE()')
                     	,'stAvaliacao' => 0);
-                    	//xd($dadosAvaliacao);
 					try
 					{
                     	$tbAvaliacaoPreProjeto->inserir($dadosAvaliacao);

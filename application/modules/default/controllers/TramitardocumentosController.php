@@ -261,7 +261,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
             $justificativa = $_POST['justificativa'];
             $idLote = $_POST['idLote'];
             $idDoc = $_POST['idDoc'];
-            //xd($idPronac);
+            
 
             $acaoAlterada = 1;
             $historicoDocumentos = new HistoricoDocumento();
@@ -284,7 +284,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                 'idDocumento' => $idDoc
             );
 
-            //xd($dadosInserir);
+            
             $inserir = $historicoDocumentos->inserirHistoricoDocumento($dadosInserir);
             parent::message("Envio de documentos realizado com sucesso!", "tramitardocumentos/enviar", "CONFIRM");
         }
@@ -1281,7 +1281,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                     'Acao' => 2,
                     'stEstado' => 1
                 );
-//                    xd($recebe);
+
                 $gravarHistorico = TramitarDocumentosDAO::GravarHistorico($recebe);
                 parent::message("Solicita��o n�o atendida!", "tramitardocumentos/solicitacoes", "CONFIRM");
             }

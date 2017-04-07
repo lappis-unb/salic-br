@@ -84,7 +84,7 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
                 'BDCORPORATIVO.scCorp'
         );
         $slct->where('D.idRelatorioConsolidado = ?', $idRelatorioConsolidado);
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
 
     }
@@ -92,7 +92,7 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('pc'=>$this->_schema.'.'.$this->_name),
+                        array('pc'=>$this->_name),
                         array('Perfil3'=>new Zend_Db_Expr("'Coordenadador de Acompanhamento'"))
                       );
 

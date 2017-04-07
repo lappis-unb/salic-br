@@ -14,7 +14,7 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
     	$select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('tbepc'=>$this->_schema.'.'.$this->_name),
+                        array('tbepc'=>$this->_name),
                         array(
                               'tbepc.idAgenteDestino','tbepc.idAgenteOrigem',
                               'tbepc.dtInicioEncaminhamento','tbepc.idOrgao',
@@ -57,10 +57,10 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
     }
 
     public function BuscaEncaminhamentoPrestacaoContas($idOrgao, $situacao, $idAgenteDestino){
-    	//xd($idOrgao."-".$idAgenteDestino);
+    	
     	$select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('tbepc'=>$this->_schema.'.'.$this->_name),
+        $select->from(array('tbepc'=>$this->_name),
                         array(
 						      'idAgenteOrigem',
 						      'dtInicioEncaminhamento',
@@ -130,7 +130,7 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                 $select->where('tbepc.idAgenteDestino = ?',$idAgenteDestino);
 		        $select->where('tbepc.idSituacaoEncPrestContas = ?',$situacao);
 		//$select->where('tbepc.idTipoAgente = ?',11);
-	    //xd($select->assemble());
+	    
 
 		return $this->fetchAll($select);
     }
@@ -178,7 +178,7 @@ a.dsJustificativa,
     public function BuscaEmitirParecerPrestacaoContas($idPronac,$idOrgao){
     	$select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('tbepc'=>$this->_schema.'.'.$this->_name),
+        $select->from(array('tbepc'=>$this->_name),
                         array(
                               'idAgenteDestino',
                               'idAgenteOrigem',
@@ -239,7 +239,7 @@ a.dsJustificativa,
 
 		$select->where('tbepc.idOrgao = ?',$idOrgao);
 		$select->where('tbepc.idPronac = ?',$idPronac);
-	   // xd($select->assemble());
+	   
 
 		return $this->fetchAll($select);
     }
@@ -280,7 +280,7 @@ a.dsJustificativa,
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
+        
         return $this->fetchAll($slct);
     }*/
 
@@ -290,7 +290,7 @@ a.dsJustificativa,
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('epc'=>$this->_schema.'.'.$this->_name),
+                        array('epc'=>$this->_name),
                         array()
                       );
 
@@ -345,7 +345,7 @@ a.dsJustificativa,
 
         $select->where('idPronac = ?', $idPronac);
         //$select->where('usu2.usu_codigo <> ?', $idusuario);
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 }

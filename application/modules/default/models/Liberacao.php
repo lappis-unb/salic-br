@@ -42,7 +42,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
 
         $slct->where('p.IdPRONAC = ?',$idPronac );
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct)->current();
     }
 
@@ -74,7 +74,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
                       );
 
         $select->where('l.AnoProjeto+l.Sequencial = ?', $pronac);
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -107,7 +107,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
             $select->where('i.Habilitado = ?', 'N');
         }
         //$select->Where("p.Situacao = 'E12' or p.Situacao = 'E13'");
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -253,14 +253,14 @@ class Liberacao extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
     public function buscarCaptacao($pronac) {
         $sql = "SELECT sac.dbo.fnPercentualCaptado(p.AnoProjeto, p.Sequencial) AS captacao
 				FROM Sac.dbo.Projetos AS p where p.AnoProjeto+p.Sequencial = '$pronac'";
-//    	xd($sql);
+//    	
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -340,7 +340,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -373,7 +373,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
             $select->where($coluna, $valor);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchRow($select);
     }
 

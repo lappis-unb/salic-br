@@ -367,17 +367,17 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                     //busca o idPronac do projeto
                     $buscaridpronac = $aprovacao->buscar(array('idAprovacao = ?' => $idAprovacao))->current();
 
-                    //busca a data final de execu��o do projeto em quest�o
+                    //busca a data final de execucao do projeto em questao
                     $resultado = $projeto->buscar(array('IdPRONAC = ?'=>$buscaridpronac->IdPRONAC))->current();
-                    $dtFimCaptacao = $resultado->DtFimExecucao; //� isso mesmo que vc v�. A data fim capta��o vai receber o mesmo valor da fim de execu��o.
+                    $dtFimCaptacao = $resultado->DtFimExecucao; //Eh isso mesmo que vc ve. A data fim captacao vai receber o mesmo valor da fim de execucao.
                     $dtFimExecucao = $resultado->DtFimExecucao;
                     $dtInicioExecucao = $resultado->DtInicioExecucao;
 
-                    //se a data final de execu��o estiver em branco (projetos antigos) o sistema considera o 31/12/ano em quest�o
+                    //se a data final de execucao estiver em branco (projetos antigos) o sistema considera o 31/12/ano em quest�o
                     if($resultado->DtFimExecucao == '' || empty($resultado->DtFimExecucao)){
                         $dtFimCaptacao = date("Y", strtotime($DtPublicacaoAprovacao)) . '-12-31 ' . date("H:i:s");
                     } else {
-                        //se o ano da data final de execu��o for maior do que o ano em quest�o, o fim de capta��o vai at� 31/12/ano em quest�o
+                        //se o ano da data final de execucao for maior do que o ano em questao, o fim de captacao vai ate 31/12/ano em questao
                         if(date("Y", strtotime($dtFimCaptacao)) > date("Y", strtotime($DtPublicacaoAprovacao))){
                             $dtFimCaptacao = date("Y", strtotime($DtPublicacaoAprovacao)) . '-12-31 ' . date("H:i:s");
                         }
@@ -411,7 +411,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
                     // verifica se eh readequacao
                     if (isset($buscaridpronac['IDREADEQUACAO']) && ! empty($buscaridpronac['IDREADEQUACAO'])) {
-                        $naoAlteraSituacao = array(3, 10, 12, 15);  // tipos de readequacoes para as quais n�o � necess�rio alterar a situa��o do projeto
+                        $naoAlteraSituacao = array(3, 10, 12, 15);  // tipos de readequacoes para as quais nao e necessario alterar a situacao do projeto
                         $tbReadequacao = new tbReadequacao();
                         $readequacao = $tbReadequacao->buscarReadequacao($buscaridpronac['IDREADEQUACAO']);
                         if (in_array($readequacao->current()->idTipoReadequacao, $naoAlteraSituacao)) {
@@ -436,32 +436,32 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                             switch ($tipoPublicacao) {
                                 case 'aprovacaoInicial':
                                     $dadosSituacao['Situacao'] = 'D09';
-                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprova��o inicial encaminhada � Imprensa Nacional para publica��o no Di�rio Oficial da Uni�o.';
+                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprova&ccedil;&atilde;o inicial encaminhada &agrave; Imprensa Nacional para publica&ccedil;&atilde;o no Di&aacute;rio Oficial da Uni&atilde;o.';
                                     break;
                                 case 'complementacao':
                                     $dadosSituacao['Situacao'] = 'D16';
-                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de complementa��o encaminhada � Imprensa Nacional para publica��o no Di�rio Oficial da Uni�o.';
+                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de complementa&ccedil;&atilde;o encaminhada &agrave; Imprensa Nacional para publica&ccedil;&atilde;o no Di&aacute;rio Oficial da Uni&atilde;o.';
                                     break;
                                 case 'prorrogacao':
                                     $dadosSituacao['Situacao'] = 'D17';
-                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de prorroga��o encaminhada � Imprensa Nacional para publica��o no Di�rio Oficial da Uni�o.';
+                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de prorroga&ccedil;&atilde;o encaminhada &agrave; Imprensa Nacional para publica&ccedil;&atilde;o no Di&aacute;rio Oficial da Uni&atilde;o.';
                                     break;
                                 case 'reducao':
                                     $dadosSituacao['Situacao'] = 'D23';
-                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de redu��o encaminhada � Imprensa Nacional para publica��o no Di�rio Oficial da Uni�o.';
+                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de redu&ccedil;&atilde;o encaminhada &agrave; Imprensa Nacional para publica&ccedil;&atilde;o no Di&aacute;rio Oficial da Uni&atilde;o.';
                                     break;
                                 case 'aprovacaoPrestacao':
                                     $dadosSituacao['Situacao'] = 'D42';
-                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de Presta��o de Contas encaminhada � Imprensa Nacional para publica��o no Di�rio Oficial da Uni�o.';
+                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de Presta&ccedil;&atilde;o de Contas encaminhada &agrave; Imprensa Nacional para publica&ccedil;&atilde;o no Di&aacute;rio Oficial da Uni&atilde;o.';
                                     break;
                                 case 'reprovacaoPrestacao':
                                     $dadosSituacao['Situacao'] = 'D43';
-                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de Presta��o de Contas encaminhada � Imprensa Nacional para publica��o no Di�rio Oficial da Uni�o.';
+                                    $dadosSituacao['ProvidenciaTomada'] = 'Portaria de Presta&ccedil;&atilde;o de Contas encaminhada &agrave; Imprensa Nacional para publica&ccedil;&atilde;o no Di&aacute;rio Oficial da Uni&atilde;o.';
                                     break;
                             }
                         } else {
                             $dadosSituacao['Situacao'] = 'D09';
-                            $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprova��o inicial encaminhada � Imprensa Nacional para publica��o no Di�rio Oficial da Uni�o.';
+                            $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprova&ccedil;&atilde;o inicial encaminhada &agrave; Imprensa Nacional para publica&ccedil;&atilde;o no Di&aacute;rio Oficial da Uni&atilde;o.';
                         }
 
 
@@ -475,25 +475,25 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                     $textoPortaria = '426 de 28 de maio de 2014 e o art. 4&ordm; da Portaria n&ordm; 120, de 30 de mar&ccedil;o de 2010';
                     $nm = 'Ivan Domingues das Neves';
 
-                } else if($nome == 2) { //Jo�o Batista da Silva
+                } else if($nome == 2) { //Joao Batista da Silva
                     $textoPortaria = '805 de 09 de outubro de 2013, e em cumprimento ao disposto na Lei 8.313, de 23 de dezembro de 1991, Decreto n� 5.761, de 27 de abril de 2006, Medida Provis�ria n� 2.228-1, de 06 de setembro de 2001, alterada pela Lei n� 10.454 de 13 de maio de 2002';
-                    $nm = 'Jo�o Batista da Silva';
+                    $nm = 'Jo&atilde;o Batista da Silva';
 
                 } else if($nome == 3) { //Kleber da Silva Rocha
                     $textoPortaria = '909 de 19 de novembro de 2013 e o art. 4&ordm; da Portaria n&ordm; 120, de 30 de Mar&ccedil;o de 2010';
                     $nm = 'Kleber da Silva Rocha';
 
-                } else if($nome == 4) { //M�rio Henrique Costa Borgneth
+                } else if($nome == 4) { //Mario Henrique Costa Borgneth
                     $textoPortaria = '846 de 07 de novembro de 2013, e em cumprimento ao disposto na Lei 8.313, de 23 de dezembro de 1991, Decreto n� 5.761, de 27 de abril de 2006, Medida Provis�ria n� 2.228-1, de 06 de setembro de 2001, alterada pela Lei n� 10.454 de 13 de maio de 2002';
-                    $nm = 'M�rio Henrique Costa Borgneth';
+                    $nm = 'M&aacute;rio Henrique Costa Borgneth';
 
                 } else {
                     $textoPortaria = '17 de 12 de janeiro de 2010 e o art. 4&ordm; da Portaria n&ordm; 120, de 30 de Mar&ccedil;o de 2010';
                     $nm = 'Ivan Domingues das Neves';
                 }
+                $this->view->cargo = strtoupper(strtr($cargo ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+                $this->view->nome = strtoupper(strtr($nm ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
 
-                $this->view->cargo = strtoupper(strtr($cargo ,"����������������","����������������"));
-                $this->view->nome = strtoupper(strtr($nm ,"����������������","����������������"));
                 $this->view->tipoPublicacao = $tipoPublicacao;
                 $this->view->textoPortaria = $textoPortaria;
 
@@ -548,8 +548,8 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                 $tipoPublicacao = 1;
             }
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-            $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+            $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
 
             $Orgaos = new Orgaos();
             $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoAtivo)->current();
@@ -562,9 +562,9 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
                     $dados['IdPRONAC'] = $projetosretirar->IdPRONAC;
                     $dados['DtSituacao'] = date('Y-m-d');
-                    $dados['ProvidenciaTomada'] = 'Projeto encaminhado para a inclus�o em portaria.';
+                    $dados['ProvidenciaTomada'] = 'Projeto encaminhado para a inclus&atilde;o em portaria.';
 
-                    if($tipoPublicacao == 8){ //Se for readequa��o, n�o altera os dados da Situa��o
+                    if($tipoPublicacao == 8){ //Se for readequacao, nao altera os dados da Situacao
                         $dados['Situacao'] = $dadosProjeto->Situacao;
                         $dados['DtSituacao'] = $dadosProjeto->DtSituacao;
                     }
@@ -575,7 +575,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                     PublicacaoDouDAO::retirarpublicacao($dados, $IdPRONAC);
                     PublicacaoDouDAO::apagarpublicacao($idAprovacao);
                 }
-                parent::message("Projetos retirados da publica��o de portaria!", "publicacaodou?pronac=&situacao=".$_GET['tipo'], "CONFIRM");
+                parent::message("Projetos retirados da publica&ccedil;&atilde;o de portaria!", "publicacaodou?pronac=&situacao=".$_GET['tipo'], "CONFIRM");
             } // fecha try
             catch (Exception $e) {
                 parent::message($e->getMessage(), "publicacaodou/index", "ERROR");
@@ -585,7 +585,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * Faz a publica��o na portaria
+     * Faz a publica&ccedil;&atilde;o na portaria
      */
     public function publicarportariaAction() {
         ini_set('memory_limit', '-1');
@@ -629,17 +629,17 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                 $situacaoAtual = 'D09';
             }
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-            $orgaoLogado = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+            $orgaoLogado = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
 
             $Orgaos = new Orgaos();
             $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoLogado)->current();
 
-            $auth = Zend_Auth::getInstance(); // pega a autentica��o
+            $auth = Zend_Auth::getInstance(); // pega a autenticacao
             $usuarioLogado = $auth->getIdentity()->usu_codigo;
 
             try {
-	        // REDU��O OU COMPLEMENTACAO
+	        // REDUCAO OU COMPLEMENTACAO
                 if($TipoAprovacao == 2 || $TipoAprovacao == 4) {
 		  $where = array();
 		  if($orgaoSuperior->Superior == Orgaos::ORGAO_SUPERIOR_SEFIC){
@@ -675,7 +675,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 		      $tbReadequacao = new tbReadequacao();
 
 		      $dados = array();
-		      $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publica��o no DOU.
+		      $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publica&ccedil;&atilde;o no DOU.
 		      $dados['stEstado'] = 1;
 		      $where = "idReadequacao = " . $p->idReadequacao;
 		      $return = $tbReadequacao->update($dados, $where);
@@ -709,7 +709,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                     $ap = new Aprovacao();
                     $projetos = $ap->consultaPortariaReadequacoes($where);
                     foreach ($projetos as $p) {
-                        // READEQUA��O DE ALTERA��O DE RAZ�O SOCIAL
+                        // READEQUACAO DE ALTERACAO DE RAZAO SOCIAL
 			if($p->idTipoReadequacao == 3){
 
                             $Projetos = new Projetos();
@@ -723,7 +723,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                             $dadosNomes->Descricao = $p->dsSolicitacao;
                             $dadosNomes->save();
 
-                        // READEQUA��O DE ALTERA��O DE PROPONENTE
+                        // READEQUACAO DE ALTERACAO DE PROPONENTE
                         } else if($p->idTipoReadequacao == 10){
 
                             $Projetos = new Projetos();
@@ -733,7 +733,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                             $dadosPrj->CgcCpf = $cnpjcpf;
                             $dadosPrj->save();
 
-                        // READEQUA��O DE NOME DO PROJETO
+                        // READEQUACAO DE NOME DO PROJETO
                         } else if($p->idTipoReadequacao == 12){
 
                             $Projetos = new Projetos();
@@ -743,7 +743,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
                             $dadosPrj->Logon = $usuarioLogado;
                             $dadosPrj->save();
 
-                        // READEQUA��O DE RESUMO DO PROJETO
+                        // READEQUACAO DE RESUMO DO PROJETO
                         } else if($p->idTipoReadequacao == 15){
 
                             $Projetos = new Projetos();
@@ -783,7 +783,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         $buscarprojetos = $pr->buscarProjetosAprovados($where);
         $this->view->dados = $buscarprojetos;
         $this->view->portaria = $portaria;
-        //xd($buscarprojetos);
+        
     }
 
     public function consultarPortariaAction(){
@@ -795,7 +795,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         if($_GET){
 
             if(isset($numeroPortaria) && empty($numeroPortaria)){
-                parent::message("Favor informar o número da portaria!", "publicacaodou/consultar-portaria", "ALERT");
+                parent::message("Favor informar o n&uacute;mero da portaria!", "publicacaodou/consultar-portaria", "ALERT");
             }
 
             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
@@ -874,13 +874,13 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         $textoPortaria = trim(strip_tags($dados->dsPortaria));
         $nm = $dados->dsAssinante;
 
-        $this->view->cargo = strtoupper(strtr($dados->dsCargo ,"����������������","����������������"));
-        $this->view->nome = strtoupper(strtr($nm ,"����������������","����������������"));
+        $this->view->cargo = strtoupper(strtr($dados->dsCargo ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+        $this->view->nome = strtoupper(strtr($nm ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $this->view->tipoPublicacao = isset($_POST['imprimitipoPublicacao']) && !empty($_POST['imprimitipoPublicacao']) ? $_POST['imprimitipoPublicacao'] : '';
         $this->view->textoPortaria = $textoPortaria;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a vis�o
 
         $Orgaos = new Orgaos();
         $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoAtivo)->current();
@@ -897,8 +897,8 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
         ini_set('memory_limit', '-1');
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a vis�o
 
         $Orgaos = new Orgaos();
         $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoAtivo)->current();

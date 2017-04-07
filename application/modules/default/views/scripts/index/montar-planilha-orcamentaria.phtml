@@ -75,12 +75,12 @@
                 $(this).addClass('fundo_linha4');
             }
         });
-        
+
         $('.detalharItemComp').click(function(){
             $("#modalComprovantes").html('Carregando...');
             var idPlanilha = $(this).attr('idPlanilha');
             jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'consultardadosprojeto', 'action' => 'carregar-comprovantes-comprovados-por-item'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>&idPlanilha='+idPlanilha, '', 'modalComprovantes');
-            
+
             $("#modalComprovantes").dialog("destroy");
             $("#modalComprovantes").dialog({
                 resizable: true,
@@ -171,8 +171,12 @@ if($this->tipoPlanilha == 0){ ?>
                                         $valorSolicitadoTotalProduto += $planilha['vlSolicitado'];
                                         $valorSolicitadoTotalIncentivo += $planilha['vlSolicitado'];
                                         $TotalSolicitado += $planilha['vlSolicitado'];
+
+                                        $valorMaiorQueOPraticado = '';
+                                        if( $planilha['stCustoPraticado'] == 1)
+                                            $valorMaiorQueOPraticado = 'orange accent-3 black-text'
                                         ?>
-                                        <tr class="item">
+                                        <tr class="item <?php echo $valorMaiorQueOPraticado; ?>">
                                             <td style="width: 5%;"><?php echo $planilha['Seq']; ?></td>
                                             <td  style="width: 20%;"><?php echo $planilha['Item']; ?></td>
                                             <td class="direita textDias"><?php echo $planilha['QtdeDias']; ?></td>
@@ -188,8 +192,8 @@ if($this->tipoPlanilha == 0){ ?>
                                     ?>
                                     <?php if(strlen($cidade) > 3) : ?>
                                         <tr>
-                                            <td colspan="6" class="black" style="font-size: 14pt;">Total da UF</td>
-                                            <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
+                                            <td colspan="6" class="black right-align" style="font-size: 14pt;">Total da UF</td>
+                                            <td class="black right-align" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
                                             <td style="width: 20%;"></td>
                                         </tr>
                                     <?php endif; ?>
@@ -581,7 +585,7 @@ else if($this->tipoPlanilha == 2){ ?>
                     </table>
                 </td>
             </tr>
-            <?php $nrproduto++; 
+            <?php $nrproduto++;
         } //fechaForeachproduto
         ?>
         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -803,7 +807,7 @@ else if($this->tipoPlanilha == 3){ ?>
                     </table>
                 </td>
             </tr>
-            <?php $nrproduto++; 
+            <?php $nrproduto++;
         } //fechaForeachproduto
         ?>
         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -926,14 +930,14 @@ else if($this->tipoPlanilha == 5){ ?>
                                     $valorAprovadoTotalProduto += $planilha['vlAprovado'];
                                     $valorAprovadoTotalIncentivo += $planilha['vlAprovado'];
                                     $TotalAprovado += $planilha['vlAprovado'];
-                                    
+
                                     $valorComprovadoTotalUf += $planilha['vlComprovado'];
                                     $valorComprovadoTotalEtapa += $planilha['vlComprovado'];
                                     $valorComprovadoTotalProduto += $planilha['vlComprovado'];
                                     $valorComprovadoTotalIncentivo += $planilha['vlComprovado'];
-                                    $TotalComprovado += $planilha['vlComprovado'];                                    
+                                    $TotalComprovado += $planilha['vlComprovado'];
                                     ?>
-                                
+
                                     <tr class="item">
                                         <td style="width: 5%;"><?php echo $planilha['Seq']; ?></td>
                                         <td style="width: 20%;">
@@ -946,7 +950,7 @@ else if($this->tipoPlanilha == 5){ ?>
                                             <?php } else {
                                                 echo $planilha['Item']; ?>
                                             <?php } ?>
-                                            
+
                                         </td>
                                         <td class="direita textDias"><?php echo $planilha['QtdeDias']; ?></td>
                                         <td class="direita textQuantidade"><?php echo $planilha['Quantidade']; ?></td>
@@ -966,13 +970,13 @@ else if($this->tipoPlanilha == 5){ ?>
                                     <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorComprovadoTotalUf, 2, ",", "."); ?></td>
                                     <td colspan="3"></td>
                                 </tr>
-                                
+
                             <tr>
                                 <td colspan="6" class="orange-text" style="width: 18%; font-size: 14pt;" nowrap>Total da Etapa</td>
                                 <td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalEtapa, 2, ",", "."); ?></td>
 				<td class="orange-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorComprovadoTotalEtapa, 2, ",", "."); ?></td>
                                 <td colspan="3" style="width: 40%;">&nbsp;</td>
-                            </tr>                                
+                            </tr>
                             </table>
                         </td>
                     </tr>
@@ -990,7 +994,7 @@ else if($this->tipoPlanilha == 5){ ?>
 		      <th>Valor Aprovado</th>
 		      <th>Valor Comprovado</th>
 		      <th></th>
-		    </tr>            
+		    </tr>
                         <tr>
                             <td colspan="6" class="green-text" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
                             <td class="green-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
@@ -999,8 +1003,8 @@ else if($this->tipoPlanilha == 5){ ?>
                         </tr>
                     </table>
                 </td>
-            </tr>	    
-            <?php $nrproduto++; 
+            </tr>
+            <?php $nrproduto++;
         } //fechaForeachproduto
         ?>
         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -1011,20 +1015,20 @@ else if($this->tipoPlanilha == 5){ ?>
 		  <th>Valor Aprovado</th>
           <th>Valor Comprovado</th>
 		  <th></th>
-		</tr>            
-		
+		</tr>
+
                     <tr>
                         <td colspan="6" class="red-text" style="width: 18%; font-size: 14pt;">Total do <?php echo $fonte; ?></td>
                         <td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorAprovadoTotalIncentivo, 2, ",", "."); ?></td>
 			<td class="red-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($valorComprovadoTotalIncentivo, 2, ",", "."); ?></td>
-			<td colspan="3" style="width: 40%;">&nbsp;</td>			
+			<td colspan="3" style="width: 40%;">&nbsp;</td>
                     </tr>
                 </table>
             </td>
         </tr>
 	<?php $nrfonte++;
     }//fechaForeachFonteIncentivo
-    
+
     ?>
     <?php if(is_array($this->planilha) && count($this->planilha)>0): ?>
     <tr>
@@ -1035,8 +1039,8 @@ else if($this->tipoPlanilha == 5){ ?>
 		      <th>Valor Aprovado</th>
 		      <th>Valor Comprovado</th>
 		      <th></th>
-		    </tr>            
-	    
+		    </tr>
+
                 <tr>
                     <td colspan="6" class="blue-text" style="width: 18%; font-size: 14pt;">Total do Projeto</td>
                     <td class="blue-text" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalAprovado, 2, ",", "."); ?></td>
@@ -1045,14 +1049,14 @@ else if($this->tipoPlanilha == 5){ ?>
                 </tr>
             </table>
         </td>
-    </tr>    
+    </tr>
 <?php else: ?>
     <tr>
         <td align="center"><em>Dados n&atilde;o informados!</em></td>
     </tr>
 <?php endif; ?>
 </table>
-    
+
 <?php }
 //MONTANDO A PLANILHA DO TIPO 6 = Readequação
 else if($this->tipoPlanilha == 6){ ?>
@@ -1123,7 +1127,7 @@ else if($this->tipoPlanilha == 6){ ?>
                                     <th>Vl. Aprovado</th>
                                     <th>Vl. Comprovado</th>
                                     <th>Justif. Readequação</th>
-                                    
+
                                     <?php //if($this->link && $this->idPerfil == 1111){ ?>
                                         <th>Ação</th>
                                     <?php //} ?>
@@ -1146,7 +1150,7 @@ else if($this->tipoPlanilha == 6){ ?>
                                         $TotalAprovado += $planilha['vlAprovado'];
                                     }
                                     ?>
-                                
+
                                     <?php
                                         $corLinha = '';
                                         switch ($planilha['tpAcao']) {
@@ -1179,7 +1183,7 @@ else if($this->tipoPlanilha == 6){ ?>
                                             <?php } else {
                                                 echo $planilha['Item']; ?>
                                             <?php } ?>
-                                            
+
                                         </td>
                                         <td class="direita textDias"><?php echo $planilha['QtdeDias']; ?></td>
                                         <td class="direita textQuantidade"><?php echo $planilha['Quantidade']; ?></td>
@@ -1216,11 +1220,11 @@ else if($this->tipoPlanilha == 6){ ?>
                                                         echo '';
                                                         break;
                                                     } ?>
-                                                
+
                                                 <?php if(in_array($this->idPerfil, array(94,121)) && $planilha['tpAcao'] != 'N'){ ?>
                                                 <img src="<?php echo $this->baseUrl(); ?>/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItem" tipo="<?php echo $planilha['tpAcao']; ?>" idPlanilha="<?php echo $planilha['idPlanilhaAprovacao']; ?>" title="<?php echo $title; ?>"/>
                                                 <?php } ?>
-                                                
+
                                                 <?php if($this->idPerfil == 118 && $planilha['tpAcao'] != 'N' && $this->link){ ?>
                                                 <img src="<?php echo $this->baseUrl(); ?>/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItem" tipo="<?php echo $planilha['tpAcao']; ?>" idPlanilha="<?php echo $planilha['idPlanilhaAprovacao']; ?>" title="<?php echo $title; ?>"/>
                                                 <?php } ?>
@@ -1262,14 +1266,14 @@ else if($this->tipoPlanilha == 6){ ?>
                     <table class="tabela">
                         <tr>
                             <td colspan="2" class="green-text" style="width: 18%; font-size: 14pt;">Total da <?php echo $produto; ?></td>
-                            <td colspan="4">&nbsp;</td>			    
+                            <td colspan="4">&nbsp;</td>
                             <td class="green-text" style="width: 1px; font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalProduto, 2, ",", "."); ?></td>
                             <td style="width: 40%" colspan="1">&nbsp;</td>
                         </tr>
                     </table>
                 </td>
-            </tr>	    
-            <?php $nrproduto++; 
+            </tr>
+            <?php $nrproduto++;
         } //fechaForeachproduto
         ?>
         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>"  fonte="<?php echo $nrfonte; ?>">

@@ -62,7 +62,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             $tipoReadeq = 'remanejamento';
         endif;
         // ========== FIM MENSAGEM DE REDU��O, COMPLEMENTO OU REMANEJAMENTO ==========
-//        xd($tipoReadeq);
+
         $this->view->verificarReadequacao = $tipoReadeq;
 
         $verificaPlanilhaCustoVerifica = $buscaProjetoProduto->buscarProdutoAprovacao($idPronac)->toArray();
@@ -75,7 +75,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             $this->view->buscaPlanilhaCusto = $verificaPlanilhaCusto;
         }
 
-        //   xd($verificaPlanilhaCusto);
+        
 
         $resultadoAcao = $buscaProjetoProduto->verificaTipoAcao($idPronac);
         $this->view->buscaacao = $resultadoAcao;
@@ -379,7 +379,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
 //            Zend_Debug::dump($resultadoProduto); $this->_helper->viewRenderer->setNoRender(TRUE); 
 //            $this->view->buscaproduto = $resultadoProduto;
             $resultadoItensCadastrados = $buscaInformacoes->buscarItensCadastrados($idPronac);
-//xd($resultadoItensCadastrados);
+
             $i = 0;
 
             if (empty($resultadoProduto[0]->produto)) {
@@ -593,7 +593,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
         $this->_helper->viewRenderer->setNoRender(true);
         $buscaPedido = new SolicitarReadequacaoCustoDAO;
         $verificapedido = $buscaPedido->verificaPedidoAlteracao($_POST['idpronac']);
-//        xd($_POST['idpronac']);
+
         //REGRA DOS 15% ***********************************************
         //soma valor total do projeto        
         $planilhaAprovacao = new PlanilhaAprovacao();
@@ -607,7 +607,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
         $arrWhereCustoAdm['idProduto = ?'] = 0; //custos administrativos
         $arrWhereCustoAdm['tpPlanilha = ? '] = 'SR'; //
         $valoracustosadministrativos = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereCustoAdm); 
-//        xd($valoracustosadministrativos);
+
         $valoracustosadministrativos = $valoracustosadministrativos['soma']; 
         //$valoracustosadministrativos += (float) $_POST['qtd'] * $_POST['ocorrencia'] * $_POST['vlUnitario']; //
         $valorquinzeporceto = ($AprovadoReal * 0.15); //pegando o valor de 15% do projeto para incluir na msg abaixo    
@@ -628,7 +628,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
         $dados = array('stPedidoAlteracao' => $_POST['acao']);
         
        if ($valoracustosdivulgacaocomercializacao > $valorvinteporcento) {
-//        xd("valor porcento: " . "$valorvinteporcento" . "aprovado real: " . "$AprovadoReal". "valor cursto divulga��o: " ."$valoracustosdivulgacaocomercializacao");
+
            $atualizaPedido = SolicitarReadequacaoCustoDAO::atualizaPedidoAlteracao($dados, $_POST['idPedidoAlteracao']);
             //xd('2- custo produto');            
             $msg = 'Favor ajustar os custos de Divulga��o / Comercializa��o que excedem <b>'. number_format($valorvinteporcento, '2', ',', '.') .'</b>, valor para que possa enviar sua solicita��o de readequa��o.';
@@ -638,9 +638,9 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             echo json_encode($novos_valores);
             $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else  if ($valoracustosadministrativos > $valorquinzeporceto) {
-//        xd("valor porcento: " . "$valorquinzeporceto" . "aprovado real: " . "$AprovadoReal". "valor custo administrativo: " ."$valoracustosadministrativos");
+
             $atualizaPedido = SolicitarReadequacaoCustoDAO::atualizaPedidoAlteracao($dados, $_POST['idPedidoAlteracao']);
-//            xd('1- custo administrativo');
+
             $msg = 'Favor ajustar os Custos Administrativos que excedem <b>'. number_format($valorquinzeporceto, '2', ',', '.') .'</b>, valor para que possa enviar sua solicita��o de readequa��o.';
             $novos_valores['error'] = true;
             $novos_valores['descricao'] = utf8_encode($msg);

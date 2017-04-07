@@ -65,7 +65,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$idavaliacao = $_POST['idavaliacao'];
 		$ListaRegistros =  ReadequacaoProjetos::retornaSQLHistoricoLista($idavaliacao);
 		$this->view->ListaRegistros = $db->fetchAll($ListaRegistros);
-//                xd($this->view->ListaRegistros);
+
 	}
 
 /**************************************************************************************************************************
@@ -1729,7 +1729,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 //		$iframe      = isset($dados[0]->CNPJCPF) ? $dados[0]->CNPJCPF : 0;
 //
 //		//VERIFICA O STATUS DA SOLICITA��O
-////xd($dados);
+//
 //		$sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 //		$stResult = $db->fetchAll($sqlStatusReadequacao);
 //
@@ -2111,7 +2111,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 //            $new = new tbProposta();
 //            $ss = $new->finalizarReadequacaoDeProposta('119720');
-//            xd($ss);
+
 
             //retorna o id do agente logado
             $idAgenteRemetente = $this->getIdUsuario;

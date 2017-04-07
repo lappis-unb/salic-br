@@ -60,7 +60,7 @@ class Cotacao extends MinC_Db_Table_Abstract {
         $select->group(array(
                             'cot.idCotacao','cot.nrCotacao','cot.dsCotacao','cot.dtCotacao','pa.IdPRONAC'
                           ));
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
 

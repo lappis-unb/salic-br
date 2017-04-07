@@ -132,7 +132,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                 ->where('pd.Descricao IS NOT NULL')
                 ->where("tpd.tpAcao != 'E'");
 
-//        xd($slct->query());
+
        return $this->fetchAll($slct);
     }
 
@@ -187,7 +187,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                 ->where('pr.IdPRONAC= ?', $idPronac)
                 ->where('pd.Descricao IS NOT NULL');
 
-    //xd($slct->assemble());
+    
        return $this->fetchAll($slct);
     }
 
@@ -273,7 +273,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
             $slct->where('tpa.idPlanilhaAprovacao= ?', $idaprovacao);
         }
         $slct->where('tpPlanilha <> ?', 'SR');
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -347,7 +347,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 			$slct->where('tpa.idPlanilhaAprovacao = ?', $idPlanilhaAprovacao);
 		endif;
 
-//        xd($slct->query());
+
         return $this->fetchAll($slct);
     }
 
@@ -706,7 +706,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                         ->where('pr.IdPRONAC = ?', $idPronac)
                                         ->where('pdp.stPlanoDistribuicaoProduto = ?', 1);
 
-//        xd($buscarPlanilhaAprovacao->query());
+
         return $this->fetchAll($buscarPlanilhaAprovacao);
     }
 
@@ -804,7 +804,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                 );
         //$slctItens->where("tpPlanilha = ?", 'SR');
         $slctItens->where('tpa.idPronac = ?', $idPronac);
-        //xd($slctItens->assemble());
+        
         return $this->fetchAll($slctItens);
     }
 

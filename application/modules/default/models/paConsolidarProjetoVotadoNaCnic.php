@@ -28,7 +28,7 @@ class paConsolidarProjetoVotadoNaCnic extends MinC_Db_Table_Abstract {
             if(!empty($idPronac) && !empty($idNrReuniao) && !empty($tpResultadoVotacao) && !empty($resultadoVotacao) && !empty($dsParecerConsolidado) && !empty($situacao)){
                 $sql = "exec " . $this->_banco .".". $this->_name . ' ' . (int)$idPronac .",". (int)$idNrReuniao .",". "'".$nrReuniao."'" .",". (int)$tpResultadoVotacao .",". "'".$resultadoVotacao."'" .",". "'".$dsParecerConsolidado."'" .",". (int)$blnReadequacao .",". "'".$situacao."'".",". "'".$tpConsolidacaoVotacao."'".",". "'".$idTipoReadequacao."'";
                 //return  $this->getAdapter()->query($sql);
-                //xd($sql);
+                
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                 return $db->fetchAll($sql);

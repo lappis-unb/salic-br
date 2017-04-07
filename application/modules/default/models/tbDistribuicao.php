@@ -39,8 +39,8 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
-        //xd($this->fetchAll($slct));
+        
+        
         return $this->fetchAll($slct);
     }
 
@@ -74,8 +74,8 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
-        //xd($this->fetchAll($slct));
+        
+        
         return $this->fetchAll($slct);
     }
 
@@ -132,8 +132,8 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
-        //xd($this->fetchAll($slct));
+        
+        
         return $this->fetchAll($slct);
     }
 
@@ -169,8 +169,8 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
             foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
-        //xd($this->fetchAll($slct));
+        
+        
         return $this->fetchAll($slct);
     }
 
@@ -224,7 +224,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                              array('pd.Descricao')
                             );
             $slct->where('dp.idDistribuicaoProduto = ?', $idDistribuicaoProduto);
-//            xd($slct->assemble());
+
             return $this->fetchAll($slct);
 
         }

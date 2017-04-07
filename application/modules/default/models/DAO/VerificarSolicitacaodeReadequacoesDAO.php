@@ -99,7 +99,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                 )
                         
                 ->where('pr.IdPRONAC= ?', $idPronac);
-                //xd($slct->__toString());
+                
         return $this->fetchAll($slct);
 
 //        $db= Zend_Db_Table::getDefaultAdapter();
@@ -259,7 +259,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
         if (!empty($idProduto)) {
             $sql .=" AND idProduto = $idProduto";
         }
-//        xd($sql);
+//        
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -570,7 +570,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
              $sql .= " AND idPlanilhaItem = $idItem";
         }
 
-        //xd($sql);
+        
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

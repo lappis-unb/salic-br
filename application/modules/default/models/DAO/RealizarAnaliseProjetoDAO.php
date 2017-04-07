@@ -526,7 +526,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         {
             $sql.= " WHERE AP. tpAnalise = '$tpAnalise' and AC.idPronac = $idPronac";
         }
-//        xd($sql);
+//        
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);

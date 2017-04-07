@@ -292,7 +292,7 @@
         <div class="content col s10 m12 l10 planilha-produtos">
             <?php
             gerarBreadCrumb(array(
-                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listarproposta')),
                 array('Or&ccedil;amento' => '')
             ));
             ?>
@@ -525,13 +525,14 @@ $3(document).ready(function () {
                 $3('#editor1').removeClass('valida');
                 $3("#vlunitario").parent().removeClass("danger");
                 $3(".justificativa label").text('Detalhamento / Justificativa / Observa\xE7\xF5es (Opcional)').parent().removeClass("danger");
-
+                $3("#stCustoPraticado").val(0);
             } else {
                 $3("#btn-salvar").addClass('disabled').removeClass('btn-salvar ');
                 $3('#editor1').addClass('valida');
                 Materialize.toast(result.msg, 60000, 'mensagem1 orange darken-3 white-text');
                 $3("#vlunitario").parent().addClass("danger");
                 $3(".justificativa label").text('Justificativa para valor unit\xE1rio maior que R$ ' + result.valorMediana + ' (Obrigat\xF3rio)').parent().addClass("danger");
+                $3("#stCustoPraticado").val(1);
             }
 
             $3('#modal-pre-loader').modal('close');

@@ -1012,7 +1012,7 @@ class SolicitarReadequacaoDoProjetoController extends MinC_Controller_Action_Abs
                 $verificaPlanilhaCusto = $buscaProjetoProduto->buscarProdutoAprovacao($idPronac);
 
                 $this->view->buscaPlanilhaCusto = $verificaPlanilhaCusto;
-//                xd($verificaPlanilhaCusto);
+
 		} // fecha if
 		else
 		{

@@ -30,7 +30,7 @@ class ComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('cpa'=>$this->_schema.'.'.$this->_name),
+                        array('cpa'=>$this->_name),
                         array(
                                 'Total'=>new Zend_Db_Expr('sum(cpa.vlComprovado)'),
                               )
