@@ -4,13 +4,6 @@
  * Arquivo principal da aplicacao (bootstrap)
  * Define todos os caminhos onde os arquivos estao armazenados
  * Carrega as classes do Zend utilizadas durante toda a aplicacao
- * @author Equipe RUP - Politec
- * @author wouerner <wouerner@gmail.com>
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 29/03/2010
- * @version 0.1
- * @copyright c 2010 - Ministcrio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
  */
 
 define('APPLICATION_PATH', realpath(__DIR__ . DIRECTORY_SEPARATOR . 'application'));

@@ -3,8 +3,8 @@
     $links = array(
         array(
             'Gerenciar Projetos' => array(
-                'module' => 'assinatura',
-                'controller' => 'enquadramento',
+                'module' => 'admissibilidade',
+                'controller' => 'enquadramento-assinatura',
                 'action' => 'gerenciar-projetos'
             )
         ),
@@ -22,8 +22,8 @@
     <form method="post" target="_blank" action="<?php
     echo $this->url(
             array(
-                'module' => 'assinatura',
-                'controller' => 'enquadramento',
+                'module' => 'admissibilidade',
+                'controller' => 'enquadramento-assinatura',
                 'action' => 'gerar-pdf'
             )
         )
@@ -89,8 +89,8 @@
                                     'controller' => 'QRCode',
                                     'action' => 'exibir'
                                 )) . "?texto=http://{$_SERVER['SERVER_NAME']}" . $this->url(array(
-                                    'module' => 'assinatura',
-                                    'controller' => 'enquadramento',
+                                    'module' => 'admissibilidade',
+                                    'controller' => 'enquadramento-assinatura',
                                     'action' => 'visualizar-projeto'
                                 )) . "?IdPRONAC={$this->IdPRONAC}" ?>"/>
                         </div>
@@ -105,8 +105,8 @@
             <a class="btn waves-effect waves-dark"
                href="<?php
                echo $this->url(array(
-                       'module' => 'assinatura',
-                       'controller' => 'enquadramento',
+                       'module' => 'admissibilidade',
+                       'controller' => 'enquadramento-assinatura',
                        'action' => 'gerenciar-projetos'
                    ))
                    . "?IdPRONAC={$this->IdPRONAC}";
@@ -114,8 +114,8 @@
             <a class="btn waves-effect waves-dark"
                href="<?php
                echo $this->url(array(
-                       'module' => 'assinatura',
-                       'controller' => 'enquadramento',
+                       'module' => 'admissibilidade',
+                       'controller' => 'enquadramento-assinatura',
                        'action' => 'assinar-projeto'
                    ))
                    . "?IdPRONAC={$this->IdPRONAC}";
@@ -124,8 +124,8 @@
                 <a class="btn waves-effect waves-dark"
                    href="<?php
                    echo $this->url(array(
-                           'module' => 'assinatura',
-                           'controller' => 'enquadramento',
+                           'module' => 'admissibilidade',
+                           'controller' => 'enquadramento-assinatura',
                            'action' => 'finalizar-assinatura'
                        ))
                        . "?IdPRONAC={$this->IdPRONAC}";
@@ -135,8 +135,8 @@
                href="<?php
                echo $this->url(
                        array(
-                           'module' => 'assinatura',
-                           'controller' => 'enquadramento',
+                           'module' => 'admissibilidade',
+                           'controller' => 'enquadramento-assinatura',
                            'action' => 'devolver-projeto'
                        )
                    ) . "?IdPRONAC={$this->IdPRONAC}";

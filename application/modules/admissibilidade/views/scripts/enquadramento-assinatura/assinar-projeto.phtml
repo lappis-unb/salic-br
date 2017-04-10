@@ -2,8 +2,8 @@
     <?php
     $links = array(
         array('Gerenciar Projetos' => array(
-            'module' => 'assinatura',
-            'controller' => 'enquadramento',
+            'module' => 'admissibilidade',
+            'controller' => 'enquadramento-assinatura',
             'action' => 'gerenciar-projetos'
         )),
         array('Assinar' => array())
@@ -20,8 +20,8 @@
         <form action="<?php
         echo $this->url(
                 array(
-                    'module' => 'assinatura',
-                    'controller' => 'enquadramento',
+                    'module' => 'admissibilidade',
+                    'controller' => 'enquadramento-assinatura',
                     'action' => 'assinar-projeto'
                 )
             )

@@ -18,4 +18,8 @@ class MinC_Assinatura_Assinatura
         $objModelDocumentoAssinatura->inserir($dadosDocumentoAssinatura);
     }
 
+    public function assinar($idPronac, $idTipoDoAtoAdministrativo) {
+
+    }
+
 }
