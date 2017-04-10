@@ -81,7 +81,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         $this->view->idPerfil = $this->idPerfil;
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         if(isset($_POST['iduf'])) {
@@ -997,9 +997,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbPais = new Pais();
         $this->view->Paises = $tbPais->buscar(array(), array(3));
 
-        $buscarEstado = EstadoDAO::buscar();
-        $this->view->UFs = $buscarEstado;
 
+        $uf = new Agente_Model_DbTable_UF();
+        $this->view->UFs = $uf->buscar();
         $get = Zend_Registry::get('get');
         $link = isset($get->link) ? true : false;
 
@@ -1124,7 +1124,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $exclusaoLogica = $tbAbrangencia->update($dados, $where);
             }
         } else {
-            $Abrangencia = new Abrangencia();
+            $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
             $itemLR = $Abrangencia->find(array('idAbrangencia=?'=>$idAbrangencia))->current();
             $dadosArray = array(
                 'idPais =?' => $itemLR->idPais,
@@ -1604,7 +1604,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function incluirSolicitacaoReadequacaoAction() {
         //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1622,25 +1622,25 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
             $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao= ?' => $idReadequacao));
             if(count($planilhaReadequada)==0){
-                parent::message('Não houve nenhuma alteração na planilha orçamentária do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o na planilha or&ccedil;ament&aacute;ria do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         } else if($idTipoReadequacao == 9){ //Local de Realização
             $tbAbrangencia = new tbAbrangencia();
             $locaisReadequados = $tbAbrangencia->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($locaisReadequados)==0){
-                parent::message('Não houve nenhuma alteração nos locais de realização do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o nos locais de realiza&ccedil;&atilde;o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         } else if($idTipoReadequacao == 11){ //Planos de Distribuição
             $tbPlanoDistribuicao = new tbPlanoDistribuicao();
             $planosReadequados = $tbPlanoDistribuicao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
-                parent::message('Não houve nenhuma alteração nos planos de distribuição do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o nos planos de distribui&ccedil;&atilde;o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         } else if($idReadequacao == 14){ //Planos de Divulgação
             $tbPlanoDivulgacao = new tbPlanoDivulgacao();
             $planosReadequados = $tbPlanoDivulgacao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
-                parent::message('Não houve nenhuma alteração nos planos de divulgação do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o nos planos de divulga&ccedil;&atilde;o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         }
 
@@ -1664,11 +1664,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                 if ($arquivoExtensao != 'pdf' && $arquivoExtensao != 'PDF') // extensão do arquivo
                 {
-                    throw new Exception('A extensão do arquivo é inválida, envie somente arquivos <strong>.pdf</strong>!');
+                    throw new Exception('A extens&atilde;o do arquivo &eacute; inv&aacute;lida, envie somente arquivos <strong>.pdf</strong>!');
                 }
                 else if ($arquivoTamanho > 5242880) // tamanho máximo do arquivo: 5MB
                 {
-                    throw new Exception('O arquivo não pode ser maior do que <strong>5MB</strong>!');
+                    throw new Exception('O arquivo n&atilde;o pode ser maior do que <strong>5MB</strong>!');
                 }
 
                 $dadosArquivo = array(
@@ -1746,11 +1746,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             if ($idReadequacao && $idTipoReadequacao != 2) {
                 $acaoErro = 'cadastrar';
 
-                parent::message("Solicitação cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message("Solicita&ccedil;&atilde;o cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             }  else if ($idReadequacao && $idTipoReadequacao == 2) {
                 $acaoErro = 'alterar';
 
-                parent::message("Solicitação alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message("Solicita&ccedil;&atilde;o alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } else {
                 throw new Exception("Erro ao $acaoErro a readequação!");
             }
@@ -1768,7 +1768,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function excluirSolicitacaoReadequacaoAction() {
         //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1830,12 +1830,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             if ($exclusao) {
                 if ($dados->idTipoReadequacao == 2) {
-                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                    parent::message('Tipo de readequa&ccedil;&atilde;o exclu&iacute;da com sucesso!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
                 } else {
-                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                    parent::message('Tipo de readequa&ccedil;&atilde;o exclu&iacute;da com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
                 }
             } else {
-                throw new Exception("Erro ao excluir o tipo de readequação!");
+                throw new Exception("Erro ao excluir o tipo de readequa&ccedil;&atilde;o!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1846,7 +1846,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function finalizarSolicitacaoReadequacaoAction() {
         //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1889,10 +1889,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             if($atualizar) {
                 //altera a situação do projeto
                 //$alterarSituacao = ProjetoDAO::alterarSituacao($idPronac, 'D20');
-                parent::message('Solicitação enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message('Solicita&ccedil;&atilde;o enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } // fecha if
             else {
-                throw new Exception("Erro ao finalizar as readequações!");
+                throw new Exception("Erro ao finalizar as readequa&ccedil;&otilde;es!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1914,7 +1914,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     {
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if($this->idPerfil != 122 && $this->idPerfil != 123 && $this->idPerfil != 151 && $this->idPerfil != 148){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2020,7 +2020,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if($this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2098,7 +2098,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $perfisAcesso = array(121, 122, 123);
 
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2192,7 +2192,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = $this->_request->getParam('idReadequacao');
@@ -2292,7 +2292,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, PARECERISTA E TECNICO DE ACOMPANHAMENTO.
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2443,7 +2443,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, COORD. DE ACOMPANHAMETO E COORD. GERAL DE ACOMPANHAMENTO.
         if($this->idPerfil != 93 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $id = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2526,7 +2526,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $perfisAcesso = array(94, 121);
 
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = (int) Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2569,7 +2569,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function salvarParecerTecnicoAction()
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 121){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $_POST['idPronac'];
@@ -2819,7 +2819,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function analisarReadequacoesCnicAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2908,7 +2908,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function formAvaliarReadequacaoCnicAction(){
 
         if($this->idPerfil != 118){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -2949,7 +2949,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     */
     public function componenteComissaoSalvarAvaliacaoAction(){
         if($this->idPerfil != 118){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $_POST['idPronac'];
@@ -3221,7 +3221,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                             // READEQUAÇÃO DE LOCAL DE REALIZAÇÃO
                             } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
-                                $Abrangencia = new Abrangencia();
+                                $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
                                 $tbAbrangencia = new tbAbrangencia();
                                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
                                 foreach ($abrangencias as $abg) {
@@ -3512,7 +3512,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
     public function encaminharReadequacaoChecklistAction() {
 
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
         // TODO: quando finalizar, mantem filtro de pronac caso estiver marca
         $auth = Zend_Auth::getInstance();
@@ -3683,7 +3683,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             // READEQUAÇÃO DE LOCAL DE REALIZAÇÃO
             } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
-                $Abrangencia = new Abrangencia();
+                $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
 
                 $tbAbrangencia = new tbAbrangencia();
                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -4011,9 +4011,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $return2 = $tbDistribuirReadequacao->update($dados, $where);
 
         if(!$return && !$return2){
-            parent::message("Não foi possível encaminhar a readequação para o Checklist de Publicação", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel encaminhar a readequa&ccedil;&atilde;o para o Checklist de Publica&ccedil;&atilde;o", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "ERROR");
         }
-        parent::message("Readequação finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "CONFIRM");
+        parent::message("Readequa&ccedil;&atilde;o finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "CONFIRM");
     }
 
 
@@ -4028,7 +4028,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
         $this->view->idPerfil = $this->idPerfil;
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -4252,7 +4252,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -4290,7 +4290,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = $this->_request->getParam('idReadequacao');
@@ -4362,9 +4362,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             }
         } catch(Exception $e) {
             if ($this->idPerfil == 121) {
-                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
+                parent::message('Erro ao encaminhar readequa&ccedil;&atilde;o!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
             } else {
-                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
+                parent::message('Erro ao encaminhar readequa&ccedil;&atilde;o!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
             }
         }
     }
