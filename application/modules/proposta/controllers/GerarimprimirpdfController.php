@@ -63,6 +63,10 @@ class Proposta_GerarimprimirpdfController extends Proposta_GenericController
        }
 
         $id_projeto = $this->getRequest()->getParam('idPreProjeto');
+        if( empty($id_projeto) ) {
+            $id_projeto = $this->getRequest()->getParam('idpreprojeto');
+        }
+
         $this->view->id_projeto = $id_projeto;
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
