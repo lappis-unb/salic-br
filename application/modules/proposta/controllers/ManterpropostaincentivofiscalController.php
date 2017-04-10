@@ -73,6 +73,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
         $listaExecucaoImediata = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 23), array('idVerificacao'));
         $this->view->listaExecucaoImediata = $listaExecucaoImediata;
+        $this->view->listaExecucaoImediata = $listaExecucaoImediata;
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
@@ -654,7 +655,8 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $sp = new Proposta_Model_DbTable_PreProjeto();
 
         # verifica se existe alguma pendencia no checklist de proposta
-        $validaProposta = $sp->checklistEnvioPropostaSemSp($idPreProjeto, true);
+        $validaProposta = $this->validarEnvioPropostaComSp($idPreProjeto);
+
         $pendencias = in_array('PENDENTE', array_column(converterObjetosParaArray($validaProposta), 'Observacao'));
 
         if ($pendencias) {
@@ -670,7 +672,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             # validar valor original e valor total atual da proposta
             if ($ValorTotalPlanilha['soma'] > $projeto['solicitadoreal']) {
-                $validacao->Descricao = 'O valor total do projeto n&atilde;o pode ultrapassar o valor anteriormente solicitado!';
+                $validacao->dsInconsistencia = 'O valor total do projeto n&atilde;o pode ultrapassar o valor anteriormente solicitado!';
                 $validacao->Observacao = 'PENDENTE';
                 $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                 $listaValidacao[] = clone($validacao);

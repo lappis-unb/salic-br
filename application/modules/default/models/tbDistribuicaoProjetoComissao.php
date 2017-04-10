@@ -9,7 +9,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                        array('dpc'=>$this->_schema.'.'.$this->_name),
+                        array('dpc'=>$this->_name),
                         array('DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
                      );
         $slct->joinInner(
@@ -72,7 +72,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             $slct2 = $this->select();
             $slct2->setIntegrityCheck(false);
             $slct2->from(
-                            array('dpc'=>$this->_schema.'.'.$this->_name),
+                            array('dpc'=>$this->_name),
                             array('total'=>'count(*)')
                          );
             $slct2->joinInner(
@@ -131,7 +131,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 $slct2->where($coluna, $valor);
             }
 
-            //xd($slct2->__toString());
+            
             $rs = $this->fetchAll($slct2)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
@@ -147,8 +147,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->getPart(Zend_Db_Select::COLUMNS));
-        //xd($slct->assemble());
+        
+        
         return $this->fetchAll($slct);
     }
 
@@ -480,7 +480,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 
         //RETORNA RESULTADO DA PRIMEIRA QUERY - PROJETO NAO ANALISADOS
         if($analise == "1"){
-//            xd($slctNaoAnalisados->assemble());
+
             if($count){
                 return $this->fetchAll($slctNaoAnalisados)->count();
             }
@@ -896,7 +896,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         )
         ORDER BY 6 ASC ";
 
-//        xd($sql);
+//        
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -907,7 +907,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
 
         $select->from(
-                        array('dpc'=>$this->_schema.'.'.$this->_name),
+                        array('dpc'=>$this->_name),
                         array()
                       );
 

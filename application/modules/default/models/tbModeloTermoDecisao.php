@@ -31,7 +31,7 @@ class tbModeloTermoDecisao extends MinC_Db_Table_Abstract {
                     $select->where($coluna, $valor);
             }
         }
-        //xd($select->query());
+        
         return $this->fetchAll($select);
     }
 

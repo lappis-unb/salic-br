@@ -128,7 +128,7 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
         }
 
         $select->order($order);
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -152,7 +152,7 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
 
         $select->order('2'); // Descricao
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

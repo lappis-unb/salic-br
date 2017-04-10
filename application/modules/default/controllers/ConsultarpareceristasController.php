@@ -210,7 +210,6 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		                $atestados = ConsultarPareceristasDAO::buscarAusencias($idTipoAusencia, 3, $idAgente, $dataInicio, $dataFim);
 		                $this->view->atestados = $atestados;
 	                }
-	                //xd($atestados);
 	                /*-------------------*/
 
 	                /* 3 - Todos */
@@ -225,7 +224,6 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		                $this->view->atestados = $atestados;
 	                }
 	                /*-------------------*/
-//xd($this->view->feriasAgend);
                 /*--------------- FIM AUSENCIAS --------------*/
 
                 /*-------------- PRODUTOS  --------------*/
@@ -264,9 +262,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		                }
 		                $this->view->projetos = $dados;
 		               	$this->view->produtos = $produtos;
-		               	//xd($produtos);
 
-//	               xd($this->view->projetos );
                 /*---------------------------------------*/
                 if((!$histFerias) && (!$feriasAgend) && (!$atestados) && (!$produtos)){
                 	parent::message("Dados n�o localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
@@ -631,7 +627,6 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 
 		            /*-------------- PRODUTOS  --------------*/
 	                $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente, $tipo_produto, $data_inicio, $data_fim, null, $idPronac, $tipo_pagamento);
-//	                xd($produtos);
 	               	$dados = array();
 	                if($produtos){
 		                foreach ($produtos as $prod){
@@ -669,7 +664,6 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 
 	    	$this->view->perfilAtual = self::$perfilAtual;
 
-//	    	xd($_GET);
 	    	$Pronac = $_GET['Pronac'];
 	    	$idPronac = $_GET['idPronac'];
 
@@ -683,7 +677,6 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 	    	$historico = $buscaHistorico->buscarHistoricoDeAnalise($idPronac, self::$codOrgao);
 
 	    	$this->view->Historico = $historico;
-//	    	xd($this->view->Historico);
 
     }
 

@@ -57,7 +57,7 @@ class Natureza extends MinC_Db_Table_Abstract
         $select->where('b.CNPJCPF = ?', $cnpjcpf);
         $select->where('a.direito = ?', 35);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

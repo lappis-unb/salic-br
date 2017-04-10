@@ -381,7 +381,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
                 }
             }
         }
-//        xd($this->view->projetosFiscalizacao);
+
     }
 
     public function parametropesquisaAction() {
@@ -507,7 +507,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 
-//        xd('aqui');
+
 
         //Apagar daqui pra frente
 
@@ -623,7 +623,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
           $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho */
 
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-            //xd($arquivoNome);
+            
             $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens?o
             $arquivoBinario = Upload::setBinario($arquivoTemp); // bin�rio
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
@@ -663,7 +663,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 
     public function cadastraraceitacaofiscalizacaoAction() {
         $post = Zend_Registry::get('post');
-//        xd($post);
+
 
         $OrgaoFiscalizadorDao = new OrgaoFiscalizador();
         $OrgaoFiscalizadorDao->update(array('dtConfirmacaoFiscalizacao' => new Zend_Db_Expr('GETDATE()'), 'dsObservacao' => $post->dsObservacao, 'idParecerista' => $post->idAgente), array('idFiscalizacao = ?' => $post->idFiscalizacao, 'idOrgao = ?' => $this->view->orgaoAtivo));
@@ -907,7 +907,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
                     $retorno[$key]['nome'] = $resulte->Sigla;
                 }
                 break;
-//                xd($post->regiao);
+
             case 'cidade':
                 $municipioDao = new Municipios();
 

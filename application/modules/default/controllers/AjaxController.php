@@ -63,7 +63,7 @@ class AjaxController extends MinC_Controller_Action_Abstract {
                 $dados[$cont]['desc'] = utf8_encode($dado->dsClassificaDocumento);
                 $cont++;
             }
-            //xd($dados);
+            
             echo json_encode($dados);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
@@ -87,7 +87,7 @@ class AjaxController extends MinC_Controller_Action_Abstract {
                 $dados[$cont]['desc'] = utf8_encode($dado->nmFormDocumento);
                 $cont++;
             }
-            //xd($_POST);
+            
             //$dados = array_unique($dados);
             echo json_encode($dados);
             $this->_helper->viewRenderer->setNoRender(TRUE);

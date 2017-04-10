@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * Description of TramitarprojetosController
  *
@@ -23,7 +23,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 97; //Gestor Salic
         $PermissoesGrupo[] = 99; //Acompanhamento
         $PermissoesGrupo[] = 103; //Coordenador de An�lise
-        $PermissoesGrupo[] = 104; //Protocolo - (Envio / Recebimento) 
+        $PermissoesGrupo[] = 104; //Protocolo - (Envio / Recebimento)
         $PermissoesGrupo[] = 91; //Protocolo - Recebimento
         $PermissoesGrupo[] = 109; //Arquivo
         $PermissoesGrupo[] = 128; //T�cnico de Portaria
@@ -58,7 +58,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $PermissoesGrupo[] = 97; //Gestor Salic
             $PermissoesGrupo[] = 99; //Acompanhamento
             $PermissoesGrupo[] = 103; //Coordenador de An�lise
-            $PermissoesGrupo[] = 104; //Protocolo - (Envio / Recebimento) 
+            $PermissoesGrupo[] = 104; //Protocolo - (Envio / Recebimento)
             $PermissoesGrupo[] = 91; //Protocolo - Recebimento
             $PermissoesGrupo[] = 109; //Arquivo
             $PermissoesGrupo[] = 128; //T�cnico de Portaria
@@ -74,9 +74,9 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $PermissoesGrupo[] = 100; //Presta��o de Contas
             $PermissoesGrupo[] = 124; //T�cnico de Presta��o de Contas
             $PermissoesGrupo[] = 122; //Coordenador de Acompanhamento
-            
+
            parent::perfil(1, $PermissoesGrupo);
-	        
+
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo est� no array de permiss�es
                 parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
             }
@@ -117,7 +117,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $historicodocumento = new HistoricoDocumento();
 
         /*         * *************************************************************** */
-		
+
         $todosDestinos = $orgaos->pesquisarTodosOrgaos();
         $this->view->TodosDestinos = $todosDestinos;
 
@@ -126,10 +126,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         //
         $despacho = $historicodocumento->projetosDespachados(array(1, 4));
         $this->view->Despacho = $despacho;
-        
-        
+
+
         if ($this->_request->getParam("Destino")) {
-        	
+
             $idDestino = $this->_request->getParam("Destino");
             $despacho = $historicodocumento->projetosDespachados(array(1, 4), $idDestino);
             $lote = new Lote();
@@ -207,26 +207,26 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
     	if(isset($_POST['msg']) and $_POST['msg'] == 'ok')
                {
                        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-//                       
+//
                        if($orgao == $codOrgao) {
                        		$dadosProjeto['Orgao'] = utf8_encode($buscaProjeto[0]->Orgao);
                             $dadosProjeto['Processo'] = utf8_encode($buscaProjeto[0]->Processo);
                             $dadosProjeto['Sigla'] = utf8_encode($buscaProjeto[0]->Sigla);
                             $dadosProjeto['NomeProjeto'] = utf8_encode($buscaProjeto[0]->NomeProjeto);
-     
+
                        		$jsonEncode = json_encode($dadosProjeto);
-                               
+
                                //echo $jsonEncode;
                                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProjeto));
                        }
                        else{
                                echo json_encode(array('resposta'=>false));
-                       }     
-                         
-                       $this->_helper->viewRenderer->setNoRender(TRUE); 
+                       }
+
+                       $this->_helper->viewRenderer->setNoRender(TRUE);
                }
     }
-    
+
 	public function buscaprojetodesarquivadoAction() {
         /** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
@@ -255,23 +255,23 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
     	if(isset($_POST['msg']) and $_POST['msg'] == 'ok')
                {
                        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-//                       
+//
                        if($orgao != $codOrgao) {
                        		$dadosProjeto['Orgao'] = utf8_encode($buscaProjeto[0]->Orgao);
                             $dadosProjeto['Processo'] = utf8_encode($buscaProjeto[0]->Processo);
                             $dadosProjeto['Sigla'] = utf8_encode($buscaProjeto[0]->Sigla);
                             $dadosProjeto['NomeProjeto'] = utf8_encode($buscaProjeto[0]->NomeProjeto);
-     
+
                        		$jsonEncode = json_encode($dadosProjeto);
-                               
+
 //                               echo $jsonEncode;
                                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProjeto));
                        }
                        else{
                                echo json_encode(array('resposta'=>false));
-                       }     
-                         
-                       $this->_helper->viewRenderer->setNoRender(TRUE); 
+                       }
+
+                       $this->_helper->viewRenderer->setNoRender(TRUE);
                }
     }
 
@@ -296,10 +296,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
         $post = Zend_Registry::get('post');
         $pronac = $post->pronac;
-        
+
         $tblProjetos = new Projetos();
         $dadoProjeto = $tblProjetos->buscar(array("AnoProjeto = ?"=>substr($pronac, 0, 2), "Sequencial = ?"=>substr($pronac, 2)))->current();
-                
+
         //VERIFICANDO SE O PRONAC PESQUISADO JA ESTA CADASTRADO PARA ESTE ORGAO
         $historicodocumento = new HistoricoDocumento();
         $despachos = $historicodocumento->projetosDespachadosListagem(array(1,2), null, null, $dadoProjeto->IdPRONAC);
@@ -339,7 +339,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function consultarprojetosAction() {
@@ -368,7 +368,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $perfil = 'PerfilGrupoPRONAC';
             EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
         }
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
         $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
@@ -386,22 +386,22 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $destino = $historicodocumento->pesquisarOrgaosPorAcao(1, 4, $idusuario,$codOrgao);
         $anexo = $historicodocumento->pesquisarOrgaosPorAcao(null, 6, $idusuario,$codOrgao);
         $this->view->Destino = $destino;
-        
+
         $despacho = $historicodocumento->projetosDespachadosListagem(array(1,4), null, null, null, $idusuario);
         $this->view->Despacho = $despacho;
-        
+
         $verificaPendencia = 0;
         $verificaEnviado = 0;
 
         if ($this->_request->getParam("Destino")) {
-        	
+
             $idDestino = $this->_request->getParam("Destino");
             $despachos = $historicodocumento->projetosDespachados(array(1,4), $idDestino, null, null, $codOrgao);
 
             $lote = new Lote();
             $insereLote = $lote->inserirLote(array('dtLote' => date('Y-m-d H:i:s')));
             $idLoteAtual = $insereLote; // Retorno do ultimo Lote Inserido
-			
+
             $acaoAlterada = 2;
             $recusado = false;
             $existeDocumento = false;
@@ -414,7 +414,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                     $cadastrado = true;
                     $dados = array('stEstado' => 0);
                     $where = "idPronac = $idPronac and stEstado = 1 and idDocumento = 0";
-                    
+
                     $verificar = TramitarprojetosDAO::verificaHistoricoDocumento($idPronac, 6);
                     if(count($verificar) > 0){
                         $acao = $verificar[0]->Acao;
@@ -468,7 +468,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 //parent::message("Projeto enviado com Sucesso!", "tramitarprojetos/enviarprojetos", "CONFIRM");
                 parent::message("Projeto enviado com sucesso!", "/tramitarprojetos/imprimirguia?idLote=".$idLoteAtual, "CONFIRM");
             }
-            
+
         }
         if (isset($_GET['pronac'])) {
             $pronac = $_GET['pronac'];
@@ -512,7 +512,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $this->view->Destino = $paginator;
         $this->view->qtdDoc    = count($destino); // quantidade
         // ========== FIM PAGINA��O ==========
-        
+
         /* =================== FIM PROJETOS RECEBIDOS ====================*/
         if (isset($_POST['idH'])) {
 
@@ -588,7 +588,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
         /* ================ PARA RECEBER OS PROJETOS ====================*/
         if ($this->_request->getParam("Destino")) {
-        	
+
             $idDestino = $this->_request->getParam("Destino");
             $idLote = $this->_request->getParam("Lote");
             $acaoAlterada = 3;
@@ -617,16 +617,16 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                         'meDespacho' => $despachos
                 );
                 $inserir = $historicodocumento->inserirHistoricoDocumento($dadosInserir);
-                
+
                 $dados = array('Orgao' => $idDestino);
                 $where = "IdPRONAC = $idPronac";
                 $atualizarProjeto = $projetos->alterarProjetos($dados, $where);
             }
-			
+
             parent::message("Projeto recebido com sucesso!", "tramitarprojetos/receberprojetos?projetoRecebido=true", "CONFIRM");
         }
         /*         * *************************************************************** */
-        
+
         /* ================ PARA ARQUIVAR OS PROJETOS ====================*/
         if (isset($_POST['inicial'])) {
 
@@ -645,7 +645,6 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 foreach ($busca2 as $b) {
                     $stAcao = $b->stAcao;
                     $idArquivamento = $b->idArquivamento;
-                    //xd($stAcao);
                 }
                 if($stAcao == 0) {
                     parent::message("O projeto j� se encontra arquivado nesta unidade!", "tramitarprojetos/receberprojetos?projetoRecebido=true", "ALERT");
@@ -673,7 +672,6 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                                 'stEstado' => 1,
                                 'meDespacho' => $despachos
                         );
-                        //xd($dadosInserir);
                         $inserir = $historicodocumento->inserirHistoricoDocumento($dadosInserir);
                     }
                     TramitarprojetosDAO::alterarStatusArquivamento($idPronac);
@@ -724,20 +722,20 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             }//FIM ELSE $busca2
 
         }
-        
+
         /*         * *************************************************************** */
         $this->view->projetoRecebido = false;
         if (isset($_REQUEST['projetoRecebido']) && $_REQUEST['projetoRecebido'] == 'true')  {
         	$this->view->projetoRecebido = true;
         }
-    
+
     }
 
     public function despacharprojAction() {
 
     	$auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idusuario = $this->getIdUsuario;
-       
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
         $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
@@ -747,7 +745,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
         $todosDestinos = TramitarprojetosDAO::pesquisarTodosDestinos();
         $this->view->TodosDestinos = $todosDestinos;
-        
+
         $despacho = TramitarprojetosDAO::projetosDespachados(1, 4);
         $this->view->Despacho = $despacho;
 
@@ -866,7 +864,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
-        
+
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
@@ -888,12 +886,12 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         //
         $despacho = $historicodocumento->projetosDespachados(array(1));
         $this->view->Despacho = $despacho;
-        
+
     	$x = 0;
         $destinos = $historicodocumento->pesquisarOrgaosPorAcao(2, 2,$idusuario, $codOrgao);
         $this->view->Dest = $destinos;
         foreach($destinos as $dest){
-        
+
 	        $dp[] = $historicodocumento->projetosDespachados(array(2), $dest->idDestino, $dest->lote);
 	        if($dp)
 	        {
@@ -905,15 +903,15 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 	        foreach($dp as $desp){
 	        	foreach($desp as $teste){
 	        		$novoDesp[] = $teste;
-	        	} 
+	        	}
 	        }
 	        $this->view->Desp = $novoDesp;
         }
-        
-        
+
+
         if (isset($_POST['justificativa'])) {
-			
-        	$idDestino = $_POST['idDes']; 
+
+        	$idDestino = $_POST['idDes'];
         	$idPronac = $_POST['idPro'];
         	$justificativa = $_POST['justificativa'];
         	$idLote = $_POST['idLote'];
@@ -922,7 +920,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         	$historicodocumento = new HistoricoDocumento();
           	$despachos = $historicodocumento->projetosDespachados(array(2), $idDestino, null, $idPronac);
 
-			foreach ($despachos as $desp){ 
+			foreach ($despachos as $desp){
 				$meDespacho = $desp['despacho'];
 				$dtEnvio    = !empty($desp['dtEnvio'])    ? trim(Data::dataAmericana($desp['dtEnvio']))    : null;
 				$dtRecebido = !empty($desp['dtRecebida']) ? trim(Data::dataAmericana($desp['dtRecebida'])) : null;
@@ -954,18 +952,18 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 	                        'dsJustificativa' => $justificativa,
 	            			'meDespacho' => $meDespacho
 	                    );
-//				xd($dadosInserir);                    
+//				xd($dadosInserir);
 	            $inserir = $historicodocumento->inserirHistoricoDocumento($dadosInserir);
-                    
+
             }
             if($inserir)
             	parent::message("Projeto cancelado com sucesso!", "tramitarprojetos/enviarprojetos", "CONFIRM");
 
         }
-        
-        
+
+
    		 if ($this->_request->getParam("Destino")) {
-        	
+
             $idDestino = $this->_request->getParam("Destino");
             $despacho = $historicodocumento->projetosDespachados(array(1, 4), $idDestino);
             $lote = new Lote();
@@ -1009,7 +1007,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         }
 
         /*         * *************************************************************** */
-     	$this->view->projetoEnviado = false; 
+     	$this->view->projetoEnviado = false;
         if(isset($_REQUEST['projetoEnviado']) && $_REQUEST['projetoEnviado'] == 'true') {
         	$this->view->projetoEnviado = true;
         }
@@ -1075,7 +1073,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $historicodocumento = new HistoricoDocumento();
             $despacho = $historicodocumento->projetosDespachados(array(2), $idDestino, $idPronac)->current()->toArray();
 			$idLote = $despacho['idLote'];
-			$meDespacho = $despacho['despacho']; 
+			$meDespacho = $despacho['despacho'];
 
 			$acaoAlterada = 4;
             $historicoDocumentos = new HistoricoDocumento();
@@ -1096,7 +1094,6 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                         'stEstado' => 1,
                         'meDespacho' => $meDespacho
                     );
-			//xd($dadosInserir);                    
             $inserir = $historicodocumento->inserirHistoricoDocumento($dadosInserir);
             parent::message("Projeto recusado com sucesso!", "tramitarprojetos/receberprojetos", "CONFIRM");
         }
@@ -1234,10 +1231,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
 //        $destino = $historicodocumento->pesquisarOrgaosPorAcao(2, $idusuario);
         $destino = $historicodocumento->pesquisarOrgaosPorAcao(2);
-//        xd($destino); 
+
         $this->view->Destino = $destino;
     }
-    
+
 	public function solicitacoesAction() {
 		 /** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
@@ -1252,7 +1249,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $this->view->idUsuarioLogado = $idusuario;
         $this->view->idorgao = $idorgao;
         /*         * *************************************************************** */
-        
+
 //        $historicodocumento = new HistoricoDocumento();
 //        $despachos = $historicodocumento->projetosDespachados(array(0), $idDestino, null, $idPronac)->current()->toArray();
 
@@ -1261,22 +1258,21 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
         $cancelamento = TramitarprojetosDAO::buscarCancelamento(null);
         $this->view->cancel = $cancelamento;
-        //xd($cancelamento);
-        
+
         $arquivados = TramitarprojetosDAO::buscarDesarquivar();
         $this->view->Arquivados = $arquivados;
-        
-        
+
+
 		if (isset($_POST['idHistorico'])) {
         	$idPronac = $_POST['idPronac'];
         	$solicitacao = $_POST['solicitacao'];
-			
+
         	if($solicitacao == 1){
 	            $historicoDocumentos = new HistoricoDocumento();
 	            $dados = array('Acao' => 1);
 	            $where = "idPronac =  $idPronac and stEstado = 1 and Acao = 0";
 	            $alterar = $historicoDocumentos->alterarHistoricoDocumento($dados, $where);
-	
+
 	            parent::message("Envio cancelado com Sucesso!", "tramitarprojetos/solicitacoes", "CONFIRM");
         	}else{
         		if($solicitacao == 2){
@@ -1284,18 +1280,18 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 		            $dados = array('Acao' => 2);
 		            $where = "idPronac =  $idPronac and stEstado = 1 and Acao = 0";
 		            $alterar = $historicoDocumentos->alterarHistoricoDocumento($dados, $where);
-		
+
 		            parent::message("Solicita��o Cancelada!", "tramitarprojetos/solicitacoes", "CONFIRM");
         		}
         	}
-        	
+
 
         }
-        
+
 		if (isset($_POST['idArq'])) {
 			$idArquivamento = $_POST['idArq'];
         	$idPronac = $_POST['idPro'];
-			
+
             TramitarprojetosDAO::alterarStatusArquivamento($idPronac);
             $stAcao = 1;
             TramitarprojetosDAO::arquivarProjeto($idPronac, $stAcao, NULL, NULL, $idusuario, $idArquivamento);
@@ -1304,12 +1300,12 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         }
 
     }
-    
+
 	public function arquivarAction() {
-		
+
 		$auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idusuario = $this->getIdUsuario;
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
         $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
@@ -1319,35 +1315,33 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $this->view->codOrgao = $codOrgao;
 		$historicodocumento = new HistoricoDocumento();
 		$buscaprojeto = new Projetos();
-		
+
 		$lote = new Lote();
         $insereLote = $lote->inserirLote(array('dtLote' => date('Y-m-d H:i:s')));
         $idLote = $insereLote; // Retorno do ultimo Lote Inserido
         $acaoAlterada = 3;
-        
+
 		if(isset($_POST['pronac']))
 		{
-			
+
 			$pronac = $_POST['pronac'];
 			$cxInicio = $_POST['inicial'];
 			$cxFinal = $_POST['final'];
 			$idDestino = 290;
 
 			$buscaDados = TramitarprojetosDAO::buscarDadosPronac($pronac);
-			
+
 			foreach ($buscaDados as $dados){
 				$idPronac = $dados->IdPRONAC;
 			}
-			
+
 			$busca2 = TramitarprojetosDAO::buscaProjetoUnidade($idPronac); //Verifica se o projeto j� tem registro na tabela tbArquivamento
-			
+
 			if ($busca2){
-				//xd('Tem registro na tbArquivamento');
 				foreach ($busca2 as $b)
 				{
 					$stAcao = $b->stAcao;
 					$idArquivamento = $b->idArquivamento;
-					//xd($stAcao);
 				}
 				if($stAcao == 0)
 				{
@@ -1377,18 +1371,16 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 		                        'stEstado' => 1,
 		                        'meDespacho' => $despachos
 		                    );
-		                //xd($dadosInserir);
 		                $inserir = $historicodocumento->inserirHistoricoDocumento($dadosInserir);
 		            }
 					TramitarprojetosDAO::alterarStatusArquivamento($idPronac);
 		            $stAcao = 0;
-		            
+
 		            TramitarprojetosDAO::arquivarProjeto($idPronac, $stAcao, $cxInicio, $cxFinal, $idusuario, $idArquivamento);
 		            parent::message("Projeto arquivado com sucesso!", "tramitarprojetos/arquivar", "CONFIRM");
 				}
 			}else{
 	            $tramitacao = $historicodocumento->projetosDespachados(array(), null, null, $idPronac);
-				//xd($tramitacao);
 	            if(count($tramitacao)){    //Se tiver Historico de tramita��o
 		            foreach ($tramitacao as $despachoResu) {
 		                $despachos = $despachoResu->despacho;
@@ -1413,14 +1405,12 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 		                        'stEstado' => 1,
 		                        'meDespacho' => 'Para arquivamento'
 		                    );
-		                //xd($dadosInserir);
 		                $inserir = $historicodocumento->inserirHistoricoDocumento($dadosInserir);
 		                $dados = array('Orgao' => $idDestino);
 			            $where = "IdPRONAC = $idPronac";
-			            //xd($idPronac);
 			            $atualizarProjeto = $buscaprojeto->alterarProjetos($dados, $where);
 		            }
-		            
+
 		            $busca1 = TramitarprojetosDAO::buscaProjetoExistente($idPronac); //Busca o Projeto na Tabela Projetos
 					if(($busca1))
 					{
@@ -1429,17 +1419,16 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 		//	            TramitarprojetosDAO::alterarSituacao($situacao, $providenciaTomada, $idPronac);
 			            TramitarprojetosDAO::alterarStatusArquivamento($idPronac);
 			            $stAcao = 0;
-			            
+
 			            TramitarprojetosDAO::arquivarProjeto($idPronac, $stAcao, $cxInicio, $cxFinal, $idusuario, null, 1);
 			            parent::message("Projeto arquivado com sucesso!", "tramitarprojetos/arquivar", "CONFIRM");
-					}else {	
+					}else {
 						parent::message("O projeto n�o se encontra na DGI/CGRL/COAL/DCA, transa��o cancelada.", "tramitarprojetos/arquivar", "ALERT");
 					}
 	            }//FIM IF TRAMITA��O
 	            else{
-	            	//xd('S� tem registro na tabela Projetos.');
 	            	$despacho = $buscaprojeto->buscarTodosDadosProjeto($idPronac);
-	            	
+
 	            	$dadosInserir = array(
 	                        'idPronac' => $idPronac,
 	                        'idUnidade' => $idDestino,
@@ -1458,7 +1447,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 	                 $dados = array('Orgao' => $idDestino);
 		            $where = "IdPRONAC = $idPronac";
 		            $atualizarProjeto = $buscaprojeto->alterarProjetos($dados, $where);
-		            
+
 		            $busca1 = TramitarprojetosDAO::buscaProjetoExistente($idPronac); //Busca o Projeto na Tabela Projetos
 					if(($busca1))
 					{
@@ -1467,16 +1456,16 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 		//	            TramitarprojetosDAO::alterarSituacao($situacao, $providenciaTomada, $idPronac);
 			            TramitarprojetosDAO::alterarStatusArquivamento($idPronac);
 			            $stAcao = 0;
-			            
+
 			            TramitarprojetosDAO::arquivarProjeto($idPronac, $stAcao, $cxInicio, $cxFinal, $idusuario, null, 1);
 			            parent::message("Projeto arquivado com sucesso!", "tramitarprojetos/arquivar", "CONFIRM");
-					}else {	
+					}else {
 						parent::message("O projeto n�o se encontra na DGI/CGRL/COAL/DCA, transa��o cancelada.", "tramitarprojetos/arquivar", "ALERT");
 					}
 	            }
 			}//FIM ELSE $busca2
-			
-				
+
+
 		}
                         }
 
@@ -1805,7 +1794,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         if(!$arquivados){
             parent::message("Nenhum Projeto Encontrado!", "tramitarprojetos/consultarprojetosarquivados", "CONFIRM");
     	}
-    	
+
     	if(isset($_POST['idArquivamento'])) {
             $idPronac = $_POST['idPro'];
             $justificativa = $_POST['justificativa'];
@@ -1831,10 +1820,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
         $get = Zend_Registry::get('get');
         $idLote = $get->idLote;
-        
+
         $docs = TramitarprojetosDAO::projetosImprimirGuia($idusuario, $idLote);
         $this->view->docs = $docs;
-        
+
         $this->view->Origem = $docs[0]->Origem;
         $this->view->Destino = $docs[0]->Destino;
         $this->view->Emissor = $docs[0]->Emissor;

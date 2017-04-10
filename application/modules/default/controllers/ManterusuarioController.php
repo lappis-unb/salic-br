@@ -669,7 +669,7 @@ private $intTamPag = 10;
 
         //$post = Zend_Registry::get('post');
 
-        //xd($_POST['html']);
+        
         $pdf = new PDFCreator($_POST['html']);
 
         $pdf->gerarPdf();

@@ -184,7 +184,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $slct->limit($tamanho, $tmpInicio);
         }
 
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -216,7 +216,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         foreach ($order as $valores) {
             $select->order($valores);
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -277,7 +277,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $select->where($comando,$valores);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -324,7 +324,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $select->where($comando,$valores);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -343,7 +343,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
             }
-            //xd($select);
+            
             return $db->fetchAll($select);
         }
 
@@ -358,7 +358,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
             }
-            //xd($select);
+            
             return $db->fetchAll($select);
         }
 
@@ -372,7 +372,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
             }
-            //xd($select);
+            
             return $db->fetchAll($select);
         }
 
@@ -397,7 +397,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         }
 
         $select->where('ap.IdPRONAC = ?', $idpronac);
-//        xd($select->assemble());
+
         $result = $this->fetchAll($select);
         return $result;
     }
@@ -445,7 +445,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        //xd($select);
+        
         return $db->fetchAll($select);
     }
 }

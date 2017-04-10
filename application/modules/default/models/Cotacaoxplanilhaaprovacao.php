@@ -72,7 +72,7 @@ class Cotacaoxplanilhaaprovacao extends MinC_Db_Table_Abstract {
                 'AGENTES.dbo'
         );
         $select->where("a.idCotacao = ?", $idCotacao);
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 }

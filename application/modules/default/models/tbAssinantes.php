@@ -39,7 +39,7 @@ class tbAssinantes extends MinC_Db_Table_Abstract {
 
         $select->order('nm.Descricao');
 
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }
@@ -65,7 +65,7 @@ class tbAssinantes extends MinC_Db_Table_Abstract {
 
         $select->order('nm.Descricao');
 
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }
@@ -82,7 +82,7 @@ class tbAssinantes extends MinC_Db_Table_Abstract {
 
         $select->order('v.Descricao');
 
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }

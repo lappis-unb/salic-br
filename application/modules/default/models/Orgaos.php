@@ -100,7 +100,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
 //        $slct->where("se.stEstado = ?", 1);
 //        $slct->where("se.Codigo = ?", $area);
 //        $slct->orWhere("se.Codigo = ?", $segmento);
-//        //xd($slct->assemble());
+//        
 //        return $this->fetchAll($slct);
 //    }
 
@@ -130,7 +130,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
         //adiciona quantos filtros foram enviados
         //$slct->where("se.stEstado = ?", 1);
         $slct->where("se.Codigo = ?", $segmento);
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 

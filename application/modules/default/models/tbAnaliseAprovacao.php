@@ -23,7 +23,7 @@ class tbAnaliseAprovacao extends MinC_Db_Table_Abstract
                 FROM SAC.dbo.tbAnaliseDeConteudo WHERE IdPRONAC='$idPronac'
 
         ";
-//        xd($sql);
+//        
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 

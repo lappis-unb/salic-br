@@ -17,11 +17,11 @@ Class Proponente extends MinC_Db_Table_Abstract {
         ->group(array('a.idAgente', 'a.NomeProponente'))
         ->order(array('a.NomeProponente'))
         ;
-//xd($consulta->__toString());
+
 //        $consulta->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $listaResultado = $this->fetchAll($consulta);
-//xd($listaResultado->toArray());
+
         return $listaResultado;
     }
 

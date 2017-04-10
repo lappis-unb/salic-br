@@ -38,7 +38,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 		}
 		
 		$sql .= " order by p.IdPRONAC";
-//xd($sql);
+
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -62,7 +62,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 				and (v.Visao = 209) AND (n.TipoNome = 18) AND (u.sis_codigo = 21) AND (u.gru_codigo = 94) 
 				and u.uog_orgao = $orgao";
 		
-//xd($sql);
+
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -117,7 +117,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 		}
 		
 		$sql .= " ORDER BY p.IdPRONAC";
-//xd($sql); 
+ 
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -204,7 +204,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 		}
 		
 		$sql .= " order by dp.idPRONAC";
-//xd($sql);
+
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -241,7 +241,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 		if(!empty($dataInicio) and !empty($dataFim)){
 			$sql .= " AND CONVERT(char(10), au.dtInicioAusencia, 103) >= '$dataInicio' and CONVERT(char(10), au.dtFimAusencia, 103) <= '$dataFim'";
 		}
-//xd($sql);
+
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

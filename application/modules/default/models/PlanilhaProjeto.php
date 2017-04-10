@@ -53,7 +53,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         );
         
         $slct->where('pp.idPRONAC = ? ', $idPronac);
-        //xd($slct->assemble());
+        
         return $this->fetchRow($slct);
     }
 	
@@ -117,7 +117,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         }
         $somar->where('idEtapa = ?', 3);
         
-        //xd($somar->assemble());
+        
         return $this->fetchRow($somar);
     }
 
@@ -146,7 +146,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
             $somar->where('PAP.tpPlanilha = ? ', $tpPlanilha);
         }
         
-        //xd($somar->assemble());
+        
         
         return $this->fetchRow($somar);
     }
@@ -169,7 +169,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
             $somar->where($key, $valor);
         }
         
-        //xd($somar->assemble());
+        
         
         return $this->fetchRow($somar);
     }
@@ -309,7 +309,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
                     'CID.Descricao'
                 )
         );
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
     

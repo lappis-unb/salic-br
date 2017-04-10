@@ -66,7 +66,7 @@ class PagarParecerista extends MinC_Db_Table_Abstract {
             $select->where($coluna, $valor);
         }
 
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }
@@ -92,7 +92,7 @@ class PagarParecerista extends MinC_Db_Table_Abstract {
             $select->where($coluna, $valor);
         }
 
-//        xd($select->assemble());
+
         $select->order('nm.Descricao');
 
         return $this->fetchAll($select);

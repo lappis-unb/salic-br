@@ -165,7 +165,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-  //          xd($select->assemble());
+  
             return $this->fetchAll($select)->count();
         }
 

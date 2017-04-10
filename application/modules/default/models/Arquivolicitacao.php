@@ -15,7 +15,7 @@ class Arquivolicitacao extends MinC_Db_Table_Abstract{
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('al'=>$this->_schema.'.'.$this->_name),
+                        array('al'=>$this->_name),
                         array(
                                 'al.idArquivo'
                               )

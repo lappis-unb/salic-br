@@ -60,7 +60,7 @@ class Licitacaoxplanilhaaprovacao extends MinC_Db_Table_Abstract {
                 'SAC.dbo'
         );
         $select->where("a.idLicitacao = ?", $idLicitacao);
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 }

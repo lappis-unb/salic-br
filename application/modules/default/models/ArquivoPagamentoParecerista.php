@@ -48,7 +48,7 @@ class ArquivoPagamentoParecerista extends MinC_Db_Table_Abstract {
         }
 
         $select->order('arq.dtEnvio');
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }

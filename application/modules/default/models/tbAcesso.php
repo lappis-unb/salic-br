@@ -39,7 +39,7 @@ class tbAcesso extends MinC_Db_Table_Abstract{
                     );
 
             $select->where('c.IdPRONAC = ?', $idpronac);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }

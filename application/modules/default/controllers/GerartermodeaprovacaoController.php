@@ -203,7 +203,7 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
             $tbUsuariosorgaosgrupos = new Usuariosorgaosgrupos();
             $rsOrgao = $tbUsuariosorgaosgrupos->buscarOrgaoSuperior($orgao)->current();*
             //if(!empty($rsOrgao) && $rsOrgao->org_superior == 160){  //Projeto SAV
-            //xd($dadosresultado);
+            
             if($dadosresultado['Area'] == "2" && $dadosresultado['Orgao'] != "262"){  //Projetos da SAV
                 
                 $pautaSAVAprovados[$ct1]['PRONAC'] = $dadosresultado['pronac'];
