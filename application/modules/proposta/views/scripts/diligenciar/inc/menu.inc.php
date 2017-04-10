@@ -59,20 +59,20 @@
             <div class="top"></div>
             <div id="qm0" class="qmmc">
                 <?php if(!empty($pronac)):?>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?><?php echo $codPronac;?>">Dados do Projeto</a>
+                <a class="no_seta" href="<?php echo $this->url(array('module'=> 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')); ?><?php echo $codPronac;?>">Dados do Projeto</a>
                 <?php endif;?>
                 <?php if(!empty($projeto)):?>
                     <?php if(isset($_GET['edital'])):?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'dadospropostaedital')); ?><?php echo $codProjeto;?>">Dados da Proposta</a>
+                    <a class="no_seta" href="<?php echo $this->url(array('module'=> 'default', 'controller' => 'manterpropostaedital', 'action' => 'dadospropostaedital')); ?><?php echo $codProjeto;?>">Dados da Proposta</a>
                     <?php else:?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'editar')); ?><?php echo $codProjeto;?>">Dados da Proposta</a>
+                    <a class="no_seta" href="<?php echo $this->url(array('module'=> 'default', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar')); ?><?php echo $codProjeto;?>">Dados da Proposta</a>
                     <?php endif;?>
                 <?php endif;?>
                 <?php
                     if(isset($this->menumsg)){
                 ?>
                 <div class="sanfonaDiv"></div>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem')); ?>/idpronac/<?php echo $this->idPronac; ?>">Mensagens</a>
+                <a class="no_seta" href="<?php echo $this->url(array('module'=> 'default', 'controller' => 'mantermensagens', 'action' => 'consultarmensagem')); ?>/idpronac/<?php echo $this->idPronac; ?>">Mensagens</a>
                 <?php } ?>
             </div>
             <div class="bottom"></div>
