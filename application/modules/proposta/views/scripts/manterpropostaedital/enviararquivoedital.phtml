@@ -86,12 +86,16 @@ $edital='';
                             </a>
                         </td>
                         <?php if( !$this->isEditarProjeto) : ?>
-                            <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proposta');" /></td>
+                            <td align="center">
+                                <button type="button" class="btn red white-text"
+                                    onclick="excluirAnexos(<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proposta');" >
+                                    Excluir
+                                </button>
+                            </td>
                         <?php endif; ?>
                     <?php } ?>
                 </table>
                 <?php } ?>
-
                 <?php if(count($this->arquivosProponente)>0){ ?>
                 <br clear="all" />
                 <table class="bordered">
@@ -112,7 +116,12 @@ $edital='';
                         <td align="center"><?php echo Data::tratarDataZend($arquivosProponente['Data'], 'Brasileira'); ?></td>
                         <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-agentes')); ?>?id=<?php echo $arquivosProponente['idDocumentosAgentes']; ?>"><?php echo $arquivosProponente['NoArquivo']; ?></a></td>
                         <?php if( !$this->isEditarProjeto) : ?>
-                            <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProponente['idDocumentosAgentes']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proponente');" /></td>
+                            <td align="center">
+                                <button type="button"
+                                    class="btn red white-text"
+                                    onclick="excluirAnexos(<?php echo $arquivosProponente['idDocumentosAgentes']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proponente');" />
+                                excluir</button>
+                            </td>
                         <?php endif; ?>
 
                     <?php } ?>
@@ -142,7 +151,7 @@ $edital='';
             arquivo = arquivo.substr((arquivo.length-3), 3)
             if (arquivo == "PDF" || arquivo == "pdf"){
                 $('#arquivoinvalido').html('');
-                $('#enviar').attr('class','btn_enviar');
+                //$('#enviar').attr('class','btn_enviar');
             }else{
                 $('#arquivoinvalido').html('<br />Somente documentos em formato PDF podem ser subidos!');
                 $('#enviar').attr('class','btn_enviar-off');
