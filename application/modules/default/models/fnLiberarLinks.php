@@ -128,7 +128,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $vDiligencia = $db->fetchRow($vDiligencia);
 
        // @TODO VERIFICAR ESSE CARA
-        $vDiligencia = ($vDiligencia->idDiligencia) ? TRUE : FALSE;
+        $Diligencia = ($vDiligencia->idDiligencia) ? TRUE : FALSE;
 
         //Verificar se há recurso @TODO FAZER ESSA PARTE E DEIXAR PRO FIM
         $data = new Zend_Db_Expr("SELECT DATEDIFF(DAY, '$dadosCnic->DtReuniao', GETDATE()) AS dado");
@@ -360,7 +360,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             if($relatorioDeCumprimento->idCumprimentoObjeto){
                 $ComprovacaoFinanceira = 0;
                 $RelatorioFinal = 0;
-                if($vDiligencia){
+                if($Diligencia){
                     $ComprovacaoFinanceira = 1;
                 }
             }

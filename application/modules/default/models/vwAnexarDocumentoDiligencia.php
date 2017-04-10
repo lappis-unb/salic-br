@@ -32,7 +32,7 @@ class vwAnexarDocumentoDiligencia extends MinC_Db_Table_Abstract {
         $idTipoDocumento = $dados['idTipoDocumento'];
         $idDiligencia = $dados['idDiligencia'];
 
-        $sql = "INSERT INTO ".$this->_banco.".".$this->_schema.".".$this->_name.
+        $sql = "INSERT INTO ".$this->_schema.".".$this->_name.
                "(nmArquivo,sgExtensao,dtEnvio,stAtivo,biArquivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto,idDiligencia) " .
                "VALUES ('$name', '$fileType', GETDATE(), 'I', $data, $idTipoDocumento, '$dsDocumento', $IdPRONAC, 'E', $idDiligencia)";
 
