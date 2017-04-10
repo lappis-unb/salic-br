@@ -765,9 +765,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'EN'){
                 $this->view->nmPagina = 'Enquadramento';
             } else if($dados->tpSolicitacao == 'EO'){
-                $this->view->nmPagina = 'Enquadramento e Or�amento';
+                $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
             } else if($dados->tpSolicitacao == 'OR'){
-                $this->view->nmPagina = 'Or�amento';
+                $this->view->nmPagina = 'Or&ccedil;amento';
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
@@ -1349,7 +1349,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'EN'){
                 $this->view->nmPagina = 'Enquadramento';
             } else if($dados->tpSolicitacao == 'EO'){
-                $this->view->nmPagina = 'Enquadramento e Or�amento';
+                $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
             } else if($dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Or�amento';
             } else {

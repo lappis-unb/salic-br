@@ -1,6 +1,6 @@
 <?php
 
-class Assinatura_EnquadramentoController extends Assinatura_GenericController
+class Admissibilidade_EnquadramentoAssinaturaController extends Assinatura_GenericController
 {
     private $idTipoDoAtoAdministrativo;
 
@@ -30,7 +30,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
     public function indexAction()
     {
         $this->validarPerfis();
-        $this->redirect("/{$this->moduleName}/enquadramento/gerenciar-projetos");
+        $this->redirect("/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos");
     }
 
     public function gerenciarProjetosAction()
@@ -110,7 +110,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
                 )
             );
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento/visualizar-projeto?IdPRONAC={$get->IdPRONAC}");
+            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento-assinatura/visualizar-projeto?IdPRONAC={$get->IdPRONAC}");
         }
     }
 
@@ -182,7 +182,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
                     )
                 );
 
-                parent::message('Projeto devolvido com sucesso.', "/{$this->moduleName}/enquadramento/gerenciar-projetos", 'CONFIRM');
+                parent::message('Projeto devolvido com sucesso.', "/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos", 'CONFIRM');
             }
 
             $this->view->IdPRONAC = $get->IdPRONAC;
@@ -207,7 +207,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
             $this->view->titulo = "Devolver";
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento/devolver-projeto?IdPRONAC={$get->IdPRONAC}");
+            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento-assinatura/devolver-projeto?IdPRONAC={$get->IdPRONAC}");
         }
     }
 
@@ -231,7 +231,7 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
 
             if(is_array($get->IdPRONAC)) {
                 $idPronacUnidos = implode(',', $get->IdPRONAC);
-                $this->redirect("/{$this->moduleName}/enquadramento/assinar-projeto?IdPRONAC={$idPronacUnidos}");
+                $this->redirect("/{$this->moduleName}/enquadramento-assinatura/assinar-projeto?IdPRONAC={$idPronacUnidos}");
             }
 
             $this->view->IdPRONAC = $get->IdPRONAC;
@@ -255,13 +255,13 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
                 if(count($arrayIdPronacs) > 1) {
                     parent::message(
                         "Projetos assinados com sucesso!",
-                        "/{$this->moduleName}/enquadramento/gerenciar-projetos",
+                        "/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos",
                         'CONFIRM'
                     );
                 }
                 parent::message(
                     "Projeto assinado com sucesso!",
-                    "/{$this->moduleName}/enquadramento/visualizar-projeto?IdPRONAC={$idPronac}",
+                    "/{$this->moduleName}/enquadramento-assinatura/visualizar-projeto?IdPRONAC={$idPronac}",
                     'CONFIRM'
                 );
             }
@@ -283,12 +283,12 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             if(is_array($get->IdPRONAC)) {
                 parent::message(
                     $objException->getMessage(),
-                    "/{$this->moduleName}/enquadramento/gerenciar-projetos"
+                    "/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos"
                 );
             }
             parent::message(
                 $objException->getMessage(),
-                "/{$this->moduleName}/enquadramento/assinar-projeto?IdPRONAC={$get->IdPRONAC}"
+                "/{$this->moduleName}/enquadramento-assinatura/assinar-projeto?IdPRONAC={$get->IdPRONAC}"
             );
         }
     }
@@ -414,9 +414,9 @@ class Assinatura_EnquadramentoController extends Assinatura_GenericController
             $objAprovacao = new Aprovacao();
             $objAprovacao->inserir($dadosInclusaoAprovacao);
 
-            parent::message('Projeto finalizado com sucesso!', "/{$this->moduleName}/enquadramento/gerenciar-projetos", 'CONFIRM');
+            parent::message('Projeto finalizado com sucesso!', "/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos", 'CONFIRM');
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento/assinar-projeto?IdPRONAC={$get->IdPRONAC}");
+            parent::message($objException->getMessage(), "/{$this->moduleName}/enquadramento-assinatura/assinar-projeto?IdPRONAC={$get->IdPRONAC}");
         }
     }
 

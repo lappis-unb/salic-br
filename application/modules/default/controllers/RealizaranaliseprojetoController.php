@@ -15,6 +15,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
     private $bln_readequacao = "false";
     private $idPedidoAlteracao = 0;
     private $intTamPag = 10;
+    private $idUsuario;
 
     public function init()
     {
@@ -1357,7 +1358,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                             $dadosNovosEnquadramento = array(
                                 'Enquadramento' => $tpEnquadramento,
                                 'dtEnquadramento' => new Zend_Db_Expr('GETDATE()'),
-                                'Observacao' => 'Altera��o de Enquadramento conforme deferimento de recurso.',
+                                'Observacao' => 'Altera&ccedil;&atilde;o de Enquadramento conforme deferimento de recurso.',
                                 'Logon' => $this->idUsuario
                             );
                             $Enquadramento->update($dadosNovosEnquadramento, "IdEnquadramento=" . $dadosEnquadramentoAtual[0]->IdEnquadramento);
