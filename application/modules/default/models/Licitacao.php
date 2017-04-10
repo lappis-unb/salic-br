@@ -83,7 +83,7 @@ class Licitacao extends MinC_Db_Table_Abstract {
                     'AGENTES.dbo'
                );
         $slct->where('idlicitacao = ?',$idLicitacao);
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
 
     }

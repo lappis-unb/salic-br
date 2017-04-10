@@ -2095,7 +2095,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
             //$sql = "select org_codigo as Codigo,org_sigla as Sigla from Orgaos ORDER BY org_sigla";
             //$sql = "SELECT DISTINCT uog_orgao as Codigo,org_siglaautorizado as Sigla FROM vwUsuariosOrgaosGrupos ORDER BY org_siglaautorizado";
         }
-//xd($sql);
+
         return $sql;
     }
 

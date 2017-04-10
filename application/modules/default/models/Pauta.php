@@ -77,7 +77,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $select->order('pr.Area');
         $select->order('pr.Segmento');
         $select->order('pr.IdPRONAC');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -219,7 +219,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         
         $slctUnion = $this->select()->union(array('('.$a.')', '('.$b.')', '('.$c.')'));
 
-        //xd($slctUnion->assemble());
+        
         return $this->fetchRow($slctUnion);
     }
 
@@ -240,7 +240,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         if ($aprovacao) {
             $select->where('(tp.idPRONAC not in (select idpronac from sac.dbo.aprovacao where idpronac = tp.idPRONAC))', '');
         }
-//        xd($select->__toString());
+
         return $this->fetchAll($select);
     }
 
@@ -342,7 +342,7 @@ class Pauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 }

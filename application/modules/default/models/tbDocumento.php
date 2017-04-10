@@ -44,7 +44,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
         $slct->order('idDocumento desc');
         $slct->limit('1', '0');
 
-        //xd($slct->query());
+        
 
         return $this->fetchRow($slct);
     }
@@ -82,7 +82,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
         if ($idnrdocumento) {
             $select->where('d.idDocumento = ?', $idnrdocumento);
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

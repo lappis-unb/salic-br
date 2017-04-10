@@ -664,7 +664,7 @@ class MantermensagensController extends MinC_Controller_Action_Abstract {
                         $valorperfil['idmensagemprojeto'][$ler[$chavesachadas]['idmensagemprojeto']]['remetente'] = $ler[$chavesachadas]['perfilRemetente'];
                         $valorperfil['idmensagemprojeto'][$ler[$chavesachadas]['idmensagemprojeto']]['destinatario'] = $ler[$chavesachadas]['perfilDestinatario'];
                     }
-//                xd($valorperfil);
+
                 @$this->view->mensagemperfil = $valorperfil;
             }
         }

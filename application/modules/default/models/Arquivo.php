@@ -51,7 +51,7 @@ class Arquivo extends MinC_Db_Table_Abstract {
                "(nmArquivo,sgExtensao,dtEnvio,stAtivo,biArquivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto) " .
                "VALUES ('$name', '$fileType', GETDATE(),'I',$data,$idTipoDocumento,'$dsDocumento', $IdPRONAC,'E')";
 
-//        xd($sql);
+//        
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

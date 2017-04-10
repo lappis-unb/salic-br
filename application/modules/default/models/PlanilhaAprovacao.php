@@ -33,7 +33,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-        //xd($somar->assemble());
+        
         //$somar->where('aa.tpAnalise = ?', $tpPlanilha); //(condigo antigo) retirado pois nao estava atualizando os custos adminitrativos
         return $this->fetchRow($somar);
     }
@@ -45,7 +45,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-//        xd($somar->assemble());
+
         return $this->fetchRow($somar);
     }
 
@@ -60,7 +60,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-        //xd($somar->assemble());
+        
         return $this->fetchRow($somar);
     }
 
@@ -79,7 +79,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         if ($outras) {
             $somar->where('FonteRecurso <> ?', $outras);
         }
-        //xd($somar->assemble());
+        
         return $this->fetchRow($somar);
     }
 
@@ -103,7 +103,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         );
         $buscar->where('tpa.idpronac = ?', $idpronac);
         $buscar->where('tpa.tpPlanilha = ?', $tpplanilha);
-//        xd($buscar->query());
+
         return $this->fetchAll($buscar);
     }
 
@@ -130,7 +130,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
 //        $select->group('pa.idProduto');
 //        $select->group('pa.idUnidade');
 
-//        xd($select->assemble());
+
 
         if($retornaSelect)
             return $select;
@@ -293,7 +293,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             $select->where('cppa.stItemAvaliado = ?', 3);
         }
 
-        #xd($select->assemble());
+        
 
         return $this->fetchAll($select);
     }
@@ -682,7 +682,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         $selectFinal->setIntegrityCheck(false);
         $selectFinal->from($select, array("vlComprovado","valor"));
         $selectFinal->where('vlComprovado>valor');
-        //xd($selectFinal->query());
+        
         return $this->fetchAll($selectFinal);
     }
 
@@ -1204,7 +1204,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $chave => $valor) {
             $select->where($chave, $valor);
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -1313,7 +1313,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 'CID.Descricao'
                 )
         );
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

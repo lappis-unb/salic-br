@@ -136,7 +136,7 @@ class ProponenteController extends MinC_Controller_Action_Abstract
         
         $tblProjetos = new Projetos();
         $total = $tblProjetos->buscarProjetosProponente($arrBusca, array(), null, null, true);
-        //xd($total);
+        
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
         if ($fim>$total) $fim = $total;

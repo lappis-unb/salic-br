@@ -524,7 +524,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         if(isset($idReuniao) && $idReuniao != ""){$arrReuniao['r.idNrReuniao = ?']=$idReuniao;}
         $ordem = array('1','21'); //ORDENACAO: analise , area cultural
         $rsProjAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, null, $arrReuniao, 1);
-        //xd($rsProjAnalisados->toArray());
 
         //NAO ANALISADOS
         $arrBusca =array();
@@ -1535,7 +1534,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             /**** CODIGO DE READEQUACAO ****/
             $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac,'CO', array('pap.stAtivo=?'=>'S'));
-            //xd($buscarplanilhaCO);
             $buscarAnaliseConta = array(); $cont = 0;
             foreach($buscarplanilhaCO as $resuplanilha){
                 $buscarAnaliseConta[$cont]['qtdRelator'] = $resuplanilha->qtItem;
@@ -1877,7 +1875,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             $resuplanilha = null; $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
             foreach($buscarplanilhaSR as $resuplanilha){
                     $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -1899,7 +1896,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             /******** Planilha aprovacao PA (Parecerista) ****************/
             $resuplanilha = null; $count = 0;
             $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
             foreach($buscarplanilhaPA as $resuplanilha){
                     $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                     $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;

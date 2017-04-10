@@ -849,7 +849,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 //
 //        $respDiligencia = $diligenciaDAO->buscar($where);
 //        if($respDiligencia->count()>0)
-//        xd($respDiligencia);
+
 
         $post = Zend_Registry::get('post');
         if($post->tipo == 'pdf' or $post->tipo == 'xls'){

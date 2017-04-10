@@ -36,7 +36,7 @@ class tbTipoDocumento extends MinC_Db_Table_Abstract
         }
         $select->where('T.stEstado = ?', 1);
         $select->order('T.dsTipoDocumento');
-//        xd($select->query());
+
         return $this->fetchAll($select);
     }
     

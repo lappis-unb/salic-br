@@ -2994,7 +2994,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $this->view->resultAnaliseProduto = GerenciarPareceresDAO::projetosConsolidadosParte2($idPronac);
                 $planilhaprojeto = new PlanilhaProjeto();
                 $planilhaAprovacao = new PlanilhaAprovacao();
-//                xd($planilhaAprovacao);
+
                 $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 /*$parecerista = $planilhaprojeto->somarPlanilhaProjeto($idPronac);
                 $this->view->valorparecerista = $parecerista['soma'];

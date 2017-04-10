@@ -75,7 +75,7 @@ class tbTmpRelatorioConsolidado extends MinC_Db_Table_Abstract
             );
 
             $select->where('a.idPronac = ?', $idpronac);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
 	} // fecha m�todo cadastrarDados()

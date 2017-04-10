@@ -72,7 +72,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $select->where("a.idPlanilhaAprovacao = ?", $idPlanilhaAprovacao);
 		
 		//$select->order("t.dtCredito");
-        //xd($select->assemble());
+        
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
     
@@ -165,7 +165,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 		
             $select->order("d.Descricao");
             $select->order("e.Descricao");
-            //xd($select->assemble());
+            
             return $this->fetchAll($select);
         } // fecha m�todo buscarDados()
     
@@ -236,7 +236,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 		$select->order("d.Descricao");
 		$select->order("e.Descricao");
 
-        #xd($select->assemble());
+        
 
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
@@ -350,7 +350,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 
         $select->where("c.idPronac = ?", $idPronac);
 		$select->order(3);
-        //xd($select->assemble());
+        
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
     
@@ -413,7 +413,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $select->where("c.idPronac = ?", $idPronac);
 		$select->group(array('c.idPronac','f.Descricao','d.Descricao','g.Descricao','c.qtItem','nrOcorrencia','c.vlUnitario','f.idPlanilhaEtapa'));
 		$select->order(array(1,2));
-        //xd($select->assemble());
+        
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
         
@@ -438,7 +438,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $a->group(array('a.CgcCpfMecena','c.Descricao'));
         $a->order(array('2','3'));
 
-        #xd($a->assemble());
+        
 
         return $this->fetchAll($a);
 	} // fecha m�todo buscarDados()
@@ -539,7 +539,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         );
         $select->where('a.idTmpCaptacao = ?', $idTmpCaptacao);
 
-        //xd($select->assemble());
+        
         return $this->fetchRow($select);
 
 	} // fecha m�todo buscarDados()

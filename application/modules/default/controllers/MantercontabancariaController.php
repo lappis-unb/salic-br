@@ -150,7 +150,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         $cb = new ContaBancaria();
         $resp = $cb->consultarDadosPorPronac($pronac, $orgao)->current();
 //            x($idagente->usu_codigo);
-//            xd($idagente->idAgente);
+
         $caminho = $this->_request->getParam("caminho"); //caminho de retorno caso a funcionalidade seja aberta em modal
         $ba = new BancoAgencia();
         $AgenciaDados = $ba->buscar(array('Agencia = ?' => $this->_request->getParam('Agencia')));

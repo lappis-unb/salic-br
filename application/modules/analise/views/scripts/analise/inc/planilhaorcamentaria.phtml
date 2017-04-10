@@ -130,7 +130,23 @@
 
             $totalItens = 0; ?>
 
-            <tr onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);"
+            <?php
+
+            $valorMaiorQueOPraticado = '';
+            if ($resposta['stCustoPraticado'] == 1) {
+                $valorMaiorQueOPraticado = 'orange accent-3 black-text';
+            }
+
+            $tooltipped = '';
+            $tooltippedClass ='';
+            if (strlen($resposta['dsJustificativa']) > 2) {
+                $tooltipped = 'data-tooltip="Justificativa: ' . $resposta['dsJustificativa'] . '"';
+                $tooltippedClass = 'tooltipped';
+            }
+            ?>
+
+
+            <tr class="<?php echo $tooltippedClass .' '. $valorMaiorQueOPraticado; ?>" onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);" <?php echo $tooltipped; ?>
                 onblur="out_tr(this);" onclick="click_tr(this);" onkeypress="click_tr(this);"
                 class="IFF<?php echo $comparadorIncentivo; ?> IFF_PRODUTO<?php echo $comparadorProdutos; ?> IFF_ETAPA<?php echo $comparadorEtapas; ?> IFF_UF<?php echo $comparadorUFs; ?>
                 <?php $totalItens--; ?> ">

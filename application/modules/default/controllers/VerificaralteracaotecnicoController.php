@@ -847,7 +847,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 		$idAvaliacaoItemPedidoAlteracao = $post->idAvaliacaoItemPedidoAlteracao;
 		$avaliacao                      = $post->avaliacao;
 		$dsAvaliacao                    = $post->dsAvaliacao;
-//                xd($dsAvaliacao);
+
 
 		try
 		{

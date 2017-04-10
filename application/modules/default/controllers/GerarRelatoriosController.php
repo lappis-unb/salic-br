@@ -153,7 +153,7 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idusuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : 0;
         $idorgao   = isset($auth->getIdentity()->usu_orgao)  ? $auth->getIdentity()->usu_orgao  : 0;
-        //xd($idorgao);
+        
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess�o
         $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o

@@ -16,7 +16,7 @@ class Consolidacaovotacao extends MinC_Db_Table_Abstract{
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                    array('cv'=>$this->_schema.'.'.$this->_name),
+                    array('cv'=>$this->_name),
                     array('cv.dsConsolidacao')
                     );
         $select->joinInner(

@@ -41,7 +41,7 @@
     });
 </script>
 <div id="titulo">
-    <div>Edital Localizar <span class="voltar"><a href="#" onclick="location.href='<?php echo $this->baseUrl(); ?>/manterpropostaincentivofiscal/listar-propostas';">Voltar</a></span></div>
+    <div>Edital Localizar <span class="voltar"><a href="#" onclick="location.href='<?php echo $this->baseUrl(); ?>/manterpropostaincentivofiscal/listarproposta';">Voltar</a></span></div>
 </div>
 <div id="conteudo">
     <form name="form" class="formulario" action="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'editalconfirmar'))."?idAgente=". $this->idAgente; ?>" method="post">
@@ -83,7 +83,7 @@
                     <input type="text" class="input_simples" name="nrEdital" id="nrEdital" maxlength="12" />
                 </td>
             </tr>
-         
+
             <tr class="fundo">
                 <td class="direita" colspan="1">
                     <label for="cep" ><b>Data Edital </b></label>
