@@ -98,10 +98,15 @@
         </form>
         <br />
         <div class="center">
-            <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
-                <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
-                    Avaliar <i class="material-icons right">gavel</i>
-                </button>
+
+            <?php if( Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo ||
+            Autenticacao_Model_Grupos::COORDENADOR_ABMISSIBILIDADE == $this->codGrupo) : ?>
+
+                <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
+                    <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
+                        Avaliar <i class="material-icons right">gavel</i>
+                    </button>
+                <?php endif; ?>
             <?php endif; ?>
             <iframe name="esconde" id="esconde" class="sumir"> </iframe>
             <button title="Imprimir" class="btn waves-effect waves-light imprimirProposta white black-text" type="button" name="action">
