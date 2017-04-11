@@ -221,16 +221,16 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     private function validarCadastrar($exterior = false)
     {
         if (!$this->fornecedor) {
-            throw new Exception('Fornecedor inv�lido.');
+            throw new Exception('Fornecedor inv&aacute;lido.');
         }
         if (!$this->item) {
-            throw new Exception('Item inv�lido.');
+            throw new Exception('Item inv&aacute;lido.');
         }
         if (!$this->tipo) {
-            throw new Exception('Comprovante inv�lido.');
+            throw new Exception('Comprovante inv&aacute;lido.');
         }
         if (!$this->numero) {
-            throw new Exception('N�mero inv�lido.');
+            throw new Exception('N&uacute;mero inv&aacute;lido.');
         }
 
         # validar periodo
@@ -240,20 +240,20 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
         $dtInicioExecucao = new DateTime($projeto->DtInicioExecucao);
         $dtFimExecucao = new DateTime($projeto->DtFimExecucao);
         if (!$this->dataEmissao || ($this->dataEmissao < $dtInicioExecucao) || ($this->dataEmissao > $dtFimExecucao)) {
-            throw new Exception('A data do documento deve estar dentro do per�odo de execu��o do projeto.');
+            throw new Exception('A data do documento deve estar dentro do per&iacute;odo de execu&ccedil;&atilde;o do projeto.');
         }
 
         // caso seja comprova��o de pagamento a empresa do exterior, n�o precisa comprovar
         if (!$exterior) {
             if (!$this->comprovanteTipo) {
-                throw new Exception('Forma de pagamento inv�lida.');
+                throw new Exception('Forma de pagamento inv&aacute;lida.');
             }
         }
         if (!$this->comprovanteNumero) {
-            throw new Exception('N�mero do comprovante inv�lido.');
+            throw new Exception('N&uacute;mero do comprovante inv&aacute;lido.');
         }
         if (!$this->comprovanteValor) {
-            throw new Exception('Valor do item inv�lido.');
+            throw new Exception('Valor do item inv&aacute;lido.');
         }
     }
 
@@ -370,7 +370,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     convert(char(10), comp.dtEmissao, 103) as dtEmissao,
                     (
                         CASE pa.idProduto
-                            WHEN 0 THEN ('Administra��o do projeto')
+                            WHEN 0 THEN ('Administra&ccedil;&atilde;o do projeto')
                             ELSE prod.Descricao
                         END
                     ) as produtonome,
@@ -379,7 +379,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     (
                         CASE tpFormaDePagamento
                             WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transfer�ncia Banc�ria')
+                            WHEN 2 THEN ('Transfer&ecirc;ncia Banc&aacute;ria')
                             WHEN 3 THEN ('Saque/Dinheiro')
                         END
                     ) as tipoFormaPagamentoNome,
@@ -436,7 +436,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('convert(char(10), comp.dtEmissao, 103) as dtEmissao'),
                 new Zend_Db_Expr('(
                                         CASE pa.idProduto
-                                            WHEN 0 THEN (\'Administra��o do projeto\')
+                                            WHEN 0 THEN (\'Administra&ccedil;&atilde;o do projeto\')
                                             ELSE prod.Descricao
                                         END
                                      ) AS produtonome'),
@@ -445,7 +445,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('(
                                             CASE tpFormaDePagamento
                                                 WHEN 1 THEN (\'Cheque\')
-                                                WHEN 2 THEN (\'Transfer�ncia Banc�ria\')
+                                                WHEN 2 THEN (\'Transfer&ecirc;ncia Banc&aacute;ria\')
                                                 WHEN 3 THEN (\'Saque/Dinheiro\')
                                             END
                                          ) AS tipoFormaPagamentoNome'),
@@ -535,7 +535,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
         $select = "SELECT top 50 a.*,
                     (
                         CASE c.idProduto
-                            WHEN 0 THEN ('Administra��o do projeto')
+                            WHEN 0 THEN ('Administra&ccedil;&atilde;o do projeto')
                             ELSE f.Descricao
                         END
                     ) as produto, b.*, d.Descricao as etapa, e.Descricao as item
