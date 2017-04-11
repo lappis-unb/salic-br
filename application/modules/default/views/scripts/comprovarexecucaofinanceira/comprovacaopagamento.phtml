@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-	// adiciona zeros a n�meros que n�o tem todos os d�gitos depois do zero (sen�o quebra)
+	// adiciona zeros a n&uacute;meros que n�o tem todos os d�gitos depois do zero (sen�o quebra)
 	$('#vlComprovado').val(parseFloat($('#vlComprovado').val()).toFixed(2));
 	$('#vlComprovadoInternacional').val(parseFloat($('#vlComprovadoInternacional').val()).toFixed(2));
 
@@ -223,7 +223,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                                     ?>
                                 </select>
                             </td>
-                            <td class="destacar" align="right" style="width: 125px;"><b>N�mero<span style='color:red'>*</span></b></td>
+                            <td class="destacar" align="right" style="width: 125px;"><b>N&uacute;mero<span style='color:red'>*</span></b></td>
                             <td>
                                 <input type="text" name="nrComprovante" id="nrComprovante" maxlength="50" null="false" class="w300"
                                     value="<?php echo $this->nrComprovante; ?>"/>
@@ -250,7 +250,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                                     ?>
                                     <option value="0"> - Selecione - </option>
                                     <option value="1" <?php echo $selected1; ?>>Cheque</option>
-                                    <option value="2" <?php echo $selected2; ?>>Transfer�ncia Banc�ria</option>
+                                    <option value="2" <?php echo $selected2; ?>>Transfer&ecirc;ncia Banc&aacute;ria</option>
                                     <option value="3" <?php echo $selected3; ?>>Saque/Dinheiro</option>
                                 </select>
                             </td>
@@ -298,7 +298,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                             </td>
                         </tr>
                         <tr>
-                            <td class="destacar" align="right"><b>Ocorr�ncia do T�cnico</b></td>
+                            <td class="destacar" align="right"><b>Ocorr&ecirc;ncia do T&eacute;cnico</b></td>
                             <td colspan="5"><?php echo $this->JustificativaTecnico; ?></td>
                         </tr>
                     </tbody>
@@ -321,7 +321,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                         </tr>
                         <tr>
                             <td class="destacar" align="right">
-                                <b>Endere�o</b></td>
+                                <b>Endere&ccedil;o</b></td>
                             <td colspan="5">
                                 <input
                                     type="text"
@@ -338,7 +338,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                             <th colspan="6" align="center" class="fundo_linha3">Dados da Comprova&ccedil;&atilde;o de Pagamento</th>
                         </tr>
                         <tr>
-                            <td class="destacar" align="right" style="width: 125px;"><b>N�mero do documento<span style='color:red'>*</span></b></td>
+                            <td class="destacar" align="right" style="width: 125px;"><b>N&uacute;mero do documento<span style='color:red'>*</span></b></td>
                             <td colspan="3">
                               <input type="text" id="nif" name="nif" null="false" value="<?php echo $this->nrComprovante; ?>"/>
 
@@ -790,7 +790,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
             return ajaxObj;
         }
 
-        // quando selecionar cheque, limita n�mero de caracteres do nrDocumentoDePagamento
+        // quando selecionar cheque, limita n&uacute;mero de caracteres do nrDocumentoDePagamento
         $('#tpFormaDePagamento').change(function() {
             if ($(this).val() == 1) {
                 $('#nrDocumentoDePagamento').attr('maxlength', 6);
@@ -880,13 +880,13 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
         function validarParametrosDeComprovacaoDePagamento() {
             var msg = '';
             if (!$("#vlComprovado").val()) { msg += 'Informe o valor do item.<br />'; }
-            if (parseFloat($("#vlComprovado").val()) === 0) { msg += 'O valor do item n�o pode ser igual a zero.<br />'; }
+            if (parseFloat($("#vlComprovado").val()) === 0) { msg += 'O valor do item n&atilde;o pode ser igual a zero.<br />'; }
             if (!$("#idAgente").val()) { msg += 'Informe um fornecedor.<br />'; }
             if (!$("#tpDocumento").val() || 0 == $("#tpDocumento").val()) { msg += 'Selecione o tipo de comprovante.<br />'; }
-            if (!$("#nrComprovante").val()) { msg += 'Informe o n�mero do comprovante.<br />'; }
-            if (!$("#dtEmissao").val()) { msg += 'Informe a data de emiss�o do comprovante.<br />'; }
+            if (!$("#nrComprovante").val()) { msg += 'Informe o n&uacute;mero do comprovante.<br />'; }
+            if (!$("#dtEmissao").val()) { msg += 'Informe a data de emiss&atilde;o do comprovante.<br />'; }
             if (!$("#tpFormaDePagamento").val() || 0 == $("#tpFormaDePagamento").val()) { msg += 'Selecione a forma de pagamento.<br />'; }
-            if (!$("#nrDocumentoDePagamento").val()) { msg += 'Informe o n�mero do Documento de pagamento.<br />'; }
+            if (!$("#nrDocumentoDePagamento").val()) { msg += 'Informe o n&uacute;mero do Documento de pagamento.<br />'; }
 
 	    if ($("#idComprovantePagamento").val()) {
 		if (!$("#arquivo_edit").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
@@ -899,9 +899,9 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
         function validarParametrosDeComprovacaoDePagamentoInvoice() {
             var msg = '';
             if (!$("#vlComprovadoInternacional").val()) { msg += 'Informe o valor do item.<br />'; }
-            if (!$("#nomeRazaoSocialInternacional").val()) { msg += 'Informe o Nome/Raz�o Social.<br />'; }
+            if (!$("#nomeRazaoSocialInternacional").val()) { msg += 'Informe o Nome/Raz&atilde;o Social.<br />'; }
             if (!$("#nif").val()) { msg += 'Informe o NIF.<br />'; }
-            if (!$("#dtEmissaoInternacional").val()) { msg += 'Informe a data de emiss�o do comprovante.<br />'; }
+            if (!$("#dtEmissaoInternacional").val()) { msg += 'Informe a data de emiss&atilde;o do comprovante.<br />'; }
 	    if ($("#arquivoInternacional").val() == '') {
 		if (!$("#arquivo_edit").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
 	    } else {
