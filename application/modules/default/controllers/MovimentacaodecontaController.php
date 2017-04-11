@@ -1640,7 +1640,6 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     else {
                         $this->tbDepositoIdentificadoCaptacao = new tbDepositoIdentificadoCaptacao();
                         $this->tbTmpDepositoIdentificado = new tbTmpDepositoIdentificado();
-
                         // verifica se existe algum dado na tabela
                         $buscar = $this->tbDepositoIdentificadoCaptacao->buscar()->toArray();
                         if (count($buscar) > 0) {
@@ -1657,7 +1656,6 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                                 if (($abrir = opendir($dir)) === false) {
                                     throw new Exception('N�o foi poss�vel abrir o diret�rio <strong>' . $dir . '</strong>!');
                                 }
-
                                 // busca todos os arquivos do diret�rio
                                 $i = 0;
                                 while (($arq = readdir($abrir)) !== false) {
