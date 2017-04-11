@@ -165,7 +165,7 @@
 
 
         <!-- INFORMACOES BASICAS - PRIMEIRA PAGINA -->
-        <?php if(in_array('resumo',$this->arrConteudoImpressao)): ?>
+        <?php if(isset($this->arrConteudoImpressao) && in_array('resumo',$this->arrConteudoImpressao)): ?>
         <table class="tabela">
             <tr>
                 <th>
@@ -518,7 +518,7 @@
         <!-- DADOS COMPLEMENTARES -->
         <?php if(isset($this->proposta)) :  ?>
 
-            <?php if(in_array('dadoscomplementares',$this->arrConteudoImpressao)): ?>
+            <?php if(isset($this->arrConteudoImpressao) && in_array('dadoscomplementares',$this->arrConteudoImpressao)): ?>
                 <div id="dadoscomplementares">
                 <fieldset>
                     <legend>Acessibilidade</legend>
@@ -609,7 +609,7 @@
   
     
     <!-- DIVULGACAO -->
-    <?php if(in_array('planodivulgacao',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('planodivulgacao',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -643,7 +643,7 @@
 
     
     <!-- PROVIDENCIA TOMADA -->
-    <?php if(in_array('providenciatomada',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('providenciatomada',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -679,7 +679,7 @@
     
     
     <!-- LOCAL DE REALIZACAO -->
-    <?php if(in_array('localrealizacao_deslocamento',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('localrealizacao_deslocamento',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -764,7 +764,7 @@
 
     
     <!-- PLANO DE DISTRIBUICAO -->
-    <?php if(in_array('planodistribuicao',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('planodistribuicao',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -898,7 +898,7 @@
 
     
     <!-- TRAMITACAO DE PROJETO -->
-    <?php if(in_array('tramitacao',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('tramitacao',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -981,7 +981,7 @@
 
     
     <!-- DILIGENCIAS -->
-    <?php if(in_array('diligencias',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('diligencias',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -1144,7 +1144,7 @@
     
     
     <!-- PARECER CONSOLIDADO -->
-    <?php if(in_array('parecer-consolidado',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('parecer-consolidado',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -1291,7 +1291,7 @@
     
     
     <!-- PLANILHA ORCAMENTARIA -->
-    <?php if(in_array('planilhaorcamentaria',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('planilhaorcamentaria',$this->arrConteudoImpressao)): ?>
     <?php
     //MONTANDO A PLANILHA DO TIPO 1 = Planilha Orçamentária do Proponente
     if($this->tipoPlanilha == 1){ ?>
@@ -1870,7 +1870,7 @@
 
     
     <!-- CERTIDOES NEGATIVAS -->
-    <?php if(in_array('certidoes',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('certidoes',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -1923,7 +1923,7 @@
 
 
     <!-- REGULARIDADE PROPONENTE -->
-    <?php if(in_array('regularidadeproponente',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('regularidadeproponente',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
@@ -1979,7 +1979,7 @@
 
     
     <!-- DOCUMENTOS ANEXADOS -->
-    <?php if(in_array('documentosanexados',$this->arrConteudoImpressao)): ?>
+    <?php if(isset($this->arrConteudoImpressao) && in_array('documentosanexados',$this->arrConteudoImpressao)): ?>
     <table class="tabela">
         <tr>
             <td>
