@@ -516,7 +516,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
         //$dadosDirigente = ManterAgentes::buscaDirigentes($rsProponente->CNPJCPF);
 
-        $tblLocaisRealizacao = new Abrangencia();
+        $tblLocaisRealizacao = new Proposta_Model_DbTable_Abrangencia();
         $dadosLocais = $tblLocaisRealizacao->buscar(array("a.idProjeto" => $idPreProjeto, "a.stAbrangencia" => 1));
 
         $tblPlanoDivulgacao = new PlanoDeDivulgacao();
