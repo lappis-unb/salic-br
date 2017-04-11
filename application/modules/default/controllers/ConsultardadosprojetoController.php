@@ -4027,7 +4027,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         //OUTROS DADOS PROPONENTE
                         $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
 
-                        if(in_array('dadoscomplementares',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('dadoscomplementares',$arrConteudoImpressao))
                         {
                             //DADOS COMPLEMENTARES
                             $tblProposta = new Proposta_Model_DbTable_PreProjeto();
@@ -4037,14 +4037,14 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //PLANO DE DISTRIBUICAO
-                    if(in_array('planodistribuicao',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('planodistribuicao',$arrConteudoImpressao))
                     {
                         $buscarDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
                         $this->view->distribuicao = $buscarDistribuicao;
                     }
 
                     //LOCAL DE REALIZACAO e DESLOCAMENTO
-                    if(in_array('localrealizacao_deslocamento',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('localrealizacao_deslocamento',$arrConteudoImpressao))
                     {
                         $buscarLocalRealizacao = RealizarAnaliseProjetoDAO::localrealizacao($idPronac);
                         $this->view->dadosLocalizacao = $buscarLocalRealizacao;
@@ -4055,7 +4055,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //DIVULGACAO
-                    if(in_array('planodivulgacao',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('planodivulgacao',$arrConteudoImpressao))
                     {
                         $buscarDivulgacao = RealizarAnaliseProjetoDAO::divulgacao($idPronac);
                         $this->view->divulgacao = $buscarDivulgacao;
@@ -4065,7 +4065,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     //PLANILHA ORCAMENTARIA
                     $this->view->itensPlanilhaOrcamentaria = array();
-                    if(in_array('planilhaorcamentaria',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('planilhaorcamentaria',$arrConteudoImpressao))
                     {
                         if(!empty ($idPreProjeto)){
 
@@ -4092,7 +4092,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                    //DOCUMENTOS ANEXADOS
                    $idAgente = null;
-                   if(in_array('documentosanexados',$arrConteudoImpressao))
+                   if(isset($arrConteudoImpressao) && in_array('documentosanexados',$arrConteudoImpressao))
                    {
                        $tblAgente = new Agente_Model_DbTable_Agentes();
                        $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$rsProjeto->CgcCpf));
@@ -4112,7 +4112,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     //DILIGENCIAS
                     $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-                    if(in_array('diligencias',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('diligencias',$arrConteudoImpressao))
                     {
                         if(isset($_POST['diligenciasProposta']) && !empty($_POST['diligenciasProposta'])){
                             $this->view->checkDiligenciasProposta = true;
@@ -4127,7 +4127,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //PARECER CONSOLIDADO
-                    if(in_array('parecer-consolidado',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('parecer-consolidado',$arrConteudoImpressao))
                     {
                         $Parecer = new Parecer();
                         $this->view->identificacaoParecerConsolidado = $Parecer->identificacaoParecerConsolidado($idPronac);
@@ -4146,7 +4146,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //TRAMITACAO DE PROJETO e TRAMITACAO DE DOCUMENTOS
-                    if(in_array('tramitacao',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('tramitacao',$arrConteudoImpressao))
                     {
                         $ordem = array();
                         $ordem = array("2 ASC");
@@ -4168,7 +4168,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $tblProjeto = new Projetos();
 
                     //PROVIDENCIA TOMADA
-                    if(in_array('providenciatomada',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('providenciatomada',$arrConteudoImpressao))
                     {
                         $rsProjeto = $tblProjeto->buscar(array("IdPronac=?"=>$idPronac))->current();
                         $pronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
@@ -4181,7 +4181,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //CERTIDOES NEGATIVAS
-                    if(in_array('certidoes',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('certidoes',$arrConteudoImpressao))
                     {
                         $Projetos = new Projetos();
                         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
@@ -4192,7 +4192,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //REGLARIDADE PROPONENTE
-                    if(in_array('regularidadeproponente',$arrConteudoImpressao))
+                    if(isset($arrConteudoImpressao) && in_array('regularidadeproponente',$arrConteudoImpressao))
                     {
                         $Projetos = new Projetos();
                         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
@@ -4227,7 +4227,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     {
 
                         //RECURSOS
-                        if(in_array('analiseprojeto',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('analiseprojeto',$arrConteudoImpressao))
                         {
                             $buscarProjetos = $tblProjetos->buscarProjetosSolicitacaoRecurso($idPronac);
 
@@ -4243,7 +4243,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         }
 
                         //APROVACAO
-                        if(in_array('aprovacao',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('aprovacao',$arrConteudoImpressao))
                         {
                             $rsProjeto = $tblProjetos->buscar(array("IdPronac=?"=>$idPronac))->current();
                             $pronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
@@ -4254,7 +4254,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         }
 
                         // =================================== ANALISE DO PROJETO =====================================
-                        if(in_array('analiseprojeto',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('analiseprojeto',$arrConteudoImpressao))
                         {
                             // === INICIAL == PARECER CONSOLIDADO
                             $this->view->resultAnaliseProjeto = array();
@@ -4582,10 +4582,10 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $this->view->totalcomponentePlenaria = $buscarsomaaprovacao['soma'];
                             $this->view->totalpareceristaPlenaria = $buscarsomaprojeto['soma'];
 
-                        }//feccha if(in_array('analiseprojeto',$arrConteudoImpressao))
+                        }//feccha if(isset($arrConteudoImpressao) && in_array('analiseprojeto',$arrConteudoImpressao))
 
                         // === DADOS BANCARIOS e CAPTACAO
-                        if(in_array('dadosbancarios',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('dadosbancarios',$arrConteudoImpressao))
                         {
                             $tblContaBancaria = new ContaBancaria();
                             $rsContaBancaria = $tblContaBancaria->contaPorProjeto($idPronac);
@@ -4631,7 +4631,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         }
 
                         // === RELATORIOS TRIMESTRAIS
-                        if(in_array('relatoriostrimestrais',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('relatoriostrimestrais',$arrConteudoImpressao))
                         {
                             $tbRelatorio = new tbRelatorio();
                             $buscarDivulgacao = RealizarAnaliseProjetoDAO::divulgacaoProjetosGeral($idPronac);
@@ -4675,7 +4675,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         }
 
                         // === DADOS DA FISCALIZACAO
-                        if(in_array('dadosfiscalizacao',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('dadosfiscalizacao',$arrConteudoImpressao))
                         {
                             $arrRegistros = array();
                             //$this->view->registrosFiscalizacao = $arrRegistros;
@@ -4717,7 +4717,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     if($this->intFaseProjeto == '4')
                     {
                         //RELTORIO FINAL
-                        if(in_array('relatoriofinal',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('relatoriofinal',$arrConteudoImpressao))
                         {
                             $this->view->relatorio = array();
                             $this->view->relatorioConsolidado = array();
@@ -4798,7 +4798,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         }
 
                         //PRESTACAO DE CONTAS
-                        if(in_array('pretacaocontas',$arrConteudoImpressao))
+                        if(isset($arrConteudoImpressao) && in_array('pretacaocontas',$arrConteudoImpressao))
                         {
                             $this->view->parecerTecnico = array();
                             $this->view->parecerChefe   = array();
