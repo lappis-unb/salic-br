@@ -682,7 +682,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
         //Mensagem para Utilizar este fornecedor para Comprova��o Financeira, sim ou n�o.
         function outroFornecedor(este){
             $("#divPerguntaFornecedor").dialog('close');
-            $("#divPerguntaFornecedor").html('Deseja utilizar este fornecedor na comprova��o do pagamento?');
+            $("#divPerguntaFornecedor").html('Deseja utilizar este fornecedor na comprova&ccedil;&atilde;o do pagamento?');
             $("#divPerguntaFornecedor").dialog('open');
             $("#divPerguntaFornecedor").dialog({
                 resizable: false,
@@ -692,7 +692,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                 draggable:false,
                 title: 'Alerta!',
                 buttons: {
-                    'N�o': function(){
+                    'N\xE2o': function(){
                         $('#'+$(este).attr('idAgente')).val('');
                         $('#'+$(este).attr('idDescricao')).val('');
                         $('#CNPJCPF').val('');
@@ -954,7 +954,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
 				$("campoValorAprovado").html(result.item.valorAprovado).toNumber().formatCurrency({region: 'pt-BR' });
 				$("campoValorComprovado").html(result.item.valorComprovado).toNumber().formatCurrency({region: 'pt-BR' });
                             }
-                            message('Exclus�o realizada com sucesso!', 'CONFIRM');
+                            message('Exclus&atilde;o realizada com sucesso!', 'CONFIRM');
                         }
                     });
                 }
