@@ -648,7 +648,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $DadosProjeto = $projetos->buscarProjetoXProponente(array('idPronac = ?' => $idpronac))->current();
         $this->view->DadosProjeto = $DadosProjeto;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -930,13 +930,13 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $dsDemocratizacaoAcesso = trim($DadosRelatorio['dsDemocratizacaoAcesso']);
 
         if(empty($dsEtapasExecutadas)){
-            $erros[] = 'Etapas Executadas não foi informado.';
+            $erros[] = 'Etapas Executadas n&atilde;o foi informado.';
         }
         if(empty($dsAcessibilidade)){
-            $erros[] = 'Acessibilidade não foi informado.';
+            $erros[] = 'Acessibilidade n&atilde;o foi informado.';
         }
         if(empty($dsDemocratizacaoAcesso)){
-            $erros[] = 'Democratização de Acesso não foi informado.';
+            $erros[] = 'Democratiza&ccedil;&atilde;o de Acesso n&atilde;o foi informado.';
         }
 
         if(count($erros)>0){
@@ -1064,7 +1064,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -1177,7 +1177,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -1327,7 +1327,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $DadosProjeto = $projetos->buscarProjetoXProponente(array('idPronac = ?' => $idpronac))->current();
         $this->view->DadosProjeto = $DadosProjeto;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
