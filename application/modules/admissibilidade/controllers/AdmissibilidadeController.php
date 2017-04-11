@@ -94,6 +94,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $this->view->itensGeral = $dados;
 
+        $this->view->codGrupo = $this->codGrupo;
+
         $movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
         $movimentacao = $movimentacao->buscarStatusAtualProposta($idPreProjeto);
         $this->view->movimentacao = $movimentacao['Movimentacao'];
@@ -348,6 +350,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     public function salvaravaliacaoAction()
     {
         $post = Zend_Registry::get('post');
+
         $dados = array();
         $dados['idProjeto'] = $post->idPreProjeto;
         $dados['idTecnico'] = $this->idUsuario;
