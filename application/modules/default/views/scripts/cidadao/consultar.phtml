@@ -76,6 +76,14 @@
 
 </script>
 
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/geral.css"/>
+    <link type="text/css" rel="stylesheet" media="screen"
+          href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/ajustes.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/botoes.css"/>
+
 <style type="text/css">
     .tooltip{
         display: inline;
@@ -113,7 +121,7 @@
         color: #35953F !important;
         font-size: 20px;
         text-decoration: underline !important;
-	float: right;	
+        float: right;
     }
     #NrPronacConsulta{
       width: 60px;
@@ -134,7 +142,7 @@
     #idNrReuniaoConsulta{
       width: 56px;
     }
- 
+
     #pag{
       width: 63px;
     }
@@ -142,19 +150,6 @@
     #qtde{
       width: 50px;
     }
-    
-    #faleconosco{
-
-    }
-
-    .input_simples{
-      width: 110px;
-    }
-
-    table td{
-      padding: 4px;
-    }
-
 </style>
 <?php
 // funcao generica para reescrever url com parametros e nao duplicar
@@ -162,7 +157,7 @@ function parseUrlWithParams($url, $params = array()) {
     if (empty($params)) {
         return false;
     }
-    
+
     foreach ($params as $key => $value) {
         if ($url == '') {
             $url .= '?';
@@ -178,6 +173,8 @@ function parseUrlWithParams($url, $params = array()) {
 }
 ?>
 
+<div class="container-fluid white">
+
 <?php if($this->intranet){ $intranet = '&intranet'; } else { $intranet = ''; } ?>
 
 <div id="alerta" class="sumir"></div>
@@ -191,75 +188,89 @@ function parseUrlWithParams($url, $params = array()) {
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-
 <!-- ========== INICIO TITULO ========== -->
-<div id="titulo">
-    <div class="esquerda">
-    <?php if (is_object($this->reuniao)) { ?>
-    Pauta da CNIC n&ordm; <?php echo $this->reuniao['NrReuniao']; ?> <?php if($this->intranet){ echo ' - Intranet'; } else { if(!$this->usuarioInterno){ echo ' - Vis&atilde;o Cidad&atilde;o'; } } ?>
-    <?php } else { ?>
-             &nbsp
-    <?php } ?>
-    <a class="faleconosco" href="http://ouvidoria.cultura.gov.br/" target="_blank">Fale conosco</a>
+<div class="row">
+    <div class="col s12">
+        <div id="titulo">
+            <div class="esquerda">
+                <?php if (is_object($this->reuniao)) { ?>
+                Pauta da CNIC n&ordm; <?php echo $this->reuniao['NrReuniao']; ?> <?php if($this->intranet){ echo ' - Intranet'; } else { if(!$this->usuarioInterno){ echo ' - Vis&atilde;o Cidad&atilde;o'; } } ?>
+                <?php } else { ?>
+                         &nbsp
+                <?php } ?>
+                <a class="faleconosco" href="http://ouvidoria.cultura.gov.br/" target="_blank">Fale conosco</a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Alysson - Inicio Customizando a Consulta para carregar por Reuniao da CNIC -->
-<fieldset>
+<div class="row">
+    <div class="col s12">
+        <!-- Alysson - Inicio Customizando a Consulta para carregar por Reuniao da CNIC -->
         <form id="pesquisa" method="post">
-          <!-- alinhamento filtro ( Samir ) -->
-            <table style="font-size:13px;" class="tabela">
-                <tr>
-                    <td>
-                      <label for="NrPronacConsulta">N&ordm; do PRONAC </label>
-                      <input name="NrPronacConsulta" id="NrPronacConsulta" MAXLENGTH=7 class="input_simples" value="<?php echo $this->nrPronac; ?>">
-                    </td>
-                    <td>
-                      <label for="NomeProjetoConsulta">Nome do projeto </label>
-                      <input name="NomeProjetoConsulta" id="NomeProjetoConsulta" class="input_simples" value="<?php echo $this->nomeProjeto; ?>">
-                    </td>
-                    <td>
-                      <label for="CpnjCpfConsulta">CPF/CNPJ </label>
-                      <input type="text" name="CnpjCpfConsulta" id="CnpjCpfConsulta" class="input_simples" value="<?php echo $this->cnpjCpf; ?>">
-                    </td>
-                    <td>
-                      <label for="ProponenteConsulta">Proponente </label>
-        			        <input type="text" name="ProponenteConsulta" id="ProponenteConsulta" class="input_simples" value="<?php echo $this->proponente; ?>">
-                    </td>
-                    <td>
-                      <label for="idNrReuniaoConsulta">N&ordm; da Reuni&atilde;o </label>
-		      <select class="input_simples" name="idNrReuniaoConsulta" id="idNrReuniaoConsulta">
-			<option value="" selected></option>
-			<?php foreach($this->listaReunioes as $u){
-			$selected = ($this->idNrReuniaoConsulta == $u->idNrReuniao) ? "selected" : ""; ?>
-			<option value="<?php echo $u->idNrReuniao;?>" <?php echo $selected; ?>><?php echo $u->NrReuniao;?></option>
-			<?php } ?>
-		      </select>
-                    </td>
-                    <td>
-                        <input type="button" name="procurar" class="btn_pesquisar" value=" " /><br>
-                    </td>
-                </tr>
-            </table>
-    </fieldset>
-<!-- Alysson - Fim Customizando a Consulta para carregar por Reuniao da CNIC -->
+            <div class="row">
+                <div class="input-field col s1">
+                  <input name="NrPronacConsulta" id="NrPronacConsulta" MAXLENGTH=7 class="" value="<?php echo $this->nrPronac; ?>">
+                  <label class="active" for="NrPronacConsulta">N&ordm; do PRONAC </label>
+                </div>
+                <div class="input-field col s2">
+                  <input name="NomeProjetoConsulta" id="NomeProjetoConsulta" class="" value="<?php echo $this->nomeProjeto; ?>">
+                  <label for="NomeProjetoConsulta">Nome do projeto </label>
+                </div>
+                <div class="input-field col s2">
+                  <input type="text" name="CnpjCpfConsulta" id="CnpjCpfConsulta" class="input_simples" value="<?php echo $this->cnpjCpf; ?>">
+                  <label for="CpnjCpfConsulta">CPF/CNPJ </label>
+                </div>
+                <div class="input-field col s3">
+                  <input type="text" name="ProponenteConsulta" id="ProponenteConsulta" class="input_simples" value="<?php echo $this->proponente; ?>">
+                  <label for="ProponenteConsulta">Proponente </label>
+                </div>
+                <div class="input-field col s1">
+                      <select class="" name="idNrReuniaoConsulta" id="idNrReuniaoConsulta">
+                        <option value="" selected></option>
+                        <?php foreach($this->listaReunioes as $u){
+                        $selected = ($this->idNrReuniaoConsulta == $u->idNrReuniao) ? "selected" : ""; ?>
+                        <option value="<?php echo $u->idNrReuniao;?>" <?php echo $selected; ?>><?php echo $u->NrReuniao;?></option>
+                        <?php } ?>
+                      </select>
+                      <label class="active" for="idNrReuniaoConsulta">N&ordm; da Reuni&atilde;o </label>
+                </div>
+                <button type="submit" name="procurar" class="btn" value=" ">pesquisar</button>
+            </div>
+     </form>
+    <!-- Alysson - Fim Customizando a Consulta para carregar por Reuniao da CNIC -->
+    </div>
 </div>
-<div id="conteudo" align="center">
 
+<div class="row">
+    <div class="col s12">
     <?php if(count($this->dados)>0){ ?>
     <!-- ============ PAGINACAO ============ -->
-    <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
+    <table class="bordered">
       <tbody>
              <tr>
-                 <td align="center">
+                 <td>
                      <?php if($this->paginacao['pag']>1) { ?>
-                     <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
-                           onclick="location.href='<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('pag' => 1, 'qtde' => $this->paginacao['qtde'])); ?>'">
+                         <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
+                               onclick="location.href='<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('pag' => 1, 'qtde' => $this->paginacao['qtde'])); ?>'">
                      <?php } ?>
+
                      <input id="btn_p_anterior" type="button"
-                     <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
-                     <?php }else { ?>
-                           class="btn_p_anterior" onclick="location.href='<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('pag' => $this->paginacao['pag'] -1, 'qtde' => $this->paginacao['qtde'])); ?>'"
-                    <?php } ?>>
+                         <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
+                         <?php }else { ?>
+                               class="btn_p_anterior" onclick="location.href='<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('pag' => $this->paginacao['pag'] -1, 'qtde' => $this->paginacao['qtde'])); ?>'"
+                        <?php } ?>
+                     >
+
+                     <!-- button id="btn_p_anterior" type="button"
+                         <?php if($this->paginacao['pag']<=1) { ?>
+                                class="btn _p_anterior-off"
+                                disabled
+                         <?php }else { ?>
+                               class="btn" onclick="location.href='<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('pag' => $this->paginacao['pag'] -1, 'qtde' => $this->paginacao['qtde'])); ?>'"
+                        <?php } ?>
+                     ><i class="material-icons" >skip_previous</i> p_anterior</button-->
+
                      <input id="btn_p_proximo" type="button"
                             <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
                            class="btn_p_proximo-off"
@@ -279,7 +290,6 @@ function parseUrlWithParams($url, $params = array()) {
                     &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="button" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
-<!--                    <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">-->
                     <input type="hidden" name="pronac" value="<?php echo $this->pronacProjeto;?>">
                     <input type="button" class="btn_imprimir" title="Imprimir" />
                     <input type="button" class="btn_xls" title="Gerar Excel" />
@@ -297,36 +307,33 @@ function parseUrlWithParams($url, $params = array()) {
     </center>
     <!-- ========== FIM PAGINACAO ========== -->
     <?php } ?>
-
+    </div>
+</div>
     <?php if(count($this->dados)>0){ ?>
-    <table class="tabela tablesorter">
+    <table class="bordered tablesorter">
         <thead>
-            <tr class="titulo_tabela">
+            <tr class="">
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 1, 'ordem' => "$this->novaOrdem")); ?>">PRONAC</a></th>
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 3, 'ordem' => "$this->novaOrdem")); ?>">Nome do Projeto</a> <br /><span class="red" style="text-transform: none;">Passe o mouse sobre o nome do projeto para ver a s&iacute;ntese</span></th>
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 4, 'ordem' => "$this->novaOrdem")); ?>">Proponente</a></th>
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 5, 'ordem' => "$this->novaOrdem")); ?>">UF</a></th>
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 6, 'ordem' => "$this->novaOrdem")); ?>">Munic&iacute;pio</a></th>
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 7, 'ordem' => "$this->novaOrdem")); ?>">Enquadramento</a></th>
-              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 8, 'ordem' => "$this->novaOrdem")); ?>">&Aacute;rea</a></th>                                     
+              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 8, 'ordem' => "$this->novaOrdem")); ?>">&Aacute;rea</a></th>
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 9, 'ordem' => "$this->novaOrdem")); ?>">Segmento</a></th>
               <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 15, 'ordem' => "$this->novaOrdem")); ?>">Dt. In&iacute;cio Execu&ccedil;&atilde;o</a></th>
-              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 16, 'ordem' => "$this->novaOrdem")); ?>">Dt. T&eacute;rmino Execu&ccedil;&atilde;o</a></th>                                                                                                               
-	      <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 10, 'ordem' => "$this->novaOrdem")); ?>">Avalia&ccedil;&atilde;o</a></th>                                                                                                               
-              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 11, 'ordem' => "$this->novaOrdem")); ?>">Vl.Solicitado</a></th>                                                                                                               
-              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 12, 'ordem' => "$this->novaOrdem")); ?>">Vl.Aprovado</a></th>                                                                                                               
-              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 13, 'ordem' => "$this->novaOrdem")); ?>">Vl.Captado</a></th>                                                                                                               
-
-                <?php /*if(!$this->intranet){ ?>
-                <th><?php echo ($this->usuarioInterno) ? 'Opini&otilde;es' : 'Cidad&atilde;o'; ?></th>
-                <?php }*/ ?>
+              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 16, 'ordem' => "$this->novaOrdem")); ?>">Dt. T&eacute;rmino Execu&ccedil;&atilde;o</a></th>
+              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 10, 'ordem' => "$this->novaOrdem")); ?>">Avalia&ccedil;&atilde;o</a></th>
+              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 11, 'ordem' => "$this->novaOrdem")); ?>">Vl.Solicitado</a></th>
+              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 12, 'ordem' => "$this->novaOrdem")); ?>">Vl.Aprovado</a></th>
+              <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('campo' => 13, 'ordem' => "$this->novaOrdem")); ?>">Vl.Captado</a></th>
             </tr>
         </thead>
         <tbody>
-            <?php 
-            $TotalSolicitado = 0;
-            $TotalAprovado = 0; 
-            $TotalCaptado = 0; 
+            <?php
+                $TotalSolicitado = 0;
+                $TotalAprovado = 0;
+                $TotalCaptado = 0;
             ?>
             <?php foreach($this->dados as $d){ ?>
             <tr>
@@ -346,9 +353,8 @@ function parseUrlWithParams($url, $params = array()) {
                 <td><?php echo $d->descEnquadramento; ?></td>
                 <td><?php echo $d->dsArea; ?></td>
                 <td><?php echo $d->dsSegmento; ?></td>
-
-<!--Se passar da data, o valor fica em vermelho -->
-<?php
+                <!--Se passar da data, o valor fica em vermelho -->
+                <?php
                      if(!empty($d->DtFimExecucao)){
                          $classRed = '';
                          $hoje = new DateTime();
@@ -358,24 +364,21 @@ function parseUrlWithParams($url, $params = array()) {
                              $classRed = 'style="color:red;"';
                          }
                      }
-?>
-<!--FIM-->
-
-		<td align="center" class="bold" <?php echo $classRed; ?>><?php echo !empty($d->DtInicioExecucao) ? Data::tratarDataZend($d->DtInicioExecucao, 'Brasileira') : '<em>Dados n&atilde;o informados!</em>'; ?></td>
- 	        <td align="center" class="bold" <?php echo $classRed; ?>><?php echo !empty($d->DtFimExecucao) ? Data::tratarDataZend($d->DtFimExecucao, 'Brasileira') : '<em>Dados n&atilde;o informados!</em>'; ?></td>
-            
-<td>
+                ?>
+                <!--FIM-->
+                <td align="center" class="bold" <?php echo $classRed; ?>><?php echo !empty($d->DtInicioExecucao) ? Data::tratarDataZend($d->DtInicioExecucao, 'Brasileira') : '<em>Dados n&atilde;o informados!</em>'; ?></td>
+                <td align="center" class="bold" <?php echo $classRed; ?>><?php echo !empty($d->DtFimExecucao) ? Data::tratarDataZend($d->DtFimExecucao, 'Brasileira') : '<em>Dados n&atilde;o informados!</em>'; ?></td>
+                <td>
                     <a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'parecer-consolidado'));?>?idPronac=<?php echo Seguranca::encrypt($d->idPronac); ?>" target="_blank"><?php echo $d->descAvaliacao; ?></a>
                 </td>
                 <td align="right"><?php echo (!empty($d->vlSolicitado)) ? @number_format($d->vlSolicitado, 2, ",", ".") : ''; ?></td>
                 <td align="right"><?php echo (!empty($d->vlAprovado)) ? @number_format($d->vlAprovado, 2, ",", ".") : ''; ?></td>
                 <td align="right"><?php echo (!empty($d->vlCaptado)) ? @number_format($d->vlCaptado, 2, ",", ".") : ''; ?></td>
-
             </tr>
-            <?php 
-            $TotalSolicitado = $TotalSolicitado + $d->vlSolicitado; 
-            $TotalAprovado = $TotalAprovado + $d->vlAprovado;
-            $TotalCaptado = $TotalCaptado + $d->vlCaptado;
+            <?php
+                $TotalSolicitado = $TotalSolicitado + $d->vlSolicitado;
+                $TotalAprovado = $TotalAprovado + $d->vlAprovado;
+                $TotalCaptado = $TotalCaptado + $d->vlCaptado;
             } ?>
             <tr class="direita bold destacar" style="font-size: 14px;">
                 <td colspan="11" style="padding: 15px 5px;">TOTAL</td>
@@ -385,27 +388,18 @@ function parseUrlWithParams($url, $params = array()) {
             </tr>
         </tbody>
     </table>
-
-    <br clear="all" />
     <center>
         <?php echo count($this->dados). " Projetos listados"; ?>
-	</br>
 		<input type="button" class="btn_imprimir">
         <input type="button" class="btn_xls" />
     </center>
-
     <?php } else { ?>
-    <table class="tabela">
+    <table class="bordered">
         <tr>
             <td align="center">Nenhum registro encontrado.</td>
         </tr>
     </table>
     <?php } ?>
-    <br clear="all" />
 </div>
-
-
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-<br clear="all" />
+</div>
+</div>
