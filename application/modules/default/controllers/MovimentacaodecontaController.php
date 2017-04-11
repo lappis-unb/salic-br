@@ -1570,15 +1570,15 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	public function gerarpdfAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o layout
-	} // fecha m�todo gerarpdfAction()
-
-
+	}
 
 	/**
 	 * M�todo para enviar o arquivo txt do banco do brasil
 	 * @access public
 	 * @param void
 	 * @return void
+     * @todo existe um potencial erro nessa estrutura de codigo. Preciso
+     * avalair refatoração.
 	 */
 	public function uploadAction() {
             /*if ($this->getIdGrupo != 121 && $this->getIdGrupo != 129) // s� T�cnico de Acompanhamento que pode acessar
