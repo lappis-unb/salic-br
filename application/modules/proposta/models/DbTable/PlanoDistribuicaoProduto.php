@@ -7,7 +7,7 @@
  *
  */
 
-class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
+class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
     protected $_schema = 'sac';
     protected $_name   = 'PlanoDistribuicaoProduto';
     protected $_primary = 'idPlanoDistribuicao';
