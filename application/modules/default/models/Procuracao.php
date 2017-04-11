@@ -33,13 +33,13 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array(	'(pr.AnoProjeto+pr.Sequencial) as pronac',
                 		'pr.OrgaoOrigem',
                 		'NomeProjeto'),
-                'SAC'
+                $this->getSchema('sac')
                 
         );
         $s->joinLeft(
                 array('org' => 'Orgaos'), "pr.OrgaoOrigem = org.Codigo", 
                 array('org.idSecretaria as OrgaoSuperior'),
-                'SAC' 
+                $this->getSchema('sac')
         );
         $s->joinInner(
                 array('v' => 'tbVinculo'), "v.idVinculo = vprp.idVinculo", 
