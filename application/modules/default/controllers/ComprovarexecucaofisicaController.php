@@ -65,7 +65,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $result = $busca->buscar(array('IdPRONAC = ?'=>$idpronac))->current();
         if(!empty ($result)) {
             if(empty($result->idProjeto)) {
-                parent::message("Somente ser&aacute; permitido comprovar execu&ccedil;&atilde;o do objeto de Projetos por meio do sistema para aqueles cadastrados a partir de Janeiro de 2009. Os outros casos dever&atilde;o ser solicitados por meio de of&iacute;cio.", "/consultardadosprojeto/?idPronac={$idpronac}", "ERROR");
+                parent::message("Somente ser&aacute; permitido comprovar execu&ccedil;&atilde;o do objeto de Projetos por meio do sistema para aqueles cadastrados a partir de Janeiro de 2009. Os outros casos dever&atilde;o ser solicitados por meio de of�Zcio.", "/consultardadosprojeto/?idPronac={$idpronac}", "ERROR");
                 return;
             }
         }
@@ -237,7 +237,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 parent::message('N&atilde;o existe idProjeto.', $redirectUrl, 'ERROR');
             }
 
-            $AbrangenciaDAO = new AbrangenciaDAO();
+            $AbrangenciaDAO = new Proposta_Model_DbTable_Abrangencia();
 
             if (filter_input(INPUT_POST, 'novoPais')) {
                 if (31 == \filter_input(\INPUT_POST, 'novoPais')) { //31=Brasil
@@ -257,7 +257,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     $dsJustificativa = filter_input(INPUT_POST, 'justificativaNovo');
                 }
 
-                $Abrangencia = new Abrangencia();
+                $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
                 $abrangencias = $Abrangencia->verificarIgual($idPais, $idUF, $idMunicipio, $idProjeto);
 
                 if (0 == count($abrangencias)) {
@@ -338,7 +338,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $redirectUrl = "comprovarexecucaofisica/local-de-realizacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac);
         $redirectUrlErroData = "comprovarexecucaofisica/manter-local-de-realizacao-final/idpronac/".Seguranca::encrypt($idpronac);
 
-        $AbrangenciaDAO = new AbrangenciaDAO();
+        $AbrangenciaDAO = new Proposta_Model_DbTable_Abrangencia();
 
         $abrangenciaId = $this->_request->getParam('idAbrangencia');
         $abrangenciaSituacao = $this->_request->getParam('siAbrangencia');
@@ -410,7 +410,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $post = Zend_Registry::get('post');
         $idAbrangencia = (int) $post->abrg;
 
-        $tblAbrangencia = new Abrangencia();
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         if($tblAbrangencia->excluir($idAbrangencia)){
             echo json_encode(array('resposta'=>true));
         } else {
@@ -930,13 +930,13 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $dsDemocratizacaoAcesso = trim($DadosRelatorio['dsDemocratizacaoAcesso']);
 
         if(empty($dsEtapasExecutadas)){
-            $erros[] = 'Etapas Executadas n�o foi informado.';
+            $erros[] = 'Etapas Executadas não foi informado.';
         }
         if(empty($dsAcessibilidade)){
-            $erros[] = 'Acessibilidade n�o foi informado.';
+            $erros[] = 'Acessibilidade não foi informado.';
         }
         if(empty($dsDemocratizacaoAcesso)){
-            $erros[] = 'Democratiza��o de Acesso n�o foi informado.';
+            $erros[] = 'Democratização de Acesso não foi informado.';
         }
 
         if(count($erros)>0){
@@ -949,7 +949,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $DadosRelatorio->siComprovanteTrimestral = 2;
             $DadosRelatorio->idCadastrador = $this->IdUsuario;
             $DadosRelatorio->save();
-            parent::message("Relat�rio enviado com sucesso.", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "CONFIRM");
+            parent::message("Relat&oacute;rio enviado com sucesso.", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "CONFIRM");
         }
     }
 

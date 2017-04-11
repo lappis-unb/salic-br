@@ -575,7 +575,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $editarItem = $tbAbrangencia->buscar(array('idAbrangencia=?'=>$_POST['idAbrangencia']))->current();
 
         if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e Técnico de Acompanhamento
@@ -944,7 +944,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'tbAbrangencia');
         if(count($locais)==0){
             $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'Abrangencia');
@@ -987,7 +987,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $locais = $tbAbrangencia->buscarLocaisConsolidadoReadequacao($idReadequacao);
 
         $tbReadequacao = new tbReadequacao();
@@ -1027,7 +1027,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
 
         //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $readequacaoLR = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $locaisAtivos = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac);
 
@@ -1092,7 +1092,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $readequacaoLR = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
 
         //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
@@ -1625,7 +1625,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o na planilha or&ccedil;ament&aacute;ria do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         } else if($idTipoReadequacao == 9){ //Local de Realização
-            $tbAbrangencia = new tbAbrangencia();
+            $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
             $locaisReadequados = $tbAbrangencia->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($locaisReadequados)==0){
                 parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o nos locais de realiza&ccedil;&atilde;o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
@@ -1810,7 +1810,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             //Se for readequação de local de realização, exclui os registros na tbAbrangencia.
             if($dados->idTipoReadequacao == 9){
-                $tbAbrangencia = new tbAbrangencia();
+                $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                 $tbAbrangencia->delete(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S'));
             }
 
@@ -1865,7 +1865,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             foreach ($readequacoes as $r) {
                 if($r->idTipoReadequacao == 9){
-                    $tbAbrangencia = new tbAbrangencia();
+                    $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                     $dadosAb = array();
                     $dadosAb['idReadequacao'] = $r->idReadequacao;
                     $whereAb = "idPronac = $idPronac AND stAtivo = 'S' AND idReadequacao is null";
@@ -3222,7 +3222,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                             // READEQUAÇÃO DE LOCAL DE REALIZAÇÃO
                             } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
                                 $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
-                                $tbAbrangencia = new tbAbrangencia();
+                                $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
                                 foreach ($abrangencias as $abg) {
                                     $Projetos = new Projetos();
@@ -3685,7 +3685,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
                 $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
 
-                $tbAbrangencia = new tbAbrangencia();
+                $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
                 foreach ($abrangencias as $abg) {
                     $Projetos = new Projetos();
