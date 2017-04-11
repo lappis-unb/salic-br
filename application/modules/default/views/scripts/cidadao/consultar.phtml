@@ -151,14 +151,14 @@ function parseUrlWithParams($url, $params = array()) {
 <!-- ========== INICIO TITULO ========== -->
 <div class="row">
     <div class="col s12">
-        <div id="titulo">
-            <div class="esquerda">
+        <div id="">
+            <div class="left">
                 <?php if (is_object($this->reuniao)) { ?>
                 Pauta da CNIC n&ordm; <?php echo $this->reuniao['NrReuniao']; ?> <?php if($this->intranet){ echo ' - Intranet'; } else { if(!$this->usuarioInterno){ echo ' - Vis&atilde;o Cidad&atilde;o'; } } ?>
                 <?php } else { ?>
                          &nbsp
                 <?php } ?>
-                <a class="faleconosco" href="http://ouvidoria.cultura.gov.br/" target="_blank">Fale conosco</a>
+                <a class="btn center-align" href="http://ouvidoria.cultura.gov.br/" target="_blank">Fale conosco</a>
             </div>
         </div>
     </div>
