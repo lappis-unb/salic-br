@@ -358,30 +358,30 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
 
             $relatorioDeCumprimento = $db->fetchRow($relatorioDeCumprimento);
 
-            if($relatorioDeCumprimento->idCumprimentoObjeto){
+            if ($relatorioDeCumprimento->idCumprimentoObjeto){
                 $ComprovacaoFinanceira = 0;
                 $RelatorioFinal = 0;
                 if($Diligencia){
                     $ComprovacaoFinanceira = 1;
                 }
-            }
-
-            /* ===== CHECAR SE EXISTE READEQUAÇAO DE 20% ===== */
-            $readequacaoFase5 = $db->select()
-                ->from(array('a' => 'tbReadequacao'),
-                    array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
-                    $this->_schema)
-                ->joinInner(array('b' => 'tbTipoReadequacao'),
-                    'a.idTipoReadequacao = b.idTipoReadequacao',
-                    array(''),
-                    $this->_schema)
-                ->where('a.idPronac = ?', $idPronac)
-                ->where('b.idTipoReadequacao = ?', 1);
-            $readequacaoFase5 = $db->fetchRow($readequacaoFase5);
-            if(!$readequacaoFase5->idTipoReadequacao) {
-                $Readequacao_20 = 1;
             } else {
-                $Readequacao_20 = 0;
+                /* ===== CHECAR SE EXISTE READEQUAÇAO DE 20% ===== */
+                $readequacaoFase5 = $db->select()
+                    ->from(array('a' => 'tbReadequacao'),
+                        array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
+                        $this->_schema)
+                    ->joinInner(array('b' => 'tbTipoReadequacao'),
+                        'a.idTipoReadequacao = b.idTipoReadequacao',
+                        array(''),
+                        $this->_schema)
+                    ->where('a.idPronac = ?', $idPronac)
+                    ->where('b.idTipoReadequacao = ?', 1);
+                $readequacaoFase5 = $db->fetchRow($readequacaoFase5);
+                if (!$readequacaoFase5->idTipoReadequacao) {
+                    $Readequacao_20 = 1;
+                } else {
+                    $Readequacao_20 = 0;
+                }
             }
 
             /* ===== CHECAR SE EXISTE READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA @todo melhoras as variaveis ===== */
