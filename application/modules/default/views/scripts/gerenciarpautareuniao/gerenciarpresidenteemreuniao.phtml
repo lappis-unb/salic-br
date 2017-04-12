@@ -150,13 +150,6 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
     }
     /*******************************************/
 
-    /*var telavotacao =  setInterval(function(){
-        var stplenaria = '<?php //echo $this->codstplenaria ?>';
-        clearInterval(votacao);
-        if(stplenaria == 'A' && $('#cronometro #minu').html()*1 == 0 && $('#cronometro #seg').html()*1 ==0){
-            verificavotacao()
-        }
-    }, '5000');*/
 
     //function verificavotacao(arrPronacs){
     function verificavotacao(){
@@ -405,34 +398,7 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
         });
       
     }
-    
-    /*$(".retornar").click(function(){
-        var pronac = $(this).attr('pronac');
-        $("#alert").html("O projeto ser&aacute; reencaminhado para o componente respons&aacute;vel e o seu parecer ser&aacute; apagado. Deseja Continuar?").css('text-align','justify');
-        perguntar(function(){
-            $.ajax({
-                async: true,
-                type: "post",
-                //url: "../gerenciarpautareuniao/gerenciaradministrativo",
-                url: "<?php //echo $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciaradministrativo')); ?>",
-                data:{
-                    pronac:pronac,
-                    retorna : 1
-                },
-                success: function()
-                {
-                    clearInterval(votacao);
-                    //clearInterval(telavotacao);
-                    clearInterval(telaacompanhamentopresidente);
-                    window.location.reload();
-                }
-            });
-        },
-        function(){
-            $("#alert").dialog("close");
-        })
-        $("#alert").dialog("open");
-    });*/
+
     
     function JSRetornarProjeto(idPronac){
         //var pronac = $(this).attr('pronac');
