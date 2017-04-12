@@ -1,0 +1,60 @@
+<table>
+    <tr onclick="abrirDinamico('#tdPlanoDistribuicao', $(this));" style="cursor:pointer">
+        <th>
+            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+            Plano de Distribui&ccedil;&atilde;o do Produto
+        </th>
+    </tr>
+    <tr id="tdPlanoDistribuicao" style="display: none;">
+        <td>
+            <table class="bordered striped responsive-table" style="font-size:9px; margin: 0 !important">
+                <thead>
+                    <tr>
+                        <td >Nome do Evento / Produto</td>
+                        <td>&Aacute;rea</td>
+                        <td>Segmento</td>
+                        <th>Quantidade de Exemplar / Ingresso</th>
+                        <th>Divulga&ccedil;&atilde;o</th>
+                        <th>Patrocinador</th>
+                        <th>Popula&ccedil;&atilde;o</th>
+                        <th>Quantidade  de Inteira</th>
+                        <th>Quantidade de Meia Entrada</th>
+                        <th>Pre&ccedil;o Unit&aacute;rio do Ingresso</th>
+                        <th>Receita da Inteira</th>
+                        <th>Valor da Meia Entrada</th>
+                        <th>Quantidade  de Inteira</th>
+                        <th>Quantidade de Meia Entrada</th>
+                        <th>Pre&ccedil;o em m&eacute;dia simples</th>
+                        <th>Receita da Inteira</th>
+                        <th>Receita da Meia Entrada</th>
+                        <th>Receita Prevista</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->itensPlanosDistribuicao as $distribuicao): ?>
+                        <tr>
+                            <td align="left" <?php echo $destacar?>><?php echo $distribuicao->Produto ?></td>
+                            <td align="center" <?php echo $destacar?>><?php echo $distribuicao->DescricaoArea ?></td>
+                            <td align="center" <?php echo $destacar?>><?php echo $distribuicao->DescricaoSegmento ?></td>
+                            <td class="centro"><?php echo $distribuicao->QtdeProduzida; ?></td>
+                            <td><?php echo $distribuicao->QtdeProponente	?></td>
+                            <td><?php echo $distribuicao->QtdePatrocinador	?></td>
+                            <td><?php echo $distribuicao->QtdeOutros ?></td>
+                            <td><?php echo $distribuicao->QtdeVendaPopularNormal?></td>
+                            <td><?php echo $distribuicao->QtdeVendaPopularPromocional?></td>
+                            <td><?php echo $distribuicao->vlUnitarioPopularNormal?>	</td>
+                            <td><?php echo $distribuicao->ReceitaPopularNormal	?></td>
+                            <td><?php echo $distribuicao->ReceitaPopularPromocional	?></th>
+                            <td><?php echo $distribuicao->QtdeVendaNormal	?></th>
+                            <td><?php echo $distribuicao->QtdeVendaPromocional	?></td>
+                            <td><?php echo $distribuicao->vlUnitarioNormal	?></td>
+                            <td><?php echo $distribuicao->PrecoUnitarioNormal	?></td>
+                            <td><?php echo $distribuicao->PrecoUnitarioPromocional?></td>
+                            <td><?php echo $distribuicao->Receita?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
