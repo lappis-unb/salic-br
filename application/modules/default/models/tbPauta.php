@@ -554,7 +554,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array('tp' => $this->_schema . '.' . $this->_name),
+                array('tp' => $this->_name),
                 array(
                     'tp.dtEnvioPauta',
                     'tp.stEnvioPlenario',
@@ -867,9 +867,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slct1 = $this->select();
         $slct1->setIntegrityCheck(false);
         $slct1->from(
-            array('a' => $this->_schema . '.' . $this->_name),
+            array('a' => $this->_name),
             array(
-                new Zend_Db_Expr("'An�lise Inicial' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
+                new Zend_Db_Expr("'An&aacute;lise Inicial' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
                 new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
                 new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
                 new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),

@@ -300,7 +300,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             //NAO ANALISADOS
             $arrReuniao = array();
             $arrReuniao['idNrReuniao IS NULL ']= "?";
-            $qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "N�o analisado", $arrReuniao)->count();
+            $qtdprojetonaoanalisados = count($tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "N&atilde;o analisado", $arrReuniao));
 
             $this->view->qtdprojetoanalisados = $qtdprojetoanalisados;
             $this->view->qtdenviadoplenaria = $contplenario;
@@ -1193,7 +1193,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idpronac = $_POST['idpronac'];
         $projeto = new Projetos();
-        $planilhaproposta = new PlanilhaProposta();
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $planilhaprojeto = new PlanilhaProjeto();
         $planilhaAprovacao = new PlanilhaAprovacao();
         $tblParecer = new Parecer();
@@ -1423,7 +1423,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $planilhaaprovacao = new PlanilhaAprovacao();
         $pt = new Pauta();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $projeto = new Projetos();
         $idpronac = $this->_request->getParam("idpronac");
         $buscarprojeto = $projeto->buscar(array('IdPRONAC = ?' => $idpronac))->current()->toArray();
@@ -1782,7 +1782,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         // recebe os dados via get
         $idpronac = $this->_request->getParam("idpronac");
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
         $tblProjetos = new Projetos();
@@ -2047,7 +2047,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $buscarAnaliseAp = $analiseaprovacao->buscar(array('IdPRONAC = ?' => $idpronac, 'idProduto = ?' => $buscarPlano['idProduto'], 'tpAnalise = ?' => $tpAnalise));
 
         //VALOR DA PROPOSTA
-        $planilhaproposta = new PlanilhaProposta();
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
         $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
         $this->view->valorproposta = $fonteincentivo['soma'] + $outrasfontes['soma'];

@@ -238,7 +238,7 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
             $this->view->unidadesAnalise = $vwProjetoDistribuidoVinculada->buscarUnidades(array('Pronac = ?'=>$pronac), array('Produto','DescricaoAnalise'));
 
             //VALORES DO PROJETO
-            $planilhaproposta = new PlanilhaProposta();
+            $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $planilhaprojeto = new PlanilhaProjeto();
             $planilhaAprovacao = new PlanilhaAprovacao();
 

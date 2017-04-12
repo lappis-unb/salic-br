@@ -2419,7 +2419,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 
                             // PRODUTO + ITEN DE CUSTO
-                        $planilhaProposta = new PlanilhaProposta();
+                        $planilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                         $planilhaProjeto  = new PlanilhaProjeto();
                         $DeParaPlanilhaAprovacao = new DeParaPlanilhaAprovacao();
                         $Projetos = new Projetos();
