@@ -251,7 +251,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->setIntegrityCheck(false);
         $slctNaoAnalisados->from(
                         array('dpc'=>$this->_name),
-                        array(new Zend_Db_Expr("'Não analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        array(new Zend_Db_Expr("'N&atilde;o analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
                         ,$this->_schema
                      );
         $slctNaoAnalisados->joinInner(
@@ -338,13 +338,11 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctUnion = $this->select();
         $slctUnion->union(array($slctAnalisados, $slctNaoAnalisados));//->order($order);
 
-        $slctMaster = $this->select();
-        $slctMaster->setIntegrityCheck(false);
-        $slctMaster->from(
-                        array('Master'=>$slctUnion),
-                        array('*'),
-                        new Zend_Db_Expr(' ')
-                     );
+        $db = Zend_Db_Table::getDefaultAdapter();
+//        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $slctMaster = $db->select();
+        $slctMaster->from(array('Master'=>$slctUnion));
 
         //BUSCA PELO STATUS DO PROJETO
         if($analise != null){
@@ -361,8 +359,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         //RETORNA QTDE. DE REGISTRO PARA PAGINACAO
         if($count)
         {
-            return $this->fetchAll($slctMaster)->count();
+            return $db->fetchAll($slctMaster)->count();
         }
+
         //adicionando linha order ao select
         $slctMaster->order($order);
 
@@ -375,11 +374,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             $slctMaster->limit($tamanho, $tmpInicio);
         }
 
-        $newString = substr($slctMaster->assemble(), 33);
-        $newString = 'SELECT "Master".* FROM  '.$newString;
-
-
-        //return $this->fetchAll($newString);
+        return $db->fetchAll($slctMaster);
     }
 
     public function buscaProjetosEmPauta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $analise=null){
@@ -607,7 +602,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctReadequados->from(
             array('p'=>'Projetos'),
             array(new Zend_Db_Expr("
-                'Readequa��o' AS Analise
+                'Readequa&ccedil;&atilde;o' AS Analise
                 ,''
                 ,'' AS Componente
                 ,p.IdPronac AS idPronac
@@ -736,7 +731,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         if($dados['status'] == 0 || $dados['status'] == 1){
             $sql .= "(
                 SELECT
-                    'N�o analisado' AS Analise
+                    'N&atilde;o analisado' AS Analise
                     ,t.idAgente
                     ,n.Descricao AS Componente
                     ,p.IdPronac
@@ -851,7 +846,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 
         $sql .= "(
             SELECT
-                'Readequa��o' AS Analise
+                'Readequa&ccedil;&atilde;o' AS Analise
                 ,''
                 ,'' AS Componente
                 ,p.IdPronac
