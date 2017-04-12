@@ -297,6 +297,40 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
                 $Readequacao_20 = 0;
             }
 
+            /* ===== CHECAR SE EXISTE READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA @todo melhoras as variaveis ===== */
+            $queryPlanilhaOrcamentaria_1 = $db->select()
+                ->from(array('a' => 'tbReadequacao'),
+                    array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
+                    $this->_schema)
+                ->joinInner(array('b' => 'tbTipoReadequacao'),
+                    'a.idTipoReadequacao = b.idTipoReadequacao',
+                    array(''),
+                    $this->_schema)
+                ->where('a.idPronac = ?', $idPronac)
+                ->where('b.idTipoReadequacao = ?',  2)
+                ->where('a.siEncaminhamento <> ?', 12);
+            $readequacaoDiferente12 = $db->fetchOne($queryPlanilhaOrcamentaria_1);
+
+            $queryPlanilhaOrcamentaria_2 = $db->select()
+                ->from(array('a' => 'tbReadequacao'),
+                    array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
+                    $this->_schema)
+                ->joinInner(array('b' => 'tbTipoReadequacao'),
+                    'a.idTipoReadequacao = b.idTipoReadequacao',
+                    array(''),
+                    $this->_schema)
+                ->where('a.idPronac = ?', $idPronac)
+                ->where('b.idTipoReadequacao = ?',  2)
+                ->where('a.siEncaminhamento = ?', 12);
+
+            $readequacaoIguala12 = $db->fetchOne($queryPlanilhaOrcamentaria_2);
+
+            if(empty($readequacaoDiferente12) OR $readequacaoIguala12) {
+                $ReadequacaoPlanilha = 1;
+            } else {
+                $ReadequacaoPlanilha = 0;
+            }
+
             /* ===== CHECAR SE EXISTE RELATÓRIO DE CUMPRIMENTO DO OBJETO PARA SER ENVIADO ===== */
             $relatorioCumprimentoEnvio = $db->select()
                 ->from('tbCumprimentoObjeto',
