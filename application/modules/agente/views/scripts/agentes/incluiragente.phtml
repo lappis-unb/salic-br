@@ -504,7 +504,7 @@
                         $('#msgAjax').html(data.error);
                         $('#msgAjax').show();
                         $('#imgPF').hide();
-                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...[ " + data.error + " ]");
+                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...");
                     } else {
                         // Preenche os dados
                         $('#idPessoa').val(data.dados.idPessoa);
@@ -620,24 +620,24 @@
                 url: '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentecadastrado")); ?>',
 
                 success: function (data) {
-                    if (data[0].msgCPF == 'cadastrado') {
-                        console.log(data);
-                        $('#novocadastro').hide();
-                        $('#carregando').show();
-                        var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
-                        document.dispatchEvent(event);
+                    if (data.length > 0) { 
+                        if (data[0].msgCPF == 'cadastrado') {
+                            $('#novocadastro').hide();
+                            $('#carregando').show();
+                            var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
+                            document.dispatchEvent(event);
                         <?php if ($this->modulo != "movimentacaobancaria") : ?>
                         window.location = '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentes")); ?>/id/' + data[0].idAgente;
                         <?php endif; ?>
+                        }
+                        else if (data[0].msgCPF == 'invalido') {
+                            $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
+                        }
+                        else if (data[0].msgCPF == 'novo') {
+                            $('#novo').html('Preencha os dados abaixo!');
+                            $('.novo').show();
+                        }
                     }
-                    else if (data[0].msgCPF == 'invalido') {
-                        $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
-                    }
-                    else if (data[0].msgCPF == 'novo') {
-                        $('#novo').html('Preencha os dados abaixo!');
-                        $('.novo').show();
-                    }
-
                 },
                 error: function (data) {
                     alert("Falha na recupera\xE7\xE3o dos dados.\nN\xE3o foi poss\xEDvel carregar agente!");
