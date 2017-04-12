@@ -166,7 +166,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 }
             }
             if ($recusado) {
-                parent::message("Projetos com a situa��o RECUSADO n�o foram tramitados!", "/tramitarprojetos/despacharprojetos", "ALERT");
+                parent::message("Projetos com a situa&ccedil;&atilde;o RECUSADO n&atilde;o foram tramitados!", "/tramitarprojetos/despacharprojetos", "ALERT");
             } else {
                 parent::message("O projeto foi enviado com sucesso!", "/tramitarprojetos/despacharprojetos", "CONFIRM");
             }
@@ -350,7 +350,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function despacharprojetosAction() {
         /** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
@@ -363,10 +363,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 $mens .= '<br /><br />';
             }
             $email = 'jefferson.silva@cultura.gov.br';
-            $assunto = 'Tramita��o Projetos - Pronac Repetido';
+            $assunto = 'Tramita&ccedil;&atilde;o Projetos - Pronac Repetido';
 
             $perfil = 'PerfilGrupoPRONAC';
-            EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
+          //  EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
         }
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
