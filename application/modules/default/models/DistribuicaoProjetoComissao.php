@@ -138,7 +138,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
     public function buscarProjetosCnicAtual($idagente = null) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('dpc' => $this->_schema . '.' . $this->_name), array('dpc.IdPRONAC')
+        $select->from(array('dpc' => $this->_name), array('dpc.IdPRONAC')
         );
         $select->where('not exists(select IdPRONAC from BDCORPORATIVO.scSAC.tbPauta where idpronac = dpc.IdPRONAC)');
         $select->where('not exists(select IdPRONAC from SAC.dbo.Parecer where idpronac = dpc.IdPRONAC and idTipoAgente = 6)');
@@ -153,7 +153,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
     public function AgenteDistribuido($idpronac) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('dpc' => $this->_schema . '.' . $this->_name), array('dpc.IdPRONAC')
+        $select->from(array('dpc' => $this->_name), array('dpc.IdPRONAC')
         );
         $select->joinInner(
                 array('nm' => 'nomes'), 'dpc.idAgente = nm.idAgente', array('nm.Descricao as nome'), 'Agentes.dbo'
@@ -167,7 +167,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('dpc' => $this->_schema . '.' . $this->_name), array('dpc.idPRONAC')
+                array('dpc' => $this->_name), array('dpc.idPRONAC')
         );
         $select->where('dpc.idPRONAC not in(select idPRONAC from SAC.dbo.Parecer where idPronac = dpc.idPRONAC and idTipoAgente=6)', '');
         $select->where(new Zend_Db_Expr('NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbPauta  o  WHERE o.IdPRONAC = dpc.idPRONAC)'));
@@ -180,7 +180,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('dpc' => $this->_schema . '.' . $this->_name), array('dpc.idPRONAC')
+                array('dpc' => $this->_name), array('dpc.idPRONAC')
         );
         $select->where("dpc.idPRONAC in (select idPRONAC from BDCORPORATIVO.scSAC.tbPauta where idPronac = dpc.idPRONAC and idNrReuniao = $idnrreuniao )", "");
         $select->where('dpc.stDistribuicao = ?', 'A');
@@ -191,7 +191,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('SDPC' => $this->_schema . '.' . $this->_name), array('SDPC.idAgente')
+                array('SDPC' => $this->_name), array('SDPC.idAgente')
         );
         $select->joinInner(
                 array('pr' => 'projetos'), 'pr.IdPRONAC = SDPC.idPronac', array(

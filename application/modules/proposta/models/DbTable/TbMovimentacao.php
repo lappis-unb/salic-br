@@ -101,7 +101,7 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->distinct();
         $slct->from(
-                array('mov' => $this->_schema . '.' . $this->_name), array()
+                array('mov' => $this->_name), array()
         );
 
         $slct->joinInner(

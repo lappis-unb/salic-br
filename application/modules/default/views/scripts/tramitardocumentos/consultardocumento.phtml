@@ -203,7 +203,7 @@
                 <td><?php echo $d->NomeProjeto; ?></td>
                 <td align="center"><?php echo $d->Processo; ?></td>
                 <td align="center">
-                    <?php if(!empty($d->despacho)){ ?>
+                    <?php if(strlen($d->despacho) > 1){ ?>
                     <img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" style="cursor:pointer;" onclick="visualizarTextoModal('<?php echo $d->despacho; ?>');" alt="Visualizar" />
                     <?php } ?>
                 </td>

@@ -76,7 +76,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 	{
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
-		$select->from(array('p' => $this->_schema . '.' . $this->_name)
+		$select->from(array('p' => $this->_name)
 			,array('p.idPlano'
 				,'p.idPlanoDistribuicao'
 				,'p.idProduto'
@@ -128,7 +128,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
 		$select->from(
-			array('h' => $this->_schema . '.' . $this->_name)
+			array('h' => $this->_name)
 			,array('h.idPlano'
 				,'h.idPlanoDistribuicao'
 				,'h.idProduto'
@@ -208,7 +208,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
 		$select->from(
-			array('a' => $this->_schema . '.' . $this->_name)
+			array('a' => $this->_name)
 			,array('*')
 		);
 		$select->joinInner(

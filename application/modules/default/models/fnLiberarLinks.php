@@ -6,8 +6,8 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
     protected $_name = 'fnLiberarLinks';
 
     /**
-     * @TODO REMOVER A FUNÇÃO liberarLinks
-     * @Deprecated
+     * @todo REMOVER A FUNÇÃO liberarLinks
+     * @Deprecated Utililizar metódo links com os mesmos parametros
      */
     public function liberarLinks($tipo, $cpfProponente, $idUsuarioLogado, $idPronac) {
         $select = new Zend_Db_Expr("SELECT SAC.dbo.fnLiberarLinksIN($tipo,'$cpfProponente',$idUsuarioLogado,$idPronac) as links");

@@ -14,7 +14,7 @@ class tbTipoDocumento extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
-	protected $_schema  = "dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbTipoDocumento";
 
 
@@ -29,7 +29,7 @@ class tbTipoDocumento extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('T' => $this->_schema . '.' . $this->_name)
+                array('T' => $this->_name)
         );
         if ($idTipoDocumento) {
             $select->where('T.idTipoDocumento = ?', $idTipoDocumento);

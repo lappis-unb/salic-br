@@ -1654,7 +1654,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 'NomeProjeto' => utf8_encode($projeto->NomeProjeto)
             );
 
-            $PlanilhaProposta = new PlanilhaProposta();
+            $PlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $dadosSolicitados = $PlanilhaProposta->buscarDadosAvaliacaoDeItem($planilha[0]->idPlanilhaProposta)->current();
             $dadosPlanilhaProposta = array();
             $dadosPlanilhaProposta['Unidade'] = utf8_encode($dadosSolicitados->descUnidade);
@@ -1720,7 +1720,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 'NomeProjeto' => utf8_encode($projeto->NomeProjeto)
             );
 
-            $PlanilhaProposta = new PlanilhaProposta();
+            $PlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $dadosSolicitados = $PlanilhaProposta->buscarDadosAvaliacaoDeItem($planilha[0]->idPlanilhaProposta)->current();
             $dadosPlanilhaProposta = array();
             $dadosPlanilhaProposta['Unidade'] = utf8_encode($dadosSolicitados->descUnidade);
