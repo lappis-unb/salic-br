@@ -535,7 +535,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $arrReuniao['idNrReuniao IS NOT NULL ']= "?";
         }
         $ordem = array('1','21'); //ORDENACAO: analise , area cultural
-        $rsProjNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, "N�o analisado", $arrReuniao);
+        $rsProjNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, "N&atilde;o analisado", $arrReuniao);
 
         //======== GRID 1 ==========/
         $arrGrid1 = array();
@@ -668,10 +668,10 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         if ($GrupoAtivo->codGrupo == 133 or $GrupoAtivo->codGrupo == 118) {
             $url = array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpautareuniao');
         }
-        if ($GrupoAtivo->codGrupo == 120) {
+        if ($GrupoAtivo->codGrupo == 120 || $GrupoAtivo->codGrupo == 148 ) { // Coordenador e Diretor da CNIC
             $url = array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciaradministrativo');
         }
-        if ($GrupoAtivo->codGrupo == 119) {
+        if ($GrupoAtivo->codGrupo == 119 ) { // presidente
             $url = array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpresidenteemreuniao');
         }
         $this->view->url = $url;
@@ -2178,7 +2178,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $whereNaoAnalisados['par.TipoParecer = ?'] = 1; /**parecer de analise inicial**/
                 }
 
-                $rsProjetosNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($whereNaoAnalisados, $ordenacaoNaoPauta->ordemNaoPauta, null, null, false, "N�o analisado", $arrReuniao);
+                $rsProjetosNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($whereNaoAnalisados, $ordenacaoNaoPauta->ordemNaoPauta, null, null, false, "N&atilde;o analisado", $arrReuniao);
 
             }else{ //SUBMETIDOS
                 $view = "listar-projetos-plenaria.phtml";
