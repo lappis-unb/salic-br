@@ -31,7 +31,7 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
             $select->setIntegrityCheck(false);
 
             $select->from(
-                array('p' => $this->_schema . '.' . $this->_name),
+                array('p' => $this->_name),
                 array('p.idPlanilhaItens')
             );
 
@@ -73,7 +73,7 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
             $select->setIntegrityCheck(false);
 
             $select->from(
-                array('p' => $this->_schema . '.' . $this->_name),
+                array('p' => $this->_name),
                 array('total' => 'count(*)')
             );
 
@@ -111,7 +111,7 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->distinct();
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name),
+            array('p' => $this->_name),
             array('p.idPlanilhaItens',
                 'p.idPlanilhaEtapa')
         );
@@ -138,7 +138,7 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('a' => $this->_schema . '.' . $this->_name),
+            array('a' => $this->_name),
             array('idPlanilhaItens')
         );
 

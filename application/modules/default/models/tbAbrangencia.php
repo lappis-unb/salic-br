@@ -83,7 +83,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 	{
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
-		$select->from(array('a' => $this->_schema . '.' . $this->_name)
+		$select->from(array('a' => $this->_name)
 			,array('a.idAbrangencia'
 				,'a.idAbrangenciaAntiga'
 				,'a.idPais'

@@ -7,7 +7,7 @@
 class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
     /* dados da tabela */
     protected $_banco   = "BDCORPORATIVO";
-    protected $_schema  = "scSAC";
+    protected $_schema  = "BDCORPORATIVO.scSAC";
     protected $_name    = "tbPedidoAlteracaoProjeto";
 
 
@@ -118,18 +118,18 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
     public function buscarProjetosCheckList($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('re' => $this->_schema . '.' . $this->_name), array('re.idPedidoAlteracao'));
+        $slct->from(array('re' => $this->_name), array('re.idPedidoAlteracao'));
         $slct->joinInner(array('rex' => 'tbPedidoAlteracaoXTipoAlteracao'),
                 're.idPedidoAlteracao = rex.idPedidoAlteracao',
                 array('tpAlteracaoProjeto' => new Zend_Db_Expr("CASE WHEN rex.tpAlteracaoProjeto = 1 THEN 'Nome do Proponente'
 													WHEN rex.tpAlteracaoProjeto = 2 THEN 'Troca de Agente'
-													WHEN rex.tpAlteracaoProjeto = 3 THEN 'Ficha T�cnica'
-													WHEN rex.tpAlteracaoProjeto = 4 THEN 'Local de Realiza��o'
+													WHEN rex.tpAlteracaoProjeto = 3 THEN 'Ficha T&eacute;cnica'
+													WHEN rex.tpAlteracaoProjeto = 4 THEN 'Local de Realiza&ccedil;&atilde;o'
 													WHEN rex.tpAlteracaoProjeto = 5 THEN 'Nome do Projeto'
-													WHEN rex.tpAlteracaoProjeto = 6 THEN 'Proposta Pedag�gica'
-													WHEN rex.tpAlteracaoProjeto = 7 THEN 'Plano de Distribui��o'
-													WHEN rex.tpAlteracaoProjeto = 8 THEN 'Prorroga��o de Prazo de Capta��o'
-													WHEN rex.tpAlteracaoProjeto = 9 THEN 'Prorroga��o de Prazo de Execu��o'
+													WHEN rex.tpAlteracaoProjeto = 6 THEN 'Proposta Pedag&oacute;gica'
+													WHEN rex.tpAlteracaoProjeto = 7 THEN 'Plano de Distribui&ccedil;&atilde;o'
+													WHEN rex.tpAlteracaoProjeto = 8 THEN 'Prorroga&ccedil;&atilde;o de Prazo de Capta&ccedil;&atilde;o'
+													WHEN rex.tpAlteracaoProjeto = 9 THEN 'Prorroga&ccedil;&atilde;o de Prazo de Execu&ccedil;&atilde;o'
 													ELSE 'Itens de Custo' END"),
                 ),'BDCORPORATIVO.scSAC'
         );
@@ -208,10 +208,10 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 array('vp.idUsuario',
                 'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = vp.idUsuario)'),
                 'vp.stAnaliseProjeto',
-                'status' => new Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando An�lise'
-												WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando An�lise'
-												WHEN vp.stAnaliseProjeto = '2' THEN 'Em An�lise'
-												WHEN vp.stAnaliseProjeto = '3' THEN 'An�lise Finalizada'
+                'status' => new Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando An&aacute;lise'
+												WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando An&aacute;lise'
+												WHEN vp.stAnaliseProjeto = '2' THEN 'Em An&aacute;lise'
+												WHEN vp.stAnaliseProjeto = '3' THEN 'An&aacute;lise Finalizada'
 												WHEN vp.stAnaliseProjeto = '4' THEN 'Encaminhado para portaria'
 												END "),
                 'DATEDIFF(day, vp.DtRecebido, GETDATE()) AS tempoAnalise',
