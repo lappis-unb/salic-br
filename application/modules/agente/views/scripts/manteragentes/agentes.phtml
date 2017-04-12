@@ -1,0 +1,84 @@
+<?php
+  //menu lateral
+if($this->grupoAtivo != 118)
+{
+    echo $this->partial('manteragentes/inc/menu.inc.php', $this)
+}
+?>
+
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="breadcrumb">
+	<ul>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+		<li class="last">Agentes</li>
+	</ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+<!-- ========== INICIO TITULO ========== -->
+<div id="titulo">
+	<div>Agentes
+		<span class="voltar">
+
+		<?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequacao ?>
+		<a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a Solicita&ccedil;&atilde;o de Readequa&ccedil;&atilde;o</a>
+		<?php } else {?>
+		<a href="#" onclick="voltar();">Voltar</a>
+		<?php } ?>
+
+		</span>
+	</div>
+</div>
+<!-- ========== FIM TITULO ========== -->
+
+<!-- ========== INICIO CONTEUDO ========== -->
+<div id="conteudo">
+<div id="confirma"></div>
+
+
+	<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/proponentes.js"></script>
+	<script type="text/javascript">
+
+		$(function(){mostrar_menu_dados_agente(<?php echo $this->grupoativo; ?>);});
+
+		$(function(){mostrar_menu_dados_agente(<?php echo $this->grupoativo?>);});
+
+	</script>
+
+	<div id="erroGeral" class="msgERROR sumir">
+		<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgERROR" onclick="$('.msgERROR').hide();" onkeypress="$('.msgERROR').hide();"/></div>
+		<div>Dados obrigat&oacute;rios n&atilde;o informados!</div>
+	</div>
+
+    <form class="formAgentes form" name="formCadAgentes" id="formCadAgentes" method="post"
+		action="<?php echo $this->url(array('module' => 'agente', 'controller' => 'manteragentes', 'action' => 'gravaragentecompleto')); ?>">
+
+		<input type="hidden" value="<?php echo $this->grupoativo; ?>" id="grupologado" name="grupologado" />
+
+		<div><?php require_once "inc/menuabas.phtml"; // menu abas ?></div>
+		<div><?php require_once "inc/form.phtml"; // formulario ?></div>
+
+		<table class="tabela">
+			<tr>
+				<td class="centro">
+					<div class="botao_texto">
+						<a class="salvar" href="#" title="Salvar" onclick="verificaValidacaoAgente();">Confirmar</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+	</form>
+
+
+
+</div>
+<!-- ========== FIM CONTEUDO ========== -->
+
+
+
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
+<div id="rodapeConteudo"><span></span></div>
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+
+<br clear="all" />

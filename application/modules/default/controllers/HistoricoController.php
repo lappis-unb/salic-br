@@ -1,7 +1,6 @@
 <?php
 
-include_once 'GenericControllerNew.php';
-class HistoricoController extends GenericControllerNew {
+class HistoricoController extends MinC_Controller_Action_Abstract {
 	
 	public function historicoAction() {
 	}

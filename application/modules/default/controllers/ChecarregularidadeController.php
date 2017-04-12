@@ -1,6 +1,6 @@
 <?php
 
-class ChecarRegularidadeController extends GenericControllerNew
+class ChecarRegularidadeController extends MinC_Controller_Action_Abstract
 {
 
     /**

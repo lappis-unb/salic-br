@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Controller Anexar Documentos - Lado do Minc
@@ -8,24 +8,18 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
-class AnexardocumentosmincController extends GenericControllerNew {
+class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
 
     private $getIdAgente  = 0;
     private $getIdGrupo   = 0;
     private $getIdOrgao   = 0;
-//    private $getIdUsuario = 0;
     private $intTamPag = 10;
-    /**
-     * Reescreve o método init()
-     * @access public
-     * @param void
-     * @return void
-     */
+
     public function init() {
 
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 92;
         $PermissoesGrupo[] = 93;
@@ -51,10 +45,12 @@ class AnexardocumentosmincController extends GenericControllerNew {
         $PermissoesGrupo[] = 137;
         $PermissoesGrupo[] = 138;
         $PermissoesGrupo[] = 139;
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 151;
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
         //SE CAIU A SECAO REDIRECIONA
         if(!$auth->hasIdentity()){
@@ -64,7 +60,7 @@ class AnexardocumentosmincController extends GenericControllerNew {
 
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $idUsuarioLogado = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->idUsuarioLogado = $idUsuarioLogado;
         $this->getIdAgente = $idagente['idAgente'];
         $this->getIdGrupo  = $GrupoAtivo->codGrupo;
@@ -100,15 +96,16 @@ class AnexardocumentosmincController extends GenericControllerNew {
             }
         } else {
             $dados = array();
-            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto não encontrado.</span>');
+            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto n&atilde;o encontrado.</span>');
             $jsonEncode = json_encode($dados);
             echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); ;
     }
 
-    public function buscarProjetosAnexosAction() {
-        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+    public function buscarProjetosAnexosAction()
+    {
+        $this->_helper->layout->disableLayout();
         $pronac = Mascara::delMaskCPFCNPJ($_POST['pronac']);
 
         $projetos = new Projetos();
@@ -132,10 +129,8 @@ class AnexardocumentosmincController extends GenericControllerNew {
                     $dados['Anexos'][$key]['idDocumentosAgentes'] = $value->idDocumentosAgentes;
                     $dados['Anexos'][$key]['NoArquivo'] = utf8_encode($value->NoArquivo);
                     $dados['Anexos'][$key]['AgenteDoc'] = $value->AgenteDoc;
-                    //$dados['Anexos'][$key] = $value;
                     $i++;
                 }
-                //xd($dados);
 
                 $jsonEncode = json_encode($dados);
                 echo json_encode(array('resposta'=>true,'conteudo'=>$dados));
@@ -147,18 +142,18 @@ class AnexardocumentosmincController extends GenericControllerNew {
             }
         } else {
             $dados = array();
-            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto não encontrado.</span>');
+            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto nï¿½o encontrado.</span>');
             $jsonEncode = json_encode($dados);
             echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); ;
     }
 
     public function cadastrarDocumentoAction() {
         $pronac = $this->_request->getParam("Pronac");
         $tpDocumento = $this->_request->getParam("tpDocumento");
         if(empty($pronac) || empty($tpDocumento)){
-            parent::message("Favor preencher os dados obrigatórios!", "anexardocumentosminc", "ERROR");
+            parent::message("Favor preencher os dados obrigat&oacute;rios!", "anexardocumentosminc", "ERROR");
         }
 
         try {
@@ -167,13 +162,13 @@ class AnexardocumentosmincController extends GenericControllerNew {
 
             if(!empty($_FILES['arquivo']['tmp_name'])){
                 $arquivoNome     = $_FILES['arquivo']['name']; // nome
-                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
                 $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
                 $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
                 if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
+                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
                     $arquivoHash     = Upload::setHash($arquivoTemp); // hash
                 }
 
@@ -207,18 +202,18 @@ class AnexardocumentosmincController extends GenericControllerNew {
                 $Arquivo->inserirUploads($dadosArquivo);
             }
             parent::message("Anexo cadastrado com sucesso!", "anexardocumentosminc", "CONFIRM");
-            
+
         } catch (Exception $e){
             parent::message("Erro ao salvar os dados.", "anexardocumentosminc", "ERROR");
         }
     }
 
     public function excluirAction() {
-        
+
     }
 
     public function excluirArquivoAction(){
-        
+
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
 
@@ -229,7 +224,7 @@ class AnexardocumentosmincController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); ;
 
     }
 

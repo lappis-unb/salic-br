@@ -1,0 +1,63 @@
+<?php if($this->dadoscount > 0):?>
+<table class="tabela">
+	<tr>
+	    <td colspan="4" class="titulo_tabela"><?php echo $this->dadoscount; ?> RESPONS&Aacute;VEIS ENCONTRADOS</td>
+	</tr>
+	<tr>
+	    <th width="300">Nome</th>
+	    <th>CPF</th>
+	    <th>Status</th>
+	    <th width="200"></th>
+	</tr>
+	<?php
+        //xd ($this->dados );
+        foreach ($this->dados as $d):
+            $status = 'N&atilde;o vinculado';
+
+            if($d->idAgenteProponente == $this->idAgenteProponente)
+            {
+                if($d->siVinculo == null)
+                {
+                    $status = 'N&atilde;o vinculado';
+                }
+                elseif($d->siVinculo == 0)
+                {
+                    $status = 'Solicitado';
+                }
+                elseif($d->siVinculo == 1)
+                {
+                    $status = 'Vinculo Rejeitado';
+                }
+                elseif($d->siVinculo == 2)
+                {
+                    $status = 'Vinculado';
+                }
+                elseif($d->siVinculo == 3)
+                {
+                    $status = 'Desvinculado';
+                }
+            }
+    ?>
+    <tr>
+        <td><?php echo $d->nomeresponsavel; ?></td>
+        <td align="center"><?php echo Mascara::addMaskCPF($d->cpfresponsavel); ?></td>
+        <?php if(($d->UsuarioVinculo) == null): ?>
+            <td align="center"><?php echo $status; ?></td>
+            <td align="center">
+            <?php if(($d->siVinculo == null) || ($d->siVinculo == 3) || ($d->siVinculo == 1)): ?>
+                <button type="button" value=" " class="btn" onclick="confirmarovinculo('<?php echo $d->idresponsavel; ?>');" >vincular</button>
+            <?php endif; ?>
+            </td>
+        <?php else: ?>
+            <td colspan="2" align="center">Servidor do Minist&eacute;rio da Cultura n&atilde;o pode ser Respons&aacute;vel!</td>
+        <?php endif;?>
+    </tr>
+    <?php endforeach; ?>
+    </table>
+<?php else:?>
+    <table class="tabela">
+        <tr>
+            <td align="center">NENHUM RESPONS&EacuteVEL ENCONTRADO!</td>
+        </tr>
+    </table>
+<?php endif;?>

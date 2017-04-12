@@ -1,0 +1,216 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <?php
+            gerarBreadCrumb(array(
+                array('Listar propostas' => '')
+            ));
+            ?>
+
+            <div id="alerta" title="Alerta"></div>
+            <div id="erro" title="Erro"></div>
+            <div id="resultado"></div>
+            <div class="clearfix"></div>
+            <h4 id="novo-titulo" class="light">
+                Listar propostas <a href="#!" class="voltar secondary-content small" onclick="voltar();"><i class="material-icons left">arrow_back</i>Voltar</a>
+            </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <form name="frmNovaProposta" id="frmNovaProposta"
+                  action="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'declaracaonovaproposta')); ?>"
+                  method="post">
+
+                <table class="tabela">
+                    <tr class="centro">
+                        <th class="centro">Cadastro</th>
+                    </tr>
+                    <tr>
+                        <td align="left">Mecanismo:&nbsp;
+                            <select name="mecanismo" id="mecanismo" class="input_simples w200">
+                                <option value="1" <?php echo ($this->mecanismo == 1) ? 'selected="selected"' : ''; ?>>Incentivo
+                                    Fiscal Federal
+                                </option>
+                            </select>
+                            &nbsp;&nbsp;&nbsp;CPF Proponente:&nbsp;
+
+                            <select name="propronente" id="propronente" class="input_simples">
+                                <option value="">- Todos -</option>
+                                <?php if (!empty($this->dadosCombo)): ?>
+                                    <?php $idProponente = ''; ?>
+                                    <?php foreach ($this->dadosCombo as $dc): ?>
+                                        <?php if ($dc['idAgenteProponente'] != $idProponente): ?>
+                                            <option value="<?php echo $dc['idAgenteProponente']; ?>">[<?php echo $dc['CPF']; ?>]
+                                                - <?php echo $dc['Nome']; ?></option>
+                                        <?php endif; ?>
+                                        <?php $idProponente = $dc['idAgenteProponente']; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>&nbsp;
+                            <span id="msgValidaProponente"></span>&nbsp;&nbsp;&nbsp;
+
+                            <button class="waves-effect waves-light btn btn-primary small btn-novaproposta" type="submit"
+                                    name="novo" id="novo">
+                                <i class="material-icons left">border_color</i>Nova Proposta
+                            </button>
+
+                            <a class="waves-effect waves-light btn black white-text small text-right"
+                               onclick="window.location='<?php echo $this->usuarioLogado == 'prop' ? $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index')) : $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index')); ?>'">
+                                <i class="material-icons left">person</i>Novo Proponente
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <table class="tabela">
+                    <tr class="centro">
+                        <th class="centro">Filtro</th>
+                    </tr>
+                    <tr>
+                        <td class="center" align="center">
+                            <a id="localizar" class="btn-localizar waves-effect waves-light btn btn-default small">
+                                <i class="material-icons left">search</i>Localizar
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div  id="propostasCadastradas">
+                    <table class="bordered striped conteudoImprimivel" id="tabelaAnaliseFinal">
+                        <thead>
+                        <tr>
+                            <th>Proposta</th>
+                            <th>Nome da Proposta</th>
+                            <th>Nome do Proponente</th>
+                            <th>Situa&ccedil;&atilde;o</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+    /*label.error {*/
+        /*color: red;*/
+        /*font-weight: normal;*/
+    /*}*/
+    select {
+        height: 35px;
+        font-size: 15px;
+        color: #212121;
+    }
+
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.expandir').live('click', function () {
+            var elemento = $(this),
+                idAgente = elemento.attr('idAgente');
+
+            $('.mostraProposta_' + idAgente).toggle()
+            if (elemento.hasClass('btn_adicionar')) {
+                elemento.addClass('btn_remover');
+                elemento.removeClass('btn_adicionar');
+            } else {
+                elemento.addClass('btn_adicionar');
+                elemento.removeClass('btn_remover');
+            }
+        });
+
+        $("#frmNovaProposta").validate({
+            rules: {
+                mecanismo: {required: true},
+                propronente: {required: true}
+            },
+            messages: {
+                mecanismo: {required: " Obrigat&oacute;rio"},
+                propronente: {required: " Obrigat&oacute;rio"}
+            },
+            submitHandler: function (form) {
+                //form.submit();
+                $("#msgValidaProponente").html("");
+                var nomeProponente = $('#propronente option:selected').text();
+                if (nomeProponente == "- TODOS -") {
+                    $("#msgValidaProponente").html("<font color='red'>Informe o nome de um Proponente.</font>");
+                    return false;
+                }
+                jqAjaxForm(form, 'propostasCadastradas');
+            }
+        });
+
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+
+            var table =  $('#tabelaAnaliseFinal').DataTable(
+                {
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+                    }
+                    , "lengthChange": true
+                    , "ajax": {
+                        url: "/proposta/manterpropostaincentivofiscal/listar-propostas-ajax",
+                        data: {"idagente": function (d) {
+                            return $('#propronente').val();
+                        }},
+                        type: "POST"
+                },
+                    "processing": true,
+                    "serverSide": true,
+                    "bFilter": false,
+                    "order": [[ 0, 'desc' ], [ 1, 'asc' ]],
+                    "columns": [
+                        {
+                            data: null,
+                            "name": "idpreprojeto",
+                            render: function (data, type, row) {
+                                return '<a class="btn waves-effect waves-darrk white black-text small" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta')); ?>/idPreProjeto/' + data.idpreprojeto + '">'
+                                    + data.idpreprojeto + '</a>'
+                            }
+                        },
+                        {
+                            "name": "nomeprojeto",
+                            "data": "nomeprojeto"
+
+                        },
+                        {
+                            "name": "nomeproponente",
+                            "data": "nomeproponente"
+
+                        },
+                        {
+                            "name": "situacao",
+                            "data": "situacao"
+
+                        }
+                    ]
+                }
+            );
+
+
+            $("#localizar").click(function () {
+                table.ajax.reload();
+            });
+
+        });
+    }($.noConflict(true)));
+</script>

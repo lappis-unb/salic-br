@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class ProponenteRestController extends Minc_Controller_AbstractRest {
 
@@ -27,7 +27,7 @@ class ProponenteRestController extends Minc_Controller_AbstractRest {
             }
         }
 
-        # Resposta da autenticação.
+        # Resposta da autenticaï¿½ï¿½o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($listaProponente));
     }
     

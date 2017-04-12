@@ -1,6 +1,5 @@
 <?php
 require_once 'library/MinC/CPF/Cpf.php';
-require_once 'GenericControllerNew.php';
 require_once 'library/MinC/Sessao/SessaoArquivo.php';
 require_once 'library/MinC/Sessao/SessaoProponente.php';
 
@@ -9,7 +8,7 @@ require_once 'library/MinC/Sessao/SessaoProponente.php';
  * @everton.gsilva
  * 
  * */
-class SolicitaralteracaoprojetoController extends GenericControllerNew {
+class SolicitaralteracaoprojetoController extends MinC_Controller_Action_Abstract {
 
 //TODO aplicar Refactoring function init
         public function init()

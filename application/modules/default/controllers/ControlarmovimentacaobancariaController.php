@@ -7,20 +7,18 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
-require_once 'GenericControllerNew.php';
-
-class ControlarmovimentacaobancariaController extends GenericControllerNew
+class ControlarmovimentacaobancariaController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @access private
-	 * @var integer (idAgente do usuário logado)
+	 * @var integer (idAgente do usuï¿½rio logado)
 	 */
-	private $getIdUsuario = 0; // código do usuário logado
-	private $getIdGrupo   = 0; // código do grupo logado
-	private $getIdOrgao   = 0; // código do órgão logado
+	private $getIdUsuario = 0; // cï¿½digo do usuï¿½rio logado
+	private $getIdGrupo   = 0; // cï¿½digo do grupo logado
+	private $getIdOrgao   = 0; // cï¿½digo do ï¿½rgï¿½o logado
 
 
 
@@ -43,38 +41,38 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 	/**
 	 * @access private
-	 * @var string (diretório onde se enconta o arquivo .txt)
+	 * @var string (diretï¿½rio onde se enconta o arquivo .txt)
 	 */
 	private $arquivoTXT = 'MovimentacaoBancaria';
 
 
 
 	/**
-	 * Reescreve o método init()
+	 * Reescreve o mï¿½todo init()
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function init()
 	{
-		$this->view->title = 'Salic - Sistema de Apoio às Leis de Incentivo à Cultura'; // título da página
+		$this->view->title = 'Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura'; // tï¿½tulo da pï¿½gina
 
-		/* ========== INÍCIO PERFIL ========== */
+		/* ========== INï¿½CIO PERFIL ========== */
 		// define os grupos que tem acesso
 		$PermissoesGrupo = array();
-		$PermissoesGrupo[] = 121; // Técnico de Acompanhamento
+		$PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
 		$PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
 		$PermissoesGrupo[] = 123; // Coordenador - Geral de Acompanhamento
-		$PermissoesGrupo[] = 129; // Técnico de Acompanhamento
-		//$PermissoesGrupo[] = ; // Coordenador de Avaliação
-		//$PermissoesGrupo[] = 134; // Coordenador de Fiscalização
-		//$PermissoesGrupo[] = 124; // Técnico de Prestação de Contas
-		//$PermissoesGrupo[] = 125; // Coordenador de Prestação de Contas
-		//$PermissoesGrupo[] = 126; // Coordenador - Geral de Prestação de Contas
+		$PermissoesGrupo[] = 129; // Tï¿½cnico de Acompanhamento
+		//$PermissoesGrupo[] = ; // Coordenador de Avaliaï¿½ï¿½o
+		//$PermissoesGrupo[] = 134; // Coordenador de Fiscalizaï¿½ï¿½o
+		//$PermissoesGrupo[] = 124; // Tï¿½cnico de Prestaï¿½ï¿½o de Contas
+		//$PermissoesGrupo[] = 125; // Coordenador de Prestaï¿½ï¿½o de Contas
+		//$PermissoesGrupo[] = 126; // Coordenador - Geral de Prestaï¿½ï¿½o de Contas
 		$PermissoesGrupo[] = 144; // Proponente
 
-		// pega o idAgente do usuário logado
-		$auth = Zend_Auth::getInstance(); // pega a autenticação
+		// pega o idAgente do usuï¿½rio logado
+		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 		if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
 		{
 			$this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -89,19 +87,19 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 		/* ========== FIM PERFIL ==========*/
 
 
-		/* ========== INÍCIO ÓRGÃO ========== */
-		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+		/* ========== INï¿½CIO ï¿½RGï¿½O ========== */
+		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 		$this->getIdGrupo = $GrupoAtivo->codGrupo; // id do grupo ativo
-		$this->getIdOrgao = $GrupoAtivo->codOrgao; // id do órgão ativo
+		$this->getIdOrgao = $GrupoAtivo->codOrgao; // id do ï¿½rgï¿½o ativo
 
-		if (isset($auth->getIdentity()->usu_codigo) && $this->getIdOrgao != 251 && $this->getIdOrgao != 272 && $this->getIdOrgao != 166) // aceita somente o órgão SEFIC/SACAV
+		if (isset($auth->getIdentity()->usu_codigo) && $this->getIdOrgao != 251 && $this->getIdOrgao != 272 && $this->getIdOrgao != 166) // aceita somente o ï¿½rgï¿½o SEFIC/SACAV
 		{
-			parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+			parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
 		}
-		/* ========== FIM ÓRGÃO ========== */
+		/* ========== FIM ï¿½RGï¿½O ========== */
 
 		parent::init();
-	} // fecha método init()
+	} // fecha mï¿½todo init()
 
 
 
@@ -113,13 +111,13 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 	 */
 	public function indexAction()
 	{
-		$this->_forward('form'); // redireciona para o formulário
-	} // fecha método indexAction()
+		$this->_forward('form'); // redireciona para o formulï¿½rio
+	} // fecha mï¿½todo indexAction()
 
 
 
 	/**
-	 * Formulário para gerar o extrato
+	 * Formulï¿½rio para gerar o extrato
 	 * @access public
 	 * @param void
 	 * @return void
@@ -138,8 +136,8 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 
 	/**
-	 * Gera o extrato bancário de acordo com o filtro na pesquisa.
-	 * Esse método só é executado quando é feita uma solicitação via POST.
+	 * Gera o extrato bancï¿½rio de acordo com o filtro na pesquisa.
+	 * Esse mï¿½todo sï¿½ ï¿½ executado quando ï¿½ feita uma solicitaï¿½ï¿½o via POST.
 	 * @access public
 	 * @param void
 	 * @return void
@@ -148,14 +146,13 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 	{
                 ini_set('memory_limit', '-1');
                 set_time_limit(0);
-		// caso o formulário seja enviado via post
+		// caso o formulï¿½rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
 			// recebe os dados via post
 			$post            = Zend_Registry::get('post');
                         
                         if($post->relPaginacao){
-                            header("Content-Type: text/html; charset=ISO-8859-1");
                             $this->_helper->layout->disableLayout(); // desabilita o layout
                         }
                         
@@ -175,22 +172,22 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 			try
 			{
-				// para o projeto com período de execução superior a 24 meses, 
-				// quando na consulta a opção selecionada for "Todo o período".
+				// para o projeto com perï¿½odo de execuï¿½ï¿½o superior a 24 meses, 
+				// quando na consulta a opï¿½ï¿½o selecionada for "Todo o perï¿½odo".
 				$this->Projetos   = new Projetos();
 				$periodo_execucao = $this->Projetos->buscarPeriodoExecucao(null, $pronac);
 
 				if (empty($periodo[0]) && isset($periodo_execucao['qtdDias']) && ((int) $periodo_execucao['qtdDias'] >= 730))
 				{
-					parent::message('Favor solicite o extrato à SEFIC!', 'controlarmovimentacaobancaria/form' . $query_string, 'ALERT');
+					parent::message('Favor solicite o extrato ï¿½ SEFIC!', 'controlarmovimentacaobancaria/form' . $query_string, 'ALERT');
 				}
 				else if (!empty($periodo[1]) && !Data::validarData($periodo[1])) // valida a data inicial
 				{
-					parent::message('A data inicial é inválida!', 'controlarmovimentacaobancaria/form' . $query_string, 'ERROR');
+					parent::message('A data inicial ï¿½ invï¿½lida!', 'controlarmovimentacaobancaria/form' . $query_string, 'ERROR');
 				}
 				else if (!empty($periodo[2]) && !Data::validarData($periodo[2])) // valida a data final
 				{
-					parent::message('A data final é inválida!', 'controlarmovimentacaobancaria/form' . $query_string, 'ERROR');
+					parent::message('A data final ï¿½ invï¿½lida!', 'controlarmovimentacaobancaria/form' . $query_string, 'ERROR');
 				}
 				else
 				{
@@ -215,7 +212,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
                                         $tamanho = ($fim > $total->total) ? $total->total - $inicio : $this->intTamPag;
                                         if ($fim>$total->total) $fim = $total->total;
 
-                                        // busca os dados no banco e manda para a visão
+                                        // busca os dados no banco e manda para a visï¿½o
 
                                         
                                        $dados = $this->tbMovimentacaoBancaria->buscarDados($pronac, $conta_rejeitada, $periodo, $operacao , $tamanho , $inicio , null );
@@ -244,15 +241,15 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 		} // fecha if post
 		else
 		{
-			parent::message('Por favor, defina um filtro válido para gerar o extrato bancário!', 'controlarmovimentacaobancaria/form', 'ALERT');
+			parent::message('Por favor, defina um filtro vï¿½lido para gerar o extrato bancï¿½rio!', 'controlarmovimentacaobancaria/form', 'ALERT');
 		}
 
-	} // fecha método pesquisarAction()
+	} // fecha mï¿½todo pesquisarAction()
 
 
 
 	/**
-	 * Método para gerar o pdf do extrato
+	 * Mï¿½todo para gerar o pdf do extrato
 	 * @access public
 	 * @param void
 	 * @return void
@@ -260,69 +257,69 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 	public function gerarpdfAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o layout
-	} // fecha método gerarpdfAction()
+	} // fecha mï¿½todo gerarpdfAction()
 
 
 
 	/**
-	 * Método para enviar o arquivo txt do banco do brasil
+	 * Mï¿½todo para enviar o arquivo txt do banco do brasil
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function uploadAction()
 	{
-		if ($this->getIdGrupo != 121 && $this->getIdGrupo != 122 && $this->getIdGrupo != 129) // só Técnico de Acompanhamento que pode acessar
+		if ($this->getIdGrupo != 121 && $this->getIdGrupo != 122 && $this->getIdGrupo != 129) // sï¿½ Tï¿½cnico de Acompanhamento que pode acessar
 		{
-			parent::message('Você não tem permissão para acessar essa área do sistema!', 'principal/index', 'ALERT');
+			parent::message('Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!', 'principal/index', 'ALERT');
 		}
 
-		// caso o formulário seja enviado via post
+		// caso o formulï¿½rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
-			// configuração o php.ini para 100MB
+			// configuraï¿½ï¿½o o php.ini para 100MB
 			@set_time_limit(0);
 			@ini_set('mssql.textsize',      10485760000);
 			@ini_set('mssql.textlimit',     10485760000);
 			@ini_set('mssql.timeout',       10485760000);
 			@ini_set('upload_max_filesize', '100M');
 
-			// pega as informações do arquivo
+			// pega as informaï¿½ï¿½es do arquivo
 			$arquivoNome    = $_FILES['arquivo']['name']; // nome
-			$arquivoTemp    = $_FILES['arquivo']['tmp_name']; // nome temporário
+			$arquivoTemp    = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
 			$arquivoTipo    = $_FILES['arquivo']['type']; // tipo
 			$arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
 			if (!empty($arquivoNome) && !empty($arquivoTemp))
 			{
-				$arquivoExtensao = strtolower(Upload::getExtensao($arquivoNome)); // extensão
+				$arquivoExtensao = strtolower(Upload::getExtensao($arquivoNome)); // extensï¿½o
 			}
 
 			// caminho do arquivo txt
 			$so               = stripos($_SERVER['SERVER_SOFTWARE'], 'win32') != FALSE ? 'WINDOWS' : 'LINUX'; // sistema operacional
 			$bar              = $so == 'WINDOWS' ? '\\' : '/';                                                // configura a barra de acordo com o SO
-			$this->arquivoTXT = getcwd() . $bar . 'public' . $bar . 'txt' . $bar . $this->arquivoTXT;         // diretório interno do arquivo
+			$this->arquivoTXT = getcwd() . $bar . 'public' . $bar . 'txt' . $bar . $this->arquivoTXT;         // diretï¿½rio interno do arquivo
 
-			$dir = $this->arquivoTXT; // diretório onde se encontram os arquivos do banco
+			$dir = $this->arquivoTXT; // diretï¿½rio onde se encontram os arquivos do banco
 
 			try
 			{
-				// integração MODELO e VISÃO
+				// integraï¿½ï¿½o MODELO e VISï¿½O
 				if (empty($arquivoTemp)) // nome do arquivo
 				{
 					throw new Exception('Por favor, informe o arquivo!');
 				}
-				else if (($arquivoExtensao != 'ret' && $arquivoExtensao != 'txt') || ($arquivoTipo != 'text/plain' && $arquivoTipo != 'application/octet-stream')) // extensão do arquivo
+				else if (($arquivoExtensao != 'ret' && $arquivoExtensao != 'txt') || ($arquivoTipo != 'text/plain' && $arquivoTipo != 'application/octet-stream')) // extensï¿½o do arquivo
 				{
-					throw new Exception('A extensão do arquivo é inválida, envie somente arquivos <strong>.txt</strong>!');
+					throw new Exception('A extensï¿½o do arquivo ï¿½ invï¿½lida, envie somente arquivos <strong>.txt</strong>!');
 				}
-//				else if ($arquivoTamanho > 14680064) // tamanho máximo do arquivo: 14MB
+//				else if ($arquivoTamanho > 14680064) // tamanho mï¿½ximo do arquivo: 14MB
 //				{
-//					throw new Exception('O arquivo não pode ser maior do que <strong>14MB</strong>!');
+//					throw new Exception('O arquivo nï¿½o pode ser maior do que <strong>14MB</strong>!');
 //				}
-//				else if ($arquivoTamanho <= 150) // tamanho mínimo do arquivo: 150 bytes
+//				else if ($arquivoTamanho <= 150) // tamanho mï¿½nimo do arquivo: 150 bytes
 //				{
-//					throw new Exception('O layout do arquivo enviado é inválido!');
+//					throw new Exception('O layout do arquivo enviado ï¿½ invï¿½lido!');
 //				}
 				// faz o envio do arquivo
 				else
@@ -334,31 +331,31 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 					if (count($buscar) > 0)
 					{
-						throw new Exception('Aguarde um momento, pois, já existe um arquivo sendo processado!');
+						throw new Exception('Aguarde um momento, pois, jï¿½ existe um arquivo sendo processado!');
 					}
-					// verifica se já existe um arquivo com o mesmo nome
+					// verifica se jï¿½ existe um arquivo com o mesmo nome
 					else if (file_exists($dir . '/' . $arquivoNome))
 					{
-						throw new Exception('O arquivo <strong>' . $arquivoNome . '</strong> já existe!');
+						throw new Exception('O arquivo <strong>' . $arquivoNome . '</strong> jï¿½ existe!');
 					}
 					else
 					{
 						// envia o arquivo
 						if (move_uploaded_file($arquivoTemp, $dir . '/' . $arquivoNome))
 						{
-							// abre o diretório
+							// abre o diretï¿½rio
 							if (($abrir = opendir($dir)) === false)
 							{
-								throw new Exception('Não foi possível abrir o diretório <strong>' . $dir . '</strong>!');
+								throw new Exception('Nï¿½o foi possï¿½vel abrir o diretï¿½rio <strong>' . $dir . '</strong>!');
 							}
 
-							// busca todos os arquivos do diretório
+							// busca todos os arquivos do diretï¿½rio
 							$i = 0;
 
 							while (($arq = readdir($abrir)) !== false)
 							{
 
-								// verifica se a extensão do arquivo é .txt ou .ret
+								// verifica se a extensï¿½o do arquivo ï¿½ .txt ou .ret
 								if ((substr(strtolower($arq), -4) == '.txt') || (substr(strtolower($arq), -4) == '.ret'))
 								{
 									// array contendo o caminho/nome completo de cada arquivo
@@ -373,16 +370,16 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 										// pega a linha do arquivo
 										$linha_header = fgets($abrir_arquivo_header, 4096);
 
-										// faz a validação do arquivo de acordo com o layout
-										$nr_banco               = substr($linha_header, 76, 3);  // NÚMERO DO BANCO
+										// faz a validaï¿½ï¿½o do arquivo de acordo com o layout
+										$nr_banco               = substr($linha_header, 76, 3);  // Nï¿½MERO DO BANCO
 										$nm_arquivo             = substr($linha_header, 11, 15); // NOME DO ARQUIVO
-										$dt_arquivo             = substr($linha_header, 181, 8); // DATA DA GERAÇÃO DO ARQUIVO
-//										$dt_inicio_movimentacao = substr($linha_header, 52, 8); // DATA DE INÍCIO DA MOVIMENTAÇÃO BANCÁRIA
-//										$dt_fim_movimentacao    = substr($linha_header, 60, 8); // DATA FINAL DA MOVIMENTAÇÃO BANCÁRIA
+										$dt_arquivo             = substr($linha_header, 181, 8); // DATA DA GERAï¿½ï¿½O DO ARQUIVO
+//										$dt_inicio_movimentacao = substr($linha_header, 52, 8); // DATA DE INï¿½CIO DA MOVIMENTAï¿½ï¿½O BANCï¿½RIA
+//										$dt_fim_movimentacao    = substr($linha_header, 60, 8); // DATA FINAL DA MOVIMENTAï¿½ï¿½O BANCï¿½RIA
                                         
                                         
-										// faz a validação do arquivo pelo header
-										// verifica pelo header se o arquivo já existe
+										// faz a validaï¿½ï¿½o do arquivo pelo header
+										// verifica pelo header se o arquivo jï¿½ existe
                                         if (substr($linha_header, 0, 1) == 0){
 
 //											if (!is_numeric($nr_banco) || !Data::validarData($dt_arquivo) || !Data::validarData($dt_inicio_movimentacao) || !Data::validarData($dt_fim_movimentacao))
@@ -394,13 +391,13 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 												// exclui o arquivo
 												unlink($arquivos[0]);
 
-												throw new Exception('O layout do arquivo enviado é inválido!');
+												throw new Exception('O layout do arquivo enviado ï¿½ invï¿½lido!');
 											}
 
-											// busca a data de geração do arquivo para evitar inserção de registros duplicados
+											// busca a data de geraï¿½ï¿½o do arquivo para evitar inserï¿½ï¿½o de registros duplicados
 											$dataGeracaoArquivo = Data::dataAmericana(Mascara::addMaskDataBrasileira($dt_arquivo));
 
-											// verifica se o arquivo já está cadastrado no banco de dados
+											// verifica se o arquivo jï¿½ estï¿½ cadastrado no banco de dados
 											$this->tbMovimentacaoBancaria = new tbMovimentacaoBancaria();
 											$buscarArquivoCadastrado = $this->tbMovimentacaoBancaria->buscar(array('dtArquivo = ?' => $dataGeracaoArquivo));
 
@@ -412,7 +409,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 												// exclui o arquivo
 												unlink($arquivos[0]);
 
-												throw new Exception('Esse arquivo já foi enviado!');
+												throw new Exception('Esse arquivo jï¿½ foi enviado!');
 											}
 
 											$i++;								
@@ -430,19 +427,19 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 							} // fecha while
 
-							// caso exista arquivo(s) .txt ou .ret no diretório:
-							// 	1. Varre o conteúdo de cada arquivo
-							// 	2. Grava o conteúdo de cada linha no banco
-							// 	3. Deleta o arquivo do diretório
+							// caso exista arquivo(s) .txt ou .ret no diretï¿½rio:
+							// 	1. Varre o conteï¿½do de cada arquivo
+							// 	2. Grava o conteï¿½do de cada linha no banco
+							// 	3. Deleta o arquivo do diretï¿½rio
 							if (isset($arquivos) && count($arquivos) > 0)
 							{
-								// ========== INÍCIO - VARRE O ARQUIVO DETALHADAMENTE ==========
+								// ========== INï¿½CIO - VARRE O ARQUIVO DETALHADAMENTE ==========
 								foreach ($arquivos as $arquivoTXT) :
 
 									// abre o arquivo para leitura
 									$abrir_arquivo = fopen($arquivoTXT, 'r');
 
-									// início while de leitura do arquivo linha por linha
+									// inï¿½cio while de leitura do arquivo linha por linha
 									$i = 0;
 									$dsInformacao = array();
 									while (!feof($abrir_arquivo))
@@ -450,7 +447,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 										// pega a linha do arquivo
 										$linha = fgets($abrir_arquivo, 4096);
 
-										// caso a linha não seja vazia e o primeiro caractere for numérico
+										// caso a linha nï¿½o seja vazia e o primeiro caractere for numï¿½rico
 										if (!empty($linha) && is_numeric( substr($linha, 0, 1) ))
 										{
 											// armazena as linhas do arquivo em um array
@@ -465,7 +462,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 									// exclui o arquivo
 									unlink($arquivoTXT);
 
-                                    $auth = Zend_Auth::getInstance(); // pega a autenticação
+                                    $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 									// grava linha por linha do arquivo no banco
 									foreach ($dsInformacao as $ds) :
 										if (!$this->tbDepositoIdentificadoMovimentacao->inserir( array('dsInformacao' => $ds, 'idUsuario' => $auth->getIdentity()->usu_codigo) ))
@@ -498,22 +495,22 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 			}
 		} // fecha if post
 
-	} // fecha método uploadAction()
+	} // fecha mï¿½todo uploadAction()
 
 
 
 	/**
-	 * Método para executar a sp de movimentação bancária
+	 * Mï¿½todo para executar a sp de movimentaï¿½ï¿½o bancï¿½ria
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function finalizarAction()
 	{
-		// caso o formulário seja enviado via post
+		// caso o formulï¿½rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
-			// configuração o php.ini para 100MB
+			// configuraï¿½ï¿½o o php.ini para 100MB
 			@set_time_limit(0);
 			@ini_set('mssql.textsize',      10485760000);
 			@ini_set('mssql.textlimit',     10485760000);
@@ -537,10 +534,10 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 		} // fecha if post
 		else
 		{
-			parent::message('Por favor, pressione o botão finalizar!', 'controlarmovimentacaobancaria/form', 'ALERT');
+			parent::message('Por favor, pressione o botï¿½o finalizar!', 'controlarmovimentacaobancaria/form', 'ALERT');
 		}
 
-	} // fecha método finalizarAction()
+	} // fecha mï¿½todo finalizarAction()
 
 
 
@@ -549,7 +546,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 	 * toda vez que acessar aqui, verificar se o arquivo do BB existe,
 	 * caso o arquivo exista, grava os dados no banco e exclui o arquivo.
 	 * ****************************************************************************************************
-	 * OBS: Por enquanto foi substituído pela TRIGGER/SP, mas, é bom não retirá-lo para o caso de precisar
+	 * OBS: Por enquanto foi substituï¿½do pela TRIGGER/SP, mas, ï¿½ bom nï¿½o retirï¿½-lo para o caso de precisar
 	 * ****************************************************************************************************
 	 * @access public
 	 * @param void
@@ -559,19 +556,19 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o layout
 
-		// diretório onde se encontram os arquivos do banco
+		// diretï¿½rio onde se encontram os arquivos do banco
 		$dir = getcwd() . $this->arquivoTXT;
 
-		// abre o diretório
+		// abre o diretï¿½rio
 		if (($abrir = opendir($dir)) === false)
 		{
-			throw new Exception('Não foi possível abrir o diretório ' . $dir . '!');
+			throw new Exception('Nï¿½o foi possï¿½vel abrir o diretï¿½rio ' . $dir . '!');
 		}
 
-		// busca todos os arquivos do diretório
+		// busca todos os arquivos do diretï¿½rio
 		while (($arq = readdir($abrir)) !== false)
 		{
-			// verifica se a extensão do arquivo é .txt
+			// verifica se a extensï¿½o do arquivo ï¿½ .txt
 			if ((substr(strtolower($arq), -4) == '.txt'))
 			{
 				// array contendo o caminho/nome completo de cada arquivo
@@ -580,14 +577,14 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 		} // fecha while
 
 
-		// caso exista arquivo(s) .txt no diretório:
-		// 	1. Varre o conteúdo de cada arquivo
-		// 	2. Grava o conteúdo de cada arquivo no banco
-		// 	3. Deleta o arquivo do diretório
+		// caso exista arquivo(s) .txt no diretï¿½rio:
+		// 	1. Varre o conteï¿½do de cada arquivo
+		// 	2. Grava o conteï¿½do de cada arquivo no banco
+		// 	3. Deleta o arquivo do diretï¿½rio
 		if (isset($arquivos) && count($arquivos) > 0)
 		{
 
-			// ========== INÍCIO - VARRE O ARQUIVO DETALHADAMENTE ==========
+			// ========== INï¿½CIO - VARRE O ARQUIVO DETALHADAMENTE ==========
 			foreach ($arquivos as $arquivoTXT) :
 
 				// abre o arquivo para leitura
@@ -605,12 +602,12 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 				$movimentacao3 = array(); // constante 3
 				$movimentacao9 = array(); // constante 9
 
-				$id_ultima_movimentacao      = 0; // id contendo a última movimentação
-				$id_ultima_movimentacao_item = 0; // id contendo o último item movimentação
+				$id_ultima_movimentacao      = 0; // id contendo a ï¿½ltima movimentaï¿½ï¿½o
+				$id_ultima_movimentacao_item = 0; // id contendo o ï¿½ltimo item movimentaï¿½ï¿½o
 
 				$erros = array(); // verificador de erros
 
-				// início while de leitura do arquivo linha por linha
+				// inï¿½cio while de leitura do arquivo linha por linha
 				while (!feof($abrir_arquivo))
 				{
 					// pega a linha do arquivo
@@ -618,13 +615,13 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 					//echo $linha . '<br />';
 
 
-					// ========== INÍCIO CONSTANTE 1 (HEADER) ==========
+					// ========== INï¿½CIO CONSTANTE 1 (HEADER) ==========
 					if (substr($linha, 0, 1) == 1) :
-						$movimentacao1['nr_banco'][$cont1]               = substr($linha, 1, 3); // NÚMERO DO BANCO
+						$movimentacao1['nr_banco'][$cont1]               = substr($linha, 1, 3); // Nï¿½MERO DO BANCO
 						$movimentacao1['nm_arquivo'][$cont1]             = substr($linha, 4, 40); // NOME DO ARQUIVO
-						$movimentacao1['dt_arquivo'][$cont1]             = substr($linha, 44, 8); // DATA DA GERAÇÃO DO ARQUIVO
-						$movimentacao1['dt_inicio_movimentacao'][$cont1] = substr($linha, 52, 8); // DATA DE INÍCIO DA MOVIMENTAÇÃO BANCÁRIA
-						$movimentacao1['dt_fim_movimentacao'][$cont1]    = substr($linha, 60, 8); // DATA FINAL DA MOVIMENTAÇÃO BANCÁRIA
+						$movimentacao1['dt_arquivo'][$cont1]             = substr($linha, 44, 8); // DATA DA GERAï¿½ï¿½O DO ARQUIVO
+						$movimentacao1['dt_inicio_movimentacao'][$cont1] = substr($linha, 52, 8); // DATA DE INï¿½CIO DA MOVIMENTAï¿½ï¿½O BANCï¿½RIA
+						$movimentacao1['dt_fim_movimentacao'][$cont1]    = substr($linha, 60, 8); // DATA FINAL DA MOVIMENTAï¿½ï¿½O BANCï¿½RIA
 
 						// gravar no banco os dados do arquivo
 						$dados_movimentacao = array(
@@ -642,13 +639,13 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 					// ========== FIM CONSTANTE 1 (HEADER) ==========
 
 
-					// ========== INÍCIO CONSTANTE 2 ==========
+					// ========== INï¿½CIO CONSTANTE 2 ==========
 					if (substr($linha, 0, 1) == 2) :
-						$movimentacao2['agencia'][$cont2]           = substr($linha, 1, 4); // PREFIXO DA AGÊNCIA
-						$movimentacao2['dv_agencia'][$cont2]        = substr($linha, 5, 1); // DIGITO VERIFICADOR DA AGÊNCIA
-						$movimentacao2['conta'][$cont2]             = substr($linha, 6, 9); // NÚMERO DA CONTA CORRENTE
+						$movimentacao2['agencia'][$cont2]           = substr($linha, 1, 4); // PREFIXO DA AGï¿½NCIA
+						$movimentacao2['dv_agencia'][$cont2]        = substr($linha, 5, 1); // DIGITO VERIFICADOR DA AGï¿½NCIA
+						$movimentacao2['conta'][$cont2]             = substr($linha, 6, 9); // Nï¿½MERO DA CONTA CORRENTE
 						$movimentacao2['dv_conta'][$cont2]          = substr($linha, 15, 1); // DIGITO VERIFICADOR DA CONTA CORRENTE
-						$movimentacao2['titulo_razao'][$cont2]      = substr($linha, 16, 12); // CÓDIGO TÍTULO RAZÃO DA CONTA CORRENTE
+						$movimentacao2['titulo_razao'][$cont2]      = substr($linha, 16, 12); // Cï¿½DIGO Tï¿½TULO RAZï¿½O DA CONTA CORRENTE
 						$movimentacao2['nome_abreviado'][$cont2]    = substr($linha, 28, 30); // NOME ABREVIADO
 						$movimentacao2['dt_abertura'][$cont2]       = substr($linha, 58, 8); // DATA DA ABERTURA DA CONTA CORRENTE
 						$movimentacao2['cnpj_cpf'][$cont2]          = substr($linha, 66, 14); // CNPJ OU CPF DA CONTA CORRENTE
@@ -657,7 +654,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 						$movimentacao2['saldo_final'][$cont2]       = (float) substr($linha, 99, 18); // SALDO FINAL NA CONTA CORRENTE
 						$movimentacao2['dc_saldo_final'][$cont2]    = substr($linha, 117, 1); // DEBITO OU CREDITO DO SALDO FINAL
 
-						// gravar no banco os dados da movimentação
+						// gravar no banco os dados da movimentaï¿½ï¿½o
 						$dados_movimentacao_item = array(
 							'tpRegistro'              => substr($linha, 0, 1)
 							,'nrAgencia'              => $movimentacao2['agencia'][$cont2].$movimentacao2['dv_agencia'][$cont2]
@@ -684,7 +681,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 							$dadosAgente = $this->Nomes->buscarNomePorCPFCNPJ(substr($movimentacao2['cnpj_cpf'][$cont2], 3, 14), null, null, null, false);
 							if (!$dadosAgente)
 							{
-								// grava no banco a inconsistência
+								// grava no banco a inconsistï¿½ncia
 								$dados_inconsistencia = array(
 									'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 									,'idTipoInconsistencia'      => '6');
@@ -695,7 +692,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 						$movimentacao2['nm_agente'][$cont2] = ($dadosAgente) ? $dadosAgente['Nome'] : ''; // NOME DO AGENTE
 
 
-						// busca o pronac de acordo com a agência e a conta do projeto
+						// busca o pronac de acordo com a agï¿½ncia e a conta do projeto
 						// obs: a conta tem 12 carateres na tabela SAC.dbo.ContaBancaria
 						$agencia      = $movimentacao2['agencia'][$cont2] . $movimentacao2['dv_agencia'][$cont2];
 						$conta        = '00' . $movimentacao2['conta'][$cont2] . $movimentacao2['dv_conta'][$cont2];
@@ -707,7 +704,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 							$dadosProjeto = $this->ContaBancaria->buscarDados(null, null, null, $conta, false);
 							if (!$dadosProjeto)
 							{
-								// grava no banco a inconsistência
+								// grava no banco a inconsistï¿½ncia
 								$dados_inconsistencia = array(
 									'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 									,'idTipoInconsistencia'      => '7');
@@ -723,14 +720,14 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 						$pronac = $movimentacao2['ano_projeto'][$cont2] . $movimentacao2['sequencial'][$cont2];
 						if (!empty($pronac))
 						{
-							$this->Enquadramento = new Enquadramento();
+							$this->Enquadramento = new Admissibilidade_Model_Enquadramento();
 							$dadosEnquadramento  = $this->Enquadramento->buscarDados(null, $pronac, false);
 						}
 						else
 						{
 							$dadosEnquadramento = false;
 
-							// grava no banco a inconsistência
+							// grava no banco a inconsistï¿½ncia
 							$dados_inconsistencia = array(
 								'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 								,'idTipoInconsistencia'      => '9');
@@ -740,7 +737,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 						if (!$dadosEnquadramento)
 						{
-							// grava no banco a inconsistência
+							// grava no banco a inconsistï¿½ncia
 							$dados_inconsistencia = array(
 								'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 								,'idTipoInconsistencia'      => '8');
@@ -753,20 +750,20 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 					// ========== FIM CONSTANTE 2 ==========
 
 
-					// ========== INÍCIO CONSTANTE 3 ==========
+					// ========== INï¿½CIO CONSTANTE 3 ==========
 					if (substr($linha, 0, 1) == 3) :
-						$movimentacao3['agencia'][$cont3]            = substr($linha, 1, 4); // PREFIXO DA AGÊNCIA
-						$movimentacao3['dv_agencia'][$cont3]         = substr($linha, 5, 1); // DIGITO VERIFICADOR DA AGÊNCIA
-						$movimentacao3['conta'][$cont3]              = substr($linha, 6, 9); // NÚMERO DA CONTA CORRENTE
+						$movimentacao3['agencia'][$cont3]            = substr($linha, 1, 4); // PREFIXO DA AGï¿½NCIA
+						$movimentacao3['dv_agencia'][$cont3]         = substr($linha, 5, 1); // DIGITO VERIFICADOR DA AGï¿½NCIA
+						$movimentacao3['conta'][$cont3]              = substr($linha, 6, 9); // Nï¿½MERO DA CONTA CORRENTE
 						$movimentacao3['dv_conta'][$cont3]           = substr($linha, 15, 1); // DIGITO VERIFICADOR DA CONTA CORRENTE
 						$movimentacao3['dt_movimento'][$cont3]       = substr($linha, 16, 8); // DATA DO MOVIMENTO NA CONTA CORRENTE
-						$movimentacao3['cod_historico'][$cont3]      = substr($linha, 24, 4); // CÓDIGO DO HISTÓRICO DO BANCO
-						$movimentacao3['historico'][$cont3]          = substr($linha, 28, 15); // HISTÓRICO DO BANCO
-						$movimentacao3['nr_documento'][$cont3]       = substr($linha, 43, 10); // NÚMERO DO DOCUMENTO PARA O BANCO
+						$movimentacao3['cod_historico'][$cont3]      = substr($linha, 24, 4); // Cï¿½DIGO DO HISTï¿½RICO DO BANCO
+						$movimentacao3['historico'][$cont3]          = substr($linha, 28, 15); // HISTï¿½RICO DO BANCO
+						$movimentacao3['nr_documento'][$cont3]       = substr($linha, 43, 10); // Nï¿½MERO DO DOCUMENTO PARA O BANCO
 						$movimentacao3['valor_movimento'][$cont3]    = (float) substr($linha, 53, 18); // VALOR DO MOVIMENTO NA CONTA CORRENTE
 						$movimentacao3['dc_valor_movimento'][$cont3] = substr($linha, 71, 1); // DEBITO OU CREDITO DO MOVIMENTO NA CONTA CORRENTE
 
-						// gravar no banco os dados da movimentação
+						// gravar no banco os dados da movimentaï¿½ï¿½o
 						$dados_movimentacao_item = array(
 							'tpRegistro'              => substr($linha, 0, 1)
 							,'nrAgencia'              => $movimentacao3['agencia'][$cont3].$movimentacao3['dv_agencia'][$cont3]
@@ -782,7 +779,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 						$id_ultima_movimentacao_item       = $this->tbMovimentacaoBancariaItem->cadastrarDados($dados_movimentacao_item);
 
 
-						// busca o pronac de acordo com a agência e a conta do projeto
+						// busca o pronac de acordo com a agï¿½ncia e a conta do projeto
 						// obs: a conta tem 12 carateres na tabela SAC.dbo.ContaBancaria
 						$agencia      = $movimentacao3['agencia'][$cont3] . $movimentacao3['dv_agencia'][$cont3];
 						$conta        = '00' . $movimentacao3['conta'][$cont3] . $movimentacao3['dv_conta'][$cont3];
@@ -794,7 +791,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 							$dadosProjeto = $this->ContaBancaria->buscarDados(null, null, null, $conta, false);
 							if (!$dadosProjeto)
 							{
-								// grava no banco a inconsistência
+								// grava no banco a inconsistï¿½ncia
 								$dados_inconsistencia = array(
 									'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 									,'idTipoInconsistencia'      => '7');
@@ -807,12 +804,12 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 
 						// busca o enquadramento do projeto
-						// verifica se o projeto está com a data de execução vigente
-						// verifica se o projeto está com a data de captação vigente
+						// verifica se o projeto estï¿½ com a data de execuï¿½ï¿½o vigente
+						// verifica se o projeto estï¿½ com a data de captaï¿½ï¿½o vigente
 						$pronac = $movimentacao3['ano_projeto'][$cont3] . $movimentacao3['sequencial'][$cont3];
 						if (!empty($pronac))
 						{
-							$this->Enquadramento  = new Enquadramento();
+							$this->Enquadramento  = new Admissibilidade_Model_Enquadramento();
 							$dadosEnquadramento   = $this->Enquadramento->buscarDados(null, $pronac, false);
 							$this->Projetos       = new Projetos();
 							$dadosPeriodoExecucao = $this->Projetos->buscarPeriodoExecucao(null, $pronac, Data::dataAmericana(Mascara::addMaskDataBrasileira($movimentacao3['dt_movimento'][$cont3])));
@@ -824,7 +821,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 							$dadosPeriodoExecucao = false;
 							$dadosPeriodoCaptacao = false;
 
-							// grava no banco a inconsistência
+							// grava no banco a inconsistï¿½ncia
 							$dados_inconsistencia = array(
 								'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 								,'idTipoInconsistencia'      => '9');
@@ -834,7 +831,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 
 						if (!$dadosEnquadramento)
 						{
-							// grava no banco a inconsistência
+							// grava no banco a inconsistï¿½ncia
 							$dados_inconsistencia = array(
 								'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 								,'idTipoInconsistencia'      => '8');
@@ -843,7 +840,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 						}
 						if (!$dadosPeriodoExecucao)
 						{
-							// grava no banco a inconsistência
+							// grava no banco a inconsistï¿½ncia
 							$dados_inconsistencia = array(
 								'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 								,'idTipoInconsistencia'      => '1');
@@ -852,7 +849,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 						}
 						if (!$dadosPeriodoCaptacao)
 						{
-							// grava no banco a inconsistência
+							// grava no banco a inconsistï¿½ncia
 							$dados_inconsistencia = array(
 								'idMovimentacaoBancariaItem' => $id_ultima_movimentacao_item
 								,'idTipoInconsistencia'      => '2');
@@ -865,7 +862,7 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 					// ========== FIM CONSTANTE 3 ==========
 
 
-					// ========== INÍCIO CONSTANTE 9 ==========
+					// ========== INï¿½CIO CONSTANTE 9 ==========
 					if (substr($linha, 0, 1) == 9) :
 						$movimentacao9['qtd_registros'][$cont9] = substr($linha, 1, 7); // QUANTIDADE DE REGISTROS
 						$cont9++; //incrementa o contador
@@ -883,9 +880,9 @@ class ControlarmovimentacaobancariaController extends GenericControllerNew
 			endforeach;
 			// ========== FIM - VARRE O ARQUIVO DETALHADAMENTE ==========
 
-		} // fecha if (caso exista arquivo(s) .txt no diretório)
+		} // fecha if (caso exista arquivo(s) .txt no diretï¿½rio)
 
 		parent::message('Arquivo enviado com sucesso!', 'controlarmovimentacaobancaria/upload', 'CONFIRM');
-	} // fecha método salvararquivobbAction()
+	} // fecha mï¿½todo salvararquivobbAction()
 
 } // fecha class

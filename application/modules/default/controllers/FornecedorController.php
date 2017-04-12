@@ -3,7 +3,7 @@
  * 
  * @author Caio Lucena
  */
-class FornecedorController extends GenericControllerNew
+class FornecedorController extends MinC_Controller_Action_Abstract
 {
     /**
      * 

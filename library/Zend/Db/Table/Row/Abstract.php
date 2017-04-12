@@ -518,7 +518,6 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess, IteratorAggreg
          * based on the primary key value(s).
          */
         $where = $this->_getWhereQuery(false);
-
         /**
          * Run pre-UPDATE logic
          */
@@ -710,7 +709,6 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess, IteratorAggreg
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception("The primary key must be set as an array");
         }
-
         $primary = array_flip($this->_primary);
         if ($useDirty) {
             $array = array_intersect_key($this->_data, $primary);
@@ -737,7 +735,6 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess, IteratorAggreg
         $primaryKey = $this->_getPrimaryKey($useDirty);
         $info = $this->_getTable()->info();
         $metadata = $info[Zend_Db_Table_Abstract::METADATA];
-
         // retrieve recently updated row using primary keys
         $where = array();
         foreach ($primaryKey as $column => $value) {

@@ -1,36 +1,36 @@
 <?php
 
-class CaptacaoController extends GenericControllerNew
+class CaptacaoController extends MinC_Controller_Action_Abstract
 {
 
     public function init()
     {
         //recupera ID do pre projeto (proposta)
-        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        if ($auth->hasIdentity()) { // caso o usuário esteja autenticado
-            // verifica as permissões
+        if ($auth->hasIdentity()) { // caso o usuï¿½rio esteja autenticado
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
 
             $PermissoesGrupo[] = 123; // Coordenador - Geral de Acompanhamento
             $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
             $PermissoesGrupo[] = 121; // Coordenador de Acompanhamento
 
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
         }
         else {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
@@ -62,7 +62,7 @@ class CaptacaoController extends GenericControllerNew
         $get = Zend_Registry::get('post');
         $pronac = $get->pronac;
 
-        $busca = new ProjetoDAO(); 
+        $busca = new ProjetoDAO();
         $projeto = $busca->buscarDadosProjeto($pronac);
 
         if ($projeto) {
@@ -71,11 +71,11 @@ class CaptacaoController extends GenericControllerNew
                 if (1 == $projeto['Mecanismo']) {
                     echo json_encode(array('resposta' => true));
                 } else {
-                    $string = utf8_encode('<b>Favor informar o número de PRONAC do tipo mecenato!</b>');
+                    $string = utf8_encode('<b>Favor informar o nï¿½mero de PRONAC do tipo mecenato!</b>');
                     echo json_encode(array('resposta' => false, 'conteudo' => $string));
                 }
             } else {
-                $string = utf8_encode('<b>Apenas os projetos que estão na fase ' . implode(' ou ', $situacoesDoProjeto) . ' podem realizar captação!</b>');
+                $string = utf8_encode('<b>Apenas os projetos que estï¿½o na fase ' . implode(' ou ', $situacoesDoProjeto) . ' podem realizar captaï¿½ï¿½o!</b>');
                 echo json_encode(array('resposta' => false, 'conteudo' => $string));
             }
         } else {
@@ -94,7 +94,7 @@ class CaptacaoController extends GenericControllerNew
         $cpf = $get->cpf;
 
 //		$busca = new Interessado();
-        $busca = new Agentes();
+        $busca = new Agente_Model_DbTable_Agentes();
         $agente = $busca->BuscaAgente($cpf)->toArray();
 
         $buscar = new Interessado();
@@ -109,7 +109,7 @@ class CaptacaoController extends GenericControllerNew
             $jsonEncode = json_encode($dadosInteressado);
             //echo $jsonEncode;
             echo json_encode(array('resposta' => "true", 'conteudo' => $dadosInteressado));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             echo json_encode(array('resposta' => false));
         }
@@ -120,16 +120,16 @@ class CaptacaoController extends GenericControllerNew
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
-        
+
         $post = Zend_Registry::get('post');
         $interessadoModel = new Interessado();
         $interessados = $interessadoModel->buscar(array('CgcCpf = ?' => $post->cpf));
 
         if (!$interessados->count()) {
-            $agenteModel = new Agentes();
+            $agenteModel = new Agente_Model_DbTable_Agentes();
             $agentes = $agenteModel->buscar(array('CNPJCPF = ?' => $post->cpf));
             if (!$agentes->count()) {
-                parent::message("CNPJ/CPF não existe na tabela Interessado!", "captacao/index", "ALERT");
+                parent::message("CNPJ/CPF nï¿½o existe na tabela Interessado!", "captacao/index", "ALERT");
             }
 
             $agente = $agentes->current();
@@ -155,9 +155,9 @@ class CaptacaoController extends GenericControllerNew
         }
 
         $pronac = $post->anoProjeto.$post->sequencial;
- 
+
         $result = new Projetos();
-        $idprojeto = $result->buscarIdPronac($pronac); 
+        $idprojeto = $result->buscarIdPronac($pronac);
 
         $insert = new Captacao();
         $captado = $insert->inserir(array(

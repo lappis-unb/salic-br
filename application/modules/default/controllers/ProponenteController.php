@@ -1,6 +1,6 @@
 <?php
 
-class ProponenteController extends GenericControllerNew
+class ProponenteController extends MinC_Controller_Action_Abstract
 {
     private $intTamPag = 300;
     
@@ -81,7 +81,7 @@ class ProponenteController extends GenericControllerNew
         $this->view->ativos = $tbativos;*/
 
         $auth = Zend_Auth::getInstance(); // pega a autenticao
-        $Usuario = new Usuario(); // objeto usuario
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
         //-------------------------------------------------------------------------------------------------------------
@@ -119,7 +119,6 @@ class ProponenteController extends GenericControllerNew
 
     public function listarProjetosProponenteAction(){
         
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
         $this->intTamPag = 30;
@@ -137,7 +136,7 @@ class ProponenteController extends GenericControllerNew
         
         $tblProjetos = new Projetos();
         $total = $tblProjetos->buscarProjetosProponente($arrBusca, array(), null, null, true);
-        //xd($total);
+        
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
         if ($fim>$total) $fim = $total;

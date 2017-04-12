@@ -1,18 +1,10 @@
 <?php
-
-include_once 'GenericController.php';
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of GerarRelatorioReuniao
  *
  * @author 01373930160
  */
-class GerarRelatorioReuniaoExternoController extends GenericControllerNew {
+class GerarRelatorioReuniaoExternoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
     	Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
@@ -82,4 +74,3 @@ class GerarRelatorioReuniaoExternoController extends GenericControllerNew {
     }
 
 }
-?>

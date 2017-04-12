@@ -1,13 +1,13 @@
 <?php
 
-class CadastrarProjetoController extends GenericControllerNew {
+class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
 //recupera ID do pre projeto (proposta)
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // tï¿½tulo da pï¿½gina
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $PermissoesGrupo[] = 103; // Coordenador de Analise
         $PermissoesGrupo[] = 132; // Coordenador de Convenios
 
@@ -23,15 +23,15 @@ class CadastrarProjetoController extends GenericControllerNew {
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuï¿½rio (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgão ativo do usuï¿½rio para a visão
-            
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgï¿½o ativo do usuï¿½rio para a visï¿½o
+
             $this->Orgao = $GrupoAtivo->codOrgao;
             $this->Usuario = $auth->getIdentity()->usu_codigo;
         } // fecha if
@@ -43,7 +43,8 @@ class CadastrarProjetoController extends GenericControllerNew {
     }
 
     public function indexAction() {
-        
+
+        $mapperArea = new Agente_Model_AreaMapper();
         $Modalidade = new tbModalidade();
         $mecanismo = new Mecanismo();
         $mecanismo2 = $mecanismo->buscar(array('Status = ?' => 1))->toArray();
@@ -51,19 +52,20 @@ class CadastrarProjetoController extends GenericControllerNew {
         $tblSituacao = new Situacao();
         $rsSitucao = $tblSituacao->buscar(array("Codigo IN (?)" => array("A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20", "A21", "A22", "A23", "A24", "A25", "A26", "A27", "A37", "A38", "A40", "A41", "B10", "B11", "B12", "B13", "B14", "B15", "E12")));
 
-        $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
         $this->view->comboestados = Estado::buscar();
         $this->view->mecanismo = $mecanismo2;
         $this->view->situacoes = $rsSitucao;
         $this->view->modalidade = $Modalidade->buscarModalidade();
 
 
-        //$this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));			
+        //$this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));
         if (isset($_POST['areacultura']) and $_POST['areacultura'] == 'ok') {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $post = Zend_Registry::get('post');
             $cdarea = $post->area;
-            $dadosSegmento = Segmentocultural::buscar($cdarea);
+            $objSegmentocultural = new Segmentocultural();
+            $dadosSegmento = $objSegmentocultural->buscarSegmento($cdarea);
             $i = 0;
             foreach ($dadosSegmento as $segmento) {
                 $vSegmento[$i]['cdsegmento'] = $segmento->id;
@@ -72,7 +74,7 @@ class CadastrarProjetoController extends GenericControllerNew {
             }
             $jsonSegmento = json_encode($vSegmento);
             echo $jsonSegmento;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 
@@ -85,11 +87,11 @@ class CadastrarProjetoController extends GenericControllerNew {
 
         $sequencial = new tbSequencialProjetos();
         $projetos = new Projetos();
-        
+
 
         $dados = array();
 
-        
+
         $dados ['UfProjeto'] = $post->uf;
         $dados ['Area'] = $post->areacultural;
         $dados ['Segmento'] = $post->segmento;
@@ -114,7 +116,7 @@ class CadastrarProjetoController extends GenericControllerNew {
 
 
         try {
-            if(count($sequencial->verificarSequencial()->toArray()) == 0 ){ //verifica se ja existe o sequencial para o ano corrente, se não existir insere.
+            if(count($sequencial->verificarSequencial()->toArray()) == 0 ){ //verifica se ja existe o sequencial para o ano corrente, se nï¿½o existir insere.
                 $dado_sequencial = array('Ano'=>date('Y'),'Sequencial'=>1);
                 $sequencial->inserirSequencial($dado_sequencial);
             }else{ //atualiza sequencial de projeto.
@@ -127,16 +129,16 @@ class CadastrarProjetoController extends GenericControllerNew {
                 } else {
                    $nrSequencial = str_pad($nrSequencial, 4, "0", STR_PAD_LEFT);
                 }
-  
+
 
             }
-            
+
            $dados['AnoProjeto'] = date('y');
             $dados['Sequencial'] = $nrSequencial;
-            
+
             $projetos->inserir($dados);
-            
-            
+
+
             parent::message("Projeto cadastado com sucesso", "cadastrarprojeto/index", "CONFIRM");
         } catch (Exception $e) {
             xd($e->getTrace());
@@ -150,13 +152,12 @@ class CadastrarProjetoController extends GenericControllerNew {
         $ProcessoMascara = $post->nrprocesso;
         preg_match_all('#\d+#', $post->nrprocesso, $processo);
         $Processo = implode('',$processo[0]);
-        header("Content-Type: text/html; charset=ISO-8859-1", true);
         if(Validacao::validarNrProcesso($Processo)){
             $projeto = new Projetos();
             $where = array('Processo =  ?'=>$Processo);
-            $nrProcesso = $projeto->VerificaPronac($where)->toArray(); // verifica se processo ja está vinculado a um PRONAC.
+            $nrProcesso = $projeto->VerificaPronac($where)->toArray(); // verifica se processo ja estï¿½ vinculado a um PRONAC.
             if(count($nrProcesso)> 0){
-                $this->view->processo = 'Processo já vinculado a um PRONAC';
+                $this->view->processo = 'Processo jï¿½ vinculado a um PRONAC';
             } else {
                 // verifica se processo existe no SAD.
                 preg_match("#\.(.*?)\/#",$ProcessoMascara,$processoNumero);
@@ -170,35 +171,34 @@ class CadastrarProjetoController extends GenericControllerNew {
                 } else {
                     $this->view->processo = 'Processo inexistente no SAD';
                 }
-                
+
             }
         } else {
             $this->view->processo = 'Digito verificador do processo incorreto!';
         }
     }
-    
+
     public function validaragenteAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $post = Zend_Registry::get('post');
-        
-        $agentes = new Agentes();
-        
+
+        $agentes = new Agente_Model_DbTable_Agentes();
+
         preg_match_all('#\d+#', $post->CgcCpf, $cgcCpf);
         $CgcCpf = implode('',$cgcCpf[0]);
-        
+
         $where = array('a.CNPJCPF = ?' =>$CgcCpf);
-        
-        $agente = $agentes->buscarAgenteNome($where)->toArray();
-        
+
+        $agente = $agentes->buscarAgenteENome($where)->toArray();
+
         if(count($agente) == 0 ){
             echo json_encode(array('agente'=>false));
         } else{
             echo json_encode(array('agente'=>true , 'descricao' => utf8_encode($agente[0]['Descricao']) ));
         }
-        
-        
+
+
     }
 
 }

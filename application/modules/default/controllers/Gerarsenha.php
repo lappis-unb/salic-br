@@ -1,15 +1,10 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Gerarsenha
  *
  * @author tisomar
  */
-class Gerarsenha extends GenericControllerNew {
+class Gerarsenha extends MinC_Controller_Action_Abstract {
 
     public static  function gerasenha($numcarats=8, $lmin=true, $lmai=true, $numeros=true, $simb=false)
     {
@@ -32,4 +27,3 @@ class Gerarsenha extends GenericControllerNew {
         return $senha;
     }
 }
-?>

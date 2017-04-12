@@ -1,0 +1,33 @@
+<?php
+/**
+ * Mostra os erros
+ * @author Equipe RUP - Politec
+ * @since 29/03/2010
+ * @version 1.0
+ * @package application
+ * @subpackage application.view.scripts.error
+ * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
+ * @link http://www.cultura.gov.br
+ */
+?>
+
+<?php //if ($this->ambiente == 'development') : ?>
+<div style="overflow:auto; width:90%; margin:auto; border:0.1em solid #ccc; background:#ffc;">
+	<div class="msg-exception">
+		<fieldset>
+			<legend>Exce&ccedil;&atilde;o</legend>
+			<b>Descri&ccedil;&atilde;o:</b> <?php echo $this->exception->getMessage() ?>
+		</fieldset>
+
+		<fieldset>
+			<legend>Rastreamento do erro</legend>
+			<pre><?php echo $this->exception->getTraceAsString() ?></pre>
+		</fieldset>
+
+		<fieldset>
+			<legend>Par&acirc;metros requisitados</legend>
+			<pre><?php echo var_export($this->request->getParams(), true) ?></pre>
+		</fieldset>
+	</div>
+</div>
+<?php //endif; ?>

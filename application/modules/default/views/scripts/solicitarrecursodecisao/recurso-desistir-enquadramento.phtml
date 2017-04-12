@@ -1,0 +1,68 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>var $3 = jQuery.noConflict();</script>
+<script src="<?php echo $this->baseUrl(); ?>/public/library/materialize/js/materialize.js"></script>
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
+
+<style type="text/css">
+    label{
+        font-weight: normal;
+        margin-right: 15px;
+    }
+
+    div .termo {
+        margin: 0 auto;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <h3>Desistência do Prazo Recursal</h3>
+        <form name="form" id="form" action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-enquadramento')); ?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>" method="post">
+            <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projetos->IdPRONAC; ?>" />
+            <table>
+                <tr>
+                    <th>Pronac</th>
+                    <th>Nome do Projeto</th>
+                </tr>
+                <tr>
+                    <td align="center"><?php echo $this->projetos->AnoProjeto.$this->projetos->Sequencial; ?></td>
+                    <td align="center"><?php echo $this->projetos->NomeProjeto; ?></td>
+                </tr>
+            </table>
+            <div class="card-panel grey lighten-3 z-depth-4 termo">
+                <p>Prezado Proponente, a manifestação de concordância com os termos da decisão da Comissão Nacional de Incentivo à Cultura - CNIC relativa ao seu projeto cultural apreciado na última Reunião implica em renúncia à possibilidade de encaminhamento de pedido de reconsideração conforme disposto no art. 44 da Instrução Normativa nº 1, de 24/6/2013:</p>
+                <p style="font-style: italic;">"Art. 44.  Da decisão caberá pedido de reconsideração, no prazo de dez dias corridos, a contar do seu registro no Salic."</p>
+                <p>Dessa forma, ao concluir o procedimento de concordância que é facultativo, o seu projeto cultural será automaticamente encaminhado, juntamente com os demais projetos na mesma situação, para análise da decisão da CNIC e verificação da instrução processual com vistas à publicação da Portaria que autoriza a captação de recursos incentivados no Diário Oficial da União - DOU, independentemente do prazo referido no art. 44.</p>
+                <br clear="all">
+            </div>
+            <div class="input-field col s12 center-align">
+                <a
+                    data-ajax-modal-height="400px"
+                    data-ajax-modal="<?php echo $this->url(array('module' => 'default', 'controller'=> 'solicitarrecursodecisao', 'action' => 'concordar-desistencia-recursal-modal'));?>?idPronac=<?php echo $this->projetos->IdPRONAC;?>" class="tooltipped waves-effect waves-light btn modal-trigger" data-tooltip="Concordar com os Termos" href="#modal1">Concordo
+                    <i class="material-icons right modal-trigger">send</i>
+                </a>
+                <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>"
+                   class="tooltipped red-text btn waves-effect waves-dark white"
+                   data-tooltip="Cancelar Desistência"
+                   id="btn_cancelar"
+                   name="action">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+<!--<div id="modal1" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--      <p>Tem certeza? Essa decisão não pode ser revertida.</p>-->
+<!--    </div>-->
+<!--    <div class="modal-footer">-->
+<!--      <a href="--><?php //echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?><!--?idPronac=--><?php //echo $this->projetos->IdPRONAC;?><!--" class=" modal-action modal-close waves-effect waves-red btn-flat">Discordo</a>-->
+<!--        <a href="--><?php //echo $this->url(array('module' => 'default', 'controller'=> 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-enquadramento-salvar'));?><!--?idPronac=--><?php //echo $this->projetos->IdPRONAC;?><!--" class=" modal-action modal-close waves-effect waves-green btn-flat">Concordo</a>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script type="text/javascript">-->
+<!--        $3(document).ready(function () {-->
+<!--            $3('.modal').modal();-->
+<!--        });-->
+<!--</script>-->

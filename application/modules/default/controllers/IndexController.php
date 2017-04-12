@@ -1,30 +1,32 @@
 <?php
 /**
- * Login e autenticação
+ * Login e autenticacao
  * @author Equipe RUP - Politec
  * @since 20/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright Â© 2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class IndexController extends GenericControllerNew
+class IndexController extends MinC_Controller_Action_Abstract
 {
     /**
-     * Método principal
+     * Metodo principal
      * @access public
      * @param void
      * @return void
      */
     public function indexAction()
     {
-        $this->_forward("index", "login");
+        $this->redirect("/autenticacao/index/index");
     }
 
+    public function indisponivelAction()
+    {
+
+    }
 
     /*
      * Pega o IP do usuario
@@ -53,7 +55,7 @@ class IndexController extends GenericControllerNew
     }
 
     /**
-     * Envia notificação para o usuário através do aplicativo mobile.
+     * Envia notificaï¿½ï¿½o para o usuï¿½rio atravï¿½s do aplicativo mobile.
      *
      * @param stdClass $projeto
      */
@@ -76,7 +78,7 @@ class IndexController extends GenericControllerNew
     }
 
     /**
-     * Método para o envio de notificações
+     * Mï¿½todo para o envio de notificaï¿½ï¿½es
      *
      * @access public
      * @param void
@@ -85,7 +87,7 @@ class IndexController extends GenericControllerNew
     public function notificationAction() {
         $idPronac = $this->_request->getParam('idPronac');
 
-        # Envia notificação para o usuário através do aplicativo mobile.
+        # Envia notificaï¿½ï¿½o para o usuï¿½rio atravï¿½s do aplicativo mobile.
         $modelProjeto = new Projetos();
         $projeto = $modelProjeto->buscarPorPronac($idPronac?$idPronac:119079);
         $this->enviarNotificacao((object)array(
@@ -129,7 +131,7 @@ class IndexController extends GenericControllerNew
         //Pega timestamp atual
         $data = new Zend_Date();
         $timestamp = $data->getTimestamp();
-        
+
         $maxTentativas = 4;
         $tempoBan = 300; // segundos
 
@@ -169,14 +171,14 @@ class IndexController extends GenericControllerNew
                         {
                             $tbLoginTentativasAcesso->removeTentativa($username,$ip);
 
-                            $auth = Zend_Auth::getInstance(); // instancia da autentição
+                            $auth = Zend_Auth::getInstance(); // instancia da autentiï¿½ï¿½o
 
-                            // registra o primeiro grupo do usurio (pega unidade autorizada, orgão e grupo do usuário)
-                            $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuário
+                            // registra o primeiro grupo do usurio (pega unidade autorizada, orgï¿½o e grupo do usuï¿½rio)
+                            $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
 
-                            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-                            $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessão
-                            $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o orgão na sessão
+                            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+                            $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessï¿½o
+                            $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o orgï¿½o na sessï¿½o
                             $this->orgaoAtivo = $GrupoAtivo->codOrgao;
 
                             // redireciona para o Controller protegido
@@ -223,7 +225,7 @@ class IndexController extends GenericControllerNew
     public function logoutAction()
     {
         $auth = Zend_Auth::getInstance();
-        $auth->clearIdentity(); // limpa a autenticação
+        $auth->clearIdentity(); // limpa a autenticaï¿½ï¿½o
         Zend_Session::destroy();
         unset($_SESSION);
         $this->_redirect('index');
@@ -232,7 +234,7 @@ class IndexController extends GenericControllerNew
 
 
     /**
-     * Altera o pefil do usuário
+     * Altera o pefil do usuï¿½rio
      * @access public
      * @param void
      * @return void
@@ -240,13 +242,13 @@ class IndexController extends GenericControllerNew
     public function alterarperfilAction()
     {
         $get      = Zend_Registry::get('get');
-        $codGrupo = $get->codGrupo; // grupo do usuário logado
-        $codOrgao = $get->codOrgao; // órgão do usuário logado
+        $codGrupo = $get->codGrupo; // grupo do usuï¿½rio logado
+        $codOrgao = $get->codOrgao; // ï¿½rgï¿½o do usuï¿½rio logado
 
-        $auth       = Zend_Auth::getInstance(); // pega a autenticação
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $GrupoAtivo->codGrupo = $codGrupo; // armazena o grupo ativo na sessão
-        $GrupoAtivo->codOrgao = $codOrgao; // armazena o órgão ativo na sessão
+        $auth       = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $GrupoAtivo->codGrupo = $codGrupo; // armazena o grupo ativo na sessï¿½o
+        $GrupoAtivo->codOrgao = $codOrgao; // armazena o ï¿½rgï¿½o ativo na sessï¿½o
 
         if($GrupoAtivo->codGrupo == "1111" && $GrupoAtivo->codOrgao == "2222"){
             $auth   = Zend_Auth::getInstance();
@@ -264,17 +266,17 @@ class IndexController extends GenericControllerNew
         $codOrgaoMaxSuperior = $tblUsuario->recuperarOrgaoMaxSuperior($codOrgao);
         $_SESSION['Zend_Auth']['storage']->usu_org_max_superior = $codOrgaoMaxSuperior;
 
-        // redireciona para a página inicial do sistema
+        // redireciona para a pï¿½gina inicial do sistema
         parent::message("Seu perfil foi alterado no sistema. Voc&ecirc; ter&aacute; acesso a outras funcionalidades!", "principal", "ALERT");
     } // fecha alterarPerfilAction()
 
 
     public function verificamensagemusuarioAction(){
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $usuario = new Usuario();
         $pr = new Projetos();
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Agente = $usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $idAgente = $Agente['idAgente'];
         $camMensagem = getcwd().'/public/mensagem/mensagem-destinatario-'.$idAgente.'.txt';
@@ -289,7 +291,7 @@ class IndexController extends GenericControllerNew
             }
         }
         $qtdmensagem = count($verificarmensagem);
-//                xd($verificarmensagem);
+
         if($qtdmensagem > 0){
             $a = 0;
             $idpronac = 0;
@@ -311,39 +313,45 @@ class IndexController extends GenericControllerNew
         exit();
     }
 
+    /**
+     * montarPlanilhaOrcamentariaAction
+     *
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     * @todo Verificar melhor local para esse metodo
+     */
+    public function montarPlanilhaOrcamentariaAction()
+    {
 
-    public function montarPlanilhaOrcamentariaAction() {
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $get = Zend_Registry::get('get');
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $this->view->idPronac = $get->idPronac;
         $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
         $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($get->idPronac, $get->tipoPlanilha);
         $planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, $get->tipoPlanilha);
-
-        // tipoPlanilha = 0 : Planilha Orçamentária da Proposta
-        // tipoPlanilha = 1 : Planilha Orçamentária do Proponente
-        // tipoPlanilha = 2 : Planilha Orçamentária do Parecerista
-        // tipoPlanilha = 3 : Planilha Orçamentária Aprovada Ativa
-        // tipoPlanilha = 4 : Cortes Orçamentários Aprovados
+        // tipoPlanilha = 0 : Planilha Orcamentaria da Proposta
+        // tipoPlanilha = 1 : Planilha Orcamentaria do Proponente
+        // tipoPlanilha = 2 : Planilha Orcamentaria do Parecerista
+        // tipoPlanilha = 3 : Planilha Orcamentaria Aprovada Ativa
+        // tipoPlanilha = 4 : Cortes Orcamentarios Aprovados
         // tipoPlanilha = 5 : Remanejamento menor que 20%
-        // tipoPlanilha = 6 : Readequação
+        // tipoPlanilha = 6 : Readequacao
 
         $link = isset($get->link) ? true : false;
 
         $this->montaTela(
             'index/montar-planilha-orcamentaria.phtml', array(
-                'tipoPlanilha' => $get->tipoPlanilha,
-                'tpPlanilha' => (count($planilhaOrcamentaria)>0) ? isset($planilhaOrcamentaria[0]->tpPlanilha) ? $planilhaOrcamentaria[0]->tpPlanilha : '' : '',
-                'planilha' => $planilha,
-                'link' => $link
+            'tipoPlanilha' => $get->tipoPlanilha,
+            'tpPlanilha' => (count($planilhaOrcamentaria)>0) ? isset($planilhaOrcamentaria[0]->tpPlanilha) ? $planilhaOrcamentaria[0]->tpPlanilha : '' : '',
+            'planilha' => $planilha,
+            'link' => $link
             )
         );
     }
-
-} // fecha class
+}

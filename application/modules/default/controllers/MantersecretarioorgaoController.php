@@ -1,19 +1,14 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Mantersecretarioorgao
  *
  * @author Tiago
  */
-class MantersecretarioorgaoController extends GenericControllerNew {
+class MantersecretarioorgaoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97; // Gestor Salic
 
@@ -49,11 +44,11 @@ class MantersecretarioorgaoController extends GenericControllerNew {
             $result['nmSecretario'] = utf8_encode($buscarOrgaoSecretario[0]->nmSecretario);
             $result['dsCargo'] = utf8_encode($buscarOrgaoSecretario[0]->dsCargo);
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             $result['existe'] = false;
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -72,7 +67,7 @@ class MantersecretarioorgaoController extends GenericControllerNew {
             $rsOrgaoSecretario->nmSecretario = $nomeSecretario;
             $rsOrgaoSecretario->dsCargo = $cargo;
             $rsOrgaoSecretario->save();
-            $acao = "Alteração realizada";
+            $acao = "Alteraï¿½ï¿½o realizada";
         } else {
             $dados = array(//insere orgaosecretario
                 'idOrgao' => $orgao,
@@ -85,5 +80,3 @@ class MantersecretarioorgaoController extends GenericControllerNew {
         parent::message("{$acao} com sucesso! ", "mantersecretarioorgao/index?orgao=".$orgao, "CONFIRM");
     }
 }
-
-?>

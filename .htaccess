@@ -1,17 +1,15 @@
 RewriteEngine on
+RewriteCond %{REQUEST_URI} !=/server-status
 RewriteRule .* index.php
 php_flag magic_quotes_gpc off
 php_flag register_globals off
 php_value upload_max_filesize 20M
 php_value post_max_size 20M
 
-## Always set these headers.
 Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, HEAD, PUT"
 Header always set Access-Control-Max-Age "1000"
 Header always set Access-Control-Allow-Headers "x-requested-with, Content-Type, origin, authorization, accept, client-security-token, ApplicationKey, registrationId"
 
-## Added a rewrite to respond with a 200 SUCCESS on every OPTIONS request.
-RewriteEngine On
 RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^(.*)$ $1 [R=200,L]

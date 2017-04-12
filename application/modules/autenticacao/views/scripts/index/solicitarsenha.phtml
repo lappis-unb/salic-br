@@ -1,0 +1,97 @@
+<div style="display:none" id="dialog-alert2"></div>
+<div id="breadcrumb">
+    <?php
+    $auth = Zend_Auth::getInstance();
+    if (isset ($auth->getIdentity()->Cpf)) { ?>
+        <ul>
+            <li class="first"><a href="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'index')); ?>">In&iacute;cio</a>
+            </li>
+            <li class="last">Solicitar Nova Senha</li>
+        </ul>
+    <?php } ?>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m3 l3"></div>
+        <div class="col s12 m6 l6">
+            <div class="card green-text text-darken-4 animated fadeInUp">
+                <div class="card-content  white-text"
+                     style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat center 0 #acda5d ;">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12 center-align">
+                            <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
+                        </div>
+                        <div class="col s12">
+                            <span class="card-title"><b>Nova senha</b></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <form
+                        class="materialize"
+                        data-ajax-form="true"
+                        action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'solicitarsenha')); ?>"
+                        name="solicitaSenha" id="solicitaSenha"
+                        method="POST">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input required="required" maxlength="14" onkeydown="mascaraCnpjCpf(this);"
+                                       onkeypress="mascaraCnpjCpf(this);"
+                                       onkeyup="mascaraCnpjCpf(this);" type="text" name="cpf" id="cpf"/>
+                                <label for="cpf">CPF</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">date_range</i>
+                                <input required="required" onblur="validaData(this)"
+                                       onkeyup="mascara(this, format_data);"
+                                       onkeydown="mascara(this, format_data);" onkeypress="mascara(this, format_data);"
+                                       maxlength="10" class="datepicker" type="text" name="dataNasc" id="dataNasc"/>
+                                <label for="dataNasc">Data de Nascimento</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mail_outline</i>
+                                <input required="required" maxlength="200" onblur="valida_email(this.value)" type="email"
+                                       name="email" id="email"/>
+                                <label for="email">E-mail</label>
+                            </div>
+                        </div>
+                        <button style="width: 100%;" id="btConfirmar"
+                                class="btn waves-effect waves-light tooltipped" data-delay="50"
+                                data-tooltip="Solicitar nova senha" type="submit" name="action">Enviar
+                        </button>
+                    </form>
+                </div>
+                <div class="card-action center-align">
+                    <a class="tooltipped" data-delay="50"
+                       data-tooltip="Acessar o sistema"
+                        href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'index', 'module' => 'autenticacao')); ?>');">J&aacute; sou cadastrado</a>&nbsp;&nbsp;&nbsp;
+                    <a class="tooltipped" data-delay="50"
+                        data-tooltip="Realizar o cadastro no sistema" href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>');">
+                        N&atilde;o sou cadastrado
+                    </a>&nbsp;&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m3 l3"></div>
+    </div>
+</div>
+<script>
+    var dateNow = new Date();
+    dateNow.setFullYear(dateNow.getUTCFullYear() - 16);
+    $3(document).ready(function ($) {
+        $('#dataNasc').mask('00/00/0000');
+        $('#dataNasc').mask('00/00/0000');
+        $("#solicitaSenha").validate({
+            rules: {
+                cpf: {
+                    cpfBR: $('#cpf').val()
+                }
+            }
+        });
+    });
+</script>

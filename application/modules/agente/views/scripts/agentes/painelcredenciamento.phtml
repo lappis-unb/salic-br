@@ -1,0 +1,105 @@
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
+<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para In�cio">In&iacute;cio</a></li>
+        <li class="last">Pareceristas</li>
+    </ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+
+<!-- ========== IN�CIO T�TULO ========== -->
+<div id="titulo">
+    <div>Pareceristas Ativos</div>
+</div>
+<!-- ========== FIM T�TULO ========== -->
+<div id="conteudo">
+<form id="form" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'painelcredenciamento'));?>" method="post">
+    <table class="tabela">
+        <tr>
+            <th colspan="3">Busca</th>
+        </tr>
+        <tr>
+            <td width="300"><label for="nome">Nome:</label> <br /> <input type="text" name="nome" id="nome" class="input_simples" size="40" /></td>
+            <td><label for="cpf">CPF: </label> <br />
+                <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14"
+                       onkeyup="mascara(this, format_cpf);"
+                       onclick="limpar_campo(this, ' ');"
+                       onkeypress="limpar_campo(this, ' ');"
+                       onmouseout="restaurar_campo(this, ' ');"
+                       value=""  />
+            </td>
+            <td width="120" align="center"><input type="submit" class="btn_localizar" value=" " /></td>
+        </tr>
+    </table>
+</form>
+
+
+    <?php echo $this->qtd?>
+        <table class="tabela " id="pareceristas">
+            <thead>
+            <tr class="titulo_tabela">
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>A&ccedil;&atilde;o</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->dados as $dado): ?>
+                <tr>
+                    <td><?php echo $dado->Nome; ?></td>
+                    <td><?php echo Mascara::addMaskCPF($dado->CNPJCPF); ?></td>
+
+                        <td align="center"><input type="button" value=" " class="btn_editar" onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes','id' =>$dado->idParecerista),'',true);?>')" /></td>
+
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+</div>
+
+<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
+<div id="rodapeConteudo"><span></span></div>
+<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+
+<br clear="all" />
+
+
+<script
+    src="https://code.jquery.com/jquery-1.12.4.js"
+    integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+    crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.material.min.js"></script>
+
+<script type="text/javascript">
+        
+    (function($){
+
+        $(document).ready (function(){
+            $('#pareceristas').DataTable(
+                {
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+                    }
+                    , "order": [0,1]
+                    , "searching": true
+                    , "lengthChange": true
+                    ,  columnDefs: [
+                    {
+                        targets: [],
+                        className: 'mdl-data-table__cell--non-numeric'
+                    }
+                ]
+                    ,
+                    "aoColumnDefs": [
+                        { 'bSortable': false, 'aTargets': [ 2 ] }
+                    ]
+                });
+        });
+    }($.noConflict(true)));
+
+</script>

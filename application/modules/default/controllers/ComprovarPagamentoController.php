@@ -3,7 +3,7 @@
  * 
  * @author Caio Lucena
  */
-class ComprovarPagamentoController extends GenericControllerNew
+class ComprovarPagamentoController extends MinC_Controller_Action_Abstract
 {
     /**
      * 

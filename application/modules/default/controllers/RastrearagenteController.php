@@ -7,19 +7,17 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class RastrearagenteController extends GenericControllerNew {
+class RastrearagenteController extends MinC_Controller_Action_Abstract {
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access privacte
      */
 
     public function init() {
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 92;
         $PermissoesGrupo[] = 93;
@@ -45,11 +43,13 @@ class RastrearagenteController extends GenericControllerNew {
         $PermissoesGrupo[] = 137;
         $PermissoesGrupo[] = 138;
         $PermissoesGrupo[] = 139;
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 151;
 
-        // definição do perfil
+        // definiï¿½ï¿½o do perfil
         parent::perfil(1, $PermissoesGrupo);
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
     public function indexAction() {
 
@@ -63,11 +63,12 @@ class RastrearagenteController extends GenericControllerNew {
             parent::message("Por favor informe o CPF ou CNPJ.", "/Rastrearagente", "ERROR");
         }
         $CpfCnpj = str_replace(array(".", "-", "/"), array("", "", ""), $CpfCnpj); //removendo mascara de CPF e CNPJ
-        $agente = ManterAgentesDAO::buscarAgentes($CpfCnpj);
+        $agente = Agente_Model_ManterAgentesDAO::buscarAgentes($CpfCnpj);
         if(count($agente)<1) {
             parent::message("Nenhum agente encontrado com o CPF/CNPJ {$get->CpfCnpj}", "/Rastrearagente", "ALERT");
         }
-        $visoes = VisaoDAO::buscarVisao($agente[0]->idAgente);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoes = $visaoTable->buscarVisao($agente[0]->idAgente);
 
         $projeto = new Projetos();
         $projetos = null;
@@ -75,15 +76,15 @@ class RastrearagenteController extends GenericControllerNew {
         $projetos2 = null;
         $projetos2 = $projeto->buscarTodosDadosProjeto(null,$CpfCnpj)->toArray();
 
-        $preprojeto = new Proposta();
+        $preprojeto = new Proposta_Model_DbTable_PreProjeto();
         $preprojetos = $preprojeto->buscar(array("idAgente = ? " => $agente[0]->idAgente));
         $preprojetos = empty($preprojetos) ? array() : $preprojetos;
 
-        $vinculo = new Vinculacao();
+        $vinculo = new Agente_Model_DbTable_Vinculacao();
         $vinculos = $vinculo->BuscarVinculos($agente[0]->idAgente);
         $vinculos = empty($vinculos) ? array() : $vinculos;
 
-        $proposta = new Proposta();
+        $proposta = new Proposta_Model_DbTable_PreProjeto();
         $propostas = $proposta->propostastransformadas($agente[0]->idAgente);
         $propostas = empty($propostas) ? array() : $propostas;
 

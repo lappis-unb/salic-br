@@ -1,7 +1,6 @@
 <?php
-include_once 'GenericControllerNew.php';
 
-class LembretesController extends GenericControllerNew {
+class LembretesController extends MinC_Controller_Action_Abstract {
 	
 	public function LembretesAction() {
 	}
@@ -151,21 +150,7 @@ class LembretesController extends GenericControllerNew {
 
 		
 	}
-		
-		
-		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	/*
 
 public function alterarlembreteAction() 
@@ -194,9 +179,6 @@ public function alterarlembreteAction()
 	
 */
 
-	
-	
-	
 	public function buscalembreteAction()
 	
 		{
@@ -233,7 +215,7 @@ public function alterarlembreteAction()
 					else
 					{
 						// redireciona a data para o lembrete
-						$this->_redirect("lembretes/index?pronac=" . $pronac ."&databusca=".$dtlembrete);
+						$this->redirect("lembretes/index?pronac=" . $pronac ."&databusca=".$dtlembrete);
 					}
 				} // fecha else
 			} // fecha try
@@ -255,11 +237,3 @@ public function alterarlembreteAction()
 		$this->view->lembretes = $tblembretes;
 	} 
 }
-	
-
-	
-	
-	
-	
-	
-	

@@ -1,0 +1,152 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        // carrega a combo de segmentos culturais
+        $('#areaCultural').change(function() {
+            $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'segmento', 'action' => 'combo')); ?>',
+                data: {
+                    id: $('#areaCultural').val()
+                },
+                success: function(dados) {
+                    $('#segmentoCultural').find('option').remove();
+                    $('#segmentoCultural').append(dados);
+                }
+            });
+        });
+
+        <?php if (!$this->isEditavel) : ?>
+             //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
+             JSBloquearAlteracaoFormulario();
+        <?php endif; ?>
+
+        //CARREGAR COMBO DE SEGMENTOS DE ACORDO COM A COMBO DE AREAS
+        <?php if(!empty($this->planoDistribuicao->Area)): ?>
+            $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'segmento', 'action' => 'combo')); ?>',
+                data: {
+                    id: $('#areaCultural').val()
+                },
+                success: function(dados) {
+                    $('#segmentoCultural').find('option').remove();
+                    $('#segmentoCultural').append(dados);
+                    $('#segmentoCultural option').each(function(){
+                       if($(this).val() == '<?php echo $this->planoDistribuicao['Segmento']; ?>'){
+                           $(this).attr('selected',true);
+                       }
+                   });
+                }
+            });
+        <?php endif; ?>
+
+        $('#btn_salvar').click(function(){
+
+            var i=0,
+                erros = null;
+
+            var preenchimento = true;
+            $('.obrigatorio').each(function(){
+                if($.trim($(this).val()) == ''){
+                    preenchimento = false;
+                }
+            });
+
+            if(!preenchimento){
+                i++;
+                erros = erros + i+' - Favor preencher os campos obrigat&oacute;rios.';
+            }
+
+            if(i>0){
+                $("#msgAlerta").dialog("destroy");
+                $("#msgAlerta").html(erros);
+                $("#msgAlerta").dialog({
+                    resizable: false,
+                    title: 'Alerta!',
+                    width: 440,
+                    modal: true,
+                    buttons : {
+                        'OK' : function(){
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+                $('.ui-dialog-titlebar-close').remove();
+            } else {
+                $("#frmPlanoDistribuicao").submit();
+            }
+        });
+    });
+</script>
+
+<style type="text/css">
+    label.error{ color:red; font-weight: normal; }
+</style>
+
+<!-- ========== INICIO CONTEUDO ========== -->
+<div id="confirma" class="sumir"></div>
+<div id="msgAlerta" class="sumir"></div>
+<form action="<?php echo $this->acaoSalvar; ?>" name="frmPlanoDistribuicao" id="frmPlanoDistribuicao" method="post">
+    <input type="hidden" name="idPlanoDistribuicao" id="idPlanoDistribuicao" value="<?php echo $this->planoDistribuicao['idPlanoDistribuicao']; ?>">
+    <input type="hidden" name="idProjeto" id="idProjeto" value="<?php echo $this->planoDistribuicao['idProjeto']; ?>">
+    <!-- ========== INICIO TABELA DADOS ========== -->
+    <table  class="tabela">
+        <tr>
+            <th colspan="4" align="center">Nome do Evento / Produto</th>
+        </tr>
+        <tr>
+            <td class="destacar bold w150">Produto <span style="color: red;">*</span></td>
+            <td>
+                <select class="input_simples w300 obrigatorio" name="produto" id="produto"
+                        <?php echo (!empty($this->planoDistribuicao->idProduto)) ? " disabled='disabled'" : ""; ?>>
+                    <option value=""> - Selecione - </option>
+                    <?php foreach ($this->comboprodutos as $produto): ?>
+                        <option value="<?php echo $produto['Codigo']; ?>" <?php echo ($produto['Codigo'] == $this->planoDistribuicao['idProduto']) ? " selected='selected'" : ""; ?>>
+                            <?php echo $produto['Descricao']; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+            <td class="destacar bold w150">Produto Principal? <span style="color: red;">*</span></td>
+            <td>
+                <?php if (($this->bln_exitePP == "false") || isset($this->planoDistribuicao['idPlanoDistribuicao'])): //Verifica se existe produto principal ja cadastrado ?>
+                    <select class="input_simples w100 obrigatorio" name="prodprincipal" id="prodprincipal">
+                        <option value="" selected>- Selecione -</option>
+                        <option value="0" <?php echo ($this->planoDistribuicao['stPrincipal'] == "0") ? " selected='selected'" : ""; ?>>N&atilde;o</option>
+                        <option value="1" <?php echo ($this->planoDistribuicao['stPrincipal'] == "1") ? " selected='selected'" : ""; ?>>Sim</option>
+                    </select>
+                <?php else: ?>
+                    <select class="input_simples w100" name="prodprincipal" id="prodprincipal">
+                        <option value="0" selected>N&atilde;o</option>
+                    </select>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="destacar bold" style="width: 1px;">&Aacute;rea <span style="color: red;">*</span></td>
+            <td>
+                <select class="input_simples obrigatorio" name="areaCultural" id="areaCultural">
+                    <option value=""> - Selecione uma &Aacute;rea Cultural - </option>
+                    <?php foreach ($this->comboareasculturais as $comboareacultural): ?>
+                        <option value="<?php echo $comboareacultural->id; ?>" <?php echo ($comboareacultural->id == $this->planoDistribuicao['Area']) ? " selected='selected'" : ""; ?>>
+                            <?php echo $comboareacultural->descricao; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+            <td class="destacar bold" style="width: 1px;">Segmento <span style="color: red;">*</span></td>
+            <td>
+                <select class="input_simples obrigatorio" name="segmentoCultural" id="segmentoCultural">
+                    <option value=""> <?php echo " - Selecione um segmento cultural - "; ?> </option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div style="width: 100%">
+        <button type="button" value="" class="btn" id="btn_salvar" >salvar</button>
+    </div>
+    <br clear="all" />
+</form>

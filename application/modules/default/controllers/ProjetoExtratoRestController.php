@@ -7,14 +7,14 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class ProjetoExtratoRestController extends Minc_Controller_AbstractRest {
 
     public function postAction(){}
     
     public function indexAction(){
-        # Parametros da Paginação.
+        # Parametros da Paginaï¿½ï¿½o.
         $next = $this->_request->getParam('next');
         $offset = $this->_request->getParam('offset');
         $total = $this->_request->getParam('total');
@@ -30,7 +30,7 @@ class ProjetoExtratoRestController extends Minc_Controller_AbstractRest {
             'idPronac' => $projeto,
             'ano' => $ano,
             'mes' => $mes);
-        # Verifica se existe necessidade de buscar o número total de registros da consulta
+        # Verifica se existe necessidade de buscar o nï¿½mero total de registros da consulta
         if(!$total){
             $total = $modelProjetos->buscarTotalExtrato($objParam);
         }
@@ -44,7 +44,7 @@ class ProjetoExtratoRestController extends Minc_Controller_AbstractRest {
             }
         }
 
-        # Resposta da autenticação
+        # Resposta da autenticaï¿½ï¿½o
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode((object) array('list' => $listaExtrato, 'total' => $total)));
     }
     

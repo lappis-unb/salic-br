@@ -1,5 +1,5 @@
 <?php
-class PlanoDistribuicaoController extends GenericControllerNew
+class PlanoDistribuicaoController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * Reescreve o método init()
@@ -33,4 +33,3 @@ class PlanoDistribuicaoController extends GenericControllerNew
             $this->montaTela("planodistribuicao/index.phtml", $arrDados);
         }
 }
-?>

@@ -67,7 +67,7 @@ Certifique-se de que está na branch correta. Faça os testes; caso encontre bug
 (1)
 
     $ git checkout dev-backlog
-    $ git commit -m 'fix: pequena correção'
+    $ git commit -m 'fix: pequena correcao'
     $ git push origin dev-backlog
 
 (2)
@@ -83,8 +83,8 @@ Se estiver tudo ok, edite o CHANGELOG e crie a tag
 
     $ vim CHANGELOG
     $ git add CHANGELOG
-    $ git commit -m 'adicionando alterações do CHANGELOG'
-    $ git tag -a v1.7.1 -m 'release de correções na proposta'
+    $ git commit -m 'adicionando alteracoes do CHANGELOG'
+    $ git tag -a v1.7.1 -m 'release de correcoes na proposta'
     $ git push origin dev-backlog
     
 

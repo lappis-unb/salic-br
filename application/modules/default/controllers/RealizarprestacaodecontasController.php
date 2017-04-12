@@ -7,16 +7,16 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
-class RealizarPrestacaoDeContasController extends GenericControllerNew {
+class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstract {
 	private $getIdUsuario = 0;
 	private $getIdAgenteLogado = 0;
 	private $codGrupo 	   = null;
 	private $codOrgao 	   = null;
 	public  $intTamPag     = 15;
-	private $modalidade    = array('Selecione','Convite','Tomada de Preços','Concorr&ecirc;ncia','Concurso','Preg&atilde;o');
+	private $modalidade    = array('Selecione','Convite','Tomada de Preï¿½os','Concorr&ecirc;ncia','Concurso','Preg&atilde;o');
 	private $tipoDocumento = array('Selecione','Boleto Banc&aacute;rio','Cupom Fiscal','Nota Fiscal/Fatura','Recibo de Pagamento','Aut&ocirc;nomo', 'Guia De Recolhimento');
 	private $tipoSituacao  = array('1'=>'Executado integralmente','2'=>'Executado parcialmente','3'=>'N&atilde;o Executado','4'=>'Sem informa&ccedil;&atilde;o');
 	private $cdGruposDestinoAtual  = null;
@@ -36,14 +36,8 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         private $arrSituacoesGrids                   = array();
 
         private $situcaoEncaminhamentoAtual = null;
-	
-	/**
-	 * Reescreve o método init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
-	
+
+
 	public function init()
         {
             $arrSituacoesGrids = implode(',',$this->arrSituacoesAguardandoAnalise).','.implode(',',$this->arrSituacoesDevolvidosAposAnalise).','.implode(',',$this->arrSituacoesDiligenciados).','.implode(',',$this->arrSituacoesTCE);
@@ -61,20 +55,22 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $PermissoesGrupo [] = 82;
             $PermissoesGrupo [] = 132;
             $PermissoesGrupo [] = 100;
+            $PermissoesGrupo [] = 148;
+            $PermissoesGrupo [] = 151;
 
             parent::perfil ( 1, $PermissoesGrupo );
 
-            // cria a sessão com o grupo ativo
+            // cria a sessï¿½o com o grupo ativo
             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
-            // pega a autenticação
+            // pega a autenticaï¿½ï¿½o
             $auth 		  = Zend_Auth::getInstance ();
             $GrupoUsuario = $GrupoAtivo->codGrupo;
 
-            // instancia da autenticação
+            // instancia da autenticaï¿½ï¿½o
             $auth = Zend_Auth::getInstance();
             $this->getIdUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->usu_identificacao))->current();
             if(!empty($rsAgente)){
                 $this->getIdAgenteLogado = $rsAgente->idAgente;
@@ -90,12 +86,14 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $this->codOrgao       = $_SESSION['GrupoAtivo']['codOrgao'];
             $this->view->codOrgao = $_SESSION['GrupoAtivo']['codOrgao'];
 
-            $this->view->comboestados = Estado::buscar();
+            $buscaEstados = new Agente_Model_DbTable_UF();
+
+            $this->view->comboestados = $buscaEstados->buscar();
 
             $idpronac = $this->_request->getParam("idPronac");
             if(!empty($idpronac)){
                 $tblEncaminhamentoPrestacaoContas = new tbEncaminhamentoPrestacaoContas();
-                $rsEPC = $tblEncaminhamentoPrestacaoContas->buscar(array("idPronac = ?"=>$idpronac, 'stAtivo=?'=>1))->current();
+                $rsEPC = $tblEncaminhamentoPrestacaoContas->buscar(array("idPronac = ? " => $idpronac, 'stAtivo= ? ' => 1))->current();
                 if(!empty($rsEPC)){
                     $this->situcaoEncaminhamentoAtual = $rsEPC->idSituacaoEncPrestContas;
                     $this->cdGruposDestinoAtual       = $rsEPC->cdGruposDestino;
@@ -104,12 +102,12 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                     $this->view->cdGruposDestinoAtual       = $this->cdGruposDestinoAtual;
                 }
             }
-	} // fecha método init()
+	} // fecha mï¿½todo init()
 
         /**
-         * Não deletar essa action pois é usada para renderizar a view.
-         * Quando loga no sistema com o perfil de Técnico de prestação de contas
-         * Acessa o menu 'Prestação de Contas' -> 'Imprimir Laudo Final' e clicar
+         * Nï¿½o deletar essa action pois ï¿½ usada para renderizar a view.
+         * Quando loga no sistema com o perfil de Tï¿½cnico de prestaï¿½ï¿½o de contas
+         * Acessa o menu 'Prestaï¿½ï¿½o de Contas' -> 'Imprimir Laudo Final' e clicar
          * em 'Cancelar' vem para essa action
          */
         public function indexAction()
@@ -120,7 +118,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	public function montaArrBuscaCoincidentes($post)
         {
             $arrBusca=array();
-            
+
             //NOME PROJETO
             if(!empty($post->NomeProjeto)){
                 $projeto = utf8_decode($post->NomeProjeto);
@@ -145,17 +143,17 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             //PERIODO EXECUCAO
             if (isset($post->tpPeriodoExecucao) && !empty($post->tpPeriodoExecucao)){
                 if ($post->tpPeriodoExecucao == 1){ // exatamente igual
-                    
-                   if (isset($post->dtExecucao) && !empty($post->dtExecucao)) { 
+
+                   if (isset($post->dtExecucao) && !empty($post->dtExecucao)) {
                        $arrBusca["p.DtInicioExecucao >= '". Data::dataAmericana($post->dtExecucao) . " 00:00:00.000' AND p.DtInicioExecucao <= '". Data::dataAmericana($post->dtExecucao) . " 23:59:59.999'" ] = '?';
                     }
-                   if ( isset($post->dtExecucao_Final) && !empty($post->dtExecucao_Final)) { 
+                   if ( isset($post->dtExecucao_Final) && !empty($post->dtExecucao_Final)) {
                        $arrBusca["p.DtFimExecucao >= '". Data::dataAmericana($post->dtExecucao_Final) . " 00:00:00.000' AND p.DtFimExecucao <= '". Data::dataAmericana($post->dtExecucao_Final) . " 23:59:59.999'" ] = '?';
                    }
                 } else if ($post->tpPeriodoExecucao == 2) { // que inicia
                     if ( isset($post->dtExecucao) && !empty($post->dtExecucao)) {
                         //$arrBusca['p.DtInicioExecucao >= ?'] = Data::dataAmericana($post->dtExecucao) . " 00:00:00.000";
-                        $arrBusca["p.DtInicioExecucao >= '". Data::dataAmericana($post->dtExecucao) . " 00:00:00.000' AND p.DtInicioExecucao <= '". Data::dataAmericana($post->dtExecucao) . " 23:59:59.999'" ] = '?';                    
+                        $arrBusca["p.DtInicioExecucao >= '". Data::dataAmericana($post->dtExecucao) . " 00:00:00.000' AND p.DtInicioExecucao <= '". Data::dataAmericana($post->dtExecucao) . " 23:59:59.999'" ] = '?';
                     }
                 } else if ($post->tpPeriodoExecucao == 3) { // que finaliza
                     if ( isset($post->dtExecucao_Final) && !empty($post->dtExecucao_Final)) {
@@ -163,14 +161,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                         $arrBusca["p.DtFimExecucao >= '". Data::dataAmericana($post->dtExecucao_Final) . " 00:00:00.000' AND p.DtFimExecucao <= '". Data::dataAmericana($post->dtExecucao_Final) . " 23:59:59.999'" ] = '?';
                     }
                 } else if ($post->tpPeriodoExecucao == 4) { // entre
-                    
+
                     if ( isset($post->dtExecucao) && !empty($post->dtExecucao)) {$arrBusca['p.DtInicioExecucao >= ?'] = Data::dataAmericana($post->dtExecucao) . " 00:00:00.000";}
                     if ( isset($post->dtExecucao_Final) && !empty($post->dtExecucao_Final)) {$arrBusca['p.DtFimExecucao <= ?'] = Data::dataAmericana($post->dtExecucao_Final) . " 23:59:59.999";}
                 }
             }
-            //xd($arrBusca);
-            //$arrBusca = GenericControllerNew::montaBuscaData($post, "tpPeriodoExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
-            
+            //$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpPeriodoExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
+
             if(!empty($post->area)){
                 if($post->tipoPesqArea == 'EIG'){
                         if(!empty($post->area)){ $arrBusca["a.Codigo = ?"] = $post->area; }
@@ -191,7 +188,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         }
 
 	public function incluiRegrasGridsPrincipais($arrBusca,$post)
-        {            
+        {
             //CONDICOES DE PROJETOS DEVOLVIDO APOS ANALISE
             if(isset($post->situacao) && !empty($post->situacao) && in_array($post->situacao,$this->arrSituacoesDevolvidosAposAnalise)){
                 $arrBusca['e.idSituacaoEncPrestContas in (?)']= array('1','2'); //Status Aguardando analise OU Em analise
@@ -230,7 +227,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
             $bln_encaminhamento = true;
             $bln_dadosDiligencia = false;
-            
+
             $pag = 1;
             if (isset($post->pagAG)) $pag = $post->pagAG;
             if (isset($post->tamPagAG)) $this->intTamPag = $post->tamPagAG;
@@ -264,7 +261,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $arrBusca['p.Situacao = ?']                    = 'E27';
                 $arrBusca['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
                 $arrBusca['e.cdGruposDestino = ?']             = 124; //grupo do tecnico de prestacao de contas
-                $arrBusca['e.idAgenteDestino = ?']             = $this->getIdAgenteLogado; //id Tecnico de Prestação de Contas
+                $arrBusca['e.idAgenteDestino = ?']             = $this->getIdAgenteLogado; //id Tecnico de Prestaï¿½ï¿½o de Contas
                 $arrBusca['e.stAtivo = ?']                     = 1;
                 $bln_encaminhamento = true;
             }
@@ -276,7 +273,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $arrBusca['p.Situacao <> ?']                    = 'E17'; //exclui projetos diligenciados
                 $arrBusca['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
                 $arrBusca['e.cdGruposDestino = ?']             = 132; //grupo do chefe de divisao
-                //$arrBusca['e.idAgenteDestino = ?']             = $this->getIdAgenteLogado; //id Tecnico de Prestação de Contas
+                //$arrBusca['e.idAgenteDestino = ?']             = $this->getIdAgenteLogado; //id Tecnico de Prestaï¿½ï¿½o de Contas
                 $arrBusca['e.stAtivo = ?']                     = 1;
                 $bln_encaminhamento = true;
             }
@@ -293,7 +290,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             if(!empty($post->ordenacaoAG)){ $ordem[] = "{$post->ordenacaoAG} {$post->tipoOrdenacaoAG}"; }else{$ordem = array('1 ASC');}
 
             $rs = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, $ordem, $tamanho, $inicio, false, $bln_encaminhamento, $bln_dadosDiligencia);
-            
+
             $this->view->registrosAG 	  = $rs;
             $this->view->pagAG 		  = $pag;
             $this->view->totalAG 	  = $total;
@@ -308,7 +305,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
             $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
             $idPronac = $this->_request->getParam("idPronac");
-            
+
             $post   = Zend_Registry::get('post');
             $this->intTamPag = 10;
 
@@ -348,7 +345,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                     $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                 }
             }
-            
+
             //CONDICOES DE DEVOLVIDO APOS ANALISE
             $arrBusca['e.idSituacaoEncPrestContas in (?)']= array('1','2'); //Status Aguardando analise OU Em analise
             $arrBusca['e.cdGruposDestino IN (?)']= array('125','126'); //grupo de coordenador de prestacao de contas
@@ -359,7 +356,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, true);
 
-            //xd($total);
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -415,7 +412,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                         $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                     }
                 }
-                
+
                 //CONDICOES DE PARA ESTAR COM O COORD. DE PRESTACAO DE CONTAS
                 $arrBusca['e.idSituacaoEncPrestContas in (?)']= array('1','2'); //Status Aguardando analise OU Em analise
                 $arrBusca['e.cdGruposDestino IN (?)']= array('125','126'); //grupo de coordenador de prestacao de contas
@@ -477,10 +474,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
             $post   = Zend_Registry::get('post');
             $this->intTamPag = 10;
-            
+
             $bln_encaminhamento = true;
             $bln_dadosDiligencia = false;
-            
+
             $pag = 1;
             //$get = Zend_Registry::get('get');
             if (isset($post->pagTCE)) $pag = $post->pagTCE;
@@ -504,7 +501,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             if ( isset($post->situacao) && !empty($post->situacao)){
                 $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
             }
-            
+
             //DILIGENCIA
             if(!empty($post->diligencia)){
                 if($post->diligencia == "abertas"){
@@ -524,7 +521,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, $bln_dadosDiligencia);
 
-            //xd($total);
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -554,7 +551,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $this->intTamPag = 10;
             $bln_encaminhamento = false;
             $bln_dadosDiligencia = false;
-            
+
             $pag = 1;
             //$get = Zend_Registry::get('get');
             if (isset($post->pagOS)) $pag = $post->pagOS;
@@ -571,7 +568,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $arrBusca["p.AnoProjeto + p.Sequencial = ?"] = trim($post->pronac);
                 $arrBusca["p.Situacao IN (?) "] = $this->arrSituacoesDePrestacaoContas;
             }
-            
+
             //SITUACAO
             if ( isset($post->situacao) && !empty($post->situacao)){
                 //$situacoesGrids = implode('\',\'',$this->arrSituacoesGrids);
@@ -626,10 +623,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
     {
         $post   = Zend_Registry::get('post');
         $bln_envioufiltro = 'false';
-        $this->view->parametroPesquisado = 'OUTRAS SITUAÇÕES';
+        $this->view->parametroPesquisado = 'OUTRAS SITUAï¿½ï¿½ES';
 
-        // cria a sessão com o grupo ativo
-        $GrupoAtivo = new Zend_Session_Namespace ( 'GrupoAtivo' ); 
+        // cria a sessï¿½o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace ( 'GrupoAtivo' );
         $this->view->Grupo = $GrupoAtivo->codGrupo;
 
         $db = Zend_Registry::get ( 'db' );
@@ -667,7 +664,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         if (isset ( $_POST ['verifica'] ) and $_POST ['verifica'] == 'a') {
             $idOrgaoDestino = $_POST ['idorgao'];
             // desabilita o Zend_Layout
-            $this->_helper->layout->disableLayout (); 
+            $this->_helper->layout->disableLayout ();
 
             $tblProjetos  = new Projetos();
             $AgentesOrgao = $tblProjetos->buscarComboOrgaos($idOrgaoDestino, 125);
@@ -690,7 +687,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             } else {
                 echo json_encode(array ('resposta' => false) );
             }
-            die ();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         //IF - BUSCA NOMES DOS TECNICOS QUANDO ENVIA O ORGAO PARA ENCAMINHAR PROJETO
@@ -705,7 +702,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             } else {
                 echo "";
             }
-            die ();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $sqllistasDeEntidadesVinculadas = ReadequacaoProjetos::retornaSQLlista ( "listasDeEntidadesVinculadas", NULL );
@@ -756,10 +753,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 /*=====================================================*/
         /*============= TOTAL DEVOLVIDOS APOS ANALISE =========*/
         /*=====================================================*/
-                
+
                 //MONTA ARRAY BUSCA COM PARAMETROS COINCIDENTES PARA TODOS OS GRIDS DO COORD.
                 $arrBusca = $this->montaArrBuscaCoincidentes($post);
-                
+
                 //NOME PROJETO
                 if(!empty($post->NomeProjeto)){
                     $projeto = ($post->NomeProjeto);
@@ -771,7 +768,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                             if(!empty($post->NomeProjeto)){ $arrBusca["p.NomeProjeto like (?)"] = "{$projeto}%"; }
                     }
                 }
-                
+
                 //SITUACAO
                 $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDevolvidosAposAnalise;
                 if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E18'){
@@ -800,10 +797,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 /*=====================================================*/
         /*============= TOTAL DILIGENCIADOS ===================*/
         /*=====================================================*/
-                
+
                 //MONTA ARRAY BUSCA COM PARAMETROS COINCIDENTES PARA TODOS OS GRIDS DO COORD.
                 $arrBusca = $this->montaArrBuscaCoincidentes($post);
-                
+
                 //NOME PROJETO
                 if(!empty($post->NomeProjeto)){
                     $projeto = ($post->NomeProjeto);
@@ -846,10 +843,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 /*=====================================================*/
         /*============= TOTAL PROJETOS TCE ====================*/
         /*=====================================================*/
-                
+
                 //MONTA ARRAY BUSCA COM PARAMETROS COINCIDENTES PARA TODOS OS GRIDS DO COORD.
                 $arrBusca = $this->montaArrBuscaCoincidentes($post);
-                
+
                 //NOME PROJETO
                 if(!empty($post->NomeProjeto)){
                     $projeto = ($post->NomeProjeto);
@@ -893,7 +890,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
                 //MONTA ARRAY BUSCA COM PARAMETROS COINCIDENTES PARA TODOS OS GRIDS DO COORD.
                 $arrBusca = $this->montaArrBuscaCoincidentes($post);
-                
+
                 //NOME PROJETO
                 if(!empty($post->NomeProjeto)){
                     $projeto = ($post->NomeProjeto);
@@ -905,7 +902,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                             if(!empty($post->NomeProjeto)){ $arrBusca["p.NomeProjeto like (?)"] = "{$projeto}%"; }
                     }
                 }
-                
+
                 //PRONAC
                 if(!empty($post->pronac)){
                     $arrBusca["p.AnoProjeto + p.Sequencial = ?"] = trim($post->pronac);
@@ -937,13 +934,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
     }
 
 	public function historicoencaminhamentoAction(){
-		
+
 		// desabilita o Zend_Layout
-		$this->_helper->layout->disableLayout (); 
+		$this->_helper->layout->disableLayout ();
 
 		$post     = Zend_Registry::get("get");
 		$idPronac = $post->idPronac;
-		
+
 		$this->view->Historico = array();
 
 		if (!empty ($idPronac)) {
@@ -967,13 +964,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	 */
 	public function laudofinalAction(){
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $get = Zend_Registry::get ('get');
             $idpronac = $this->getRequest()->getParam('idPronac');
             $nomeProponente = null;
 
             $projetosDAO = new Projetos ();
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
 
             $rsProjeto = $projetosDAO->buscar(array ('IdPRONAC = ? '=> "{$idpronac}"));
             $pronac = $rsProjeto[0]->AnoProjeto . $rsProjeto[0]->Sequencial;
@@ -982,7 +979,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $rsAgente = $tblAgente->buscar(array("CNPJCPF = ? "=>$rsProjeto[0]->CgcCpf))->current();
 
             if(!empty($rsAgente)){
-                $nomeProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsAgente->idAgente))->current();
+                $nomeProponente = $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsAgente->idAgente))->current();
             }
             if(!empty($nomeProponente)){
                 $nomeProponente = $nomeProponente->Descricao;
@@ -998,9 +995,9 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $rsParecerChefe   = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>132))->current();
             $rsParecerCoord   = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>125))->current();
 
-            $nomeTecnico = (!empty($rsParecerTecnico)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerTecnico->idAgente))->current() : '';
-            $nomeChefe   = (!empty($rsParecerChefe)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerChefe->idAgente))->current() : '';
-            $nomeCoord   = (!empty($rsParecerCoord)) ? $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsParecerCoord->idAgente))->current() : '';
+            $nomeTecnico = (!empty($rsParecerTecnico)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerTecnico->idAgente))->current() : '';
+            $nomeChefe   = (!empty($rsParecerChefe)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerChefe->idAgente))->current() : '';
+            $nomeCoord   = (!empty($rsParecerCoord)) ? $tblAgente->buscarAgenteENome(array("a.idAgente = ?"=>$rsParecerCoord->idAgente))->current() : '';
 
             if(is_object($rsParecerTecnico)){
                 $this->view->parecerTecnico = $rsParecerTecnico;
@@ -1058,10 +1055,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $this->view->processo = $processo;
             $this->view->siglaOrgaoGuia = $siglaOrgaoGuia;
             $this->view->emissor  = $auth->getIdentity()->usu_nome;
-            
+
             $tbAssinantesPrestacao = new tbAssinantesPrestacao();
             $assinantes = $tbAssinantesPrestacao->buscar(array('stAtivo = ?'=>1));
-            
+
             $CoordIncFisc = array();
             $CoordGeral = array();
             $Diretores = array();
@@ -1092,13 +1089,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
 	/*Laudo Final*/
 	public function laudofinalInabilitadoAction(){
-		
+
 		$get      = Zend_Registry::get ('get');
 		$idpronac = $get->idPronac;
 
 		$projetosDAO = new Projetos ();
 		$resposta    = $projetosDAO->buscar(array ('IdPRONAC = ? '=> "{$idpronac}"));
-		
+
 		$this->view->pronac      = $resposta [0]->AnoProjeto . $resposta [0]->Sequencial;
 		$this->view->nomeProjeto = $resposta[0]->NomeProjeto;
 		$this->view->idPronac    = $resposta[0]->IdPRONAC;
@@ -1122,7 +1119,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $post = Zend_Registry::get ('post');
         $idPronac = $post->idPronac;
         $parecer = NULL;
-        
+
         $idTipoInabilitado = null;
         $arrOpcaoEscolhida = array();
         $arrOpcoes = array("A1A","A1B","A1C","A2A","A2B","A3A","A3B");
@@ -1160,7 +1157,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
         try {
             $relatorioTecnico->inserir($dados);
-            
+
             //===== inlcui parecer do coordenador (laudo final)
             $tbLaudoFinal = new tbLaudoFinal();
             $dadosLaudoFinal ['idPronac'] = $idPronac;
@@ -1211,36 +1208,36 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             }
 
             $this->_forward('gerarpdf');
-//            parent::message('Laudo final da prestação de contas emitido com sucesso!', "realizarprestacaodecontas/laudofinal?idPronac={$idPronac}&gerarGuia=true", 'CONFIRM');
+//            parent::message('Laudo final da prestaï¿½ï¿½o de contas emitido com sucesso!', "realizarprestacaodecontas/laudofinal?idPronac={$idPronac}&gerarGuia=true", 'CONFIRM');
         } catch (Exception $e) {
             parent::message('Erro ao gravar laudo final!', "realizarprestacaodecontas/laudofinal?idPronac=" . $idPronac, 'ERROR');
             //$this->_redirect("realizarprestacaodecontas/laudofinal?idPronac=".$idPronac."&tipoMsg=ERROR&msg=Erro ao gravar laudo final! ");
             return;
         }
     }
-    
+
     /*
      * Consultar Laudo Final
-     * Perfis: Coord. de Prestação de Contas, Téc. de Prestação de Contas e Chefe de Divisão
+     * Perfis: Coord. de Prestaï¿½ï¿½o de Contas, Tï¿½c. de Prestaï¿½ï¿½o de Contas e Chefe de Divisï¿½o
      */
     public function consultarLaudoFinalAction()
     {
-        
+
     }
-    
+
     /*
      * Analisar Laudo Final
-     * Perfis: Coord. Geral de Prestação de Contas
+     * Perfis: Coord. Geral de Prestaï¿½ï¿½o de Contas
      */
     public function analisarLaudoFinalAction()
     {
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $GrupoUsuario = $GrupoAtivo->codGrupo;
-        
-        if($GrupoUsuario != 126){ //Se o perfil for diferente de Coord. Geral de Prestação de Contas, não permite o acesso dessa funcionalidade.
-            parent::message('Você não tem permissão para acessar essa funcionalidade.', "principal", 'ALERT');
+
+        if($GrupoUsuario != 126 && $GrupoUsuario != 151 && $GrupoUsuario != 148){ //Se o perfil for diferente de Coord. Geral de Prestaï¿½ï¿½o de Contas, nï¿½o permite o acesso dessa funcionalidade.
+            parent::message('Vocï¿½ nï¿½o tem permissï¿½o para acessar essa funcionalidade.', "principal", 'ALERT');
         }
-        
+
         $this->intTamPag = 10;
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -1288,12 +1285,12 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $where['e.cdGruposOrigem = ?'] = 132;
         $where['e.stAtivo = ?'] = 1;
         $where['rt.cdGrupo in (?)'] = array(125,126);
-                    
+
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
             $where["p.AnoProjeto+p.Sequencial = ?"] = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
         }
-        
+
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             $this->view->filtro = $filtro;
@@ -1304,7 +1301,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 case 'reprovado': //Reprovados
                     $where['rt.siManifestacao = ?'] = 0;
                     break;
-                default: //Aguardando Análise
+                default: //Aguardando Anï¿½lise
                     break;
             }
         }
@@ -1336,9 +1333,9 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
-        
+
     }
-    
+
     public function imprimirAnalisesLaudoFinalAction()
     {
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
@@ -1389,12 +1386,12 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $where['e.cdGruposOrigem = ?'] = 132;
         $where['e.stAtivo = ?'] = 1;
         $where['rt.cdGrupo in (?)'] = array(125,126);
-                    
+
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
             $where["p.AnoProjeto+p.Sequencial = ?"] = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
         }
-        
+
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             $this->view->filtro = $filtro;
@@ -1405,7 +1402,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 case 'reprovado': //Reprovados
                     $where['rt.siManifestacao = ?'] = 0;
                     break;
-                default: //Aguardando Análise
+                default: //Aguardando Anï¿½lise
                     break;
             }
         }
@@ -1419,7 +1416,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $busca = $Projetos->buscarPainelCoordGeralPrestDeContas($where, $order, $tamanho, $inicio, false, $filtro);
 
         if(isset($post->xls) && $post->xls){
-            
+
             $html = '';
             $html .= '<table style="border: 1px">';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="9">Analisar Laudo Final</td></tr>';
@@ -1430,8 +1427,8 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">#</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">PRONAC</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
-            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situação</th>';
-            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Área / Segmento</th>';
+            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situaï¿½ï¿½o</th>';
+            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">ï¿½rea / Segmento</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Cidade</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Mecanismo</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Recebimento</th>';
@@ -1445,7 +1442,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 if($mecanismo == 'Mecenato'){
                     $mecanismo = "Incentivo Fiscal";
                 }
-                
+
                 $siManifestacao = 'Reprovado';
                 if($projeto->siManifestacao == 1){
                     $siManifestacao = 'Aprovado';
@@ -1469,17 +1466,17 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.xls;");
-            echo $html; die();
+            header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.ods;");
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->dados = $busca;
         }
     }
-    
+
     /*
      * Imprimir Laudo Final
-     * Perfis: Coord. de Prestação de Contas, Téc. de Prestação de Contas e Chefe de Divisão
+     * Perfis: Coord. de Prestaï¿½ï¿½o de Contas, Tï¿½c. de Prestaï¿½ï¿½o de Contas e Chefe de Divisï¿½o
      */
     public function imprimirLaudoFinalAction()
     {
@@ -1495,7 +1492,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $totalRegistros = $resultados->count();
         if (empty($totalRegistros)) {
             parent::message(
-                    'Este PRONAC não possui Laudo Final.',
+                    'Este PRONAC nï¿½o possui Laudo Final.',
                     '/realizarprestacaodecontas/consultar-laudo-final',
                     'ERROR'
                     );
@@ -1518,7 +1515,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
         if (empty($folder)) {
             parent::message(
-                    'Informe se a prestação de contas foi Aprovada ou Reprovada',
+                    'Informe se a prestaï¿½ï¿½o de contas foi Aprovada ou Reprovada',
                     '/realizarprestacaodecontas/laudofinal/idPronac/' . $dados->IdPRONAC,
                     'ERROR'
                     );
@@ -1544,7 +1541,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $manifestacao = $value['siManifestacao'] == 1 ? 'Regular' : 'Irregular';
                 $html = str_replace("{manifestacaoParecerTecnico}", $manifestacao, $html);
                 $html = str_replace("{parecerDoTecnico}", $value['meRelatorio'], $html);
-                
+
             } else if($value->cdGrupo == 132){
                 $manifestacao = $value['siManifestacao'] == 1 ? 'Regular' : 'Irregular';
                 $html = str_replace("{manifestacaoChefeDeDivisao}", $manifestacao, $html);
@@ -1564,45 +1561,45 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
     }
 
     /**
-     * Avaliação final do laudo de prestação de contas - Perfil: Coord. Geral de Prestação de Contas
+     * Avaliaï¿½ï¿½o final do laudo de prestaï¿½ï¿½o de contas - Perfil: Coord. Geral de Prestaï¿½ï¿½o de Contas
      * @access public
      * @param void
      * @return void
      */
     public function avaliacaoFinalDoLaudoAction() {
         $get = Zend_Registry::get('get');
-        
-        // cria a sessão com o grupo ativo
+
+        // cria a sessï¿½o com o grupo ativo
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
-        //  Órgão ativo na sessão
+        //  ï¿½rgï¿½o ativo na sessï¿½o
         $codOrgao = $GrupoAtivo->codOrgao;
-        
+
         $tblProjeto = new Projetos ();
         $rsProjeto = $tblProjeto->find($get->idPronac)->current();
-        
+
         try {
 
             if($get->avaliacao == 'aprovado') {
                 // Aprovado
                 $situacao = 'D42';
-                $ProvidenciaTomada = 'Aguardando Publicação de Portaria da Prestação de Contas';
-                $textoPrestacaoDeContas = 'Aprovação da Prestação de Contas';
+                $ProvidenciaTomada = 'Aguardando Publicaï¿½ï¿½o de Portaria da Prestaï¿½ï¿½o de Contas';
+                $textoPrestacaoDeContas = 'Aprovaï¿½ï¿½o da Prestaï¿½ï¿½o de Contas';
                 $TpApPrestacaoDeContas = 5;
             } elseif ($get->avaliacao == 'reprovado') {
                 // Reprovado
                 $situacao = 'D43';
-                $ProvidenciaTomada = 'Aguardando Portaria da Prestação de Contas';
-                $textoPrestacaoDeContas = 'Reprovação da Prestação de Contas';
+                $ProvidenciaTomada = 'Aguardando Portaria da Prestaï¿½ï¿½o de Contas';
+                $textoPrestacaoDeContas = 'Reprovaï¿½ï¿½o da Prestaï¿½ï¿½o de Contas';
                 $TpApPrestacaoDeContas = 6;
             } else {
                 parent::message('Erro ao tentar salvar os dados. Entre em contato com o administrador do sistema!', "realizarprestacaodecontas/analisar-laudo-final", 'ERRO');
             }
 
-            // altera a situação do projeto
+            // altera a situaï¿½ï¿½o do projeto
             $tblProjeto->alterarSituacao($get->idPronac, '', $situacao, $ProvidenciaTomada);
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -1617,29 +1614,29 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 'Logon' => $idagente
             );
             $Aprovacao->inserir($dadosAprovacao);
-            parent::message('Projeto encaminhado para publicação do Diário Oficial com sucesso.', "realizarprestacaodecontas/analisar-laudo-final", 'CONFIRM');
-            
+            parent::message('Projeto encaminhado para publicaï¿½ï¿½o do Diï¿½rio Oficial com sucesso.', "realizarprestacaodecontas/analisar-laudo-final", 'CONFIRM');
+
         } catch (Exception $e) {
-            parent::message('Erro ao encaminhar o projeto para publicação do Diário Oficial.', "realizarprestacaodecontas/analisar-laudo-final", 'ERROR');
+            parent::message('Erro ao encaminhar o projeto para publicaï¿½ï¿½o do Diï¿½rio Oficial.', "realizarprestacaodecontas/analisar-laudo-final", 'ERROR');
         }
     }
 
     /**
-     * Encaminha a prestação de contas
-     * 
+     * Encaminha a prestaï¿½ï¿½o de contas
+     *
      * @access public
      * @param void
      * @return void
      */
     public function encaminharprestacaodecontasAction() {
         $tipoFiltro = $this->_request->getParam('tipoFiltro');
-        $this->view->pag = 1; //Se tirar isso, não funciona. Por isso não foi retirado!
+        $this->view->pag = 1; //Se tirar isso, nï¿½o funciona. Por isso nï¿½o foi retirado!
 
         /** Usuario Logado *********************************************** */
-        // caso o formulário seja enviado via post
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        // caso o formulï¿½rio seja enviado via post
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $auth               = Zend_Auth::getInstance();
-        $Usuario            = new Usuario();
+        $Usuario            = new Autenticacao_Model_Usuario();
         $idagente           = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $idAgenteOrigem     = $idagente['idAgente'];
         $idPerfilDestino    = (null === $this->_request->getParam('idPerfilDestino')) ? 124 : $this->_request->getParam('idPerfilDestino'); // se nao receber idPerfilDestino, define como 124 por padrao (tecnico)
@@ -1649,7 +1646,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             // recebe os dados via post
             $post = Zend_Registry::get('post');
             if ($this->getRequest()->isPost() && !empty($post->dsjustificativa)) {
-                
+
                 $idPronac               = $post->idPronac;
                 $dtInicioEncaminhamento = new Zend_Db_Expr('GETDATE()');
                 $dsJustificativa        = $post->dsjustificativa;
@@ -1666,24 +1663,24 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                     //100: 177 AECI
                     //100: 12 CONJUR
                     //SE O ENCAMINHAMENTO FOR DO COORDENADOR PARA O TECNICO - ALTERA SITUACAO DO PROJETO
-		  
+
                     if (
 			($this->codGrupo == 125 || $this->codGrupo == 126 || $this->codGrupo == 132)
 			&& $idGrupoDestino == 124) {
-                        // altera a situação do projeto AO ENCAMINHAR PARA O TECNICO
+                        // altera a situaï¿½ï¿½o do projeto AO ENCAMINHAR PARA O TECNICO
                         $tblProjeto = new Projetos();
-                        $tblProjeto->alterarSituacao($idPronac, '', 'E27', 'Comprovação Financeira do Projeto em Análise');
+                        $tblProjeto->alterarSituacao($idPronac, '', 'E27', 'Comprovaï¿½ï¿½o Financeira do Projeto em Anï¿½lise');
                     } else if ($this->codGrupo == 124 && $idGrupoDestino == 132) {
 			       // SE O ENCAMINHAMENTO FOR DO TECNICO PARA O CHEFE/COORDENADOR (DEVOLUCAO) - ALTERAR SITUACAO DO PROJETO
                         $tblProjeto = new Projetos();
-                        $tblProjeto->alterarSituacao($idPronac, '', 'E68', 'Projeto devolvido para o Chefe de Divisão - Aguarda análise financeira');		      
+                        $tblProjeto->alterarSituacao($idPronac, '', 'E68', 'Projeto devolvido para o Chefe de Divisï¿½o - Aguarda anï¿½lise financeira');
 		    }
 
                     //BUSCA ULTIMO STATUS DO PROJETO
                     $tblProjeto = new Projetos();
                     $rsProjeto  = $tblProjeto->find($idPronac)->current();
                     $idSituacao = $rsProjeto->Situacao;
-		    
+
                     //ENCAMINHA PROJETO
                     $dados = array(
                         'idPronac'                  => $idPronac,
@@ -1701,20 +1698,20 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                         'stAtivo'                   => 1
                     );
                     $tblEncaminhamento = new EncaminhamentoPrestacaoContas();
-                    
+
                     $idTblEncaminhamento = $tblEncaminhamento->inserir($dados);
 
                     if ($idTblEncaminhamento) {
                         // altera todos os encaminhamentos anteriores para stAtivo = 0
                         $tblEncaminhamento->update(array('stAtivo'=>0),array('idPronac = ?'=>$idPronac, 'idEncPrestContas != ?' => $idTblEncaminhamento));
                     }
-                    
+
                     if($this->codGrupo == 132){
-                        parent::message('Solicitação enviada com sucesso!', "realizarprestacaodecontas/chefedivisaoprestacaocontas?tipoFiltro=".$tipoFiltro, 'CONFIRM');
+                        parent::message('Solicitaï¿½ï¿½o enviada com sucesso!', "realizarprestacaodecontas/chefedivisaoprestacaocontas?tipoFiltro=".$tipoFiltro, 'CONFIRM');
                     } else if($this->codGrupo == 124){
-                        parent::message('Solicitação enviada com sucesso!', "realizarprestacaodecontas/tecnicoprestacaocontas?tipoFiltro=".$tipoFiltro, 'CONFIRM');
+                        parent::message('Solicitaï¿½ï¿½o enviada com sucesso!', "realizarprestacaodecontas/tecnicoprestacaocontas?tipoFiltro=".$tipoFiltro, 'CONFIRM');
                     } else {
-                        parent::message('Solicitação enviada com sucesso!', "realizarprestacaodecontas/painel?tipoFiltro=".$tipoFiltro, 'CONFIRM');
+                        parent::message('Solicitaï¿½ï¿½o enviada com sucesso!', "realizarprestacaodecontas/painel?tipoFiltro=".$tipoFiltro, 'CONFIRM');
                     }
                 } catch (Exception $e) {
                     parent::message('Erro ao tentar salvar os dados!', "principal", 'ERRO');
@@ -1730,7 +1727,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $this->view->nomemodal = 'encaminhar';
                 $this->view->Historico = array();
                 $this->view->ocultarJustificativa = false;
-		
+
                 $tblEncaminhamento = new tbEncaminhamentoPrestacaoContas();
                 $rsEnc = $tblEncaminhamento->buscar(array('idPronac = ?' => $idPronac, 'idOrgaoDestino=?' => $idOrgaoDestino), array('dtFimEncaminhamento'));
                 $this->view->consultorias = $rsEnc;
@@ -1742,13 +1739,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                     //$idPronac = 130978;
                     $tblProjeto = new Projetos();
                     $rsProjeto = $tblProjeto->find($idPronac)->current();
-		    
+
                     $this->view->PRONAC = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
                     $this->view->NomeProjeto = $rsProjeto->NomeProjeto;
                     $this->view->idPronac = $idPronac;
                     $this->view->idSituacaoPrestContas = $idSituacaoPrestContas;
 
-                    $db = Zend_Registry::get('db');
+                    $db= Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
                     $orgaos = new Orgaos();
@@ -1780,9 +1777,9 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         if (isset ( $_POST ['verifica'] ) and $_POST ['verifica'] == 'a') {
             $idOrgaoDestino  = $_POST ['idorgao'];
 	    $idPerfilDestino = $_POST['idPerfilDestino'];
-	    
+
             // desabilita o Zend_Layout
-            $this->_helper->layout->disableLayout (); 
+            $this->_helper->layout->disableLayout ();
 
             $tblProjetos  = new Projetos();
             $AgentesOrgao = $tblProjetos->buscarComboOrgaos($idOrgaoDestino, $idPerfilDestino);
@@ -1804,27 +1801,27 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             } else {
                 echo json_encode(array ('resposta' => false) );
             }
-            die ();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
-    // fecha método encaminharprestacaodecontasAction()
-	
+    // fecha mï¿½todo encaminharprestacaodecontasAction()
 
-	/*Emcaminhamento para o Chefe de Divisão*/
+
+	/*Emcaminhamento para o Chefe de Divisï¿½o*/
 	public function encaminharchefedivisaoAction() {
 
-		// caso o formulário seja enviado via post
-		// cria a sessão com o grupo ativo
-		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); 
-		
-		// pega a autenticação
-		$auth         = Zend_Auth::getInstance (); 
+		// caso o formulï¿½rio seja enviado via post
+		// cria a sessï¿½o com o grupo ativo
+		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+
+		// pega a autenticaï¿½ï¿½o
+		$auth         = Zend_Auth::getInstance ();
 		$GrupoUsuario = $GrupoAtivo->codGrupo;
-		if ($this->getRequest ()->isPost ()) {			
+		if ($this->getRequest ()->isPost ()) {
 			// recebe os dados via post
 			$post = Zend_Registry::get ( 'post' );
-			
+
 			$idPronac               = $post->idPronac;
 			$idAgenteOrigem         = $this->getIdAgenteLogado;
 			$dtInicioEncaminhamento = new Zend_Db_Expr ( 'GETDATE()' );
@@ -1835,29 +1832,29 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 			$idGrupo                = $idAgenteDestino [1];
 			$gru_codigo             = $GrupoUsuario;
 			$stSituacao             = 1;
-				
+
 			// monta o array de dados para cadastro
 			$dados = array ('idPronac' => $idPronac, 'idAgenteOrigem' => $idAgenteOrigem, 'dtInicioEncaminhamento' => $dtInicioEncaminhamento, 'dsJustificativa' => $dsJustificativa, 'idOrgaoDestino' => $idOrgaoDestino, 'idAgenteDestino' => $idAgenteDestino, 'cdGruposDestino' => $GrupoUsuario, 'dtFimEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ), 'idSituacaoEncPrestContas' => $idSituacaoEncPrestContas, 'idSituacao' => "E27" );
-			
+
 			// cadastra
 			$EncaminhamentoPrestacaoContas = new EncaminhamentoPrestacaoContas ( $idPronac );
 			$cadastrar                     = $EncaminhamentoPrestacaoContas->cadastrar ( $dados );
-				
-			// altera a situação do projeto
+
+			// altera a situaï¿½ï¿½o do projeto
 			$alterar_situacao = ProjetoDAO::alterarSituacao ( $idPronac, 'E27' );
-				
-			$updateprojetos = new Projetos ();				
+
+			$updateprojetos = new Projetos ();
 			$updateprojetos->alterarSituacao($idPronac,NULL,'E27','Encaminhado');
-				
+
 			if ($cadastrar) {
 				parent::message ( "cadastrado com sucesso!", "realizarprestacaodecontas/coordenadorgeralprestacaocontas", "CONFIRM" );
 			} else {
 				parent::message ( "Desculpe ocorreu um erro!", "realizarprestacaodecontas/coordenadorgeralprestacaocontas", "ERROR" );
 			}
 		} // fecha $_POST
-	} // fecha método encaminharprestacaodecontasAction()
+	} // fecha mï¿½todo encaminharprestacaodecontasAction()
 
-	/*Buscar Projeto do Coordenados Geral e Coordenador de Prestação de Contas*/
+	/*Buscar Projeto do Coordenados Geral e Coordenador de Prestaï¿½ï¿½o de Contas*/
 	public function coordenadorprestacaocontasAction() {
 
 		$prescontas                  = new Projetos ();
@@ -1868,7 +1865,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		$this->view->CoordPresContasDiligenciados = $dados;
 	}
 
-	/*Buscar Projeto do Tecnico de Prestação de Contas*/
+	/*Buscar Projeto do Tecnico de Prestaï¿½ï¿½o de Contas*/
 	public function tecnicoprestacaocontasAction()
 	{
             //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -1895,7 +1892,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $campo = $this->_request->getParam("campo");
                 $order = array($campo." ".$ordem);
                 $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-                
+
             } else {
                 $campo = null;
                 $order = array(2); //Pronac
@@ -1914,13 +1911,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             }
 	    $where['e.stAtivo = ?'] = 1;
-	    $where['e.idAgenteDestino = ?'] = $this->getIdUsuario; //id Tecnico de Prestação de Contas
+	    $where['e.idAgenteDestino = ?'] = $this->getIdUsuario; //id Tecnico de Prestaï¿½ï¿½o de Contas
 	    $where['e.cdGruposDestino = ?'] = 124; //grupo do tecnico de prestacao de contas
 
-	    // técnico só visualiza projetos encaminhados para ele
+	    // tï¿½cnico sï¿½ visualiza projetos encaminhados para ele
 	    $where['p.Situacao in (?)'] = array('E17', 'E20', 'E27', 'E30');
 	    $where['e.idSituacaoEncPrestContas = ?'] = '2';
-	    
+
             $Projetos = new Projetos();
             $total = $Projetos->buscarPainelTecPrestacaoDeContas($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
@@ -1949,11 +1946,11 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $this->view->dados         = $busca;
             $this->view->intTamPag     = $this->intTamPag;
 	}
-        
+
 	public function imprimirTecnicoPrestacaoDeContasAction()
 	{
             $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
-            
+
             //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
             if($this->_request->getParam("qtde")) {
                 $this->intTamPag = $this->_request->getParam("qtde");
@@ -1978,7 +1975,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $campo = $this->_request->getParam("campo");
                 $order = array($campo." ".$ordem);
                 $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-                
+
             } else {
                 $campo = null;
                 $order = array(2); //Pronac
@@ -2006,27 +2003,27 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                         $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
                         $where['e.cdGruposDestino = ?'] = 124; //grupo do tecnico de prestacao de contas
                         $where['e.cdGruposOrigem IN (?)'] = array('125','126'); //grupo de coordenador de prestacao de contas
-                        $where['e.idAgenteDestino = ?'] = $this->getIdAgenteLogado; //id Tecnico de Prestação de Contas
+                        $where['e.idAgenteDestino = ?'] = $this->getIdAgenteLogado; //id Tecnico de Prestaï¿½ï¿½o de Contas
                         $where['e.stAtivo = ?'] = 1;
                         $where['d.idTipoDiligencia = ?'] = 174; //Diligencia na Prestacao de contas
                         break;
-                    default: //Aguardando Análise
-                        $this->view->tituloPag = 'Aguardando Análise';
+                    default: //Aguardando Anï¿½lise
+                        $this->view->tituloPag = 'Aguardando Anï¿½lise';
                         $where['p.Situacao = ?'] = 'E27';
                         $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
                         $where['e.cdGruposDestino = ?'] = 124; //grupo do tecnico de prestacao de contas
-                        $where['e.idAgenteDestino = ?'] = $this->getIdAgenteLogado; //id Tecnico de Prestação de Contas
+                        $where['e.idAgenteDestino = ?'] = $this->getIdAgenteLogado; //id Tecnico de Prestaï¿½ï¿½o de Contas
                         $where['e.stAtivo = ?'] = 1;
                         break;
                 }
-                
-            } else { //Aguardando Análise
-                $this->view->tituloPag = 'Aguardando Análise';
+
+            } else { //Aguardando Anï¿½lise
+                $this->view->tituloPag = 'Aguardando Anï¿½lise';
                 $filtro = '';
                 $where['p.Situacao = ?'] = 'E27';
                 $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
                 $where['e.cdGruposDestino = ?'] = 124; //grupo do tecnico de prestacao de contas
-                $where['e.idAgenteDestino = ?'] = $this->getIdAgenteLogado; //id Tecnico de Prestação de Contas
+                $where['e.idAgenteDestino = ?'] = $this->getIdAgenteLogado; //id Tecnico de Prestaï¿½ï¿½o de Contas
                 $where['e.stAtivo = ?'] = 1;
             }
             $this->view->filtro = $filtro;
@@ -2042,7 +2039,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             if(isset($post->xls) && $post->xls){
                 $html = '';
                 $html .= '<table style="border: 1px">';
-                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="8">Analisar prestação de contas - '.$this->view->tituloPag.'</td></tr>';
+                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="8">Analisar prestaï¿½ï¿½o de contas - '.$this->view->tituloPag.'</td></tr>';
                 $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="8">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
                 $html .='<tr><td colspan="8"></td></tr>';
 
@@ -2050,8 +2047,8 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">#</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">PRONAC</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situação</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Área / Segmento</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situaï¿½ï¿½o</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">ï¿½rea / Segmento</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Estado</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Mecanismo</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Recebimento</th>';
@@ -2059,13 +2056,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
                 $i=1;
                 foreach ($busca as $projeto){
-                    
+
                     $mecanismo = $projeto->Mecanismo;
                     if($mecanismo == 'Mecenato'){
                         $mecanismo = "Incentivo Fiscal";
                     }
                     $dtSituacao = Data::tratarDataZend($projeto->DtSituacao, 'brasileira');
-                    
+
                     $html .= '<tr>';
                     $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$projeto->Pronac.'</td>';
@@ -2081,15 +2078,15 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
-                echo $html; die();
+                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.ods;");
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->dados = $busca;
             }
 	}
 
-	/*PLANILHA Oraçmentaria COMPROVADA*/
+	/*PLANILHA Oraï¿½mentaria COMPROVADA*/
 	public function dadosProjeto() {
 		$idpronac = $this->getRequest()->getParam('idPronac');
 		$projetosDAO = new Projetos ();
@@ -2097,10 +2094,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		$this->view->pronac      = $resposta [0]->AnoProjeto . $resposta [0]->Sequencial;
 		$this->view->nomeProjeto = $resposta [0]->NomeProjeto;
 	}
-	
+
 	public function planilhaorcamentariaAction()
 	{
-        // pega a autenticação
+        // pega a autenticaï¿½ï¿½o
         $auth = Zend_Auth::getInstance ();
         $this->view->codGrupo = $_SESSION['GrupoAtivo']['codGrupo'];
 
@@ -2108,13 +2105,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $this->view->idPronac = $this->getRequest()->getParam('idPronac');
         $this->view->itemAvaliadoFilter = $this->getRequest()->getParam('itemAvaliadoFilter');
         $this->view->idRelatorio = $this->getRequest()->getParam('relatorio');
-        
+
         $dao = new PlanilhaAprovacao ();
         $resposta = $dao->buscarItensPagamento(
             $this->view->idPronac,
             ($this->view->itemAvaliadoFilter ? $this->view->itemAvaliadoFilter : null)
         );
-       
+
 
         $tblEncaminhamento = new EncaminhamentoPrestacaoContas();
         $rsEncaminhamento = $tblEncaminhamento->buscar(array('idPronac=?'=>$this->view->idPronac,'stAtivo=?'=>1))->current();
@@ -2133,7 +2130,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $arrComprovantesImpugnados = array();
         if (is_object($resposta)) {
             foreach ($resposta as $val) {
-		#xd($resposta);
+		
                 $modalidade = '';
                 if($val->idCotacao != '') {
                     $modalidade = 'Cota&ccedil;&atilde;o';
@@ -2196,7 +2193,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                                 $arrComprovantesImpugnados[$comprovante->idComprovantePagamento] = $comprovante->vlComprovacao;
 			}
                     }
- 		
+
             }
         }
 	#Realiza a soma dos itens
@@ -2214,7 +2211,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		$idpronac    = $this->getRequest()->getParam('idPronac');
 		$projetosDAO = new Projetos();
 		$resposta    = $projetosDAO->buscar(array ('IdPRONAC = ? '=> "{$idpronac}"));
-		
+
 		$this->view->pronac      = $resposta [0]->AnoProjeto . $resposta [0]->Sequencial;
 		$this->view->nomeProjeto = $resposta[0]->NomeProjeto;
 		$this->view->idPronac    = $resposta[0]->IdPRONAC;
@@ -2230,7 +2227,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		$RelatorioTecnico = new tbRelatorioTecnico();
 		$rsParecerTecnico = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>124))->current();
 		$rsParecerChefe   = $RelatorioTecnico->buscar(array('IdPRONAC=?'=>$idpronac,'cdGrupo=?'=>132))->current();
-		
+
 		if(is_object($rsParecerTecnico)){
 			$this->view->parecerTecnico = $rsParecerTecnico;
 			$this->view->parecerChefe   = $rsParecerChefe;
@@ -2241,10 +2238,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	}
 
 	public function existeparecerAction() {
-		
+
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		
+
 		$post     = Zend_Registry::get ('post');
 		$idpronac = $post->idPronac;
 
@@ -2263,7 +2260,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		$this->_helper->viewRenderer->setNoRender(true);
 
 		$post             = Zend_Registry::get ( 'post' );
-        
+
 		$idPronac         = $post->idPronac;
 		$parecer          = $this->getRequest()->getParam('ParecerTecnico');
 		$bln_chefedivisao = $post->parecerChefeDivisao;
@@ -2271,39 +2268,39 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		$relatorioTecnico = new tbRelatorioTecnico();
 
 		$rsParecer        = $relatorioTecnico->buscar(array('IdPRONAC=?'=>$idPronac,'cdGrupo=?'=>$this->codGrupo))->current();
-		
+
 		$dados ['meRelatorio']  =   utf8_decode(trim($parecer));
 		$dados ['dtRelatorio']  =   date("Y-m-d H:i:s");
 		$dados ['IdPRONAC']     =   $idPronac;
 		$dados ['idAgente']     =   $auth->getIdentity()->usu_codigo;
 		$dados ['cdGrupo']      =   $this->codGrupo;
 		$dados ['siManifestacao'] = $this->getRequest()->getParam('manifestacao');
-        
+
 		try{
 			if(!empty ($rsParecer)){
 				$where = array(
                                 'IdPRONAC = ?'  =>  $idPronac,
                                 'idRelatorioTecnico = ?'   =>  $rsParecer['idRelatorioTecnico'],
 				);
-				
+
 				$relatorioTecnico->update($dados,$where);
 			}
 			else{
 				//inlcui parecer
 				$relatorioTecnico->inserir($dados);
 			}
-			
+
 			$this->_helper->flashMessenger->addMessage('Parecer salvo com sucesso!');
 			$this->_helper->flashMessengerType->addMessage('CONFIRM');
 			$this->_redirect("realizarprestacaodecontas/emitirparecertecnico/idPronac/{$idPronac}");
 		}catch (Exception $e){
-			$this->_redirect("realizarprestacaodecontas/dadosprojeto?idPronac=".$idPronac."&tipoMsg=ERROR&msg=Erro ao gravar Parecer técnico!");
+			$this->_redirect("realizarprestacaodecontas/dadosprojeto?idPronac=".$idPronac."&tipoMsg=ERROR&msg=Erro ao gravar Parecer tï¿½cnico!");
 			return;
 		}
 	}
 
 	public function respostaconsultoriaAction() {
-		
+
 		$idEncPrestContas = $this->_request->getParam('idEncPrestContas');
 
 		if (!empty ($idEncPrestContas)) {
@@ -2325,10 +2322,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	}
 
 	public function gravarrespostaconsultoriaAction(){
-		
+
 		$idEncPrestContas   =   $this->_request->getParam('idEncPrestContas');
 		$dsresposta         =   $this->_request->getParam('dsresposta');
-		
+
 		if (!empty($dsresposta)) {
 			$tblEncaminhamento = new tbEncaminhamentoPrestacaoContas();
 			$rsEnc             = $tblEncaminhamento->buscar(array('idEncPrestContas = ?'=>$idEncPrestContas,'idOrgaoDestino=?'=>$this->codOrgao,'idSituacaoEncPrestContas=?'=>1),array('dtFimEncaminhamento DESC'))->current();
@@ -2382,13 +2379,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 				return;
 			}
 		}else{
-			$this->_redirect("realizarprestacaodecontas/conjurprestacaocontas?tipoMsg=ERROR&msg=Dados obrigatórios não informados");
+			$this->_redirect("realizarprestacaodecontas/conjurprestacaocontas?tipoMsg=ERROR&msg=Dados obrigatï¿½rios nï¿½o informados");
 		}
 	}
 
 	public function cadastrarrelatoriotecnicoAction() {
 		$this->_helper->layout->disableLayout ();
-		
+
 		$valido       = true;
 		$licitacaoDAO = new Licitacao ();
 		$post         = Zend_Registry::get ( 'post' );
@@ -2404,12 +2401,12 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	 * @method tecnicoprestacaocontas
 	 * @since 11/02/2011
 	 * @version 1.0
-	 * @access Tecnico Prestação de Contas
+	 * @access Tecnico Prestaï¿½ï¿½o de Contas
 	 */
 	public function tecnicoprestacaocontassAction() {
 
-		$auth = Zend_Auth::getInstance (); 
-		
+		$auth = Zend_Auth::getInstance ();
+
 		$tblEncaminhamentoPrestacaoContas = new tbEncaminhamentoPrestacaoContas ();
 		$rs                               = $tblEncaminhamentoPrestacaoContas->BuscaEncaminhamentoPrestacaoContas ( "E27", $auth->getIdentity ()->usu_orgao, "E27" );
 		$this->view->TecPresContas        = $rs;
@@ -2420,7 +2417,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	 * @method chefedivisaoprestacaocontas
 	 * @since 18/02/2011
 	 * @version 1.0
-	 * @access Chefe de Divisão
+	 * @access Chefe de Divisï¿½o
 	 */
 	public function chefedivisaoprestacaocontasAction() {
 
@@ -2448,7 +2445,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $campo = $this->_request->getParam("campo");
                 $order = array($campo." ".$ordem);
                 $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-                
+
             } else {
                 $campo = null;
                 $order = array(2); //Pronac
@@ -2473,28 +2470,28 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                     case 'analisados': //Analisados
                         $where['e.idSituacaoEncPrestContas = ?'] = 3;
 			$where['e.cdGruposDestino = ?'] = 132;
-			$where['p.Orgao = ?'] = $_SESSION['GrupoAtivo']['codOrgao'];			
-                        break;			
-   		    case 'emanalise': //Em Análise
+			$where['p.Orgao = ?'] = $_SESSION['GrupoAtivo']['codOrgao'];
+                        break;
+   		    case 'emanalise': //Em Anï¿½lise
   		        $where['p.Situacao in (?)'] = array('E14', 'E17', 'E18', 'E20', 'E27', 'E30', 'E46', 'G08', 'G21', 'G22');
                         $where['e.idSituacaoEncPrestContas = ?'] = 2;
 			$where['e.cdGruposDestino = ?'] = 124;
-			$where['p.Orgao = ?'] = $_SESSION['GrupoAtivo']['codOrgao'];			
-                        break;			
-                    default: //Aguardando Análise
+			$where['p.Orgao = ?'] = $_SESSION['GrupoAtivo']['codOrgao'];
+                        break;
+                    default: //Aguardando Anï¿½lise
                         $where['p.Situacao in (?)'] = array('C08', 'E16', 'E17', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54');
 			$where['p.Orgao = ?'] = $_SESSION['GrupoAtivo']['codOrgao'];
                         break;
                 }
-                
-            } else { //Aguardando Análise
+
+            } else { //Aguardando Anï¿½lise
                 $filtro = '';
 		$where['p.Situacao in (?)'] = array('C08', 'E16', 'E17', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54');
-		
+
 		$where['p.Orgao = ?'] = $_SESSION['GrupoAtivo']['codOrgao'];
             }
             $this->view->filtro = $filtro;
-            
+
             $Projetos = new Projetos();
             $total = $Projetos->buscarPainelChefeDivisaoPrestacaoDeContas($where, $order, null, null, true, $filtro);
             $fim = $inicio + $this->intTamPag;
@@ -2523,11 +2520,11 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $this->view->dados         = $busca;
             $this->view->intTamPag     = $this->intTamPag;
 	}
-        
+
         public function imprimirChefeDivisaoPrestacaoDeContasAction()
 	{
             $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
-            
+
             //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
             if($this->_request->getParam("qtde")) {
                 $this->intTamPag = $this->_request->getParam("qtde");
@@ -2552,7 +2549,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $campo = $this->_request->getParam("campo");
                 $order = array($campo." ".$ordem);
                 $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-                
+
             } else {
                 $campo = null;
                 $order = array(2); //Pronac
@@ -2578,29 +2575,29 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                         $this->view->tituloPag = 'Projetos diligenciados';
                         $where['p.Situacao = ?'] = 'E17';
                         $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
-                        $where['e.cdGruposDestino = ?'] = 132; //grupo do chefe de divisão
+                        $where['e.cdGruposDestino = ?'] = 132; //grupo do chefe de divisï¿½o
                         $where['e.stAtivo = ?'] = 1;
                         $where['d.idTipoDiligencia = ?'] = 174; //Diligencia na Prestacao de contas
                         break;
-                    default: //Aguardando Análise
-                        $this->view->tituloPag = 'Aguardando Análise';
+                    default: //Aguardando Anï¿½lise
+                        $this->view->tituloPag = 'Aguardando Anï¿½lise';
                         $where['p.Situacao <> ?'] = 'E17';
                         $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
-                        $where['e.cdGruposDestino = ?'] = 132; //grupo do chefe de divisão
+                        $where['e.cdGruposDestino = ?'] = 132; //grupo do chefe de divisï¿½o
                         $where['e.stAtivo = ?'] = 1;
                         break;
                 }
-                
-            } else { //Aguardando Análise
-                $this->view->tituloPag = 'Aguardando Análise';
+
+            } else { //Aguardando Anï¿½lise
+                $this->view->tituloPag = 'Aguardando Anï¿½lise';
                 $filtro = '';
                 $where['p.Situacao <> ?'] = 'E17';
                 $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2'); //Situacao Aguardando analise, e Em analise
-                $where['e.cdGruposDestino = ?'] = 132; //grupo do chefe de divisão
+                $where['e.cdGruposDestino = ?'] = 132; //grupo do chefe de divisï¿½o
                 $where['e.stAtivo = ?'] = 1;
             }
             $this->view->filtro = $filtro;
-            
+
             $Projetos = new Projetos();
             $total = $Projetos->buscarPainelTecPrestacaoDeContas($where, $order, null, null, true, $filtro);
             $fim = $inicio + $this->intTamPag;
@@ -2612,7 +2609,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             if(isset($post->xls) && $post->xls){
                 $html = '';
                 $html .= '<table style="border: 1px">';
-                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="8">Analisar prestação de contas - '.$this->view->tituloPag.'</td></tr>';
+                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="8">Analisar prestaï¿½ï¿½o de contas - '.$this->view->tituloPag.'</td></tr>';
                 $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="8">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
                 $html .='<tr><td colspan="8"></td></tr>';
 
@@ -2620,8 +2617,8 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">#</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">PRONAC</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situação</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Área / Segmento</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situaï¿½ï¿½o</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">ï¿½rea / Segmento</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Estado</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Mecanismo</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Recebimento</th>';
@@ -2629,13 +2626,13 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
                 $i=1;
                 foreach ($busca as $projeto){
-                    
+
                     $mecanismo = $projeto->Mecanismo;
                     if($mecanismo == 'Mecenato'){
                         $mecanismo = "Incentivo Fiscal";
                     }
                     $dtSituacao = Data::tratarDataZend($projeto->DtSituacao, 'brasileira');
-                    
+
                     $html .= '<tr>';
                     $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$projeto->Pronac.'</td>';
@@ -2651,8 +2648,8 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
-                echo $html; die();
+                header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.ods;");
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->dados = $busca;
@@ -2668,9 +2665,9 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	 */
 	public function aeciprestacaocontasAction() {
 
-		$auth = Zend_Auth::getInstance (); 
-		
-		$Usuario = new Usuario();
+		$auth = Zend_Auth::getInstance ();
+
+		$Usuario = new Autenticacao_Model_Usuario();
 
 		$idagente       = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
 		$idAgenteOrigem = $idagente['idAgente'];
@@ -2691,10 +2688,10 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	public function conjurprestacaocontasAction() {
 
 
-		$auth = Zend_Auth::getInstance (); 
+		$auth = Zend_Auth::getInstance ();
 		$auth->getIdentity();
-		
-		$Usuario = new Usuario();
+
+		$Usuario = new Autenticacao_Model_Usuario();
 
 		$idagente       = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
 		$idAgenteOrigem = $idagente['idAgente'];
@@ -2713,9 +2710,9 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	 * @access Parecerista
 	 */
 	public function pareceristaprestacaocontasAction() {
-		
-		$Usuario        = new Usuario();
-		$auth           = Zend_Auth::getInstance (); // pega a autenticação
+
+		$Usuario        = new Autenticacao_Model_Usuario();
+		$auth           = Zend_Auth::getInstance (); // pega a autenticaï¿½ï¿½o
 		$idagente       = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
 		$idAgenteOrigem = $idagente['idAgente'];
 
@@ -2724,7 +2721,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
 		$this->view->PareceristaPresContas = $rs;
 	}
-	
+
 	/**
 	 * Controller RealizarPrestacaoDeContas
 	 * @method coordenadorpareceristaprestacaocontasAction
@@ -2735,11 +2732,11 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	 */
 	public function coordenadorpareceristaprestacaocontasAction() {
 
-		$Usuario        = new Usuario();
-		$auth           = Zend_Auth::getInstance (); // pega a autenticação
+		$Usuario        = new Autenticacao_Model_Usuario();
+		$auth           = Zend_Auth::getInstance (); // pega a autenticaï¿½ï¿½o
 		$idagente       = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
 		$idAgenteOrigem = $idagente['idAgente'];
-		
+
 		$tblEncaminhamentoPrestacaoContas = new tbEncaminhamentoPrestacaoContas ();
 		$rs = $tblEncaminhamentoPrestacaoContas->BuscaEncaminhamentoPrestacaoContas ( $this->codOrgao, "1", $idAgenteOrigem );
 
@@ -2762,7 +2759,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
             if (!$this->view->projeto) {
                 $this->_helper->flashMessengerType->addMessage('ALERT');
-                $this->_helper->flashMessenger->addMessage('Não houve comprovação para este item.');
+                $this->_helper->flashMessenger->addMessage('Nï¿½o houve comprovaï¿½ï¿½o para este item.');
                 $this->_redirect("realizarprestacaodecontas/planilhaorcamentaria/idPronac/{$idPronac}");
             } else {
                 $this->view->tipoComprovante = $this->tipoDocumento;
@@ -2801,19 +2798,19 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		{
 			$planilhaAprovacaoDao             = new PlanilhaAprovacao();
 			$this->view->ComprovantePagamento = $planilhaAprovacaoDao->buscarcomprovantepagamento($rsPlanilha->IdPRONAC,$idPlanilhaItem);
-			
+
 			$this->view->idPronac              = $rsPlanilha->IdPRONAC;
 			$this->view->tipoDocumentoConteudo = $this->tipoDocumento;
 			$this->view->idPlanilhaAprovacao   = $idPlanilhaAprovacao;
 			$this->view->idPlanilhaItem        = $idPlanilhaItem;
 		}else{
-			$this->_redirect("realizarprestacaodecontas/planilhaorcamentaria?idPronac={$idPronac}&tipoMsg=ALERT&msg=Não houve comprovação para este item.");
+			$this->_redirect("realizarprestacaodecontas/planilhaorcamentaria?idPronac={$idPronac}&tipoMsg=ALERT&msg=Nï¿½o houve comprovaï¿½ï¿½o para este item.");
 		}
 	}
 
     public function validaritemAction()
     {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
         $idPronac = $this->_request->getParam("idPronac");
         $idPlanilhaItem = $this->_request->getParam("idPlanilhaItem");
@@ -2875,7 +2872,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $this->_helper->flashMessenger->addMessage('Item validado com sucesso!');
             $this->_helper->flashMessengerType->addMessage('CONFIRM');
         } else {
-            $this->_helper->flashMessenger->addMessage('Preencha os dados para validação de item.');
+            $this->_helper->flashMessenger->addMessage('Preencha os dados para validaï¿½ï¿½o de item.');
             $this->_helper->flashMessengerType->addMessage('ERROR');
         }
         $tblComprovantePag->getAdapter()->commit();
@@ -2883,7 +2880,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
     }
 
     public function dadosprojetoAction() {
-		
+
 		if (isset($_REQUEST['idPronac'])) {
 			$dados = array();
 			$dados['idPronac'] = (int) $_REQUEST['idPronac'];
@@ -2899,7 +2896,6 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 				if(count($rst)>0){
 					$this->view->projeto  = $rst[0];
 					$this->view->idpronac = $_REQUEST['idPronac'];
-					//xd($rst[0]);
 				}else{
 					parent::message("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado.", "listarprojetos/listarprojetos", "ERROR");
 					return;
@@ -2918,18 +2914,18 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
 		$get = Zend_Registry::get("get");
 		$auth               = Zend_Auth::getInstance();
-		
+
 		$idPronac   = $this->getRequest()->getParam('idPronac');
 		$situacao = $this->getRequest()->getParam('situacao');
 
 		$tblEncaminhamento = new tbEncaminhamentoPrestacaoContas();
 		$rsEPC = $tblEncaminhamento->buscar(array("idPronac = ?" => $idPronac, 'stAtivo=?' => 1))->current();
-		
+
 		$tblRelatorio = new tbRelatorioTecnico();
 		$rsRelatorio  = $tblRelatorio->buscar(array('IdPRONAC = ?'=>$idPronac,'idAgente=?'=>$auth->getIdentity()->usu_codigo,'cdGrupo=?'=>132));
-	
+
 		if($rsRelatorio->count() > 0){
-	  
+
 		  //DESLIGA STATUS ATUAL
 		  $rsEPC->stAtivo = 0;
 		  $rsEPC->save();
@@ -2940,23 +2936,23 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		    $tblProjeto->alterarSituacao($idPronac,'','E27');
 
 		    $tblEncaminhamento->update(array('stAtivo'=>0),array('idPronac = ?'=>$idPronac, 'idEncPrestContas != ?' => $rsEPC->idEncPrestContas));
-		    
+
 		    //ENCAMINHA PROJETO PARA COORDENADOR
 		    $dados = array ('idPronac'          => $idPronac,
 	                            'idAgenteOrigem'    => $rsEPC->idAgenteOrigem,
 	                            'idAgenteDestino'   => $rsEPC->idAgenteDestino,
 	                            'idOrgaoOrigem'     => $rsEPC->idOrgaoOrigem,
 	                            'idOrgaoDestino'    => $rsEPC->idOrgaoDestino,
-				
+
 	                            'dtInicioEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ),
 	                            'dtFimEncaminhamento'    => new Zend_Db_Expr ( 'GETDATE()' ),
-	
+
 	                            'dsJustificativa'   => $rsEPC->dsJustificativa,
 	                            'cdGruposOrigem'    => $rsEPC->cdGruposDestino,
 	                            'cdGruposDestino'   => 125,
-				
+
 	                            'idSituacaoEncPrestContas' => 3,
-				
+
 	                            'idSituacao'        => 'E27',
 	                            'stAtivo'           => 1);
 		    $tblEncaminhamento->inserir($dados);
@@ -2967,24 +2963,24 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		    return;
 		  }
 		}else{
-		  $this->_redirect("realizarprestacaodecontas/emitirparecertecnico?idPronac={$pronac}&tipoMsg=ALERT&msg=Para Finalizar a Análise é necessário Emitir parecer.");
+		  $this->_redirect("realizarprestacaodecontas/emitirparecertecnico?idPronac={$pronac}&tipoMsg=ALERT&msg=Para Finalizar a Anï¿½lise ï¿½ necessï¿½rio Emitir parecer.");
 		}
 	}
 
 	public function enviarchefedivisaoAction(){
 	        $auth               = Zend_Auth::getInstance();
-		
+
 		$get = Zend_Registry::get("get");
-		
+
 		$pronac   = $this->getRequest()->getParam('idPronac');
 		$situacao = $this->getRequest()->getParam('situacao');
-		 
+
 		$tblEncaminhamento = new tbEncaminhamentoPrestacaoContas();
 		$rsEPC             = $tblEncaminhamento->buscar(array("idPronac = ?"=>$pronac, 'stAtivo=?'=>1))->current();
 
 		$tblRelatorio = new tbRelatorioTecnico();
 		$rsRelatorio  = $tblRelatorio->buscar(array('IdPRONAC = ?'=>$pronac,'idAgente=?'=>$auth->getIdentity()->usu_codigo,'cdGrupo=?'=>124));
-		
+
 		if($rsRelatorio->count() > 0){
 			//DESLIGA STATUS ATUAL
 			$rsEPC->stAtivo = 0;
@@ -3000,16 +2996,16 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                                 'idAgenteDestino'   => $rsEPC->idAgenteDestino,
                                 'idOrgaoOrigem'     => $rsEPC->idOrgaoOrigem,
                                 'idOrgaoDestino'    => $rsEPC->idOrgaoDestino,
-				
+
                                 'dtInicioEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ),
                                 'dtFimEncaminhamento'    => new Zend_Db_Expr ( 'GETDATE()' ),
-				
+
                                 'dsJustificativa'   => $rsEPC->dsJustificativa,
                                 'cdGruposOrigem'    => $rsEPC->cdGruposDestino,
                                 'cdGruposDestino'   => 132,
-				
+
                                 'idSituacaoEncPrestContas' => 3, //projeto Finalizado
-				
+
                                 'idSituacao'        => $rsEPC->idSituacao,
 				'stAtivo'           => 1);
 				$tblEncaminhamento->inserir($dados);
@@ -3021,19 +3017,19 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 				return;
 			}
 		}else{
-			$this->_redirect("realizarprestacaodecontas/emitirparecertecnico?idPronac={$pronac}&tipoMsg=ALERT&msg=Para Finalizar a Análise é necessário Emitir parecer.");
+			$this->_redirect("realizarprestacaodecontas/emitirparecertecnico?idPronac={$pronac}&tipoMsg=ALERT&msg=Para Finalizar a Anï¿½lise ï¿½ necessï¿½rio Emitir parecer.");
 		}
 	}
 
 	public function alterarstatusprojetoAction(){
-		
+
 		$get = Zend_Registry::get("get");
-		 
-		$auth = Zend_Auth::getInstance (); // pega a autenticação
-		
+
+		$auth = Zend_Auth::getInstance (); // pega a autenticaï¿½ï¿½o
+
 		$pronac   = $get->idPronac;
 		$situacao = $get->situacao;
-		 
+
 		$tblEncaminhamentoPrestacaoContas = new tbEncaminhamentoPrestacaoContas();
 		$rsEPC = $tblEncaminhamentoPrestacaoContas->buscar(array("idPronac = ?"=>$pronac, 'stAtivo=?'=>1))->current();
 		if(count($rsEPC)>0){
@@ -3047,20 +3043,20 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                             'idAgenteDestino'   => $rsEPC->idAgenteDestino,
                             'idOrgaoOrigem'     => $rsEPC->idOrgaoOrigem,
                             'idOrgaoDestino'    => $rsEPC->idOrgaoDestino,
-			
+
                             'dtInicioEncaminhamento' => new Zend_Db_Expr ( 'GETDATE()' ),
                             'dtFimEncaminhamento'    => new Zend_Db_Expr ( 'GETDATE()' ),
-			
+
                             'dsJustificativa'   => $rsEPC->dsJustificativa,
                             'cdGruposOrigem'    => $rsEPC->cdGruposOrigem,
                             'cdGruposDestino'   => $rsEPC->cdGruposDestino,
-			
+
                             'idSituacaoEncPrestContas' => 2, //projeto Em Analise
-			
+
                             'idSituacao'        => $rsEPC->idSituacao);
 
 			if($tblEncaminhamentoPrestacaoContas->inserir($dados)){
-				$this->_redirect("realizarprestacaodecontas/planilhaorcamentaria?idPronac={$pronac}&tipoMsg=CONFIRM&msg=Projeto em análise!");
+				$this->_redirect("realizarprestacaodecontas/planilhaorcamentaria?idPronac={$pronac}&tipoMsg=CONFIRM&msg=Projeto em anï¿½lise!");
 			}else{
 				$this->_redirect("realizarprestacaodecontas/planilhaorcamentaria?idPronac={$pronac}&tipoMsg=ERROR&msg=Falha ao alterar status do Projeto!");
 			}
@@ -3070,12 +3066,12 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 	}
 
 	public function recuperardataultimasituacaoAction() {
-		
+
 		$this->_helper->layout->disableLayout (); // desabilita o Zend_Layout
 		$this->_helper->viewRenderer->setNoRender(true);
 
 		$NrPronac = $this->_request->getParam("NrPronac");
-		
+
 		if(!empty($NrPronac)){
 			$tblHistoricoSituacao = new HistoricoSituacao();
 			$rsHitorico           = $tblHistoricoSituacao->buscarSituacaoAnterior($NrPronac);
@@ -3101,7 +3097,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
     {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-        
+
         $isAprovado = $this->getRequest()->getParam('IN');
         $folder = '';
         if ('aprovado' == $isAprovado) {
@@ -3111,7 +3107,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         }
         if (empty($folder)) {
             parent::message(
-                    'Informe se a prestação de contas foi Aprovada ou Reprovada',
+                    'Informe se a prestaï¿½ï¿½o de contas foi Aprovada ou Reprovada',
                     '/realizarprestacaodecontas/laudofinal/idPronac/' . $this->getRequest()->getParam('idPronac'),
                     'ERROR'
                     );
@@ -3141,23 +3137,23 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         echo $html;
     }
 
-        /*Buscar Situação PC*/
+        /*Buscar Situaï¿½ï¿½o PC*/
 	public function buscarsituacaoAction()
 	{
-	
-	
+
+
 	}
-	
-	/*Fim Situação PC*/
+
+	/*Fim Situaï¿½ï¿½o PC*/
 	public function imprimirguiaarquivoAction()
 	{
 		//** Usuario Logado ************************************************/
-		$auth = Zend_Auth::getInstance(); // pega a autenticação
+		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
 		/******************************************************************/
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender();
-		
+
 		$get      = Zend_Registry::get('get');
 		$idpronac = $get->idPronac;
 
@@ -3165,7 +3161,6 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 		$data         = date('d/m/Y H:i:s');
 		//buscaProjeto
 		$docs         = TramitarprojetosDAO::buscaProjetoPDF($idpronac);
-		//xd($docs);
 		foreach ($docs as $d):
 
 		//$idDocumento = $d->idDocumento;
@@ -3195,7 +3190,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 							<table cellspacing='0' cellpadding='2' border='1' align='center' width='99%'>
 								<tr align='center'>
 									<td colspan='4'>
-									<h2>MINISTÉRIO DA CULTURA</h2>
+									<h2>MINISTï¿½RIO DA CULTURA</h2>
 									<h3>Guia de Arquivamento de projetos - Enviado</h3></td>
 								</tr>
 								<tr>
@@ -3321,19 +3316,19 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 }
             }
         }
-        
+
         public function painelAction(){
-            
+
             if(isset($_GET['msg']) && $_GET['msg'] == 'sucessoLaudoFinal'){
-                parent::message('Laudo final da prestação de contas emitido com sucesso!', "realizarprestacaodecontas/painel?pag=1&tipoFiltro=devolvidos", 'CONFIRM');
+                parent::message('Laudo final da prestaï¿½ï¿½o de contas emitido com sucesso!', "realizarprestacaodecontas/painel?pag=1&tipoFiltro=devolvidos", 'CONFIRM');
             }
-            
+
             $tblSituacao = new Situacao();
-            $rsSitucao = $tblSituacao->buscar(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
-	    
+            $rsSitucao = $tblSituacao->listasituacao(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
+
             $this->view->situacoes = $rsSitucao;
             $this->intTamPag = 10;
-            
+
             //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
             if($this->_request->getParam("qtde")) {
                 $this->intTamPag = $this->_request->getParam("qtde");
@@ -3361,7 +3356,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                     $order = array("6 ".$ordem,"7 ".$ordem);
                 }
                 $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-                
+
             } else {
                 $campo = null;
                 $order = array(2); //Pronac
@@ -3384,19 +3379,19 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
                 $this->view->filtro = $filtro;
                 switch ($filtro) {
-                    case 'emanalise': //Em análise
+                    case 'emanalise': //Em anï¿½lise
                         $where['p.Orgao = ?'] = $this->codOrgao;
                         $where['p.Situacao in (?)'] = array('E17','E18', 'E20', 'E27', 'E30', 'E46', 'G08', 'G21', 'G22');
                         $where['e.idSituacaoEncPrestContas in (?)'] = array('2');
                         $where['e.stAtivo = ?'] = 1;
                         break;
-                    case 'analisados': // Analisados
-                        $where['p.Orgao = ?'] = $this->codOrgao;
-                        $where['p.Situacao in (?)'] = array('E14','E18', 'E27', 'E46', 'G08', 'G21', 'G22');
-                        $where['e.idSituacaoEncPrestContas in (?)'] = array('3');
-                            $where['e.cdGruposDestino in (?)'] = array('125', '126');
-                        $where['e.stAtivo = ?'] = 1;
-                        break;
+		    case 'analisados': // Analisados
+		        $where['p.Orgao = ?'] = $this->codOrgao;
+		        $where['p.Situacao in (?)'] = array('E14','E18', 'E27', 'E46', 'G08', 'G21', 'G22');
+		        $where['e.idSituacaoEncPrestContas in (?)'] = array('3');
+			$where['e.cdGruposDestino in (?)'] = array('125', '126');
+		        $where['e.stAtivo = ?'] = 1;
+		        break;
                     case 'diligenciados': //Projetos diligenciados
                         $where['p.Orgao = ?'] = $this->codOrgao;
                         $where['p.Situacao in (?)'] = array('E17', 'E20', 'E30');
@@ -3416,23 +3411,23 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 			            $where['d.idTipoDiligencia = ?'] = 174;
 			              $where['d.stEstado = ?'] = 0;
                         break;
-                    default: //Aguardando Análise
+                    default: //Aguardando Anï¿½lise
                         $where['p.Orgao = ?'] = $this->codOrgao;
                         $where['p.Situacao in (?)'] = array('C08', 'E16', 'E17', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54');
                         break;
                 }
-                
-            } else { //Aguardando Análise
+
+            } else { //Aguardando Anï¿½lise
                 $filtro = '';
                 $where['p.Orgao = ?'] = $this->codOrgao;
 		$where['p.Situacao in (?)'] = array('C08', 'E16', 'E17', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54');
             }
-            
+
             if((isset($_POST['situacao']) && !empty($_POST['situacao'])) || (isset($_GET['situacao']) && !empty($_GET['situacao']))){
                 $where["p.Situacao in (?)"] = isset($_POST['situacao']) ? $_POST['situacao'] : $_GET['situacao'];
                 $this->view->situacao = isset($_POST['situacao']) ? $_POST['situacao'] : $_GET['situacao'];
             }
-            
+
             $Projetos = new Projetos();
             $total = $Projetos->buscarPainelPrestacaoDeContas($where, $order, null, null, true, $filtro);
             $fim = $inicio + $this->intTamPag;
@@ -3461,12 +3456,12 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $this->view->dados         = $busca;
             $this->view->intTamPag     = $this->intTamPag;
         }
-        
+
         public function imprimirPainelAction()
 	{
             $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
             $this->intTamPag = 10;
-            
+
             //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
             if($this->_request->getParam("qtde")) {
                 $this->intTamPag = $this->_request->getParam("qtde");
@@ -3522,8 +3517,8 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
                 $this->view->filtro = $filtro;
                 switch ($filtro) {
-                    case 'emanalise': //Em análise
-                        $this->view->tituloPag = 'Em análise';
+                    case 'emanalise': //Em anï¿½lise
+                        $this->view->tituloPag = 'Em anï¿½lise';
                         $where['p.Orgao = ?'] = $this->codOrgao;
                         $where['p.Situacao in (?)'] = array('E17','E18', 'E20', 'E27', 'E30', 'E46', 'G08', 'G21', 'G22');
                         $where['e.idSituacaoEncPrestContas in (?)'] = array('2');
@@ -3557,25 +3552,25 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                         $where['d.idTipoDiligencia = ?'] = 174;
                         $where['d.stEstado = ?'] = 0;
                         break;
-                    default: //Aguardando Análise
-                        $this->view->tituloPag = 'Aguardando Análise';
+                    default: //Aguardando Anï¿½lise
+                        $this->view->tituloPag = 'Aguardando Anï¿½lise';
                         $where['p.Orgao = ?'] = $this->codOrgao;
                         $where['p.Situacao in (?)'] = array('C08', 'E16', 'E17', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54');
                         break;
                 }
-                
-            } else { //Aguardando Análise
-                $this->view->tituloPag = 'Aguardando Análise';
+
+            } else { //Aguardando Anï¿½lise
+                $this->view->tituloPag = 'Aguardando Anï¿½lise';
                 $filtro = '';
                 $where['p.Orgao = ?'] = $this->codOrgao;
                 $where['p.Situacao in (?)'] = array('E68', 'E77');
             }
-            
+
             if((isset($_POST['situacao']) && !empty($_POST['situacao'])) || (isset($_GET['situacao']) && !empty($_GET['situacao']))){
                 $where["p.Situacao in (?)"] = isset($_POST['situacao']) ? $_POST['situacao'] : $_GET['situacao'];
                 $this->view->situacao = isset($_POST['situacao']) ? $_POST['situacao'] : $_GET['situacao'];
             }
-            
+
             $Projetos = new Projetos();
             $total = $Projetos->buscarPainelPrestacaoDeContas($where, $order, null, null, true, $filtro);
             $fim = $inicio + $this->intTamPag;
@@ -3583,36 +3578,37 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             $busca = $Projetos->buscarPainelPrestacaoDeContas($where, $order, $tamanho, $inicio, false, $filtro);
-        
+
+
             if(isset($post->xls) && $post->xls){
                 if(!isset($filtro) || (isset($filtro) && $filtro != 'devolvidos')){
                     $colspan = 8;
                 } else {
                     $colspan = 9;
                 }
-                
+
                 if(isset($filtro) && $filtro == 'emanalise'){
                     $colspan = 9;
                 }
-                
+
                 $html = '';
                 $html .= '<table style="border: 1px">';
-                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="'.$colspan.'">Analisar prestação de contas - '.$this->view->tituloPag.'</td></tr>';
+                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="'.$colspan.'">Analisar prestaï¿½ï¿½o de contas - '.$this->view->tituloPag.'</td></tr>';
                 $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="'.$colspan.'">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
                 $html .='<tr><td colspan="'.$colspan.'"></td></tr>';
 
                 if(isset($filtro) && $filtro == 'emanalise'){
-                    $addTec = '<th style="border: 1px dotted black; background-color: #9BBB59;">Técnico</th>';
+                    $addTec = '<th style="border: 1px dotted black; background-color: #9BBB59;">Tï¿½cnico</th>';
                     $addDataEnvio = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Envio</th>';
-                    $addDiasAnalise = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dias em Análise</th>';
+                    $addDiasAnalise = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dias em Anï¿½lise</th>';
                 }
-                
+
                 $html .= '<tr>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">#</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">PRONAC</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situação</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Área / Segmento</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situaï¿½ï¿½o</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">ï¿½rea / Segmento</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Mecanismo</th>';
                 if(isset($filtro) && $filtro == 'emanalise'){
                     $html .= $addTec;
@@ -3623,21 +3619,21 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
 
                 $i=1;
                 foreach ($busca as $projeto){
-                    
+
                     $mecanismo = $projeto->Mecanismo;
                     if($mecanismo == 'Mecenato'){
                         $mecanismo = "Incentivo Fiscal";
                     }
-                    
 
-                    
+
+
                     $addValTec = '';
                     if(isset($filtro) && $filtro == 'emanalise'){
                         $addValTec = '<td style="border: 1px dotted black;">'.$projeto->usu_nome.'</td>';
                         $addValDiasAnalise = '<td style="border: 1px dotted black;">'.$projeto->qtDiasAnalise.'</td>';
                         $addValDataEnvio = '<td style="border: 1px dotted black;">'.Data::tratarDataZend($projeto->dtInicioEncaminhamento, 'brasileira').'</td>';
                     }
-                    
+
                     $html .= '<tr>';
                     $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$projeto->Pronac.'</td>';
@@ -3656,33 +3652,33 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 $html .= '</table>';
 
                 header("Content-Type: application/vnd.ms-excel");
-                header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.xls;");
-                echo $html; die();
+                header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.ods;");
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->dados = $busca;
             }
 	}
-        
+
         public function cancelamentoDoEncaminhamentoAction(){
             $get  = Zend_Registry::get('get');
-            
+
             try {
                 $tbEncaminhamentoPrestacaoContas = new tbEncaminhamentoPrestacaoContas();
                 $busca = $tbEncaminhamentoPrestacaoContas->buscar(array('idPronac = ?' => $get->idPronac, 'idEncPrestContas = ?' => $get->enc))->current();
                 $busca->delete();
 
                 $tblProjeto = new Projetos();
-                $tblProjeto->alterarSituacao($get->idPronac, '', 'E68', 'Prestação de Contas apresentada - Aguardando Análise');
+                $tblProjeto->alterarSituacao($get->idPronac, '', 'E68', 'Prestaï¿½ï¿½o de Contas apresentada - Aguardando Anï¿½lise');
                 parent::message('Projeto devolvido com sucesso!', "realizarprestacaodecontas/painel?tipoFiltro=emanalise", 'CONFIRM');
-                
+
             } catch (Exception $e) {
                 parent::message('Erro ao devolver o projeto!', "realizarprestacaodecontas/painel?tipoFiltro=emanalise", 'ERROR');
                 return;
             }
         }
-        
-        
+
+
     public function manterAssinantesAction(){
 
         $this->intTamPag = 10;
@@ -3729,16 +3725,16 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             switch ($filtro) {
-                case 'coordIncFiscTec': //Coordenador (a) de Incentivos Fiscais e Apoio Técnico
+                case 'coordIncFiscTec': //Coordenador (a) de Incentivos Fiscais e Apoio Tï¿½cnico
                     $where['a.tpCargo = ?'] = 1;
                     break;
-                case 'coordGeral': //Coordenador (a) Geral de Prestação de Contas
+                case 'coordGeral': //Coordenador (a) Geral de Prestaï¿½ï¿½o de Contas
                     $where['a.tpCargo = ?'] = 2;
                     break;
-                case 'diretorExecutivo': //Diretor (a) Executivo de Incentivo à Cultura
+                case 'diretorExecutivo': //Diretor (a) Executivo de Incentivo ï¿½ Cultura
                     $where['a.tpCargo = ?'] = 3;
                     break;
-                case 'secretarioFomento': //Secretário (a) de Fomento e Incentivo à Cultura
+                case 'secretarioFomento': //Secretï¿½rio (a) de Fomento e Incentivo ï¿½ Cultura
                     $where['a.tpCargo = ?'] = 4;
                     break;
                 default: //Todos os cargos
@@ -3775,7 +3771,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
     }
-    
+
     public function imprimirManterAssinantesAction(){
 
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
@@ -3823,16 +3819,16 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             switch ($filtro) {
-                case 'coordIncFiscTec': //Coordenador (a) de Incentivos Fiscais e Apoio Técnico
+                case 'coordIncFiscTec': //Coordenador (a) de Incentivos Fiscais e Apoio Tï¿½cnico
                     $where['a.tpCargo = ?'] = 1;
                     break;
-                case 'coordGeral': //Coordenador (a) Geral de Prestação de Contas
+                case 'coordGeral': //Coordenador (a) Geral de Prestaï¿½ï¿½o de Contas
                     $where['a.tpCargo = ?'] = 2;
                     break;
-                case 'diretorExecutivo': //Diretor (a) Executivo de Incentivo à Cultura
+                case 'diretorExecutivo': //Diretor (a) Executivo de Incentivo ï¿½ Cultura
                     $where['a.tpCargo = ?'] = 3;
                     break;
-                case 'secretarioFomento': //Secretário (a) de Fomento e Incentivo à Cultura
+                case 'secretarioFomento': //Secretï¿½rio (a) de Fomento e Incentivo ï¿½ Cultura
                     $where['a.tpCargo = ?'] = 4;
                     break;
                 default: //Todos os cargos
@@ -3861,36 +3857,36 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Assinante</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Tipo do Cargo</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Cadastro</th>';
-            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situação</th>';
+            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situaï¿½ï¿½o</th>';
             $html .= '</tr>';
 
             $i=1;
             foreach ($busca as $d){
-                
+
                 switch ($d->tpCargo) {
                     case '1':
-                        $tpCargo = 'Coordenador (a) de Incentivos Fiscais e Apoio Técnico';
+                        $tpCargo = 'Coordenador (a) de Incentivos Fiscais e Apoio Tï¿½cnico';
                         break;
                     case '2':
-                        $tpCargo = 'Coordenador (a) Geral de Prestação de Contas';
+                        $tpCargo = 'Coordenador (a) Geral de Prestaï¿½ï¿½o de Contas';
                         break;
                     case '3':
-                        $tpCargo = 'Diretor (a) Executivo de Incentivo à Cultura';
+                        $tpCargo = 'Diretor (a) Executivo de Incentivo ï¿½ Cultura';
                         break;
                     case '4':
-                        $tpCargo = 'Secretário (a) de Fomento e Incentivo à Cultura';
+                        $tpCargo = 'Secretï¿½rio (a) de Fomento e Incentivo ï¿½ Cultura';
                         break;
                     default:
                         $tpCargo = ' - ';
                         break;
                 }
-                
+
                 $dtCadastro = Data::tratarDataZend($d->dtCadastro, 'brasileira');
                 $stAtivo = 'Ativo';
                 if($d->stAtivo == 0){
                     $stAtivo = 'Inativo';
                 }
-                
+
                 $html .= '<tr>';
                 $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.$d->nmAssinante.'</td>';
@@ -3903,22 +3899,22 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $html .= '</table>';
 
             header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=Manter_Assinantes.xls;");
-            echo $html; die();
+            header("Content-Disposition: inline; filename=Manter_Assinantes.ods;");
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->dados = $busca;
         }
     }
-    
+
     public function incluirAssinantesPrestacaoAction(){
         $post = Zend_Registry::get('post');
         $tbAssinantesPrestacao = new tbAssinantesPrestacao();
-        
+
         $auth = Zend_Auth::getInstance();
         $this->usu_codigo = $auth->getIdentity()->usu_codigo;
-            
-        $db = Zend_Registry :: get('db');
+
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -3939,15 +3935,15 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             parent::message("Erro ao realizar cadastro do asssinante.", "realizarprestacaodecontas/manter-assinantes", "ERROR");
         }
     }
-    
+
     public function editarAssinantesPrestacaoAction(){
         $post = Zend_Registry::get('post');
         $tbAssinantesPrestacao = new tbAssinantesPrestacao();
-        
+
         $auth = Zend_Auth::getInstance();
         $this->usu_codigo = $auth->getIdentity()->usu_codigo;
-            
-        $db = Zend_Registry :: get('db');
+
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         try {
@@ -3958,7 +3954,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $dados->idUsuario = $this->usu_codigo;
             $dados->stAtivo = $post->stAtivo;
             $dados->save();
-            
+
             $db->commit();
             parent::message("Assinante alterado com sucesso!", "realizarprestacaodecontas/manter-assinantes", "CONFIRM");
         }
@@ -3967,5 +3963,5 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             parent::message("Erro ao tentar atualizar os dados do asssinante.", "realizarprestacaodecontas/manter-assinantes", "ERROR");
         }
     }
-    
+
 }  //fecha class

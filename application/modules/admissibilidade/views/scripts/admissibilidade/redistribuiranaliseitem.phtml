@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <script type="text/javascript">
+            <!--
+            $(document).ready(function () {
+                $(".btArmazenar").click(function () {
+                    $('#frmRedistAnalise').submit();
+                });
+            });
+            //-->
+        </script>
+        <div class="col s10 m10 l10">
+            <h4>Admissibilidade de propostas - Redistribuir an&aacute;lise </h4>
+            <?php
+            if ($this->mensagem) {
+                echo "<div class='mensagem' align=center>{$this->mensagem}</div>";
+            }
+            ?>
+            <form id="frmRedistAnalise" method="post"
+                  action="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/redistribuiranaliseitem?fase=<?php echo $this->analista->Tipo; ?>">
+                <table class="bordered ">
+                    <tr>
+                        <th colspan="2">
+                            Propostas distribuidas para an&aacute;lise
+                        </th>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <b>Nr. Proposta</b>
+                            <br/>
+                            <input type="hidden" name="idProjeto" value="<?php echo $this->analista->idProjeto; ?>"/>
+                            <?php echo $this->analista->idProjeto; ?>
+                        </td>
+                        <td align="left">
+                            <b>Nome da Proposta</b>
+                            <br/>
+                            <?php echo $this->analista->NomeProposta; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <b>Analista Atual</b>
+                            <br/>
+                            <?php echo $this->analista->Tecnico; ?>
+                            <input type="hidden" name="tecnicoAtual" value="<?php echo $this->analista->Tecnico; ?>"/>
+                        </td>
+                        <td align="left">
+                            <b>Tipo</b>
+                            <br/>
+                            <?php echo $this->analista->Tipo; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <b>Novo Analista *</b>
+                        </td>
+                        <td align="left">
+                            <?php if($this->novosAnalistas) :?>
+                                <select class="select_simples" name="usu_cod">
+                                    <?php foreach ($this->novosAnalistas as $analista) : ?>
+                                        <option value="<?php echo $analista->usu_cod ?>"><?php echo $analista->usu_nome ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            <?php endif ?>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <table class="tabela">
+                <tr>
+                    <td class="centro">
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller'=>'admissibilidade', 'action' => 'redistribuiranalise'))?>"
+                            class="btn red-text white" type="submit">Cancelar</a>
+                        <button class="btn btArmazenar" type="submit">Confirmar</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<br clear="all"/>

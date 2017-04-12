@@ -1,5 +1,4 @@
 <?php
-include_once 'GenericController.php';
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -10,7 +9,7 @@ include_once 'GenericController.php';
  *
  * @author tisomar
  */
-class DocumentosrecebidosController extends GenericControllerNew {
+class DocumentosrecebidosController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         // verifica as permissões
@@ -34,4 +33,3 @@ class DocumentosrecebidosController extends GenericControllerNew {
 
 
 }
-?>

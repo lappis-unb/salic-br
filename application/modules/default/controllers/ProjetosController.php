@@ -10,7 +10,7 @@
  * @link http://www.politec.com.br
  * @copyright 2010 - Politec - Todos os direitos reservados.
  */
-class ProjetosController extends GenericControllerNew {
+class ProjetosController extends MinC_Controller_Action_Abstract {
 
     /**
      * Reescreve o metodo init()
@@ -278,7 +278,7 @@ class ProjetosController extends GenericControllerNew {
                   (".$idPronac.", 0, null, ".$tipo_doc.", ".$idusuario.", GETDATE(), '".$arquivoNome."', ".$arquivoTamanho.", null, null, ".$codOrgao.", '".$cod_ect."', ".$arquivoBinario.")
             ";
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
@@ -379,7 +379,7 @@ class ProjetosController extends GenericControllerNew {
                         'stAvaliacao'=>$resu->ParecerFavoravel,
                         'dsAvaliacao'=>$resu->ParecerDeConteudo
                     );
-                    //xd($data);
+                    
                     $analiseaprovacao->inserir($data);
                 }
 

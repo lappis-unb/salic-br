@@ -1,27 +1,21 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of inserirUsuarioController
  *
  * @author augusto
  */
-class InserirusuarioController extends GenericControllerNew {
+class InserirusuarioController extends MinC_Controller_Action_Abstract {
 
     public function indexAction() {
         $cpf = $this->_request->getParam("cpf");
-        $agente = new Agentes();
-        $usuario = new Usuario();
+        $agente = new Agente_Model_DbTable_Agentes();
+        $usuario = new Autenticacao_Model_Usuario();
 
         $buscarDadosAgente = $agente->buscar(array('CNPJCPF = ?' => $cpf))->current()->toArray();
 
         $buscarUsuario = $usuario->buscar(array(), array('usu_codigo desc'), array('1'))->current()->toArray();
         $usuarioCadastrar =  $buscarUsuario['usu_codigo']+1;
-//        xd($usuarioCadastrar);
+
         $usurioLogin = str_replace(' ', '_', $buscarDadosAgente['Descricao']);
         $dados = array(
             'usu_codigo'=>$usuarioCadastrar,
@@ -49,13 +43,10 @@ class InserirusuarioController extends GenericControllerNew {
             'usu_andar' => 0,
             'usu_telefone' => 0,
         );
-//        xd($dados);
+
         $senha = substr($cpf, 0,6);
         $inserir = $usuario->inserirUsuarios($dados);
         $alterarSenha = $usuario->alterarSenha($cpf, $senha);
        die('OK');
     }
-
 }
-
-?>

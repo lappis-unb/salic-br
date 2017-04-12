@@ -1,0 +1,51 @@
+<?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+
+<div id="titulo">
+    <div>Admissibilidade de propostas - Despachos <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
+</div>
+<div id="conteudo">
+    <?php if(isset($this->itensDespacho[0])):?>
+    <table class="tabela">
+        <tr>
+            <th>
+                <?php echo $this->itensDespacho[0]->idProposta.' - '; echo $this->itensDespacho[0]->NomeProjeto;?>
+            </th>
+        </tr>
+        <tr>
+            <td align="center">
+	    	<table>
+                    <tr>
+                        <th>Data</th>
+                        <th>Despacho</th>
+                        <th>Despachante</th>
+                    </tr>
+                    <?php
+                    if(is_array($this->itensDespacho) and count($this->itensDespacho)>0)
+                            foreach ($this->itensDespacho as $despacho){
+
+                   ?>
+                    <tr>
+                        <td><?php echo str_replace(" ", " as ", data::dataBrasileira($despacho->Data)); ?></td>
+                        <td align="center"><?php echo $despacho->Despacho ?></td>
+                        <td align="center"><?php echo $despacho->Usuario ?></td>
+                    </tr>
+                    <?php
+                            }
+                    ?>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <?php else:?>
+    <br>
+    <br>
+    <div class="centro">Nenhum Despacho encontrado para a Proposta.</div>
+    <br>
+    <br>
+    <?php endif;?>
+</div>
+<!-- ========== FIM CONTEUDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
+<div id="rodapeConteudo"><span></span></div>
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+<br clear="all" />

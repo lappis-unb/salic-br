@@ -5,12 +5,11 @@
  *
  * @author 01373930160
  */
-require_once 'GenericControllerNew.php';
 
-class SolicitarReadequacaoCustoController extends GenericControllerNew {
+class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstract {
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -22,7 +21,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-    // fecha método init()
+    // fecha mï¿½todo init()
 
     public function indexAction() {
 
@@ -31,18 +30,18 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
                 $dados = array('stPedidoAlteracao' => $_POST['acao']);
                 $atualizaPedido = SolicitarReadequacaoCustoDAO::atualizaPedidoAlteracao($dados, $_POST['idPedidoAlteracao']);
                 echo json_encode(array('error' => false));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Zend_Exception $e) {
                 die('Erro:' . $e->getMessage());
                 echo json_encode(array('error' => true));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         $idPronac = $_GET['idpronac'];
         $buscaProjetoProduto = new SolicitarReadequacaoCustoDAO();
 
 
-        // ========== INÍCIO MENSAGEM DE REDUÇÃO, COMPLEMENTO OU REMANEJAMENTO ==========
+        // ========== INï¿½CIO MENSAGEM DE REDUï¿½ï¿½O, COMPLEMENTO OU REMANEJAMENTO ==========
         $verificarReadequacao = $buscaProjetoProduto->verificarreadequacao($idPronac);
 
         $totalPlanilhaAprovada = !empty($verificarReadequacao[0]['totalAprovado']) ? $verificarReadequacao[0]['totalAprovado'] : 0;
@@ -56,14 +55,14 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
         endif;
 
         if ($totalPlanilhaAprovada > $totalPlanilhaSolicitada) :
-            $tipoReadeq = 'redução';
+            $tipoReadeq = 'reduï¿½ï¿½o';
         elseif ($totalPlanilhaAprovada < $totalPlanilhaSolicitada) :
-            $tipoReadeq = 'complementação';
+            $tipoReadeq = 'complementaï¿½ï¿½o';
         else :
             $tipoReadeq = 'remanejamento';
         endif;
-        // ========== FIM MENSAGEM DE REDUÇÃO, COMPLEMENTO OU REMANEJAMENTO ==========
-//        xd($tipoReadeq);
+        // ========== FIM MENSAGEM DE REDUï¿½ï¿½O, COMPLEMENTO OU REMANEJAMENTO ==========
+
         $this->view->verificarReadequacao = $tipoReadeq;
 
         $verificaPlanilhaCustoVerifica = $buscaProjetoProduto->buscarProdutoAprovacao($idPronac)->toArray();
@@ -76,7 +75,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
             $this->view->buscaPlanilhaCusto = $verificaPlanilhaCusto;
         }
 
-        //   xd($verificaPlanilhaCusto);
+        
 
         $resultadoAcao = $buscaProjetoProduto->verificaTipoAcao($idPronac);
         $this->view->buscaacao = $resultadoAcao;
@@ -136,12 +135,12 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
                 $status = $_POST['status'];
                 $idPronac = $_POST['idpronac'];
                 $atualizaPedido = SolicitarReadequacaoCustoDAO::controlaStatus($status, $idPronac);
-                die();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 $status = $_POST['status'];
                 $idPronac = $_POST['idpronac'];
                 $atualizaPedido = SolicitarReadequacaoCustoDAO::controlaStatus($status, $idPronac);
-                die();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
 
@@ -168,7 +167,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
                 $municipio['error'] = true;
             }
             echo json_encode($municipio);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         if (isset($_POST['idEtapa'])) {
@@ -187,7 +186,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
             }
 
             echo json_encode($itemEtapa);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         //se o produto estiver setado
         if (isset($_POST['acao'])) {
@@ -226,7 +225,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
                 }
 //                $valorFinal =  explode(".", $_POST['vlUnitario']);
 //                $valorFinal = $valorFinal[0] . $valorFinal[1] . "." . $valorFinal[2];
-                // diz se a solicitação de readequação será incluída ou alterada
+                // diz se a solicitaï¿½ï¿½o de readequaï¿½ï¿½o serï¿½ incluï¿½da ou alterada
                 $PA = new PlanilhaAprovacao();
                 $buscarPlanilhaAprovacaoPai = $PA->buscar(array('idPlanilhaAprovacaoPai = ?' => $_POST['idPlanilhaAP'], 'tpPlanilha = ?' => 'SR'));
                 if (count($buscarPlanilhaAprovacaoPai) > 0) :
@@ -275,11 +274,11 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
 
                 if ($_POST['acao'] == 'E' or $_POST['acao'] == 'A') {
 
-                    // inclusão da solicitação de readequação
+                    // inclusï¿½o da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                     if ($acaoSR == 'I') {
                         $insertItem = SolicitarReadequacaoCustoDAO::inserirNovoProduto($dados);
                     }
-                    // alteração da solicitação de readequação
+                    // alteraï¿½ï¿½o da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                     else {
                         $where = "tpPlanilha = 'SR' AND stAtivo = 'N' AND $colunaSR = " . $_POST['idPlanilhaAP'];
                         $updateItem = SolicitarReadequacaoCustoDAO::atualizaItem($dados, $where);
@@ -302,10 +301,10 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
                     $insertItem = SolicitarReadequacaoCustoDAO::inserirNovoProduto($dados);
                 }
                 echo json_encode(array('error' => false));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Zend_Exception $e) {
                 echo json_encode(array('error' => true, 'descricao:' => $e->getMessage()));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
 
@@ -317,7 +316,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
             );
 
             $alterarpedido = SolicitarReadequacaoCustoDAO::alterarPedidoAlterado($dados);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
 
         if (isset($_POST['verificaPlanilha']) and $_POST['verificaPlanilha'] == "S") {
@@ -350,7 +349,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
             }
             $json = json_encode($valorjson);
             echo $json;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
 
         if (isset($_GET['idpronac'])) {
@@ -377,10 +376,10 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
 
             $resultadoProduto = $buscaInformacoes->buscarProdutos($idPronac);
 
-//            Zend_Debug::dump($resultadoProduto); die;
+//            Zend_Debug::dump($resultadoProduto); $this->_helper->viewRenderer->setNoRender(TRUE); 
 //            $this->view->buscaproduto = $resultadoProduto;
             $resultadoItensCadastrados = $buscaInformacoes->buscarItensCadastrados($idPronac);
-//xd($resultadoItensCadastrados);
+
             $i = 0;
 
             if (empty($resultadoProduto[0]->produto)) {
@@ -420,7 +419,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
             }
 
             $resultadoEtapa = $buscaInformacoes->buscarEtapa($tipoproduto);
-//            Zend_Debug::dump($resultadoEtapa);die;
+//            Zend_Debug::dump($resultadoEtapa);$this->_helper->viewRenderer->setNoRender(TRUE); 
             $this->view->buscaetapa = $resultadoEtapa;
 
             $resultadoFonteRecurso = $buscaInformacoes->buscarFonteRecurso();
@@ -481,7 +480,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
           }
 
           echo json_encode($itemEtapa);
-          exit();
+          $this->_helper->viewRenderer->setNoRender(TRUE);
           } */
 
         if (isset($_POST['verificaPlanilha']) and $_POST['verificaPlanilha'] == "S") {
@@ -513,7 +512,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
             }
             $json = json_encode($valorjson);
             echo $json;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }
 
@@ -586,7 +585,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
         }
     }
 
-// fecha método existirPlanilhaProduto()
+// fecha mï¿½todo existirPlanilhaProduto()
 
     public function validarPercentualAction() {
 
@@ -594,7 +593,7 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
         $this->_helper->viewRenderer->setNoRender(true);
         $buscaPedido = new SolicitarReadequacaoCustoDAO;
         $verificapedido = $buscaPedido->verificaPedidoAlteracao($_POST['idpronac']);
-//        xd($_POST['idpronac']);
+
         //REGRA DOS 15% ***********************************************
         //soma valor total do projeto        
         $planilhaAprovacao = new PlanilhaAprovacao();
@@ -608,16 +607,16 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
         $arrWhereCustoAdm['idProduto = ?'] = 0; //custos administrativos
         $arrWhereCustoAdm['tpPlanilha = ? '] = 'SR'; //
         $valoracustosadministrativos = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereCustoAdm); 
-//        xd($valoracustosadministrativos);
+
         $valoracustosadministrativos = $valoracustosadministrativos['soma']; 
         //$valoracustosadministrativos += (float) $_POST['qtd'] * $_POST['ocorrencia'] * $_POST['vlUnitario']; //
         $valorquinzeporceto = ($AprovadoReal * 0.15); //pegando o valor de 15% do projeto para incluir na msg abaixo    
         
-        //***REGRA 20% DIVULGAÇÃO/COMERCIALIZAÇÃO  *****************************************************************************/                        
-        //soma valor dos custos DIVULGAÇÃO / COMERCIALIZAÇÃO
+        //***REGRA 20% DIVULGAï¿½ï¿½O/COMERCIALIZAï¿½ï¿½O  *****************************************************************************/                        
+        //soma valor dos custos DIVULGAï¿½ï¿½O / COMERCIALIZAï¿½ï¿½O
         $arrWhereCustoDC = array();
         $arrWhereCustoDC['idPronac = ?'] = $_POST['idpronac'];
-        $arrWhereCustoDC['idEtapa = ?'] = 3; //custos DIVULGAÇÃO E COMERCIALIZAÇÃO
+        $arrWhereCustoDC['idEtapa = ?'] = 3; //custos DIVULGAï¿½ï¿½O E COMERCIALIZAï¿½ï¿½O
         $arrWhereCustoDC['tpPlanilha = ? '] = 'SR';
         $valoracustosdivulgacaocomercializacao = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereCustoDC);
         $valoracustosdivulgacaocomercializacao = (!empty($valoracustosdivulgacaocomercializacao['soma'])) ? $valoracustosdivulgacaocomercializacao['soma'] : 0;
@@ -629,31 +628,31 @@ class SolicitarReadequacaoCustoController extends GenericControllerNew {
         $dados = array('stPedidoAlteracao' => $_POST['acao']);
         
        if ($valoracustosdivulgacaocomercializacao > $valorvinteporcento) {
-//        xd("valor porcento: " . "$valorvinteporcento" . "aprovado real: " . "$AprovadoReal". "valor cursto divulgação: " ."$valoracustosdivulgacaocomercializacao");
+
            $atualizaPedido = SolicitarReadequacaoCustoDAO::atualizaPedidoAlteracao($dados, $_POST['idPedidoAlteracao']);
             //xd('2- custo produto');            
-            $msg = 'Favor ajustar os custos de Divulgação / Comercialização que excedem <b>'. number_format($valorvinteporcento, '2', ',', '.') .'</b>, valor para que possa enviar sua solicitação de readequação.';
-//            $msg = 'Na readequa&ccedil;ão de planilha or&ccedil;amentária, o sistema deve bloquear envio planilha com custos administrativos superior a 15% do valor total do projeto.';
+            $msg = 'Favor ajustar os custos de Divulgaï¿½ï¿½o / Comercializaï¿½ï¿½o que excedem <b>'. number_format($valorvinteporcento, '2', ',', '.') .'</b>, valor para que possa enviar sua solicitaï¿½ï¿½o de readequaï¿½ï¿½o.';
+//            $msg = 'Na readequa&ccedil;ï¿½o de planilha or&ccedil;amentï¿½ria, o sistema deve bloquear envio planilha com custos administrativos superior a 15% do valor total do projeto.';
             $novos_valores['error'] = true;
             $novos_valores['descricao'] = utf8_encode($msg);
             echo json_encode($novos_valores);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else  if ($valoracustosadministrativos > $valorquinzeporceto) {
-//        xd("valor porcento: " . "$valorquinzeporceto" . "aprovado real: " . "$AprovadoReal". "valor custo administrativo: " ."$valoracustosadministrativos");
+
             $atualizaPedido = SolicitarReadequacaoCustoDAO::atualizaPedidoAlteracao($dados, $_POST['idPedidoAlteracao']);
-//            xd('1- custo administrativo');
-            $msg = 'Favor ajustar os Custos Administrativos que excedem <b>'. number_format($valorquinzeporceto, '2', ',', '.') .'</b>, valor para que possa enviar sua solicitação de readequação.';
+
+            $msg = 'Favor ajustar os Custos Administrativos que excedem <b>'. number_format($valorquinzeporceto, '2', ',', '.') .'</b>, valor para que possa enviar sua solicitaï¿½ï¿½o de readequaï¿½ï¿½o.';
             $novos_valores['error'] = true;
             $novos_valores['descricao'] = utf8_encode($msg);
             echo json_encode($novos_valores);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else {
             $novos_valores['error'] = false;
             echo json_encode($novos_valores);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
         //***FINAL REGRA 15% CUSTOS ADMINISRATIVOS *****************************************************************************/       
-        //***FINAL REGRA 20% DIVULGAÇÃO/COMERCIALIZAÇÃO*****************************************************************************/
+        //***FINAL REGRA 20% DIVULGAï¿½ï¿½O/COMERCIALIZAï¿½ï¿½O*****************************************************************************/
     }
 
 }

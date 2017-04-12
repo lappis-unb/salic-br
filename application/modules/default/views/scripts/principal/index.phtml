@@ -1,0 +1,55 @@
+<script type="text/javascript">
+
+	jqAjaxLink('<?php echo $this->Url(array('controller' => 'principal', 'action' => 'listar-comunicados', 'stEstado' => '1', 'stOpcao' => '0')) ?>', '', 'resultadoConsulta');
+
+	function localizapronac(){
+
+		var pronac = $("#pronac").val();
+
+		if(pronac == ''){
+			alertar("Informe o Pronac!");
+			return false;
+		}
+
+		$("#formpronac").submit();
+
+	}
+
+</script>
+
+<!-- ========== IN�CIO T�TULO ========== -->
+<div id="titulo">
+    <div>Seja bem-vindo(a) ao Salic! <span><?php echo $this->saudacao; ?></span></div>
+</div>
+<!-- ========== FIM T�TULO ========== -->
+
+<!-- ========== IN�CIO CONTE�DO ========== -->
+<div id="conteudo">
+<div id="confirma"></div>
+	<form id="formpronac" action="<?php echo $this->Url(array('controller' => 'principal', 'action' => 'buscarprojeto')) ?>" method="post">
+		<table class="tabela">
+			<tr>
+				<td width="100">PRONAC</td>
+				<td>
+					<input id="pronac" type="text" name="Pronac" class="input_simples" onkeypress="mascara(this, format_num);" maxlength="7" />
+					<button type="button" class="btn" value=" " onclick="localizapronac();">Localizar</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+<?php if(count($this->comunicados) > 0):?>
+	<div id="resultadoConsulta"><br><center>Aguarde, carregando dados...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br></div>
+<?php else:?>
+
+	<table class="tabela">
+		<tr>
+			<td align="center" class="center-align logo-content">
+				<br /><br /><br /><br />
+				<img alt="" src="<?php echo $this->baseUrl(); ?>/public/img/logo-500px.png" />
+				<br /><br /><br /><br />
+			</td>
+		</tr>
+	</table>
+
+<?php endif;?>
+</div>

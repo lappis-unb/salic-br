@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class ProjetoExtratoMesRestController extends Minc_Controller_AbstractRest {
 
@@ -18,7 +18,7 @@ class ProjetoExtratoMesRestController extends Minc_Controller_AbstractRest {
         $ano = $this->_request->getParam('ano');
         $listaMes = array();
         $modelProjetos = new Projetos();
-        
+
         $objListaResult = $modelProjetos->buscarMesExtratoDeProjeto($projeto, $ano);
         $arrListaResult = $objListaResult->toArray();
         if($arrListaResult){
@@ -28,7 +28,7 @@ class ProjetoExtratoMesRestController extends Minc_Controller_AbstractRest {
             }
         }
 
-        # Resposta da autenticação
+        # Resposta da autenticaï¿½ï¿½o
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($listaMes));
     }
     

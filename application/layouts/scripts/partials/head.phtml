@@ -1,0 +1,118 @@
+<head>
+    <?php if(in_array($_SERVER["HTTP_HOST"], array('salic.cultura.gov.br', 'http://salic.cultura.gov.br'))){ ?>
+        <!-- Piwik -->
+        <script type="text/javascript">
+            var _paq = _paq || [];
+            _paq.push(["trackPageView"]);
+            _paq.push(["enableLinkTracking"]);
+
+            (function() {
+                var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analise.cultura.gov.br/";
+                _paq.push(["setTrackerUrl", u+"piwik.php"]);
+                _paq.push(["setSiteId", "3"]);
+                var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+                g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
+        <!-- End Piwik Code -->
+    <?php } ?>
+    <?php
+    /* Parsear os arquivos de configuração */
+//    $applicationConf = Zend_Registry::get('config')->application->{APPLICATION_ENV};
+    $config = Zend_Registry::get('config');
+    $configLayout = $config->layout->{$this->layout()->name};
+
+    $arrJsFiles = array();
+    if ($configLayout->resources->js->global->files) {
+        foreach ($configLayout->resources->js->global->files as $strJsValue) {
+            $arrJsFiles[] = $strJsValue;
+        }
+    }
+    if ($configLayout->resources->js->files) {
+        foreach ($configLayout->resources->js->files as $strJsValue) {
+            $arrJsFiles[] = $strJsValue;
+        }
+    }
+
+//    $arrJsFiles = array_reverse($arrJsFiles);
+    foreach ($arrJsFiles as $strJsValue) {
+        $this->headScript()->appendFile($configLayout->resources->js->path . '/' . $strJsValue, 'text/javascript', array('language' => 'javascript'));
+//        $this->headScript()->prependFile($configLayout->resources->js->path . '/' . $strJsValue, 'text/javascript', array('language' => 'javascript'));
+    }
+
+    $arrCssFiles = array();
+    if ($configLayout->resources->css->global->files) {
+        foreach ($configLayout->resources->css->global->files as $arrCssValues ) {
+            $arrCssFiles[] = $arrCssValues;
+        }
+    }
+    if ($configLayout->resources->css->files) {
+        foreach ($configLayout->resources->css->files as $arrCssValues ) {
+            $arrCssFiles[] = $arrCssValues;
+        }
+    }
+//    $arrCssFiles = array_reverse($arrCssFiles);
+    foreach ($arrCssFiles as $arrCssValue) {
+        $this->headLink()->appendStylesheet(
+            $configLayout->resources->css->path . '/' . $arrCssValue,
+            'all',
+            true,
+            array('rel' => 'stylesheet')
+        );
+    }
+
+    $this->headTitle(html_entity_decode($configLayout->layout->headTitle, ENT_QUOTES, $config->resources->db->params->charset));
+    $this->doctype($config->layout->doctype);
+    $this->headMeta()->setHttpEquiv('Content-Type', 'text/html; charset=' . $config->resources->db->params->charset);
+    $this->headMeta()->appendName('name', 'Sistema Salic');
+    $this->headMeta()->appendName('description', 'Sistema de Apoio às Leis de Incentivo à Cultura');
+    $this->headMeta()->appendName('viewport', 'width=device-width, user-scalable=no');
+
+//    if ($config->layout->meta->layoutName == true)
+//        $this->view->headMeta()->setName('Layout', $layout);
+
+    // Titulo da pagina
+    $this->headTitle()->setSeparator(' | ');
+
+    $mSet = false;
+    foreach ($this->headTitle() as $t) {
+        if ($t == 'Salic') $mSet = true;
+    }
+    if (!$mSet) $this->headTitle('Salic', Zend_View_Helper_Placeholder_Container_Abstract::PREPEND);
+
+    // Adicionar o HeadTitle default caso exista apenas um registrado
+    if (count($this->headTitle()) == 1)
+        $this->headTitle($config->layout->headTitle);
+//
+    if ($this->docType()->getDoctype() == Zend_View_Helper_Doctype::XHTML1_RDFA) {
+        foreach ($this->view->FacebookOpenGraphTags()->getTags() as $k => $v) {
+            if ($v == '') continue;
+            $this->view->headMeta()->setProperty($k, $v);
+        }
+    }
+
+    echo $this->headMeta();
+    echo $this->headLink();
+    echo $this->headScript();
+    echo $this->headTitle();
+    ?>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--    <noscript>-->
+<!--        <link type="text/css" rel="stylesheet" media="all" href="--><?php //echo $this->baseUrl(); ?><!--/public/css/noscript.css" />-->
+<!--    </noscript>-->
+
+    <!-- Jquery -->
+<!--    <link type="text/css" href="--><?php //echo $this->baseUrl(); ?><!--/public/css/custom-theme/jquery-ui-1.8.2.custom.css" rel="stylesheet" />-->
+<!--    <script type="text/javascript" src="--><?php //echo $this->baseUrl(); ?><!--/public/js/jquery-ui-1.8.2.custom.min.js"></script>-->
+<!--    <script type="text/javascript" src="--><?php //echo $this->baseUrl(); ?><!--/public/js/ui/i18n/jquery.ui.datepicker-pt-BR.js"></script>-->
+<!--    <style type="text/css">-->
+<!--        /*demo page css*/-->
+<!--        .demoHeaders { margin-top: 2em; }-->
+<!--        #dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}-->
+<!--        #dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}-->
+<!--        ul#icons {margin: 0; padding: 0;}-->
+<!--        ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}-->
+<!--        ul#icons span.ui-icon {float: left; margin: 0 4px;}-->
+<!--    </style>-->
+
+</head>

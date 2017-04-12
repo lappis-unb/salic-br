@@ -12,7 +12,7 @@
 
 
 
-class ComunicadosController extends GenericControllerNew
+class ComunicadosController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @var integer (variável com o id do grupo ativo)
@@ -158,7 +158,7 @@ class ComunicadosController extends GenericControllerNew
         
         $total = $tbComunicados->listarComunicados($where, array(), null, null, true);
 
-        //xd($total);
+        
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
         if ($fim>$total) $fim = $total;

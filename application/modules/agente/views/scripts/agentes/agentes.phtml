@@ -1,0 +1,231 @@
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
+
+<!-- ========== IN&Iacute;CIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li class="last">Manter Agentes</li>
+    </ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+
+<!-- ========== IN&Iacute;CIO T&Iacute;TULO ========== -->
+<div id="titulo">
+    <div>Dados principais
+        <span class="voltar">
+            <?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequa&ccedil;&Atilde;o ?>
+            <a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a Solicita&ccedil;&Atilde;o de Readequa&ccedil;&Atilde;o</a>
+            <?php } else {?>
+            <a href="javascript:voltar();">Voltar</a>
+            <?php } ?>
+        </span>
+    </div>
+</div>
+<!-- ========== FIM T&Iacute;TULO ========== -->
+
+<!-- ========== IN&Iacute;CIO CONTEUDO ========== -->
+<div id="conteudo">
+    <div id="confirma"></div>
+    <div>
+        <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
+        <table class="tabela <?php echo $this->dados[0]->idendereco ? 'sumir' : ''; ?>">
+            <tr>
+                <th>ENDERE&Ccedil;OS</th>
+            </tr>
+            <tr>
+                <td>Nenhum Endere&ccedil;o Cadastrado</td>
+            </tr>
+        </table>
+        <table id="tabEndereco" class="tabela <?php echo $this->dados[0]->idendereco ? '' : 'sumir'; ?>">
+            <tr>
+                <th colspan="3">ENDERE&Ccedil;OS</th>
+            </tr>
+            <tr>
+                <td><label>CEP:</label> <?php echo Mascara::addMaskCep($this->dados[0] ->cep); ?></td>
+                <td><label>UF:</label> <?php echo $this->dados[0] ->dsuf; ?></td>
+                <td><label>Cidade:</label> <?php echo !empty($this->dados[0]->dscidade) ? $this->dados[0]->dscidade : '' ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $this->dados[0] ->dstipoendereco; ?></td>
+                <td><label>Tipo de Logradouro:</label> <?php echo $this->dados[0] ->dstipologradouro; ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><label>Logradouro:</label> <?php echo $this->dados[0] ->logradouro; ?></td>
+                <td><label>N&uacute;mero:</label> <?php echo $this->dados[0]->numero; ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><label>Complemento:</label> <?php echo $this->dados[0] ->complemento; ?></td>
+                <td><label>Bairro:</label> <?php echo $this->dados[0] ->bairro; ?></td>
+            </tr>
+            <tr>
+                <td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $this->dados[0] ->status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+                <td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $this->dados[0]->divulgarendereco == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+            </tr>
+        </table>
+
+        <table class="tabela <?php echo $this->telefones ? 'sumir' : ''; ?>">
+            <tr>
+                <th>TELEFONES</th>
+            </tr>
+            <tr>
+                <td>Nenhum telefone cadastrado</td>
+            </tr>
+        </table>
+
+        <table id="tabFone" class="tabela <?php echo $this->telefones ? '' : 'sumir'; ?>">
+            <tr>
+                <th colspan="5">TELEFONES</th>
+            </tr>
+            <tr>
+                <td><label>Tipo</label></td>
+                <td align="center"><label>UF</label></td>
+                <td align="center"><label>DDD</label></td>
+                <td><label>Telefone</label></td>
+                <td><label>Divulgar?</label></td>
+            </tr>
+            <?php foreach($this->telefones as $t):?>
+            <tr>
+                <td><?php echo $t->dstelefone ;?></td>
+                <td align="center"><?php echo $t->ufsigla ;?></td>
+                <td align="center"><?php echo $t->ddd ;?></td>
+                <td><?php echo $t->numero ;?></td>
+                <td><?php echo $t->divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+
+        <table class="tabela <?php echo $this->emails ? 'sumir' : ''; ?>">
+            <tr>
+                <th>E-MAILS</th>
+            </tr>
+            <tr>
+                <td>Nenhum e-mail cadastrado</td>
+            </tr>
+        </table>
+
+        <table id="tabEmail" class="tabela  <?php echo $this->emails ? '' : 'sumir'; ?>">
+            <tr>
+                <th colspan="4">E-MAILS</th>
+            </tr>
+            <tr>
+                <td><label>Tipo</label></td>
+                <td><label>E-mail</label></td>
+                <td><label>Divulgar?</label></td>
+                <td><label>Para correpond&ecirc;ncia?</label></td>
+            </tr>
+            <?php foreach($this->emails as $e):?>
+            <tr>
+                <td><?php echo $e->tipo ;?></td>
+                <td><?php echo $e->descricao ;?></td>
+                <td><?php echo $e->divulgar == "1" ? "SIM" : "N&Atilde;O" ;?></td>
+                <td><?php echo $e->status == "1" ? "SIM" : "N&Atilde;O" ;?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <!-- Se for Parecerista, Coordenador de PRONAC ou Gestor Salic -->
+
+        <div id="parecerista" class="<?php echo $this->parecerista == "sim" ? '' : 'sumir';	?>">
+            <?php if(($this->grupoativo == "94") || ($this->grupoativo == "93") || ($this->grupoativo == "97") || ($this->grupoativo == "137")){ ?>
+                <?php if(count($this->formacoes) != 0){ ?>
+                    <table class="tabela">
+                        <tr>
+                            <th colspan="5">INFORMA&Ccedil;&Otilde;ES PROFISSIONAIS</th>
+                        </tr>
+                        <tr>
+                            <td width="140" align="center"><b>PROFISS&Atilde;O</b></td>
+                            <td width="140" align="center"><b>CARGO</b></td>
+                            <td width="170" align="center"><b>ENDERE&Ccedil;O</b></td>
+                            <td width="120" align="center"><b>DATA ENTRADA</b></td>
+                            <td width="120" align="center"><b>DATA SA&Iacute;DA</b></td>
+                        </tr>
+                        <?php foreach($this->formacoes as $f){ ?>
+                        <tr>
+                            <td><?php echo $f->nmprofissao; ?></td>
+                            <td><?php echo $f->nmcargo; ?></td>
+                            <td><?php echo $f->dsendereco; ?></td>
+                            <td align="center"><?php echo $f->dtinicio; ?></td>
+                            <td align="center"><?php echo $f->dtfim; ?></td>
+                        </tr>
+                        <?php } ?>
+                    </table>
+                <?php } ?>
+
+                <?php if(count($this->dadosferias) != 0){ ?>
+                    <table class="tabela">
+                        <tr>
+                            <th colspan="6">F&Eacute;RIAS MARCADAS</th>
+                        </tr>
+                        <?php foreach($this->dadosferias as $d){
+                            $siAusencia = '';
+                            $title = '';
+                            if($d->siAusencia == 0) {
+                                $siAusencia = 'bola_amarelo' ;
+                                $title = 'Em aberto';
+                            } else if($d->siAusencia == 1) {
+                                $siAusencia = 'bola_verde'   ;
+                                $title = 'Aceito';
+                            } else if($d->siAusencia == 2) {
+                                $siAusencia = 'bola_vermelho';
+                                $title = 'Alterado';
+                            } else if($d->siAusencia == 3) {
+                                $siAusencia = 'bola_vermelho';
+                                $title = 'Cancelado';
+                            } else if($d->siAusencia == 4) {
+                                $siAusencia = 'bola_vermelho';
+                                $title = 'Negado!';
+                            }
+                        ?>
+                        <tr>
+                            <td width="180">Quantidade de dias: <span id="qtdDias"><?php echo $d->qtdDias; ?></span></td>
+                            <td align="center">Data das férias: </td>
+                            <td width="150" align="center"><?php echo $d->dtInicio; ?></td>
+                            <td width="10" align="center">à</td>
+                            <td width="150" align="center"><?php echo $d->dtFim; ?></td>
+                            <td width="50" align="center" style="background: white;"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $siAusencia; ?>.gif" title="<?php echo $title; ?>" border="0" style="cursor: pointer;" /></td>
+                        </tr>
+                        <tr class="<?php echo $d->dsJustificativaAusencia == ' ' ? 'sumir' : ''; ?>">
+                            <td colspan="6" class="fundo_linha"><b>JUSTIFICATIVA:</b> <br /> <?php echo $d->dsJustificativaAusencia; ?></td>
+                        </tr>
+                        <?php } ?>
+                    </table>
+                <?php } ?>
+
+            <?php } ?>
+        </div>
+
+        <?php if(count($this->credenciados) != 0){ ?>
+        <table class="tabela">
+            <tr>
+                <th colspan="3">&Aacute;reas e segmentos</th>
+            </tr>
+            <tr>
+                <td align="center" width="50%"><b>&Aacute;REA</b></td>
+                <td align="center"><b>SEGMENTO</b></td>
+                <td align="center"><b>N&Iacute;VEL</b></td>
+            </tr>
+            <?php foreach($this->credenciados as $c){ ?>
+            <tr>
+                <td><?php echo $c->area;?></td>
+                <td><?php echo $c->segmento;?></td>
+                <td><?php echo $c->nivel;?></td>
+            </tr>
+            <?php } ?>
+        </table>
+        <?php } else { ?>
+        <!--<table class="tabela" id="salvos">
+            <tr>
+                <td>O Parecerista n&Atilde;o esta credenciado a nenhuma area e segmento!</td>
+            </tr>
+        </table>-->
+        <?php } ?>
+    </div>
+</div>
+<!-- ========== FIM CONTEUDO ========== -->
+
+
+<!-- ========== IN&Iacute;CIO RODAPE DO CONTEUDO ========== -->
+<div id="rodapeConteudo"><span></span></div>
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+
+<br clear="all" />

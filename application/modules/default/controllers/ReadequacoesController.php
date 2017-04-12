@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
-class ReadequacoesController extends GenericControllerNew {
+class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
     private $idAgente = 0;
@@ -18,31 +18,27 @@ class ReadequacoesController extends GenericControllerNew {
     private $idOrgao = 0;
     private $idPerfil = 0;
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init() {
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $this->idOrgao = $GrupoAtivo->codOrgao;
         $this->idPerfil = $GrupoAtivo->codGrupo;
 
         // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = '1111'; //Permissao para proponentes.
+        $PermissoesGrupo[] = '151'; //Permissao para proponentes.
+        $PermissoesGrupo[] = '148'; //Permissao para proponentes.
 
-        // pega o idAgente do usuário logado
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        // pega o idAgente do usuÃ¡rio logado
+        $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
         $this->view->usuarioInterno = false;
-        
+
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             $this->view->usuarioInterno = true;
             $this->idUsuario = $auth->getIdentity()->usu_codigo;
 
             //Recupera todos os grupos do Usuario
-            $Usuario = new Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuÃ¡rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -78,14 +74,14 @@ class ReadequacoesController extends GenericControllerNew {
     }
 
     /**
-     * Tela de cadastro de readequações - visão do proponente
+     * Tela de cadastro de readequaÃ§Ãµes - visÃ£o do proponente
      * @require idPronac
      */
     public function indexAction() {
-        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELO PROPONENTE.
         $this->view->idPerfil = $this->idPerfil;
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         if(isset($_POST['iduf'])) {
@@ -100,7 +96,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $a++;
             }
             echo json_encode($cidadeArray);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         if(isset($_POST['idEtapa']) && isset($_POST['idProduto'])) {
@@ -116,7 +112,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $a++;
             }
             echo json_encode($itensArray);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -129,28 +125,34 @@ class ReadequacoesController extends GenericControllerNew {
             $Projetos = new Projetos();
             $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
 
-            $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+//            $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+
+            $tbVerificao = new Proposta_Model_DbTable_Verificacao();
+            $buscarRecurso = $tbVerificao->buscarFonteRecurso();
+
             $this->view->Recursos = $buscarRecurso;
 
-            $buscarEstado = EstadoDAO::buscar();
+            $uf = new Agente_Model_DbTable_UF();
+            $buscarEstado = $uf->buscar();
             $this->view->UFs = $buscarEstado;
 
-            $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+            $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
-            $tbPlanilhaEtapa = new tbPlanilhaEtapa();
+            $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
             $this->view->Etapas = $tbPlanilhaEtapa->buscar(array('stEstado = ?'=>1));
 
-            $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+            $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+            $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
             $this->view->Unidade = $buscarUnidade;
 
             $tbTipoReadequacao = new tbTipoReadequacao();
             $this->view->TiposReadequacao = $tbTipoReadequacao->buscarTiposReadequacoesPermitidos($idPronac);
 
-            // na listagem de 'outras solicitações' não listar planilha orçamentária (idTipoReadequacao 2)
+            // na listagem de 'outras solicitaÃ§Ãµes' nÃ£o listar planilha orÃ§amentÃ¡ria (idTipoReadequacao 2)
             $tbReadequacao = new tbReadequacao();
             $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12, 'a.idTipoReadequacao != ?' => 2), array(1));
-            
+
         } else {
             parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
         }
@@ -161,7 +163,7 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 06/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é acessada para alterar o item da planilha orçamentária.
+     * Essa funÃ§Ã£o Ã© acessada para alterar o item da planilha orÃ§amentÃ¡ria.
      */
     public function alterarItemSolicitacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -255,13 +257,13 @@ class ReadequacoesController extends GenericControllerNew {
 
         //$jsonEncode = json_encode($dadosPlanilha);
         echo json_encode(array('resposta'=>true, 'dadosPlanilhaAtiva'=>$dadosPlanilhaAtiva, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel, 'valoresDoItem'=>$valoresDoItem, 'dadosProjeto'=>$dadosProjeto));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 14/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse função é usada pelo proponente para solicitar a exclusão de um item da planilha orçamentária.
+     * Esse funÃ§Ã£o Ã© usada pelo proponente para solicitar a exclusÃ£o de um item da planilha orÃ§amentÃ¡ria.
      */
     public function excluirItemSolicitacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -274,7 +276,7 @@ class ReadequacoesController extends GenericControllerNew {
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
-        //VERIFICA SE JÁ POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, CRIA, E DEPOIS DELETA O ITEM DESEJADO.
+        //VERIFICA SE JÃ POSSUI A PLANILHA TIPO SR. SE NÃƒO TIVER, CRIA, E DEPOIS DELETA O ITEM DESEJADO.
         if(count($verificarPlanilhaSR)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
@@ -310,13 +312,13 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÃ“GICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpAcao'] = 'E';
 
         $whereIdPlanilha = "idPlanilhaAprovacaoPai = $idPlanilhaAprovacao";
         $itemTipoPlanilha = $tbPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao=?'=>$idPlanilhaAprovacao))->current();
-        
+
         if($itemTipoPlanilha->tpAcao == 'I'){
             $exclusaoLogica = $tbPlanilhaAprovacao->delete(array('idPlanilhaAprovacao = ?'=>$idPlanilhaAprovacao));
         } else {
@@ -334,7 +336,7 @@ class ReadequacoesController extends GenericControllerNew {
                 } else {
             echo json_encode(array('resposta'=>false));
                 }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
@@ -351,7 +353,7 @@ class ReadequacoesController extends GenericControllerNew {
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
-        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃƒO TIVER, COPIA A ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         if(count($verificarPlanilhaSR)==0){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
@@ -388,8 +390,8 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
         $idAgente = 0;
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $tblAgente = new Agentes();
+        $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->Cpf));
         if($rsAgente->count() > 0){
              $idAgente = $rsAgente[0]->idAgente;
@@ -398,7 +400,7 @@ class ReadequacoesController extends GenericControllerNew {
         $newValorUnitario = str_replace('.', '', $_POST['newValorUnitario']);
         $newValorUnitario = str_replace(',', '.', $newValorUnitario);
 
-        /* DADOS DO ITEM PARA INCLUSÃO DA READEQUAÇÃO */
+        /* DADOS DO ITEM PARA INCLUSÃƒO DA READEQUAÃ‡ÃƒO */
         $dadosInclusao = array();
         $dadosInclusao['tpPlanilha'] = 'SR';
         $dadosInclusao['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
@@ -433,21 +435,21 @@ class ReadequacoesController extends GenericControllerNew {
             } else {
             echo json_encode(array('resposta'=>false));
             }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 06/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para alterar os dados do item da planilha orçamentária.
+     * Essa funÃ§Ã£o Ã© usada para alterar os dados do item da planilha orÃ§amentÃ¡ria.
      */
     public function salvarAvaliacaoDoItemAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
         $cpf = isset($auth->getIdentity()->Cpf) ? $auth->getIdentity()->Cpf : $auth->getIdentity()->usu_identificacao;
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$cpf));
         $idAgente = 0;
         if($rsAgente->count() > 0){
@@ -520,13 +522,13 @@ class ReadequacoesController extends GenericControllerNew {
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 18/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada pelos técnicos, pareceristas e componentes da comissão para alterarem os itens da planilha orçamentária.
+     * Essa funÃ§Ã£o Ã© usada pelostÃ©cnicos, pareceristas e componentes da comissÃ£o para alterarem os itens da planilha orÃ§amentÃ¡ria.
      */
     public function alteracoesTecnicasNoItemAction() {
         $this->_helper->layout->disableLayout();
@@ -561,25 +563,25 @@ class ReadequacoesController extends GenericControllerNew {
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 18/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada pelos técnicos, pareceristas e componentes da comissão para alterarem os locais de realização.
+     * Essa funÃ§Ã£o Ã© usada pelostÃ©cnicos, pareceristas e componentes da comissÃ£o para alterarem os locais de realizaÃ§Ã£o.
      */
     public function alteracoesTecnicasNoLocalDeRealizacaoAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $editarItem = $tbAbrangencia->buscar(array('idAbrangencia=?'=>$_POST['idAbrangencia']))->current();
 
-        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e Técnico de Acompanhamento
+        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e TÃ©cnico de Acompanhamento
             $editarItem->tpAnaliseTecnica = $_POST['tpAcao'];
 
-        } else if($this->idPerfil == 118){ //Componente da Comissão
+        } else if($this->idPerfil == 118){ //Componente da ComissÃ£o
             $editarItem->tpAnaliseComissao = $_POST['tpAcao'];
 
         } else if($this->idPerfil == 1111){ //Proponente
@@ -587,19 +589,19 @@ class ReadequacoesController extends GenericControllerNew {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); die();
+                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada pelos técnicos, pareceristas e componentes da comissão para alterarem os planos de divulgação.
+     * Essa funÃ§Ã£o Ã© usada pelostÃ©cnicos, pareceristas e componentes da comissÃ£o para alterarem os planos de divulgaÃ§Ã£o.
      */
     public function alteracoesTecnicasNoPlanoDeDivulgacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -608,10 +610,10 @@ class ReadequacoesController extends GenericControllerNew {
         $tbPlanoDivulgacao = new tbPlanoDivulgacao();
         $editarItem = $tbPlanoDivulgacao->buscar(array('idPlanoDivulgacao=?'=>$_POST['idPlanoDivulgacao']))->current();
 
-        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e Técnico de Acompanhamento
+        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e TÃ©cnico de Acompanhamento
             $editarItem->tpAnaliseTecnica = $_POST['tpAcao'];
 
-        } else if($this->idPerfil == 118){ //Componente da Comissão
+        } else if($this->idPerfil == 118){ //Componente da ComissÃ£o
             $editarItem->tpAnaliseComissao = $_POST['tpAcao'];
 
         } else if($this->idPerfil == 1111){ //Proponente
@@ -619,19 +621,19 @@ class ReadequacoesController extends GenericControllerNew {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); die();
+                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 1/04/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada pelos técnicos, pareceristas, proponente e componentes da comissão para alterarem os planos de distribuição.
+     * Essa funÃ§Ã£o Ã© usada pelostÃ©cnicos, pareceristas, proponente e componentes da comissÃ£o para alterarem os planos de distribuiÃ§Ã£o.
      */
     public function alteracoesTecnicasNoPlanoDeDistribuicaoAction() {
         $this->_helper->layout->disableLayout();
@@ -640,10 +642,10 @@ class ReadequacoesController extends GenericControllerNew {
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
         $editarItem = $tbPlanoDistribuicao->buscar(array('idPlanoDistribuicao=?'=>$_POST['idPlanoDistribuicao']))->current();
 
-        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e Técnico de Acompanhamento
+        if($this->idPerfil == 94 || $this->idPerfil == 121){ //Parecerista e TÃ©cnico de Acompanhamento
             $editarItem->tpAnaliseTecnica = $_POST['tpAcao'];
 
-        } else if($this->idPerfil == 118){ //Componente da Comissão
+        } else if($this->idPerfil == 118){ //Componente da ComissÃ£o
             $editarItem->tpAnaliseComissao = $_POST['tpAcao'];
 
         } else if($this->idPerfil == 1111){ //Proponente
@@ -651,13 +653,13 @@ class ReadequacoesController extends GenericControllerNew {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); die();
+                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function criarCampoTipoReadequacaoAction() {
@@ -667,7 +669,7 @@ class ReadequacoesController extends GenericControllerNew {
         $valorPreCarregado = null;
 //        x($tipoReadequacao);
 
-        //ALTERAÇÃO DE RAZÃO SOCIAL DO PROPONENTE
+        //ALTERAÃ‡ÃƒO DE RAZÃƒO SOCIAL DO PROPONENTE
         if($tipoReadequacao == 3){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscarDadosUC75($get->idPronac)->current();
@@ -694,7 +696,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Sinopse;
@@ -707,7 +709,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->ImpactoAmbiental;
@@ -720,27 +722,27 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->EspecificacaoTecnica;
                 }
             }
 
-        //ESTRATÉGIA DE EXECUÇÃO
+        //ESTRATÃ‰GIA DE EXECUÃ‡ÃƒO
         } else if($tipoReadequacao == 8){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->EstrategiadeExecucao;
                 }
             }
 
-        //ALTERAÇÃO DE PROPONENTE
+        //ALTERAÃ‡ÃƒO DE PROPONENTE
         } else if($tipoReadequacao == 10){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
@@ -758,7 +760,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $valorPreCarregado = $dadosProjeto->NomeProjeto;
             }
 
-        //PERÍODO DE EXECUCAO
+        //PERÃODO DE EXECUCAO
         } else if($tipoReadequacao == 13){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
@@ -768,7 +770,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $valorPreCarregado = $DtFimExecucao;
             }
 
-        //SÍNTESE DO PROJETO
+        //SÃNTESE DO PROJETO
         } else if($tipoReadequacao == 15){
             $Projetos = new Projetos();
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
@@ -783,7 +785,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Objetivos;
@@ -796,7 +798,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Justificativa;
@@ -809,7 +811,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Acessibilidade;
@@ -822,7 +824,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->DemocratizacaoDeAcesso;
@@ -835,7 +837,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->EtapaDeTrabalho;
@@ -848,7 +850,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->FichaTecnica;
@@ -915,21 +917,23 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 19/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para carregar os dados do locais de realização do projeto.
+     * Essa funÃ§Ã£o Ã© usada para carregar os dados do locais de realizaÃ§Ã£o do projeto.
      */
     public function carregarLocaisDeRealizacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         if(isset($_POST['iduf'])) {
             $iduf = $_POST['iduf'];
-            $cidade = CidadeDAO::buscar($iduf);
+
+            $mun = new Agente_Model_DbTable_Municipios();
+            $cidade = $mun->listar($iduf);
             $a = 0;
             $cidadeArray = array();
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -940,10 +944,8 @@ class ReadequacoesController extends GenericControllerNew {
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'tbAbrangencia');
-
         if(count($locais)==0){
             $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'Abrangencia');
         }
@@ -951,7 +953,9 @@ class ReadequacoesController extends GenericControllerNew {
         $tbPais = new Pais();
         $this->view->Paises = $tbPais->buscar(array(), array(3));
 
-        $buscarEstado = EstadoDAO::buscar();
+//        $buscarEstado = EstadoDAO::buscar();
+        $uf = new Agente_Model_DbTable_UF();
+        $buscarEstado = $uf->buscar();
         $this->view->UFs = $buscarEstado;
 
         $get = Zend_Registry::get('get');
@@ -970,11 +974,11 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 27/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para carregar os dados do locais de realização do projeto.
+     * Essa funÃ§Ã£o Ã© usada para carregar os dados do locais de realizaÃ§Ã£o do projeto.
      */
     public function carregarLocaisDeRealizacaoReadequacoesAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -983,7 +987,7 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $locais = $tbAbrangencia->buscarLocaisConsolidadoReadequacao($idReadequacao);
 
         $tbReadequacao = new tbReadequacao();
@@ -993,9 +997,9 @@ class ReadequacoesController extends GenericControllerNew {
         $tbPais = new Pais();
         $this->view->Paises = $tbPais->buscar(array(), array(3));
 
-        $buscarEstado = EstadoDAO::buscar();
-        $this->view->UFs = $buscarEstado;
 
+        $uf = new Agente_Model_DbTable_UF();
+        $this->view->UFs = $uf->buscar();
         $get = Zend_Registry::get('get');
         $link = isset($get->link) ? true : false;
 
@@ -1022,8 +1026,8 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
-        $tbAbrangencia = new tbAbrangencia();
+        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃƒO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $readequacaoLR = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $locaisAtivos = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac);
 
@@ -1043,8 +1047,8 @@ class ReadequacoesController extends GenericControllerNew {
 
         if($_POST['newPaisLR'] == 31){
             if(empty($_POST['newUFLR']) && empty($_POST['newMunicipioLR'])){
-                $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e Município se tornam obrigatórios no cadastro!');
-                echo json_encode(array('resposta'=>false, 'msg'=>$msg)); die();
+                $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e MunicÃ­pio se tornam obrigatÃ³rios no cadastro!');
+                echo json_encode(array('resposta'=>false, 'msg'=>$msg)); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             $verificaLocalRepetido = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idPais=?'=>$_POST['newPaisLR'], 'idUF=?'=>$_POST['newUFLR'], 'idMunicipioIBGE=?'=>$_POST['newMunicipioLR']));
         } else {
@@ -1052,7 +1056,7 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
         if(count($verificaLocalRepetido)==0){
-            /* DADOS DO ITEM PARA INCLUSÃO DA READEQUAÇÃO */
+            /* DADOS DO ITEM PARA INCLUSÃƒO DA READEQUAÃ‡ÃƒO */
             $dadosInclusao = array();
             $dadosInclusao['idReadequacao'] = NULL;
             $dadosInclusao['idPais'] = $_POST['newPaisLR'];
@@ -1069,16 +1073,16 @@ class ReadequacoesController extends GenericControllerNew {
                 echo json_encode(array('resposta'=>false));
             }
         } else {
-            $msg = utf8_encode('Esse local de realização já foi cadastrado!');
+            $msg = utf8_encode('Esse local de realizaÃ§Ã£o jÃ¡ foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 25/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse função é usada pelo proponente para solicitar a exclusão de um local de realização.
+     * Esse funÃ§Ã£o Ã© usada pelo proponente para solicitar a exclusÃ£o de um local de realizaÃ§Ã£o.
      */
     public function excluirLocalDeRealizacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1088,10 +1092,10 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        $tbAbrangencia = new tbAbrangencia();
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $readequacaoLR = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
 
-        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃƒO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $locaisAtivos = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac);
         if(count($readequacaoLR)==0){
             $locaisCopiados = array();
@@ -1107,7 +1111,7 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÃ“GICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpSolicitacao'] = 'E';
 
@@ -1120,7 +1124,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $exclusaoLogica = $tbAbrangencia->update($dados, $where);
             }
         } else {
-            $Abrangencia = new Abrangencia();
+            $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
             $itemLR = $Abrangencia->find(array('idAbrangencia=?'=>$idAbrangencia))->current();
             $dadosArray = array(
                 'idPais =?' => $itemLR->idPais,
@@ -1141,17 +1145,17 @@ class ReadequacoesController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para carregar os dados do planos de divulgação do projeto.
+     * Essa funÃ§Ã£o Ã© usada para carregar os dados do planos de divulgaÃ§Ã£o do projeto.
      */
     public function carregarPlanosDeDivulgacaoAction(){
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1187,11 +1191,11 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 27/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para carregar os dados dos planos de divulgação do projeto.
+     * Essa funÃ§Ã£o Ã© usada para carregar os dados dos planos de divulgaÃ§Ã£o do projeto.
      */
     public function carregarPlanosDeDivulgacaoReadequacoesAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1231,7 +1235,7 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para que o proponente faça uma solicitação de inclusão de plano de divulgação
+     * Essa funÃ§Ã£o Ã© usada para que o proponente faÃ§a uma solicitaÃ§Ã£o de inclusÃ£o de plano de divulgaÃ§Ã£o
      */
     public function incluirPlanosDeDivulgacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1240,7 +1244,7 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGAÇAO NA TABELA tPlanoDivulgacao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGAÃ‡AO NA TABELA tPlanoDivulgacao (READEQUACAO), SE NÃƒO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDivulgacao = new tbPlanoDivulgacao();
         $readequacaoPDD = $tbPlanoDivulgacao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDivulgacao->buscarPlanosDivulgacaoReadequacao($idPronac);
@@ -1260,7 +1264,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         $verificaPlanoRepetido = $tbPlanoDivulgacao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idPeca=?'=>$_POST['newPeca'], 'idVeiculo=?'=>$_POST['newVeiculo']));
         if(count($verificaPlanoRepetido)==0){
-            /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
+            /* DADOS DO PLANO PARA INCLUSÃƒO DA READEQUAÃ‡ÃƒO */
             $dadosInclusao = array();
             $dadosInclusao['idReadequacao'] = NULL;
             $dadosInclusao['idPeca'] = $_POST['newPeca'];
@@ -1276,16 +1280,16 @@ class ReadequacoesController extends GenericControllerNew {
                 echo json_encode(array('resposta'=>false));
         }
         } else {
-            $msg = utf8_encode('Esse plano de divulgação já foi cadastrado!');
+            $msg = utf8_encode('Esse plano de divulgaÃ§Ã£o jÃ¡ foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
     }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse função é usada pelo proponente para solicitar a exclusão de um plano de divulgação.
+     * Esse funÃ§Ã£o Ã© usada pelo proponente para solicitar a exclusÃ£o de um plano de divulgaÃ§Ã£o.
      */
     public function excluirPlanoDeDivulgacaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1295,7 +1299,7 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGAÇAO NA TABELA tPlanoDivulgacao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DIVULGAÃ‡ÃƒO NA TABELA tPlanoDivulgacao (READEQUACAO), SE NÃƒO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDivulgacao = new tbPlanoDivulgacao();
         $readequacaoPDD = $tbPlanoDivulgacao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDivulgacao->buscarPlanosDivulgacaoReadequacao($idPronac);
@@ -1313,7 +1317,7 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÃ“GICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpSolicitacao'] = 'E';
 
@@ -1346,17 +1350,17 @@ class ReadequacoesController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 31/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para carregar os dados do planos de distribuição do projeto.
+     * Essa funÃ§Ã£o Ã© usada para carregar os dados do planos de distribuiÃ§Ã£o do projeto.
      */
     public function carregarPlanosDeDistribuicaoAction(){
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1370,7 +1374,7 @@ class ReadequacoesController extends GenericControllerNew {
         if(count($planosDistribuicao)==0){
             $planosDistribuicao = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac, 'PlanoDistribuicaoProduto');
         }
-        
+
         $Produtos = new Produto();
         $produtos = $Produtos->buscar(array('stEstado=?'=>0), array('Descricao'));
 
@@ -1399,11 +1403,11 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 27/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para carregar os dados dos planos de divulgação do projeto.
+     * Essa funÃ§Ã£o Ã© usada para carregar os dados dos planos de divulgaÃ§Ã£o do projeto.
      */
     public function carregarPlanosDeDistribuicaoReadequacoesAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1437,7 +1441,7 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 31/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função é usada para que o proponente faça uma solicitação de inclusão de plano de distribuição
+     * Essa funÃ§Ã£o Ã© usada para que o proponente faÃ§a uma solicitaÃ§Ã£o de inclusÃ£o de plano de distribuiÃ§Ã£o
      */
     public function incluirPlanosDeDistribuicaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1446,12 +1450,11 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUIÇÃO NA TABELA tbPlanoDistribuicao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUIÃ‡ÃƒO NA TABELA tbPlanoDistribuicao (READEQUACAO), SE NÃƒO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
         $readequacaoPDDist = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac);
 
-        // COPIA UM PLANO POR PRODUTO
         if(count($readequacaoPDDist)==0){
             $planosCopiados = array();
             foreach ($planosAtivos as $value){
@@ -1476,52 +1479,50 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
 
-        // atualiza produto em cima do plano copiado
-        $QtdeProduzida = $this->_request->getParam('newQntdNormal')+$this->_request->getParam('newQntdPromocional')+$this->_request->getParam('newQntdPatrocinador')+$this->_request->getParam('newQntdPopulacaoBaixaRenda')+$this->_request->getParam('newQntdDivulgacao');
-        $preconormal = str_replace(",", ".", str_replace(".", "", $this->_request->getParam('newVlNormal')));
-        $precopromocional = str_replace(",", ".", str_replace(".", "", $this->_request->getParam('newVlPromocional')));
-        
-        /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
-        $dadosInclusao = array();
-        $dadosInclusao['idReadequacao'] = NULL;
-        $dadosInclusao['idProduto'] = $this->_request->getParam('newPlanoDistribuicao');
-        $dadosInclusao['cdArea'] = $this->_request->getParam('newArea');
-        $dadosInclusao['cdSegmento'] = $this->_request->getParam('newSegmento');
-        $dadosInclusao['idPosicaoLogo'] = $this->_request->getParam('newPosicaoLogomarca');
-        $dadosInclusao['qtProduzida'] = $QtdeProduzida;
-        $dadosInclusao['qtPatrocinador'] = $this->_request->getParam('newQntdPatrocinador');
-        $dadosInclusao['qtProponente'] = $this->_request->getParam('newQntdDivulgacao');
-        $dadosInclusao['qtOutros'] = $this->_request->getParam('newQntdPopulacaoBaixaRenda');
-        $dadosInclusao['qtVendaNormal'] = $this->_request->getParam('newQntdNormal');
-        $dadosInclusao['qtVendaPromocional'] = $this->_request->getParam('newQntdPromocional');
-        $dadosInclusao['vlUnitarioNormal'] = $preconormal;
-        $dadosInclusao['vlUnitarioPromocional'] = $precopromocional;
-        $dadosInclusao['stPrincipal'] = 0;
-        $dadosInclusao['tpSolicitacao'] = 'I';
-        $dadosInclusao['stAtivo'] = 'S';
-        $dadosInclusao['idPronac'] = $idPronac;
-
         $verificaPlanoRepetido = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idProduto=?'=>$_POST['newPlanoDistribuicao']));
-        if (count($verificaPlanoRepetido) > 0) {
-            $where = " idPronac=" . $idPronac . " AND stAtivo='S' AND idProduto=" . $this->_request->getParam('newPlanoDistribuicao');
-            $return = $tbPlanoDistribuicao->update($dadosInclusao, $where);
+        if(count($verificaPlanoRepetido)==0){
+            $QtdeProduzida = $_POST['newQntdNormal']+$_POST['newQntdPromocional']+$_POST['newQntdPatrocinador']+$_POST['newQntdPopulacaoBaixaRenda']+$_POST['newQntdDivulgacao'];
+            $preconormal = str_replace(",", ".", str_replace(".", "", $_POST['newVlNormal']));
+            $precopromocional = str_replace(",", ".", str_replace(".", "", $_POST['newVlPromocional']));
+
+            /* DADOS DO PLANO PARA INCLUSÃƒO DA READEQUAÃ‡ÃƒO */
+            $dadosInclusao = array();
+            $dadosInclusao['idReadequacao'] = NULL;
+            $dadosInclusao['idProduto'] = $_POST['newPlanoDistribuicao'];
+            $dadosInclusao['cdArea'] = $_POST['newArea'];
+            $dadosInclusao['cdSegmento'] = $_POST['newSegmento'];
+            $dadosInclusao['idPosicaoLogo'] = $_POST['newPosicaoLogomarca'];
+            $dadosInclusao['qtProduzida'] = $QtdeProduzida;
+            $dadosInclusao['qtPatrocinador'] = $_POST['newQntdPatrocinador'];
+            $dadosInclusao['qtProponente'] = $_POST['newQntdDivulgacao'];
+            $dadosInclusao['qtOutros'] = $_POST['newQntdPopulacaoBaixaRenda'];
+            $dadosInclusao['qtVendaNormal'] = $_POST['newQntdNormal'];
+            $dadosInclusao['qtVendaPromocional'] = $_POST['newQntdPromocional'];
+            $dadosInclusao['vlUnitarioNormal'] = $preconormal;
+            $dadosInclusao['vlUnitarioPromocional'] = $precopromocional;
+            $dadosInclusao['stPrincipal'] = 0;
+            $dadosInclusao['tpSolicitacao'] = 'I';
+            $dadosInclusao['stAtivo'] = 'S';
+            $dadosInclusao['idPronac'] = $idPronac;
+            $insert = $tbPlanoDistribuicao->inserir($dadosInclusao);
+
+            if($insert){
+                //$jsonEncode = json_encode($dadosPlanilha);
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         } else {
-            // insere
-            $return = $tbPlanoDistribuicao->insert($dadosInclusao);
+            $msg = utf8_encode('Esse plano de distribuiÃ§Ã£o jÃ¡ foi cadastrado!');
+            echo json_encode(array('resposta'=>false, 'msg'=>$msg));
         }
-        
-        if($return){
-            echo json_encode(array('resposta'=>true));
-        } else {
-            echo json_encode(array('resposta'=>false));
-        }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 28/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Esse função é usada pelo proponente para solicitar a exclusão de um plano de distribuição.
+     * Esse funÃ§Ã£o Ã© usada pelo proponente para solicitar a exclusÃ£o de um plano de distribuiÃ§Ã£o.
      */
     public function excluirPlanoDeDistribuicaoAction() {
         $this->_helper->layout->disableLayout();
@@ -1531,7 +1532,7 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUIÇÃO NA TABELA tbPlanoDistribuicao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
+        //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUIÃ‡ÃƒO NA TABELA tbPlanoDistribuicao (READEQUACAO), SE NÃƒO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
         $readequacaoPDDist = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac);
@@ -1560,7 +1561,7 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
 
-        /* DADOS DO ITEM PARA EXCLUSAO LÓGICA DO ITEM DA READEQUACAO */
+        /* DADOS DO ITEM PARA EXCLUSAO LÃ“GICA DO ITEM DA READEQUACAO */
         $dados = array();
         $dados['tpSolicitacao'] = 'E';
 
@@ -1592,18 +1593,18 @@ class ReadequacoesController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 14/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função para incluir uma solicitação de readequação.
+     * Essa funÃ§Ã£o para incluir uma solicitaÃ§Ã£o de readequaÃ§Ã£o.
      */
     public function incluirSolicitacaoReadequacaoAction() {
-        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1616,30 +1617,30 @@ class ReadequacoesController extends GenericControllerNew {
 
         $tbReadequacao = new tbReadequacao();
         $busca = array();
-        
-        if($idTipoReadequacao == 2){ //Planilha Orçamentária
+
+        if($idTipoReadequacao == 2){ //Planilha OrÃ§amentÃ¡ria
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
             $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao= ?' => $idReadequacao));
             if(count($planilhaReadequada)==0){
-                parent::message('Não houve nenhuma alteração na planilha orçamentária do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o na planilha or&ccedil;ament&aacute;ria do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($idTipoReadequacao == 9){ //Local de Realização
-            $tbAbrangencia = new tbAbrangencia();
+        } else if($idTipoReadequacao == 9){ //Local de RealizaÃ§Ã£o
+            $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
             $locaisReadequados = $tbAbrangencia->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($locaisReadequados)==0){
-                parent::message('Não houve nenhuma alteração nos locais de realização do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o nos locais de realiza&ccedil;&atilde;o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($idTipoReadequacao == 11){ //Planos de Distribuição
+        } else if($idTipoReadequacao == 11){ //Planos de DistribuiÃ§Ã£o
             $tbPlanoDistribuicao = new tbPlanoDistribuicao();
             $planosReadequados = $tbPlanoDistribuicao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
-                parent::message('Não houve nenhuma alteração nos planos de distribuição do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o nos planos de distribui&ccedil;&atilde;o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($idReadequacao == 14){ //Planos de Divulgação
+        } else if($idReadequacao == 14){ //Planos de DivulgaÃ§Ã£o
             $tbPlanoDivulgacao = new tbPlanoDivulgacao();
             $planosReadequados = $tbPlanoDivulgacao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
-                parent::message('Não houve nenhuma alteração nos planos de divulgação do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('N&atilde;o houve nenhuma altera&ccedil;&atilde;o nos planos de divulga&ccedil;&atilde;o do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         }
 
@@ -1651,23 +1652,23 @@ class ReadequacoesController extends GenericControllerNew {
 
             // ==================== Dados do arquivo de upload ===============================
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporÃ¡rio
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
             $idDocumento = null;
             if(!empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // binï¿½rio
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensÃ£o
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // binÃ¡rio
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
 
-                if ($arquivoExtensao != 'pdf' && $arquivoExtensao != 'PDF') // extensão do arquivo
+                if ($arquivoExtensao != 'pdf' && $arquivoExtensao != 'PDF') // extensÃ£o do arquivo
                 {
-                    throw new Exception('A extensão do arquivo é inválida, envie somente arquivos <strong>.pdf</strong>!');
+                    throw new Exception('A extens&atilde;o do arquivo &eacute; inv&aacute;lida, envie somente arquivos <strong>.pdf</strong>!');
                 }
-                else if ($arquivoTamanho > 5242880) // tamanho máximo do arquivo: 5MB
+                else if ($arquivoTamanho > 5242880) // tamanho mÃ¡ximo do arquivo: 5MB
                 {
-                    throw new Exception('O arquivo não pode ser maior do que <strong>5MB</strong>!');
+                    throw new Exception('O arquivo n&atilde;o pode ser maior do que <strong>5MB</strong>!');
                 }
 
                 $dadosArquivo = array(
@@ -1692,7 +1693,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $dados = array(
                         'idTipoDocumento' => 38,
                         'idArquivo' => $idArquivo,
-                        'dsDocumento' => 'Solicitação de Readequação',
+                        'dsDocumento' => 'SolicitaÃ§Ã£o de ReadequaÃ§Ã£o',
                         'dtEmissaoDocumento' => NULL,
                         'dtValidadeDocumento' => NULL,
                         'idTipoEventoOrigem' => NULL,
@@ -1703,14 +1704,14 @@ class ReadequacoesController extends GenericControllerNew {
                 $idDocumento = $idDocumento['idDocumento'];
             }
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
-            $tblAgente = new Agentes();
+            $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
 
             if ($idTipoReadequacao == 2) {
                 $descJustificativa = $this->_request->getParam('descJustificativa');
 
-                // se for tipo planilha orçamentaria, somente atualiza tbReadequacao
+                // se for tipo planilha orÃ§amentaria, somente atualiza tbReadequacao
                 $dadosReadequacao = array();
                 $dadosReadequacao['dsJustificativa'] = $descJustificativa;
 
@@ -1745,13 +1746,13 @@ class ReadequacoesController extends GenericControllerNew {
             if ($idReadequacao && $idTipoReadequacao != 2) {
                 $acaoErro = 'cadastrar';
 
-                parent::message("Solicitação cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message("Solicita&ccedil;&atilde;o cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             }  else if ($idReadequacao && $idTipoReadequacao == 2) {
                 $acaoErro = 'alterar';
 
-                parent::message("Solicitação alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message("Solicita&ccedil;&atilde;o alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } else {
-                throw new Exception("Erro ao $acaoErro a readequação!");
+                throw new Exception("Erro ao $acaoErro a readequaÃ§Ã£o!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1762,12 +1763,12 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 14/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função para excluir uma solicitação de readequação.
+     * Essa funÃ§Ã£o para excluir uma solicitaÃ§Ã£o de readequaÃ§Ã£o.
      */
     public function excluirSolicitacaoReadequacaoAction() {
-        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1800,26 +1801,26 @@ class ReadequacoesController extends GenericControllerNew {
                 }
             }
 
-            //Se for readequação de planilha orçamentária, exclui a planilha SR gerada.
+            //Se for readequaÃ§Ã£o de planilha orÃ§amentÃ¡ria, exclui a planilha SR gerada.
             if($dados->idTipoReadequacao == 2){
                 $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
                 $tbPlanilhaAprovacao->delete(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao = ?'=>$get->idReadequacao));
             }
 
-            //Se for readequação de local de realização, exclui os registros na tbAbrangencia.
+            //Se for readequaÃ§Ã£o de local de realizaÃ§Ã£o, exclui os registros na tbAbrangencia.
             if($dados->idTipoReadequacao == 9){
-                $tbAbrangencia = new tbAbrangencia();
+                $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                 $tbAbrangencia->delete(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S'));
             }
 
-            //Se for readequação de plano de distribuição, exclui os registros na tbPlanoDistribuicao.
+            //Se for readequaÃ§Ã£o de plano de distribuiÃ§Ã£o, exclui os registros na tbPlanoDistribuicao.
             if($dados->idTipoReadequacao == 11){
                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                 $tbPlanoDistribuicao->delete(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S'));
             }
 
-            //Se for readequação de plano de divulgação, exclui os registros na tbPlanoDivulgacao.
+            //Se for readequaÃ§Ã£o de plano de divulgaÃ§Ã£o, exclui os registros na tbPlanoDivulgacao.
             if($dados->idTipoReadequacao == 14){
                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                 $tbPlanoDivulgacao->delete(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S'));
@@ -1829,12 +1830,12 @@ class ReadequacoesController extends GenericControllerNew {
 
             if ($exclusao) {
                 if ($dados->idTipoReadequacao == 2) {
-                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                    parent::message('Tipo de readequa&ccedil;&atilde;o exclu&iacute;da com sucesso!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
                 } else {
-                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                    parent::message('Tipo de readequa&ccedil;&atilde;o exclu&iacute;da com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
                 }
             } else {
-                throw new Exception("Erro ao excluir o tipo de readequação!");
+                throw new Exception("Erro ao excluir o tipo de readequa&ccedil;&atilde;o!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1843,9 +1844,9 @@ class ReadequacoesController extends GenericControllerNew {
     }
 
     public function finalizarSolicitacaoReadequacaoAction() {
-        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELO PROPONENTE.
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1864,7 +1865,7 @@ class ReadequacoesController extends GenericControllerNew {
 
             foreach ($readequacoes as $r) {
                 if($r->idTipoReadequacao == 9){
-                    $tbAbrangencia = new tbAbrangencia();
+                    $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                     $dadosAb = array();
                     $dadosAb['idReadequacao'] = $r->idReadequacao;
                     $whereAb = "idPronac = $idPronac AND stAtivo = 'S' AND idReadequacao is null";
@@ -1886,12 +1887,12 @@ class ReadequacoesController extends GenericControllerNew {
                 }
             }
             if($atualizar) {
-                //altera a situação do projeto
+                //altera a situaÃ§Ã£o do projeto
                 //$alterarSituacao = ProjetoDAO::alterarSituacao($idPronac, 'D20');
-                parent::message('Solicitação enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message('Solicita&ccedil;&atilde;o enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } // fecha if
             else {
-                throw new Exception("Erro ao finalizar as readequações!");
+                throw new Exception("Erro ao finalizar as readequa&ccedil;&otilde;es!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1900,7 +1901,7 @@ class ReadequacoesController extends GenericControllerNew {
     }
 
     /**
-     * painelAction - Lista dos Projetos em nas situações: Aguardando Análise, Em
+     * painelAction - Lista dos Projetos em nas situaÃ§Ãµes: Aguardando AnÃ¡lise, Em
      * Analise, Analisados.
      *
      * @since Alterada em 30/06/16
@@ -1911,11 +1912,11 @@ class ReadequacoesController extends GenericControllerNew {
      */
     public function painelAction()
     {
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if($this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if($this->idPerfil != 122 && $this->idPerfil != 123 && $this->idPerfil != 151 && $this->idPerfil != 148){
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -1927,7 +1928,7 @@ class ReadequacoesController extends GenericControllerNew {
             $ordem = $this->_request->getParam("ordem");
             if($ordem == "DESC") {
                 $novaOrdem = "ASC";
-            }else {
+            } else {
                 $novaOrdem = "DESC";
             }
         } else {
@@ -1935,7 +1936,7 @@ class ReadequacoesController extends GenericControllerNew {
             $ordem = "DESC";
             $novaOrdem = "ASC";
         }
-        
+
         //==== campo de ordenacao  ======//
         if($this->_request->getParam("campo")) {
             $campo = $this->_request->getParam("campo");
@@ -1943,7 +1944,7 @@ class ReadequacoesController extends GenericControllerNew {
             $ordenacao = "&campo=".$campo."&ordem=".$ordem;
 
         } else {
-            // ordenação padrão
+            // ordenaÃ§Ã£o padrÃ£o
             $order = array($campo." ".$ordem);
             $ordenacao = null;
         }
@@ -1962,32 +1963,32 @@ class ReadequacoesController extends GenericControllerNew {
         } else {
             $filtro = 'aguardando_distribuicao';
         }
-        
+
         $this->view->filtro = $filtro;
-        
-        // lista apenas readequações do órgão atual
+
+        // lista apenas readequaÃ§Ãµes do Ã³rgÃ£o atual
         if ($filtro == 'aguardando_distribuicao') {
             $where['idOrgao = ?'] = $this->idOrgao;
         } else {
             $where['idOrgaoOrigem = ?'] = $this->idOrgao;
         }
-        
-        if ($this->_request->getParam('pronac')) {           
+
+        if ($this->_request->getParam('pronac')) {
             $where['a.PRONAC = ?'] = $this->_request->getParam('pronac');
             $this->view->pronac = $this->_request->getParam('pronac');
         }
 
         $tbReadequacao = New tbReadequacao();
-        
+
         $total = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamentoCount($where, $filtro);
-        
+
         $fim = $inicio + $this->intTamPag;
 
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-        
+
         $busca = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamento($where, $order, $tamanho, $inicio, false, $filtro);
-        
+
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,
@@ -2002,10 +2003,10 @@ class ReadequacoesController extends GenericControllerNew {
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $tbTitulacaoConselheiro = new tbTitulacaoConselheiro();
         $this->view->conselheiros = $tbTitulacaoConselheiro->buscarConselheirosTitularesTbUsuarios();
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
@@ -2017,11 +2018,11 @@ class ReadequacoesController extends GenericControllerNew {
      */
     public function imprimirReadequacoesAction(){
 
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if($this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -2049,7 +2050,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         } else {
             $campo = null;
-            $order = array(5); //Dt. Solicitação
+            $order = array(5); //Dt. SolicitaÃ§Ã£o
             $ordenacao = null;
         }
 
@@ -2058,30 +2059,30 @@ class ReadequacoesController extends GenericControllerNew {
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        
+
         $where = array();
-        if ($this->_request->getParam('pronac')) {           
+        if ($this->_request->getParam('pronac')) {
             $where['a.PRONAC = ?'] = $this->_request->getParam('pronac');
             $this->view->pronac = $this->_request->getParam('pronac');
         }
-        
+
         $filtro = null;
         if ($this->_request->getParam('tipoFiltro')) {
             $filtro = $this->_request->getParam('tipoFiltro');
         } else {
             $filtro = 'aguardando_distribuicao';
-        }        
+        }
 
         $tbReadequacao = New tbReadequacao();
-        
+
         $total = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamentoCount($where, $filtro);
-        
+
         $fim = $inicio + $this->intTamPag;
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-        
+
         $busca = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamento($where, $order, $tamanho, $inicio, null, $filtro);
-        
+
         $this->view->qtdRegistros = $total;
         $this->view->dados = $busca;
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
@@ -2090,14 +2091,14 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Alterada em 19/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função usada para o coordenador de acompanhamento deferir ou não a solicitação de readequação.
+     * FunÃ§Ã£o usada para o coordenador de acompanhamento deferir ou nÃ£o a solicitaÃ§Ã£o de readequaÃ§Ã£o.
      */
     public function avaliarReadequacaoAction() {
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         $perfisAcesso = array(121, 122, 123);
-        
+
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2174,11 +2175,11 @@ class ReadequacoesController extends GenericControllerNew {
                 echo json_encode(array('resposta'=>false));
             }
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /**
-     * salvarAvaliacaoAction Função utilizada pleo Coord. de Acompanhamento para avaliar a readequação e encaminhá-la.
+     * salvarAvaliacaoAction FunÃ§Ã£o utilizada pleo Coord. de Acompanhamento para avaliar a readequaÃ§Ã£o e encaminhÃ¡-la.
      *
      * @since  Alterada em 11/03/14
      * @author Jefferson Alessandro <jeffersonassilva@gmail.com>
@@ -2188,15 +2189,15 @@ class ReadequacoesController extends GenericControllerNew {
      */
     public function salvarAvaliacaoAction() {
         $perfisAcesso = array(121, 122, 123);
-        
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if(!in_array($this->idPerfil, $perfisAcesso)){        
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if(!in_array($this->idPerfil, $perfisAcesso)){
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
-        
+
         $idReadequacao = $this->_request->getParam('idReadequacao');
         $filtro = $this->_request->getParam('filtro');
-        
+
         $tbReadequacao = new tbReadequacao();
         $r = $tbReadequacao->find(array('idReadequacao = ?'=>$idReadequacao))->current();
         $stValidacaoCoordenador = 0;
@@ -2209,8 +2210,8 @@ class ReadequacoesController extends GenericControllerNew {
             $r->idAvaliador = $this->idUsuario;
 
             if($this->_request->getParam('stAtendimento') == 'I'){
-                // indeferida                
-                $r->siEncaminhamento = 2; //2=Solicitação indeferida
+                // indeferida
+                $r->siEncaminhamento = 2; //2=SolicitaÃ§Ã£o indeferida
                 $r->stEstado = 1;
             } else if ($this->_request->getParam('stAtendimento') == 'DP') {
                 // devolvida ao proponente
@@ -2220,7 +2221,7 @@ class ReadequacoesController extends GenericControllerNew {
             } else {
                 // deferida
                 if($this->_request->getParam('vinculada') == 262 || $this->_request->getParam('vinculada') == 166){
-                    $r->siEncaminhamento = 4; //4=Enviado para Análise Técnica (SAV, SEFIC)
+                    $r->siEncaminhamento = 4; //4=Enviado para AnÃ¡lise TÃ©cnica (SAV, SEFIC)
                     $dataEnvio = new Zend_Db_Expr('GETDATE()');
                     $r->idAvaliador = $this->_request->getParam('destinatario');
                 } else if($this->_request->getParam('vinculada') == 400) {
@@ -2230,15 +2231,15 @@ class ReadequacoesController extends GenericControllerNew {
                 } else {
                     $r->siEncaminhamento = 3; //3=Enviado para o coordenador de parecer
                 }
-            }            
+            }
             $r->save();
-            
+
             if($this->_request->getParam('stAtendimento') == 'D'){
 
-                // busca readequacao para ver se existe. Se não existe, cria, senão atualiza               
+                // busca readequacao para ver se existe. Se nÃ£o existe, cria, senÃ£o atualiza
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $jaDistribuiu = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$r->idReadequacao))->current();
-                
+
                 if (empty($jaDistribuiu)) {
                     $dados = array(
                         'idReadequacao' => $r->idReadequacao,
@@ -2249,7 +2250,7 @@ class ReadequacoesController extends GenericControllerNew {
                         'stValidacaoCoordenador' => $stValidacaoCoordenador,
                         'dsOrientacao' => $r->dsAvaliacao
                     );
-                    
+
                     $tbDistribuirReadequacao->inserir($dados);
                 } else {
                     $dados = array(
@@ -2261,11 +2262,11 @@ class ReadequacoesController extends GenericControllerNew {
                         'dsOrientacao' => $r->dsAvaliacao
                     );
                     $where = "idReadequacao = " . $r->idReadequacao;
-                    
-                    $tbDistribuirReadequacao->update($dados, $where);
-                    
 
-                }                    
+                    $tbDistribuirReadequacao->update($dados, $where);
+
+
+                }
             }
             if ($this->idPerfil == 121) {
                 parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
@@ -2285,21 +2286,21 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Alterada em 11/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * FUNÇÃO ACESSADA PELO TECNICO DE ACOMPANHAMENTO
+     * FUNÃ‡ÃƒO ACESSADA PELO TECNICO DE ACOMPANHAMENTO
     */
     public function painelReadequacoesAction() {
 
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, PARECERISTA E TECNICO DE ACOMPANHAMENTO.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, PARECERISTA E TECNICO DE ACOMPANHAMENTO.
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
         }
         $order = array();
-        
+
         //==== parametro de ordenacao  ======//
         if($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
@@ -2312,7 +2313,7 @@ class ReadequacoesController extends GenericControllerNew {
             $ordem = "ASC";
             $novaOrdem = "ASC";
         }
-        
+
         //==== campo de ordenacao  ======//
         if($this->_request->getParam("campo")) {
             $campo = $this->_request->getParam("campo");
@@ -2332,7 +2333,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         /* ================== PAGINACAO ======================*/
         $where = array();
-        
+
         if ($this->_request->getParam('tipoFiltro') !== null) {
             $filtro = $this->_request->getParam('tipoFiltro');
         } else {
@@ -2344,44 +2345,48 @@ class ReadequacoesController extends GenericControllerNew {
         }
         $this->view->filtro = $filtro;
 
-        if ($this->_request->getParam('pronac')) {           
+        if ($this->_request->getParam('pronac')) {
             $where['PRONAC = ?'] = $this->_request->getParam('pronac');
             $this->view->pronac = $this->_request->getParam('pronac');
         }
-        
+
         // hack!
         if ($this->idOrgao == 272) {
-            $where['idOrgao = ?'] = 262;
+            $where['idUnidade = ?'] = 262;
         } else {
-            $where['idOrgao = ?'] = $this->idOrgao;
+            $where['idUnidade = ?'] = $this->idOrgao;
         }
 
         $tbReadequacao = New tbReadequacao();
-        
+        $tbDistribuirReadequacao = New tbDistribuirReadequacao();
+
         if ($this->idPerfil == 93) {
             // coordenador parecer
-            
+
             switch($filtro){
                 case 'aguardando_distribuicao':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise' , $where);
+                    $total = count($tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAguardandoAnalise($where));
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise' , $where);
                     break;
                 case 'em_analise':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerEmAnalise' , $where);
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerEmAnalise' , $where);
+                    $total = count($tbReadequacao->buscarReadequacaoCoordenadorParecerEmAnalise($where));
                     break;
                 case 'analisados':
-                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
+                    $total  = count($tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAnalisados($where));
+//                    $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
                     break;
             }
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
-            // técnico de acompanhamento ou parecerista de vinculada
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
-            $where['idTecnicoParecerista = ?'] = $auth->getIdentity()->usu_codigo;
-            
-            $total = $tbReadequacao->count('vwPainelReadequacaoTecnico', $where);
-            
+            // tÃ©cnico de acompanhamento ou parecerista de vinculada
+            $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
+            $where['d.idAvaliador = ?'] = $auth->getIdentity()->usu_codigo;
+
+            $total = count($tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where));
+
             $this->filtro = '';
         }
-        
+
         $fim = $inicio + $this->intTamPag;
 
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
@@ -2389,12 +2394,23 @@ class ReadequacoesController extends GenericControllerNew {
 
         // coordenador de parecer
         if ($this->idPerfil == 93) {
-            $busca = $tbReadequacao->painelReadequacoesCoordenadorParecer($where, $order, $tamanho, $inicio, false, $filtro);
+
+            switch ($filtro) {
+                case 'aguardando_distribuicao':
+                        $busca = $tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAguardandoAnalise($where, $order, $tamanho, $inicio, false);
+                    break;
+                case 'em_analise':
+                    $busca = $tbReadequacao->buscarReadequacaoCoordenadorParecerEmAnalise($where, $order, $tamanho, $inicio, false);
+                    break;
+                case 'analisados':
+                    $busca = $tbDistribuirReadequacao->buscarReadequacaoCoordenadorParecerAnalisados($where, $order, $tamanho, $inicio, false);
+                    break;
+            }
+
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
-            // técnico de acompanhamento ou parecerista de vinculada           
+             // tecnico de acompanhamento ou parecerista de vinculada
             $busca = $tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where, $order, $tamanho, $inicio, false);
         }
-        
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,
@@ -2409,24 +2425,25 @@ class ReadequacoesController extends GenericControllerNew {
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
         $this->view->idPerfil      = $this->idPerfil;
         $this->view->idOrgao       = $this->idOrgao;
+
     }
 
     /*
      * Alterada em 12/03/14
-     * Função acessada pelo Coordenador de Parecer, Coordenador de Acompanhamento, e Coordenador Geral de Acomapanhamento.
+     * FunÃ§Ã£o acessada pelo Coordenador de Parecer, Coordenador de Acompanhamento, e Coordenador Geral de Acomapanhamento.
     */
     public function visualizarReadequacaoAction() {
 
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, COORD. DE ACOMPANHAMETO E COORD. GERAL DE ACOMPANHAMENTO.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. DE PARECER, COORD. DE ACOMPANHAMETO E COORD. GERAL DE ACOMPANHAMENTO.
         if($this->idPerfil != 93 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $id = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -2446,29 +2463,29 @@ class ReadequacoesController extends GenericControllerNew {
      /*
      * Alterada em 13/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função acessada pelo Coordenador de Parecer para encaminhar a readequação para o Parecerista.
+     * FunÃ§Ã£o acessada pelo Coordenador de Parecer para encaminhar a readequaÃ§Ã£o para o Parecerista.
     */
     public function encaminharReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $vinculada = $this->idOrgao;
-        
+
         $idDistRead = $this->_request->getParam('idDistRead');
         $idReadequacao = $this->_request->getParam('idReadequacao');
-        
+
         //Atualiza a tabela tbDistribuirReadequacao
-        if ($vinculada != 91) { // todos os casos exceto IPHAN
+        if ($vinculada != Orgaos::ORGAO_SUPERIOR_IPHAN) { // todos os casos exceto IPHAN
             $idAvaliador = $this->_request->getParam('parecerista');
-            
+
             $dados = array();
             $dados['idAvaliador'] = $idAvaliador;
             $dados['DtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
             $where["idDistribuirReadequacao = ? "] = $idDistRead;
             $tbDistribuirReadequacao = new tbDistribuirReadequacao();
             $return = $tbDistribuirReadequacao->update($dados, $where);
-            
+
             //Atualiza a tabela tbReadequacao
             $dados = array();
-            $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
+            $dados['siEncaminhamento'] = 4; // Enviado para anÃ¡lise tÃ©cnica
             $where = array();
             $where['idReadequacao = ?'] = $idReadequacao;
             $tbReadequacao = new tbReadequacao();
@@ -2482,7 +2499,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         } else {
             // IPHAN
-            
+
             $idVinculada = $this->_request->getParam('parecerista');
 
             $dados = array();
@@ -2497,42 +2514,43 @@ class ReadequacoesController extends GenericControllerNew {
                 echo json_encode(array('resposta'=>false));
             }
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Criada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função acessada pelo Parecerista ou Técnico de acompanhamento para avaliar a readequação.
+     * FunÃ§Ã£o acessada pelo Parecerista ou TÃ©cnico de acompanhamento para avaliar a readequaÃ§Ã£o.
     */
     public function formAvaliarReadequacaoAction(){
         $perfisAcesso = array(94, 121);
-        
+
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = (int) Seguranca::dencrypt($this->_request->getParam('id'));
-        
+
         $this->view->idReadequacao = $idReadequacao;
 
         $tbReadequacao = new tbReadequacao();
         $dados = $tbReadequacao->buscarDadosReadequacoes(array('idReadequacao = ?'=>$idReadequacao))->current();
         if(!$dados){
-            parent::message("Readequação não encontrada!", "readequacoes/painel-readequacoes", "ERROR");
+            parent::message("ReadequaÃ§Ã£o nÃ£o encontrada!", "readequacoes/painel-readequacoes", "ERROR");
         }
         $this->view->dados = $dados;
         $this->view->idPronac = $dados->idPronac;
 
         $this->view->nmPagina = $dados->dsReadequacao;
         $d = array();
-        $d['ProvidenciaTomada'] = 'Readequação enviado para avaliação técnica.';
+        $d['ProvidenciaTomada'] = 'ReadequaÃ§Ã£o enviado para avaliaÃ§Ã£o tÃ©cnica.';
         $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
         $where = "IdPRONAC = $dados->idPronac";
         $Projetos = new Projetos();
         $Projetos->update($d, $where);
 
-        $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+        $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+        $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
         $this->view->Unidade = $buscarUnidade;
 
         $tbReadequacaoXParecer = new tbReadequacaoXParecer();
@@ -2546,25 +2564,25 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Criada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função acessada pelo Parecerista ou Técnico de acompanhamento para avaliar a readequação.
+     * FunÃ§Ã£o acessada pelo Parecerista ou TÃ©cnico de acompanhamento para avaliar a readequaÃ§Ã£o.
     */
     public function salvarParecerTecnicoAction()
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 121){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
-       }
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
+        }
 
-        $idPronac = $this->_request->getParam('idPronac');
-        $idReadequacao = $this->_request->getParam('idReadequacao');
-        $dsParecer = $this->_request->getParam('dsParecer');
-        $parecerProjeto = $this->_request->getParam('parecerProjeto');
+        $idPronac = $_POST['idPronac'];
+        $idReadequacao = $_POST['idReadequacao'];
+        $dsParecer = $_POST['dsParecer'];
+        $parecerProjeto = $_POST['parecerProjeto'];
         $campoTipoParecer = 8;
         $vlPlanilha = 0;
 
         $tbReadequacao = new tbReadequacao();
         $dadosRead = $tbReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao))->current();
-        
-        //SE FOR READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDARÁ.
+
+        //SE FOR READEQUAÃ‡ÃƒO DE PLANILHA ORÃ‡AMENTÃRIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR.
         if($dadosRead->idTipoReadequacao == 2){
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
@@ -2591,15 +2609,15 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
         try {
-            //ATUALIAZA A SITUAÇÃO, ÁREA E SEGMENTO DO PROJETO
+            //ATUALIAZA A SITUAÃ‡ÃƒO, ÃREA E SEGMENTO DO PROJETO
             $d = array();
-            $d['ProvidenciaTomada'] = 'Readequação em análise pela área técnica.';
+            $d['ProvidenciaTomada'] = 'ReadequaÃ§Ã£o em anÃ¡lise pela Ã¡rea tÃ©cnica.';
             //$d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
             $Projetos->update($d, $where);
 
-            $enquadramentoDAO = new Enquadramento();
+            $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
             $buscaEnquadramento = $enquadramentoDAO->buscarDados($idPronac, null, false);
 
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
@@ -2613,7 +2631,7 @@ class ReadequacoesController extends GenericControllerNew {
                     'Sequencial' => $dadosProjeto[0]->Sequencial,
                     'TipoParecer' => $campoTipoParecer,
                     'ParecerFavoravel' => $parecerProjeto,
-                    'DtParecer' => new Zend_Db_Expr("GETDATE()"),
+                    'DtParecer' => MinC_Db_Expr::date(),
                     'NumeroReuniao' => null,
                     'ResumoParecer' => $dsParecer,
                     'SugeridoReal' => $vlPlanilha,
@@ -2654,41 +2672,30 @@ class ReadequacoesController extends GenericControllerNew {
                     $tbReadequacaoXParecer->inserir($dadosInclusao);
                 }
             }
-            
-            if((null !== $this->_request->getParam('finalizarAvaliacao')) && $this->_request->getParam('finalizarAvaliacao') == 1){
+
+            if(isset($_POST['finalizarAvaliacao']) && $_POST['finalizarAvaliacao'] == 1){
 
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dDP = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$idReadequacao));
-                
+
                 if(count($dDP)>0){
-                    
-                    $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
                     //ATUALIZA A TABELA tbDistribuirReadequacao
                     $dadosDP = array();
                     $dadosDP['DtRetornoAvaliador'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
-
-                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central. Senão, permanece na unidade
-                    $perfilCoordenadorVinculada = 93;
-                    if (!in_array($this->idOrgao, $outrasVinculadas) && $this->idPerfil == $perfilCoordenadorVinculada) {
-                        $dadosDP['idUnidade'] = 91; // retorna para IPHAN (topo)
-                    }
-                    
                     $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
-                    
-                    $siEncaminhamento = 5; //Devolvido da análise técnica
+
+                    $siencaminhamento = 5; //Devolvido da anÃ¡lise tÃ©cnica
                     if($this->idPerfil == 121){
                         $siEncaminhamento = 10; //Devolver para Coordenador do MinC
                     }
-                    
                     //ATUALIZA A TABELA tbReadequacao
                     $dados = array();
                     $dados['siEncaminhamento'] = $siEncaminhamento;
-                    $dados['dtAvaliador'] = new Zend_Db_Expr('GETDATE()');
                     $where = "idReadequacao = $idReadequacao";
                     $tbReadequacao->update($dados, $where);
                 }
-                parent::message("A avaliação da readequação foi finalizada com sucesso! ", "readequacoes/painel-readequacoes", "CONFIRM");
+                parent::message("A avaliaÃ§Ã£o da readequaÃ§Ã£o foi finalizada com sucesso! ", "readequacoes/painel-readequacoes", "CONFIRM");
             }
             $idReadequacao = Seguranca::encrypt($idReadequacao);
             parent::message("Dados salvos com sucesso!", "readequacoes/form-avaliar-readequacao?id=$idReadequacao", "CONFIRM");
@@ -2701,42 +2708,29 @@ class ReadequacoesController extends GenericControllerNew {
 
     public function coordParecerFinalizarReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
-        $idReadequacao = $this->_request->getParam("idReadequacao");
-        $idDistribuirReadequacao = $this->_request->getParam("idDistProj");
-        
-        // Se estiver com vinculada do IPHAN, volta para sede IPHAN
-        $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
 
-        // se não for uma das vinculadas, retorna para o iphan
-        if (!in_array($this->idOrgao, $outrasVinculadas)) {
-            $dadosDR = array();
-            $whereDR = array();
-            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
-            $whereDR = "idDistribuirReadequacao = " . $idDistribuirReadequacao;
-            $dadosDR['idUnidade'] = 91; // retorna para IPHAN
-            $return = $tbDistribuirReadequacao->update($dadosDR, $whereDR);           
-        } else {
-            //Atualiza a tabela tbReadequacao
-            $dados = array();
-            $dados['siEncaminhamento'] = 6; // Devolvido para o coordenador geral de acompanhamento
-            $where = "idReadequacao = $idReadequacao";
-            $tbReadequacao = new tbReadequacao();
-            $return = $tbReadequacao->update($dados, $where);
-        }
+        $post = Zend_Registry::get('post');
+        $idReadequacao = (int) $post->idReadequacao;
+
+        //Atualiza a tabela tbReadequacao
+        $dados = array();
+        $dados['siEncaminhamento'] = 6; // Devolvido para o coordenador geral de acompanhamento
+        $where = "idReadequacao = $idReadequacao";
+        $tbReadequacao = new tbReadequacao();
+        $return = $tbReadequacao->update($dados, $where);
 
         if($return){
             echo json_encode(array('resposta'=>true));
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Alterada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função acessada pelos coordenadores para devolver para análise técnica.
+     * FunÃ§Ã£o acessada pelos coordenadores para devolver para anÃ¡lise tÃ©cnica.
     */
     public function devolverReadequacaoAction() {
         $dados = array();
@@ -2751,21 +2745,21 @@ class ReadequacoesController extends GenericControllerNew {
         //RECURSOS TRATADOS POR PARECERISTA
         if($siEncaminhamento == 6){
             //Atualiza a tabela tbRecurso
-            $dados['siEncaminhamento'] = 3; // Encaminhado do MinC para Unidade de Análise
+            $dados['siEncaminhamento'] = 3; // Encaminhado do MinC para Unidade de AnÃ¡lise
             $where = "idReadequacao = $idReadequacao";
         } else {
-            $dados['siEncaminhamento'] = 4; // Encaminhado para o Técnico
+            $dados['siEncaminhamento'] = 4; // Encaminhado para o TÃ©cnico
             $where = "idReadequacao = $idReadequacao";
         }
         $tbReadequacao->update($dados, $where);
 
-        parent::message("Readequação devolvida com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
+        parent::message("ReadequaÃ§Ã£o devolvida com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
     }
 
     /*
      * Alterada em 14/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função acessada pelo coordenador de análise para finalizar a readequação e encaminhar para o componente da comissão.
+     * FunÃ§Ã£o acessada pelo coordenador de anÃ¡lise para finalizar a readequaÃ§Ã£o e encaminhar para o componente da comissÃ£o.
     */
     public function coordAnaliseFinalizarReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -2787,13 +2781,13 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosDP['stValidacaoCoordenador'] = 1;
             $dadosDP['DtValidacaoCoordenador'] = new Zend_Db_Expr('GETDATE()');
             $dadosDP['idCoordenador'] = $this->idUsuario;
-            
+
             // atualiza com dados para enviar para cnic
             $dadosDP['idUnidade'] = 400;
             $dadosDP['DtEncaminhamento'] = new Zend_Db_Expr('GETDATE()');
             $dadosDP['idAvaliador'] = $idComponente;
             $dadosDP['dtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
-            
+
             $whereDP = "idDistribuirReadequacao = ".$dadosDistRead[0]->idDistribuirReadequacao;
             $distribuicao = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
         }
@@ -2814,18 +2808,18 @@ class ReadequacoesController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /*
      * Alterada em 14/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função acessada pelo componente da comissão para analisar as readequações - painel.
+     * FunÃ§Ã£o acessada pelo componente da comissÃ£o para analisar as readequaÃ§Ãµes - painel.
     */
     public function analisarReadequacoesCnicAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -2868,7 +2862,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         $where = array();
         $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-        $where['a.siEncaminhamento = ?'] = 7; // 7=Encaminhar para ao Componente da Comissão
+        $where['a.siEncaminhamento = ?'] = 7; // 7=Encaminhar para ao Componente da ComissÃ£o
         $where['d.idUnidade = ?'] = 400; // CNIC
         $where['d.idAvaliador = ?'] = $this->idUsuario;
 
@@ -2909,12 +2903,12 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Alterada em 17/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função acessada pelo componente da comissão para avaliar as readequações.
+     * FunÃ§Ã£o acessada pelo componente da comissÃ£o para avaliar as readequaÃ§Ãµes.
     */
     public function formAvaliarReadequacaoCnicAction(){
 
         if($this->idPerfil != 118){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -2930,31 +2924,32 @@ class ReadequacoesController extends GenericControllerNew {
         $this->view->dados = $dados;
         $this->view->idPronac = $dados->idPronac;
         $this->view->nmPagina = $dados->dsReadequacao;
-        
+
         //DADOS DO PROJETO
         $Projetos = new Projetos();
         $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $dados->idPronac))->current();
         $this->view->projeto = $p;
 
-        $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+        $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+        $buscarUnidade =  $TbPlanilhaUnidade->buscarUnidade();
         $this->view->Unidade = $buscarUnidade;
 
-        //DADOS DA AVALIAÇÃO TÉCNICA ou PARECERISTA
+        //DADOS DA AVALIAÃ‡ÃƒO TÃ‰CNICA ou PARECERISTA
         $avaliacaoTecnica = $tbReadequacao->buscarDadosParecerReadequacao(array('a.idReadequacao = ?'=>$idReadequacao, 'c.idTipoAgente = ?'=>1))->current();
         $this->view->avaliacaoTecnica = $avaliacaoTecnica;
 
-        //DADOS DA AVALIAÇÃO DO COMPONENTE
+        //DADOS DA AVALIAÃ‡ÃƒO DO COMPONENTE
         $avaliacaoConselheiro = $tbReadequacao->buscarDadosParecerReadequacao(array('a.idReadequacao = ?'=>$idReadequacao, 'c.idTipoAgente = ?'=>6))->current();
         $this->view->avaliacaoConselheiro = $avaliacaoConselheiro;
     }
 
     /*
      * Alterada em 15/05/2015
-     * Função acessada pelo componente da comissão para avaliar as readequações.
+     * FunÃ§Ã£o acessada pelo componente da comissÃ£o para avaliar as readequaÃ§Ãµes.
     */
     public function componenteComissaoSalvarAvaliacaoAction(){
         if($this->idPerfil != 118){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $_POST['idPronac'];
@@ -2967,7 +2962,7 @@ class ReadequacoesController extends GenericControllerNew {
         $tbReadequacao = new tbReadequacao();
         $dadosRead = $tbReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao))->current();
 
-        //SE FOR READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDARÁ.
+        //SE FOR READEQUAÃ‡ÃƒO DE PLANILHA ORÃ‡AMENTÃRIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR.
         if($dadosRead->idTipoReadequacao == 2){
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
@@ -2996,7 +2991,7 @@ class ReadequacoesController extends GenericControllerNew {
         try {
 
             $Projetos = new Projetos();
-            $enquadramentoDAO = new Enquadramento();
+            $enquadramentoDAO = new Admissibilidade_Model_Enquadramento();
             $buscaEnquadramento = $enquadramentoDAO->buscarDados($idPronac, null, false);
 
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
@@ -3010,14 +3005,14 @@ class ReadequacoesController extends GenericControllerNew {
                     'Sequencial' => $dadosProjeto[0]->Sequencial,
                     'TipoParecer' => $campoTipoParecer,
                     'ParecerFavoravel' => $parecerProjeto,
-                    'DtParecer' => new Zend_Db_Expr("GETDATE()"),
+                    'DtParecer' => MinC_Db_Expr::date(),
                     'NumeroReuniao' => null,
                     'ResumoParecer' => $dsParecer,
                     'SugeridoReal' => $vlPlanilha,
                     'Atendimento' => 'S',
                     'idEnquadramento' => $buscaEnquadramento['IdEnquadramento'],
                     'stAtivo' => 1,
-                    'idTipoAgente' => 6, //Componente da Comissão
+                    'idTipoAgente' => 6, //Componente da ComissÃ£o
                     'Logon' => $this->idUsuario
                 );
 
@@ -3071,18 +3066,18 @@ class ReadequacoesController extends GenericControllerNew {
 
                     $stEstado = 0;
                     if($_POST['plenaria']){
-                        $campoSiEncaminhamento = 8; // 8=Enviado à Plenária
+                        $campoSiEncaminhamento = 8; // 8=Enviado Ã  PlenÃ¡ria
                     } else {
-                        $campoSiEncaminhamento = 9; // 9=Enviado para Checklist Publicação
+                        $campoSiEncaminhamento = 9; // 9=Enviado para Checklist PublicaÃ§Ã£o
                         if(!in_array($read->idTipoReadequacao, array(2,3,10,12,15))){
-                            $campoSiEncaminhamento = 15; // 15=Finaliza a readequação sem a necessidade de enviar para publicação no DOU.
+                            $campoSiEncaminhamento = 15; // 15=Finaliza a readequaÃ§Ã£o sem a necessidade de enviar para publicaÃ§Ã£o no DOU.
                             $stEstado = 1;
                         }
                     }
 
                     //ATUALIZA A TABELA tbReadequacao
                     $dados = array();
-                    $dados['siEncaminhamento'] = $campoSiEncaminhamento; // Devolvido da análise técnica
+                    $dados['siEncaminhamento'] = $campoSiEncaminhamento; // Devolvido da anÃ¡lise tÃ©cnica
                     $dados['idNrReuniao'] = $idNrReuniao;
                     $dados['stEstado'] = $stEstado;
                     if($parecerProjeto == 2){
@@ -3097,9 +3092,9 @@ class ReadequacoesController extends GenericControllerNew {
 
                     if($campoSiEncaminhamento != 8){
 
-                        if($parecerProjeto == 2){ //Se for parecer favorável, atualiza os dados solicitados na readequação
+                        if($parecerProjeto == 2){ //Se for parecer favorÃ¡vel, atualiza os dados solicitados na readequaÃ§Ã£o
 
-                            // READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA
+                            // READEQUAÃ‡ÃƒO DE PLANILHA ORÃ‡AMENTÃRIA
                             if($read->idTipoReadequacao == 2){
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3135,15 +3130,15 @@ class ReadequacoesController extends GenericControllerNew {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => $TipoAprovacao,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                                     'AprovadoReal' => $AprovadoReal,
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
-                            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na AGENTES.dbo.Nomes.
+                            // READEQUAÃ‡ÃƒO DE ALTERAÃ‡ÃƒO DE RAZÃƒO SOCIAL
+                            } else if($read->idTipoReadequacao == 3){ //Se for readequaÃ§Ã£o de alteraÃ§Ã£o de razÃ£o social, atualiza os dados na AGENTES.dbo.Nomes.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3154,14 +3149,14 @@ class ReadequacoesController extends GenericControllerNew {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUAÇÃO DE AGÊNCIA BANCÁRIA
-                            } else if($read->idTipoReadequacao == 4){ //Se for readequação de agência bancária, atualiza os dados na SAC.dbo.PreProjeto.// READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
+                            // READEQUAÃ‡ÃƒO DE AGÃŠNCIA BANCÃRIA
+                            } else if($read->idTipoReadequacao == 4){ //Se for readequaÃ§Ã£o de agÃªncia bancÃ¡ria, atualiza os dados na SAC.dbo.PreProjeto.// READEQUAÃ‡ÃƒO DE ALTERAÃ‡ÃƒO DE RAZÃƒO SOCIAL
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
                                 $agenciaBancaria = str_replace('-', '', $read->dsSolicitacao);
@@ -3184,67 +3179,67 @@ class ReadequacoesController extends GenericControllerNew {
                                 $whereDadosBancarios['Sequencial = ?'] = $dadosPrj->Sequencial;
                                 $tblContaBancaria->alterar($arrayDadosBancarios, $whereDadosBancarios);
 
-                            // READEQUAÇÃO DE SINOPSE DA OBRA
-                            } else if($read->idTipoReadequacao == 5){ //Se for readequação de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE SINOPSE DA OBRA
+                            } else if($read->idTipoReadequacao == 5){ //Se for readequaÃ§Ã£o de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Sinopse = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE IMPACTO AMBIENTAL
-                            } else if($read->idTipoReadequacao == 6){ //Se for readequação de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE IMPACTO AMBIENTAL
+                            } else if($read->idTipoReadequacao == 6){ //Se for readequaÃ§Ã£o de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->ImpactoAmbiental = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE ESPECIFICAÇÃO TÉCNICA
-                            } else if($read->idTipoReadequacao == 7){ //Se for readequação de especificação técnica, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE ESPECIFICAÃ‡ÃƒO TÃ‰CNICA
+                            } else if($read->idTipoReadequacao == 7){ //Se for readequaÃ§Ã£o de especificaÃ§Ã£o tÃ©cnica, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->EspecificacaoTecnica = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE ESTRATÉGIA DE EXECUÇÃO
-                            } else if($read->idTipoReadequacao == 8){ //Se for readequação de estratégia de execução, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE ESTRATÃ‰GIA DE EXECUÃ‡ÃƒO
+                            } else if($read->idTipoReadequacao == 8){ //Se for readequaÃ§Ã£o de estratÃ©gia de execuÃ§Ã£o, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->EstrategiadeExecucao = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE LOCAL DE REALIZAÇÃO
-                            } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
-                                $Abrangencia = new Abrangencia();
-                                $tbAbrangencia = new tbAbrangencia();
+                            // READEQUAÃ‡ÃƒO DE LOCAL DE REALIZAÃ‡ÃƒO
+                            } else if($read->idTipoReadequacao == 9){ //Se for readequaÃ§Ã£o de local de realizaÃ§Ã£o, atualiza os dados na SAC.dbo.Abrangencia.
+                                $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
+                                $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
                                 foreach ($abrangencias as $abg) {
                                     $Projetos = new Projetos();
                                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
+                                    //Se nÃ£o houve avaliÃ§Ã£o do conselheiro, pega a avaliaÃ§Ã£o tÃ©cnica como referencia.
                                     $avaliacao = $abg->tpAnaliseComissao;
                                     if($abg->tpAnaliseComissao == 'N'){
                                         $avaliacao = $abg->tpAnaliseTecnica;
                                     }
 
-                                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
+                                    //Se a avaliaÃ§Ã£o foi deferida, realiza as mudanÃ§as necessÃ¡rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na SAC.dbo.Abrangencia
+                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluÃ­da, atualiza os status da abrangencia na SAC.dbo.Abrangencia
                                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela SAC.dbo.Abrangencia
+                                        } else if($abg->tpSolicitacao == 'I') { //Se a abangÃªncia foi incluÃ­da, cria um novo registro na tabela SAC.dbo.Abrangencia
                                             $novoLocalRead = array();
                                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3262,8 +3257,8 @@ class ReadequacoesController extends GenericControllerNew {
                                 $whereAbr = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                                 $tbAbrangencia->update($dadosAbr, $whereAbr);
 
-                            // READEQUAÇÃO DE ALTERAÇÃO DE PROPONENTE
-                            } else if($read->idTipoReadequacao == 10){ //Se for readequação de alteração de proponente, atualiza os dados na SAC.dbo.Projetos.
+                            // READEQUAÃ‡ÃƒO DE ALTERAÃ‡ÃƒO DE PROPONENTE
+                            } else if($read->idTipoReadequacao == 10){ //Se for readequaÃ§Ã£o de alteraÃ§Ã£o de proponente, atualiza os dados na SAC.dbo.Projetos.
 
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3275,15 +3270,15 @@ class ReadequacoesController extends GenericControllerNew {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUAÇÃO DE PLANO DE DISTRIBUIÇÃO
-                            } else if($read->idTipoReadequacao == 11){ //Se for readequação de plano de distribuição, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
-                                $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                            // READEQUAÃ‡ÃƒO DE PLANO DE DISTRIBUIÃ‡ÃƒO
+                            } else if($read->idTipoReadequacao == 11){ //Se for readequaÃ§Ã£o de plano de distribuiÃ§Ã£o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
+                                $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                                 $planosDistribuicao = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
 
@@ -3291,18 +3286,18 @@ class ReadequacoesController extends GenericControllerNew {
                                     $Projetos = new Projetos();
                                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
+                                    //Se nÃ£o houve avaliÃ§Ã£o do conselheiro, pega a avaliaÃ§Ã£o tÃ©cnica como referencia.
                                     $avaliacao = $plano->tpAnaliseComissao;
                                     if($plano->tpAnaliseComissao == 'N'){
                                         $avaliacao = $plano->tpAnaliseTecnica;
                                     }
 
-                                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
+                                    //Se a avaliaÃ§Ã£o foi deferida, realiza as mudanÃ§as necessÃ¡rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribuição foi excluído, atualiza os status do plano na SAC.dbo.PlanoDistribuicaoProduto
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribuiÃ§Ã£o foi excluÃ­do, atualiza os status do plano na SAC.dbo.PlanoDistribuicaoProduto
                                             $PlanoDistribuicaoProduto->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idProduto = ?'=>$plano->idProduto, 'Area = ?'=>$plano->cdArea, 'Segmento = ?'=>$plano->cdSegmento));
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribuição foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDistribuicaoProduto
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribuiÃ§Ã£o foi incluÃ­do, cria um novo registro na tabela SAC.dbo.PlanoDistribuicaoProduto
                                             $novoPlanoDistRead = array();
                                             $novoPlanoDistRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDistRead['idProduto'] = $plano->idProduto;
@@ -3331,8 +3326,8 @@ class ReadequacoesController extends GenericControllerNew {
                                 $wherePDD = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                                 $tbPlanoDistribuicao->update($dadosPDD, $wherePDD);
 
-                            // READEQUAÇÃO DE NOME DO PROJETO
-                            } else if($read->idTipoReadequacao == 12){ //Se for readequação de nome do projeto, insere o registo na tela de Checklist de Publicação.
+                            // READEQUAÃ‡ÃƒO DE NOME DO PROJETO
+                            } else if($read->idTipoReadequacao == 12){ //Se for readequaÃ§Ã£o de nome do projeto, insere o registo na tela de Checklist de PublicaÃ§Ã£o.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3343,22 +3338,22 @@ class ReadequacoesController extends GenericControllerNew {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUAÇÃO DE PERÍODO DE EXECUÇÃO
-                            } else if($read->idTipoReadequacao == 13){ //Se for readequação de período de execução, atualiza os dados na SAC.dbo.Projetos.
+                            // READEQUAÃ‡ÃƒO DE PERÃODO DE EXECUÃ‡ÃƒO
+                            } else if($read->idTipoReadequacao == 13){ //Se for readequaÃ§Ã£o de perÃ­odo de execuÃ§Ã£o, atualiza os dados na SAC.dbo.Projetos.
                                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
                                 $dadosPrj->DtFimExecucao = $dtFimExecucao;
                                 $dadosPrj->save();
 
-                            // READEQUAÇÃO DE PLANO DE DIVULGAÇÃO
-                            } else if($read->idTipoReadequacao == 14){ //Se for readequação de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
+                            // READEQUAÃ‡ÃƒO DE PLANO DE DIVULGAÃ‡ÃƒO
+                            } else if($read->idTipoReadequacao == 14){ //Se for readequaÃ§Ã£o de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
                                 $PlanoDeDivulgacao = new PlanoDeDivulgacao();
                                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                                 $planosDivulgacao = $tbPlanoDivulgacao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3367,15 +3362,15 @@ class ReadequacoesController extends GenericControllerNew {
                                     $Projetos = new Projetos();
                                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
+                                    //Se nÃ£o houve avaliÃ§Ã£o do conselheiro, pega a avaliaÃ§Ã£o tÃ©cnica como referencia.
                                     $avaliacao = $plano->tpAnaliseComissao;
                                     if($plano->tpAnaliseComissao == 'N'){
                                         $avaliacao = $plano->tpAnaliseTecnica;
                                     }
 
-                                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
+                                    //Se a avaliaÃ§Ã£o foi deferida, realiza as mudanÃ§as necessÃ¡rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulgação foi excluído, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulgaÃ§Ã£o foi excluÃ­do, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
                                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                                             $tbLogomarca = new tbLogomarca();
                                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3386,7 +3381,7 @@ class ReadequacoesController extends GenericControllerNew {
                                                 $PlanoDivulgacaoEmQuestao->delete();
                                             }
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulgação foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulgaÃ§Ã£o foi incluÃ­do, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
                                             $novoPlanoDivRead = array();
                                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -3405,8 +3400,8 @@ class ReadequacoesController extends GenericControllerNew {
                                 $wherePDD = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                                 $tbPlanoDivulgacao->update($dadosPDD, $wherePDD);
 
-                            // READEQUAÇÃO DE RESUMO DO PROJETO
-                            } else if($read->idTipoReadequacao == 15){ //Se for readequação de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE RESUMO DO PROJETO
+                            } else if($read->idTipoReadequacao == 15){ //Se for readequaÃ§Ã£o de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3417,68 +3412,68 @@ class ReadequacoesController extends GenericControllerNew {
                                     'Sequencial' => $dadosPrj->Sequencial,
                                     'TipoAprovacao' => 8,
                                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                                     'Logon' => $this->idUsuario,
                                     'idReadequacao' => $idReadequacao
                                 );
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-                            // READEQUAÇÃO DE OBJETIVOS
-                            } else if($read->idTipoReadequacao == 16){ //Se for readequação de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE OBJETIVOS
+                            } else if($read->idTipoReadequacao == 16){ //Se for readequaÃ§Ã£o de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Objetivos = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE JUSTIFICATIVA
-                            } else if($read->idTipoReadequacao == 17){ //Se for readequação de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE JUSTIFICATIVA
+                            } else if($read->idTipoReadequacao == 17){ //Se for readequaÃ§Ã£o de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Justificativa = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE ACESSIBILIDADE
-                            } else if($read->idTipoReadequacao == 18){ //Se for readequação de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE ACESSIBILIDADE
+                            } else if($read->idTipoReadequacao == 18){ //Se for readequaÃ§Ã£o de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Acessibilidade = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE DEMOCRATIZAÇÃO DE ACESSO
-                            } else if($read->idTipoReadequacao == 19){ //Se for readequação de democratização de acesso, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE DEMOCRATIZAÃ‡ÃƒO DE ACESSO
+                            } else if($read->idTipoReadequacao == 19){ //Se for readequaÃ§Ã£o de democratizaÃ§Ã£o de acesso, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->DemocratizacaoDeAcesso = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE ETAPAS DE TRABALHO
-                            } else if($read->idTipoReadequacao == 20){ //Se for readequação de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE ETAPAS DE TRABALHO
+                            } else if($read->idTipoReadequacao == 20){ //Se for readequaÃ§Ã£o de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->EtapaDeTrabalho = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
 
-                            // READEQUAÇÃO DE FICHA TÉCNICA
-                            } else if($read->idTipoReadequacao == 21){ //Se for readequação de ficha técnica, atualiza os dados na SAC.dbo.PreProjeto.
+                            // READEQUAÃ‡ÃƒO DE FICHA TÃ‰CNICA
+                            } else if($read->idTipoReadequacao == 21){ //Se for readequaÃ§Ã£o de ficha tÃ©cnica, atualiza os dados na SAC.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->FichaTecnica = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3495,10 +3490,10 @@ class ReadequacoesController extends GenericControllerNew {
                         $tbDistribuirReadequacao->update($dados, $where);
                     }
 
-                    parent::message("A avaliação da readequação foi finalizada com sucesso!", "readequacoes/analisar-readequacoes-cnic", "CONFIRM");
+                    parent::message("A avaliaÃ§Ã£o da readequaÃ§Ã£o foi finalizada com sucesso!", "readequacoes/analisar-readequacoes-cnic", "CONFIRM");
 
                 } else {
-                    parent::message("Erro ao avaliar a readequação!", "form-avaliar-readequacao-cnic?id=$idReadequacao", "ERROR");
+                    parent::message("Erro ao avaliar a readequaÃ§Ã£o!", "form-avaliar-readequacao-cnic?id=$idReadequacao", "ERROR");
                 }
             }
             $idReadequacao = Seguranca::encrypt($idReadequacao);
@@ -3512,19 +3507,19 @@ class ReadequacoesController extends GenericControllerNew {
 
     /*
      * Alterada em 15/05/2015
-     * Função criada para finalizar ou encaminhar a readequação para checklist de publicação.
+     * FunÃ§Ã£o criada para finalizar ou encaminhar a readequaÃ§Ã£o para checklist de publicaÃ§Ã£o.
     */
     public function encaminharReadequacaoChecklistAction() {
 
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("VocÃª nÃ£o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
         // TODO: quando finalizar, mantem filtro de pronac caso estiver marca
         $auth = Zend_Auth::getInstance();
         $idCoordenador = $auth->getIdentity()->usu_codigo;
         $pronacSelecionado = $this->_request->getParam("pronac");
         $urlComplemento = ($pronacSelecionado) ? "&pronac=$pronacSelecionado" : "";
-        
+
         $get = Zend_Registry::get('get');
         $idReadequacao = (int) $get->id;
 
@@ -3544,9 +3539,9 @@ class ReadequacoesController extends GenericControllerNew {
 
         $tbReadequacao = new tbReadequacao();
         $read = $tbReadequacao->buscarReadequacao(array('idReadequacao =?'=>$idReadequacao))->current();
-        
-        if($parecerTecnico->ParecerFavoravel == 2){ //Se for parecer favorável, atualiza os dados solicitados na readequação
-            // READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA
+
+        if($parecerTecnico->ParecerFavoravel == 2){ //Se for parecer favorÃ¡vel, atualiza os dados solicitados na readequaÃ§Ã£o
+            // READEQUAÃ‡ÃƒO DE PLANILHA ORÃ‡AMENTÃRIA
             if($read->idTipoReadequacao == 2){
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3557,36 +3552,36 @@ class ReadequacoesController extends GenericControllerNew {
                 $wherePlanilhaAtiva['a.IdPRONAC = ?'] = $read->idPronac;
                 $wherePlanilhaAtiva['a.stAtivo = ?'] = 'S';
                 $PlanilhaAtiva = $tbPlanilhaAprovacao->valorTotalPlanilha($wherePlanilhaAtiva)->current();
-                
+
                 //BUSCAR VALOR TOTAL DA PLANILHA DE READEQUADA
                 $whereTotalPlanilha = array();
                 $whereTotalPlanilha['a.IdPRONAC = ?'] = $read->idPronac;
                 $whereTotalPlanilha['a.tpPlanilha = ?'] = 'SR';
                 $whereTotalPlanilha['a.stAtivo = ?'] = 'N';
                 $PlanilhaReadequada = $tbPlanilhaAprovacao->valorTotalPlanilha($whereTotalPlanilha)->current();
-                
+
                 // chama SP que verifica o tipo do remanejamento
                 $spTipoDeReadequacaoOrcamentaria = new spTipoDeReadequacaoOrcamentaria();
                 $TipoDeReadequacao = $spTipoDeReadequacaoOrcamentaria->exec($read->idPronac);
-                
+
                 // complementacao
                 if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'CO') {
                     $TipoAprovacao = 2;
                     $dadosPrj->Situacao = 'D28';
-                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de complementação';
+                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de complementaÃ§Ã£o';
                     $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
                 } else if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RE'){
                     // reducao
                     $TipoAprovacao = 4;
                     $dadosPrj->Situacao = 'D29';
-                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de redução';
+                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de reduÃ§Ã£o';
                     $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
                 }
-                
+
                 // insere somente em reducao ou complementacao
                 if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'CO' || $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RE') {
-                    
-                    $dadosPrj->save();                    
+
+                    $dadosPrj->save();
                     $tbAprovacao = new Aprovacao();
                     $dadosAprovacao = array(
                         'IdPRONAC' => $read->idPronac,
@@ -3594,18 +3589,18 @@ class ReadequacoesController extends GenericControllerNew {
                         'Sequencial' => $dadosPrj->Sequencial,
                         'TipoAprovacao' => $TipoAprovacao,
                         'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                        'ResumoAprovacao' => 'Parecer favorável para readequação',
+                        'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                         #'AprovadoReal' => $AprovadoReal,
                         'AprovadoReal' => $TipoDeReadequacao[0]['vlReadequado'], //Alterado pelo valor retornado pela Store
                         'Logon' => $auth->getIdentity()->usu_codigo,
                         'idReadequacao' => $idReadequacao
                     );
-                    
+
 		    $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
                 }
 
-                // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
-            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na AGENTES.dbo.Nomes.
+                // READEQUAÃ‡ÃƒO DE ALTERAÃ‡ÃƒO DE RAZÃƒO SOCIAL
+            } else if($read->idTipoReadequacao == 3){ //Se for readequaÃ§Ã£o de alteraÃ§Ã£o de razÃ£o social, atualiza os dados na AGENTES.dbo.Nomes.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3616,14 +3611,14 @@ class ReadequacoesController extends GenericControllerNew {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUAÇÃO DE AGÊNCIA BANCÁRIA
-            } else if($read->idTipoReadequacao == 4){ //Se for readequação de agência bancária, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE AGÃŠNCIA BANCÃRIA
+            } else if($read->idTipoReadequacao == 4){ //Se for readequaÃ§Ã£o de agÃªncia bancÃ¡ria, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
                 $agenciaBancaria = str_replace('-', '', $read->dsSolicitacao);
@@ -3646,68 +3641,68 @@ class ReadequacoesController extends GenericControllerNew {
                 $whereDadosBancarios['Sequencial = ?'] = $dadosPrj->Sequencial;
                 $tblContaBancaria->alterar($arrayDadosBancarios, $whereDadosBancarios);
 
-            // READEQUAÇÃO DE SINOPSE DA OBRA
-            } else if($read->idTipoReadequacao == 5){ //Se for readequação de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE SINOPSE DA OBRA
+            } else if($read->idTipoReadequacao == 5){ //Se for readequaÃ§Ã£o de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Sinopse = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE IMPACTO AMBIENTAL
-            } else if($read->idTipoReadequacao == 6){ //Se for readequação de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE IMPACTO AMBIENTAL
+            } else if($read->idTipoReadequacao == 6){ //Se for readequaÃ§Ã£o de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->ImpactoAmbiental = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE ESPECIFICAÇÃO TÉCNICA
-            } else if($read->idTipoReadequacao == 7){ //Se for readequação de especificação técnica, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE ESPECIFICAÃ‡ÃƒO TÃ‰CNICA
+            } else if($read->idTipoReadequacao == 7){ //Se for readequaÃ§Ã£o de especificaÃ§Ã£o tÃ©cnica, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->EspecificacaoTecnica = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE ESTRATÉGIA DE EXECUÇÃO
-            } else if($read->idTipoReadequacao == 8){ //Se for readequação de estratégia de execução, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE ESTRATÃ‰GIA DE EXECUÃ‡ÃƒO
+            } else if($read->idTipoReadequacao == 8){ //Se for readequaÃ§Ã£o de estratÃ©gia de execuÃ§Ã£o, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->EstrategiadeExecucao = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE LOCAL DE REALIZAÇÃO
-            } else if($read->idTipoReadequacao == 9){ //Se for readequação de local de realização, atualiza os dados na SAC.dbo.Abrangencia.
-                $Abrangencia = new Abrangencia();
+            // READEQUAÃ‡ÃƒO DE LOCAL DE REALIZAÃ‡ÃƒO
+            } else if($read->idTipoReadequacao == 9){ //Se for readequaÃ§Ã£o de local de realizaÃ§Ã£o, atualiza os dados na SAC.dbo.Abrangencia.
+                $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
 
-                $tbAbrangencia = new tbAbrangencia();
+                $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
                 foreach ($abrangencias as $abg) {
                     $Projetos = new Projetos();
                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
+                    //Se nÃ£o houve avaliÃ§Ã£o do conselheiro, pega a avaliaÃ§Ã£o tÃ©cnica como referencia.
                     $avaliacao = $abg->tpAnaliseComissao;
                     if($abg->tpAnaliseComissao == 'N'){
                         $avaliacao = $abg->tpAnaliseTecnica;
                     }
 
-                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
+                    //Se a avaliaÃ§Ã£o foi deferida, realiza as mudanÃ§as necessÃ¡rias na tabela original.
                     if($avaliacao == 'D'){
-                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na SAC.dbo.Abrangencia
+                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluÃ­da, atualiza os status da abrangencia na SAC.dbo.Abrangencia
                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela SAC.dbo.Abrangencia
+                        } else if($abg->tpSolicitacao == 'I') { //Se a abangÃªncia foi incluÃ­da, cria um novo registro na tabela SAC.dbo.Abrangencia
                             $novoLocalRead = array();
                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3725,8 +3720,8 @@ class ReadequacoesController extends GenericControllerNew {
                 $whereAbr = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                 $tbAbrangencia->update($dadosAbr, $whereAbr);
 
-            // READEQUAÇÃO DE ALTERAÇÃO DE PROPONENTE
-            } else if($read->idTipoReadequacao == 10){ //Se for readequação de alteração de proponente, atualiza os dados na SAC.dbo.Projetos.
+            // READEQUAÃ‡ÃƒO DE ALTERAÃ‡ÃƒO DE PROPONENTE
+            } else if($read->idTipoReadequacao == 10){ //Se for readequaÃ§Ã£o de alteraÃ§Ã£o de proponente, atualiza os dados na SAC.dbo.Projetos.
 
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3738,18 +3733,18 @@ class ReadequacoesController extends GenericControllerNew {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUAÇÃO DE PLANO DE DISTRIBUIÇÃO
-            } else if($read->idTipoReadequacao == 11){ //Se for readequação de plano de distribuição, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
-                $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+            // READEQUAÃ‡ÃƒO DE PLANO DE DISTRIBUIÃ‡ÃƒO
+            } else if($read->idTipoReadequacao == 11){ //Se for readequaÃ§Ã£o de plano de distribuiÃ§Ã£o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
+                $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                 $planosDistribuicaoReadequados = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
-                
+
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3762,13 +3757,13 @@ class ReadequacoesController extends GenericControllerNew {
 
                 foreach ($planosDistribuicaoReadequados as $planoReadequado) {
 
-                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
+                    //Se nÃ£o houve avaliÃ§Ã£o do conselheiro, pega a avaliaÃ§Ã£o tÃ©cnica como referencia.
                     $avaliacao = $planoReadequado->tpAnaliseComissao;
                     if($planoReadequado->tpAnaliseComissao == 'N'){
                         $avaliacao = $planoReadequado->tpAnaliseTecnica;
                     }
 
-                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
+                    //Se a avaliaÃ§Ã£o foi deferida, realiza as mudanÃ§as necessÃ¡rias na tabela original.
                     if($avaliacao == 'D'){
                         $registroExiste = false;
 
@@ -3813,8 +3808,8 @@ class ReadequacoesController extends GenericControllerNew {
                 $wherePDD['idReadequacao = ?'] = $idReadequacao;
                 $tbPlanoDistribuicao->update($dadosPDD, $wherePDD);
 
-            // READEQUAÇÃO DE NOME DO PROJETO
-            } else if($read->idTipoReadequacao == 12){ //Se for readequação de nome do projeto, insere o registo na tela de Checklist de Publicação.
+            // READEQUAÃ‡ÃƒO DE NOME DO PROJETO
+            } else if($read->idTipoReadequacao == 12){ //Se for readequaÃ§Ã£o de nome do projeto, insere o registo na tela de Checklist de PublicaÃ§Ã£o.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3825,22 +3820,22 @@ class ReadequacoesController extends GenericControllerNew {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUAÇÃO DE PERÍODO DE EXECUÇÃO
-            } else if($read->idTipoReadequacao == 13){ //Se for readequação de período de execução, atualiza os dados na SAC.dbo.Projetos.
+            // READEQUAÃ‡ÃƒO DE PERÃODO DE EXECUÃ‡ÃƒO
+            } else if($read->idTipoReadequacao == 13){ //Se for readequaÃ§Ã£o de perÃ­odo de execuÃ§Ã£o, atualiza os dados na SAC.dbo.Projetos.
                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
                 $dadosPrj->DtFimExecucao = $dtFimExecucao;
                 $dadosPrj->save();
 
-            // READEQUAÇÃO DE PLANO DE DIVULGAÇÃO
-            } else if($read->idTipoReadequacao == 14){ //Se for readequação de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
+            // READEQUAÃ‡ÃƒO DE PLANO DE DIVULGAÃ‡ÃƒO
+            } else if($read->idTipoReadequacao == 14){ //Se for readequaÃ§Ã£o de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
                 $PlanoDeDivulgacao = new PlanoDeDivulgacao();
                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                 $planosDivulgacao = $tbPlanoDivulgacao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3849,15 +3844,15 @@ class ReadequacoesController extends GenericControllerNew {
                     $Projetos = new Projetos();
                     $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                    //Se não houve avalição do conselheiro, pega a avaliação técnica como referencia.
+                    //Se nÃ£o houve avaliÃ§Ã£o do conselheiro, pega a avaliaÃ§Ã£o tÃ©cnica como referencia.
                     $avaliacao = $plano->tpAnaliseComissao;
                     if($plano->tpAnaliseComissao == 'N'){
                         $avaliacao = $plano->tpAnaliseTecnica;
                     }
 
-                    //Se a avaliação foi deferida, realiza as mudanças necessárias na tabela original.
+                    //Se a avaliaÃ§Ã£o foi deferida, realiza as mudanÃ§as necessÃ¡rias na tabela original.
                     if($avaliacao == 'D'){
-                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulgação foi excluído, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
+                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulgaÃ§Ã£o foi excluÃ­do, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                             $tbLogomarca = new tbLogomarca();
                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3866,7 +3861,7 @@ class ReadequacoesController extends GenericControllerNew {
                             }
                             $PlanoDivulgacaoEmQuestao->delete();
 
-                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulgação foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
+                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulgaÃ§Ã£o foi incluÃ­do, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
                             $novoPlanoDivRead = array();
                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -3885,8 +3880,8 @@ class ReadequacoesController extends GenericControllerNew {
                 $wherePDD = "idPronac = $read->idPronac AND idReadequacao = $idReadequacao";
                 $tbPlanoDivulgacao->update($dadosPDD, $wherePDD);
 
-            // READEQUAÇÃO DE RESUMO DO PROJETO
-            } else if($read->idTipoReadequacao == 15){ //Se for readequação de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE RESUMO DO PROJETO
+            } else if($read->idTipoReadequacao == 15){ //Se for readequaÃ§Ã£o de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3897,68 +3892,68 @@ class ReadequacoesController extends GenericControllerNew {
                     'Sequencial' => $dadosPrj->Sequencial,
                     'TipoAprovacao' => 8,
                     'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                    'ResumoAprovacao' => 'Parecer favorável para readequação',
+                    'ResumoAprovacao' => 'Parecer favorÃ¡vel para readequaÃ§Ã£o',
                     'Logon' => $auth->getIdentity()->usu_codigo,
                     'idReadequacao' => $idReadequacao
                 );
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
-            // READEQUAÇÃO DE OBJETIVOS
-            } else if($read->idTipoReadequacao == 16){ //Se for readequação de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE OBJETIVOS
+            } else if($read->idTipoReadequacao == 16){ //Se for readequaÃ§Ã£o de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Objetivos = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE JUSTIFICATIVA
-            } else if($read->idTipoReadequacao == 17){ //Se for readequação de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE JUSTIFICATIVA
+            } else if($read->idTipoReadequacao == 17){ //Se for readequaÃ§Ã£o de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Justificativa = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE ACESSIBILIDADE
-            } else if($read->idTipoReadequacao == 18){ //Se for readequação de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE ACESSIBILIDADE
+            } else if($read->idTipoReadequacao == 18){ //Se for readequaÃ§Ã£o de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Acessibilidade = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE DEMOCRATIZAÇÃO DE ACESSO
-            } else if($read->idTipoReadequacao == 19){ //Se for readequação de democratização de acesso, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE DEMOCRATIZAÃ‡ÃƒO DE ACESSO
+            } else if($read->idTipoReadequacao == 19){ //Se for readequaÃ§Ã£o de democratizaÃ§Ã£o de acesso, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->DemocratizacaoDeAcesso = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE ETAPAS DE TRABALHO
-            } else if($read->idTipoReadequacao == 20){ //Se for readequação de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE ETAPAS DE TRABALHO
+            } else if($read->idTipoReadequacao == 20){ //Se for readequaÃ§Ã£o de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->EtapaDeTrabalho = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
 
-            // READEQUAÇÃO DE FICHA TÉCNICA
-            } else if($read->idTipoReadequacao == 21){ //Se for readequação de ficha técnica, atualiza os dados na SAC.dbo.PreProjeto.
+            // READEQUAÃ‡ÃƒO DE FICHA TÃ‰CNICA
+            } else if($read->idTipoReadequacao == 21){ //Se for readequaÃ§Ã£o de ficha tÃ©cnica, atualiza os dados na SAC.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->FichaTecnica = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3967,37 +3962,37 @@ class ReadequacoesController extends GenericControllerNew {
 
         //Atualiza a tabela tbReadequacao
         $dados = array();
-        $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
+        $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicaÃ§Ã£o no DOU.
         $dados['stEstado'] = 1;
 
         $tiposParaChecklist = array(2,3,10,12,15);
         if(in_array($read->idTipoReadequacao, $tiposParaChecklist)){
             // se remanejamento orcamentario
-            
+
             if ($read->idTipoReadequacao == 2 && $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
-                $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
+                $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicaÃ§Ã£o no DOU.
                 $dados['stEstado'] = 1;
             } else {
                 // reducao ou complementacao orcamentaria
 
 		// verificacao do tipo de parecer.
-		// $parecerTecnico->ParecerFavoravel   
-		// 1 = desfavorável
-		// 2 = favorável
+		// $parecerTecnico->ParecerFavoravel
+		// 1 = desfavorÃ¡vel
+		// 2 = favorÃ¡vel
 		if ($parecerTecnico->ParecerFavoravel === '1') { // desfavoravel
 		    $dados['siEncaminhamento'] = 15;
 		    $dados['stEstado'] = 1;
-		} else {		
+		} else {
 		    $dados['stEstado'] = 0;
-		    $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
+		    $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de PublicaÃ§Ã£o
 		}
             }
         }
-	
+
         // atualiza registro de tbReadequacao
         $dados['idNrReuniao'] = $idNrReuniao;
         $where["idReadequacao = ?"] = $idReadequacao;
-        
+
         $return = $tbReadequacao->update($dados, $where);
 
         if ($read->idTipoReadequacao == 2 && $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
@@ -4016,24 +4011,24 @@ class ReadequacoesController extends GenericControllerNew {
         $return2 = $tbDistribuirReadequacao->update($dados, $where);
 
         if(!$return && !$return2){
-            parent::message("Não foi possível encaminhar a readequação para o Checklist de Publicação", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel encaminhar a readequa&ccedil;&atilde;o para o Checklist de Publica&ccedil;&atilde;o", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "ERROR");
         }
-        parent::message("Readequação finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "CONFIRM");
+        parent::message("Readequa&ccedil;&atilde;o finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "CONFIRM");
     }
 
 
     /*
-     * Página de criação de planilha orçamentária
+     * PÃ¡gina de criaÃ§Ã£o de planilha orÃ§amentÃ¡ria
      * Criada em 02/06/2016
-     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @author: FernÃ£o Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
      * @return void
      */
     public function planilhaOrcamentariaAction() {
-        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELO PROPONENTE.
         $this->view->idPerfil = $this->idPerfil;
         if($this->idPerfil != 1111){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -4041,19 +4036,19 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        // verificação adicional na pagina se pode incluir nova planilha orcamentaria
+        // verificaÃ§Ã£o adicional na pagina se pode incluir nova planilha orcamentaria
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
-        
+
         $proj = new Projetos();
         $cpf = $proj->buscarProponenteProjeto($idPronac);
         $cpf = $cpf->CgcCpf;
         $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
-        
+
         $links = new fnLiberarLinks();
-        $linksXpermissao = $links->liberarLinks(2, $cpf, $idUsuarioLogado, $idPronac);
+        $linksXpermissao = $links->links(2, $cpf, $idUsuarioLogado, $idPronac);
         $linksPermissao = str_replace(' ', '', explode('-', $linksXpermissao->links));
         $permiteReadequacaoPlanilha = $linksPermissao[14];
-        
+
         if (!$permiteReadequacaoPlanilha) {
             parent::message("Voc&ecirc;  n&atilde;o pode realizar uma nova readequa&ccedil;&atilde;o.", "principalproponente", "ERROR");
         }
@@ -4063,19 +4058,23 @@ class ReadequacoesController extends GenericControllerNew {
             $Projetos = new Projetos();
             $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
 
-            $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+            $tbVerificao = new Proposta_Model_DbTable_Verificacao();
+            $buscarRecurso = $tbVerificao->buscarFonteRecurso();
             $this->view->Recursos = $buscarRecurso;
 
-            $buscarEstado = EstadoDAO::buscar();
-            $this->view->UFs = $buscarEstado;
+            $tbuf = new Agente_Model_DbTable_UF();
 
-            $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+            $buscarEstado = $tbuf->buscar();
+            $this->view->uf = $buscarEstado;
+
+            $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
-            $tbPlanilhaEtapa = new tbPlanilhaEtapa();
+            $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
             $this->view->Etapas = $tbPlanilhaEtapa->buscar(array('stEstado = ?'=>1));
 
-            $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+            $TbPlanilhaUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+            $buscarUnidade = $TbPlanilhaUnidade->buscarUnidade();
             $this->view->Unidade = $buscarUnidade;
 
             $tbReadequacao = new tbReadequacao();
@@ -4091,11 +4090,11 @@ class ReadequacoesController extends GenericControllerNew {
 
 
     /*
-     * Função para verificar e criar planilha orçamentária. Recebe flag opcional para criar a planilha
+     * FunÃ§Ã£o para verificar e criar planilha orÃ§amentÃ¡ria. Recebe flag opcional para criar a planilha
      * Criada em 31/05/2016
-     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @author: FernÃ£o Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
-     * @return Bool   True se foi possível criar a planilha ou se ela existe
+     * @return Bool   True se foi possÃ­vel criar a planilha ou se ela existe
      */
     public function verificarPlanilhaAtivaAction() {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
@@ -4106,11 +4105,11 @@ class ReadequacoesController extends GenericControllerNew {
         $idPronac = $post->idPronac;
         $idReadequacao = $post->idReadequacao;
         $criarNovaPlanilha = $post->criarNovaPlanilha;
-        
-        // Se não possui idReadequacao, cria entrada na tabela tbReadequacao
+
+        // Se nÃ£o possui idReadequacao, cria entrada na tabela tbReadequacao
         if ($idReadequacao == 0) {
 
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
 
             $tbReadequacao = new tbReadequacao();
@@ -4128,12 +4127,12 @@ class ReadequacoesController extends GenericControllerNew {
             try {
                 $idReadequacao = $tbReadequacao->inserir($dados);
             } catch (Zend_Exception $e) {
-                echo json_encode(array('msg' => 'Houve um erro na criação do registro de tbReadequacao'));
-                die();
+                echo json_encode(array('msg' => 'Houve um erro na criaÃ§Ã£o do registro de tbReadequacao'));
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
 
-        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL
+        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃƒO TIVER, COPIA A ORIGINAL
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
 
@@ -4179,9 +4178,9 @@ class ReadequacoesController extends GenericControllerNew {
                     )
                 );
             } catch (Zend_Exception $e) {
-                echo json_encode(array('msg' => 'Houve um erro na criação das planilhas SR'));
+                echo json_encode(array('msg' => 'Houve um erro na criaÃ§Ã£o das planilhas SR'));
             }
-            die();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             echo json_encode(array(
                 'msg' => 'Planilha existente',
@@ -4201,33 +4200,33 @@ class ReadequacoesController extends GenericControllerNew {
     public function consultarReadequacaoAction() {
         $this->_helper->viewRenderer->setNoRender();
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
+
         $idPronac = $this->_request->getParam("idPronac"); // pega o id do pronac via get
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-        
+
         $idPronac = $this->_request->getParam("idPronac");
         $idReadequacao = $this->_request->getParam("idReadequacao");
         $idTipoReadequacao = $this->_request->getParam("idTipoReadequacao");
-        
+
         $where = array();
         $where['a.idPronac = ?'] = $idPronac;
-        
+
         if ($idReadequacao) {
             $where['a.idReadequacao = ?'] = $idReadequacao;
         }
         if ($idTipoReadequacao) {
              $where['a.idTipoReadequacao = ?'] = $idTipoReadequacao;
         }
-        
+
         try {
             $tbReadequacao = new tbReadequacao();
             $readequacoes = $tbReadequacao->buscarDadosReadequacoes($where);
-            
+
             // prepara sada json
-            $output = array();            
-            foreach ($readequacoes as $readequacao) {               
+            $output = array();
+            foreach ($readequacoes as $readequacao) {
                 $output[] = array(
                     'idReadequacao' => $readequacao->idReadequacao,
                     'idPronac' => $readequacao->idPronac,
@@ -4236,27 +4235,27 @@ class ReadequacoesController extends GenericControllerNew {
                     'dsJustificativa' => $readequacao->dsJustificativa
                 );
             }
-            
+
             echo json_encode(array('readequacoes' => $output));
-            
+
         } catch (Zend_Exception $e) {
             echo json_encode(array('msg' => 'Registro no localizado'));
         }
     }
-    
+
     /*
-     * Encaminhar para análise técnica
+     * Encaminhar para anÃ¡lise tÃ©cnica
      * Criada em 13/06/2016
-     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @author: FernÃ£o Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
      * @return void
-     */    
+     */
     public function encaminharAnaliseTecnicaAction() {
         $perfisAcesso = array(121, 122, 123);
 
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if(!in_array($this->idPerfil, $perfisAcesso)){        
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if(!in_array($this->idPerfil, $perfisAcesso)){
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
@@ -4277,26 +4276,26 @@ class ReadequacoesController extends GenericControllerNew {
 
         } else {
             parent::message('Nenhum registro encontrado.', "readequacoes/painel", "ERROR");
-        }       
+        }
     }
 
 
     /**
-     * formEncaminharAnaliseTecnicaAction Função utilizada pleo Coord. de Acompanhamento para encaminhar readequacao
+     * formEncaminharAnaliseTecnicaAction FunÃ§Ã£o utilizada pleo Coord. de Acompanhamento para encaminhar readequacao
      *
      * @since  Criada em 13/06/2016
-     * @author Fernão Lopes Ginez de Lara <fernao.lara@cultura.gov.br>
+     * @author FernÃ£o Lopes Ginez de Lara <fernao.lara@cultura.gov.br>
      * @access public
      * @return void
      */
     public function formEncaminharAnaliseTecnicaAction() {
         $perfisAcesso = array(121, 122, 123);
 
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        //FUNÃ‡ÃƒO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if(!in_array($this->idPerfil, $perfisAcesso)){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
-        
+
         $idReadequacao = $this->_request->getParam('idReadequacao');
         $filtro = $this->_request->getParam('filtro');
         $dsOrientacao = $this->_request->getParam('dsAvaliacao');
@@ -4304,11 +4303,10 @@ class ReadequacoesController extends GenericControllerNew {
         $dataEnvio = null;
         $destinatario = (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null;
         $idUnidade = $this->_request->getParam('vinculada');
-        
+
         try {
-            // se for SAV ou SEFIC
-            if (in_array($idUnidade, array(166, 262))) {           
-                // MUDANÇA DE TECNICO
+            if (in_array($idUnidade, array(Orgaos::ORGAO_SAV, Orgaos::ORGAO_SEFIC))) {
+                // MUDANÃ‡A DE TECNICO
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idAvaliador' => $destinatario,
@@ -4318,7 +4316,7 @@ class ReadequacoesController extends GenericControllerNew {
                 );
                 $where = array();
                 $where['idReadequacao = ?'] = $idReadequacao;
-                
+
                 $u = $tbDistribuirReadequacao->update($dados, $where);
 
                 // atualizar tbReadequacao
@@ -4329,16 +4327,16 @@ class ReadequacoesController extends GenericControllerNew {
                 $where = array();
                 $where['idReadequacao = ?'] = $idReadequacao;
                 $tbReadequacao->update($dados, $where);
-                
+
                 if ($this->idPerfil == 121) {
                     parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
                 } else {
                     parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
                 }
             } else {
-                // MUDANÇA DE VINCULADA
+                // MUDANÃ‡A DE VINCULADA
 
-                // MUDANÇA DE TECNICO
+                // MUDANÃ‡A DE TECNICO
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idUnidade' => $idUnidade,
@@ -4349,9 +4347,9 @@ class ReadequacoesController extends GenericControllerNew {
                 );
                 $where = array();
                 $where['idReadequacao = ?'] = $idReadequacao;
-                
-                $tbDistribuirReadequacao->update($dados, $where);                
-                
+
+                $tbDistribuirReadequacao->update($dados, $where);
+
                 $tbReadequacao = new tbReadequacao();
                 $dadosReadequacao = array(
                     'siEncaminhamento' => 3
@@ -4362,20 +4360,20 @@ class ReadequacoesController extends GenericControllerNew {
                     parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
                 } else {
                     parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
-                }                
-                
-            }            
+                }
+
+            }
         } catch(Exception $e) {
             if ($this->idPerfil == 121) {
-                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
+                parent::message('Erro ao encaminhar readequa&ccedil;&atilde;o!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
             } else {
-                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
-            }                
+                parent::message('Erro ao encaminhar readequa&ccedil;&atilde;o!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
+            }
         }
     }
 
      /*
-      * verificarLimitesOrcamentarios Consulta ajax para verficiar limites orçamentários de readequação
+      * verificarLimitesOrcamentarios Consulta ajax para verficiar limites orÃ§amentÃ¡rios de readequaÃ§Ã£o
       * @since  31/08/2016
       * @author Fernao Lopes Ginez de Lara fernao.lara@cultura.gov.br
       * @access public
@@ -4384,33 +4382,33 @@ class ReadequacoesController extends GenericControllerNew {
     public function verificarLimitesOrcamentariosAction() {
         $this->_helper->viewRenderer->setNoRender();
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
+
         $idPronac = $this->_request->getParam("idPronac");
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-        
+
         $pa = new spChecarLimitesOrcamentarioReadequacao();
         $resultadoCheckList = $pa->exec($idPronac, 3);
-        
+
         $resultado = array();
         $i = 0;
-        
+
         $mensagem = array(
             'custo_administrativo' => array(
                 'OK' => "O custo administrativo inferior a 15% do valor total do projeto.",
                 'PENDENTE' => "O custo administrativo supera 15% do valor total do projeto. Para corrigir, reduza o valor da etapa em R$ ",
-            ),            
+            ),
             'remuneracao' => array(
-                'OK' => "Remuneração para captação de recursos está dentro dos parâmetros permitidos.",
-                'PENDENTE' => "A remuneração para captação de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto é R$ "
+                'OK' => "RemuneraÃ§Ã£o para captaÃ§Ã£o de recursos estÃ¡ dentro dos parÃ¢metros permitidos.",
+                'PENDENTE' => "A remuneraÃ§Ã£o para captaÃ§Ã£o de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto Ã© R$ "
             ),
             'divulgacao' => array(
-                'OK' => "Divulgação / Comercialização está dentro dos parâmetros permitidos.",
-                'PENDENTE' => "A divulgação ou a comercialização supera 20%. Para corrigir, reduza o valor da etapa em R$ "
+                'OK' => "DivulgaÃ§Ã£o / ComercializaÃ§Ã£o estÃ¡ dentro dos parÃ¢metros permitidos.",
+                'PENDENTE' => "A divulgaÃ§Ã£o ou a comercializaÃ§Ã£o supera 20%. Para corrigir, reduza o valor da etapa em R$ "
             )
         );
-        
+
         foreach($resultadoCheckList as $item) {
             $resultado[$i]['idPronac'] = $item->idPronac;
             $resultado[$i]['Descricao'] = utf8_encode($mensagem[$item->Tipo][$item->Observacao]);
@@ -4419,5 +4417,5 @@ class ReadequacoesController extends GenericControllerNew {
             $i++;
         }
         echo json_encode(array('mensagens' => $resultado));
-    }    
+    }
 }

@@ -1,0 +1,349 @@
+<?php $frmplanoHref = $this->url(array('module' => 'proposta' , 'controller' => 'plano-distribuicao', 'action' => 'frm-plano-distribuicao')).'?idPreProjeto='.$_GET['idPreProjeto']; ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="">
+           <div class="row">
+               <div class="col s12" id="example">
+                    <?php
+                    gerarBreadCrumb(array(
+                        $this->layout['listagem'],
+                        array('Plano de Distribui&ccedil;&atilde;o' => '')
+                    )); ?>
+
+               <div class="row">
+                   <div class="col s12 center" >
+                        <a class="btn white black-text" href="<?php echo $this->url(array('module' => 'proposta', 'controller'=>'plano-distribuicao','action' => 'index')) ?>">Voltar</a>
+                   </div>
+               </div>
+                <?php $totalExemplares=0; $totalReceita=0; ?>
+                    <?php foreach($this->planosDistribuicao as $planoDistribuicao) : ?>
+                        <div class="row">
+                            <div id="detalhamento-plano" class="col s12">
+                                <table class="bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th>Nome do Evento / Produto</th>
+                                            <th>&Aacute;rea</th>
+                                            <th>Segmento</th>
+                                            <th>Principal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td ><?php echo $planoDistribuicao->Produto; ?></td>
+                                            <td ><?php echo $planoDistribuicao->DescricaoArea; ?></td>
+                                            <td ><?php echo $planoDistribuicao->DescricaoSegmento; ?></td>
+                                            <td ><?php echo ($planoDistribuicao->stPrincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <?php foreach($this->abrangencias as $abrangencia): ?>
+                                                    <div class=" col s12 ">
+                                                       <div class="row">
+                                                            <table class="bordered">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><?php echo $abrangencia['uf']?> - <?php echo $abrangencia['cidade']?> </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <my-component
+                                                                                disabled="<?php echo $this->isEditavel ?>"
+                                                                                idplanodistribuicao="<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>"
+                                                                                idpreprojeto="<?php echo $this->idPreProjeto; ?>"
+                                                                                iduf="<?php echo $abrangencia['idUF']?>"
+                                                                                idmunicipioibge="<?php echo $abrangencia['idMunicipioIBGE']?>"
+                                                                            ></my-component>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 center" >
+                        <a class="btn white black-text" href="<?php echo $this->url(array('module' => 'proposta', 'controller'=>'plano-distribuicao','action' => 'index')) ?>">Voltar</a>
+                  </div>
+               </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.4/numeral.min.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script type="text/x-template" id="app-6">
+    <div>
+        <div class="row">
+            <div class="col s12 center">
+               <button class="btn" v-on:click.prevent="mostrar()"><i class="material-icons">{{icon}}</i></button>
+           </div>
+        </div>
+        <div v-show="active">
+            <div class="row" >
+                <div class=" center">
+                    <table class="bordered">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Categoria</th>
+                                <th rowspan="2">Qtd. de exemplar / Ingresso</th>
+                                <th class="center green lighten-4" colspan="3">
+                                    Distribui&ccedil;&atilde;o Gratuita
+                                </th>
+                                <th class="center red lighten-4"colspan="5">
+                                    Pre&ccedil;o Popular
+                                </th>
+                                <th  class="center lime lighten-3 black-text" colspan="5">
+                                    Proponente
+                                </th>
+                                <th rowspan="2">Receita Prevista</th>
+                                <th rowspan="2">A&ccedil;&otildees</th>
+                            </tr>
+                            <tr>
+                                <th class="green lighten-4" >Divulga&ccedil;&atilde;o</th>
+                                <th class="green lighten-4" >Patrocinador</th>
+                                <th class="green lighten-4" >Popula&ccedil;&atilde;o</th>
+                                <th class="red lighten-4">Qtd. de Inteira</th>
+                                <th class="red lighten-4">Qtd. de Meia Entrada</th>
+                                <th class="red lighten-4">Pre&ccedil;o Unitario do Ingresso</th>
+                                <th class="red lighten-4">Valor da inteira</th>
+                                <th class="red lighten-4">Valor da meia entrada</th>
+                                <th class="lime lighten-3 black-text" >Qtd. de Inteira</th>
+                                <th class="lime lighten-3 black-text" >Qtd. de Meia Inteira</th>
+                                <th class="lime lighten-3 black-text" >Pre&ccedil;o Unitario do Ingresso</th>
+                                <th class="lime lighten-3 black-text" >Valor da inteira</th>
+                                <th class="lime lighten-3 black-text" >Valor da meia entrada</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="produtos.length > 0">
+                                <tr  v-for="( produto, index ) in produtos">
+                                    <td>{{ produto.dsProduto }}</td>
+                                    <td class="right-align">{{ produto.qtExemplares }}</td>
+                                    <td class="right-align">{{ produto.qtGratuitaDivulgacao }}</td>
+                                    <td class="right-align">{{ produto.qtGratuitaPatrocinador }}</td>
+                                    <td class="right-align">{{ produto.qtGratuitaPopulacao }}</td>
+                                    <!--Preço Popular -->
+                                    <td class="right-align">{{ produto.qtPopularIntegral }}</td>
+                                    <td class="right-align">{{ produto.qtPopularParcial }}</td>
+                                    <td class="right-align">{{ produto.vlUnitarioPopularIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaPopularIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaPopularParcial }}</td>
+                                    <!--Preço Popular -->
+                                    <td class="right-align">{{ produto.qtProponenteIntegral }}</td>
+                                    <td class="right-align">{{ produto.qtProponenteParcial }}</td>
+                                    <td class="right-align">{{ produto.vlUnitarioProponenteIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaProponenteIntegral }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaProponenteParcial }}</td>
+                                    <td class="right-align">{{ produto.vlReceitaPrevista }}</td>
+                                    <td>
+                                        <button class="btn red white-text" v-bind:disabled="!disabled"
+                                            v-on:click="excluir(produto.idDetalhaPlanoDistribuicao)">
+                                            <i class="material-icons">delete</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                        <tbody v-else>
+                            <tr>
+                                <td colspan="16">Sem dados</td>
+                            </tr>
+                        </tbody>
+                        <tfoot class=" grey lighten-1">
+                            <tr>
+                                <td><b>Totais</b></td>
+                                <td class="right-align"><b>{{ qtExemplaresTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtGratuitaDivulgacaoTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtGratuitaPatrocinadorTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtGratuitaPopulacaoTotal }}</b></td>
+                                <!--Preço Popular -->
+                                <td class="right-align"><b>{{ qtPopularIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtPopularParcialTotal }}</b></td>
+                                <td> - </td>
+                                <td class="right-align"><b>{{ vlReceitaPopularIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ vlReceitaPopularParcialTotal }}</b></td>
+                                <!--Fim: Preço Popular -->
+                                <td class="right-align"><b>{{ qtProponenteIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ qtProponenteParcialTotal }}</b></td>
+                                <td> - </td>
+                                <td class="right-align"><b>{{ vlReceitaProponenteIntegralTotal }}</b></td>
+                                <td class="right-align"><b>{{ vlReceitaProponenteParcialTotal }}</b></td>
+                                <td class="right-align"><b>{{ receitaPrevistaTotal }}</b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <form>
+                <table class="bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Distribui&ccedil;&atilde;o ser&acirc; totalmente gratuita?</th>
+                            <td colspan="14">
+                                <p>
+                                  <input name="group1" type="radio" :id=" _uid + '1' " value="s" v-model="radio"/>
+                                  <label :for="_uid + '1'">Sim</label>
+                                  <input name="group1" type="radio" :id=" _uid + '2' " value="n"  v-model="radio"/>
+                                  <label :for="_uid + '2'">N&atilde;o</label>
+                                </p>
+                             </td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th class="center" colspan="9">At&eacute; 50%</th>
+                            <th class="center" colspan="6">At&eacute; 50%</th>
+                            <th rowspan="4">A&ccedil;&otildees</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="4">Categoria</th>
+                            <th rowspan="4">Qtd. de exemplar / Ingresso</th>
+                            <th class="center green lighten-4" colspan="3">
+                                Distribui&ccedil;&atilde;o Gratuita (no minimo 30%)
+                            </th>
+                            <th class="center red lighten-4"colspan="5">
+                                Pre&ccedil;o Popular (at&eacute; 20%)
+                            </th>
+                            <th  class="center lime lighten-3 black-text" colspan="5">
+                                Proponente
+                            </th>
+                            <th rowspan="3">Receita Prevista</th>
+                        </tr>
+                        <tr>
+                            <th class="green lighten-4" >Divulga&ccedil;&atilde;o</th>
+                            <th class="green lighten-4" >Patrocinador</th>
+                            <th class="green lighten-4" >Popula&ccedil;&atilde;o</th>
+                            <th class="red lighten-4">Qtd. de Inteira</th>
+                            <th class="red lighten-4">Qtd. de Meia Entrada</th>
+                            <th class="red lighten-4">Pre&ccedil;o Unitario do Ingresso</th>
+                            <th class="red lighten-4">Valor da inteira</th>
+                            <th class="red lighten-4">Valor da meia entrada</th>
+                            <th class="lime lighten-3 black-text" >Qtd. de Inteira</th>
+                            <th class="lime lighten-3 black-text" >Qtd. de Meia Inteira</th>
+                            <th class="lime lighten-3 black-text" >Pre&ccedil;o Unitario do Ingresso</th>
+                            <th class="lime lighten-3 black-text" >Valor da inteira</th>
+                            <th class="lime lighten-3 black-text" >Valor da meia entrada</th>
+                        </tr>
+                        <tr>
+                            <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
+                            <th class="green lighten-4" >At&eacute; {{ (qtExemplares * 0.1) }}</th>
+                            <th class="green lighten-4" >de {{ (qtExemplares * 0.1) }} at&eacute; {{ (qtExemplares * 0.3) }}</th>
+                            <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorIntegralLimite }}</th>
+                            <th class="green lighten-4" >At&eacute; {{ qtPrecoPopularValorParcialLimite }}</th>
+                            <th class="green lighten-4" >At&eacute; 50,00</th>
+                        </tr>
+                    </thead>
+                    <tbody class=" green lighten-7">
+                    <tr>
+                        <td>
+                            <div class="input-field  ">
+                                <input  id="dsProduto" v-model="dsProduto">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input   class="right-align" v-model.lazy="qtExemplares" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input  class="right-align" v-model.number="qtGratuitaDivulgacao" ref="divulgacao">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input  class="right-align" v-model="qtGratuitaPatrocinador" ref="patrocinador">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input  class="right-align" v-model="qtGratuitaPopulacao" ref="populacao" v-on:blur="populacaoValidate(qtGratuitaPopulacao)">
+                            </div>
+                        </td>
+                        <!-- Preço popular-->
+                        <td>
+                            <div class="input-field">
+                                <input  class="right-align" v-model="qtPopularIntegral" ref="qtPopularIntegral">
+                            </div>
+                        </td>
+                        <td class="right-align">
+                            <div class="input-field">
+                                <input class="right-align" v-model="qtPopularParcial" ref="qtPopularParcial">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field ">
+                                <input-money
+                                     v-bind:disabled="radio =='s'? true: false"
+                                     v-bind:value="vlUnitarioPopularIntegral"
+                                     v-on:ev="vlUnitarioPopularIntegral = $event">
+                                </input-money>
+                            </div>
+                        </td>
+                        <td class="right-align">{{ vlReceitaPopularIntegral }}</td>
+                        <td class="right-align">{{ vlReceitaPopularParcial }}</td>
+                        <!-- Preço popular-->
+                        <!-- Proponente-->
+                        <td class="right-align">{{ qtProponenteIntegral }}</td>
+                        <td class="right-align">{{ qtProponenteParcial }}</td>
+                        <td class="right-align">
+                            <div class="input-field ">
+                                <input-money
+                                    v-bind:disabled="radio =='s'? true: false"
+                                    v-bind:value="vlUnitarioProponenteIntegral"
+                                    v-on:ev="vlUnitarioProponenteIntegral = $event">
+                                </input-money>
+                            </div>
+                        </td>
+                        <td class="right-align">{{ vlReceitaProponenteIntegral }}</td>
+                        <td class="right-align">{{ vlReceitaProponenteParcial }}</td>
+                        <!-- Proponente-->
+                        <td class="right-align">{{ vlReceitaPrevista }}</td>
+                        <td class="right-align">
+                            <button ref="add" class="btn" v-on:click.prevent="salvar"><i class="material-icons">add</i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="/public/scripts/proposta/plano-distribuicao/detalhar-plano-distribuicao.js"></script>
+<style>
+    #detalhamento-plano table {
+        font-size: 8pt;
+        width: 100%;
+    }
+    #detalhamento-plano button.btn {
+        margin: 1;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    #detalhamento-plano button.red {
+        background-color: #c30;
+    }
+    #detalhamento-plano,
+    #detalhamento-plano table,
+    #detalhamento-plano td,
+    #detalhamento-plano th,
+    #detalhamento-plano thead,
+    #detalhamento-plano tbody,
+    #detalhamento-plano tr{
+        padding: 3px;
+        border: 1px solid #666;
+    }
+
+    #detalhamento-plano table {
+        border-spacing: 1;
+        border-radius: 0px;
+    }
+</style>
