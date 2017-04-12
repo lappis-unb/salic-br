@@ -200,7 +200,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
             $idpronac = $this->_request->getParam("idpronac");
             $projetos = new Projetos();
             $aprovacao = new Aprovacao();
-            $PlanilhaProposta = new PlanilhaProposta();
+            $PlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $interessado      = new Interessado();
             $agente           = new Agente_Model_DbTable_Agentes();
 
