@@ -50,8 +50,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $PermissoesGrupo[] = 138; // Coordenador de Avaliacao
         $PermissoesGrupo[] = 139; // Tecnico de Avaliacao
         $PermissoesGrupo[] = 140; // Tecnico de Admissibilidade Edital
-        $PermissoesGrupo[] = 148; // Tecnico de Admissibilidade Edital
-        $PermissoesGrupo[] = 151; // Tecnico de Admissibilidade Edital
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 151;
         //parent::perfil(1, $PermissoesGrupo);
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
         parent::init();
@@ -149,9 +149,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
             $propostaPorEdital = true;
         }
+
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+
+        $this->view->itensPlanosDistribuicao = $tblPlanoDistribuicao->buscar(
+            array("a.idprojeto = ?" => $idPreProjeto, "a.stplanodistribuicaoproduto = ?" => 1),
+            array("idplanodistribuicao DESC")
+        );
+
         $this->view->isEdital = $propostaPorEdital;
         $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
-        $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        //$this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
         $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
         $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
         $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
@@ -759,13 +767,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
-//xd($this->view->itensGeral);
 
         $Projetos = new Projetos();
         $dadosProjeto = $Projetos->buscar(array('idProjeto = ?' => $this->idPreProjeto))->current();
 
         // Busca na tabela apoio ExecucaoImediata stproposta
-        //  xd($this->idPreProjeto);
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
         if (!empty($this->view->itensGeral[0]->stProposta))
             $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
@@ -2791,8 +2797,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
             $propostaPorEdital = true;
         }
+
         $this->view->isEdital = $propostaPorEdital;
         $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        //$this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
         $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
         $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
         $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
