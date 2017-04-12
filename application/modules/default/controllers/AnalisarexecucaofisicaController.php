@@ -8,9 +8,9 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
-class AnalisarexecucaofisicaController extends GenericControllerNew {
+class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
 
     private $getIdAgente  = 0;
     private $getIdGrupo   = 0;
@@ -18,23 +18,23 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
     private $getIdUsuario = 0;
     private $intTamPag = 10;
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador de Acompanhamento
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->getIdAgente = $idagente['idAgente'];
         $this->getIdGrupo  = $GrupoAtivo->codGrupo;
         $this->getIdOrgao  = $GrupoAtivo->codOrgao;
@@ -44,7 +44,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
     }
 
     /**
-     * Metodo Analisar Relatórios Trimestrais
+     * Metodo Analisar Relatï¿½rios Trimestrais
      * @access public
      * @param void
      * @return void
@@ -144,7 +144,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
                 $anogravado = $anoperiodo;
             }
             echo json_encode($periodo);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 
@@ -166,11 +166,11 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
 
     public function projetosAction() {
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $codPerfil          = $GrupoAtivo->codGrupo; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $codPerfil          = $GrupoAtivo->codGrupo; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
@@ -249,8 +249,9 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
         $this->view->Usuarios = $usuarios;
     }
 
@@ -274,7 +275,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function visualizarRelatorioAction() {
@@ -294,7 +295,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         $DadosRelatorio = $tbComprovanteTrimestral->buscarComprovantes(array('IdPRONAC = ?' => $idpronac, 'nrComprovanteTrimestral=?'=>$nrrelatorio, 'siComprovanteTrimestral in (?)'=>array(2,5)));
         $this->view->DadosRelatorio = $DadosRelatorio;
         if(count($DadosRelatorio)==0){
-            parent::message("Relatório não encontrado!", "analisarexecucaofisica/projetos", "ERROR");
+            parent::message("Relatï¿½rio nï¿½o encontrado!", "analisarexecucaofisica/projetos", "ERROR");
         }
 
         $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac);
@@ -303,7 +304,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -341,7 +342,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function imprimirAction() {
@@ -361,7 +362,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         $DadosRelatorio = $tbComprovanteTrimestral->buscarComprovantes(array('IdPRONAC = ?' => $idpronac, 'nrComprovanteTrimestral=?'=>$nrrelatorio, 'siComprovanteTrimestral in (?)'=>array(2,5)));
         $this->view->DadosRelatorio = $DadosRelatorio;
         if(count($DadosRelatorio)==0){
-            parent::message("Relatório não encontrado!", "analisarexecucaofisica/projetos", "ERROR");
+            parent::message("Relatï¿½rio nï¿½o encontrado!", "analisarexecucaofisica/projetos", "ERROR");
         }
 
         $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac);
@@ -370,7 +371,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -532,8 +533,8 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
 
     public function diligenciaAction() {
         $this->view->idpronac = $this->_request->getParam('idpronac');
-        $Usuario = new Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $d = new tbDiligencia();
         $p = new Projetos();
 
@@ -568,14 +569,14 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
         $buscarRelatorios = $r->buscarRelatorioTrimestrais($idPronac);
 
         if (!$this->verificarOrgao($idPronac)) {
-            parent::message('Você não tem permissão para visualizar esse Relatório!', "analisarexecucaofisica/filtroconsulta", "ALERT");
+            parent::message('Vocï¿½ nï¿½o tem permissï¿½o para visualizar esse Relatï¿½rio!', "analisarexecucaofisica/filtroconsulta", "ALERT");
         }
 
         $p = new Projetos();
         $DadosProjeto = $p->buscar(array('IdPRONAC = ?' => $idPronac))->current();
         $this->view->DadosProjeto = $DadosProjeto;
         
-        // busca os técnicos do órgão logado
+        // busca os tï¿½cnicos do ï¿½rgï¿½o logado
         $Tecnicos = new Usuariosorgaosgrupos();
         $buscarTecnicos = $Tecnicos->buscardadosAgentesArray(array('uog.uog_orgao = ?' => $this->getIdOrgao, 'uog.gru_codigo IN (?)' => array('121', '129')) );
 
@@ -605,7 +606,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
             $url[0] = ($_POST['stRelatorio'] == 7) ? 'detalharrelatorios' : 'relatoriotrimestral';
             $url[1] = ($_POST['stRelatorio'] == 7) ? '' : "/idRelatorio/" . $_POST['idRelatorioTrimestral'];
 
-            parent::message("Relatório $msg com sucesso!", "analisarexecucaofisica/$url[0]/idPronac/" . $idPronac . $url[1], 'CONFIRM');
+            parent::message("Relatï¿½rio $msg com sucesso!", "analisarexecucaofisica/$url[0]/idPronac/" . $idPronac . $url[1], 'CONFIRM');
         }
     }
 

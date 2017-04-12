@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("inc/menu.phtml", $this); ?>
+        <div class="content col s10 m12 l10 planilha-produtos">
+            <?php
+                $links = array(
+                    $this->layout['listagem'],
+                    array('Tabelas de Itens' => array())
+                );
+                gerarBreadCrumb($links);
+            ?>
+            <!-- ========== INICIO TITULO ========== -->
+            <div id="titulo">
+                <div>Tabelas de Itens <?php echo montaBotaoVoltar($controller, $links); ?></div>
+            </div>
+            <!-- ========== FIM TITULO ========== -->
+            <div id="conteudo">
+                <form id="formBuscar" name="formBuscar" method="post" action="<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'exibirdados')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>">
+                    <table class="tabela">
+                        <th colspan="3">Pesquisar Produtos / Etapas / Itens </th>
+                        <tr><td colspan="3"></td></tr>
+                        <tr>
+                            <td class="esquerda" ><label for="produto" ><b>Produto </b></label></td>
+                            <td class="esquerda"><b>Exatamente igual </b></td>
+                            <td class="esquerda"><label for="produto"></label>
+                                <select class="input_simples" name="produto" id="produto">
+                                    <option value="">- Todos - </option>
+                                    <?php foreach($this->produto as $tbproduto) { ?>
+                                    <option value="<?php echo $tbproduto->codproduto; ?>"> <?php echo $tbproduto->Produto; ?></option>
+                                        <?php } ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda" ><label for="etapa" ><b>Etapa</b></label></td>
+                            <td class="esquerda"><b>Exatamente igual </b></td>
+                            <td class="esquerda">
+                                <select class="input_simples" name="etapa" id="etapa">
+                                    <option value="">- Todos - </option>
+                                    <?php foreach($this->etapa as $tbetapa) { ?>
+                                    <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo $tbetapa->Etapa; ?></option>
+                                        <?php } ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr  class="centro">
+                            <td class="esquerda" ><label for="item" ><b>Item</b></label></td>
+                            <td class="esquerda">
+                                <select class="input_simples" name="TipoPesquisa" id="TipoPesquisa">
+                                    <option value="01" selected="selected">Que contenha</option>
+                                    <option value="02" >In&iacute;cio Igual</option>
+                                    <option value="03">Exatamente Igual</option>
+                                    <option value="04">Diferente</option>
+                                </select>
+                                <td class="esquerda"><input type="text" name="NomeDoItem" id="NomeDoItem" maxlength="70" style="width:600px;" class="input_simples w500"/>
+                                </td>
+                        </tr>
+                        <tr  class="centro">
+                            <td colspan="3" class="centro">
+                                <button type="submit" title=" Pesquisar " class="btn" value=" " >pesquisar</button>
+                                <button type="button" name="novo" class="btn" value="" onclick="window.location='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'solicitaritens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>'">novo</button>
+                                <button type="reset" title=" Cancelar " class="btn white black-text" value=" ">cancelar</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <br clear="all" />
+        </div>
+    </div>
+</div>

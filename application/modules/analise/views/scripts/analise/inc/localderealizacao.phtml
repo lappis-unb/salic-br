@@ -1,0 +1,53 @@
+<fieldset>
+    <legend>Local de Realiza&ccedil;&atilde;o</legend>
+    <table class="bordered striped responsive-table" id="localRealizacao">
+        <tr class="destacar">
+            <td align="left"><b>Pais</b></td>
+            <td align="left"><b>UF</b></td>
+            <td align="left"><b>Cidade</b></td>
+        </tr>
+        <?php
+        if (is_array($this->itensLocalRealizacao) and count($this->itensLocalRealizacao) > 0) {
+            foreach ($this->itensLocalRealizacao as $itensLocalRealizacao) {
+                ?>
+                <tr>
+                    <td><?php echo $itensLocalRealizacao['pais']; ?></td>
+                    <td><?php echo $itensLocalRealizacao['uf']; ?></td>
+                    <td><?php echo $itensLocalRealizacao['cidade']; ?></td>
+                </tr>
+            <?php }
+        } else { ?>
+            <td colspan="5" align="center">N&atilde;o informado</td>
+        <?php } ?>
+    </table>
+</fieldset>
+<fieldset id="" style="display: block;">
+    <legend>Deslocamento</legend>
+    <table class="bordered striped responsive-table" id="deslocamento">
+        <tr class="destacar">
+            <td align='left'><b>Pais de Origem</b></td>
+            <td align='left'><b>UF de Origem</b></td>
+            <td align='left'><b>Cidade de Origem</b></td>
+            <td align='left'><b>Pais de Destino</b></td>
+            <td align='left'><b>UF de Destino</b></td>
+            <td align='left'><b>Cidade de Destino</b></td>
+            <td>Quantidade</td>
+        </tr>
+        <?php if (is_array($this->itensDeslocamento) and count($this->itensDeslocamento) > 0) {
+            foreach ($this->itensDeslocamento as $deslocamento) { ?>
+                <tr>
+                    <td class="esquerda"><?php echo $deslocamento['paisorigem'] ?></td>
+                    <td class="esquerda"><?php echo $deslocamento['uforigem'] ?></td>
+                    <td class="esquerda"><?php echo $deslocamento['municipioorigem'] ?></td>
+                    <td class="esquerda"><?php echo $deslocamento['paisodestino'] ?></td>
+                    <td class="esquerda"><?php echo $deslocamento['ufdestino'] ?></td>
+                    <td class="esquerda"><?php echo $deslocamento['municipiodestino'] ?></td>
+                    <td align="center"><?php echo $deslocamento['Qtde'] ?></td>
+                </tr>
+                <?php
+            }
+        } else { ?>
+            <td colspan="7" align="center">N&atilde;o informado</td>
+        <?php } ?>
+    </table>
+</fieldset>

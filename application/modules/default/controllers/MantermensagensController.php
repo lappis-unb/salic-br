@@ -1,21 +1,16 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Mantermensagens
  *
  * @author augusto
  */
-class MantermensagensController extends GenericControllerNew {
+class MantermensagensController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -23,41 +18,41 @@ class MantermensagensController extends GenericControllerNew {
     public function init() {
 //        Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
         
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        if ($auth->hasIdentity()) { // caso o usuário esteja autenticado
-            // verifica as permissões
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        if ($auth->hasIdentity()) { // caso o usuï¿½rio esteja autenticado
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 131;  // Coordenador de Admissibilidade  /* Deve estar habilitado - Demanda Manter mensagens */
-            $PermissoesGrupo[] = 92;   // Técnico de Admissibilidade      /* Deve estar habilitado - Demanda Manter mensagens */
+            $PermissoesGrupo[] = 92;   // Tï¿½cnico de Admissibilidade      /* Deve estar habilitado - Demanda Manter mensagens */
             $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
             $PermissoesGrupo[] = 122;  // Coordenador de Acompanhamento
             $PermissoesGrupo[] = 123;  // Coordenador Geral de Acompanhamento
-            $PermissoesGrupo[] = 121;  // Técnico de Acompanhamento
-            $PermissoesGrupo[] = 129;  // Técnico de Acompanhamento
+            $PermissoesGrupo[] = 121;  // Tï¿½cnico de Acompanhamento
+            $PermissoesGrupo[] = 129;  // Tï¿½cnico de Acompanhamento
             $PermissoesGrupo[] = 94;  // Parecerista
-            $PermissoesGrupo[] = 103; // Coordenador de Análise
-            $PermissoesGrupo[] = 110; // Técnico de Análise
-            $PermissoesGrupo[] = 118; // Componente da Comissão
-            $PermissoesGrupo[] = 126; // Coordenador Geral de Prestação de Contas
-            $PermissoesGrupo[] = 125; // Coordenador de Prestação de Contas
-            $PermissoesGrupo[] = 124; // Técnico de Prestação de Contas
-            $PermissoesGrupo[] = 132; // Chefe de Divisão
+            $PermissoesGrupo[] = 103; // Coordenador de Anï¿½lise
+            $PermissoesGrupo[] = 110; // Tï¿½cnico de Anï¿½lise
+            $PermissoesGrupo[] = 118; // Componente da Comissï¿½o
+            $PermissoesGrupo[] = 126; // Coordenador Geral de Prestaï¿½ï¿½o de Contas
+            $PermissoesGrupo[] = 125; // Coordenador de Prestaï¿½ï¿½o de Contas
+            $PermissoesGrupo[] = 124; // Tï¿½cnico de Prestaï¿½ï¿½o de Contas
+            $PermissoesGrupo[] = 132; // Chefe de Divisï¿½o
             $PermissoesGrupo[] = 136; // Coordenador de Entidade Vinculada
-            $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaç?o
-            $PermissoesGrupo[] = 135; // Técnico de  Fiscalizaç?o
-            $PermissoesGrupo[] = 138; // Coordenador de Avaliaçao
-            $PermissoesGrupo[] = 139; // Técnico de  Avaliaçao
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+            $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaï¿½?o
+            $PermissoesGrupo[] = 135; // Tï¿½cnico de  Fiscalizaï¿½?o
+            $PermissoesGrupo[] = 138; // Coordenador de Avaliaï¿½ao
+            $PermissoesGrupo[] = 139; // Tï¿½cnico de  Avaliaï¿½ao
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticaç?o
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½?o
             if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
                 $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
                 $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
@@ -65,13 +60,13 @@ class MantermensagensController extends GenericControllerNew {
                 $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
             }
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
-            $this->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
-        } else { // caso o usuário não esteja autenticado
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
+            $this->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
+        } else { // caso o usuï¿½rio nï¿½o esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
         
@@ -83,12 +78,12 @@ class MantermensagensController extends GenericControllerNew {
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-// fecha método init()
+// fecha mï¿½todo init()
 
     public function incluirmensagemAction() {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-        $usuario = new Usuario();
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $usuario = new Autenticacao_Model_Usuario();
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Agente = $usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_codigo = $auth->getIdentity()->usu_codigo;
         $mensagemprojeto = new Mensagemprojeto();
@@ -130,7 +125,7 @@ class MantermensagensController extends GenericControllerNew {
         }
 
         $idpronac = $this->_request->getParam('idpronac');
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $grupologado = $GrupoAtivo->codGrupo;
 
         $dadosWhereMensagemPrj = array(
@@ -154,8 +149,8 @@ class MantermensagensController extends GenericControllerNew {
         $usuariosorgao = new Usuariosorgaosgrupos();
 //*************************** NOVO *****************************************************
         $num = 0;
-        /* Perfil de Coordenador e Técnico de Adminissibilidade  */
-        $movimentacaoDAO = new Movimentacao();
+        /* Perfil de Coordenador e Tï¿½cnico de Adminissibilidade  */
+        $movimentacaoDAO = new Proposta_Model_DbTable_TbMovimentacao();
         $atores = $movimentacaoDAO->buscarTecCoordAdmissibilidade($idpronac, $usu_codigo);
         foreach ($atores as $ator) {
             $encaminha[$num]['idAgente'] = $ator->idAgente;
@@ -165,7 +160,7 @@ class MantermensagensController extends GenericControllerNew {
             $encaminha[$num]['orgao'] = $ator->Orgao;
             $num++;
         }
-        /* Fim Perfil de Coordenador e Técnico de Adminissibilidade  */
+        /* Fim Perfil de Coordenador e Tï¿½cnico de Adminissibilidade  */
         /* Perfil de Coordenador de Parecerista / Parecerista  */
         $DistribuirParecerDAO = new tbDistribuirParecer();
        /*$where = array(
@@ -220,7 +215,7 @@ class MantermensagensController extends GenericControllerNew {
         }
         
         /* FIM Perfil de Coordenador de Parecerista / Parecerista  */
-        /* Perfil de componente da comissão  */
+        /* Perfil de componente da comissï¿½o  */
         $tbTitulacaoConselheiroDAO = new tbTitulacaoConselheiro();
         $sql = $tbTitulacaoConselheiroDAO->buscarTitulacao(true);
         $tbDistribuicaoProjetoComissaoDAO = new tbDistribuicaoProjetoComissao();
@@ -233,8 +228,8 @@ class MantermensagensController extends GenericControllerNew {
             $encaminha[$num]['perfil'] = '118';
             $num++;
         }
-        /* FIM Perfil de componente da comissão  */
-        /* Perfil de Acompanhamento Readequaç?o */
+        /* FIM Perfil de componente da comissï¿½o  */
+        /* Perfil de Acompanhamento Readequaï¿½?o */
         $tbPedidoAlteracaoProjetoDAO = new tbPedidoAlteracaoProjeto();
         $atores = $tbPedidoAlteracaoProjetoDAO->buscarAtoresReadequacao($idpronac, $usu_codigo);
         $prepara = array();
@@ -267,8 +262,8 @@ class MantermensagensController extends GenericControllerNew {
                 $num++;
             }
         }
-        /* FIM Perfil de Acompanhamento Readequaç?o  */
-        /* Perfil de Acompanhamento Avaliaç?o */
+        /* FIM Perfil de Acompanhamento Readequaï¿½?o  */
+        /* Perfil de Acompanhamento Avaliaï¿½?o */
         $tbParecerConsolidadoDAO = new tbParecerConsolidado();
         $atores = $tbParecerConsolidadoDAO->buscarAtoresCoordenadorAvaliacao($idpronac, $usu_codigo);
         $prepara = array();
@@ -303,7 +298,7 @@ class MantermensagensController extends GenericControllerNew {
                 }
             }
         }
-        /* FIM Perfil de Acompanhamento Avaliaç?o */
+        /* FIM Perfil de Acompanhamento Avaliaï¿½?o */
 
         /* Perfil de Acompanhamento Fiscalizacao */
         $tbFiscalizacaoDAO = new tbFiscalizacao();
@@ -345,7 +340,7 @@ class MantermensagensController extends GenericControllerNew {
         
         /* FIM Perfil de Acompanhamento Fiscalizacao */
 
-        /* Perfil de Modulo Prestaç?o de Contas */
+        /* Perfil de Modulo Prestaï¿½?o de Contas */
         $tbEncaminhamentoPrestacaoContasDAO = new tbEncaminhamentoPrestacaoContas();
         $atores = $tbEncaminhamentoPrestacaoContasDAO->buscarAtoresPrestacaoContas($idpronac, $usu_codigo);
         $prepara = array();
@@ -374,7 +369,7 @@ class MantermensagensController extends GenericControllerNew {
                 }
             }
         }
-        /* FIM Perfil de Modulo Prestaç?o de Contas */
+        /* FIM Perfil de Modulo Prestaï¿½?o de Contas */
 
 
         $this->view->grupologado = array('controller' => 'dadosprojeto', 'action' => 'index');
@@ -392,10 +387,10 @@ class MantermensagensController extends GenericControllerNew {
 
         $idpronac = $this->_request->getParam('idpronac');
         
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $grupologado = $GrupoAtivo->codGrupo;
-        $usuario = new Usuario();
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $usuario = new Autenticacao_Model_Usuario();
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Agente = $usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_codigo = $auth->getIdentity()->usu_codigo;
         $idAgente = $Agente['idAgente'];
@@ -403,7 +398,7 @@ class MantermensagensController extends GenericControllerNew {
         $projetos = new Projetos();
 
         //$idpronac = $this->_request->getParam('idpronac');
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $grupologado = $GrupoAtivo->codGrupo;
 
         $dadosWhereMensagemPrj = array(
@@ -427,8 +422,8 @@ class MantermensagensController extends GenericControllerNew {
         $usuariosorgao = new Usuariosorgaosgrupos();
 //*************************** NOVO *****************************************************
         $num = 0;
-        /* Perfil de Coordenador e Técnico de Adminissibilidade  */
-        $movimentacaoDAO = new Movimentacao();
+        /* Perfil de Coordenador e Tï¿½cnico de Adminissibilidade  */
+        $movimentacaoDAO = new Proposta_Model_DbTable_TbMovimentacao();
         $atores = $movimentacaoDAO->buscarTecCoordAdmissibilidade($idpronac, $usu_codigo);
         
         foreach ($atores as $ator) {
@@ -437,7 +432,7 @@ class MantermensagensController extends GenericControllerNew {
             $encaminha[$num]['TipoUsuario'] = $ator->Perfil;
             $num++;
         }
-        /* Fim Perfil de Coordenador e Técnico de Adminissibilidade  */
+        /* Fim Perfil de Coordenador e Tï¿½cnico de Adminissibilidade  */
         /* Perfil de Coordenador de Parecerista / Parecerista  */
         $DistribuirParecerDAO = new tbDistribuirParecer();
         /*$where = array(
@@ -480,7 +475,7 @@ class MantermensagensController extends GenericControllerNew {
             }
         }
         /* FIM Perfil de Coordenador de Parecerista / Parecerista  */
-        /* Perfil de componente da comissão  */
+        /* Perfil de componente da comissï¿½o  */
         $tbTitulacaoConselheiroDAO = new tbTitulacaoConselheiro();
         $sql = $tbTitulacaoConselheiroDAO->buscarTitulacao(true);
         $tbDistribuicaoProjetoComissaoDAO = new tbDistribuicaoProjetoComissao();
@@ -493,8 +488,8 @@ class MantermensagensController extends GenericControllerNew {
             $encaminha[$num]['perfil'] = '118';
             $num++;
         }
-        /* FIM Perfil de componente da comissão  */
-        /* Perfil de Acompanhamento Readequaç?o */
+        /* FIM Perfil de componente da comissï¿½o  */
+        /* Perfil de Acompanhamento Readequaï¿½?o */
         $tbPedidoAlteracaoProjetoDAO = new tbPedidoAlteracaoProjeto();
         $atores = $tbPedidoAlteracaoProjetoDAO->buscarAtoresReadequacao($idpronac, $usu_codigo);
         $prepara = array();
@@ -527,8 +522,8 @@ class MantermensagensController extends GenericControllerNew {
                 $num++;
             }
         }
-        /* FIM Perfil de Acompanhamento Readequaç?o  */
-        /* Perfil de Acompanhamento Avaliaç?o */
+        /* FIM Perfil de Acompanhamento Readequaï¿½?o  */
+        /* Perfil de Acompanhamento Avaliaï¿½?o */
         $tbParecerConsolidadoDAO = new tbParecerConsolidado();
         $atores = $tbParecerConsolidadoDAO->buscarAtoresCoordenadorAvaliacao($idpronac, $usu_codigo);
         $prepara = array();
@@ -563,7 +558,7 @@ class MantermensagensController extends GenericControllerNew {
                 }
             }
         }
-        /* FIM Perfil de Acompanhamento Avaliaç?o */
+        /* FIM Perfil de Acompanhamento Avaliaï¿½?o */
 
         /* Perfil de Acompanhamento Fiscalizacao */
         $tbFiscalizacaoDAO = new tbFiscalizacao();
@@ -596,7 +591,7 @@ class MantermensagensController extends GenericControllerNew {
         }
         /* FIM Perfil de Acompanhamento Fiscalizacao */
 
-        /* Perfil de Modulo Prestaç?o de Contas */
+        /* Perfil de Modulo Prestaï¿½?o de Contas */
         $tbEncaminhamentoPrestacaoContasDAO = new tbEncaminhamentoPrestacaoContas();
         $atores = $tbEncaminhamentoPrestacaoContasDAO->buscarAtoresPrestacaoContas($idpronac, $usu_codigo);
         $prepara = array();
@@ -625,7 +620,7 @@ class MantermensagensController extends GenericControllerNew {
                 }
             }
         }
-        /* FIM Perfil de Modulo Prestaç?o de Contas */
+        /* FIM Perfil de Modulo Prestaï¿½?o de Contas */
 
 
 
@@ -669,7 +664,7 @@ class MantermensagensController extends GenericControllerNew {
                         $valorperfil['idmensagemprojeto'][$ler[$chavesachadas]['idmensagemprojeto']]['remetente'] = $ler[$chavesachadas]['perfilRemetente'];
                         $valorperfil['idmensagemprojeto'][$ler[$chavesachadas]['idmensagemprojeto']]['destinatario'] = $ler[$chavesachadas]['perfilDestinatario'];
                     }
-//                xd($valorperfil);
+
                 @$this->view->mensagemperfil = $valorperfil;
             }
         }

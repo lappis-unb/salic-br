@@ -9,9 +9,9 @@
  *
  * @author augusto
  */
-class dbtable extends GenericModel {
+class dbtable extends MinC_Db_Table_Abstract {
 
-    public static function dbg($dados, type $type=null){
+    public function dbg($dados, type $type=null){
 
         if($type == 1 or $type == null){
 

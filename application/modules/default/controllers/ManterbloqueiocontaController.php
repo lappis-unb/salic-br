@@ -10,11 +10,11 @@
  * @copyright @ 2012 - Ministerio da Cultura - Todos os direitos reservados.
  */
 
-class ManterbloqueiocontaController extends GenericControllerNew {
+class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
 
-    private $getIdUsuario = 0; // código do usuário logado
-    private $getIdGrupo   = 0; // código do grupo logado
-    private $getIdOrgao   = 0; // código do órgão logado
+    private $getIdUsuario = 0; // cï¿½digo do usuï¿½rio logado
+    private $getIdGrupo   = 0; // cï¿½digo do grupo logado
+    private $getIdOrgao   = 0; // cï¿½digo do ï¿½rgï¿½o logado
     private $intTamPag    = 10;
 
     /**
@@ -25,21 +25,21 @@ class ManterbloqueiocontaController extends GenericControllerNew {
      */
     public function init() {
 
-        // pega o idAgente do usuário logado
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        // pega o idAgente do usuï¿½rio logado
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         
-        /* ========== INÍCIO PERFIL ==========*/
+        /* ========== INï¿½CIO PERFIL ==========*/
         // define os grupos que tem acesso
         $PermissoesGrupo = array();
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador - Geral de Acompanhamento
-        $PermissoesGrupo[] = 129; // Técnico de Acompanhamento
-        //$PermissoesGrupo[] = ; // Coordenador de Avaliação
-        //$PermissoesGrupo[] = 134; // Coordenador de Fiscalização
-        //$PermissoesGrupo[] = 124; // Técnico de Prestação de Contas
-        //$PermissoesGrupo[] = 125; // Coordenador de Prestação de Contas
-        //$PermissoesGrupo[] = 126; // Coordenador - Geral de Prestação de Contas
+        $PermissoesGrupo[] = 129; // Tï¿½cnico de Acompanhamento
+        //$PermissoesGrupo[] = ; // Coordenador de Avaliaï¿½ï¿½o
+        //$PermissoesGrupo[] = 134; // Coordenador de Fiscalizaï¿½ï¿½o
+        //$PermissoesGrupo[] = 124; // Tï¿½cnico de Prestaï¿½ï¿½o de Contas
+        //$PermissoesGrupo[] = 125; // Coordenador de Prestaï¿½ï¿½o de Contas
+        //$PermissoesGrupo[] = 126; // Coordenador - Geral de Prestaï¿½ï¿½o de Contas
         parent::perfil(1, $PermissoesGrupo); // perfil novo salic
 
         if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
@@ -54,10 +54,10 @@ class ManterbloqueiocontaController extends GenericControllerNew {
         /* ========== FIM PERFIL ==========*/
 
 
-        /* ========== INÍCIO ÓRGÃO ========== */
-        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        /* ========== INï¿½CIO ï¿½RGï¿½O ========== */
+        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->getIdGrupo = $GrupoAtivo->codGrupo; // id do grupo ativo
-        $this->getIdOrgao = $GrupoAtivo->codOrgao; // id do órgão ativo
+        $this->getIdOrgao = $GrupoAtivo->codOrgao; // id do ï¿½rgï¿½o ativo
 
         parent::init();
     }
@@ -91,7 +91,7 @@ class ManterbloqueiocontaController extends GenericControllerNew {
             $where['IdPRONAC = ?'] = $rsProjeto->IdPRONAC;
             $where['stEstado = ?'] = 1; //registro ativo
             $where['tpAcao <> ?'] = '0'; //(0 - conta desbloqueada)
-            $where['tpIdentificacaoConta = ?'] = 1; //(1 - captação)
+            $where['tpIdentificacaoConta = ?'] = 1; //(1 - captaï¿½ï¿½o)
             $rsCBCaptacao = $tbContaBloqueada->buscar($where)->current();
             xd($rsCBCaptacao);
             
@@ -164,7 +164,7 @@ class ManterbloqueiocontaController extends GenericControllerNew {
             parent::message("Conta(s) bloqueada(s) com sucesso!", "manterbloqueioconta", "CONFIRM");
             
         }catch(Exception $e){
-            //xd($e->getMessage());
+            
             parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "manterbloqueioconta", "ERROR");
         }
     }
@@ -174,14 +174,14 @@ class ManterbloqueiocontaController extends GenericControllerNew {
         try{
             
             $arquivoNome     = $_FILES['arqDecisaoJudicial']['name']; // nome
-            $arquivoTemp     = $_FILES['arqDecisaoJudicial']['tmp_name']; // nome temporário
+            $arquivoTemp     = $_FILES['arqDecisaoJudicial']['tmp_name']; // nome temporï¿½rio
             $arquivoTipo     = $_FILES['arqDecisaoJudicial']['type']; // tipo
             $arquivoTamanho  = $_FILES['arqDecisaoJudicial']['size']; // tamanho
 
             if (!empty($arquivoNome) && !empty($arquivoTemp))
             {
-                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
+                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
                     $arquivoHash     = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -230,8 +230,8 @@ class ManterbloqueiocontaController extends GenericControllerNew {
             $idDocumento = $idDocumento['idDocumento'];*/
         
             return $idArquivo;
-            die;
-            
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+
         }catch(Exception $e){
             parent::message("Erro ao enviar o arquivo anexado.", "manterbloqueioconta", "ERROR");
         }
@@ -271,7 +271,7 @@ class ManterbloqueiocontaController extends GenericControllerNew {
             $where['IdPRONAC = ?'] = $rsProjeto->IdPRONAC;
             $where['stEstado = ?'] = 1; //registro ativo
             $where['tpAcao = ?'] = $tipoDesbloqueio; //(1- bloqueio sistemico / 2- bloqueio judicial)
-            $where['tpIdentificacaoConta = ?'] = 1; //(1 - captação)
+            $where['tpIdentificacaoConta = ?'] = 1; //(1 - captaï¿½ï¿½o)
             $rsCBCaptacao = $tbContaBloqueada->buscar($where)->current();
             
             $where['tpIdentificacaoConta = ?'] = 2; //(2-movimento)
@@ -344,7 +344,7 @@ class ManterbloqueiocontaController extends GenericControllerNew {
             parent::message("Conta(s) desbloqueada(s) com sucesso!", "manterbloqueioconta/listar-contas-desbloqueio", "CONFIRM");
             
         }catch(Exception $e){
-            //xd($e->getMessage());
+            
             parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "manterbloqueioconta/listar-contas-desbloqueio", "ERROR");
         }
     }
@@ -375,10 +375,9 @@ class ManterbloqueiocontaController extends GenericControllerNew {
     }
     
     public function imprimirAction(){
-        //xd($_POST['html']);
+        
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $this->view->titulo = $_POST['titulo'];
         $this->view->html = $_POST['html'];
     }
 }
-?>

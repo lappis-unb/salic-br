@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Controller Login
  * @author tisomar - Politec
@@ -7,50 +7,49 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
-class LoginController extends GenericControllerNew {
+class LoginController extends MinC_Controller_Action_Abstract {
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        // configurações do layout
+        // configuraï¿½ï¿½es do layout
         Zend_Layout::startMvc(array('layout' => 'layout_login'));
 
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 
 
     /**
-     * Método com o formulário de login
+     * Mï¿½todo com o formulï¿½rio de login
      * @access public
      * @param void
      * @return void
      */
     public function indexAction() {
 
-    } // fecha método indexAction()
+    } // fecha mï¿½todo indexAction()
     public function index2Action() {
 
-    } // fecha método indexAction()
+    } // fecha mï¿½todo indexAction()
 
 
     /**
-     * Método que efetua o login
+     * Mï¿½todo que efetua o login
      * @access public
      * @param void
      * @return void
      */
     public function loginAction() {
         // recebe os dados do formulï¿½rio via post
-        $post     = Zend_Registry::get('post');
-        $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->Login)); // recebe o login sem mï¿½scaras
-        $password = $post->Senha; // recebe a senha
+        $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
+        $password = $this->getParam('Senha', null);
 
         $password = str_replace("##menor##", "<", $password);
         $password = str_replace("##maior##", ">", $password);
@@ -72,10 +71,10 @@ class LoginController extends GenericControllerNew {
             }
             else {
 
-                // realiza a busca do usuï¿½rio no banco, fazendo a autenticaç?o do mesmo
-                $Usuario = new Sgcacesso();
+                // realiza a busca do usuï¿½rio no banco, fazendo a autenticaï¿½?o do mesmo
+                $Usuario = new Autenticacao_Model_Sgcacesso();
                 $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
-                
+
                 $verificaSituacao = 0;
                 if(count($verificaStatus)>0){
                     $IdUsuario =  $verificaStatus[0]->IdUsuario;
@@ -106,15 +105,15 @@ class LoginController extends GenericControllerNew {
                 if ($buscar) // acesso permitido
                 {
 
-                    //                                    $auth = Zend_Auth::getInstance(); // instancia da autenticação
-                    //xd($auth->getIdentity());
+                    //                                    $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
+                    
                     //                                    // registra o primeiro grupo do usuï¿½rio (pega unidade autorizada, orgï¿½o e grupo do usuï¿½rio)
-                    //                                    $Usuario = new Usuario();
+                    //                                    $Usuario = new Autenticacao_Model_Usuario();
                     //                                    $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
                     //
-                    //                                    $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-                    //                                    $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessão
-                    //                                    $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o orgão na sessão
+                    //                                    $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+                    //                                    $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessï¿½o
+                    //                                    $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o orgï¿½o na sessï¿½o
 
                     $verificaSituacao =  $verificaStatus[0]->Situacao;
                     if ( $verificaSituacao == 1 ) {
@@ -124,19 +123,19 @@ class LoginController extends GenericControllerNew {
                     }
 
 
-                    $agentes = new Agentes();
+                    $agentes = new Agente_Model_DbTable_Agentes();
                     $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
 
                     if ( !empty ( $verificaAgentes ) ) {
 
-                        //                                        $this->_redirect("/agentes/incluiragenteexterno");
+                        //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
                         //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
                         return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
                     }
                     else {
                         return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
-                        //$this->_redirect("/agentes/incluiragenteexterno");
-                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
+                        //$this->_redirect("/agente/agentes/incluiragenteexterno");
+                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
                     }
 
                 } // fecha if
@@ -182,10 +181,8 @@ class LoginController extends GenericControllerNew {
                     "Situacao" => 1,
                     "DtSituacao" => date("Y-m-d")
             );
-//                xd($dados);
 
-
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf));
             $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
 
@@ -209,7 +206,7 @@ class LoginController extends GenericControllerNew {
                  * ==============================================================
                  */
                 /* ========== VERIFICA SE O RESPONSAVEL JA TEM CADASTRO COMO PROPONENTE ========== */
-                $Agentes = new Agentes();
+                $Agentes = new Agente_Model_DbTable_Agentes();
                 $Visao   = new Visao();
                 $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
                 $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
@@ -217,8 +214,8 @@ class LoginController extends GenericControllerNew {
 
                 /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
                 if ( count($buscarVisao) > 0 ) :
-                    $tbVinculo    = new TbVinculo();
-                    $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsável cadastrado
+                    $tbVinculo    = new Agente_Model_DbTable_TbVinculo();
+                    $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsï¿½vel cadastrado
 
                     $dadosVinculo = array(
                             'idAgenteProponente'    => $idAgenteProp
@@ -249,7 +246,7 @@ class LoginController extends GenericControllerNew {
                 parent::message("Cadastro efetuado com sucesso. Verifique a senha no seu email", "/login/index", "CONFIRM");
             }
         } // fecha if
-    } // fecha método cadastrarusuarioAction()
+    } // fecha mï¿½todo cadastrarusuarioAction()
 
     public function solicitarsenhaAction() {
 
@@ -259,9 +256,9 @@ class LoginController extends GenericControllerNew {
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
             $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
             $email = $post->email; // recebe email
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
-            
+
             $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
             if ( empty ( $verificaUsuario ) ) {
                 parent::message("Dados incorretos!", "/login/index", "ALERT");
@@ -289,7 +286,7 @@ class LoginController extends GenericControllerNew {
             $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
             $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
             $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
-            
+
             $email = $sgcAcessoBuscaCpfArray[0]['Email'];
             $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
             parent::message("Senha gerada com sucesso. Verifique seu email!", "/login/index", "CONFIRM");
@@ -297,24 +294,24 @@ class LoginController extends GenericControllerNew {
     }
 
     public function alterarsenhaAction() {
-        // autenticação proponente (Novo Salic)
+        // autenticaï¿½ï¿½o proponente (Novo Salic)
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
-        $auth    = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario();
+        /* ========== INï¿½CIO ID DO USUï¿½RIO LOGADO ========== */
+        $auth    = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new Autenticacao_Model_Usuario();
 
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuï¿½rio logado ï¿½ agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->Cpf);
         if ( $idUsuario ) {
-            // caso não tenha idAgente, atribui o idUsuario
+            // caso nï¿½o tenha idAgente, atribui o idUsuario
             $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->IdUsuario;
             $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+            /* ========== FIM ID DO USUï¿½RIO LOGADO ========== */
             parent::perfil(4);
         }
 
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $this->view->cpf = "";
         $this->view->nome = "";
@@ -323,7 +320,7 @@ class LoginController extends GenericControllerNew {
         $this->view->email = "";
 
         if ( count(Zend_Auth::getInstance()->getIdentity()) > 0 ) {
-            $auth = Zend_Auth::getInstance();// instancia da autenticação
+            $auth = Zend_Auth::getInstance();// instancia da autenticaï¿½ï¿½o
 
             $idUsuario = $auth->getIdentity()->IdUsuario;
             $this->view->idUsuario = $auth->getIdentity()->IdUsuario;
@@ -347,7 +344,7 @@ class LoginController extends GenericControllerNew {
             $senhaAtual = str_replace("##maior##", ">", $senhaAtual);
             $senhaAtual = str_replace("##aspa##", "'", $senhaAtual);
 
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
 
             if ( empty ($_POST['idUsuario']) ) {
                 $idUsuario = $_POST['idUsuarioGet'];
@@ -365,7 +362,7 @@ class LoginController extends GenericControllerNew {
             }
 
             // busca a senha do banco TABELAS
-            $Usuarios     = new Usuario();
+            $Usuarios     = new Autenticacao_Model_Usuario();
             $buscarCPF    = $Usuarios->buscar(array('usu_identificacao = ?' => trim($cpf)));
             $cpfTabelas   = count($buscarCPF) > 0 ? true : false;
             $senhaTabelas = $Usuarios->verificarSenha(trim($cpf) , $senhaAtual);
@@ -428,20 +425,20 @@ class LoginController extends GenericControllerNew {
 
     public function alterarsenhausuarioAction() {
         parent::perfil(0);
-        // autenticação proponente (Novo Salic)
+        // autenticaï¿½ï¿½o proponente (Novo Salic)
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
-        $auth    = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario();
+        /* ========== INï¿½CIO ID DO USUï¿½RIO LOGADO ========== */
+        $auth    = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new Autenticacao_Model_Usuario();
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuï¿½rio logado ï¿½ agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->usu_identificacao);
         if ( isset($auth->getIdentity()->usu_identificacao) ) {
-            //xd($auth->getIdentity());
-            // caso não tenha idAgente, atribui o idUsuario
+            
+            // caso nï¿½o tenha idAgente, atribui o idUsuario
             $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->usu_codigo;
             //$this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+            /* ========== FIM ID DO USUï¿½RIO LOGADO ========== */
 
         }
 
@@ -451,7 +448,7 @@ class LoginController extends GenericControllerNew {
         $this->view->nome = "";
 
         if ( count(Zend_Auth::getInstance()->getIdentity()) > 0 ) {
-            $auth = Zend_Auth::getInstance();// instancia da autenticação
+            $auth = Zend_Auth::getInstance();// instancia da autenticaï¿½ï¿½o
 
             $idUsuario = $auth->getIdentity()->usu_codigo;
             $cpf       = $auth->getIdentity()->usu_identificacao;
@@ -489,7 +486,7 @@ class LoginController extends GenericControllerNew {
 
             $comparaSenhaNova = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaNova);
             $senhaNovaCript = $comparaSenhaNova[0]->senha;
-            
+
             if ( trim($senhaAtualBanco) !=  trim($SenhaFinal)) {
                 parent::message("Por favor, digite a senha atual correta!", "/login/alterarsenhausuario?idUsuario=$idUsuario","ALERT");
             }
@@ -503,7 +500,7 @@ class LoginController extends GenericControllerNew {
             }
 
             if ( strlen(trim($senhaNova))<5) {
-                parent::message("Por favor, sua nova senha deverá conter no mínimo 5 dígitos!", "/login/alterarsenhausuario?idUsuario=$idUsuario","ALERT");
+                parent::message("Por favor, sua nova senha deverï¿½ conter no mï¿½nimo 5 dï¿½gitos!", "/login/alterarsenhausuario?idUsuario=$idUsuario","ALERT");
             }
 
             $alterar = $Usuario->alterarSenhaSalic($cpf, $senhaNova);
@@ -517,8 +514,8 @@ class LoginController extends GenericControllerNew {
 
     public function logarcomoAction() {
 
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $buscaUsuario = new Usuariosorgaosgrupos();
         $buscaUsuarioRs = $buscaUsuario->buscarUsuariosOrgaosGrupos(
@@ -538,13 +535,13 @@ class LoginController extends GenericControllerNew {
 
 
             $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $senha =  $db->fetchRow($sql);
 
             $SenhaFinal = $senha->senha;
 
-            $usuario = new Usuario();
+            $usuario = new Autenticacao_Model_Usuario();
             $usuarioRs = $usuario->buscar(
                     array('usu_identificacao = ?' => $username, 'usu_senha = ?'=> $SenhaFinal ));
 
@@ -553,14 +550,14 @@ class LoginController extends GenericControllerNew {
                         array('usu_identificacao = ?' => $idLogarComo ))->current();
                 $senha = $usuarioRs->usu_senha;
 
-                $Usuario = new Usuario();
+                $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->loginSemCript($idLogarComo, $senha);
 
                 if ($buscar) // acesso permitido
                 {
-                    $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+                    $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½?o
 
-                    // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaàio)
+                    // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaï¿½io)
                     $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
 
                     $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
@@ -575,23 +572,23 @@ class LoginController extends GenericControllerNew {
     }
 
     public function alterardadosAction() {
-        // autenticação proponente (Novo Salic)
+        // autenticaï¿½ï¿½o proponente (Novo Salic)
         parent::perfil(4);
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
-        $auth    = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario();
+        /* ========== INï¿½CIO ID DO USUï¿½RIO LOGADO ========== */
+        $auth    = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new Autenticacao_Model_Usuario();
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuï¿½rio logado ï¿½ agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->Cpf);
 
-        // caso não tenha idAgente, atribui o idUsuario
+        // caso nï¿½o tenha idAgente, atribui o idUsuario
         $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->IdUsuario;
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-        /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+        /* ========== FIM ID DO USUï¿½RIO LOGADO ========== */
 
-        $sgcAcesso = new Sgcacesso();
-        $auth = Zend_Auth::getInstance();// instancia da autenticação
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
+        $auth = Zend_Auth::getInstance();// instancia da autenticaï¿½ï¿½o
         $cpf = Mascara::delMaskCPF($auth->getIdentity()->Cpf);
         $buscarDados =  $sgcAcesso->buscar(array ('Cpf = ?' => $cpf))->current();
 
@@ -608,8 +605,8 @@ class LoginController extends GenericControllerNew {
             $this->view->email = $buscarDados['Email'];
         }
 
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         if ( $_POST ) {
             $post     = Zend_Registry::get('post');
@@ -639,4 +636,3 @@ class LoginController extends GenericControllerNew {
         }
     }
 }
-

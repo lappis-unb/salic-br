@@ -1,13 +1,85 @@
 <?php
+function d() {
+    $debug = debug_backtrace();
+    echo <<<HTML
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: verdana;
+            font-size: 16px !important;
+            color: #fff;
+            width: 100%;
+            background: #070707 url("../../public/images/planet.jpg")  no-repeat;
+            /*filter: grayscale(1)*/
+            /*text-shadow: 0px 0px 5px #FFF;*/
+        }
+        h3{
+            color: #fff;
+            text-shadow: 0px 0px 5px #FFF;
+        }
+        fieldset{
 
+        }
+        h3 {
+            margin: 10px;
+        }
+        </style>
+    </head>
+    <body>
+    <div class="msg-error exception">
+    <span>
+        <h3>Salic Debug</h3>
+        <!--<p>Debug:</p>-->
+    </span>
+    </div>
+        <div class="msg-exception">
+            <fieldset>
+                <legend>Par&acirc;metros</legend>
+HTML;
+    for ($i = 0; $i < func_num_args(); $i++) {
+        $value = func_get_arg($i);
+        var_dump($value);
+        print_r($value);
+    }
+    echo <<<HTML
+            </fieldset>
+            <fieldset>
+                <legend>Local</legend>
+                <p><b>Classe:</b> {$debug[1]['class']}</p>
+                <p><b>M&eacute;todo:</b> {$debug[1]['function']}</p>
+                <p><b>Arquivo:</b> {$debug[0]['file']} ({$debug[0]['line']})</p>
+            </fieldset>
+HTML;
+    for ($i = 2; $i < count($debug); $i++) {
+        if (is_int(strpos($debug[$i]['class'], 'Zend'))) {
+            break;
+        }
+        $intBacktrace = $i - 1;
+        echo <<<HTML
+            <fieldset>
+                <legend>Rastro por onde passou {$intBacktrace}</legend>
+                <p><b>Classe:</b> {$debug[$i]['class']}</p>
+                <p><b>M&eacute;todo:</b> {$debug[$i]['function']}</p>
+                <p><b>Arquivo:</b> {$debug[$i - 1]['file']} ({$debug[$i - 1]['line']})</p>
+            </fieldset>
+HTML;
+    }
+    echo <<<HTML
+</table>
+            </div>
+    </body>
+</html>
+HTML;
+    exit;
+}
+
+/* FUNï¿½ï¿½O ï¿½TIL PARA DEBUG */
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-/* FUNÇÃO ÚTIL PARA DEBUG */
-
 function xd($obj) {
     $debug = debug_backtrace();
     $calledLine = $debug[0]['line'];
@@ -20,9 +92,9 @@ function xd($obj) {
     echo "</div>";
     die();
 }
-
-/* FUNÇÃO ÚTIL PARA DEBUG SEM  DIE */
-
+*/
+/* FUNï¿½ï¿½O ï¿½TIL PARA DEBUG SEM  DIE */
+/*
 function x($obj) {
     echo "<div style='background-color:#9370DB; border:1px #666666 solid; text-align:left;'>"; #DFDFDF
     echo "<pre>";
@@ -30,7 +102,7 @@ function x($obj) {
     echo "</pre>";
     echo "</div>";
 }
-
+*/
 function preparaValor($valor, $tipo=1) {
     if ($tipo == 1) {
         $valor = str_replace(".", "", $valor);
@@ -81,12 +153,12 @@ function pontoMilhar($valor) {
  */
 function preparaNomeArquivo($strNomeArquivo) {
     //$strNomeArquivo = html_entity_decode(utf8_decode($strNomeArquivo));
-    //retira acentos e substitui espaço em branco por underscores
-    $arr1 = array("á", "à", "â", "ã", "ä", "é", "è", "ê", "ë", "í", "ì", "î", "ï", "ó", "ò", "ô", "õ", "ö", "ú", "ù", "û", "ü", "ç", "Á", "À", "Â", "Ã", "Ä", "É", "È", "Ê", "Ë", "Í", "Ì", "Î", "Ï", "Ó", "Ò", "Ô", "Õ", "Ö", "Ú", "Ù", "Û", "Ü", "Ç", " ", "-", "'", "/", "\\");
+    //retira acentos e substitui espaï¿½o em branco por underscores
+    $arr1 = array("ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", " ", "-", "'", "/", "\\");
     $arr2 = array("a", "a", "a", "a", "a", "e", "e", "e", "e", "i", "i", "i", "i", "o", "o", "o", "o", "o", "u", "u", "u", "u", "c", "A", "A", "A", "A", "A", "E", "E", "E", "E", "I", "I", "I", "I", "O", "O", "O", "O", "O", "U", "U", "U", "U", "C", "", "", "", "", "");
     $strNomeArquivoAlterado = str_replace($arr1, $arr2, $strNomeArquivo);
 
-    //transformas as letras em minúsulas
+    //transformas as letras em minï¿½sulas
     $strNomeArquivoAlterado = strtolower($strNomeArquivoAlterado);
 
     return $strNomeArquivoAlterado;
@@ -98,7 +170,7 @@ function preparaNomeArquivo($strNomeArquivo) {
  * @return string
  */
 function retiraMascara($strNomeArquivo) {
-    //retira acentos e substitui espaço em branco por underscores
+    //retira acentos e substitui espaï¿½o em branco por underscores
     $arr1 = array("(", ")", "-", ".", "_", "/");
     $arr2 = array("", "", "", "", "", "");
     $strNomeArquivoAlterado = str_replace($arr1, $arr2, $strNomeArquivo);
@@ -132,40 +204,50 @@ function aplicaMascara($valor, $mascara) {
     return $novoValor;
 }
 
-function montaGuiaLinks($controller, $links = array()) {
+function gerarBreadCrumb($links = array()) {
     try {
-        $pattern = "#(.*?)/$controller#is";
-        if ($BASEURL = retornaBaseUrl($controller)) {
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $primeiroLink = null;
 
-            $guia = "<div id='breadcrumb'><ul>";
-            $guia .= "<li class='first'><a href='{$BASEURL}/principal/' title='In&iacute;cio'>In&iacute;cio</a></li>";
-            $qtdLinks = count($links);
-            $contador = 0;
-            if ($qtdLinks > 0) {
-                foreach ($links as $link) {
-                    foreach ($link as $key => $val) {
-                        $contador++;
-                        if ($contador == $qtdLinks) {
-                            $guia .= "<li class='last'>{$key}</li>";
-                        } else {
-                            $router = Zend_Controller_Front::getInstance()->getRouter();
-                            if (is_array($val)) {
-                                $url = $router->assemble(array('controller' => $val['controller'], 'action' => $val['action']));
-                            } else {
-                                $url = $val;
+        $auth = Zend_Auth::getInstance();
+        $primeiroLink =  $router->assemble(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''));
+        if( isset($auth->getIdentity()->usu_codigo ) ) {
+            $primeiroLink =  $router->assemble(array('module' => 'default', 'controller' => 'principal', 'action' => ''));
+        }
+
+        $guia = "<div id='breadcrumb'><ul>";
+        $guia .= "<li class='first'><a href='{$primeiroLink}' title='In&iacute;cio'>In&iacute;cio</a></li>";
+        $qtdLinks = count($links);
+
+        $contador = 0;
+        if ($qtdLinks > 0) {
+            foreach ($links as $link) {
+                foreach ($link as $nomeLink => $val) {
+                    $contador++;
+                    if ($contador == $qtdLinks) {
+                        $guia .= "<li class='last'>{$nomeLink}</li>";
+                    } else {
+                        $url = $val;
+                        if (is_array($val)) {
+                            $arrayLink = array('controller' => $val['controller'], 'action' => $val['action']);
+                            if(isset($val['module']) && !empty($val['module'])) {
+                                $arrayLink['module'] = $val['module'];
                             }
-                            $guia .= "<li><a href='" . $url . "' title='{$key}'>" . $key . "</a></li>";
+
+                            // @todo: nÃ£o Ã© possivel nesse momento otimizar essa rotina.
+                            $url = $router->assemble($arrayLink);
+                            $url = explode('/', $url);
+                            $url = ('/'.$url[1] . '/' . $url[2] .'/'.$url[3]);
                         }
+                        $guia .= "<li><a href='" . $url . "' title='{$nomeLink}'>" . $nomeLink . "</a></li>";
                     }
                 }
             }
-            $guia .= "</ul></div>";
-            print $guia;
-        } else {
-            print "<span style='color: red;'>Erro na apresentaç?o da guia! - controller invalido</span>";
         }
-    } catch (Zend_Exception $e) {
-        parent::message("Erro ao montar guia de links", "projetosgerenciar/projetosgerenciar", "ERROR");
+        $guia .= "</ul></div>";
+        print $guia;
+    } catch (Zend_Exception $objException) {
+        throw new Exception("Erro ao montar guia de links", 0, $objException);
     }
 }
 
@@ -186,7 +268,7 @@ function retornaBaseUrl($controller) {
 function montaBotaoVoltar($controller, $links) {
     $link = retornaBaseUrl($controller) . '/principal/';
     $ultimoLink = count($links);
-    
+
     if (isset($links[$ultimoLink - 2])) {
         foreach ($links[$ultimoLink - 2] as $key => $value) {
             $titulo = $key;
@@ -205,15 +287,15 @@ function montaBotaoVoltar($controller, $links) {
 
 
 
-/* Funcção que verifica se o Proponente está Inabilitado*/
+/* Funcï¿½ï¿½o que verifica se o Proponente estï¿½ Inabilitado*/
 function proponenteInabilitado($cpf)
 {
 	$inabilitadoDAO = new Inabilitado();
-	
+
 	$where['CgcCpf 		= ?'] = $cpf;
 	$where['Habilitado 	= ?'] = 'N';
 	$busca = $inabilitadoDAO->Localizar($where);
-	
+
 	if(count($busca) > 0){
 		return true;
 	} else {
@@ -225,12 +307,12 @@ function proponenteInabilitado($cpf)
  * @param $cpf
  * @return bool
  */
-function validaCPF($cpf) { // Verifiva se o número digitado contém todos os digitos
+function validaCPF($cpf) { // Verifiva se o nï¿½mero digitado contï¿½m todos os digitos
     $cpf = str_pad(preg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
 
     if (strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999') {
         return false;
-    } else {   // Calcula os numeros para verificar se o CPF é verdadeiro
+    } else {   // Calcula os numeros para verificar se o CPF ï¿½ verdadeiro
         for ($t = 9; $t < 11; $t++) {
             for ($d = 0, $c = 0; $c < $t; $c++) {
                 $d += $cpf{$c} * (($t + 1) - $c);
@@ -257,7 +339,7 @@ function isValidDate($date, $format = 'Y-m-d') {
 }
 
 function isCnpjValid($cnpj) {
-    // Etapa 1: Cria um array com apenas os digitos numéricos,
+    // Etapa 1: Cria um array com apenas os digitos numï¿½ricos,
     // Isso permite receber o cnpj em diferentes formatos como:
     // "00.000.000/0000-00", "00000000000000", "00 000 000 0000 00" etc...
     $num = array();
@@ -269,18 +351,18 @@ function isCnpjValid($cnpj) {
         }
     }
 
-    //Etapa 2: Conta os dígitos, um Cnpj válido possui 14 dígitos numéricos.
+    //Etapa 2: Conta os dï¿½gitos, um Cnpj vï¿½lido possui 14 dï¿½gitos numï¿½ricos.
     if (count($num) != 14) {
         return false;
     }
 
-    //Etapa 3: O número 00000000000 embora não seja um cnpj real resultaria um cnpj válido
-    // após o calculo dos dígitos verificares e por isso precisa ser filtradas nesta etapa.
+    //Etapa 3: O nï¿½mero 00000000000 embora nï¿½o seja um cnpj real resultaria um cnpj vï¿½lido
+    // apï¿½s o calculo dos dï¿½gitos verificares e por isso precisa ser filtradas nesta etapa.
     if ($num[0] == 0 && $num[1] == 0 && $num[2] == 0 && $num[3] == 0 && $num[4] == 0 && $num[5] == 0 && $num[6] == 0 && $num[7] == 0 && $num[8] == 0 && $num[9] == 0 && $num[10] == 0 && $num[11] == 0) {
         return false;
     }
 
-    //Etapa 4: Calcula e compara o primeiro dígito verificador.
+    //Etapa 4: Calcula e compara o primeiro dï¿½gito verificador.
     else {
         $j = 5;
         for ($i = 0; $i < 4; $i++) {
@@ -305,7 +387,7 @@ function isCnpjValid($cnpj) {
         }
     }
 
-    //Etapa 5: Calcula e compara o segundo dígito verificador.
+    //Etapa 5: Calcula e compara o segundo dï¿½gito verificador.
     if (!isset($isCnpjValid)) {
         $j = 6;
         for ($i = 0; $i < 5; $i++) {
@@ -333,6 +415,133 @@ function isCnpjValid($cnpj) {
     }
 }
 
+
+function converterArrayParaObjetos($array)
+{
+    if(!sizeof($array))
+    {
+        return null;
+    }
+    else
+    {
+        $object = new stdClass();
+
+        foreach ($array as $field => $value)
+        {
+            $object->$field = (object) $value;
+        }
+        return $object;
+    }
+}
+
+
+function converterObjetosParaArray($objects){
+
+    if(empty($objects))
+        return false;
+
+    if(count($objects) == 1) {
+        return (array) $objects;
+    }
+
+    foreach($objects as $object)
+    {
+        $itens[] = get_object_vars( $object );
+    }
+    return $itens;
+
+}
+
+if (!function_exists('array_column')) {
+    /**
+     * Returns the values from a single column of the input array, identified by
+     * the $columnKey.
+     *
+     * Optionally, you may provide an $indexKey to index the values in the returned
+     * array by the values from the $indexKey column in the input array.
+     *
+     * @param array $input A multi-dimensional array (record set) from which to pull
+     *                     a column of values.
+     * @param mixed $columnKey The column of values to return. This value may be the
+     *                         integer key of the column you wish to retrieve, or it
+     *                         may be the string key name for an associative array.
+     * @param mixed $indexKey (Optional.) The column to use as the index/keys for
+     *                        the returned array. This value may be the integer key
+     *                        of the column, or it may be the string key name.
+     * @return array
+     */
+    function array_column($input = null, $columnKey = null, $indexKey = null)
+    {
+        // Using func_get_args() in order to check for proper number of
+        // parameters and trigger errors exactly as the built-in array_column()
+        // does in PHP 5.5.
+        $argc = func_num_args();
+        $params = func_get_args();
+        if ($argc < 2) {
+            trigger_error("array_column() expects at least 2 parameters, {$argc} given", E_USER_WARNING);
+            return null;
+        }
+        if (!is_array($params[0])) {
+            trigger_error(
+                'array_column() expects parameter 1 to be array, ' . gettype($params[0]) . ' given',
+                E_USER_WARNING
+            );
+            return null;
+        }
+        if (!is_int($params[1])
+            && !is_float($params[1])
+            && !is_string($params[1])
+            && $params[1] !== null
+            && !(is_object($params[1]) && method_exists($params[1], '__toString'))
+        ) {
+            trigger_error('array_column(): The column key should be either a string or an integer', E_USER_WARNING);
+            return false;
+        }
+        if (isset($params[2])
+            && !is_int($params[2])
+            && !is_float($params[2])
+            && !is_string($params[2])
+            && !(is_object($params[2]) && method_exists($params[2], '__toString'))
+        ) {
+            trigger_error('array_column(): The index key should be either a string or an integer', E_USER_WARNING);
+            return false;
+        }
+        $paramsInput = $params[0];
+        $paramsColumnKey = ($params[1] !== null) ? (string) $params[1] : null;
+        $paramsIndexKey = null;
+        if (isset($params[2])) {
+            if (is_float($params[2]) || is_int($params[2])) {
+                $paramsIndexKey = (int) $params[2];
+            } else {
+                $paramsIndexKey = (string) $params[2];
+            }
+        }
+        $resultArray = array();
+        foreach ($paramsInput as $row) {
+            $key = $value = null;
+            $keySet = $valueSet = false;
+            if ($paramsIndexKey !== null && array_key_exists($paramsIndexKey, $row)) {
+                $keySet = true;
+                $key = (string) $row[$paramsIndexKey];
+            }
+            if ($paramsColumnKey === null) {
+                $valueSet = true;
+                $value = $row;
+            } elseif (is_array($row) && array_key_exists($paramsColumnKey, $row)) {
+                $valueSet = true;
+                $value = $row[$paramsColumnKey];
+            }
+            if ($valueSet) {
+                if ($keySet) {
+                    $resultArray[$key] = $value;
+                } else {
+                    $resultArray[] = $value;
+                }
+            }
+        }
+        return $resultArray;
+    }
+}
 
 // Returns a file size limit in bytes based on the PHP upload_max_filesize
 // and post_max_size
@@ -367,4 +576,5 @@ function parse_size($size) {
     return round($size);
   }
 }
+
 ?>

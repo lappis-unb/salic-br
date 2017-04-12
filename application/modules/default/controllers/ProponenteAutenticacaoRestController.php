@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Login e autenticação via REST
- * 
+ * Login e autenticaï¿½ï¿½o via REST
+ *
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
-    
+
     public function init() {
         $this->setPublicMethod('post');
         parent::init();
@@ -34,9 +34,9 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
         } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)){
             $result->msg = 'CNPJ inv&aacute;lido!';
         } else {
-            $Usuario = new Sgcacesso();
+            $Usuario = new Autenticacao_Model_Sgcacesso();
             $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
-            
+
             $verificaSituacao = 0;
             if(count($verificaStatus)>0) {
                 $IdUsuario =  $verificaStatus[0]->IdUsuario;
@@ -61,7 +61,7 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
                 $SenhaFinal = addslashes($password);
                 $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
             }
-            
+
             if($buscar){
                 $result->usuario = Zend_Auth::getInstance()->getIdentity();
                 $result->authorization = $this->encryptAuthorization();
@@ -86,14 +86,14 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
                 $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
             }
         }
-        
-        # Resposta da autenticação.
+
+        # Resposta da autenticaï¿½ï¿½o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
-    
+
     /**
-     * Gera a chave de acesso do usuário para utilizar os serviços que precisam de identificação de usuário.
-     * 
+     * Gera a chave de acesso do usuï¿½rio para utilizar os serviï¿½os que precisam de identificaï¿½ï¿½o de usuï¿½rio.
+     *
      * @return string
      */
     protected function encryptAuthorization(){
@@ -102,18 +102,18 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
 
         return $authorization;
     }
-    
+
     /**
      * Define senha inicial para cadastros incompletos.
-     * 
+     *
      * @return string
      */
     public static function validarSenhaInicial(){
         return 'ae56f49edf70ec03b98f53ea6d2bc622';
     }
-    
+
     public function indexAction(){}
-    
+
     public function getAction(){}
 
     public function putAction(){}

@@ -10,7 +10,7 @@
  * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
-class DiligenciarProponenteController extends GenericControllerNew
+class DiligenciarProponenteController extends MinC_Controller_Action_Abstract
 {
     /**
      * Reescreve o método init()
@@ -57,7 +57,7 @@ class DiligenciarProponenteController extends GenericControllerNew
 	public function indexAction()
 	{
         $auth              = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
 
@@ -136,7 +136,7 @@ class DiligenciarProponenteController extends GenericControllerNew
                                         $diligencia = new Diligencia();
 
                                         $respostaDiligencia = $diligencia->buscar(array('idPronac = ?'=>$idpronac));
-//                                        xd($respostaDiligencia);
+
 					// manda os dados para a visão
 					//$this->view->buscar          = $buscar;
 

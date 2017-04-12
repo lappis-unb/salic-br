@@ -1,0 +1,139 @@
+<!--<style>-->
+<!--    body {overflow-x: hidden;overflow-y: hidden;}-->
+<!--</style>-->
+<?php if (!$this->habilitarServicoLoginCidadao): ?>
+    <div class="container">
+        <!--<div class="container animated slideInUp">-->
+        <!--<div class="container animated zoomIn">-->
+        <div id="title" class="row animated fadeIn">
+            <div class="col s12 l4"></div>
+            <div class="col s12 l4 center-align">
+                <h4 class="white-text">Bem-vindo(a)!</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m3 l3"></div>
+            <div class="col s12 m6 l6">
+                <!--        <div class="card z-depth-5 green darken-3">-->
+<!--                <div class="card green-text text-darken-4 animated fadeInUp">-->
+                <div class="card animated fadeInUp">
+                    <!--            <div class="card">-->
+                    <!--                <div class="card-image">-->
+                    <!--                    <img alt="Salic" src="-->
+                    <?php //echo $this->baseUrl(); ?><!--/public/img/logo.png">-->
+                    <!--                    <span class="card-title">Login</span>-->
+                    <!--                </div>-->
+                    <div class="card-content  white-text" style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat center 0 #acda5d ;">
+                        <div class="row" style="margin: 0;">
+                            <div class="col s12 center-align" >
+                                <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
+                            </div>
+                            <div class="col s12" >
+                                <span class="card-title"><b>Login</b></span>
+                            </div>
+                        </div>
+                        <!--                    <span class="card-title activator grey-text text-darken-4">Login-->
+                    </div>
+                    <div class="card-content">
+                        <form class="materialize" name="inicial" id="inicial"
+                              onsubmit="return validaSenha();"
+                              method="POST"
+                              action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'login'), null, true); ?>">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <!--                                <input id="email" type="password" class="validate">-->
+                                    <input  required="required"  type="text" name="Login"
+                                           id="Login"
+                                            class="cpf"/>
+                                    <label for="Login">CPF</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input required="required" type="password" name="Senha" id="Senha"/>
+<!--                                    <label for="password" data-error="wrong" data-success="OMK asodi jasodhasiod">Senha</label>-->
+                                    <label for="Senha">Senha</label>
+                                </div>
+                            </div>
+                            <button style="width: 100%;" id="btConfirmar"
+                                    class="btn waves-effect waves-light tooltipped" data-delay="50" data-tooltip="Acessar o sistema" type="submit" name="action">Entrar
+<!--                                <i class="material-icons right">send</i>-->
+                            </button>
+                        </form>
+                    </div>
+                    <div class="card-action center-align">
+                        <a
+                            href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>');"
+                            class="tooltipped" data-delay="50" data-tooltip="Se cadastrar">
+                            N&atilde;o sou cadastrado
+                        </a>
+                        <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>');"
+                           class="tooltipped" data-delay="50" data-tooltip="Resetar senha">
+                            Esqueci a senha
+                        </a>
+                    </div>
+                    <!--                <div class="card-reveal">-->
+                    <!--                    <span class="card-title grey-text text-darken-4">Login<i class="material-icons right">close</i></span>-->
+                    <!--                    <p>Preencha o seu cpf e senha para acessar o sistema.</p>-->
+                    <!--                </div>-->
+                </div>
+            </div>
+            <div class="col s12 m3 l3"></div>
+        </div>
+    </div>
+<?php else: ?>
+    <p align="center" colspan="2">
+        <a href="<?php echo $this->url(array('controller' => 'logincidadao', 'module' => 'autenticacao')) ?>">
+            <img style="border: 0px"
+                 src="<?php echo $this->baseUrl(); ?>/public/img/buttons/login_cidadao/BotaoParaLogin_escuro.png"
+                 alt="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza"
+                 title="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza"/>
+        </a>
+    </p>
+<?php endif; ?>
+<script type="text/javascript">
+
+    $3(document).ready(function ($) {
+        $("#inicial").validate({
+            // Define as regras
+            rules: {
+                Login: {
+                    // campoNome sera obrigatorio (required) e tera tamanho manimo (minLength)
+//                    required: true,
+                    minlength: 14,
+                    maxlength: 14
+                },
+                Senha: {
+                    // campoSenha sera obrigatorio (required)
+//                    required: true,
+                    minlength: 2
+                }
+            },
+            // Define as mensagens de erro para cada regra
+            messages: {
+                Login: {
+                    required: " Digite o seu CPF!",
+                    minlength: " O CPF deve conter exatamente 11 caracteres!"
+                },
+                Senha: {
+                    required: " Digite a sua senha!",
+                    minlength: " A senha deve conter, no m&iacute;nimo, 2 caracteres!"
+                }
+            }
+        });
+    });
+
+    function validaSenha() {
+        var data = document.getElementById("Senha").value;
+        //var iChars = "<";
+        data = data.replace("<", "##menor##");
+        data = data.replace(">", "##maior##");
+        data = data.replace("'", "##aspa##");
+
+        document.getElementById("Senha").value = data;
+        //document.inicial.submit();
+        return true;
+    }
+</script>

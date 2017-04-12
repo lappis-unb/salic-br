@@ -3,7 +3,7 @@
 * PHPMailer language file: refer to English translation for definitive list
 * Faroese Version [language of the Faroe Islands, a Danish dominion]
 * This file created: 11-06-2004
-* Supplied by Dávur Sørensen [www.profo-webdesign.dk]
+* Supplied by Davur Sørensen [www.profo-webdesign.dk]
 */
 
 $PHPMAILER_LANG['authenticate']         = 'SMTP feilur: Kundi ikki góðkenna.';

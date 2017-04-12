@@ -1,0 +1,106 @@
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
+
+<div id="msgAlerta"></div>
+<div class="container">
+    <h4>Solicitar Recurso</h4>
+    <div class="row">
+    <div class="col s12">
+    <?php if ($this->projeto): ?>
+        <table class="bordered">
+            <thead>
+                <th class="">Pronac</th>
+                <th class="">Nome do Projeto</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo $this->projeto->pronac;?></td>
+                    <td><?php echo $this->projeto->NomeProjeto;?></td>
+                </tr>
+            </tbody>
+                <thead>
+                    <th>Estado do Projeto</th>
+                    <th>Tipo da Solicita&ccedil;&atilde;o</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <?php echo $this->projeto->situacao ?>
+                        </td>
+                        <td >
+                            <?php if($this->recurso):  ?>
+                                Recurso
+                            <?php else :  ?>
+                                Pedido de Reconsidera&ccedil;&atilde;o
+                            <?php endif ?>
+                        </td>
+                    </tr>
+                    <?php if($this->recurso): ?>
+                        <tr>
+                            <th colspan="2">Recurso anterior:</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                    <?php echo $this->recurso->dsSolicitacaoRecurso  ?>
+                            </td>
+                        </tr>
+                    <?php endif ?>
+                </tbody>
+            </table>
+                <form name="form" id="form" method="post" action="<?php echo $this->url(array('module' => 'default', 'controller' => 'solicitarrecursodecisao', 'action' => 'recurso-enquadramento-salvar'))?>">
+                    <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
+                    <input type="hidden" name="tpSolicitacao" id="ER" value="ER" />
+                    <?php if($this->recurso):  ?>
+                        <input type="hidden" name="tpRecurso" value="2" />
+                    <?php else :  ?>
+                        <input type="hidden" name="tpRecurso" value="1" />
+                    <?php endif ?>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <br />
+                            <label class="active" for="dsRecurso">Recurso</label>
+                            <br/>
+                            <textarea name="dsRecurso" id="dsRecurso" class="editor materialize-textarea"></textarea>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class="input-field col s12 center-align">
+                             <button class="tooltipped btn waves-effect waves-light " data-tooltip="Solicitar Recurso" type="submit" name="action">Solicitar
+                                 <i class="material-icons right">send</i>
+                             </button>
+                             <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->idPronac?>" class="tooltipped red-text btn waves-effect waves-dark white" data-tooltip="Cancelar Solicitação" id="btn_cancelar" name="action">Cancelar
+                             </a>
+                         </div>
+                    </div>
+                </form>
+            </div>
+        <?php endif ?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/public/js/jquery.validate.addMethod.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#form').validate({
+            rules : {
+                dsRecurso:{
+                    requiredTinyMice: true
+                }
+            },
+            invalidHandler: function(event, validator) {
+                Materialize.toast('Campo "Recurso" &eacute; obrigat&oacute;rio!', 4000);
+            },
+            submitHandler: function (form) {
+                    $("#container-progress").show();
+                    form.submit();
+                }
+        });
+
+        jQuery('#dsRecurso').editorRico({altura: 200});
+    });
+</script>
+

@@ -1,0 +1,122 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s10">
+            <div class="valign-wrapper row">
+                <div class="col s6">
+                    <h4>Lista de propostas por proponente</h4>
+                </div>
+                <div class="col s6 ">
+                    <?php  if(!empty($_GET['realizar_analise'])) :  ?>
+                        <a class=" right btn white black-text"href="/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $this->idPreProjeto?><?php echo !empty($_GET['realizar_analise']) ? '&realizar_analise=sim' : null ?>">
+                            <i class="material-icons left">undo</i> Voltar: <?php echo $this->idPreProjeto?>
+                        </a>
+                    <?php else:  ?>
+                        <a class=" right btn white black-text"href="/admissibilidade/admissibilidade/listar-propostas">
+                            <i class="material-icons left">undo</i> Voltar
+                        </a>
+                    <?php endif  ?>
+                </div>
+            </div>
+            <div>
+                <?php if(!empty($this->propostas)): ?>
+                <table class="bordered">
+                    <tr onclick="abrirDinamico('#propostasProponente', $(this))" style="cursor:pointer">
+                        <th align="left">
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" />
+                            <?php echo $this->agente->Descricao; ?>
+                        </th>
+                    </tr>
+                    <tr id="propostasProponente">
+                        <td>
+                            <table class="bordered striped" id="tabelaPropostas">
+                                <thead>
+                                <tr>
+                                    <th>Nr. Proposta</th>
+                                    <th>Nome da Proposta Cultural</th>
+                                    <th>Status</th>
+                                    <th>T&eacute;cnico</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach($this->propostas as $proposta): ?>
+                                <tr>
+                                    <td><a data-idpreprojeto="<?php echo $proposta->idPreProjeto; ?>"
+                                        class="proposta-visualizar black-text btn waves-effect waves-dark white"
+                                        href="#abrirModal"><?php echo $proposta->idPreProjeto; ?></a></td>
+                                    <td><?php echo $proposta->NomeProjeto; ?></td>
+                                    <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"]; ?></td>
+                                    <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["tecnico"]; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <?php endif; ?>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="abrirModal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Fechar</a>
+    </div>
+</div>
+<script type="text/javascript">
+    $3('.proposta-visualizar').on('click',
+        function() {
+            $3(".modal-content").empty().load('/admissibilidade/admissibilidade/exibirpropostacultural-ajax?idPreProjeto=' + $3(this).data().idpreprojeto)
+        }
+    );
+</script>
+<style>
+    #abrirModal.modal{
+       height: 100%;
+       max-height: 96%;
+       width: 98%;
+    }
+</style>
+<script type="text/javascript">
+    <!--
+    $(document).ready(function(){
+        $("#tabelaPropostas").tablesorter();
+        $('th').css("cursor","pointer");
+        $('th').attr("title","Clique aqui para ordenar");
+    });
+    $(document).ready(function(){
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $3('.modal').modal({
+            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+            opacity: .6, // Opacity of modal background
+            in_duration: 500, // Transition in duration
+            out_duration: 200, // Transition out duration
+            starting_top: '4%', // Starting top style attribute
+            ending_top: '02%', // Ending top style attribute
+        });
+    });
+
+    /*
+     * Fun��o respons�vel pela exibi��o ou ocultamento de conte�do,
+     * mudando a imagem.
+     **/
+    function abrirDinamico(elemento, obj) {
+        if($(elemento).css('display') == 'none') {
+            $(elemento).fadeIn('fast', function() {
+                $('img', $(obj)).attr('src','<?php echo $this->baseUrl();?>/public/img/navigation-right.png');
+            });
+        } else {
+            $(elemento).fadeOut('fast', function() {
+                $('img', $(obj)).attr('src','<?php echo $this->baseUrl();?>/public/img/navigation-baixo.PNG');
+            });
+        }
+    }
+    //-->
+</script>

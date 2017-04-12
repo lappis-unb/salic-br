@@ -1,0 +1,693 @@
+/*
+Ajustes materialize com o SALIC
+
+Sugestão de organização do css, ajustar conforme o uso
+
+Paleta de cores by Jamile
+    Verde claro: #81C784
+    Verde médio: #4CAF50
+    Verde escuro: #1B5E20
+    Rosa: #FF8A80
+    Azul: #039BE5
+    Laranja: #FB8C00
+    Amarelo: #FDD835
+    Cinza claro: #FAFAFA
+    Cinza médio: #EEEEEE
+    Cinza escuro: #212121
+
+----------------------------------------------------------------
+>>> ÍNDICE:
+----------------------------------------------------------------
+
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+x - Elementos básicos
+--------------------------------------------------------------*/
+label {
+    width: 100%;
+}
+
+.ui-dialog {
+    font-size: 14px;
+}
+
+.no-border { border: 0px; }
+.padding20 { padding: 20px; }
+.no-margin { margin: 0px !important; }
+.margin0 { margin: 0px; }
+.margin5 { margin: 5px; }
+.margin-bottom20 { margin-bottom: 20px; }
+.margin-bottom30 { margin-bottom: 30px }
+
+
+/*--------------------------------------------------------------
+x - BODY
+--------------------------------------------------------------*/
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background: transparent;
+    width: 100%;
+}
+/*--------------------------------------------------------------
+x - HEADER
+--------------------------------------------------------------*/
+header {
+    margin-bottom: 1em;
+    position: relative;
+    display: block;
+    clear: both;
+}
+
+/*--------------------------------------------------------------
+x - MAIN
+--------------------------------------------------------------*/
+main {
+    display: block;
+    clear: both;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/*--------------------------------------------------------------
+x - CONTAINER
+--------------------------------------------------------------*/
+.container-fluid {
+    margin: 0 auto;
+    width: 98%;
+}
+
+.container.fade {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+x - BREADCRUMB
+--------------------------------------------------------------*/
+.breadcrumb a {
+    font-size: 13px;
+}
+/*--------------------------------------------------------------
+x - ARTICLE
+--------------------------------------------------------------*/
+article {
+    padding-bottom: 60px;
+    width: 900px;
+    margin: 0 auto;
+}
+
+/*--------------------------------------------------------------
+x -  NAVEGAÇÃO
+--------------------------------------------------------------*/
+/** fim ajustes materialize com o salic **/
+
+nav .nav-wrapper {
+    color: #fff;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+}
+nav.breadcrumb {
+    height: 30px;
+    /*background-color: #388E3C;*/
+}
+nav.breadcrumb .nav-wrapper {
+    color: #fff;
+    background-color: #388E3C;
+    /*background-color: #3c763d;*/
+    /*background-color: #1B5E20;*/
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+/*--------------------------------------------------------------
+x - Navegação
+--------------------------------------------------------------*/
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+/*Inherited from nav.nav-extended*/
+/*@media only screen and (min-width: 601px)*/
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 56px;
+    line-height: 56px;
+}
+nav {
+    color: #fff;
+    background-color: #ee6e73;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+}
+nav ul a {
+    transition: background-color .3s;
+    font-size: 1rem;
+    color: #fff;
+    display: block;
+    padding: 0 15px;
+    cursor: pointer;
+}
+#sidenav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 996;
+    will-change: opacity;
+}
+
+/*--------------------------------------------------------------
+x - Botões
+--------------------------------------------------------------*/
+.btn-default,
+.btn-success  {
+    background: #4caf50;
+    color: #fff !important;
+}
+
+.btn-default:focus,
+.btn-sucess:focus,
+.btn-default:hover,
+.btn-success:hover {
+    background: #388e3c;
+}
+
+.btn-primary {
+    background-color: #29b6f6;
+    color: #fff !important;
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+    background: #0277bd;
+}
+
+.btn-danger {
+    background: #FF8A80;
+    color: #fff !important;
+}
+
+.btn-danger:focus,
+.btn-danger:hover {
+    background: #ff5252;
+
+}
+
+.btn-warning {}
+
+.btn-success {}
+
+.btn-info {
+    background: #212121;
+    color: #fff;
+}
+.btn-info:focus,
+.btn-info:hover {
+    background: #757575;
+}
+
+.btn.small{
+    padding: 0 1rem;
+}
+
+.btn-floating.small {
+    width: 30px;
+    height: 30px;
+}
+.btn-floating.small i {
+    line-height: 32px;
+}
+
+.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .collapsible, .side-nav {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+}
+
+.btn.loading {
+    background-image: url(../../../img/loader-mini.gif);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    cursor: none;
+    box-shadow: none;
+    border: none;
+    text-indent: -2000px;
+}
+
+/*--------------------------------------------------------------
+x - FORMULÁRIOS
+--------------------------------------------------------------*/
+/* label color */
+.input-field label {
+    color: #00481d;
+}
+
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: #00481d;
+}
+
+/* label underline focus color */
+.input-field input[type=text]:focus, textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #00481d;
+    box-shadow: 0 1px 0 0 #00481d;
+}
+
+textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: #00481d;
+}
+
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #00481d;
+    box-shadow: 0 1px 0 0 #00481d;
+}
+
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #F44336;
+    box-shadow: 0 1px 0 0 #F44336;
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #00481d;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    font-size: 16px;
+    color: #00481d;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+}
+
+input:not([type]).invalid, input:not([type]):focus.invalid,
+input[type=text].invalid,
+input[type=text]:focus.invalid,
+input[type=password].invalid,
+input[type=password]:focus.invalid,
+input[type=email].invalid,
+input[type=email]:focus.invalid,
+input[type=url].invalid,
+input[type=url]:focus.invalid,
+input[type=time].invalid,
+input[type=time]:focus.invalid,
+input[type=date].invalid,
+input[type=date]:focus.invalid,
+input[type=datetime].invalid,
+input[type=datetime]:focus.invalid,
+input[type=datetime-local].invalid,
+input[type=datetime-local]:focus.invalid,
+input[type=tel].invalid,
+input[type=tel]:focus.invalid,
+input[type=number].invalid,
+input[type=number]:focus.invalid,
+input[type=search].invalid,
+input[type=search]:focus.invalid,
+textarea.materialize-textarea.invalid,
+textarea.materialize-textarea:focus.invalid {
+    color: #F44336;
+}
+
+label {
+    width: 100%;
+}
+
+/* label color */
+.input-field label {
+    color: #1b5e20;
+}
+.input-field {
+    color: #1b5e20;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: #1b5e20;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #1b5e20;
+    box-shadow: 0 1px 0 0 #1b5e20;
+}
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #4CAF50;
+    box-shadow: 0 1px 0 0 #4CAF50;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #F44336;
+    box-shadow: 0 1px 0 0 #F44336;
+}
+
+.input-field label[data-error] {
+    font-size: 0.8rem;
+    -webkit-transform: translateY(-140%);
+    -moz-transform: translateY(-140%);
+    -ms-transform: translateY(-140%);
+    -o-transform: translateY(-140%);
+    transform: translateY(-140%);
+}
+
+input:not([type]):focus:not([readonly]) + label[data-error],
+input[type=text]:focus:not([readonly]) + label[data-error],
+input[type=password]:focus:not([readonly]) + label[data-error],
+input[type=email]:focus:not([readonly]) + label[data-error],
+input[type=url]:focus:not([readonly]) + label[data-error],
+input[type=time]:focus:not([readonly]) + label[data-error],
+input[type=date]:focus:not([readonly]) + label[data-error],
+input[type=datetime]:focus:not([readonly]) + label[data-error],
+input[type=datetime-local]:focus:not([readonly]) + label[data-error],
+input[type=tel]:focus:not([readonly]) + label[data-error],
+input[type=number]:focus:not([readonly]) + label[data-error],
+input[type=search]:focus:not([readonly]) + label[data-error],
+textarea.materialize-textarea:focus:not([readonly]) + label[data-error] {
+    color: #F44336;
+}
+
+#frmProposta .input-field label {
+    color: #212121;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+#frmProposta .input-field .caption {
+    color: #212121;
+}
+
+#frmProposta .mce-tinymce {
+    margin-bottom: 5px;
+
+}
+#tinymce  {
+    font-size: 14px !important;
+}
+
+/*--------------------------------------------------------------
+x - CARREGAMENTO
+--------------------------------------------------------------*/
+
+.progress .indeterminate {
+    background-color: #fb8c00;
+}
+.progress {
+    background-color: #ffe0b2;
+}
+
+/*--------------------------------------------------------------
+x - MODAL
+--------------------------------------------------------------*/
+.modal.height-fluid{
+    height: auto;
+}
+
+
+/*--------------------------------------------------------------
+x - Tabelas
+--------------------------------------------------------------*/
+
+.bordered {
+    border: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0;
+}
+
+table > tbody > tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+table > tbody > tr {
+    transition: background-color .25s ease;
+}
+
+table > tbody > tr:hover {
+    background-color: #f2f2f2;
+}
+
+/*--------------------------------------------------------------
+x - Sidebar
+--------------------------------------------------------------*/
+ul.sidebar-nav {
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0px 1px 4px #9e9e9e;
+    overflow: hidden;
+    min-width: 100px;
+}
+
+ul.sidebar-nav ul {
+    margin: 0px;
+    padding: 0px;
+}
+.sidebar-nav .collapsible-header,
+.sidebar-nav .collapsible-body,
+.sidebar-nav .collapsible {
+    box-shadow: none;
+    border: none;
+    margin: 0;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding: 0px;
+}
+
+.sidebar-nav a.collapsible-header,
+.sidebar-nav li a {
+    position: relative;
+    font-size: 12px;
+    /*color: #565656;*/
+    color: #212121;
+    line-height: 44px;
+    height: 44px;
+    padding: 0 30px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #D2D2D2;
+    overflow: hidden;
+}
+
+.sidebar-nav li a.active:before,
+.sidebar-nav a.collapsible-header:before {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 16px;
+    top: 18px;
+    width: 0;
+    border-width: 6px 0 6px 6px;
+    border-style: solid;
+    border-color: transparent #666;
+}
+
+.sidebar-nav li a.active:before {
+    border-color: transparent #afaaaa;
+}
+
+.sidebar-nav a.collapsible-header.active:before {
+    border-width: 6px 6px 0px 6px;
+    border-color: #666 transparent;
+    top: 20px
+}
+
+.sidebar-nav a.collapsible-header.active,
+.sidebar-nav li a.active,
+.sidebar-nav a.collapsible-header:hover,
+.sidebar-nav li a:hover {
+    background: rgba(0, 0, 0, 0.11);
+}
+
+.sidebar-nav li .collapsible-body a {
+    border: none;
+    font-weight: normal;
+    color: #212121;
+    padding-left: 50px;
+
+}
+.sidebar-nav li .collapsible-body{
+    border-bottom: 1px solid #D2D2D2;
+}
+
+.sidebar-nav .detalhes-proposta .row {
+    margin-bottom: 0px;
+}
+
+.sidebar-nav .detalhes-proposta p {
+    line-height: 12pt;
+    padding: 0 0 2px;
+    font-size: 13px;
+    margin: 10px 0px;
+}
+
+.sidebar-nav .detalhes-proposta i {
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 1300px) {
+    .sidebar-nav a.collapsible-header, .sidebar-nav li a {
+        padding: 0 10px;
+    }
+
+    .sidebar-nav li .collapsible-body a {
+        padding-left: 15px;
+    }
+}
+
+/*--------------------------------------------------------------
+x - DATATABLE
+--------------------------------------------------------------*/
+.mdl-button--raised.mdl-button--colored {
+    background: #4caf50 !important;
+    color: #fff;
+}
+
+/* TEMPORARIAMENTE - Sera retirado depois. */
+div.dataTables_wrapper div.dataTables_filter{text-align:right}
+div.dataTables_wrapper div.dataTables_filter input{margin-left:0.5em}
+div.dataTables_wrapper div.dataTables_info{padding-top:10px;white-space:nowrap}
+div.dataTables_wrapper div.dataTables_processing{
+    background: rgba(76, 175, 80, 0.8);
+    z-index: 1000;
+}
+
+.dataTables_wrapper .dataTables_processing {
+    background: rgba(0, 0, 0, 0) linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%) repeat scroll 0 0;
+    font-size: 2.5em !important;
+    height: 100% !important;
+    padding: 5%;
+    text-align: center !important;
+    vertical-align: middle !important;
+    top: 0% !important;
+    right: 0% !important;
+    width: 100% !important;
+    height: 105% !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate{text-align:right}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: rgb(76, 175, 80) !important;
+    border: 1px solid #979797;
+    color: #333 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: rgb(76, 175, 80) !important;
+    border: 1px solid #979797;
+    color: #333 !important;
+}
+
+div.dataTables_wrapper div.mdl-grid.dt-table {
+    padding-top: 0;
+    padding-bottom: 0
+}
+
+div.dataTables_wrapper div.mdl-grid.dt-table > div.mdl-cell {
+    margin-top: 0;
+    margin-bottom: 0
+}
+table.dataTable thead th {
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 0;
+}
+table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting {
+    padding-right: 30px;
+}
+
+table.dataTable thead > tr > th:active, table.dataTable thead > tr > td:active {
+    outline: none
+}
+
+table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
+    cursor: pointer;
+    position: relative
+}
+
+table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:before, table.dataTable thead .sorting_desc_disabled:after {
+    position: absolute;
+    bottom: 11px;
+    display: block;
+    opacity: 0.3;
+    font-size: 1.3em
+}
+
+table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:before {
+    right: 1em;
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+    right: 0.5em;
+}
+
+table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:after {
+    opacity: 1
+}
+
+table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:after {
+    opacity: 0
+}
+
+div.dataTables_filter input {
+    border: 1px solid #ddd;
+}
+div.dataTables_length .select-wrapper {
+    max-width: 30px;
+}
+div.dataTables_length select {
+    height: 30px;
+}
+/*--------------------------------------------------------------
+x - FOOTER
+--------------------------------------------------------------*/
+footer {
+    background-color: #1B5E20;
+    color: #fff;
+    position: inherit;
+    bottom: 0;
+    width: 100%;
+
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+}
+
+footer.green,
+footer.green a {
+    color: #ffcc80;
+}
+
+footer.page-footer {
+    margin-top: 0;
+    padding-top: 0;
+    background-color: #ee6e73;
+}
+
+footer a{
+    color: #ffcc80;
+}
+
+footer {
+    color: #FFFFFF;
+    background-color: rgb(93, 64, 55);
+}

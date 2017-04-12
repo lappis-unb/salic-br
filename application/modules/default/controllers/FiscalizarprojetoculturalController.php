@@ -5,9 +5,7 @@
  *
  * @author André Nogueira Pereira
  */
-require_once 'GenericControllerNew.php';
-
-class FiscalizarprojetoculturalController extends GenericControllerNew {
+class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstract {
 
     public function init() {
 
@@ -50,14 +48,14 @@ class FiscalizarprojetoculturalController extends GenericControllerNew {
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $idUsuario = $auth->getIdentity()->usu_codigo;
 
-        $usuarios = new Usuario();
+        $usuarios = new Autenticacao_Model_Usuario();
         $agente = $usuarios->getIdUsuario($idUsuario);
 
-        $idAgente = $agente->idAgente;
+        $idAgente = $agente['idAgente'];
 
         $aprovacaoDao = new Aprovacao();
         $selectAp = $aprovacaoDao->totalAprovadoProjeto(true);
-        $abrangenciaDao = new Abrangencia();
+        $abrangenciaDao = new Proposta_Model_DbTable_Abrangencia();
         $selectAb = $abrangenciaDao->abrangenciaProjeto(true);
         $projetosDao = new Projetos();
 
@@ -151,7 +149,7 @@ class FiscalizarprojetoculturalController extends GenericControllerNew {
                 $this->view->historicoDevolucao = array();
             }
         }
-        //xd($this->view->relatorioFiscalizacao);
+        
     }
 
     public function parecerdocoordenadorAction() {
@@ -312,7 +310,7 @@ class FiscalizarprojetoculturalController extends GenericControllerNew {
         $FiscalizacaoDAO = new Fiscalizacao();
         $RelatorioFiscalizacaoDAO = new RelatorioFiscalizacao();
         $ArquivoFiscalizacaoDAO = new ArquivoFiscalizacao();
-        $usuarios = new Usuario();
+        $usuarios = new Autenticacao_Model_Usuario();
         $projetosDAO = new Projetos();
 
 //        $Usuario = $usuarios->getIdUsuario($idUsuario);
@@ -463,5 +461,3 @@ class FiscalizarprojetoculturalController extends GenericControllerNew {
     }
 
 }
-
-?>

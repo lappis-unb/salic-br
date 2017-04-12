@@ -1,0 +1,78 @@
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
+
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="breadcrumb">
+	<ul>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="In&iacute;cio">In&iacute;cio</a></li>
+		<li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes')); ?>?acao=cc">Manter Agentes</a></li>
+		<li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'buscaragente')); ?>">Pesquisar Agentes</a></li>
+		<li class="last">Resultado da busca</li>
+	</ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+
+
+<!-- ========== INICIO TITULO ========== -->
+<div id="titulo">
+	<div>Resultado da busca <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+</div>
+<!-- ========== FIM TITULO ========== -->
+
+
+
+<!-- ========== INICIO CONTEUDO ========== -->
+<div id="conteudo">
+    <table class="tabela">
+        <tr>
+            <th colspan="5" class="fundo_linha2">Agentes</th>
+        </tr>
+        <tr>
+            <th>CPF/CNPJ</th>
+            <th>NOME</th>
+            <th>VIS&Atilde;O</th>
+            <th></th>
+        </tr>
+        <?php $cont = 0; ?>
+        <?php $idAgente = 0; ?>
+        <?php foreach ($this->buscar as $b) : ?>
+        <?php if($b->idAgente != $idAgente): ?>
+        <tr onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);" onblur="out_tr(this);" onclick="click_tr(this);" onkeypress="click_tr(this);"
+            class="<?php //echo $this->corLinha($cont); ?>">
+            <td class="centro"><?php echo Validacao::mascaraCPFCNPJ($b->CNPJCPF); ?></td>
+            <td><?php echo $b->Nome; ?></td>
+            <td>
+                <?php
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $visao = $visaoTable->buscarVisao($b->idAgente); // visao
+                $i     = 0; // contador
+
+                foreach ($visao as $v) :
+                    if ($i > 0) echo " / "; // separa por barra caso tenha mais de uma visao
+                    echo $v->Descricao;
+                    $i++;
+                endforeach;
+                ?>
+            </td>
+            <td class="centro">
+                <input type="button" class="btn_ver" title=" Alterar Vis&atilde;o " value=" "
+                    onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes','id' => $b->idAgente),'',true); ?>');" />
+            </td>
+        </tr>
+        <?php endif; ?>
+        <?php $idAgente = $b->idAgente; ?>
+        <?php $cont++; ?>
+        <?php endforeach; ?>
+    </table>
+
+<!-- ========== PAGINACAO ========== -->
+<?php if ($this->qtdAgentes > 10) { echo "<br /><p>" . $this->buscar . "</p><br />"; } ?>
+
+</div>
+<!-- ========== FIM CONTEUDO ========== -->
+
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
+<div id="rodapeConteudo"><span></span></div>
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+
+<br clear="all" />

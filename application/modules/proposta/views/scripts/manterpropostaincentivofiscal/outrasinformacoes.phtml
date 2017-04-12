@@ -1,0 +1,77 @@
+<div class="container-fluid white">
+    <div class="row">
+        <?php echo $this->partial("inc/menu.phtml", $this); // menu ?>
+        <div class="col s10 m12 l10">
+
+            <?php
+            gerarBreadCrumb(array(
+                $this->layout['listagem'],
+                array('Outras Informa&ccedil;&otilde;es' => '')
+            ));
+            ?>
+
+            <div id="titulo" style="width: 100%;">
+                <div><?php echo $this->layout['titleFull']; ?> - Outras Informa&ccedil;&otilde;es</div>
+            </div>
+            <div class="clear-fix"></div>
+            <div id="conteudo" class="section">
+                <div class="row">
+                    <form action="<?php echo $this->acao; ?>" method="post" id="frmProposta" name="frmProposta"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="idPreProjeto" id="idPreProjeto"
+                               value="<?php echo isset($this->proposta['idpreprojeto']) ? $this->proposta['idpreprojeto'] : '' ?>">
+                        <input type="hidden" name="acao" id="acao" value="alterar">
+                        <input type="hidden" name="idagente"
+                               value="<?php echo isset($this->proponente['idagente']) ? $this->proponente['idagente'] : '' ?>">
+                        <input type="hidden" name="url"
+                               value="<?php echo isset($this->url) ? $this->url : '' ?>">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <p class="caption">Apenas utilizar este campo caso tenha informa&ccedil;&atilde;o
+                                    complementar do projeto que n&atilde;o tenha sido abordada nos campos anteriores.
+                                    Como, por exemplo, algum apontamento acerca de rubricas no or&ccedil;amento da
+                                    Planilha Or&ccedil;ament&aacute;ria.</p>
+
+                                <textarea id="estrategiadeexecucao" class="browser-default editor"
+                                          name="estrategiadeexecucao" <?php echo isset($this->arrConfig['estrategiadeexecucao']['disabled']) ? 'disabled="disabled"' : '' ?>>
+                                 <?php if (isset($this->proposta['estrategiadeexecucao'])) echo $this->proposta['estrategiadeexecucao']; ?>
+                                </textarea>
+                                <label for="estrategiadeexecucao" class="active">Outras Informa&ccedil;&otilde;es</label>
+                            </div>
+                        </div>
+                        <?php  if ( $this->isEditavel ) : ?>
+                            <div class="row">
+                                <div class="input-field col s12 center">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Salvar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function ($) {
+
+        <?php  if ( !$this->isEditavel ) : ?>
+            //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
+            JSBloquearAlteracaoFormulario();
+        <?php endif; ?>
+
+
+        $("textarea.editor").each(function () {
+            $(this).editorRico({
+                altura: 400,
+                maxchar: 8000,
+                isLimitarCarateres : true,
+                isDesabilitarEdicao: 0
+            });
+        });
+    });
+</script>

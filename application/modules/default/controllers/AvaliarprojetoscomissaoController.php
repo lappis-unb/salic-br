@@ -1,45 +1,43 @@
 <?php
 
+class AvaliarprojetoscomissaoController extends MinC_Controller_Action_Abstract {
 
-
-class AvaliarprojetoscomissaoController extends GenericControllerNew {
-	
 	private $intTamPag = 10;
 	private $idAgente = null;
-	
-	public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
 
-        if ($auth->hasIdentity()) { // caso o usuário estja autenticado
-            // verifica as permissões
+	public function init() {
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+
+        if ($auth->hasIdentity()) { // caso o usuï¿½rio estja autenticado
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 114; //Coordenador de Editais
-	        
+
 	        if(isset($auth->getIdentity()->usu_codigo)){
 	        	parent::perfil(1, $PermissoesGrupo);
 	        }else{
 	        	parent::perfil(4, $PermissoesGrupo);
 	        }
-	        
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 
         } // fecha if
         else {
-            // caso o usuário não esteja autenticado
+            // caso o usuï¿½rio nï¿½o esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
 
@@ -47,59 +45,59 @@ class AvaliarprojetoscomissaoController extends GenericControllerNew {
         $cpf =  trim($cpf);
         $dados = array('CNPJCPF = ?' => $cpf);
 
-        $idAge = new Agentes();
-        $idAgente = $idAge->buscarAgenteNome($dados);
+        $idAge = new Agente_Model_DbTable_Agentes();
+        $idAgente = $idAge->buscarAgenteENome($dados);
         $this->idAgente = $idAgente;
-        
+
         parent::init(); // chama o init() do pai GenericControllerNew
     }
-    
+
     public function indexAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
         //$this->_redirect("tramitarprojetos/despacharprojetos");
-        
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->view->codGrupo = $codGrupo;
 
         /*         * *************************************************************** */
     }
-    
+
     public function avaliarcomissaoAction(){
-        
+
     	$tblProjeto = new Projetos();
         $buscaRegiao = AvaliarProjetosComissaoDAO::buscaRegiao();
-    	$this->view->buscaRegiao = $buscaRegiao; 
+    	$this->view->buscaRegiao = $buscaRegiao;
 
     	$buscaUF = AvaliarProjetosComissaoDAO::buscaUF();
-    	$this->view->buscaUF = $buscaUF; 
-    	
+    	$this->view->buscaUF = $buscaUF;
+
     	$buscaEdital = AvaliarProjetosComissaoDAO::buscaEdital();
-    	$this->view->buscaEdital = $buscaEdital; 
-        
+    	$this->view->buscaEdital = $buscaEdital;
+
     	//PARA APROVAR O PROJETO
         if(!empty($_POST['pronacs'])) {
         	$pronac = $_POST['pronacs'];
         	$idPreProjeto = $_POST['pre'];
         	$nota = str_replace(',', '.', $_POST['nrNota']);
         	$situacao = 'G52';
-        	
+
         	$tblProjeto->alterarSituacao(null,$pronac, $situacao);
         	$aprovacao = AvaliarProjetosComissaoDAO::buscarAprovacao($idPreProjeto);
-        	
+
         	if($aprovacao){
         		AvaliarProjetosComissaoDAO::aprovarProjeto($idPreProjeto, $nota, null, 1, 1);
         	}else {
         		AvaliarProjetosComissaoDAO::aprovarProjeto($idPreProjeto, $nota, null, 1);
         	}
-        	
+
         	parent::message("Projeto aprovado com sucesso!", "Avaliarprojetoscomissao/avaliarcomissao", "CONFIRM");
         }
-        
+
         //PARA REPROVAR O PROJETO
     	if(!empty($_POST['just']) && isset($_POST['pro'])) {
         	$pronac = $_POST['pro'];
@@ -107,61 +105,61 @@ class AvaliarprojetoscomissaoController extends GenericControllerNew {
         	$idPreProjeto = $_POST['idPreProj'];
         	$justificativa = $_POST['justificativa'];
         	$situacao = 'G52';
-        	
+
         	AvaliarProjetosComissaoDAO::alterarNota($nota, $idPreProjeto);
         	$tblProjeto->alterarSituacao(null,$pronac, $situacao);
 
     		$aprovacao = AvaliarProjetosComissaoDAO::buscarAprovacao($idPreProjeto);
-        	
+
         	if($aprovacao){
         		AvaliarProjetosComissaoDAO::aprovarProjeto($idPreProjeto, $nota, $justificativa, 0, 1);
         	}else {
         		AvaliarProjetosComissaoDAO::aprovarProjeto($idPreProjeto, $nota, $justificativa, 0);
         	}
-        	
+
         	parent::message("Projeto reprovado com sucesso!", "Avaliarprojetoscomissao/avaliarcomissao", "CONFIRM");
         }
-        
+
         //PARA ALTERAR A NOTA DO PROJETO
     	if(isset($_POST['pro']) and empty($_POST['just'])) {
-    		
+
         	$nota = str_replace(',', '.', $_POST['nota']);
         	$idPreProjeto = $_POST['idPreProj'];
         	$justificativa = $_POST['justificativa'];
 //        	$idAgente = $this->idAgente;
 
         	AvaliarProjetosComissaoDAO::alterarNota($nota, $idPreProjeto);
-        	
+
     		$aprovacao = AvaliarProjetosComissaoDAO::buscarAprovacao($idPreProjeto);
-        	
+
         	if($aprovacao){
         		AvaliarProjetosComissaoDAO::aprovarProjeto($idPreProjeto, $nota, $justificativa, null, 1);
         	}
-        	        	
+
         	parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "Avaliarprojetoscomissao/avaliarcomissao", "CONFIRM");
-        }    
+        }
     }
 
     public function listarprojetosAction(){
-    	
+
     	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-    		
+
     	//DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
 		if($this->_request->getParam("qtde")){
         	$this->intTamPag = $this->_request->getParam("qtde");
         }
         $order = array();
-            
+
         $pag = 1;
         $get = Zend_Registry::get('get');
-        //xd($get);
+        
         if (isset($get->pag)) $pag = $get->pag;
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-        
+
         //==== parametro de ordenacao  ======//
         if($this->_request->getParam("ordem")){
         	$ordem = $this->_request->getParam("ordem");
-	        
+
         	if($ordem == "ASC"){
 	            $novaOrdem = "DESC";
 	        }else{
@@ -175,18 +173,18 @@ class AvaliarprojetoscomissaoController extends GenericControllerNew {
         //==== campo de ordenacao  ======//
         if($this->_request->getParam("campo")){
             $campo = $this->_request->getParam("campo");
-            //xd($campo);
+            
             $order = array($campo." ".$ordem);
             $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-                
+
         }else{
         	$campo = null;
-            $order = array("12 DESC"); //ordenado por Nota 
+            $order = array("12 DESC"); //ordenado por Nota
             $ordenacao = null;
         }
 
         $this->view->filtros = '';
-    	
+
     	$where = array();
     	$where['pro.Situacao = ? ']='G51';
     	//SE ENVIOU EDITAL
@@ -196,10 +194,10 @@ class AvaliarprojetoscomissaoController extends GenericControllerNew {
     		$this->view->Edital = $this->_request->getParam("edital");
     		$this->view->filtros = '&edital='.$this->_request->getParam("edital");
     	}
-    	
+
     	//SE ENVIOU REGIAO
     	$regiao = trim($this->_request->getParam("regiao"));
-    	
+
     	if(!empty($regiao)){
     		$arrUfs = AvaliarProjetosComissaoDAO::buscaUF($regiao);
     		foreach($arrUfs as $uf){
@@ -208,40 +206,40 @@ class AvaliarprojetoscomissaoController extends GenericControllerNew {
     		$where['pro.UfProjeto in (?) ']= $arrFiltroUfs;
     		$this->view->Edital = $this->_request->getParam("edital");
     		$this->view->RegiaoSel = $regiao;
-    		$this->view->buscaUF = $arrUfs; 
+    		$this->view->buscaUF = $arrUfs;
     		$this->view->filtros .= '&regiao='.$regiao;
     	}else{
-    		
+
 	    	$buscaUF = AvaliarProjetosComissaoDAO::buscaUF();
-	    	$this->view->buscaUF = $buscaUF; 
+	    	$this->view->buscaUF = $buscaUF;
     	}
-    	
+
     	//SE ENVIOU UF
     	if($this->_request->getParam("uf")){
     		$where['pro.UfProjeto = ? ']= $this->_request->getParam("uf");
     		$this->view->UfSel = $this->_request->getParam("uf");
     		$this->view->filtros .= '&uf='.$this->_request->getParam("uf");
     	}
-    	
+
     	$tblProjeto = new Projetos();
-    	
+
     	$total = $tblProjeto->buscaProjetosComissao($where, $order, null, null, true);
-    	
-    	$fim = $inicio + $this->intTamPag; 
-    	
+
+    	$fim = $inicio + $this->intTamPag;
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
         $buscaProjetosComissao = $tblProjeto->buscaProjetosComissao($where, $order, $tamanho, $inicio);//$tblProjeto->buscarProjetosConsolidados($where, $order, $tamanho, $inicio);
 
 	    $this->view->buscaProjetos = $buscaProjetosComissao;
-        
+
         $buscaRegiao = AvaliarProjetosComissaoDAO::buscaRegiao();
-    	$this->view->buscaRegiao = $buscaRegiao; 
-    	
+    	$this->view->buscaRegiao = $buscaRegiao;
+
     	$buscaEdital = AvaliarProjetosComissaoDAO::buscaEdital();
-    	$this->view->buscaEdital = $buscaEdital; 
-    	
+    	$this->view->buscaEdital = $buscaEdital;
+
     	$paginacao = array(
                             "pag"=>$pag,
                             "qtde"=>$this->intTamPag,
@@ -258,10 +256,7 @@ class AvaliarprojetoscomissaoController extends GenericControllerNew {
                      );
 
          $this->view->paginacao = $paginacao;
-    	
+
     }
 
 }
-
-
-?>

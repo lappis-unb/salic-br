@@ -146,5 +146,9 @@ abstract class Minc_Controller_AbstractRest extends Zend_Rest_Controller{
         }
         $this;
     }
+
+    public function headAction() {
+
+    }
     
 }

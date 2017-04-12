@@ -1,0 +1,157 @@
+<div class="container-fluid">
+    <div class="row">
+<?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s9">
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
+
+<h4>
+    Consultar hist&oacute;rico de an&aacute;lise visual
+</h4>
+
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+    $("#tipodata").change(function(){
+        $("#spanDtFinal").toggle();
+    });
+
+    $(function()
+    {
+        $.datepicker.regional['pt-BR'] = {
+            closeText: 'Fechar',
+            prevText: '&#x3c;Anterior',
+            nextText: 'Pr&oacute;ximo&#x3e;',
+            currentText: 'Hoje',
+            monthNames: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+            dayNames: ['Domingo','Segunda-feira','Ter&ccedil;a-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sabado'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+            dayNamesMin: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''};
+        $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+        $("#dataPropostaInicial").datepicker($.datepicker.regional['pt-BR']);
+        $("#dataPropostaFinal").datepicker($.datepicker.regional['pt-BR']);
+    });
+
+   /* $("#situacao").click(function(){
+        $("#situacaoAUX").val("1");
+    }); */
+
+});
+
+function verificaPreenchimento(){
+
+    if($("#tecnico").val() == "" && $("#dataPropostaInicial").val() == "" && $("#situacao").val() != "0" && $("#situacao").val() != "9"){
+        $("#lblMsg").html("<font color='red'><b>Dados obrigat&oacute;rios n&atilde;o informados</b></font>");
+        return false;
+    }
+    if(JsTrataDatas()){
+        $("#frmBuscaHistorico").submit();
+    }
+}
+
+function JsTrataDatas(){
+
+        var tipodata = $("#tipodata").val();
+
+        if(tipodata == 'entre')
+        {
+            if($("#dataPropostaInicial").length > 0)
+            {
+                var dtInicio = $("#dataPropostaInicial").val();
+                var arrInicio = dtInicio.split("/");
+                dtInicio = arrInicio[2]+arrInicio[1]+arrInicio[0];
+            }else{
+                var dtInicio = 0;
+            }
+
+            if($("#dataPropostaFinal").length > 0)
+            {
+                var dtFim = $("#dataPropostaFinal").val();
+                var arrFim = dtFim.split("/");
+                dtFim = arrFim[2]+arrFim[1]+arrFim[0];
+            }else{
+                var dtFim = 0;
+            }
+
+            if(dtFim < dtInicio){
+                $("#DtERROR").html("<font color='red'><b>A Data Final deve ser maior ou igual a Data de In&iacute;cio<b></font>");
+                return false;
+            }else{
+                $("#DtERROR").html("");
+                return true;
+            }
+        }else{
+            return true;
+        }
+    }
+//-->
+</script>
+<div>
+    <form name="frmBuscaHistorico" id="frmBuscaHistorico" action="<?php echo $this->urlForm; ?>" method="get" onsubmit="">
+        <input type="hidden" name="busca" value="1"/>
+    <table>
+        <tr>
+            <th colspan="2">Hist&oacute;rico de An&aacute;lise Visual</th>
+        </tr>
+        <tr>
+            <td>
+                T&eacute;cnico:
+            </td>
+            <td>
+                <select class="select_simples required_group" name="tecnico" id="tecnico">
+                    <option value="">Selecione</option>
+                    <?php foreach($this->tecnicos as $tecnico): ?>
+                    <option value="<?php echo $tecnico->idTecnico; ?>"><?php echo $tecnico->Tecnico; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Data:
+            </td>
+            <td>
+                <select name="tipodata" id="tipodata" class="select_simples">
+                    <option value="igual">Exatamente Igual</option>
+                    <option value="entre">Entre dois valores</option>
+                </select>
+                <input name="dataPropostaInicial" id="dataPropostaInicial" value="" class="input_simples required_group" />
+                <span id="spanDtFinal" style="display: none;">&nbsp;e&nbsp;<input name="dataPropostaFinal" id="dataPropostaFinal" value="" class="input_simples" /></span>
+                <span id="DtERROR"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Situa&ccedil;&atilde;o:
+            </td>
+            <td>
+                <input type="hidden" name="situacaoAUX" id="situacaoAUX" value="" style="display: none;" />
+                Enviado ao MinC
+                <input type="radio" name="situacao" id="situacao" value="9" />
+                Em Diligencia
+                <input type="radio" name="situacao" id="situacao" value="0" />
+            </td>
+        </tr>
+     </table>
+     <table class="tabela">
+        <tr>
+            <td class="centro">
+                <input type="button" onclick="verificaPreenchimento();" name="localizar" id="localizar" value=" " class="btn_localizar" title="Localizar" />
+                <input type="reset" name="reset" id="reset" value=" " class="btn_limpar" title="Limpar" onclick="$('#DtERROR').html('');"/>
+            </td>
+        </tr>
+    </table>
+    </form>
+<div id="lblMsg" align="center"></div>
+</div>
+</div>
+    </div>
+</div>
+

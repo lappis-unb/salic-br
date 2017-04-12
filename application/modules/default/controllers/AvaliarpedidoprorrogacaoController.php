@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-class AvaliarpedidoprorrogacaoController extends GenericControllerNew {
+class AvaliarpedidoprorrogacaoController extends MinC_Controller_Action_Abstract {
 
     private $getIdAgente  = 0;
     private $getIdGrupo   = 0;
@@ -29,7 +29,7 @@ class AvaliarpedidoprorrogacaoController extends GenericControllerNew {
         $PermissoesGrupo[] = 122;  // Coordenador de Acompanhamento
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo

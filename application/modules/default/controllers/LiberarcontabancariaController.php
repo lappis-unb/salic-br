@@ -1,5 +1,6 @@
-<?php 
-class LiberarcontabancariaController extends GenericControllerNew {
+<?php
+
+class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
 
@@ -262,7 +263,7 @@ class LiberarcontabancariaController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function inabilitadosAction() {
@@ -274,7 +275,7 @@ class LiberarcontabancariaController extends GenericControllerNew {
     }
 
     public function contasLiberadasAction() {
-//        xd('aaa');
+
     }
 
     public function localizarprojetosAction() {

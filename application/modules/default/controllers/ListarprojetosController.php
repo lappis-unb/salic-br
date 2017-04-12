@@ -1,8 +1,6 @@
 <?php
 
-require_once "GenericControllerNew.php";
-
-class ListarprojetosController extends GenericControllerNew {
+class ListarprojetosController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
     private $getCNPJCPF = 0;
@@ -12,7 +10,7 @@ class ListarprojetosController extends GenericControllerNew {
     private $cpfLogado = 0;
 
     /*     * *
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -20,12 +18,12 @@ class ListarprojetosController extends GenericControllerNew {
 
     public function init() {
         ini_set('memory_limit', '128M');
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        // define as permissões
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        // define as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
         $PermissoesGrupo[] = 93;  // Acompanhamento
-        $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaç?o
+        $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaï¿½?o
         //SE CAIU A SECAO REDIRECIONA
         if (!$auth->hasIdentity()) {
             $url = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -38,15 +36,15 @@ class ListarprojetosController extends GenericControllerNew {
         $this->cpfLogado = $cpf;
 
         // Busca na SGCAcesso
-        $sgcAcesso = new Sgcacesso();
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
         // Busca na Usuarios
-        $usuarioDAO = new Usuario();
+        $usuarioDAO = new Autenticacao_Model_Usuario();
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agentes();
+        $agentesDAO = new Agente_Model_DbTable_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
@@ -63,7 +61,7 @@ class ListarprojetosController extends GenericControllerNew {
         $this->view->idAgenteLogado = $this->idAgente;
         /*         * ****************************************************************************************************** */
 
-        // pega o idAgente do usuário logado
+        // pega o idAgente do usuï¿½rio logado
         if (isset($auth->getIdentity()->usu_codigo)) {
             parent::perfil(1, $PermissoesGrupo);
 
@@ -91,7 +89,7 @@ class ListarprojetosController extends GenericControllerNew {
     public function listarprojetosAction() {
 
         /***************************************************************************** */
-        $tblVinculo = new TbVinculo();
+        $tblVinculo = new Agente_Model_DbTable_TbVinculo();
         $dadosCombo = array();
         $cpfCnpj = '';
 
@@ -105,7 +103,7 @@ class ListarprojetosController extends GenericControllerNew {
             $dadosCombo[$i]['Nome'] = $rs->NomeProponente;
             $i++;
         }
-        
+
         $this->view->buscaProponente = $dadosCombo;
         $this->view->idResponsavel = $this->idResponsavel;
         $this->view->idUsuario = $this->idUsuario;
@@ -118,7 +116,7 @@ class ListarprojetosController extends GenericControllerNew {
             try {
                 $post = Zend_Registry::get('post');
 
-                $idProponente = !empty($post->idProponente) ? $post->idProponente : ''; // deleta a máscara
+                $idProponente = !empty($post->idProponente) ? $post->idProponente : ''; // deleta a mï¿½scara
                 $mecanismo = $_POST['mecanismo'];
                 $idResponsavel = $this->idResponsavel;
 
@@ -142,7 +140,7 @@ class ListarprojetosController extends GenericControllerNew {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $mecanismo = $_POST['mecanismo'];
 
-        $tblVinculo = new TbVinculo();
+        $tblVinculo = new Agente_Model_DbTable_TbVinculo();
         $rsVinculo = $tblVinculo->buscarProponenteResponsavel($this->idResponsavel, $mecanismo);
         $agente = array();
 
@@ -164,7 +162,7 @@ class ListarprojetosController extends GenericControllerNew {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function gerarpdfAction() {
@@ -177,7 +175,7 @@ class ListarprojetosController extends GenericControllerNew {
 
     public function gerarxlsAction() {
         $cpf = $_GET['cpf'];
-        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout  
+        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $listar = ListarprojetosDAO::buscarDadosListarProjetos($cpf);
         $this->view->listarprojetos = $listar;
     }

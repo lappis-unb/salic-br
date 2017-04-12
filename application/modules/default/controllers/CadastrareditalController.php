@@ -7,10 +7,10 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
-class CadastrareditalController extends GenericControllerNew
+class CadastrareditalController extends MinC_Controller_Action_Abstract
 {
     public function init()
     {
@@ -23,12 +23,11 @@ class CadastrareditalController extends GenericControllerNew
         $codOrgao = $GrupoAtivo->codOrgao; //  Orgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         //$this->view->idUsuarioLogado = $idusuario;
-        //xd($auth->getIdentity());
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC72
         if (isset($auth->getIdentity()->usu_codigo))
         {
             //Recupera todos os grupos do Usuario
-            $Usuario = new Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo)
             {
@@ -52,15 +51,15 @@ class CadastrareditalController extends GenericControllerNew
 
         parent::init();
         // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 	public function indexAction() {
         $this->_redirect("cadastraredital/consultaralterareditais");
     }
-    
+
 
 	/**
-	 * Método para buscar/salvar os dados do edital
+	 * Mï¿½todo para buscar/salvar os dados do edital
 	 */
     public function dadosgeraisAction()
     {
@@ -89,8 +88,8 @@ class CadastrareditalController extends GenericControllerNew
             $iduf = $_POST['idorgao'];
             $date = getdate();
             $data = $date['year'];
-            
-            $buscarPI = new SimcAtividade(); 
+
+            $buscarPI = new SimcAtividade();
             $pi = $buscarPI->buscarPI(array('o.Codigo = ?'=>$iduf, 'atianopi = ?'=> $data, 'ati.atistatuspi = ?'=>"A"));
 
            $a = 0;
@@ -100,26 +99,26 @@ class CadastrareditalController extends GenericControllerNew
                 $Array[$a]['pi'] = $Dados->pi;
                 $a++;
             }
-            
+
             if ( empty ( $Array ) )
             {
             	$Array['semdados'] = 'semdados';
             }
-            
+
             echo json_encode($Array);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
-        
-		// caso já exista um edital cadastrado
+
+		// caso jï¿½ exista um edital cadastrado
         if ( !empty ( $_GET['idEdital'] )  &&  !empty ($idusuario))
-        { 
+        {
             $idEdital = $_GET['idEdital'];
             $this->view->idUsuarioLogado = $idusuario;
 
             $dadosEdital = new Edital();
             $buscaEdital = $dadosEdital->buscaEditalFormDocumento($idusuario, $idEdital)->toArray();
-            //busca os PI´s da secretaria cadastrada no Edital
-            $buscarPI = new SimcAtividade(); 
+            //busca os PIï¿½s da secretaria cadastrada no Edital
+            $buscarPI = new SimcAtividade();
             $pi = $buscarPI->buscarPI(array('o.Codigo = ?'=>$buscaEdital[0]['idOrgao'], 'atianopi = ?'=> date('Y'), 'ati.atistatuspi = ?'=>"A"))->toArray();
             $classificacaoDocumento  = $buscaEdital[0]['idClassificaDocumento'];
             if(count($classificacaoDocumento)>0)
@@ -138,11 +137,11 @@ class CadastrareditalController extends GenericControllerNew
             }
 
             if ( !empty( $buscaFasesEdital ) )
-            { 
+            {
                 $this->view->recurso = $buscaFasesEdital[0]['qtDiasRecurso'];
                 $this->view->julg = $buscaFasesEdital[0]['qtDiasJulgamento'];
 
-                foreach ($buscaFasesEdital as $FasesEdital) 
+                foreach ($buscaFasesEdital as $FasesEdital)
                 {
                     if ( $FasesEdital['idFaseEdital'] == 1 )
                     {
@@ -156,7 +155,7 @@ class CadastrareditalController extends GenericControllerNew
                         $dataIni2 = data::tratarDataZend($FasesEdital['dtIniFase'], "brasileiro");
                         $dataFim2 = data::tratarDataZend($FasesEdital['dtFimFase'], "brasileiro");
                         $this->view->dtIniFase2 = $dataIni2;
-                        $this->view->dtFimFase2 = $dataFim2;                      
+                        $this->view->dtFimFase2 = $dataFim2;
                     }
                     else if ( $FasesEdital['idFaseEdital'] == 3 )
                     {
@@ -208,7 +207,7 @@ class CadastrareditalController extends GenericControllerNew
                             $this->view->dtFimFase8 = "";
                         }
                     }
-                    else 
+                    else
                     {
                         if ( !empty ( $FasesEdital['idFaseEdital'] ) )
                         {
@@ -266,18 +265,18 @@ class CadastrareditalController extends GenericControllerNew
             $fasePrestIni = $_POST['fasePrestIni'];
             $fasePrestFim = $_POST['fasePrestFim'];
             $atiid = $_POST['pi'];
-   
+
    			$date = getdate();
             $data = $date['year'];
-            
-            $buscarPI = new SimcAtividade(); 
+
+            $buscarPI = new SimcAtividade();
             $pi = $buscarPI->buscarPI(array('ati.atiid = ?'=>$atiid, 'o.Codigo = ?'=>$orgao, 'atianopi = ?'=> $data, 'ati.atistatuspi = ?'=>"A"));
 
             foreach($pi as $Dados) {
                 $PiDisponivel = $Dados['atiorcamento'];
             }
             $PiDisponivel = $PiDisponivel/100;
-            
+
             if ( !empty ( $_POST['idEdital'] ) )
             {
                 $idEdital = $_POST['idEdital'];
@@ -308,10 +307,10 @@ class CadastrareditalController extends GenericControllerNew
                     'idAti' => $atiid
                     //, 'piDisponivel' => $PiDisponivel
                     );
-    //                xd($dados);
+    
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
-                else // alteração
+                else // alteraï¿½ï¿½o
                 {
                     $dados = array('idEdital' => $idEdital,
                     'idOrgao' => $orgao,
@@ -325,11 +324,11 @@ class CadastrareditalController extends GenericControllerNew
                     'stAdmissibilidade' => 'S',
                     'cdTipoFundo' => $tipoFundo,
                     'idAti' => $atiid);
-    //                xd($dados);
+    
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
             }catch (Exception $e){
-                //xd($e->getMessage());
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
             $arrFases[0][0] = $faseElabIni;
@@ -381,7 +380,7 @@ class CadastrareditalController extends GenericControllerNew
                         'qtDiasRecurso' => $diasRec,
                         'qtDiasJulgamento' => $diasJulg);
 
-                    if ( !empty ( $_POST['idEdital'] ) ) // alteração
+                    if ( !empty ( $_POST['idEdital'] ) ) // alteraï¿½ï¿½o
                     {
                         $where = " idFaseEdital = " . $fases[2] . " AND idEdital = " . $idEdital;
 
@@ -404,7 +403,7 @@ class CadastrareditalController extends GenericControllerNew
                     }
                 } // fecha foreach fases
             }catch (Exception $e){
-                //xd($e->getMessage());
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
 
@@ -415,7 +414,7 @@ class CadastrareditalController extends GenericControllerNew
                 {
                     $dadosFormDocumento = array('nrVersaoDocumento' => 1,
                         'nmFormDocumento' => $nomeEdital,
-                        'dsFormDocumento' => 'Formulário de Edital',
+                        'dsFormDocumento' => 'Formulï¿½rio de Edital',
                         'stFormDocumento' => 'A',
                         'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
                         'idClassificaDocumento' => $classificaDocumento,
@@ -428,10 +427,10 @@ class CadastrareditalController extends GenericControllerNew
                     parent::message("Cadastro realizado com sucesso!", "/cadastraredital/dadosgerais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
 
                 }
-                else // alteração
+                else // alteraï¿½ï¿½o
                 {
                     $dadosFormDocumento = array('nmFormDocumento' => $nomeEdital,
-                        'dsFormDocumento' => 'Formulário de Edital',
+                        'dsFormDocumento' => 'Formulï¿½rio de Edital',
                         'stFormDocumento' => 'A',
                         'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
                         'idClassificaDocumento' => $classificaDocumento,
@@ -447,17 +446,17 @@ class CadastrareditalController extends GenericControllerNew
                     parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/dadosgerais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
                 }
             }catch (Exception $e){
-                //xd($e->getMessage());
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
         } // fecha if ($_POST)
 
-	} // fecha método dadosgeraisAction()
+	} // fecha mï¿½todo dadosgeraisAction()
 
 
 
 	/**
-	 * Método para cadastro/busca de critérios de avaliação
+	 * Mï¿½todo para cadastro/busca de critï¿½rios de avaliaï¿½ï¿½o
 	 */
     public function criteriosavaliacaoAction()
     {
@@ -465,22 +464,22 @@ class CadastrareditalController extends GenericControllerNew
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
         $usu_identificacao = $auth->getIdentity()->usu_identificacao;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo 
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
         //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessao
         $codOrgao = $GrupoAtivo->codOrgao; //  Orgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
 
-		// joga o nome do edital no título
+		// joga o nome do edital no tï¿½tulo
         if ( isset($_GET['idEdital']) )
         {
-	 		// joga o nome do edital no título
+	 		// joga o nome do edital no tï¿½tulo
 	        $tbFormDocumentoDAO =   new tbFormDocumento();
 	        $edital                 =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$_GET['idEdital']));
 	        $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
         }
 
-		// busca todos os critérios cadastrados
+		// busca todos os critï¿½rios cadastrados
         if ( isset($_GET['nrFormDocumento']) && isset($_GET['nrVersaoDocumento']) )
         {
             $nrFormDocumento = $_GET['nrFormDocumento'];
@@ -491,7 +490,7 @@ class CadastrareditalController extends GenericControllerNew
                                           'rv.nrVersaoDocumento = ?' => $nrVersaoDocumento);
 
             $dadosTbpergunta = new tbPergunta();
-            $buscarDadosTbPergunta = $dadosTbpergunta->buscarDados($dadosBuscaTbPergunta, 'pd.nrOrdemPergunta')->toArray(); 
+            $buscarDadosTbPergunta = $dadosTbpergunta->buscarDados($dadosBuscaTbPergunta, 'pd.nrOrdemPergunta')->toArray();
             $this->view->dadosPergunta = $buscarDadosTbPergunta;
         }
 
@@ -499,8 +498,8 @@ class CadastrareditalController extends GenericControllerNew
 		// caso os dados sejam enviados via post
         if ($_POST)
         {
-            /* não está sendo utilizado
-            // recadastra a posição
+            /* nï¿½o estï¿½ sendo utilizado
+            // recadastra a posiï¿½ï¿½o
             if ( isset ( $_POST['operacao'] ) )
             {
                 $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -538,7 +537,7 @@ class CadastrareditalController extends GenericControllerNew
 					'idEdital'              =>  $idEdital,
 					'nrVersaoDocumento'     =>  $nrVersaoDocumento,
 					'nmFormDocumento'       =>  $_POST['dsPergunta'],
-					'dsFormDocumento'       =>  'Critério de Avaliação',
+					'dsFormDocumento'       =>  'Critï¿½rio de Avaliaï¿½ï¿½o',
 					'idClassificaDocumento' =>  25,
 					'dtCadastramento'       =>  new Zend_Db_Expr('GETDATE()'),
 					'stFormDocumento'       =>  'A'
@@ -546,7 +545,7 @@ class CadastrareditalController extends GenericControllerNew
                 $nrFormDocumentoCriterio   = $result['nrFormDocumento'];
                 $nrVersaoDocumentoCriterio = $result['nrVersaoDocumento'];
 
-                $agentes = new Agentes();
+                $agentes = new Agente_Model_DbTable_Agentes();
                 $buscarAgente = $agentes->buscar(array("CNPJCPF = ?" => $usu_identificacao))->current()->toArray();
                 $idAgente = $buscarAgente['idAgente'];
                 $dadosPergunta = array('stTipoRespPergunta' => "O",
@@ -578,15 +577,15 @@ class CadastrareditalController extends GenericControllerNew
                                                 'dsLabelPergunta' => $dsLabelPergunta,
                                                 'nrPeso' => $nrPeso);
                 $nrPerguntaFormDocto = $tbPerguntaFormDocto->salvar($dadosPerguntaFormDocto);
-                
-                
+
+
 				$tbOpcaoResposta = new tbOpcaoResposta();
                 $dadosOpcaoResposta = array('nrFormDocumento' => $nrFormDocumentoCriterio,
                                             'nrVersaoDocumento' => $nrVersaoDocumentoCriterio,
                                             'nrPergunta' => $nrPergunta,
                                             'nrOrdemOpcao' => 1,
                                             'dsOpcao' => '',
-                                            'stTipoObjetoPgr' => "CB");               
+                                            'stTipoObjetoPgr' => "CB");
                 $nrOpcao = $tbOpcaoResposta->salvar($dadosOpcaoResposta);
 
 				$tbOpcaoRespostaVariavel = new tbOpcaoRespostaVariavel();
@@ -602,7 +601,7 @@ class CadastrareditalController extends GenericControllerNew
                 parent::message("Cadastro realizado com sucesso!", "/cadastraredital/criteriosavaliacao?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
             } // fim if cadastro
 
-            if ( !empty ( $_POST['nrPergunta'] ) &&  !empty ($_POST['acao']) ) // alteração
+            if ( !empty ( $_POST['nrPergunta'] ) &&  !empty ($_POST['acao']) ) // alteraï¿½ï¿½o
             {
                 $nrFormDocumento = $_POST['nrFormDocumento'];
                 $nrVersaoDocumento = $_POST['nrVersaoDocumento'];
@@ -624,7 +623,7 @@ class CadastrareditalController extends GenericControllerNew
 
 				$tbFormDocumento = new tbFormDocumento();
                 $dadosFormDocumento = array('nmFormDocumento' => $dsPergunta,
-                    'dsFormDocumento' => 'Critério de Avaliação',
+                    'dsFormDocumento' => 'Critï¿½rio de Avaliaï¿½ï¿½o',
                     'stFormDocumento' => 'A',
                     'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
                     'idClassificaDocumento' => 25);
@@ -649,7 +648,7 @@ class CadastrareditalController extends GenericControllerNew
                  $idPerguntaFormDocto = $buscaPerguntaFormDocto->save();
 
                  $tbOpcaoResposta = new tbOpcaoResposta();
-                 $buscaOpcaoResposta = $tbOpcaoResposta->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio, 
+                 $buscaOpcaoResposta = $tbOpcaoResposta->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio,
                                                                       'nrVersaoDocumento = ?' => $nrVersaoDocumentoCriterio,
                                                                       'nrPergunta = ?' => $nrPergunta))->current();
                  $nrOpcao = $buscaOpcaoResposta->nrOpcao;
@@ -665,9 +664,9 @@ class CadastrareditalController extends GenericControllerNew
                  $idOpcaoRespostaVariavel = $buscaOpcaoRespostaVariavel->save();
 
                  parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/criteriosavaliacao?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital=$idEdital" , "CONFIRM");
-            } // fim if alteração
+            } // fim if alteraï¿½ï¿½o
 
-            if ( isset ($_POST['acaoD']) ) // alteração e exclusão
+            if ( isset ($_POST['acaoD']) ) // alteraï¿½ï¿½o e exclusï¿½o
             {
                 $nrFormDocumento = $_POST['nrFormDocumento'];
                 $nrVersaoDocumento = $_POST['nrVersaoDocumento'];
@@ -679,29 +678,29 @@ class CadastrareditalController extends GenericControllerNew
                 $dadosTbpergunta = new tbPergunta();
                 $buscarDadosTbPergunta = $dadosTbpergunta->buscarDados($dadosBuscaTbPergunta, 'pd.nrOrdemPergunta')->toArray();
 
-                if ( $_POST['acaoD'] == "0" ) // busca os dados para efetuar a alteração
+                if ( $_POST['acaoD'] == "0" ) // busca os dados para efetuar a alteraï¿½ï¿½o
                 {
                      $this->view->dadosCriterios = $buscarDadosTbPergunta;
                 }
-                else // efetua a exclusão
+                else // efetua a exclusï¿½o
                 {
                 	$nrFormDocumentoCriterio   = $buscarDadosTbPergunta[0]['nrFormDocumento'];
                 	$nrVersaoDocumentoCriterio = $buscarDadosTbPergunta[0]['nrVersaoDocumento'];
 
                     $tbOpcaoRespostaVariavel = new tbOpcaoRespostaVariavel();
-                    $buscaOpcaoRespostaVariavel = $tbOpcaoRespostaVariavel->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio, 
+                    $buscaOpcaoRespostaVariavel = $tbOpcaoRespostaVariavel->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio,
                                                                                          'nrVersaoDocumento = ?' => $nrVersaoDocumentoCriterio,
                                                                                          'nrPergunta = ?' => $nrPergunta))->current();
                     $buscaOpcaoRespostaVariavel->delete();
 
                     $tbOpcaoResposta = new tbOpcaoResposta();
-                    $buscaOpcaoResposta = $tbOpcaoResposta->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio, 
+                    $buscaOpcaoResposta = $tbOpcaoResposta->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio,
                                                                          'nrVersaoDocumento = ?' => $nrVersaoDocumentoCriterio,
                                                                          'nrPergunta = ?' => $nrPergunta))->current();
                     $buscaOpcaoResposta->delete();
 
                     $tbPerguntaFormDocto = new tbPerguntaFormDocto();
-                    $buscaPerguntaFormDocto = $tbPerguntaFormDocto->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio, 
+                    $buscaPerguntaFormDocto = $tbPerguntaFormDocto->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio,
                                                                                  'nrVersaoDocumento = ?' => $nrVersaoDocumentoCriterio,
                                                                                  'nrPergunta = ?' => $nrPergunta))->current();
                     $buscaPerguntaFormDocto->delete();
@@ -713,22 +712,22 @@ class CadastrareditalController extends GenericControllerNew
 
 
                     $tbFormDocumento = new tbFormDocumento();
-                    $buscaFormDocumento = $tbFormDocumento->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio, 
+                    $buscaFormDocumento = $tbFormDocumento->buscar(array('nrFormDocumento = ?' => $nrFormDocumentoCriterio,
                                                                          'nrVersaoDocumento = ?' => $nrVersaoDocumentoCriterio))->current();
                     $buscaFormDocumento->delete();
 
                     parent::message("Exclus&atilde;o realizada com sucesso!", "/cadastraredital/criteriosavaliacao?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
                 }
-            } // fim if exclusão
+            } // fim if exclusï¿½o
 
         } // fim post
 
-    } // fecha método criteriosavaliacaoAction()
+    } // fecha mï¿½todo criteriosavaliacaoAction()
 
 
 
 	/**
-	 * Método para cadastro/busca de formas de pagamento
+	 * Mï¿½todo para cadastro/busca de formas de pagamento
 	 */
     public function formapagamentoAction()
     {
@@ -739,12 +738,12 @@ class CadastrareditalController extends GenericControllerNew
         $this->view->idUsuario = $idusuario;
 
         $post                          =   Zend_Registry::get('post');
-        
+
         $operacao = $post->operacao;
         $nrPergunta = $post->nrPergunta;
 
         $get                           =   Zend_Registry::get('get');
-     
+
         $nrFormDocumento = $get->nrFormDocumento;
         $this->view->nrFormDocumento = $nrFormDocumento;
         $nrVersaoDocumento = $get->nrVersaoDocumento;
@@ -755,13 +754,13 @@ class CadastrareditalController extends GenericControllerNew
         $tbFormDocumentoDAO =   new tbFormDocumento();
         $edital                 =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$_GET['idEdital']));
         $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
-        
+
         //if ($_POST) {
         $objNrformDocumentoDAO = new tbFormDocumento();
         $objNrformDocumento = $objNrformDocumentoDAO->buscaNrFormDocumento($idEdital);
-        
+
         $buscaPIEdital = new Edital();
-        $dadosPiEdital = $buscaPIEdital->buscaEditalFormDocumento($idusuario, $idEdital); 
+        $dadosPiEdital = $buscaPIEdital->buscaEditalFormDocumento($idusuario, $idEdital);
 
         foreach($dadosPiEdital as $PiEdital){
         	$idPi = $PiEdital['idAti'];
@@ -770,20 +769,20 @@ class CadastrareditalController extends GenericControllerNew
 
         $date = getdate();
         $data = $date['year'];
-        $buscarPI = new SimcAtividade(); 
+        $buscarPI = new SimcAtividade();
         $pi = $buscarPI->buscarPI(array('o.Codigo = ?'=>$idOrgao, 'atianopi = ?'=> $data, 'ati.atistatuspi = ?'=>"A"));
 
-    	foreach($pi as $dadosPI){ 
-        	$acaid = $dadosPI['acaid']; 
-        	$atiseqpi = $dadosPI['atiseqpi']; 
+    	foreach($pi as $dadosPI){
+        	$acaid = $dadosPI['acaid'];
+        	$atiseqpi = $dadosPI['atiseqpi'];
         	$atiprojeto = $dadosPI['_atiprojeto'];
         	$atiid = $dadosPI['atiid'];
         	$orgao = $dadosPI['secretaria'];
         }
-     
+
         $dadosPI = $buscarPI->buscarValoresPI(array('aca.acaid = ?'=>$acaid, 'atiseqpi = ?'=>$atiseqpi, '_atiprojeto = ?'=>$atiprojeto, 'atiid = ?'=>$atiid, 'ati.uexid = ?'=>$orgao));
         $this->view->dadosPI = $dadosPI;
-        
+
         if(isset($objNrformDocumento)){
            $nrFormDocumentoPagamento = $objNrformDocumento['nrFormDocumento'];
         }else{
@@ -805,7 +804,6 @@ class CadastrareditalController extends GenericControllerNew
 //        $ListaPerguntasDao = new tbPerguntaFormDocto();
 //        $listaPerguntas = $ListaPerguntasDao->listaPerguntas($nrFormDocumento, $nrVersaoDocumento);
 //        $this->view->listaPerguntas = $listaPerguntas;
-        //xd($listaPerguntas);
 
 //        if($nrPergunta){
 //            $FormaPagamentoDao = new tbPergunta();
@@ -821,7 +819,7 @@ class CadastrareditalController extends GenericControllerNew
             $idEdital = $_POST['idEdital'];
             $dtCadastramento = new Zend_Db_Expr('GETDATE()');
 
-            $agentes = new Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
 
             $buscarAgente = $agentes->buscar(array("CNPJCPF = ?" => $usu_identificacao))->current()->toArray();
 
@@ -852,7 +850,7 @@ class CadastrareditalController extends GenericControllerNew
                 //parent::message("Cadastro realizado com sucesso!", "/cadastraredital/formapagamento?nrPergunta={$nrPergunta}&nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}" , "ALERT");
         }else
              if($nrPergunta !='' and $operacao == 'alterarPergunta'){
-                 
+
                  $nrPergunta = $post->nrPergunta;
                  $dsPergunta = $post->dsPergunta;
 
@@ -868,7 +866,7 @@ class CadastrareditalController extends GenericControllerNew
              }
         unset($_POST);
         //} // fim post
-    } // fecha método formapagamentoAction()
+    } // fecha mï¿½todo formapagamentoAction()
 
 
 
@@ -892,10 +890,10 @@ class CadastrareditalController extends GenericControllerNew
         $auth = Zend_Auth::getInstance();// instancia da autentica??o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $this->view->idUsuario = $idusuario;
-        
-//        xd($listaPerguntas);
+
+
         $this->view->listaPerguntas = $listaPerguntas;
-    } // fecha método listaformapagamentoAction()
+    } // fecha mï¿½todo listaformapagamentoAction()
 
 
 
@@ -904,31 +902,31 @@ class CadastrareditalController extends GenericControllerNew
         $this->_helper->layout->disableLayout();
 
         $post                           =   Zend_Registry::get('post');
-        
+
         $idEdital = $post->idEdital;
         $this->view->idEdital = $idEdital;
-        
+
         $idUsuario = $post->idUsuario;
         $this->view->idUsuario = $idUsuario;
-        
+
         $nrPergunta = $post->nrPergunta;
         $this->view->nrPergunta = $nrPergunta;
-        
+
         $nrFormDocumento = $post->nrFormDocumentoPagamento;
         $this->view->nrFormDocumento = $nrFormDocumento;
-        
+
         $nrVersaoDocumento = $post->nrVersaoDocumento;
         $this->view->nrVersaoDocumento = $nrVersaoDocumento;
-        
+
         $listaFormaPagamentoDAO = new tbOpcaoResposta();
         $listaFormaPagamento = $listaFormaPagamentoDAO->buscarparcelas($nrFormDocumento, $nrVersaoDocumento, $nrPergunta);
         $this->view->listaFormaPagamento = $listaFormaPagamento;
-    } // fecha método listaparcelasAction()
+    } // fecha mï¿½todo listaparcelasAction()
 
 
 
 	/**
-	 * Método para cadastrar/buscar as opções de forma de pagamento
+	 * Mï¿½todo para cadastrar/buscar as opï¿½ï¿½es de forma de pagamento
 	 */
     public function formapagamentoopcoesAction()
     {
@@ -953,8 +951,8 @@ class CadastrareditalController extends GenericControllerNew
         $idEdital = $post->idEdital;
         $idUsuario = $post->idUsuario;
         $nrFormDocumentoPagamento = $post->nrFormDocumentoPagamento;
-      
-//        xd($post);
+
+
         switch ($operacao) {
             case "inserirOpcao":
                 $this->_helper->layout->disableLayout();
@@ -1017,15 +1015,14 @@ class CadastrareditalController extends GenericControllerNew
                 $this->_helper->layout->disableLayout();
                 $pesquisaFormaPagamentoDao = new tbOpcaoResposta();
                 $valorArray = $pesquisaFormaPagamentoDao->pesquisaFormaPagamento($nrFormDocumento, $nrVersaoDocumento, $nrPergunta, $nrOpcao);
-//                xd($valorArray);
+
                 foreach ($valorArray as $key => $value){
                     $valorArray[$key] = Conversor::iso88591ParaUtf8_Array($value);
                 }
-//xd($valorArray);
                 echo Conversor::jsonEncodeParaIso88591($valorArray);
 
                 //$this->pesquisaFormaPagamento($this->formaPagamento);
-                
+
                 break;
             case "alterar":
                 $alteraFormaPagamentoDao = new tbOpcaoResposta();
@@ -1048,7 +1045,7 @@ class CadastrareditalController extends GenericControllerNew
                                    'nrOpcao = ?' =>$nrOpcao);
                     $excluirParcelas = $excluirParcelasDAO->buscar($where);
 
-                    if(count($excluirParcelas)>0){ 
+                    if(count($excluirParcelas)>0){
                         $excluirParcelasDAO->delete($where);
                         $vlParcela = $post->vlParcela;
                         $nrParcelaPrestConta = $post->nrParcelaPrestConta;
@@ -1077,7 +1074,7 @@ class CadastrareditalController extends GenericControllerNew
                                                     );
 
                             $tbPagamentoDao = new tbPagamento();
-                            $tbPagamento = $tbPagamentoDao->inserir($dadosPagamento); 
+                            $tbPagamento = $tbPagamentoDao->inserir($dadosPagamento);
                             if(!$tbPagamento){
                                 $verificar = false;
                             }
@@ -1108,29 +1105,29 @@ class CadastrareditalController extends GenericControllerNew
                                'nrVersaoDocumento = ?' => $nrVersaoDocumento,
                                'nrPergunta = ?' => $nrPergunta,
                                'nrOpcao = ?' =>$nrOpcao);
-                
+
                 $excluirParcelas = $excluirParcelasDAO->buscar($where);
 
-                if(count($excluirParcelas)>0){ 
+                if(count($excluirParcelas)>0){
 
                     $excluirParcelasDAO->delete($where);
 
                     $excluirformapagamentoDAO = new tbOpcaoResposta();
                     $excluirformapagamento = $excluirformapagamentoDAO->buscar($where);
-                    
+
                     if(count($excluirformapagamento)){
                         $excluirformapagamentoDAO->delete($where);
-                        
+
                         parent::message("Exclus&atilde;o realizada com sucesso!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "CONFIRM");
-                        
+
 //                        echo json_encode(array("retorno"=>"EXCLUIR","mensagem"=>"Forma de Pagamento excluida com sucesso!"));
-                    }else{ 
-                    	
+                    }else{
+
                     	parent::message("Erro ao tentar excluir a Forma de Pagamento!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
 //                        echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a Forma de Pagamento."));
                     }
-                }else{ 
-                	
+                }else{
+
                 	parent::message("Erro ao tentar excluir as parcelas!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
 //                    echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir as Parcelas."));
                 }
@@ -1155,7 +1152,7 @@ class CadastrareditalController extends GenericControllerNew
                                         'nrOpcao = ?' =>$nrOpcao);
 
                         $excluirParcelas = $excluirParcelasDAO->buscar($where);
-                        
+
                         if(count($excluirParcelas)>0){
                             if($excluirParcelasDAO->delete($where)){
 
@@ -1165,9 +1162,9 @@ class CadastrareditalController extends GenericControllerNew
                                                'nrPergunta = ?' => $nrPergunta,
                                                'nrOpcao = ?' =>$nrOpcao);
                                 $excluiFormaPagamento = $excluiFormaPagamentoDAO->buscar($where);
-									
+
                                 if(count($excluiFormaPagamento)>0){
-									
+
                                     $excluiFormaPagamentoDAO->delete($where);
 
                                     $verificar=true;
@@ -1187,14 +1184,12 @@ class CadastrareditalController extends GenericControllerNew
                         }
                     }
                 }
-                //xd($verificar);
                 if($verificar){
                     $excluirPerguntaFormDoctoDAO = new tbPerguntaFormDocto();
                     $where = array('nrFormDocumento = ?' => $nrFormDocumento,
                                    'nrVersaoDocumento = ?' => $nrVersaoDocumento,
                                    'nrPergunta = ?' => $nrPergunta);
                     $excluirPerguntaFormDocto = $excluirPerguntaFormDoctoDAO->buscar($where);
-                    //xd($excluirPerguntaFormDocto);
                     if(count($excluirPerguntaFormDocto)>0) {
                     	$excluirPerguntaFormDoctoDAO->delete($where);
                         parent::message("Exclus&atilde;o realizada com sucesso!", "/Cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "CONFIRM");
@@ -1212,11 +1207,11 @@ class CadastrareditalController extends GenericControllerNew
                 echo json_encode(array('nrPergunta'=>$pesquisaPergunta->nrPergunta,'dsPergunta'=>  utf8_encode($pesquisaPergunta->dsPergunta)));
                 break;
         }
-        
-    } // fecha método formapagamentoopcoesAction()
+
+    } // fecha mï¿½todo formapagamentoopcoesAction()
 
 
-    
+
     public function consultaralterareditaisAction()
     {
         $auth = Zend_Auth::getInstance();// instancia da autentica??o
@@ -1228,11 +1223,11 @@ class CadastrareditalController extends GenericControllerNew
         $codOrgao = $GrupoAtivo->codOrgao; //  ?rg?o ativo na sess?o
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
-        
+
         $dadosEdital = new Edital();
         $buscaEdital = $dadosEdital->buscaEditalFormDocumento($idusuario)->toArray();
         $this->view->buscaEdital = $buscaEdital;
-    } // fecha método consultaralterareditaisAction()
+    } // fecha mï¿½todo consultaralterareditaisAction()
 
 
 
@@ -1240,7 +1235,7 @@ class CadastrareditalController extends GenericControllerNew
     {
         $auth = Zend_Auth::getInstance();// instancia da autentica??o
         $idusuario = $auth->getIdentity()->usu_codigo;
-        
+
         $nrFormDocumento    = $_GET['nrFormDocumento'];
         $idEdital           = $_GET['idEdital'];
         $nrVersaoDocumento  = $_GET['nrVersaoDocumento'];
@@ -1250,14 +1245,14 @@ class CadastrareditalController extends GenericControllerNew
         $edital                 =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$_GET['idEdital']));
         $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
 
-        
+
         $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
 
         $this->view->nrFormDocumento    = $nrFormDocumento;
         $this->view->idEdital           = $idEdital;
         $this->view->nrVersaoDocumento  = $nrVersaoDocumento;
         $this->view->idUsuario          = $idusuario;
-    } // fecha método propostacustomizavelAction()
+    } // fecha mï¿½todo propostacustomizavelAction()
 
 
 
@@ -1278,7 +1273,7 @@ class CadastrareditalController extends GenericControllerNew
             $idUsuario = $auth->getIdentity()->IdUsuario;
             $this->view->idUsuario   =   $idUsuario;
         }
-    } // fecha método listaguiaAction()
+    } // fecha mï¿½todo listaguiaAction()
 
 
 
@@ -1288,9 +1283,9 @@ class CadastrareditalController extends GenericControllerNew
 
         $edital             =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$idEdital,
         														'idClassificaDocumento = ?'=>23));
-//        xd($edital);
+
         return $edital;
-    } // fecha método listaGuiaDigital($idEdital)
+    } // fecha mï¿½todo listaGuiaDigital($idEdital)
 
 
 
@@ -1302,7 +1297,7 @@ class CadastrareditalController extends GenericControllerNew
         $tbFormDocumentoDAO =   new tbFormDocumento();
         $post       = Zend_Registry::get('post');
         $get        = Zend_Registry::get('get');
-        
+
     	if(!$post->operacao){
         	$post =  Zend_Registry::get('get');
         }
@@ -1344,7 +1339,7 @@ class CadastrareditalController extends GenericControllerNew
                 if($result) {
                 	parent::message("Cadastro realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
 //                    echo json_encode(array("retorno"=>"INSERIR","mensagem"=>"Guia de edital inclu&iacute;da com sucesso!"));
-                }else {	
+                }else {
                     echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar inserir a guia de edital."));
                 }
                 break;
@@ -1389,19 +1384,19 @@ class CadastrareditalController extends GenericControllerNew
                 $tbPerguntaFormDoctoDAO->delete($where);
                 $tbFormDocumento->delete($where);
 
-                if(is_object($listaPerguntaFormDocto) && count($listaPerguntaFormDocto) > 0){                   
+                if(is_object($listaPerguntaFormDocto) && count($listaPerguntaFormDocto) > 0){
 
                     foreach ($listaPerguntaFormDocto as $pergunta ){
                         $tbPerguntaDAO->delete(array('nrPergunta = ?'=>$pergunta->nrPergunta));
                     }
 
                 }
-           	
+
             	$idEdital = $_GET['idEdital'];
             	$idusuario = $_GET['idUsuario'];
 
                 $FormExclusao = $tbFormDocumento->buscar($where);
-            	
+
                 if(count($FormExclusao) > 0) {
                     parent::message("Erro ao tentar excluir a guia de edital!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocURL}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "ALERT");
 //                        echo json_encode(array("retorno"=>"EXCLUIR","mensagem"=>"Guia de edital excluida com sucesso!"));
@@ -1586,7 +1581,7 @@ class CadastrareditalController extends GenericControllerNew
                     $nrOpcao = $_POST["resposta_{$nrPergunta}"];
                 else
                     $nrOpcao = "";
-                
+
                 $tbOpcaoRespostaDAO = new tbOpcaoResposta();
 
                 $where  =   array(
@@ -1631,7 +1626,7 @@ class CadastrareditalController extends GenericControllerNew
                     $dsRespostaSubj =   $resp[0]->dsOpcao;
                 }
 
-                
+
                 $info = array(
                             'idPreProjeto'	=>  $idPreProjeto,
                             'idUsuario'		=>  $idusuario,
@@ -1649,7 +1644,7 @@ class CadastrareditalController extends GenericControllerNew
                 $tbPerguntaFormDoctoDAO =   new tbPerguntaFormDocto();
                 $data   =   array('nrOrdemPergunta'=>$nrOrdemPergunta);
                 $where  =   array('nrFormDocumento = ?'=>$nrFormDocumento,'nrVersaoDocumento = ?'=>$nrVersaoDocumento,'nrPergunta = ?'=>$nrPergunta);
-                
+
                 $retorno = $tbPerguntaFormDoctoDAO->update($data, $where);
                 if($retorno)
                     echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Ordena??o Salva.')));
@@ -1678,7 +1673,7 @@ class CadastrareditalController extends GenericControllerNew
                 $retorno = array();
                 foreach ($resposta as $pergunta){
                         $retorno[] = utf8_encode($pergunta->dsPergunta);
-                }                
+                }
                 echo json_encode($retorno);
                 break;
             case 'cadastroPergunta':
@@ -1710,7 +1705,7 @@ class CadastrareditalController extends GenericControllerNew
                     $idPerguntaFormDocto    =   $tbPerguntaFormDoctoDAO->inserir($dados);
 
                     if($idPerguntaFormDocto){
-                        if($stTipoObjetoPgr == 'TA' or $stTipoObjetoPgr == 'IT' or $stTipoObjetoPgr == 'DT' or $stTipoObjetoPgr == 'NR'){ 
+                        if($stTipoObjetoPgr == 'TA' or $stTipoObjetoPgr == 'IT' or $stTipoObjetoPgr == 'DT' or $stTipoObjetoPgr == 'NR'){
                             $dsOpcao    =   '';
                             $dados      =   array(
                                                 'nrFormDocumento'   =>  $nrFormDocumento,
@@ -1728,7 +1723,7 @@ class CadastrareditalController extends GenericControllerNew
                                 echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta TA IT.')));
                             }
                         }
-                        else{ 
+                        else{
                             $validado           =   true;
                             foreach ($dsOpcaoR as $key => $value) {
                                 $dsOpcao            =   $value;
@@ -1839,7 +1834,7 @@ class CadastrareditalController extends GenericControllerNew
                                                 );
                                 $idOpcaoResposta = $tbOpcaoRespostaDAO->inserir($dados);
                                 if($idOpcaoResposta){
-                                	parent::message("Alteração realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
+                                	parent::message("Alteraï¿½ï¿½o realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
 //                                    echo json_encode(array('retorno'=>'ALTERAR','mensagem'=>''));
                                 }
                                 else{
@@ -1867,7 +1862,7 @@ class CadastrareditalController extends GenericControllerNew
                                         $validado = false;
                                 }
                                 if($validado){
-                                	parent::message("Alteração realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
+                                	parent::message("Alteraï¿½ï¿½o realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
 //                                    echo json_encode(array('retorno'=>'ALTERAR','mensagem'=>''));
                                 }
                                 else{
@@ -1887,7 +1882,7 @@ class CadastrareditalController extends GenericControllerNew
                     echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro alterar pergunta.')));
                 break;
         }
-    } // fecha método operacoescustomizavelAction()
+    } // fecha mï¿½todo operacoescustomizavelAction()
 
 
 
@@ -1901,33 +1896,33 @@ class CadastrareditalController extends GenericControllerNew
                         'nrPergunta = ?'        =>  $info['nrPergunta'],
                         'idProjeto = ?'         =>  $info['idPreProjeto'],
                         'idPessoaCadastro = ?'  =>  $info['idUsuario']
-                     ); 
+                     );
         if(!($info['operacao'] == 'tipoCB' or $info['operacao'] == 'tipoRB'  or $info['operacao'] == 'tipoIR') )
             $where['nrOpcao = ?']   =   $info['nrOpcao'];
         $resposta = $tdRespostaDAO->buscar($where);
-        if(is_object($resposta) and $resposta->count() > 0){ 
+        if(is_object($resposta) and $resposta->count() > 0){
             $data = array(
                         'dtResposta'        =>  new Zend_Db_Expr('GETDATE()'),
-                        'dsRespostaSubj'    =>  $info['dsRespostaSubj']  
+                        'dsRespostaSubj'    =>  $info['dsRespostaSubj']
                     );
             switch ($info['operacao']){
             	case 'tipoDT':
                     if($tdRespostaDAO->update($data, $where))
                         echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaç?o DT.')));
+                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaï¿½?o DT.')));
                    break;
                 case 'tipoNR':
                     if($tdRespostaDAO->update($data, $where))
                         echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaç?o NR.')));
+                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaï¿½?o NR.')));
                    break;
                 case 'tipoIT':
                     if($tdRespostaDAO->update($data, $where))
                         echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaç?o IT.')));
+                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaï¿½?o IT.')));
                    break;
                 case 'tipoTA':
                     if($tdRespostaDAO->update($data, $where))
@@ -1970,7 +1965,7 @@ class CadastrareditalController extends GenericControllerNew
                     break;
             }
         }
-        else{ 
+        else{
             $dados = array(
                         'nrFormDocumento'   =>  $info['nrFormDocumento'],
                         'nrVersaoDocumento' =>  $info['nrVersaoDocumento'],
@@ -1982,13 +1977,13 @@ class CadastrareditalController extends GenericControllerNew
                         'dsRespostaSubj'    =>  $info['dsRespostaSubj']
                      );
 
-//            xd($dados);
+
             if($tdRespostaDAO->insert($dados)==0)
                 echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
             else
                 echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro cadastro '.$info['operacao'].'.')));
         }
-    } // fecha método cadastraAtualizaRespostaQuestoes($info)
+    } // fecha mï¿½todo cadastraAtualizaRespostaQuestoes($info)
 
 
 
@@ -2004,7 +1999,7 @@ class CadastrareditalController extends GenericControllerNew
 
         $tbOpcaoRespostaDAO =   new tbOpcaoResposta();
         $this->view->opcoes             =   $tbOpcaoRespostaDAO->buscar($where,array('nrOrdemOpcao'));
-    } // fecha método opcaoadicionadasAction()
+    } // fecha mï¿½todo opcaoadicionadasAction()
 
 
 
@@ -2020,7 +2015,7 @@ class CadastrareditalController extends GenericControllerNew
 
         $this->view->nrFormDocumento    =   $nrFormDocumento;
         $this->view->nrVersaoDocumento  =   $nrVersaoDocumento;
-    } // fecha método questoesadicionadasAction()
+    } // fecha mï¿½todo questoesadicionadasAction()
 
 
 
@@ -2032,11 +2027,11 @@ class CadastrareditalController extends GenericControllerNew
         $idusuario = $auth->getIdentity()->usu_codigo;
         $nrFormDocumento    =   $post->nrFormDocumento;
         $nrVersaoDocumento  =   $post->nrVersaoDocumento;
-		
+
         $tbFormDocumentoDAO =   new tbFormDocumento();
         $edital                 =   $tbFormDocumentoDAO->buscar(array('nrFormDocumento = ?'=>$nrFormDocumento));
         $this->view->idEdital   =   $edital[0]->idEdital;
-        
+
         $tbFormDocumentoDAO             =   new tbFormDocumento();
         $FormDocumento                  =   $tbFormDocumentoDAO->buscar(array('nrFormDocumento = ?'=>$nrFormDocumento,'nrVersaoDocumento = ?'=>$nrVersaoDocumento));
         $this->view->nmFormDocumento    =   $FormDocumento[0]->nmFormDocumento;
@@ -2064,7 +2059,7 @@ class CadastrareditalController extends GenericControllerNew
     private $stTipoRespPergunta =   'O';
     // variaveis para o questionario (Proposta Customiz?vel)
     public function visualizarguiaAction()
-    {   
+    {
         $post                           =   Zend_Registry::get('post');
 
         $idEdital = isset($_POST['idEdital']) ? $_POST['idEdital'] : $_GET['idEdital'];
@@ -2078,7 +2073,7 @@ class CadastrareditalController extends GenericControllerNew
 
         $this->view->idPreProjeto       =   $this->idPreProjeto;
         $this->view->listaGuiasEdital   =   $edital;
-    } // fecha método visualizarguiaAction()
+    } // fecha mï¿½todo visualizarguiaAction()
 
 
 
@@ -2097,7 +2092,7 @@ class CadastrareditalController extends GenericControllerNew
         $this->view->nmFormDocumento    =   $FormDocumento[0]->nmFormDocumento;
         $this->view->stSomenteLeitura   =   $this->stSomenteLeitura;
         $this->view->questionario       =   $this->montarQuestionario();
-    } // fecha método visualizarquestionarioAction()
+    } // fecha mï¿½todo visualizarquestionarioAction()
 
 
 
@@ -2147,7 +2142,7 @@ class CadastrareditalController extends GenericControllerNew
         }
 
         return $questionario;
-    } // fecha método montarQuestionario()
+    } // fecha mï¿½todo montarQuestionario()
 
 
 
@@ -2174,10 +2169,10 @@ class CadastrareditalController extends GenericControllerNew
                                             ,'nrOpcao = ?'              =>$this->nrOpcao
                                         );
                     $result = $tbRespostaDAO->buscar($where);
-                    
+
                     if($result->count() > 0)
                         $resposta = $result;
-                }                
+                }
                 switch ($this->operacao){
                     case 'IT':
                         $resp .= $this->MontarInput($resposta,$disable);
@@ -2206,7 +2201,7 @@ class CadastrareditalController extends GenericControllerNew
                     case 'NR':
                         $resp .= $this->MontarInputNumero($resposta,$disable);
                         break;
-                        
+
                 }
             }
         }
@@ -2222,7 +2217,7 @@ class CadastrareditalController extends GenericControllerNew
             $resp = $this->defaultQuestao($resp);
         }
         return $resp;
-    } // fecha método montarQuestoes()
+    } // fecha mï¿½todo montarQuestoes()
 
 
 
@@ -2232,7 +2227,7 @@ class CadastrareditalController extends GenericControllerNew
         $this->stSomenteLeitura = 'S';
         $stSomenteLeituraAux = $this->_request->getParam('stSomenteLeitura');
         if($stSomenteLeituraAux != $this->stSomenteLeitura && $this->idPreProjeto && !isset($auth->getIdentity()->usu_codigo)){
-            $tbMovimentacaoDAO = new Movimentacao();
+            $tbMovimentacaoDAO = new Proposta_Model_DbTable_TbMovimentacao();
             $where = array(
                 'idProjeto = ?'     =>  $this->idPreProjeto
                 ,'Movimentacao = ?' =>  $this->Movimentacao
@@ -2242,7 +2237,7 @@ class CadastrareditalController extends GenericControllerNew
                 $this->stSomenteLeitura = '';
             }
         }
-    } // fecha método desabilitaQuestoes()
+    } // fecha mï¿½todo desabilitaQuestoes()
 
 
 
@@ -2266,7 +2261,7 @@ class CadastrareditalController extends GenericControllerNew
                 $tbFormDocumentoProjetoDAO->inserir($cad);
             }
         }
-    } // fecha método vincularProjetoDocumento()
+    } // fecha mï¿½todo vincularProjetoDocumento()
 
 
 
@@ -2275,13 +2270,13 @@ class CadastrareditalController extends GenericControllerNew
     	if(!$_POST){
     		$nrVersaoDocumento  =   $_GET['nrVersaoDocumento'];
         	$nrFormDocumento    =   $_GET['nrFormDocumento'];
-        	$where = array('nrFormDocumento = ?'=>$nrFormDocumento,'nrVersaoDocumento = ?'=>$nrVersaoDocumento);	
+        	$where = array('nrFormDocumento = ?'=>$nrFormDocumento,'nrVersaoDocumento = ?'=>$nrVersaoDocumento);
     	}else{
     		$nrVersaoDocumento  =   $_POST['nrVersaoDocumento'];
 	        $nrFormDocumento    =   $_POST['nrFormDocumento'];
 	        $where = array('nrFormDocumento = ?'=>$nrFormDocumento,'nrVersaoDocumento = ?'=>$nrVersaoDocumento);
     	}
-        
+
         $tbRespostaDAO          =   new tbResposta();
         $tbOpcaoRespostaDAO     =   new tbOpcaoResposta();
         $tbPerguntaFormDoctoDAO =   new tbPerguntaFormDocto();
@@ -2327,7 +2322,7 @@ class CadastrareditalController extends GenericControllerNew
             else
                 return array(false,"Erro ao tentar excluir a Resposta.");
         }
-    } // fecha método excluirQuestionario()
+    } // fecha mï¿½todo excluirQuestionario()
 
 
 
@@ -2350,7 +2345,7 @@ class CadastrareditalController extends GenericControllerNew
                 <div></div>
             </form>
         ";
-    } // fecha método defaultQuestao($add)
+    } // fecha mï¿½todo defaultQuestao($add)
 
 
 
@@ -2395,7 +2390,7 @@ class CadastrareditalController extends GenericControllerNew
         </script>
         ";
         return $this->defaultQuestao($resp);
-    } // fecha método MontarTextArea()
+    } // fecha mï¿½todo MontarTextArea()
 
 
 
@@ -2408,7 +2403,7 @@ class CadastrareditalController extends GenericControllerNew
         $label = $alternativa['dsOpcao'];
         $resp = "<input class=\"{$this->operacao}\" name=\"resposta_{$this->nrOpcao}\" type=\"checkbox\" {$disable} {$valor} value=\"{$label}\" />{$label}";
         return $this->defaultQuestao($resp);
-    } // fecha método MontarCheckGroup()
+    } // fecha mï¿½todo MontarCheckGroup()
 
 
 
@@ -2424,7 +2419,7 @@ class CadastrareditalController extends GenericControllerNew
 
         //$resp = "<input class=\"{$this->operacao}\" name=\"resposta_{$this->nrOpcao}\" type=\"checkbox\" {$disable} {$valor} value=\"{$label}\" />{$label} <input value=\"{$valorAux}\" type=\"text\" size=\"50\" {$disable} class=\"{$this->operacao}\" name=\"resposta_{$this->nrPergunta}_{$this->nrOpcao}\" />";
         return $this->defaultQuestao($resp);
-    } // fecha método MontarCheckGroupJust()
+    } // fecha mï¿½todo MontarCheckGroupJust()
 
 
 
@@ -2437,7 +2432,7 @@ class CadastrareditalController extends GenericControllerNew
         $label = $alternativa['dsOpcao'];
         $resp = "<option {$valor} value=\"{$this->nrOpcao}\">{$label}</option>";
         return $resp;
-    } // fecha método MontarComboBox()
+    } // fecha mï¿½todo MontarComboBox()
 
 
 
@@ -2450,7 +2445,7 @@ class CadastrareditalController extends GenericControllerNew
         $label = $alternativa['dsOpcao'];
         $resp = "<input name=\"resposta_{$this->nrPergunta}\" type=\"radio\" class=\"{$this->operacao}\"  {$disable} {$valor} value=\"{$this->nrOpcao}\" />{$label}<br /><br />";
         return $resp;
-    } // fecha método MontarRadio()
+    } // fecha mï¿½todo MontarRadio()
 
 
 
@@ -2467,39 +2462,39 @@ class CadastrareditalController extends GenericControllerNew
         $resp = "<input name=\"resposta_{$this->nrPergunta}\" type=\"radio\" class=\"{$this->operacao}\" {$disable} {$valor} value=\"{$this->nrOpcao}\" />{$label}<br />Justificativa:<br /> <textarea {$disable} class=\"{$this->operacao}\" style=\"width:100%;\"  name=\"resposta_{$this->nrPergunta}_{$this->nrOpcao}\" >{$valorAux}</textarea><br /><br />";
         //$resp = "<input name=\"resposta_{$this->nrPergunta}\" type=\"radio\" class=\"{$this->operacao}\" {$disable} {$valor} value=\"{$this->nrOpcao}\" />{$label} <input value=\"{$valorAux}\" type=\"text\" size=\"50\" {$disable} class=\"{$this->operacao}\" name=\"resposta_{$this->nrPergunta}_{$this->nrOpcao}\" /><br /><br />";
         return $resp;
-    } // fecha método MontarRadioJust()
+    } // fecha mï¿½todo MontarRadioJust()
 
 
 
  	public function acessaravaliadorAction()
     {
     	/** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
-        
+
         $Orgao = new Orgaos();
-        
+
         $NomeOrgao = $Orgao->pesquisarNomeOrgao($codOrgao);
         $this->view->nomeOrgao = $NomeOrgao;
 
         $tbFormDocumentoDAO =   new tbFormDocumento();
         $edital                 =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$_GET['idEdital']));
-        
+
         $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
         /*         * *************************************************************** */
-        
-    } // fecha método acessaravaliadorAction()
+
+    } // fecha mï¿½todo acessaravaliadorAction()
 
 
-    
+
     public function vinculareditaisAction()
     {
         $nrFormDocumento = $_GET['nrFormDocumento'];
@@ -2507,13 +2502,13 @@ class CadastrareditalController extends GenericControllerNew
         //$idAgente = $_POST['idAgente'];
         $idEdital = $_GET['idEdital'];
         $idUsuario = $_GET['idUsuario'];
-  
+
         $tbFormDocumentoDAO =   new tbFormDocumento();
         $edital                 =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$_GET['idEdital']));
         $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
         $this->view->nrFormDocumento    = $nrFormDocumento;
         $this->view->idEdital           = $idEdital;
-        
+
         if(isset($_GET['cpf'])){
         	$cpf = $_GET['cpf'];
         	$this->view->cpf = $cpf;
@@ -2523,91 +2518,90 @@ class CadastrareditalController extends GenericControllerNew
         }
 		$buscaIdAgente = ManterAvaliadorDAO::buscaIdAgente($cpf);
                 if(!empty ($buscaIdAgente[0])){
-     		if(isset($_POST['idAgente'])){ 
+     		if(isset($_POST['idAgente'])){
      			$idAgente = $_POST['idAgente'];
         		$this->view->idAgente = $idAgente;
-     		}else{ 
-     			$agentes = new Agentes();
+     		}else{
+     			$agentes = new Agente_Model_DbTable_Agentes();
 	    		$agente = $agentes->BuscaAgente($cpf)->toArray();
 	    		$idAgente = $agente[0]['idAgente'];
-	    		$this->view->idAgente = $idAgente;	
+	    		$this->view->idAgente = $idAgente;
      		}
-     		
-    		
+
+
 	        $avaliador = ManterAvaliadorDAO::buscaAvaliador($cpf, $idAgente);
 	        $this->view->nomeAvaliador = $avaliador[0]->nome;
-    		
+
 	        $avaliador = ManterAvaliadorDAO::buscaAvaliador($cpf, $idAgente);
 	        $this->view->dadosAvaliador = $avaliador;
-	        
+
         	$editais = ManterAvaliadorDAO::buscaEditaisAtivos($idAgente);
         	$this->view->editais = $editais;
-        
+
         $dadosEdital = ManterAvaliadorDAO::listarEditaisAvaliador(); //BUSCA DA MODAL EDITAIS
        	$this->view->dadosEditalAvaliador = $dadosEdital;
-       	
-        	// ========== INÍCIO PAGINAÇÃO ==========
+
+        	// ========== INï¿½CIO PAGINAï¿½ï¿½O ==========
 			Zend_Paginator::setDefaultScrollingStyle('Sliding');
 			Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 			$paginator = Zend_Paginator::factory($dadosEdital); // dados a serem paginados
-	
-			// página atual e quantidade de ítens por página
+
+			// pï¿½gina atual e quantidade de ï¿½tens por pï¿½gina
 			$currentPage = $this->_getParam('page', 1);
 			$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(5);
 			$this->view->dadosEditalAvaliador = $paginator;
-        	//xd($paginator);
         	$this->view->qtdDoc    = count($dadosEdital); // quantidade
-		
-			// ========== FIM PAGINAÇÃO ==========
-		}else{ 
-			parent::message("CPF não cadastrado!", "/cadastraredital/acessaravaliador?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
+
+			// ========== FIM PAGINAï¿½ï¿½O ==========
+		}else{
+			parent::message("CPF nï¿½o cadastrado!", "/cadastraredital/acessaravaliador?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
 		}
-   		 if (isset($_POST['idEdit'])) { x(3);//Desvincular 
+   		 if (isset($_POST['idEdit'])) { x(3);//Desvincular
     		$idAgente = $_POST['idAgen'];
         	$idEdital = $_POST['idEdit'];
-        	
+
         	$this->view->cpf = $cpf;
-        	
+
         	$alterar = new tbAvaliadorEdital();
         	$dados = array('stAtivo' => 'I');
             $where = "idAvaliador = $idAgente and idEdital = $idEdital";
             $atualizarProjeto = $alterar->alterarAvaliador($dados, $where);
-    
+
 	        $avaliador = ManterAvaliadorDAO::buscaAvaliador($cpf, $idAgente);
 	        $this->view->nomeAvaliador = $avaliador[0]->nome;
-	        
-	        $this->view->idAgente = $idAgente; 
+
+	        $this->view->idAgente = $idAgente;
 	        if($idAgente){
 	        	$editais = ManterAvaliadorDAO::buscaEditaisAtivos($idAgente);
 	        	$this->view->editais = $editais;
 	     	}
-	       	
+
 	       	parent::message("Edital desvinculado com sucesso!", "/cadastraredital/vinculareditais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}&cpf={$cpf}", "CONFIRM");
 
 
         }
-        
+
     	if (isset($_POST['cpf2'])) { //Vincular
-    		
+
     		$cpf = $_POST['cpf2'];
-    		$agentes = new Agentes();
+    		$agentes = new Agente_Model_DbTable_Agentes();
     		$agente = $agentes->BuscaAgente($cpf)->toArray();
     		$idAgente = $agente[0]['idAgente'];
     		$this->view->idAgente = $idAgente;
-	    		
+
         	$idEdit= $_GET['idEdital'];
 
         	$alterar = new tbAvaliadorEdital();
         	$vinculado = $alterar->buscar(array('idAvaliador = ?'=>$idAgente, 'idEdital = ?'=>$idEdital))->toArray();
-        	
+
         	if($vinculado){
         		if($vinculado[0]['stAtivo'] == 'A'){
-        			parent::message("Edital já vinculado!", "/cadastraredital/vinculareditais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}&cpf={$cpf}", "ALERT");
+        			parent::message("Edital jï¿½ vinculado!", "/cadastraredital/vinculareditais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}&cpf={$cpf}", "ALERT");
         		}elseif($vinculado[0]['stAtivo'] == 'I'){
 	        		$dados = array('stAtivo' => 'A');
 		        	$where = "idAvaliador = $idAgente and idEdital = $idEdital";
 					$atualizarProjeto = $alterar->update($dados, $where);
-		        	
+
 		        	parent::message("Edital vinculado com sucesso!", "/cadastraredital/vinculareditais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}&cpf={$cpf}", "CONFIRM");
         		}
 
@@ -2626,8 +2620,8 @@ class CadastrareditalController extends GenericControllerNew
         	}
         }
 
-    } // fecha método vinculareditaisAction()
-    
+    } // fecha mï¿½todo vinculareditaisAction()
+
 	public static function saldoPiMenosValorEdital($nrFormDocumento,$idAti){
 
         $buscar = new tbPagamento();
@@ -2643,19 +2637,19 @@ class CadastrareditalController extends GenericControllerNew
 
 		$valorPi = Edital::recuperaValorPi($idAti);
 		$valorPi = number_format($valorPi[0]->valor,2,',','.');
-		
+
         $saldoPi = str_replace(".","",$valorPi)-$valorGasto;
-        
+
         $saldoPi = number_format($saldoPi,2,',','.');
 
         $saldoPiMenosPiAtual = str_replace(".","",$saldoPi) - str_replace(".","",$valorJaInserido);
-                
+
         $saldoPiMenosPiAtual = number_format($saldoPiMenosPiAtual,2,',','.');
 
         return $saldoPiMenosPiAtual;
 
     }
-    
+
 	public static function recuperaIdAti($idEdital){
 
         $buscar = new Edital();

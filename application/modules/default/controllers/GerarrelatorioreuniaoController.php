@@ -1,18 +1,10 @@
 <?php
-
-include_once 'GenericController.php';
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of GerarRelatorioReuniao
  *
  * @author 01373930160
  */
-class GerarRelatorioReuniaoController extends GenericControllerNew {
+class GerarRelatorioReuniaoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // tï¿½tulo da pï¿½gina
@@ -50,6 +42,8 @@ class GerarRelatorioReuniaoController extends GenericControllerNew {
             $PermissoesGrupo[] = 135; // Tec. De Fiscalização
             $PermissoesGrupo[] = 138; // Coord. de Avaliação
             $PermissoesGrupo[] = 139; // Tec. de Avaliação
+            $PermissoesGrupo[] = 148; // Coord. de Avaliação
+            $PermissoesGrupo[] = 150; // Tec. de Avaliação
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
@@ -70,7 +64,6 @@ class GerarRelatorioReuniaoController extends GenericControllerNew {
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-// fecha método init()
 
     public function gerarrelatorioreuniaoAction() {
         $reuniao = new Reuniao();
@@ -141,4 +134,3 @@ class GerarRelatorioReuniaoController extends GenericControllerNew {
     }
 
 }
-?>

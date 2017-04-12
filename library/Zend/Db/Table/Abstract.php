@@ -1049,6 +1049,7 @@ abstract class Zend_Db_Table_Abstract
          * INSERT the new row.
          */
         $tableSpec = ($this->_schema ? $this->_schema . '.' : '') . $this->_name;
+
         $this->_db->insert($tableSpec, $data);
 
         /**
@@ -1272,7 +1273,6 @@ abstract class Zend_Db_Table_Abstract
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
         }
-
         // issue ZF-5775 (empty where clause should return empty rowset)
         if ($whereClause == null) {
             $rowsetClass = $this->getRowsetClass();
@@ -1282,6 +1282,7 @@ abstract class Zend_Db_Table_Abstract
             }
             return new $rowsetClass(array('table' => $this, 'rowClass' => $this->getRowClass(), 'stored' => true));
         }
+
 
         return $this->fetchAll($whereClause);
     }

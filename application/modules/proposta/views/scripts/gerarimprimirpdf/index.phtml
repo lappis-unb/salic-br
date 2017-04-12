@@ -1,0 +1,351 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?php echo $this->title; ?></title>
+    <style>
+        body {
+            font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;
+            color:#666;
+            line-height:14pt;
+            margin:30px;
+        }
+        h2{
+            margin:0px;
+            margin-top:50px;
+            border-bottom:1px #36963f solid;
+            font-size:13pt;
+        }
+
+        p{
+            padding:15px;
+        }
+
+        table.identificacao tr {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body style="paddig:20px">
+<?php if( $this->isEditarProjeto ) : ?>
+    <center><h1>Alterar Projeto</h1></center>
+<?php else : ?>
+    <center><h1>Proposta Cultural</h1></center>
+<?php endif; ?>
+<br>
+<h2>Identifica&ccedil;&atilde;o </h2>
+<table class="identificacao">
+    <tr>
+        <td width="300px">
+            N. da Proposta: <br><b><?php echo $this->id_projeto; ?></b>
+        </td>
+        <td>
+            Nome da Proposta: <br><b><?php echo $this->rsDadosProjeto['nomeprojeto']; ?></b>
+        </td>
+    </tr>
+    <tr>
+        <td width="300px">
+            Mecanismo: <br>
+            <b><?php echo $this->mecanismo; ?></b>
+        </td>
+        <td>
+            Proponente: <br><b><?php echo $this->rsDadosProjeto['cnpjcpf'];?> - <?php echo utf8_encode($this->rsDadosProjeto['nomeagente']); ?></b>
+        </td>
+        <br>
+    </tr>
+    <tr>
+        <td width="300px">
+            Prorroga&ccedil;&atilde;o autom&aacute;tica: <br><b><?php echo ($this->rsDadosProjeto['tpprorrogacao']) ? 'Sim' : 'N;&atilde;o'; ?></b>
+        </td>
+        <td>
+            Plano de execu&ccedil;&atilde;o imediata: <br>
+            <b><?php echo utf8_encode($this->ExecucaoImediata['Descricao']); ?></b>
+        </td>
+    </tr>
+</table>
+<br /><br />
+<h2>Resumo da Proposta Cultural </h2>
+
+<p class="MsoNormal"><?php echo $this->rsDadosProjeto['resumodoprojeto']; ?></p>
+<br /><br />
+<h2>Abrang&ecirc;ncia geogr&aacute;fica da proposta cultural</h2>
+<br>
+<p>
+<table cellpadding="3" style="width:100%">
+    <tr>
+        <th>Pa&iacute;s</th>
+        <th>UF</th>
+        <th>Cidade</th>
+        <th>Dt.In&iacute;cio de Execu&ccedil;&atilde;o</th>
+        <th>Dt.Final de Execu&ccedil;&atilde;o</th>
+    </tr>
+
+    <?php foreach ($this->rsAbrangencias as $abrangencia ) : //busca locais onde o preprojeto sera realizado ?>
+
+        <tr bgcolor="#EEEEEE" valign="center">
+            <td><?php echo $abrangencia['pais']; ?></td>
+            <td><?php echo $abrangencia['uf']; ?></td>
+            <td><?php echo $abrangencia['cidade']; ?></td>
+            <td><?php echo data($abrangencia['dtiniciodeexecucao']); ?></td>
+            <td><?php echo data($abrangencia['dtfinaldeexecucao']); ?></td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>
+</p>
+
+<?php if($this->mecanismo == 'Incentivo Fiscal') : ///DADOS APENAS PARA O INCENTIVO FISCAL ?>
+
+    <h2>Informa&ccedil;&otilde;es Complementares</h2>
+    <table style="width:100%" cellpadding="13" border="0">
+        <tr>
+            <td>Mecanismo: <?php echo $this->mecanismo; ?></td>
+            <td><nobr>Data Fixa: <?php echo verifica($this->rsDadosProjeto['stdatafixa']); ?></nobr></td>
+            <td>Plano Anual: <?php echo verifica($this->rsDadosProjeto['stplanoanual']); ?></td>
+            <td>Ag.Banc&aacute;ria: <?php echo $this->rsDadosProjeto['agenciabancaria']; ?></td>
+            <td>Proposta Audiovisual: <?php echo verifica($this->rsDadosProjeto['areaabrangencia']); ?></td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%; margin-top:50px">
+        <tr>
+            <td style="padding-right:10px">
+                <h2>Per&iacute;odo de Realiza&ccedil;&atilde;o</h2>
+                <p>
+                    Data In&iacute;cio: <?php echo data($this->rsDadosProjeto['dtiniciodeexecucao']); ?><br />
+                    Data Final: <?php echo data($this->rsDadosProjeto['dtfinaldeexecucao']); ?>
+                </p>
+            </td>
+            <td style="padding-left:10px">
+                <h2>Bem Tombado</h2>
+                <p>
+                    <?php if ($this->rsDadosProjeto['esferatombamento'] > 0) {
+                        echo "N. do Ato: " . $this->rsDadosProjeto['nratotombamento'] . '<br/>';
+                        echo "Data do Ato: " . data($this->rsDadosProjeto['dtatotombamento']) . '<br/>';
+                        echo "Esfera do Ato: " . $this->rsDadosProjeto['esferatombamento'] . '<br/>';
+                    } else {
+                        echo "Bem n&atilde;o tombado <br/>" ;
+                    } ?>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Objetivos do Projeto</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['objetivos']); ?></p>
+    <h2>Justificativa do Projeto</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['justificativa']); ?></p>
+    <h2>Acessibilidade</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['acessibilidade']); ?></p>
+    <h2>Democratiza&ccedil;&atilde;o de Acesso</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['democratizacaodeacesso']); ?></p>
+    <h2>Fases do Projeto</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['etapadetrabalho']); ?></p>
+    <h2>Ficha T&eacute;cnica</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['fichatecnica']); ?></p>
+    <h2>Sinopse da obra</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['sinopse']); ?></p>
+    <h2>Impacto Ambiental</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['impactoambiental']); ?></p>
+    <h2>Especifica&ccedil;&otilde;es t&eacute;cnicas do produto</h2>
+    <p><?php echo tratatexto($this->rsDadosProjeto['especificacaotecnica']); ?></p>
+<!--    <h2>Plano b&aacute;sico de Divulga&ccedil;&atilde;o</h2>-->
+<!--    <p>-->
+<!--        <table cellpadding="3" style="width:100%">-->
+
+            <?php //foreach ($this->rsPlanoDivulgacao as $divulgacao) : ?>
+<!--                <tr bgcolor="#EEEEEE">-->
+<!--                    <td width="80%">--><?php //echo $divulgacao['peca']; ?><!--</td>-->
+<!--                    <td>--><?php //echo $divulgacao['veiculo']; ?><!--</td>-->
+<!--                </tr>-->
+            <?php //endforeach; ?>
+<!--        </table>-->
+<!--    </p>-->
+<!--    <br><br>-->
+    <h2>Plano de distribui&ccedil;&atilde;o de produtos culturais</h2>
+    <p>
+        <table cellpadding="3" style="width:100%">
+            <tr>
+                <td style="font-size:8pt" valin="bottom"><b>Nome do Evento/Produto</b></td>
+                <td style="font-size:8pt"><b>Qtde.Divulga&ccedil;&atilde;o</b></td>
+                <td style="font-size:8pt"><b>Qtde.Patrocinador</b></td>
+                <td style="font-size:8pt"><b>Distribu&ccedil;&atilde;o Gratuita</b></td>
+                <td style="font-size:8pt"><b>Total Venda</b></td>
+                <td style="font-size:8pt"><b>Total Venda Promocional</b></td>
+                <td style="font-size:8pt"><b>Qtde Total</b></td>
+                <td style="font-size:8pt"><b>Preco Uni. Promocional</b></td>
+                <td style="font-size:8pt"><b>Preco Uni. Normal</b></td>
+                <td style="font-size:8pt"><b>Receita Prev. Normal</b></td>
+                <td style="font-size:8pt"><b>Receita Prev. Promocional</b></td>
+            </tr>
+
+            <?php
+
+            $Total                          = 0;
+            $QtdeOutrosTotal                = 0;
+            $QtdeVendaNormalTotal           = 0;
+            $QtdeVendaPromocionalTotal      = 0;
+            $QtdeProduzidaTotal             = 0;
+            $PrecoUnitarioPromocionalTotal  = 0;
+            $PrecoUnitarioNormalTotal       = 0;
+            $ReceitaNormalTotal             = 0;
+            $ReceitaProTotal                = 0;
+
+            //busca dados de distribuicao do preprojeto
+            foreach ( $this->rsPlanoDistribuicao as $DadosDistribuicao ) {
+                $receitanormal   = 0;
+                $receitapro      = 0;
+                $receitaprevista = 0;
+
+                $DadosDistribuicao->PrecoUnitarioNormal = str_replace('$','', $DadosDistribuicao->PrecoUnitarioNormal);
+                $DadosDistribuicao->PrecoUnitarioPromocional = str_replace('$','', $DadosDistribuicao->PrecoUnitarioPromocional);
+
+                $receitanormal   = ($DadosDistribuicao->QtdeVendaNormal*$DadosDistribuicao->PrecoUnitarioNormal);
+                $receitapro      = ($DadosDistribuicao->QtdeVendaPromocional*$DadosDistribuicao->PrecoUnitarioPromocional);
+                $receitaprevista = $receitanormal + $receitapro;
+
+                $QtdeOutrosTotal                = $QtdeOutrosTotal + $DadosDistribuicao->QtdeOutros;
+                $QtdeVendaNormalTotal           = $QtdeVendaNormalTotal + $DadosDistribuicao->QtdeVendaNormal;
+                $QtdeVendaPromocionalTotal      = $QtdeVendaPromocionalTotal + $DadosDistribuicao->QtdeVendaPromocional;
+                $QtdeProduzidaTotal             = $QtdeProduzidaTotal + $DadosDistribuicao->QtdeProduzida;
+                $PrecoUnitarioPromocionalTotal  = $PrecoUnitarioPromocionalTotal + $DadosDistribuicao->PrecoUnitarioPromocional;
+                $PrecoUnitarioNormalTotal       = $PrecoUnitarioNormalTotal + $DadosDistribuicao->PrecoUnitarioNormal;
+                $ReceitaNormalTotal             = $ReceitaNormalTotal + $receitanormal;
+                $ReceitaProTotal                = $ReceitaProTotal + $receitapro;
+                $Total++;
+
+                ?>
+                    <tr bgcolor="#EEEEEE">
+                        <td><?php echo $DadosDistribuicao->Produto; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeProponente; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdePatrocinador; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeOutros; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeVendaNormal; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeVendaPromocional; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeProduzida; ?></td>
+                        <td><?php echo number_format($DadosDistribuicao->PrecoUnitarioPromocional,"2",",","."); ?></td>
+                        <td><?php echo number_format($DadosDistribuicao->PrecoUnitarioNormal,"2",",","."); ?></td>
+                        <td><?php echo number_format($receitanormal,"2",",","."); ?></td>
+                        <td><?php echo number_format($receitapro,"2",",","."); ?></td>
+                    </tr>
+                <?php
+            } ?>
+
+            <tr>
+                <th colspan="3" align="left">Total Geral (<?php echo $Total; ?>)</th>
+                <th align="left"><?php echo $QtdeOutrosTotal; ?></th>
+                <th align="left"><?php echo $QtdeVendaNormalTotal; ?></th>
+                <th align="left"><?php echo $QtdeVendaPromocionalTotal; ?></th>
+                <th align="left"><?php echo $QtdeProduzidaTotal; ?></th>
+                <th align="left"><?php echo number_format($PrecoUnitarioPromocionalTotal,"2",",","."); ?></th>
+                <th align="left"><?php echo number_format($PrecoUnitarioNormalTotal,"2",",","."); ?></th>
+                <th align="left"><?php echo number_format($ReceitaNormalTotal,"2",",","."); ?></th>
+                <th align="left"><?php echo number_format($ReceitaProTotal,"2",",","."); ?></th>
+            </tr>
+        </table>
+    </p>
+
+    <h2>Planilha Or&ccedil;ament&aacute;ria</h2>
+    <?php
+        $etapa = -1;
+        $Produto = -1;
+        $TotalProduto = 0;
+        $TotalEtapa = 0;
+        $TotalOrcamento = 0;
+
+        //busca dados de orcamento do preprojeto
+        foreach ($this->rsOrcamento as $Orcamento) : ?>
+
+            <?php if (($etapa != $Orcamento->idEtapa or $Produto != $Orcamento->idProduto) and $Produto != -1) : ?>
+
+                <tr>
+                    <th colspan="9" align="left" style="font-size:9pt;">Total Produto: <?php echo number_format($TotalProduto,2,',','.'); ?></th>
+                </tr>
+
+                <?php
+
+                $TotalEtapa = $TotalEtapa + $TotalProduto;
+                $TotalProduto = 0;
+            endif;
+
+            if ($etapa != $Orcamento->idEtapa and $etapa != -1) : ?>
+
+                <tr>
+                    <th colspan="9" align="left" style="font-size:11pt;">Total Etapa: <?php echo number_format($TotalEtapa,2,',','.'); ?></th>
+                </tr>
+                 </table>
+                <?php
+                $TotalOrcamento = $TotalOrcamento + $TotalEtapa;
+                $TotalEtapa = 0;
+            endif; ?>
+
+            <?php if ($etapa != $Orcamento->idEtapa or $Produto != $Orcamento->idProduto) : ?>
+
+                <table border=0 cellpading="5" width="100%" style="font-size:6pt; margin-top:20px">
+
+                    <tr>
+                        <th colspan="11" align="left" style="font-size:12pt;">Etapa: <?php echo $Orcamento->etapa; ?></th>
+                    </tr>
+                    <tr>
+                        <th colspan="11" align="left" style="font-size:12pt;">Produto: <?php echo $Orcamento->ProdutoF; ?> </th>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#EEEEEE" align="center"><b>Item</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Unid.</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Quant.</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Ocorr</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Valor Unid.</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Total</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Dias</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Fonte de Recurso</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>UF</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Munic&iacute;pio</b></td>
+                        <td bgcolor="#EEEEEE" align="center"><b>Justificativa</b></td>
+                    </tr>
+            <?php endif; ?>
+
+            <?php
+
+                $TotalProduto = $TotalProduto + (($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario));
+                $etapa = $Orcamento->idEtapa;
+                $Produto = $Orcamento->idProduto;
+
+            ?>
+
+            <tr>
+                <td><?php echo $Orcamento->item; ?></td>
+                <td><?php echo $Orcamento->unidadef; ?></td>
+                <td><?php echo (int)$Orcamento->Quantidade; ?></td>
+                <td><?php echo (int)$Orcamento->Ocorrencia; ?></td>
+                <td><?php echo number_format($Orcamento->ValorUnitario,2,',','.'); ?></td>
+                <td><?php echo number_format(($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario),2,',','.'); ?></td>
+                <td><?php echo $Orcamento->QtdeDias; ?></td>
+                <td><?php echo $Orcamento->fonterecursof; ?></td>
+                <td><?php echo $Orcamento->ufdespesaf; ?></td>
+                <td><?php echo $Orcamento->municipiodespesaf; ?></td>
+                <td><?php echo $Orcamento->dsJustificativa; ?></td>
+            </tr>
+
+            <tr>
+                <td bgcolor="#EEEEEE"  colspan="11" style="height:1px"></td>
+            </tr>
+
+        <?php endforeach;  // endforeach;
+
+        $TotalOrcamento = $TotalOrcamento + $TotalProduto;  ?>
+
+        <table border=0 cellpading="5" width="100%" style="font-size:6pt;">
+            <tr>
+                <th colspan="9" align="left" style="font-size:9pt;">Total Produto: <?php echo number_format($TotalProduto,2,',','.'); ?></th>
+            </tr>
+            <tr>
+                <th colspan="9" align="left" style="font-size:11pt;">Total Etapa: <?php echo number_format($TotalEtapa + $TotalProduto,2,',','.'); ?></th>
+            </tr>
+            <tr>
+                <th colspan="9" align="left" bgcolor="#EEEEEE" style="font-size:11pt; padding-top:10px;">Or&ccedil;amento Total: <?php echo number_format($TotalOrcamento,2,',','.'); ?></th>
+            </tr>
+        </table>
+        <?php endif;  //Fim do IF para incentivo fiscal ?>
+    </div>
+</body>
+</html>

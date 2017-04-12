@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php", $this); ?>
+        <div class="col s10 m10 l10">
+            <?php
+            $SalvarAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'arquivarproposta'));
+            ?>
+            <script type="text/javascript"
+                    src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
+            <script type="text/javascript"
+                    src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
+            <h4>Admissibilidade de propostas - Arquivar proposta
+            </h4>
+
+
+            <div id="">
+                <form id="formEncaminhar" name="formEncaminhar" method="post" action="<?php echo $SalvarAvaliacao; ?>">
+
+                    <table class="tabela">
+                        <tr>
+                            <th>
+                                <input type="hidden" name="idPreProjeto" id="idPreProjeto"
+                                       value="<?php echo $this->idPreProjeto ?>"/>
+                                Proposta Nr: <?php echo $this->idPreProjeto ?>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <input type="hidden" name="nomeProjeto" id="nomeProjeto"
+                                       value="<?php echo $this->nomeProjeto ?>"/>
+                                <?php echo $this->nomeProjeto ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Justificativa *</th>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <textarea cols="80" id="justificativa" name="justificativa" rows="10"></textarea>
+                                <script type="text/javascript">
+                                    //<![CDATA[
+                                    CKEDITOR.replace('justificativa', {fullPage: true});
+                                    //]]>
+                                </script>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="tabela">
+                        <tr>
+                            <td align="center">
+                                <a class="btn waves-effect waves-dark red-text white" type="button"
+                                   href="javascript:voltar();">
+                                    Voltar
+                                </a>
+                                <button class="btn waves-effect waves-light" type="submit">
+                                    Salvar <i class="material-icons right">send</i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br clear="all"/>
+<script type="text/javascript">
+    <!--
+    $(document).ready(function () {
+        /*$('.salvar').click(function(){
+
+         $('#formEncaminhar').attr('action','<?php echo $SalvarAvaliacao;?>');
+         $('#formEncaminhar').submit();
+
+         });*/
+
+        $("#formEncaminhar").validate({
+            rules: {
+                justificativa: {validarjustificativa: true}
+            },
+            messages: {
+                justificativa: {validarjustificativa: "Dado obrigat&oacute;rio n&atilde;o informado"}
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+
+        //VALIDA CAMPO RESUMO DA PROPOSTA
+        jQuery.validator.addMethod("validarjustificativa", function (value, element) {
+            var texto = CKEDITOR.instances['justificativa'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g, '');
+
+            if (texto.length > 0) {
+                // verifica se o usu�rio clicou no bot�o 'Reintegra��o'
+
+                $('#justificativa').val(CKEDITOR.instances['justificativa'].getData());
+                return true;
+            }
+            else {
+                //apresentarDialog();
+                //$("#divMsg").show();
+                return false;
+            }
+        });
+    });
+    //-->
+</script>

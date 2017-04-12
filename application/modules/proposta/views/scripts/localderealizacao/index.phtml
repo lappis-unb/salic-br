@@ -1,0 +1,138 @@
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("inc/menu.phtml", $this); ?>
+        <div class="content col s10 m12 l10">
+            <?php
+                $links = array(
+                    $this->layout['listagem'],
+                    array('Local de Realiza&ccedil;&atilde;o' => array())
+                );
+                gerarBreadCrumb($links);
+            ?>
+            <h4 class="ligthen">Local de Realiza&ccedil;&atilde;o <?php if (!isset($_GET['edital'])): ?>/ Deslocamento<?php endif; ?>
+                <?php //echo montaBotaoVoltar($controller, $links); ?>
+            </h4>
+            <div id="">
+                <?php if (!isset($_GET['edital'])): ?>
+                    <p style="margin-top: 30px;">
+                        <input id="local"
+                            type="radio" <?php echo (!isset($_GET['deslocamento'])) ? 'checked' : ''; ?>
+                            name="selecionar" id="selecionar1" value="realizacao" onclick="trocatela('1')"
+                            /><label for="local">Local de Realiza&ccedil;&atilde;o</label>
+                        <input id="desloc"
+                            type="radio" <?php echo (isset($_GET['deslocamento'])) ? 'checked' : ''; ?>
+                            name="selecionar" id="selecionar2" value="deslocamento" onclick="trocatela('2')"/><label for="desloc">Deslocamento</label>
+                    </p>
+                <?php endif; ?>
+                <div id="localderealizacao">
+                    <div class="row">
+                        <div class="col s12">
+                            <table class="bordered">
+                                <tr>
+                                    <th colspan="4">Instru&ccedil;&otilde;es</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="padding-left: 30px;">
+                                        <ul>
+                                            <li>Esta tela dever&aacute; ser preenchida com um ou mais locais realiza&ccedil;&atilde;o
+                                                da proposta cultural.
+                                            </li>
+                                            <li>Se o local de realiza&ccedil;&atilde;o for no exterior, selecione o
+                                                pa&iacute;s.
+                                            </li>
+                                            <li>Se o local de realiza&ccedil;&atilde;o for no Brasil, selecione a UF e a
+                                                Cidade.
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Pa&iacute;s</th>
+                                    <th>UF</th>
+                                    <th>Cidade</th>
+                                    <th nowrap>A&ccedil;&otilde;es</th>
+                                </tr>
+                                <?php foreach ($this->localizacoes as $localizacao) : ?>
+                                    <tr>
+                                        <td><?php echo $localizacao['pais']; ?></td>
+                                        <td><?php echo $localizacao['uf']; ?></td>
+                                        <td><?php echo $localizacao['cidade']; ?></td>
+                                        <td nowrap>
+                                            <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao['idAbrangencia']; ?>&idPreProjeto=<?php echo $this->idPreProjeto; ?>&edit=1" class="btn white-text">Editar</a>
+                                            <button type="button"
+                                                   class=" btn white-text red"
+                                                   onclick="excluir(<?php echo $localizacao['idAbrangencia']; ?>);">Excluir</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 center">
+                        <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-inserir', 'idPreProjeto' => $this->idPreProjeto)); ?>" class="btn white-text">Novo</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="deslocamento" class="sumir"></div>
+                <div title="Confirma&ccedil;&atilde;o" id="modalConfirmaExclusao"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        <?php if( isset($_GET['deslocamento']) ) : ?>
+        trocatela(2);
+        <?php endif; ?>
+
+        <?php if (!$this->isEditavel) : ?>
+        //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
+        JSBloquearAlteracaoFormulario();
+        <?php endif; ?>
+
+        $('#btn_novo').click(function () {
+            redirecionar("<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'form-inserir', 'idPreProjeto' => $this->idPreProjeto)); ?>");
+        });
+
+    });
+
+    function excluir(cod) {
+        $("#modalConfirmaExclusao").html("Se voc&ecirc; excluir um local de realiza&ccedil;&atilde;o com planilha cadastrada, todos os itens da planilha ser&atilde;o apagados. \nTem certeza que deseja excluir o registro?");
+        // modal com os ddos do dirigente
+        $("#modalConfirmaExclusao").dialog("destroy");
+        $("#modalConfirmaExclusao").dialog
+        ({
+            width: 400,
+            height: 180,
+            EscClose: false,
+            modal: true
+            , buttons: {
+                'Cancelar': function () {
+                    $(this).dialog('close'); // fecha a modal
+                },
+                'Confirmar': function () {
+                    window.location.href = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'excluir')); ?>?cod=" + cod + "&idPreProjeto=<?php echo $this->idPreProjeto;?>";
+                    $(this).dialog('close'); // fecha a modal
+                }
+            }
+        });
+        return false;
+
+
+    }
+
+    function trocatela(obj) {
+        if (obj == 1) {
+            $('#deslocamento').hide();
+            $('#localderealizacao').show();
+
+        } else {
+            $('#deslocamento').html('&ensp;&ensp;&ensp;Carregando...');
+            jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')) . '?idPreProjeto=' . $this->idPreProjeto; ?>", "", "deslocamento");
+            $('#deslocamento').show();
+            $('#localderealizacao').hide();
+
+        }
+
+    }
+</script>

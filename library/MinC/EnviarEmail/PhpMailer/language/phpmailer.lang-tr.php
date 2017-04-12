@@ -2,8 +2,8 @@
 /**
 * PHPMailer language file: refer to English translation for definitive list
 * Turkish version
-* Türkçe Versiyonu
-* ÝZYAZILIM - Elçin Özel - Can Yýlmaz - Mehmet Benlioðlu
+* Türkce Versiyonu
+* ÝZYAZILIM - Elcin Özel - Can Yýlmaz - Mehmet Benlioðlu
 */
 
 $PHPMAILER_LANG['authenticate']         = 'SMTP Hatasý: Doðrulanamýyor.';

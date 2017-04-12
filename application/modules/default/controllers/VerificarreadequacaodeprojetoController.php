@@ -1,24 +1,14 @@
 <?php
-/* VerificarReadequacaoDeProjetoController
- * @author Equipe RUP - Politec
- * @since 17/05/2010
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
- */
- 
-require_once "GenericControllerNew.php";
 
-class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
+class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abstract
+{
 
     private $getIdUsuario = 0;
     private $getIdOrgao = 0;
     private $_idPedidoAlteracao = 0;
 
  	/**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -28,26 +18,26 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
         $PermissoesGrupo[] = 94;  // Parecerista
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
-        $PermissoesGrupo[] = 129; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
+        $PermissoesGrupo[] = 129; // Tï¿½cnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
         $PermissoesGrupo[] = 128; // Tecnico de Portaria
         parent::perfil(1, $PermissoesGrupo);
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $this->view->agente = $agente['idAgente'];
         $this->getIdUsuario = $agente['idAgente'];
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->getIdOrgao = $GrupoAtivo->codOrgao;
         $this->codGrupo = $GrupoAtivo->codGrupo;
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 
 	/**
-	 * Médoto para pegar o idPedidoAlteracao
+	 * Mï¿½doto para pegar o idPedidoAlteracao
 	 * @access public
 	 * @param $idPronac int
 	 * @return $idPedidoAlteracao int
@@ -56,41 +46,41 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 	{
 		$tbPedidoAlteracaoProjeto = new tbPedidoAlteracaoProjeto();
 
-		// busca os id do último pedido de readequação não finalizado
+		// busca os id do ï¿½ltimo pedido de readequaï¿½ï¿½o nï¿½o finalizado
 		$wherePedido                    = array('IdPRONAC = ?' => $idPronac, 'siVerificacao IN (?)' => array(0, 1), 'stPedidoAlteracao = ?' => 'I');
 		$orderPedido                    = array('idPedidoAlteracao DESC');
 		$buscarPedidoAlteracao          = $tbPedidoAlteracaoProjeto->buscar($wherePedido, $orderPedido)->current();
 		$this->_idPedidoAlteracao       = count($buscarPedidoAlteracao) > 0 ? $buscarPedidoAlteracao['idPedidoAlteracao'] : 0;
 		return $this->_idPedidoAlteracao;
-	} // fecha função pegarIdPedidoAlteracao()
+	} // fecha funï¿½ï¿½o pegarIdPedidoAlteracao()
 
-    
+
 /**************************************************************************************************************************
- * FUNÇÃO PARA GERAR OS HISTÓRICOS
+ * FUNï¿½ï¿½O PARA GERAR OS HISTï¿½RICOS
  * ************************************************************************************************************************/
 	public function historicoAction(){
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$idavaliacao = $_POST['idavaliacao'];
 		$ListaRegistros =  ReadequacaoProjetos::retornaSQLHistoricoLista($idavaliacao);
 		$this->view->ListaRegistros = $db->fetchAll($ListaRegistros);
-//                xd($this->view->ListaRegistros);
+
 	}
-	
+
 /**************************************************************************************************************************
- * Função que chama a view verificarreadequacaodeprojeto - Tela Coordenador de Acompanhemento
+ * Funï¿½ï¿½o que chama a view verificarreadequacaodeprojeto - Tela Coordenador de Acompanhemento
  * ************************************************************************************************************************/
- 	
+
 	public function verificarreadequacaodeprojetocoordacompanhamentoAction(){
 
                 $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
                 $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-		
+
 		if(isset($_POST['verifica']) and $_POST['verifica'] == 'a')
 		{
 			$idorgao = $_POST['idorgao'];
@@ -107,18 +97,18 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 					$dadosAgente[$a]['idperfil'] = $agentes->idVerificacao;
 					$dadosAgente[$a]['idAgente'] = utf8_encode($agentes->idAgente);
 					$a++;
-				}	
+				}
 				$jsonEncode = json_encode($dadosAgente);
-				
+
 				//echo $jsonEncode;
 				echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
 			}
 			else{
 				echo json_encode(array('resposta'=>false));
-			}	
-			die;
+			}
+			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
-		
+
 		if(isset($_POST['verifica']) and $_POST['verifica'] == 'b')
 		{
 			$idorgao = $_POST['idorgao'];
@@ -135,18 +125,18 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 					$dadosAgente[$a]['idperfil'] = $agentes->idVerificacao;
 					$dadosAgente[$a]['idAgente'] = utf8_encode($agentes->idAgente);
 					$a++;
-				}	
+				}
 				$jsonEncode = json_encode($dadosAgente);
-				
+
 				//echo $jsonEncode;
 				echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
 			}
 			else{
 				echo json_encode(array('resposta'=>false));
-			}	
-			die;
+			}
+			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
-		
+
 		if(isset($_POST['verifica2']) and $_POST['verifica2'] == 'x')
 		{
 			$idagente = $_POST['idagente'];
@@ -160,18 +150,18 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 				else {
 					echo "";
 				}
-			die;
-			
+			$this->_helper->viewRenderer->setNoRender(TRUE); 
+
 		}
 
-	// Chama o SQL da lista de Entidades Vinculadas - Técnico
+	// Chama o SQL da lista de Entidades Vinculadas - Tï¿½cnico
 		$sqllistasDeEntidadesVinculadas = ReadequacaoProjetos::retornaSQLlista("listasDeEntidadesVinculadas", $this->getIdOrgao);
 		$listaEntidades = $db->fetchAll($sqllistasDeEntidadesVinculadas);
 
 	// Chama o SQL da lista de Entidades Vinculadas - Parecerista
 		$sqllistasDeEntidadesVinculadasPar = ReadequacaoProjetos::retornaSQLlista("listasDeEntidadesVinculadasPar", "NULL");
 		$listaEntidadesPar = $db->fetchAll($sqllistasDeEntidadesVinculadasPar);
-		
+
 	// Chama o SQL Desejado e monta a lista
 		$sqlAnaliseGeral = ReadequacaoProjetos::retornaSQL("sqlAnaliseGeral","");
 		$AnaliseGeral = $db->fetchAll($sqlAnaliseGeral);
@@ -179,102 +169,102 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$sqlAnaliseGeralDev = ReadequacaoProjetos::retornaSQL("sqlAnaliseGeralDev","");
 		$AnaliseGeralDev = $db->fetchAll($sqlAnaliseGeralDev);
 
-		
-	//LISTA O HISTÓRICO
+
+	//LISTA O HISTï¿½RICO
 		$sqlListarHistorico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistorico");
 		$Historico = $db->fetchAll($sqlListarHistorico);
-		
+
 		$sqlListarHistoricoUnico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistoricoUnico");
 		$HistoricoUnico = $db->fetchAll($sqlListarHistoricoUnico);
-		
+
 		if(count($HistoricoUnico) != 0 ){ $idOrgao = $HistoricoUnico[0]->idOrgao; } else { $idOrgao = 0; }
-			
+
 	// Chama o SQL da lista os agentes
 //		$sqllistasDeEncaminhamento = ReadequacaoProjetos::retornaSQLlista("listasDeEncaminhamento",$idOrgao);
 //		$listaParecerista = $db->fetchAll($sqllistasDeEncaminhamento);
 
 
 
-		// ========== DEFINE QUAIS PROJETOS DETERMINADOS PERFIS PODERÃO VISUALIZAR ==========
-		// Só quem visualiza os Projetos são os Coordenadores de Acompanhamento da SAV/CGAV/CAP e da SEFIC/GEAR/SACAV.
-		// Caso o órgão logado seja SAV/CGAV/CAP (166) pega somente os projetos da área de Audiovisual (2).
-		// Senão, quando o órgão for SEFIC/GEAR/SACAV (272), busca os Projetos das áreas que não seja a de Audiovisual.
-		// O órgão/unidade é passada através de $this->getIdOrgao
+		// ========== DEFINE QUAIS PROJETOS DETERMINADOS PERFIS PODERï¿½O VISUALIZAR ==========
+		// Sï¿½ quem visualiza os Projetos sï¿½o os Coordenadores de Acompanhamento da SAV/CGAV/CAP e da SEFIC/GEAR/SACAV.
+		// Caso o ï¿½rgï¿½o logado seja SAV/CGAV/CAP (166) pega somente os projetos da ï¿½rea de Audiovisual (2).
+		// Senï¿½o, quando o ï¿½rgï¿½o for SEFIC/GEAR/SACAV (272), busca os Projetos das ï¿½reas que nï¿½o seja a de Audiovisual.
+		// O ï¿½rgï¿½o/unidade ï¿½ passada atravï¿½s de $this->getIdOrgao
 		$unidade_autorizada = ($this->getIdOrgao == 166 || $this->getIdOrgao == 272) ? $this->getIdOrgao : 0;
 
 
 
-	//LISTAS - POR TIPO DE ALTERAÇÃO -- AGUARDANDO ANÁLISE
-		
+	//LISTAS - POR TIPO DE ALTERAï¿½ï¿½O -- AGUARDANDO ANï¿½LISE
+
 		$sqlAguardAnalise1 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",1, $unidade_autorizada); //Nome do proponente
 		$AguardAnalise1 = $db->fetchAll($sqlAguardAnalise1);
-		
+
 		$sqlAguardAnalise2 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",2, $unidade_autorizada); //Troca de Agente
 		$AguardAnalise2 = $db->fetchAll($sqlAguardAnalise2);
-		
-		$sqlAguardAnalise3 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",3, $unidade_autorizada); //Ficha técnica
+
+		$sqlAguardAnalise3 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",3, $unidade_autorizada); //Ficha tï¿½cnica
 		$AguardAnalise3 = $db->fetchAll($sqlAguardAnalise3);
-		
-		$sqlAguardAnalise4 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",4, $unidade_autorizada); //Local de realização
+
+		$sqlAguardAnalise4 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",4, $unidade_autorizada); //Local de realizaï¿½ï¿½o
 		$AguardAnalise4 = $db->fetchAll($sqlAguardAnalise4);
-		
+
 		$sqlAguardAnalise5 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",5, $unidade_autorizada); //Nome do projeto
 		$AguardAnalise5 = $db->fetchAll($sqlAguardAnalise5);
 
-                $sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",6, $unidade_autorizada); //Proposta Pedagógica
+                $sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",6, $unidade_autorizada); //Proposta Pedagï¿½gica
 		$AguardAnalise6 = $db->fetchAll($sqlAguardAnalise6);
-		
+
 		$sqlAguardAnalise7 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompProdutos",7, $unidade_autorizada); //Produtos
 		$AguardAnalise7 = $db->fetchAll($sqlAguardAnalise7);
-		
-		$sqlAguardAnalise8 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",8, $unidade_autorizada); //Prorrogação de prazo de captação
+
+		$sqlAguardAnalise8 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",8, $unidade_autorizada); //Prorrogaï¿½ï¿½o de prazo de captaï¿½ï¿½o
 		$AguardAnalise8 = $db->fetchAll($sqlAguardAnalise8);
-		
-		$sqlAguardAnalise9 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",9, $unidade_autorizada); //Prorrogação de prazo de execução
+
+		$sqlAguardAnalise9 = ReadequacaoProjetos::retornaSQL("sqlCoordAcomp",9, $unidade_autorizada); //Prorrogaï¿½ï¿½o de prazo de execuï¿½ï¿½o
 		$AguardAnalise9 = $db->fetchAll($sqlAguardAnalise9);
 
                 $sqlAguardAnalise10 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompItensProdutos",10, $unidade_autorizada); //Itens de Custo
 		$AguardAnalise10 = $db->fetchAll($sqlAguardAnalise10);
-		
-		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja várias cidades para o mesmo ID_PRONAC)
+
+		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja vï¿½rias cidades para o mesmo ID_PRONAC)
 		$UFs = $db->fetchAll($sqlUFs);
-		
+
 		$AguardAnaliseQNTD = count($AguardAnalise1)+count($AguardAnalise2)+count($AguardAnalise3)+count($AguardAnalise4)+count($AguardAnalise5)+count($AguardAnalise6)+count($AguardAnalise7)+count($AguardAnalise8)+count($AguardAnalise9)+count($AguardAnalise10);
-		
-	//LISTAS - POR TIPO DE ALTERAÇÃO -- DEVOLVIDOS APÓS ANÁLISE
-		
+
+	//LISTAS - POR TIPO DE ALTERAï¿½ï¿½O -- DEVOLVIDOS APï¿½S ANï¿½LISE
+
 		$sqlDevolvAnalise1 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",1, $unidade_autorizada); //Nome do proponente
 		$DevolvAnalise1 = $db->fetchAll($sqlDevolvAnalise1);
-		
-		$sqlDevolvAnalise2 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",2, $unidade_autorizada); //Razão social
+
+		$sqlDevolvAnalise2 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",2, $unidade_autorizada); //Razï¿½o social
 		$DevolvAnalise2 = $db->fetchAll($sqlDevolvAnalise2);
-		
-		$sqlDevolvAnalise3 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",3, $unidade_autorizada); //Ficha técnica
+
+		$sqlDevolvAnalise3 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",3, $unidade_autorizada); //Ficha tï¿½cnica
 		$DevolvAnalise3 = $db->fetchAll($sqlDevolvAnalise3);
-		
-		$sqlDevolvAnalise4 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",4, $unidade_autorizada); //Local de realização
+
+		$sqlDevolvAnalise4 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",4, $unidade_autorizada); //Local de realizaï¿½ï¿½o
 		$DevolvAnalise4 = $db->fetchAll($sqlDevolvAnalise4);
-		
+
 		$sqlDevolvAnalise5 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",5, $unidade_autorizada); //Nome do projeto
 		$DevolvAnalise5 = $db->fetchAll($sqlDevolvAnalise5);
 
-		$sqlDevolvAnalise6 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",6, $unidade_autorizada); //Proposta Pedagógica
+		$sqlDevolvAnalise6 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",6, $unidade_autorizada); //Proposta Pedagï¿½gica
 		$DevolvAnalise6 = $db->fetchAll($sqlDevolvAnalise6);
-		
+
 		$sqlDevolvAnalise7 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDevProdutos",7, $unidade_autorizada); //Produtos
 		$DevolvAnalise7 = $db->fetchAll($sqlDevolvAnalise7);
-		
-		$sqlDevolvAnalise8 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",8, $unidade_autorizada); //Prorrogação de prazo de captação
+
+		$sqlDevolvAnalise8 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",8, $unidade_autorizada); //Prorrogaï¿½ï¿½o de prazo de captaï¿½ï¿½o
 		$DevolvAnalise8 = $db->fetchAll($sqlDevolvAnalise8);
-		
-		$sqlDevolvAnalise9 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",9, $unidade_autorizada); //Prorrogação de prazo de execução
+
+		$sqlDevolvAnalise9 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDev",9, $unidade_autorizada); //Prorrogaï¿½ï¿½o de prazo de execuï¿½ï¿½o
 		$DevolvAnalise9 = $db->fetchAll($sqlDevolvAnalise9);
 
                 $sqlDevolvAnalise10 = ReadequacaoProjetos::retornaSQL("sqlCoordAcompDevItens",10, $unidade_autorizada); //Itens de Custo
 		$DevolvAnalise10 = $db->fetchAll($sqlDevolvAnalise10);
-		
+
 		$DevolvAnaliseQNTD = count($DevolvAnalise1)+count($DevolvAnalise2)+count($DevolvAnalise3)+count($DevolvAnalise4)+count($DevolvAnalise5)+count($DevolvAnalise6)+count($DevolvAnalise7)+count($DevolvAnalise8)+count($DevolvAnalise9)+count($DevolvAnalise10);
-		
+
 	//PASSANDO VALORES PARA A VIEW
 		$this->view->listaEntidades = $listaEntidades;
 		$this->view->listaEntidadesPar = $listaEntidadesPar;
@@ -284,7 +274,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$this->view->UFs = $UFs;
 		$this->view->Historico = $Historico;
 		$this->view->HistoricoUnico = $HistoricoUnico;
-		
+
 		$this->view->AguardAnalise1 = $AguardAnalise1;
 		$this->view->AguardAnalise2 = $AguardAnalise2;
 		$this->view->AguardAnalise3 = $AguardAnalise3;
@@ -296,7 +286,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$this->view->AguardAnalise9 = $AguardAnalise9;
 		$this->view->AguardAnalise10 = $AguardAnalise10;
 		$this->view->AguardAnaliseQNTD = $AguardAnaliseQNTD;
-		
+
 		$this->view->DevolvAnalise1 = $DevolvAnalise1;
 		$this->view->DevolvAnalise2 = $DevolvAnalise2;
 		$this->view->DevolvAnalise3 = $DevolvAnalise3;
@@ -309,60 +299,60 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$this->view->DevolvAnalise10 = $DevolvAnalise10;
 		$this->view->DevolvAnaliseQNTD = $DevolvAnaliseQNTD;
 	}
-	
+
  /**************************************************************************************************************************
- * Função que chama a view verificarreadequacaodeprojeto - Tela Coordenador de Parecerista
+ * Funï¿½ï¿½o que chama a view verificarreadequacaodeprojeto - Tela Coordenador de Parecerista
  * ************************************************************************************************************************/
- 	
+
 	public function verificarreadequacaodeprojetocoordpareceristaAction(){
 
                 $PermissoesGrupo[] = 93; // Coordenador de Parecerista
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-	
+
 	// Chama o SQL Desejado e monta a lista
 		$sqlCoordPareceristaGeral = ReadequacaoProjetos::retornaSQLCP("sqlCoordPareceristaGeral","",$this->getIdUsuario);
 		$AnaliseGeral = $db->fetchAll($sqlCoordPareceristaGeral);
-		
-	//LISTA O HISTÓRICO
+
+	//LISTA O HISTï¿½RICO
 		$sqlListarHistorico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistorico");
 		$Historico = $db->fetchAll($sqlListarHistorico);
-		
+
 		$sqlListarHistoricoUnico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistoricoUnico");
 		$HistoricoUnico = $db->fetchAll($sqlListarHistoricoUnico);
 		//$idOrgao = $HistoricoUnico[0]->idOrgao;
-		
+
 		if(count($HistoricoUnico) != 0 ){ $idOrgao = $HistoricoUnico[0]->idOrgao; } else { $idOrgao = 0; }
-			
+
 	// Chama o SQL da lista dos Pareceristas
 		//$sqllistasDeEncaminhamento = ReadequacaoProjetos::retornaSQLlista("listasDeEncaminhamento",$idOrgao);
 		$sqllistasDeEncaminhamento = ReadequacaoProjetos::retornaSQLlista("listasDeEncaminhamento",$this->getIdOrgao);
 		$listaParecerista = $db->fetchAll($sqllistasDeEncaminhamento);
 
-	//LISTAS - POR TIPO DE ALTERAÇÃO		
-		$sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQLCP("sqlCoordParecerista",6,$this->getIdUsuario); //Proposta Pedagógica
+	//LISTAS - POR TIPO DE ALTERAï¿½ï¿½O
+		$sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQLCP("sqlCoordParecerista",6,$this->getIdUsuario); //Proposta Pedagï¿½gica
 		$AguardAnalise6 = $db->fetchAll($sqlAguardAnalise6);
 
                 $sqlAguardAnalise10 = ReadequacaoProjetos::retornaSQLCP("sqlCoordParecerista",7,$this->getIdUsuario, $this->getIdOrgao); //Produtos
 		$AguardAnalise10 = $db->fetchAll($sqlAguardAnalise10);
-		
-		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja várias cidades para o mesmo ID_PRONAC)
+
+		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja vï¿½rias cidades para o mesmo ID_PRONAC)
 		$UFs = $db->fetchAll($sqlUFs);
-		
+
 		$AguardAnaliseQNTD = /*count($AguardAnalise6)+*/count($AguardAnalise10);
-		
-	//LISTAS - POR TIPO DE ALTERAÇÃO -- DEVOLVIDOS APÓS ANÁLISE
-		$sqlDevolvAnalise6 = ReadequacaoProjetos::retornaSQLCP("sqlCoordPareceristaDev",6,$this->getIdUsuario); //Proposta Pedagógica
+
+	//LISTAS - POR TIPO DE ALTERAï¿½ï¿½O -- DEVOLVIDOS APï¿½S ANï¿½LISE
+		$sqlDevolvAnalise6 = ReadequacaoProjetos::retornaSQLCP("sqlCoordPareceristaDev",6,$this->getIdUsuario); //Proposta Pedagï¿½gica
 		$DevolvAnalise6 = $db->fetchAll($sqlDevolvAnalise6);
 
 		$sqlDevolvAnalise10 = ReadequacaoProjetos::retornaSQLCP("sqlCoordPareceristaDev",7,$this->getIdUsuario, $this->getIdOrgao); //Produtos
 		$DevolvAnalise10 = $db->fetchAll($sqlDevolvAnalise10);
-		
+
 		$DevolvAnaliseQNTD = /*count($DevolvAnalise6)+*/count($DevolvAnalise10);
-		
-				
+
+
 	//PASSANDO VALORES PARA A VIEW
 		$this->view->listaParecerista = $listaParecerista;
 		$this->view->AnaliseGeral = $AnaliseGeral;
@@ -373,131 +363,131 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$this->view->AguardAnalise6 = $AguardAnalise6;
 		$this->view->AguardAnalise10 = $AguardAnalise10;
 		$this->view->AguardAnaliseQNTD = $AguardAnaliseQNTD;
-		
+
 		$this->view->DevolvAnalise6 = $DevolvAnalise6;
 		$this->view->DevolvAnalise10 = $DevolvAnalise10;
 		$this->view->DevolvAnaliseQNTD = $DevolvAnaliseQNTD;
-				
+
 	}
-	
+
  /**************************************************************************************************************************
- * Função que chama a view verificarreadequacaodeprojeto - Tela de Parecerista
+ * Funï¿½ï¿½o que chama a view verificarreadequacaodeprojeto - Tela de Parecerista
  * ************************************************************************************************************************/
- 	
+
 	public function verificarreadequacaodeprojetopareceristaAction(){
 
                 $PermissoesGrupo[] = 94; // Parecerista
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-		
+
 	// Chama o SQL Desejado e monta a lista
 		$sqlPareceristaGeral = ReadequacaoProjetos::retornaSQLPar("sqlPareceristaGeral","");
 		$AnaliseGeral = $db->fetchAll($sqlPareceristaGeral);
-		
-	//LISTA O HISTÓRICO
+
+	//LISTA O HISTï¿½RICO
 		$sqlListarHistorico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistorico");
 		$Historico = $db->fetchAll($sqlListarHistorico);
-		
+
 		$sqlListarHistoricoUnico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistoricoUnico");
 		$HistoricoUnico = $db->fetchAll($sqlListarHistoricoUnico);
-		
-	//LISTAS - POR TIPO DE ALTERAÇÃO		
-//		$sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQLPar("sqlParecerista",6); //Proposta Pedagógica
+
+	//LISTAS - POR TIPO DE ALTERAï¿½ï¿½O
+//		$sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQLPar("sqlParecerista",6); //Proposta Pedagï¿½gica
 //		$AguardAnalise6 = $db->fetchAll($sqlAguardAnalise6);
 
                 $sqlAguardAnalise10 = ReadequacaoProjetos::retornaSQLPar("sqlParecerista",7, $this->getIdOrgao, null); //Produtos //$this->getIdUsuario
 		$AguardAnalise10 = $db->fetchAll($sqlAguardAnalise10);
-		
-		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja várias cidades para o mesmo ID_PRONAC)
+
+		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja vï¿½rias cidades para o mesmo ID_PRONAC)
 		$UFs = $db->fetchAll($sqlUFs);
-		
+
 		$AguardAnaliseQNTD = /*count($AguardAnalise6)+*/count($AguardAnalise10);
-		
-		
+
+
 	//PASSANDO VALORES PARA A VIEW
 		$this->view->AnaliseGeral = $AnaliseGeral;
 		$this->view->Historico = $Historico;
 		$this->view->HistoricoUnico = $HistoricoUnico;
 		$this->view->UFs = $UFs;
-		
+
 //		$this->view->AguardAnalise6 = $AguardAnalise6;
 		$this->view->AguardAnalise10 = $AguardAnalise10;
 		$this->view->AguardAnaliseQNTD = $AguardAnaliseQNTD;
-				
+
 	}
-	
+
  /**************************************************************************************************************************
- * Função que chama a view verificarreadequacaodeprojeto - Tela de Técnico de Acompanhamento
+ * Funï¿½ï¿½o que chama a view verificarreadequacaodeprojeto - Tela de Tï¿½cnico de Acompanhamento
  * ************************************************************************************************************************/
- 		
+
 	public function verificarreadequacaodeprojetotecnicoAction(){
 
-                $PermissoesGrupo[] = 121; // Técnico
-                $PermissoesGrupo[] = 129; // Técnico
+                $PermissoesGrupo[] = 121; // Tï¿½cnico
+                $PermissoesGrupo[] = 129; // Tï¿½cnico
                 parent::perfil(1, $PermissoesGrupo);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-		
+
 	// Chama o SQL Desejado e monta a lista
 		$sqlTecnicoGeral = ReadequacaoProjetos::retornaSQLTec("sqlTecnicoGeral","",$this->getIdUsuario,$this->getIdOrgao);
-                
+
 		$AnaliseGeral = $db->fetchAll($sqlTecnicoGeral);
-                
-		
-	//LISTA O HISTÓRICO
+
+
+	//LISTA O HISTï¿½RICO
 		$sqlListarHistorico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistorico");
 		$Historico = $db->fetchAll($sqlListarHistorico);
-		
+
 		$sqlListarHistoricoUnico = ReadequacaoProjetos::retornaSQLHistorico("sqlListarHistoricoUnico");
 		$HistoricoUnico = $db->fetchAll($sqlListarHistoricoUnico);
-		
-	//LISTAS - POR TIPO DE ALTERAÇÃO
-		
+
+	//LISTAS - POR TIPO DE ALTERAï¿½ï¿½O
+
 		$sqlAguardAnalise1 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",1,$this->getIdUsuario,$this->getIdOrgao); //Nome do proponente
 		$AguardAnalise1 = $db->fetchAll($sqlAguardAnalise1);
 
-                
-		
-		$sqlAguardAnalise2 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",2,$this->getIdUsuario,$this->getIdOrgao); //Razão social
+
+
+		$sqlAguardAnalise2 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",2,$this->getIdUsuario,$this->getIdOrgao); //Razï¿½o social
 		$AguardAnalise2 = $db->fetchAll($sqlAguardAnalise2);
-                
-		
-		$sqlAguardAnalise3 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",3,$this->getIdUsuario,$this->getIdOrgao); //Ficha técnica
+
+
+		$sqlAguardAnalise3 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",3,$this->getIdUsuario,$this->getIdOrgao); //Ficha tï¿½cnica
 		$AguardAnalise3 = $db->fetchAll($sqlAguardAnalise3);
-		
-		$sqlAguardAnalise4 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",4,$this->getIdUsuario,$this->getIdOrgao); //Local de realização
+
+		$sqlAguardAnalise4 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",4,$this->getIdUsuario,$this->getIdOrgao); //Local de realizaï¿½ï¿½o
 		$AguardAnalise4 = $db->fetchAll($sqlAguardAnalise4);
-		
+
 		$sqlAguardAnalise5 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",5,$this->getIdUsuario,$this->getIdOrgao); //Nome do projeto
 		$AguardAnalise5 = $db->fetchAll($sqlAguardAnalise5);
-		
-		$sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",6,$this->getIdUsuario,$this->getIdOrgao); //Proposta Pedagógica
+
+		$sqlAguardAnalise6 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",6,$this->getIdUsuario,$this->getIdOrgao); //Proposta Pedagï¿½gica
 		$AguardAnalise6 = $db->fetchAll($sqlAguardAnalise6);
 
                 $sqlAguardAnalise7 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",7,$this->getIdUsuario,$this->getIdOrgao); //Produtos
 		$AguardAnalise7 = $db->fetchAll($sqlAguardAnalise7);
-				
-		$sqlAguardAnalise8 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",8,$this->getIdUsuario,$this->getIdOrgao); //Prorrogação de prazo de captação
+
+		$sqlAguardAnalise8 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",8,$this->getIdUsuario,$this->getIdOrgao); //Prorrogaï¿½ï¿½o de prazo de captaï¿½ï¿½o
 		$AguardAnalise8 = $db->fetchAll($sqlAguardAnalise8);
-		
-		$sqlAguardAnalise9 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",9,$this->getIdUsuario,$this->getIdOrgao); //Prorrogação de prazo de execução
+
+		$sqlAguardAnalise9 = ReadequacaoProjetos::retornaSQLTec("sqlTecnico",9,$this->getIdUsuario,$this->getIdOrgao); //Prorrogaï¿½ï¿½o de prazo de execuï¿½ï¿½o
 		$AguardAnalise9 = $db->fetchAll($sqlAguardAnalise9);
-		
-		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja várias cidades para o mesmo ID_PRONAC)
+
+		$sqlUFs = ReadequacaoProjetos::retornaSQL("sqlUFs",""); //Lista de UFs para listar no painel (caso haja vï¿½rias cidades para o mesmo ID_PRONAC)
 		$UFs = $db->fetchAll($sqlUFs);
-		
+
 		$AguardAnaliseQNTD = count($AguardAnalise1)+count($AguardAnalise2)+count($AguardAnalise3)+count($AguardAnalise4)+count($AguardAnalise5)+count($AguardAnalise6)+count($AguardAnalise7)+count($AguardAnalise8)+count($AguardAnalise9);
-		
-		
+
+
 	//PASSANDO VALORES PARA A VIEW
 		$this->view->AnaliseGeral = $AnaliseGeral;
 		$this->view->Historico = $Historico;
 		$this->view->HistoricoUnico = $HistoricoUnico;
 		$this->view->UFs = $UFs;
-		
+
 		$this->view->AguardAnalise1 = $AguardAnalise1;
 		$this->view->AguardAnalise2 = $AguardAnalise2;
 		$this->view->AguardAnalise3 = $AguardAnalise3;
@@ -508,18 +498,18 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$this->view->AguardAnalise8 = $AguardAnalise8;
 		$this->view->AguardAnalise9 = $AguardAnalise9;
 		$this->view->AguardAnaliseQNTD = $AguardAnaliseQNTD;
-		
+
 	}
 
- 
+
  /**************************************************************************************************************************
- * Função que chama a view Proposta Pedagógiga - VISUALIZAÇÃO (perfil coordenador de acompanhamento - AGUARDANDO ANÁLISE)
+ * Funï¿½ï¿½o que chama a view Proposta Pedagï¿½giga - VISUALIZAï¿½ï¿½O (perfil coordenador de acompanhamento - AGUARDANDO ANï¿½LISE)
  * ************************************************************************************************************************/
  	public function propostapedagogicaAction(){
 
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             // Chama o SQL
@@ -542,16 +532,16 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
  	}
 
  /**************************************************************************************************************************
- * Função que chama a view Proposta Pedagógiga - VISUALIZAÇÃO (perfil coordenador de acompanhamento - DEVOLVIDOS APÓS ANÁLISE)
+ * Funï¿½ï¿½o que chama a view Proposta Pedagï¿½giga - VISUALIZAï¿½ï¿½O (perfil coordenador de acompanhamento - DEVOLVIDOS APï¿½S ANï¿½LISE)
  * ************************************************************************************************************************/
  	public function propostapedagogicadevAction(){
 
  		$id_Pronac = $_GET['id'];
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-		// BUSCA O ID DO PEDIDO DE ALTERAÇÃO
+		// BUSCA O ID DO PEDIDO DE ALTERAï¿½ï¿½O
 		$resultadoDadosProposta = PedidoAlteracaoDAO::buscarAlteracaoPropostaPedagogica($id_Pronac);
 
 		// Chama o SQL
@@ -572,25 +562,25 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $this->view->menumsg = 'true';
                 //****************************************************
  	}
- 	
+
  /**************************************************************************************************************************
- * Função que chama a view Proposta Pedagógiga - EDITAR (perfil técnico)
+ * Funï¿½ï¿½o que chama a view Proposta Pedagï¿½giga - EDITAR (perfil tï¿½cnico)
  * ************************************************************************************************************************/
  	public function propostapedagogicaeditarAction(){
- 	
+
                 $id_Pronac = $_GET['id'];
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-		// BUSCA O ID DO PEDIDO DE ALTERAÇÃO
+		// BUSCA O ID DO PEDIDO DE ALTERAï¿½ï¿½O
 		$resultadoDadosProposta = PedidoAlteracaoDAO::buscarAlteracaoPropostaPedagogica($id_Pronac);
 
 		// Chama o SQL
 		$sqlproposta = ReadequacaoProjetos::retornaSQLproposta("sqlpropostaeditar",$id_Pronac, null, null, $resultadoDadosProposta['idPedidoAlteracao']);
                 $dados = $db->fetchAll($sqlproposta);
 		$idPedidoAlt = $dados[0]['idAvaliacao'];
-		//VERIFICA O STATUS DA SOLICITAÇÃO
+		//VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
 		$sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 		$stResult = $db->fetchAll($sqlStatusReadequacao);
 
@@ -608,52 +598,52 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $this->view->idPronac = $id_Pronac;
                 $this->view->menumsg = 'true';
                 //****************************************************
-		
-		$this->view->dados = $dados; 		
+
+		$this->view->dados = $dados;
  	}
 
 /**************************************************************************************************************************
- * Função para diligenciar Proposta Pedagógiga - EDITAR (perfil técnico)
+ * Funï¿½ï¿½o para diligenciar Proposta Pedagï¿½giga - EDITAR (perfil tï¿½cnico)
  * ************************************************************************************************************************/
  	public function propostapedagogicadiligenciarAction(){
- 	
- 		$auth = Zend_Auth::getInstance(); // pega a autenticação
+
+ 		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 		$agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
 		$AgenteLogin = $agente['idAgente'];
-		
+
  		$IdPronac = $_POST['IdPronac'];
  		$solicitacao = $_POST['solicitacao'];
- 		
- 		$db = Zend_Registry :: get('db');
+
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
                     // Chama o SQL
                     $sqlDiligenciarproposta = ReadequacaoProjetos::diligenciarProposta($IdPronac,$solicitacao,$AgenteLogin);
                     $dados = $db->fetchAll($sqlDiligenciarproposta);
-                    parent::message("Diligência enviada com sucesso!", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$IdPronac" ,"CONFIRM");
 
                 } catch (Zend_Exception $e){
-                    parent::message("Erro ao diligenciar a solicitação", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$IdPronac" ,"ERROR");
+                    parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$IdPronac" ,"ERROR");
 
                 }
  	}
- 	
- 	
+
+
 /**************************************************************************************************************************
- * Função que altera o status da solcitação na view de Proposta Pedagógica
+ * Funï¿½ï¿½o que altera o status da solcitaï¿½ï¿½o na view de Proposta Pedagï¿½gica
  * ************************************************************************************************************************/
  	public function stpropostapedAction(){
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 		$agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
 		$AgenteLogin = $agente['idAgente'];
-		
+
 		$idAvaliacao = $_GET['id'];
 		$idPronac = $_GET['idPronac'];
 		$opcao = $_GET['opcao'];
-		
-		$db = Zend_Registry :: get('db');
+
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -678,17 +668,17 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         $dados = $db->fetchAll($sqlstProposta);
                     }
 
-                    parent::message("Situação alterada com sucesso!", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$idPronac" ,"CONFIRM");
-                    
+                    parent::message("Situaï¿½ï¿½o alterada com sucesso!", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$idPronac" ,"CONFIRM");
+
 		} catch (Zend_Exception $e){
-                    parent::message("Erro ao alterar o status da solicitação", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$idPronac" ,"ERROR");
+                    parent::message("Erro ao alterar o status da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/propostapedagogicaeditar?id=$idPronac" ,"ERROR");
 
                 }
  	}
- 	
- 
+
+
  /**************************************************************************************************************************
- * FUNÇÃO QUE SALVA A ANÁLISE DA PROPOSTA PEDAGÓGICA
+ * FUNï¿½ï¿½O QUE SALVA A ANï¿½LISE DA PROPOSTA PEDAGï¿½GICA
  * ************************************************************************************************************************/
 // 	public function salvaproppedagAction(){
 //
@@ -702,7 +692,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 // 		$IdProposta = $_POST['IdProposta'];
 // 		$idOrgao = $_POST['idOrgao'];
 //
-// 		$db = Zend_Registry :: get('db');
+// 		$db = Zend_Db_Table::getDefaultAdapter();
 //		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 //
 //                try{
@@ -718,9 +708,9 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 //                }
 // 	}
 
- 	
+
  /**************************************************************************************************************************
- * FUNÇÃO QUE FINALIZA A ANÁLISE DA PROPOSTA PEDAGÓGICA
+ * FUNï¿½ï¿½O QUE FINALIZA A ANï¿½LISE DA PROPOSTA PEDAGï¿½GICA
  * ************************************************************************************************************************/
  	public function finalizaproppedagAction(){
 
@@ -741,7 +731,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $status = "IN";
                 }
 
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		try{
                     $db->beginTransaction();
@@ -773,18 +763,18 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                     $db->rollBack();
                     parent::message("Erro ao finalizar projeto.", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetotecnico" ,"ERROR");
-                    
+
                 }
  	}
- 	
+
  /**************************************************************************************************************************
- * Função que chama a view Readequação de Produtos
+ * Funï¿½ï¿½o que chama a view Readequaï¿½ï¿½o de Produtos
  * ************************************************************************************************************************/
  	public function consultareadequacaoprodutosAction(){
 
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($id_Pronac);
@@ -818,13 +808,13 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
  	}
 
  /**************************************************************************************************************************
- * Função que chama a view Readequação de Itens de Custo
+ * Funï¿½ï¿½o que chama a view Readequaï¿½ï¿½o de Itens de Custo
  * ************************************************************************************************************************/
  	public function consultareadequacaoitensdecustoAction(){
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -838,7 +828,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $dadosTopo['NomeProjeto'] = $dadosPrincipais[0]->NomeProjeto;
             $dadosTopo['CNPJCPF'] = $dadosPrincipais[0]->CGCCPF;
             $dadosTopo['NomeProponente'] = $dadosPrincipais[0]->Proponente;
-            
+
             // Chama o SQL
             $sql = ReadequacaoProjetos::listarProdutosReadequacao("sqlCoordAcompAguardAnalise",$idPronac,$this->_idPedidoAlteracao);
             $dados = $db->fetchAll('SET TEXTSIZE 2147483647;');
@@ -897,7 +887,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planAP = $planAP;
 
 
@@ -937,7 +927,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planSR = $planSR;
  	}
 
@@ -945,7 +935,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1018,7 +1008,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planAP = $planAP;
 
 
@@ -1058,18 +1048,18 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planSR = $planSR;
  	}
- 	
+
  /**************************************************************************************************************************
- * Função que chama a view Readequação de Produtos
+ * Funï¿½ï¿½o que chama a view Readequaï¿½ï¿½o de Produtos
  * ************************************************************************************************************************/
  	public function readequacaoprodutosAction(){
- 	
+
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($id_Pronac);
@@ -1109,20 +1099,20 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $this->view->menumsg = 'true';
             //****************************************************
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = new tbAvaliacaoItemPedidoAlteracao();
             $stResult = $sqlStatusReadequacao->buscar(array('idPedidoAlteracao = ?'=> $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 7, 'idAvaliacaoItemPedidoAlteracao = ?' => $dados[0]->idAvaliacaoItemPedidoAlteracao));
             $this->view->stResult = $stResult;
  	}
 
  /**************************************************************************************************************************
- * Função que chama a view Readequação de Itens de Custo
+ * Funï¿½ï¿½o que chama a view Readequaï¿½ï¿½o de Itens de Custo
  * ************************************************************************************************************************/
  	public function readequacaoitensdecustoAction()
         {
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1166,7 +1156,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $this->view->idPronac = $idPronac;
             $this->view->menumsg = 'true';
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = new tbAvaliacaoItemPedidoAlteracao();
             $stResult = $sqlStatusReadequacao->buscar(array('idPedidoAlteracao = ?'=> $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 7, 'idAvaliacaoItemPedidoAlteracao = ?' => $dados[0]->idAvaliacaoItemPedidoAlteracao));
             $this->view->stResult = $stResult;
@@ -1208,7 +1198,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planAP = $planAP;
 
 
@@ -1247,23 +1237,23 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planSR = $planSR;
  	}
- 	
- 	
+
+
 /**************************************************************************************************************************
- * SALVA A READEQUAÇÃO
+ * SALVA A READEQUAï¿½ï¿½O
  * ************************************************************************************************************************/
 	public function salvarreadequacaoAction(){
 
  		$idPedidoAlteracao = $_GET['idPedidoAlteracao'];
  		$IdPRONAC = $_GET['IdPRONAC'];
- 		
+
  	//CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-                
+
 	// CHAMA O SQL
 		$sqllistaidplano = ReadequacaoProjetos::listaSQLidPlano($idPedidoAlteracao);
 		$ids = $db->fetchAll($sqllistaidplano);
@@ -1291,25 +1281,25 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                             $sqlsalvareadequacao = ReadequacaoProjetos::sqlsalvareadequacao($updateFrom,$sqldados,$where,$and1);
                             $db->query($sqlsalvareadequacao);
                             // select insert delete update -> query
-                            // fetchAll usar após uma query;
+                            // fetchAll usar apï¿½s uma query;
 			endforeach;
                             $db->commit();
                             parent::message("Dados salvos com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPRONAC" ,"CONFIRM");
 
-									
+
 		} catch(Zend_Exception $e) {
                     $db->rollBack();
                     parent::message("Erro ao salvar os dados do projeto", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPRONAC" ,"ERROR");
-			/* Try _ Catch, é utilizado para tratamento de erros.
-			 * o $e->getMessage(), é utilizado para saber qual o tipo de erro que retornou.
+			/* Try _ Catch, ï¿½ utilizado para tratamento de erros.
+			 * o $e->getMessage(), ï¿½ utilizado para saber qual o tipo de erro que retornou.
 			*/
 		}
-			
+
  	}
- 	
+
 
  /**************************************************************************************************************************
- * FINALIZA A READEQUAÇÃO
+ * FINALIZA A READEQUAï¿½ï¿½O
  * ************************************************************************************************************************/
 	public function finalizarreadequacaoAction(){
 
@@ -1322,9 +1312,9 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 } else {
                     $situacao = 'IN';
                 }
- 		
+
                 //CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
                 // CHAMA O SQL
 		$sqllistaidplano = ReadequacaoProjetos::listaSQLidPlano($idPronac);
@@ -1332,7 +1322,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$this->ids = $ids;
 
 		try {
-                    //inicia uma transaçao
+                    //inicia uma transaï¿½ao
                      $db->beginTransaction();
                      $justificativa = '';
 			foreach($this->ids as $ids) :
@@ -1355,26 +1345,26 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                             $where = "WHERE idPedidoAlteracao = ".$idPedidoAlteracao;
                             $and1 = "AND idPlano = ".$ids->idPlano;
                             $justificativa .= $justificativa2."<br/><br/>";
-                            
+
                             // SALVA OS DADOS NO BANCO
                             $sqlsalvareadequacao = ReadequacaoProjetos::sqlsalvareadequacao($updateFrom,$sqldados,$where,$and1);
                             $db->query($sqlsalvareadequacao);
                             // select insert delete update -> query
-                            // fetchAll usar após uma query;
+                            // fetchAll usar apï¿½s uma query;
 			endforeach;
 
                         // Chama o SQL
                         $sqlFinalizarPar = ReadequacaoProjetos::retornaSQLfinalizarPar($idPedidoAlteracao,$situacao,$justificativa);
                         $dados = $db->fetchAll($sqlFinalizarPar);
 
-                        //RETORNA EM VARIÁVEIS OS DADOS DO LOG ANTERIOR
+                        //RETORNA EM VARIï¿½VEIS OS DADOS DO LOG ANTERIOR
                         $sqlFinalizarPar2 = ReadequacaoProjetos::retornaSQLfinalizarPar2($idPedidoAlteracao);
                         $dados = $db->fetchAll($sqlFinalizarPar2);
                         $idAvaliacaoItemPedidoAlteracao = $dados[0]->idAvaliacaoItemPedidoAlteracao;
                         $idAgenteAvaliador = $dados[0]->idAgenteAvaliador;
                         $idOrgao = $dados[0]->idOrgao;
 
-                        //ATUALIZAR A SITUAÇÃO DO REGISTRO
+                        //ATUALIZAR A SITUAï¿½ï¿½O DO REGISTRO
                         $sqlFinalizarParST = ReadequacaoProjetos::retornaSQLfinalizarParST($idAvaliacaoItemPedidoAlteracao);
                         $dados2 = $db->fetchAll($sqlFinalizarParST);
                         $idPedidoAlteracao = $dados2[0]->idPedidoAlteracao;
@@ -1383,7 +1373,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         $sqlFinalizarParST2 = ReadequacaoProjetos::retornaSQLfinalizarParST2($idPedidoAlteracao,$tpAlteracaoProjeto);
                         $dados3 = $db->fetchAll($sqlFinalizarParST2);
 
-                        //ATUALIZAR A SITUAÇÃO DO REGISTRO
+                        //ATUALIZAR A SITUAï¿½ï¿½O DO REGISTRO
                         $sqlFinalizarPar3 = ReadequacaoProjetos::retornaSQLfinalizarPar3($idAvaliacaoItemPedidoAlteracao);
                         $dados = $db->fetchAll($sqlFinalizarPar3);
 
@@ -1392,19 +1382,19 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         $dados = $db->fetchAll($sqlFinalizarPar4);
                         //salva os dados na base caso esteja tudo ok.
                         $db->commit();
-                        
+
                         parent::message("Projeto finalizado com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetotecnico" ,"CONFIRM");
-						
-					
+
+
 		} catch(Zend_Exception $e) {
-                    //Exceçao pois houve erro ao tentar inserir ou atualizar dados na base.
+                    //Exceï¿½ao pois houve erro ao tentar inserir ou atualizar dados na base.
                     $db->rollBack();
                     parent::message("Erro ao encaminhar Projeto", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetotecnico" ,"ERROR");
-			/* Try _ Catch, é utilizado para tratamento de erros.
-			 * o $e->getMessage(), é utilizado para saber qual o tipo de erro que retornou.
+			/* Try _ Catch, ï¿½ utilizado para tratamento de erros.
+			 * o $e->getMessage(), ï¿½ utilizado para saber qual o tipo de erro que retornou.
 			*/
 		}
-			
+
  	}
 
 
@@ -1424,16 +1414,16 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 }
 
  	//CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
- 		$db = Zend_Registry :: get('db');
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 	// CHAMA O SQL
 		$sqllistaidplano = ReadequacaoProjetos::listaSQLidPlano($idPronac);
 		$ids = $db->fetchAll($sqllistaidplano);
 		$this->ids = $ids;
 
-                
+
 		try {
-                    //inicia uma transaçao
+                    //inicia uma transaï¿½ao
                      $db->beginTransaction();
                      $justificativa = '';
 			foreach($this->ids as $ids) :
@@ -1461,21 +1451,21 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                             $sqlsalvareadequacao = ReadequacaoProjetos::sqlsalvareadequacao($updateFrom,$sqldados,$where,$and1);
                             $db->query($sqlsalvareadequacao);
                             // select insert delete update -> query
-                            // fetchAll usar após uma query;
+                            // fetchAll usar apï¿½s uma query;
 			endforeach;
 
                         // Chama o SQL
                         $sqlFinalizarPar = ReadequacaoProjetos::retornaSQLfinalizarPar($idPedidoAlteracao,$situacao,$justificativa);
                         $dados = $db->fetchAll($sqlFinalizarPar);
 
-                        //RETORNA EM VARIÁVEIS OS DADOS DO LOG ANTERIOR
+                        //RETORNA EM VARIï¿½VEIS OS DADOS DO LOG ANTERIOR
                         $sqlFinalizarPar2 = ReadequacaoProjetos::retornaSQLfinalizarPar2($idPedidoAlteracao);
                         $dados = $db->fetchAll($sqlFinalizarPar2);
                         $idAvaliacaoItemPedidoAlteracao = $dados[0]->idAvaliacaoItemPedidoAlteracao;
                         $idAgenteAvaliador = $dados[0]->idAgenteAvaliador;
                         $idOrgao = $dados[0]->idOrgao;
 
-                        //ATUALIZAR A SITUAÇÃO DO REGISTRO
+                        //ATUALIZAR A SITUAï¿½ï¿½O DO REGISTRO
                         $sqlFinalizarParST = ReadequacaoProjetos::retornaSQLfinalizarParST($idAvaliacaoItemPedidoAlteracao);
                         $dados2 = $db->fetchAll($sqlFinalizarParST);
                         $idPedidoAlteracao = $dados2[0]->idPedidoAlteracao;
@@ -1484,7 +1474,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         $sqlFinalizarParST2 = ReadequacaoProjetos::retornaSQLfinalizarParST2($idPedidoAlteracao,$tpAlteracaoProjeto);
                         $dados3 = $db->fetchAll($sqlFinalizarParST2);
 
-                        //ATUALIZAR A SITUAÇÃO DO REGISTRO
+                        //ATUALIZAR A SITUAï¿½ï¿½O DO REGISTRO
                         $sqlFinalizarPar3 = ReadequacaoProjetos::retornaSQLfinalizarPar3($idAvaliacaoItemPedidoAlteracao);
                         $dados = $db->fetchAll($sqlFinalizarPar3);
 
@@ -1498,25 +1488,25 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
 
 		} catch(Zend_Exception $e) {
-                    //Exceçao pois houve erro ao tentar inserir ou atualizar dados na base.
+                    //Exceï¿½ao pois houve erro ao tentar inserir ou atualizar dados na base.
                     $db->rollBack();
                     parent::message("Erro ao encaminhar Projeto", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"ERROR");
-			/* Try _ Catch, é utilizado para tratamento de erros.
-			 * o $e->getMessage(), é utilizado para saber qual o tipo de erro que retornou.
+			/* Try _ Catch, ï¿½ utilizado para tratamento de erros.
+			 * o $e->getMessage(), ï¿½ utilizado para saber qual o tipo de erro que retornou.
 			*/
 		}
 
  	}
- 
+
 
  /**************************************************************************************************************************
- * Função que altera o status da solicitação na view Readequação de Produtos
+ * Funï¿½ï¿½o que altera o status da solicitaï¿½ï¿½o na view Readequaï¿½ï¿½o de Produtos
  * ************************************************************************************************************************/
  	public function readequacaoprodutoseditarAction(){
 
             $id_Pronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($id_Pronac);
@@ -1556,7 +1546,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $this->view->menumsg = 'true';
             //****************************************************
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = new tbAvaliacaoItemPedidoAlteracao();
             $stResult = $sqlStatusReadequacao->buscar(array('idPedidoAlteracao = ?'=> $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 7));
             $this->view->stResult = $stResult;
@@ -1564,13 +1554,13 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
 
 /**************************************************************************************************************************
-* Função que altera o status da solicitação na view Readequação de Produtos
+* Funï¿½ï¿½o que altera o status da solicitaï¿½ï¿½o na view Readequaï¿½ï¿½o de Produtos
 * ************************************************************************************************************************/
  	public function readequacaoitensdecustoeditarAction(){
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1616,7 +1606,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $this->view->menumsg = 'true';
             //****************************************************
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = new tbAvaliacaoItemPedidoAlteracao();
             $stResult = $sqlStatusReadequacao->buscar(array('idPedidoAlteracao = ?'=> $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 7, 'stAvaliacaoItemPedidoAlteracao != ?' => 'AP'));
             $this->view->stResult = $stResult;
@@ -1657,7 +1647,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planAP = $planAP;
 
             $pedidoAlteracao = new tbPedidoAlteracaoProjeto();
@@ -1695,7 +1685,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planSR = $planSR;
 
 
@@ -1714,11 +1704,11 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 //                        $where = " idpedidoalteracao = $idpedidoalteracao";
 //                        //$avaliacao = $buscaInformacoes->atualizarAvaliacaopedido($dados, $where);
 //
-//                        //parent::message("N&atilde;o há  readequaç&otilde;es para produto, por favor verifique os itens de custo", "/verificarsolicitacaodereadequacoes/planilhasolicitada?idPronac=$id_Pronac", "ALERT");
+//                        //parent::message("N&atilde;o hï¿½  readequaï¿½&otilde;es para produto, por favor verifique os itens de custo", "/verificarsolicitacaodereadequacoes/planilhasolicitada?idPronac=$id_Pronac", "ALERT");
 //                        $this->_redirect('verificarsolicitacaodereadequacoes/planilhasolicitada?idPronac='.$id_Pronac);
 //                }
 //
-//		//LISTA COMBO DE "ÁREA" NA VIEW
+//		//LISTA COMBO DE "ï¿½REA" NA VIEW
 //		$sqlListaArea = ReadequacaoProjetos::retornaSQLproposta("sqlListaArea","NULL");
 //		$ListaArea = $db->fetchAll($sqlListaArea);
 //
@@ -1727,7 +1717,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 //		$ListaSegmento = $db->fetchAll($sqlListaSegmento);
 //
 //		// Chama o SQL
-//                // verifica se o registro do Parecerista/Técnico existe
+//                // verifica se o registro do Parecerista/Tï¿½cnico existe
 //		$sqlproposta = ReadequacaoProjetos::retornaSQLproposta("sqlConsultaReadequacaoEditarParecerista", $id_Pronac, null, true);
 //
 //		$dados = $db->fetchAll($sqlproposta);
@@ -1738,8 +1728,8 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 //		$idPedidoAlt = isset($dados[0]->idAvaliacaoItemPedidoAlteracao) ? $dados[0]->idAvaliacaoItemPedidoAlteracao : 0;
 //		$iframe      = isset($dados[0]->CNPJCPF) ? $dados[0]->CNPJCPF : 0;
 //
-//		//VERIFICA O STATUS DA SOLICITAÇÃO
-////xd($dados);
+//		//VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
+//
 //		$sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 //		$stResult = $db->fetchAll($sqlStatusReadequacao);
 //
@@ -1771,7 +1761,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
             $idPronac = $_GET['id'];
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $this->_idPedidoAlteracao = $this->pegarIdPedidoAlteracao($idPronac);
@@ -1817,7 +1807,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $this->view->menumsg = 'true';
             //****************************************************
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = new tbAvaliacaoItemPedidoAlteracao();
             $stResult = $sqlStatusReadequacao->buscar(array('idPedidoAlteracao = ?'=> $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 7, 'stAvaliacaoItemPedidoAlteracao not in (?)' => array('AG','EA')));
             $this->view->stResult = $stResult;
@@ -1858,7 +1848,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planAP = $planAP;
 
             $pedidoAlteracao = new tbPedidoAlteracaoProjeto();
@@ -1896,22 +1886,22 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $cont++;
             endforeach;
 
-            // manda as informações para a visão
+            // manda as informaï¿½ï¿½es para a visï¿½o
             $this->view->planSR = $planSR;
  	}
- 	
- 	
+
+
  /**************************************************************************************************************************
- * Função que altera o status da solcitação na view de Readequação de Produtos
+ * Funï¿½ï¿½o que altera o status da solcitaï¿½ï¿½o na view de Readequaï¿½ï¿½o de Produtos
  * ************************************************************************************************************************/
  	public function streadequacaoprodutosAction(){
 
             $IdPronac = $_GET['IdPronac'];
             if(!isset($IdPronac) || empty($IdPronac)){
-                parent::message("Projeto não encontrado.", "principal" ,"ERROR");
+                parent::message("Projeto nï¿½o encontrado.", "principal" ,"ERROR");
             }
             if($_GET['opcao'] != '1'){
-                parent::message("Erro ao alterar o status da solicitação", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"ERROR");
+                parent::message("Erro ao alterar o status da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"ERROR");
             }
 
             $verificaIdPedidoAlteracao = VerificarSolicitacaodeReadequacoesDAO::verificaPedidoAlteracao($IdPronac);
@@ -1923,14 +1913,14 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             }
 
             //retorna o id do agente logado
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idAgente = $agente['idAgente'];
 
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             $registro = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlteracao);
@@ -1943,7 +1933,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $whereProdutoAT = array('idPedidoAlteracao = ?' => $reg[0]->idPedidoAlteracao, 'tpPlanoDistribuicao = ?' => 'AT');
             $listaProdutosAT = $this->tbPlanoDistribuicao->buscar($whereProdutoAT);
 
-            //VERIFICA SE JÁ POSSUI PLANO DE DISTRIBUIÇÃO DO TIPO AT PARA NÃO GERAR OUTRA CÓPIA DE ANÁLISE TÉCNICA
+            //VERIFICA SE Jï¿½ POSSUI PLANO DE DISTRIBUIï¿½ï¿½O DO TIPO AT PARA Nï¿½O GERAR OUTRA Cï¿½PIA DE ANï¿½LISE Tï¿½CNICA
             if(count($listaProdutosAT) <= 0){
                 foreach ($listaProdutosSR as $d) {
                     if($d->tpAcao != 'N'){
@@ -1966,13 +1956,13 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                                 ,'tpPlanoDistribuicao'   => 'AT'
                                 ,'dtPlanoDistribuicao'   => new Zend_Db_Expr('GETDATE()')
                         );
-                        //INSERE UMA CÓPIA QUE SERÁ ALTERADA PELO TÉCNICO DE ACOMPANHAMENTO - AT
+                        //INSERE UMA Cï¿½PIA QUE SERï¿½ ALTERADA PELO Tï¿½CNICO DE ACOMPANHAMENTO - AT
                         $this->tbPlanoDistribuicao->inserir($dadosCopia);
                     }
                 }
             }
 
-            //REGISTRO EM QUESTÃO
+            //REGISTRO EM QUESTï¿½O
             $idPedido = $reg[0]->idAvaliacaoItemPedidoAlteracao;
             try{
                 if($opcao == 1){
@@ -1996,38 +1986,38 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 }
 
                 if(isset($_GET['itemDeCusto']) && $_GET['itemDeCusto']){
-                    parent::message("Situação alterada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"CONFIRM");
+                    parent::message("Situaï¿½ï¿½o alterada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"CONFIRM");
                 } else {
-                    parent::message("Situação alterada com sucesso!", "verificarreadequacaodeprojeto/readequacaoprodutoseditar?id=$IdPronac" ,"CONFIRM");
+                    parent::message("Situaï¿½ï¿½o alterada com sucesso!", "verificarreadequacaodeprojeto/readequacaoprodutoseditar?id=$IdPronac" ,"CONFIRM");
                 }
 
             } catch(Zend_Exception $e){
                 if(isset($_GET['itemDeCusto']) && $_GET['itemDeCusto']){
-                    parent::message("Erro ao alterar o status da solicitação", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"ERROR");
+                    parent::message("Erro ao alterar o status da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"ERROR");
                 } else {
-                    parent::message("Erro ao alterar o status da solicitação", "verificarreadequacaodeprojeto/readequacaoprodutoseditar?id=$IdPronac" ,"ERROR");
+                    parent::message("Erro ao alterar o status da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/readequacaoprodutoseditar?id=$IdPronac" ,"ERROR");
                 }
             }
  	}
 
  /**************************************************************************************************************************
- * Função que altera o status da solcitação na view de Readequação de Itens de Custo
+ * Funï¿½ï¿½o que altera o status da solcitaï¿½ï¿½o na view de Readequaï¿½ï¿½o de Itens de Custo
  * ************************************************************************************************************************/
  	public function streadequacaoitensdecustoAction(){
 
 		//retorna o id do agente logado
- 		$auth = Zend_Auth::getInstance(); // pega a autenticação
+ 		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
  		$agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
 		$idAgente = $agente['idAgente'];
 
-		$idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
- 		$opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+		$idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+ 		$opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
  		$IdPronac = $_GET['IdPronac'];
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-		//SQL PARA TRAZER OD DADOS DO REGISTRO EM QUESTÃO
+		//SQL PARA TRAZER OD DADOS DO REGISTRO EM QUESTï¿½O
 		$registro = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlteracao);
 		$reg = $db->fetchAll($registro);
 		$idPedido = $reg[0]->idAvaliacaoItemPedidoAlteracao;
@@ -2052,15 +2042,15 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                             $db->fetchAll($sqlstReadequacao);
                     }
 
-                    parent::message("Situação alterada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"CONFIRM");
+                    parent::message("Situaï¿½ï¿½o alterada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"CONFIRM");
                 } catch(Zend_Exception $e){
-                    parent::message("Erro ao alterar o status da solicitação", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"ERROR");
+                    parent::message("Erro ao alterar o status da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$IdPronac" ,"ERROR");
                 }
  	}
- 	
- 
+
+
   /**************************************************************************************************************************
- * Função que devolve o pedido para a fila do coordenador de acompanhamento
+ * Funï¿½ï¿½o que devolve o pedido para a fila do coordenador de acompanhamento
  * ************************************************************************************************************************/
  	public function devolverpedidoAction(){
 
@@ -2069,8 +2059,8 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $idPerfilRemetente = $this->codGrupo;
 
  		$idAcao = $_GET['id'];
- 		
- 		$db = Zend_Registry :: get('db');
+
+ 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
                 try{
                     $db->beginTransaction();
@@ -2099,35 +2089,35 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $dados = $db->fetchAll($sqldev5);
 
                     $db->commit();
-                    parent::message("Devolução da solicitação feita com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"CONFIRM");
-                    
+                    parent::message("Devoluï¿½ï¿½o da solicitaï¿½ï¿½o feita com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"CONFIRM");
+
                  } catch(Zend_Exception $e){
 
                     $db->rollBack();
-                    parent::message("Erro na devolução da solicitação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"ERROR");
-                    
+                    parent::message("Erro na devoluï¿½ï¿½o da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"ERROR");
+
                  }
-			
+
  	}
- 	
- 	
+
+
   /**************************************************************************************************************************
- * FUNÇÃO QUE FINALIZA A SOLICITAÇÃO (GERAL - TELA DE COORDENADOR DE ACOMPANHAMENTO)
+ * FUNï¿½ï¿½O QUE FINALIZA A SOLICITAï¿½ï¿½O (GERAL - TELA DE COORDENADOR DE ACOMPANHAMENTO)
  * ************************************************************************************************************************/
  	public function finalizageralAction(){
-
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
             //idAcaoAvaliacaoItemPedidoAlteracao da Tabela BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
             $idAcao = $_GET['id'];
 
 //            $new = new tbProposta();
 //            $ss = $new->finalizarReadequacaoDeProposta('119720');
-//            xd($ss);
+
 
             //retorna o id do agente logado
             $idAgenteRemetente = $this->getIdUsuario;
             $idPerfilRemetente = $this->codGrupo;
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
              try{
@@ -2173,7 +2163,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     }
                 }
 
-                $auth = Zend_Auth::getInstance(); // pega a autenticação
+                $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
                 $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                 $idagente = $agente['idAgente'];
 
@@ -2219,9 +2209,9 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                              * ==============================================================
                              */
                             $Projetos          = new Projetos();
-                            $Agentes           = new Agentes();
+                            $Agentes           = new Agente_Model_DbTable_Agentes();
                             $Visao             = new Visao();
-                            $tbVinculo         = new TbVinculo();
+                            $tbVinculo         = new Agente_Model_DbTable_TbVinculo();
                             $tbVinculoProposta = new tbVinculoProposta();
 
                             /* ========== BUSCA OS DADOS DO PROPONENTE ANTIGO ========== */
@@ -2250,7 +2240,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                                     $tbVinculo->alterar($dadosVinculo, $whereVinculo);
                             else :
-                                    parent::message("O usuário informado não é Proponente ou o Projeto não está vinculado a uma Proposta!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento", "ERROR");
+                                    parent::message("O usuï¿½rio informado nï¿½o ï¿½ Proponente ou o Projeto nï¿½o estï¿½ vinculado a uma Proposta!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento", "ERROR");
                             endif;
 
                             /**
@@ -2261,7 +2251,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
 
                     } else if ($tpAlt == 3){
-                        //FICHA TÉCNICA
+                        //FICHA Tï¿½CNICA
                         $fichatecAtual = FichaTecnicaDAO::buscarFichaTecnicaFinal($idPronac, $idPedidoAlt);
                         $Atual = $fichatecAtual[0]->FichaTecnica;
                         $idPreProjeto = $fichatecAtual[0]->idPreProjeto;
@@ -2273,7 +2263,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         $result = $db->fetchAll($avaliacao);
 
                     } else if ($tpAlt == 4){
-                        //LOCAL DE REALIZAÇÃO
+                        //LOCAL DE REALIZAï¿½ï¿½O
                         $local = ProjetoDAO::buscarPronac($idPronac);
                         $idProjeto = $local['idProjeto'];
 
@@ -2291,13 +2281,13 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                                 );
 
                                                                     //if (count(AbrangenciaDAO::verificarLocalRealizacao($idProjeto, $x->idMunicipioIBGE)) <= 0) :
-                                    $local = AbrangenciaDAO::cadastrar($dados);
+                                    $local = $tbAbrangencia->cadastrar($dados);
                                 //endif;
                                 //print_r($local);
 
                             } else if (trim($x->tpAcao) == 'E') {
-                                    // altera o status dos locais excluídos
-                                    $Abrangencia = new Abrangencia();
+                                    // altera o status dos locais excluï¿½dos
+                                    $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
                                     $Abrangencia->update(array('stAbrangencia' => 0), array('idAbrangencia = ?' => $x->idAbrangenciaAntiga));
                                     //$_local = AbrangenciaDAO::buscarAbrangenciasAtuais($idProjeto, $x->idPais, $x->idUF, $x->idMunicipioIBGE);
                                 //$__local = AbrangenciaDAO::excluir($_local[0]->idAbrangencia);
@@ -2315,7 +2305,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                     } else if ($tpAlt == 6){
 
-                        //PROPOSTA PEDAGÓGICA
+                        //PROPOSTA PEDAGï¿½GICA
                         $sqlproposta = ReadequacaoProjetos::retornaSQLproposta("sqlpropostafinalizar",$idPronac);
                         $dadosSolicitado = $db->fetchAll($sqlproposta);
 
@@ -2323,7 +2313,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         $DadosProj = $Projeto->buscar(array('IdPRONAC = ?' => $idPronac));
 
                         if(count($DadosProj) > 0 && !empty($DadosProj[0]->idProjeto)) {
-                            $PreProjeto = new PreProjeto();
+                            $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                             $dados = array(
                                 'EstrategiadeExecucao' => $dadosSolicitado[0]['dsEstrategiaExecucao'],
                                 'EspecificacaoTecnica' => $dadosSolicitado[0]['dsEspecificacaoSolicitacao']
@@ -2379,7 +2369,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                             'Sequencial' => $DadosProj[0]->Sequencial,
                             'TipoAprovacao' => 3,
                             'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                            // 'ResumoAprovacao' => 'Solicitação de Readequação',
+                            // 'ResumoAprovacao' => 'Solicitaï¿½ï¿½o de Readequaï¿½ï¿½o',
                             'DtInicioCaptacao' => $datas['dtInicioNovoPrazo'],
                             'DtFimCaptacao' => $datas['dtFimNovoPrazo'],
                             'Logon' => $idagente
@@ -2440,7 +2430,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         foreach ($PlanilhasSolicitadas as $dadosP){
                             if (!empty($dadosP->idPedidoAlteracao))
                             {
-                                    // busca a ação a ser executada conforme solicitação de readequação
+                                    // busca a aï¿½ï¿½o a ser executada conforme solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                                     //$_idPlanilhaProjeto      = empty($dadosP->idPlanilhaProjeto) ? ('idPlanilhaProjeto ? ' => new Zend_Db_Expr('IS NULL')) : ('idPlanilhaProjeto = ? ' => $dadosP->idPlanilhaProjeto);
                                     //$_idPlanilhaProposta     = empty($dadosP->idPlanilhaProposta) ? ('idPlanilhaProposta ? ' => new Zend_Db_Expr('IS NULL')) : ('idPlanilhaProposta = ? ' => $dadosP->idPlanilhaProposta);
                                     //$_idPlanilhaAprovacaoPai = empty($dadosP->idPlanilhaAprovacaoPai) ? ('idPlanilhaAprovacaoPai ? ' => new Zend_Db_Expr('IS NULL')) : ('idPlanilhaAprovacaoPai = ? ' => $dadosP->idPlanilhaAprovacaoPai);
@@ -2453,7 +2443,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                                                                     if (count($buscarTpAcaoSR) > 0 && !empty($buscarProjeto[0]->idProjeto))
                                                                     {
-                                                                            // EXCLUSÃO
+                                                                            // EXCLUSï¿½O
                                                                             if ($buscarTpAcaoSR[0]->tpAcao == 'E') :
                                                                                     // planilha antiga
                                                 $idProjeto = $buscarProjeto[0]->idProjeto;
@@ -2468,7 +2458,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                                                     $planilhaProposta->delete(array('idPlanilhaProposta = ?' => $dadosExculsao->idPlanilhaProposta));
                                                 endforeach;
 
-                                                                            // ALTERAÇÃO
+                                                                            // ALTERAï¿½ï¿½O
                                                                             elseif ($buscarTpAcaoSR[0]->tpAcao == 'A') :
                                                                                     // planilha antiga
                                                 $idProjeto = $buscarProjeto[0]->idProjeto;
@@ -2499,7 +2489,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                                                                                     $planilha->update(array('tpPlanilha' => 'CO' , 'stAtivo' => 'N'), array('idPlanilhaAprovacao = ? ' => $dadosP->idPlanilhaAprovacao));
                                                                                     $planilha->update(array('tpPlanilha' => 'CO' , 'stAtivo' => 'N'), array('idPlanilhaAprovacao = ? ' => $buscarTpAcaoSR[0]->idPlanilhaAprovacao));
-                                                                            // INCLUSÃO
+                                                                            // INCLUSï¿½O
                                                                             elseif ($buscarTpAcaoSR[0]->tpAcao == 'I') :
                                                                                     // planilha antiga
                                                 $ReplicaDados = array(
@@ -2535,7 +2525,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                 $db->commit();
 
-                                    //CASO SEJA O ÚLTIMO ITEM DO PEDIDO DE ALTERAÇÃO, FINALIZA O STATUS DA MESMA
+                                    //CASO SEJA O ï¿½LTIMO ITEM DO PEDIDO DE ALTERAï¿½ï¿½O, FINALIZA O STATUS DA MESMA
                                     $tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
                                     $verificarPedidosAtivos = $tbPedidoAlteracaoXTipoAlteracao->buscar(array('idPedidoAlteracao = ?' => $idPedidoAlt, 'stVerificacao <> ?' => 4));
                                     $arrBusca = array();
@@ -2560,10 +2550,10 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 } catch(Zend_Exception $e){
 
                 $db->rollBack();
-                parent::message("Erro na devolução da solicitação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na devoluï¿½ï¿½o da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
 
              }
-			
+
  	}
 
 
@@ -2577,7 +2567,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $idPronac_Get = $this->_request->getParam("idpronac"); // pega o id do pronac via get
             $idAcao       = $this->_request->getParam("idacao"); // pega o idAcaoAvaliacaoPedidoAlteracao via get
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
@@ -2606,7 +2596,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $tpAlt              = $dados[0]->tpAlteracaoProjeto;
                 $stAvaliacaoItem    = $dados[0]->stAvaliacaoItemPedidoAlteracao;
                 $idAgenteAvaliador  = $dados[0]->idAgenteAvaliador;
-                $stParecerFavoravel = (trim($stAvaliacaoItem) == 'AP') ? 1 : 2; // 1 => favorável; 2 => desfavorável
+                $stParecerFavoravel = (trim($stAvaliacaoItem) == 'AP') ? 1 : 2; // 1 => favorï¿½vel; 2 => desfavorï¿½vel
 
                 // ATUALIZA O CAMPO stVerificacao NA TABELA tbPedidoAlteracaoXTipoAlteracao
                 $sqlfin4 = ReadequacaoProjetos::retornaSQLfinalizaGeral4($idPedidoAlt, $tpAlt);
@@ -2659,7 +2649,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $inserirPlanilhaAprovacao = $planilhaAprovacao->InserirPlanilhaAprovacao($data);
                 }
 
-                // chama a função para fazer o balanceamento
+                // chama a funï¿½ï¿½o para fazer o balanceamento
                 $areaProjeto = $projetos->BuscarAreaSegmentoProjetos($idPronac_Get);
                 $Rtitulacao  = $titulacaoConselheiro->buscarComponenteBalanceamento($areaProjeto['area']);
                 $Distribuicao->alterar(array('stDistribuicao' => 'I'), array('idPRONAC = ?'=>$idPronac_Get));
@@ -2671,7 +2661,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         ,'idResponsavel'  => 0);
                 $Distribuicao->inserir($dados);
 
-                // chama a função para alterar a situação do projeto - Padrão C10
+                // chama a funï¿½ï¿½o para alterar a situaï¿½ï¿½o do projeto - Padrï¿½o C10
                 $data  = array('Situacao' => 'C10');
                 $where = "IdPRONAC = $idPronac_Get";
                 $projetos->alterarProjetos($data, $where);
@@ -2694,7 +2684,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $arrWhereSomaPlanilhaCO['tpPlanilha = ?']       = 'CO';
                 $somaCO                                         = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilhaCO);
 
-                // define o tipo de parecer (tipo 2 => complementação; tipo 4 => redução)
+                // define o tipo de parecer (tipo 2 => complementaï¿½ï¿½o; tipo 4 => reduï¿½ï¿½o)
                 $tipoParecer = 2;
                 if ($somaPA < $somaCO) :
                         $tipoParecer = 4;
@@ -2736,23 +2726,23 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
             catch (Zend_Exception $e) {
                 $db->rollBack();
-                parent::message("Erro na devolução da solicitação", "manterreadequacao?tipoFiltro=7:d", "ERROR");
+                parent::message("Erro na devoluï¿½ï¿½o da solicitaï¿½ï¿½o", "manterreadequacao?tipoFiltro=7:d", "ERROR");
             }
-	} // fecha método encaminhacomponentecomissaoAction()
+	} // fecha mï¿½todo encaminhacomponentecomissaoAction()
 
 
 
  /**************************************************************************************************************************
- * Função para encaminhar projeto - Coordenador de Acompanhamento
+ * Funï¿½ï¿½o para encaminhar projeto - Coordenador de Acompanhamento
  * ************************************************************************************************************************/
  	public function encaminhacoordacompanhamentoAction(){
 
  		//retorna o id do agente logado
- 		$auth = Zend_Auth::getInstance(); // pega a autenticação
+ 		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
  		$agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
 		$idAgenteEncaminhar = $agente['idAgente'];
 
-		//echo "<pre>"; print_r($_POST); die;
+		//echo "<pre>"; print_r($_POST); $this->_helper->viewRenderer->setNoRender(TRUE); 
  		$idAgenteReceber = $_POST['AgenteId'];
  		$Orgao = $_POST['passaValor'];
  		$AgentePerfil = $_POST['AgentePerfil'];
@@ -2769,12 +2759,12 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                 xd($_POST);
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
                     $db->beginTransaction();
-		
+
                     //ALTERA O STATUS DE '0' PARA '1' NA TABELA tbPedidoAlteracaoProjeto
                     $sqlAlteraVariavelAltProj = ReadequacaoProjetos::retornaSQLencaminhar("sqlAlteraVariavelAltProj",$ID_PRONAC,$idPedidoAlteracao,$tpAlteracaoProjeto,$justificativa,$Orgao,$idAgenteReceber);
                     $db->fetchAll($sqlAlteraVariavelAltProj);
@@ -2791,7 +2781,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $sqlEncaminhar = ReadequacaoProjetos::retornaSQLencaminhar("sqlCoordAcompEncaminhar",$ID_PRONAC,$idPedidoAlteracao,$tpAlteracaoProjeto,$justificativa,$Orgao,$idAgenteReceber);
                     $db->fetchAll($sqlEncaminhar);
 
-                    //RETORNA EM VARIÁVEIS OS DADOS DO LOG ANTERIOR PARA INSERIR NA TABELA tbAcaoAvaliacaoItemPedidoAlteracao
+                    //RETORNA EM VARIï¿½VEIS OS DADOS DO LOG ANTERIOR PARA INSERIR NA TABELA tbAcaoAvaliacaoItemPedidoAlteracao
                     $sqlproposta = ReadequacaoProjetos::retornaSQLencaminhar("sqlRecuperarRegistro",$ID_PRONAC,$idPedidoAlteracao,$tpAlteracaoProjeto,$justificativa,$Orgao,$idAgenteReceber);
                     $dados = $db->fetchAll($sqlproposta);
                     $idAvaliacaoItemPedidoAlteracao = $dados[0]->idAvaliacaoItemPedidoAlteracao;
@@ -2820,11 +2810,11 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     parent::message("Erro ao encaminhar Projeto", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
 
                  }
-			
+
  	}
- 	
+
  /**************************************************************************************************************************
- * Função para Reencaminhar projeto - Coordenador de Acompanhamento
+ * Funï¿½ï¿½o para Reencaminhar projeto - Coordenador de Acompanhamento
  * ************************************************************************************************************************/
  	public function reencaminhacoordacompanhamentoAction(){
 
@@ -2835,14 +2825,14 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$idAgente = $_POST['AgenteId'];
 		$Orgao = $_POST['Orgao'];
                 $AgentePerfil = $_POST['AgentePerfil'];
-		
+
                 if($_POST['AgentePerfil'] == '121' || $_POST['AgentePerfil'] == '129'){
                     $idPerfil = 5;
                 } else{
                     $idPerfil = 2;
                 }
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -2878,13 +2868,13 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     parent::message("Erro ao reencaminhar Projeto", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
 
                  }
-			
+
  	}
- 	
- 	
+
+
 
  /**************************************************************************************************************************
- * Função para encaminhar projeto - Coordenador de Parecerista
+ * Funï¿½ï¿½o para encaminhar projeto - Coordenador de Parecerista
  * ************************************************************************************************************************/
  	public function encaminhacoordpareceristaAction(){
 
@@ -2899,7 +2889,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$agenteNovo = $_POST['agenteNovo'];
 		$Orgao = $_POST['Orgao'];
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -2922,11 +2912,11 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     parent::message("Erro ao encaminhar Projeto", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"ERROR");
 
                  }
-			
+
  	}
- 	
+
 	public function reencaminhacoordpareceristaAction(){
- 	
+
 // 		$agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
 //		$this->view->agente = $agente['idAgente'];
  		$idAcao = $_POST['idAcao'];
@@ -2936,7 +2926,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 		$idOrgao = $_POST['idOrgao'];
 		$idAgente = $_POST['agenteNovo'];
 
-		$db = Zend_Registry :: get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
                 try{
@@ -2962,7 +2952,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     //INSERE NOVO REGISTRO
                     $sqlAlteraVariavel3 = ReadequacaoProjetos::reencaminharPar3($idAvaliacaoItemPedidoAlteracao,$idAgente,$justificativa,$idOrgao, $this->getIdUsuario, $this->codGrupo);
                     $dados = $db->fetchAll($sqlAlteraVariavel3);
- 				
+
  		$db->commit();
                     parent::message("Projeto encaminhado com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"CONFIRM");
 
@@ -2972,25 +2962,25 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     parent::message("Erro ao encaminhar Projeto", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"ERROR");
 
                  }
-			
+
  	}
- 
+
  /**************************************************************************************************************************
- * Função que chama a função de encaminha projeto para outro componente ou para a lista de balanceamento
+ * Funï¿½ï¿½o que chama a funï¿½ï¿½o de encaminha projeto para outro componente ou para a lista de balanceamento
  * ************************************************************************************************************************/
- 	
+
  	public function encaminharprojetoAction(){
- 		
- 		
+
+
  		$filter = new Zend_Filter_StripTags();
-        
+
         //Tela de Dados
         $idPronac        = $filter->filter($this->_request->getPost('idPronac'));
         $justificativa        = $filter->filter($this->_request->getPost('justificativa'));
         $agenteAtual        = $filter->filter($this->_request->getPost('agenteAtual'));
         $agenteNovo        = $filter->filter($this->_request->getPost('agenteNovo'));
-        $data        = $filter->filter($this->_request->getPost('data'));	
- 		
+        $data        = $filter->filter($this->_request->getPost('data'));
+
  		$dados = ProjetosGerenciarDAO::encaminharProjeto($idPronac, $data, $justificativa, $agenteAtual, $agenteNovo);
 
 			if ($dados)
@@ -3000,51 +2990,51 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 				else
 				{
 					parent::message("Erro ao encaminhar Projeto", "projetosgerenciar/projetosgerenciar" ,"ERROR");
-				}   
- 		
-				
+				}
+
+
  	}
-	
+
 /**************************************************************************************************************************
- * Função que desabilita o componente da comissão para receber projetos
+ * Funï¿½ï¿½o que desabilita o componente da comissï¿½o para receber projetos
  * e faz o rebalanceamento de todos os projetos do mesmo quando ativos
  * ************************************************************************************************************************/
- 	
+
 	public function desabilitarcomponenteAction(){
-		
+
 		$filter = new Zend_Filter_StripTags();
-        
+
         //Tela de Dados
         $justificativa        = $filter->filter($this->_request->getPost('justificativa'));
         $idAgente        = $filter->filter($this->_request->getPost('idAgente'));
-        
+
  		$dados = ProjetosGerenciarDAO::desativarComponente($idAgente, $justificativa);
- 		
+
 		if ($dados)
 				{
-					parent::message("O Componente da Comissão foi desabilitado com sucesso!", "projetosgerenciar/projetosgerenciar" ,"CONFIRM");
+					parent::message("O Componente da Comissï¿½o foi desabilitado com sucesso!", "projetosgerenciar/projetosgerenciar" ,"CONFIRM");
 				}
 				else
 				{
-					parent::message("Erro ao desabilitar o Componente da Comissão", "projetosgerenciar/projetosgerenciar" ,"ERROR");
-				}   
- 		
+					parent::message("Erro ao desabilitar o Componente da Comissï¿½o", "projetosgerenciar/projetosgerenciar" ,"ERROR");
+				}
+
 	}
-	
-	
+
+
 /**************************************************************************************************************************
- * Função que cria o select para escolha entre entidade vinculada ou técnico de acompanhamento
+ * Funï¿½ï¿½o que cria o select para escolha entre entidade vinculada ou tï¿½cnico de acompanhamento
  * ************************************************************************************************************************/
- 	
+
 	public function selectcoordacompAction(){
-		
-		$db = Zend_Registry :: get('db');
+
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-	// Chama o SQL da lista de Entidades Vinculadas - Técnicos
+	// Chama o SQL da lista de Entidades Vinculadas - Tï¿½cnicos
 		$sqllistasDeEntidadesVinculadas = ReadequacaoProjetos::retornaSQLlista("listasDeEntidadesVinculadas", "NULL");
 		$listaEntidades = $db->fetchAll($sqllistasDeEntidadesVinculadas);
-		
+
 	// Chama o SQL da lista dos Pareceristas
 		$sqllistasDeEncaminhamento = ReadequacaoProjetos::retornaSQLlista("listasDeEncaminhamento",203);
 		$listaParecerista = $db->fetchAll($sqllistasDeEncaminhamento);
@@ -3055,7 +3045,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
 
 		$opcao = $_POST["opcao"];
-		
+
 		if( $opcao == 0 ){
 			echo "<option value='0'>&nbsp;</option>";
 			}
@@ -3074,42 +3064,42 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 				echo "<option value='$lista->idAgente'>".$lista->Nome." - ".$lista->Perfil."</option>";
 				}
 			}
-		
-		die;	
-		
-		
+
+		$this->_helper->viewRenderer->setNoRender(TRUE); 
+
+
 	}
-	
-	
+
+
 /**************************************************************************************************************************
- * Função que habilita o componente da comissão para receber projetos
+ * Funï¿½ï¿½o que habilita o componente da comissï¿½o para receber projetos
  * ************************************************************************************************************************/
- 	
+
 	public function habilitarcomponenteAction(){
-		
+
 		$filter = new Zend_Filter_StripTags();
-        
+
         //Tela de Dados
         $justificativa        = $filter->filter($this->_request->getPost('justificativa'));
         $idAgente        = $filter->filter($this->_request->getPost('idAgente'));
-        
+
  		/*echo 'Agente = '.$idAgente.'<br /> Jus '.$justificativa;
- 		exit();*/
- 		
-        
+ 		$this->_helper->viewRenderer->setNoRender(TRUE);*/
+
+
  		$dados = ProjetosGerenciarDAO::ativarComponente($idAgente, $justificativa);
 
-			       	
+
 		if ($dados)
 				{
-					parent::message("O Componente da Comissão foi habilitado com sucesso!", "projetosgerenciar/projetosgerenciar" ,"CONFIRM");
+					parent::message("O Componente da Comissï¿½o foi habilitado com sucesso!", "projetosgerenciar/projetosgerenciar" ,"CONFIRM");
 				}
 				else
 				{
-					parent::message("Erro ao habilitar o Componente da Comissão", "projetosgerenciar/projetosgerenciar" ,"ERROR");
-				}   
- 		
- 	
+					parent::message("Erro ao habilitar o Componente da Comissï¿½o", "projetosgerenciar/projetosgerenciar" ,"ERROR");
+				}
+
+
 	}
 
 
@@ -3118,7 +3108,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
         {
             try
             {
-                // recebe os dados do formulário
+                // recebe os dados do formulï¿½rio
                 $idPronac        = $_POST['idPRONAC'];
                 $idPlano         = $_POST['idPlano'];
                 $idProduto       = $_POST['idProduto'];
@@ -3126,8 +3116,8 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $dsJustificativa = $_POST['justificativaPropRead'];
 
 
-                // ========== INÍCIO PLANO DE DISTRIBUIÇÃO ==========
-                // busca o Plano de Distribuição do Proponente
+                // ========== INï¿½CIO PLANO DE DISTRIBUIï¿½ï¿½O ==========
+                // busca o Plano de Distribuiï¿½ï¿½o do Proponente
                 $b = PlanoDistribuicaoDAO::buscar($idPlano);
 
                 $dados = array(
@@ -3151,14 +3141,14 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     ,'dsjustificativa'      => $b[0]->dsjustificativa
                 );
 
-                // faz a cópia dos dados do proponente para o parecerista/técnico (tipificação)
+                // faz a cï¿½pia dos dados do proponente para o parecerista/tï¿½cnico (tipificaï¿½ï¿½o)
                 $cadastrar = PlanoDistribuicaoDAO::cadastrar($dados);
 
-                // pega o último idPlano inserido (registro do parecerista/técnico com tipo = 'O')
+                // pega o ï¿½ltimo idPlano inserido (registro do parecerista/tï¿½cnico com tipo = 'O')
                 $ultimoIdPlano = PlanoDistribuicaoDAO::buscarUltimo();
                 $ultimoIdPlano = $ultimoIdPlano[0]->id;
 
-                // se for deferido, realiza a alteração na tabela tbPlanoDistribuicao com tipificação 'O' (alteração de dados do técnico)
+                // se for deferido, realiza a alteraï¿½ï¿½o na tabela tbPlanoDistribuicao com tipificaï¿½ï¿½o 'O' (alteraï¿½ï¿½o de dados do tï¿½cnico)
                 if ($avaliacao == "D")
                 {
                     $dados = array(
@@ -3174,27 +3164,27 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     );
                     $alterar = PlanoDistribuicaoDAO::alterar($dados, $ultimoIdPlano);
                 } // fecha if
-                // ========== FIM PLANO DE DISTRIBUIÇÃO ==========
+                // ========== FIM PLANO DE DISTRIBUIï¿½ï¿½O ==========
 
 
-                // ========== INÍCIO: cadastro de avaliação do produto ==========
+                // ========== INï¿½CIO: cadastro de avaliaï¿½ï¿½o do produto ==========
                 $dados_produtos = array(
                     'idAvaliacaoItemPedidoAlteracao'     => $_POST['idAvaliacaoItemPedidoAlteracao']
                     ,'stAvaliacaoSubItemPedidoAlteracao' => $avaliacao
                     ,'dsAvaliacaoSubItemPedidoAlteracao' => $dsJustificativa);
                  $cadastrar_avaliacao = AvaliacaoSubItemPedidoAlteracaoDAO::cadastrar($dados_produtos);
 
-                // pega o último id inserido
+                // pega o ï¿½ltimo id inserido
                 $ultimo = AvaliacaoSubItemPedidoAlteracaoDAO::buscarUltimo();
                 $ultimo = $ultimo[0]->id;
 
-                // vincula o plano de distribuição
+                // vincula o plano de distribuiï¿½ï¿½o
                 $dados_plano_Distribuicao = array(
                     'idAvaliacaoItemPedidoAlteracao'     => $_POST['idAvaliacaoItemPedidoAlteracao']
                     ,'idAvaliacaoSubItemPedidoAlteracao' => $ultimo
                     ,'idPlano'                           => $ultimoIdPlano);
                 $cadastrar_plano_distribuicao = AvaliacaoSubItemPlanoDistribuicaoDAO::cadastrar($dados_plano_Distribuicao);
-                // ========== FIM: cadastro de avaliação do produto ==========
+                // ========== FIM: cadastro de avaliaï¿½ï¿½o do produto ==========
 
 
                 if (!$cadastrar_avaliacao)
@@ -3203,14 +3193,14 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 }
                 else
                 {
-                    parent::message("Solicitação enviada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=".$idPronac, "CONFIRM");
+                    parent::message("Solicitaï¿½ï¿½o enviada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=".$idPronac, "CONFIRM");
                 }
             } // fecha try
             catch (Exception $e)
             {
                 parent::message("Erro ao avaliar item de custo", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=".$idPronac, "ERROR");
             }
-        } // fecha método avaliaritemdecustoAction()
+        } // fecha mï¿½todo avaliaritemdecustoAction()
 
 
 
@@ -3223,29 +3213,29 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $observacoes = $_POST['observacoes'];
 
             //CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
-                //inicia uma transaçao
+                //inicia uma transaï¿½ao
                  $db->beginTransaction();
 
                     // Chama o SQL
                     $sqlFinalizarTec = ReadequacaoProjetos::retornaSQLfinalizarTec($idPedidoAlteracao,$situacao,$analisetecnica);
                     $dados = $db->fetchAll($sqlFinalizarTec);
 
-                    //RETORNA EM VARIÁVEIS OS DADOS DO LOG ANTERIOR
+                    //RETORNA EM VARIï¿½VEIS OS DADOS DO LOG ANTERIOR
                     $sqlFinalizarTec2 = ReadequacaoProjetos::retornaSQLfinalizarTec2($idPedidoAlteracao);
                     $dados = $db->fetchAll($sqlFinalizarTec2);
                     $idAvaliacaoItemPedidoAlteracao = $dados[0]->idAvaliacaoItemPedidoAlteracao;
                     $idAgenteAvaliador = $dados[0]->idAgenteAvaliador;
                     $idOrgao = $dados[0]->idOrgao;
 
-                    //ATUALIZAR A SITUAÇÃO DO REGISTRO
+                    //ATUALIZAR A SITUAï¿½ï¿½O DO REGISTRO
                     $sqlFinalizarPar3 = ReadequacaoProjetos::retornaSQLfinalizarTec3($idPedidoAlteracao,7);
                     $dados3 = $db->fetchAll($sqlFinalizarPar3);
 
-                    //ATUALIZAR A SITUAÇÃO DO REGISTRO
+                    //ATUALIZAR A SITUAï¿½ï¿½O DO REGISTRO
                     $sqlFinalizarPar4 = ReadequacaoProjetos::retornaSQLfinalizarTec4($idAvaliacaoItemPedidoAlteracao);
                     $dados = $db->fetchAll($sqlFinalizarPar4);
 
@@ -3259,11 +3249,11 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
 
             } catch(Zend_Exception $e) {
-                //Exceçao pois houve erro ao tentar inserir ou atualizar dados na base.
+                //Exceï¿½ao pois houve erro ao tentar inserir ou atualizar dados na base.
                 $db->rollBack();
                 parent::message("Erro ao encaminhar Projeto", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetotecnico" ,"ERROR");
-                    /* Try _ Catch, é utilizado para tratamento de erros.
-                     * o $e->getMessage(), é utilizado para saber qual o tipo de erro que retornou.
+                    /* Try _ Catch, ï¿½ utilizado para tratamento de erros.
+                     * o $e->getMessage(), ï¿½ utilizado para saber qual o tipo de erro que retornou.
                     */
             }
         }
@@ -3276,18 +3266,18 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             $analisetecnica = $_POST['analisetecnica'];
 
             //CONSULTA OS PEDIDOS NA TABELA tbPlanoDistribuicao
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
-                //inicia uma transaçao
+                //inicia uma transaï¿½ao
                 $db->beginTransaction();
 
                 // Chama o SQL
                 $sqlFinalizarTec = ReadequacaoProjetos::retornaSQLfinalizarTec($idPedidoAlteracao,$situacao,$analisetecnica);
                 $dados = $db->fetchAll($sqlFinalizarTec);
 
-                //RETORNA EM VARIÁVEIS OS DADOS DO LOG ANTERIOR
+                //RETORNA EM VARIï¿½VEIS OS DADOS DO LOG ANTERIOR
                 $sqlFinalizarTec2 = ReadequacaoProjetos::retornaSQLfinalizarTec2($idPedidoAlteracao);
                 $dados = $db->fetchAll($sqlFinalizarTec2);
                 $idAvaliacaoItemPedidoAlteracao = $dados[0]->idAvaliacaoItemPedidoAlteracao;
@@ -3313,11 +3303,11 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 parent::message("Projeto finalizado com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"CONFIRM");
 
             } catch(Zend_Exception $e) {
-                //Exceçao pois houve erro ao tentar inserir ou atualizar dados na base.
+                //Exceï¿½ao pois houve erro ao tentar inserir ou atualizar dados na base.
                 $db->rollBack();
-                parent::message("Erro ao finalizar a análise dos produtos.", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac" ,"ERROR");
-                    /* Try _ Catch, é utilizado para tratamento de erros.
-                     * o $e->getMessage(), é utilizado para saber qual o tipo de erro que retornou.
+                parent::message("Erro ao finalizar a anï¿½lise dos produtos.", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac" ,"ERROR");
+                    /* Try _ Catch, ï¿½ utilizado para tratamento de erros.
+                     * o $e->getMessage(), ï¿½ utilizado para saber qual o tipo de erro que retornou.
                     */
             }
         }
@@ -3327,14 +3317,14 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
         {
             try
             {
-                // recebe os dados do formulário
+                // recebe os dados do formulï¿½rio
                 $idPronac        = $_POST['idPRONAC'];
                 $idPlano         = $_POST['idPlano'];
                 $idProduto       = $_POST['idProduto'];
                 $avaliacao       = $_POST['avaliacaoDoItem'];
                 $dsJustificativa = $_POST['justificativaPropRead'];
 
-                // ALTERA OS DADOS MODIFICADOS PELO TÉCNICO NO REGISTRO DO TIPO AT
+                // ALTERA OS DADOS MODIFICADOS PELO Tï¿½CNICO NO REGISTRO DO TIPO AT
                 if ($avaliacao == "D")
                 {
                     $dados = array(
@@ -3352,7 +3342,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 } // fecha if
 
 
-                // ========== INÍCIO: cadastro de avaliação do produto ==========
+                // ========== INï¿½CIO: cadastro de avaliaï¿½ï¿½o do produto ==========
                 $dados_produtos = array(
                     'idAvaliacaoItemPedidoAlteracao'     => $_POST['idAvaliacaoItemPedidoAlteracao']
                     ,'stAvaliacaoSubItemPedidoAlteracao' => $avaliacao
@@ -3362,30 +3352,30 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $ultimo = $_POST['idAvaliacaoSubItem'];
                 } else {
                     $cadastrar_avaliacao = AvaliacaoSubItemPedidoAlteracaoDAO::cadastrar($dados_produtos);
-                    // pega o último id inserido
+                    // pega o ï¿½ltimo id inserido
                     $ultimo = AvaliacaoSubItemPedidoAlteracaoDAO::buscarUltimo();
                     $ultimo = $ultimo[0]->id;
                 }
 
-                // vincula o plano de distribuição
+                // vincula o plano de distribuiï¿½ï¿½o
                 $dados_plano_Distribuicao = array(
                     'idAvaliacaoItemPedidoAlteracao'     => $_POST['idAvaliacaoItemPedidoAlteracao']
                     ,'idAvaliacaoSubItemPedidoAlteracao' => $ultimo
                     ,'idPlano'                           => $idPlano);
-                
+
                 if(!isset($_POST['idAvaliacaoSubItem']) || empty($_POST['idAvaliacaoSubItem'])){
                     $cadastrar_plano_distribuicao = AvaliacaoSubItemPlanoDistribuicaoDAO::cadastrar($dados_plano_Distribuicao);
                 }
-                // ========== FIM: cadastro de avaliação do produto ==========
+                // ========== FIM: cadastro de avaliaï¿½ï¿½o do produto ==========
 
 
                 if (!$cadastrar_avaliacao){
                     throw new Exception("Erro ao tentar avaliar o Produto!");
                 } else {
                     if(isset($_GET['itemDeCusto']) && $_GET['itemDeCusto']){
-                        parent::message("Solicitação enviada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac" ,"CONFIRM");
+                        parent::message("Solicitaï¿½ï¿½o enviada com sucesso!", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac" ,"CONFIRM");
                     } else {
-                        parent::message("Solicitação enviada com sucesso!", "verificarreadequacaodeprojeto/readequacaoprodutoseditar?id=$idPronac" ,"CONFIRM");
+                        parent::message("Solicitaï¿½ï¿½o enviada com sucesso!", "verificarreadequacaodeprojeto/readequacaoprodutoseditar?id=$idPronac" ,"CONFIRM");
                     }
                 }
             } // fecha try
@@ -3396,15 +3386,15 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     parent::message("Erro ao avaliar o Produto!", "verificarreadequacaodeprojeto/readequacaoprodutoseditar?id=".$idPronac, "ERROR");
                 }
             }
-        } // fecha método avaliarprodutoAction()
+        } // fecha mï¿½todo avaliarprodutoAction()
 
 
         public function finalizarprojetosprodutosAction()
         {
-            // recebe os dados do formulário
+            // recebe os dados do formulï¿½rio
             $idPronac  = $_POST['idPronac'];
 
-            // VERIFICAÇÃO DO STATUS GERAL
+            // VERIFICAï¿½ï¿½O DO STATUS GERAL
             $statusGeral = 3; // indeferido
 
             // cadastra somente os itens deferidos
@@ -3415,10 +3405,10 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
                     $statusGeral = 2; // deferido
 
-                    // busca o idPlanoDistribuicao (vinculação entre a tabela original e a solicitada)
+                    // busca o idPlanoDistribuicao (vinculaï¿½ï¿½o entre a tabela original e a solicitada)
                     $buscar = PlanoDistribuicaoDAO::buscar($_POST['arrayPlanos'][$i]);
                     $idPedidoAlteracao = $buscar[0]->idPedidoAlteracao;
-                    //Zend_Debug::dump($buscar);die;
+                    //Zend_Debug::dump($buscar);$this->_helper->viewRenderer->setNoRender(TRUE); 
 
                     foreach ($buscar as $b) :
 
@@ -3441,12 +3431,12 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                             ,'stPlanoDistribuicaoProduto'=>1
                         );
 
-                        // alteração de produto já existente
+                        // alteraï¿½ï¿½o de produto jï¿½ existente
                         if (!empty($b->idPlanoDistribuicao))
                         {
                             $alterar = PlanoDistribuicaoProdutoDAO::alterar($array_plano, $b->idPlanoDistribuicao);
                         }
-                        // inclusão de novo produto
+                        // inclusï¿½o de novo produto
                         else
                         {
                             $cadastrar = PlanoDistribuicaoProdutoDAO::cadastrar($array_plano);
@@ -3467,14 +3457,14 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                  $status = 'IN';
              }
 
-            $db = Zend_Registry :: get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-            // busca o idPlanoDistribuicao (vinculação entre a tabela original e a solicitada)
+            // busca o idPlanoDistribuicao (vinculaï¿½ï¿½o entre a tabela original e a solicitada)
             $buscar = PlanoDistribuicaoDAO::buscar($_POST['arrayPlanos'][0]);
             $idPedidoAlteracao = $buscar[0]->idPedidoAlteracao;
-            //Zend_Debug::dump($buscar);die;
-                    
+            //Zend_Debug::dump($buscar);$this->_helper->viewRenderer->setNoRender(TRUE); 
+
             try{
                 $db->beginTransaction();
 
@@ -3509,7 +3499,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 $db->fetchAll($sqlfinalproped4);
 
                 $db->commit();
-                
+
                 parent::message("Projeto finalizado com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetotecnico" ,"CONFIRM");
 
             } catch (Zend_Exception $e){
@@ -3518,7 +3508,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
             }
 
         }
-        
+
         public function planilhasolicitadaAction() {
 
         $idPronac = isset($_POST['idpronac']) ? $_POST['idpronac'] : '';
@@ -3533,7 +3523,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 	        }
 
          }
-         
+
          $buscaInformacoes = new VerificarSolicitacaodeReadequacoesDAO;
          if (isset($_POST['finaliza'])) {
 
@@ -3564,7 +3554,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                 //retorna o id do agente logado
                  $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                  $idAgenteRemetente = $agente['idAgente'];
-                 $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+                 $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
                  $idPerfilRemetente = $GrupoAtivo->codGrupo;
 
                 $dadosinserir = array(
@@ -3592,13 +3582,13 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                     $alterarStatus = $buscaInformacoes->atualizarStatus($dados, $where);
                 }
                 echo json_encode(array('error' => false));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Exception $e) {
                 echo json_encode(array('error' => true, 'Descricao' => $e->getMessage()));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
-        
+
         $resultadoOrcamento = $buscaInformacoes->verificaMudancaOrcamentaria($idPronac);
         $this->view->buscaorcamento = $resultadoOrcamento;
 
@@ -3614,7 +3604,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
         $this->view->buscaetapa = $resultadoEtapa;
 
         $resultadoProduto = $SolicitarReadequacaoCustoDAO->buscarProdutos($idPronac)->toArray();
-        
+
         if ( empty ( $resultadoProduto ) )
         {
             $resultadoProduto = $SolicitarReadequacaoCustoDAO->buscarProdutosAprovados($idPronac);
@@ -3627,7 +3617,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
         $this->view->buscaproduto = $resultadoProduto;
 
-        //var_dump($resultadoProduto);die;
+        //var_dump($resultadoProduto);$this->_helper->viewRenderer->setNoRender(TRUE); 
 
         foreach ($resultadoProduto as $idProduto) {
             foreach ($resultadoEtapa as $idEtapa) {
@@ -3675,11 +3665,11 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
         if ( $stAvaliacaoSubItemPedidoAlteracao == "AG" )
         {
-            $this->view->statusAnalise = "Aguardando Análise";
+            $this->view->statusAnalise = "Aguardando Anï¿½lise";
         }
         if ( $stAvaliacaoSubItemPedidoAlteracao == "EA" )
         {
-            $this->view->statusAnalise = "Em Análise";
+            $this->view->statusAnalise = "Em Anï¿½lise";
         }
         if ( $stAvaliacaoSubItemPedidoAlteracao == "AP" )
         {
@@ -3692,7 +3682,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
          $resultadoAvaliacaoAnalise = $buscaInformacoes->verificaAvaliacaoAnalise();
         $this->view->AvaliacaoAnalise = $resultadoAvaliacaoAnalise;
-        	
-        	
+
+
         }
 }

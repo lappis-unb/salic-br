@@ -1,0 +1,49 @@
+<div class="fixed-action-btn vertical">
+    <a class="btn-floating btn-large red">
+        <i class="large material-icons">add</i>
+    </a>
+    <ul>
+        <li><a href="/analise/analise/listarprojetos" class="btn-floating red tooltipped" data-tooltip="Voltar para lista de projetos"><i class="material-icons">undo</i></a></li>
+        <li><a id="ir-para-o-topo" class="btn-floating yellow darken-1 tooltipped" data-tooltip="Ir para o topo"><i class="material-icons">arrow_upward</i></a></li>
+<!--        <li><a class="btn-floating blue tooltipped" data-tooltip="Avaliar projeto"><i class="material-icons">create</i></a></li>-->
+        <li><a
+                data-ajax-modal="<?php echo $this->url(array('module' => 'analise', 'controller' => 'analise', 'action' => 'formavaliaradequacao', 'idpronac' => $this->projeto['IdPRONAC']), null, true); ?>"
+                href="javascript:void(0);"
+                class="btn-floating blue tooltipped" data-position="top" data-delay="50"
+                data-ajax-modal-type="bottom-sheet"
+                data-ajax-modal-height = "570px"
+                data-tooltip="Avaliar projeto">
+                <i class="material-icons">create</i>
+            </a></li>
+
+    </ul>
+</div>
+
+<!--<a class="expandall btn-floating waves-effect waves-light btn tooltipped btn-info" onClick="expandAll();" data-tooltip="Expandir tudo"><i class="material-icons left">fullscreen</i></a>-->
+
+
+<script>
+    $3(document).ready(function(){
+        if ($3('#ir-para-o-topo').length) {
+            var scrollTrigger = 100, // px
+                backToTop = function () {
+                    var scrollTop = $3(window).scrollTop();
+                    if (scrollTop > scrollTrigger) {
+                        $3('#ir-para-o-topo').parent().show();
+                    } else {
+                        $3('#ir-para-o-topo').parent().hide();
+                    }
+                };
+            backToTop();
+            $3(window).on('scroll', function () {
+                backToTop();
+            });
+            $3('#ir-para-o-topo').on('click', function (e) {
+                e.preventDefault();
+                $3('html,body').animate({
+                    scrollTop: 0
+                }, 700);
+            });
+        }
+    });
+</script>

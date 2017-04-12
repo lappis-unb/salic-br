@@ -1,6 +1,6 @@
 <?php
 
-class AjaxController extends GenericControllerNew {
+class AjaxController extends MinC_Controller_Action_Abstract {
 
     public function municipioAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -17,10 +17,10 @@ class AjaxController extends GenericControllerNew {
                 $cont++;
             }
             echo json_encode($municipio);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
             echo json_encode(array('error' => 'true'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -46,7 +46,7 @@ class AjaxController extends GenericControllerNew {
         } else {
             echo json_encode(array('error'=>true));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function fundoClassificacaoAction(){
@@ -63,12 +63,12 @@ class AjaxController extends GenericControllerNew {
                 $dados[$cont]['desc'] = utf8_encode($dado->dsClassificaDocumento);
                 $cont++;
             }
-            //xd($dados);
+            
             echo json_encode($dados);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
             echo json_encode(array('error' => 'true'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
     }
@@ -87,17 +87,15 @@ class AjaxController extends GenericControllerNew {
                 $dados[$cont]['desc'] = utf8_encode($dado->nmFormDocumento);
                 $cont++;
             }
-            //xd($_POST);
+            
             //$dados = array_unique($dados);
             echo json_encode($dados);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
             echo json_encode(array('error' => 'true'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
     }
 
 }
-
-?>

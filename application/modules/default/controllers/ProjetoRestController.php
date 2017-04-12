@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class ProjetoRestController extends Minc_Controller_AbstractRest {
     
@@ -42,7 +42,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
             'pronac' => $pronac,
             'cgcCpf' => $cgcCpf,
             'nomeProponente' => $nomeProponente);
-        # Verifica se existe necessidade de buscar o número total de registros da consulta
+        # Verifica se existe necessidade de buscar o nï¿½mero total de registros da consulta
         if(!$total){
             $total = $modelProjeto->buscarTotalListarProjetosDeUsuario($objParam);
         }
@@ -58,7 +58,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
             }
         }
 
-        # Resposta do serviço.
+        # Resposta do serviï¿½o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode(array(
             'list' => $listaProjeto,
             'total' => (int)$total)
@@ -72,7 +72,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
         $projeto = (object) $resultado->toArray();
 
         if($projeto){
-            # Busca lancamentos no Extrato Bancário
+            # Busca lancamentos no Extrato Bancï¿½rio
             $listaResult = $modelProjeto->buscarAnoExtratoDeProjeto($pronac);
             $listaAno = $listaResult->toArray();
             $numeroLancamentoExtrato = count($listaAno);
@@ -99,12 +99,12 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
             $projeto->nuLancamento = $numeroLancamentoExtrato;
         }
 
-        # Resposta do serviço.
+        # Resposta do serviï¿½o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($projeto));
     }
 
     /**
-     * Regra de visualização para formatar a descrição da conta.
+     * Regra de visualizaï¿½ï¿½o para formatar a descriï¿½ï¿½o da conta.
      * 
      * @param stdClass $projeto
      * @return string
@@ -129,7 +129,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
     }
 
     /**
-     * Regra de visualização para formatar o número da conta corrente.
+     * Regra de visualizaï¿½ï¿½o para formatar o nï¿½mero da conta corrente.
      * 
      * @param string $conta
      * @return string
@@ -137,7 +137,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
     protected function formatarContaCorrente($conta) {
         $resultado = NULL;
         if((int)$conta){
-            # Retira os zeros à esquerda.
+            # Retira os zeros ï¿½ esquerda.
             $resultado = (int)$conta;
             # Numero de caracteres.
             $qtdCarecteres = strlen($resultado);
@@ -146,7 +146,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
             $numero = number_format($numeroPrincipal, 0, '.', '.');
             # Digito da CC
             $digito = substr($resultado, ((int) $qtdCarecteres) -1, $qtdCarecteres);
-            # Inserindo traço
+            # Inserindo traï¿½o
             $resultado = $numero. '-'. $digito;
         }
         
@@ -154,7 +154,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
     }
     
     /**
-     * Regra de visualização para formatar o número da Agência.
+     * Regra de visualizaï¿½ï¿½o para formatar o nï¿½mero da Agï¿½ncia.
      * 
      * @param string $agencia
      * @return string

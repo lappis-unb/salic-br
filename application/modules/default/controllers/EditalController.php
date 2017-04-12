@@ -1,6 +1,6 @@
 <?php
 
-class EditalController extends GenericControllerNew {
+class EditalController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         $auth = Zend_Auth::getInstance(); // instancia da autenticacao;
@@ -11,7 +11,7 @@ class EditalController extends GenericControllerNew {
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC72
         if (isset($auth->getIdentity()->usu_codigo)) {
             //Recupera todos os grupos do Usuario
-            $Usuario = new Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -62,7 +62,7 @@ class EditalController extends GenericControllerNew {
         $modelTextoEdital = new tbTextoEdital();
         $editalMontado = $modelTextoEdital->buscarTextoEdital($idEdital);
         $this->view->editalmontado = $editalMontado;
-//        xd($editalMontado);
+
         $modelCriterioAvaliacao = new tbCriteriosAvaliacao();
         $criterioAvaliacao  =   $modelCriterioAvaliacao->buscarcriterioporidEdital($idEdital);
         $this->view->criterioavaliacao = $criterioAvaliacao;
@@ -303,7 +303,7 @@ class EditalController extends GenericControllerNew {
             $dadosEdital = $tbEdital->buscar(array('idEdital = ?' => $idEdital))->current();
             $this->view->dadosEdital = $dadosEdital;
             
-//            xd($dadosEdital);
+
             
             $tbEditalTipoParticipacao = new tbEditalTipoParticipacao();
             $dadosParticipacaoEdital = $tbEditalTipoParticipacao->buscar(array('idEdital = ?' => $idEdital));
@@ -472,7 +472,7 @@ class EditalController extends GenericControllerNew {
 //        $listaMunicipios = $modelMunicipios->buscar(array(), array('idUFIBGE','Descricao'));
         $this->view->listaMunicipios = $listaMunicipios;
         
-//        xd(count($listaMunicipios));
+
         
         $criterioParticipacao = $modelCriterioParticipacao->buscarCriterioPorIdCategoria($idCategoria);
         $this->view->criterioParticipacao = $criterioParticipacao;
@@ -984,7 +984,7 @@ class EditalController extends GenericControllerNew {
         $modelCriterioParticipacao          = new tbCriterioParticipacao();
         $modelRegiaoCriterioParticipacao    = new tbRegiaoCriterioParticipacao();
 
-//        xd($this->getRequest()->getParams());
+
         
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->beginTransaction();
@@ -1192,7 +1192,7 @@ class EditalController extends GenericControllerNew {
         $qtParcela              = $this->_request->getParam('qtdParcelas'); 
         $parcelas               = $this->_request->getParam('parcela'); 
         
-//        xd($this->_request->getParams());
+
         
         $this->view->idEdital   = $idEdital;
         
@@ -1556,7 +1556,7 @@ class EditalController extends GenericControllerNew {
                 'idTpPremiacao'         => $tipoPremiacao
             );
 
-//            xd($dados);
+
             $where = array('idEdital = ?' => $idEdital);
             //Atualizando informações na tabela tbEdital
             $nEdital->salvardadosgerais($dados, $where);
@@ -1678,7 +1678,7 @@ class EditalController extends GenericControllerNew {
             'txCriterioAvaliacao'   => $txtCriterio
         );
 
-//        xd($dados);
+
         $nEdital = new tbCriteriosAvaliacao();
         
         
@@ -1779,7 +1779,7 @@ class EditalController extends GenericControllerNew {
     
     public function salvarPlanilhaOrcamentariaAction(){
 
-        //xd($this->_request->getParams());
+        
         
         //Recupera os parametros que vem da View
         $idEdital                   = $this->_request->getParam('idEdital');
@@ -1792,7 +1792,7 @@ class EditalController extends GenericControllerNew {
         $valorUnitarioItemEdital    = $this->_request->getParam('valorUnitarioItemEdital');
         $dsOutro                    = $this->_request->getParam('dsOutro');
         
-        //xd($this->_request->getParams());
+        
         
         $modelPlanilhaOrcamentaria      = new tbPlanilhaOrcamentaria();
         $modelPlanilhaItemPlanilhaEtapa = new tbPlanilhaItemPlanilhaEtapa();

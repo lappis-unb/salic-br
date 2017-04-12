@@ -1,24 +1,32 @@
 <?php
 /**
- * SegmentoController
+ * Class SegmentoController
+ *
+ * @name SegmentoController
+ * @package default
+ * @subpackage controllers
+ * @version $Id$
+ *
  * @author Emanuel Sampaio <emanuelonline@gmail.com>
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 24/04/2012
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ *
  * @link http://salic.cultura.gov.br
  */
-
 class SegmentoController extends Zend_Controller_Action
 {
 	/**
-	 * Método para buscar os segmentos de uma área
+	 * Metodo para buscar os segmentos de uma area
 	 * Busca como XML para o AJAX
-	 * @access public
+     *
+     * @name comboAction
 	 * @param void
-	 * @return void
-	 */
+     * @return void
+     *
+     * @access public
+     *
+     * @since  17/08/2016
+     */
 	public function comboAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -28,22 +36,22 @@ class SegmentoController extends Zend_Controller_Action
 		$idArea = (int) $post->id;
 		$idSegmento = isset($post->segmento) ? $post->segmento : 0;
 
-		// integração MODELO e VISÃO
+		// integracao MODELO e VISAO
 		$Segmento = new Segmento();
-		$resultado = $Segmento->combo(array("a.Codigo = '?'" => $idArea), array('s.Segmento ASC'));
+		$resultado = $Segmento->combo(array("a.codigo = '?'" => $idArea), array('s.segmento ASC'));
                 if(count($resultado)>0){
                     $html = '<option value=""> - Selecione - </option>';
                     foreach ($resultado as $value) {
                         if($idSegmento > 0 && $idSegmento == $value->id){
-                            $html = $html.'<option value="'.$value->id.'" selected="selected">'.utf8_encode($value->descricao).'</option>';
+                            $html = $html.'<option data-tp_enquadramento="'.$value->tp_enquadramento.'" value="'.$value->id.'" selected="selected">'.($value->descricao).'</option>';
                         } else {
-                            $html = $html.'<option value="'.$value->id.'">'.utf8_encode($value->descricao).'</option>';
+                            $html = $html.'<option data-tp_enquadramento="'.$value->tp_enquadramento.'" value="'.$value->id.'">'.utf8_encode($value->descricao).'</option>';
                         }
                     }
                     echo $html;
                 } else {
                     echo '<option value=""> - Selecione - </option>';
                 }
-                die;
-	} // fecha comboAction()
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+    }
 }

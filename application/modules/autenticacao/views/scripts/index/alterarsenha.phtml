@@ -1,0 +1,112 @@
+
+<script>
+
+    $(document).ready( function() {
+	$("#alterarSenha").validate({
+		// Define as regras
+		rules:{
+                        senhaAtual:{
+				// campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
+				required: true, minlength: 2
+			},
+			senhaNova:{
+				// campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
+				required: true, minlength: 2
+			},
+			repeteSenha:{
+				// campoEmail sera obrigatório (required) e precisara ser um e-mail valido (email)
+				required: true, minlength: 2
+			}
+
+		},
+		// Define as mensagens de erro para cada regra
+		messages:{
+                        senhaAtual:{
+				required: "Digite a senha atual",
+				minLength: "O seu nome deve conter, no mínimo, 11 caracteres"
+			},
+			senhaNova:{
+				required: "Digite senha nova",
+				minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+			},
+			repeteSenha:{
+				required: "Repetir senha nova",
+                                minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+
+			}
+		}
+	});
+});
+
+function validaSenha(){
+
+    var data = document.getElementById("senhaAtual").value;
+    //var iChars = "<";
+    data = data.replace("<", "##menor##");
+    data = data.replace(">", "##maior##");
+    data = data.replace("'", "##aspa##");
+
+    document.getElementById("senhaAtual").value = data;
+    //document.alterarSenha.submit();
+    return true;
+}
+
+
+</script>
+<div id="confirm"></div>
+<div id="breadcrumb">
+<?php
+$auth = Zend_Auth::getInstance();
+if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), '', true); ?>">In&iacute;cio</a></li>
+        <li class="last">Cadastrar Usu&aacute;rio</li>
+    </ul>
+<?php } ?>
+</div>
+<div id="titulo">
+    <div>Alterar Senha<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+</div>
+	<div id="conteudo">
+            <fieldset>
+                <legend>Informa&ccedil;&otilde;es</legend>
+                <form method="POST" onsubmit="return validaSenha()"
+                    action="<?php echo $this->url(array('module'=>'autenticacao', 'controller' => 'index', 'action' => 'alterarsenha')); ?>"
+                    name="alterarSenha" id="alterarSenha">
+                <table border="1" class="tabela">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Altera&ccedil;&atilde;o da Senha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="200">Senha Atual *</td>
+                            <td><input maxlength="50" class="input_simples" type="password" name="senhaAtual" id="senhaAtual"  /> </td>
+                        </tr>
+                        <tr>
+                            <td>Senha nova *</td>
+                            <td><input maxlength="50" class="input_simples" type="password" name="senhaNova" id="senhaNova"  /> </td>
+                        </tr>
+                        <tr>
+                            <td>Repetir senha nova *</td>
+                            <td><input maxlength="50" class="input_simples" type="password" name="repeteSenha" id="repeteSenha"  /> </td>
+                        </tr>
+                        <tr>
+                            <td align="center" colspan="2">
+                                <button id='btIncluir' type='submit'  value='' class='btn enviar' >salvar</button>
+                                <button id='btLimpar' type='reset' value='' class='btn enviar white black-text ' >limpar</button>
+                                <button id='btCancelar' type='button' value='' class='btn white black-text enviar' onClick="history.go(-1)" onkeypress=" ">cancelar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <input id='idUsuario' name="idUsuario" type='hidden' value='<?php echo $this->idUsuario; ?>'   />
+                <?php if ( isset ( $_GET['idUsuario'] ) ) { ?>
+                    <input id='idUsuario' name="idUsuarioGet" type='hidden' value='<?php echo $_GET['idUsuario']; ?>'   />
+                 <?php } ?>
+            </form>
+</fieldset>
+        </div>
+<div id="rodapeConteudo"><span></span></div>
+<br clear="all" />

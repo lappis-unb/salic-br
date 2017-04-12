@@ -1,48 +1,61 @@
 
 /*******************************************************************************************
-* Resgatando a formatação anterior e ajustando para a atual.
+* Resgatando a formataï¿½ï¿½o anterior e ajustando para a atual.
 ********************************************************************************************/
 
 /* Estrutura global do menu */
 #navglobal {
-	padding: 0;
+	/*padding: 0;*/
 }
 
 /* Lista do menu */
 #navglobal ul{
-	padding: 0;
-	height: 33px;
-	padding: 3px 0 0 0;
+	/*padding: 0;*/
+	/*height: 33px;*/
+	/*padding: 3px 0 0 0;*/
+	margin: 0;
 }
 
-/* Formatação dos itens da lista do menu */
+#atalhos ul {
+	margin: 0;
+}
+
+#menu-barra-temp {
+	margin: 6px;
+}
+
+/* Formataï¿½ï¿½o dos itens da lista do menu */
 #navglobal ul li {
-	padding: 0;
-	height: 31px;
-	display: block;
-	float: left;		
+	/*height: 31px;*/
+	/*display: block;*/
+	/*display: inline-block;*/
 }
 
-/* Formatação do item de menu que indica quando está ativo */
+/* Formataï¿½ï¿½o do item de menu que indica quando estï¿½ ativo */
 #navglobal ul li.ativo {
-	background: url(../img/navglobal-ativo-right.gif) right 0 no-repeat; 
+	/*background: url(../img/navglobal-ativo-right.gif) right 0 no-repeat; */
 }
 	
 	#navglobal ul li span {
-		padding: 0;
+		/*padding: 0;*/
 	}
 	
 
-/* Formatação dos links da lista do menu  */
+/* Formataï¿½ï¿½o dos links da lista do menu  */
 #navglobal ul li a {					
-	overflow: hidden;
-	padding: 7px 9px 0 9px;
-	display: block;
-	height: 24px;
+	/*overflow: hidden;*/
+	/*padding: 7px 9px 0 9px;*/
+	/*display: block;*/
+	/*height: 24px;*/
 }
 
-/* Formatação do link de menu que indica quando está ativo */
+/* Formataï¿½ï¿½o do link de menu que indica quando estï¿½ ativo */
 #navglobal ul li.ativo a { 
-	background: url(../img/navglobal-ativo-left.gif) left 0 no-repeat;
-	color:#666;
+	/*background: url(../img/navglobal-ativo-left.gif) left 0 no-repeat;*/
+	/*color:#666;*/
+}
+
+.collapsible-body p.valign {
+	width: 100%;
+
 }

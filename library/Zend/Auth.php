@@ -14,16 +14,16 @@
  *
  * @category   Zend
  * @package    Zend_Auth
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Auth.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id$
  */
 
 
 /**
  * @category   Zend
  * @package    Zend_Auth
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Auth
@@ -145,6 +145,17 @@ class Zend_Auth
      * Returns the identity from storage or null if no identity is available
      *
      * @return mixed|null
+     * @todo REmover comentário abaixo após refatoração:
+     *  IdUsuario
+        Cpf
+        Nome
+        DtNascimento
+        Email
+        Senha
+        DtCadastro
+        Situacao
+        DtSituacao
+        id_login_cidadao
      */
     public function getIdentity()
     {

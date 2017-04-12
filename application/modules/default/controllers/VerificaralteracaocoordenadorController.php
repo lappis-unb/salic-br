@@ -1,17 +1,17 @@
 <?php
-class VerificarAlteracaoCoordenadorController extends GenericControllerNew
+class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abstract
 {
 
     public function init()
     {
        /* $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
         $PermissoesGrupo[] = 94;  // Parecerista
-        $PermissoesGrupo[] = 121; // Técnico*/
+        $PermissoesGrupo[] = 121; // Tï¿½cnico*/
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
         parent::perfil(1, $PermissoesGrupo);
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $this->view->agente = $agente['idAgente'];
 
@@ -85,7 +85,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->resultTotal   = $Total;
     }
     /*
-    *  View: Solicitação de Alteração do Nome do Projeto
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Nome do Projeto
     */
     public function solaltnomprojAction()
     {
@@ -95,12 +95,12 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $dados['Solicitacao'] = $recebidoPost->editor1;
             $dados['idPronac'] = $recebidoPost->idPronac;
 
-            // manda os dados para a visão
-            /*$this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão*/
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            // manda os dados para a visï¿½o
+            /*$this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o*/
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -109,7 +109,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             if(PedidoAlteracaoDAO::salvarComentarioAlteracaoProj($dados)){
                 parent::message("Os dados foram salvos com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
             } else {
-                parent::message("Erro na operação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na operaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
             }
             /*if($recebidoPost->stAprovacao == 'RT')
             {
@@ -143,7 +143,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -153,7 +153,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -172,7 +172,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
     }
 
     /*
-    *  View: Solicitação de Alteração Razão Social
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o Razï¿½o Social
     */
     public function solaltrazsocAction()
     {
@@ -198,7 +198,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $dados['Solicitacao'] = $recebidoPost->editor1;
             $dados['idPronac'] = $recebidoPost->idPronac;
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -207,7 +207,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             if(PedidoAlteracaoDAO::salvarComentarioAlteracaoProj($dados)){
                 parent::message("Os dados foram salvos com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
             } else {
-                parent::message("Erro na operação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na operaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
             }
         }
 
@@ -229,7 +229,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -239,7 +239,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -256,7 +256,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
     }
 
     /*
-    *  View: Solicitação de Alteração do Nome do Proponente
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Nome do Proponente
     */
     public function solaltnomprpAction()
     {
@@ -268,7 +268,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $dados['Solicitacao'] = $recebidoPost->editor1;
             $dados['idPronac'] = $recebidoPost->idPronac;
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -277,7 +277,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             if(PedidoAlteracaoDAO::salvarComentarioAlteracaoProj($dados)){
                 parent::message("Os dados foram salvos com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
             } else {
-                parent::message("Erro na operação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na operaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
             }
             
             
@@ -314,7 +314,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -324,7 +324,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -342,10 +342,11 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->resultParecerTecnico   = tbalteracaonomeprojetoDAO::buscarDadosParecerTecnico($idpedidoalteracao);*/
     }
     /*
-    *  View: Solicitação de Alteração do Local de Realização
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Local de Realizaï¿½ï¿½o
     */
     public function solaltlocrelAction()
     {
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 
         if($_POST)
         {
@@ -374,7 +375,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $dados['Solicitacao'] = $recebidoPost->editor1;
             $dados['idPronac'] = $recebidoPost->idPronac;
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -383,7 +384,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             if(PedidoAlteracaoDAO::salvarComentarioAlteracaoProj($dados)){
                 parent::message("Os dados foram salvos com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
             } else {
-                parent::message("Erro na operação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na operaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
             }
 
         }
@@ -391,21 +392,21 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
 
         $recebidoGet = Zend_Registry::get('get');
         $idpedidoalteracao    = $recebidoGet->idpedidoalteracao;
-		$buscaAb = AbrangenciaDAO::buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao);
+		$buscaAb = $tbAbrangencia->buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao);
         $resultadoBuscaPedidoAlteracao = VerificarAlteracaoProjetoDAO::BuscarDadosGenericos($idpedidoalteracao, $buscaAb[0]->idPedidoAlteracao);
         //$resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracao($idpedidoalteracao);
         if (AvaliacaoSubItemPedidoAlteracaoDAO::buscar($resultadoBuscaPedidoAlteracao['idAvaliacao']))
         {
-            $resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'COM_AVALIACAO');
+            $resultadoDadosAlteracaoLocalRealizacao = $tbAbrangencia->buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'COM_AVALIACAO');
            
         }
         else
         {
-            $resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'SEM_AVALIACAO');
+            $resultadoDadosAlteracaoLocalRealizacao = $tbAbrangencia->buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'SEM_AVALIACAO');
         }
 
         $arquivos = VerificarAlteracaoProjetoDAO::buscarArquivosSolicitacao($idpedidoalteracao,4,$buscaAb[0]->idPedidoAlteracao);
-         $this->view->resultLocalRel     = AbrangenciaDAO::buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao, 'N');
+         $this->view->resultLocalRel     = $tbAbrangencia->buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao, 'N');
         $this->view->resultArquivo = $arquivos;
         $this->view->resultAbrangencia = $resultadoDadosAlteracaoLocalRealizacao;
         $this->view->resultConsulta = $resultadoBuscaPedidoAlteracao;
@@ -416,7 +417,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -427,7 +428,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -447,7 +448,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
     }
 
     /*
-    *  View: Solicitação de Alteração da Ficha técnica
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o da Ficha tï¿½cnica
     */
     public function solaltfictecAction()
     {
@@ -467,7 +468,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $dados['Solicitacao'] = $recebidoPost->editor1;
             $dados['idPronac'] = $recebidoPost->idPronac;
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -476,7 +477,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             if(PedidoAlteracaoDAO::salvarComentarioAlteracaoProj($dados)){
                 parent::message("Os dados foram salvos com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
             } else {
-                parent::message("Erro na operação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na operaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
             }
         }
 
@@ -497,7 +498,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -507,7 +508,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -525,7 +526,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
     }
 
     /*
-    *  View: Solicitação de Prorrogacao de Prazos - Captação
+    *  View: Solicitaï¿½ï¿½o de Prorrogacao de Prazos - Captaï¿½ï¿½o
     */
     public function solaltprogprazcapAction()
     {
@@ -560,7 +561,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $dados['Solicitacao'] = $recebidoPost->editor1;
             $dados['idPronac'] = $recebidoPost->idPronac;
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -569,7 +570,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             if(PedidoAlteracaoDAO::salvarComentarioAlteracaoProj($dados)){
                 parent::message("Os dados foram salvos com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
             } else {
-                parent::message("Erro na operação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na operaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
             }
         }
 
@@ -593,7 +594,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -603,7 +604,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -622,7 +623,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
     }
 
     /*
-    *  View: Solicitação de Prorrogacao de Prazos - Execução
+    *  View: Solicitaï¿½ï¿½o de Prorrogacao de Prazos - Execuï¿½ï¿½o
     */
     public function solaltprogprazexecAction()
     {
@@ -657,7 +658,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $dados['Solicitacao']   = $recebidoPost->editor1;
             $dados['idPronac']      = $recebidoPost->idPronac;
 
-            $auth                   = Zend_Auth::getInstance(); // pega a autenticação
+            $auth                   = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente                 = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente               = $agente['idAgente'];
 
@@ -666,7 +667,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             if(PedidoAlteracaoDAO::salvarComentarioAlteracaoProj($dados)){
                 parent::message("Os dados foram salvos com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
             } else {
-                parent::message("Erro na operação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na operaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
             }
         }
 
@@ -691,7 +692,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         $this->view->menumsg = 'true';
         //****************************************************
 
-        $db = Zend_Registry :: get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // Chama o SQL
@@ -701,7 +702,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -737,7 +738,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         if($query)
         {
             $this->_redirect('verificaralteracaocoordenador/');
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }
 
@@ -757,7 +758,7 @@ class VerificarAlteracaoCoordenadorController extends GenericControllerNew
         if($query)
         {
             $this->_redirect('verificaralteracaocoordenador/');
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 

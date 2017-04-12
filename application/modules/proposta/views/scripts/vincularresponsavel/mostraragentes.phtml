@@ -1,0 +1,40 @@
+<div class="sumir" id="email">
+    Deseja solicitar o v&iacute;nculo ao proponente?
+</div>
+<fieldset>
+    <legend>Vincular ao Proponente</legend>
+    <table class="tabela">
+        <tr>
+             <th colspan="3" class="w500">Vincular ao Proponente</th>
+        </tr>
+        <tr class="destacar">
+            <td tabindex="1"><b>CPF:</b></td>
+            <td tabindex="1"><b>Nome:</b></td>
+            <td tabindex="1"><b>Solicitar V&iacute;nculo:</b></td>
+        </tr>
+        <?php $idAgente = null; ?>
+
+        <?php foreach ($this->vinculo as $vinculo): ?>
+
+            <?php if($vinculo->idagente != $idAgente):?>
+	            <tr class="centro">
+	                <td align="left"> <?php echo Validacao::mascaraCPFCNPJ($vinculo->cnpjcpf); ?></td>
+	                <td align="left"><?php echo $vinculo->nomeagente ?></td>
+	                <td style="font-weight: 600;">
+		                <?php if(($vinculo->usuariovinculo) == null): ?>
+		                	<?php if(($vinculo->sivinculo != '')): ?>
+		                		<?php echo $this->stVinculo($vinculo->sivinculo); ?>
+		                	<?php else:   ?>
+		                        <img style="cursor: pointer;" class="vincular" id="vincular" onclick="vincularproponente('<?php echo $vinculo->idagente; ?>');" idAgente="<?php echo $vinculo->idagente; ?>" src="<?php echo $this->baseUrl(); ?>/public/img/passed.gif" />
+		                	<?php endif;?>
+		                <?php else: ?>
+		                	Servidor do Ministério da Cultura não pode ser Proponente!
+		                <?php endif; ?>
+	                </td>
+	            </tr>
+	        <?php $idAgente = $vinculo->idagente; ?>
+	        <?php endif;?>
+        <?php endforeach; ?>
+    </table>
+</fieldset>
+

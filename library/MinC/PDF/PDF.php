@@ -58,7 +58,7 @@ class PDF {
             //$papel = array(0,0,355.00,866.20);
     
     
-     		// se a variável não for definida, seta para vertical, caso contrário, seta para horizontal
+     		// se a variï¿½vel nï¿½o for definida, seta para vertical, caso contrï¿½rio, seta para horizontal
      		$orientacao = (empty($orientacao_papel) || $orientacao_papel == null) ? 'portrait' : 'landscape';
      		$dompdf->set_paper("letter", $orientacao);
      
@@ -79,8 +79,8 @@ class PDF {
         header("Expires: Mon, 1 Apr 1974 05:00:00 GMT");
         header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
         header("Pragma: no-cache");
-        header("Content-type: application/xls; name=" . $this->nomeArquivo . ".xls");
-        header("Content-Disposition: attachment; filename=" . $this->nomeArquivo . ".xls");
+        header("Content-type: application/xls; name=" . $this->nomeArquivo . ".ods");
+        header("Content-Disposition: attachment; filename=" . $this->nomeArquivo . ".ods");
         header("Content-Description: MID Gera excel");
         return $this->entrada;
         exit;
@@ -100,6 +100,17 @@ class PDF {
         header("Content-Disposition: attachment; filename=" . $this->nomeArquivo . ".rtf");
         header("Content-Description: MID Gera rtf");
         return $this->entrada;
+        exit;
+    }
+
+    private function gerarRelatorioHTML() {
+
+        header("Expires: Mon, 1 Apr 1974 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+        header("Pragma: no-cache");
+        header("Content-type: text/html");
+
+        echo  $this->entrada;
         exit;
     }
 

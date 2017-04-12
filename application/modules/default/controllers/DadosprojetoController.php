@@ -1,10 +1,9 @@
 <?php
 
+class DadosprojetoController extends MinC_Controller_Action_Abstract {
 
-class DadosprojetoController extends GenericControllerNew {
-		
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -20,15 +19,15 @@ class DadosprojetoController extends GenericControllerNew {
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
             }
         }
-                        
+
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
-        
+
         /*if ($auth->hasIdentity()) // caso o usuario esteja autenticado
         {
             // verifica as permissoes
@@ -44,7 +43,7 @@ class DadosprojetoController extends GenericControllerNew {
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuario (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuario (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
             // manda os dados para a visao
@@ -53,13 +52,13 @@ class DadosprojetoController extends GenericControllerNew {
             $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
             $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
         } // fecha if
-        else // caso o usuario não esteja autenticado
+        else // caso o usuario nï¿½o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }*/
 
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 
 
@@ -92,7 +91,7 @@ class DadosprojetoController extends GenericControllerNew {
                 }
             }
             else{
-                parent::message("Não existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
+                parent::message("Nï¿½o existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
             }
 		$pronac = $this->_request->getParam("idpronac");
 		$tbdadosprojeto = DadosprojetoDAO::buscar($pronac);
@@ -203,7 +202,7 @@ class DadosprojetoController extends GenericControllerNew {
             $aprovacao = new Aprovacao();
             $PlanilhaProposta = new PlanilhaProposta();
             $interessado      = new Interessado();
-            $agente           = new Agentes();
+            $agente           = new Agente_Model_DbTable_Agentes();
 
             $dadosprojeto = $projetos->buscarTodosDadosProjeto($idpronac)->current()->toArray();
             $buscarInteressado = $interessado->buscar(array('CgcCpf = ?'=> $dadosprojeto['CgcCpf']));
@@ -242,7 +241,7 @@ class DadosprojetoController extends GenericControllerNew {
             {
                 $idpronac = $_POST['idpronac'];
   		$buscarObj = RealizarAnaliseProjetoDAO::outrasinformacoes($idpronac);
-                
+
 		$htmlGerado  = "<table class='tabela' >";
                 $htmlGerado .= "<th colspan='6' >Objetivos</th>";
                 if( count($buscarObj['Objetivos']) == 0)
@@ -256,9 +255,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'justificativa')
             {
                 $idpronac = $_POST['idpronac'];
@@ -277,9 +276,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'acessibilidade')
             {
                 $idpronac = $_POST['idpronac'];
@@ -298,9 +297,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'democratizacao')
             {
                 $idpronac = $_POST['idpronac'];
@@ -319,7 +318,7 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'etapa')
             {
@@ -339,9 +338,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'ficha')
             {
                 $idpronac = $_POST['idpronac'];
@@ -360,9 +359,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'sinopse')
             {
                 $idpronac = $_POST['idpronac'];
@@ -381,9 +380,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'impacto')
             {
                 $idpronac = $_POST['idpronac'];
@@ -402,9 +401,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'estrategia')
             {
                 $idpronac = $_POST['idpronac'];
@@ -423,7 +422,7 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'especificacao')
@@ -444,9 +443,9 @@ class DadosprojetoController extends GenericControllerNew {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'localrealizacao')
             {
                 $idpronac = $_POST['idpronac'];
@@ -481,7 +480,7 @@ class DadosprojetoController extends GenericControllerNew {
                     }
                $htmlGerado .= "</table>";
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'deslocamento')
@@ -520,9 +519,9 @@ class DadosprojetoController extends GenericControllerNew {
                     }
                 }
                $htmlGerado .= "</table>";
-               
+
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             }
 
@@ -549,14 +548,14 @@ class DadosprojetoController extends GenericControllerNew {
                                         $htmlGerado .="<td align='center'>".$divulgacao->Peca."</td>";
                                         $htmlGerado .="<td align='center'>".$divulgacao->Veiculo."</td>";
                            $htmlGerado .= "</tr>";
- 
+
                     }
                 }
                $htmlGerado .= "</table>";
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'plano')
             {
                 $idpronac = $_POST['idpronac'];
@@ -580,8 +579,8 @@ class DadosprojetoController extends GenericControllerNew {
                             $htmlGerado .= "<td align='center' style='font-size:12pt; font-weight: 600;'>$distribuicao->Produto</td>";
                             $htmlGerado .= "<td align='center' style='font-size:12pt; font-weight: 600;'>$distribuicao->PosicaoDaLogo</td>";
                         $htmlGerado .= "</tr>";
-                    
-                    
+
+
                     $htmlGerado .= "<tr>";
                         $htmlGerado .= "<td	colspan='8'  align= 'center'>";
                         $htmlGerado .= "<table class='tabela' style='margin:0'>";
@@ -669,7 +668,7 @@ class DadosprojetoController extends GenericControllerNew {
                $htmlGerado .= "</table>";
                $htmlGerado .= "</td>";
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'orcamento')
@@ -679,7 +678,7 @@ class DadosprojetoController extends GenericControllerNew {
                 $soma = RealizarAnaliseProjetoDAO::somarOrcamentoSolicitado($idpronac);
                 $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
                 $buscarPlanilhaEtapa = PlanilhaEtapaDAO::buscar();
-                
+
                 $buscarpronac = ProjetoDAO::buscarPronac($idpronac);
                 $buscarPronac = ProjetoDAO::buscar($buscarpronac['pronac']);
 
@@ -811,7 +810,7 @@ class DadosprojetoController extends GenericControllerNew {
             $htmlGerado .= "<tr class=\"IFF\">";
                     $htmlGerado .= "<td colspan=\"12\">&nbsp;</td>";
             $htmlGerado .= "</tr>";
-            $contadorProd++; 
+            $contadorProd++;
                     }
             //<!-- ========== FIM BUSCA POR PRODUTO ========== -->
             //<!-- ========== INICIO TOTAL GERAL ========== -->
@@ -823,11 +822,11 @@ class DadosprojetoController extends GenericControllerNew {
             $htmlGerado .= "<th class=\"left\" colspan=\"7\"><strong>Total Geral</strong></th>";
             $htmlGerado .= "<td class=\"direita red\"><strong>".number_format($soma['somatudo'],'2',',','.')."</strong></td>";
             $htmlGerado .= "</tr>";
-            
+
             //<!-- ========== FIM TOTAL GERAL ========== -->
          $htmlGerado .= "</table>";
        // <!-- ========== FIM PLANILHA ========== -->
             }
-          echo utf8_encode($htmlGerado); die;
+          echo utf8_encode($htmlGerado); $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }// fecha class
