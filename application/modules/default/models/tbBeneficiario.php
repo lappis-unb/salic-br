@@ -42,7 +42,7 @@ class tbBeneficiario extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name),
+                    array('a' => $this->_name),
                     array('a.idRelatorio', 'CAST(a.dsBeneficiario AS TEXT) AS dsBeneficiario', 'a.tpBeneficiario', 'tpBeneficiario', 'a.nrCNPJ', 'a.nrCPF', 'CAST(a.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'CAST(a.dsEntrega AS TEXT) AS dsEntrega')
             );
             $select->where('a.idRelatorio = ?', $idRelatorio);
@@ -55,7 +55,7 @@ class tbBeneficiario extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name),
+                    array('a' => $this->_name),
                     array(
                             'a.idRelatorio',
                             'a.nrCNPJ',

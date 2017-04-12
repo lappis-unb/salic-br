@@ -49,7 +49,7 @@ class Verificacao extends MinC_Db_Table_Abstract
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('v' => $this->_schema . '.' . $this->_name)
+        $select->from(array('v' => $this->_name)
             , array('v.idVerificacao'
             , 'LTRIM(v.Descricao) AS dsVerificacao')
         );
