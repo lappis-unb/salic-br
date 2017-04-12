@@ -1,14 +1,14 @@
-<?php 
- 
+<?php
+
 class MarcasController extends MinC_Controller_Action_Abstract {
-     
+
     /**
      * Reescreve o m�todo init()
      * @access public
      * @param void
      * @return void
      */
-    
+
     public function init()
     {
         $auth = Zend_Auth::getInstance(); // pega a autentica�?o
@@ -46,7 +46,7 @@ class MarcasController extends MinC_Controller_Action_Abstract {
         parent::init();
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $tbArquivoImagem = new tbArquivoImagem();
         $tblUsuario = new Autenticacao_Model_Usuario();
@@ -93,16 +93,15 @@ class MarcasController extends MinC_Controller_Action_Abstract {
                         $EnviarEmails->enviarEmail($lista->Email, $assunto, utf8_decode($_POST['justificativa']));
                     }
                 }
-                echo json_encode(array('resposta'=>true, 'mensagem'=>$msg));
+                $this->_helper->json(array('resposta'=>true, 'mensagem'=>$msg));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
-    
 }
