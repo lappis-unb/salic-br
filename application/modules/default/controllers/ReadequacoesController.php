@@ -4045,7 +4045,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
 
         $links = new fnLiberarLinks();
-        $linksXpermissao = $links->liberarLinks(2, $cpf, $idUsuarioLogado, $idPronac);
+        $linksXpermissao = $links->links(2, $cpf, $idUsuarioLogado, $idPronac);
         $linksPermissao = str_replace(' ', '', explode('-', $linksXpermissao->links));
         $permiteReadequacaoPlanilha = $linksPermissao[14];
 
@@ -4058,11 +4058,14 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $Projetos = new Projetos();
             $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
 
-            $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+            $tbVerificao = new Proposta_Model_DbTable_Verificacao();
+            $buscarRecurso = $tbVerificao->buscarFonteRecurso();
             $this->view->Recursos = $buscarRecurso;
 
-            $buscarEstado = EstadoDAO::buscar();
-            $this->view->UFs = $buscarEstado;
+            $tbuf = new Agente_Model_DbTable_UF();
+
+            $buscarEstado = $tbuf->buscar();
+            $this->view->uf = $buscarEstado;
 
             $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
