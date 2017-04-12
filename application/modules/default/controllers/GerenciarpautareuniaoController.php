@@ -300,7 +300,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             //NAO ANALISADOS
             $arrReuniao = array();
             $arrReuniao['idNrReuniao IS NULL ']= "?";
-            $qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "N�o analisado", $arrReuniao)->count();
+            $qtdprojetonaoanalisados = count($tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "N&atilde;o analisado", $arrReuniao));
 
             $this->view->qtdprojetoanalisados = $qtdprojetoanalisados;
             $this->view->qtdenviadoplenaria = $contplenario;
