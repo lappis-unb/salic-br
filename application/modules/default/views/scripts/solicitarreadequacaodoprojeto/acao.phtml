@@ -324,7 +324,7 @@ function Proposta()
 <!-- in�cio: #breadcrumb -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
+		<li class="first"><a href="<?php echo $this->url(array('module'=>'default', 'controller' => 'principalproponente', 'action' => 'index')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo $this->buscaprojeto[0]->IdPRONAC; ?>" title="Ir para consultar dados do projeto">Consultar dados do projeto</a></li>
         <li class="last">Readequa&ccedil;&atilde;o de projeto</li>
     </ul>
