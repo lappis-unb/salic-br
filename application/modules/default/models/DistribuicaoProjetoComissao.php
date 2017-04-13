@@ -42,7 +42,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->where('Pa.stAtivo = ?', 1);
         $select->order('Pa.idTipoAgente');
         $select->order('Pr.idPRONAC');
-        
+
         return $this->fetchAll($select);
     }
 
@@ -92,7 +92,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         foreach ($where as $chave => $valor) {
             $select->where($chave, $valor);
         }
-        
+
         return $this->fetchAll($select);
     }
 
@@ -132,6 +132,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         }
         $select->order('D.dtDistribuicao');
         $select->order('NomeProjeto asc');
+        //echo $select;die;
         return $this->fetchAll($select);
     }
 
@@ -172,7 +173,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->where('dpc.idPRONAC not in(select idPRONAC from SAC.dbo.Parecer where idPronac = dpc.idPRONAC and idTipoAgente=6)', '');
         $select->where(new Zend_Db_Expr('NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbPauta  o  WHERE o.IdPRONAC = dpc.idPRONAC)'));
         $select->where('dpc.stDistribuicao = ?', 'A');
-        
+
         return $this->fetchAll($select);
     }
 
