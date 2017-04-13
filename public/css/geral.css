@@ -826,10 +826,10 @@ x - TABELAS
 
 #conteudo table th {
     background: #4caf50;
-    padding: 8px;
+    padding: 5px;
     /*color: #f8f8f8;*/
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 #conteudo table tfoot td {
@@ -2059,6 +2059,48 @@ x - DATE PICKER
 	background-color: #2bbbad;
 }
 
+.ui-dialog table {
+    width: 100%;
+    margin: 0px;
+}
+
+.ui-dialog table > tbody > tr:hover,
+.ui-dialog table tr:nth-child(odd),
+.ui-dialog table > tbody > tr:nth-child(odd) {
+    background: transparent;
+}
+
+.ui-dialog table tr td {
+    border: solid 2px #ccc;
+}
+.ui-dialog table tr td.destacar {
+    background: #388E3C;
+    color: #fff;
+    padding: 8px 5px;
+}
+
+.ui-dialog table tr td.bold {
+    font-weight: bold;
+}
+
+.ui-dialog table tr td.green {
+    background-color: transparent !important;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+
+.ui-dialog input[type="text"],
+.ui-dialog textarea{
+    /*width: 100%;*/
+    border: 1px solid #676767;
+    background: #fff;
+}
+
+.ui-dialog textarea {
+    height: 5rem;
+}
+
 .ui-datepicker .ui-datepicker-header {
 	background: #388e3c;
 	color: #fff;
@@ -2110,7 +2152,7 @@ x - RESET - Ajustes para compatibilidade com materialize
 .conteudoImprimir table,
 #conteudo table.tabela {
     background: #fff;
-    font-size: 14px;
+    font-size: 12px;
     margin: 10px !important;
     width: 98%;
 }
@@ -2118,7 +2160,7 @@ x - RESET - Ajustes para compatibilidade com materialize
 .conteudoImprimir table th,
 #conteudo table.tabela th {
     border-radius: 0px;
-    padding: 10px;
+    padding: 5px 10px;
 }
 
 .conteudoImprimir table td,
