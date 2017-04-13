@@ -2034,7 +2034,10 @@ x - TOOLTIP
 /*--------------------------------------------------------------
 x - DATE PICKER
 --------------------------------------------------------------*/
-
+.ui-dialog .ui-dialog-title {
+    font-weight: bold;
+    color: #fff;
+}
 .ui-datepicker .ui-datepicker-title {
 	font-size: 20px;
 }
@@ -2089,6 +2092,9 @@ x - DATE PICKER
     font-weight: bold;
 }
 
+.ui-dialog  .ui-widget-content {
+    height: 100% !important;
+}
 
 .ui-dialog input[type="text"],
 .ui-dialog textarea{
@@ -2098,7 +2104,12 @@ x - DATE PICKER
 }
 
 .ui-dialog textarea {
-    height: 5rem;
+    min-height: 5rem;
+}
+
+.ui-dialog label {
+    color: #212121;
+    padding: 5px;
 }
 
 .ui-datepicker .ui-datepicker-header {
