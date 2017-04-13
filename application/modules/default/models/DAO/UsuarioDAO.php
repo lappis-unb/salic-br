@@ -186,11 +186,12 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
     public static function buscarUsuario($cod)
     {
         $sql = "SELECT *
-				FROM " . UsuarioDAO::getStaticTableName('tabelas', 'usuarios') . "
+				FROM " . UsuarioDAO::getStaticTableName('tabelas', '.usuarios') . "
 				WHERE usu_codigo = $cod";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+//echo $sql;die;
         return $db->fetchAll($sql);
     }
 
@@ -247,7 +248,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
         // configuracaes do banco de dados (seta uma nova conexao no arquivo config.ini)
 //        $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
 
-        
+
 //        $db = Zend_Db::factory($config->db);;
 //        Zend_Db_Table::setDefaultAdapter($db);,
 
