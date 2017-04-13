@@ -223,7 +223,7 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($select);
     }
 
-    public function obterProjetosEncaminhadosParaAssinatura($codOrgao, $ordenacao = array())
+    public function obterProjetosEncaminhadosParaAssinatura($codOrgao = null, $ordenacao = array())
     {
         $query = $this->select();
         $query->setIntegrityCheck(false);
@@ -273,7 +273,11 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
             ),
             $this->_schema
         );
-        $query->where("Projetos.Orgao = ?", $codOrgao);
+
+        if($codOrgao) {
+            $query->where("Projetos.Orgao = ?", $codOrgao);
+        }
+
         $query->where("Projetos.Situacao in (?)", array('B04'));
         $query->order($ordenacao);
 
