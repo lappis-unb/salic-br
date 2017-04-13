@@ -2960,10 +2960,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     }
 
     //@todo lugar certo é tbPlanilhaProposta, remover do ManterOrcamentoDAO tbm
-    public function listarItensProdutos($idPreProjeto, $idItem = null)
+    public function listarItensProdutos($idPreProjeto, $idItem = null, $fetchMode = Zend_DB::FETCH_OBJ)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode($fetchMode);
 
         $pp = array(
             'pp.idetapa as idEtapa',
