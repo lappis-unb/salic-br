@@ -35,11 +35,9 @@ class vwAnexarDocumentoAgente extends MinC_Db_Table_Abstract {
         $idAgente               = $dados['idAgente'];
         $stAtivoDocumentoAgente = $dados['stAtivoDocumentoAgente'];
 
-        $sql = "INSERT INTO ".$this->_banco.".".$this->_schema.".".$this->_name.
+        $sql = "INSERT INTO ".$this->_schema.".".$this->_name.
                "(nmArquivo, sgExtensao, nrTamanho, dtEnvio, stAtivo, biArquivo, idTipoDocumento, dsDocumento, idAgente, stAtivoDocumentoAgente) " .
                "VALUES ('$name', '$fileType', '$nrTamanho', GETDATE(), '$stAtivo', $biArquivo, $idTipoDocumento, '$dsDocumento', $idAgente, $stAtivoDocumentoAgente)";
-
-//       
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
