@@ -1877,6 +1877,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             'status' => 0,
             'usuario' => $usuario
         );
+        
         $mprAgentes = new Agente_Model_AgentesMapper();
         $mprNomes = new Agente_Model_NomesMapper();
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
@@ -1890,6 +1891,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         if($this->modal == "s"){
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
+        $nome = preg_replace('/[^A-Za-zZ0-9\ ]/', '', $nome);
+
         try {
             $arrNome = array(
                 'idagente' => $idAgente,
