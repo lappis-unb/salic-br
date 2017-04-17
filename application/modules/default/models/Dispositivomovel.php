@@ -5,12 +5,18 @@
  *
  * @author rafael.gloria@cultura.gov.br
  */
-class Dispositivomovel extends GenericModel{
+class Dispositivomovel extends MinC_Db_Table_Abstract
+{
 
     protected $_name = 'tbDispositivoMovel';
     protected $_schema = 'SAC';
-    protected $_banco = 'SAC';
-
+    protected $_primary = 'idDispositivoMovel';
+    
+    public function init()
+    {
+        parent::init();
+    }
+    
     /**
      * Salva o dispositivo que está conectado, salva o CPF do usuário e atualiza a última data de acesso.
      *
@@ -28,7 +34,6 @@ class Dispositivomovel extends GenericModel{
                     'idRegistration' => $registrationId
                 ));
             }
-
             if($cpf){
                 $dispositivoRow->nrCPF = $cpf;
             }

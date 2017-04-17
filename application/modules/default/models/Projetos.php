@@ -718,7 +718,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'p.Situacao', 'p.Mecanismo', 'p.NomeProjeto', 'p.idProjeto'
             )
         );
@@ -789,7 +789,7 @@ class Projetos extends MinC_Db_Table_Abstract
         //$select->distinct();
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 '(p.AnoProjeto+p.Sequencial) as pronac', 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'p.DtSituacao', 'p.OrgaoOrigem'
             )
         );
@@ -867,7 +867,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'd.idSolicitante', 'p.Mecanismo',
                 'p.OrgaoOrigem', 'd.DtSolicitacao' => new Zend_Db_Expr('max(d.DtSolicitacao)'), 'p.DtSituacao' => new Zend_Db_Expr('max(p.DtSituacao)')
             )
@@ -1014,7 +1014,7 @@ class Projetos extends MinC_Db_Table_Abstract
          *
          */
         $select->from(
-            array('pr' => $this->_schema . '.' . $this->_name), array(
+            array('pr' => $this->_name), array(
                 'SAC.dbo.fnchecarDiligencia(pr.IdPRONAC) AS Diligencia',
                 'pr.AnoProjeto',
                 'pr.Sequencial',
@@ -5182,7 +5182,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'p.Situacao', 'p.Mecanismo', 'p.NomeProjeto', 'p.idProjeto'
             )
         );
@@ -5212,7 +5212,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false)->distinct();
         if ($dadosDiligencia) {
             $select->from(
-                array('p' => $this->_schema . '.' . $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
+                array('p' => $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
                     'p.AnoProjeto',
                     'p.Sequencial',
                     'p.UfProjeto',
@@ -5227,7 +5227,7 @@ class Projetos extends MinC_Db_Table_Abstract
             );
         } else {
             $select->from(
-                array('p' => $this->_schema . '.' . $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
+                array('p' => $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
                     'p.AnoProjeto',
                     'p.Sequencial',
                     'p.UfProjeto',
@@ -5307,7 +5307,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $selectQtdTotal = $this->select();
         $selectQtdTotal->setIntegrityCheck(false);
         if ($qtdTotal) {
-            $select->from(array('p' => $this->_schema . '.' . $this->_name), array('IdPronac'));
+            $select->from(array('p' => $this->_name), array('IdPronac'));
             $select->joinInner(array('i' => 'Interessado'), 'p.CgcCPf = i.CgcCPf', array(), 'SAC.dbo');
             $select->joinInner(array('a' => 'Area'), 'p.Area = a.Codigo', array(), 'SAC.dbo');
             $select->joinInner(array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array(), 'SAC.dbo');
@@ -5324,7 +5324,7 @@ class Projetos extends MinC_Db_Table_Abstract
         } else {
             if ($inicio < 0) {
                 $select->from(
-                    array('p' => $this->_schema . '.' . $this->_name),
+                    array('p' => $this->_name),
                     array(
                         '(p.AnoProjeto+p.Sequencial) as pronac',
                         'p.AnoProjeto',
@@ -5342,7 +5342,7 @@ class Projetos extends MinC_Db_Table_Abstract
             } else {
                 $soma = $tamanho + $tmpInicio;
                 $select->from(
-                    array('p' => $this->_schema . '.' . $this->_name),
+                    array('p' => $this->_name),
                     array(
                         new Zend_Db_Expr("DISTINCT TOP $soma (p.AnoProjeto+p.Sequencial) as pronac"),
                         'p.AnoProjeto',
@@ -5434,7 +5434,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->distinct();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name),
+            array('p' => $this->_name),
             array(
                 '(p.AnoProjeto+p.Sequencial) as pronac',
                 'p.AnoProjeto',
@@ -5478,7 +5478,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $selectCount = $this->select();
             $selectCount->distinct();
             $selectCount->setIntegrityCheck(false);
-            $selectCount->from(array('p' => $this->_schema . '.' . $this->_name), array('total' => "count(*)"));
+            $selectCount->from(array('p' => $this->_name), array('total' => "count(*)"));
             $selectCount->joinInner(array('i' => 'Interessado'), 'p.CgcCPf = i.CgcCPf', array(), 'SAC.dbo');
             $selectCount->joinInner(array('a' => 'Area'), 'p.Area = a.Codigo', array(), 'SAC.dbo');
             $selectCount->joinInner(array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array(), 'SAC.dbo');

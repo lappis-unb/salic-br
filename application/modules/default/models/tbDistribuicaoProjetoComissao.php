@@ -21,7 +21,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slct->joinInner(
                             array('pa'=>'Parecer'),
                             'pr.idPronac = pa.idPronac',
-                            array('Avaliacao'=>new Zend_Db_Expr("case when pa.ParecerFavoravel = '1' then 'Desfavor�vel' when pa.ParecerFavoravel = '2' then 'Favor�vel' end"), 'SugeridoReal'),
+                            array('Avaliacao'=>new Zend_Db_Expr("case when pa.ParecerFavoravel = '1' then 'Desfavor&aacute;vel' when pa.ParecerFavoravel = '2' then 'Favor&aacute;vel' end"), 'SugeridoReal'),
                             'SAC.dbo'
                           );
         $slct->joinInner(
@@ -179,7 +179,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctAnalisados->joinInner(
                             array('par'=>'Parecer'),
                             'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)',
-                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavor�vel' WHEN par.ParecerFavoravel = '2' THEN 'Favor�vel' END"), 'SugeridoReal'),
+                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel' WHEN par.ParecerFavoravel = '2' THEN 'Favor&aacute;vel' END"), 'SugeridoReal'),
                             'SAC.dbo'
                           );
         $slctAnalisados->joinInner(
@@ -251,7 +251,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->setIntegrityCheck(false);
         $slctNaoAnalisados->from(
                         array('dpc'=>$this->_name),
-                        array(new Zend_Db_Expr("'Não analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        array(new Zend_Db_Expr("'N&atilde;o analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
                         ,$this->_schema
                      );
         $slctNaoAnalisados->joinInner(
@@ -263,7 +263,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->joinInner(
                             array('par'=>'Parecer'),
                             'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)',
-                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavor�vel' WHEN par.ParecerFavoravel = '2' THEN 'Favor�vel' END"), 'SugeridoReal'),
+                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel' WHEN par.ParecerFavoravel = '2' THEN 'Favor&aacute;vel' END"), 'SugeridoReal'),
                             'SAC.dbo'
                           );
         $slctNaoAnalisados->joinInner(
@@ -338,13 +338,11 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctUnion = $this->select();
         $slctUnion->union(array($slctAnalisados, $slctNaoAnalisados));//->order($order);
 
-        $slctMaster = $this->select();
-        $slctMaster->setIntegrityCheck(false);
-        $slctMaster->from(
-                        array('Master'=>$slctUnion),
-                        array('*'),
-                        new Zend_Db_Expr(' ')
-                     );
+        $db = Zend_Db_Table::getDefaultAdapter();
+//        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $slctMaster = $db->select();
+        $slctMaster->from(array('Master'=>$slctUnion));
 
         //BUSCA PELO STATUS DO PROJETO
         if($analise != null){
@@ -361,8 +359,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         //RETORNA QTDE. DE REGISTRO PARA PAGINACAO
         if($count)
         {
-            return $this->fetchAll($slctMaster)->count();
+            return $db->fetchAll($slctMaster)->count();
         }
+
         //adicionando linha order ao select
         $slctMaster->order($order);
 
@@ -375,11 +374,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             $slctMaster->limit($tamanho, $tmpInicio);
         }
 
-        $newString = substr($slctMaster->assemble(), 33);
-        $newString = 'SELECT "Master".* FROM  '.$newString;
-
-
-        //return $this->fetchAll($newString);
+        return $db->fetchAll($slctMaster);
     }
 
     public function buscaProjetosEmPauta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $analise=null){
@@ -393,7 +388,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->from(
             array('t'=>$this->_name),
             array(new Zend_Db_Expr("
-                'N�o analisado' AS Analise
+                'N&atilde;o analisado' AS Analise
                 ,t.idAgente
                 ,n.Descricao AS Componente
                 ,p.IdPronac AS idPronac
@@ -421,8 +416,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,null as NrReuniao
                 ,null AS stAnalise
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
@@ -525,8 +520,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,r.NrReuniao AS NrReuniao
                 ,stAnalise
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
@@ -607,7 +602,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctReadequados->from(
             array('p'=>'Projetos'),
             array(new Zend_Db_Expr("
-                'Readequa��o' AS Analise
+                'Readequa&ccedil;&atilde;o' AS Analise
                 ,''
                 ,'' AS Componente
                 ,p.IdPronac AS idPronac
@@ -632,8 +627,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,'' AS NrReuniao
                 ,''
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
@@ -736,7 +731,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         if($dados['status'] == 0 || $dados['status'] == 1){
             $sql .= "(
                 SELECT
-                    'N�o analisado' AS Analise
+                    'N&atilde;o analisado' AS Analise
                     ,t.idAgente
                     ,n.Descricao AS Componente
                     ,p.IdPronac
@@ -763,8 +758,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,null as NrReuniao
                     ,null AS stAnalise
                     ,CASE
-                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                        WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                        WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                     END AS Avaliacao
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
@@ -820,8 +815,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,r.NrReuniao AS NrReuniao
                     ,stAnalise
                     ,CASE
-                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                        WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                        WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                     END AS Avaliacao
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
@@ -851,7 +846,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 
         $sql .= "(
             SELECT
-                'Readequa��o' AS Analise
+                'Readequa&ccedil;&atilde;o' AS Analise
                 ,''
                 ,'' AS Componente
                 ,p.IdPronac
@@ -874,8 +869,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,'' AS NrReuniao
                 ,''
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal

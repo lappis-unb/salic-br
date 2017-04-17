@@ -1,3 +1,24 @@
+Release 2.0.1
+  * Fix: [Checklist] Erro do CNAE
+  * Fix: [Checklist] Erro na data
+  * Fix: [Comprovação financeira] Ajuste de charset
+  * Fix: [Consulta cidadão] Fix na funcionalidade
+  * Fix: [Diligência] Resposta de diligência
+  * Fix: [Fiscalização] Fix na funcionalidade
+  * Fix: [Movimentação bancária] Vários fixes
+  * Fix: [Prestação de contas] Fix em comprovar execução física
+  * Fix: [Parecerista] Fix em meus pagamentos
+  * Fix: [Proponente] Envio da proposta estava quebrado
+  * Fix: [Proponente] Vários fixes nas diligências
+  * Fix: [Proponente] Permitir detalhamento do plano de distribuição
+  * Fix: [Proponente] Fix ao consultar proposta
+  * Fix: [Proponente] Anexar documentos
+  * Fix: [Proponente] Excluir proposta
+  * Fix: [Proponente] Falha ao finalzar pedido de Readequação
+  * Fix: [Proponente] Gerar pdf
+  * Fix: [Proponente] Fix em realização do objeto - comprovação física
+  * Fix: [Relatório trimestral] Fix na funcionalidade
+
 Release 2.0.0
   * Novo: Implementação da Nova IN 2017
   * Novo: Alterações de modularização

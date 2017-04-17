@@ -648,7 +648,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
                 $qtdeProdutoPrincial = 0;
                 $valorProjeto = 0;
                 //instancia classe modelo PlanilhaProposta
-                $tblPlanilhaProposta = new PlanilhaProposta();
+                $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 foreach ($dadosPlanoDistribuicao as $produto) {
                     //=========== PLANILHA ORCAMENTARIA ===============
                     $idProduto = $produto['idProduto'];

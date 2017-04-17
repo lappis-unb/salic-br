@@ -1005,7 +1005,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $rsPreProjeto = $tblPreProjeto->propostas($this->idAgente, $this->idResponsavel, $idAgente, array(), $order, $start, $length, $search);
 
-
         $recordsTotal = 0;
         $recordsFiltered = 0;
         $aux = array();

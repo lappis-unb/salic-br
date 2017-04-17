@@ -58,7 +58,7 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array('D' => $this->_schema . '.' . $this->_name),
+                array('D' => $this->_name),
                 array(
                     'idParecerConsolidado',
                     'CAST(D.dsParecer AS TEXT) AS dsParecer',

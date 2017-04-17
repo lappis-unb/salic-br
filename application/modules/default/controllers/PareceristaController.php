@@ -218,7 +218,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         if (isset($auth->getIdentity()->usu_codigo)){
             $Usuario      = new Autenticacao_Model_Usuario(); // objeto usuário
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-            $idAgente = $Agente['idAgente'];
+            $idAgente = $Agente['idagente'];
             $this->view->idAgente    = $idAgente;
         }
 
@@ -308,7 +308,6 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
             $this->view->dtFimPesquisa = $dtFimPesquisa;
         }
 
-//        $where['pp.idParecerista = ?'] = 30013;
         $where['pp.idParecerista = ?'] = $idAgente;
 
         $modelGerarPagamentoParecerista = new GerarPagamentoParecerista();

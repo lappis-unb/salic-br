@@ -328,7 +328,7 @@
     
     <table class="tabela">
         <tr>
-            <th width="20">
+            <td width="20">
                 <input type="checkbox" value="1" name="print[]" class="cinput" title="Marcar para Imprimir" onchange="if($('#dadosconsolidados').html() == ''){dadosconsolidados();}" />
             <td width="300">
                 <input id="b1" type="button" class="btn_adicionar" value=" " onclick="dadosconsolidados();"/>
@@ -341,7 +341,7 @@
     
     <table class="tabela">
         <tr>
-            <th width="20"><input type="checkbox" value="2" name="print[]" class="cinput" title="Marcar para Imprimir" onclick="if($('#pareceres').html() == ''){parecertecnicos();}"/> </th>
+            <td width="20"><input type="checkbox" value="2" name="print[]" class="cinput" title="Marcar para Imprimir" onclick="if($('#pareceres').html() == ''){parecertecnicos();}"/> </td>
             <td width="300">
                 <input id="b2" type="button" class="btn_adicionar" value=" " onclick="parecertecnicos();"/>
 			Análise de Conteúdo
@@ -353,7 +353,7 @@
     
     <table class="tabela">
         <tr>
-            <th width="20"><input type="checkbox" value="3" name="print[]" class="cinput" title="Marcar para Imprimir" onclick="if($('#planilha').html() == ''){planilha();}"/> </th>
+            <td width="20"><input type="checkbox" value="3" name="print[]" class="cinput" title="Marcar para Imprimir" onclick="if($('#planilha').html() == ''){planilha();}"/> </td>
             <td width="300">
                 <input id="b3" type="button" class="btn_adicionar" value=" " onclick="planilha();"/>
 			Análise Custo
@@ -365,7 +365,7 @@
     
     <table class="tabela">
         <tr>
-            <th width="20"><input type="checkbox" value="4" name="print[]" class="cinput" title="Marcar para Imprimir"  onclick="diligencias();"/> </th>
+            <td width="20"><input type="checkbox" value="4" name="print[]" class="cinput" title="Marcar para Imprimir"  onclick="diligencias();"/> </td>
             <td width="300">
                 <input id="b4" type="button" class="btn_adicionar" value=" " onclick="diligencias();"/>
                 Dilig&ecirc;ncias
@@ -378,21 +378,21 @@
         <table class="tabela">
             <?php foreach($this->diligencias as $item3){ ?>
             <tr>
-                <th align="center">Data Solicitação</th>
-                <th align="center">Data Resposta</th>
+                <td align="center">Data Solicitação</td>
+                <td align="center">Data Resposta</td>
             </tr>
             <tr>
                 <td align="center"><?php echo $item3->DtSolicitacao; ?>	</td>
                 <td align="center"><?php echo $item3->DtResposta?></td>
             </tr>
             <tr>
-                <th colspan="2">Solicitação</th>
+                <td colspan="2">Solicitação</td>
             </tr>
             <tr>
                 <td colspan="2"><?php echo strip_tags($item3->Solicitacao);?></td>
             </tr>
             <tr>
-                <th colspan="2">Resposta</th>
+                <td colspan="2">Resposta</td>
             </tr>
             <tr>
                 <td colspan="2"><?php echo strip_tags($item3->Resposta);?></td>
@@ -402,7 +402,9 @@
     </div>
     <br />
     <p class="centro" style="margin-right:1%;">
-        <input type="button" class="btn_xls" value=" " onclick="imprimeNomeParecerista('xls');"  />
+        <button onclick="imprimeNomeParecerista('xls');" class="btn small waves-effect waves-light tooltipped btn-default" data-tooltip="Baixar planilha" type="submit" name="action">
+            <i class="material-icons">file_download</i>
+        </button
     </p>
     <br />
 
