@@ -803,7 +803,7 @@ x - TABELAS
 #conteudo table td {
     /*background:url(../img/bg-celulas.gif) repeat-x ;*/
     background: #fff;
-    padding: 8px;
+    padding: 3px;
     /*color:auto;*/
 }
 
@@ -829,7 +829,7 @@ x - TABELAS
     padding: 5px;
     /*color: #f8f8f8;*/
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 #conteudo table tfoot td {
@@ -2093,7 +2093,7 @@ x - DATE PICKER
 }
 
 .ui-dialog  .ui-widget-content {
-    height: 100% !important;
+    /*height: 100% !important;*/
 }
 
 .ui-dialog input[type="text"],
@@ -2109,7 +2109,7 @@ x - DATE PICKER
 
 .ui-dialog label {
     color: #212121;
-    padding: 5px;
+    /*padding: 5px;*/
 }
 
 .ui-datepicker .ui-datepicker-header {
