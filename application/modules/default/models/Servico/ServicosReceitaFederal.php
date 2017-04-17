@@ -132,7 +132,7 @@ class ServicosReceitaFederal
         if (11 == strlen($cpf) && !validaCPF($cpf)) {
             throw new InvalidArgumentException("CPF/CNPJ inválido");
         }
-
+        
         $url = $this->baseUrl . self::urlServico . self::urlPessoaFisica . $cpf;
         if ($forcarBuscaReceita) {
             $url .= self::urlForcar;
@@ -143,18 +143,20 @@ class ServicosReceitaFederal
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($curl, CURLOPT_USERPWD, "$this->user:$this->password");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        
         $resultCurl = curl_exec($curl);
         curl_close($curl);
-        $result = new ArrayObject(json_decode($resultCurl, true));
-
-        if ($returnJSON) {
-            $retornoResultado = $resultCurl; #Retorno do Formato JSON
-        } else {
-            $retornoResultado = $result; #Retorno no Formato ArrayObject
+        
+        $resultArray = json_decode($resultCurl, true);
+        if (is_array($resultArray)) {
+            $result = new ArrayObject($resultArray);
+            $retornoResultado = $result;
+            
+            if ($returnJSON) {
+                $retornoResultado = $resultCurl;
+            }
+            return $retornoResultado;
         }
-#xd($retornoResultado);
-
-        return $retornoResultado;
     }
 
     /**

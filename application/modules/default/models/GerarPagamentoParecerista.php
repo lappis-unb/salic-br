@@ -71,8 +71,8 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
         return $this->fetchRow($select);
     }
 
-    public function buscarProjetosFinalizados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
-
+    public function buscarProjetosFinalizados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('pro' => 'Projetos'),

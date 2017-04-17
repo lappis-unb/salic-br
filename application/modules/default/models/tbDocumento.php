@@ -53,7 +53,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('d' => $this->_schema . '.' . $this->_name),
+                array('d' => $this->_name),
                 array(
                     'd.idDocumento',
                     'd.dsDocumento',

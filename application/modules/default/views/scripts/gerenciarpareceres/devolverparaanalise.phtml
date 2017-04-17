@@ -44,7 +44,7 @@
             </tr>
             <tr>
                 <td align="center"><?php echo $d->PRONAC; ?></td>
-                <td align="center"><?php echo utf8_decode(htmlentities($d->NomeProjeto)); ?></td>
+                <td align="center"><?php echo $d->NomeProjeto; ?></td>
             </tr>
         </table>
         
@@ -53,7 +53,7 @@
                 <td class="destacar bold w150" align="center">Devolver para:</td>
             </tr>
             <tr>
-                <td><?php echo utf8_decode(htmlentities($d->Orgao)); ?></td>
+                <td><?php echo $d->Orgao; ?></td>
             </tr>
         
             <tr>
