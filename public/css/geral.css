@@ -2093,7 +2093,7 @@ x - DATE PICKER
 }
 
 .ui-dialog  .ui-widget-content {
-    height: 100% !important;
+    /*height: 100% !important;*/
 }
 
 .ui-dialog input[type="text"],
