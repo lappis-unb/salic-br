@@ -26,29 +26,28 @@ class Assinatura_IndexController extends Assinatura_GenericController
         $ordenacao = array("projetos.DtSituacao asc");
         $this->view->dados = $enquadramento->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
-        $this->view->idTipoDoAtoAdministrativo = $this->idTipoDoAtoAdministrativo;
     }
 
     public function visualizarProjetoAction()
     {
         $get = Zend_Registry::get('get');
         $idPronac = $get->IdPRONAC;
-        $idTipoDoAtoAdministrativo = $this->idTipoDoAtoAdministrativo;
-
+        $idTipoDoAtoAdministrativo = $get->idTipoDoAtoAdministrativo;
         try {
             try {
                 if (!filter_input(INPUT_GET, 'IdPRONAC')) {
-                    throw new Exception("Identificador do projeto é necessário para acessar essa funcionalidade.");
+                    throw new Exception("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
                 }
 
                 if (!filter_input(INPUT_GET, 'idTipoDoAtoAdministrativo')) {
-                    throw new Exception("Identificador do tipo do ato administrativo é necessário para acessar essa funcionalidade.");
+                    throw new Exception("Identificador do tipo do ato administrativo &eacute; necess&aacute;rio para acessar essa funcionalidade.");
                 }
             } catch (Exception $objException) {
-                parent::message($objException->getMessage(), "/{$this->moduleName}/index/gerenciar-projetos");
+                parent::message($objException->getMessage(), "/{$this->moduleName}/index/gerenciar-assinaturas");
             }
 
             $this->view->IdPRONAC = $idPronac;
+            $this->view->idTipoDoAtoAdministrativo = $idTipoDoAtoAdministrativo;
 
             $objTbProjetos = new Projeto_Model_DbTable_Projetos();
             $this->view->projeto = $objTbProjetos->findBy(array(
@@ -88,8 +87,8 @@ class Assinatura_IndexController extends Assinatura_GenericController
             $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
 
             $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-xd($this->view->assinaturas, $idTipoDoAtoAdministrativo);
             $this->view->assinaturas = $objAssinatura->obterAssinaturas($idPronac, $idTipoDoAtoAdministrativo);
+
             $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
             $this->view->quantidade_minima_assinaturas = $objTbAtoAdministrativo->obterQuantidadeMinimaAssinaturas($idTipoDoAtoAdministrativo);
 
@@ -101,21 +100,26 @@ xd($this->view->assinaturas, $idTipoDoAtoAdministrativo);
                 )
             );
         } catch (Exception $objException) {
-xd($objException->getMessage());
             parent::message($objException->getMessage(), "/{$this->moduleName}/index/visualizar-projeto?IdPRONAC={$idPronac}&idTipoDoAtoAdministrativo={$idTipoDoAtoAdministrativo}");
         }
     }
 
+    /**
+     * @todo Revisar
+     */
     public function assinarProjetoAction()
     {
         $get = Zend_Registry::get('get');
+        $idPronac = $get->IdPRONAC;
+        $idTipoDoAtoAdministrativo = $get->idTipoDoAtoAdministrativo;
 
         try {
             $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
+
             $this->view->perfilAssinante = $objTbAtoAdministrativo->obterPerfilAssinante(
                 $this->grupoAtivo->codOrgao,
                 $this->grupoAtivo->codGrupo,
-                $this->idTipoDoAtoAdministrativo
+                $idTipoDoAtoAdministrativo
             );
 
             if (!$this->view->perfilAssinante) {
@@ -134,7 +138,6 @@ xd($objException->getMessage());
             }
 
             $post = $this->getRequest()->getPost();
-
             if ($post) {
 
                 foreach ($arrayIdPronacs as $idPronac) {
@@ -148,13 +151,13 @@ xd($objException->getMessage());
                 if (count($arrayIdPronacs) > 1) {
                     parent::message(
                         "Projetos assinados com sucesso!",
-                        "/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos",
+                        "/{$this->moduleName}/index/gerenciar-assinaturas",
                         'CONFIRM'
                     );
                 }
                 parent::message(
                     "Projeto assinado com sucesso!",
-                    "/{$this->moduleName}/enquadramento-assinatura/visualizar-projeto?IdPRONAC={$idPronac}",
+                    "/{$this->moduleName}/index/visualizar-projeto?IdPRONAC={$idPronac}",
                     'CONFIRM'
                 );
             }
@@ -169,19 +172,13 @@ xd($objException->getMessage());
 
             $objVerificacao = new Verificacao();
             $this->view->tipoDocumento = $objVerificacao->findBy(array(
-                'idVerificacao = ?' => $this->idTipoDoAtoAdministrativo
+                'idVerificacao = ?' => $idTipoDoAtoAdministrativo
             ));
 
         } catch (Exception $objException) {
-            if (is_array($get->IdPRONAC)) {
-                parent::message(
-                    $objException->getMessage(),
-                    "/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos"
-                );
-            }
             parent::message(
                 $objException->getMessage(),
-                "/{$this->moduleName}/enquadramento-assinatura/assinar-projeto?IdPRONAC={$get->IdPRONAC}"
+                "/{$this->moduleName}/index/gerenciar-assinaturas"
             );
         }
     }
