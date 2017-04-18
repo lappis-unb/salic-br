@@ -55,7 +55,10 @@
             <?php foreach ($this->diligenciasProposta as $value) { ?>
             <tr>
                 <td style="text-align: center;">
-                    <img onclick="JSVisualizar('<?php echo $value->idDiligencia;?>','<?php echo $this->idPronac;?>','<?php echo $value->idDiligencia;?>')" src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" width="20" style="cursor: pointer;"/>
+                    <button onclick="JSVisualizar('<?php echo $value->idDiligencia;?>','<?php echo $this->idPronac;?>','<?php echo $value->idDiligencia;?>')"
+                        class="waves-effect waves-darken btn white black-text">
+                        <i class="material-icons">visibility</i>
+                    </button>
                 </td>
                 <td><?php echo $value->pronac;?></td>
                 <td><?php echo $value->nomeProjeto;?></td>
@@ -85,7 +88,11 @@
             <?php foreach ($this->diligencias as $value) { ?>
             <tr>
                 <td style="text-align: center;">
-                    <img onclick="JSVisualizar('<?php echo $value->idDiligencia;?>','<?php echo $this->idPronac;?>')" src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png" width="20" style="cursor: pointer;"/>
+                    <button
+                        onclick="JSVisualizar('<?php echo $value->idDiligencia;?>','<?php echo $this->idPronac;?>')"
+                        class="waves-effect waves-darken btn white black-text">
+                        <i class="material-icons">visibility</i>
+                    </button>
                 </td>
                 <td><?php echo $value->pronac;?></td>
                 <td><?php echo $value->nomeProjeto;?></td>
