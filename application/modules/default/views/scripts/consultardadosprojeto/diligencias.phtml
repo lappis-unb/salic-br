@@ -8,11 +8,11 @@
     function JSVisualizar(idDiligencia,idPronac,idDiligenciaPreProjeto){
 
         //jqAjaxLink('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'visualizar-diligencia'));?>', '', 'linha'+idDiligencia);
-        $('#linha'+idDiligencia).toggle();
+        $('#linha'+idDiligencia).toggleClass('sumir');
         if($('#resultado'+idDiligencia).html() == '')
         {
             $('#resultado'+idDiligencia).html('<br><center>Aguarde, carregando dados...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
-            
+
             $.ajax({
                 url : '<?php echo $this->url ( array ('controller' => 'consultardadosprojeto', 'action' => 'visualizar-diligencia' ));?>',
                 data :
@@ -100,7 +100,7 @@
                 <td align="center"><?php echo date('d/m/Y',strtotime($value->dataSolicitacao));?></td>
                 <td align="center"><?php echo ($value->stEnviado == 'S') ? (!empty($value->dataResposta)) ? date('d/m/Y',strtotime($value->dataResposta)) : '' : ''; ?></td>
                 <td align="center">
-                    <?php 
+                    <?php
                         $qtdia = 40;
                         echo date('d/m/Y',strtotime($value->dataSolicitacao.' +'.$qtdia.' day'));
                     ?>
