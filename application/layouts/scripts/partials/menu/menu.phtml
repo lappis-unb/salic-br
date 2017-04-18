@@ -294,7 +294,7 @@ $arrMenu['admissibilidade'] = array(
     'label' => 'Admissibilidade',
     'title' => 'Ir para Admissibilidade',
     'menu' => array(),
-    'grupo' => array(92,97,131,148,151),
+    'grupo' => array(92,97,131,147,148,149,151),
 );
 $arrMenu['admissibilidade']['menu'][] = array(
     'grupo' => array(92,97,131),
@@ -315,12 +315,6 @@ $arrMenu['admissibilidade']['menu'][] = array(
     'label' => 'Enquadramento'
 );
 $arrMenu['admissibilidade']['menu'][] = array(
-    'grupo' => array(92,131),
-    'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'desistencia-recursal')),
-    'title' => 'Ir para Desist&ecirc;ncia Recursal',
-    'label' => 'Desist&ecirc;ncia Recursal'
-);
-$arrMenu['admissibilidade']['menu'][] = array(
     'grupo' => array(92,97,131),
     'url' => $this->url(array('controller' => 'recurso', 'action' => 'recurso-enquadramento'), '', true),
     'title' => 'Ir para Recurso',
@@ -328,7 +322,7 @@ $arrMenu['admissibilidade']['menu'][] = array(
 );
 
 $arrMenu['admissibilidade']['menu'][] = array(
-    'grupo' => array(92,131),
+    'grupo' => array(92,131, 147, 149),
     'url' => $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-assinatura')),
     'title' => 'Ir para Encaminhar para assinatura',
     'label' => 'Encaminhar para assinatura'
