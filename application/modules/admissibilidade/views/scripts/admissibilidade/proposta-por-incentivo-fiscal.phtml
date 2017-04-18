@@ -495,7 +495,7 @@
                                                         <td align="center"><?php echo Data::tratarDataZend($arquivosProposta['data'], 'Brasileira'); ?></td>
                                                         <td>
                                                             <?php $arrayTipos = array(1,2,3); if(in_array($arquivosProposta['tpdoc'], $arrayTipos)) { ?>
-                                                                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'abrir-documentos-anexados-admissibilidade')); ?>?id=<?php echo $arquivosProposta['idDocumentosPreprojetos']; ?>&tipo=<?php echo $arquivosProposta['tpdoc']; ?>" title="Abrir arquivo">
+                                                                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'abrir-documentos-anexados-admissibilidade')); ?>?id=<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>&tipo=<?php echo $arquivosProposta['tpdoc']; ?>" title="Abrir arquivo">
                                                                     <?php echo $arquivosProposta['noarquivo'];?></a>
                                                             <?php } else { ?>
                                                                 <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivosProposta[ 'iddocumentospreprojetos' ]; ?>">
