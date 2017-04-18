@@ -174,6 +174,15 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 	 */
 	public function modalAction()
 	{
-	} // fecha método modalAction()
+	}
 
-} // fecha class
+	/**
+	 * Modal
+	 * @access public
+	 * @param void
+	 * @return void
+	 */
+	public function buttonsAction()
+	{
+	}
+}
