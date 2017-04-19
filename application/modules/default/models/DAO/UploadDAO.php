@@ -1,18 +1,7 @@
 <?php
-/**
- * DAO Upload
- * @author Equipe RUP - Politec
- * @since 28/04/2010
- * @version 1.0
- * @package application
- * @subpackage application.model.DAO
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
 class UploadDAO extends MinC_Db_Table_Abstract {
-    
-    protected $_schema          = "SAC";
+
+    protected $_schema = "SAC";
 
     /**
      * M�todo para abrir o arquivo
@@ -39,8 +28,7 @@ class UploadDAO extends MinC_Db_Table_Abstract {
 
         $resultado = $db->fetchAll('SET TEXTSIZE 2147483647');
         return $db->fetchAll($select);
-    } 
-
+    }
 
     /**
      * M�todo para abrir o arquivo
@@ -102,4 +90,4 @@ class UploadDAO extends MinC_Db_Table_Abstract {
         return $resultado;
     }
 
-} 
+}
