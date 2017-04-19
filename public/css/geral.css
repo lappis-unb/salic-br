@@ -633,6 +633,7 @@ x - Menu lateral
     position: relative;
     left: 9px;
     background: url(../img/sombra-menu-contexto.gif) right repeat-y #fff;
+    margin-bottom: 300px;
 }
 
 #menuContexto .top {
