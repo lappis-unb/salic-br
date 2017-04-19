@@ -1,6 +1,7 @@
 Release 2.0.3
   * Fix: [Checklist para publicação] Ajuste em alterar projeto
   * Fix: [Checklist para publicação] Ajuste de estilo
+  * Fix: [Cnic] Correção em menu quebrado
   * Fix: [Consulta cidadão] Correção ao ordenar por Pronac
   * Fix: [Diligências] Ajuste nos frames
   * Fix: [Diligências] Ajuste de estilo
