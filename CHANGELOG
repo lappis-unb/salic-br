@@ -1,3 +1,16 @@
+Release 2.0.3
+  * Fix: [Checklist para publicação] Ajuste em alterar projeto
+  * Fix: [Checklist para publicação] Ajuste de estilo
+  * Fix: [Cnic] Correção em menu quebrado
+  * Fix: [Consulta cidadão] Correção ao ordenar por Pronac
+  * Fix: [Diligências] Ajuste nos frames
+  * Fix: [Diligências] Ajuste de estilo
+  * Fix: [Proponente] Correções de estilo e charset
+  * Fix: [Proposta] Correção no download de documentos da proposta
+  * Fix: [Validar aprovação] Removendo funcionalidade de desistência recursal
+  * Fix: [Validar aprovação] Adicionando funcionalidade de assinar para Secretário e Coord Geral Admissibilidade
+  * Fix: [Validar aprovação] Alteração na regra de exibição do botão de Encaminhar para Assinatura
+
 Release 2.0.2
   * Fix: [Atendimento Representações] Exibindo menu em Tramitar documentos
   * Fix: [CNIC] Fix em Reunião CNIC

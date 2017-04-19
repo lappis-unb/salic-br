@@ -13,9 +13,8 @@ class Projeto_Model_vwPlanoDeDistribuicaoProduto extends MinC_Db_Table_Abstract 
     protected $_primary = 'IdPRONAC';
 
     public function obterProducaoProjeto(array $arrayWhere = array()) {
-        $objQuery = $this->select();
-        $objQuery->setIntegrityCheck(false);
-        $objQuery->from(
+        $db = $this->getAdapter();
+        $db->select()->from(
             array('vwPlanoDeDistribuicaoProduto' => $this->_name),
             '*',
             $this->_schema
@@ -23,13 +22,12 @@ class Projeto_Model_vwPlanoDeDistribuicaoProduto extends MinC_Db_Table_Abstract 
 
         if(count($arrayWhere) > 0) {
             foreach ($arrayWhere as $condicao => $valor) {
-                $objQuery->where($condicao, $valor);
+                $db->select()->where($condicao, $valor);
             }
         }
-
-        $db = Zend_Db_Table::getDefaultAdapter();
+        
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
-//xd($objQuery->assemble());
+        
         return $db->fetchAll($objQuery);
     }
 
