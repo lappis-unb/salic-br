@@ -2098,10 +2098,18 @@ x - DATE PICKER
 }
 
 .ui-dialog input[type="text"],
-.ui-dialog textarea{
+.ui-dialog textarea,
+.ui-dialog select.input_simples {
     /*width: 100%;*/
     border: 1px solid #676767;
     background: #fff;
+    min-height: 25px;
+}
+
+.ui-dialog input[type="text"][disabled],
+.ui-dialog textarea[disabled],
+.ui-dialog select.input_simples[disabled]{
+    background: rgb(230, 230, 230);
 }
 
 .ui-dialog textarea {

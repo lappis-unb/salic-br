@@ -2167,13 +2167,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 );
             }
             echo '<script>';
-            echo 'var event = new CustomEvent("agenteCadastrar_POST", { "detail": ' , json_encode($agente) , ' });';
+            echo 'var event = new CustomEvent("agenteCadastrar_POST", { "detail": ' , json_encode(utf8_encode($agente)) , ' });';
             echo 'document.dispatchEvent(event)';
             echo '</script>';
             echo '<br/><br/><br/><br/><center><font color="green">Cadastrado com sucesso!</font></center>';
         } else if (!empty($movimentacacaobancaria)) {
             echo '<script>';
-            echo 'var event = new CustomEvent("agenteCadastrar_POST", { "detail": ' , json_encode($agente) , ' });';
+            echo 'var event = new CustomEvent("agenteCadastrar_POST", { "detail": ' , json_encode(utf8_encode($agente)) , ' });';
             echo 'document.dispatchEvent(event)';
             echo '</script>';
             echo '<br/><br/><br/><br/><center><font color="green">Cadastrado com sucesso!</font></center>';
@@ -2185,10 +2185,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'proposta/manterpropostaincentivofiscal/listarproposta',
                 'CONFIRM'
             );
+        } else {
+            // Caso nao seja ele retorna para a visualizacao dos dados cadastrados do agente
+            # editado para atender
+            parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente->id}", 'CONFIRM');
         }
-        // Caso nao seja ele retorna para a visualizacao dos dados cadastrados do agente
-        # editado para atender
-        parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente->id}", 'CONFIRM');
     }
 
     /**
