@@ -67,17 +67,17 @@
             <td><?php echo (!empty($relPagamentos->CNPJCPF)) ? Validacao::mascaraCPFCNPJ($relPagamentos->CNPJCPF) : ''; ?></td>
             <td><?php echo $relPagamentos->Fornecedor; ?></td>
             <td><?php echo $relPagamentos->tbDocumento; ?></td>
-            <td><?php echo $relPagamentos->nrComprovante; ?></td>
+            <td class="right-align"><?php echo $relPagamentos->nrComprovante; ?></td>
             <td align="center"><?php echo Data::tratarDataZend($relPagamentos->DtPagamento, 'Brasileira'); ?></td>
             <td><?php echo $relPagamentos->tpFormaDePagamento; ?></td>
-            <td><?php echo $relPagamentos->nrDocumentoDePagamento; ?></td>
+            <td class="right-align"><?php echo $relPagamentos->nrDocumentoDePagamento; ?></td>
             <td>
                 <a class="btn white-text" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $relPagamentos->idArquivo; ?>" title="<?php echo $relPagamentos->nmArquivo; ?>">
                     pdf
                 </a>
             </td>
-            <td align="right"><?php echo $relPagamentos->dsJustificativa; ?></td>
-            <td align="right"><?php echo number_format($relPagamentos->vlPagamento, 2, ",", "."); ?></td>
+            <td class="right-align"><?php echo $relPagamentos->dsJustificativa; ?></td>
+            <td class="right-align"><?php echo number_format($relPagamentos->vlPagamento, 2, ",", "."); ?></td>
         </tr>
         <?php $x++; $idPlanilhaAnterior=$relPagamentos->idPlanilhaAprovacao; $vlTotal=$vlTotal+$relPagamentos->vlPagamento; } ?>
     <?php } else { ?>
