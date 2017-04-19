@@ -13,14 +13,14 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
     protected $_primary = 'idPlanoDistribuicao';
 
     /**
-     * M�todo para cadastrar
+     * Metodo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o �ltimo id cadastrado)
+     * @return integer (retorna o ultimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    } // fecha metodo cadastrarDados()
 
 
     public function buscarPlanoDeDistribuicao($idPronac) {
@@ -92,7 +92,7 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         $b->from(
             array('a' => $this->_name),
             array(
-                new Zend_Db_Expr("'0', 'Administra��o do Projeto'")
+                new Zend_Db_Expr("'0', 'Administra&ccedil;&atilde;o do Projeto'")
             )
         );
         $b->joinInner(
