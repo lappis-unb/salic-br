@@ -197,7 +197,7 @@
                 ?>
 				">
                 <td><?php echo $item; ?></td>
-                <td><?php echo $this->escape($resposta->Item); ?></td>
+                <td><?php echo strip_tags($resposta->Item); ?></td>
                 <td class="direita"><?php echo $this->escape($resposta->QtdeDias); ?></td>
                 <td class="centro"><?php echo $this->escape($resposta->Unidade); ?></td>
                 <td class="direita"><?php echo $this->escape($resposta->Quantidade); ?></td>
@@ -205,8 +205,8 @@
                 <td class="direita"><?php echo $this->formatarReal($this->escape($resposta->ValorUnitario)); ?></td>
                 <td class="direita blue-text"><?php echo $this->formatarReal($this->escape($resposta->VlSolicitado)); ?></td>
                 <td class="direita green-text"><?php echo $this->formatarReal($this->escape($resposta->Sugerido)); ?></td>
-                <td><?php echo $this->escape($resposta->JustificativaProponente); ?></td>
-                <td><?php echo $this->escape($resposta->Justificativa); ?></td>
+                <td><?php echo strip_tags($resposta->JustificativaProponente); ?></td>
+                <td><?php echo strip_tags($resposta->Justificativa); ?></td>
                 <!--<td class="direita"><?php if ($resposta->VlSugeridoConselheiro) echo $this->formatarReal($this->escape($resposta->VlSugeridoConselheiro)); ?></td>
 				<td><?php echo $this->escape($this->LimitadorCaracteres($resposta->dsJustificativaConselheiro)); ?></td>-->
             </tr>
