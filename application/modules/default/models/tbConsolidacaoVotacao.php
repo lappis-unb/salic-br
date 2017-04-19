@@ -1,34 +1,25 @@
 <?php
-/**
- * tbConsolidacaoVotacao
- * @author jefferson.silva - XTI
- * @since 02/08/2013
- * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
 class tbConsolidacaoVotacao extends MinC_Db_Table_Abstract
 {
-    protected $_banco  = "BDCORPORATIVO";
-    protected $_schema = "scSAC";
+    protected $_schema = "BDCORPORATIVO.scSAC";
     protected $_name   = "tbConsolidacaoVotacao";
 
-    public function consolidacaoPlenaria($idPronac) {
+    public function consolidacaoPlenaria($idPronac)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $select =  new Zend_Db_Expr("
-                SELECT idNrReuniao,IdPRONAC,dsConsolidacao
-                FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao
-                WHERE IdPRONAC = $idPronac ");
+        $cols = array('idNrReuniao', 'IdPRONAC', 'dsConsolidacao');
+
+        $select = $db->select()
+            ->from($this->_name, $cols, $this->_schema)
+            ->where('IdPRONAC = ?', $idPronac)
+            ;
+
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
         return $db->fetchAll($select);
     }
-
-} // fecha class
+}
