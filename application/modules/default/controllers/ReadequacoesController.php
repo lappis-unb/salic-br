@@ -87,12 +87,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if(isset($_POST['iduf'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
-            $cidade = CidadeDAO::buscar($iduf);
+            $mun = new Agente_Model_DbTable_Municipios();
+            $cidade = $mun->listar($iduf);
             $a = 0;
             $cidadeArray = array();
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -4065,7 +4066,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $tbuf = new Agente_Model_DbTable_UF();
 
             $buscarEstado = $tbuf->buscar();
-            $this->view->uf = $buscarEstado;
+            $this->view->UFs = $buscarEstado;
 
             $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
