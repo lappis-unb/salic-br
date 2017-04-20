@@ -10,23 +10,23 @@
  */
 
 class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
-    protected $_banco  = "SAC";
-    protected $_schema = "SAC";
+    protected $_schema = "sac";
     protected $_name   = "tbPlanilhaAprovacao";
+    protected $_primary = "idPlanilhaAprovacao";
 
     /**
-     * M�todo para cadastrar
+     * Metodo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o �ltimo id cadastrado)
+     * @return integer (retorna o ultimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    } // fecha metodo cadastrarDados()
 
 
     /**
-     * M�todo para alterar
+     * Metodo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -35,7 +35,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
     public function alterarDados($dados, $where) {
         $where = "idPlanilhaAprovacao = " . $where;
         return $this->update($dados, $where);
-    } // fecha m�todo alterarDados()
+    } // fecha metodo alterarDados()
 
 
     public function buscarItensOrcamentarios($where, $order = array()) {
@@ -68,7 +68,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         // retornando os registros
         return $this->fetchAll($slct);
 
-    } // fecha m�todo alterarDados()
+    } // fecha metodo alterarDados()
 
     public function copiandoPlanilhaRecurso($idPronac){
 
