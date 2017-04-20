@@ -254,7 +254,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         $idPreProjeto = $rsProjeto->idProjeto;
                     }
 
-                    $pronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
+                    $this->view->pronac = $pronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
                     $dadosProjeto = $geral->execPaProponente($idPronac);
                     $this->view->dados = $dadosProjeto;
                     $this->view->dadosProjeto = $rsProjeto;

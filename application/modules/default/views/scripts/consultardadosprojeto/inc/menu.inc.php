@@ -1,4 +1,3 @@
-<!-- ========== INï¿½CIO MENU ========== -->
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
     <script type="text/javascript">
@@ -119,14 +118,17 @@
                 $id = $get->idPronac;
                 $auxPronac .= $get->idPronac;
             }
-
             $resp = array();
         ?>
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
 
-                <a href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo Seguranca::encrypt($id); ?>' class="no_seta" title="Ir para Projeto Atual">Projeto Atual</a>
+                <a
+                    href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo Seguranca::encrypt($id); ?>'
+                    class="no_seta" title="Ir para Projeto Atual">
+                        Projeto Atual: <span id="pronacProjeto" data-pronac="<?php echo $this->idPronac ?>"><?php echo $this->pronac ?></span>
+                </a>
                 <a href='#' class="no_seta" onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-proponente')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Dados do Proponente">Proponente</a>
 
                 <!-- ======================= Outras Informações  =======================   -->
@@ -149,7 +151,6 @@
                 </div>
                 <!-- ==================== FIM - Outras Informações  =======================   -->
 
-
                 <?php if(($this->fnLiberarLinks['Analise'] && in_array($this->fnLiberarLinks['FaseDoProjeto'],array('2','3','4'))) || $this->usuarioInterno){ ?>
                 <!-- ======================= Análise e Aprovação  =======================   -->
                 <div class="sanfonaDiv" style="display:none;"></div>
@@ -161,7 +162,6 @@
                 </div>
                 <!-- ==================== FIM - Análise e Aprovação  =======================   -->
                 <?php } ?>
-
 
                 <?php if($this->fnLiberarLinks['Execucao'] || $this->usuarioInterno){ ?>
                 <!-- ======================= Execução  =======================   -->
@@ -178,7 +178,6 @@
                 </div>
                 <?php } ?>
                 <!-- ==================== FIM - Execução  =======================   -->
-
 
                 <?php if($this->fnLiberarLinks['PrestacaoContas'] || $this->usuarioInterno){ ?>
                 <!-- ======================= Prestação de Contas  =======================   -->
@@ -207,8 +206,6 @@
                 <!-- ==================== FIM - Prestação de Contas  =======================   -->
                 <?php } ?>
 
-
-
                 <!-- ======================= Readequação  =======================   -->
                 <?php if( $this->blnProponente && ($this->fnLiberarLinks['Readequacao'] || $this->fnLiberarLinks['Readequacao_20']) ) { ?>
                 <div class="sanfonaDiv" style="display:none;"></div>
@@ -228,9 +225,6 @@
                 <?php } ?>
                 <!-- ==================== FIM - Readequação  =======================   -->
 
-
-
-
                 <!-- ======================= SOLICITAR PRAZO CAPTAÇÃO  =======================   -->
                 <?php if($this->blnProponente) { ?>
 		<?php if($this->fnLiberarLinks['SolicitarProrrogacao']): ?>
@@ -238,8 +232,6 @@
 		<?php endif; ?>
                 <?php } ?>
                 <!-- ==================== FIM - SOLICITAR PRAZO CAPTAÇÃO  =======================   -->
-
-
 
                 <!-- ======================= DILIGENCIA ====================== -->
                 <?php if($this->fnLiberarLinks['Diligencia']){ ?>
@@ -277,8 +269,6 @@
                 <?php } ?>
                 <!-- FIM - COMPROVACAO FINANCEIRA -->
 
-
-
                 <!-- ======================= COMPROVACAO FISICA  ======================= -->
                 <?php if($this->situacaoProjeto != 'E24'){ ?>
                     <?php if($this->fnLiberarLinks['RelatorioTrimestral'] || $this->fnLiberarLinks['RelatorioFinal']) { ?>
@@ -297,28 +287,19 @@
                 <?php } ?>
                 <!-- FIM - COMPROVACAO FISICA -->
 
-
-
-
                 <!--  ======================= MARCAS =======================  -->
                 <?php if($this->blnProponente) { ?>
 	        <?php if($this->fnLiberarLinks['Marcas']): ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'form-enviar-arquivo-marca')); ?><?php echo $codPronac;?>">Marcas</a>
-		<?php endif; ?>
+            <?php endif; ?>
                 <?php } ?>
                 <!--  ==================== FIM - MARCAS ====================  -->
-
-
-
 
                 <!--  ======================= LISTAR PROJETOS =======================  -->
                 <?php if($this->blnProponente) { ?>
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'listarprojetos', 'action' => 'listarprojetos')); ?>">Listar Projetos</a>
                 <?php } ?>
                 <!--  ==================== FIM - LISTAR PROJETOS ======================  -->
-
-
-
 
                 <!--  ======================= IMPRIMIR PROJETOS =======================  -->
                 <a class="no_seta" href='#' onclick="imprimirProjeto('<?php echo $this->idPronac;?>'); return false;" title="Ir Imprimir Projeto">Imprimir Projeto</a>
@@ -327,17 +308,12 @@
                 <?php } ?>
                 <!--  ==================== FIM - IMPRIMIR PROJETOS ======================  -->
 
-
-
-
                 <!--  ======================= MANTER MENSAGENS =======================  -->
                 <?php $perfisMensagens = array(131,92,93,122,123,121,129,94,103,110,118,126,125,124,132,136,134,135,138,139);
                     if(in_array($this->grupoAtivo,$perfisMensagens)){ ?>
                         <a class="no_seta" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem', 'idpronac' => $this->idPronac), '', true); ?>">Mensagens</a>
                 <?php } ?>
                 <!--  ==================== FIM - MANTER MENSAGENS =======================  -->
-
-
             </div>
             <div class="bottom"></div>
             <div id="space_menu"></div>
@@ -468,6 +444,15 @@
             $('.ui-dialog-titlebar-close').remove();
         });
 
+        $.get(
+            '/projeto/projeto/verificar-in2017/idPronac/' + $('#pronacProjeto').attr("data-pronac"),
+            function(data) {
+                if(data.IN2017 == "false") {
+                    $('#pronacProjeto').append(' [IN2016]');
+                } else {
+                    $('#pronacProjeto').append(' [IN2017]');
+                }
+            }
+        );
     });
 </script>
-<!-- ========== FIM MENU ========== -->
