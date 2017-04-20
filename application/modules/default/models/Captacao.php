@@ -26,12 +26,12 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         return $this->fetchAll($select);
 
-    } // fecha m�todo listasituacao()
+    } // fecha metodo listasituacao()
 
 
 
     /**
-     * M�todo para buscar
+     * Metodo para buscar
      * @access public
      * @param void
      * @return object/array
@@ -43,24 +43,24 @@ class Captacao extends MinC_Db_Table_Abstract {
         $select->order('DtChegadaRecibo');
         $select->order('DtRecibo');
         return $this->fetchAll($select);
-    } // fecha m�todo buscarDados()
+    } // fecha metodo buscarDados()
 
 
 
     /**
-     * M�todo para cadastrar
+     * Metodo para cadastrar
      * @access public
      * @param array $dados
      * @return integer (retorna o �ltimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    } // fecha metodo cadastrarDados()
 
 
 
     /**
-     * M�todo para alterar
+     * Metodo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -69,12 +69,12 @@ class Captacao extends MinC_Db_Table_Abstract {
     public function alterarDados($dados, $where) {
         $where = "Idcaptacao = " . $where;
         return $this->update($dados, $where);
-    } // fecha m�todo alterarDados()
+    } // fecha metodo alterarDados()
 
 
 
     /**
-     * M�todo para excluir
+     * Metodo para excluir
      * @access public
      * @param integer $where
      * @return integer (quantidade de registros exclu�dos)
@@ -82,10 +82,10 @@ class Captacao extends MinC_Db_Table_Abstract {
     public function excluirDados($where) {
         $where = "Idcaptacao = " . $where;
         return $this->delete($where);
-    } // fecha m�todo excluirDados()
+    } // fecha metodo excluirDados()
 
     /**
-     * M�todo para buscar
+     * Metodo para buscar
      * @access public
      * @return float TotalCaptadoReal
      */
@@ -109,7 +109,7 @@ class Captacao extends MinC_Db_Table_Abstract {
             return $this->fetchAll($select);
     }
     /**
-     * M�todo para buscar
+     * Metodo para buscar
      * @access public
      * @param integer $AnoProjeto,$Sequencial,$selectC,$selectCq,$selectCg,$selectCc
      * @return float totalCaptadoProjeto
@@ -179,7 +179,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         return $this->fetchAll($select);
 
-    } // fecha m�todo listasituacao()
+    } // fecha metodo listasituacao()
 
 
 
@@ -308,7 +308,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         return $this->fetchAll($select);
 
-    } // fecha m�todo listasituacao()
+    } // fecha metodo listasituacao()
 
 
     public function buscaCompleta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
