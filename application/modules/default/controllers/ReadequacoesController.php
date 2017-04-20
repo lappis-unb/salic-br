@@ -945,11 +945,11 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
-        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $tbAbrangencia = new tbAbrangencia();
         $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'tbAbrangencia');
         if(count($locais)==0){
             $locais = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac,'Abrangencia');
-        }
+        }W
 
         $tbPais = new Pais();
         $this->view->Paises = $tbPais->buscar(array(), array(3));
@@ -1028,7 +1028,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
 
         //VERIFICA SE JA POSSUI AS ABRANGENCIAS NA TABELA tbAbrangencia (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
-        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $tbAbrangencia = new tbAbrangencia();
         $readequacaoLR = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $locaisAtivos = $tbAbrangencia->buscarLocaisParaReadequacao($idPronac);
 
