@@ -1052,6 +1052,10 @@ x - FORMULÁRIOS
     float: left;
 }
 
+#conteudo .form a .left, .form a .right {
+    background: none;
+}
+
 #conteudo .form .right {
     background: url(../img/input-borda-right.gif) no-repeat;
 }
