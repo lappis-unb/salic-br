@@ -1,15 +1,5 @@
 <?php
-/**
- * Analise de Custos
- * @author Equipe RUP - Politec
- * @since 07/06/2010
- * @version 1.0
- * @package application
- * @subpackage application.views.realizaranaliseprojeto
- * @link http://www.cultura.gov.br
- * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
- */
-echo $this->partial('inc/menu.inc.php', $this) // menu vertical
+echo $this->partial('realizaranaliseprojeto/inc/menu.inc.php', $this);
 
 if($this->bln_readequacao == "true"):
     $urlForm = $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'analisedecustosreadequacao'));
@@ -19,7 +9,7 @@ endif;
 ?>
 <script>
     $(document).ready(function(){
-        
+
         var idplanilha = '<?php echo (isset($_GET['idplanilha'])) ? $_GET['idplanilha'] : '';?>';
         if(idplanilha != ""){
             setTimeout(function(){
@@ -28,9 +18,9 @@ endif;
                     scrollTop: $('#scroll'+idplanilha).offset().top
                 }, 1500);
             }, '1500');
-            
+
         }
-        
+
         var codEtapa = '<?php echo (isset($_GET['ETP'])) ? $_GET['ETP'] : '';?>';
         if(codEtapa != ""){
             setTimeout(function(){
@@ -40,7 +30,7 @@ endif;
                 }, 1500);
             }, '1500');
         }
-        
+
         $(".reintegrar").click(function(){
             var quantidade = $(this).attr('quantidade');
             var valorunitario = $(this).attr('valorunitario').replace('.',',');
@@ -58,14 +48,14 @@ endif;
                     $("#ocorrencia"+idplanilhaaprovacao).val(ocorrencia)
                     calcular_planilha_projeto(idplanilhaaprovacao)
                     validar_val_parec_relat(idplanilhaaprovacao)
-                   $("#confirma").dialog('close');  
+                   $("#confirma").dialog('close');
                 }
                 ,
                 function(){
-                  $("#confirma").dialog('close');  
+                  $("#confirma").dialog('close');
                 }
             )
-            $("#confirma").dialog('open');  
+            $("#confirma").dialog('open');
         })
         $("#error").dialog({
             title:"Erro",
@@ -133,31 +123,31 @@ endif;
                 $(this).addClass('fundo_linha4');
             }
         })
-        
+
         $(".linkplanilha").click(function(){
-            
+
             $('.fundo_linha4').removeClass('fundo_linha4');
-            
+
             var idplanilhaaprovacao = $(this).attr('idPlanilhaAprovacao');
             var idProduto = $(this).attr('idProduto');
             var idEtapa   = $(this).attr('idEtapa');
             var idItem    = $(this).attr('idPlanilhaItem');
             var nomeEtapa = $(this).attr('etapa');
-            
+
             $("#form" + idplanilhaaprovacao).each(function() // necessario para resetar o formulario, pois, quando a modal e fechada o mesmo nao e resetado
             {
                 this.reset();
                 calcular_planilha_projeto(idplanilhaaprovacao); // recalcula o valor total do produto
                 buscar_val_pred_parec_relat(idplanilhaaprovacao); // busca os valores predefinidos dos campos
             });
-            
-            
+
+
             $.ajax({
                 async: true,
                 type : 'post',
                 url : '<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'recuperar-etapas-do-item')); ?>',
                 beforeSend: function(){
-                    
+
                 },
                 data :
                 {
@@ -165,7 +155,7 @@ endif;
                     idItem: idItem
                 },
                 success: function(data){
-                    
+
                     $("#selEtapaItem"+idplanilhaaprovacao+" option").remove(); //remove options existentes
                     if(data.length > 0)
                     {
@@ -179,7 +169,7 @@ endif;
                         });
 
                         $("#selEtapaItem"+idplanilhaaprovacao).append(option);
-                        
+
                     }else{
                         var option = "<option selected value='" + idEtapa + "'>" + nomeEtapa + "</option>";
                         $("#selEtapaItem"+idplanilhaaprovacao).append(option);
@@ -190,7 +180,7 @@ endif;
                 },
                 dataType : 'json'
             });
-            
+
             $(".tela[idPlanilhaAprovacao='"+idplanilhaaprovacao+"']").dialog({
                 title:"Planilha",
                 resizable: true,
@@ -206,17 +196,17 @@ endif;
                     },
                     'Salvar': function()
                     {
-                        
+
                         if(($.trim($('#qtd'+idplanilhaaprovacao).val())== '') || ($.trim($('#justificativa'+idplanilhaaprovacao).val())== '') || ($.trim($('#qtd'+idplanilhaaprovacao).val())== '')|| ($.trim($('#ocorrencia'+idplanilhaaprovacao).val())== '') || ($.trim($('#vlunitario'+idplanilhaaprovacao).val())== '') || ($.trim($('#dias'+idplanilhaaprovacao).val())== '') || $("#selEtapaItem"+idplanilhaaprovacao).val() == '')
                         {
                             $("#error").html('Dados Obrigat&oacute;rios n&atilde;o informados!');
                             $("#error").dialog('open');
                             return false;
                         }
-                        
+
                         $("#form" + idplanilhaaprovacao).submit(); // envia o formulario
                         $(this).dialog('close');
-                        
+
                         /*if( $("#selEtapaItem"+idplanilhaaprovacao).val() != idEtapa)
 
                         {
@@ -224,12 +214,12 @@ endif;
                             var txtEtapa   = $("#selEtapaItem"+idplanilhaaprovacao+" [value='" + valorEtapa + "']").text();
                             $("#mensagemAlerta").html("Este item será movido para a etapa de " + txtEtapa + "!");
                             abreAlerta();
-                        
+
                             setTimeout(function(){
                                 $("#form" + idplanilhaaprovacao).submit(); // envia o formulario
                                 $(this).dialog('close');
                             }, '1500');
-                            
+
                         }else{
                             $("#form" + idplanilhaaprovacao).submit(); // envia o formulario
                             $(this).dialog('close');
@@ -240,12 +230,12 @@ endif;
             });
             $(".tela[idPlanilhaAprovacao='"+idplanilhaaprovacao+"']").dialog('open')
         });
-    
+
         $(".selEtapaItem").change(function(){
             var idEtapa    = $(this).attr('idEtapa');
             var valorEtapa = $(this).val();
             var txtEtapa   = $(this).find('option').filter(':selected').text(); //pega texto da combo selecionada
-            
+
             if(valorEtapa != idEtapa)
             {
                 $("#mensagemAlerta").html("Este item será movido para a etapa de " + txtEtapa + "!");
@@ -255,7 +245,7 @@ endif;
     });//fecha $(document).ready
 
 
-    
+
     function confirma(functionsim, functionnao){
     $("#confirma").dialog({
         title:"Confirma",
@@ -292,17 +282,17 @@ endif;
         });
         $('.ui-dialog-titlebar-close').remove();
     }
-    
+
     function JSReintegrarEtapa(intProduto, intEtapa){
-        
+
         var idPronac   = $("#divEtapa"+intProduto+"_"+intEtapa).find("input:[name='idPronac']").val();
         var idProduto  = $("#divEtapa"+intProduto+"_"+intEtapa).find("input:[name='idProduto']").val();
         var idEtapa    = $("#divEtapa"+intProduto+"_"+intEtapa).find("input:[name='idEtapa']").val();
         var tpPlanilha = $("#divEtapa"+intProduto+"_"+intEtapa).find("input:[name='tpPlanilha']").val();
-        
+
         $("#divDinamicaReintegrarEtapa").remove();
         $("#divDinamicaReintegrarEtapa").dialog("destroy");
-                
+
         $('html').css('overflow', 'hidden');
         $("body").append("<div id='divDinamicaReintegrarEtapa'></div>");
         $("#divDinamicaReintegrarEtapa").html("");
@@ -338,13 +328,13 @@ endif;
                     $("#divDinamicaReintegrarEtapa").remove();
                 },
                 'Salvar': function() {
-                    
+
                     var justificativa    = $("#formReintegrarEtapa").find("textarea:[name='justificativa']").val();
                     var etapaAReintegrar = $("#formReintegrarEtapa").find("input:[name='etapaAReintegrar']").val();
                     var msgErro = $("#formReintegrarEtapa").find("span:[id='msgErro']");
-                    
+
                     msgErro.html('');
-                    
+
                     if($.trim(etapaAReintegrar) == ''){
                         $("#error").html('Informe qual Etapa deseja reintegrar!');
                         $("#error").dialog('open');
@@ -357,11 +347,11 @@ endif;
                         //msgErro.html('Campo obrigatório não preenchido');
                         return false;
                     }
-                    
+
                     $("#confirma").html("Os valores da Etapa que voc&ecirc; selecionou ser&atilde;o reintegrados. Tem certeza que deseja continuar?");
                     confirma(
                         function(){
-                            $("#confirma").dialog('close');  
+                            $("#confirma").dialog('close');
                             $("#formReintegrarEtapa").submit();
                             //jqAjaxForm(document.getElementById('formReintegrarEtapa'), 'resultadoPesquisa');
                             $(this).dialog('close');
@@ -370,7 +360,7 @@ endif;
                         }
                         ,
                         function(){
-                            $("#confirma").dialog('close');  
+                            $("#confirma").dialog('close');
                         }
                     )
                     $("#confirma").dialog('open');
@@ -383,7 +373,7 @@ endif;
             }
         });
     }
-    
+
 </script>
 
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -401,7 +391,7 @@ endif;
 </div>
 <!-- ========== FIM TITULO ========== -->
 <div id="conteudo">
-    <?php echo $this->partial('inc/menu_abas.inc.php', $this) // menu    ?>
+    <?php echo $this->partial('realizaranaliseprojeto/inc/menu_abas.inc.php', $this) // menu   ?>
     <div id="dialog-valor" class="sumir" title="Valor Inv&aacute;lido">
         <div class="msgERROR">
             <div>Valor de remanejamento maior que o permitido! M&aacute;ximo : <?php echo $this->formatarReal($this->totalproponente - $this->totalcomponente);?></div>
@@ -465,7 +455,7 @@ endif;
                         <td>
                             <div>
                                 <div tipo="etapa" fonte="<?php echo $nrfonte;?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" aberto="true" class="icn_menos" style="width:80%; margin-left:4%; "><span class="orange del_link" style="font-size: 14pt; font-weight: 800;"><?php echo $etapa; ?></span></div>
-                                <?php if(array_key_exists($produto,$this->produtosFavoraveis)): ?> 
+                                <?php if(array_key_exists($produto,$this->produtosFavoraveis)): ?>
                                     <div id="icnReintegrarEtapa" style="float: right;"><input type="button" class="btn_reintegrar reintegrarEtapa" value=" " onclick="JSReintegrarEtapa('<?php echo $nrproduto;?>','<?php echo $nretapa;?>')"></div>
                                 <?php endif; ?>
                             </div>
@@ -478,7 +468,7 @@ endif;
         ?>
                         <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte;?>" >
                             <td>
-                                <div tipo="cidade" fonte="<?php echo $nrfonte;?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
+                                <div tipo="cidade" fonte="<?php echo $nrfonte;?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black-text-text del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
                             </td>
                         </tr>
                         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte;?>">
@@ -512,7 +502,7 @@ endif;
                                             <tr class="item" <?php echo $planilha['reducao'] == 1 ? "style='color : red;'" : 0; ?> id="scroll<?php echo $planilha['idPlanilhaAprovacao']; ?>">
                                                 <td><?php echo $item; ?></td>
                                                 <td>
-                                                    <?php if(array_key_exists($produto,$this->produtosFavoraveis)): ?> 
+                                                    <?php if(array_key_exists($produto,$this->produtosFavoraveis)): ?>
                                                         <a <?php echo $planilha['nrFonteRecurso'] == 109 ? "class='linkplanilha' valor='".$planilha['idPlanilhaAprovacao']."' style='text-decoration: underline; cursor:pointer;'" : '' ?> idPlanilhaAprovacao ="<?php echo $planilha['idPlanilhaAprovacao']; ?>"  idProduto="<?php echo $planilha['idProduto']; ?>"  idEtapa="<?php echo $planilha['idEtapa']; ?>" idPlanilhaItem="<?php echo $planilha['idPlanilhaItem']; ?>" etapa="<?php echo $etapa; ?>"  name="<?php echo $planilha['idPlanilhaAprovacao']; ?>" ><?php echo $planilha['item']; ?></a>
                                                     <?php else: ?>
                                                         <?php echo $planilha['item']; ?>
@@ -529,7 +519,7 @@ endif;
                                                 <td><?php echo $this->formatarReal($planilha['vlunitariocomp']); ?></td>
                                                 <td><?php echo $this->formatarReal($planilha['vlconselheiro']); ?></td>
                                                 <td><?php echo $planilha['justificativaconselheiro']; ?>
-                                                    
+
                                                     <!-- ================================================= -->
                                                     <!-- ========== INICIO MODAL REINTEGRAR ETAPA ======== -->
                                                     <!-- ================================================= -->
@@ -542,7 +532,7 @@ endif;
                                                     <!-- ================================================= -->
                                                     <!-- ========== FIM  MODAL REINTEGRAR ETAPA ========== -->
                                                     <!-- ================================================= -->
-                                                    
+
                                                     <!-- =============================================== -->
                                                     <!-- ========== INICIO MODAL EDITAR ITEM =========== -->
                                                     <!-- =============================================== -->
@@ -606,7 +596,7 @@ endif;
                                                                 </tr>
                                                                 <!-- ================================ -->
                                                                 <!-- ==== FIM DADOS DO PROPONENTE === -->
-                                                                
+
                                                                 <!-- ================================= -->
                                                                 <!-- ======= DADOS DO PARECERISTA ==== -->
                                                                 <tr>
@@ -643,7 +633,7 @@ endif;
                                                                 </tr>
                                                                 <!-- ================================= -->
                                                                 <!-- ==== FIM DADOS DO PARECERISTA === -->
-                                                                
+
                                                                 <!-- ============================= -->
                                                                 <!-- ===== DADOS DO RELATOR ====== -->
                                                                 <tr>
@@ -712,18 +702,18 @@ endif;
                                                         $valoretapasolicitado += $valorufsolicitado;
                                                         $valoretapaparecerista += $valorufparecerista;
                                                         $valoretapacomponente += $valorufcomponente;
-                                                        
+
                                                         $valorprodutosolicitado += $valorufsolicitado;
                                                         $valorprodutoparecerista += $valorufparecerista;
                                                         $valorprodutocomponente += $valorufcomponente;
                                                       ?>
                                                     <tr>
-                                                        <td colspan="7" class="black" style="font-size: 14pt;">Total de UF</td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufsolicitado) ;?></td>
+                                                        <td colspan="7" class="black-text" style="font-size: 14pt;">Total de UF</td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufsolicitado) ;?></td>
                                                         <td></td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufparecerista)  ;?></td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufparecerista)  ;?></td>
                                                         <td></td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufcomponente)   ;?></td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufcomponente)   ;?></td>
                                                         <td></td>
                                                     </tr>
                                                     <tr>
@@ -768,9 +758,9 @@ endif;
                         <th>Total Componente</th>
                     </tr>
                     <tr>
-                        <td class="black" style="font-size: 12pt; font-weight: 600; "><?php echo $this->formatarReal($this->totalproponente)   ;?></td>
-                        <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalparecerista)   ;?></td>
-                        <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalcomponente)   ;?></td>
+                        <td class="black-text" style="font-size: 12pt; font-weight: 600; "><?php echo $this->formatarReal($this->totalproponente)   ;?></td>
+                        <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalparecerista)   ;?></td>
+                        <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalcomponente)   ;?></td>
                     </tr>
                 </table>
             </td>

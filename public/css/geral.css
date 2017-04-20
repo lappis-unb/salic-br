@@ -1261,20 +1261,50 @@ x - GRID ANTIGO
 x - CORES
 --------------------------------------------------------------*/
 #conteudo .red,
-#conteudo .red a { color:#c30; }
+#conteudo .red a, 
+#conteudo table.tabela td.red
+{ 
+    color:#c30; 
+    background: white !important;
+}
 
 #conteudo .green,
-#conteudo .green a   { color:#096; }
+#conteudo .green a,
+#conteudo table.tabela td.green
+{ 
+    color:#096; 
+    background: white !important;
+}
 
 #conteudo .blue,
-#conteudo .blue a     { color:#06c; }
+#conteudo .blue a ,    
+#conteudo table.tabela td.blue
+{ 
+    color:#06c; 
+    background: white !important;
+}
 
-#conteudo .orange, #conteudo .orange a { color:#f90; }
+#conteudo .orange, 
+#conteudo .orange a ,
+#conteudo table.tabela td.orange
+{ 
+    color:#f90; 
+    background: white !important;
+}
 
-#conteudo .black, #conteudo .black a   { color:#000; }
+#conteudo .black, 
+#conteudo .black a,
+#conteudo table.tabela td.black,
+{ 
+    color:#000; 
+    background: white !important;
+}
 
 #conteudo .white,
-#conteudo .write a   { color:#fff; }
+#conteudo .white a   
+{ 
+    color:#fff; 
+}
 
 #conteudo .bg_red     { background:#c30; }
 #conteudo .bg_green   { background:#096; }
