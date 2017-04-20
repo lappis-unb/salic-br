@@ -29,7 +29,7 @@
     <?php foreach ($this->relExecRec as $r) { ?>
     <tr>
         <td align="center"><?php echo $x; ?></td>
-        <td class="<?php echo $r->tipo=='RECEITA' ? 'blue' : 'red';  ?>"><?php echo $r->tipo; ?></td>
+        <td class="<?php echo $r->tipo=='RECEITA' ? 'blue-text' : 'red-text';  ?>"><?php echo $r->tipo; ?></td>
         <td><?php echo Validacao::mascaraCPFCNPJ($r->CgcCpfMecena); ?></td>
         <td><?php echo $r->Nome; ?></td>
         <td align="right"><?php echo number_format($r->vlIncentivado, 2, ",", "."); ?></td>
@@ -60,7 +60,7 @@
     <?php foreach ($this->relExecDesp as $r) { ?>
     <tr>
         <td align="center"><?php echo $y; ?></td>
-        <td class="<?php echo $r->tipo=='RECEITA' ? 'blue' : 'red';  ?>"><?php echo ($r->tipo!=$tipoAnterior) ? $r->tipo : ''; ?></td>
+        <td class="<?php echo $r->tipo=='RECEITA' ? 'blue-text' : 'red-text';  ?>"><?php echo ($r->tipo!=$tipoAnterior) ? $r->tipo : ''; ?></td>
         <td><?php echo ($r->Etapa!=$etapaAnterior) ? $r->Etapa : ''; ?></td>
         <td><?php echo $r->Item; ?></td>
         <td align="right"><?php echo number_format($r->vlPagamento, 2, ",", "."); ?></td>

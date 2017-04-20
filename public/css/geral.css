@@ -633,6 +633,7 @@ x - Menu lateral
     position: relative;
     left: 9px;
     background: url(../img/sombra-menu-contexto.gif) right repeat-y #fff;
+    margin-bottom: 300px;
 }
 
 #menuContexto .top {
@@ -1260,20 +1261,50 @@ x - GRID ANTIGO
 x - CORES
 --------------------------------------------------------------*/
 #conteudo .red,
-#conteudo .red a { color:#c30; }
+#conteudo .red a, 
+#conteudo table.tabela td.red
+{ 
+    color:#c30; 
+    background: white !important;
+}
 
 #conteudo .green,
-#conteudo .green a   { color:#096; }
+#conteudo .green a,
+#conteudo table.tabela td.green
+{ 
+    color:#096; 
+    background: white !important;
+}
 
 #conteudo .blue,
-#conteudo .blue a     { color:#06c; }
+#conteudo .blue a ,    
+#conteudo table.tabela td.blue
+{ 
+    color:#06c; 
+    background: white !important;
+}
 
-#conteudo .orange, #conteudo .orange a { color:#f90; }
+#conteudo .orange, 
+#conteudo .orange a ,
+#conteudo table.tabela td.orange
+{ 
+    color:#f90; 
+    background: white !important;
+}
 
-#conteudo .black, #conteudo .black a   { color:#000; }
+#conteudo .black, 
+#conteudo .black a,
+#conteudo table.tabela td.black,
+{ 
+    color:#000; 
+    background: white !important;
+}
 
 #conteudo .white,
-#conteudo .write a   { color:#fff; }
+#conteudo .white a   
+{ 
+    color:#fff; 
+}
 
 #conteudo .bg_red     { background:#c30; }
 #conteudo .bg_green   { background:#096; }
@@ -2097,10 +2128,18 @@ x - DATE PICKER
 }
 
 .ui-dialog input[type="text"],
-.ui-dialog textarea{
+.ui-dialog textarea,
+.ui-dialog select.input_simples {
     /*width: 100%;*/
     border: 1px solid #676767;
     background: #fff;
+    min-height: 25px;
+}
+
+.ui-dialog input[type="text"][disabled],
+.ui-dialog textarea[disabled],
+.ui-dialog select.input_simples[disabled]{
+    background: rgb(230, 230, 230);
 }
 
 .ui-dialog textarea {

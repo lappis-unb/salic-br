@@ -1094,7 +1094,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function gerencialAction(){
-        $this->_forward("visual-tecnico");
+        $this->forward("visual-tecnico");
     }
 
     public function visualTecnicoAction(){
