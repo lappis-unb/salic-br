@@ -1,3 +1,15 @@
+Release 2.0.4
+  * Fix: [Admissibilidade] Correção no enquadramento do projeto
+  * Fix: [Admissibilidade] Correção na transformação de proposta em projeto
+  * Fix: [Comprovação de objeto] Ajuste no CEP ao gravar plano de distribuição
+  * Fix: [CNIC]	Ajuste em telas quebradas em CNIC
+  * Fix: [Gerenciar pareceres] Ajustes de estilo e botões ao visualizar parecer técnico consolidado (parecer técnico consolidado, análise de conteúdo, análise de custo e diligências)
+  * Fix: [Planilha orçamentária] Ajuste na gravação das tabelas
+  * Fix: [Proponente] Estilos, botões, rolagem em cadastrar fornecedor
+  * Fix: [Proponente] Corrigindo carregamento infinito em cadastrar fornecedor
+  * Fix: [Proponente] Ajuste de estilo na execução da receita e despesa
+  * Fix: [Proponente] Correção na impressão do projeto
+
 Release 2.0.3
   * Fix: [Checklist para publicação] Ajuste em alterar projeto
   * Fix: [Checklist para publicação] Ajuste de estilo
