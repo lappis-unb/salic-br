@@ -177,7 +177,7 @@ if (  $this->modal == "s"  ) {?>
             window.location = "<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>";
         });
         
-        $('.btn_limpar').click(function(){
+        $('.botao_limpar').click(function(){
             var cpfcnpj = $(this).attr('cpfcnpj'),
                 cod = $(this).attr('cod');
             
@@ -294,7 +294,7 @@ if (  $this->modal == "s"  ) {?>
         
         habilitarEnvio();
         
-        $('.btn_imprimir').click(function(){
+        $('.botao_imprimir').click(function(){
             window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'imprimir')); ?>?cpfCnpj=<?php echo $_REQUEST['cpfCnpj'] ?>');
         });
 
@@ -680,7 +680,9 @@ if (  $this->modal == "s"  ) {?>
                         }
                     ?>
                 </td>
-                <td align="center"><input type="button" class="btn_limpar" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="49" /></td>
+                <td align="center"><a class="botao_limpar waves-effect waves-light btn btn-default small" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="49" >
+                    <i class="material-icons left">delete</i>limpar</a>
+                </td>
             </tr>
             <?php if($this->proponente == "PJ"):?>
             <!------------------------------------------------------------------------------------------------------------------>
@@ -740,7 +742,9 @@ if (  $this->modal == "s"  ) {?>
                         }
                     ?>
                 </td>
-                <td align="center"><input type="button" class="btn_limpar" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="51" /></td>
+                <td align="center"><a class="botao_limpar waves-effect waves-light btn btn-default small" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="51" >
+                    <i class="material-icons left">delete</i>limpar</a>
+                </td>                                             
             </tr>
 
             <!------------------------------------------------------------------------------------------------------------------>
@@ -798,7 +802,9 @@ if (  $this->modal == "s"  ) {?>
                         }
                     ?>
                 </td>
-                <td align="center"><input type="button" class="btn_limpar" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="52" /></td>
+                <td align="center"><a class="botao_limpar waves-effect waves-light btn btn-default small" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="52" >
+                    <i class="material-icons left">delete</i>limpar</a>
+                </td>                                             
             </tr>
             <?php endif;?>
             <!--==============================================================================================================-->
@@ -892,7 +898,9 @@ if (  $this->modal == "s"  ) {?>
                         }*/
                     ?>
                 </td>-->
-                <td align="center"><input type="button" class="btn_limpar" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="244" /></td>
+                <td align="center"><a class="botao_limpar waves-effect waves-light btn btn-default small" cpfcnpj="<?php echo $this->cgccpf; ?>" cod="244" >
+                    <i class="material-icons left">delete</i>limpar</a>
+                </td>                                             
             </tr>
 
 
@@ -959,10 +967,18 @@ if (  $this->modal == "s"  ) {?>
 
             <tr>
                 <td colspan="7" align="center">
-                    <input id="btSalvar" type="button" value=" " class="btn_salvar" onclick="enviarForm()" />
-                    <input id="btImprimir" type="button" value=" " class="btn_imprimir"  />
+                  <a id="btSalvar" onclick="enviarForm()" class="botao_limpar waves-effect waves-light btn btn-default small" href="#">
+                    <i class="material-icons left">send</i>salvar
+		  </a>
+                  <a id="btImprimir" class="botao_imprimir waves-effect waves-light btn btn-default small" href="#">
+                    <i class="material-icons left">print</i>imprimir
+		  </a>
+
                     <?php if (  $this->modal == "s" ) {?>
-                        <input id="btCancelar" type="button" value=" " class="btn_cancelar" />
+			<a id="btCancelar" class="botao_cancelar waves-effect waves-light btn white small" href="#">
+			  cancelar
+			</a>
+
                     <?php } ?>
                     <?php if (  isset ($this->modal ) ) {?>
                         <input id="caminho" name="caminho" type="hidden" value="<?php echo $this->caminho; ?>" class="btn_cancelar" onclick="voltar();" />
