@@ -12,15 +12,15 @@ class tbDocumento extends MinC_Db_Table_Abstract {
 
 
     /**
-     * M�todo para cadastrar
+     * Metodo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o �ltimo id cadastrado)
+     * @return integer (retorna o ultimo id cadastrado)
      */
     public function cadastrarDados($dados)
     {
             return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    } // fecha metodo cadastrarDados()
 
 
     /**
