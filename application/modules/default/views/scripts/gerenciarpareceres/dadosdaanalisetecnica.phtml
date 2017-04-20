@@ -377,7 +377,7 @@
     <div id="diligencias" class="sumir">
         <table class="tabela">
             <?php foreach($this->diligencias as $item3){ ?>
-            <tr>
+            <tr class="destacar">
                 <td align="center">Data Solicitação</td>
                 <td align="center">Data Resposta</td>
             </tr>
@@ -385,17 +385,17 @@
                 <td align="center"><?php echo $item3->DtSolicitacao; ?>	</td>
                 <td align="center"><?php echo $item3->DtResposta?></td>
             </tr>
-            <tr>
+            <tr class="destacar">
                 <td colspan="2">Solicitação</td>
             </tr>
             <tr>
-                <td colspan="2"><?php echo strip_tags($item3->Solicitacao);?></td>
+                <td colspan="2"><?php echo $item3->Solicitacao;?></td>
             </tr>
-            <tr>
+            <tr class="destacar">
                 <td colspan="2">Resposta</td>
             </tr>
             <tr>
-                <td colspan="2"><?php echo strip_tags($item3->Resposta);?></td>
+                <td colspan="2"><?php echo $item3->Resposta;?></td>
             </tr>
             <?php } ?>
         </table>

@@ -235,7 +235,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 $slct2->where($coluna, $valor);
             }
 
-            
+
             $rs = $this->fetchAll($slct2)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
@@ -251,7 +251,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        
+
         return $this->fetchAll($slct);
     }
 
@@ -397,7 +397,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 $slct2->where($coluna, $valor);
             }
 
-            
+
             $rs = $this->fetchAll($slct2)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
@@ -413,8 +413,8 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        
-        
+
+
         return $this->fetchAll($slct);
     }
 
@@ -719,7 +719,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        
+
         return $this->fetchAll($slct);
     }
 
@@ -840,25 +840,35 @@ class tbPauta extends MinC_Db_Table_Abstract {
         return $this->fetchAll($slct);
     }
 
-    public function parecerDoComponenteComissao($idPronac) {
+    public function parecerDoComponenteComissao($idPronac)
+    {
 
-        $select =  new Zend_Db_Expr("
-                SELECT p.idPronac,x.AnoProjeto+x.Sequencial as PRONAC,x.NomeProjeto ,pa.stAtivo,pa.idTipoAgente,n.usu_nome ,pa.ParecerFavoravel,pa.ResumoParecer,p.stEnvioPlenario,
-                       r.NrReuniao,r.DtFinal,
-                       round((Select sum(qtItem * nrOcorrencia * vlUnitario) From tbPlanilhaAprovacao y where y.idPronac = x.idPronac and y.stAtivo = 'S'),2) AS valor
-                FROM BDCORPORATIVO.scSAC.tbPauta p
-                INNER JOIN Parecer pa ON (p.IdPRONAC = pa.IdPRONAC)
-                INNER JOIN Projetos x ON (x.IdPRONAC = pa.IdPRONAC)
-                INNER JOIN tbReuniao r ON (p.idNrReuniao = r.idNrReuniao)
-                INNER JOIN Tabelas..Usuarios n ON (n.usu_codigo = pa.Logon)
-                WHERE pa.idTipoAgente = 6 AND p.idPronac = $idPronac ");
-        try {
-            $db= Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        } catch (Zend_Exception_Db $e) {
-            $this->view->message = $e->getMessage();
-        }
-        return $db->fetchAll($select);
+        $cols = [
+            'p.idPronac',
+            new Zend_Db_Expr('x.AnoProjeto+x.Sequencial as PRONAC'),
+            'x.NomeProjeto',
+            'pa.stAtivo','pa.idTipoAgente',
+            'n.usu_nome' ,
+            'pa.ParecerFavoravel',
+            'pa.ResumoParecer',
+            'p.stEnvioPlenario',
+            'r.NrReuniao',
+            'r.DtFinal',
+            "round( (Select sum(qtItem * nrOcorrencia * vlUnitario) From sac.dbo.tbPlanilhaAprovacao y where y.idPronac = x.idPronac and y.stAtivo = 'S') ,2) AS valor" ];
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $select = $db->select()
+            ->from(array('p' => 'tbPauta'), $cols, 'BDCORPORATIVO.scSAC')
+            ->join(array('pa' => 'Parecer'), '(p.IdPRONAC = pa.IdPRONAC)', null, 'sac.dbo')
+            ->join(array('x' => 'Projetos'), '(x.IdPRONAC = pa.IdPRONAC)', null, 'sac.dbo')
+            ->join(array('r' => 'tbReuniao'), '(p.idNrReuniao = r.idNrReuniao)', null, 'sac.dbo' )
+            ->join(array('n' => 'Usuarios'), '(n.usu_codigo = pa.Logon)', null,'Tabelas.dbo')
+            ->where('p.idPronac = ?', $idPronac)
+            ->where('pa.idTipoAgente = 6')
+            ;
+
+            return $db->fetchAll($select);
     }
 
     public function buscaProjetosAprovados($idNrReuniao) {
@@ -947,7 +957,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             ->union(array('('.$slct1.')', '('.$slct2.')', '('.$slct3.')'))
                             ->order('3');
 
-        
+
         return $this->fetchAll($slctUnion);
     }
 

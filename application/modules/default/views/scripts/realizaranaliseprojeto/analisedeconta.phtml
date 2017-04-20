@@ -1,19 +1,7 @@
-<?php
-/**
- * Análise de Cortes Sugeridos
- * @author Equipe RUP - Politec
- * @since 07/06/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller.realizaranaliseprojeto
- * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
- */
-echo $this->partial('inc/menu.inc.php', $this) // menu 
-?>
+<?php echo $this->partial('realizaranaliseprojeto/inc/menu.inc.php', $this) ?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
-<div id="breadcrumb"> 
+<div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'index')); ?>" title="Ir para An&aacute;lise do Membro da Comiss&atilde;o">An&aacute;lise do Membro da Comiss&atilde;o</a></li>
@@ -37,7 +25,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 
 
 
-    <?php echo $this->partial('inc/menu_abas.inc.php', $this) // menu   ?>
+    <?php echo $this->partial('realizaranaliseprojeto/inc/menu_abas.inc.php', $this) // menu   ?>
 
     <!-- ========== SCRIPT MODAL ========== -->
     <script type="text/javascript">
@@ -58,14 +46,14 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                     $("#ocorrencia"+idplanilhaaprovacao).val(ocorrencia)
                     calcular_planilha_projeto(idplanilhaaprovacao)
                     validar_val_parec_relat(idplanilhaaprovacao)
-                    $("#confirma").dialog('close');  
+                    $("#confirma").dialog('close');
                 }
                 ,
                 function(){
-                    $("#confirma").dialog('close');  
+                    $("#confirma").dialog('close');
                 }
                 )
-                $("#confirma").dialog('open');  
+                $("#confirma").dialog('open');
             })
             $(".linkplanilha").click(function(){
                 $('.fundo_linha4').removeClass('fundo_linha4');
@@ -572,7 +560,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                                 </div>
                                     <!-- FIM DADOS DO RELATOR-->
                                 <!-- Fim Modal-->
-                            
+
                             </td>
                             <td class="direita blue"><?php echo $this->formatarReal($this->escape($resposta['vltotalsolicitado'])); ?></td>
                             <td class="direita red"><?php echo $this->formatarReal($this->escape($resposta['vltotalparecerista'])); ?></td>
