@@ -1,4 +1,5 @@
 Release 2.0.4
+  * Fix: [Admissibilidade] Assinar projeto quebrado
   * Fix: [Admissibilidade] Correção no enquadramento do projeto
   * Fix: [Admissibilidade] Correção na transformação de proposta em projeto
   * Fix: [Comprovação de objeto] Ajuste no CEP ao gravar plano de distribuição
@@ -9,6 +10,7 @@ Release 2.0.4
   * Fix: [Proponente] Corrigindo carregamento infinito em cadastrar fornecedor
   * Fix: [Proponente] Ajuste de estilo na execução da receita e despesa
   * Fix: [Proponente] Correção na impressão do projeto
+  * Fix: [Proponente] Readequação - local de realização
 
 Release 2.0.3
   * Fix: [Checklist para publicação] Ajuste em alterar projeto
