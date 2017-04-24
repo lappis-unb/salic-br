@@ -187,6 +187,10 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             # Caso o usuario esteja autenticado
             if ($auth->hasIdentity()) {
 
+                if(empty($permissoes)) {
+                   return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
+                }
+
                 # Verifica se o grupo ativo esta no array de permissoes
                 if (!in_array($GrupoAtivo->codGrupo, $permissoes)) {
                     $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
