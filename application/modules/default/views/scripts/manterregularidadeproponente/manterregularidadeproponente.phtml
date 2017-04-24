@@ -156,11 +156,11 @@ if (  $this->modal == "s"  ) {?>
     
         var check = $("input:checkbox:checked").length;
         if ( check  <= 0 ){
-            JSBloquearAlteracaoFormulario();
+            //JSBloquearAlteracaoFormulario();
         }
         else{
-            $('body').find('.btn_salvar-off').each(function(){
-                $(this).replaceWith("<input type='button' class='btn_salvar' id='btSalvar' value=' ' onclick='enviarForm()'>");
+            $('body').find('.botao_salvar-off').each(function(){
+                $(this).replaceWith("<input type='button' class='botao_salvar' id='btSalvar' value=' ' onclick='enviarForm()'>");
             });
         }
     }
@@ -524,7 +524,8 @@ if (  $this->modal == "s"  ) {?>
             $("#linhaFederal").removeClass("vencida");
             $("#linhaFederal").removeClass("vencidaInput");
         }
-         
+
+            <?php if($this->proponente == "PJ"): ?>         
         //DATA FGTS
         dtTmp = null;
         arrTmp = null;
@@ -544,7 +545,7 @@ if (  $this->modal == "s"  ) {?>
             $("#linhaFgts").removeClass("vencida");
             $("#linhaFgts").removeClass("vencidaInput");
         }
-            
+        
         //DATA INSS
         dtTmp = null;
         arrTmp = null;
@@ -564,6 +565,7 @@ if (  $this->modal == "s"  ) {?>
             $("#linhaInss").removeClass("vencida");
             $("#linhaInss").removeClass("vencidaInput");
         }
+	    <?php endif; ?>
        
     }
 </script>
@@ -633,34 +635,34 @@ if (  $this->modal == "s"  ) {?>
                 <td>
                     <input name="txtDtFut" id="txtDtFut" onclick="limpar_campo(this);" 
                            onchange="addDia(this.value,1,$('#federal').attr('id')),validaData(this,'frmCertidao');"
-                           disabled="disable" class="input_simples btn_calendario" onkeydown="mascara(this, format_data)" 
+                           class="input_simples btn_calendario" onkeydown="mascara(this, format_data)" 
                            onkeypress="mascara(this, format_data)" onkeyup="mascara(this, format_data)" 
                            maxlength="10" type="text" value="<?php echo $this->dtemissaoqf ?>" />
                     <span id="txtDtFutSpan" ></span>
                 </td>
                 <!--<td>&nbsp;</td>
                 <td>
-                    <input id="quitacaoFederalDias" class="input_simples" name="txtDias" disabled="disable" maxlength="3"                            
+                    <input id="quitacaoFederalDias" class="input_simples" name="txtDias" maxlength="3"                            
                            onblur="calculaDia(this.value,$('#txtDtFut').val(),$('#federal').attr('id'))" 
                            type="text" value="<?php //echo $this->diasqf ?>"/>
                     <span id="quitacaoFederalDiasSpan" ></span>
                 </td>-->
                 <td>
-                    <input id="federal" name="quitacaoFederalValidade" disabled="disable" readonly="readonly" maxlength="10" 
+                    <input id="federal" name="quitacaoFederalValidade" readonly="readonly" maxlength="10" 
                            onblur="" onkeydown="mascara(this, format_data)"
                            onkeyup="mascara(this, format_data)" onkeypress="mascara(this, format_data)" 
                            class="input_simples btn_calendario" type="text" value="<?php echo $this->dtvalidadeqf ?>"/>
                     <span id="federalSpan" ></span>
                 </td>
                 <td>
-                    <input disabled="disable" maxlength="7" class="input_simples" type="text" id="quitacaoFederalProjeto" 
+                    <input maxlength="7" class="input_simples" type="text" id="quitacaoFederalProjeto" 
                            name="quitacaoFederalProjeto" onblur="buscaPronac(this.value,this.id)" value="<?php echo $this->pronacqf ?>" />
                     <span id="quitacaoFederalProjetoSpan" ></span>
                     <input type="hidden" id="verificaqf" name="verificaqf" value="" />
                     <input type="hidden" id="idcertidaoqf" name="idcertidaoqf" value="<?php echo $this->idcertidaoqf ?>" />
                 </td>
                 <!--<td>
-                    <input disabled="disable" maxlength="15" class="input_simples" type="text" id="quitacaoFederalProtocolo" 
+                    <input maxlength="15" class="input_simples" type="text" id="quitacaoFederalProtocolo" 
                            name="quitacaoFederalProtocolo" value="<?php echo $this->cdprotocolonegativaqf ?>" />
                     <input type="hidden" id="verificaqf" name="verificaqf" value="" />
                     <input type="hidden" id="idcertidaoqf" name="idcertidaoqf" value="<?php echo $this->idcertidaoqf ?>" />
@@ -693,7 +695,7 @@ if (  $this->modal == "s"  ) {?>
                 <td align="center"><input type="checkbox" value=""  name="checkFGTS" onclick="habilitaCampos(3), habilitarEnvio()" /></td>
                 <td>FGTS</td>
                 <td>
-                    <input id="txtDtFutFGTS"  name="txtDtFutFGTS" disabled="disable" class="input_simples btn_calendario" 
+                    <input id="txtDtFutFGTS"  name="txtDtFutFGTS" class="input_simples btn_calendario" 
                            onchange="addDia(this.value,3,$('#fgts').attr('id'))" 
                            onkeydown="mascara(this, format_data)" onkeyup="mascara(this, format_data)"
                            onkeypress="mascara(this, format_data)" maxlength="10" type="text" 
@@ -702,19 +704,19 @@ if (  $this->modal == "s"  ) {?>
                 </td>
                 <!--<td>&nbsp;</td>
                 <td>
-                    <input class="input_simples" onblur="calculaDia(this.value,$('#txtDtFutFGTS').val(),$('#fgts').attr('id'))" disabled="disable" 
+                    <input class="input_simples" onblur="calculaDia(this.value,$('#txtDtFutFGTS').val(),$('#fgts').attr('id'))" 
                            maxlength="3" type="text" name="txtDiasFGTS" id="quitacaoFGTSDias" value="<?php //echo $this->diasfgts ?>"  />
                     <span id="quitacaoFGTSDiasSpan" ></span>
                 </td>-->
                 <td>
-                    <input id="fgts"  name="quitacaoFGTSValidade" disabled="disable" readonly="readonly" maxlength="10"
+                    <input id="fgts"  name="quitacaoFGTSValidade" readonly="readonly" maxlength="10"
                            onkeydown="mascara(this, format_data)" onkeyup="mascara(this, format_data)" 
                            onkeypress="mascara(this, format_data)event);" class="input_simples btn_calendario" type="text" 
                            value="<?php echo $this->dtvalidadefgts ?>"/>
                     <span id="quitacaoFGTSValidadeSpan" ></span>
                 </td>
                 <td>
-                    <input id="quitacaoFGTSProjeto" name="quitacaoFGTSProjeto" disabled="disable" maxlength="7" class="input_simples" type="text" 
+                    <input id="quitacaoFGTSProjeto" name="quitacaoFGTSProjeto" maxlength="7" class="input_simples" type="text" 
                            onblur="buscaPronac(this.value,this.id)" 
                            value="<?php echo $this->pronacfgts ?>" />
                     <span id="quitacaoFGTSProjetoSpan" ></span>
@@ -722,7 +724,7 @@ if (  $this->modal == "s"  ) {?>
                     <input type="hidden" id="idcertidaofgts" name="idcertidaofgts" value="<?php echo $this->idcertidaofgts ?>" />
                 </td>
                 <!--<td>
-                    <input disabled="disable" maxlength="15" class="input_simples" type="text" id="quitacaoFGTSProtocolo" 
+                    <input maxlength="15" class="input_simples" type="text" id="quitacaoFGTSProtocolo" 
                            name="quitacaoFGTSProtocolo" value="<?php echo $this->cdprotocolonegativafgts ?>" />
                     <input type="hidden" id="verificafgts" name="verificafgts" value="" />
                     <input type="hidden" id="idcertidaofgts" name="idcertidaofgts" value="<?php echo $this->idcertidaofgts ?>" />
@@ -755,7 +757,7 @@ if (  $this->modal == "s"  ) {?>
                 <td align="center"><input type="checkbox" value="" name="checkINSS" <?php echo $this->stylealidadeinss ?> onclick="habilitaCampos(2), habilitarEnvio()" /></td>
                 <td>INSS</td>
                 <td>
-                    <input disabled="disable" class="input_simples btn_calendario" onchange="addDia(this.value,2,$('#inss').attr('id')), validaData(this);" 
+                    <input class="input_simples btn_calendario" onchange="addDia(this.value,2,$('#inss').attr('id')), validaData(this);" 
                            onkeydown="mascara(this, format_data)" onkeyup="mascara(this, format_data)" 
                            onkeypress="mascara(this, format_data)" maxlength="10" type="text" 
                            name="txtDtFutINSS" id="txtDtFutINSS" value="<?php echo $this->dtemissaoinss ?>" />
@@ -764,25 +766,25 @@ if (  $this->modal == "s"  ) {?>
                 <!--<td>&nbsp;</td>
                 <td>
                     <input name="txtDiasINSS" id="quitacaoINSSDias" onblur="calculaDia(this.value,$('#txtDtFutINSS').val(),$('#inss').attr('id'))"  
-                           class="input_simples" disabled="disable" maxlength="3" type="text" value="<?php //echo $this->diasinss ?>"  />
+                           class="input_simples" maxlength="3" type="text" value="<?php //echo $this->diasinss ?>"  />
                     <span id="quitacaoINSSDiasSpan" ></span>
                 </td>-->
                 <td>
-                    <input id="inss" name="quitacaoINSSValidade" disabled="disable" readonly="readonly" maxlength="10" onblur="" 
+                    <input id="inss" name="quitacaoINSSValidade" readonly="readonly" maxlength="10" onblur="" 
                            onkeyup="mascara(this, format_data)" onkeypress="mascara(this, format_data)" 
                            class="input_simples btn_calendario" 
                            type="text" value="<?php echo $this->dtvalidadeinss ?>"  />
                     <span id="quitacaoINSSValidadeSpan" ></span>
                 </td>
                 <td>
-                    <input id="quitacaoINSSProjeto" name="quitacaoINSSProjeto" disabled="disable" maxlength="7" class="input_simples" type="text" 
+                    <input id="quitacaoINSSProjeto" name="quitacaoINSSProjeto" maxlength="7" class="input_simples" type="text" 
                            onblur="buscaPronac(this.value,this.id)" value="<?php echo $this->pronacinss ?>" />
                     <span id="quitacaoINSSProjetoSpan" ></span>
                     <input type="hidden" id="verificainss" name="verificainss" value="" />
                     <input type="hidden" id="idcertidaoinss" name="idcertidaoinss" value="<?php echo $this->idcertidaoinss ?>" />
                 </td>
                 <!--<td>
-                    <input id="quitacaoINSSProtocolo" name="quitacaoINSSProtocolo" disabled="disable" maxlength="15" class="input_simples" type="text" 
+                    <input id="quitacaoINSSProtocolo" name="quitacaoINSSProtocolo" maxlength="15" class="input_simples" type="text" 
                            value="<?php echo $this->cdprotocolonegativainss ?>" />
                     <input type="hidden" id="verificainss" name="verificainss" value="" />
                     <input type="hidden" id="idcertidaoinss" name="idcertidaoinss" value="<?php echo $this->idcertidaoinss ?>" />
@@ -815,14 +817,14 @@ if (  $this->modal == "s"  ) {?>
                 <td align="center"><input type="checkbox" value="" name="checkCADIN" onclick="habilitaCampos(4), habilitarEnvio()" /></td>
                 <td>CADIN</td>
                 <td>
-                    <input  name="txtDtFutCADIN" id="txtDtFutCADIN" readonly="readonly" disabled="disable" class="input_simples btn_calendario" onchange="validaData(this);" 
+                    <input  name="txtDtFutCADIN" id="txtDtFutCADIN" readonly="readonly" class="input_simples btn_calendario" onchange="validaData(this);" 
                             onkeydown="mascara(this, format_data)" onkeyup="mascara(this, format_data)" 
                             onkeypress="mascara(this, format_data)" maxlength="10" type="text" 
                             value="<?php echo ($this->dtemissaocadin) ? $this->dtemissaocadin: date("d/m/Y"); ?>" />
                     <span id="txtDtFutCADINSpan" ></span>
                 </td>
                 <!--<td>
-                    <input id="quitacaoCADINHora" name="quitacaoCADINHora" disabled="disable" maxlength="8" onblur="" 
+                    <input id="quitacaoCADINHora" name="quitacaoCADINHora" maxlength="8" onblur="" 
                            OnKeyUp="mascara_hora(this.value, 4);" OnKeyDown="mascara_hora(this.value, 4)" 
                            OnKeyPress="mascara_hora(this.value, 4)" class="input_simples btn_relogio" type="text" 
                            value="<?php echo $this->horacadin; ?>" />
@@ -830,12 +832,12 @@ if (  $this->modal == "s"  ) {?>
                 </td>-->
                 <td>&nbsp;</td>
                 <td>
-                    <input id="quitacaoCADINProjeto" name="quitacaoCADINProjeto" disabled="disable" maxlength="7" class="input_simples" type="text" 
+                    <input id="quitacaoCADINProjeto" name="quitacaoCADINProjeto" maxlength="7" class="input_simples" type="text" 
                            onblur="buscaPronac(this.value,this.id)" value="<?php echo $this->pronaccadin ?>" />
                     <span id="quitacaoCADINProjetoSpan" ></span>
                 </td>
                 <td>
-                    <select id="quitacaoCADINSituacao" name="quitacaoCADINSituacao" disabled="disable" maxlength="15" class="select_simples" >
+                    <select id="quitacaoCADINSituacao" name="quitacaoCADINSituacao" maxlength="15" class="select_simples" >
                         <?php
                         if ($this->cdsituacaocertidaocadin != "") {
                             if ($this->cdsituacaocertidaocadin == "Pendente") {
@@ -870,7 +872,7 @@ if (  $this->modal == "s"  ) {?>
                     <input type="hidden" id="cgcCpf" name="cgcCpf" value="<?php echo $this->cgccpf ?>" />
                 </td>
                 <!--<td>
-                    <input  id="quitacaoCADINProtocolo" name="quitacaoCADINProtocolo" disabled="disable" maxlength="15" class="input_simples" 
+                    <input  id="quitacaoCADINProtocolo" name="quitacaoCADINProtocolo" maxlength="15" class="input_simples" 
                             type="text" value="<?php echo $this->cdprotocolonegativacadin ?>" />
                     <span id="quitacaoCADINProtocoloSpan" ></span>
                     <input type="hidden" id="verificacadin" name="verificacadin" value="" />
@@ -913,7 +915,7 @@ if (  $this->modal == "s"  ) {?>
                 <td align="center"><input type="checkbox" value="" name="checkCEPIM" onclick="habilitaCampos(5), habilitarEnvio()" /></td>
                 <td>CEPIM</td>
                 <td>
-                    <input  name="txtDtFutCEPIM" id="txtDtFutCEPIM" readonly="readonly" disabled="disable" class="input_simples btn_calendario" onchange="validaData(this);"
+                    <input  name="txtDtFutCEPIM" id="txtDtFutCEPIM" readonly="readonly" class="input_simples btn_calendario" onchange="validaData(this);"
                             onkeydown="mascara(this, format_data)" onkeyup="mascara(this, format_data)"
                             onkeypress="mascara(this, format_data)" maxlength="10" type="text"
                             value="<?php echo ($this->dtemissaocepim) ? $this->dtemissaocepim: date("d/m/Y"); ?>" />
@@ -921,12 +923,12 @@ if (  $this->modal == "s"  ) {?>
                 </td>
                 <td>&nbsp;</td>
                 <td>
-                    <input id="quitacaoCEPIMProjeto" name="quitacaoCEPIMProjeto" disabled="disable" maxlength="7" class="input_simples" type="text"
+                    <input id="quitacaoCEPIMProjeto" name="quitacaoCEPIMProjeto" maxlength="7" class="input_simples" type="text"
                            onblur="buscaPronac(this.value,this.id)" value="<?php echo $this->pronaccepim ?>" />
                     <span id="quitacaoCEPIMProjetoSpan" ></span>
                 </td>
                 <td>
-                    <select id="quitacaoCEPIMSituacao" name="quitacaoCEPIMSituacao" disabled="disable" maxlength="15" class="select_simples" >
+                    <select id="quitacaoCEPIMSituacao" name="quitacaoCEPIMSituacao" maxlength="15" class="select_simples" >
                         <?php
                         if ($this->cdsituacaocertidaocepim != "") {
                             if ($this->cdsituacaocertidaocepim == "Pendente") {
@@ -981,7 +983,7 @@ if (  $this->modal == "s"  ) {?>
 
                     <?php } ?>
                     <?php if (  isset ($this->modal ) ) {?>
-                        <input id="caminho" name="caminho" type="hidden" value="<?php echo $this->caminho; ?>" class="btn_cancelar" onclick="voltar();" />
+                        <input id="caminho" name="caminho" type="hidden" value="<?php echo $this->caminho; ?>" class="botao_cancelar" onclick="voltar();" />
                     <?php } ?>
                 </td>
             </tr>
