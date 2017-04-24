@@ -39,7 +39,12 @@ label {
 .margin-bottom20 { margin-bottom: 20px; }
 .margin-bottom30 { margin-bottom: 30px }
 
-
+.content h3,
+.content h4 {
+    clear: both;
+    display: block;
+    margin-bottom: 30px;
+}
 /*--------------------------------------------------------------
 x - BODY
 --------------------------------------------------------------*/
