@@ -1004,6 +1004,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
         $rsPreProjeto = $tblPreProjeto->propostas($this->idAgente, $this->idResponsavel, $idAgente, array(), $order, $start, $length, $search);
+        $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
 
         $recordsTotal = 0;
         $recordsFiltered = 0;
@@ -1013,6 +1014,8 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $proposta->nomeproponente = utf8_encode($proposta->nomeproponente);
                 $proposta->nomeprojeto = utf8_encode($proposta->nomeprojeto);
                 $proposta->situacao = utf8_encode($proposta->situacao);
+                $rsStatusAtual = $Movimentacao->buscarStatusPropostaNome($proposta->idpreprojeto);
+                $proposta->situacao = isset($rsStatusAtual['MovimentacaoNome']) ? utf8_encode($rsStatusAtual['MovimentacaoNome']) : '';
 
                 $aux[$key] = $proposta;
             }
