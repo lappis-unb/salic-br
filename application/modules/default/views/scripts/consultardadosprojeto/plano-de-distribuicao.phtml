@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
     $(document).ready(function(){
         //ATUALIZA TITULO DA PAGINA
@@ -7,7 +6,7 @@
     });
     function mostraOcultaElemento(elemento)
     {
-            $('.' + elemento).toggle();
+            $('.' + elemento).toggleClass('sumir');
 
             if ($('#' + elemento).hasClass('btn_adicionar'))
             {
@@ -38,36 +37,30 @@
         <table class="tabela">
             <tr>
                 <td align="left">
-                    <input type="button" class="btn_adicionar" id="<?php echo $distribuicao->idPlanoDistribuicao;?>" onclick="mostraOcultaElemento('<?php echo $distribuicao->idPlanoDistribuicao;?>');" />  <b><?php echo "<b>".$distribuicao->Produto."</b>";?> <?php if($distribuicao->stPrincipal == 1) echo "<font color='red'>(produto principal)</font>";?></b>
+                    <input type="button" class="btn_adicionar" id="<?php echo $distribuicao->idPlanoDistribuicao;?>"
+                        onclick="mostraOcultaElemento('<?php echo $distribuicao->idPlanoDistribuicao;?>');" />
+                    <b><?php echo "<b>".$distribuicao->Produto."</b>";?> <?php if($distribuicao->stPrincipal == 1) echo "<span class='red'>(produto principal)</span>";?></b>
                 </td>
             </tr>
             <tr class="<?php echo $distribuicao->idPlanoDistribuicao;?> sumir" align="left">
-                <td >
+                <td>
                     <table class="tabela">
-                        <!--<tr class="destacar">
-                            <th align="center"><b>Produto</b></th>
+                        <tr>
+                            <td colspan="2" align='center'  class="destacar"><b>Produto</b></td>
                         </tr>
                         <tr>
-                            <td align='center' style="font-size: 11pt"><?php echo "<b>".$distribuicao->Produto."</b>";?> <?php if($distribuicao->stPrincipal == 1) echo "<font color='red'>(principal)</font>";?></td>
-                        </tr>-->
-                        <tr>
-                            <td colspan="2" align='center' width="20%" class="destacar"><b>Produto</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align='center' width="80%" style="font-size: 11pt"><?php echo "<b>".$distribuicao->Produto."</b>";?></td>
+                            <td colspan="2" align='center'  style="font-size: 11pt"><?php echo "<b>".$distribuicao->Produto."</b>";?></td>
                         </tr>
                         <tr>
                             <td align='center' class="destacar"><b>&Aacute;rea</b></td>
-			    <td align='center' class="destacar"><b>Segmento</b></td>
-			                               
+                            <td align='center' class="destacar"><b>Segmento</b></td>
                         </tr>
                         <tr>
-			    <td align='center'><?php echo $distribuicao->Area; ?></td>
+                            <td align='center'><?php echo $distribuicao->Area; ?></td>
                             <td align='center'><?php echo $distribuicao->Segmento; ?></td>
-                        </tr>			
-
+                        </tr>
                         <tr>
-                            <td colspan="2" align= 'center' style='padding:0;'>
+                            <td colspan="2" align= 'center' >
                                 <table class='tabela'>
                                     <tr class="destacar">
                                         <td align="center"><b>Distribui&ccedil;&atilde;o Gratuita (Qtde)</b></td>
@@ -169,7 +162,7 @@
             </tr>
         </table>
         <?php endforeach; ?>
-<?php else: ?>
+    <?php else: ?>
     <table class="tabela">
         <tr>
             <td align="center"><em>Dados n&atilde;o informados!</em></td>

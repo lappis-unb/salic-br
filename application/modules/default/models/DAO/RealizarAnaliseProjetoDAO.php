@@ -17,7 +17,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
        $db = Zend_Db_Table::getDefaultAdapter();
        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
        return $db->fetchRow($sele);
-        
+
     }
 
     /**
@@ -165,7 +165,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                 }
             }
 
-            
+
                 /**
                  * M�todo que insere os dados na tabela tbplanilhaaprovacao
                  * @access public
@@ -238,7 +238,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
     }
 
-    
+
     /**
      * M�todo para recuperar os projetos em an�lise. (CONSELHEIRO)
      * S� efetua a busca se as fontes de recursos estiverem de acordo com o C�digo 109 � Incentivo Fiscal Federal,
@@ -526,7 +526,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         {
             $sql.= " WHERE AP. tpAnalise = '$tpAnalise' and AC.idPronac = $idPronac";
         }
-//        
+//
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
@@ -552,7 +552,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 //        die($sql);
         return $resultado;
     }
-    
+
     /**
      * M�todo que busca os produtos dos projetos da an�lise de custos
      * @access public
@@ -560,10 +560,10 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      * @param integer $idPronac
      * @return object
      */
-    
+
     public static function analiseDeCustosBuscarProduto($idPronac)
     {
-		$sql = "SELECT DISTINCT PD.Descricao, 
+		$sql = "SELECT DISTINCT PD.Descricao,
 					CASE
 						WHEN PAP.idProduto = 0
 							THEN 'Administra��o do Projeto'
@@ -582,8 +582,8 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
-					AND (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)			
-					AND PP.FonteRecurso = 109 
+					AND (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
+					AND PP.FonteRecurso = 109
 					AND PAP.tpPlanilha = 'CO'
                                         AND I.idplanilhaitens <> 206
                                         AND I.idplanilhaitens <> 1238";
@@ -626,8 +626,8 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
 					AND (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
-					AND PP.FonteRecurso = 109 
-					AND PAP.tpPlanilha = 'CO' 
+					AND PP.FonteRecurso = 109
+					AND PAP.tpPlanilha = 'CO'
 						AND I.idplanilhaitens <> 206
                         AND I.idplanilhaitens <> 1238";
 
@@ -677,9 +677,9 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
 					AND (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
-					AND PP.FonteRecurso = 109 
-					AND PAP.tpPlanilha = 'CO' 
-						                                    
+					AND PP.FonteRecurso = 109
+					AND PAP.tpPlanilha = 'CO'
+
 						AND I.idplanilhaitens <> 206
                         AND I.idplanilhaitens <> 1238";
 
@@ -915,7 +915,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $dados = array('situacao'=>$situacao);
-        
+
         $alterar = $db->update("sac.dbo.projetos", $dados, $where);
         return true;
         }
@@ -924,7 +924,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             return false;
         }
     } // fech
- 
+
 public static  function outrasinformacoes($idpronac)
 	    {
 	      $sql = " SELECT p.idPronac,
@@ -946,8 +946,8 @@ public static  function outrasinformacoes($idpronac)
 	                      EsferaTombamento
 	                FROM  SAC.dbo.PreProjeto pr
 	                      INNER JOIN SAC.dbo.Projetos p on (pr.idPreProjeto = p.idProjeto)
-	                where p.idPronac =$idpronac";  
-	      
+	                where p.idPronac =$idpronac";
+
 	      try
 			{
 				$db = Zend_Db_Table::getDefaultAdapter();
@@ -958,7 +958,7 @@ public static  function outrasinformacoes($idpronac)
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
 			return $db->fetchRow($sql);
-	   
+
 	} // fecha class
 
 	public static function localrealizacao($idpronac)
@@ -1011,9 +1011,9 @@ public static  function outrasinformacoes($idpronac)
 				$this->view->message = $e->getMessage();
 			}
 
-	   
+
 	} // fecha class
-	
+
 public static function deslocamento($pronac)
 {
         $table = Zend_Db_Table::getDefaultAdapter();
@@ -1052,7 +1052,7 @@ public static function deslocamento($pronac)
                 array(new Zend_Db_Expr('Municipios_2.Descricao AS MunicipioDestino')),
                 'Agentes.dbo');
 
-		
+
 		try
 			{
 				$db = Zend_Db_Table::getDefaultAdapter();
@@ -1111,7 +1111,7 @@ public static function divulgacaoProjetos($pronac){
                     INNEr JOIN sac.dbo.Projetos p on (d.idProjeto = p.idProjeto)
                     INNER JOIN sac.dbo.Verificacao v on (d.idVeiculo = v.idVerificacao)
                     WHERE p.IdPRONAC ='$pronac' AND d.stPlanoDivulgacao = 1";
-	
+
 	try
 			{
 				$db = Zend_Db_Table::getDefaultAdapter();
@@ -1121,7 +1121,7 @@ public static function divulgacaoProjetos($pronac){
 			{
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
-			return $db->fetchAll($sql);	
+			return $db->fetchAll($sql);
 }
 
 public static function divulgacaoProjetosGeral($pronac){
@@ -1261,7 +1261,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
         ->where('y.IdPRONAC = ?',$pronac)
         ->where('x.stPlanoDistribuicaoProduto = 1');
 
-	
+
                 if ($idproduto) {
                     $sql .= sprintf(' AND x.idProduto = %d', $idproduto);
                 }
@@ -1287,14 +1287,14 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 					  SELECT CodigoDocumento,
 					         Descricao,
 					         'Anexado pelo Proponente' as Classificacao,
-					         idAgente as Codigo,CONVERT(CHAR(10), Data,103) + ' ' + CONVERT(CHAR(8), Data,108) AS Data,  
+					         idAgente as Codigo,CONVERT(CHAR(10), Data,103) + ' ' + CONVERT(CHAR(8), Data,108) AS Data,
 					         NoArquivo,
 					         TaArquivo,
 					         idDocumentosAgentes,'tbDocumentosAgentes' as Tabela
-					  FROM SAC.dbo.tbDocumentosAgentes d  
-					  INNER JOIN SAC.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)  
+					  FROM SAC.dbo.tbDocumentosAgentes d
+					  INNER JOIN SAC.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)
 					  --WHERE d.idPRONAC = $idpronac";
-	   
+
 	      try
 			{
 				$db = Zend_Db_Table::getDefaultAdapter();
@@ -1305,20 +1305,20 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
 			return $db->fetchAll($sql);
-	      
+
 	} // fecha class
 
-	
-	
+
+
 	public static  function documentosanexadosproponente($idpronac) // anexado pelo proponente
 	    {
 	      $sql = "SELECT NoArquivo AS nmArquivo,
-						imDocumento AS biArquivo    
-					  FROM SAC.dbo.tbDocumentosPreProjeto d  
+						imDocumento AS biArquivo
+					  FROM SAC.dbo.tbDocumentosPreProjeto d
 					  INNER JOIN SAC.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)
-					  WHERE idDocumentosPreprojetos =  $idpronac 
+					  WHERE idDocumentosPreprojetos =  $idpronac
 	      ";
-	   
+
 	      try
 			{
 				$db = Zend_Db_Table::getDefaultAdapter();
@@ -1329,30 +1329,30 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
 			return $db->fetchAll($sql);
-	      
+
 	} // fecha class
 
-	
-	
+
+
 	public static  function documentosanexadosminc($idpronac) // anexado pelo minc
 	    {
 	      $sql = "
 					  SELECT d.idTipoDocumento,
 					         e.dsTipoDocumento as Descricao,
 					         'Anexado no MinC' as Classificacao,
-					         idPronac as Codigo,  
+					         idPronac as Codigo,
 					         dtDocumento,
 					         NoArquivo,
 					         TaArquivo,
-					         d.idDocumento, 
+					         d.idDocumento,
 					         'tbDocumento' as Tabela
-					  FROM SAC.dbo.tbDocumento d  
-					  INNER JOIN SAC.dbo.tbTipoDocumento e on (d.idTipoDocumento = e.idTipoDocumento)  
+					  FROM SAC.dbo.tbDocumento d
+					  INNER JOIN SAC.dbo.tbTipoDocumento e on (d.idTipoDocumento = e.idTipoDocumento)
 					  WHERE idPronac = $idpronac
 					 -- ORDER BY Data
-	      
+
 	      ";
-	   
+
 	      try
 			{
 				$db = Zend_Db_Table::getDefaultAdapter();
@@ -1363,7 +1363,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
 			return $db->fetchAll($sql);
-	      
+
 	} // fecha class
 
 
@@ -1385,7 +1385,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
      * @return object
      */
     public static function planilhaOrcamento($idPronac = null, $idProduto = null, $Etapa = null, $UF = null, $Cidade = null, $buscarPorProduto = null){
-        $sql = "SELECT 
+        $sql = "SELECT
 			    idPronac,
 			    AnoProjeto,
 			    Sequencial,
@@ -1408,8 +1408,8 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 			    UF,
 			    Municipio,
 			    Justificativa
-			
-			FROM 
+
+			FROM
 			    SAC.dbo.vwOrcamentoSolicitado";
 
 
@@ -1455,12 +1455,12 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
      */
     public static function planilhaOrcamentoBuscarProduto($idPronac)
     {
-        
+
 		$sql = "SELECT DISTINCT Produto AS Produto,
 				    idPronac,
 				    idProduto
-				
-				FROM 
+
+				FROM
 				    SAC.dbo.vwOrcamentoSolicitado
 				WHERE idPronac = $idPronac
 				ORDER BY Produto";
@@ -1486,7 +1486,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 			    idPronac,
 			    idProduto
 
-			FROM 
+			FROM
 			    SAC.dbo.vwOrcamentoSolicitado";
 
 
@@ -1519,9 +1519,9 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 		$sql = "SELECT DISTINCT UF AS UF, Municipio,
 			    idPronac,
 			    idProduto,
-			    Etapa 
-			
-			FROM 
+			    Etapa
+
+			FROM
 			    SAC.dbo.vwOrcamentoSolicitado";
 
 
@@ -1563,11 +1563,11 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
         and idetapa = 4
         and idplanilhaitem not in (5249, 206, 1238)
         and NrFonteRecurso = 109";
-        
+
         if($idPronac){
 
             $sql .= " and idpronac = $idPronac";
-            
+
         }
 //die($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -1663,4 +1663,4 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
         return $resultado;
     } // fecha m�todo analiseDeCustos()
 
-}   
+}
