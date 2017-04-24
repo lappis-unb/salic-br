@@ -241,8 +241,8 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         }
     }
 
-    public function apagarAction(){
-
+    public function apagarAction()
+    {
         if (empty($this->_idPreProjeto))
             parent::message("Informe o numero da proposta", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
 
@@ -263,7 +263,8 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         }
     }
 
-    public function detalharPlanoDistribuicaoAction() {
+    public function detalharPlanoDistribuicaoAction()
+    {
         $pag = 1;
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
@@ -345,4 +346,5 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
 
         $this->_helper->json(array('data' => $dados, 'success' => 'true'));
     }
+
 }

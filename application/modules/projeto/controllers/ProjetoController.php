@@ -51,8 +51,8 @@ class Projeto_ProjetoController extends Proposta_GenericController {
         $idPronac = $this->getRequest()->getParam('idPronac');
         $projeto = new Projeto_Model_DbTable_Projetos();
         $IN2017 = $projeto->verificarIN2017($idPronac);
-        $IN2017 = !empty($IN2017) ? true: false;
+        $IN2017 = !empty($IN2017) ? true : false;
 
-        $this->_helper->json(['idPronac' => $idPronac, 'IN2017' => 'false']);
+        $this->_helper->json(['idPronac' => $idPronac, 'IN2017' => $IN2017]);
     }
 }

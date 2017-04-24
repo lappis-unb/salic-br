@@ -6712,4 +6712,21 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $this->view->intTamPag = $this->intTamPag;
         }
     }
+
+    public function planoDeDistribuicaoNovoAction()
+    {
+        $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+
+        $Projetos = new Projetos();
+        $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+
+        if(!empty($idPronac)){
+            $buscarDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
+            $this->view->dados = $buscarDistribuicao;
+        }
+    }
 }
