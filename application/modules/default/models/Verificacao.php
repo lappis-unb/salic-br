@@ -76,7 +76,7 @@ class Verificacao extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array(new Zend_Db_Expr('Agentes.dbo.Verificacao')), // 'v' => $this->_schema . '.' . $this->_name),
+            array($this->_name), // 'v' => $this->_schema . '.' . $this->_name),
             array('idVerificacao', 'Descricao')
         );
         $select->where('idTipo = ?', $idTipo);
@@ -89,7 +89,7 @@ class Verificacao extends MinC_Db_Table_Abstract
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array(new Zend_Db_Expr('SAC.dbo.Verificacao')),
+        $select->from(array($this->_name),
             array('idVerificacao', 'Descricao'));
 
         if ($where) {
