@@ -194,15 +194,14 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
      * @param void
      * @return void
      */
-    public function indexAction() {
-
+    public function indexAction()
+    {
         if (isset($_REQUEST['idPronac'])) {
 
             $idPronac = $_GET['idPronac'];
             if (strlen($idPronac) > 7) {
                 $idPronac = Seguranca::dencrypt($idPronac);
             }
-
 
             $dados = array();
             $dados['idPronac'] = (int) $idPronac;
@@ -254,7 +253,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         $idPreProjeto = $rsProjeto->idProjeto;
                     }
 
-                    $pronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
+                    $this->view->pronac = $pronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
                     $dadosProjeto = $geral->execPaProponente($idPronac);
                     $this->view->dados = $dadosProjeto;
                     $this->view->dadosProjeto = $rsProjeto;
