@@ -32,14 +32,14 @@ class Projeto_Model_DbTable_Projetos extends MinC_Db_Table_Abstract
                 "ValorAprovado" => new Zend_Db_Expr(
                     "case when projetos.Mecanismo ='2' or projetos.Mecanismo ='6'
                         then sac.dbo.fnValorAprovadoConvenio(projetos.AnoProjeto,projetos.Sequencial)
-                     else 
+                     else
                         sac.dbo.fnValorAprovado(projetos.AnoProjeto,projetos.Sequencial)
                      end"
                 ),
                 "ValorProjeto" => new Zend_Db_Expr(
                     "case when projetos.Mecanismo ='2' or projetos.Mecanismo ='6'
                      then sac.dbo.fnValorAprovadoConvenio(projetos.AnoProjeto,projetos.Sequencial)
-                     else sac.dbo.fnValorAprovado(projetos.AnoProjeto,projetos.Sequencial) + sac.dbo.fnOutrasFontes(projetos.idPronac) 
+                     else sac.dbo.fnValorAprovado(projetos.AnoProjeto,projetos.Sequencial) + sac.dbo.fnOutrasFontes(projetos.idPronac)
                       end "
                 ),
                 "ValorCaptado" => new Zend_Db_Expr("sac.dbo.fnCustoProjeto (projetos.AnoProjeto,projetos.Sequencial)"),
@@ -48,6 +48,20 @@ class Projeto_Model_DbTable_Projetos extends MinC_Db_Table_Abstract
         $objQuery->where('projetos.IdPRONAC = ?', $idPronac);
 //xd($objQuery->assemble());
         return $this->_db->fetchRow($objQuery);
+    }
+
+    public function verificarIN2017($idPronac)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('projetos' => $this->_name),
+            'idPRONAC',
+            $this->_schema
+        );
+        $select->where("CONVERT(CHAR(10), (DtProtocolo),112) >= '20170320' AND idPronac = ?", $idPronac);
+
+        return $this->_db->fetchRow($select);
     }
 
 }
