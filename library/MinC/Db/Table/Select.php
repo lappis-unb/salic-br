@@ -30,14 +30,14 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      * @param null $schema
      * @return Zend_Db_Table_Select
      */
-    public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
-    {
-        if($this->isUseSchema) {
-            $schema = $this->getSchema($schema);
-        }
+    //public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
+    //{
+        //if($this->isUseSchema) {
+            //$schema = $this->getSchema($schema);
+        //}
 
-        return parent::from($name, $cols, $schema);
-    }
+        //return parent::from($name, $cols, $schema);
+    //}
 
     /**
      * @param array|string|Zend_Db_Expr $name
@@ -78,14 +78,14 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      * @param null $schema
      * @return Zend_Db_Select
      */
-    public function joinLeft($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
-    {
-        if($this->isUseSchema) {
-            $schema = $this->getSchema($schema);
-        }
+    //public function joinLeft($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
+    //{
+        //if($this->isUseSchema) {
+            //$schema = $this->getSchema($schema);
+        //}
 
-        return parent::joinLeft($name, $cond, $cols, $schema);
-    }
+        //return parent::joinLeft($name, $cond, $cols, $schema);
+    //}
 
 
     /**

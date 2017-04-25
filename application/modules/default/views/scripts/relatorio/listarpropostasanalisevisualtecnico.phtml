@@ -52,7 +52,7 @@
     };
 </script>
 
-<form method="POST" id="formGerarPdf" name="formGerarPdf" action="<?php echo $this->url(array('controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>" target="_blank" style="display:none">
+<form method="POST" id="formGerarPdf" name="formGerarPdf" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>" target="_blank" style="display:none">
     <textarea name="html" id="conteudoImprimir"></textarea>
 </form>
 <form method="POST" id="formGerarXls" target="_blank" name="formGerarXls" action="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'gerar-xls')); ?>" target="_blank" style="display:none">
@@ -97,7 +97,7 @@
                                     <?php foreach($propostas as $proposta): ?>
                                     <?php if($proposta->ConformidadeOK == 0): ?>
                                     <tr>
-                                        <td align="center"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
+                                        <td align="center"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
                                         <td><?php echo $proposta->NomeProjeto; ?></td>
                                         <td class="centro"><?php echo str_replace(" ", " as ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
                                     </tr>
@@ -152,7 +152,7 @@
                                 <?php foreach($propostas as $proposta): ?>
                                 <?php if($proposta->ConformidadeOK == 9): ?>
                                 <tr>
-                                    <td align="center"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
+                                    <td align="center"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idProjeto; ?>"><?php echo $proposta->idProjeto; ?></a></td>
                                     <td><?php echo $proposta->NomeProjeto; ?></td>
                                     <td class="centro"><?php echo str_replace(" ", " as ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
                                 </tr>

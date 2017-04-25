@@ -201,11 +201,11 @@ if ($this->grupoAtivo != 118) {
             </tr>
             <?php foreach ($this->telefonesD as $t): ?>
                 <tr>
-                    <td><?php echo $t->dsTelefone; ?></td>
-                    <td align="center"><?php echo $t->ufSigla; ?></td>
-                    <td align="center"><?php echo $t->DDD; ?></td>
-                    <td><?php echo $t->Numero; ?></td>
-                    <td><?php echo $t->Divulgar == "1" ? "SIM" : "NÃO"; ?></td>
+                    <td><?php echo $t->dstelefone; ?></td>
+                    <td align="center"><?php echo $t->ufsigla; ?></td>
+                    <td align="center"><?php echo $t->ddd; ?></td>
+                    <td><?php echo $t->numero; ?></td>
+                    <td><?php echo $t->divulgar == "1" ? "SIM" : "NÃO"; ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -222,9 +222,9 @@ if ($this->grupoAtivo != 118) {
             <?php foreach ($this->emailsD as $e): ?>
                 <tr>
                     <td><?php echo $e->tipo; ?></td>
-                    <td><?php echo $e->Descricao; ?></td>
-                    <td><?php echo $e->Divulgar == "1" ? "SIM" : "NÃO"; ?></td>
-                    <td><?php echo $e->Status == "1" ? "SIM" : "NÃO"; ?></td>
+                    <td><?php echo $e->descricao; ?></td>
+                    <td><?php echo $e->divulgar == "1" ? "SIM" : "NÃO"; ?></td>
+                    <td><?php echo $e->status == "1" ? "SIM" : "NÃO"; ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>

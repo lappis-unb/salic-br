@@ -81,7 +81,7 @@
             <div class="top"></div>
             <div id="qm0" class="qmmc">
                 <?php
-                if ($this->grupoAtivo == 120) { //coordenador CNIC
+                if ($this->grupoAtivo == 120 || $this->grupoAtivo == 148) { //coordenador CNIC
                 ?>
                     <!--<a class="no_seta last" href="<?php echo $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciaradministrativo')); ?>" title="Ir para Projetos em Pauta">Projetos em Pauta</a>-->
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'exibirvotantes')); ?>" title="Ir para Votantes">Votantes</a>
@@ -109,7 +109,7 @@
                     <span class="no_seta last">&nbsp;</span>
 <?php } ?>
 <?php
-                if ($this->grupoAtivo == 119) { //presidente CNIC
+                if ($this->grupoAtivo == 119 ) { //presidente CNIC
 ?>
                     <!--<a class="no_seta"  href="<?php echo $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpresidenteemreuniao')); ?>" title="Ir para Projetos em Pauta">Projetos em Pauta</a>-->
                     <a class="no_seta"  href="<?php echo $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpresidenteemreuniao', 'readequacao' => 'false', 'plenaria' => 'true')); ?>" title="Ir para Plenária - análise inicial">Plenária - análise inicial</a>

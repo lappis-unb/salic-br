@@ -13,7 +13,7 @@
 class tbProrrogacaoPrazo extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "BDCORPORATIVO";
-	protected $_schema = "scSAC";
+	protected $_schema = "BDCORPORATIVO.scSAC";
 	protected $_name   = "tbProrrogacaoPrazo";
 
 
@@ -79,7 +79,7 @@ class tbProrrogacaoPrazo extends MinC_Db_Table_Abstract
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
 		$select->from(
-			array('h' => $this->_schema . '.' . $this->_name)
+			array('h' => $this->_name)
 			,array('h.idPedidoAlteracao'
 				,'h.tpProrrogacao'
 				,'CONVERT(CHAR(10), h.dtInicioNovoPrazo,103) AS dtInicioNovoPrazo'

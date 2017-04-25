@@ -79,8 +79,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                 $componentes[$a]['stTitular'] = $dadoscomponentes->stTitular == 1 ? 'Titutal' : 'Suplente';
                 $a++;
             }
-            echo json_encode($componentes);
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+            $this->_helper->json($componentes);
         }
         $buscarArea = $ar->buscar();
         $componentes = array();

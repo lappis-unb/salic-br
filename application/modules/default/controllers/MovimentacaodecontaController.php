@@ -13,7 +13,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @access private
-	 * @var integer (idAgente do usu�rio logado)
+	 * @var integer (idAgente do usuario logado)
 	 */
     private $getIdUsuario = 0; // codigo do usuorio logado
 	private $getIdGrupo   = 0; // codigo do grupo logado
@@ -40,27 +40,27 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 	/**
 	 * @access private
-	 * @var string (diret�rio onde se enconta o arquivo .txt)
+	 * @var string (diretorio onde se enconta o arquivo .txt)
 	 */
 	private $arquivoTXT = 'DepositoIdentificado';
 
 	public function init()
 	{
-		$this->view->title = 'Salic - Sistema de Apoio �s Leis de Incentivo � Cultura'; // t�tulo da p�gina
+		$this->view->title = 'Salic - Sistema de Apoio às Leis de Incentivo à Cultura'; // titulo da pagina
 
-		/* ========== IN�CIO PERFIL ==========*/
+		/* ========== INICIO PERFIL ==========*/
 		// define os grupos que tem acesso
 		$PermissoesGrupo = array();
-		$PermissoesGrupo[] = 121; // T�cnico de Acompanhamento
+		$PermissoesGrupo[] = 121; // Tecnico de Acompanhamento
 		$PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
 		$PermissoesGrupo[] = 123; // Coordenador - Geral de Acompanhamento
-		$PermissoesGrupo[] = 129; // T�cnico de Acompanhamento
+		$PermissoesGrupo[] = 129; // Tecnico de Acompanhamento
 		$PermissoesGrupo[] = 148;
 		$PermissoesGrupo[] = 151;
 		parent::perfil(1, $PermissoesGrupo); // perfil novo salic
 
-		// pega o idAgente do usu�rio logado
-		$auth = Zend_Auth::getInstance(); // pega a autentica��o
+		// pega o idAgente do usuario logado
+		$auth = Zend_Auth::getInstance(); // pega a autenticacao
 		if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
 		{
 			$this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -72,16 +72,16 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		}
 		/* ========== FIM PERFIL ==========*/
 
-		/* ========== IN�CIO �RG�O ========== */
-		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+		/* ========== INICIO ORGAO ========== */
+		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
 		$this->getIdGrupo = $GrupoAtivo->codGrupo; // id do grupo ativo
-		$this->getIdOrgao = $GrupoAtivo->codOrgao; // id do �rg�o ativo
+		$this->getIdOrgao = $GrupoAtivo->codOrgao; // id do orgao ativo
 
 		if ($this->getIdOrgao != 166 && $this->getIdOrgao != 272 && $this->getIdOrgao != 340&& $this->getIdOrgao != 341) // aceita somente o �rg�o SEFIC/SACAV && SAV/CAP
 		{
-			parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
+			parent::message("Voc&ecirc; nao tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
 		}
-		/* ========== FIM �RG�O ========== */
+		/* ========== FIM ORGAO ========== */
 
 		parent::init();
 
@@ -99,7 +99,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $context = $this->_helper->getHelper('contextSwitch');
                 $context->addActionContext('deposito-equivocado', 'json');
                 $context->initContext();
-	} // fecha m�todo init()
+	} // fecha metodo init()
 
 
 
@@ -113,25 +113,25 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	{
 		// redireciona para o fluxo inicial
 		$this->_redirect('movimentacaodeconta/listar-inconsistencias');
-	} // fecha m�todo indexAction()
+	} // fecha metodo indexAction()
 
 
 
 	/**
-	 * M�todo com o formul�rio para gerar o relat�rio de contas rejeitadas
+	 * Metodo com o formulario para gerar o relatorio de contas rejeitadas
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function relatorioAction()
 	{
-	} // fecha m�todo relatorioAction()
+	} // fecha metodo relatorioAction()
 
 
 
 	/**
-	 * M�todo com o relat�rio de contas rejeitadas.
-	 * Esse m�todo s� � executado quando � feita uma solicita��o via POST.
+	 * Metodo com o relatorio de contas rejeitadas.
+	 * Esse metodo so eh executado quando e feita uma solicitacao via POST.
 	 * @access public
 	 * @param void
 	 * @return void
@@ -153,23 +153,23 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 			{
 				if (!empty($data_recibo[0]) && !Data::validarData($data_recibo[0])) // valida a data inicial do recibo
 				{
-					parent::message('A data inicial do recibo � inv�lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
+					parent::message('A data inicial do recibo &eacute; inv&aacute;lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
 				}
 				else if (!empty($data_recibo[1]) && !Data::validarData($data_recibo[1])) // valida a data final do recibo
 				{
-					parent::message('A data final do recibo � inv�lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
+					parent::message('A data final do recibo &eacute; inv&aacute;lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
 				}
 				else if (!empty($data_credito[0]) && !Data::validarData($data_credito[0])) // valida a data inicial de credito
 				{
-					parent::message('A data inicial de cr�dito � inv�lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
+					parent::message('A data inicial de cr&eacute;dito &eacute; inv&aacute;lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
 				}
 				else if (!empty($data_credito[1]) && !Data::validarData($data_credito[1])) // valida a data final de credito
 				{
-					parent::message('A data final de cr�dito � inv�lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
+					parent::message('A data final de cr&eacute;dito &eacute; inv&aacute;lida!', 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
 				}
 				else
 				{
-					// busca os dados do banco e manda para a vis�o
+					// busca os dados do banco e manda para a visao
 					//$this->tbTmpCaptacao = new tbTmpCaptacao();
 					//$this->view->dados   = $this->tbTmpCaptacao->buscarDados($pronac, $data_recibo, $proponente, $incentivador, $data_credito);
 
@@ -189,17 +189,17 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		} // fecha if post
 		else
 		{
-			parent::message('Por favor, defina um filtro v�lido para gerar o relat�rio!', 'movimentacaodeconta/gerarrelatorio', 'ALERT');
+			parent::message('Por favor, defina um filtro v&aacute;lido para gerar o relat&oacute;rio!', 'movimentacaodeconta/gerarrelatorio', 'ALERT');
 		}
-	} // fecha m�todo gerarrelatorioAction()
+	} // fecha metodo gerarrelatorioAction()
 
 	/**
-	 * t.tpValidacao = 2 // Per�odo de Capta��o Vencida
+	 * t.tpValidacao = 2 // Periodo de Captacao Vencida
 	 * t.tpValidacao = 3 // Sem Incentivador Cadastrado
-	 * t.tpValidacao = 4 // Sem Tipo de Dep�sito
+	 * t.tpValidacao = 4 // Sem Tipo de Deposito
 	 * t.tpValidacao = 5 // Proponente e Incentivador Iguais
 	 * t.tpValidacao = 6 // Sem Proponente Cadastrado
-	 * t.tpValidacao = 7 // Ag�ncia e Conta n�o Cadastrada
+	 * t.tpValidacao = 7 // Agencia e Conta nao Cadastrada
 	 * t.tpValidacao = 8 // Sem Enquadramento
 	 * t.tpValidacao = 9 // Sem saldo para captar
 	 *
@@ -352,7 +352,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             if(isset($post->xls) && $post->xls){
                 $html = '';
                 $html .= '<table style="border: 1px">';
-                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="6">Relat�rio de inconsist�ncias de conta capta��o</td></tr>';
+                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="6">Relat&oacute;rio de inconsist&ecirc;ncias de conta capta&ccedil;&atilde;o</td></tr>';
                 $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="6">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
                 $html .='<tr><td colspan="5"></td></tr>';
 
@@ -434,7 +434,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         # redirect para tela de inconsistencia resolvida
         if (!$captacoes->count()) {
-            parent::message('Todas as inconsist�ncias desse projeto j� foram resolvidas.', 'movimentacaodeconta/listar-inconsistencias', 'ALERT');
+            parent::message('Todas as inconsist&ecirc;ncias desse projeto j&aacute; foram resolvidas.', 'movimentacaodeconta/listar-inconsistencias', 'ALERT');
 //            $this->_forward('listar-inconsistencia-detalhe-resolvido');
         }
 
@@ -544,7 +544,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     $arrBusca["t.nrCpfCnpjIncentivador = ?"]= $incentivador;
             }
 
-            // busca pela data do cr�dito
+            // busca pela data do cr&eacute;dito
             if (!empty($data_credito)){
                     if (!empty($data_credito[0]) && !empty($data_credito[1]))
                     {
@@ -582,7 +582,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
         }
 
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Execucao Nao Vigente
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Execucao Nao Vigente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -605,7 +605,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -619,7 +619,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Captacao Nao Vigente
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Captacao Nao Vigente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -640,7 +640,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 2
             );
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -649,7 +649,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Sem Incentivador
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Sem Incentivador
 	 * @access public
 	 * @param void
 	 * @return void
@@ -670,7 +670,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 3
             );
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -679,7 +679,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Sem Tipo de Deposito
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Sem Tipo de Deposito
 	 * @access public
 	 * @param void
 	 * @return void
@@ -700,7 +700,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 4
             );
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -709,7 +709,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Proponente e incentivador iguais
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Proponente e incentivador iguais
 	 * @access public
 	 * @param void
 	 * @return void
@@ -730,7 +730,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 5
             );
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -739,7 +739,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Proponente incompativel
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Proponente incompativel
 	 * @access public
 	 * @param void
 	 * @return void
@@ -760,7 +760,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 6
             );
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -769,7 +769,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Agencia e Conta nao Cadastrada
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Agencia e Conta nao Cadastrada
 	 * @access public
 	 * @param void
 	 * @return void
@@ -789,7 +789,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 7
             );
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -798,7 +798,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Sem enquadramento
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Sem enquadramento
 	 * @access public
 	 * @param void
 	 * @return void
@@ -820,7 +820,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             );
 
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -829,7 +829,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo para listar os projetos para grid de inconsistencias do tipo Sem saldo para captar
+	 * Metodo para listar os projetos para grid de inconsistencias do tipo Sem saldo para captar
 	 * @access public
 	 * @param void
 	 * @return void
@@ -850,7 +850,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                  't.tpValidacao = ?' => 9
             );
 
-            //busca os dados do banco e manda para a vis�o
+            //busca os dados do banco e manda para a visao
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem,5,0);
 
@@ -874,7 +874,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
         }
         /**
-	 * M�todo que monta tela com resumo de captacaoes e saldo para captar do projeto
+	 * Metodo que monta tela com resumo de captacaoes e saldo para captar do projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1019,13 +1019,13 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             if($count == 0){
                 echo json_encode(array('resposta'=>true, 'mensagem'=>'Dados atualizados com sucesso!'));
             } else {
-                echo json_encode(array('resposta'=>false, 'mensagem'=>'Ocorreu um erro no processo de atualiza��o. Entre em contato com o administrador do sistema!'));
+                echo json_encode(array('resposta'=>false, 'mensagem'=>'Ocorreu um erro no processo de atualiza&ccedil;&atilde;o. Entre em contato com o administrador do sistema!'));
             }
 
         }
 
 	/**
-	 * M�todo para listar os projetos para grid do relatorio conforme o tipo de inconsistencia
+	 * Metodo para listar os projetos para grid do relatorio conforme o tipo de inconsistencia
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1080,7 +1080,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     $arrBusca["t.nrCpfCnpjIncentivador = ?"]= $incentivador;
             }
 
-            // busca pela data do cr�dito
+            // busca pela data do credito
             if (!empty($data_credito)){
                     if (!empty($data_credito[0]) && !empty($data_credito[1]))
                     {
@@ -1117,7 +1117,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $ordem = array();
             if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
-            // busca os dados do banco e manda para a vis�o
+            // busca os dados do banco e manda para a visao
             $this->tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $this->tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
@@ -1129,11 +1129,11 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->tbTipoInconsistencia = new tbTipoInconsistencia();
             $this->view->inconsistencias = $this->tbTipoInconsistencia->buscar($arrBusca);
 
-	} // fecha m�todo listarProjetosAction()
+	} // fecha metodo listarProjetosAction()
 
 
 	/**
-	 * M�todo para montar o formulario de pesquisa do extrato de captacao
+	 * Metodo para montar o formulario de pesquisa do extrato de captacao
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1141,10 +1141,10 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	public function formExtratoDeContaCaptacaoAction()
 	{
 
-	} // fecha m�todo formExtratoDeContaCaptacaoAction()
+	} // fecha metodo formExtratoDeContaCaptacaoAction()
 
 	/**
-	 * M�todo para listar os projetos para grid do relatorio conforme o tipo de inconsistencia
+	 * Metodo para listar os projetos para grid do relatorio conforme o tipo de inconsistencia
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1207,7 +1207,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     case '': //captou 20%
                         $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
                         break;
-                    case 'nc': //n�o captou 20%
+                    case 'nc': //nao captou 20%
                         $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
                         break;
                 }
@@ -1310,7 +1310,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     case '': //captou 20%
                         $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
                         break;
-                    case 'nc': //n�o captou 20%
+                    case 'nc': //nao captou 20%
                         $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
                         break;
                 }
@@ -1334,14 +1334,14 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             if(isset($post->xls) && $post->xls){
                 $html = '';
                 $html .= '<table style="border: 1px">';
-                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="12">Transfer�ncia de Recurso</td></tr>';
+                $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="12">Transfer&ecirc;ncia de Recurso</td></tr>';
                 $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="12">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
                 $html .='<tr><td colspan="12"></td></tr>';
 
                 $html .= '<tr>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">#</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">PRONAC</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situa��o</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situa&ccedil;&atilde;o</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">CPF/CNPJ</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Incentivador</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">N&ordm; do Lote</th>';
@@ -1359,7 +1359,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     if (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) {
                         $DtLiberacao = 'Sim';
                     } else {
-                        $DtLiberacao = '<span style="color:red; font-weight: bold;">N�o</span>';
+                        $DtLiberacao = '<span style="color:red; font-weight: bold;">N&atilde;o</span>';
                     }
 
                     $CaptacaoReal = 'R$ '.number_format($projeto->CaptacaoReal,'2',',','.');
@@ -1391,13 +1391,13 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
             }
 
-	} // fecha m�todo listarProjetosAction()
+	} // fecha metodo listarProjetosAction()
 
 
 	public function transferenciaContaCaptacaoAction(){
 
             if(!isset($_GET['id']) || empty($_GET['id']) || !isset($_GET['liberado'])){
-                parent::message('N�o foi poss�vel realizar a transfer�ncia.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
+                parent::message('N&atilde;o foi poss&iacute;vel realizar a transfer&ecirc;ncia.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
             }
 
             $idCaptacao = $_GET['id'];
@@ -1420,7 +1420,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $valorTransferido = @number_format(($vlCaptado), 2, ",", ".");
 
                 $dadosP = array(
-                    'ProvidenciaTomada' => 'Transfer�ncia de recursos entre conta capta��o e conta movimento no valor de R$'.$valorTransferido.' em '.$getdate.'.',
+                    'ProvidenciaTomada' => 'Transfer&ecirc;ncia de recursos entre conta capta&ccedil;&atilde;o e conta movimento no valor de R$'.$valorTransferido.' em '.$getdate.'.',
                     'Logon' => $idusuario
                 );
                 $whereP = array('IdPRONAC = ?' => $dadosProjetos[0]->IdPRONAC);
@@ -1454,7 +1454,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     $liberar->inserir($dados);
                 }
 
-                # Envia notifica��o para o usu�rio atrav�s do aplicativo mobile.
+                # Envia notificacao para o usuario atraves do aplicativo mobile.
                 $this->enviarNotificacaoCapitacao((object)array(
                     'cpf' => $dadosProjetos[0]->CgcCpf,
                     'pronac' => $AnoProjeto. $Sequencial,
@@ -1462,15 +1462,15 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     'vlCaptado' => number_format($vlCaptado, 2, ',', '.')
                 ));
 
-                parent::message('Transfer�ncia executada com sucesso!', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'CONFIRM');
+                parent::message('Transfer&ecirc;ncia executada com sucesso!', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'CONFIRM');
 
             } else {
-                parent::message('N�o foi poss�vel realizar a transfer�ncia.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
+                parent::message('N&atilde;o foi poss&iacute;vel realizar a transfer&ecirc;ncia.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
             }
 	}
 
     /**
-     * Envia notifica��o para o usu�rio atrav�s do aplicativo mobile.
+     * Envia notificacao para o usuario atraves do aplicativo mobile.
      *
      * @param stdClass $projeto
      */
@@ -1485,7 +1485,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
             ->setTipoMensagem(Dominio_TipoMensagem::CAPTACAO)
             ->setTitle('Projeto '. $projeto->pronac)
-            ->setText('Recebeu R$'. $projeto->vlCaptado. ' de capta��o!')
+            ->setText('Recebeu R$'. $projeto->vlCaptado. ' de capta&ccedil;&atilde;o!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
@@ -1495,7 +1495,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
     public function transferenciaColetivaContaCaptacaoAction(){
 
             if(!is_array($_POST)){
-                parent::message('N�o foi poss�vel realizar a transfer�ncia.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
+                parent::message('N&atilde;o foi poss&iacute;vel realizar a transfer&ecirc;ncia.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
             }
 
             $idsCaptacao = $_POST['listaTransf'];
@@ -1521,7 +1521,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $valorTransferido = @number_format(($vlCaptado), 2, ",", ".");
 
                 $dadosP = array(
-                    'ProvidenciaTomada' => 'Transfer�ncia de recursos entre conta capta��o e conta movimento no valor de R$'.$valorTransferido.' em '.$getdate.'.',
+                    'ProvidenciaTomada' => 'Transfer&ecirc;ncia de recursos entre conta capta&ccedil;&atilde;o e conta movimento no valor de R$'.$valorTransferido.' em '.$getdate.'.',
                     'Logon' => $idusuario
                 );
                 $whereP = array('IdPRONAC = ?' => $dadosProjetos[0]->IdPRONAC);
@@ -1562,7 +1562,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	}
 
 	/**
-	 * M�todo para gerar o pdf do extrato
+	 * Metodo para gerar o pdf do extrato
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1570,32 +1570,32 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	public function gerarpdfAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o layout
-	} // fecha m�todo gerarpdfAction()
-
-
+	}
 
 	/**
-	 * M�todo para enviar o arquivo txt do banco do brasil
+	 * Metodo para enviar o arquivo txt do banco do brasil
 	 * @access public
 	 * @param void
 	 * @return void
+     * @todo existe um potencial erro nessa estrutura de codigo. Preciso
+     * avalair refatoração.
 	 */
 	public function uploadAction() {
-            /*if ($this->getIdGrupo != 121 && $this->getIdGrupo != 129) // s� T�cnico de Acompanhamento que pode acessar
+            /*if ($this->getIdGrupo != 121 && $this->getIdGrupo != 129) // só Técnico de Acompanhamento que pode acessar
 		{
-			parent::message('Voc� n�o tem permiss�o para acessar essa �rea do sistema!', 'principal/index', 'ALERT');
+			parent::message('Voce nao tem permissão para acessar essa área do sistema!', 'principal/index', 'ALERT');
 		}*/
 
-            // caso o formul�rio seja enviado via post
+            // caso o formulário seja enviado via post
             if ($this->getRequest()->isPost()) {
-                // configura��o o php.ini para 100MB
+                // configuração o php.ini para 100MB
                 @set_time_limit(0);
                 @ini_set('mssql.textsize',      10485760000);
                 @ini_set('mssql.textlimit',     10485760000);
                 @ini_set('mssql.timeout',       10485760000);
                 @ini_set('upload_max_filesize', '100M');
 
-                // pega as informa��es do arquivo
+                // pega as informações do arquivo
                 $arquivoNome    = $_FILES['arquivo']['name']; // nome
                 $arquivoTemp    = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
                 $arquivoTipo    = $_FILES['arquivo']['type']; // tipo
@@ -1608,60 +1608,58 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 // caminho do arquivo txt
                 $so               = stripos($_SERVER['SERVER_SOFTWARE'], 'win32') != FALSE ? 'WINDOWS' : 'LINUX'; // sistema operacional
                 $bar              = $so == 'WINDOWS' ? '\\' : '/';                                                // configura a barra de acordo com o SO
-                $this->arquivoTXT = getcwd() . $bar . 'public' . $bar . 'txt' . $bar . $this->arquivoTXT;         // diret�rio interno do arquivo
+                $this->arquivoTXT = getcwd() . $bar . 'public' . $bar . 'txt' . $bar . $this->arquivoTXT;         // diretorio interno do arquivo
 
-                $dir = $this->arquivoTXT; // diret�rio onde se encontram os arquivos do banco
+                $dir = $this->arquivoTXT; // diretorio onde se encontram os arquivos do banco
                 if (!is_dir($dir)) {
                     if (!mkdir($dir, 0755, true)) {
-                        throw new RuntimeException("N�o foi poss�vel criar a pasta para salvar o arquivo");
+                        throw new RuntimeException("N&atilde;o foi poss&iacute;vel criar a pasta para salvar o arquivo");
                     }
                 }
 
                 try {
-                    // integra��o MODELO e VIS�O
+                    // integracao MODELO e VISAO
 
                     if (empty($arquivoTemp)) // nome do arquivo
                     {
                         throw new Exception('Por favor, informe o arquivo!');
                     }
-                    else if (($arquivoExtensao != 'ret' && $arquivoExtensao != 'txt') || ($arquivoTipo != 'text/plain' && $arquivoTipo != 'application/octet-stream' && $arquivoTipo != '')) // extens�o do arquivo
+                    else if (($arquivoExtensao != 'ret' && $arquivoExtensao != 'txt') || ($arquivoTipo != 'text/plain' && $arquivoTipo != 'application/octet-stream' && $arquivoTipo != '')) // extensao do arquivo
                     {
-                        throw new Exception('A extens�o do arquivo � inv�lida, envie somente arquivos <strong>.txt</strong> ou <strong>.ret</strong>!');
+                        throw new Exception('A extens&atilde;o do arquivo &eacute; inv&aacute;lida, envie somente arquivos <strong>.txt</strong> ou <strong>.ret</strong>!');
                     }
-                    else if ($arquivoTamanho > 14680064) // tamanho m�ximo do arquivo: 14MB
+                    else if ($arquivoTamanho > 14680064) // tamanho maximo do arquivo: 14MB
                     {
-                        throw new Exception('O arquivo n�o pode ser maior do que <strong>14MB</strong>!');
+                        throw new Exception('O arquivo nao pode ser maior do que <strong>14MB</strong>!');
                     }
-                    else if ($arquivoTamanho <= 150) // tamanho m�nimo do arquivo: 150 bytes
+                    else if ($arquivoTamanho <= 150) // tamanho minimo do arquivo: 150 bytes
                     {
-                        throw new Exception('O layout do arquivo enviado � inv�lido!');
+                        throw new Exception('O layout do arquivo enviado &eacute; inv&aacute;lido!');
                     }
                     // faz o envio do arquivo
                     else {
                         $this->tbDepositoIdentificadoCaptacao = new tbDepositoIdentificadoCaptacao();
                         $this->tbTmpDepositoIdentificado = new tbTmpDepositoIdentificado();
-
                         // verifica se existe algum dado na tabela
                         $buscar = $this->tbDepositoIdentificadoCaptacao->buscar()->toArray();
                         if (count($buscar) > 0) {
-                            throw new Exception('Aguarde um momento, pois, j� existe um arquivo sendo processado!');
+                            throw new Exception('Aguarde um momento, pois, j&aacute; existe um arquivo sendo processado!');
                         }
-                        // verifica se j� existe um arquivo com o mesmo nome
+                        // verifica se j&aacute; existe um arquivo com o mesmo nome
                         else if (file_exists($dir . '/' . $arquivoNome)) {
-                            throw new Exception('O arquivo <strong>' . $arquivoNome . '</strong> j� existe!');
+                            throw new Exception('O arquivo <strong>' . $arquivoNome . '</strong> j&aacute; existe!');
                         }
                         else {
                             // envia o arquivo
                             if (move_uploaded_file($arquivoTemp, $dir . '/' . $arquivoNome)) {
-                                // abre o diret�rio
+                                // abre o diretorio
                                 if (($abrir = opendir($dir)) === false) {
-                                    throw new Exception('N�o foi poss�vel abrir o diret�rio <strong>' . $dir . '</strong>!');
+                                    throw new Exception('N&atilde;o foi poss&iacute;vel abrir o diretorio <strong>' . $dir . '</strong>!');
                                 }
-
-                                // busca todos os arquivos do diret�rio
+                                // busca todos os arquivos do diretorio
                                 $i = 0;
                                 while (($arq = readdir($abrir)) !== false) {
-                                    // verifica se a extens�o do arquivo � .txt ou .ret
+                                    // verifica se a extensao do arquivo eh .txt ou .ret
                                     if ((substr(strtolower($arq), -4) == '.txt') || (substr(strtolower($arq), -4) == '.ret')) {
                                         // array contendo o caminho/nome completo de cada arquivo
                                         $arquivos[] = $dir . $bar . $arq;
@@ -1673,14 +1671,14 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                                             // pega a linha do arquivo
                                             $linha_header = fgets($abrir_arquivo_header, 4096);
 
-                                            // faz a valida��o do arquivo de acordo com o layout
+                                            // faz a validacao do arquivo de acordo com o layout
                                             $sequencial   = substr($linha_header, 1, 4);  // SEQUENCIAL
                                             $cliente      = substr($linha_header, 5, 5);  // CLIENTE: MINC
-                                            $data_geracao = substr($linha_header, 10, 8); // DATA DE GERA��O DO ARQUIVO
-                                            $referencia   = substr($linha_header, 18, 6); // M�S E ANO DE REFER�NCIA DOS DEP�SITOS
+                                            $data_geracao = substr($linha_header, 10, 8); // DATA DE GERACAO DO ARQUIVO
+                                            $referencia   = substr($linha_header, 18, 6); // MES E ANO DE REFERENCIA DOS DEPOSITOS
 
-                                            // faz a valida��o do arquivo pelo header
-                                            // verifica pelo header se o arquivo j� existe
+                                            // faz a validacao do arquivo pelo header
+                                            // verifica pelo header se o arquivo j&aacute; existe
                                             if (substr($linha_header, 0, 1) == 1) :
 
                                                 if (!is_numeric($sequencial) || trim(strtoupper($cliente)) != 'MINC' || !Data::validarData($data_geracao) || !Data::validarData('01'.$referencia)) {
@@ -1690,13 +1688,13 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                                                     // exclui o arquivo
                                                     unlink($arquivos[0]);
 
-                                                    throw new Exception('O layout do arquivo enviado � inv�lido!');
+                                                    throw new Exception('O layout do arquivo enviado &eacute; inv&aacute;lido!');
                                                 }
 
-                                                // busca a data de gera��o do arquivo para evitar inser��o de registros duplicados
+                                                // busca a data de geracao do arquivo para evitar insercao de registros duplicados
                                                 //$dataGeracaoArquivo = Data::dataAmericana(Mascara::addMaskDataBrasileira($data_geracao));
 
-                                                // verifica se o arquivo j� est� cadastrado no banco de dados
+                                                // verifica se o arquivo j&aacute; esta cadastrado no banco de dados
                                                 $buscarArquivoCadastrado = $this->tbTmpDepositoIdentificado->buscar(array('dtGeracao = ?' => $data_geracao));
 
                                                 if (count($buscarArquivoCadastrado) > 0) {
@@ -1706,7 +1704,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                                                     // exclui o arquivo
                                                     unlink($arquivos[0]);
 
-                                                    throw new Exception('Esse arquivo j� foi enviado!');
+                                                    throw new Exception('Esse arquivo j&aacute; foi enviado!');
                                                 }
 
                                                 $i++;
@@ -1719,7 +1717,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                                                 // exclui o arquivo
                                                 unlink($arquivos[0]);
 
-                                                throw new Exception('O layout do arquivo enviado � inv�lido!');
+                                                throw new Exception('O layout do arquivo enviado &eacute; inv&aacute;lido!');
                                             }
 
                                             // fecha o arquivo
@@ -1736,12 +1734,12 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                                 } // fecha while
 
-                                // caso exista arquivo(s) .txt ou .ret no diret�rio:
-                                // 	1. Varre o conte�do de cada arquivo
-                                // 	2. Grava o conte�do de cada linha no banco
-                                // 	3. Deleta o arquivo do diret�rio
+                                // caso exista arquivo(s) .txt ou .ret no diretorio:
+                                // 	1. Varre o conteudo de cada arquivo
+                                // 	2. Grava o conteudo de cada linha no banco
+                                // 	3. Deleta o arquivo do diretorio
                                 if (isset($arquivos) && count($arquivos) > 0) {
-                                    // ========== IN�CIO - VARRE O ARQUIVO DETALHADAMENTE ==========
+                                    // ========== INICIO - VARRE O ARQUIVO DETALHADAMENTE ==========
                                     foreach ($arquivos as $arquivoTXT) :
 
                                         // abre o arquivo para leitura
@@ -1754,7 +1752,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                                             // pega a linha do arquivo
                                             $linha = fgets($abrir_arquivo, 4096);
 
-                                            // caso a linha n�o seja vazia e o primeiro caractere for num�rico
+                                            // caso a linha nao seja vazia e o primeiro caractere for num�rico
                                             if (!empty($linha) && is_numeric( substr($linha, 0, 1) )) {
                                                 // armazena as linhas do arquivo em um array
                                                 $dsInformacao[$i] = trim($linha);
@@ -1799,12 +1797,12 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 }
             } // fecha if post
 
-        } // fecha m�todo uploadAction()
+        } // fecha metodo uploadAction()
 
 
 
 	/**
-	 * M�todo para executar a sp de movimenta��o banc�ria
+	 * Metodo para executar a sp de movimentcao bancaria
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1812,9 +1810,9 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
     public function finalizarAction()
     {
         $arrRetorno = array();
-        // caso o formul�rio seja enviado via post
+        // caso o formulario seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // configura��o o php.ini para 100MB
+            // configuracao o php.ini para 100MB
             @set_time_limit(0);
             @ini_set('mssql.textsize',      10485760000);
             @ini_set('mssql.textlimit',     10485760000);
@@ -1859,7 +1857,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	 * toda vez que acessar aqui, verificar se o arquivo do BB existe,
 	 * caso o arquivo exista, grava os dados no banco e exclui o arquivo.
 	 * ****************************************************************************************************
-	 * OBS: Por enquanto foi substitu�do pela TRIGGER/SP, mas, � bom n�o retir�-lo para o caso de precisar
+	 * OBS: Por enquanto foi substituido pela TRIGGER/SP, mas, eh bom nao retira-lo para o caso de precisar
 	 * ****************************************************************************************************
 	 * @access public
 	 * @param void
@@ -1876,10 +1874,10 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		//Diretorio onde se encontra os arquivos
     	$dir = getcwd() . $this->arquivoTXT;
 
-		// Esse seria o 'handler' do diret�rio
+		// Esse seria o 'handler' do diretorio
 		$dh = opendir($dir);
 
-		// Loop que busca todos os arquivos at� que n�o encontre mais nada
+		// Loop que busca todos os arquivos ate que nao encontre mais nada
 		while (false !== ($filename = readdir($dh)))
 		{
 			// Verificando se o arquivo � .txt
@@ -1892,7 +1890,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 		}
 
-		// Se tiver arquivos TXT no diret�rio...
+		// Se tiver arquivos TXT no diretorio...
 		if($arquivos)
 		{
 
@@ -1901,7 +1899,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		    	$arquivoTxt = $i;
 
 		    	/* Abrindo o arquivo */
-		    	$fp = fopen($arquivoTxt, 'r'); // $fp conter� o handle do arquivo que abrimos
+		    	$fp = fopen($arquivoTxt, 'r'); // $fp contera o handle do arquivo que abrimos
 
 		   		/* Count para os dados */
 		   		$countD = 0;
@@ -1914,7 +1912,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		        	$buffer = fgets($fp, 4096);
 		        	echo $buffer.'<br />';
 
-		        	/* Se o inicio da linha for igual a 1, ent�o � Header */
+		        	/* Se o inicio da linha for igual a 1, entao eh Header */
 		        	if(substr($buffer,0,1) == 1)
 		        	{
 		        		$movimentacaoH['Sequencial'][$countH]=substr($buffer,1,4);
@@ -1925,7 +1923,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 			        	$countH ++;
 		        	}
 
-		        	/* Se o inicio da linha for igual a 2, ent�o � Detalhe */
+		        	/* Se o inicio da linha for igual a 2, entao eh Detalhe */
 		        	if(substr($buffer,0,1) == 2)
 		        	{
 		        		$movimentacaoD['cpf_cnpj'][$countD]=substr($buffer,1,14);
@@ -1956,7 +1954,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 			        	$movimentacaoD['cpf_cnpjPatrocinador'][$countD]=substr($buffer,33,14);
 
 
-			        	// Verificando se o Patrocinador est� cadastrado
+			        	// Verificando se o Patrocinador estah cadastrado
 			        	$Patrocinador = MovimentacaoDeContaDAO::buscarPatrocinador(substr($buffer,33,14));
 			        	if($Patrocinador)
 			        	{
@@ -1983,13 +1981,13 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 							$SequencialProjeto 	= $i->Sequencial;
 						}
 
-						/* Se acharo pronac ele d� um ok */
+						/* Se acharo pronac ele da um ok */
 			        	if($BuscaPRONAC)
 			        	{
 			        		$movimentacaoD['AnoProjeto'][$countD]= $AnoProjeto;
 			        		$movimentacaoD['SequencialProjeto'][$countD]= $SequencialProjeto;
 			        	}
-			        	/* Se n�o achar ele manda um email pedindo para cadastrar */
+			        	/* Se nao achar ele manda um email pedindo para cadastrar */
 			        	else
 			        	{
 			        		$movimentacaoD['AnoProjeto'][$countD]= '';
@@ -2011,7 +2009,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 			        		$movimentacaoD['Enquadramento'][$countD] = 'not';
 			        	}
 
-			        	/* Pegando a data para verifica��o e transformando para BR */
+			        	/* Pegando a data para verificacao e transformando para BR */
 			        	$data = substr($buffer,47,8);
 			        	$dia = substr($data,0,2);
 			        	$mes = substr($data,2,2);
@@ -2021,7 +2019,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 			        	$movimentacaoD['dataCredito'][$countD] = $dataCredito;
 			        	$movimentacaoD['dataCreditoC'][$countD] = $dataCreditoC;
 
-			        	/* Fazer uma busca para ver se o projeto est� com data de execu��o vigente */
+			        	/* Fazer uma busca para ver se o projeto esta com data de execucao vigente */
 			        	$PExecucao = MovimentacaoDeContaDAO::buscarVigenciaExecucao($dataCreditoC, $AnoProjeto.$SequencialProjeto);
 			        	if($PExecucao)
 		        		{
@@ -2032,7 +2030,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 							$movimentacaoD['PExecucao'][$countD] = 'not';
 						}
 
-			        	/* Fazer uma busca para ver se o projeto est� com data de capta��o vigente */
+			        	/* Fazer uma busca para ver se o projeto esta com data de captacao vigente */
 			        	$PCaptacao = MovimentacaoDeContaDAO::buscarVigenciaCaptacao($dataCreditoC, $AnoProjeto.$SequencialProjeto);
 			        	if($PCaptacao)
 		        		{
@@ -2046,7 +2044,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 			        	$movimentacaoD['valorCredito'][$countD]=(float)substr($buffer,55,17);
 
-			        	/* Se o codigo de patrocinio for em branco transforma para 0 (N�o informado) */
+			        	/* Se o codigo de patrocinio for em branco transforma para 0 (Nao informado) */
 			        	if(substr($buffer,94,1) == '')
 			        	{
 			        		$movimentacaoD['codPatrocinio'][$countD]= 0;
@@ -2059,7 +2057,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 			        	$countD ++;
 		        	} // fecha if
 
-		        	/* Se o inicio da linha for igual a 3, ent�o � Trailer */
+		        	/* Se o inicio da linha for igual a 3, entao eh Trailer */
 		        	if(substr($buffer,0,1) == 3)
 		        	{
 		        		$movimentacaoT['quantidadeRegistros'][$countT]=substr($buffer,1,8);
@@ -2068,7 +2066,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 		    	} // fecha while
 
-				// Colocando as datas nas formata��es certas
+				// Colocando as datas nas formatacoes certas
 		   		$dia = substr($dataChegadaRecibo,0,2);
 		    	$mes = substr($dataChegadaRecibo,2,2);
 		    	$ano = substr($dataChegadaRecibo,4,4);
@@ -2109,19 +2107,19 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 		   			$dadosContigencia = array();
 
-		   			$pendencias = 'PEND�NCIAS NA CAPTA��O DO PROJETO PRONAC: '.$movimentacaoD['AnoProjeto'][$Key].
+		   			$pendencias = 'PEND&Ecirc;NCIAS NA CAPTA&Ccedil;&Atilde;O DO PROJETO PRONAC: '.$movimentacaoD['AnoProjeto'][$Key].
 								     										   $movimentacaoD['SequencialProjeto'][$Key].
 																			 '<br /><br />';
 
 		   			if($movimentacaoD['PExecucao'][$Key] == 'not')
 		   			{
 		   				array_push($dadosContigencia, '1');
-						$pendencias .= 'Periodo de execu��o n�o vigente <br />';
+						$pendencias .= 'Periodo de execu&ccedil;&atilde;o n&atilde;o vigente <br />';
 		   			}
 		   			if($movimentacaoD['PCaptacao'][$Key] == 'not')
 		   			{
 		   				array_push($dadosContigencia, '2');
-						$pendencias .= 'Periodo de capta��o n�o vigente <br />';
+						$pendencias .= 'Periodo de capta&ccedil;&atilde;o n&atilde;o vigente <br />';
 		   			}
 		   			if($movimentacaoD['Patrocinador'][$Key] == 'not')
 		   			{
@@ -2131,7 +2129,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		   			if($movimentacaoD['codPatrocinio'][$Key] == 0)
 		   			{
 		   				array_push($dadosContigencia, '4');
-		   				$pendencias .= 'Informar o tipo de patroc�nio <br />';
+		   				$pendencias .= 'Informar o tipo de patroc&iacute;nio <br />';
 		   			}
 		   			if($movimentacaoD['EmailProponente'][$Key] == 'not')
 		   			{
@@ -2142,14 +2140,14 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 		   				array_push($dadosContigencia, '6');
 		   			}
 
-		   			/* Tipo de contig�ncias
+		   			/* Tipo de contigencias
 		   			 *
-		   			 * 1 - Execu��o n�o vigente
-		   			 * 2 - Capta��o n�o vigente
-		   			 * 3 - Incentivador n�o cadastrado
-		   			 * 4 - Patroc�nio n�o informado
-		   			 * 5 - Email do proponente n�o cadastrado
-		   			 * 6 - Proponente n�o cadastrado
+		   			 * 1 - Execucao nao vigente
+		   			 * 2 - Captacao nao vigente
+		   			 * 3 - Incentivador nao cadastrado
+		   			 * 4 - Patrocinio nao informado
+		   			 * 5 - Email do proponente nao cadastrado
+		   			 * 6 - Proponente nao cadastrado
 		   			 */
 
 					if(sizeof($dadosContigencia) > 0)
@@ -2165,10 +2163,10 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 		   				/****************************************************************************************************/
 
-					        $email = 'tarcisio.angelo@cultura.gov.br';
+					        $email = 'salicweb@gmail.com';
 
-					        // Quando subir para produ��o deve substituir o email acima por esse abaixo
-					        //$email = $emailProponente;
+					        // Quando subir para producao deve substituir o email acima por esse abaixo
+//					        $email = $emailProponente;
 
 					    	//$enviar = MovimentacaoDeContaDAO::enviarEmail($email, $pendencias);
 
@@ -2196,16 +2194,16 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 	    } // Fecha caso tem arquivos
 
-    	// Agora vai verificar o que j� tem cadastrado
+    	// Agora vai verificar o que j&aacute; tem cadastrado
     	$this->_redirect('movimentacaodeconta/verificacao');
-	} // fecha m�todo salvararquivobbAction()
+	} // fecha metodo salvararquivobbAction()
 
 
 
 	/**
-	 * M�todo de verifica��o
+	 * Metodo de verificacao
 	 * ****************************************************************************************************
-	 * OBS: Por enquanto foi substitu�do pela TRIGGER/SP, mas, � bom n�o retir�-lo para o caso de precisar
+	 * OBS: Por enquanto foi substituido pela TRIGGER/SP, mas, eh bom nao retira-lo para o caso de precisar
 	 * ****************************************************************************************************
 	 * @access public
 	 * @param void
@@ -2274,7 +2272,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	        	}
 
 
-	        	/* Fazer uma busca para ver se o projeto est� com data de execu��o vigente */
+	        	/* Fazer uma busca para ver se o projeto esta com data de execucao vigente */
 	        	$PExecucao = MovimentacaoDeContaDAO::buscarVigenciaExecucao($dtCredito, $nrAnoProjeto.$nrSequencial);
 	        	if($PExecucao)
         		{
@@ -2285,7 +2283,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 					$PEx = 'not';
 				}
 
-	        	/* Fazer uma busca para ver se o projeto est� com data de capta��o vigente */
+	        	/* Fazer uma busca para ver se o projeto esta com data de captacao vigente */
 	        	$PCaptacao = MovimentacaoDeContaDAO::buscarVigenciaCaptacao($dtCredito, $nrAnoProjeto.$nrSequencial);
 	        	if($PCaptacao)
         		{
@@ -2375,7 +2373,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	    }
 
 		parent::message('Arquivo enviado com sucesso!', 'movimentacaodeconta/upload', 'CONFIRM');
-	} // fecha m�todo verificacaoAction()
+	} // fecha metodo verificacaoAction()
 
 
     /**
@@ -2427,7 +2425,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
     public function formRelatorioReciboCaptacaoAction() {;}
 
         /**
-	 * M�todo para listar os projetos para grid do relatorio conforme o tipo de inconsistencia
+	 * Metodo para listar os projetos para grid do relatorio conforme o tipo de inconsistencia
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2595,7 +2593,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->view->dtCaptacao_Final = $get->dtCaptacao_Final;
             $this->view->numLote = $get->numLote;
 
-	} // fecha m�todo listarProjetosAction()
+	} // fecha metodo listarProjetosAction()
 
         public function imprimirRelatorioReciboCaptacaoAction(){
             $this->_helper->layout->disableLayout();
@@ -2726,15 +2724,15 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $busca = $tbCaptacao->buscaReciboCaptacao($where, $order);
             $this->view->dados = $busca;
             $this->view->vlrTotalGrid = $tbCaptacao->buscaReciboCaptacaoTotalValorGrid($where);
-	} // fecha m�todo listarProjetosAction()
+	} // fecha metodo listarProjetosAction()
 
 
 	/**
-	 * M�todo respons�vel pela corre��o manual das inconsist�ncias
+	 * Metodo responsavel pela correcao manual das inconsistencias
 	 */
 	public function corrigirInconsistenciasAction()
 	{
 
-	} // fecha m�todo corrigirInconsistenciaAction()
+	} // fecha metodo corrigirInconsistenciaAction()
 
 } // fecha class

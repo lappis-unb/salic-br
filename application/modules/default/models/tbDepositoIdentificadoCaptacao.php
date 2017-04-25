@@ -1,6 +1,6 @@
 <?php
 /**
- * DAO tbDepositoIdentificadoCaptacao 
+ * DAO tbDepositoIdentificadoCaptacao
  * @author emanuel.sampaio - Politec
  * @since 30/06/2011
  * @version 1.0
@@ -14,10 +14,8 @@ class tbDepositoIdentificadoCaptacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
-	protected $_schema  = "dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbDepositoIdentificadoCaptacao";
-
-
 
 	/**
 	 * M�todo para ignorar a aus�ncia da chave prim�ria
@@ -26,7 +24,6 @@ class tbDepositoIdentificadoCaptacao extends MinC_Db_Table_Abstract
 	{
 		$this->_primary = "";
 	}*/
-
 
 
 	/**
@@ -39,7 +36,7 @@ class tbDepositoIdentificadoCaptacao extends MinC_Db_Table_Abstract
 	{
 		return $this->insert($dados);
 	} // fecha m�todo cadastrarDados()
-        
+
         /**
          * Executa a Procedure spDepositoIdentificadoCaptacao
          * @access public
@@ -47,12 +44,11 @@ class tbDepositoIdentificadoCaptacao extends MinC_Db_Table_Abstract
          */
         public function DepositoIdentificadoCaptacao(){
             $sql ="exec SAC.dbo.spDepositoIdentificadoCaptacao";
-            
+
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             return $db->query($sql);
         }
-        
 
-} // fecha class
+}

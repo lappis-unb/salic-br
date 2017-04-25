@@ -312,10 +312,10 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $this->_helper->layout->disableLayout();
 
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
-        $itens = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
+        $itens = $tbPreprojeto->listarItensProdutos($this->idPreProjeto, null,  Zend_DB::FETCH_ASSOC);
 
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $listaEtapa = converterObjetosParaArray($manterOrcamento->buscarEtapas('P'));
+        $listaEtapa = $manterOrcamento->buscarEtapas('P', Zend_DB::FETCH_ASSOC);
 
         $this->view->EtapaCusto = $manterOrcamento->buscarEtapas("A");
         $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");

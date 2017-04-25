@@ -303,7 +303,7 @@ $relatorio .="<tr>
                 $arrBusca = array();
                 $arrBusca['idProjeto']=$idPreProjeto;
 
-                $tblAbrangencia = new Abrangencia();
+                $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
                 $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
                 
 		foreach ($rsAbrangencia as $localizacao):

@@ -1,3 +1,84 @@
+Release 2.0.4
+  * Fix: [Admissibilidade] Assinar projeto quebrado
+  * Fix: [Admissibilidade] Correção no enquadramento do projeto
+  * Fix: [Admissibilidade] Correção na transformação de proposta em projeto
+  * Fix: [Comprovação de objeto] Ajuste no CEP ao gravar plano de distribuição
+  * Fix: [CNIC]	Ajuste em telas quebradas em CNIC
+  * Fix: [Gerenciar pareceres] Ajustes de estilo e botões ao visualizar parecer técnico consolidado (parecer técnico consolidado, análise de conteúdo, análise de custo e diligências)
+  * Fix: [Planilha orçamentária] Ajuste na gravação das tabelas
+  * Fix: [Proponente] Estilos, botões, rolagem em cadastrar fornecedor
+  * Fix: [Proponente] Corrigindo carregamento infinito em cadastrar fornecedor
+  * Fix: [Proponente] Ajuste de estilo na execução da receita e despesa
+  * Fix: [Proponente] Correção na impressão do projeto
+  * Fix: [Proponente] Readequação - local de realização
+
+Release 2.0.3
+  * Fix: [Checklist para publicação] Ajuste em alterar projeto
+  * Fix: [Checklist para publicação] Ajuste de estilo
+  * Fix: [Cnic] Correção em menu quebrado
+  * Fix: [Consulta cidadão] Correção ao ordenar por Pronac
+  * Fix: [Diligências] Ajuste nos frames
+  * Fix: [Diligências] Ajuste de estilo
+  * Fix: [Proponente] Correções de estilo e charset
+  * Fix: [Proposta] Correção no download de documentos da proposta
+  * Fix: [Validar aprovação] Removendo funcionalidade de desistência recursal
+  * Fix: [Validar aprovação] Adicionando funcionalidade de assinar para Secretário e Coord Geral Admissibilidade
+  * Fix: [Validar aprovação] Alteração na regra de exibição do botão de Encaminhar para Assinatura
+
+Release 2.0.2
+  * Fix: [Atendimento Representações] Exibindo menu em Tramitar documentos
+  * Fix: [CNIC] Fix em Reunião CNIC
+  * Fix: [Gerar portarias] Correção na publicação de portarias
+  * Fix: [Gerenciar componente da comissão] Correção ao salvar
+  * Fix: [Gerenciar componente da comissão] Correção de estilo
+  * Fix: [Gerenciar componente da comissão] Correção ao desabilitar componente
+  * Fix: [Gerenciar pareceres] Estilo pra página de tramitação
+  * Fix: [Gerenciar pareceres] Correção em devolver para análise
+  * Fix: [Gerenciar pareceres] Correções em aprovação direta
+  * Fix: [Marcas] Permitindo processar marcas
+  * Fix: [Mobile] Correção na autenticação do App - permitindo acesso do proponente
+  * Fix: [Mobile] Correções de texto
+  * Fix: [Parecerista] Correção em meus pagamentos
+  * Fix: [Parecerista] Anexando RPA em Meus Pagamentos
+  * Fix: [Planilha] Correção visual na tela de alterar item
+  * Fix: [Planilha] Correção em custo por produto
+  * Fix: [Proponente] Cadastrando beneficiários
+  * Fix: [Proponente] Readequação de Planilha Orçamentária
+  * Fix: [Proponente] Correção nos menus do proponente
+  * Fix: [Proposta] Exibindo proposta cultural
+  * Fix: [Web Service Receita] Correção do preenchimento do CEP
+  * Fix: [Web Service Receita] Correção do cliente do Web Service
+  * Fix: [Web Service Receita] Gravando nome sem apóstrofe
+
+Release 2.0.1
+  * Fix: [Checklist] Erro do CNAE
+  * Fix: [Checklist] Erro na data
+  * Fix: [Comprovação financeira] Ajuste de charset
+  * Fix: [Consulta cidadão] Fix na funcionalidade
+  * Fix: [Diligência] Resposta de diligência
+  * Fix: [Fiscalização] Fix na funcionalidade
+  * Fix: [Movimentação bancária] Vários fixes
+  * Fix: [Prestação de contas] Fix em comprovar execução física
+  * Fix: [Parecerista] Fix em meus pagamentos
+  * Fix: [Proponente] Envio da proposta estava quebrado
+  * Fix: [Proponente] Vários fixes nas diligências
+  * Fix: [Proponente] Permitir detalhamento do plano de distribuição
+  * Fix: [Proponente] Fix ao consultar proposta
+  * Fix: [Proponente] Anexar documentos
+  * Fix: [Proponente] Excluir proposta
+  * Fix: [Proponente] Falha ao finalzar pedido de Readequação
+  * Fix: [Proponente] Gerar pdf
+  * Fix: [Proponente] Fix em realização do objeto - comprovação física
+  * Fix: [Relatório trimestral] Fix na funcionalidade
+
+Release 2.0.0
+  * Novo: Implementação da Nova IN 2017
+  * Novo: Alterações de modularização
+
+Release 1.15.3
+  * Fix: [Comprovação financeira] Corrigindo erro em que soma ultrapassava valor total (erro de ponto flutuante)
+  * Fix: Removendo php info
+
 Release 1.15.2
   * Fix: [Recursos] Lista de pareceristas quebrava página de vinculada do IPHAN
 

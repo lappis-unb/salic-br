@@ -12,15 +12,15 @@ class tbDocumento extends MinC_Db_Table_Abstract {
 
 
     /**
-     * M�todo para cadastrar
+     * Metodo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o �ltimo id cadastrado)
+     * @return integer (retorna o ultimo id cadastrado)
      */
     public function cadastrarDados($dados)
     {
             return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    } // fecha metodo cadastrarDados()
 
 
     /**
@@ -53,7 +53,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('d' => $this->_schema . '.' . $this->_name),
+                array('d' => $this->_name),
                 array(
                     'd.idDocumento',
                     'd.dsDocumento',

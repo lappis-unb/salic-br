@@ -720,7 +720,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $rsPreProjeto->stEstado = 0;
 
         if ($rsPreProjeto->save()) {
-            parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listarproposta", "CONFIRM");
         } else {
             parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }

@@ -1291,7 +1291,7 @@ public function analisePorParecerista($where){
             $slct->distinct();
             $slct->setIntegrityCheck(false);
             $slct->from(
-                    array('dp' => $this->_schema . '.' . $this->_name), array()            );
+                    array('dp' => $this->_name), array()            );
             $slct->joinInner(
                     array('ag'=>'Agentes'),
                     'ag.idAgente = dp.idAgenteParecerista',

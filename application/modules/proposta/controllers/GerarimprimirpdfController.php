@@ -63,15 +63,22 @@ class Proposta_GerarimprimirpdfController extends Proposta_GenericController
        }
 
         $id_projeto = $this->getRequest()->getParam('idPreProjeto');
+        if( empty($id_projeto) ) {
+            $id_projeto = $this->getRequest()->getParam('idpreprojeto');
+        }
+
+
         $this->view->id_projeto = $id_projeto;
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
         $rsDadosProjeto = array_change_key_case( $tblPreProjeto->buscaCompleta(array("idPreProjeto = ?"=>$id_projeto))->current()->toArray() );
         $this->view->rsDadosProjeto = $rsDadosProjeto;
 
-        // Busca na tabela apoio ExecucaoImediata stproposta
-        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $rsDadosProjeto['stproposta']));
+        if( !empty($rsDadosProjeto['stproposta'])) {
+            // Busca na tabela apoio ExecucaoImediata stproposta
+            $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+            $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $rsDadosProjeto['stproposta']));
+        }
 
         $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $this->view->rsAbrangencias = $tbAbrangencia->buscar( array("idProjeto"=>$id_projeto) );

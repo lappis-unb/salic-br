@@ -682,7 +682,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
             try {
-                $db->beginTransaction();
+//                $db->beginTransaction();
 
                 $tbDistribuirParecer = new tbDistribuirParecer();
                 $dadosWhere["t.idPRONAC = ?"] = $idpronac;
@@ -720,11 +720,11 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		$orgao = $orgaos->pesquisarNomeOrgao($idorgao);
 		$projetos = new Projetos();
 		$projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Devolvido para unidade ' . $orgao[0]->NomeOrgao . ' para revis�o do parecer t�cnico.');
-                $db->commit();
+//                $db->commit();
                 parent::message("Devolvido com sucesso!", "gerenciarpareceres/index", "CONFIRM");
 
             } catch(Zend_Exception $ex) {
-                $db->rollBack();
+//                $db->rollBack();
                 parent::message($ex->getMessage(), "gerenciarpareceres/devolverparaanalise/idpronac/".$idpronac ,	"ERROR");
             }
         }

@@ -26,7 +26,7 @@
                     $("#td-grupo-d").html(data.dadosPlanilha.GrupoD);
                 } else {
                     $("#alerta").dialog("destroy");
-                    $("#alerta").html("N�o foi poss�vel fazer os c�lculos da planilha.<br />Tente novamente mais tarde!");
+                    $("#alerta").html("N&atilde;o foi poss&iacute;vel fazer os c&aacute;lculos da planilha.<br />Tente novamente mais tarde!");
                     $("#alerta").dialog({
                         resizable: false,
                         title: 'Alerta!',
@@ -105,14 +105,14 @@
         
         $('#finalizarRemanejamento').click(function(){
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente finalizar o remanejamento?<br /><br />Ap�s a confirma��o, voc� n�o ter� mais acesso a essa funcionalidade.');
+            $("#alerta").html('Deseja realmente finalizar o remanejamento?<br /><br />Ap&oacute;s a confirma&ccedil;&atilde;o, voc&ecirc; n&atilde;o ter&aacute; mais acesso a essa funcionalidade.');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width:370,
                 modal: true,
                 buttons : {
-                    'N�o' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -177,7 +177,7 @@
             var idPronac = $(this).attr('idPronac');
             $("#modalItem").dialog('close');
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente cancelar todas as modifica��es feitas nos itens da planilha?');
+            $("#alerta").html('Deseja realmente cancelar todas as modifica&ccedil;&ätilde;es feitas nos itens da planilha?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -282,8 +282,8 @@
                             valorParaMsgErro = data.dadosPlanilhaAtiva.TotalSolicitado,
                             mensagem = '';
                     
-                        //MOSTRA OS DADOS NA MODAL AP�S ABRI-LA
-                        $("#modalItem").dialog("destroy");
+                        //MOSTRA OS DADOS NA MODAL APOS ABRI-LA
+                        //$("#modalItem").dialog("destroy");
                         $("#modalItem").dialog({
                             resizable: false,
                             title: 'Alterar Item!',
@@ -321,7 +321,7 @@
                                     var TotalCalculadoComponente = $('#TotalCalculado').html().replace(/[^\d]/g, "");
                                     if(parseInt(TotalCalculadoComponente) < parseInt(vlComprovadoDoItemValidacao)){
                                         //$('#TotalCalculado').css('color','red');
-                                        mensagem += '- O valor total do item n�o pode ser menor do que o valor comprovado de '+data.valoresDoItem.vlComprovadoDoItem+'.<br/>';
+                                        mensagem += '- O valor total do item n&atilde;o pode ser menor do que o valor comprovado de '+data.valoresDoItem.vlComprovadoDoItem+'.<br/>';
                                         erros++;
                                     }
                                     
@@ -330,11 +330,11 @@
                                         erros++;
                                         var vlComp = parseInt(vlComprovadoDoItemValidacao+'00');
                                         if(vlComp < data.dadosPlanilhaAtiva.ValorMinimoProItemValidacao){
-                                            mensagem += '- O valor total do item n�o pode ser menor que '+data.dadosPlanilhaAtiva.ValorMinimoProItem+'.<br/>';
+                                            mensagem += '- O valor total do item n&atilde;o pode ser menor que '+data.dadosPlanilhaAtiva.ValorMinimoProItem+'.<br/>';
                                         }
                                     }
                                     if(parseInt(TotalCalculadoComponente) > parseInt(valorMaximoValidacao)){
-                                        mensagem += '- O valor total do item n�o pode ser maior que '+data.dadosPlanilhaAtiva.ValorMaximoProItem+'.<br/>';
+                                        mensagem += '- O valor total do item n&atilde;o pode ser maior que '+data.dadosPlanilhaAtiva.ValorMaximoProItem+'.<br/>';
                                         erros++;
                                     }
 
@@ -570,7 +570,7 @@
             </td>
         </tr>
     </table>
-
+    <div id="planilhaOrcamentariaMontada">
     <table class="tabela">
         <?php
         $nrfonte = 0;
@@ -743,7 +743,7 @@
         </tr>
         <tr>
             <td class="centro">
-                <input type="button" class="btn_finalizar" id="finalizarRemanejamento">
+	      <button class="waves-effect waves-light btn small" id="finalizarRemanejamento" name="finalizar">finalizar</button>
             </td>
         </tr>
         <?php } else { ?>
@@ -752,6 +752,7 @@
         </tr>
         <?php } ?>
     </table>
+    </div>
 </div>
 
 <?php //MODAL DE AVALIA��O DO ITEM ?>
@@ -783,8 +784,8 @@
         <tr class="centro">
             <td class="destacar bold">Unidade</td>
             <td class="destacar bold">Qtd</td>
-            <td class="destacar bold">Ocorr�ncia</td>
-            <td class="destacar bold">Vl. Unit�rio</td>
+            <td class="destacar bold">Ocorr&ecirc;ncia</td>
+	    <td class="destacar bold">Vl. Unit&aacute;rio</td>
             <td class="destacar bold">Dias</td>
             <td class="destacar bold">Total</td>
             <td class="destacar bold" style="width: 1px;">Reintegrar</td>
@@ -803,13 +804,13 @@
     </table>
     <table class="tabela">
         <tr class="centro">
-            <td class="destacar bold">Vl. M�nimo</td>
-            <td class="destacar bold">Vl. M�ximo</td>
+            <td class="destacar bold">Vl. M&iacute;nimo</td>
+            <td class="destacar bold">Vl. M&aacute;ximo</td>
             <td class="destacar bold">Vl. Comprovado</td>
         </tr>
         <tr class="centro">
-            <td class="camposModal red bold"><span id="campoValorMinimo">&nbsp;</span></td>
-            <td class="camposModal blue bold"><span id="campoValorMaximo">&nbsp;</span></td>
+            <td class="camposModal red-text bold"><span id="campoValorMinimo">&nbsp;</span></td>
+            <td class="camposModal blue-text bold"><span id="campoValorMaximo">&nbsp;</span></td>
             <td class="camposModal green bold"><span id="campoValorComprovado">&nbsp;</span></td>
         </tr>
     </table>
@@ -820,12 +821,12 @@
         <tr class="centro">
             <!--<td class="destacar bold">Unidade</td>-->
             <td class="destacar bold">Qtd</td>
-            <td class="destacar bold">Ocorr�ncia</td>
-            <td class="destacar bold">Vl. Unit�rio</td>
+            <td class="destacar bold">Ocorr&ecirc;ncia</td>
+            <td class="destacar bold">Vl. Unit&aacute;rio</td>
             <!--<td class="destacar bold">Dias</td>-->
             <td class="destacar bold">Total</td>
-<!--            <td class="destacar bold">Vl. M�nimo</td>
-            <td class="destacar bold">Vl. M�ximo</td>-->
+<!--            <td class="destacar bold">Vl. M&iacute;nimo</td>
+            <td class="destacar bold">Vl. M&aacute;ximo</td>-->
         </tr>
         <tr>
 <!--            <td class="centro">

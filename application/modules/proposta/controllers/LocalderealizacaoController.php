@@ -336,7 +336,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             $arrBusca['idProjeto'] = $idProjeto;
             $arrBusca['stAbrangencia'] = 1;
 
-            $tblAbrangencia = new Abrangencia();
+            $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
             $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
             $this->view->localizacoes = $rsAbrangencia;
         } else {

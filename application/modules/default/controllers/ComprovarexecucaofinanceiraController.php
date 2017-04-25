@@ -2,8 +2,8 @@
 
 class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstract
 {
-    private $modalidade    = array(' - Selecione - ','Convite','Tomada de Pre�os','Concorr&ecirc;ncia','Concurso','Preg&atilde;o');
-    private $tipoLicitacao = array(' - Selecione - ','Eletr�nico','Eletr�nico para registro de pre�o','Eletr�nico por desconto','Eletr�nico por lote','Presencial','Presencial para registro de pre�o','Presencial para maior desconto');
+    private $modalidade    = array(' - Selecione - ','Convite','Tomada de Pre&ccedil;os','Concorr&ecirc;ncia','Concurso','Preg&atilde;o');
+    private $tipoLicitacao = array(' - Selecione - ','Eletr&ocirc;nico','Eletr&ocirc;nico para registro de pre&ccedil;o','Eletr&ocirc;nico por desconto','Eletr&ocirc;nico por lote','Presencial','Presencial para registro de pre�o','Presencial para maior desconto');
     private $tipoCompra    = array(' - Selecione - ','Material','Servi&ccedil;o','Marterial/Servi&ccedil;o');
     private $tipoAquisicao = array(' - Selecione - ','Material','Servi&ccedil;o','Material/Servi&ccedil;o');
     private $tipoDocumento = array(' - Selecione - ','Cupom Fiscal','Guia de Recolhimento','Nota Fiscal/Fatura','Recibo de Pagamento','RPA');
@@ -62,7 +62,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
 
             parent::init(); // chama o init() do pai GenericControllerNew
         } else {
-            $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
+            $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // t�tulo da p�gina
 
             $Usuario = new UsuarioDAO(); // objeto usu�rio
             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
@@ -1788,7 +1788,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
 
         $idPlanilhaAprovacao = $this->getRequest()->getParam('idPlanilhaAprovacao');
 
-        //Adicionado para ser usado como novo parametro do m�todo pesquisarComprovantePorItem
+        //Adicionado para ser usado como novo parametro do metodo pesquisarComprovantePorItem
         $idPronac = $this->getRequest()->getParam('idpronac');
         $idComprovantePagamento = $this->getRequest()->getParam('idComprovantePagamento');
         

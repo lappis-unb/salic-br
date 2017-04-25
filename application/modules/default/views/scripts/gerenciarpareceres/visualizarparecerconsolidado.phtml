@@ -4,40 +4,40 @@
 <table class="tabela">
 	<tr>
 		<th align="center" colspan="6">Identifica&ccedil;&atilde;o</th>
-	</tr>	
+	</tr>
 	<tr>
 		<td align="left" colspan="3"><b>PRONAC	 	</b><br /><?php echo $pc->PRONAC?>				</td>
-		<td align="left" colspan="3"><b>Nome do Projeto </b><br /><?php echo utf8_decode(htmlentities($pc->NomeProjeto));?>			</td>
-	</tr>	
-	<tr>	
+		<td align="left" colspan="3"><b>Nome do Projeto </b><br /><?php echo $pc->NomeProjeto;?>			</td>
+	</tr>
+	<tr>
 		<td align="left"><b>Enquadramento               </b><br /><b style="color:red;"><?php echo $pc->Enquadramento?></b></td>
-                <td align="left"><b>Tipo do Parecer		</b><br /><?php echo utf8_decode(htmlentities($pc->TipoParecer));?></td>
-                <td align="left"><b>Parecer Favor&aacute;vel?	</b><br /><?php echo utf8_decode(htmlentities($pc->ParecerFavoravel));?></td>
+                <td align="left"><b>Tipo do Parecer		</b><br /><?php echo $pc->TipoParecer;?></td>
+                <td align="left"><b>Parecer Favor&aacute;vel?	</b><br /><?php echo $pc->ParecerFavoravel;?></td>
 		<td align="left"><b>Dt.Parecer	 		</b><br /><?php echo $pc->DtConsolidacao?></td>
-		<td align="right" colspan="2"><b>Sugerido Real	</b><br /><?php echo $this->formatarReal($pc->SugeridoReal); ?></td>		
-	</tr>	
-	<tr>	
-		<th align="right">Valor Solicitado (A)								</th>
+		<td align="right" colspan="2"><b>Sugerido Real	</b><br /><?php echo $this->formatarReal($pc->SugeridoReal); ?></td>
+	</tr>
+	<tr>
+		<td align="right">Valor Solicitado (A)								</td>
 		<td align="right" colspan="5" style="color:green;"><?php echo $this->formatarReal($pc->ValorSolicitado); ?></td>
 	</tr>
 	<tr>
-		<th align="right">Valor de Outras Fontes (B)						</th>
+		<td align="right">Valor de Outras Fontes (B)						</td>
 		<td align="right" colspan="5" style="color:red;"><?php echo $this->formatarReal($pc->OutrasFontes); ?></td>
 	</tr>
 	<tr>
-		<th align="right">Valor do Projeto (C = A + B)						</th>
+		<td align="right">Valor do Projeto (C = A + B)						</td>
 		<td align="right" colspan="5" style="color:blue;"><?php echo $this->formatarReal($pc->ValorProposta); ?></td>
 	</tr>
 	<tr>
-		<th align="right">Valor do Parecer T&eacute;cnico (D)						</th>
+		<td align="right">Valor do Parecer T&eacute;cnico (D)						</td>
 		<td align="right" colspan="5"><?php echo $this->formatarReal($pc->ValorParecer); ?>		</td>
 	</tr>
 	<tr>
-		<th align="right">Valor de Elabora&ccedil;&atilde;o e Agenciamento (E)			</th>
+		<td align="right">Valor de Elabora&ccedil;&atilde;o e Agenciamento (E)			</td>
 		<td align="right" colspan="5"><?php echo $this->formatarReal($pc->Elaboracao); ?>		</td>
 	</tr>
 	<tr>
-		<th align="right">Valor Sugerido para Aprova&ccedil;&atilde;o (F = D + E)			</th>
+		<td align="right">Valor Sugerido para Aprova&ccedil;&atilde;o (F = D + E)			</td>
 		<td align="right" colspan="5" style="color:black;"><b><?php echo $this->formatarReal($pc->ValorSugerido); ?></b></td>
 	</tr>
 
@@ -57,12 +57,12 @@
 	</tr>
 	<?php foreach($this->dados2 as $pc2): ?>
 	<tr>
-		<td><?php echo utf8_decode(htmlentities($pc2->Produto)); ?>			</td>
-		<td><?php echo utf8_decode(htmlentities($pc2->Enquadramento)); ?>		</td>
-		<td><?php echo utf8_decode(htmlentities($pc2->IncisoArtigo27_I)); ?>	</td>
-		<td><?php echo utf8_decode(htmlentities($pc2->IncisoArtigo27_II)); ?>	</td>
-		<td><?php echo utf8_decode(htmlentities($pc2->IncisoArtigo27_III)); ?>	</td>
-		<td><?php echo utf8_decode(htmlentities($pc2->IncisoArtigo27_IV)); ?>	</td>
+		<td><?php echo $pc2->Produto; ?>			</td>
+		<td><?php echo $pc2->Enquadramento; ?>		</td>
+		<td><?php echo $pc2->IncisoArtigo27_I; ?>	</td>
+		<td><?php echo $pc2->IncisoArtigo27_II; ?>	</td>
+		<td><?php echo $pc2->IncisoArtigo27_III; ?>	</td>
+		<td><?php echo $pc2->IncisoArtigo27_IV; ?>	</td>
 	</tr>
 	<?php endforeach; ?>
 
@@ -72,7 +72,7 @@
 		<th colspan="6">An&aacute;lise de Conte&uacute;do</th>
 	</tr>
 	<tr>
-		<td colspan="6"><?php echo utf8_decode(htmlentities($pc->ResumoParecer)); ?></td>
+		<td colspan="6"><?php echo $pc->ResumoParecer; ?></td>
 	</tr>
 </table>
 
@@ -83,5 +83,5 @@
 		<tr>
 			<td align="center" style="color: red; font:sans-serif 13px bold;">Nenhum Registro encontrado</td>
 		</tr>
-	</table>	
-<?php endif;?>	
+	</table>
+<?php endif;?>

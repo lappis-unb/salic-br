@@ -1,6 +1,6 @@
-<?php include_once 'scripts/parecerista/inc/menu-parecerista.inc.php'; ?>
+<?php echo $this->partial('parecerista/inc/menu-parecerista.inc.php', $this); ?>
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
-<div id="breadcrumb"> 
+<div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true); ?>" title="Ir para Início">Início</a></li>
         <li class="last">Meus Pagamentos</li>
@@ -15,7 +15,7 @@
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 
 <div id="conteudo">
-    
+
     <?php if(count($this->listaDePagamentos) > 0): ?>
     <?php foreach($this->listaDePagamentos as $pa):?>
     <form enctype="multipart/form-data" id="form_<?php echo $pa['idGerarPagamentoParecerista']; ?>" action="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'assinou-rpa-parecerista')); ?>" method="POST">
@@ -47,7 +47,6 @@
             </tr>
             <?php $i++; ?>
             <?php endforeach; ?>
-            
             <tr>
                 <td style="text-align: right;" colspan="4">Total:</td>
                 <td style="text-align: right;"><?php echo $this->formatarReal($pa['vlTotalPagamento']); ?></td>
@@ -98,19 +97,19 @@
 <script>
 
     $(document).ready(function(){
-       
+
     });
-    
+
     function confirmarAssinatura(id){
-        
+
         $('#rpa_'+id).css('border','solid 1px #ccc');
-        
+
         if($('#rpa_'+id).is(":empty")){
             $('#rpa_'+id).css('border','solid 1px red');
             $('#label_'+id).html('É preciso fazer o Upload do RPA assinado! &nbsp; &nbsp; &nbsp;');
 //            return false;
         }
-        
+
         $("#dialog").html('Deseja confirmar o pagamento?');
         $("#dialog").dialog("destroy");
         $("#dialog").dialog({
@@ -120,7 +119,7 @@
             resizable: false,
             closeOnEscape: false,
             title: 'Confirmação',
-            buttons: { 
+            buttons: {
                 Não:function() {
                     $(this).dialog('close');
                 },
@@ -131,7 +130,7 @@
         });
 
         $('.ui-dialog-titlebar-close').remove();
-            
+
     }
-    
+
 </script>

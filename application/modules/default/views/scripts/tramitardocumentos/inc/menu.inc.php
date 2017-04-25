@@ -45,7 +45,7 @@
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitardocumentos', 'action' => 'despachar')); ?>" title="Ir para Cadastrar documentos">Cadastrar</a>
                 <!--<a class="no_seta" href="<?php //echo $this->url(array('controller' => 'tramitardocumentos', 'action' => 'enviar')); ?>" title="Ir para Enviar documentos">Enviar</a>-->
             <?php }?>
-                
+
             <?php if(in_array($this->grupoAtivo, array(91,97,104,109,115))){ ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitardocumentos', 'action' => 'receber')); ?>" title="Ir para Receber documentos">Receber</a>
             <?php }?>
@@ -53,11 +53,11 @@
             <?php if(in_array($this->grupoAtivo, array(91,97,104,109,115))){ ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitardocumentos', 'action' => 'anexar')); ?>" title="Ir para Anexar documento">Anexar</a>
             <?php }?>
-                
+
             <?php /*if(in_array($this->grupoAtivo, array(90,91,97,104,115))){ ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitardocumentos', 'action' => 'desanexar')); ?>" title="Ir para Desanexar documento">Desanexar</a>
             <?php }*/?>
-                
+
             <?php /*if(in_array($this->grupoAtivo, array(90,91,97,104,115))){ ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitardocumentos', 'action' => 'solicitacoes')); ?>" title="Ir para Solicita&ccedil;&otilde;es">Solicita&ccedil;&otilde;es</a>
             <?php }*/ ?>

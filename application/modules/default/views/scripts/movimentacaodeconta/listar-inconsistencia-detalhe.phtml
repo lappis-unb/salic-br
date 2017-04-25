@@ -20,7 +20,7 @@
                 <td align="center"><?php echo!empty($this->projeto->Agencia) ? $this->projeto->Agencia : '<em>Não informada</em>'; ?></td>
                 <td align="center"><?php echo!empty($this->projeto->ContaBloqueada) ? $this->projeto->ContaBloqueada : '<em>Não informada</em>'; ?></td>
                 <td align="center">
-                    <b><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-bancarios-captacao')); ?>?idPronac=<?php echo $this->idPronac; ?>" style="color: blue !important;" target="new">R$ <?php echo number_format($this->projeto->ValorCaptado, 2, ',', '.'); ?></a></b>
+                    <b><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'dados-bancarios-captacao')); ?>?idPronac=<?php echo $this->idPronac; ?>" style="color: blue !important;" target="new">R$ <?php echo number_format($this->projeto->ValorCaptado, 2, ',', '.'); ?></a></b>
                 </td>
             </tr>
         </tbody>
@@ -74,7 +74,7 @@
                         <td align="center">
                             <?php
                             try {
-                                echo $this->partial($inconsistenciaPartial, array('projeto' => $this->projeto, 'captacao' => $captacao,));
+                                echo $this->partial('movimentacaodeconta/' . $inconsistenciaPartial, array('projeto' => $this->projeto, 'captacao' => $captacao));
                             } catch (Exception $e) {
                                 echo "Partial Missing {$inconsistenciaPartial}";
                             }
@@ -145,7 +145,7 @@
         $.ajax({
             async: true,
             type: "post",
-            url: "<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'finalizar')); ?>",
+            url: "<?php echo $this->url(array('module'=> 'default', 'controller' => 'movimentacaodeconta', 'action' => 'finalizar')); ?>",
             data: {modal: "s"},
             success: function(data) {
                 window.location.reload();
@@ -162,7 +162,7 @@
 
 var resolverInconsistencia = function (event) {
     var idTmpCaptacao = $('body').data('currentIdTmpCaptacao');
-    
+
     $.ajax({
 	url: '<?php echo $this->url(array('controller' => 'resolver-inconsistencia', 'action' => 'incentivador-proponente-iguais')); ?>/idInconsistencia/' + idTmpCaptacao,
         data: {cnpjcpf: event.detail.CNPJCPF},
@@ -181,7 +181,7 @@ var resolverInconsistencia = function (event) {
                 $("#carregando table tbody tr td").append(
                     $('<p>Inconsistência resolvida com sucesso.</p>')
                 );
-	    
+
 	    $('#row-' + idTmpCaptacao + ' .cpfcnpjIncentivador').html( format_cnpj(event.detail.CNPJCPF) );
 
                 $('#btnValidarProponenteIncentivadorIguais-' + idTmpCaptacao).closest('td').html("<font color='green'>[Correção enviada]</font>");
@@ -200,13 +200,13 @@ var resolverInconsistencia = function (event) {
 
 function JSCadastarIncentivador(cpfCnpj, element, event, idTmpCaptacao) {
     $('body').data('currentIdTmpCaptacao', idTmpCaptacao);
-    
+
     $('html').css('overflow', 'hidden');
     $("body").append("<div id='divDinamicaAgentes'></div>");
     $("#divDinamicaAgentes").html("");
     $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
     $.ajax({
-        url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluiragente')); ?>',
+        url : '<?php echo $this->url(array('module'=> 'agente','controller' => 'agentes', 'action' => 'incluiragente')); ?>',
         data : {cpf : '', caminho: "", modal : "s", modulo : "movimentacaobancaria"},
         success: function(data){
             $('#divDinamicaAgentes').html(data.error ? data.msg : data);

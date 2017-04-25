@@ -14,7 +14,7 @@ class tbProposta extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
-	protected $_schema  = "dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbProposta";
 
 
@@ -30,7 +30,7 @@ class tbProposta extends MinC_Db_Table_Abstract
 	{
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
-		$select->from($this->_schema . '.' . $this->_name
+		$select->from($this->_name
 			,array('IdProposta'
 				,'tpProposta'
 				,'CONVERT(CHAR(10), dtProposta, 103) AS dtProposta'
@@ -95,7 +95,7 @@ class tbProposta extends MinC_Db_Table_Abstract
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
 		$select->from(
-			array('h' => $this->_schema . '.' . $this->_name)
+			array('h' => $this->_name)
 			,array('h.IdProposta'
 				,'h.tpProposta'
 				,'CONVERT(CHAR(10), h.dtProposta, 103) AS dtProposta'
@@ -184,7 +184,7 @@ class tbProposta extends MinC_Db_Table_Abstract
 		$select->setIntegrityCheck(false);
 		$select->distinct();
 		$select->from(
-			array('a' => $this->_schema . '.' . $this->_name)
+			array('a' => $this->_name)
 			,array('dsObjetivos AS Solicitacao'
 				,'dsJustificativa AS Justificativa','dsEstrategiaExecucao'
                                 ,'dsEspecificacaoTecnica as dsEspecificacaoSolicitacao')

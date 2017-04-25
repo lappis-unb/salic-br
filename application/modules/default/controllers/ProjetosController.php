@@ -279,10 +279,10 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
             ";
 
             $db = Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             try {
-                $db->beginTransaction();
+//                $db->beginTransaction();
                 if (empty($arquivoTemp)){ // nome do arquivo
                     parent::message("Por favor, informe o arquivo!!", "gerenciarpareceres/index", "ALERT");
                 } else if (empty($arquivoTemp)){ // nome do arquivo
@@ -422,11 +422,11 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 $inserirProjetoPauta = $pauta->inserir($dadosPauta);
 
                 $verificarSituacao = $sp->expaVerificarAtualizarSituacaoAprovacao($idPronac);
-                $db->commit();
+//                $db->commit();
                 parent::message("Projeto aprovado com sucesso!", "gerenciarpareceres/index", "CONFIRM");
             }
             catch(Zend_Exception $ex) {
-                $db->rollBack();
+//                $db->rollBack();
                 parent::message("Erro ao realizar cadastro", "gerenciarpareceres/index", "ERROR");
             }
 
