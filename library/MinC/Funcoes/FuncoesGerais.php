@@ -440,7 +440,7 @@ function converterObjetosParaArray($objects){
     if(empty($objects))
         return false;
 
-    if(count($objects) == 1) {
+    if(count($objects) == 1 && !isset($objects[0])) {
         return (array) $objects;
     }
 
