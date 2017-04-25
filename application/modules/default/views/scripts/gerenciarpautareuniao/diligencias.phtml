@@ -5,7 +5,7 @@
     function JSVisualizar(idDiligencia,idPronac,idDiligenciaPreProjeto){
 
         //jqAjaxLink('<?php //echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'visualizar-diligencia'));?>', '', 'linha'+idDiligencia);
-        $('#linha'+idDiligencia).toggle();
+        $('#linha'+idDiligencia).toggleClass("sumir");
         if($('#resultado'+idDiligencia).html() == '')
         {
             $('#resultado'+idDiligencia).html('<br><center>Aguarde, carregando dados...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
