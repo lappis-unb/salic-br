@@ -123,14 +123,14 @@
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
-
                 <a
                     href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo Seguranca::encrypt($id); ?>'
-                    class="no_seta" title="Ir para Projeto Atual">
-                        Projeto Atual: <span id="pronacProjeto" data-pronac="<?php echo $this->idPronac ?>"><?php echo $this->pronac ?></span>
+                    class="no_seta"
+                    title="Ir para Projeto Atual"
+                >
+                    Projeto Atual: <span id="pronacProjeto" data-pronac="<?php echo $this->idPronac ?>"><?php echo $this->pronac ?></span>
                 </a>
                 <a href='#' class="no_seta" onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-proponente')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Dados do Proponente">Proponente</a>
-
                 <!-- ======================= Outras Informações  =======================   -->
                 <div class="sanfonaDiv" style="display:none;"></div>
                 <a href="#" title="Outras Informações" class="ancoraOutrasInformacoes" onclick="return false;">Outras Informações</a>
@@ -146,7 +146,7 @@
                     <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'tramitacao')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Tramita&ccedil;&atilde;o">Tramita&ccedil;&atilde;o</a>
 
                     <?php if($this->usuarioInterno){ ?>
-                    <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'historico-encaminhamento')); ?><?php echo $codPronac;?>" title="Ir para Hist&oacute;rico encaminhamento">Hist&oacute;rico encaminhamento</a>
+                        <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'historico-encaminhamento')); ?><?php echo $codPronac;?>" title="Ir para Hist&oacute;rico encaminhamento">Hist&oacute;rico encaminhamento</a>
                     <?php } ?>
                 </div>
                 <!-- ==================== FIM - Outras Informações  =======================   -->
@@ -455,7 +455,7 @@
                 } else {
                     $('#pronacProjeto').append(' [IN2017]');
                     $('#planoDistribuicaoId').click( function() {
-                        carregaDados('<?php echo $this->url(['module' => 'proposta', 'controller' => 'visualizar-plano-distribuicao', 'action' => 'visualizar', 'idPreProjeto' => $this->idPronac]); ?>','conteudo');
+                        carregaDados('<?php echo $this->url(['module' => 'proposta', 'controller' => 'visualizar-plano-distribuicao', 'action' => 'visualizar', 'idPreProjeto' => $this->idprojeto]); ?>','conteudo');
                     });
                 }
             }
