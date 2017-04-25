@@ -95,8 +95,6 @@ class MinC_Assinatura_Assinatura
             throw new Exception ("A fase atual de assinaturas do projeto atual n&atilde;o permite realizar essa opera&ccedil;&atilde;o.");
         }
 
-PAREI AQUI
-
         $usuario = $this->servicoAutenticacao->obterInformacoesAssinante();
         $objTbAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
 
