@@ -248,7 +248,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      * @param array $dados
      * @return bool
      */
-    public  function cadastrar($dados)
+    public function cadastrar($dados)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

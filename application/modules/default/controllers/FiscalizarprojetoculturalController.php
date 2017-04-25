@@ -55,7 +55,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
 
         $aprovacaoDao = new Aprovacao();
         $selectAp = $aprovacaoDao->totalAprovadoProjeto(true);
-        $abrangenciaDao = new Abrangencia();
+        $abrangenciaDao = new Proposta_Model_DbTable_Abrangencia();
         $selectAb = $abrangenciaDao->abrangenciaProjeto(true);
         $projetosDao = new Projetos();
 

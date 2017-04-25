@@ -260,56 +260,15 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $this->view->dados = array();
         $ordenacao = array("dias desc");
-        $this->view->dados = $enquadramento->obterProjetosEnquadradosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
+        $dados = $enquadramento->obterProjetosEnquadradosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
+
+        foreach ($dados as $dado) {
+            $dado->desistenciaRecursal = $enquadramento->verificarDesistenciaRecursal($idPronac);
+            $this->view->dados[] = $dado;
+        }
+
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
         $this->view->codOrgao = $this->grupoAtivo->codOrgao;
     }
 
-    public function desistenciaRecursalAction()
-    {
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-
-        $Orgaos = new Orgaos();
-        $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$GrupoAtivo->codOrgao))->current();
-
-        $area = 1;
-        if($idSecretaria->idSecretaria == Orgaos::ORGAO_SUPERIOR_SAV){
-            $area = 2;
-        }
-
-        $recurso = new tbRecurso();
-        $recursos = $recurso->desistenciaRecursal($area);
-
-        $this->view->recursos = $recursos;
-    }
-
-    public function finalizarDesistenciaRecursalAction()
-    {
-        $idPronac = $this->getRequest()->getParam('idPronac');
-        $idRecurso = $this->getRequest()->getParam('idRecurso');
-
-        $objProjetos = new Projetos();
-
-        $dadosProjetos = array(
-            'DtSituacao'        => $objProjetos->getExpressionDate(),
-            'Situacao'          => 'D27',
-            'logon'             => $this->auth->getIdentity()->IdUsuario,
-            'ProvidenciaTomada' => 'Desistência do prazo recursal'
-        );
-
-        $objProjetos->update($dadosProjetos, array('IdPRONAC = ?' => $idPronac));
-
-        $tbRecurso = new tbRecurso();
-        $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
-
-        $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
-        $recurso->idAgenteAvaliador = $this->auth->IdUsuario;
-        $recurso->stAtendimento = 'D';
-        $recurso->siRecurso = 15;
-        $recurso->stEstado = 1;
-
-        $recurso->save();
-
-        parent::message('Projeto enviado para portaria.', "/admissibilidade/enquadramento/desistencia-recursal", 'CONFIRM');
-    }
 }

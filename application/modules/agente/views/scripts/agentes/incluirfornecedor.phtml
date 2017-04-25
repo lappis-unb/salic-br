@@ -86,7 +86,7 @@ if (empty($_GET['acao'])) {
                 data: {
                     cpf: cpf
                 },
-                url: '<?php echo $this->url(array("controller" => "agentes", "action" => "agentecadastrado")); ?>',
+                url: '<?php echo $this->url(array("module" => "agente", "controller" => "agentes", "action" => "agentecadastrado")); ?>',
 
                 success: function (data)
                 {
@@ -98,7 +98,7 @@ if (empty($_GET['acao'])) {
                         $('#carregando').show();
                     <?php if ($this->modulo != "movimentacaobancaria") { ?>
 
-                        window.location = '<?php echo $this->url(array("controller" => "agentes", "action" => "agentes")); ?>/id/'+ data[0].idAgente;
+                        window.location = '<?php echo $this->url(array("module" => "agente", "controller" => "agentes", "action" => "agentes")); ?>/id/'+ data[0].idAgente;
                     <?php } ?>
                     }
                     else if (data[0].msgCPF == 'invalido')
@@ -140,7 +140,7 @@ if (empty($_GET['acao'])) {
         uf             = document.getElementById("uf");
 
         ajax = xmlhttp(); // instancia ajax
-        ajax.open("GET", "<?php echo $this->url(array('controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
+        ajax.open("GET", "<?php echo $this->url(array('module'=>'default','controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
         ajax.onreadystatechange = function()
         {
             if (cep.length != 10)
@@ -329,6 +329,7 @@ if (empty($_GET['acao'])) {
     </div>
 
     <div id="novocadastro">
+        <div id="cadastro">
         <form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
 
             <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />
@@ -482,10 +483,10 @@ if (empty($_GET['acao'])) {
                                 <option value="0"> -- </option>
                             <?php } ?>
 
-                            <?php foreach ($this->comboestados as $comboestado): ?>
-                                <option value="<?php echo $comboestado->id; ?>"
-                                        <?php if ($this->uf == $comboestado->id) echo "selected=\"selected\""; ?> >
-                                            <?php echo $comboestado->descricao; ?>
+                            <?php foreach ($this->comboestados as $key => $comboestado): ?>
+                                <option value="<?php echo $key; ?>"
+                                        <?php if ($this->uf == $key) echo "selected=\"selected\""; ?> >
+                                            <?php echo $comboestado; ?>
                                 </option>
                             <?php endforeach; ?>
 
@@ -496,14 +497,15 @@ if (empty($_GET['acao'])) {
                         <label for="cidade">Cidade *</label> <br />
                         <select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
                             <option value="0"> - Selecione - </option>
-
-                            <?php foreach ($this->combocidades as $combocidade): ?>
-                                <option value="<?php echo $combocidade->id; ?>"
-                                        id="<?php echo $combocidade->idUF; ?>"
-                                        <?php if ($this->cidade == $combocidade->id) echo "selected=\"selected\""; ?>>
-                                            <?php echo utf8_encode($combocidade->descricao); ?>
-                                </option>
-                            <?php endforeach; ?>
+                            <?php if($this->combocidades) : ?>
+                                <?php foreach ($this->combocidades as $key => $combocidade): ?>
+                                    <option value="<?php echo $combocidade->id; ?>"
+                                            id="<?php echo $combocidade->idUF; ?>"
+                                            <?php if ($this->cidade == $combocidade->id) echo "selected=\"selected\""; ?>>
+                                                <?php echo utf8_encode($combocidade->descricao); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
 
                         </select>
                         <span id="erroCidade" class="spanError"></span>
@@ -518,10 +520,10 @@ if (empty($_GET['acao'])) {
                                 <option value="0"> - Selecione - </option>
                             <?php } ?>
 
-                            <?php foreach ($this->combotiposenderecos as $combotipoendereco): ?>
-                                <option value="<?php echo $combotipoendereco->id; ?>"
-                                        <?php if ($this->tipoEndereco == $combotipoendereco->id) echo "selected=\"selected\""; ?>>
-                                            <?php echo $combotipoendereco->descricao; ?>
+                            <?php foreach ($this->combotiposenderecos as $key => $combotipoendereco): ?>
+                                <option value="<?php echo $key; ?>"
+                                        <?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
+                                            <?php echo $combotipoendereco; ?>
                                 </option>
                             <?php endforeach; ?>
 
@@ -536,10 +538,10 @@ if (empty($_GET['acao'])) {
                                 <option value="0"> - Selecione - </option>
                             <?php } ?>
 
-                            <?php foreach ($this->combotiposlogradouros as $combotipologradouro): ?>
-                                <option value="<?php echo $combotipologradouro->id; ?>"
-                                        <?php if ($this->tipoLogradouro == $combotipologradouro->id) echo "selected=\"selected\""; ?>>
-                                            <?php echo ($combotipologradouro->descricao); ?>
+                            <?php foreach ($this->combotiposlogradouros as $key => $combotipologradouro): ?>
+                                <option value="<?php echo $key; ?>"
+                                        <?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
+                                            <?php echo ($combotipologradouro); ?>
                                 </option>
                             <?php endforeach; ?>
 
@@ -590,5 +592,5 @@ if (empty($_GET['acao'])) {
             </table>
 
         </form>
-
+        </div>
     </div>

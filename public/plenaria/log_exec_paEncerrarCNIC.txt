@@ -1,5 +1,0 @@
-Em 2015-07-09 22:35:04 : A SP "paEncerrarCNIC" foi executada com sucesso
-Em 2015-08-06 22:35:12 : A SP "paEncerrarCNIC" foi executada com sucesso
-Em 2015-09-04 00:11:16 : A SP "paEncerrarCNIC" foi executada com sucesso
-Em 2015-10-08 22:49:30 : A SP "paEncerrarCNIC" foi executada com sucesso
-Em 2015-11-12 22:28:09 : A SP "paEncerrarCNIC" foi executada com sucesso

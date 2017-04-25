@@ -65,7 +65,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $result = $busca->buscar(array('IdPRONAC = ?'=>$idpronac))->current();
         if(!empty ($result)) {
             if(empty($result->idProjeto)) {
-                parent::message("Somente ser� permitido comprovar execu��o do objeto de Projetos por meio do sistema para aqueles cadastrados a partir de Janeiro de 2009. Os outros casos dever�o ser solicitados por meio de of�cio.", "/consultardadosprojeto/?idPronac={$idpronac}", "ERROR");
+                parent::message("Somente ser&aacute; permitido comprovar execu&ccedil;&atilde;o do objeto de Projetos por meio do sistema para aqueles cadastrados a partir de Janeiro de 2009. Os outros casos dever&atilde;o ser solicitados por meio de of�Zcio.", "/consultardadosprojeto/?idPronac={$idpronac}", "ERROR");
                 return;
             }
         }
@@ -234,10 +234,10 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $idProjeto = $dadosProj->idProjeto;
 
             if (empty($idProjeto)) {
-                parent::message('N�o existe idProjeto.', $redirectUrl, 'ERROR');
+                parent::message('N&atilde;o existe idProjeto.', $redirectUrl, 'ERROR');
             }
 
-            $AbrangenciaDAO = new AbrangenciaDAO();
+            $AbrangenciaDAO = new Proposta_Model_DbTable_Abrangencia();
 
             if (filter_input(INPUT_POST, 'novoPais')) {
                 if (31 == \filter_input(\INPUT_POST, 'novoPais')) { //31=Brasil
@@ -257,7 +257,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     $dsJustificativa = filter_input(INPUT_POST, 'justificativaNovo');
                 }
 
-                $Abrangencia = new Abrangencia();
+                $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
                 $abrangencias = $Abrangencia->verificarIgual($idPais, $idUF, $idMunicipio, $idProjeto);
 
                 if (0 == count($abrangencias)) {
@@ -288,8 +288,8 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     );
                    $success = $AbrangenciaDAO->cadastrar($dados);
                 } else {
-                    parent::message('N�o � poss�vel salvar o mesmo local mais de uma vez. '
-                            . '(Pa�s, Uf, Munic�pio)', $redirectUrl, 'ERROR');
+                    parent::message('Não é possível salvar o mesmo local mais de uma vez. '
+                            . '(País, Uf, Município)', $redirectUrl, 'ERROR');
                 }
             }
 
@@ -306,7 +306,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
     }
 
     /**
-     * m�todo para pegar o idpronac
+     * metodo para pegar o idpronac
      *
      * @return mixed|string
      */
@@ -338,7 +338,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $redirectUrl = "comprovarexecucaofisica/local-de-realizacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac);
         $redirectUrlErroData = "comprovarexecucaofisica/manter-local-de-realizacao-final/idpronac/".Seguranca::encrypt($idpronac);
 
-        $AbrangenciaDAO = new AbrangenciaDAO();
+        $AbrangenciaDAO = new Proposta_Model_DbTable_Abrangencia();
 
         $abrangenciaId = $this->_request->getParam('idAbrangencia');
         $abrangenciaSituacao = $this->_request->getParam('siAbrangencia');
@@ -410,7 +410,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $post = Zend_Registry::get('post');
         $idAbrangencia = (int) $post->abrg;
 
-        $tblAbrangencia = new Abrangencia();
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         if($tblAbrangencia->excluir($idAbrangencia)){
             echo json_encode(array('resposta'=>true));
         } else {
@@ -510,7 +510,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                             'nmArquivo'         => $arquivoNome,
                             'sgExtensao'        => $arquivoExtensao,
                             'biArquivo'         => $data,
-                            'dsDocumento'       => 'Comprova��o do Relat�rio Trimestral/Final - Plano de Divulga��o',
+                            'dsDocumento'       => 'Comprovação do Relatório Trimestral/Final - Plano de Divulgação',
                             'idPronac'          => $idpronac,
                             'idTipoDocumento'   => 18);
 
@@ -531,7 +531,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
 
                 //se for Brasil, o usuario deve informar a cidade e o municipio
                 if(empty($idPeca) || empty($idVeiculo)){
-                    parent::message("N�o foi poss�vel cadastrar o novo plano de divulga��o do Projeto!", "comprovarexecucaofisica/plano-de-divulgacao/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("N&atilde;o foi poss&iacute;vel cadastrar o novo plano de divulga&ccedil;&atilde;o do Projeto!", "comprovarexecucaofisica/plano-de-divulgacao/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $planos = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$idProjeto, 'idPeca = ?'=>$idPeca, 'idVeiculo = ?'=>$idVeiculo));
@@ -554,7 +554,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         }
 
                         if(empty($_FILES['arquivoNovo']['tmp_name'])){
-                            parent::message("Favor selecionar um arquivo para o novo Plano de Divulga��o.", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                            parent::message("Favor selecionar um arquivo para o novo Plano de Divulgação.", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                         }
 
                         $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
@@ -571,7 +571,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                                 'nmArquivo'         => $arquivoNome,
                                 'sgExtensao'        => $arquivoExtensao,
                                 'biArquivo'         => $data,
-                                'dsDocumento'       => 'Comprova��o do Relat�rio Trimestral/Final - Plano de Divulga��o',
+                                'dsDocumento'       => 'Comprovação do Relatório Trimestral/Final - Plano de Divulgação',
                                 'idPronac'          => $idpronac,
                                 'idTipoDocumento'   => 18);
 
@@ -591,7 +591,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         );
                         $PlanoDeDivulgacao->inserir($dados);
                     } else {
-                        parent::message("N�o foi poss�vel cadastrar o novo Plano de Divulga��o!", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                        parent::message("Não foi poss&iacute;vel cadastrar o novo Plano de Divulga&ccedil;&atilde;o!", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                     }
 
                 }
@@ -648,7 +648,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $DadosProjeto = $projetos->buscarProjetoXProponente(array('idPronac = ?' => $idpronac))->current();
         $this->view->DadosProjeto = $DadosProjeto;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -690,7 +690,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $produtoBeneficiario = $tbBeneficiarioProdutoCultural->buscar(array('IdPRONAC=?'=>$idpronac,'idAgente=?'=>$_POST['idAgente'],'idPlanoDistribuicao=?'=>$_POST['produto'],'idTipoBeneficiario=?'=>$_POST['tipoDocumento']));
 
             if(count($produtoBeneficiario)>0){
-                parent::message("J� foi cadastrado o mesmo agente para este produto!", "comprovarexecucaofisica/plano-de-distribuicao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                parent::message("J&aacute; foi cadastrado o mesmo agente para este produto!", "comprovarexecucaofisica/plano-de-distribuicao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
 
             } else {
                 if(!empty($_FILES['arquivo']['tmp_name'])){
@@ -710,7 +710,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     }
 
                     if(empty($_FILES['arquivo']['tmp_name'])){
-                        parent::message("Favor selecionar um arquivo para o novo Plano de Distribui��o.", "comprovarexecucaofisica/plano-de-distribuicao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                        parent::message("Favor selecionar um arquivo para o novo Plano de Distribui&ccedil;&atilde;o.", "comprovarexecucaofisica/plano-de-distribuicao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                     }
 
                     $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
@@ -727,7 +727,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                             'nmArquivo'         => $arquivoNome,
                             'sgExtensao'        => $arquivoExtensao,
                             'biArquivo'         => $data,
-                            'dsDocumento'       => 'Comprova��o do Relat�rio Trimestral/Final - Plano de Distribui��o',
+                            'dsDocumento'       => 'Comprova&ccedil;&atilde;o do Relat&oacute;rio Trimestral/Final - Plano de Distribui&ccedil;&atilde;o',
                             'idPronac'          => $idpronac,
                             'idTipoDocumento'   => $_POST['tipoDocumento']);
 
@@ -748,7 +748,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     $tbBeneficiarioProdutoCultural->inserir($dados);
 
                 } else {
-                    parent::message("N�o foi poss�vel cadastrar os dados do Plano de Distribui��o!", "comprovarexecucaofisica/plano-de-distribuicao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("N&atilde;o foi poss&iacute;vel cadastrar os dados do Plano de Distribui&ccedil;&atilde;o!", "comprovarexecucaofisica/plano-de-distribuicao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
             }
 
@@ -883,7 +883,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Arquivo->inserirUploads($dadosArquivo);
 
             } else {
-                parent::message("N�o foi poss�vel cadastrar o Comprovante de Execu�ao!", "comprovarexecucaofisica/comprovantes-de-execucao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                parent::message("N&atilde;o foi poss&iacute;vel cadastrar o Comprovante de Execu&ccedil;&atilde;o!", "comprovarexecucaofisica/comprovantes-de-execucao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
             }
 
             parent::message("Dados salvos com sucesso!", "comprovarexecucaofisica/comprovantes-de-execucao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "CONFIRM");
@@ -902,7 +902,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $resutado = $vw->excluirArquivo($idArquivo);
         if($resutado){
             $this->_helper->viewRenderer->setNoRender(true);
-            $this->_helper->flashMessenger->addMessage('Comprovante exclu�do com sucesso!');
+            $this->_helper->flashMessenger->addMessage('Comprovante exclu&iacute;do com sucesso!');
             $this->_helper->flashMessengerType->addMessage('CONFIRM');
             echo json_encode(array('resposta'=>true));
         } else {
@@ -930,13 +930,13 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $dsDemocratizacaoAcesso = trim($DadosRelatorio['dsDemocratizacaoAcesso']);
 
         if(empty($dsEtapasExecutadas)){
-            $erros[] = 'Etapas Executadas n�o foi informado.';
+            $erros[] = 'Etapas Executadas n&atilde;o foi informado.';
         }
         if(empty($dsAcessibilidade)){
-            $erros[] = 'Acessibilidade n�o foi informado.';
+            $erros[] = 'Acessibilidade n&atilde;o foi informado.';
         }
         if(empty($dsDemocratizacaoAcesso)){
-            $erros[] = 'Democratiza��o de Acesso n�o foi informado.';
+            $erros[] = 'Democratiza&ccedil;&atilde;o de Acesso n&atilde;o foi informado.';
         }
 
         if(count($erros)>0){
@@ -949,7 +949,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $DadosRelatorio->siComprovanteTrimestral = 2;
             $DadosRelatorio->idCadastrador = $this->IdUsuario;
             $DadosRelatorio->save();
-            parent::message("Relat�rio enviado com sucesso.", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "CONFIRM");
+            parent::message("Relat&oacute;rio enviado com sucesso.", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "CONFIRM");
         }
     }
 
@@ -1055,7 +1055,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $DadosRelatorio = $tbComprovanteTrimestral->buscarComprovantes(array('idPronac = ?' => $idpronac, 'idComprovanteTrimestral=?'=>$idrelatorio, 'siComprovanteTrimestral!=?'=>1));
         $this->view->DadosRelatorio = $DadosRelatorio;
         if(count($DadosRelatorio)==0){
-            parent::message("Relat�rio n�o encontrado!", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+            parent::message("Relat&oacute;rio n&atilde;o encontrado!", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
         }
 
         $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac);
@@ -1064,7 +1064,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -1098,7 +1098,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $tipoDocumento = null;
                 switch ($registro['tpDocumento']) {
                     case 1:
-                        $tipoDocumento = 'Boleto Banc�rio';
+                        $tipoDocumento = 'Boleto Bancário';
                         break;
                     case 2:
                         $tipoDocumento = 'Cupom Fiscal';
@@ -1110,7 +1110,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         $tipoDocumento = 'Recibo de Pagamento';
                         break;
                     case 5:
-                        $tipoDocumento = 'Aut�nomo';
+                        $tipoDocumento = 'Autônomo';
                         break;
                 }
 
@@ -1120,7 +1120,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         $formaPagamento = 'Cheque';
                         break;
                     case 2:
-                        $formaPagamento = 'Transfer�ncia Banc�ria';
+                        $formaPagamento = 'Transferência Bancária';
                         break;
                     case 3:
                         $formaPagamento = 'Saque/Dinheiro';
@@ -1168,7 +1168,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $DadosRelatorio = $tbComprovanteTrimestral->buscarComprovantes(array('idPronac = ?' => $idpronac, 'idComprovanteTrimestral=?'=>$idrelatorio, 'siComprovanteTrimestral!=?'=>1));
         $this->view->DadosRelatorio = $DadosRelatorio;
         if(count($DadosRelatorio)==0){
-            parent::message("Relat�rio n�o encontrado!", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+            parent::message("Relat&oacute;rio n&atilde;o encontrado!", "comprovarexecucaofisica/relatoriotrimestral/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
         }
 
         $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac);
@@ -1177,7 +1177,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -1327,7 +1327,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $DadosProjeto = $projetos->buscarProjetoXProponente(array('idPronac = ?' => $idpronac))->current();
         $this->view->DadosProjeto = $DadosProjeto;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -1442,7 +1442,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 }
 
                 if(empty($_FILES['arquivo']['tmp_name'])){
-                    parent::message("Favor selecionar um arquivo para o novo Plano de Distribui��o.", "comprovarexecucaofisica/aceite-de-obra-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar um arquivo para o novo Plano de Distribui&ccedil;&atilde;o.", "comprovarexecucaofisica/aceite-de-obra-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
@@ -1551,12 +1551,12 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 }
 
                 if(empty($_FILES['documentoDoacao']['tmp_name'])){
-                    parent::message("Favor selecionar um arquivo para a Doa��o do Bem M�vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar um arquivo para a Doa&ccedil;&atilde;o do Bem M&oacute;vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
                 if (!in_array(strtolower($arquivoExtensao), $tipos)) {
-                    parent::message("Favor selecionar o arquivo de Doa��o do Bem M�vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar o arquivo de Doa&ccedil;&atilde;o do Bem M&oacute;vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $dataString = file_get_contents($arquivoTemp);
@@ -1568,7 +1568,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprova��o do Relat�rio Final - Bem M�vel',
+                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Móvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 26);
 
@@ -1596,12 +1596,12 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 }
 
                 if(empty($_FILES['documentoAceite']['tmp_name'])){
-                    parent::message("Favor selecionar um arquivo para a Aceite do Bem M�vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar um arquivo para a Aceite do Bem M&oacute;vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
                 if (!in_array(strtolower($arquivoExtensao), $tipos)) {
-                    parent::message("Favor selecionar o arquivo de Aceite do Bem M�vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar o arquivo de Aceite do Bem M&oacute;vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $dataString = file_get_contents($arquivoTemp);
@@ -1613,7 +1613,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprova��o do Relat�rio Final - Bem M�vel',
+                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Móvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 25);
 
@@ -1673,12 +1673,12 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 }
 
                 if(empty($_FILES['documentoDoacao']['tmp_name'])){
-                    parent::message("Favor selecionar um arquivo para a Doa��o do Bem Im�vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar um arquivo para a Doa&ccedil;&atilde;o do Bem Im&oacute;vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
                 if (!in_array(strtolower($arquivoExtensao), $tipos)) {
-                    parent::message("Favor selecionar o arquivo de Doa��o do Bem Im�vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar o arquivo de Doa&ccedil;&atilde;o do Bem Im&oacute;vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $dataString = file_get_contents($arquivoTemp);
@@ -1690,7 +1690,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprova��o do Relat�rio Final - Bem Im�vel',
+                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Imóvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 26);
 
@@ -1718,12 +1718,12 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 }
 
                 if(empty($_FILES['documentoAceite']['tmp_name'])){
-                    parent::message("Favor selecionar um arquivo para a Aceite do Bem Im�vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar um arquivo para a Aceite do Bem Im&oacute;vel.", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
                 if (!in_array(strtolower($arquivoExtensao), $tipos)) {
-                    parent::message("Favor selecionar o arquivo de Aceite do Bem Im�vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                    parent::message("Favor selecionar o arquivo de Aceite do Bem Im&oacute;vel no formato BMP, GIF, JPEG, JPG, PNG, RAW, TIF ou PDF!", "comprovarexecucaofisica/bens-final/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                 }
 
                 $dataString = file_get_contents($arquivoTemp);
@@ -1735,7 +1735,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprova��o do Relat�rio Final - Bem Im�vel',
+                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Imóvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 25);
 
@@ -1786,7 +1786,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
 
         if ($exclusaoDoBem) {
             $this->_helper->viewRenderer->setNoRender(true);
-            $this->_helper->flashMessenger->addMessage('O bem foi exclu�do com sucesso!');
+            $this->_helper->flashMessenger->addMessage('O bem foi exclu&iacute;do com sucesso!');
             $this->_helper->flashMessengerType->addMessage('CONFIRM');
             echo json_encode(array('resposta'=>true));
         } else {
@@ -1874,7 +1874,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Projetos = new Projetos();
                 $d = array();
                 $d['situacao'] = 'E24';
-                $d['ProvidenciaTomada'] = 'Presta��o de Contas final apresentada, aguardando an�lise.';
+                $d['ProvidenciaTomada'] = 'Prestação de Contas final apresentada, aguardando análise.';
                 $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
                 $d['Logon'] = $idUsuario;
                 $w = "IdPRONAC = $idpronac";
@@ -1899,9 +1899,9 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $return = $tbCumprimentoObjeto->update($dados, $where);
 
                 if ($return) {
-                    parent::message('Comprova��es enviadas com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idpronac), "CONFIRM");
+                    parent::message('Comprova&ccedil;&otilde;es enviadas com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idpronac), "CONFIRM");
                 } else {
-                    throw new Exception("Erro ao enviar a comprova��o!");
+                    throw new Exception("Erro ao enviar a comprova&ccedil;&atilde;o!");
                 }
             } // fecha try
         } catch(Exception $e) {
@@ -1924,7 +1924,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $cumprimentoObjetoArquivoModel->apagarArquivo();
             parent::message('Imagem deletada com sucesso', $url, 'CONFIRM');
         } catch (Exception $exception) {
-            parent::message('N�o foi poss�vel deletar a imagem', $url, 'ERROR');
+            parent::message('N&atilde;o foi poss&iacute;vel deletar a imagem', $url, 'ERROR');
         }
     }
 

@@ -206,7 +206,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 //        return $db->fetchAll($select);
-        throw new Exception("Método transferido para: Proposta_model_DbTable_PlanoDistribuicaoProduto");
+        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanoDistribuicaoProduto");
         return $db->fetchAll($sql);
 
     }

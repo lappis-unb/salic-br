@@ -13,7 +13,7 @@ class ArquivoPagamentoParecerista extends MinC_Db_Table_Abstract {
 
     public function inserirArquivodePagamento($idGerarPagamentoParecerista, $idArquivo, $siArquivo){
 
-        $sql = "INSERT INTO ".$this->_banco.".".$this->_schema.".".$this->_name." (idGerarPagamentoParecerista,idArquivo,siArquivo)
+        $sql = "INSERT INTO ".$this->_schema.".".$this->_name." (idGerarPagamentoParecerista,idArquivo,siArquivo)
                 values ($idGerarPagamentoParecerista, $idArquivo,'$siArquivo')";
 
         $db = Zend_Db_Table::getDefaultAdapter();

@@ -6,8 +6,8 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
     protected $_name = 'fnLiberarLinks';
 
     /**
-     * @TODO REMOVER A FUNÇÃO liberarLinks
-     * @Deprecated
+     * @todo REMOVER A FUNÇÃO liberarLinks
+     * @Deprecated Utililizar metódo links com os mesmos parametros
      */
     public function liberarLinks($tipo, $cpfProponente, $idUsuarioLogado, $idPronac) {
         $select = new Zend_Db_Expr("SELECT SAC.dbo.fnLiberarLinksIN($tipo,'$cpfProponente',$idUsuarioLogado,$idPronac) as links");
@@ -44,6 +44,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $Readequacao_20 = 0;
         $SolicitarProrrogacao = 0;
         $Marcas = 0;
+        $ReadequacaoPlanilha = 0;
 
         # Verificar permissão
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -128,7 +129,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $vDiligencia = $db->fetchRow($vDiligencia);
 
        // @TODO VERIFICAR ESSE CARA
-        $vDiligencia = ($vDiligencia->idDiligencia) ? TRUE : FALSE;
+        $Diligencia = ($vDiligencia->idDiligencia) ? 1 : 0;
 
         //Verificar se há recurso @TODO FAZER ESSA PARTE E DEIXAR PRO FIM
         $data = new Zend_Db_Expr("SELECT DATEDIFF(DAY, '$dadosCnic->DtReuniao', GETDATE()) AS dado");
@@ -245,7 +246,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $validacaoFase2 = $db->fetchRow($validacaoFase2);
         $situacoesFase2 = array('B11', 'B14', 'C10', 'C20', 'C30', 'D20');
 
-        if(!$dadoPortaria->NrPortaria OR $dadoPortaria->NrPortaria == '' AND !in_array($dadosProjeto->Situacao, $situacoesFase2) AND !$validacaoFase2->idPRONAC) {
+        if((!$dadoPortaria->NrPortaria OR $dadoPortaria->NrPortaria == '' ) AND !in_array($dadosProjeto->Situacao, $situacoesFase2) AND !$validacaoFase2->idPRONAC) {
             $Fase = 2;
             $Analise = 1;
         } else {
@@ -294,6 +295,40 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
                 $Readequacao_20 = 1;
             } else {
                 $Readequacao_20 = 0;
+            }
+
+            /* ===== CHECAR SE EXISTE READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA @todo melhoras as variaveis ===== */
+            $queryPlanilhaOrcamentaria_1 = $db->select()
+                ->from(array('a' => 'tbReadequacao'),
+                    array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
+                    $this->_schema)
+                ->joinInner(array('b' => 'tbTipoReadequacao'),
+                    'a.idTipoReadequacao = b.idTipoReadequacao',
+                    array(''),
+                    $this->_schema)
+                ->where('a.idPronac = ?', $idPronac)
+                ->where('b.idTipoReadequacao = ?',  2)
+                ->where('a.siEncaminhamento <> ?', 12);
+            $readequacaoDiferente12 = $db->fetchOne($queryPlanilhaOrcamentaria_1);
+
+            $queryPlanilhaOrcamentaria_2 = $db->select()
+                ->from(array('a' => 'tbReadequacao'),
+                    array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
+                    $this->_schema)
+                ->joinInner(array('b' => 'tbTipoReadequacao'),
+                    'a.idTipoReadequacao = b.idTipoReadequacao',
+                    array(''),
+                    $this->_schema)
+                ->where('a.idPronac = ?', $idPronac)
+                ->where('b.idTipoReadequacao = ?',  2)
+                ->where('a.siEncaminhamento = ?', 12);
+
+            $readequacaoIguala12 = $db->fetchOne($queryPlanilhaOrcamentaria_2);
+
+            if(empty($readequacaoDiferente12) OR $readequacaoIguala12) {
+                $ReadequacaoPlanilha = 1;
+            } else {
+                $ReadequacaoPlanilha = 0;
             }
 
             /* ===== CHECAR SE EXISTE RELATÓRIO DE CUMPRIMENTO DO OBJETO PARA SER ENVIADO ===== */
@@ -357,16 +392,34 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
 
             $relatorioDeCumprimento = $db->fetchRow($relatorioDeCumprimento);
 
-            if($relatorioDeCumprimento->idCumprimentoObjeto){
+            if ($relatorioDeCumprimento->idCumprimentoObjeto){
                 $ComprovacaoFinanceira = 0;
                 $RelatorioFinal = 0;
-                if($vDiligencia){
+                if($Diligencia){
                     $ComprovacaoFinanceira = 1;
+                }
+            } else {
+                /* ===== CHECAR SE EXISTE READEQUAÇAO DE 20% ===== */
+                $readequacaoFase5 = $db->select()
+                    ->from(array('a' => 'tbReadequacao'),
+                        array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
+                        $this->_schema)
+                    ->joinInner(array('b' => 'tbTipoReadequacao'),
+                        'a.idTipoReadequacao = b.idTipoReadequacao',
+                        array(''),
+                        $this->_schema)
+                    ->where('a.idPronac = ?', $idPronac)
+                    ->where('b.idTipoReadequacao = ?', 1);
+                $readequacaoFase5 = $db->fetchRow($readequacaoFase5);
+                if (!$readequacaoFase5->idTipoReadequacao) {
+                    $Readequacao_20 = 1;
+                } else {
+                    $Readequacao_20 = 0;
                 }
             }
 
-            /* ===== CHECAR SE EXISTE READEQUAÇAO DE 20% ===== */
-            $readequacaoFase5 = $db->select()
+            /* ===== CHECAR SE EXISTE READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA @todo melhoras as variaveis ===== */
+            $queryPlanilhaOrcamentaria_1 = $db->select()
                 ->from(array('a' => 'tbReadequacao'),
                     array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
                     $this->_schema)
@@ -375,17 +428,34 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
                     array(''),
                     $this->_schema)
                 ->where('a.idPronac = ?', $idPronac)
-                ->where('b.idTipoReadequacao = ?', 1);
-            $readequacaoFase5 = $db->fetchRow($readequacaoFase5);
-            if(!$readequacaoFase5->idTipoReadequacao) {
-                $Readequacao_20 = 1;
+                ->where('b.idTipoReadequacao = ?',  2)
+                ->where('a.siEncaminhamento <> ?', 12);
+            $readequacaoDiferente12 = $db->fetchOne($queryPlanilhaOrcamentaria_1);
+
+            $queryPlanilhaOrcamentaria_2 = $db->select()
+                ->from(array('a' => 'tbReadequacao'),
+                    array(new Zend_Db_Expr('TOP 1 a.idTipoReadequacao')),
+                    $this->_schema)
+                ->joinInner(array('b' => 'tbTipoReadequacao'),
+                    'a.idTipoReadequacao = b.idTipoReadequacao',
+                    array(''),
+                    $this->_schema)
+                ->where('a.idPronac = ?', $idPronac)
+                ->where('b.idTipoReadequacao = ?',  2)
+                ->where('a.siEncaminhamento = ?', 12);
+
+            $readequacaoIguala12 = $db->fetchOne($queryPlanilhaOrcamentaria_2);
+
+            if(empty($readequacaoDiferente12) OR $readequacaoIguala12) {
+                $ReadequacaoPlanilha = 1;
             } else {
-                $Readequacao_20 = 0;
+                $ReadequacaoPlanilha = 0;
             }
+
             $Fase = 5;
         }
 
-        $permissao = array('links'=>"$Permissao - $Fase - $Diligencia - $Recursos - $Readequacao - $ComprovacaoFinanceira - $RelatorioTrimestral - $RelatorioFinal - $Analise - $Execucao - $PrestacaoDeContas - $Readequacao_20 - $Marcas - $SolicitarProrrogacao");
+        $permissao = array('links'=>"$Permissao - $Fase - $Diligencia - $Recursos - $Readequacao - $ComprovacaoFinanceira - $RelatorioTrimestral - $RelatorioFinal - $Analise - $Execucao - $PrestacaoDeContas - $Readequacao_20 - $Marcas - $SolicitarProrrogacao - $ReadequacaoPlanilha");
 
         return (object) $permissao;
     }

@@ -43,7 +43,7 @@
                 height:180,
                 modal:true,
                 buttons: {
-                    'N�o': function(){
+                    'N\xE3o': function(){
                         $("#msgAlerta").dialog("destroy");
                     },
                     'Sim': function() {
@@ -73,7 +73,7 @@
                 height:180,
                 modal:true,
                 buttons: {
-                    'N�o': function(){
+                    'N\xE3o': function(){
                         $("#msgAlerta").dialog("destroy");
                     },
                     'Sim': function() {
@@ -86,7 +86,7 @@
                             },
                             success: function(data){
                                 if(data.resposta){
-                                    message('Transfer�ncia est� sendo executada com sucesso. Por favor, aguarde!', 'CONFIRM');
+                                    message('Transfer\u00EAncia est\u00E1 sendo executada com sucesso. Por favor, aguarde!', 'CONFIRM');
                                     $("#msgAlerta").dialog("destroy");
                                     $("#msgAlerta").html('<center><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" alt="carregando"><br /><br />Transa��o conclu�da.<br />Por favor, aguarde!!</center>');
                                     $("#msgAlerta").dialog({
@@ -104,7 +104,7 @@
                                     //}, 2500);
 
                                 } else {
-                                    message('Erro ao executar a transfer�ncia.', 'ERROR');
+                                    message('Erro ao executar a transfer\u00EAncia.', 'ERROR');
                                 }
 
                             },
@@ -148,7 +148,7 @@
                 </select>
             </td>
             <td width="550" align="center">
-                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left;"> A diligenciar</div>
+                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left;">A diligenciar</div>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice.png" width="20px"/></div><div style="margin-top: 2px;  margin-right: 15px; margin-left: 3px; float: left"> Diligenciado</div>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia respondida</div>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Dilig&ecirc;ncia n&atilde;o respondida</div>
@@ -157,7 +157,7 @@
     </table>
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINA��O ============ -->
+    <!-- ============ PAGINACAO ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -206,15 +206,14 @@
             echo " de ". $this->paginacao['total']. " Projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINA��O ========== -->
+    <!-- ========== FIM PAGINACAO ========== -->
     <?php } ?>
 
 
     <?php if($this->qtdRegistros > 0){ ?>
     <table class="tabela tablesorter" >
         <thead>
-
-        <tr class="titulo_tabela">
+             <tr class="titulo_tabela">
                 <th width="1px">N&ordm;</th>
                 <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=1&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=13&ordem='.$this->paginacao['novaOrdem'];?>">Situa&ccedil;&atilde;o</a></th>
@@ -234,56 +233,58 @@
             </tr>
         </thead>
         <tbody>
-            <?php $vlTotal=0; $x=1; $pronacAnterior=0; foreach($this->dados as $projeto){ ?>
-            <tr>
-                <td class="centro"><?php echo $x; ?></td>
-                <td class="centro">
+            <?php $vlTotal=0; $x=1; $pronacAnterior=0; ?>
+            <?php foreach($this->dados as $projeto) : ?>
+                <tr>
+                    <td class="centro"><?php echo $x; ?></td>
+                    <td class="centro">
 
-                    <?php if( isset($this->pronacProjeto) && !empty($this->pronacProjeto) && $x == 1){ ?>
-                    <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($projeto->IdPRONAC); ?>" target="_blank">
-                        <?php echo $projeto->PRONAC; ?>
-                    </a>
-                    <?php } else if( !isset($this->pronacProjeto) || empty($this->pronacProjeto) ){ ?>
-                    <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($projeto->IdPRONAC); ?>" target="_blank">
-                        <?php echo $projeto->PRONAC; ?>
-                    </a>
-                    <?php } ?>
-                </td>
-                <td class="centro"><?php echo $projeto->Situacao; ?></td>
-                <td nowrap><?php echo Validacao::mascaraCPFCNPJ($projeto->CgcCpfMecena); ?></td>
-                <td><?php echo $projeto->Incentivador; ?></td>
-                <td class="centro"><?php echo $projeto->NumeroRecibo; ?></td>
-                <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtChegadaRecibo)); ?></td>
-                <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtRecibo)); ?></td>O
-                <td><?php echo utf8_decode($projeto->TipoApoio); ?></td>
-                <td class="centro"><?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 'Sim' : '<span style="color:red; font-weight: bold;">N&atilde;o</span>'; ?></td>
-                <td class="direita"><?php echo $projeto->Percentual; ?></td>
-                <td class="direita" nowrap><?php echo "R$ ".number_format($projeto->CaptacaoReal,'2',',','.'); ?></td>
-                <?php if(!isset($_GET['tipoFiltro']) || $_GET['tipoFiltro'] != 'nc'){ ?>
-                <td align="center" >
-                    <?php if( isset($this->pronacProjeto) && !empty($this->pronacProjeto) && $x == 1){ ?>
-                        <?php $arrPrazo = $this->prazoRespostaDiligencia($projeto->IdPRONAC, 183);
-                        $icone = $arrPrazo['iconeDiligencia']['icone'];
-                        $title = $arrPrazo['iconeDiligencia']['title']; ?>
-                        <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta','controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
-                    <?php } else if( !isset($this->pronacProjeto) || empty($this->pronacProjeto) ){ ?>
-                        <?php $arrPrazo = $this->prazoRespostaDiligencia($projeto->IdPRONAC, 183);
-                        $icone = $arrPrazo['iconeDiligencia']['icone'];
-                        $title = $arrPrazo['iconeDiligencia']['title']; ?>
-                        <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta','controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
-                    <?php } ?>
-                </td>
-                <td class="centro">
-                    <input type="hidden" class="ids_transacao_coletiva" value="<?php echo $projeto->idCaptacao; ?>" />
-                    <?php if( isset($this->pronacProjeto) && !empty($this->pronacProjeto) && $x == 1){ ?>
-                    <input type="button" class="btn_transferir transacao_coletiva" />
-                    <?php } else if( !isset($this->pronacProjeto) || empty($this->pronacProjeto) ){ ?>
-                    <input type="button" class="btn_transferir transacao_individual" idcap="<?php echo $projeto->idCaptacao; ?>" valorEditado="<?php echo "R$".number_format($projeto->CaptacaoReal,'2',',','.'); ?>" pronac="<?php echo $projeto->PRONAC; ?>" liberado="<?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 1 : 0; ?>" />
-                    <?php } ?>
-                </td>
-                <?php } ?>
-            </tr>
-            <?php $vlTotal = $vlTotal+$projeto->CaptacaoReal; $x++; } ?>
+                        <?php if( isset($this->pronacProjeto) && !empty($this->pronacProjeto) && $x == 1){ ?>
+                            <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($projeto->IdPRONAC); ?>" target="_blank">
+                                <?php echo $projeto->PRONAC; ?>
+                            </a>
+                        <?php } else if( !isset($this->pronacProjeto) || empty($this->pronacProjeto) ){ ?>
+                            <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($projeto->IdPRONAC); ?>" target="_blank">
+                                <?php echo $projeto->PRONAC; ?>
+                            </a>
+                        <?php } ?>
+                    </td>
+                    <td class="centro"><?php echo $projeto->Situacao; ?></td>
+                    <td nowrap><?php echo Validacao::mascaraCPFCNPJ($projeto->CgcCpfMecena); ?></td>
+                    <td><?php echo $projeto->Incentivador; ?></td>
+                    <td class="centro"><?php echo $projeto->NumeroRecibo; ?></td>
+                    <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtChegadaRecibo)); ?></td>
+                    <td class="centro"><?php echo date("d/m/Y",strtotime($projeto->DtRecibo)); ?></td>
+                    <td><?php echo utf8_decode($projeto->TipoApoio); ?></td>
+                    <td class="centro"><?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 'Sim' : '<span style="color:red; font-weight: bold;">N&atilde;o</span>'; ?></td>
+                    <td class="direita"><?php echo $projeto->Percentual; ?></td>
+                    <td class="direita" nowrap><?php echo "R$ ".number_format($projeto->CaptacaoReal,'2',',','.'); ?></td>
+                    <?php if(!isset($_GET['tipoFiltro']) || $_GET['tipoFiltro'] != 'nc') : ?>
+                        <td align="center" >
+                            <?php if( isset($this->pronacProjeto) && !empty($this->pronacProjeto) && $x == 1) : ?>
+                                <?php $arrPrazo = $this->prazoRespostaDiligencia($projeto->IdPRONAC, 183);
+                                $icone = $arrPrazo['iconeDiligencia']['icone'];
+                                $title = $arrPrazo['iconeDiligencia']['title']; ?>
+                                <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta','controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
+                            <?php elseif( !isset($this->pronacProjeto) || empty($this->pronacProjeto) ) : ?>
+                                <?php $arrPrazo = $this->prazoRespostaDiligencia($projeto->IdPRONAC, 183);
+                                $icone = $arrPrazo['iconeDiligencia']['icone'];
+                                $title = $arrPrazo['iconeDiligencia']['title']; ?>
+                                <a target="_blank" href="<?php echo $this->url(array('module' => 'proposta','controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
+                            <?php endif; ?>
+                        </td>
+                        <td class="centro">
+                            <input type="hidden" class="ids_transacao_coletiva" value="<?php echo $projeto->idCaptacao; ?>" />
+                            <?php if( isset($this->pronacProjeto) && !empty($this->pronacProjeto) && $x == 1){ ?>
+                            <input type="button" class="btn_transferir transacao_coletiva" />
+                            <?php } else if( !isset($this->pronacProjeto) || empty($this->pronacProjeto) ){ ?>
+                            <input type="button" class="btn_transferir transacao_individual" idcap="<?php echo $projeto->idCaptacao; ?>" valorEditado="<?php echo "R$".number_format($projeto->CaptacaoReal,'2',',','.'); ?>" pronac="<?php echo $projeto->PRONAC; ?>" liberado="<?php echo (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) ? 1 : 0; ?>" />
+                            <?php } ?>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+                <?php $vlTotal = $vlTotal+$projeto->CaptacaoReal; $x++; ?>
+            <?php endforeach; ?>
 
         </tbody>
     </table>
@@ -299,7 +300,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINA��O ============ -->
+        <!-- ============ PAGINACAO ============ -->
         <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -349,7 +350,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINA��O ========== -->
+        <!-- ========== FIM PAGINACAO ========== -->
 
     <?php } } ?>
 
@@ -375,10 +376,10 @@
 
 </div><!-- fecha div resultado ajax -->
 
-<!-- ========== FIM CONTE�DO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

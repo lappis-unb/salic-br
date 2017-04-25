@@ -50,8 +50,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $PermissoesGrupo[] = 138; // Coordenador de Avaliacao
         $PermissoesGrupo[] = 139; // Tecnico de Avaliacao
         $PermissoesGrupo[] = 140; // Tecnico de Admissibilidade Edital
-        $PermissoesGrupo[] = 148; // Tecnico de Admissibilidade Edital
-        $PermissoesGrupo[] = 151; // Tecnico de Admissibilidade Edital
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 151;
         //parent::perfil(1, $PermissoesGrupo);
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
         parent::init();
@@ -93,6 +93,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $idPreProjeto = $this->idPreProjeto;
         $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $this->view->itensGeral = $dados;
+
+        $this->view->codGrupo = $this->codGrupo;
 
         $movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
         $movimentacao = $movimentacao->buscarStatusAtualProposta($idPreProjeto);
@@ -147,9 +149,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
             $propostaPorEdital = true;
         }
+
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+
+        $this->view->itensPlanosDistribuicao = $tblPlanoDistribuicao->buscar(
+            array("a.idprojeto = ?" => $idPreProjeto, "a.stplanodistribuicaoproduto = ?" => 1),
+            array("idplanodistribuicao DESC")
+        );
+
         $this->view->isEdital = $propostaPorEdital;
         $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
-        $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        //$this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
         $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
         $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
         $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
@@ -348,6 +358,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     public function salvaravaliacaoAction()
     {
         $post = Zend_Registry::get('post');
+
         $dados = array();
         $dados['idProjeto'] = $post->idPreProjeto;
         $dados['idTecnico'] = $this->idUsuario;
@@ -756,13 +767,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
-//xd($this->view->itensGeral);
 
         $Projetos = new Projetos();
         $dadosProjeto = $Projetos->buscar(array('idProjeto = ?' => $this->idPreProjeto))->current();
 
         // Busca na tabela apoio ExecucaoImediata stproposta
-        //  xd($this->idPreProjeto);
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
         if (!empty($this->view->itensGeral[0]->stProposta))
             $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
@@ -1261,7 +1270,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     if ($rsMovimentacao->Movimentacao == 95) {
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#0000FF>Proposta com Proponente</font>";
                     } elseif ($rsMovimentacao->Movimentacao == 96) {
-                        $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em An�lise' . "</font>";
+                        $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em An&aacute;lise' . "</font>";
 
                         $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?" => $proposta->idPreProjeto, "ConformidadeOK =?" => 9, "stEstado =?" => 0))->current();
 
@@ -1276,7 +1285,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                         //$movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#0000FF>Proposta com Proponente</font>";
                         /*if (!count($tecnico)>0)
                         {
-                            $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em An�lise' . "</font>";
+                            $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em An&aacute;lise' . "</font>";
                         }*/
                     } elseif ($rsMovimentacao->Movimentacao == 97 and (!count($rsProjeto) > 0)) {
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta aguardando documentos' . "</font>";
@@ -1342,17 +1351,19 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $post = Zend_Registry::get('post');
         $orgSuperior = $this->codOrgaoSuperior;
         $view = $this->getRequest()->getParam("view");
+        $arrBusca = array();
 
         if (!empty($view)) {
-            $arrBusca = array("Tecnico " => "IS NOT NULL");
+            $arrBusca = array("Tecnico" => new Zend_Db_Expr('IS NOT NULL'));
+            $arrBusca = array("idOrgao =" => $orgSuperior);
         } else {
-            $arrBusca = array("idOrgao " => $orgSuperior);
+            $arrBusca = array("idOrgao =" => $orgSuperior);
         }
         if (is_numeric($post->avaliacao)) {
-            $arrBusca["ConformidadeOK "] = "'$post->avaliacao'";
+            $arrBusca["ConformidadeOK ="] = "$post->avaliacao";
         }
         if (!empty($post->tecnico)) {
-            $arrBusca["Tecnico "] = "'$post->tecnico'";
+            $arrBusca["Tecnico ="] = "$post->tecnico";
         }
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
@@ -1457,7 +1468,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 <tr>
                     <td>Nr. Proposta</td>
                     <td>Nome da Proposta</td>
-                    <td>Dt.Movimenta��o</td>
+                    <td>Dt.Movimenta&ccedil;&atilde;o</td>
                 </tr>
                 ";
         foreach ($rsProposta as $proposta) {
@@ -1482,13 +1493,13 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao " => $usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = " => $usuario), array("Tecnico ASC"));
 
         $html = "<table>
                 <tr>
                     <td>Nr. Proposta</td>
                     <td>Nome da Proposta</td>
-                    <td>Dt.Movimenta��o</td>
+                    <td>Dt.Movimenta&ccedil;&atilde;o</td>
                 </tr>
                 ";
         foreach ($rsProposta as $proposta) {
@@ -1521,7 +1532,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 <table width="100%">
                     <tr>
                         <th style="font-size:36px;">
-                            Proposta em an�lise final
+                            Proposta em an&aacute;lise final
                         </th>
                     </tr>
                 ';
@@ -1541,7 +1552,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                 <tr>
                                     <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                     <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta��o</th>
+                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta&ccedil;&atilde;o</th>
                                 </tr>
                 ';
                 foreach ($propostas as $proposta) {
@@ -1579,7 +1590,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao " => $usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = " => $usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
         foreach ($rsProposta as $proposta) {
@@ -1590,7 +1601,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 <table width="100%">
                     <tr>
                         <th style="font-size:36px;">
-                            Avalia��o: Reavalia��o
+                            Avalia&ccedil;&atilde;o: Reavalia&ccedil;&atilde;o
                         </th>
                     </tr>
                 ';
@@ -1610,7 +1621,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                 <tr>
                                     <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                     <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta��o</th>
+                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta&ccedil;&atilde;o</th>
                                 </tr>
                 ';
                 foreach ($propostas as $proposta) {
@@ -1641,7 +1652,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 <table width="100%">
                     <tr>
                         <th style="font-size:36px;">
-                            Avalia��o: Inicial
+                            Avalia&ccedil;&atilde;o: Inicial
                         </th>
                     </tr>
                 ';
@@ -1661,7 +1672,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                 <tr>
                                     <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                     <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta��o</th>
+                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta&ccedil;&atilde;o</th>
                                 </tr>
                 ';
                 foreach ($propostas as $proposta) {
@@ -2044,7 +2055,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $grafico = new Grafico($_POST["cgTipoGrafico"]);
         $grafico->setTituloGrafico("Registros");
-        $grafico->setTituloEixoXY("T�cnicos", "Registros");
+        $grafico->setTituloEixoXY("T&eacute;cnicos", "Registros");
         $grafico->configurar($_POST);
 
         $aux = array();
@@ -2076,7 +2087,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $grafico = new Grafico($_POST["cgTipoGrafico"]);
         $grafico->setTituloGrafico("Registros");
-        $grafico->setTituloEixoXY("Avalia��o", "Registros");
+        $grafico->setTituloEixoXY("Avalia&ccedil;&atilde;o", "Registros");
         $grafico->configurar($_POST);
 
         $analista = array();
@@ -2153,11 +2164,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $arrTitulo = array();
         if (isset($_POST["reavaliacao"])) {
-            $arrTitulo[] = "Reavalia��o";
+            $arrTitulo[] = "Reavalia&ccedil;&atilde;o";
         } elseif (isset($_POST["inicial"])) {
             $arrTitulo[] = "Inicial";
         } else {
-            $arrTitulo[] = "Reavalia��o";
+            $arrTitulo[] = "Reavalia&ccedil;&atilde;o";
             $arrTitulo[] = "Inicial";
         }
 
@@ -2189,13 +2200,13 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
         } else {
-            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gr�fico.";
+            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gr&aacute;fico.";
         }
     }
 
     public function localizarAction()
     {
-        throw new Exception("Metodo descontinuado nesta versão");
+        throw new Exception("Metodo descontinuado nesta vers&atilde;o");
         $arrDados = array(
             "urlAcao" => $this->_urlPadrao . "/admissibilidade/admissibilidade/listar-propostas"
         );
@@ -2788,8 +2799,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
             $propostaPorEdital = true;
         }
+
         $this->view->isEdital = $propostaPorEdital;
         $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        //$this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
         $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
         $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
         $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);

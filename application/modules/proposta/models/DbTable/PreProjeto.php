@@ -1869,7 +1869,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @deprecated
+     *
      */
     public function buscarPropostaAnaliseVisualTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -1891,7 +1891,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         ($order) ? $sql->order($order) : null;
 
         foreach ($where as $coluna=>$valor) {
-            $sql->where($coluna.' = ?', $valor);
+            $sql->where($coluna.' ?', $valor);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -2960,10 +2960,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     }
 
     //@todo lugar certo é tbPlanilhaProposta, remover do ManterOrcamentoDAO tbm
-    public function listarItensProdutos($idPreProjeto, $idItem = null)
+    public function listarItensProdutos($idPreProjeto, $idItem = null, $fetchMode = Zend_DB::FETCH_OBJ)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode($fetchMode);
 
         $pp = array(
             'pp.idetapa as idEtapa',
@@ -3171,10 +3171,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql = $db->select()->union(array($sql, $sql2,$sql3), Zend_Db_Select::SQL_UNION);
 
-        $sqlFinal = $db->select()->from(array("p" => $sql))
-        ->joinInner( array('mov' => 'tbmovimentacao'), 'p.idpreprojeto = mov.idprojeto', array(), $this->_schema)
-        ->joinInner( array('ver' => 'verificacao'), 'mov.Movimentacao = ver.idVerificacao', array('Descricao as situacao'), $this->_schema)
-        ->where('mov.stestado = ? ', 0);
+        $sqlFinal = $db->select()->from(array("p" => $sql));
+//        ->joinInner( array('mov' => 'tbmovimentacao'), 'p.idpreprojeto = mov.idprojeto', array(), $this->_schema)
+//        ->joinInner( array('ver' => 'verificacao'), 'mov.Movimentacao = ver.idVerificacao', array('Descricao as situacao'), $this->_schema)
+//        ->where('mov.stestado = ? ', 0);
 
         foreach ($where as $coluna=>$valor)
         {

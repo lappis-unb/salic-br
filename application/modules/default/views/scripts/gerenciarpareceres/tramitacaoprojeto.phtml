@@ -4,7 +4,7 @@
     }
 
     $(document).ready(function(){
-        $('.btn_imprimir').click(function(){
+        $('.btn-imprimir').click(function(){
             var idPronac = $(this).attr('idpronac');
             window.open("<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'imprimir-tramitacao'),'',true); ?>/idpronac/"+idPronac, '_blank');
         });
@@ -50,8 +50,12 @@
     <table class="tabela">
         <tr>
             <td align="center">
-                <input type="button" class="btn_imprimir" name="btn_imprimir" value="" idpronac="<?php echo $this->idPronac; ?>" />
-                <input type="button" class="btn_xls" name="btn_xls" style="width:44px;" value=" " onclick="xls();" />
+                <button class="btn small waves-effect waves-light tooltipped btn-primary btn-imprimir" data-tooltip="Imprimir" type="submit" name="action" idpronac="<?php echo $this->idPronac; ?>">
+                    <i class="material-icons">print</i>
+                </button>
+                <button onclick="xls();" class="btn small waves-effect waves-light tooltipped" data-tooltip="Baixar planilha" type="submit" name="action">
+                    <i class="material-icons">file_download</i>
+                </button>
             </td>
         </tr>
     </table>

@@ -7,13 +7,13 @@
         <div class="content col s10 m12 l10 planilha-produtos">
 
             <!-- ========== INCIO BREADCRUMB (LINKS TOPO) ========== -->
-            <div id="breadcrumb">
-                <ul>
-                    <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-                    <li class="second">Or&ccedil;amento</li>
-                    <li class="last">Planilha Or&ccedil;ament&aacute;ria Geral</li>
-                </ul>
-            </div>
+            <?php if (isset($this->proposta['idpreprojeto'])) {
+                gerarBreadCrumb(array(
+                    array('Or&ccedil;amento do Projeto' => ''),
+                    array('Planilha Or&ccedil;ament&aacute;ria Geral' => '')
+                ));
+            }
+            ?>
             <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 

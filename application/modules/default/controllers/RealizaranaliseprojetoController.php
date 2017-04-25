@@ -86,7 +86,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
     {
         $idpronac = $this->_request->getParam("idpronac");
         $projeto = new Projetos();
-        $planilhaproposta = new PlanilhaProposta();
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $planilhaprojeto = new PlanilhaProjeto();
         $planilhaAprovacao = new PlanilhaAprovacao();
         $tblParecer = new Parecer();
@@ -211,7 +211,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
     {
         $planilhaaprovacao = new PlanilhaAprovacao();
         $tblPauta = new Pauta();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $projeto = new Projetos();
         // caso o formulario seja enviado via post
         // atualiza a planilha
@@ -887,7 +887,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
         $arrProdutosFavoraveis = array();
         // caso o formulario seja enviado via post
@@ -943,10 +943,10 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $idpronac = $this->_request->getParam("idpronac");
             $this->view->idpronac = $idpronac;
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-            $tblPlanilhaProposta = new PlanilhaProposta();
+            $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $tblPlanilhaProjeto = new PlanilhaProjeto();
             $tblProjetos = new Projetos();
-            $tblPlanoDistribuicao = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+            $tblPlanoDistribuicao = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $tblAnaliseAprovacao = new AnaliseAprovacao();
 
             $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?' => $idpronac), array('dtPlanilha DESC'))->current();
@@ -1389,7 +1389,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                     $idpronac = $this->_request->getParam("idpronac");
 
                     $projeto = new Projetos();
-                    $planilhaproposta = new PlanilhaProposta();
+                    $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                     $planilhaprojeto = new PlanilhaProjeto();
                     $planoDistribuicao = new PlanoDistribuicao();
                     $analiseaprovacao = new AnaliseAprovacao();
@@ -1803,7 +1803,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
     {
         $planilhaaprovacao = new PlanilhaAprovacao();
         $tblPauta = new Pauta();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $projeto = new Projetos();
         // caso o formulario seja enviado via post
         // atualiza a planilha
@@ -2096,9 +2096,9 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
-        $tblPlanoDistribuicao = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $tblPlanoDistribuicao = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $tblAnaliseAprovacao = new AnaliseAprovacao();
         // caso o formulario seja enviado via post
         // atualiza a planilha
@@ -2180,7 +2180,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             // recebe os dados via get
             $idpronac = $this->_request->getParam("idpronac");
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-            $tblPlanilhaProposta = new PlanilhaProposta();
+            $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $tblPlanilhaProjeto = new PlanilhaProjeto();
             $tblProjetos = new Projetos();
 
@@ -2329,7 +2329,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         $codEtapa = $this->_request->getParam("codEtapa");
 
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
 
         $arrBusca = array();
