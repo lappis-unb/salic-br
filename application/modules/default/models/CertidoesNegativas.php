@@ -18,7 +18,7 @@ class CertidoesNegativas extends MinC_Db_Table_Abstract
 	protected $_name    = 'CertidoesNegativas';
 
 	/**
-	 * M�todo para buscar os dados de uma certid�o espec�fica
+	 * Metodo para buscar os dados de uma certidao especifica
 	 * @access public
 	 * @param string $CgcCpf
 	 * @param integer $CodigoCertidao
@@ -49,7 +49,7 @@ class CertidoesNegativas extends MinC_Db_Table_Abstract
 			$select->where("c.CgcCpf = ?", $CgcCpf);
 		}
 
-		// filtra pelo c�digo da certid�o
+		// filtra pelo codigo da certidao
 		if (!empty($CodigoCertidao))
 		{
 			$select->where("c.CodigoCertidao = ?", $CodigoCertidao);
@@ -58,6 +58,6 @@ class CertidoesNegativas extends MinC_Db_Table_Abstract
 		$select->order("c.idCertidoesnegativas DESC");
 
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarDados()
+	} // fecha metodo buscarDados()
 
 }
