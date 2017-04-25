@@ -939,14 +939,15 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $membrosnatos = array();
         foreach ($buscarMembrosNatos as $membros) {
             $Agente = $usuario->getIdUsuario($membros->usu_codigo);
-            if ($Agente['idAgente']) {
-                if ($idagenteAtual == $Agente['idAgente']) {
-                    $idagenteAtual = $Agente['idAgente'];
+            
+            if ($Agente['idagente']) {
+                if ($idagenteAtual == $Agente['idagente']) {
+                    $idagenteAtual = $Agente['idagente'];
                 } else {
-                    $membrosnatos[$num]['idAgente'] = $Agente['idAgente'];
+                    $membrosnatos[$num]['idAgente'] = $Agente['idagente'];
                     $membrosnatos[$num]['nome'] = $membros->usu_nome;
                     $membrosnatos[$num]['selecionado'] = in_array($Agente['idAgente'], $votanteCadastrado) ? true : false;
-                    $idagenteAtual = $Agente['idAgente'];
+                    $idagenteAtual = $Agente['idagente'];
                 }
             }
             $num++;
