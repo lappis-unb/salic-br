@@ -58,6 +58,7 @@ class Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto extends MinC
             ->where(' idUF= ?', $dados['idUF'])
             ->where(' idMunicipio= ?', $dados['idMunicipio'])
             ->where('idPlanoDistribuicao = ?', $dados['idPlanoDistribuicao']);
+
         return $this->fetchAll($sql);
     }
 
