@@ -5026,7 +5026,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    public function buscarProjetosProponente($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $count = false)
+    public function buscarProjetosProponente($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $count = false, $fetchMode = Zend_DB::FETCH_OBJ)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -5086,13 +5086,13 @@ class Projetos extends MinC_Db_Table_Abstract
                 $slctContador->where($coluna, $valor);
             }
 
-            $slctContadorMaster = $this->select();
-            $slctContadorMaster->setIntegrityCheck(false);
-            $slctContadorMaster->from(
-                array($slctContador), array('total' => "count(*)")
-            );
+            $slctContadorMaster = new Zend_Db_Expr('SELECT
+                            count(*) AS "total"
+                        FROM
+                            (' .$slctContador. ') as master');
 
-            $rs = $this->fetchAll($slctContadorMaster)->current();
+            $rs = $this->_db->fetchAll($slctContadorMaster);
+
             if ($rs) {
                 return $rs->total;
             } else {
@@ -5112,8 +5112,9 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
+        $this->_db->setFetchMode($fetchMode);
 
-        return $this->fetchAll($select);
+        return $this->_db->fetchAll($select);
     }
 
     public function exibirResultadoProjetoSituacao($where, $QntdPorPagina, $PaginaAtual)
