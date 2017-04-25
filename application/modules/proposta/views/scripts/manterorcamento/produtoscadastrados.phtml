@@ -432,10 +432,10 @@ $3(document).ready(function () {
 
                     $3('#form')[0].reset();
                     Materialize.toast(result.msg, 4000, 'green white-text');
-                    $3.each($('div[data-ajax-render]'), function () {
+                    $3.each($('#custosvinculados[data-ajax-render]'), function () {
                         $3.ajaxRender({
                             strUrl: $('#custosvinculados').attr('data-ajax-render'),
-                            strTarget: '#custosvinculados'
+//                            strTarget: '#custosvinculados'
                         });
                     });
                 } else {

@@ -112,7 +112,8 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
         $listaEtapa = $manterOrcamento->buscarEtapas('P');
         $this->view->EtapasProduto = $this->reordenaretapas($listaEtapa);
-        $this->view->ItensProduto = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
+
+        $this->view->ItensProduto = $tbPreprojeto->listarItensProdutos($this->idPreProjeto, null, Zend_DB::FETCH_ASSOC);
 
         $arrBusca = array(
             'idprojeto' => $this->idPreProjeto,
