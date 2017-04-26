@@ -44,7 +44,7 @@
         <?php if ($this->idArquivo and $this->stEnviado == 'S') : ?>
             <tr>
                 <td>
-                    Arquivo anexado: <a href="<?php echo $this->baseUrl(); ?>/upload/abrir?id=<?php echo $this->idArquivo;?>"><?php echo $this->nmArquivo;?></a>
+                    Arquivo anexado: <a href="<?php echo $this->baseUrl(); ?>/default/upload/abrir?id=<?php echo $this->idArquivo;?>"><?php echo $this->nmArquivo;?></a>
                 </td>
             </tr>
             <tr>
@@ -66,7 +66,7 @@
             </tr>
             <?php foreach ($this->arquivos as $arquivos) : ?>
                 <tr>
-                    <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivos->idArquivo; ?>"><?php echo $arquivos->nmArquivo; ?></a></td>
+                    <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivos->idArquivo; ?>"><?php echo $arquivos->nmArquivo; ?></a></td>
                     <td><?php echo Data::tratarDataZend($arquivos->dtEnvio, 'Brasileira', true); ?></td>
                 </tr>
             <?php endforeach; ?>
