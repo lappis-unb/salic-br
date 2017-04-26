@@ -89,7 +89,7 @@
             </tr>
             <?php foreach ($this->arquivos as $arquivos) { ?>
             <tr id="linha<?php echo $arquivos->idArquivo; ?>">
-                <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivos->idArquivo; ?>"><?php echo $arquivos->nmArquivo; ?></a></td>
+                <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivos->idArquivo; ?>"><?php echo $arquivos->nmArquivo; ?></a></td>
                 <td align="center"><?php echo Data::tratarDataZend($arquivos->dtEnvio, 'Brasileira', true); ?></td>
                 <td align="center"><input class="btn_exclusao" type="button" value="" name="btn_exclusao" id="btn_exclusao" arquivo="<?php echo $arquivos->idArquivo; ?>" diligencia="<?php echo $arquivos->idDiligencia; ?>"></td>
             </tr>
