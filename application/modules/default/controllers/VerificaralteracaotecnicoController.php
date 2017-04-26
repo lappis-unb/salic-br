@@ -980,10 +980,10 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
                     $where = " idpedidoalteracao = $idpedidoalteracao";
                     $alterarStatus = $buscaInformacoes->atualizarStatus($dados, $where);
                 }
-                echo json_encode(array('Ok' => true));
+                $this->_helper->json(array('Ok' => true));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             } catch (Exception $e) {
-                echo json_encode(array('error' => false, 'Descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => false, 'Descricao' => $e->getMessage()));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }

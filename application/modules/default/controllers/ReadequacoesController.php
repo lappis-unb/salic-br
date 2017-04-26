@@ -96,7 +96,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
@@ -112,7 +112,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $itensArray[$a]['Item'] = utf8_encode($i->Item);
                 $a++;
             }
-            echo json_encode($itensArray);
+            $this->_helper->json($itensArray);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
@@ -257,7 +257,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         );
 
         //$jsonEncode = json_encode($dadosPlanilha);
-        echo json_encode(array('resposta'=>true, 'dadosPlanilhaAtiva'=>$dadosPlanilhaAtiva, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel, 'valoresDoItem'=>$valoresDoItem, 'dadosProjeto'=>$dadosProjeto));
+        $this->_helper->json(array('resposta'=>true, 'dadosPlanilhaAtiva'=>$dadosPlanilhaAtiva, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel, 'valoresDoItem'=>$valoresDoItem, 'dadosProjeto'=>$dadosProjeto));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
@@ -332,10 +332,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if($exclusaoLogica){
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
 
                 } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
                 }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -431,10 +431,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if($insert){
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
 
             } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
             }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -522,7 +522,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 //        $editarItem->idAgente = $auth->getIdentity()->IdUsuario;
         $editarItem->save();
 
-        echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+        $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
@@ -563,7 +563,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
         $editarItem->save();
 
-        echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+        $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
@@ -590,12 +590,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         $editarItem->save();
 
-        echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+        $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
@@ -622,12 +622,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         $editarItem->save();
 
-        echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+        $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
@@ -654,12 +654,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         $editarItem->save();
 
-        echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+        $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
@@ -937,7 +937,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -1049,7 +1049,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if($_POST['newPaisLR'] == 31){
             if(empty($_POST['newUFLR']) && empty($_POST['newMunicipioLR'])){
                 $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e Município se tornam obrigatórios no cadastro!');
-                echo json_encode(array('resposta'=>false, 'msg'=>$msg)); $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json(array('resposta'=>false, 'msg'=>$msg)); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             $verificaLocalRepetido = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idPais=?'=>$_POST['newPaisLR'], 'idUF=?'=>$_POST['newUFLR'], 'idMunicipioIBGE=?'=>$_POST['newMunicipioLR']));
         } else {
@@ -1069,13 +1069,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $insert = $tbAbrangencia->inserir($dadosInclusao);
             if($insert){
                 //$jsonEncode = json_encode($dadosPlanilha);
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         } else {
             $msg = utf8_encode('Esse local de realização já foi cadastrado!');
-            echo json_encode(array('resposta'=>false, 'msg'=>$msg));
+            $this->_helper->json(array('resposta'=>false, 'msg'=>$msg));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1141,10 +1141,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if($exclusaoLogica){
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1276,13 +1276,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $insert = $tbPlanoDivulgacao->inserir($dadosInclusao);
             if($insert){
                 //$jsonEncode = json_encode($dadosPlanilha);
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
         } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
         }
         } else {
             $msg = utf8_encode('Esse plano de divulgação já foi cadastrado!');
-            echo json_encode(array('resposta'=>false, 'msg'=>$msg));
+            $this->_helper->json(array('resposta'=>false, 'msg'=>$msg));
     }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1346,10 +1346,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if($exclusaoLogica){
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1509,13 +1509,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             if($insert){
                 //$jsonEncode = json_encode($dadosPlanilha);
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         } else {
             $msg = utf8_encode('Esse plano de distribuição já foi cadastrado!');
-            echo json_encode(array('resposta'=>false, 'msg'=>$msg));
+            $this->_helper->json(array('resposta'=>false, 'msg'=>$msg));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1589,10 +1589,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if($exclusaoLogica){
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -2153,10 +2153,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosUsuarios);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
         } else { //CNIC
@@ -2170,10 +2170,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosUsuarios);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -2493,9 +2493,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $return2 = $tbReadequacao->update($dados, $where);
 
             if($return && $return2){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
         } else {
@@ -2510,9 +2510,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $return = $tbDistribuirReadequacao->update($dados, $where);
 
             if ($return) {
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -2721,9 +2721,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $return = $tbReadequacao->update($dados, $where);
 
         if($return){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -2805,9 +2805,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $return = $tbReadequacao->update($dados, $where);
 
         if($return && $distribuicao){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -4128,7 +4128,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             try {
                 $idReadequacao = $tbReadequacao->inserir($dados);
             } catch (Zend_Exception $e) {
-                echo json_encode(array('msg' => 'Houve um erro na criação do registro de tbReadequacao'));
+                $this->_helper->json(array('msg' => 'Houve um erro na criação do registro de tbReadequacao'));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
@@ -4172,18 +4172,18 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $planilhaSR['stAtivo'] = 'N';
                     $tbPlanilhaAprovacao->inserir($planilhaSR);
                 }
-                echo json_encode(
+                $this->_helper->json(
                     array(
                         'msg' => 'Planilhas SR criadas',
                         'idReadequacao' => $idReadequacao
                     )
                 );
             } catch (Zend_Exception $e) {
-                echo json_encode(array('msg' => 'Houve um erro na cria&ccedil;&atilde;o das planilhas SR'));
+                $this->_helper->json(array('msg' => 'Houve um erro na cria&ccedil;&atilde;o das planilhas SR'));
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
-            echo json_encode(array(
+            $this->_helper->json(array(
                 'msg' => 'Planilha existente',
                 'idReadequacao' => $idReadequacao
             ));
@@ -4237,10 +4237,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 );
             }
 
-            echo json_encode(array('readequacoes' => $output));
+            $this->_helper->json(array('readequacoes' => $output));
 
         } catch (Zend_Exception $e) {
-            echo json_encode(array('msg' => 'Registro no localizado'));
+            $this->_helper->json(array('msg' => 'Registro no localizado'));
         }
     }
 
@@ -4417,6 +4417,6 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $resultado[$i]['Observacao'] = $item->Observacao;
             $i++;
         }
-        echo json_encode(array('mensagens' => $resultado));
+        $this->_helper->json(array('mensagens' => $resultado));
     }
 }

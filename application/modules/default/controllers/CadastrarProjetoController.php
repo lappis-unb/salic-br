@@ -193,9 +193,9 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         $agente = $agentes->buscarAgenteENome($where)->toArray();
 
         if(count($agente) == 0 ){
-            echo json_encode(array('agente'=>false));
+            $this->_helper->json(array('agente'=>false));
         } else{
-            echo json_encode(array('agente'=>true , 'descricao' => utf8_encode($agente[0]['Descricao']) ));
+            $this->_helper->json(array('agente'=>true , 'descricao' => utf8_encode($agente[0]['Descricao']) ));
         }
 
 

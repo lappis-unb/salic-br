@@ -652,7 +652,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         }
         header('Content-Type: application/json');
-        echo json_encode($retorno);
+        $this->_helper->json($retorno);
     }
 
     public function encaminharpropostaAction()
@@ -2256,14 +2256,14 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosProposta);
-                echo json_encode(array('resposta' => true, 'conteudo' => $dadosProposta));
+                $this->_helper->json(array('resposta' => true, 'conteudo' => $dadosProposta));
 
             } else {
-                echo json_encode(array('resposta' => false));
+                $this->_helper->json(array('resposta' => false));
             }
 
         } else {
-            echo json_encode(array('resposta' => false));
+            $this->_helper->json(array('resposta' => false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

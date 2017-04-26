@@ -157,10 +157,10 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
                 $i++;
             }
             $jsonEncode = json_encode($dadosCombo);
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosCombo));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosCombo));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

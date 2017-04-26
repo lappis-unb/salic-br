@@ -101,10 +101,10 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 				$jsonEncode = json_encode($dadosAgente);
 
 				//echo $jsonEncode;
-				echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+				$this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
 			}
 			else{
-				echo json_encode(array('resposta'=>false));
+				$this->_helper->json(array('resposta'=>false));
 			}
 			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
@@ -129,10 +129,10 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 				$jsonEncode = json_encode($dadosAgente);
 
 				//echo $jsonEncode;
-				echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+				$this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
 			}
 			else{
-				echo json_encode(array('resposta'=>false));
+				$this->_helper->json(array('resposta'=>false));
 			}
 			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
@@ -3581,10 +3581,10 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $where = " idpedidoalteracao = $idpedidoalteracao";
                     $alterarStatus = $buscaInformacoes->atualizarStatus($dados, $where);
                 }
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Exception $e) {
-                echo json_encode(array('error' => true, 'Descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'Descricao' => $e->getMessage()));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }

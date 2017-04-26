@@ -433,16 +433,16 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
 
             if (!empty($buscaPronac)) {
                 $result['existe'] = true;
-                echo json_encode($result);
+                $this->_helper->json($result);
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 $result['existe'] = false;
-                echo json_encode($result);
+                $this->_helper->json($result);
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         } else {
             $result['existe'] = true;
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
@@ -947,9 +947,9 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         $CertidoesNegativas = new CertidoesNegativas();
         $exclusao = $CertidoesNegativas->delete(array('CgcCpf = ?' => $post->cpfcnpj, 'CodigoCertidao = ?' => $post->cod));
         if($exclusao){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -988,11 +988,11 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         if (!empty($dias)) {
             $result['existe'] = true;
             $result['dias'] = $dias;
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             $result['existe'] = false;
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
@@ -1005,7 +1005,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
 
         if (empty($dtEmissao) && strlen($dtEmissao) < 10) {
             $result['data'] = false;
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->json($result);
         }
 
