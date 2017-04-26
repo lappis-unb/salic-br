@@ -1,3 +1,10 @@
+Release 2.0.6
+  * Fix: [Proponente] Corrigindo conversao JSON
+  * Fix: [Autenticacao] Erro ao tentar logar no sistema
+  * Fix: [Diligências] Erro ao visualizar diligencia e clicar em voltar
+  * Fix: [Diligências] Erro ao baixar arquivo
+  * Fix: [Geral] Erro ao retornar json para view.
+
 Release 2.0.5
   * Fix: [Coordenador de parecer] corrige caracteres e botao de download
   * Fix: [Readequacao] corrige caracteres das mensagens
