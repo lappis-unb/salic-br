@@ -31,9 +31,9 @@
                 <a href="#" title="Orcamento">Listar Propostas</a>
                 <a href="#" title="Orcamento">Or&ccedil;amento</a>
                 <div style="display: none;">
-                    <a href="<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'produtoscadastrados')); ?>" title="Listar Produtos Cadastrados">Listar Produtos Cadastrados</a>
-                    <a href='<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'custosadministrativos')); ?>'>Custos Administrativos</a>
-                    <a href='<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'planilhaorcamentariageral')); ?>'>Planilha Or&ccedil;ament&aacute;ria Geral</a>
+                    <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'Manterorcamento', 'action' => 'produtoscadastrados')); ?>" title="Listar Produtos Cadastrados">Listar Produtos Cadastrados</a>
+                    <a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'Manterorcamento', 'action' => 'custosadministrativos')); ?>'>Custos Administrativos</a>
+                    <a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'Manterorcamento', 'action' => 'planilhaorcamentariageral')); ?>'>Planilha Or&ccedil;ament&aacute;ria Geral</a>
                 </div>    
                 <a href="#" title="Orcamento">Enviar Proposta ao Minc</a>  
             </div>

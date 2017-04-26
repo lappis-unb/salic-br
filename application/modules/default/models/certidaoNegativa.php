@@ -11,7 +11,7 @@ class certidaoNegativa extends MinC_Db_Table_Abstract {
             array(new Zend_Db_Expr("
                 CASE
                         WHEN c.CodigoCertidao = '49'
-                        THEN 'Quita��o de Tributos Federais'
+                        THEN 'Quita&ccedil;&atilde;o de Tributos Federais'
                         WHEN c.CodigoCertidao = '51'
                         THEN 'FGTS'
                         WHEN c.CodigoCertidao = '52'
@@ -26,7 +26,7 @@ class certidaoNegativa extends MinC_Db_Table_Abstract {
                         CASE
                             WHEN c.cdSituacaoCertidao = 0
                             THEN 'Pendente'
-                            ELSE 'N�o Pendente'
+                            ELSE 'N&atilde;o Pendente'
                         END
                 END AS Situacao,
                 CASE

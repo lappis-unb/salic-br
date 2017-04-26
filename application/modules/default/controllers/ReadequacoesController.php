@@ -2544,7 +2544,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         $this->view->nmPagina = $dados->dsReadequacao;
         $d = array();
-        $d['ProvidenciaTomada'] = 'Readequação enviado para avaliação técnica.';
+        $d['ProvidenciaTomada'] = 'Readequa&ccedil;&atilde;o enviado para avalia&ccedil;&atilde;o t&eacute;cnica.';
         $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
         $where = "IdPRONAC = $dados->idPronac";
         $Projetos = new Projetos();
@@ -2696,7 +2696,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $where = "idReadequacao = $idReadequacao";
                     $tbReadequacao->update($dados, $where);
                 }
-                parent::message("A avaliação da readequação foi finalizada com sucesso! ", "readequacoes/painel-readequacoes", "CONFIRM");
+                parent::message("A avalia&ccedil;&atilde;o da readequa&ccedil;&atilde;o foi finalizada com sucesso! ", "readequacoes/painel-readequacoes", "CONFIRM");
             }
             $idReadequacao = Seguranca::encrypt($idReadequacao);
             parent::message("Dados salvos com sucesso!", "readequacoes/form-avaliar-readequacao?id=$idReadequacao", "CONFIRM");
@@ -2754,7 +2754,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         }
         $tbReadequacao->update($dados, $where);
 
-        parent::message("Readequação devolvida com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
+        parent::message("Readequa&ccedil;&atilde;o devolvida com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
     }
 
     /*
@@ -3491,10 +3491,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                         $tbDistribuirReadequacao->update($dados, $where);
                     }
 
-                    parent::message("A avaliação da readequação foi finalizada com sucesso!", "readequacoes/analisar-readequacoes-cnic", "CONFIRM");
+                    parent::message("A avalia&ccedil;&atilde;o da readequa&ccedil;&atilde;o foi finalizada com sucesso!", "readequacoes/analisar-readequacoes-cnic", "CONFIRM");
 
                 } else {
-                    parent::message("Erro ao avaliar a readequação!", "form-avaliar-readequacao-cnic?id=$idReadequacao", "ERROR");
+                    parent::message("Erro ao avaliar a readequa&ccedil;&atilde;o!", "form-avaliar-readequacao-cnic?id=$idReadequacao", "ERROR");
                 }
             }
             $idReadequacao = Seguranca::encrypt($idReadequacao);
@@ -4179,7 +4179,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     )
                 );
             } catch (Zend_Exception $e) {
-                echo json_encode(array('msg' => 'Houve um erro na criação das planilhas SR'));
+                echo json_encode(array('msg' => 'Houve um erro na cria&ccedil;&atilde;o das planilhas SR'));
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
@@ -4401,12 +4401,12 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 'PENDENTE' => "O custo administrativo supera 15% do valor total do projeto. Para corrigir, reduza o valor da etapa em R$ ",
             ),
             'remuneracao' => array(
-                'OK' => "Remuneração para captação de recursos está dentro dos parâmetros permitidos.",
-                'PENDENTE' => "A remuneração para captação de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto é R$ "
+                'OK' => "Remunera&ccedil;&atilde;o para capta&ccedil;&atilde;o de recursos est&aacute; dentro dos par&acirc;metros permitidos.",
+                'PENDENTE' => "A remunera&ccedil;&atilde;o para capta&ccedil;&atilde;o de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto &eacute; R$ "
             ),
             'divulgacao' => array(
-                'OK' => "Divulgação / Comercialização está dentro dos parâmetros permitidos.",
-                'PENDENTE' => "A divulgação ou a comercialização supera 20%. Para corrigir, reduza o valor da etapa em R$ "
+                'OK' => "Divulga&ccedil;&atilde;o / Comercializa&ccedil;&atilde;o est&aacute; dentro dos par&acirc;metros permitidos.",
+                'PENDENTE' => "A divulga&ccedil;&atilde;o ou a comercializa&ccedil;&atilde;o supera 20%. Para corrigir, reduza o valor da etapa em R$ "
             )
         );
 
