@@ -39,7 +39,7 @@ class CepController extends MinC_Controller_Action_Abstract
             $_uf          = $resultado['uf'];
 
             // atribuica da cidade
-            if (empty($resultado['idCidadeMunicipios']) || empty($resultado['dsCidadeMunicipios']))
+            if (empty($resultado['idcidademunicipios']) || empty($resultado['dscidademunicipios']))
             {
                 // caso a cidade nao exista na tabela de municipios (tabela associada aos agentes)
                 // pega a primeira cidade do estado
