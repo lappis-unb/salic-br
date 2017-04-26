@@ -2904,7 +2904,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam("id");
         $this->view->id = $idAgente;
 
-        $tbVerificacao = new Verificacao();
+        $tbVerificacao = new Agente_Model_DbTable_Verificacao();
         $direito = $tbVerificacao->combosNatureza(7);
         $this->view->direito = $direito;
 

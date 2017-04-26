@@ -48,9 +48,9 @@
             <th>Dt.<br />Pagamento</th>
             <th>Forma de Pagamento</th>
             <th>N&ordm; Doc. Pagamento</th>
-            <th>Arquivo</th>
             <th>Justificativa</th>
             <th>Vl. Pagamento</th>
+            <th>Arquivo</th>
         </tr>
     </thead>
     <?php foreach ($this->relacaoPagamentos as $relPagamentos) { ?>
@@ -71,13 +71,14 @@
             <td align="center"><?php echo Data::tratarDataZend($relPagamentos->DtPagamento, 'Brasileira'); ?></td>
             <td><?php echo $relPagamentos->tpFormaDePagamento; ?></td>
             <td class="right-align"><?php echo $relPagamentos->nrDocumentoDePagamento; ?></td>
-            <td>
-                <a class="btn white-text" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $relPagamentos->idArquivo; ?>" title="<?php echo $relPagamentos->nmArquivo; ?>">
-                    pdf
-                </a>
-            </td>
+
             <td class="right-align"><?php echo $relPagamentos->dsJustificativa; ?></td>
             <td class="right-align"><?php echo number_format($relPagamentos->vlPagamento, 2, ",", "."); ?></td>
+            <td>
+                <a class="btn small waves-effect waves-light tooltipped btn-primary" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $relPagamentos->idArquivo; ?>" title="<?php echo $relPagamentos->nmArquivo; ?>">
+                    <i class="material-icons">attach_file</i>
+                </a>
+            </td>
         </tr>
         <?php $x++; $idPlanilhaAnterior=$relPagamentos->idPlanilhaAprovacao; $vlTotal=$vlTotal+$relPagamentos->vlPagamento; } ?>
     <?php } else { ?>
