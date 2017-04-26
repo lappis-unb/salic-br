@@ -143,7 +143,7 @@ class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
                 }
                 $anogravado = $anoperiodo;
             }
-            echo json_encode($periodo);
+            $this->_helper->json($periodo);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
@@ -271,9 +271,9 @@ class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
         $return = $tbComprovanteTrimestral->update($dados, $where);
 
         if($return){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -338,9 +338,9 @@ class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
         $return = $tbComprovanteTrimestral->update($dados, $where);
 
         if($return){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

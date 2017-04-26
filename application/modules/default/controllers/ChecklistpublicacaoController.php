@@ -856,14 +856,14 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
                 $rsVP->stAnaliseProjeto = '2';
                 $rsVP->save();
             }
-            echo json_encode(array('error' => false, "msg" => "Projeto alterado com sucesso!"));
+            $this->_helper->json(array('error' => false, "msg" => "Projeto alterado com sucesso!"));
             $this->_helper->viewRenderer->setNoRender(TRUE);
             //parent::message("Projeto alterado com sucesso!!", "checklistpublicacao/", "CONFIRM");
 
         }
         catch (Exception $e)
         {
-            echo json_encode(array('error' => true, "msg" => "Erro ao atualizar informa&ccedil;&otilde;es! As altera&ccedil;&otilde;es n&atilde;o foram salvas. ".$e->getMessage()));
+            $this->_helper->json(array('error' => true, "msg" => "Erro ao atualizar informa&ccedil;&otilde;es! As altera&ccedil;&otilde;es n&atilde;o foram salvas. ".$e->getMessage()));
             $this->_helper->viewRenderer->setNoRender(TRUE);
             //parent::message("Erro ao atualizar informa��es! Opera��o n�o realizada. ".$e->getMessage(), "checklistpublicacao/", "ERROR");
         }

@@ -308,9 +308,9 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         $result = $tbPlanilhaAprovacao->buscar($where);
 
         if(count($result) > 0){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
@@ -336,9 +336,9 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
             $jsonEncode = json_encode($dadosAgente);
 
             //echo $jsonEncode;
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
@@ -364,9 +364,9 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
             $jsonEncode = json_encode($dadosAgente);
 
             //echo $jsonEncode;
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); 
     }

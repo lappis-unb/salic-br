@@ -43,11 +43,11 @@ class MantersecretarioorgaoController extends MinC_Controller_Action_Abstract {
             $result['existe'] = true;
             $result['nmSecretario'] = utf8_encode($buscarOrgaoSecretario[0]->nmSecretario);
             $result['dsCargo'] = utf8_encode($buscarOrgaoSecretario[0]->dsCargo);
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             $result['existe'] = false;
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }

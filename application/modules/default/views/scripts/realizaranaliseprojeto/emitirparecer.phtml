@@ -341,10 +341,10 @@
                         <input type="radio" name="stPlanoAnual" value="1" <?php if($this->stPlanoAnual == '1') echo "checked='checked'";?>> Sim &nbsp;<input type="radio" name="stPlanoAnual" value="0" <?php if($this->stPlanoAnual != '1') echo "checked='checked'";?>> N&atilde;o
                     </div>
                     <p style="font-weight: 600; width: 100%">Justificativa de Envio para Plen&aacute;ria</p>
-                    <textarea class="input_simples" style="width: 42em; height: 10em; width:99%;" name="justificativaenvioplenaria" id="justificativaenvioplenaria"></textarea>
+                    <textarea class="input_simples" style="width: 42em; height: 30em; width:99%;" name="justificativaenvioplenaria" id="justificativaenvioplenaria"></textarea>
                 </div>
             </div>
-            <textarea class="input_simples" style="display: none; width: 42em; height: 10em;" name="pareceratualizado" id="pareceratualizado"></textarea>
+            <textarea class="input_simples" style="display: none; width: 42em; height: 30em;" name="pareceratualizado" id="pareceratualizado"></textarea>
         </form>
     </div>
     <div id="erro" style="display:none; text-align: center; color: red;"></div>
@@ -537,7 +537,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <textarea name="justificativa" id="justificativa" rows="15" class="input_simples" style="width: 99%"><?php echo isset($this->valorJustificativa) ? strip_tags(trim($this->valorJustificativa)) : ''; ?></textarea>
+                        <textarea name="justificativa" id="justificativa"  class="input_simples" style="width: 42em; height: 25em; width: 99%"><?php echo isset($this->valorJustificativa) ? strip_tags(trim($this->valorJustificativa)) : ''; ?></textarea>
                         <!--<script>
                             //CKEDITOR.replace('justificativa', {	fullPage : true });
                         </script>-->

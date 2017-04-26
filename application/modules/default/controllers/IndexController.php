@@ -308,7 +308,7 @@ class IndexController extends MinC_Controller_Action_Abstract
             echo count($mensagem) > 0 ? json_encode($mensagem) : json_encode(array('error'=>true));
         }
         else{
-            echo json_encode(array('error'=>true));
+            $this->_helper->json(array('error'=>true));
         }
         exit();
     }
