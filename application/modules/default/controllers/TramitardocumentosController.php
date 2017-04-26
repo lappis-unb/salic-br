@@ -894,12 +894,12 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
             endforeach;
 
-            echo json_encode($msgAjax);
+            $this->_helper->json($msgAjax);
         }
         else {
             $msgAjax[0]['msg'] = utf8_encode("erro");
             $msgAjax[0]['p'] = utf8_encode($pronac);
-            echo json_encode($msgAjax);
+            $this->_helper->json($msgAjax);
         }
     }
 
@@ -1182,9 +1182,9 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         }
 
         if ($conclusao) {
-            echo json_encode(array('resposta' => true));
+            $this->_helper->json(array('resposta' => true));
         } else {
-            echo json_encode(array('resposta' => false));
+            $this->_helper->json(array('resposta' => false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

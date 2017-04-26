@@ -1013,13 +1013,13 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
             } // fecha try
             catch (Exception $e) {
-                echo json_encode(array('resposta'=>false, 'messagem'=>$e->getMessage()));
+                $this->_helper->json(array('resposta'=>false, 'messagem'=>$e->getMessage()));
             }
 
             if($count == 0){
-                echo json_encode(array('resposta'=>true, 'mensagem'=>'Dados atualizados com sucesso!'));
+                $this->_helper->json(array('resposta'=>true, 'mensagem'=>'Dados atualizados com sucesso!'));
             } else {
-                echo json_encode(array('resposta'=>false, 'mensagem'=>'Ocorreu um erro no processo de atualiza&ccedil;&atilde;o. Entre em contato com o administrador do sistema!'));
+                $this->_helper->json(array('resposta'=>false, 'mensagem'=>'Ocorreu um erro no processo de atualiza&ccedil;&atilde;o. Entre em contato com o administrador do sistema!'));
             }
 
         }
@@ -1553,10 +1553,10 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 if (count($buscar)==0) {
                     $liberar->inserir($dados);
                 }
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
 	}
@@ -1832,7 +1832,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 if($this->modal = "s") {
                     $arrRetorno['error'] = false;
                     $arrRetorno['msg']   = 'Rotina executada com sucesso!';
-                    echo json_encode($arrRetorno);
+                    $this->_helper->json($arrRetorno);
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 }else {
                     parent::message('Rotina executada com sucesso!', 'movimentacaodeconta/listar-inconsistencias', 'CONFIRM');
@@ -1841,7 +1841,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 if($this->modal = "s") {
                     $arrRetorno['error'] = true;
                     $arrRetorno['msg']   = $e->getMessage();
-                    echo json_encode($arrRetorno);
+                    $this->_helper->json($arrRetorno);
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 }else {
                     parent::message( $e->getMessage() , 'movimentacaodeconta/listar-inconsistencias', 'ERROR');

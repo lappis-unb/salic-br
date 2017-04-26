@@ -410,10 +410,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosUsuarios);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
         } else { //CNIC
@@ -427,10 +427,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosUsuarios);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -594,9 +594,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return2 = $tbRecurso->update($dados, $where);
 
             if($return && $return2){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         } else {
             // IPHAN
@@ -609,9 +609,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return = $tbDistribuirProjeto->update($dados, $where);
 
             if ($return) {
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         die();
@@ -1093,9 +1093,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
 
             if($return && $return2){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
         } else {
@@ -1114,9 +1114,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return2 = $tbRecurso->update($dados, $where);
 
             if($return && $return2){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -1182,9 +1182,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $return = $tbRecurso->update($dados, $where);
 
         if($return){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         die();
 
@@ -1683,10 +1683,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $dadosPlanilhaProjeto['Justificativa'] = utf8_encode($registro['Justificativa']);
             }
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosProjeto'=>$dadosProjeto));
+            $this->_helper->json(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosProjeto'=>$dadosProjeto));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         die();
 
@@ -1759,10 +1759,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $dadosPlanilhaAprovada['dsJustificativa'] = utf8_encode($registro['dsJustificativa']);
             }
 //            $jsonEncode = json_encode($dadosPlanilhaAprovada);
-            echo json_encode(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosPlanilhaAprovada'=>$dadosPlanilhaAprovada, 'dadosProjeto'=>$dadosProjeto));
+            $this->_helper->json(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosPlanilhaAprovada'=>$dadosPlanilhaAprovada, 'dadosProjeto'=>$dadosProjeto));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1785,14 +1785,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
         //O valor total dos valores n�o podem ultrapassar o valor solicitado na proposta.
         if($vlTotal > $_POST['valorSolicitado']){
-            echo json_encode(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
+            $this->_helper->json(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
         } else {
             $where = array('idPlanilhaProjeto = ?' => $_POST['idPlanilha']);
             $PlanilhaProjeto = new PlanilhaProjeto();
             if($PlanilhaProjeto->alterar($dados, $where)){
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
             } else {
-                echo json_encode(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
             }
         }
         die();
@@ -1818,14 +1818,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
         //O valor total dos valores n�o podem ultrapassar o valor solicitado na proposta.
         if($vlTotal > $_POST['valorSolicitado']){
-            echo json_encode(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
+            $this->_helper->json(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
         } else {
             $where = array('idPlanilhaAprovacao = ?' => $_POST['idPlanilha']);
             $PlanilhaAprovacao = new PlanilhaAprovacao();
             if($PlanilhaAprovacao->alterar($dados, $where)){
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
             } else {
-                echo json_encode(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);

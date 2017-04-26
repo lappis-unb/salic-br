@@ -50,10 +50,10 @@ class MunicipiosController extends Zend_Controller_Action {
                 $a++;
             }
             $jsonEncode = json_encode($arrayMunicipios);
-            echo json_encode(array('resposta'=>true,'conteudo'=>$arrayMunicipios));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$arrayMunicipios));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
 

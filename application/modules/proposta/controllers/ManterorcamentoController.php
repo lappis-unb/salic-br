@@ -254,7 +254,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -275,7 +275,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
 
@@ -562,7 +562,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $return['html'] = $html;
         }
 
-        echo json_encode($return);
+        $this->_helper->json($return);
         die;
     }
 
@@ -643,7 +643,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $return['status'] = true;
         }
 
-        echo json_encode($return);
+        $this->_helper->json($return);
         die;
     }
 
@@ -677,7 +677,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             }
         }
 
-        echo json_encode($return);
+        $this->_helper->json($return);
         die;
     }
 
@@ -759,7 +759,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -774,7 +774,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
 
@@ -880,7 +880,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -897,7 +897,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = $Dadositem->descricao;
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
         $uf = new Agente_Model_DbTable_UF();
@@ -962,7 +962,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao;
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -979,7 +979,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = $Dadositem->Descricao;
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
         $uf = new Agente_Model_DbTable_UF();
@@ -1221,7 +1221,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $return['status'] = 0;
         }
 
-        echo json_encode($return);
+        $this->_helper->json($return);
         die;
     }
 

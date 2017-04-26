@@ -29,11 +29,11 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             try {
                 $dados = array('stPedidoAlteracao' => $_POST['acao']);
                 $atualizaPedido = SolicitarReadequacaoCustoDAO::atualizaPedidoAlteracao($dados, $_POST['idPedidoAlteracao']);
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Zend_Exception $e) {
                 die('Erro:' . $e->getMessage());
-                echo json_encode(array('error' => true));
+                $this->_helper->json(array('error' => true));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
@@ -166,7 +166,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             } else {
                 $municipio['error'] = true;
             }
-            echo json_encode($municipio);
+            $this->_helper->json($municipio);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
@@ -185,7 +185,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
                 $itemEtapa['error'] = true;
             }
 
-            echo json_encode($itemEtapa);
+            $this->_helper->json($itemEtapa);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         //se o produto estiver setado
@@ -300,10 +300,10 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
                 } else {
                     $insertItem = SolicitarReadequacaoCustoDAO::inserirNovoProduto($dados);
                 }
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Zend_Exception $e) {
-                echo json_encode(array('error' => true, 'descricao:' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'descricao:' => $e->getMessage()));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
@@ -479,7 +479,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
           $itemEtapa['error'] = true;
           }
 
-          echo json_encode($itemEtapa);
+          $this->_helper->json($itemEtapa);
           $this->_helper->viewRenderer->setNoRender(TRUE);
           } */
 
@@ -635,7 +635,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
 //            $msg = 'Na readequa&ccedil;�o de planilha or&ccedil;ament�ria, o sistema deve bloquear envio planilha com custos administrativos superior a 15% do valor total do projeto.';
             $novos_valores['error'] = true;
             $novos_valores['descricao'] = utf8_encode($msg);
-            echo json_encode($novos_valores);
+            $this->_helper->json($novos_valores);
             $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else  if ($valoracustosadministrativos > $valorquinzeporceto) {
 
@@ -644,11 +644,11 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             $msg = 'Favor ajustar os Custos Administrativos que excedem <b>'. number_format($valorquinzeporceto, '2', ',', '.') .'</b>, valor para que possa enviar sua solicita��o de readequa��o.';
             $novos_valores['error'] = true;
             $novos_valores['descricao'] = utf8_encode($msg);
-            echo json_encode($novos_valores);
+            $this->_helper->json($novos_valores);
             $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else {
             $novos_valores['error'] = false;
-            echo json_encode($novos_valores);
+            $this->_helper->json($novos_valores);
             $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
         //***FINAL REGRA 15% CUSTOS ADMINISRATIVOS *****************************************************************************/       
