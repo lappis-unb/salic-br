@@ -72,8 +72,9 @@
             <?php endforeach; ?>
         </table>
     <?php endif; ?>
+
     <p class="center">
-        <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')).'?idPreProjeto'.$this->idPreProjeto?>" type="button" name="" class="btn white black-text" />Voltar</a>
+        <a href="" onClick="history.go(-1)" type="button" name="" class="btn white black-text" />Voltar</a>
         <button type="button" name="btn_imprimir" class="btn" id="btn_imprimir" />imprimir</button>
     </p>
 </div>
