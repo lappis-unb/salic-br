@@ -407,7 +407,6 @@ $3(document).ready(function () {
 
 
             $3.post($3('#form').attr('action'), $3('#form').serialize(), function (result) {
-                result = $3.parseJSON(result);
                 if (result.status == '1') {
                     console.log(result.status + result.action);
 
@@ -471,7 +470,6 @@ $3(document).ready(function () {
                         var dados = { idPreProjeto: <?php echo isset($this->idPreProjeto) ? $this->idPreProjeto : '' ?>};
 
                         $.post(urlAction, dados, function (result) {
-                            result = $3.parseJSON(result)
                             if (result.status == '1') {
                                 Materialize.toast(result.msg, 4000, 'green white-text');
 
@@ -518,7 +516,6 @@ $3(document).ready(function () {
         };
 
         $.post(urlAction, dados, function (result) {
-            result = $3.parseJSON(result);
             if (result.status == '1') {
 //                Materialize.toast(result.msg, 5000, 'green white-text');
                 $3("#btn-salvar").addClass('btn-salvar').removeClass('disabled');
