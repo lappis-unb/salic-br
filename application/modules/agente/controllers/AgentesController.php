@@ -436,7 +436,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
         }
 
-        echo json_encode($retorno);
+        $this->_helper->json($retorno);
         die;
     }
 
@@ -1854,7 +1854,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        echo json_encode($novos_valores);
+        $this->_helper->json($novos_valores);
         die;
     }
 

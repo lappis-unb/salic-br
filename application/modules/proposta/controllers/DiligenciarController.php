@@ -399,9 +399,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         $result = $Arquivo->excluirArquivo($_POST['arquivo'], $_POST['diligencia']);
 
         if(count($result) > 0){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         die();
     }
@@ -1073,9 +1073,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
             $prorrogado = $AvaliacaoPropostadao->update($dados, $where);
         }
         if ($prorrogado) {
-            echo json_encode(array('result' => true, 'mensagem' => 'Prorrogado com sucesso.'));
+            $this->_helper->json(array('result' => true, 'mensagem' => 'Prorrogado com sucesso.'));
         } else {
-            echo json_encode(array('result' => false, 'mensagem' => 'N&atilde;o foi possivel!'));
+            $this->_helper->json(array('result' => false, 'mensagem' => 'N&atilde;o foi possivel!'));
         }
     }
 

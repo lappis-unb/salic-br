@@ -896,7 +896,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         foreach ($retorno as $value) {
                 $pareceristas[] = array('id'=>$value->id,'nome'=>utf8_encode($value->Nome));
         }
-        echo json_encode($pareceristas);
+        $this->_helper->json($pareceristas);
     }
     private function tipos($array,$labelCampo,$tp,$infoInicial,$infoFinal = ''){
         switch ($tp){

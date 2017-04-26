@@ -822,7 +822,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
             $pareceristas[] = array('id' => $value->id, 'nome' => utf8_encode($value->Nome));
         }
 
-        echo json_encode($pareceristas);
+        $this->_helper->json($pareceristas);
     }
 
     public function infopareceristaAction()
@@ -893,7 +893,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
 
         $pareceristas[] = array('situacao' => utf8_encode($situacao), 'situacaoTexto' => utf8_encode($situacaoTexto));
 
-        echo json_encode($pareceristas);
+        $this->_helper->json($pareceristas);
     }
 
     private function tipos($array, $labelCampo, $tp, $infoInicial, $infoFinal = '')

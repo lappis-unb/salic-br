@@ -452,7 +452,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
                 $resposta = array('result' => false, 'mensagem' => utf8_encode('N?o foi possivel4!'));
             }
         }
-        echo json_encode($resposta);
+        $this->_helper->json($resposta);
     }
 
     public function url(array $urlOptions = array(), $name = null, $reset = false, $encode = true) {

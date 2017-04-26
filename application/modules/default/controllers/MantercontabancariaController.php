@@ -54,9 +54,9 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
             $a = 0;
             if(count($AgenciaDados)>0){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else{
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }

@@ -690,7 +690,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
                     $dadosBuscar['idEmpresa'] = $buscarMandato[0]->idEmpresa;
                     $dadosBuscar['idDirigente'] = $buscarMandato[0]->idDirigente;
                     $dadosBuscar['idArquivo'] = $buscarMandato[0]->idArquivo;
-//                echo json_encode($dadosBuscar);
+//                $this->_helper->json($dadosBuscar);
 //                $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
 
@@ -821,7 +821,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             }
         }
 
-        echo json_encode($novos_valores);
+        $this->_helper->json($novos_valores);
     }
 
 // fecha metodo buscaragentedirigenteAction()

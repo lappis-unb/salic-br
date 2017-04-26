@@ -821,7 +821,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                     $arrayRetorno[$key] = utf8_encode($val);
                 }
                 
-                echo json_encode($arrayRetorno);
+                $this->_helper->json($arrayRetorno);
                 break;
 
             case 2:
