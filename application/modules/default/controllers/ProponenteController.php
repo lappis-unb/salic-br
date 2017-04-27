@@ -3,7 +3,7 @@
 class ProponenteController extends MinC_Controller_Action_Abstract
 {
     private $intTamPag = 300;
-    
+
     /**
      * Reescreve o metodo init()
      * @access public
@@ -56,7 +56,7 @@ class ProponenteController extends MinC_Controller_Action_Abstract
 
         $geral = new ProponenteDAO();
         $tblProjetos = new Projetos();
-        
+
         $tbdados = $geral->buscarDadosProponente($idpronac);
         $this->view->dados = $tbdados;
 
@@ -70,7 +70,7 @@ class ProponenteController extends MinC_Controller_Action_Abstract
         $this->view->dirigentes = $tbDirigentes;
 
         $this->view->CgcCpf = $tbdados[0]->CgcCpf;
-        
+
         /*$tbarquivados = $geral->buscarArquivados($idpronac);
         $this->view->arquivados = $tbarquivados;
 
@@ -111,21 +111,20 @@ class ProponenteController extends MinC_Controller_Action_Abstract
                                     parent::message("N&atilde;o existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
                                 }
     }
-    
+
     public function cadastrarpropostaAction()
     {
-    	
+
     }
 
-    public function listarProjetosProponenteAction(){
-        
+    public function listarProjetosProponenteAction($fetchMode = Zend_DB::FETCH_OBJ)
+    {
         $this->_helper->layout->disableLayout();
-        $post   = Zend_Registry::get('post');
+        $post = Zend_Registry::get('post');
         $this->intTamPag = 30;
         $cpfCnpj = $this->_request->getParam("CgcCpf");
-        
+
         $pag = 1;
-        //$get = Zend_Registry::get('get');
         if (isset($post->pag)) $pag = $post->pag;
         if (isset($post->tamPag)) $this->intTamPag = $post->tamPag;
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
@@ -133,10 +132,10 @@ class ProponenteController extends MinC_Controller_Action_Abstract
 
         $arrBusca = array();
         $arrBusca['p.CgcCpf = ?'] = $cpfCnpj;
-        
+
         $tblProjetos = new Projetos();
         $total = $tblProjetos->buscarProjetosProponente($arrBusca, array(), null, null, true);
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
         if ($fim>$total) $fim = $total;

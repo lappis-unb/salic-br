@@ -2479,10 +2479,10 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                 $dadosPlanilha['GrupoC'] = utf8_encode('<span class="black bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
                 $dadosPlanilha['GrupoD'] = utf8_encode('<span class="black bold">R$ '.number_format(0, 2, ',', '.')).'</span>';
             }
-            echo json_encode(array('resposta'=>true, 'dadosPlanilha'=>$dadosPlanilha));
+            $this->_helper->json(array('resposta'=>true, 'dadosPlanilha'=>$dadosPlanilha));
 
         } catch (Zend_Exception $e) {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -2574,10 +2574,10 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $dadosPlanilhaEditavel['Justificativa'] = '';
 
             $x = $item->save();
-            echo json_encode(array('resposta'=>true, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel));
+            $this->_helper->json(array('resposta'=>true, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel));
 
         } catch (Zend_Exception $e) {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -2625,14 +2625,14 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $planilhaRP['stAtivo'] = 'N';
                     $tbPlanilhaAprovacao->inserir($planilhaRP);
                 }
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
                 $msg = utf8_encode('A planilha j� foi reintegrada.');
-                echo json_encode(array('resposta'=>false, 'msg'=>$msg));
+                $this->_helper->json(array('resposta'=>false, 'msg'=>$msg));
             }
 
         } catch (Zend_Exception $e) {
-            echo json_encode(array('resposta'=>false, 'msg'=>'Ocorreu um erro durante o processo.'));
+            $this->_helper->json(array('resposta'=>false, 'msg'=>'Ocorreu um erro durante o processo.'));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -2730,10 +2730,10 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             );
 
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true, 'dadosPlanilhaAtiva'=>$dadosPlanilhaAtiva, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel, 'valoresDoItem'=>$valoresDoItem, 'dadosProjeto'=>$dadosProjeto));
+            $this->_helper->json(array('resposta'=>true, 'dadosPlanilhaAtiva'=>$dadosPlanilhaAtiva, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel, 'valoresDoItem'=>$valoresDoItem, 'dadosProjeto'=>$dadosProjeto));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -2807,7 +2807,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
         //VERIFICA SE O VALOR TOTAL DOS DADOS INFORMADOR PELO PROPONENTE EST� ENTRE O M�NIMO E M�XIMO PERMITIDO - 20%
         if($vlTotal < $vlAtualMin || $vlTotal > $vlAtualMax){
-            echo json_encode(array('resposta'=>false, 'msg'=>'O valor total do item desejado ultrapassou a margem de 20%.'));
+            $this->_helper->json(array('resposta'=>false, 'msg'=>'O valor total do item desejado ultrapassou a margem de 20%.'));
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
@@ -2820,7 +2820,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 //        $editarItem->idAgente = $auth->getIdentity()->IdUsuario;
         $editarItem->save();
 
-        echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+        $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 

@@ -683,9 +683,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $jsonEncode = json_encode($dadosAgente);
 
                 //echo $jsonEncode;
-                echo json_encode(array ('resposta' => true, 'conteudo' => $dadosAgente) );
+                $this->_helper->json(array ('resposta' => true, 'conteudo' => $dadosAgente) );
             } else {
-                echo json_encode(array ('resposta' => false) );
+                $this->_helper->json(array ('resposta' => false) );
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
@@ -1797,9 +1797,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $jsonEncode = json_encode($dadosAgente);
 
                 //echo $jsonEncode;
-                echo json_encode(array ('resposta' => true, 'conteudo' => $dadosAgente) );
+                $this->_helper->json(array ('resposta' => true, 'conteudo' => $dadosAgente) );
             } else {
-                echo json_encode(array ('resposta' => false) );
+                $this->_helper->json(array ('resposta' => false) );
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
@@ -2251,7 +2251,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 		$retorno = false;
 		if(!empty ($rsParecer))
 		$retorno = true;
-		echo json_encode(array('retorno'=>$retorno));
+		$this->_helper->json(array('retorno'=>$retorno));
 	}
 
 	public function parecertecnicoAction() {
@@ -3083,12 +3083,12 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 				$data = "00/00/0000";
 				$dias = "0";
 			}
-			echo json_encode(array('dataImpressao'=>$data,'dias'=>$dias));
+			$this->_helper->json(array('dataImpressao'=>$data,'dias'=>$dias));
 			return;
 		}else{
 			$data = "00/00/0000";
 			$dias = "0";
-			echo json_encode(array('dataImpressao'=>$data,'dias'=>$dias));
+			$this->_helper->json(array('dataImpressao'=>$data,'dias'=>$dias));
 			return;
 		}
 	}

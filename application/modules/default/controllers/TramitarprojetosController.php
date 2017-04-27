@@ -217,10 +217,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                        		$jsonEncode = json_encode($dadosProjeto);
 
                                //echo $jsonEncode;
-                               echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProjeto));
+                               $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosProjeto));
                        }
                        else{
-                               echo json_encode(array('resposta'=>false));
+                               $this->_helper->json(array('resposta'=>false));
                        }
 
                        $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -265,10 +265,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                        		$jsonEncode = json_encode($dadosProjeto);
 
 //                               echo $jsonEncode;
-                               echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProjeto));
+                               $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosProjeto));
                        }
                        else{
-                               echo json_encode(array('resposta'=>false));
+                               $this->_helper->json(array('resposta'=>false));
                        }
 
                        $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -332,10 +332,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 $jsonEncode = json_encode($dadosProjeto);
 
                 //echo $jsonEncode;
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProjeto));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosProjeto));
             }
             else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
 
@@ -1855,9 +1855,9 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         }
 
         if($conclusao){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

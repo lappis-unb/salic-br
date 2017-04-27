@@ -183,7 +183,8 @@
                     }
                 },
                 success: function(result) {
-                    result = $3.parseJSON(result);
+                    //console.log(result);
+                    //result = $3.parseJSON(result);
                     if (result.status == '1') {
                         Materialize.toast(result.msg, 4000, 'green light-green accent-1 black-text');
                         setTimeout(function(){

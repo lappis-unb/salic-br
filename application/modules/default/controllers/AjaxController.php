@@ -16,10 +16,10 @@ class AjaxController extends MinC_Controller_Action_Abstract {
                 $municipio[$cont]['descmun'] = utf8_encode($dadosmunicipio->Descricao);
                 $cont++;
             }
-            echo json_encode($municipio);
+            $this->_helper->json($municipio);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
-            echo json_encode(array('error' => 'true'));
+            $this->_helper->json(array('error' => 'true'));
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
@@ -42,9 +42,9 @@ class AjaxController extends MinC_Controller_Action_Abstract {
             $cont++;
         }
         if (count($dadosagente) > 0) {
-            echo json_encode($dadosagente);
+            $this->_helper->json($dadosagente);
         } else {
-            echo json_encode(array('error'=>true));
+            $this->_helper->json(array('error'=>true));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -64,10 +64,10 @@ class AjaxController extends MinC_Controller_Action_Abstract {
                 $cont++;
             }
             
-            echo json_encode($dados);
+            $this->_helper->json($dados);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
-            echo json_encode(array('error' => 'true'));
+            $this->_helper->json(array('error' => 'true'));
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
@@ -89,10 +89,10 @@ class AjaxController extends MinC_Controller_Action_Abstract {
             }
             
             //$dados = array_unique($dados);
-            echo json_encode($dados);
+            $this->_helper->json($dados);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
-            echo json_encode(array('error' => 'true'));
+            $this->_helper->json(array('error' => 'true'));
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 

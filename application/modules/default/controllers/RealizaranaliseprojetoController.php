@@ -1100,7 +1100,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
         $ConsultaReuniaoAberta = ReuniaoDAO::buscarReuniaoAberta();
         $NumeroReuniao = $ConsultaReuniaoAberta['NrReuniao'];
-
         //CASO O COMPONENTE QUEIRA APENAS SALVAR O SEU PARECER - INICIO
         if (isset($_POST['usu_codigo'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -1140,24 +1139,25 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
                         $update = $tblParecer->alterar($dadosAtualizar, $where);
                         $inserir = $tblParecer->inserir($dados);
-                        echo json_encode(array('error' => false));
+                        $this->_helper->json(array('error' => false));
                     } catch (Exception $e) {
-                        echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                        $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
                     }
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 } else {
                     try {
                         $where = "idparecer = " . $idparecer;
                         $update = $tblParecer->alterar($dados, $where);
-                        echo json_encode(array('error' => false));
+                        $this->_helper->json(array('error' => false));
+
                     } catch (Zend_Exception $e) {
-                        echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                        $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
                     }
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
             } else {
 
-                echo json_encode(array('error' => true, 'descricao' => 'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
+                $this->_helper->json(array('error' => true, 'descricao' => 'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
@@ -2542,7 +2542,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         }
         //$arrEtapas = $rsEtapas->toArray();
         //x($arrEtapas);
-        echo json_encode($arrEtapas);
+        $this->_helper->json($arrEtapas);
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 } // fecha class

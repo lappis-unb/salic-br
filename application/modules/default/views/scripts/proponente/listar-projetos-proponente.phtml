@@ -55,7 +55,7 @@
                 <?php $statusOrig = -1; $situacaoOrig = null; ?>
                 <!-- ======== IMPRIME A STATUS =========== -->
                 <?php foreach($this->registros as $status => $arrSituacao): ?>
-                
+
                     <?php if($statusOrig != $status):?>
 
                     <!-- == soma valores por status do projeto == -->
@@ -82,7 +82,9 @@
                         <?php foreach($arrProjeto as $projeto): ?>
                         <tr>
                             <td align="center">
-                                <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo $projeto->idPronac;?>"><?php echo $projeto->NrProjeto; ?></a>
+                                <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo $projeto->idPronac;?>">
+                                    <?php echo $projeto->NrProjeto; ?>
+                                </a>
                             </td>
                             <td align="left">
                                 <?php echo $projeto->NomeProjeto; ?>

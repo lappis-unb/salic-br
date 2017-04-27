@@ -504,14 +504,14 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
             $idAgente = $this->cadastrarVinculoFornecedor($dadosFornecedor);
             //cadastro fornecedor fim
             if($idAgente == 'cadastrado') {
-                echo json_encode(array('result'=>false,'mensagem'=>'Agente ja cadastrado!', 'fechar'=>'ok'));
+                $this->_helper->json(array('result'=>false,'mensagem'=>'Agente ja cadastrado!', 'fechar'=>'ok'));
             } else if($idAgente) {
-                echo json_encode(array('result'=>true,'idAgente'=>$idAgente,'mensagem'=>'Adicionado com sucesso!', 'fechar'=>'ok'));
+                $this->_helper->json(array('result'=>true,'idAgente'=>$idAgente,'mensagem'=>'Adicionado com sucesso!', 'fechar'=>'ok'));
             } else {
-                echo json_encode(array('result'=>false,'mensagem'=>'Erro ao adicionar agente!'));
+                $this->_helper->json(array('result'=>false,'mensagem'=>'Erro ao adicionar agente!'));
             }
         } else {
-            echo json_encode(array('result'=>false,'mensagem'=>'Erro ao adicionar agente. CPF/CNPJ inv&aacute;lido!', 'fechar'=>'ok'));
+            $this->_helper->json(array('result'=>false,'mensagem'=>'Erro ao adicionar agente. CPF/CNPJ inv&aacute;lido!', 'fechar'=>'ok'));
         }
     }
 
@@ -945,9 +945,9 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
                     )
                 );
             }
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
 
@@ -1605,10 +1605,10 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
                 $delete = true;
         }
         if($delete){
-            echo json_encode(array('resp'=>true,'mensagem'=>utf8_encode('Exclu�do com sucesso!'), 'fechar'=>'ok'));
+            $this->_helper->json(array('resp'=>true,'mensagem'=>utf8_encode('Exclu�do com sucesso!'), 'fechar'=>'ok'));
         }
         else{
-            echo json_encode(array('resp'=>false,'mensagem'=>utf8_encode('N&atilde;o foi poss�vel!')));
+            $this->_helper->json(array('resp'=>false,'mensagem'=>utf8_encode('N&atilde;o foi poss�vel!')));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1642,10 +1642,10 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         }
 
         if($delete){
-            echo json_encode(array('retorno'=>true,'mensagem'=>'Excluido com sucesso', 'fechar'=>'ok'));
+            $this->_helper->json(array('retorno'=>true,'mensagem'=>'Excluido com sucesso', 'fechar'=>'ok'));
         }
         else{
-            echo json_encode(array('retorno'=>false,'mensagem'=>'Erro ao excluir'.$iddispensa.' | '.$idArquivo));
+            $this->_helper->json(array('retorno'=>false,'mensagem'=>'Erro ao excluir'.$iddispensa.' | '.$idArquivo));
         }
     }
 
@@ -2016,10 +2016,10 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         $planilhaaprovacaoDao = new PlanilhaAprovacao();
         if($post->idPlanilhaItem != ''){
             $resposta = $planilhaaprovacaoDao->descricaoitem($post->idpronac,$post->idProduto,$post->idEtapa,$post->idPlanilhaItem);
-            echo json_encode(array('idPlanilhaAprovacao'=>$resposta[0]->idPlanilhaAprovacao,'qtItem'=>$resposta[0]->qtTotal,'vlUnitarioItem'=>number_format($resposta[0]->vlUnitario, 2, ',','.'),'vlTotalItem'=>number_format(($resposta[0]->Total), 2, ',','.'),'dsFabricante'=>utf8_encode($resposta[0]->dsFabricante),'dsItemDeCusto'=>utf8_encode($resposta[0]->dsItemDeCusto),'dsMarca'=>utf8_encode($resposta[0]->dsMarca),'dsObservacao'=>utf8_encode($resposta[0]->dsObservacao),'idItemCusto'=>$resposta[0]->idItemCusto));
+            $this->_helper->json(array('idPlanilhaAprovacao'=>$resposta[0]->idPlanilhaAprovacao,'qtItem'=>$resposta[0]->qtTotal,'vlUnitarioItem'=>number_format($resposta[0]->vlUnitario, 2, ',','.'),'vlTotalItem'=>number_format(($resposta[0]->Total), 2, ',','.'),'dsFabricante'=>utf8_encode($resposta[0]->dsFabricante),'dsItemDeCusto'=>utf8_encode($resposta[0]->dsItemDeCusto),'dsMarca'=>utf8_encode($resposta[0]->dsMarca),'dsObservacao'=>utf8_encode($resposta[0]->dsObservacao),'idItemCusto'=>$resposta[0]->idItemCusto));
         }
         else{
-            echo json_encode(array('resp'=>false));
+            $this->_helper->json(array('resp'=>false));
         }
     }
 
@@ -2062,7 +2062,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         else{
             $report = array('result'=>false,'mensagem'=>utf8_encode('Falha na recupera��o dos dados |'.$idItemCusto.'|'));
         }
-        echo json_encode($report);
+        $this->_helper->json($report);
     }
 
     /*
@@ -2279,14 +2279,14 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
             }
 
             if($resp){
-                echo json_encode(array('retorno'=>true));
+                $this->_helper->json(array('retorno'=>true));
             }
             else{
-                echo json_encode(array('retorno'=>false,'mensagem'=>utf8_encode('Nao � possivel registrar a comprovo��o do valor R$'.number_format(($valor+$total[0]->Total), 2, ',', '.').', tendo em vista que o valor aprovado � de R$'.number_format($valorAprovado, 2, ',', '.').'.')));
+                $this->_helper->json(array('retorno'=>false,'mensagem'=>utf8_encode('Nao � possivel registrar a comprovo��o do valor R$'.number_format(($valor+$total[0]->Total), 2, ',', '.').', tendo em vista que o valor aprovado � de R$'.number_format($valorAprovado, 2, ',', '.').'.')));
             }
         }else{
-            //echo json_encode(array('retorno'=>false,'mensagem'=>utf8_encode('Selecione um item de custo!')));
-            echo json_encode(array('retorno'=>true));
+            //$this->_helper->json(array('retorno'=>false,'mensagem'=>utf8_encode('Selecione um item de custo!')));
+            $this->_helper->json(array('retorno'=>true));
         }
     }
 
@@ -2510,7 +2510,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         else{
             $resposta = array('retorno'=>false,'mensagem'=>'N&atilde;o foi possivel remover!');
         }
-        echo json_encode($resposta);
+        $this->_helper->json($resposta);
     }
 
     /*
@@ -2536,7 +2536,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         } else {
             $resposta = array('retorno'=>false,'mensagem'=>'N&atilde;o foi possivel!');
         }
-        echo json_encode($resposta);
+        $this->_helper->json($resposta);
     }
 
     /*

@@ -1325,7 +1325,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
             $retorno['error'] = $exc->getTraceAsString();
         }
 
-        echo json_encode($retorno);
+        $this->_helper->json($retorno);
     }
     
     public function salvaModuloAction() {
@@ -1774,7 +1774,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
             $retorno['error'] = $exc->getTraceAsString();
         }
 
-        echo json_encode($retorno);
+        $this->_helper->json($retorno);
     }
     
     public function salvarPlanilhaOrcamentariaAction(){
@@ -1875,7 +1875,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
             $retorno['error'] = $exc->getTraceAsString();
         }
 
-        echo json_encode($retorno);
+        $this->_helper->json($retorno);
     }
  
 }

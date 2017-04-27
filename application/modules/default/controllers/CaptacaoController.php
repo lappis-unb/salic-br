@@ -69,18 +69,18 @@ class CaptacaoController extends MinC_Controller_Action_Abstract
             $situacoesDoProjeto = array('E10', 'E12', 'E13');
             if (in_array($projeto['Situacao'], $situacoesDoProjeto)) {
                 if (1 == $projeto['Mecanismo']) {
-                    echo json_encode(array('resposta' => true));
+                    $this->_helper->json(array('resposta' => true));
                 } else {
                     $string = utf8_encode('<b>Favor informar o n�mero de PRONAC do tipo mecenato!</b>');
-                    echo json_encode(array('resposta' => false, 'conteudo' => $string));
+                    $this->_helper->json(array('resposta' => false, 'conteudo' => $string));
                 }
             } else {
                 $string = utf8_encode('<b>Apenas os projetos que est�o na fase ' . implode(' ou ', $situacoesDoProjeto) . ' podem realizar capta��o!</b>');
-                echo json_encode(array('resposta' => false, 'conteudo' => $string));
+                $this->_helper->json(array('resposta' => false, 'conteudo' => $string));
             }
         } else {
             $string = '<b>Pronac Inexistente!</b>';
-            echo json_encode(array('resposta' => false, 'conteudo' => $string));
+            $this->_helper->json(array('resposta' => false, 'conteudo' => $string));
         }
     }
 
@@ -108,10 +108,10 @@ class CaptacaoController extends MinC_Controller_Action_Abstract
             $dadosInteressado['Nome'] = utf8_encode($interessado[0]['Descricao']);
             $jsonEncode = json_encode($dadosInteressado);
             //echo $jsonEncode;
-            echo json_encode(array('resposta' => "true", 'conteudo' => $dadosInteressado));
+            $this->_helper->json(array('resposta' => "true", 'conteudo' => $dadosInteressado));
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
-            echo json_encode(array('resposta' => false));
+            $this->_helper->json(array('resposta' => false));
         }
     }
 

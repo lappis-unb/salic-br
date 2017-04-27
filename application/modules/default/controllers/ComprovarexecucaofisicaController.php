@@ -412,9 +412,9 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
 
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         if($tblAbrangencia->excluir($idAbrangencia)){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -626,9 +626,9 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         if($return){
             $vw = new vwAnexarComprovantes();
             $resutado = $vw->excluirArquivo($idArquivo);
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -771,9 +771,9 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         if($return){
             $vw = new vwAnexarComprovantes();
             $resutado = $vw->excluirArquivo($idArquivo);
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -797,10 +797,10 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $a++;
             }
             $jsonEncode = json_encode($dadosAgente);
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
 
         } else {
-            echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cnpjcpf));
+            $this->_helper->json(array('resposta'=>false,'CNPJCPF'=>$cnpjcpf));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -904,9 +904,9 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->flashMessenger->addMessage('Comprovante exclu&iacute;do com sucesso!');
             $this->_helper->flashMessengerType->addMessage('CONFIRM');
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1140,10 +1140,10 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $a++;
             }
             $jsonEncode = json_encode($dadosItem);
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosItem));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosItem));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1788,9 +1788,9 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->flashMessenger->addMessage('O bem foi exclu&iacute;do com sucesso!');
             $this->_helper->flashMessengerType->addMessage('CONFIRM');
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

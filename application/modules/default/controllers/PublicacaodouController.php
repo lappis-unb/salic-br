@@ -252,10 +252,10 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
             try {
                 PublicacaoDouDAO::alterardatapublicacao($dados, $portaria);
-                echo json_encode(array('error' => false, 'datagravada' => $datapublicacao));
+                $this->_helper->json(array('error' => false, 'datagravada' => $datapublicacao));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             } catch (Exception $e) {
-                echo json_encode(array('error' => true));
+                $this->_helper->json(array('error' => true));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }

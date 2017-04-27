@@ -200,9 +200,9 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
                 }
                 $jsonEncode = json_encode($dadosProjeto);
 
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProjeto));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosProjeto));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
             $this->_helper->viewRenderer->setNoRender(TRUE);

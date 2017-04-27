@@ -436,7 +436,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
         }
 
-        echo json_encode($retorno);
+        $this->_helper->json($retorno);
         die;
     }
 
@@ -1854,7 +1854,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        echo json_encode($novos_valores);
+        $this->_helper->json($novos_valores);
         die;
     }
 
@@ -1877,7 +1877,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             'status' => 0,
             'usuario' => $usuario
         );
-        
+
         $mprAgentes = new Agente_Model_AgentesMapper();
         $mprNomes = new Agente_Model_NomesMapper();
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
@@ -2904,7 +2904,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam("id");
         $this->view->id = $idAgente;
 
-        $tbVerificacao = new Verificacao();
+        $tbVerificacao = new Agente_Model_DbTable_Verificacao();
         $direito = $tbVerificacao->combosNatureza(7);
         $this->view->direito = $direito;
 
@@ -3002,6 +3002,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $msg = 'alterados';
                 $tbTitulacaoConselheiro->alterarDados($dados, $result->idAgente);
             } else {
+                $dados = array(
+                    'cdArea' => $post->area,
+                    'cdSegmento' => !empty($post->segmento) ? $post->segmento : 0,
+                    'idAgente' =>  $post->agente,
+                    'stTitular' => 0
+               );
+
                 $msg = 'cadastrados';
                 $tbTitulacaoConselheiro->inserir($dados);
             }
