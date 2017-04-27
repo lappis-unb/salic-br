@@ -1,15 +1,4 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of tbTitulacaoConselheiro
- *
- * @author 01610881125
- * @author wouerner <wouerner@gmail.com>
- */
 class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
 {
     /* dados da tabela */
@@ -32,7 +21,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
                             'AGENTES.dbo'
                            );
         $select->order('nm.Descricao');
-       
+
         if($retornaSQL)
             return $select;
         else
@@ -87,8 +76,18 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    public function alterarDados($dados, $where) {
+    public function alterarDados($dados, $where)
+    {
         $where = "idAgente = " . $where;
         return $this->update($dados, $where);
-    } // fecha m�todo alterarDados()
+    }
+
+    public function inserir($dados, $dbg = null)
+    {
+        if ($dbg) {
+            xd($this->dbg($dados));
+        }
+        $insert = $this->insert($dados);
+        return $insert;
+    }
 }

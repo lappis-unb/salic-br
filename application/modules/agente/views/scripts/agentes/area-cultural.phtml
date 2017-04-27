@@ -5,7 +5,7 @@
         $('#segmento').html('<option value=""> - Carregando - </option>');
         $.ajax({
             type: 'POST',
-            url: '<?php echo $this->url(array('controller' => 'segmento', 'action' => 'combo')); ?>',
+            url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'segmento', 'action' => 'combo')); ?>',
             data: {
                 id: $('#area').val()
             },
@@ -85,21 +85,15 @@
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
     <div>Área Cultural <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
-
-
 <div class="sumir" id="camposObrigatorios"></div>
-
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
-
-    <?php //echo $this->partial('agentes/inc/cabecalho.php', $this)?>
+    <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
     <div id="formNovo">
         <form id="formAreaCultural" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvar-area-cultural'));?>" method="post">
             <table class="tabela">
@@ -125,20 +119,11 @@
                     </td>
                 </tr>
             </table>
-
             <div style="width: 100%; margin: 15px 0;" align="center">
                 <input type="button" class="btn_salvar" id="btnsalvar" />
             </div>
-
         </form>
     </div>
-
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
-
-
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
-
 <br clear="all" />
