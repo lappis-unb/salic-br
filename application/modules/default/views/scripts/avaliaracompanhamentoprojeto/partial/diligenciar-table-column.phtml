@@ -1,12 +1,8 @@
-<?php
-
-/**
- * @todo: Esta partial foi duplicada para a view em default/avaliaracompanhamentodeprojeto
- */
-
+<?php 
     $diligencia = $this->prazoRespostaDiligencia($this->idPronac, $this->tpDiligencia);
     $urlDiligencia = $this->url(
             array(
+                'module' => 'proposta',
                 'controller' => 'diligenciar',
                 'action' => 'listardiligenciaanalista',
                 'tipoAnalise' => 'inicial',

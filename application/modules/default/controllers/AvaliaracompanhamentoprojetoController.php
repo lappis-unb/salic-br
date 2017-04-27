@@ -7,14 +7,14 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function init() {
 
-        $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura";
+        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura";
         $auth = Zend_Auth::getInstance();
         $Usuario = new UsuarioDAO();
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
-        if ($auth->hasIdentity()) // caso o usu�rio esteja autenticado
+        if ($auth->hasIdentity()) // caso o usuario esteja autenticado
         {
-            // verifica as permiss�es
+            // verifica as permissoes
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 122;
             $PermissoesGrupo[] = 121;
@@ -22,32 +22,32 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $PermissoesGrupo[] = 94;  // Parecerista
             $PermissoesGrupo[] = 135; // tecnico
             $PermissoesGrupo[] = 134; // coordenador
-            $PermissoesGrupo[] = 138; // tecnico de avalia��o
-            $PermissoesGrupo[] = 139; // coordenador de avalia��o
-            $PermissoesGrupo[] = 124; //Tecnico de Presta��o de Contas
-            $PermissoesGrupo[] = 132; // Chefe de Divis�o
+            $PermissoesGrupo[] = 138; // tecnico de avaliacao
+            $PermissoesGrupo[] = 139; // coordenador de avaliacao
+            $PermissoesGrupo[] = 124; //Tecnico de Prestacao de Contas
+            $PermissoesGrupo[] = 132; // Chefe de Divisao
             $PermissoesGrupo[] = 151;
             $PermissoesGrupo[] = 148;
 
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est� no array de permiss�es
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo esta no array de permissoes
             {
-                parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
+                parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, �rg�os e grupos do usu�rio (pega todos os grupos)
+            // pega as unidades autorizadas, orgaos e grupos do usuario (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades(isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario, 21);
 
-            // manda os dados para a vis�o
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu�rio para a vis�o
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
+            // manda os dados para a visao
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuario para a visao
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuario para a visao
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
             $this->orgSup = $GrupoAtivo->codOrgao;
             $this->usu_orgao = $GrupoAtivo->codOrgao;
 
             $this->getIdOrgao = $GrupoAtivo->codOrgao;
         } // fecha if
-        else // caso o usu�rio n�o esteja autenticado
+        else // caso o usuario n&atilde;o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -59,11 +59,11 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function indexAction() {
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth               = Zend_Auth::getInstance(); // pega a autenticacao
         $idusuario          = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-        $codPerfil          = $GrupoAtivo->codGrupo; //  �rg�o ativo na sess�o
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  orgao ativo na sessao
+        $codPerfil          = $GrupoAtivo->codGrupo; //  orgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
@@ -116,9 +116,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $tipoFiltro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             switch ($tipoFiltro) {
-                case 'emanalise': //Em an�lise
+                case 'emanalise': //Em an&aacute;lise
                     $tipoFiltro = 'emanalise';
-                    $filtro = 'Em an�lise';
+                    $filtro = 'Em an&aacute;lise';
                     $where['a.siCumprimentoObjeto = ?'] = 3;
                     break;
                 case 'analisados': //Analisados
@@ -126,16 +126,16 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
                     $filtro = 'Analisados';
                     $where['a.siCumprimentoObjeto = ?'] = 5;
                     break;
-                default: //Aguardando An�lise
+                default: //Aguardando An&aacute;lise
                     $tipoFiltro = 'aguardando';
-                    $filtro = 'Aguardando An�lise';
+                    $filtro = 'Aguardando An&aacute;lise';
                     $where['a.siCumprimentoObjeto = ?'] = 2;
                     break;
             }
 
-        } else { //Aguardando An�lise
+        } else { //Aguardando An&aacute;lise
             $tipoFiltro = 'aguardando';
-            $filtro = 'Aguardando An�lise';
+            $filtro = 'Aguardando An&aacute;lise';
             $where['a.siCumprimentoObjeto = ?'] = 2;
         }
 
@@ -180,11 +180,11 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth               = Zend_Auth::getInstance(); // pega a autenticacao
         $idusuario          = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-        $codPerfil          = $GrupoAtivo->codGrupo; //  �rg�o ativo na sess�o
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  orgao ativo na sessao
+        $codPerfil          = $GrupoAtivo->codGrupo; //  orgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
@@ -236,9 +236,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $tipoFiltro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             switch ($tipoFiltro) {
-                case 'emanalise': //Em an�lise
+                case 'emanalise': //Em an&aacute;lise
                     $tipoFiltro = 'emanalise';
-                    $filtro = 'Em an�lise';
+                    $filtro = 'Em an&aacute;lise';
                     $where['a.siCumprimentoObjeto = ?'] = 3;
                     break;
                 case 'analisados': //Analisados
@@ -246,16 +246,16 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
                     $filtro = 'Analisados';
                     $where['a.siCumprimentoObjeto = ?'] = 5;
                     break;
-                default: //Aguardando An�lise
+                default: //Aguardando An&aacute;lise
                     $tipoFiltro = 'aguardando';
-                    $filtro = 'Aguardando An�lise';
+                    $filtro = 'Aguardando An&aacute;lise';
                     $where['a.siCumprimentoObjeto = ?'] = 2;
                     break;
             }
 
-        } else { //Aguardando An�lise
+        } else { //Aguardando An&aacute;lise
             $tipoFiltro = 'aguardando';
-            $filtro = 'Aguardando An�lise';
+            $filtro = 'Aguardando An&aacute;lise';
             $where['a.siCumprimentoObjeto = ?'] = 2;
         }
 
@@ -275,7 +275,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
             $html = '';
             $html .= '<table style="border: 1px">';
-            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="'.$colspan.'">Analisar Comprova��o do Objeto - '.$filtro.'</td></tr>';
+            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="'.$colspan.'">Analisar Comprova&ccedil;&atilde;o do Objeto - '.$filtro.'</td></tr>';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="'.$colspan.'">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
             $html .='<tr><td colspan="'.$colspan.'"></td></tr>';
 
@@ -285,10 +285,10 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">UF</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Mecanismo</th>';
-            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situa��o</th>';
-            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Relat�rio</th>';
+            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situa&ccedil;&atilde;o</th>';
+            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Relat&aacute;rio</th>';
             if(isset($tipoFiltro) && $tipoFiltro != 'aguardando'){
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">T�cnico</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">T&eacute;cnico</th>';
             }
             $html .= '</tr>';
 
@@ -365,7 +365,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $this->view->DadosRelatorio = $DadosRelatorio;
         $this->view->cumprimentoDoObjeto = $tbCumprimentoObjeto;
         if(count($DadosRelatorio)==0){
-            parent::message("Relat�rio n�o encontrado!", "avaliaracompanhamentoprojeto/index", "ALERT");
+            parent::message("Relat&aacute;rio n&atilde;o encontrado!", "avaliaracompanhamentoprojeto/index", "ALERT");
         }
 
         $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac);
@@ -425,7 +425,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $DadosRelatorio = $tbCumprimentoObjeto->buscarCumprimentoObjeto(array('idPronac = ?' => $idpronac, 'siCumprimentoObjeto!=?'=>1));
         $this->view->DadosRelatorio = $DadosRelatorio;
         if(count($DadosRelatorio)==0){
-            parent::message("Relat�rio n�o encontrado!", "avaliaracompanhamentoprojeto/index", "ALERT");
+            parent::message("Relat&aacute;rio n&atilde;o encontrado!", "avaliaracompanhamentoprojeto/index", "ALERT");
         }
 
         $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac);
@@ -484,24 +484,24 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $return = $tbCumprimentoObjeto->update($dados, $where);
 
         if($return){
-            parent::message("Relat�rio encaminhado com sucesso!", "avaliaracompanhamentoprojeto/index", "CONFIRM");
+            parent::message("Relat&aacute;rio encaminhado com sucesso!", "avaliaracompanhamentoprojeto/index", "CONFIRM");
         } else {
-            parent::message("Relat�rio n�o foi encaminhado. Contate o Administrador do sistema!", "avaliaracompanhamentoprojeto/index", "ERROR");
+            parent::message("Relat&aacute;rio n&atilde;o foi encaminhado. Contate o Administrador do sistema!", "avaliaracompanhamentoprojeto/index", "ERROR");
         }
     }
 
     public function indexTecnicoAction() {
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth               = Zend_Auth::getInstance(); // pega a autenticacao
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-        $codPerfil          = $GrupoAtivo->codGrupo; //  �rg�o ativo na sess�o
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  orgao ativo na sessao
+        $codPerfil          = $GrupoAtivo->codGrupo; //  orgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
         if($codPerfil!=139 && $codPerfil!=148 && $codPerfil!=151){
-            parent::message("Voc� n�o tem permiss�o para acessar essa funcionalidade!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permissao para acessar essa funcionalidade!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -585,7 +585,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth               = Zend_Auth::getInstance(); // pega a autenticacao
         /******************************************************************/
 
         $post = Zend_Registry::get('post');
@@ -610,16 +610,16 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
     public function parecerTecnicoAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth               = Zend_Auth::getInstance(); // pega a autenticacao
         $idusuario          = $auth->getIdentity()->usu_codigo;
         $nmusuario          = $auth->getIdentity()->usu_nome;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
-        $codPerfil          = $GrupoAtivo->codGrupo; //  �rg�o ativo na sess�o
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  orgao ativo na sessao
+        $codPerfil          = $GrupoAtivo->codGrupo; //  orgao ativo na sessao
         /******************************************************************/
 
         if($codPerfil!=139){
-            parent::message("Voc� n�o tem permiss�o para acessar essa funcionalidade!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permissao para acessar essa funcionalidade!", "principal", "ALERT");
         }
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -638,7 +638,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $DadosRelatorio = $tbCumprimentoObjeto->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relat�rio n�o encontrado!', "avaliaracompanhamentoprojeto/index-tecnico", "ALERT");
+            parent::message('Relat&oacute;rio n&atilde;o encontrado!', "avaliaracompanhamentoprojeto/index-tecnico", "ALERT");
         }
 
         $this->view->DadosRelatorio = $DadosRelatorio;
@@ -661,7 +661,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
     }
 
     public function etapasDeTrabalhoFinalAction() {
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -683,7 +683,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function localDeRealizacaoFinalAction() {
 
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -703,7 +703,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function planoDeDivulgacaoFinalAction() {
 
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -733,7 +733,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function planoDeDistribuicaoFinalAction() {
 
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -758,7 +758,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function metasComprovadasFinalAction() {
 
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -779,7 +779,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function itensComprovadosFinalAction() {
 
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -799,7 +799,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function comprovantesDeExecucaoFinalAction() {
 
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -819,7 +819,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
     }
 
     public function aceiteDeObraFinalAction() {
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -839,7 +839,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
     }
 
     public function bensFinalAction() {
-        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        //** Verifica se o usuario logado tem permissao de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -865,10 +865,10 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
     public function avaliarRelatorioAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth               = Zend_Auth::getInstance(); // pega a autenticacao
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  orgao ativo na sessao
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -885,15 +885,15 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $DadosRelatorio = $tbCumprimentoObjeto->buscarCumprimentoObjeto($where);
 
         if (empty($DadosRelatorio)) {
-            parent::message('Relat�rio n�o encontrado!', "avaliaracompanhamentoprojeto/index-tecnico", "ALERT");
+            parent::message('Relat&aacute;rio n&atilde;o encontrado!', "avaliaracompanhamentoprojeto/index-tecnico", "ALERT");
         }
 
         $siComprovante = 4;
-        $msg = 'Relat�rio salvo com sucesso!';
+        $msg = 'Relat&aacute;rio salvo com sucesso!';
         $controller = "avaliaracompanhamentoprojeto/parecer-tecnico?idpronac=".$idpronac;
         if(isset($_POST['finalizar']) && !empty($_POST['finalizar'])){
             $siComprovante = 5;
-            $msg = 'Relat�rio finalizado com sucesso!';
+            $msg = 'Relat&aacute;rio finalizado com sucesso!';
             $controller = 'avaliaracompanhamentoprojeto/index-tecnico';
         }
 
@@ -912,7 +912,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         if($resultado){
             parent::message($msg, $controller, "CONFIRM");
         } else {
-            parent::message('N�o foi poss�vel salvar o relat�rio!', "analisarexecucaofisicatecnico", "ERROR");
+            parent::message('N&atilde;o foi poss&iacute;vel salvar o relat&oacute;rio!', "analisarexecucaofisicatecnico", "ERROR");
         }
     }
 
