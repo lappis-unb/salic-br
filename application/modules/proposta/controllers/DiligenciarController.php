@@ -26,15 +26,15 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
      * @return void
      */
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // titulo da pagina
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if (isset($auth->getIdentity()->usu_codigo) ) {
             //Recupera todos os grupos do Usuario
-            $Usuario    = new Autenticacao_Model_Usuario(); // objeto usu�rio
+            $Usuario    = new Autenticacao_Model_Usuario(); // objeto usuario
             $grupos     = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -97,7 +97,7 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         $diligenciaDAO      = new Diligencia();
         $post               = Zend_Registry::get('post');
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
         $Usuario = new Autenticacao_Model_Usuario();
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_identificacao = trim($idagente['usu_identificacao']);
@@ -399,9 +399,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         $result = $Arquivo->excluirArquivo($_POST['arquivo'], $_POST['diligencia']);
 
         if(count($result) > 0){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         die();
     }
@@ -722,7 +722,7 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         }
         $rowDiligencia = $diligenciaDAO->inserir($dados);
 
-        # Envia notifica��o para o usu�rio atrav�s do aplicativo mobile.
+        # Envia notificacao para o usuario atraves do aplicativo mobile.
         $modelProjeto = new Projetos();
         $projeto = $modelProjeto->buscarPorPronac((int)$this->getRequest()->getParam('idPronac'));
         $this->enviarNotificacao((object)array(
@@ -734,15 +734,7 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
 
         parent::message(
             "Dilig&ecirc;ncia enviada com sucesso!",
-            $this->_helper->redirector->goToRoute(
-                array(
-                    'controller' => 'diligenciar',
-                    'action' => 'listardiligenciaanalista',
-                    'idPronac' => $this->getRequest()->getParam('idPronac'),
-                    'situacao' => $this->getRequest()->getParam('situacao'),
-                    'tpDiligencia' => $this->getRequest()->getParam('tpDiligencia')
-                )
-            ),
+            "/proposta/diligenciar/listardiligenciaanalista/idPronac/{$this->getRequest()->getParam('idPronac')}/situacao/{$this->getRequest()->getParam('situacao')}/tpDiligencia/{$this->getRequest()->getParam('tpDiligencia')}",
             "CONFIRM");
     }
 
@@ -762,7 +754,7 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
             ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
             ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
             ->setTitle('Projeto '. $projeto->pronac)
-            ->setText('Recebeu nova dilig�ncia!')
+            ->setText('Recebeu nova dilig&ecirc;ncia!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
@@ -1081,9 +1073,9 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
             $prorrogado = $AvaliacaoPropostadao->update($dados, $where);
         }
         if ($prorrogado) {
-            echo json_encode(array('result' => true, 'mensagem' => 'Prorrogado com sucesso.'));
+            $this->_helper->json(array('result' => true, 'mensagem' => 'Prorrogado com sucesso.'));
         } else {
-            echo json_encode(array('result' => false, 'mensagem' => 'N&atilde;o foi possivel!'));
+            $this->_helper->json(array('result' => false, 'mensagem' => 'N&atilde;o foi possivel!'));
         }
     }
 

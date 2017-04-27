@@ -1294,10 +1294,10 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $ba = new BancoAgencia;
         $validaragencia = $ba->buscar(array('Agencia = ?'=>$_POST['agencia']))->count();
         if($validaragencia > 0){
-            echo json_encode(array('error'=>false));
+            $this->_helper->json(array('error'=>false));
         }
         else{
-            echo json_encode(array('error'=>true));
+            $this->_helper->json(array('error'=>true));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

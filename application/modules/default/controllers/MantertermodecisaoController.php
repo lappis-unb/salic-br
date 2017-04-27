@@ -205,11 +205,11 @@ class MantertermodecisaoController extends MinC_Controller_Action_Abstract {
 
         if (!empty($verificaTermoDecisao)) {
             $result['existe'] = true;
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             $result['existe'] = false;
-            echo json_encode($result);
+            $this->_helper->json($result);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }

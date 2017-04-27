@@ -98,9 +98,11 @@
         </form>
         <br />
         <div class="center">
-
-            <?php if( Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo ||
-            Autenticacao_Model_Grupos::COORDENADOR_ABMISSIBILIDADE == $this->codGrupo) : ?>
+            <?php if(
+                        Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo ||
+                        Autenticacao_Model_Grupos::COORDENADOR_ABMISSIBILIDADE == $this->codGrupo
+                    ) :
+            ?>
 
                 <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
                     <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
@@ -137,9 +139,11 @@
                 </a>
             <?php endif; ?>
 
-            <a href="/admissibilidade/admissibilidade/listar-propostas" class="waves-effect waves-light btn white black-text" title="" alt="" >
-               <i class="material-icons  ">undo</i>
-            </a>
+            <?php if(!$this->menu): ?>
+                <a href="/admissibilidade/admissibilidade/listar-propostas" class="waves-effect waves-light btn white black-text" title="" alt="" >
+                   <i class="material-icons  ">undo</i>
+                </a>
+            <?php endif ?>
         </div>
         <div class="conteudoImprimir">
             <br>
@@ -913,9 +917,15 @@
                 <tr>
                     <td class="centro">
                         <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
-                            <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
-                                Avaliar <i class="material-icons right">gavel</i>
-                            </button>
+                            <?php if(
+                                        Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE == $this->codGrupo ||
+                                        Autenticacao_Model_Grupos::COORDENADOR_ABMISSIBILIDADE == $this->codGrupo
+                                    ) :
+                            ?>
+                                <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
+                                    Avaliar <i class="material-icons right">gavel</i>
+                                </button>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <iframe name="esconde" id="esconde" class="sumir"> </iframe>
                     </td>

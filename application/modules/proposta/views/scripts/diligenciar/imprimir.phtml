@@ -155,7 +155,7 @@
                 <?php if(isset($dadosDiligencia->idArquivo) && $dadosDiligencia->idArquivo and $dadosDiligencia->stEnviado == 'S') {?>
                 <tr>
                     <td colspan="3">
-                        Arquivo anexado: <a href="<?php echo $this->baseUrl(); ?>/upload/abrir?id=<?php echo $dadosDiligencia->idArquivo;?>"><?php echo $dadosDiligencia->nmArquivo;?></a>
+                        Arquivo anexado: <a href="<?php echo $this->baseUrl(); ?>/default/upload/abrir?id=<?php echo $dadosDiligencia->idArquivo;?>"><?php echo $dadosDiligencia->nmArquivo;?></a>
                     </td>
                 </tr>
                 <tr>

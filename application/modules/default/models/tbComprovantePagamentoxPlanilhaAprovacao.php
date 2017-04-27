@@ -106,7 +106,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                               WHEN b.tpFormaDePagamento = '1'
                                  THEN 'Cheque'
                               WHEN b.tpFormaDePagamento = '2'
-                                 THEN 'Transferencia Banc�ria'
+                                 THEN 'Transferencia Banc&aacute;ria'
                               WHEN b.tpFormaDePagamento = '3'
                                  THEN 'Saque/Dinheiro'
                                  ELSE ''

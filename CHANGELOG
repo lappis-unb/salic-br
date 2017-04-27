@@ -1,3 +1,29 @@
+Release 2.0.5
+  * Fix: [Coordenador de parecer] corrige caracteres e botao de download
+  * Fix: [Readequacao] corrige caracteres das mensagens
+  * Fix: [Proponentes][Manter agentes] carrega as combos de natureza corretamente
+  * Fix: [Técnico de Fiscalizacao] Corrige bug ao cadastrar nova diligencia
+  * Fix: [Técnico de Fiscalizacao] Corrige erro ao acessar pagina e menu trocado
+  * Fix: [Proponente] Corrige charset nas certidões negativas
+  * Fix: [Coordenador CNIC] ajustes ao abrir tabela de diligencias
+  * Fix: [Proponente] corrige erro ao acessar proposta de proponente vinculado
+  * FIX: Erro geral de sql quando vai fazer algumas consultar e retorna como objeto
+  * Fix: [CNIC] Votantes: exibindo membros natos
+  * Update: [Projeto] Consultar dados do projeto para IN2017 e IN2016 para consultar os dados de plano de distribuição
+  * Fix: [Proponente] Tela de natureza ao cadastrar agente
+  * Update: Consultar Dados do projeto para IN2017 e IN2016 para consultar os dados de plano de distribuição
+  * Fix: [Proponente] Corrigindo quando cadastrava apenas um item da planilha não estava mostrando
+  * Update: [Proponente] Evitando quebra do header no cabecalho
+  * Update: [CNIC] Atualização de código para componente de visualizar distribuição
+  * Update: [Proponente] Melhorando perfomance ao listar propostas
+  * Fix: [Proponente] Erro quando cai a sessão de usuário e o proponente vai para pagina inicial
+  * Fix: [Técnico de Parecer] Análise/certidões negativas: corrigindo cor do botão
+  * Fix: [Técnico de Parecer] Análise/certidões negativas: habilitando edição dos campos
+  * Fix: [Técnico de Parecer] Análise - certidões negativas: Padronizando botões
+  * Update: [Projeto] Identificação das IN por PRONAC ou idPronac
+  * Fix: [Análise] Corrigindo link para certidões negativas
+  * Fix: [Admissibilidade] Transferência de recurso
+
 Release 2.0.4
   * Fix: [Admissibilidade] Assinar projeto quebrado
   * Fix: [Admissibilidade] Correção no enquadramento do projeto

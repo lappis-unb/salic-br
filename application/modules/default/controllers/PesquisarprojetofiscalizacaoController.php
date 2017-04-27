@@ -860,7 +860,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
                 $resposta = array('result' => false, 'mensagem' => utf8_encode('N?o foi possivel4!'));
             }
         }
-        echo json_encode($resposta);
+        $this->_helper->json($resposta);
     }
 
     public function buscartecnicoAction() {
@@ -887,9 +887,9 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
             }
         }
         if ($tecnicos) {
-            echo json_encode($tecnicos);
+            $this->_helper->json($tecnicos);
         } else {
-            echo json_encode(0);
+            $this->_helper->json(0);
         }
     }
 
@@ -934,7 +934,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
                 }
                 break;
         }
-        echo json_encode($retorno);
+        $this->_helper->json($retorno);
     }
 
     public function url(array $urlOptions = array(), $name = null, $reset = false, $encode = true) {

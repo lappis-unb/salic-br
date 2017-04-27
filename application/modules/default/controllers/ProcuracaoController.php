@@ -475,10 +475,10 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
                 $a++;
             }
             $jsonEncode = json_encode($dadosAgente);
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -502,10 +502,10 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
                 $a++;
             }
             $jsonEncode = json_encode($dadosAgente);
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
 
         } else {
-            echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cpf));
+            $this->_helper->json(array('resposta'=>false,'CNPJCPF'=>$cpf));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -643,9 +643,9 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         }
 
         if($result){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -681,10 +681,10 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $result2 = $tbProcuradorProjeto->update($dadostbProcuradorProjeto, array("idProcuracao = ?" => $idProcuracao));
 
         if($result1 && $result2){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -705,10 +705,10 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
                 $i++;
             }
             $jsonEncode = json_encode($dadosProjeto);
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProjeto));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosProjeto));
 
         } else {
-            echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cpf));
+            $this->_helper->json(array('resposta'=>false,'CNPJCPF'=>$cpf));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -723,9 +723,9 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $result = $Vinculacao->verificarDirigente($cpfPropoenente, $cpfProcurador);
 
         if(count($result) > 0){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

@@ -44,11 +44,12 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             ->from('sgcacesso', 'cpf', $this->getSchema('controledeacesso'))
             ->where('IdUsuario = ?', $idUsuarioLogado)
         ;
-        $cpfLogado = $db->fetchRow($sql);
+        $cpfLogado = $db->fetchOne($sql);
+
         //VERIFICAR SE O CPF LOGADO ESTA CADASTRADO NO BANCO AGENTES
         $sql = $db->select()
             ->from('agentes', 'idagente', $this->getSchema('agentes'))
-            ->where('CNPJCPF = ?', $cpfLogado['cpf'])
+            ->where('CNPJCPF = ?', $cpfLogado)
         ;
         $idAgenteLogado = $db->fetchRow($sql);
 
@@ -57,7 +58,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
          //PEGAR ID DO PROPONENTE E O TIPO DE PESSOA
         $sql = $db->select()
             ->from('agentes', array('idagente','tipopessoa'), $this->getSchema('agentes'))
-            ->where('CNPJCPF = ?', $cpfLogado['cpf'])
+            ->where('CNPJCPF = ?', $cpfLogado)
         ;
 
         $proponente = $db->fetchRow($sql);
@@ -68,7 +69,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
         //-- CHECAR PERMISSAO PARA ADMINISTRATIVO
         case 0 :
             if ($proponente['tipopessoa'] == 0) {
-                if ($cpfLogado['cpf'] == $cpfCnpjProponente) {
+                if ($cpfLogado == $cpfCnpjProponente) {
                     $permissao = 1;
                 } else {
                     $permissao = 0;
@@ -79,7 +80,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     ->join(array('b' => 'agentes'), '(a.idagente = b.idagente)', 'b.cnpjcpf' ,$this->getSchema('agentes'))
                     ->join(array('c' => 'agentes'), '(a.idvinculoprincipal = c.idagente)', null, $this->getSchema('agentes'))
                     ->join(array('d' => 'visao'), '(d.idagente = a.idagente)', null,$this->getSchema('agentes'))
-                    ->where('b.cnpjcpf = ?', $cpfLogado['cpf'])
+                    ->where('b.cnpjcpf = ?', $cpfLogado)
                     ->where('c.cnpjcpf = ?', $cpfCnpjProponente)
                     ->where('d.visao = 198')
                     ;
@@ -87,7 +88,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                 $cpfDirigente = $db->fetchRow($sql);
 
                 if (!empty($cpfDirigente)) {
-                    if($cpfLogado['cpf'] == $cpfDirigente['cnpjcpf']) {
+                    if($cpfLogado == $cpfDirigente['cnpjcpf']) {
                         $permissao = 1;
                     } else {
                         $permissao = 0;
@@ -107,7 +108,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             $agente = $db->fetchRow($sql);
 
             if ($agente['tipopessoa'] == 0) {
-                if ($cpfLogado['cpf'] == $agente['cnpjcpf'] ||  $agente['idusuario'] == $idUsuarioLogado) {
+                if ($cpfLogado == $agente['cnpjcpf'] ||  $agente['idusuario'] == $idUsuarioLogado) {
                     $permissao = 1;
                 } else {
                     $permissao = 0;
@@ -118,14 +119,16 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     ->join(array('b' => 'agentes'), '(a.idagente = b.idagente)', 'b.cnpjcpf', $this->getSchema('agentes'))
                     ->join(array('c' => 'agentes'), '(a.idvinculoprincipal = c.idagente)', null, $this->getSchema('agentes'))
                     ->join(array('d' => 'visao'), '(d.idagente = a.idagente)', null, $this->getSchema('agentes'))
-                    ->where('b.cnpjcpf = ?', $cpfLogado['cpf'] )
+                    ->where('b.cnpjcpf = ?', $cpfLogado )
                     ->where('c.cnpjcpf = ?', $cpfCnpjProponente)
                     ->where('d.visao = 198')
                     ;
-                    $dirigenteCpf = $db->fetchRow($sql);
+
+                    $dirigenteCpf = $db->fetchOne($sql);
+
                     if (!empty($dirigenteCpf)) {
                        //IF @CPF_Logado = @CPF_Dirigente or @idUsuario_Responsavel = @idUsuario_Logado
-                        if ($cpfLogado['cpf'] == $dirigenteCpf['b.cnpjcpf'] || $agente['idusuario'] == $idUsuarioLogado) {
+                        if ($cpfLogado == $dirigenteCpf || $agente['idusuario'] == $idUsuarioLogado) {
                             $permissao = 1;
                         } else {
                             $permissao = 0;
@@ -225,6 +228,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
         }
         $perm = new stdClass();
         $perm->Permissao = ($permissao == 0) ? 0 : 1;
+
         return  $perm;
     }
 
