@@ -893,24 +893,27 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Agente = $usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $buscarReuniaoAberta = $reuniao->buscarReuniaoAberta();
-        $reuniaoaberta = $buscarReuniaoAberta['idNrReuniao'];
+        
+        //$reuniaoaberta = $buscarReuniaoAberta['idNrReuniao'];
         if (isset($_POST['votantes'])) {
             $votantesSelecionados = array_unique($_POST['votantes']);
-            $buscarVotante = $vt->buscar(array('idReuniao = ?' => $reuniaoaberta))->count();
+            $buscarVotante = $vt->buscar(array('idReuniao = ?' => $buscarReuniaoAberta['idNrReuniao']))->count();
+            
             if ($buscarVotante > 1) {
-                $where = "idReuniao = $reuniaoaberta";
+                $where = "idReuniao = " . $buscarReuniaoAberta['idNrReuniao'];
                 $vt->apagar($where);
             }
             foreach ($votantesSelecionados as $votantesadicionar) {
                 $dados = array(
-                    'idReuniao' => $reuniaoaberta,
+                    'idReuniao' => $buscarReuniaoAberta['idNrReuniao'],
                     'idAgente' => $votantesadicionar
                 );
                 $vt->inserir($dados);
             }
             parent::message("Votantes cadastrados com sucesso!", "gerenciarpautareuniao/exibirvotantes", "CONFIRM");
         }
-        $buscarVotante = $vt->buscar(array('idReuniao = ?' => $reuniaoaberta));
+        $buscarVotante = $vt->buscar(array('idReuniao = ?' => $buscarReuniaoAberta['idNrReuniao']));
+        
         $votanteCadastrado = array();
         foreach ($buscarVotante as $verificarVotante) {
             $votanteCadastrado[] = $verificarVotante->idAgente;
@@ -946,13 +949,14 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 } else {
                     $membrosnatos[$num]['idAgente'] = $Agente['idagente'];
                     $membrosnatos[$num]['nome'] = $membros->usu_nome;
-                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idAgente'], $votanteCadastrado) ? true : false;
+                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idagente'], $votanteCadastrado) ? true : false;
                     $idagenteAtual = $Agente['idagente'];
                 }
             }
             $num++;
         }
-        $this->view->Plenaria = $reuniaoaberta;
+        
+        $this->view->Plenaria = $buscarReuniaoAberta;
         $this->view->membrosnatos = $membrosnatos;
     }
 

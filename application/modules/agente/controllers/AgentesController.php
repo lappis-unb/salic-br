@@ -1877,7 +1877,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             'status' => 0,
             'usuario' => $usuario
         );
-        
+
         $mprAgentes = new Agente_Model_AgentesMapper();
         $mprNomes = new Agente_Model_NomesMapper();
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
@@ -3002,6 +3002,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $msg = 'alterados';
                 $tbTitulacaoConselheiro->alterarDados($dados, $result->idAgente);
             } else {
+                $dados = array(
+                    'cdArea' => $post->area,
+                    'cdSegmento' => !empty($post->segmento) ? $post->segmento : 0,
+                    'idAgente' =>  $post->agente,
+                    'stTitular' => 0
+               );
+
                 $msg = 'cadastrados';
                 $tbTitulacaoConselheiro->inserir($dados);
             }
