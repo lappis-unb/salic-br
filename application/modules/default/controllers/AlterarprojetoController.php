@@ -1890,7 +1890,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             'Orgao' => $dadosProjeto->Orgao,
             'Logon' => $this->idusuario,
             'Habilitado' => $post->habilitado,
-            'idTipoInabilitado' => ($post->habilitado == 'S') ? null : !empty($post->penalidade) ? $post->penalidade : null,
+            'idTipoInabilitado' => null,
             'dtInabilitado' => ($post->habilitado == 'S') ? null : date("Y-m-d H:i:s")
         );
         $tbl = new Inabilitado();
