@@ -2537,7 +2537,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $dados = $tbReadequacao->buscarDadosReadequacoes(array('idReadequacao = ?'=>$idReadequacao))->current();
         if(!$dados){
-            parent::message("Readequação não encontrada!", "readequacoes/painel-readequacoes", "ERROR");
+            parent::message("Readequa&ccedil;&atilde;o n&atilde;o encontrada!", "readequacoes/painel-readequacoes", "ERROR");
         }
         $this->view->dados = $dados;
         $this->view->idPronac = $dados->idPronac;
