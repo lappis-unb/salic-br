@@ -2530,8 +2530,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
-        $idReadequacao = (int) Seguranca::dencrypt($this->_request->getParam('id'));
-
+        $idReadequacao = (strlen($this->_request->getParam('id')) > 7) ? (int) Seguranca::dencrypt($this->_request->getParam('id')) : $this->_request->getParam('id');
+        
         $this->view->idReadequacao = $idReadequacao;
 
         $tbReadequacao = new tbReadequacao();
@@ -2686,7 +2686,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
                     $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
 
-                    $siencaminhamento = 5; //Devolvido da análise técnica
+                    $siEncaminhamento = 5; //Devolvido da análise técnica
                     if($this->idPerfil == 121){
                         $siEncaminhamento = 10; //Devolver para Coordenador do MinC
                     }
