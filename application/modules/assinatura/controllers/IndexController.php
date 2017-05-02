@@ -114,6 +114,18 @@ class Assinatura_IndexController extends Assinatura_GenericController
         $idTipoDoAtoAdministrativo = $get->idTipoDoAtoAdministrativo;
 
         try {
+            if (!filter_input(INPUT_GET, 'IdPRONAC')) {
+                throw new Exception("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
+            }
+
+            if (!filter_input(INPUT_GET, 'idTipoDoAtoAdministrativo')) {
+                throw new Exception("Identificador do tipo do ato administrativo &eacute; necess&aacute;rio para acessar essa funcionalidade.");
+            }
+        } catch (Exception $objException) {
+            parent::message($objException->getMessage(), "/{$this->moduleName}/index/gerenciar-assinaturas");
+        }
+
+        try {
             $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
 
             $this->view->perfilAssinante = $objTbAtoAdministrativo->obterPerfilAssinante(
