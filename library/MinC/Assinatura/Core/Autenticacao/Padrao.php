@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Class MinC_Assinatura_Model_Assinatura
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
- * @since 19/04/2017
- */
-class MinC_Assinatura_Autenticacao_Assinatura implements MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
+class MinC_Assinatura_Core_Autenticacao_Padrao implements MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
 {
 
     /**
