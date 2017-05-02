@@ -775,7 +775,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo',  'Descricao');
             $objSegmentocultural = new Segmentocultural();
             $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($this->view->projetosEN->cdArea);
 
