@@ -6,7 +6,7 @@
             $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
             $.ajax({
                 type: 'POST',
-                url: '<?php echo $this->url(array('controller' => 'segmento', 'action' => 'combo')); ?>',
+                url: '<?php echo $this->url(array('module' => 'default', 'controller' => 'segmento', 'action' => 'combo')); ?>',
                 data: {
                     id: $('#areaCultural').val()
                 },
@@ -83,8 +83,8 @@
                             <option value="0"> - Selecione - </option>
                             <?php } ?>
 
-                            <?php foreach ($this->comboareasculturais as $comboareacultural): ?>
-                            <option value="<?php echo $comboareacultural->id; ?>" <?php if ($this->areaCultural == $comboareacultural->id) echo "selected=\"selected\""; ?>><?php echo $comboareacultural->descricao; ?></option>
+                            <?php foreach ($this->comboareasculturais as $id => $descricao): ?>
+                            <option value="<?php echo $id; ?>" <?php if ($this->areaCultural == $id) echo "selected=\"selected\""; ?>><?php echo $descricao; ?></option>
                             <?php endforeach; ?>
                         </select>
                         &nbsp; <span id="erroAreaCultural" class="spanError"></span>
@@ -150,10 +150,10 @@
         </tr>
         <?php foreach($this->credenciados as $c){ ?>
         <tr>
-            <td><?php echo $c->Area;?></td>
-            <td><?php echo $c->Segmento;?></td>
-            <td align="center"><?php echo $c->Nivel;?></td>
-            <td align="center"><input type="button" value=" " class="btn_exclusao"  title="Descredenciar"  onclick="confirmaExclusao('Deseja realmente descredenciar?', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'descredenciamento', 'idcredenciamento' => $c->idCredenciamentoParecerista, 'sicredenciamento' =>$c->siCredenciamento)); ?>')" /></td>
+            <td><?php echo $c->area;?></td>
+            <td><?php echo $c->segmento;?></td>
+            <td align="center"><?php echo $c->nivel;?></td>
+            <td align="center"><input type="button" value=" " class="btn_exclusao"  title="Descredenciar"  onclick="confirmaExclusao('Deseja realmente descredenciar?', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'descredenciamento', 'idcredenciamento' => $c->idcredenciamentoparecerista, 'sicredenciamento' =>$c->sicredenciamento)); ?>')" /></td>
         </tr>
         <?php } ?>
     </table>
