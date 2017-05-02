@@ -18,8 +18,8 @@
                           id="formGerenciamentoPropostas"
                           action="<?php echo $this->url(
                               array(
-                                  'module' => 'admissibilidade',
-                                  'controller' => 'enquadramento-assinatura',
+                                  'module' => 'assinatura',
+                                  'controller' => 'index',
                                   'action' => 'assinar-projeto'
                               ),
                               '',
@@ -81,10 +81,10 @@
                                     <td class="center-align" align="center">
                                         <a class="btn waves-effect waves-light tooltipped small "
                                            href="<?php echo $this->url(array(
-                                                   'module' => 'admissibilidade',
-                                                   'controller' => 'enquadramento-assinatura',
+                                                   'module' => 'assinatura',
+                                                   'controller' => 'index',
                                                    'action' => 'visualizar-projeto'
-                                               )) . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
+                                               )) . "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true" ?>"
                                            data-position="top"
                                            data-delay="50"
                                            data-tooltip="Visualizar">
@@ -107,10 +107,10 @@
                                     <td class="center-align" align="center">
                                         <a class="btn waves-effect waves-light tooltipped small"
                                            href="<?php echo $this->url(array(
-                                                   'module' => 'admissibilidade',
-                                                   'controller' => 'enquadramento-assinatura',
+                                                   'module' => 'assinatura',
+                                                   'controller' => 'index',
                                                    'action' => 'assinar-projeto'
-                                               )) . "?IdPRONAC={$dado['IdPRONAC']}&encaminhar=true" ?>"
+                                               )) . "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true" ?>"
                                            data-position="top"
                                            data-delay="50"
                                            data-tooltip="Assinar">
