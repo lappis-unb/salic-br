@@ -2,8 +2,8 @@
     <?php
     $links = array(
         array('Gerenciar Projetos' => array(
-            'module' => 'admissibilidade',
-            'controller' => 'enquadramento-assinatura',
+            'module' => 'assinatura',
+            'controller' => 'index',
             'action' => 'gerenciar-projetos'
         )),
         array('Assinar' => array())
@@ -20,12 +20,12 @@
         <form action="<?php
         echo $this->url(
                 array(
-                    'module' => 'admissibilidade',
-                    'controller' => 'enquadramento-assinatura',
+                    'module' => 'assinatura',
+                    'controller' => 'index',
                     'action' => 'assinar-projeto'
                 )
             )
-            . "?IdPRONAC={$this->IdPRONAC}";
+            . "?IdPRONAC={$this->IdPRONAC}&idTipoDoAtoAdministrativo={$this->idTipoDoAtoAdministrativo}";
         ?>"
         method="post">
             <input type="hidden" name="IdPRONAC" value="<?php echo $this->IdPRONAC ?>" />
