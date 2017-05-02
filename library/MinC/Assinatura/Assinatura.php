@@ -7,41 +7,49 @@ class MinC_Assinatura_Assinatura
      */
     private $servicoAutenticacao;
 
-    private $validarOrdemAssinatura = false;
+    /**
+     * @var MinC_Assinatura_Documento $servicoDocumento
+     */
+    private $servicoDocumento;
+
+    private $isValidarOrdemAssinatura = true;
 
     function __construct()
     {
-        //$this->servicoAutenticacao =
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isValidarOrdemAssinatura()
-    {
-        return $this->validarOrdemAssinatura;
-    }
-
-    public function setValidarOrdemAssinatura($isValidarOrdemAssinatura)
-    {
-        if(is_bool($isValidarOrdemAssinatura)) {
-            $this->validarOrdemAssinatura = $isValidarOrdemAssinatura;
+        $configuracoesAplicacao = Zend_Registry::get("config")->toArray();
+        if(
+            $configuracoesAplicacao
+            && is_array($configuracoesAplicacao['Assinatura'])
+            && $configuracoesAplicacao['Assinatura']['isServicoHabilitado'] == true
+        ) {
+            $metodoAutenticacao = "Padrao";
+            if(is_array($configuracoesAplicacao['Assinatura']['Autenticacao'])
+               && count($configuracoesAplicacao['Assinatura']['Autenticacao']) > 0
+               && $configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']) {
+                $metodoAutenticacao =  ucfirst($configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']);
+            }
+            $this->servicoAutenticacao = new MinC_Assinatura_Core_Autenticacao_{$metodoAutenticacao}();
+            $this->servicoDocumento = new MinC_Assinatura_Documento();
         }
     }
 
-    public function criarDocumentoAssinatura($idPronac, $idTipoDoAtoAdministrativo)
+    public function validarOrdemDeAssinaturas($isValidarOrdemAssinatura)
     {
-        $auth = Zend_Auth::getInstance();
-        $conteudo = $this->gerarConteudo($idPronac, $idTipoDoAtoAdministrativo);
+        $this->isValidarOrdemAssinatura = $isValidarOrdemAssinatura;
+    }
 
-        $dadosDocumentoAssinatura = array(
-            'IdPRONAC' => $idPronac,
-            'idTipoDoAtoAdministrativo' => $idTipoDoAtoAdministrativo,
-            'conteudo' => $conteudo,
-            'idCriadorDocumento' => $auth->getIdentity()->usu_codigo
-        );
-        $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
-        $objModelDocumentoAssinatura->inserir($dadosDocumentoAssinatura);
+    /**
+     * @return MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
+     */
+    public function obterServicoAutenticacao() {
+        return $this->servicoAutenticacao;
+    }
+
+    /**
+     * @return MinC_Assinatura_Documento
+     */
+    public function obterServicoDocumento() {
+        return $this->servicoDocumento;
     }
 
     public function assinarProjeto(MinC_Assinatura_Core_Model_Model_Assinatura $modelAssinatura)
@@ -58,8 +66,6 @@ class MinC_Assinatura_Assinatura
         if (empty($modelAssinatura->getIdTipoDoAtoAdministrativo())) {
             throw new Exception ("O Tipo do Ato Administrativo &eacute; obrigat&oacute;rio.");
         }
-
-        $auth = Zend_Auth::getInstance();
 
         $objProjeto = new Projeto_Model_DbTable_Projetos();
         $dadosProjeto = $objProjeto->findBy(array(
@@ -95,7 +101,7 @@ class MinC_Assinatura_Assinatura
             throw new Exception ("A fase atual de assinaturas do projeto atual n&atilde;o permite realizar essa opera&ccedil;&atilde;o.");
         }
 
-        $usuario = $this->servicoAutenticacao->obterInformacoesAssinante();
+        $usuario = $this->obterServicoAutenticacao()->obterInformacoesAssinante();
         $objTbAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
 
         $dadosInclusaoAssinatura = array(
@@ -110,7 +116,7 @@ class MinC_Assinatura_Assinatura
 
         $objTbAssinatura->inserir($dadosInclusaoAssinatura);
 
-        if($this->isValidarOrdemAssinatura()) {
+        if($this->isValidarOrdemAssinatura) {
             $orgaoDestino = $objTbAtoAdministrativo->obterProximoOrgaoDeDestino($modelAssinatura->getIdTipoDoAtoAdministrativo(), $dadosAtoAdministrativoAtual['idOrdemDaAssinatura']);
 
             if ($orgaoDestino) {
