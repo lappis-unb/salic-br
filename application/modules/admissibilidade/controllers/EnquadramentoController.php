@@ -218,10 +218,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
     }
 
-    private function encaminharProjetoEnquadradoParaAssinatura($IdPRONAC) {
+    private function encaminharProjetoEnquadradoParaAssinatura($idPronac) {
 
         $objTbProjetos = new Projeto_Model_DbTable_Projetos();
-        $dadosProjeto = $objTbProjetos->findBy(array('IdPRONAC' => $IdPRONAC));
+        $dadosProjeto = $objTbProjetos->findBy(array('IdPRONAC' => $idPronac));
 
         if(!$dadosProjeto) {
             throw new Exception("Projeto n&atilde;o encontrado.");
@@ -231,19 +231,16 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
-        $auth = Zend_Auth::getInstance();
-        $authIdentity = array_change_key_case((array)$auth->getIdentity());
-
         $objDocumentoAssinatura = new MinC_Assinatura_Assinatura();
         $idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
-        $objDocumentoAssinatura->criarDocumentoAssinatura(
-            $IdPRONAC,
-            $idTipoDoAtoAdministrativo,
-            $authIdentity['usu_codigo']
+        $objDocumentoAssinatura->obterServicoDocumento()->criarDocumentoAssinatura
+        (
+            $idPronac,
+            $idTipoDoAtoAdministrativo
         );
 
         $objProjeto = new Projetos();
-        $objProjeto->alterarSituacao($dadosProjeto['IdPRONAC'], null, 'B04', 'Projeto encamihado para Portaria.');
+        $objProjeto->alterarSituacao($idPronac, null, 'B04', 'Projeto encamihado para Portaria.');
 
         $orgaoDestino = 166;
         $objOrgaos = new Orgaos();
@@ -251,7 +248,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         if ($dadosOrgaoSuperior['Codigo'] == Orgaos::ORGAO_SUPERIOR_SEFIC) {
             $orgaoDestino = 262;
         }
-        $objTbProjetos->alterarOrgao($orgaoDestino, $dadosProjeto['IdPRONAC']);
+        $objTbProjetos->alterarOrgao($orgaoDestino, $idPronac);
     }
 
     private function carregarListaEncaminhamentoPortaria() {
