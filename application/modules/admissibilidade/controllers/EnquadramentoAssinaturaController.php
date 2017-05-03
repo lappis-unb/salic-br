@@ -102,19 +102,14 @@ class Admissibilidade_EnquadramentoAssinaturaController extends Assinatura_Gener
                     $arrayAtosAdministrativosEnquadramento[] = $atoAdministrativo['idAtoAdministrativo'];
                 }
 
-                $objTbAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
-                $objTbAssinatura->delete(array(
-                   "IdPRONAC = ?" => $get->IdPRONAC,
-                    "idAtoAdministrativo in (?)" => $arrayAtosAdministrativosEnquadramento
-                ));
-
                 $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
-                $objModelDocumentoAssinatura->delete(
-                    array(
-                        'IdPRONAC = ?' => $get->IdPRONAC,
-                        'idTipoDoAtoAdministrativo = ?' => $this->idTipoDoAtoAdministrativo
-                    )
+                $data = array('cdSituacao = ?' => 2);
+                $where = array(
+                    'IdPRONAC = ?' => $get->IdPRONAC,
+                    'idTipoDoAtoAdministrativo = ?' => $this->idTipoDoAtoAdministrativo,
+                    'cdSituacao = ?' => 1
                 );
+                $objModelDocumentoAssinatura->update($data, $where);
 
                 parent::message('Projeto devolvido com sucesso.', "/{$this->moduleName}/enquadramento-assinatura/gerenciar-projetos", 'CONFIRM');
             }
