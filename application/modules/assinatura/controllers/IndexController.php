@@ -149,11 +149,13 @@ class Assinatura_IndexController extends Assinatura_GenericController
                 throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
             }
 
+            $objAssinatura = new MinC_Assinatura_Servico_Assinatura();
             $post = $this->getRequest()->getPost();
             if ($post) {
 
                 foreach ($arrayIdPronacs as $idPronac) {
-                    $this->assinarProjeto(
+                    $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
+                    $objAssinatura->assinarProjeto(
                         $idPronac,
                         $post['password'],
                         $post['dsManifestacao']

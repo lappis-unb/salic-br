@@ -231,7 +231,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
-        $objDocumentoAssinatura = new MinC_Assinatura_Assinatura();
+        $objDocumentoAssinatura = new MinC_Assinatura_Servico_Assinatura();
         $idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
         $objDocumentoAssinatura->obterServicoDocumento()->criarDocumentoAssinatura
         (

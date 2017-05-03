@@ -1,6 +1,6 @@
 <?php
 
-class MinC_Assinatura_Assinatura
+class MinC_Assinatura_Servico_Assinatura
 {
     /**
      * @var MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter $servicoAutenticacao
@@ -8,7 +8,7 @@ class MinC_Assinatura_Assinatura
     private $servicoAutenticacao;
 
     /**
-     * @var MinC_Assinatura_Documento $servicoDocumento
+     * @var MinC_Assinatura_Servico_Documento $servicoDocumento
      */
     private $servicoDocumento;
 
@@ -29,7 +29,7 @@ class MinC_Assinatura_Assinatura
                 $metodoAutenticacao =  ucfirst($configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']);
             }
             $this->servicoAutenticacao = new MinC_Assinatura_Core_Autenticacao_{$metodoAutenticacao}();
-            $this->servicoDocumento = new MinC_Assinatura_Documento();
+            $this->servicoDocumento = new MinC_Assinatura_Servico_Documento();
         }
     }
 
@@ -46,13 +46,13 @@ class MinC_Assinatura_Assinatura
     }
 
     /**
-     * @return MinC_Assinatura_Documento
+     * @return MinC_Assinatura_Servico_Documento
      */
     public function obterServicoDocumento() {
         return $this->servicoDocumento;
     }
 
-    public function assinarProjeto(MinC_Assinatura_Core_Model_Model_Assinatura $modelAssinatura)
+    public function assinarProjeto(MinC_Assinatura_Model_Assinatura $modelAssinatura)
     {
 
         if (empty($modelAssinatura->getDsManifestacao())) {

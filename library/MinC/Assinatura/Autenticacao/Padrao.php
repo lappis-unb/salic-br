@@ -1,6 +1,6 @@
 <?php
 
-class MinC_Assinatura_Core_Autenticacao_Padrao implements MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
+class MinC_Assinatura_Autenticacao_Padrao implements MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
 {
 
     /**
