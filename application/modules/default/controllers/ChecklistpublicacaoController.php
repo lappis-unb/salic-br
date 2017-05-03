@@ -1,15 +1,4 @@
 <?php
-/**
- * CheckListPublicacaoController
- * @author Equipe RUP - Politec
- * @since 30/09/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
 class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 {
     private $getIdUsuario = 0;
@@ -43,6 +32,8 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $PermissoesGrupo[] = 123;
             $PermissoesGrupo[] = 110;
             $PermissoesGrupo[] = 142;
+            $PermissoesGrupo[] = 151;
+            $PermissoesGrupo[] = 148;
 
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est� no array de permiss�es
             {
@@ -103,7 +94,6 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior))?$auth->getIdentity()->usu_org_max_superior:$auth->getIdentity()->usu_orgao;
     }
 
-    // fecha m�todo init()
     public function indexAction(){
 
     }
@@ -475,7 +465,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
             $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
-        //xd($arrBusca);
+        
         $projetosAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
         $arrProjetosAprovadosInic = $projetosAprovadosInic->toArray();
         $this->view->BuscarAprovadosRegularesAprovadosInic = $arrProjetosAprovadosInic;
@@ -870,14 +860,14 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
                 $rsVP->stAnaliseProjeto = '2';
                 $rsVP->save();
             }
-            echo json_encode(array('error' => false, "msg" => "Projeto alterado com sucesso!"));
+            $this->_helper->json(array('error' => false, "msg" => "Projeto alterado com sucesso!"));
             $this->_helper->viewRenderer->setNoRender(TRUE);
             //parent::message("Projeto alterado com sucesso!!", "checklistpublicacao/", "CONFIRM");
 
         }
         catch (Exception $e)
         {
-            echo json_encode(array('error' => true, "msg" => "Erro ao atualizar informa&ccedil;&otilde;es! As altera&ccedil;&otilde;es n&atilde;o foram salvas. ".$e->getMessage()));
+            $this->_helper->json(array('error' => true, "msg" => "Erro ao atualizar informa&ccedil;&otilde;es! As altera&ccedil;&otilde;es n&atilde;o foram salvas. ".$e->getMessage()));
             $this->_helper->viewRenderer->setNoRender(TRUE);
             //parent::message("Erro ao atualizar informa��es! Opera��o n�o realizada. ".$e->getMessage(), "checklistpublicacao/", "ERROR");
         }
@@ -1107,7 +1097,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         $tblTecnicos = new Usuariosorgaosgrupos();
         $rsTecnicos = $tblTecnicos->buscarUsuariosOrgaosGrupos($arrBusca, array('u.usu_nome ASC', 'g.gru_nome ASC'));
         $this->view->tecnicos = $rsTecnicos;
-        //xd($rsProjetos);
+        
     }
 
     function redistribuirProjetoAction()
@@ -1116,7 +1106,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         $post = Zend_Registry::get('post');
         $arrPronacs = $post->idpronac;
         $idTecnico = $post->novoTecnico;
-        //xd($post);
+        
 
         $tblVerificaProjeto = new tbVerificaProjeto();
         try{
@@ -1134,7 +1124,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         } // fecha try
         catch (Exception $e)
         {
-            //xd($e->getMessage());
+            
             parent::message("Erro ao redistribuir projeto(s). ".$e->getMessage(), "checklistpublicacao/listas", "ERROR");
             return;
         }

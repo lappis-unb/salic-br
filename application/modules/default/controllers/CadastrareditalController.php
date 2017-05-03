@@ -23,7 +23,6 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $codOrgao = $GrupoAtivo->codOrgao; //  Orgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         //$this->view->idUsuarioLogado = $idusuario;
-        //xd($auth->getIdentity());
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC72
         if (isset($auth->getIdentity()->usu_codigo))
         {
@@ -106,7 +105,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             	$Array['semdados'] = 'semdados';
             }
 
-            echo json_encode($Array);
+            $this->_helper->json($Array);
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
@@ -309,7 +308,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     'idAti' => $atiid
                     //, 'piDisponivel' => $PiDisponivel
                     );
-    //                xd($dados);
+    
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
                 else // altera��o
@@ -327,11 +326,11 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     'stAdmissibilidade' => 'S',
                     'cdTipoFundo' => $tipoFundo,
                     'idAti' => $atiid);
-    //                xd($dados);
+    
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
             }catch (Exception $e){
-                //xd($e->getMessage());
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
             $arrFases[0][0] = $faseElabIni;
@@ -406,7 +405,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     }
                 } // fecha foreach fases
             }catch (Exception $e){
-                //xd($e->getMessage());
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
 
@@ -451,7 +450,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/dadosgerais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
                 }
             }catch (Exception $e){
-                //xd($e->getMessage());
+
                 parent::message("Erro ao realizar opera&ccedil;&atilde;o. ".$e->getMessage(), "/cadastraredital/dadosgerais", "ERROR");
             }
         } // fecha if ($_POST)
@@ -813,7 +812,6 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 //        $ListaPerguntasDao = new tbPerguntaFormDocto();
 //        $listaPerguntas = $ListaPerguntasDao->listaPerguntas($nrFormDocumento, $nrVersaoDocumento);
 //        $this->view->listaPerguntas = $listaPerguntas;
-        //xd($listaPerguntas);
 
 //        if($nrPergunta){
 //            $FormaPagamentoDao = new tbPergunta();
@@ -902,7 +900,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $idusuario = $auth->getIdentity()->usu_codigo;
         $this->view->idUsuario = $idusuario;
 
-//        xd($listaPerguntas);
+
         $this->view->listaPerguntas = $listaPerguntas;
     } // fecha m�todo listaformapagamentoAction()
 
@@ -963,7 +961,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $idUsuario = $post->idUsuario;
         $nrFormDocumentoPagamento = $post->nrFormDocumentoPagamento;
 
-//        xd($post);
+
         switch ($operacao) {
             case "inserirOpcao":
                 $this->_helper->layout->disableLayout();
@@ -1011,14 +1009,14 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     }
                     if($verificar) {
                     	parent::message("Cadastro realizado com sucesso!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "CONFIRM");
-//                        echo json_encode(array("retorno"=>"INSERIR","mensagem"=>"Forma de Pagamento inclu&iacute;da com sucesso!"));
+//                        $this->_helper->json(array("retorno"=>"INSERIR","mensagem"=>"Forma de Pagamento inclu&iacute;da com sucesso!"));
                     }else {
                     	parent::message("Erro ao tentar incluir as parcelas!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                        echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar inserir as Parcelas."));
+//                        $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar inserir as Parcelas."));
                     }
                 }else{
                 	parent::message("Erro ao tentar incluir as parcelas!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                    echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar inserir a Forma de Pagamento."));
+//                    $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar inserir a Forma de Pagamento."));
                 }
 
                 break;
@@ -1026,11 +1024,10 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $this->_helper->layout->disableLayout();
                 $pesquisaFormaPagamentoDao = new tbOpcaoResposta();
                 $valorArray = $pesquisaFormaPagamentoDao->pesquisaFormaPagamento($nrFormDocumento, $nrVersaoDocumento, $nrPergunta, $nrOpcao);
-//                xd($valorArray);
+
                 foreach ($valorArray as $key => $value){
                     $valorArray[$key] = Conversor::iso88591ParaUtf8_Array($value);
                 }
-//xd($valorArray);
                 echo Conversor::jsonEncodeParaIso88591($valorArray);
 
                 //$this->pesquisaFormaPagamento($this->formaPagamento);
@@ -1093,20 +1090,20 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                         }
                         if($verificar){
                         	parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "CONFIRM");
-//                            echo json_encode(array("retorno"=>"ALTERAR","mensagem"=>"Forma de Pagamento alterada com sucesso!"));
+//                            $this->_helper->json(array("retorno"=>"ALTERAR","mensagem"=>"Forma de Pagamento alterada com sucesso!"));
                         }
                         else{
                         	parent::message("Erro ao tentar incluir as parcelas!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                            echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar cadastrar as Parcelas."));
+//                            $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar cadastrar as Parcelas."));
                         }
                     }
                     else{
                     	parent::message("Erro ao tentar incluir as parcelas!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                        echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir as Parcelas."));
+//                        $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir as Parcelas."));
                     }
                 }else {
                 	parent::message("Erro ao tentar alterar a forma de pagamento!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                    echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar alterar a Forma de Pagamento."));
+//                    $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar alterar a Forma de Pagamento."));
                 }
                 break;
             case "excluir":
@@ -1132,16 +1129,16 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
                         parent::message("Exclus&atilde;o realizada com sucesso!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "CONFIRM");
 
-//                        echo json_encode(array("retorno"=>"EXCLUIR","mensagem"=>"Forma de Pagamento excluida com sucesso!"));
+//                        $this->_helper->json(array("retorno"=>"EXCLUIR","mensagem"=>"Forma de Pagamento excluida com sucesso!"));
                     }else{
 
                     	parent::message("Erro ao tentar excluir a Forma de Pagamento!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                        echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a Forma de Pagamento."));
+//                        $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a Forma de Pagamento."));
                     }
                 }else{
 
                 	parent::message("Erro ao tentar excluir as parcelas!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                    echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir as Parcelas."));
+//                    $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir as Parcelas."));
                 }
                 break;
             case "excluirfp":
@@ -1183,12 +1180,12 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                                 }else{
                                     $verificar=false;
                                     parent::message("Erro ao tentar excluir a Forma de Pagamento!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                                    echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a Forma de Pagamento."));
+//                                    $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a Forma de Pagamento."));
                                 }
                             }else {
                                 $verificar=false;
                                 parent::message("Erro ao tentar excluir as parcelas!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                                echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir as Parcelas."));
+//                                $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir as Parcelas."));
                             }
                         }
                         else{
@@ -1196,21 +1193,19 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                         }
                     }
                 }
-                //xd($verificar);
                 if($verificar){
                     $excluirPerguntaFormDoctoDAO = new tbPerguntaFormDocto();
                     $where = array('nrFormDocumento = ?' => $nrFormDocumento,
                                    'nrVersaoDocumento = ?' => $nrVersaoDocumento,
                                    'nrPergunta = ?' => $nrPergunta);
                     $excluirPerguntaFormDocto = $excluirPerguntaFormDoctoDAO->buscar($where);
-                    //xd($excluirPerguntaFormDocto);
                     if(count($excluirPerguntaFormDocto)>0) {
                     	$excluirPerguntaFormDoctoDAO->delete($where);
                         parent::message("Exclus&atilde;o realizada com sucesso!", "/Cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "CONFIRM");
-//                        echo json_encode(array("retorno"=>"EXCLUIR","mensagem"=>"Forma de Pagamento excluida com sucesso!"));
+//                        $this->_helper->json(array("retorno"=>"EXCLUIR","mensagem"=>"Forma de Pagamento excluida com sucesso!"));
                     }else {
                     	parent::message("Erro ao tentar excluir!", "/cadastraredital/formapagamento?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
-//                        echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a PerguntaFormDocto."));
+//                        $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a PerguntaFormDocto."));
                     }
                 }
                 break;
@@ -1218,7 +1213,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $pesquisaPerguntaFpDao = new tbPergunta();
                 $pesquisaPergunta = $pesquisaPerguntaFpDao->procurarPergunta($nrPergunta);
                 $this->view->nrPergunta = $nrPergunta;
-                echo json_encode(array('nrPergunta'=>$pesquisaPergunta->nrPergunta,'dsPergunta'=>  utf8_encode($pesquisaPergunta->dsPergunta)));
+                $this->_helper->json(array('nrPergunta'=>$pesquisaPergunta->nrPergunta,'dsPergunta'=>  utf8_encode($pesquisaPergunta->dsPergunta)));
                 break;
         }
 
@@ -1297,7 +1292,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         $edital             =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$idEdital,
         														'idClassificaDocumento = ?'=>23));
-//        xd($edital);
+
         return $edital;
     } // fecha m�todo listaGuiaDigital($idEdital)
 
@@ -1353,9 +1348,9 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
                 if($result) {
                 	parent::message("Cadastro realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
-//                    echo json_encode(array("retorno"=>"INSERIR","mensagem"=>"Guia de edital inclu&iacute;da com sucesso!"));
+//                    $this->_helper->json(array("retorno"=>"INSERIR","mensagem"=>"Guia de edital inclu&iacute;da com sucesso!"));
                 }else {
-                    echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar inserir a guia de edital."));
+                    $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar inserir a guia de edital."));
                 }
                 break;
             case "pesquisa":
@@ -1367,7 +1362,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     $result['nrVersaoDocumento']    = $val->nrVersaoDocumento;
                     $result['dsFormDocumento']      = utf8_encode($val->dsFormDocumento);
                 }
-                echo json_encode($result);
+                $this->_helper->json($result);
                 break;
             case "alterar":
                 $result = $tbFormDocumentoDAO->update(array(
@@ -1376,10 +1371,10 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                           ), $where);
                 if($result) {
                 	parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
-//                    echo json_encode(array("retorno"=>"ALTERAR","mensagem"=>"Guia de edital alterada com sucesso!"));
+//                    $this->_helper->json(array("retorno"=>"ALTERAR","mensagem"=>"Guia de edital alterada com sucesso!"));
                 }else {
                 	parent::message("Erro ao tentar alterar a guia de edital!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "ALERT");
-//                    echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar alterar a guia de edital."));
+//                    $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar alterar a guia de edital."));
                 }
                 break;
             case "excluir":
@@ -1414,10 +1409,10 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
                 if(count($FormExclusao) > 0) {
                     parent::message("Erro ao tentar excluir a guia de edital!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocURL}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "ALERT");
-//                        echo json_encode(array("retorno"=>"EXCLUIR","mensagem"=>"Guia de edital excluida com sucesso!"));
+//                        $this->_helper->json(array("retorno"=>"EXCLUIR","mensagem"=>"Guia de edital excluida com sucesso!"));
                 }else {
                     parent::message("Exclus&atilde;o realizada com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocURL}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
-//                        echo json_encode(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a guia de edital."));
+//                        $this->_helper->json(array("retorno"=>"ERRO","mensagem"=>"Erro ao tentar excluir a guia de edital."));
                 }
                 break;
 
@@ -1512,9 +1507,9 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     $resposta = $tbRespostaDAO->buscar($where);
                     if(is_object($resposta) and $resposta->count() > 0){
                         if($tbRespostaDAO->delete($where))
-                            echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                            $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                         else
-                            echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro excluir '.$info['nrOpcao'].'.')));
+                            $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro excluir '.$info['nrOpcao'].'.')));
                     }
 
                 }
@@ -1554,9 +1549,9 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     $resposta = $tdRespostaDAO->buscar($where);
                     if(is_object($resposta) and $resposta->count() > 0){
                         if($tbRespostaDAO->delete($where))
-                            echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                            $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                         else
-                            echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro excluir '.$info['nrOpcao'].'.')));
+                            $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro excluir '.$info['nrOpcao'].'.')));
                     }
                 }
                 break;
@@ -1662,15 +1657,15 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
                 $retorno = $tbPerguntaFormDoctoDAO->update($data, $where);
                 if($retorno)
-                    echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Ordena??o Salva.')));
+                    $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Ordena??o Salva.')));
                 else
-                    echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro Ordena&ccedil;&atilde;o Perguntas.'.$retorno)));
+                    $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro Ordena&ccedil;&atilde;o Perguntas.'.$retorno)));
                 break;
             /*case 'ordenarOpcao':
                 if($this->dao->alterarPosicaoOpcao($this->questionario))
-                    echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Ordena??o Salva.')));
+                    $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Ordena??o Salva.')));
                 else
-                    echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro Ordena??o Opcao.')));
+                    $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro Ordena??o Opcao.')));
                 break;*/
             case 'perguntas':
                 $dsPergunta = $get->term;
@@ -1689,7 +1684,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 foreach ($resposta as $pergunta){
                         $retorno[] = utf8_encode($pergunta->dsPergunta);
                 }
-                echo json_encode($retorno);
+                $this->_helper->json($retorno);
                 break;
             case 'cadastroPergunta':
 //            	xd($_POST);
@@ -1733,10 +1728,10 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                             $idOpcaoResposta = $tbOpcaoRespostaDAO->inserir($dados);
                             if($idOpcaoResposta){
                             	parent::message("Cadastro realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
-//                                echo json_encode(array('retorno'=>'INSERIR','mensagem'=>''));
+//                                $this->_helper->json(array('retorno'=>'INSERIR','mensagem'=>''));
                             }
                             else{
-                                echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta TA IT.')));
+                                $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta TA IT.')));
                             }
                         }
                         else{
@@ -1761,19 +1756,19 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                             }
                             if($validado){
                             	parent::message("Cadastro realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
-//                              echo json_encode(array('retorno'=>'INSERIR','mensagem'=>''));
+//                              $this->_helper->json(array('retorno'=>'INSERIR','mensagem'=>''));
                             }
                             else{
-                                echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta CK CB RB.')));
+                                $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta CK CB RB.')));
                             }
                         }
                     }
                     else{
-                        echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro perguntaformdocto.')));
+                        $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro perguntaformdocto.')));
                     }
                 }
                 else
-                    echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro pergunta.')));
+                    $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro pergunta.')));
                 break;
             case 'excluirQuestao':
                 $where = array('nrFormDocumento = ?'=>$nrFormDocumento,'nrVersaoDocumento = ?'=>$nrVersaoDocumento,'nrPergunta = ?'=>$nrPergunta);
@@ -1813,7 +1808,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 	                if($stTipoObjetoPgr == 'IC')
 	                    $stTipoObjetoPgr = 'CK';
                 }
-                echo json_encode(array('result'=>true,'nrPergunta'=>$questao[0]->nrPergunta,'dsPergunta'=>utf8_encode($questao[0]->dsPergunta),'dsLabelPergunta'=>utf8_encode($questao[0]->dsLabelPergunta),'stTipoObjetoPgr'=>$stTipoObjetoPgr));
+                $this->_helper->json(array('result'=>true,'nrPergunta'=>$questao[0]->nrPergunta,'dsPergunta'=>utf8_encode($questao[0]->dsPergunta),'dsLabelPergunta'=>utf8_encode($questao[0]->dsLabelPergunta),'stTipoObjetoPgr'=>$stTipoObjetoPgr));
                 break;
             case 'alterarPergunta':
                 $tbPerguntaDAO          =   new tbPergunta();
@@ -1851,10 +1846,10 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                                 $idOpcaoResposta = $tbOpcaoRespostaDAO->inserir($dados);
                                 if($idOpcaoResposta){
                                 	parent::message("Altera��o realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
-//                                    echo json_encode(array('retorno'=>'ALTERAR','mensagem'=>''));
+//                                    $this->_helper->json(array('retorno'=>'ALTERAR','mensagem'=>''));
                                 }
                                 else{
-                                    echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta TA IT.')));
+                                    $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta TA IT.')));
                                 }
                             }
                             else{
@@ -1879,23 +1874,23 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                                 }
                                 if($validado){
                                 	parent::message("Altera��o realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
-//                                    echo json_encode(array('retorno'=>'ALTERAR','mensagem'=>''));
+//                                    $this->_helper->json(array('retorno'=>'ALTERAR','mensagem'=>''));
                                 }
                                 else{
-                                    echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta CK CB RB.')));
+                                    $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro cadastro OpcaoResposta CK CB RB.')));
                                 }
                             }
                         }
                         else{
-                            echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro excluir alterar OpcaoResposta.')));
+                            $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro excluir alterar OpcaoResposta.')));
                         }
                     }
                     else{
-                        echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro alterar perguntaformdocto.')));
+                        $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro alterar perguntaformdocto.')));
                     }
                 }
                 else
-                    echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro alterar pergunta.')));
+                    $this->_helper->json(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro alterar pergunta.')));
                 break;
         }
     } // fecha m�todo operacoescustomizavelAction()
@@ -1925,60 +1920,60 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             switch ($info['operacao']){
             	case 'tipoDT':
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza�?o DT.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza�?o DT.')));
                    break;
                 case 'tipoNR':
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza�?o NR.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza�?o NR.')));
                    break;
                 case 'tipoIT':
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza�?o IT.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza�?o IT.')));
                    break;
                 case 'tipoTA':
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o TA.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o TA.')));
                    break;
                 case 'tipoCK':
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o TA.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o TA.')));
                    break;
                 case 'tipoIC':
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o TA.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o TA.')));
                    break;
                 case 'tipoCB':
                     $data['nrOpcao']   =   $info['nrOpcao'];
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o CB.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o CB.')));
                     break;
                 case 'tipoRB':
                     $data['nrOpcao']   =   $info['nrOpcao'];
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o RB.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o RB.')));
                     break;
                 case 'tipoIR':
                     $data['nrOpcao']   =   $info['nrOpcao'];
                     if($tdRespostaDAO->update($data, $where))
-                        echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                        $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o IR.')));
+                        $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro atualiza&ccedil;&atilde;o IR.')));
                     break;
             }
         }
@@ -1994,11 +1989,11 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                         'dsRespostaSubj'    =>  $info['dsRespostaSubj']
                      );
 
-//            xd($dados);
+
             if($tdRespostaDAO->insert($dados)==0)
-                echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
+                $this->_helper->json(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
             else
-                echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro cadastro '.$info['operacao'].'.')));
+                $this->_helper->json(array('result'=>false,'mensagem'=>utf8_encode('Erro cadastro '.$info['operacao'].'.')));
         }
     } // fecha m�todo cadastraAtualizaRespostaQuestoes($info)
 
@@ -2567,7 +2562,6 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 			$currentPage = $this->_getParam('page', 1);
 			$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(5);
 			$this->view->dadosEditalAvaliador = $paginator;
-        	//xd($paginator);
         	$this->view->qtdDoc    = count($dadosEdital); // quantidade
 
 			// ========== FIM PAGINA��O ==========

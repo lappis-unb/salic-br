@@ -208,7 +208,7 @@ class Projetos extends MinC_Db_Table_Abstract
         if (!empty($pronac)) {
             $consulta->where('a.IdPRONAC = ?', $pronac);
         }
-//xd($consulta->assemble());
+
         return $this->fetchRow($consulta);
     }
 
@@ -429,7 +429,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->where('ap.DtPublicacaoAprovacao IS NULL');
             $slct->where('ap.PortariaAprovacao IS NULL');
         }
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -671,7 +671,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -707,7 +707,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         $slct->where('pr.IdPRONAC = ?', $idPronac);
 
-        //xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -718,7 +718,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'p.Situacao', 'p.Mecanismo', 'p.NomeProjeto', 'p.idProjeto'
             )
         );
@@ -734,7 +734,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array('s.Descricao as Segmento'), 'SAC.dbo'
         );
 
-        //xd($select->assemble());
+
         /* $select->joinInner(
           array('his'=>'HistoricoSituacao'),
           'p.AnoProjeto+p.Sequencial = his.AnoProjeto+his.Sequencial',
@@ -753,7 +753,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where('p.Situacao = ?', $Situacao);
 
 //$select->where ('p.idProjeto is not null','?');
-//xd($select);
+
         if (!empty($arrSituacao)) {
             $select->where('idEncPrestContas in (?)', $arrSituacao);
         }
@@ -789,7 +789,7 @@ class Projetos extends MinC_Db_Table_Abstract
         //$select->distinct();
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 '(p.AnoProjeto+p.Sequencial) as pronac', 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'p.DtSituacao', 'p.OrgaoOrigem'
             )
         );
@@ -867,7 +867,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'd.idSolicitante', 'p.Mecanismo',
                 'p.OrgaoOrigem', 'd.DtSolicitacao' => new Zend_Db_Expr('max(d.DtSolicitacao)'), 'p.DtSituacao' => new Zend_Db_Expr('max(p.DtSituacao)')
             )
@@ -916,8 +916,8 @@ class Projetos extends MinC_Db_Table_Abstract
         foreach ($arrWhere as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-//xd($select->assemble());
-        //xd($select->assemble());
+
+
 
         return $this->fetchAll($select);
     }
@@ -1006,7 +1006,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         /**
          * $select->from(
-         * array('p'=>$this->_schema.'.'.$this->_name),
+         * array('p'=>$this->_name),
          * array(
          * 'p.AnoProjeto','p.Sequencial','p.UfProjeto','p.NomeProjeto','p.IdPRONAC'
          * )
@@ -1014,7 +1014,7 @@ class Projetos extends MinC_Db_Table_Abstract
          *
          */
         $select->from(
-            array('pr' => $this->_schema . '.' . $this->_name), array(
+            array('pr' => $this->_name), array(
                 'SAC.dbo.fnchecarDiligencia(pr.IdPRONAC) AS Diligencia',
                 'pr.AnoProjeto',
                 'pr.Sequencial',
@@ -1097,7 +1097,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $select->limit($tamanho, $tmpInicio);
         }
-//        xd($select->__toString());
+
         return $this->fetchAll($select);
     }
 
@@ -1143,16 +1143,16 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->where($coluna, $valor);
         }
 
-//    xd($select->__toString());
+
         return $this->fetchAll($select)->current()->total;
     }
 
     public function salvar($dados)
     {
 //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        //xd($dados);
+
         $tmpTbl = new Projetos();
-//xd($dados);
+
         $tmpTbl = $tmpTbl->find($dados['idPRONAC'])->current();
 
 //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
@@ -1269,7 +1269,7 @@ class Projetos extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -1338,7 +1338,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         $select->order($order);
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -1549,7 +1549,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $tbFiscalizacao->where('stFiscalizacaoProjeto = ?', '0');
         $tbFiscalizacao->orWhere('stFiscalizacaoProjeto = ?', '1');
 
-//        xd($tbFiscalizacao->assemble());
+
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -1590,7 +1590,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         $select->order('p.AnoProjeto');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -1674,7 +1674,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         $select->order('Projetos.idProjeto');
 
-        //xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }
@@ -1831,7 +1831,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-//xd($slct->assemble());
+
 
         return $this->fetchAll($slct);
     }
@@ -2011,7 +2011,7 @@ class Projetos extends MinC_Db_Table_Abstract
         foreach ($where as $key => $val) {
             $select->where($key, $val);
         }
-// xd($select->assemble());
+
         /* Consultas auxiliares 1 */
         $selectAux = $this->select();
         $selectAux->setIntegrityCheck(false);
@@ -2037,7 +2037,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-            // xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -2147,7 +2147,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-//            xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -2250,7 +2250,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
 
-        //xd($select->assemble());
+
 
 
         /* Resultado */
@@ -2261,7 +2261,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-            //xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -2375,7 +2375,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-//            xd($select->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -2434,12 +2434,106 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->order('d.DtDistribuicao');
 
 
-//xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }
 
 // fecha metodo buscarPeriodoCaptacao()
+
+    public function enquadramentoProjeto($idpronac) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('p' => 'vwEnquadramentoDoProjeto'),
+            array(
+                'p.IdPRONAC',
+                'p.Pronac',
+                'p.NomeProjeto',
+                'p.CNPJCPF',
+                'p.Proponente',
+                'p.Area',
+                'p.Segmento',
+                'p.UfProjeto',
+                'p.DtInicioExecucao',
+                'p.DtFimExecucao',
+                'p.ResumoProjeto',
+                'p.VlSolicitado',
+                'p.VlOutrasFontes',
+                'p.VlProjeto',
+                'p.CustoProjeto',
+                'p.VlOutrasFontesAprovado',
+                'p.CustoTotal',
+                'p.Enquadramento',
+                'p.DtEnquadramento',
+                'p.AvaliacaoTecnica',
+                'p.IdEnquadramento'
+            ));
+        $select->where("p.idPronac = ?", $idpronac);
+        return $this->fetchAll($select);
+    }
+
+
+    public function assinarParecer($idpronac) {
+        $returnData = array();
+
+        $returnData['enquadramento'] = $this->enquadramentoProjeto($idpronac);
+
+        $select2 = $this->select();
+        $select2->setIntegrityCheck(false);
+        $select2->from(
+            array('p' => 'vwPlanoDeDistribuicaoProduto'),
+            array(
+                'p.idProjeto',
+                'p.IdPRONAC',
+                'p.idProduto',
+                'p.Produto',
+                'p.tpProduto',
+                'p.QtdeProduzida',
+                'p.QtdeDistribuicaoGratuita',
+                'p.QtdeVendaPopular',
+                'p.QtdeVendaProponente',
+                'p.PrecoMedio',
+                'p.ReceitaTotal',
+                'p.vlProduto'
+            ));
+        $select2->where("p.idPronac = ?", $idpronac);
+        $returnData['produtos'] = $this->fetchAll($select2);
+
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $sql = "exec ".$this->_banco.".spDiligenciasEnviadasAoProjeto " . $idpronac;
+        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $returnData['diligencias'] = $db->fetchAll($sql);
+
+
+        $select3 = $this->select();
+        $select3->setIntegrityCheck(false);
+        $select3->from(
+            array('p' => 'tbAcaoAlcanceProjeto'),
+            array(
+                'p.dsAcaoAlcanceProduto'
+            ));
+        $select3->where("p.tpAnalise = ?", 1);
+        $select3->where("p.idPronac = ?", $idpronac);
+        $returnData['alcance'] = $this->fetchAll($select3);
+
+        $select4 = $this->select();
+        $select4->setIntegrityCheck(false);
+        $select4->from(
+            array('p' => 'Parecer'),
+            array(
+                'p.tpResultado' => new Zend_Db_Expr("CASE WHEN ParecerFavoravel = 1 THEN 'Desfavor&aacute;vel' WHEN ParecerFavoravel = 2 THEN 'Favor&aacute;vel' END")
+            ));
+        $select4->where("p.stAtivo = ?", 1);
+        $select4->where("p.TipoParecer = ?", 1);
+        $select4->where("p.idTipoagente = ?", 1);
+        $select4->where("p.idPronac = ?", $idpronac);
+        $returnData['parecer'] = $this->fetchAll($select4);
+
+        return $returnData;
+    }
+
 
     public function dadosFechar($usu_Codigo, $idpronac, $idDistribuirParecer)
     {
@@ -2496,7 +2590,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         $select->order('d.DtDistribuicao');
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -2582,7 +2676,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->order('i.Descricao');
 
 
-//xd($select->assemble());
+
 
         return $this->fetchAll($select);
     }
@@ -2680,7 +2774,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         //x("Se voce esta vendo esta mensagem, favor entrar em contato com o Everton ou Danilo Lisboa urgentemente! <br>Informe tambem os dados abaixo, se houver! ");
-        //xd($where);
+
         if (!empty($where)) {
             return $this->update($dados, $where);
         } else {
@@ -3038,7 +3132,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->order('Projetos.idProjeto');
         $select->order('tbFiscalizacao.idFiscalizacao');
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3096,7 +3190,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->order('a.NomeProjeto');
         $select->order('g.idFiscalizacao');
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3133,7 +3227,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //                          );
         $select->order('proj.NomeProjeto ASC');
 
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3168,7 +3262,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->where($coluna, $valor);
         }
 
-        //xd($select->assemble());
+
         if ($retornaSelect)
             return $select;
         else
@@ -3251,7 +3345,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where("a.IdPRONAC = '" . $idpronac . "'");
         $select->where("b.stPlanoDistribuicaoProduto = 1");
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3277,7 +3371,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->where("a.IdPRONAC = '" . $idpronac . "'");
         $select->where("b.stPlanoDistribuicaoProduto = 1");
         $select->order("a.IdPRONAC DESC");
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3328,7 +3422,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -3374,7 +3468,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -3409,7 +3503,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-//xd($slct->__toString());
+
         return $this->fetchAll($slct)->current();
     }
 
@@ -3431,7 +3525,7 @@ class Projetos extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -3452,8 +3546,8 @@ class Projetos extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//xd($slct->assemble());
-//xd($this->fetchAll($slct));
+
+
         return $this->fetchAll($slct);
     }
 
@@ -3486,7 +3580,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
         $slct->order('app.nrNotaFinal desc');
 
-        //xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -3541,7 +3635,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
 //adicionando linha order ao select
         $slct->order($order);
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -3642,8 +3736,8 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('idProjeto is not null');
         $slct->where('dbo.fnchecarConclusao(pro.idPronac) = 1');
         $slct->where('not exists (Select * from Parecer pr where pro.idPronac=pr.idPronac)');
-//xd($slct->assemble());
-//xd($this->fetchAll($slct));
+
+
 
 
         return $this->fetchAll($slct);
@@ -3698,8 +3792,8 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('dbo.fnDtEnvioVinculada(pro.idPronac) is not null');
         $slct->where('idProjeto is not null');
         $slct->where('exists(Select * from Parecer pr where pro.idPronac=pr.idPronac)');
-        //xd($slct->assemble());
-//xd($this->fetchAll($slct));
+
+
 //return $this->fetchAll($slct);
 
 
@@ -3754,8 +3848,8 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->where('dbo.fnDtEnvioVinculada(pro.idPronac) is not null');
         $slct->where('idProjeto is not null');
         $slct->where('exists(Select * from Parecer pr where pro.idPronac=pr.idPronac)');
-//xd($slct->assemble());
-//xd($this->fetchAll($slct));
+
+
 
 
         return $this->fetchAll($slct);
@@ -3860,7 +3954,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         if ($count) {
-//            xd($slct->assemble());
+
             return $this->fetchAll($slct)->count();
         }
 
@@ -3876,7 +3970,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->limit($tamanho, $tmpInicio);
         }
 
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -3972,7 +4066,7 @@ class Projetos extends MinC_Db_Table_Abstract
             foreach ($where as $coluna => $valor) {
                 $slct2->where($coluna, $valor);
             }
-//xd($slct2->__toString());
+
             $rs = $this->fetchAll($slct2)->current();
             if ($rs) {
                 return $rs->total;
@@ -3992,7 +4086,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -4035,7 +4129,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -4078,7 +4172,7 @@ class Projetos extends MinC_Db_Table_Abstract
             foreach ($where as $coluna => $valor) {
                 $slct2->where($coluna, $valor);
             }
-//xd($slct2->__toString());
+
             $rs = $this->fetchAll($slct2)->current();
             if ($rs) {
                 return $rs->total;
@@ -4199,7 +4293,7 @@ class Projetos extends MinC_Db_Table_Abstract
             foreach ($where as $coluna => $valor) {
                 $slct2->where($coluna, $valor);
             }
-//xd($slct2->__toString());
+
             $rs = $this->fetchAll($slct2)->current();
             if ($rs) {
                 return $rs->total;
@@ -4224,8 +4318,8 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct->limit($tamanho, $tmpInicio);
         }
 
-//xd($slct->assemble());
-//xd($this->fetchAll($slct));
+
+
         return $this->fetchAll($slct);
     }
 
@@ -4293,7 +4387,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //            foreach ($where as $coluna => $valor) {
 //                $slct2->where($coluna, $valor);
 //            }
-//            //xd($slct2->__toString());
+//
 //            $rs = $this->fetchAll($slct2)->current();
 //            if($rs){ return $rs->total; }else{ return 0; }
 //        }
@@ -4309,7 +4403,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //            }
 //            $slct->limit($tamanho, $tmpInicio);
 //        }
-//        //xd($slct->__toString());
+//
 //        return $this->fetchAll($slct);
 //    }
 
@@ -4383,7 +4477,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'DtFinal')
         );
 
-//xd($slct->assemble());
+
 // paginacao
         if ($inicio <= 0)
             return $this->fetchAll($slct);
@@ -4408,8 +4502,8 @@ class Projetos extends MinC_Db_Table_Abstract
         );
 
         $slct->where('p.IdPRONAC = ?', $idPronac);
-//xd($slct->assemble());
-//xd($this->fetchAll($slct));
+
+
 
 
         return $this->fetchAll($slct);
@@ -4591,7 +4685,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
         $slct->order(array('p.AnoProjeto', 'p.Sequencial', 'd.idProduto', 'd.TipoAnalise'));
 
-//xd($slct->assemble());
+
 
         $selectAux = $this->select();
         $selectAux->setIntegrityCheck(false);
@@ -4755,7 +4849,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->where($key, $val);
         }
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -4834,7 +4928,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -4928,11 +5022,11 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
-    public function buscarProjetosProponente($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $count = false)
+    public function buscarProjetosProponente($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $count = false, $fetchMode = Zend_DB::FETCH_OBJ)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -4992,13 +5086,13 @@ class Projetos extends MinC_Db_Table_Abstract
                 $slctContador->where($coluna, $valor);
             }
 
-            $slctContadorMaster = $this->select();
-            $slctContadorMaster->setIntegrityCheck(false);
-            $slctContadorMaster->from(
-                array($slctContador), array('total' => "count(*)")
-            );
+            $slctContadorMaster = new Zend_Db_Expr('SELECT
+                            count(*) AS "total"
+                        FROM
+                            (' .$slctContador. ') as master');
 
-            $rs = $this->fetchAll($slctContadorMaster)->current();
+            $rs = $this->_db->fetchAll($slctContadorMaster);
+
             if ($rs) {
                 return $rs->total;
             } else {
@@ -5018,8 +5112,9 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
-        return $this->fetchAll($select);
+        $this->_db->setFetchMode($fetchMode);
+
+        return $this->_db->fetchAll($select);
     }
 
     public function exibirResultadoProjetoSituacao($where, $QntdPorPagina, $PaginaAtual)
@@ -5043,7 +5138,7 @@ class Projetos extends MinC_Db_Table_Abstract
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        //xd($select);
+
         return $db->fetchAll($select);
     }
 
@@ -5064,14 +5159,14 @@ class Projetos extends MinC_Db_Table_Abstract
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        //xd($select);
+
         return $db->fetchAll($select);
     }
 
 //        public function cadastrarProjetoFNC(array $dados){
 //
 //            $sql = "EXEC SAC.dbo.paGravarProjeto '{$dados['AnoProjeto']}','{$dados['Sequencial']}','{$dados['UfProjeto']}','{$dados['Area']}','{$dados['Segmento']}','{$dados['NomeProjeto']}','{$dados['Processo']}','{$dados['CgcCpf']}','{$dados['Orgao']}','{$dados['Modalidade']}','NULL','{$dados ['Situacao']}','{$dados ['ProvidenciaTomada']}','NULL','{$dados ['Mecanismo']}','0.00',{$dados['VlCusteio']},{$dados['VlCapital']},'{$dados['Usuario']}','{$dados ['DtProtocolo']}'";
-////          xd($sql);
+////
 //            $db= Zend_Db_Table::getDefaultAdapter();
 //            $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //            return $db->fetchAll($sql);
@@ -5088,7 +5183,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
 
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name), array(
+            array('p' => $this->_name), array(
                 'p.AnoProjeto', 'p.Sequencial', 'p.UfProjeto', 'p.NomeProjeto', 'p.IdPRONAC', 'p.Situacao', 'p.Mecanismo', 'p.NomeProjeto', 'p.idProjeto'
             )
         );
@@ -5118,7 +5213,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false)->distinct();
         if ($dadosDiligencia) {
             $select->from(
-                array('p' => $this->_schema . '.' . $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
+                array('p' => $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
                     'p.AnoProjeto',
                     'p.Sequencial',
                     'p.UfProjeto',
@@ -5133,7 +5228,7 @@ class Projetos extends MinC_Db_Table_Abstract
             );
         } else {
             $select->from(
-                array('p' => $this->_schema . '.' . $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
+                array('p' => $this->_name), array('(p.AnoProjeto+p.Sequencial) as pronac',
                     'p.AnoProjeto',
                     'p.Sequencial',
                     'p.UfProjeto',
@@ -5213,7 +5308,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $selectQtdTotal = $this->select();
         $selectQtdTotal->setIntegrityCheck(false);
         if ($qtdTotal) {
-            $select->from(array('p' => $this->_schema . '.' . $this->_name), array('IdPronac'));
+            $select->from(array('p' => $this->_name), array('IdPronac'));
             $select->joinInner(array('i' => 'Interessado'), 'p.CgcCPf = i.CgcCPf', array(), 'SAC.dbo');
             $select->joinInner(array('a' => 'Area'), 'p.Area = a.Codigo', array(), 'SAC.dbo');
             $select->joinInner(array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array(), 'SAC.dbo');
@@ -5230,7 +5325,7 @@ class Projetos extends MinC_Db_Table_Abstract
         } else {
             if ($inicio < 0) {
                 $select->from(
-                    array('p' => $this->_schema . '.' . $this->_name),
+                    array('p' => $this->_name),
                     array(
                         '(p.AnoProjeto+p.Sequencial) as pronac',
                         'p.AnoProjeto',
@@ -5248,7 +5343,7 @@ class Projetos extends MinC_Db_Table_Abstract
             } else {
                 $soma = $tamanho + $tmpInicio;
                 $select->from(
-                    array('p' => $this->_schema . '.' . $this->_name),
+                    array('p' => $this->_name),
                     array(
                         new Zend_Db_Expr("DISTINCT TOP $soma (p.AnoProjeto+p.Sequencial) as pronac"),
                         'p.AnoProjeto',
@@ -5328,7 +5423,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 return $this->fetchAll($select);
             }
         } else {
-            //xd($selectAux2->assemble());
+
             return $this->fetchAll($selectAux2);
         }
     }
@@ -5340,7 +5435,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->distinct();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('p' => $this->_schema . '.' . $this->_name),
+            array('p' => $this->_name),
             array(
                 '(p.AnoProjeto+p.Sequencial) as pronac',
                 'p.AnoProjeto',
@@ -5384,7 +5479,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $selectCount = $this->select();
             $selectCount->distinct();
             $selectCount->setIntegrityCheck(false);
-            $selectCount->from(array('p' => $this->_schema . '.' . $this->_name), array('total' => "count(*)"));
+            $selectCount->from(array('p' => $this->_name), array('total' => "count(*)"));
             $selectCount->joinInner(array('i' => 'Interessado'), 'p.CgcCPf = i.CgcCPf', array(), 'SAC.dbo');
             $selectCount->joinInner(array('a' => 'Area'), 'p.Area = a.Codigo', array(), 'SAC.dbo');
             $selectCount->joinInner(array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array(), 'SAC.dbo');
@@ -5424,7 +5519,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $select->limit($tamanho, $tmpInicio);
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -5539,7 +5634,7 @@ class Projetos extends MinC_Db_Table_Abstract
             ->union(array('(' . $a . ')', '(' . $b . ')'))
             ->order('3', '8');
 
-//        xd($slctUnion->assemble());
+
         return $this->fetchAll($slctUnion);
     }
 
@@ -5588,7 +5683,7 @@ class Projetos extends MinC_Db_Table_Abstract
         );
 
         $select->where('c.idDocumento = ?', $idDocumento);
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -5792,7 +5887,7 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($a);
     }
 
-    public function buscarLocaisDeRealizacao($idPronac)
+    public function buscarLocaisDeRealizacao($idPronac, $idLocal = null)
     {
 
         $a = $this->select();
@@ -5815,12 +5910,16 @@ class Projetos extends MinC_Db_Table_Abstract
         $a->where('a.IdPRONAC = ?', $idPronac);
         $a->where('b.stAbrangencia = ?', 1);
         $a->order('b.idAbrangencia');
+
+        if($idLocal){
+             $a->where('b.idAbrangencia = ?', $idLocal);
+        }
 //        $a->order('b.siAbrangencia');
 //        $a->order('c.Descricao');
 //        $a->order('d.Descricao');
 //        $a->order('e.Descricao');
 
-        #xd($a->assemble());
+
         return $this->fetchAll($a);
     }
 
@@ -5895,7 +5994,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -5989,7 +6088,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -6068,7 +6167,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         $select->where('p.IdPRONAC = ?', $idPronac);
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -6092,7 +6191,7 @@ class Projetos extends MinC_Db_Table_Abstract
         );
         $select->where('p.AnoProjeto+p.Sequencial = ?', $Pronac);
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -6135,7 +6234,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -6143,7 +6242,7 @@ class Projetos extends MinC_Db_Table_Abstract
     {
         $tbFiscalizacao = $this->select();
         $tbFiscalizacao->setIntegrityCheck(false);
-        $tbFiscalizacao->from(array("tbFiscalizacao" => 'tbFiscalizacao'), array('*'));
+        $tbFiscalizacao->from(array("tbFiscalizacao" => 'tbFiscalizacao'), array('*'), $this->_schema);
         $tbFiscalizacao->where('stFiscalizacaoProjeto = ?', '0');
         $tbFiscalizacao->orWhere('stFiscalizacaoProjeto = ?', '1');
 
@@ -6198,10 +6297,11 @@ class Projetos extends MinC_Db_Table_Abstract
             array('tbNm' => 'Nomes'), "tf.idAgente = tbNm.idAgente", array('nmTecnico' => 'tbNm.Descricao'), 'AGENTES.dbo'
         );
         $select->joinLeft(
-            array('trf' => 'tbRelatorioFiscalizacao'), 'tf.idFiscalizacao = trf.idFiscalizacao', array('stAvaliacao'), "SAC.dbo"
+            array('trf' => 'tbRelatorioFiscalizacao'), 'tf.idFiscalizacao = trf.idFiscalizacao',
+            array('stAvaliacao'), "SAC.dbo"
         );
         $select->joinLeft(
-            array('AUXF' => $tbFiscalizacao), 'AUXF.IdPRONAC = tf.IdPRONAC', array()
+            array('AUXF' => $tbFiscalizacao), 'AUXF.IdPRONAC = tf.IdPRONAC'
         );
 
         //adiciona quantos filtros foram enviados
@@ -6224,7 +6324,7 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -6375,7 +6475,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slctUnion->order($order);
 
 
-        #xd($slctUnion->assemble());
+
         return $this->fetchAll($slctUnion);
     }
 
@@ -6619,7 +6719,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->where($coluna, $valor);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -6725,7 +6825,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+
             return $this->fetchAll($select)->count();
         }
 
@@ -6843,7 +6943,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+
             return $this->fetchAll($select)->count();
         }
 
@@ -6859,7 +6959,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -6941,7 +7041,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+
             return $this->fetchAll($select)->count();
         }
 
@@ -6957,7 +7057,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -7049,7 +7149,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+
             return $this->fetchAll($select)->count();
         }
 
@@ -7065,7 +7165,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -7132,7 +7232,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+
             return $this->fetchAll($select)->count();
         }
 
@@ -7148,7 +7248,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -7327,4 +7427,9 @@ class Projetos extends MinC_Db_Table_Abstract
         return $db->fetchOne('select sac.dbo.fnChecarLiberacaoDaAdequacaoDoProjeto (?)', $idPronac);
     }
 
+    public function verificarIN2017($idPronac) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchOne('SELECT sac.dbo.fnVerificarProjeto_IN2017(?) as IN2017', $idPronac);
+    }
 }

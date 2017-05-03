@@ -65,7 +65,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$idavaliacao = $_POST['idavaliacao'];
 		$ListaRegistros =  ReadequacaoProjetos::retornaSQLHistoricoLista($idavaliacao);
 		$this->view->ListaRegistros = $db->fetchAll($ListaRegistros);
-//                xd($this->view->ListaRegistros);
+
 	}
 
 /**************************************************************************************************************************
@@ -101,10 +101,10 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 				$jsonEncode = json_encode($dadosAgente);
 
 				//echo $jsonEncode;
-				echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+				$this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
 			}
 			else{
-				echo json_encode(array('resposta'=>false));
+				$this->_helper->json(array('resposta'=>false));
 			}
 			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
@@ -129,10 +129,10 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 				$jsonEncode = json_encode($dadosAgente);
 
 				//echo $jsonEncode;
-				echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+				$this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
 			}
 			else{
-				echo json_encode(array('resposta'=>false));
+				$this->_helper->json(array('resposta'=>false));
 			}
 			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
@@ -1729,7 +1729,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 //		$iframe      = isset($dados[0]->CNPJCPF) ? $dados[0]->CNPJCPF : 0;
 //
 //		//VERIFICA O STATUS DA SOLICITA��O
-////xd($dados);
+//
 //		$sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 //		$stResult = $db->fetchAll($sqlStatusReadequacao);
 //
@@ -2113,7 +2113,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 //            $new = new tbProposta();
 //            $ss = $new->finalizarReadequacaoDeProposta('119720');
-//            xd($ss);
+
 
             //retorna o id do agente logado
             $idAgenteRemetente = $this->getIdUsuario;
@@ -2290,7 +2290,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                             } else if (trim($x->tpAcao) == 'E') {
                                     // altera o status dos locais exclu�dos
-                                    $Abrangencia = new Abrangencia();
+                                    $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
                                     $Abrangencia->update(array('stAbrangencia' => 0), array('idAbrangencia = ?' => $x->idAbrangenciaAntiga));
                                     //$_local = AbrangenciaDAO::buscarAbrangenciasAtuais($idProjeto, $x->idPais, $x->idUF, $x->idMunicipioIBGE);
                                 //$__local = AbrangenciaDAO::excluir($_local[0]->idAbrangencia);
@@ -2423,7 +2423,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 
                             // PRODUTO + ITEN DE CUSTO
-                        $planilhaProposta = new PlanilhaProposta();
+                        $planilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                         $planilhaProjeto  = new PlanilhaProjeto();
                         $DeParaPlanilhaAprovacao = new DeParaPlanilhaAprovacao();
                         $Projetos = new Projetos();
@@ -3588,10 +3588,10 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $where = " idpedidoalteracao = $idpedidoalteracao";
                     $alterarStatus = $buscaInformacoes->atualizarStatus($dados, $where);
                 }
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Exception $e) {
-                echo json_encode(array('error' => true, 'Descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'Descricao' => $e->getMessage()));
                 $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }

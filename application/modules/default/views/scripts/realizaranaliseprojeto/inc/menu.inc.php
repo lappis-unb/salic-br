@@ -182,7 +182,7 @@
             <a class="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciarproponente', 'action' => 'index')); ?>" title="Ir para Diligenciar Proponente">Dilig&ecirc;ncias</a>
              */
             ?>
-            <a class="no_seta last" target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'), '', true); ?>?idPronac=<?php echo $this->idpronac;?>&situacao=C30&tpDiligencia=126" title="Ir para Diligenciar Proponente">Dilig&ecirc;ncias</a>
+            <a class="no_seta last" target="_blank" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'), '', true); ?>?idPronac=<?php echo $this->idpronac;?>&situacao=C30&tpDiligencia=126" title="Ir para Diligenciar Proponente">Dilig&ecirc;ncias</a>
             <!--<a class="no_seta" href="<?php //echo $this->url(array('controller' => 'recurso', 'action' => 'detalhar-recurso'), '', true); ?>?idPronac=<?php //echo $this->idpronac;?>" title="Ir para Recurso">Recurso</a>-->
             
             <?php /* ?>

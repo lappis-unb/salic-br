@@ -34,6 +34,8 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
           $PermissoesGrupo[] = 126; // Coordenador Geral de Presta��o de Contas
           $PermissoesGrupo[] = 134; // Coordenador de Fiscaliza�?o */
 
+          $PermissoesGrupo[] = 148; // Coordenador de Fiscaliza�?o
+          $PermissoesGrupo[] = 151; // Coordenador de Fiscaliza�?o
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
         $this->usuarioLogado = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
@@ -848,7 +850,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 //
 //        $respDiligencia = $diligenciaDAO->buscar($where);
 //        if($respDiligencia->count()>0)
-//        xd($respDiligencia);
+
 
         $post = Zend_Registry::get('post');
         if($post->tipo == 'pdf' or $post->tipo == 'xls'){
@@ -895,7 +897,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         foreach ($retorno as $value) {
                 $pareceristas[] = array('id'=>$value->id,'nome'=>utf8_encode($value->Nome));
         }
-        echo json_encode($pareceristas);
+        $this->_helper->json($pareceristas);
     }
     private function tipos($array,$labelCampo,$tp,$infoInicial,$infoFinal = ''){
         switch ($tp){

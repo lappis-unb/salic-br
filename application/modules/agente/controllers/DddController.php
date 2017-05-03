@@ -78,9 +78,9 @@ class Agente_DddController extends Zend_Controller_Action
                     $i++;
                 }
                 $jsonEncode = json_encode($dados);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dados));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dados));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
     }

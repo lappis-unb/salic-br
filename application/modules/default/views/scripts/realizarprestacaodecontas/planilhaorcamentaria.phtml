@@ -1,7 +1,7 @@
 <?php
     $tpAgente = filter_input(INPUT_GET, 'tpAgente');
     if (empty($tpAgente)) {
-        require_once "inc/menu.inc.php"; // menu
+        echo $this->partial("inc/menu.inc.php");
     }
 ?>
 
@@ -147,7 +147,7 @@
             <?php } ?>
         </tr>
     </table>
-    
+
 <?php
     $validaA = true;
     $validab = true;
@@ -258,7 +258,7 @@
                                                 }
                                                 $html .= '</div>';
                                             }
-                                        } 
+                                        }
                                         $html .= '</div>';
                                         $cont2++;
                                     }
@@ -301,7 +301,7 @@
                                                     $html .= '<th>Comprovação Validada</th>';
                                                     $html .= '<th>Modalidade Vinculada</th>';
                                                     $html .= '</tr>';
-                                                    foreach ($tabelaItem as $idPlanilhaAprovacao => $valor) : 
+                                                    foreach ($tabelaItem as $idPlanilhaAprovacao => $valor) :
                                                         $html .= '<tr>';
                                                         $html .= '<td align="center">';
                                                         $href = $this->url(
@@ -392,12 +392,12 @@
     <?php } ?>
     </div>
 </div>
-    
+
 <div id="rodapeConteudo"></div>
 <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
 <br clear="all" />
 
-<?php $analisarItemHref   =   $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'analisaritem'));?> 
+<?php $analisarItemHref   =   $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'analisaritem'));?>
 
 <script type="text/javascript">
     <?php if(isset($_GET['tipoMsg'])):?>
@@ -458,7 +458,7 @@
             });
         }
     });
-    
+
     $('#btComprovar').click(function(){
         var dados = $('#frPagamento').serializeArray();
         var verifica = false;
@@ -521,7 +521,7 @@
                         }
                         else{
                             janelaAlerta(resposta.mensagem);
-                        }                      
+                        }
 
                         $(this).dialog('close');
                     }

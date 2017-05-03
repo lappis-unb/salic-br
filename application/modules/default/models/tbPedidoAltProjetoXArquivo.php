@@ -14,7 +14,7 @@ class tbPedidoAltProjetoXArquivo extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "scSAC";
+	protected $_schema  = "BDCORPORATIVO.scSAC";
 	protected $_name    = "tbPedidoAltProjetoXArquivo";
 
 
@@ -30,7 +30,7 @@ class tbPedidoAltProjetoXArquivo extends MinC_Db_Table_Abstract
 	{
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
-		$select->from(array('x' => $this->_schema . '.' . $this->_name)
+		$select->from(array('x' => $this->_name)
 			,array('x.idPedidoAlteracao')
 		);
 		$select->joinInner(

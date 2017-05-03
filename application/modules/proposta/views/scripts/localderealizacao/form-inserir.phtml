@@ -1,17 +1,13 @@
 <div class="container-fluid">
-
     <div class="row">
-
         <?php echo $this->partial("inc/menu.phtml", $this); ?>
-
         <div class="content col s10 m12 l10 planilha-produtos">
-
             <?php
-            $links = array(
-                $this->layout['listagem'],
-                array('Novo Local de Realiza&ccedil;&atilde;o' => array())
-            );
-            gerarBreadCrumb($links);
+                $links = array(
+                    $this->layout['listagem'],
+                    array('Novo Local de Realiza&ccedil;&atilde;o' => array())
+                );
+                gerarBreadCrumb($links);
             ?>
             <div id="titulo">
                 <div>Local de
@@ -58,14 +54,11 @@
                                 </td>
                             </tr>
                         </table>
-                        <table class="tabela">
-                            <tr>
-                                <td align="center">
-                                    <input type="button" style="width: 87px" class="btn_salvar" id="btn_salvar"
-                                           name="Salvar" value=""/>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button type="button" class="btn" id="btn_salvar" name="Salvar" value=""/>Salvar</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -248,7 +248,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         $select->where('idReadequacao = ?', $idReadequacao);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -307,7 +307,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -366,7 +366,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -431,7 +431,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -502,7 +502,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -540,7 +540,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
 
@@ -556,7 +556,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -598,7 +598,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
 
@@ -614,7 +614,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -649,7 +649,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -703,7 +703,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         $select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE a.idNrReuniao = cv.idNrReuniao AND a.idPronac = cv.IdPRONAC AND a.idTipoReadequacao = cv.tpTipoReadequacao)", '');
         $select->order(array(6, 1));
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -800,9 +800,46 @@ class tbReadequacao extends MinC_Db_Table_Abstract
     public function painelReadequacoesTecnicoAcompanhamento($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
     {
         try {
-            $db = Zend_Db_Table::getDefaultAdapter();
-            $select = $this->selectView('vwPainelReadequacaoTecnico');
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+            $select->from(
+                array('a' => $this->_name),
+                    new Zend_Db_Expr("
+                        b.idPronac,
+                        a.idReadequacao,
+                        b.AnoProjeto+b.Sequencial as PRONAC,
+                        b.NomeProjeto,
+                        c.dsReadequacao as tpReadequacao,
+                        d.dtEnvioAvaliador as dtDistribuicao,
+                        DATEDIFF(DAY,
+                        d.dtEnvioAvaliador,
+                        GETDATE()) as qtDiasAvaliacao,
+                        d.idAvaliador AS idTecnicoParecerista,
+                        d.idUnidade as idOrgao"
+                        )
+                );
+
+            $select->joinInner(
+                array('d' => 'tbDistribuirReadequacao'), 'a.idReadequacao = d.idReadequacao',
+                array(''), $this->_schema
+            );
+            $select->joinInner(
+                array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
+                array(''), $this->_schema
+            );
+            $select->joinInner(
+                array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
+                array(''), $this->_schema
+            );
+            $select->joinInner(
+                array('e' => 'tbTipoEncaminhamento'), 'a.siEncaminhamento = e.idTipoEncaminhamento',
+                array(''), $this->_schema
+            );
+
+            $select->where('a.stEstado = ? ', 0);
+            $select->where('a.siEncaminhamento = ? ', 4);
+
+
             foreach ($where as $coluna => $valor) {
                 $select->where($coluna, $valor);
             }
@@ -817,7 +854,10 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                 $select->limit($tamanho, $tmpInicio);
             }
 
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($select);
+
         } catch (Exception $objException) {
             xd($objException->getMessage());
             throw new Exception($objException->getMessage(), 0, $objException);
@@ -852,5 +892,78 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         }
 
         return $total;
-    }    
+    }
+
+    public function buscarReadequacaoCoordenadorParecerEmAnalise($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
+    {
+
+        try {
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+            $select->from(
+                array('a' => $this->_name),
+                new Zend_Db_Expr("
+                 b.idPronac,
+                 a.idReadequacao,
+                 b.AnoProjeto+b.Sequencial as PRONAC,
+                 b.NomeProjeto,
+                 b.Area,
+                 b.Segmento,
+                 c.dsReadequacao as tpReadequacao,
+                 d.dtEnvioAvaliador as dtDistribuicao,
+                 DATEDIFF(DAY,    
+                 d.dtEnvioAvaliador,
+                 GETDATE()) as qtDiasEmAnalise,
+                 d.idAvaliador,
+                 f.usu_nome as nmParecerista,
+                 d.idUnidade as idOrgao"
+                )
+            );
+
+            $select->joinInner(
+                array('d' => 'tbDistribuirReadequacao'), 'a.idReadequacao = d.idReadequacao',
+                array(''), $this->_schema
+            );
+            $select->joinInner(
+                array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
+                array(''), $this->_schema
+            );
+            $select->joinInner(
+                array('c' => 'tbTipoReadequacao'), 'a.idReadequacao = d.idReadequacao',
+                array(''), $this->_schema
+            );
+            $select->joinInner(
+                array('e' => 'tbTipoEncaminhamento'), 'a.siEncaminhamento = e.idTipoEncaminhamento',
+                array(''), $this->_schema
+            );
+            $select->joinLeft(
+                array('f' => 'Usuarios'), 'd.idAvaliador = f.usu_codigo',
+                array(''), $this->getSchema('tabelas')
+            );
+
+            $select->where('a.stEstado = ? ', 0);
+            $select->where('a.siEncaminhamento = ? ', 4);
+
+            foreach ($where as $coluna => $valor) {
+                $select->where($coluna, $valor);
+            }
+
+            $select->order($order);
+
+            if ($tamanho > -1) {
+                $tmpInicio = 0;
+                if ($inicio > -1) {
+                    $tmpInicio = $inicio;
+                }
+                $select->limit($tamanho, $tmpInicio);
+            }
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchAll($select);
+
+        } catch (Exception $objException) {
+            xd($objException->getMessage());
+            throw new Exception($objException->getMessage(), 0, $objException);
+        }
+    }
 }

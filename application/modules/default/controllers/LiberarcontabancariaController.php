@@ -260,9 +260,9 @@ class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
 
         if (!$buscar) {
             $liberar->inserir($dados);
-            echo json_encode(array('resposta'=>true, 'cgccpf'=>$cgccpf));
+            $this->_helper->json(array('resposta'=>true, 'cgccpf'=>$cgccpf));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -276,7 +276,7 @@ class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
     }
 
     public function contasLiberadasAction() {
-//        xd('aaa');
+
     }
 
     public function localizarprojetosAction() {

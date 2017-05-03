@@ -30,6 +30,5 @@ class Zend_View_Helper_CorLinha
 		}
 
 		return $bg;
-	} // fecha método corLinha()
-
-} // fecha class
+	}
+}

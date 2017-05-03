@@ -35,7 +35,7 @@ class tbDocumentoAceitacao extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbRelatorioConsolidado'),
@@ -69,7 +69,7 @@ class tbDocumentoAceitacao extends MinC_Db_Table_Abstract
                     );
 
             $select->where('c.idPRONAC = ?', $idpronac);
-//            xd($select->query());
+
             return $this->fetchAll($select);
 
         }

@@ -15,14 +15,8 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
     private $getIdAgente  = 0;
     private $getIdGrupo   = 0;
     private $getIdOrgao   = 0;
-//    private $getIdUsuario = 0;
     private $intTamPag = 10;
-    /**
-     * Reescreve o m�todo init()
-     * @access public
-     * @param void
-     * @return void
-     */
+
     public function init() {
 
         // verifica as permiss�es
@@ -51,6 +45,8 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 137;
         $PermissoesGrupo[] = 138;
         $PermissoesGrupo[] = 139;
+        $PermissoesGrupo[] = 148;
+        $PermissoesGrupo[] = 151;
         parent::perfil(1, $PermissoesGrupo);
 
         $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
@@ -91,18 +87,18 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
             if($dadosProjeto[0]->Orgao == $this->getIdOrgao) {
                 $dados['NomeProjeto'] = utf8_encode($dadosProjeto[0]['NomeProjeto']);
                 $jsonEncode = json_encode($dados);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dados));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dados));
             } else {
                 $dados = array();
                 $dados['msg'] = utf8_encode('<span style="color:red;">Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto</span>');
                 $jsonEncode = json_encode($dados);
-                echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
+                $this->_helper->json(array('resposta'=>false,'conteudo'=>$dados));
             }
         } else {
             $dados = array();
             $dados['msg'] = utf8_encode('<span style="color:red;">Projeto n&atilde;o encontrado.</span>');
             $jsonEncode = json_encode($dados);
-            echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
+            $this->_helper->json(array('resposta'=>false,'conteudo'=>$dados));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); ;
     }
@@ -137,18 +133,18 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
                 }
 
                 $jsonEncode = json_encode($dados);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dados));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dados));
             } else {
                 $dados = array();
                 $dados['msg'] = utf8_encode('<span style="color:red;">Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto</span>');
                 $jsonEncode = json_encode($dados);
-                echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
+                $this->_helper->json(array('resposta'=>false,'conteudo'=>$dados));
             }
         } else {
             $dados = array();
             $dados['msg'] = utf8_encode('<span style="color:red;">Projeto n�o encontrado.</span>');
             $jsonEncode = json_encode($dados);
-            echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
+            $this->_helper->json(array('resposta'=>false,'conteudo'=>$dados));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); ;
     }
@@ -224,9 +220,9 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         $vwAnexarComprovantes = new vwAnexarComprovantes();
         $resultado = $vwAnexarComprovantes->excluirArquivo($post->id);
         if($resultado){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); ;
 

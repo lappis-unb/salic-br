@@ -52,6 +52,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function retirarProjetosVinculos($siVinculoProposta, $idVinculo)
     {
@@ -446,6 +447,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function listaUF()
     {
@@ -464,6 +466,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function buscaIdAgente($CNPJCPF) {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -481,6 +484,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function inserirAgentes($dadosAgentes) {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -494,6 +498,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function inserirNomes($dadosNomes) {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -507,6 +512,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function inserirEnderecoNacional($dadosEnderecoNacional) {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -520,6 +526,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function inserirVisao($dadosVisao) {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -550,6 +557,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idOrgaoSuperior
      * @access public
      * @return void
+     * @todo mover para o lugar correto
      */
     public function recuperarTecnicosOrgao($idOrgaoSuperior)
     {
@@ -1861,7 +1869,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @deprecated
+     *
      */
     public function buscarPropostaAnaliseVisualTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -1883,7 +1891,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         ($order) ? $sql->order($order) : null;
 
         foreach ($where as $coluna=>$valor) {
-            $sql->where($coluna.' = ?', $valor);
+            $sql->where($coluna.' ?', $valor);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -2542,7 +2550,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @return void
      * @author wouerner <wouerner@gmail.com>
      */
-    public function checklistEnvioProposta($idPreProjeto, $alterarprojeto = false)
+    public function checklistEnvioPropostaSemSp($idPreProjeto, $alterarprojeto = false)
     {
         $validacao = new stdClass();
         $listaValidacao = array();
@@ -2550,25 +2558,28 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()
-            ->from($this->_name, $this->_getCols(), $this->_schema)
-            ->where('idPreProjeto = ?', $idPreProjeto);
-        $idAgente = $db->fetchRow($sql)->idAgente;
-        $sql = $db->select()
-            ->from(array('tbmovimentacao'), '*', $this->_schema)
-            ->where('idProjeto = ?', $idPreProjeto)
-            ->where('Movimentacao <> 95')
-            ->where('stEstado = 0')
-            ->limit(1);
 
-        $movimentacao = $db->fetchAll($sql);
+        #verificar se a proposta está com o proponente
+        $whereMovimentacao = array(
+            'idProjeto = ?' =>  $idPreProjeto,
+            'Movimentacao <> ?' => 95,
+            'stEstado = ?' => 0
+        );
+
+        $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+        $movimentacao = $tbMovimentacao->buscar($whereMovimentacao, array(), 1)->current();
 
         if (!empty( $movimentacao ) && !$alterarprojeto) {
-            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL ENCONTRA-SE NO MINIST&Eacute;RIO DA CULTURA.</b></font>';
+            $validacao->dsInconsistencia = 'A proposta cultural encontra-se no minist&eacute;rio da cultura';
             $validacao->Observacao = '';
             $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
         } else {
+
+            $sql = $db->select()
+                ->from($this->_name, $this->_getCols(), $this->_schema)
+                ->where('idPreProjeto = ?', $idPreProjeto);
+            $idAgente = $db->fetchRow($sql)->idAgente;
 
             $sql = $db->select()
                 ->from(array('tbavaliacaoproposta'), '*', $this->_schema)
@@ -2578,7 +2589,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $avaliacaoProposta = $db->fetchAll($sql);
             //if(( date('m') == 13 || date('m') == 1 ) && empty($avaliacaoProposta)) { @todo voltar esta linha, apenas para teste
             if( getenv('APPLICATION_ENV') == 'production' && empty($avaliacaoProposta)) {
-                $validacao->Descricao = 'Conforme Art 9&#176; da Instru&ccedil;&atilde;o Normativa n&#176; 1, de 24 de junho de 2013, nenhuma proposta poder&aacute; ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!';
+                $validacao->dsInconsistencia = 'Conforme Art 9&#176; da Instru&ccedil;&atilde;o Normativa n&#176; 1, de 24 de junho de 2013, nenhuma proposta poder&aacute; ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!';
                 $validacao->Observacao = 'PENDENTE';
                 $validacao->Url = '';
                 $listaValidacao[] =  clone($validacao);
@@ -2594,7 +2605,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                 //VERIFICAR AS INFORMACOES DO PROPONENTE
                 if (empty($vCadastrarProponente)) {
-                    $validacao->Descricao = 'Dados cadastrais do proponente inexistente ou não h&aacute; endereço para correspondência selecionado.';
+                    $validacao->dsInconsistencia = 'Dados cadastrais do proponente inexistente ou não h&aacute; endereço para correspondência selecionado.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                     $listaValidacao[] =  clone($validacao);
@@ -2613,7 +2624,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                 $regularidadeProponente = $db->fetchAll($sql);
                 if (!empty($regularidadeProponente)) {
-                    $validacao->Descricao ='Proponente em situa&ccedil;&atilde;o IRREGULAR no Minist&eacute;rio da Cultura.';
+                    $validacao->dsInconsistencia ='Proponente em situa&ccedil;&atilde;o IRREGULAR no Minist&eacute;rio da Cultura.';
                     $validacao->Observacao =  'PENDENTE';
                     $validacao->Url = '';
                     $listaValidacao[] =  clone($validacao);
@@ -2629,7 +2640,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     ;
                 $verificarEmail = $db->fetchAll($sql);
                 if (empty($verificarEmail)){
-                    $validacao->Descricao ='E-mail do proponente inexistente';
+                    $validacao->dsInconsistencia ='E-mail do proponente inexistente';
                     $validacao->Observacao =  'PENDENTE';
                     $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                     $listaValidacao[] =  clone($validacao);
@@ -2654,9 +2665,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $dataNasc = $db->fetchAll($sql);
 
                     if (empty($dataNasc)) {
-                        $validacao->Descricao ='Data de Nascimento inexistente.';
+                        $validacao->dsInconsistencia ='Data de nascimento inexistente.';
                         $validacao->Observacao =  'PENDENTE';
-                        $validacao->Url = array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterardados');
+                        $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'info-adicionais', 'id' => $idAgente);
                         $listaValidacao[] = clone($validacao);
                     }
                 }
@@ -2672,7 +2683,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                     $natureza = $db->fetchAll($sql);
                     if(empty($natureza)) {
-                        $validacao->Descricao = 'Natureza do proponente.';
+                        $validacao->dsInconsistencia = 'Natureza do proponente.';
                         $validacao->Observacao =  'PENDENTE';
                         $validacao->Url = '';
                         $listaValidacao[] =  clone($validacao);
@@ -2687,7 +2698,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                     $dirigenteCadastrado = $db->fetchAll($sql);
                     if (empty($dirigenteCadastrado)) {
-                        $validacao->Descricao = 'Cadastro de Dirigente.';
+                        $validacao->dsInconsistencia = 'Cadastro de Dirigente.';
                         $validacao->Observacao = 'PENDENTE';
                         $validacao->Url = '';
                         $listaValidacao[] =  clone($validacao);
@@ -2719,7 +2730,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $documento = $db->fetchRow($sql);
 
                     if (empty($documento)) {
-                        $validacao->Descricao = $msg;
+                        $validacao->dsInconsistencia = $msg;
                         $validacao->Observacao = 'PENDENTE';
                         $validacao->Url = array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
@@ -2737,7 +2748,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $local = $db->fetchAll($sql);
 
                 if (empty($local)) {
-                    $validacao->Descricao = 'O Local de realiza&ccedil;&atilde;o da proposta n&atilde;o foi preenchido.';
+                    $validacao->dsInconsistencia = 'O Local de realiza&ccedil;&atilde;o da proposta n&atilde;o foi preenchido.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'localderealizacao', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2758,7 +2769,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
 
                 if (!empty($minimo90)) {
-                    $validacao->Descricao = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de in&iacute;cio de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
+                    $validacao->dsInconsistencia = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de in&iacute;cio de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url =  array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2772,7 +2783,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
                 $planoDistribuicao = $db->fetchAll($sql);
                 if (empty($planoDistribuicao)){
-                    $validacao->Descricao = 'O Plano Distribui&ccedil;&atilde;o de Produto n&atilde;o foi preenchido.';
+                    $validacao->dsInconsistencia = 'O Plano Distribui&ccedil;&atilde;o de Produto n&atilde;o foi preenchido.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2789,12 +2800,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $quantidade = count($db->fetchAll($sql));
 
                 if ($quantidade = 0){
-                    $validacao->Descricao = 'N&atilde;o h&aacute; produto principal selecionado na proposta.';
+                    $validacao->dsInconsistencia = 'N&atilde;o h&aacute; produto principal selecionado na proposta.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
                 } else if($quantidade > 1) {
-                    $validacao->Descricao = 'Só poder&aacute; haver um produto principal em cada proposta, a sua est&aacute; com mais de um produto.';
+                    $validacao->dsInconsistencia = 'Só poder&aacute; haver um produto principal em cada proposta, a sua est&aacute; com mais de um produto.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2811,7 +2822,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $planilhaOrcamentaria = $db->fetchAll($sql);
 
                 if (empty($planilhaOrcamentaria)) {
-                    $validacao->Descricao = 'N&atilde;o existe item or&ccedil;ament&aacute;rio referente a fonte de recurso - Incentivo Fiscal Federal.';
+                    $validacao->dsInconsistencia = 'N&atilde;o existe item or&ccedil;ament&aacute;rio referente a fonte de recurso - Incentivo Fiscal Federal.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2836,7 +2847,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 $planilhaProduto = $db->fetchAll($sql);
 
                 if (!empty($planilhaProduto)) {
-                    $validacao->Descricao = 'Existe produto cadastrado sem a respectiva planilha orcament&aacute;ria cadastrada.';
+                    $validacao->dsInconsistencia = 'Existe produto cadastrado sem a respectiva planilha orcament&aacute;ria cadastrada.';
                     $validacao->Observacao = 'PENDENTE';
                     $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                     $listaValidacao[] =  clone($validacao);
@@ -2866,17 +2877,6 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             }
         }
 
-        $sql = $db->select()
-            ->from($this->_name, $this->_getCols(),  $this->_schema)
-            ->where('idPreProjeto =  ?', $idPreProjeto)
-            ;
-        $resultUsuario = $db->fetchAll($sql);
-
-        $usuario = null;
-        if(count($resultUsuario) > 0) {
-            $usuario = $resultUsuario[0]->idUsuario;
-        }
-
         $validado= true;
         foreach ($listaValidacao as $valido){
             if($valido->Observacao == 'PENDENTE') {
@@ -2886,24 +2886,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if($validado ) {
-
-            $dados = array(
-                'idprojeto' => $idPreProjeto,
-                'movimentacao' => 96,
-                'dtmovimentacao' => MinC_Db_Expr::date(),
-                'stestado' => 0,
-                'usuario' => $usuario
-            );
-
-            $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $insert = $tbMovimentacao->insert($dados);
-
-            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINIST&Eacute;RIO DA CULTURA.</b></font>';
-            $validacao->Observacao = 'OK';
+            $validacao->dsInconsistencia = 'A proposta cultural n&atilde;o possui pend&ecirc;ncias';
+            $validacao->Observacao = true;
             $validacao->Url = '';
-            $listaValidacao[] =  clone($validacao);
+            return $validacao;
+
         } else {
-            $validacao->Descricao = '<font color=red><b> A PROPOSTA CULTURAL N&Atilde;O FOI ENVIADA AO MINIST&Eacute;RIO DA CULTURA DEVIDO &Agrave;S PEND&Ecirc;NCIAS ASSINALADAS ACIMA.</b></font>';
+            $validacao->dsInconsistencia = '<font color=red><b> A PROPOSTA CULTURAL N&Atilde;O FOI ENVIADA AO MINIST&Eacute;RIO DA CULTURA DEVIDO &Agrave;S PEND&Ecirc;NCIAS ASSINALADAS ACIMA.</b></font>';
             $validacao->Observacao = '';
             $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
@@ -2971,10 +2960,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     }
 
     //@todo lugar certo é tbPlanilhaProposta, remover do ManterOrcamentoDAO tbm
-    public function listarItensProdutos($idPreProjeto, $idItem = null)
+    public function listarItensProdutos($idPreProjeto, $idItem = null, $fetchMode = Zend_DB::FETCH_OBJ)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode($fetchMode);
 
         $pp = array(
             'pp.idetapa as idEtapa',
@@ -3114,4 +3103,213 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
         return $db->fetchAll($sql);
     }
+
+    /**
+     * propostas
+     * @param $idAgente
+     * @param $idResponsavel
+     * @param $idAgenteCombo
+     * @param array $where
+     * @param array $order
+     * @param int $start
+     * @param int $limit
+     * @param null $search
+     * @return array
+     */
+    public function propostas($idAgente, $idResponsavel, $idAgenteCombo, $where = array(), $order = array(), $start = 0, $limit = 20, $search = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $subSql = $db->select()
+            ->from(array('pr' => 'projetos'), array('idprojeto'), $this->_schema)
+            ->where('a.idpreprojeto = pr.idprojeto')
+        ;
+
+        $sql = $db->select()
+            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'),$this->_schema)
+            ->join(array('b' => 'agentes'), 'a.idagente = b.idagente', array('b.cnpjcpf', 'b.idagente'), $this->getSchema('agentes'))
+            ->joinleft(array('n' => 'nomes'), 'n.idagente = b.idagente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
+            ->where('a.idagente = ? ', $idAgente)
+            ->where('a.stestado = 1')
+            ->where("NOT EXISTS($subSql)")
+            ->where("a.mecanismo = '1'")
+        ;
+
+        $sql2 = $db->select()
+            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), $this->_schema)
+            ->join(array('b' => 'agentes'), 'a.idagente = b.idagente', array('b.cnpjcpf', 'b.idagente'), $this->getSchema('agentes'))
+            ->join(array('c' => 'vinculacao'), 'b.idagente = c.idvinculoprincipal', array(), $this->getSchema('agentes'))
+            ->join(array('d' => 'agentes'), 'c.idagente = d.idagente', array(), $this->getSchema('agentes'))
+            ->join(array('e' => 'sgcacesso'), 'd.cnpjcpf = e.cpf', array(), $this->getSchema('controledeacesso'))
+            ->joinleft(array('n' => 'nomes'), 'n.idagente = b.idagente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
+            ->where('e.idusuario = ?',$idResponsavel)
+            ->where('a.stestado = 1')
+            ->where("NOT EXISTS($subSql)")
+            ->where("a.mecanismo = '1'")
+        ;
+
+        $sql3 = $db->select()
+            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->join(array('b' => 'agentes'), 'a.idagente = b.idagente', array('b.cnpjcpf', 'b.idagente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('c' => 'nomes'), 'b.idagente = c.idagente', array('c.descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
+            ->join(array('e' => 'tbvinculoproposta'), 'a.idpreprojeto = e.idpreprojeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('f' => 'tbvinculo'), 'e.idvinculo = f.idvinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->where('a.stestado = 1')
+            ->where("NOT EXISTS($subSql)")
+            ->where("a.mecanismo = '1'")
+            ->where('e.sivinculoproposta = 2')
+            ->where('f.idusuarioresponsavel = ?', $idResponsavel)
+        ;
+
+        if (!empty($idAgenteCombo)) {
+            $sql->where('b.idagente = ?', $idAgenteCombo);
+            $sql2->where('b.idagente = ?', $idAgenteCombo);
+            $sql3->where('b.idagente = ?', $idAgenteCombo);
+        }
+
+        $sql = $db->select()->union(array($sql, $sql2,$sql3), Zend_Db_Select::SQL_UNION);
+
+        $sqlFinal = $db->select()->from(array("p" => $sql));
+//        ->joinInner( array('mov' => 'tbmovimentacao'), 'p.idpreprojeto = mov.idprojeto', array(), $this->_schema)
+//        ->joinInner( array('ver' => 'verificacao'), 'mov.Movimentacao = ver.idVerificacao', array('Descricao as situacao'), $this->_schema)
+//        ->where('mov.stestado = ? ', 0);
+
+        foreach ($where as $coluna=>$valor)
+        {
+            $sqlFinal->where($coluna, $valor);
+        }
+
+        if (!empty($search['value'])) {
+            $sqlFinal->where('p.idpreprojeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%'.$search['value'].'%');
+        }
+
+        $sqlFinal->order($order);
+
+        if (!is_null($start) && $limit) {
+            $start = (int)$start;
+            $limit = (int)$limit;
+            $sqlFinal->limitPage($start, $limit);
+        }
+
+        return $db->fetchAll($sqlFinal);
+    }
+
+    /**
+     * propostas
+     * @param $idAgente
+     * @param $idResponsavel
+     * @param $idAgenteCombo
+     * @param array $where
+     * @param array $order
+     * @param int $start
+     * @param int $limit
+     * @param null $search
+     * @return array
+     */
+    public function propostasTotal($idAgente, $idResponsavel, $idAgenteCombo, $where = array(), $order = array(), $start = 0, $limit = 20, $search = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $subSql = $db->select()
+            ->from(array('pr' => 'projetos'), array('idprojeto'), $this->_schema)
+            ->where('a.idpreprojeto = pr.idprojeto')
+        ;
+
+        $sql = $db->select()
+            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'),$this->_schema)
+            ->join(array('b' => 'agentes'), 'a.idagente = b.idagente', array('b.cnpjcpf', 'b.idagente'), $this->getSchema('agentes'))
+            ->joinleft(array('n' => 'nomes'), 'n.idagente = b.idagente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
+            ->where('a.idagente = ? ', $idAgente)
+            ->where('a.stestado = 1')
+            ->where("NOT EXISTS($subSql)")
+            ->where("a.mecanismo = '1'")
+        ;
+
+        $sql2 = $db->select()
+            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), $this->_schema)
+            ->join(array('b' => 'agentes'), 'a.idagente = b.idagente', array('b.cnpjcpf', 'b.idagente'), $this->getSchema('agentes'))
+            ->join(array('c' => 'vinculacao'), 'b.idagente = c.idvinculoprincipal', array(), $this->getSchema('agentes'))
+            ->join(array('d' => 'agentes'), 'c.idagente = d.idagente', array(), $this->getSchema('agentes'))
+            ->join(array('e' => 'sgcacesso'), 'd.cnpjcpf = e.cpf', array(), $this->getSchema('controledeacesso'))
+            ->joinleft(array('n' => 'nomes'), 'n.idagente = b.idagente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
+            ->where('e.idusuario = ?',$idResponsavel)
+            ->where('a.stestado = 1')
+            ->where("NOT EXISTS($subSql)")
+            ->where("a.mecanismo = '1'")
+        ;
+
+        $sql3 = $db->select()
+            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->join(array('b' => 'agentes'), 'a.idagente = b.idagente', array('b.cnpjcpf', 'b.idagente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('c' => 'nomes'), 'b.idagente = c.idagente', array('c.descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
+            ->join(array('e' => 'tbvinculoproposta'), 'a.idpreprojeto = e.idpreprojeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('f' => 'tbvinculo'), 'e.idvinculo = f.idvinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->where('a.stestado = 1')
+            ->where("NOT EXISTS($subSql)")
+            ->where("a.mecanismo = '1'")
+            ->where('e.sivinculoproposta = 2')
+            ->where('f.idusuarioresponsavel = ?', $idResponsavel)
+        ;
+
+        if (!empty($idAgenteCombo)) {
+            $sql->where('b.idagente = ?', $idAgenteCombo);
+            $sql2->where('b.idagente = ?', $idAgenteCombo);
+            $sql3->where('b.idagente = ?', $idAgenteCombo);
+        }
+
+        $sql = $db->select()->union(array($sql, $sql2,$sql3), Zend_Db_Select::SQL_UNION);
+
+        $sqlFinal = $db->select()->from(array("p" => $sql), array('count(distinct p.idpreprojeto)'));
+
+        foreach ($where as $coluna=>$valor)
+        {
+            $sqlFinal->where($coluna, $valor);
+        }
+
+        if (!empty($search['value'])) {
+            $sqlFinal->where('p.idpreprojeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%'.$search['value'].'%');
+        }
+
+        $sqlFinal->order($order);
+
+        if (!is_null($start) && $limit) {
+            $start = (int)$start;
+            $limit = (int)$limit;
+            $sqlFinal->limitPage($start, $limit);
+        }
+        return $db->fetchOne($sqlFinal);
+    }
+
+    public function valorTotalSolicitadoNaProposta($idPreProjeto) {
+
+         $select = new Zend_Db_Expr("SELECT sac.dbo.fnSolicitadoNaProposta({$idPreProjeto}) as valorTotalSolicitado");
+
+        try {
+            $db= Zend_Db_Table::getDefaultAdapter();
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $db->fetchOne($select);
+    }
+
+
+    public function spChecklistParaApresentacaoDeProposta($idPreProjeto) {
+
+        $select = new Zend_Db_Expr("EXEC sac.dbo.spChecklistParaApresentacaoDeProposta {$idPreProjeto}");
+
+        try {
+            $db= Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            $result = $db->fetchAll($select);
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $result;
+    }
+
+
 }

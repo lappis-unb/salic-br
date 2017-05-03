@@ -2,7 +2,6 @@
 
 class AlterarprojetoController extends MinC_Controller_Action_Abstract
 {
-
     private $idusuario = 0;
     private $codGrupo = 0;
     private $codOrgao = 0;
@@ -10,12 +9,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
     private $getParecerista = 'N';
     private $idAgente = null;
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init()
     {
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
@@ -68,6 +61,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         $PermissoesGrupo[] = 139;
         $PermissoesGrupo[] = 140;
         $PermissoesGrupo[] = 143;
+        $PermissoesGrupo[] = 151;
+        $PermissoesGrupo[] = 148;
 
         parent::perfil(1, $PermissoesGrupo);
         if (isset($auth->getIdentity()->usu_codigo)) {
@@ -216,7 +211,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto", "Alterarprojeto/consultarprojeto", "ERROR");
         }
@@ -272,7 +266,6 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto", "Alterarprojeto/consultarprojeto", "ERROR");
         }
@@ -566,12 +559,10 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
         }
-        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
         if ($listaparecer[0]->Orgao != $this->codOrgao) {
             parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto", "Alterarprojeto/consultarprojeto", "ERROR");
         }
 
-        //xd($idDirigente);
 
         if (isset($idAgente)) {
 
@@ -699,7 +690,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
                     $dadosBuscar['idEmpresa'] = $buscarMandato[0]->idEmpresa;
                     $dadosBuscar['idDirigente'] = $buscarMandato[0]->idDirigente;
                     $dadosBuscar['idArquivo'] = $buscarMandato[0]->idArquivo;
-//                echo json_encode($dadosBuscar);
+//                $this->_helper->json($dadosBuscar);
 //                $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
 
@@ -832,7 +823,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             }
         }
 
-        echo json_encode($novos_valores);
+        $this->_helper->json($novos_valores);
     }
 
 // fecha metodo buscaragentedirigenteAction()
@@ -1901,7 +1892,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             'Orgao' => $dadosProjeto->Orgao,
             'Logon' => $this->idusuario,
             'Habilitado' => $post->habilitado,
-            'idTipoInabilitado' => ($post->habilitado == 'S') ? null : !empty($post->penalidade) ? $post->penalidade : null,
+            'idTipoInabilitado' => null,
             'dtInabilitado' => ($post->habilitado == 'S') ? null : date("Y-m-d H:i:s")
         );
         $tbl = new Inabilitado();

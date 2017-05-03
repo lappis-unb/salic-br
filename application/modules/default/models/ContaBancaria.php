@@ -46,7 +46,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
+        
         return $this->fetchAll($slct);
     }
 
@@ -83,7 +83,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         $slct2->setIntegrityCheck(false);
         $slct2->from($slct, array("count(*) AS total"));
 
-        //xd($slct2->assemble());
+        
         return $this->fetchAll($slct2)->current();
     }
 
@@ -135,7 +135,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         if(!empty($orgao)){
             $slct->where('pr.Orgao = ?',$orgao );
         }
-//        xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
@@ -256,7 +256,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         }
 
         if ($qtdeTotal) {
-            //xd($select->assemble());
+            
             return $this->fetchAll($select)->count();
         }
 
@@ -272,7 +272,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

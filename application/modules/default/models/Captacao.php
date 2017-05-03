@@ -26,12 +26,12 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         return $this->fetchAll($select);
 
-    } // fecha m�todo listasituacao()
+    } // fecha metodo listasituacao()
 
 
 
     /**
-     * M�todo para buscar
+     * Metodo para buscar
      * @access public
      * @param void
      * @return object/array
@@ -43,24 +43,24 @@ class Captacao extends MinC_Db_Table_Abstract {
         $select->order('DtChegadaRecibo');
         $select->order('DtRecibo');
         return $this->fetchAll($select);
-    } // fecha m�todo buscarDados()
+    } // fecha metodo buscarDados()
 
 
 
     /**
-     * M�todo para cadastrar
+     * Metodo para cadastrar
      * @access public
      * @param array $dados
      * @return integer (retorna o �ltimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha m�todo cadastrarDados()
+    } // fecha metodo cadastrarDados()
 
 
 
     /**
-     * M�todo para alterar
+     * Metodo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -69,12 +69,12 @@ class Captacao extends MinC_Db_Table_Abstract {
     public function alterarDados($dados, $where) {
         $where = "Idcaptacao = " . $where;
         return $this->update($dados, $where);
-    } // fecha m�todo alterarDados()
+    } // fecha metodo alterarDados()
 
 
 
     /**
-     * M�todo para excluir
+     * Metodo para excluir
      * @access public
      * @param integer $where
      * @return integer (quantidade de registros exclu�dos)
@@ -82,10 +82,10 @@ class Captacao extends MinC_Db_Table_Abstract {
     public function excluirDados($where) {
         $where = "Idcaptacao = " . $where;
         return $this->delete($where);
-    } // fecha m�todo excluirDados()
+    } // fecha metodo excluirDados()
 
     /**
-     * M�todo para buscar
+     * Metodo para buscar
      * @access public
      * @return float TotalCaptadoReal
      */
@@ -109,7 +109,7 @@ class Captacao extends MinC_Db_Table_Abstract {
             return $this->fetchAll($select);
     }
     /**
-     * M�todo para buscar
+     * Metodo para buscar
      * @access public
      * @param integer $AnoProjeto,$Sequencial,$selectC,$selectCq,$selectCg,$selectCc
      * @return float totalCaptadoProjeto
@@ -179,7 +179,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         return $this->fetchAll($select);
 
-    } // fecha m�todo listasituacao()
+    } // fecha metodo listasituacao()
 
 
 
@@ -289,7 +289,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         );
 
         $slct->where('p.IdPRONAC = ?',$idPronac );
-        //xd($this->fetchAll($slct));
+        
 
 
         return $this->fetchAll($slct);
@@ -308,7 +308,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 
         return $this->fetchAll($select);
 
-    } // fecha m�todo listasituacao()
+    } // fecha metodo listasituacao()
 
 
     public function buscaCompleta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
@@ -397,7 +397,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
         $slct->distinct();
         $slct->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                         array('DtRecibo',
                               'CaptacaoReal',
                               'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
@@ -524,7 +524,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slctSA->setIntegrityCheck(false);
 	        $slctSA->distinct();
 	        $slctSA->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                        array('vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
 	                        	  'DtRecibo',
 	                              'CaptacaoReal',
@@ -596,7 +596,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slctSC->setIntegrityCheck(false);
 	        $slctSC->distinct();
 	        $slctSC->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                        array('vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
 		                       	  'DtRecibo',
 	                              'CaptacaoReal',
@@ -726,7 +726,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
         $slct->distinct();
         $slct->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                          array(
                               'CaptacaoReal'=>new Zend_Db_Expr('SUM(CaptacaoReal)'),
                         	  'p.AnoProjeto',
@@ -791,7 +791,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                         array('total'=>'count(*)')
                      );*/
 	        $slctCount->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                         array('total'=>'count(*)',
 	                               'CaptacaoReal'=>new Zend_Db_Expr('SUM(CaptacaoReal)'),
 			                       'p.AnoProjeto',
@@ -908,7 +908,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slctSC->setIntegrityCheck(false);
         $slctSC->distinct();
         $slctSC->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                         array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)"),
                         	  /*'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
 
@@ -981,7 +981,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slctSA->setIntegrityCheck(false);
         $slctSA->distinct();
         $slctSA->from(
-                        array('ca'=>$this->_schema.'.'.$this->_name),
+                        array('ca'=>$this->_name),
                         array('vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
                               /*'CaptacaoReal'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")
 
@@ -1064,7 +1064,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slct->setIntegrityCheck(false);
 	        $slct->distinct();
 	        $slct->from(
-	                        array('ca'=>$this->_schema.'.'.$this->_name),
+	                        array('ca'=>$this->_name),
 	                        array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")
 	                             )
 	                     );

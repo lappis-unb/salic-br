@@ -23,9 +23,9 @@
                     foreach($this->visoes as $v)
                     {
                             if ( $i == 0 ):
-                                echo $v->descricao;
+                                echo $v->Descricao;
                             else:
-                                echo " | " .$v->descricao;
+                                echo " | " .$v->Descricao;
                             endif;
                             $i++;
                     }

@@ -397,7 +397,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 }
             }
 
-            //echo json_encode($result);
+            //$this->_helper->json($result);
             $this->_helper->json($result);
         } else {
             $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -481,7 +481,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 endforeach;
             } // fecha else
 
-            echo json_encode($novos_valores);
+            $this->_helper->json($novos_valores);
         } // fecha if
         else {
             $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -517,7 +517,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $e++;
             endforeach;
 
-            echo json_encode($novos_emails);
+            $this->_helper->json($novos_emails);
         } // fecha if
 
     } // fecha metodo buscaremailsAction()
@@ -552,7 +552,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $f++;
             endforeach;
 
-            echo json_encode($novos_fones);
+            $this->_helper->json($novos_fones);
         } // fecha if
 
     } // fecha metodo buscarfonesAction()
@@ -588,7 +588,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $E++;
             endforeach;
 
-            echo json_encode($enderecos);
+            $this->_helper->json($enderecos);
         } // fecha if
 
     } // fecha metodo buscarenderecosAction()
@@ -669,7 +669,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $i++;
             endforeach;
 
-            echo json_encode($novos_dados);
+            $this->_helper->json($novos_dados);
         } // fecha if
     } // fecha metodo buscaareasegmentoAction()
 
@@ -702,7 +702,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $i++;
             endforeach;
 
-            echo json_encode($novos_dados);
+            $this->_helper->json($novos_dados);
         } // fecha if
     } // fecha metodo buscarvisaoAction()
 

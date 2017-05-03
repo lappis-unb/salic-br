@@ -70,7 +70,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idpronac = $_POST['idpronac'];
         $projeto = new Projetos();
-        $planilhaproposta = new PlanilhaProposta();
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $planilhaprojeto = new PlanilhaProjeto();
         $planilhaAprovacao = new PlanilhaAprovacao();
         $tblParecer = new Parecer();
@@ -189,7 +189,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $planilhaaprovacao = new PlanilhaAprovacao();
         $pt = new Pauta();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $projeto = new Projetos();
         $idpronac = $this->_request->getParam("idpronac");
         $buscarprojeto = $projeto->buscar(array('IdPRONAC = ?' => $idpronac))->current()->toArray();
@@ -300,7 +300,6 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
 
             /**** CODIGO DE READEQUACAO ****/
             $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac,'CO', array('pap.stAtivo=?'=>'S'));
-            //xd($buscarplanilhaCO);
             $buscarAnaliseConta = array(); $cont = 0;
             foreach($buscarplanilhaCO as $resuplanilha){
                 $buscarAnaliseConta[$cont]['qtdRelator'] = $resuplanilha->qtItem;
@@ -543,7 +542,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         // recebe os dados via get
         $idpronac = $this->_request->getParam("idpronac");
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
         $tblProjetos = new Projetos();
@@ -636,7 +635,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
 
             $resuplanilha = null; $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+
             foreach($buscarplanilhaSR as $resuplanilha){
                     $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -658,7 +657,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             /******** Planilha aprovacao PA (Parecerista) ****************/
             $resuplanilha = null; $count = 0;
             $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+
             foreach($buscarplanilhaPA as $resuplanilha){
                     $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                     $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -763,13 +762,13 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
                 );
                 $where = "IdPRONAC = $idpronac and idAgente = $idagente and idNrReuniao = $reuniaoaberta";
                 $votar = $votacao->alterar($dadosupdate, $where);
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
             }
             catch (Exception $e)
             {
-                echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
             }
-            $this->_helper->viewRenderer->setNoRender(TRUE); 
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         $idpronac = $this->_request->getParam("idpronac");
         $dpc = new DistribuicaoProjetoComissao();
@@ -827,9 +826,8 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             'totalvotos' => '',
             );
             $json = json_encode($valores);
-            //xd($json);
             echo $json;
-            $this->_helper->viewRenderer->setNoRender(TRUE); 
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         $justificativa = "<table class='tabela'>";
         $justificativa .= "<tr class='centro'>";
@@ -1084,7 +1082,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             }// fecha try
             catch (Exception $e)
             {
-                //xd($e->getMessage());
+
                 parent::message("Ocorreu um erro ao inativar a distribui��o desse Projeto feita ao Componente, mas as outras a��es foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
             }
             echo "<script>msg();</script>";
@@ -1148,8 +1146,8 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
                     if (file_exists($arquivo)) {
                         unlink($arquivo);
                     }
-                    echo json_encode(array('error' => false));
-                    $this->_helper->viewRenderer->setNoRender(TRUE); 
+                    $this->_helper->json(array('error' => false));
+                    $this->_helper->viewRenderer->setNoRender(TRUE);
 
                 }else{
                     throw new Exception ($sp);
@@ -1158,9 +1156,9 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
 
         } // fecha try
         catch (Exception $e) {
-            //xd($e->getMessage());
-            echo json_encode(array('error' => true, 'descricao' => "N&atilde;o foi poss&iacute;vel consolidar a vota&ccedil;&atilde;o do Projeto. <br />".$e->getMessage()));
-            $this->_helper->viewRenderer->setNoRender(TRUE); 
+
+            $this->_helper->json(array('error' => true, 'descricao' => "N&atilde;o foi poss&iacute;vel consolidar a vota&ccedil;&atilde;o do Projeto. <br />".$e->getMessage()));
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 
@@ -1324,12 +1322,12 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
                     $tblProjetos->alterar($dados, $where);
                 }
 
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
 
             }// fecha try
             catch (Exception $e)
             {
-                echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
                 //parent::message("", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
             }
 
@@ -1341,7 +1339,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             }// fecha try
             catch (Exception $e)
             {
-                echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
                 return;
                 //parent::message("Ocorreu um erro ao inativar a distribui��o desse Projeto feita ao Componente, mas as outras a��es foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
             }*/

@@ -10,7 +10,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-require_once "inc/menu.inc.php"; // menu
+echo $this->partial('inc/menu.inc.php', $this) // menu
 // define o tipo de custo
 $tpCusto = empty($this->idProduto) ? 'Custo administrativo' : 'Custo por produtos';
 $dsCusto = empty($this->idProduto) ? 'Custo administrativo' : 'Nome do produto: ' . $this->Produto;
@@ -274,7 +274,7 @@ $idPronacCrip = Seguranca::encrypt($this->idPronac);
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
     <!-- ========== INÍCIO TOPO PROJETO ========== -->
-    <?php require_once "inc/topo.inc.php"; ?>
+    <?php echo $this->partial('readequacao/inc/topo.inc.php', $this); ?>
     <!-- ========== FIM TOPO PROJETO ========== -->
 
     <!-- ========== INÍCIO PLANILHA APROVADA ========== -->

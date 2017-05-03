@@ -33,7 +33,7 @@ class Inabilitado extends MinC_Db_Table_Abstract {
         $slct->where('AnoProjeto = ?', $AnoProjeto);
         $slct->where('Sequencial = ?', $Sequencial);
 
-//xd($slct->assemble());
+
         return $this->fetchRow($slct);
     }
     
@@ -58,7 +58,7 @@ class Inabilitado extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-         //xd($slct->assemble());
+         
         return $this->fetchAll($slct);
     }
 
@@ -81,7 +81,7 @@ class Inabilitado extends MinC_Db_Table_Abstract {
         //Retirado, n�o pode ter mais de um registro de um �nico projeto
         //AND CgcCpf 		= '".$dados['CgcCpf']."'
         
-        //xd($sql);
+        
         $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
         $db->query($sql);

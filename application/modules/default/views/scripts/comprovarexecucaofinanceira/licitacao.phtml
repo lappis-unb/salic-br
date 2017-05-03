@@ -5,7 +5,7 @@
     $FinalizarHref  =   $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'finalizarlicitacao')) . '?idusuario=' . $this->idusuario . '&idpronac=' . $this->idpronac;
     $incluirHref    =   $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'alterarlicitacao')) . '?idusuario=' . $this->idusuario . '&idpronac=' . $this->idpronac ;
     $anteriorHref          =   $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'pagamento')) . '?idusuario=' . $this->idusuario . '&idpronac=' . $this->idpronac;
-    include_once 'scripts/comprovarexecucaofinanceira/inc/menu.inc.php';
+echo $this->partial('comprovarexecucaofinanceira/inc/menu.inc.php', $this);
 ?>
 
 <div id="breadcrumb">

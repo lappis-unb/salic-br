@@ -5,7 +5,7 @@
     $ExcluirHref    =   $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'excluirdispensa')).'?idusuario=' . $this->idusuario . '&idpronac=' . $this->idpronac;
     $FinalizarHref  =   $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'finalizardispensa')).'?idusuario=' . $this->idusuario . '&idpronac=' . $this->idpronac;
     $anteriorHref          =   $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'pagamento')).'?idusuario=' . $this->idusuario . '&idpronac=' . $this->idpronac;
-    include_once 'scripts/comprovarexecucaofinanceira/inc/menu.inc.php';
+echo $this->partial('comprovarexecucaofinanceira/inc/menu.inc.php', $this);
 ?>
 
 <div id="breadcrumb">

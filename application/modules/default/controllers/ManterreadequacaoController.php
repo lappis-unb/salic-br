@@ -308,9 +308,9 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         $result = $tbPlanilhaAprovacao->buscar($where);
 
         if(count($result) > 0){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
@@ -336,9 +336,9 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
             $jsonEncode = json_encode($dadosAgente);
 
             //echo $jsonEncode;
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
@@ -364,9 +364,9 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
             $jsonEncode = json_encode($dadosAgente);
 
             //echo $jsonEncode;
-            echo json_encode(array('resposta'=>true,'conteudo'=>$dadosAgente));
+            $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosAgente));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
@@ -561,7 +561,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
                         } else if (trim($x->tpAcao) == 'E') {
                             // altera o status dos locais exclu�dos
-                            $Abrangencia = new Abrangencia();
+                            $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
                             $Abrangencia->update(array('stAbrangencia' => 0), array('idAbrangencia = ?' => $x->idAbrangenciaAntiga));
                             //$_local = AbrangenciaDAO::buscarAbrangenciasAtuais($idProjeto, $x->idPais, $x->idUF, $x->idMunicipioIBGE);
                             //$__local = AbrangenciaDAO::excluir($_local[0]->idAbrangencia);
@@ -694,7 +694,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
 
                     // PRODUTO + ITEN DE CUSTO
-                    $planilhaProposta = new PlanilhaProposta();
+                    $planilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                     $planilhaProjeto  = new PlanilhaProjeto();
                     $DeParaPlanilhaAprovacao = new DeParaPlanilhaAprovacao();
                     $Projetos = new Projetos();

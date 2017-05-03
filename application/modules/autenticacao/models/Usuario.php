@@ -392,16 +392,14 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
      */
     public function alterarSenhaSalic($cpf, $password)
     {
-
-//        $db = Zend_Registry:: get('db');
-//        agentes.usuarios
-//        Agentes.dbo.usuarios
-        parent::name('ausuarios', 'agentes');
-        $this->_db->beginTransaction();
+        $cpf= trim($cpf);
+        $password = trim($password);
+        //parent::name('ausuarios', 'agentes');
+        //$this->_db->beginTransaction();
         try {
-            $db = Zend_Registry:: get('db');
+            $db = Zend_DB_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-            $sql = "UPDATE postgres.agentes.usuarios
+            $sql = "UPDATE tabelas.dbo.usuarios
                         SET usu_senha = Tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),
                             usu_data_validade = ".$this->getDate()."+usu_duracao_senha,
                             usu_seguranca = Tabelas.dbo.fnSegurancaUsuarios
@@ -580,10 +578,10 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         );
 
         if (!empty($usu_codigo)) {
-//            $select->where("usu_codigo = ? ", $usu_codigo);
+            $select->where("usu_codigo = ? ", $usu_codigo);
         }
         if (!empty($usu_identificacao)) {
-//            $select->where("usu_identificacao = ? ", $usu_identificacao);
+            $select->where("usu_identificacao = ? ", $usu_identificacao);
         }
         try {
             $result = $this->fetchRow($select);
@@ -993,14 +991,16 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $objUsuario = $this->select();
         $senha = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
+        $senhaScape = preg_replace("/'/", "''",$senha);
+
         $objUsuario->from(
             $this->_name,
-            new Zend_Db_Expr("'{$senha}' as senha"),
+            new Zend_Db_Expr("'{$senhaScape}' as senha"),
             $this->_schema
         );
 
-
         $objUsuario->where('usu_identificacao = ?', $username);
+
         $criptSenha = $this->fetchRow($objUsuario);
 
         $auxSenha = "";

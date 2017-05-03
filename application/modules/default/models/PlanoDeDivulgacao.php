@@ -51,7 +51,7 @@ class PlanoDeDivulgacao extends MinC_Db_Table_Abstract {
         );
         $select->where('pd.idProjeto = ?', $idprojeto);
         $select->where('pdp.stPlanoDistribuicaoProduto = ?', 1);
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

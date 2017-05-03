@@ -139,7 +139,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
 
         $select->group('pItens.Descricao');
         */
-        //xd($select->query());
+        
 
         return $this->fetchAll($select);
 
@@ -222,7 +222,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
         $select->group('pItens.idPlanilhaItens');
         $select->group('pItens.Descricao');//*/
 
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
 
@@ -360,7 +360,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
 		// adicionando linha order ao select
 		$select->order($order);
 
-                //xd($select->assemble());
+                
 		return $this->fetchAll($select);
 	} // fecha m�todo combo()
 

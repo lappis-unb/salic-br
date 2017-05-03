@@ -14,7 +14,7 @@ class Arquivocotacao  extends MinC_Db_Table_Abstract{
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('ac'=>$this->_schema.'.'.$this->_name),
+                        array('ac'=>$this->_name),
                         array(
                                 'ac.idArquivo'
                               )

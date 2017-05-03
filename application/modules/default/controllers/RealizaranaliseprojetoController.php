@@ -75,7 +75,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
     {
         $idpronac = $this->_request->getParam("idpronac");
         $projeto = new Projetos();
-        $planilhaproposta = new PlanilhaProposta();
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $planilhaprojeto = new PlanilhaProjeto();
         $planilhaAprovacao = new PlanilhaAprovacao();
         $tblParecer = new Parecer();
@@ -200,12 +200,12 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
     {
         $planilhaaprovacao = new PlanilhaAprovacao();
         $tblPauta = new Pauta();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $projeto = new Projetos();
         // caso o formulario seja enviado via post
         // atualiza a planilha
         if ($this->getRequest()->isPost()) {
-//                    xd($_POST);
+
             // recebe os dados via post
             $post = Zend_Registry::get('post');
             $idPlanilha = $post->idPlanilha;
@@ -734,7 +734,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
         $rs = $tbAnaliseAprovacao->buscarAnaliseProduto($tpPlanilha, $idPronac, null, array('aa.idAnaliseAprovacao=?' => $idAnaliseAprovacao))->current();
         $this->view->analise = $rs;
-        //xd($rs);
         $this->view->parametrosBusca = $_POST;
     }
 
@@ -879,7 +878,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
         $arrProdutosFavoraveis = array();
         // caso o formulario seja enviado via post
@@ -935,10 +934,10 @@ $objAcesso = new Acesso();
             $idpronac = $this->_request->getParam("idpronac");
             $this->view->idpronac = $idpronac;
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-            $tblPlanilhaProposta = new PlanilhaProposta();
+            $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $tblPlanilhaProjeto = new PlanilhaProjeto();
             $tblProjetos = new Projetos();
-            $tblPlanoDistribuicao = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+            $tblPlanoDistribuicao = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
             $tblAnaliseAprovacao = new AnaliseAprovacao();
 
             $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?' => $idpronac), array('dtPlanilha DESC'))->current();
@@ -1092,7 +1091,6 @@ $objAcesso = new Acesso();
 
         $ConsultaReuniaoAberta = ReuniaoDAO::buscarReuniaoAberta();
         $NumeroReuniao = $ConsultaReuniaoAberta['NrReuniao'];
-
         //CASO O COMPONENTE QUEIRA APENAS SALVAR O SEU PARECER - INICIO
         if (isset($_POST['usu_codigo'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -1132,24 +1130,25 @@ $objAcesso = new Acesso();
 
                         $update = $tblParecer->alterar($dadosAtualizar, $where);
                         $inserir = $tblParecer->inserir($dados);
-                        echo json_encode(array('error' => false));
+                        $this->_helper->json(array('error' => false));
                     } catch (Exception $e) {
-                        echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                        $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
                     }
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 } else {
                     try {
                         $where = "idparecer = " . $idparecer;
                         $update = $tblParecer->alterar($dados, $where);
-                        echo json_encode(array('error' => false));
+                        $this->_helper->json(array('error' => false));
+
                     } catch (Zend_Exception $e) {
-                        echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                        $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
                     }
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
             } else {
 
-                echo json_encode(array('error' => true, 'descricao' => 'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
+                $this->_helper->json(array('error' => true, 'descricao' => 'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
@@ -1277,7 +1276,7 @@ $objAcesso = new Acesso();
 
                     }// fecha try
                     catch (Exception $e) {
-                        //xd($e->getMessage());
+
                         parent::message("Erro ao ativar Planilha readequada. " . $e->getMessage(), "realizaranaliseprojeto/emitirparecer" . $query_string, "ERROR");
                     }
                 }
@@ -1363,7 +1362,7 @@ $objAcesso = new Acesso();
 
             } // fecha try
             catch (Exception $e) {
-                //xd($e->getMessage());
+
                 parent::message("Erro ao incluir projeto na Pauta. " . $e->getMessage(), "realizaranaliseprojeto/emitirparecer" . $query_string, "ERROR");
             }
         } // fecha if
@@ -1382,7 +1381,7 @@ $objAcesso = new Acesso();
                     $idpronac = $this->_request->getParam("idpronac");
 
                     $projeto = new Projetos();
-                    $planilhaproposta = new PlanilhaProposta();
+                    $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
                     $planilhaprojeto = new PlanilhaProjeto();
                     $planoDistribuicao = new PlanoDistribuicao();
                     $analiseaprovacao = new AnaliseAprovacao();
@@ -1796,7 +1795,7 @@ $objAcesso = new Acesso();
     {
         $planilhaaprovacao = new PlanilhaAprovacao();
         $tblPauta = new Pauta();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $projeto = new Projetos();
         // caso o formulario seja enviado via post
         // atualiza a planilha
@@ -1853,7 +1852,6 @@ $objAcesso = new Acesso();
             $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
 
             $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac, $tpplanilha, $arrBuscaPlanilha);
-            //xd($buscarplanilhaCO);
             $buscarAnaliseConta = array();
             $cont = 0;
             foreach ($buscarplanilhaCO as $resuplanilha) {
@@ -2091,9 +2089,9 @@ $objAcesso = new Acesso();
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
-        $tblPlanoDistribuicao = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $tblPlanoDistribuicao = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $tblAnaliseAprovacao = new AnaliseAprovacao();
         // caso o formulario seja enviado via post
         // atualiza a planilha
@@ -2176,7 +2174,7 @@ $objAcesso = new Acesso();
             // recebe os dados via get
             $idpronac = $this->_request->getParam("idpronac");
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-            $tblPlanilhaProposta = new PlanilhaProposta();
+            $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $tblPlanilhaProjeto = new PlanilhaProjeto();
             $tblProjetos = new Projetos();
 
@@ -2195,7 +2193,6 @@ $objAcesso = new Acesso();
             $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
 
             $buscarplanilhaCO = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, $tipoplanilha, $arrBuscaPlanilha);
-            //xd($buscarplanilhaCO);
 
             $planilhaaprovacao = array();
             $count = 0;
@@ -2242,7 +2239,7 @@ $objAcesso = new Acesso();
             $resuplanilha = null;
             $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+
             foreach ($buscarplanilhaSR as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -2269,7 +2266,7 @@ $objAcesso = new Acesso();
             $resuplanilha = null;
             $count = 0;
             $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
+
             foreach ($buscarplanilhaPA as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -2302,7 +2299,7 @@ $objAcesso = new Acesso();
             //$buscarsomaprojeto = $tblPlanilhaProjeto->somarPlanilhaProjeto($idpronac, 109);
             $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
             $this->view->planilhaUnidade = $buscarPlanilhaUnidade;
-            $this->view->planilha = $planilhaaprovacao; //xd($planilhaaprovacao);
+            $this->view->planilha = $planilhaaprovacao;
             $this->view->projeto = $buscarprojeto;
             $this->view->totalcomponente = $buscarsomaaprovacao['soma'];
             $this->view->totalparecerista = $buscarsomaprojeto['soma'];
@@ -2326,7 +2323,7 @@ $objAcesso = new Acesso();
         $codEtapa = $this->_request->getParam("codEtapa");
 
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
 
         $arrBusca = array();
@@ -2511,7 +2508,7 @@ $objAcesso = new Acesso();
 
         } // fecha try
         catch (Exception $e) {
-            //xd($e->getMessage());
+
             parent::message("Erro ao efetuar altera&ccedil;&atilde;o! " . $e->getMessage(), "realizaranaliseprojeto/" . $url . "/idpronac/" . $idPronac, "ERROR");
         }
     }
@@ -2539,7 +2536,7 @@ $objAcesso = new Acesso();
         }
         //$arrEtapas = $rsEtapas->toArray();
         //x($arrEtapas);
-        echo json_encode($arrEtapas);
+        $this->_helper->json($arrEtapas);
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 } // fecha class

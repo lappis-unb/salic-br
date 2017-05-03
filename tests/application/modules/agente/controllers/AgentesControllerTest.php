@@ -17,6 +17,17 @@ class AgentesControllerTest extends MinC_Test_ControllerActionTestCase
     public function testIncluiragente()
     {
         $this->autenticar();
+
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        $this->perfilParaProponente();
+
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
         $this->dispatch('agente/agentes/incluiragente?menuLateral=false&acao=prop');
         $this->assertModule('agente');
         $this->assertController('agentes');

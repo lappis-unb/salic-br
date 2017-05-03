@@ -340,7 +340,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $this->view->idPronac = $idpronac;
         $this->view->idRelatorio = $idrelatorio;
 
-        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -546,9 +546,9 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $return = $tbComprovanteTrimestral->update($dados, $where);
 
         if($return){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }

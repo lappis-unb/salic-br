@@ -38,7 +38,7 @@ class Votacao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                    array('tv'=>$this->_schema.'.'.$this->_name),
+                    array('tv'=>$this->_name),
                     array(
                             '(cast(tv.dsJustificativa AS TEXT)) as justificativa',
                             'tv.stVoto'

@@ -30,7 +30,7 @@ class tbTipoReadequacao extends MinC_Db_Table_Abstract
 
         $select->order('2');
 
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 

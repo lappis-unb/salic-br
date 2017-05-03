@@ -94,6 +94,7 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
                     );
 
         $this->view->idPreProjeto = $this->_idPreProjeto;
+        $this->view->isEditavel = $this->isEditavel($this->_idPreProjeto);
         $this->montaTela("planodistribuicao/index.phtml", $arrDados);
     }
 
@@ -161,6 +162,10 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
     public function salvarAction(){
 
         $post = Zend_Registry::get("post");
+
+        if (($this->isEditarProjeto($this->_idPreProjeto) && $post->prodprincipal == 1))
+            parent::message("Em alterar projeto, n&atilde;o pode alterar o produto principal cadastrado. A opera&ccedil;&atilde;o foi cancelada.", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+
         $precopromocional = str_replace(",", ".", str_replace(".", "", $post->precopromocional));
         $preconormal = str_replace(",", ".", str_replace(".", "", $post->preconormal));
         $QtdeProduzida = $post->qtdenormal+$post->qtdepromocional+$post->patrocinador+$post->beneficiarios+$post->divulgacao;
@@ -236,9 +241,19 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         }
     }
 
-    public function apagarAction(){
+    public function apagarAction()
+    {
+        if (empty($this->_idPreProjeto))
+            parent::message("Informe o numero da proposta", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+
         $get = Zend_Registry::get("get");
+
         $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $rsPlanoDistribuicao = $tblPlanoDistribuicao->findBy( array("idplanodistribuicao = ?" => $get->idPlanoDistribuicao));
+
+        if (($this->isEditarProjeto($this->_idPreProjeto) && $rsPlanoDistribuicao['stPrincipal'] == 1))
+            parent::message("Em alterar projeto, n&atilde;o pode excluir o produto principal cadastrado. A opera&ccedil;&atilde;o foi cancelada.", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+
         $retorno = $tblPlanoDistribuicao->apagar($get->idPlanoDistribuicao);
 
         if($retorno > 0){
@@ -248,7 +263,8 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         }
     }
 
-    public function detalharPlanoDistribuicaoAction() {
+    public function detalharPlanoDistribuicaoAction()
+    {
         $pag = 1;
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
@@ -288,6 +304,7 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
         $this->view->idPreProjeto = $this->_idPreProjeto;
         $this->view->abrangencias = $rsAbrangencia;
         $this->view->planosDistribuicao=($rsPlanoDistribuicao);
+        $this->view->isEditavel = $this->isEditavel($this->_idPreProjeto);
     }
 
     public function detalharSalvarAction()
@@ -329,4 +346,5 @@ class Proposta_PlanoDistribuicaoController extends Proposta_GenericController
 
         $this->_helper->json(array('data' => $dados, 'success' => 'true'));
     }
+
 }

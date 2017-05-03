@@ -100,7 +100,7 @@ $(document).ready(function(){
 
 
 <?php if(isset ($_GET['idEdital'])) :?>
-<?php include_once 'inc/menu.inc.php'; ?>
+<?php echo $this->partial('cadastraredital/inc/menu.inc.php', $this); ?>
 <?php endif; ?>
 
 

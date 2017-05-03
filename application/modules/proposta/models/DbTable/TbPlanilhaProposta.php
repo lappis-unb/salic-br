@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class Proposta_Model_DbTable_TbDeslocamento
+ * Class Proposta_Model_DbTable_TbPlanilhaProposta
  *
- * @name Proposta_Model_DbTable_TbDeslocamento
+ * @name Proposta_Model_DbTable_TbPlanilhaProposta
  * @package Modules/Agente
  * @subpackage Models/DbTable
  *
@@ -89,6 +89,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             'CAST(pp.dsjustificativa AS TEXT) as Justificativa',
             'pp.qtdedias as QtdDias',
             'pp.unidade as Unidade',
+            'pp.stCustoPraticado as stCustoPraticado',
         );
 
         $sacSchema = $this->_schema;
@@ -664,5 +665,20 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
         return $db->fetchAll($sql);
+    }
+
+    public function calcularMedianaItemOrcamento($idProduto, $idUnidade, $idPlanilhaItem, $idUFDespesa, $idMunicipioDespesa) {
+
+        if( empty($idPlanilhaItem) OR empty($idUnidade))
+            return false;
+
+        $exec = new Zend_Db_Expr("EXEC SAC.dbo.spCalcularMedianaItemOrcamentario {$idProduto}, {$idPlanilhaItem}, {$idUFDespesa}, {$idMunicipioDespesa}, {$idUnidade}");
+
+        try {
+            $db= Zend_Db_Table::getDefaultAdapter();
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $db->fetchRow($exec);
     }
 }

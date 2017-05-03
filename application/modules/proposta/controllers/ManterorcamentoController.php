@@ -88,11 +88,12 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
      *
      * @name produtoscadastradosAction
      */
-    public function produtoscadastradosAction()
+   public function produtoscadastradosAction()
     {
         $this->view->idPreProjeto = $this->idPreProjeto;
 
         $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+
     }
 
     /**
@@ -111,7 +112,8 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
         $listaEtapa = $manterOrcamento->buscarEtapas('P');
         $this->view->EtapasProduto = $this->reordenaretapas($listaEtapa);
-        $this->view->ItensProduto = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
+
+        $this->view->ItensProduto = $tbPreprojeto->listarItensProdutos($this->idPreProjeto, null, Zend_DB::FETCH_ASSOC);
 
         $arrBusca = array(
             'idprojeto' => $this->idPreProjeto,
@@ -129,10 +131,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             }
         }
         $this->view->localRealizacao = $novosLocais;
-
-        $this->view->idPreProjeto = $this->idPreProjeto;
-
-        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+//
+//     $this->view->idPreProjeto = $this->idPreProjeto;
+//     $this->view->charset = Zend_Registry::get('config')->db->params->charset;
     }
 
     /**
@@ -253,7 +254,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -274,7 +275,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
 
@@ -312,10 +313,10 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         $this->_helper->layout->disableLayout();
 
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
-        $itens = converterObjetosParaArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
+        $itens = $tbPreprojeto->listarItensProdutos($this->idPreProjeto, null,  Zend_DB::FETCH_ASSOC);
 
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $listaEtapa = converterObjetosParaArray($manterOrcamento->buscarEtapas('P'));
+        $listaEtapa = $manterOrcamento->buscarEtapas('P', Zend_DB::FETCH_ASSOC);
 
         $this->view->EtapaCusto = $manterOrcamento->buscarEtapas("A");
         $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
@@ -447,7 +448,8 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             'UfDespesa' => $params['uf'],
             'MunicipioDespesa' => $params['municipio'],
             'dsJustificativa' => substr($justificativa, 0, 510),
-            'idUsuario' => $this->idUsuario
+            'idUsuario' => $this->idUsuario,
+            'stCustoPraticado' => $params['stCustoPraticado']
         );
 
         $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
@@ -560,7 +562,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $return['html'] = $html;
         }
 
-        echo json_encode($return);
+        $this->_helper->json($return);
         die;
     }
 
@@ -641,7 +643,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $return['status'] = true;
         }
 
-        echo json_encode($return);
+        $this->_helper->json($return);
         die;
     }
 
@@ -675,7 +677,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             }
         }
 
-        echo json_encode($return);
+        $this->_helper->json($return);
         die;
     }
 
@@ -757,7 +759,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -772,7 +774,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
 
@@ -878,7 +880,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -895,7 +897,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = $Dadositem->descricao;
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
         $uf = new Agente_Model_DbTable_UF();
@@ -960,7 +962,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao;
                 $a++;
             }
-            echo json_encode($cidadeArray);
+            $this->_helper->json($cidadeArray);
             die;
         }
 
@@ -977,7 +979,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 $itemArray[$a]['nomeItem'] = $Dadositem->Descricao;
                 $a++;
             }
-            echo json_encode($itemArray);
+            $this->_helper->json($itemArray);
             die;
         }
         $uf = new Agente_Model_DbTable_UF();
@@ -1109,7 +1111,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
             if ($_POST['acao'] == 'alterar') {
 
-                $buscarCustos = new Proposta_Model_DbTable_PlanilhaProposta();
+                $buscarCustos = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
 
                 $buscarCustos->update($dados, $where);
@@ -1117,7 +1119,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
                 echo "Altera&ccedil;&atilde;o realizada com sucesso!";
                 die;
             } else {
-                $TPP = new Proposta_Model_DbTable_PlanilhaProposta();
+                $TPP = new Proposta_Model_DbTable_TbPlanilhaProposta();
                 $buscarCustos = $TPP->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio);
                 if ($buscarCustos) {
                     $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -1184,7 +1186,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
 
         $retorno = $_GET['retorno'];
 
-        $tbPlaninhaProposta = new Proposta_Model_DbTable_PlanilhaProposta();
+        $tbPlaninhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
 
         $where = 'idPlanilhaProposta = ' . $idPlanilhaProposta;
 
@@ -1197,6 +1199,30 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             parent::message("Erro ao excluir os dados", "/proposta/manterorcamento/" . $retorno . "?idPreProjeto=" . $this->idPreProjeto, "ERROR");
         }
         $this->view->idPreProjeto = $this->idPreProjeto;
+    }
+
+    public function buscarValorMedianaAjaxAction() {
+
+        $params = $idPreProjeto = $this->getRequest()->getParams();
+
+        $tbPlaninhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+
+        $valorMediana = $tbPlaninhaProposta->calcularMedianaItemOrcamento($params['idproduto'], $params['idunidade'], $params['idplanilhaitem'], $params['idufdespesa'], $params['idmunicipiodespesa']);
+        $valorMediana = isset($valorMediana['Mediana']) ? $valorMediana['Mediana'] : 0;
+
+        $return['msg'] = '';
+        $return['status'] = 1;
+        $return['valorMediana'] = $valorMediana;
+
+        $params['vlunitario'] = str_replace(",", ".", str_replace(".", "", $params['vlunitario']));
+
+        if (!empty($valorMediana) && $valorMediana < $params['vlunitario']) {
+            $return['msg'] = utf8_encode('O valor unit&aacute;rio para este item, ultrapassa o valor(R$ '. number_format($valorMediana, 2, ",", ".") . ') aprovado pelo MinC. Justifique o motivo!');
+            $return['status'] = 0;
+        }
+
+        $this->_helper->json($return);
+        die;
     }
 
 

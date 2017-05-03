@@ -1,12 +1,10 @@
 <?php
 /**
- * DAO tbTmpCaptacao 
+ * DAO tbTmpCaptacao
  * @author emanuel.sampaio - Politec
  * @since 17/02/2011
- * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -14,7 +12,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
-	protected $_schema  = "dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbTmpCaptacao";
 
 
@@ -64,14 +62,14 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
 		$select->joinLeft(
 			array("c" => "ContaBancaria")
 			,"t.nrAnoProjeto = c.AnoProjeto AND t.nrSequencial = c.Sequencial"
-                        ,array('Agencia'=>new Zend_Db_Expr("case	
+                        ,array('Agencia'=>new Zend_Db_Expr("case
 				when
                                     c.Agencia is not null then c.Agencia
-				else 
+				else
                                     t.nrAgenciaProponente end"),
-                            'ContaBloqueada'=>new Zend_Db_Expr("case 
-				when 
-					c.ContaBloqueada is not null then c.ContaBloqueada 
+                            'ContaBloqueada'=>new Zend_Db_Expr("case
+				when
+					c.ContaBloqueada is not null then c.ContaBloqueada
 				else t.nrContaProponente end"))
 			,array()
 		);
@@ -146,7 +144,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
 		$select->order("(t.nrAnoProjeto+t.nrSequencial)");
 		$select->order("t.dtChegadaRecibo");
 		$select->order("t.dtCredito");
-//xd($select->assemble());
+
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
 
@@ -182,7 +180,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
                     )
                  )
                 ->order($order);
-        
+
         if ($idPronac) {
             $select->where('CONVERT(INT, (tmpCaptacao.nrAnoProjeto+tmpCaptacao.nrSequencial)) = ?', $idPronac);
         } else {
@@ -198,7 +196,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -284,7 +282,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
         }
         return $this->fetchAll($select);
     }
-        
+
 	/**
 	 * M�todo para cadastrar
 	 * @access public
@@ -346,7 +344,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
             );
             $select->where('a.idTmpCaptacao = ?', $idTmpCaptacao);
 
-            //xd($select->assemble());
+            
             return $this->fetchRow($select);
 
 	} // fecha m�todo buscarDados()

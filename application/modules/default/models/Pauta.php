@@ -19,7 +19,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('tp' => $this->_schema . '.' . $this->_name),
+                array('tp' => $this->_name),
                 array(
                     'tp.stAnalise',
                     'tp.IdPRONAC'
@@ -77,7 +77,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $select->order('pr.Area');
         $select->order('pr.Segmento');
         $select->order('pr.IdPRONAC');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -145,7 +145,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $a = $this->select();
         $a->setIntegrityCheck(false);
         $a->from(
-                array('tp' => $this->_schema . '.' . $this->_name),
+                array('tp' => $this->_name),
                 array(
                     new Zend_Db_Expr('1 as tpConsolidacaoVotacao'),
                     'tp.stAnalise',
@@ -219,7 +219,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         
         $slctUnion = $this->select()->union(array('('.$a.')', '('.$b.')', '('.$c.')'));
 
-        //xd($slctUnion->assemble());
+        
         return $this->fetchRow($slctUnion);
     }
 
@@ -227,7 +227,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('tp' => $this->_schema . '.' . $this->_name),
+                array('tp' => $this->_name),
                 array('tp.idPRONAC')
         );
         $select->joinInner(
@@ -240,7 +240,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         if ($aprovacao) {
             $select->where('(tp.idPRONAC not in (select idpronac from sac.dbo.aprovacao where idpronac = tp.idPRONAC))', '');
         }
-//        xd($select->__toString());
+
         return $this->fetchAll($select);
     }
 
@@ -248,7 +248,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('pt' => $this->_schema . '.' . $this->_name),
+                array('pt' => $this->_name),
                 array(
                     'pt.IdPRONAC',
                     'pt.stAnalise'
@@ -297,7 +297,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('pt' => $this->_schema . '.' . $this->_name),
+                array('pt' => $this->_name),
                 array('pt.IdPRONAC',
                     'pt.idNrReuniao'
                 )
@@ -321,7 +321,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array($this->_schema . '.' . $this->_name),
+                array($this->_name),
                 array('*',
                     'CAST(dsAnalise AS TEXT) AS dsAnalise'
                 )
@@ -342,7 +342,7 @@ class Pauta extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 }

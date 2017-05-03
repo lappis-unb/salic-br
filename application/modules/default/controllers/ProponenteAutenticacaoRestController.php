@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Login e autenticaï¿½ï¿½o via REST
+ * Login e autenticação via REST
  *
- * @version 1.0
+ * @version 1.1
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
 
@@ -28,11 +27,9 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
         $registrationId = $this->registrationId;
 
         if(empty($username) || empty($password)){
-            $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
+            $result->msg = 'CPF ou Senha inv&aacute;lidos!';
         } else if (strlen($username) == 11 && !Validacao::validarCPF($username)){
             $result->msg = 'CPF inv&aacute;lido!';
-        } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)){
-            $result->msg = 'CNPJ inv&aacute;lido!';
         } else {
             $Usuario = new Autenticacao_Model_Sgcacesso();
             $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
@@ -45,17 +42,14 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
 
             if ($verificaSituacao != 1) {
                 if(md5($password) != $this->validarSenhaInicial()){
-                    $encriptaSenha = EncriptaSenhaDAO::encriptaSenha($username, $password);
-                    //x($encriptaSenha);
-                    $SenhaFinal = $encriptaSenha[0]->senha;
-                    //x($SenhaFinal);
+                    $SenhaFinal = EncriptaSenhaDAO::encriptaSenha($username, $password);
                     $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                 } else {
                     $buscar = $Usuario->loginSemCript($username, md5($password));
                 }
 
                 if(!$buscar){
-                    $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
+                    $result->msg = 'CPF ou Senha inv&aacute;lidos!';
                 }
             } else {
                 $SenhaFinal = addslashes($password);
@@ -65,7 +59,10 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
             if($buscar){
                 $result->usuario = Zend_Auth::getInstance()->getIdentity();
                 $result->authorization = $this->encryptAuthorization();
-//                $result->authorization = Seguranca::encrypt($result->usuario->IdUsuario, $this->encryptHash);
+                # Corrigi caracteres não utf8 para retornar dados da requisição corretamente.
+                if($result->usuario && $result->usuario->Nome){
+                    $result->usuario->Nome = utf8_encode($result->usuario->Nome);
+                }
 
                 $verificaSituacao = $verificaStatus[0]->Situacao;
                 if($verificaSituacao == 1) {
@@ -75,24 +72,17 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
                 $modelDispositivoMovel = new Dispositivomovel();
                 $result->dispositivo = $modelDispositivoMovel->salvar($registrationId, $username);
 
-//                $agentes = new Agentes();
-//                $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
-//
-//                if(empty($verificaAgentes)){
-//                    $result->msg = 'Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente!';
-//                }
-
             } else {
-                $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
+                $result->msg = 'CPF ou Senha inv&aacute;lidos!';
             }
         }
 
-        # Resposta da autenticaï¿½ï¿½o.
+        # Resposta da autenticação.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
 
     /**
-     * Gera a chave de acesso do usuï¿½rio para utilizar os serviï¿½os que precisam de identificaï¿½ï¿½o de usuï¿½rio.
+     * Gera a chave de acesso do usuï¿½rio para utilizar os serviços que precisam de identificação de usuário.
      *
      * @return string
      */
@@ -109,7 +99,7 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
      * @return string
      */
     public static function validarSenhaInicial(){
-        return 'ae56f49edf70ec03b98f53ea6d2bc622';
+        return MinC_Controller_Action_Abstract::validarSenhaInicial();
     }
 
     public function indexAction(){}

@@ -125,7 +125,7 @@
                     ?>
                     <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                         <td>
-                            <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
+                            <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black-text del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
                         </td>
                     </tr>
                     <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -183,12 +183,12 @@
                                 $valorprodutocomponente += $valorufcomponente;
                                 ?>
                                 <tr>
-                                    <td colspan="7" class="black" style="font-size: 14pt;">Total de UF</td>
-                                    <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufsolicitado); ?></td>
+                                    <td colspan="7" class="black-text" style="font-size: 14pt;">Total de UF</td>
+                                    <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufsolicitado); ?></td>
                                     <td></td>
-                                    <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufparecerista); ?></td>
+                                    <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufparecerista); ?></td>
                                     <td></td>
-                                    <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufcomponente); ?></td>
+                                    <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($valorufcomponente); ?></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -233,9 +233,9 @@
                     <th>Total Componente</th>
                 </tr>
                 <tr>
-                    <td class="black" style="font-size: 12pt; font-weight: 600; "><?php echo $this->formatarReal($this->totalproponente); ?></td>
-                    <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalparecerista); ?></td>
-                    <td class="black" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalcomponente); ?></td>
+                    <td class="black-text" style="font-size: 12pt; font-weight: 600; "><?php echo $this->formatarReal($this->totalproponente); ?></td>
+                    <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalparecerista); ?></td>
+                    <td class="black-text" style="font-size: 12pt; font-weight: 600;"><?php echo $this->formatarReal($this->totalcomponente); ?></td>
                 </tr>
             </table>
         </td>

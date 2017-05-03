@@ -86,7 +86,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                  where uog_usuario = {$params->usu_cod}
                    and uog_grupo   = {$params->gru_codigo}
                    and uog_orgao   = {$params->usu_orgao}";
-        //xd($sql);
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);

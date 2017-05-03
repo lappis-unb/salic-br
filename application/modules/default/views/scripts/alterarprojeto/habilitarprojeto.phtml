@@ -35,16 +35,6 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
 <!-- ========== GRID NOME DA PROPOSTA ========== -->
 <script type="text/javascript">
     $(document).ready( function() {
-        $('.checkbox').change(function(){
-            if($(this).val() == 'N'){
-                $('#tdCombo').removeClass('sumir');
-                $('#penalidade').addClass('obrigatorio');
-            } else {
-                $('#tdCombo').addClass('sumir');
-                $('#penalidade').removeClass('obrigatorio');
-            }
-        })
-
         $('#btn_salvar').click(function(){
             var preenchimento = true,
                 selectCombo = false;
@@ -113,20 +103,6 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
                 <td>
                     <input type="radio" name="habilitado" value="S" id="S" class="checkbox" <?php echo ($this->parecer->Habilitado == "S") ? 'checked="checked"' : ''; ?> /> <label for="S">Habilitar Projeto</label>&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="habilitado" value="N" id="N" class="checkbox" <?php echo ($this->parecer->Habilitado == "N") ? 'checked="checked"' : ''; ?> /> <label for="N">Inabilitar Projeto</label>
-                </td>
-            </tr>
-            <tr id="tdCombo" <?php echo ($this->parecer->Habilitado == "N") ? '' : 'class="sumir"'; ?>>
-                <td width="100px" class="destacar bold" align="right">Penalidade <span style="color: red;">*</span></td>
-                <td>
-                    <select class="select_simples <?php echo ($this->parecer->Habilitado == "N") ? 'obrigatorio' : ''; ?>" name="penalidade" id="penalidade">
-                        <option value=""> - Selecione - </option>
-                        <?php foreach ($this->combo as $combo) { ?>
-                        <option value="<?php echo $combo->idTipoInabilitado; ?>" <?php echo ($combo->idTipoInabilitado == $this->parecer->idTipoInabilitado) ? 'selected="selected"' : ''; ?>><?php echo $combo->dsTipoInabilitado; ?></option>
-                        <?php }?>
-                        <?php if($this->parecer->idTipoInabilitado == 8){ ?>
-                        <option value="8" selected="selected">Inabilitado pelo sistema</option>
-                        <?php } ?>
-                    </select>
                 </td>
             </tr>
         </table>

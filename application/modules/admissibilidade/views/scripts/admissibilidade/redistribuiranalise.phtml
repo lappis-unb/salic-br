@@ -55,13 +55,9 @@
                 //-->
             </script>
     <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
-        <?php
-            foreach ($this->analistas as $nomeAnalista => $fases) {
-        ?>
+        <?php foreach ($this->analistas as $nomeAnalista => $fases) { ?>
             <input type="hidden" name="<?php echo str_replace("_", " ", $nomeAnalista); ?>" value="<?php echo count($fases); ?>"/>
-        <?php
-            }
-        ?>
+        <?php } ?>
     </form>
 
         <table class="bordered striped">
@@ -86,9 +82,7 @@
                       <table class="bordered striped" id="tabelaRedistribuir_<?php echo $i?>_<?php echo $j?>">
                           <thead>
                                 <tr>
-                                    <th>
-                                        Redistribuir
-                                    </th>
+                                    <th> Redistribuir </th>
                                     <th style="cursor:pointer" title="Clique aqui para ordenar">
                                         Nr.Proposta
                                     </th>
@@ -104,8 +98,8 @@
                             <?php foreach ($fases as  $faseItem) : ?>
                                 <tr>
                                     <td >
-                                        <a href="<?php echo $this->baseUrl()?>/admissibilidade/admissibilidade/redistribuiranaliseitem?idProjeto=<?php echo $faseItem['nrProposta']?>">
-                                            <img src="<?php echo $this->baseUrl()?>/public/img/user_gray.png" />
+                                        <a class="btn blue white-text" href="<?php echo $this->baseUrl()?>/admissibilidade/admissibilidade/redistribuiranaliseitem?idProjeto=<?php echo $faseItem['nrProposta']?>">
+                                            <i class="material-icons">compare_arrows</i>
                                         </a>
                                     </td>
                                     <td>

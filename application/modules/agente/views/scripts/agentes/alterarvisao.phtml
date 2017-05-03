@@ -1,4 +1,4 @@
-<?php require_once "inc/menu.inc.php"; // menu lateral ?>
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) // menu lateral ?>
 
 <script type="text/javascript">
 
@@ -105,7 +105,7 @@
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
-    <?php require_once "inc/cabecalho.php";?>
+    <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
     <?php
         $arrayIdVisao = array();
         // array com o id das visoes do agente

@@ -23,7 +23,7 @@ class tbAcesso extends MinC_Db_Table_Abstract{
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbRelatorioTrimestral'),
@@ -39,7 +39,7 @@ class tbAcesso extends MinC_Db_Table_Abstract{
                     );
 
             $select->where('c.IdPRONAC = ?', $idpronac);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }

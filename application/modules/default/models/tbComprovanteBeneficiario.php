@@ -34,7 +34,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -70,7 +70,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
             $select->where('h.stRelatorioTrimestral = 1');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }
@@ -86,7 +86,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -122,7 +122,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
             $select->where('h.stRelatorioTrimestral = 2');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }
@@ -139,7 +139,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -175,7 +175,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
             $select->where('h.stRelatorioTrimestral in (5,7)');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }
@@ -191,7 +191,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -226,7 +226,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
 
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }
