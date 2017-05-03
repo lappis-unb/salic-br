@@ -8,6 +8,35 @@ class Assinatura_Model_TbDocumentoAssinatura extends MinC_Db_Model
     protected $_conteudo;
     protected $_dt_criacao;
     protected $_idCriadorDocumento;
+    protected $_cdSituacao;
+
+    /**
+     * @return mixed
+     */
+    public function getCdSituacao()
+    {
+        return $this->_cdSituacao;
+    }
+
+    /**
+     * @param mixed $cdSituacao
+     * @return Assinatura_Model_TbDocumentoAssinatura
+     */
+    public function setCdSituacao($cdSituacao)
+    {
+        $this->_cdSituacao = $cdSituacao;
+        return $this;
+    }
+
+    /*
+     * @var string CD_SITUACAO_ABERTO Disponível para assinatura
+     */
+    const CD_SITUACAO_ABERTO = 1;
+
+    /*
+     * @var string CD_SITUACAO_FINALIZADO Fechado para assinatura
+     */
+    const CD_SITUACAO_FINALIZADO = 2;
 
     /**
      * @return mixed

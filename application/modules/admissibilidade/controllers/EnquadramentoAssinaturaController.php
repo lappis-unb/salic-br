@@ -37,10 +37,10 @@ class Admissibilidade_EnquadramentoAssinaturaController extends Assinatura_Gener
     {
         $this->validarPerfis();
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Admissibilidade_Model_Enquadramento();
+        $documentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
 
         $ordenacao = array("projetos.DtSituacao asc");
-        $this->view->dados = $enquadramento->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
+        $this->view->dados = $documentoAssinatura->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();

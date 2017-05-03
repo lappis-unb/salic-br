@@ -21,10 +21,10 @@ class Assinatura_IndexController extends Assinatura_GenericController
     public function gerenciarAssinaturasAction()
     {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-        $enquadramento = new Admissibilidade_Model_Enquadramento();
+        $documentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
 
         $ordenacao = array("projetos.DtSituacao asc");
-        $this->view->dados = $enquadramento->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
+        $this->view->dados = $documentoAssinatura->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
     }
 
