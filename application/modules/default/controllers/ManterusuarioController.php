@@ -781,7 +781,7 @@ private $intTamPag = 10;
                 {
                 	if(count($buscardados) > 0)
 		            {
-		                parent::message("Perfil já cadastrado!", "/manterusuario/permissoessalic", "CONFIRM");
+		                parent::message("Perfil j&aacute; cadastrado!", "/manterusuario/permissoessalic", "CONFIRM");
 		            }
 
                     $dados = array(
