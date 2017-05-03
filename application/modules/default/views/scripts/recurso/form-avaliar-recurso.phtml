@@ -1185,8 +1185,8 @@
                 <td valign="top" width="200px">
                     <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" style="width: 160px;">
                         <option value=""> - Selecione - </option>
-                        <?php foreach ($this->comboareasculturais as $comboareacultural){ ?>
-                        <option value="<?php echo $comboareacultural->id; ?>" <?php if ($this->projetosEN->cdArea == $comboareacultural->id) echo "selected=\"selected\""; ?>><?php echo $comboareacultural->descricao; ?></option>
+                        <?php foreach ($this->comboareasculturais as $id => $descricao){ ?>
+                        <option value="<?php echo $id; ?>" <?php if ($this->projetosEN->cdArea == $id) echo "selected=\"selected\""; ?>><?php echo $descricao; ?></option>
                         <?php } ?>
                     </select>
                 </td>
