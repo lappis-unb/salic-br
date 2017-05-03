@@ -653,7 +653,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
                 } catch (Exception $e) {
 
                     $db->rollBack();
-                    //xd($e->getMessage());
+
 
                     $mensagem = "Erro ao enviar arquivo.";
                     $script = "window.parent.jqAjaxLinkSemLoading('" . $this->view->baseUrl() . "/upload/listar-arquivo-marca$this->cod', '', 'listaDeArquivos');\n";
@@ -712,7 +712,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
             );
             return;
         } catch (Exception $e) {
-            //xd($e->getMessage());
+
 
             $mensagem = "N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o.";
             $script = "window.parent.jqAjaxLinkSemLoading('" . $this->view->baseUrl() . "/upload/listar-arquivo-marca$this->cod', '', 'listaDeArquivos');\n";
@@ -773,7 +773,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
             );
             return;
         } catch (Exception $e) {
-            //xd($e->getMessage());
+
 
             $db->rollBack();
 
@@ -939,4 +939,4 @@ class UploadController extends MinC_Controller_Action_Abstract {
 
 }
 
-// fecha class
+

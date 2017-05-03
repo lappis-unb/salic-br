@@ -50,7 +50,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbDocumento'),
@@ -86,7 +86,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
             $select->where('f.stRelatorioTrimestral = 1');
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }
@@ -102,7 +102,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbDocumento'),
@@ -153,7 +153,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbDocumento'),
@@ -204,7 +204,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbDocumento'),
@@ -239,7 +239,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
 
             $select->where('d.idPRONAC = ?', $idpronac);
             $select->where('d.tpRelatorio = ?', $tpRelatorio);
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 
         }
@@ -255,7 +255,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbDocumento'),
@@ -305,7 +305,7 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name)
             );
             $select->joinInner(
                     array('b' => 'tbDocumento'),

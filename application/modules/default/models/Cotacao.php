@@ -13,7 +13,7 @@ class Cotacao extends MinC_Db_Table_Abstract {
 
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbCotacao';
-    protected $_schema  = 'scSAC';
+    protected $_schema  = 'bdcorporativo.scSAC';
 
 
 
@@ -37,7 +37,7 @@ class Cotacao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('cot'=>$this->_schema.'.'.$this->_name),
+                        array('cot'=>$this->_name),
                         array(
                                 'cot.idCotacao','cot.nrCotacao','CAST(cot.dsCotacao AS TEXT) AS dsCotacao','cot.dtCotacao'
                               )
@@ -60,7 +60,7 @@ class Cotacao extends MinC_Db_Table_Abstract {
         $select->group(array(
                             'cot.idCotacao','cot.nrCotacao','cot.dsCotacao','cot.dtCotacao','pa.IdPRONAC'
                           ));
-//        xd($select->assemble());
+
 
         return $this->fetchAll($select);
 
@@ -70,7 +70,7 @@ class Cotacao extends MinC_Db_Table_Abstract {
     public function buscarCotacao($cotacao){
         $slct = $this->select();
         $slct->from(
-                 array('cot'=>$this->_schema.'.'.$this->_name),
+                 array('cot'=>$this->_name),
                  array(
                     'cot.idCotacao','cot.nrCotacao','CAST(cot.dsCotacao AS TEXT) AS dsCotacao','cot.dtCotacao'
                  )

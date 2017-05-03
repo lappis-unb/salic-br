@@ -36,7 +36,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
         $slct->where('p.IdPRONAC = ? ', $idPronac);
 
-        //xd($slct->assemble());
+        
         return $this->fetchRow($slct);
     }
     public function BuscarQtdAvaliacoes($idPronac, $idProduto)
@@ -52,7 +52,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $slct->where('t.idProduto = ? ', $idProduto);
         $slct->where('t.DtDevolucao is not null', '');
 
-        //xd($slct->assemble());
+        
         return $this->fetchRow($slct);
     }
 
@@ -74,7 +74,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 				 INNER JOIN TABELAS.dbo.usuarios AS usu ON usu.usu_identificacao = age.CNPJCPF
 				 WHERE (idPronac = '$idPronac') and d.idOrgao = $codOrgao and SAC.dbo.fnNomeUsuario(d.idUsuario) is not null";
 
-                //xd($sql);
+                
 		try
 		{
 			$db = Zend_Db_Table::getDefaultAdapter();
@@ -84,7 +84,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 		{
 			$this->view->message = "Erro ao buscar Projetos: " . $e->getMessage();
 		}
-		//xd($sql);
+		
 		return $db->fetchAll($sql);
     }// fecha m�todo buscarHistoricoDeAnalise()
 
@@ -147,6 +147,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             "DtRetorno",
             "stPrincipal",
             "DtDistribuicao",
+            "DtDevolucao",
             "CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT",
             "CAST(Observacao AS TEXT) AS Observacao",
             "SAC.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
@@ -174,7 +175,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         }
 
         $select->order('idDistribuirParecer DESC');
-		//xd($select->assemble());
+		
         return $this->fetchAll($select);
     }// fecha m�todo buscarHistorico()
 
@@ -239,7 +240,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
             }
             $select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc', 't.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
-//            xd($select->assemble());
+
             return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
@@ -288,7 +289,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
         }
 		$select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc','t.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
-                //xd($select->assemble());
+                
 		return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
@@ -347,7 +348,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
         }
 		$select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
-                //xd($select->assemble());
+                
 		return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
@@ -438,7 +439,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                         $select->where($coluna, $valor);
                 }
                         $select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
-                       // xd($select->assemble());
+                       
                         return $this->fetchAll($select);
 	} // fecha m�todo listarProjetos()
 
@@ -504,7 +505,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 }
 
                 $select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
-                //xd($select->assemble());
+                
                 return $this->fetchAll($select);
 
 	} // fecha m�todo()
@@ -628,7 +629,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $select->distinct('t.idDistribuirParecer');
 
         $select->order('t.stPrincipal desc');
-               // xd($select->assemble());
+               
 		return $this->fetchAll($select);
 
     } // fecha m�todo dadosParaDistribuir()
@@ -654,7 +655,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $rstbDistribuirParecer->idUsuario = $dados['idUsuario'];
         $rstbDistribuirParecer->idAgenteParecerista = $dados['idAgenteParecerista'];
 
-        //xd($rstbDistribuirParecer);
+        
 
         //SALVANDO O OBJETO
         $id = $rstbDistribuirParecer->save();
@@ -685,7 +686,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         $rstbDistribuirParecer->idUsuario 		= $dados['idUsuario'];
         $rstbDistribuirParecer->idOrgao 		= $dados['idOrgao'];
 
-        //xd($rstbDistribuirParecer);
+        
 
         //SALVANDO O OBJETO
         $id = $rstbDistribuirParecer->save();
@@ -715,7 +716,7 @@ public function concluirParecer($dados) {
         $rstbDistribuirParecer->Observacao 		= $dados['Observacao'];
         $rstbDistribuirParecer->idUsuario 		= $dados['idUsuario'];
 
-        //xd($rstbDistribuirParecer);
+        
         //SALVANDO O OBJETO
         $id = $rstbDistribuirParecer->save();
 
@@ -1094,8 +1095,8 @@ public function aguardandoparecerresumo($where) {
         $select->where('t.FecharAnalise = 1');
         $select->where('t.TipoAnalise <> 2');
         $select->where('(p.AnoProjeto + p.Sequencial) = ?',$pronac);
-        //xd($select->assemble());
-        //xd($this->fetchAll($select));
+        
+        
 
         return $this->fetchAll($select);
 
@@ -1150,8 +1151,8 @@ public function aguardandoparecerresumo($where) {
         $select->where('t.FecharAnalise = 1');
         $select->where('t.TipoAnalise <> 2');
         $select->where('(p.AnoProjeto + p.Sequencial) = ?',$pronac);
-        //xd($select->assemble());
-        //xd($this->fetchAll($select));
+        
+        
 
         return $this->fetchAll($select);
 
@@ -1280,7 +1281,7 @@ public function analisePorParecerista($where){
         $select->where('uog.uog_grupo = 94');
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
-           // xd($select->assemble());
+           
         }
         return $this->fetchAll($select);
     }
@@ -1290,7 +1291,7 @@ public function analisePorParecerista($where){
             $slct->distinct();
             $slct->setIntegrityCheck(false);
             $slct->from(
-                    array('dp' => $this->_schema . '.' . $this->_name), array()            );
+                    array('dp' => $this->_name), array()            );
             $slct->joinInner(
                     array('ag'=>'Agentes'),
                     'ag.idAgente = dp.idAgenteParecerista',
@@ -1367,7 +1368,7 @@ public function analisePorParecerista($where){
 
             $slct->where('dp.idPRONAC = ?',$idpronac);
             $slct->where('gru.gru_codigo = 93 or gru.gru_codigo = 94');
-//xd($slct->assemble());
+
             return $this->fetchAll($slct);
         }
         public function analisePorPareceristaPagamento($where){
@@ -1504,7 +1505,7 @@ public function analisePorParecerista($where){
             $select->where($coluna, $valor);
 
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
     public function analiseParecerista($where){
@@ -1641,7 +1642,7 @@ public function analisePorParecerista($where){
             $select->where($coluna, $valor);
 
         }
-        //xd($select->assemble());
+        
         return $this->fetchAll($select);
     }
 
@@ -1696,7 +1697,7 @@ public function analisePorParecerista($where){
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -1856,6 +1857,35 @@ public function analisePorParecerista($where){
 			    );
 		$from = 'FROM sac.dbo.vwPainelCoordenadorVinculadasReanalisar';
                 break;
+
+        case 'impedimento_parecerista':
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorImpedimentoParecerista'),
+			    array(
+                    'IdPRONAC',
+                    'NrProjeto',
+                    'NomeProjeto',
+                    'idProduto',
+                    'Produto',
+                    'idArea',
+                    'Area',
+                    'idSegmento',
+                    'Segmento',
+                    'idDistribuirParecer',
+                    'idOrgao',
+                    'idAgenteParecerista',
+                    'Parecerista',
+                    'DtEnvioMincVinculada',
+                    'DtDistribuicao',
+                    'DtDevolucao',
+                    'JustParecerista',
+                    'Valor',
+                    'stPrincipal',
+                    'FecharAnalise'
+                    )
+			    );
+		$from = 'FROM dbo.vwPainelCoordenadorImpedimentoParecerista';
+                break;            
 	}
 
 	// se for totalizador
@@ -1923,7 +1953,7 @@ public function analisePorParecerista($where){
         $slct->group('a.idPRONAC,b.Descricao,c.Sigla,a.Observacao,convert(char(10),a.DtEnvio,121),convert(char(10),a.DtRetorno,121), DATEDIFF(DAY,a.DtEnvio,a.DtRetorno)');
         $slct->order(array('b.Descricao','c.Sigla','convert(char(10),a.DtRetorno,121)'));
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct);
     }
 
@@ -1947,7 +1977,7 @@ public function analisePorParecerista($where){
         }
         $slct->group('a.idProduto');
 
-        //xd($slct->assemble());
+        
         return $this->fetchAll($slct)->count();
     }
 

@@ -1,10 +1,4 @@
 <?php
-
-/**
- * Description of GerenciarPautaReuniao
- *
- * @author 01373930160
- */
 class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
     private $bln_readequacao = "false";
@@ -23,25 +17,26 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
 
         if ($auth->hasIdentity()) { // caso o usuario esteja autenticado
-// verifica as permissoes
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 133;
             $PermissoesGrupo[] = 118;
             $PermissoesGrupo[] = 119;
             $PermissoesGrupo[] = 120;
+            $PermissoesGrupo[] = 148;
+            $PermissoesGrupo[] = 151;
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo esta no array de permissoes
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-// pega as unidades autorizadas, orgaos e grupos do usuario (pega todos os grupos)
+            // pega as unidades autorizadas, orgaos e grupos do usuario (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-// manda os dados para a visao
+            // manda os dados para a visao
             $this->view->usuario = $auth->getIdentity(); // manda os dados do usuario para a visao
             $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuario para a visao
             $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
             $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
-        } // fecha if
+        }
         else {// caso o usuario nao esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -69,7 +64,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         /**** FIM - CODIGO DE READEQUACAO ****/
     }
 
-// fecha metodo init()
 
     public function gerenciarpautareuniaoAction() {
 
@@ -306,7 +300,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             //NAO ANALISADOS
             $arrReuniao = array();
             $arrReuniao['idNrReuniao IS NULL ']= "?";
-            $qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "N�o analisado", $arrReuniao)->count();
+            $qtdprojetonaoanalisados = count($tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "N&atilde;o analisado", $arrReuniao));
 
             $this->view->qtdprojetoanalisados = $qtdprojetoanalisados;
             $this->view->qtdenviadoplenaria = $contplenario;
@@ -386,7 +380,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
-                echo json_encode($arrRetorno);
+                $this->_helper->json($arrRetorno);
                 $this->_helper->viewRenderer->setNoRender(TRUE);
 
             }
@@ -394,7 +388,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
                 $arrRetorno['error'] = true;
                 $arrRetorno['msg']   = $e->getMessage();
-                echo json_encode($arrRetorno);
+                $this->_helper->json($arrRetorno);
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
@@ -411,13 +405,13 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
-                echo json_encode($arrRetorno);
+                $this->_helper->json($arrRetorno);
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             catch(Exception $e){
                 $arrRetorno['error'] = true;
                 $arrRetorno['msg']   = $e->getMessage();
-                echo json_encode($arrRetorno);
+                $this->_helper->json($arrRetorno);
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
@@ -530,7 +524,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         if(isset($idReuniao) && $idReuniao != ""){$arrReuniao['r.idNrReuniao = ?']=$idReuniao;}
         $ordem = array('1','21'); //ORDENACAO: analise , area cultural
         $rsProjAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, null, $arrReuniao, 1);
-        //xd($rsProjAnalisados->toArray());
 
         //NAO ANALISADOS
         $arrBusca =array();
@@ -542,7 +535,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $arrReuniao['idNrReuniao IS NOT NULL ']= "?";
         }
         $ordem = array('1','21'); //ORDENACAO: analise , area cultural
-        $rsProjNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, "N�o analisado", $arrReuniao);
+        $rsProjNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, "N&atilde;o analisado", $arrReuniao);
 
         //======== GRID 1 ==========/
         $arrGrid1 = array();
@@ -675,10 +668,10 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         if ($GrupoAtivo->codGrupo == 133 or $GrupoAtivo->codGrupo == 118) {
             $url = array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpautareuniao');
         }
-        if ($GrupoAtivo->codGrupo == 120) {
+        if ($GrupoAtivo->codGrupo == 120 || $GrupoAtivo->codGrupo == 148 ) { // Coordenador e Diretor da CNIC
             $url = array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciaradministrativo');
         }
-        if ($GrupoAtivo->codGrupo == 119) {
+        if ($GrupoAtivo->codGrupo == 119 ) { // presidente
             $url = array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpresidenteemreuniao');
         }
         $this->view->url = $url;
@@ -744,18 +737,18 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $reuniaoaberta = $raberta['idNrReuniao'];
                 $verificareuniao = json_decode($verificareuniao, true);
                 if (isset($verificareuniao->Status) and ($verificareuniao['Status'] != $_POST['stPlenaria'])) {
-                    echo json_encode(array('error' => false, 'acao' => 'reload'));
+                    $this->_helper->json(array('error' => false, 'acao' => 'reload'));
                 } else {
                     $horaBanco = date('Y-m-d H:i:s', strtotime($verificareuniao['TempoInicio']));
                     $horaadicionada = strtotime($horaBanco . "+10 minutes");
                     $horaAtual = strtotime("NOW");
                     $real = $horaadicionada - $horaAtual;
                     $data = date('i:s', $real);
-                    echo json_encode(array('error' => false, 'acao' => 'naoreload', 'cronometro' => $data, 'real' => $real, 'status' => $verificareuniao['Status']));
+                    $this->_helper->json(array('error' => false, 'acao' => 'naoreload', 'cronometro' => $data, 'real' => $real, 'status' => $verificareuniao['Status']));
                 }
             }
             else{
-                echo json_encode(array('error' => true, 'acao' => 'reload', 'status'=>'N'));
+                $this->_helper->json(array('error' => true, 'acao' => 'reload', 'status'=>'N'));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -782,7 +775,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $rsVotacao = $votacao->buscar($where)->current();
 
                 if(!empty($rsVotacao) && $this->_request->getParam("tipo") != 'readequacao'){
-                    echo json_encode(array('error' => true, 'descricao' => 'J&aacute; existe uma vota&ccedil;&atildeo em aberto para este Pronac. Favor encerrar a vota&ccedil;&atildeo antes de iniciar uma outra.'));
+                    $this->_helper->json(array('error' => true, 'descricao' => 'J&aacute; existe uma vota&ccedil;&atildeo em aberto para este Pronac. Favor encerrar a vota&ccedil;&atildeo antes de iniciar uma outra.'));
 
                 }else{
 
@@ -825,10 +818,10 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $fp = fopen($arquivo, "a+");
                     $escreve = fwrite($fp, json_encode($dadosvotacao));
                     fclose($fp);
-                    echo json_encode(array('error' => false));
+                    $this->_helper->json(array('error' => false));
                 }
             } catch (Exception $e) {
-                echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
             }
         } else {
             try {
@@ -840,9 +833,9 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 }
                 $where = "idNrReuniao = $reuniaoaberta and IdPRONAC = $idpronac";
                 $apagar = $votacao->apagar($where);
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
             } catch (Exception $e) {
-                echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -871,11 +864,11 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 }
                 closedir($handle); //Fecha a manipulacao
             }
-            echo json_encode(array('error' => false, 'qtdeArquivos' => $qtdeArquivos, 'arrPronacs' => $arrPronacs));
+            $this->_helper->json(array('error' => false, 'qtdeArquivos' => $qtdeArquivos, 'arrPronacs' => $arrPronacs));
 
         } catch (Exception $e) {
 
-            echo json_encode(array('error' => true, 'qtdeArquivos' => 0, 'arrPronacs' => $arrPronacs));
+            $this->_helper->json(array('error' => true, 'qtdeArquivos' => 0, 'arrPronacs' => $arrPronacs));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -900,24 +893,27 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Agente = $usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $buscarReuniaoAberta = $reuniao->buscarReuniaoAberta();
-        $reuniaoaberta = $buscarReuniaoAberta['idNrReuniao'];
+        
+        //$reuniaoaberta = $buscarReuniaoAberta['idNrReuniao'];
         if (isset($_POST['votantes'])) {
             $votantesSelecionados = array_unique($_POST['votantes']);
-            $buscarVotante = $vt->buscar(array('idReuniao = ?' => $reuniaoaberta))->count();
+            $buscarVotante = $vt->buscar(array('idReuniao = ?' => $buscarReuniaoAberta['idNrReuniao']))->count();
+            
             if ($buscarVotante > 1) {
-                $where = "idReuniao = $reuniaoaberta";
+                $where = "idReuniao = " . $buscarReuniaoAberta['idNrReuniao'];
                 $vt->apagar($where);
             }
             foreach ($votantesSelecionados as $votantesadicionar) {
                 $dados = array(
-                    'idReuniao' => $reuniaoaberta,
+                    'idReuniao' => $buscarReuniaoAberta['idNrReuniao'],
                     'idAgente' => $votantesadicionar
                 );
                 $vt->inserir($dados);
             }
             parent::message("Votantes cadastrados com sucesso!", "gerenciarpautareuniao/exibirvotantes", "CONFIRM");
         }
-        $buscarVotante = $vt->buscar(array('idReuniao = ?' => $reuniaoaberta));
+        $buscarVotante = $vt->buscar(array('idReuniao = ?' => $buscarReuniaoAberta['idNrReuniao']));
+        
         $votanteCadastrado = array();
         foreach ($buscarVotante as $verificarVotante) {
             $votanteCadastrado[] = $verificarVotante->idAgente;
@@ -946,19 +942,21 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $membrosnatos = array();
         foreach ($buscarMembrosNatos as $membros) {
             $Agente = $usuario->getIdUsuario($membros->usu_codigo);
-            if ($Agente['idAgente']) {
-                if ($idagenteAtual == $Agente['idAgente']) {
-                    $idagenteAtual = $Agente['idAgente'];
+            
+            if ($Agente['idagente']) {
+                if ($idagenteAtual == $Agente['idagente']) {
+                    $idagenteAtual = $Agente['idagente'];
                 } else {
-                    $membrosnatos[$num]['idAgente'] = $Agente['idAgente'];
+                    $membrosnatos[$num]['idAgente'] = $Agente['idagente'];
                     $membrosnatos[$num]['nome'] = $membros->usu_nome;
-                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idAgente'], $votanteCadastrado) ? true : false;
-                    $idagenteAtual = $Agente['idAgente'];
+                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idagente'], $votanteCadastrado) ? true : false;
+                    $idagenteAtual = $Agente['idagente'];
                 }
             }
             $num++;
         }
-        $this->view->Plenaria = $reuniaoaberta;
+        
+        $this->view->Plenaria = $buscarReuniaoAberta;
         $this->view->membrosnatos = $membrosnatos;
     }
 
@@ -988,10 +986,10 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 echo $jsonEnviar;
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
-                echo json_encode(array('error' => true));
+                $this->_helper->json(array('error' => true));
             }
         } else {
-            echo json_encode(array('error' => true));
+            $this->_helper->json(array('error' => true));
         }
     }
 
@@ -1064,20 +1062,20 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     if(isset($dados['idtiporeadequacao'])){
                         $dados['idpronac'] = $dados['idpronac'].'_'.$dados['idtiporeadequacao'];
                     }
-                    echo json_encode(array('error' => false, 'stvoto' => 'ok', 'status' => 'aberta', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
+                    $this->_helper->json(array('error' => false, 'stvoto' => 'ok', 'status' => 'aberta', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
 
                 } else if($ConsolidacaoVotacao->count() == 0) {
                     if(isset($dados['idtiporeadequacao'])){
                         $dados['idpronac'] = $dados['idpronac'].'_'.$dados['idtiporeadequacao'];
                     }
-                    echo json_encode(array('error' => false, 'stvoto' => 'ok', 'status' => 'aberta', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
+                    $this->_helper->json(array('error' => false, 'stvoto' => 'ok', 'status' => 'aberta', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
 
                 } else {
-                    echo json_encode(array('error' => false, 'stvoto' => 'ok', 'status' => 'completa', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
+                    $this->_helper->json(array('error' => false, 'stvoto' => 'ok', 'status' => 'completa', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
                 }
             }
         } else {
-            echo json_encode(array('error' => true, 'status' => 'naoiniciada'));
+            $this->_helper->json(array('error' => true, 'status' => 'naoiniciada'));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1099,7 +1097,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $jsonEnviar = json_encode($dados);
             echo $jsonEnviar;
         } else {
-            echo json_encode(array('error' => true));
+            $this->_helper->json(array('error' => true));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1122,7 +1120,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             echo $verificavotacao;
         }
         else
-            echo json_encode(array('error' => 'true'));
+            $this->_helper->json(array('error' => 'true'));
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
@@ -1134,9 +1132,9 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         try {
             $where = "IdPRONAC = $idpronac and idNrReuniao = $idnrreuniao";
             $votacao->excluirVotacao($where);
-            echo json_encode(array('error' => false));
+            $this->_helper->json(array('error' => false));
         } catch (Zend_Db_Table_Exception $e) {
-            echo json_encode(array('error' => true));
+            $this->_helper->json(array('error' => true));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1147,14 +1145,14 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         if ($recebidoGet->idNrReuniao) {
             $enviar = AtualizaReuniaoDAO::verificaReuniaoAdministrativo($recebidoGet->idNrReuniao);
             if (count($enviar) > 0) {
-                echo json_encode(array('idPRONAC' => $enviar[0]->idPRONAC));
+                $this->_helper->json(array('idPRONAC' => $enviar[0]->idPRONAC));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
-                echo json_encode(array('idPRONAC' => false));
+                $this->_helper->json(array('idPRONAC' => false));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         } else {
-            echo json_encode(array('idPRONAC' => false));
+            $this->_helper->json(array('idPRONAC' => false));
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
@@ -1181,7 +1179,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             echo $jsonEncode;
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
-            echo json_encode(array('error' => true));
+            $this->_helper->json(array('error' => true));
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
@@ -1200,7 +1198,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idpronac = $_POST['idpronac'];
         $projeto = new Projetos();
-        $planilhaproposta = new PlanilhaProposta();
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $planilhaprojeto = new PlanilhaProjeto();
         $planilhaAprovacao = new PlanilhaAprovacao();
         $tblParecer = new Parecer();
@@ -1363,7 +1361,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $tbDistribuicaoProjetoComissao = new tbDistribuicaoProjetoComissao();
                     $tbDistribuicaoProjetoComissao->update($e, $w);
 
-                    $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+                    $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                     $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                     $this->view->produtos = $dadosProdutos;
 
@@ -1431,7 +1429,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $planilhaaprovacao = new PlanilhaAprovacao();
         $pt = new Pauta();
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $projeto = new Projetos();
         $idpronac = $this->_request->getParam("idpronac");
         $buscarprojeto = $projeto->buscar(array('IdPRONAC = ?' => $idpronac))->current()->toArray();
@@ -1542,7 +1540,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             /**** CODIGO DE READEQUACAO ****/
             $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac,'CO', array('pap.stAtivo=?'=>'S'));
-            //xd($buscarplanilhaCO);
             $buscarAnaliseConta = array(); $cont = 0;
             foreach($buscarplanilhaCO as $resuplanilha){
                 $buscarAnaliseConta[$cont]['qtdRelator'] = $resuplanilha->qtItem;
@@ -1791,7 +1788,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         // recebe os dados via get
         $idpronac = $this->_request->getParam("idpronac");
-        $tblPlanilhaProposta = new PlanilhaProposta();
+        $tblPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $tblPlanilhaProjeto = new PlanilhaProjeto();
         $tblPlanilhaAprovacao = new PlanilhaAprovacao();
         $tblProjetos = new Projetos();
@@ -1884,7 +1881,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             $resuplanilha = null; $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
             foreach($buscarplanilhaSR as $resuplanilha){
                     $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
 
@@ -1906,7 +1902,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             /******** Planilha aprovacao PA (Parecerista) ****************/
             $resuplanilha = null; $count = 0;
             $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
-            //xd($buscarplanilhaSR);
             foreach($buscarplanilhaPA as $resuplanilha){
                     $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                     $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['UnidadeProjeto'] = $resuplanilha->Unidade;
@@ -2058,7 +2053,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $buscarAnaliseAp = $analiseaprovacao->buscar(array('IdPRONAC = ?' => $idpronac, 'idProduto = ?' => $buscarPlano['idProduto'], 'tpAnalise = ?' => $tpAnalise));
 
         //VALOR DA PROPOSTA
-        $planilhaproposta = new PlanilhaProposta();
+        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
         $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
         $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
         $this->view->valorproposta = $fonteincentivo['soma'] + $outrasfontes['soma'];
@@ -2189,7 +2184,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $whereNaoAnalisados['par.TipoParecer = ?'] = 1; /**parecer de analise inicial**/
                 }
 
-                $rsProjetosNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($whereNaoAnalisados, $ordenacaoNaoPauta->ordemNaoPauta, null, null, false, "N�o analisado", $arrReuniao);
+                $rsProjetosNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($whereNaoAnalisados, $ordenacaoNaoPauta->ordemNaoPauta, null, null, false, "N&atilde;o analisado", $arrReuniao);
 
             }else{ //SUBMETIDOS
                 $view = "listar-projetos-plenaria.phtml";

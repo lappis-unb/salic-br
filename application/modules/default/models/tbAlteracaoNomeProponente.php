@@ -14,7 +14,7 @@ class tbAlteracaoNomeProponente extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "scSAC";
+	protected $_schema  = "BDCORPORATIVO.scSAC";
 	protected $_name    = "tbAlteracaoNomeProponente";
 
 
@@ -31,7 +31,7 @@ class tbAlteracaoNomeProponente extends MinC_Db_Table_Abstract
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
 		$select->from(
-			array($this->_schema . '.' . $this->_name)
+			array($this->_name)
 			,array(
 				'nrCNPJCPF AS CNPJCPF'
 				,'nmProponente AS NomeProponente')
@@ -62,7 +62,7 @@ class tbAlteracaoNomeProponente extends MinC_Db_Table_Abstract
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
 		$select->from(
-			array('h' => $this->_schema . '.' . $this->_name)
+			array('h' => $this->_name)
 			,array(
 				'h.nrCNPJCPF AS CNPJCPF'
 				,'h.nmProponente AS NomeProponente')

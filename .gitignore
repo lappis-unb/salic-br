@@ -13,7 +13,9 @@ index.php
 *#
 .#*
 index.php
+public/plenaria
 public/plenaria/log_exec_paEncerrarCNIC.txt
+public/txt
 .directory
 application/configs/config_desenv.ini
 application/configs/config_treinamento.ini

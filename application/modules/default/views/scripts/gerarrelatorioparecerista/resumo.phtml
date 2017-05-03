@@ -5,7 +5,7 @@ $graficoresumoHref = $this->url(array('controller' => 'gerarrelatorioparecerista
 <div id="menu">
     <!-- início: conteúdo principal #container -->
     <div id="container">
-        <?php include_once 'inc/menu.inc.php';?>
+        <?php echo $this->partial('gerarrelatorioparecerista/inc/menu.inc.php', $this)';?>
         <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
         <div id="breadcrumb">
             <ul>

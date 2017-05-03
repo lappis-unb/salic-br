@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Description of tbPedidoAlteracaoProjeto
  *
@@ -7,7 +7,7 @@
 class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
     /* dados da tabela */
     protected $_banco   = "BDCORPORATIVO";
-    protected $_schema  = "scSAC";
+    protected $_schema  = "BDCORPORATIVO.scSAC";
     protected $_name    = "tbPedidoAlteracaoProjeto";
 
 
@@ -16,7 +16,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
 
         $select->from(
-                array('pap'=>$this->_schema.'.'.$this->_name),
+                array('pap'=>$this->_name),
                 array('Perfil3'=>new Zend_Db_Expr("'Coordenador de Acompanhamento'"),'cdPerfil3'=>new Zend_Db_Expr("'122'"))
         );
 
@@ -82,7 +82,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         );
 
         $select->where('pap.IdPRONAC = ?', $idPronac);
-//xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -90,7 +90,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
 
-        $select->from(array('pa'=>$this->_schema.'.'.$this->_name),
+        $select->from(array('pa'=>$this->_name),
                 array('*'));
 
         $select->joinInner(array('paxta'=>'tbPedidoAlteracaoXTipoAlteracao'),
@@ -106,7 +106,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         //adicionando linha order ao select
         $select->order($order);
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -118,18 +118,18 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
     public function buscarProjetosCheckList($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('re' => $this->_schema . '.' . $this->_name), array('re.idPedidoAlteracao'));
+        $slct->from(array('re' => $this->_name), array('re.idPedidoAlteracao'));
         $slct->joinInner(array('rex' => 'tbPedidoAlteracaoXTipoAlteracao'),
                 're.idPedidoAlteracao = rex.idPedidoAlteracao',
                 array('tpAlteracaoProjeto' => new Zend_Db_Expr("CASE WHEN rex.tpAlteracaoProjeto = 1 THEN 'Nome do Proponente'
-													WHEN rex.tpAlteracaoProjeto = 2 THEN 'Troca de Agente' 
-													WHEN rex.tpAlteracaoProjeto = 3 THEN 'Ficha T�cnica' 
-													WHEN rex.tpAlteracaoProjeto = 4 THEN 'Local de Realiza��o' 
-													WHEN rex.tpAlteracaoProjeto = 5 THEN 'Nome do Projeto' 
-													WHEN rex.tpAlteracaoProjeto = 6 THEN 'Proposta Pedag�gica' 
-													WHEN rex.tpAlteracaoProjeto = 7 THEN 'Plano de Distribui��o' 
-													WHEN rex.tpAlteracaoProjeto = 8 THEN 'Prorroga��o de Prazo de Capta��o' 
-													WHEN rex.tpAlteracaoProjeto = 9 THEN 'Prorroga��o de Prazo de Execu��o' 
+													WHEN rex.tpAlteracaoProjeto = 2 THEN 'Troca de Agente'
+													WHEN rex.tpAlteracaoProjeto = 3 THEN 'Ficha T&eacute;cnica'
+													WHEN rex.tpAlteracaoProjeto = 4 THEN 'Local de Realiza&ccedil;&atilde;o'
+													WHEN rex.tpAlteracaoProjeto = 5 THEN 'Nome do Projeto'
+													WHEN rex.tpAlteracaoProjeto = 6 THEN 'Proposta Pedag&oacute;gica'
+													WHEN rex.tpAlteracaoProjeto = 7 THEN 'Plano de Distribui&ccedil;&atilde;o'
+													WHEN rex.tpAlteracaoProjeto = 8 THEN 'Prorroga&ccedil;&atilde;o de Prazo de Capta&ccedil;&atilde;o'
+													WHEN rex.tpAlteracaoProjeto = 9 THEN 'Prorroga&ccedil;&atilde;o de Prazo de Execu&ccedil;&atilde;o'
 													ELSE 'Itens de Custo' END"),
                 ),'BDCORPORATIVO.scSAC'
         );
@@ -208,11 +208,11 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 array('vp.idUsuario',
                 'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = vp.idUsuario)'),
                 'vp.stAnaliseProjeto',
-                'status' => new Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando An�lise'
-												WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando An�lise' 
-												WHEN vp.stAnaliseProjeto = '2' THEN 'Em An�lise' 
-												WHEN vp.stAnaliseProjeto = '3' THEN 'An�lise Finalizada' 
-												WHEN vp.stAnaliseProjeto = '4' THEN 'Encaminhado para portaria' 
+                'status' => new Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando An&aacute;lise'
+												WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando An&aacute;lise'
+												WHEN vp.stAnaliseProjeto = '2' THEN 'Em An&aacute;lise'
+												WHEN vp.stAnaliseProjeto = '3' THEN 'An&aacute;lise Finalizada'
+												WHEN vp.stAnaliseProjeto = '4' THEN 'Encaminhado para portaria'
 												END "),
                 'DATEDIFF(day, vp.DtRecebido, '.$this->getDate().') AS tempoAnalise',
                 'vp.dtRecebido'
@@ -237,7 +237,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        // xd($slct->assemble());
+
         return $this->fetchAll($slct);
     } // fecha m�todo buscarProjetosCheckList()
 
@@ -246,7 +246,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('a'=>$this->_schema.'.'.$this->_name),
+                array('a'=>$this->_name),
                 array('')
         );
         $select->joinInner(
@@ -261,7 +261,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select->where('c.tpAlteracaoProjeto = ?', 7);
         $select->where('b.tpAcao = ?', 'I');
         $select->where(new Zend_Db_Expr("NOT EXISTS(SELECT TOP 1 * FROM SAC.DBO.tbPlanilhaAprovacao d WHERE d.tpPlanilha = 'SR' AND d.stAtivo = 'N' AND b.idProduto = d.idProduto AND a.idPronac = d.idPronac)"));
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -293,14 +293,14 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             array('e' => 'tbPedidoAlteracaoXTipoAlteracao'), 'a.idPedidoAlteracao = e.idPedidoAlteracao',
             array('idPedidoAlteracao', 'tpAlteracaoProjeto'), 'BDCORPORATIVO.scSAC'
         );
-        
+
        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
 
         if ($qtdeTotal){
-            //xd($select->assemble());
+
             return $this->fetchAll($select)->count();
         }
 
@@ -316,7 +316,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 
@@ -357,7 +357,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             $select->where($coluna, $valor);
         }
         if ($qtdeTotal){
-            //xd($select->assemble());
+
             return $this->fetchAll($select)->count();
         }
         //adicionando linha order ao select
@@ -370,7 +370,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        //xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

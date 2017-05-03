@@ -50,7 +50,7 @@ class Acesso extends MinC_Db_Table_Abstract {
 
         $select->where("b.idPRONAC = ?", $idPronac);
         $select->where("a.tpAcesso = ?", $tpAcesso);
-//xd($select->__toString());
+
         return $this->fetchAll($select);
     }
 
@@ -59,12 +59,12 @@ class Acesso extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('a' => $this->_schema . '.' . $this->_name),
+                array('a' => $this->_name),
                 array('a.idAcesso', 'a.idRelatorio', 'CAST(a.dsAcesso AS TEXT) AS dsAcesso', 'CAST(a.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'a.qtPessoa', 'CAST(a.dsLocal AS TEXT) AS dsLocal', 'CAST(a.dsEstruturaSolucao AS TEXT) AS dsEstruturaSolucao', 'a.tpAcesso', 'a.stAcesso', 'a.stQtPessoa', 'a.stPublicoAlvo', 'a.stLocal', 'a.stEstrutura', 'CAST(a.dsJustificativaAcesso AS TEXT) AS dsJustificativaAcesso')
         );
         $select->where('a.idRelatorio = ?', $idRelatorio);
         $select->where('a.tpAcesso = ?', $tpAcesso);
-//            xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

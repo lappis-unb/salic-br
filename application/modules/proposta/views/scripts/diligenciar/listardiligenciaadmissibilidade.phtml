@@ -1,15 +1,15 @@
 <?php
-$visualizarDiligenciaHref   = $this->url(array('controller' => 'diligenciar', 'action' => 'visualizardiligencia'));
-$alterarDiligenciaHref      = $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia'));
-$prorrogarHref              = $this->url(array('controller' => 'diligenciar', 'action' => 'prorrogar'));
+$visualizarDiligenciaHref   = $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'visualizardiligencia'));
+$alterarDiligenciaHref      = $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia'));
+$prorrogarHref              = $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'prorrogar'));
 ?>
 <br clear="left"/>
 <?php
 
 if($this->idPronac)
-    require_once "scripts/diligenciar/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+    echo $this->partial('diligenciar/inc/menu.inc.php', $this); // menu de manter proposta por incentivo fiscal
 if($this->idPreProjeto)
-    require_once "scripts/diligenciar/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+    echo $this->partial('diligenciar/inc/menu.inc.php', $this); // menu de manter proposta por incentivo fiscal
 ?>
 <div id="titulo">
     <div>Listagem das Dilig&ecirc;ncias <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>

@@ -43,8 +43,8 @@ class Segmento extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->getPart(Zend_Db_Select::COLUMNS));
-//        xd($slct->assemble());
+        
+
         return $this->fetchAll($slct);
     }
 
@@ -68,7 +68,7 @@ class Segmento extends MinC_Db_Table_Abstract
 
         $select->from(
             array('s' => 'vSegmento'),
-            array('s.codigo AS id', 's.segmento AS descricao'),
+            array('s.codigo AS id', 's.segmento AS descricao', 'tp_enquadramento'),
             $this->_schema
         );
 

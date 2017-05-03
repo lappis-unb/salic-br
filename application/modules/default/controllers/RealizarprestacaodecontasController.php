@@ -37,12 +37,6 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
         private $situcaoEncaminhamentoAtual = null;
 
-	/**
-	 * Reescreve o m�todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
 
 	public function init()
         {
@@ -61,6 +55,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $PermissoesGrupo [] = 82;
             $PermissoesGrupo [] = 132;
             $PermissoesGrupo [] = 100;
+            $PermissoesGrupo [] = 148;
+            $PermissoesGrupo [] = 151;
 
             parent::perfil ( 1, $PermissoesGrupo );
 
@@ -170,7 +166,6 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                     if ( isset($post->dtExecucao_Final) && !empty($post->dtExecucao_Final)) {$arrBusca['p.DtFimExecucao <= ?'] = Data::dataAmericana($post->dtExecucao_Final) . " 23:59:59.999";}
                 }
             }
-            //xd($arrBusca);
             //$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpPeriodoExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
 
             if(!empty($post->area)){
@@ -361,7 +356,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, true);
 
-            //xd($total);
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -526,7 +521,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $tblProjetos = new Projetos ();
             $total = $tblProjetos->buscarProjetosPrestacaoContas($arrBusca, array(), null, null, true, $bln_encaminhamento, $bln_dadosDiligencia);
 
-            //xd($total);
+
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
@@ -688,9 +683,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $jsonEncode = json_encode($dadosAgente);
 
                 //echo $jsonEncode;
-                echo json_encode(array ('resposta' => true, 'conteudo' => $dadosAgente) );
+                $this->_helper->json(array ('resposta' => true, 'conteudo' => $dadosAgente) );
             } else {
-                echo json_encode(array ('resposta' => false) );
+                $this->_helper->json(array ('resposta' => false) );
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
@@ -1239,7 +1234,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $GrupoUsuario = $GrupoAtivo->codGrupo;
 
-        if($GrupoUsuario != 126){ //Se o perfil for diferente de Coord. Geral de Presta��o de Contas, n�o permite o acesso dessa funcionalidade.
+        if($GrupoUsuario != 126 && $GrupoUsuario != 151 && $GrupoUsuario != 148){ //Se o perfil for diferente de Coord. Geral de Presta��o de Contas, n�o permite o acesso dessa funcionalidade.
             parent::message('Voc� n�o tem permiss�o para acessar essa funcionalidade.', "principal", 'ALERT');
         }
 
@@ -1802,9 +1797,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $jsonEncode = json_encode($dadosAgente);
 
                 //echo $jsonEncode;
-                echo json_encode(array ('resposta' => true, 'conteudo' => $dadosAgente) );
+                $this->_helper->json(array ('resposta' => true, 'conteudo' => $dadosAgente) );
             } else {
-                echo json_encode(array ('resposta' => false) );
+                $this->_helper->json(array ('resposta' => false) );
             }
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
@@ -2147,7 +2142,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         $arrComprovantesImpugnados = array();
         if (is_object($resposta)) {
             foreach ($resposta as $val) {
-		#xd($resposta);
+		
                 $modalidade = '';
                 if($val->idCotacao != '') {
                     $modalidade = 'Cota&ccedil;&atilde;o';
@@ -2268,7 +2263,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 		$retorno = false;
 		if(!empty ($rsParecer))
 		$retorno = true;
-		echo json_encode(array('retorno'=>$retorno));
+		$this->_helper->json(array('retorno'=>$retorno));
 	}
 
 	public function parecertecnicoAction() {
@@ -2913,7 +2908,6 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 				if(count($rst)>0){
 					$this->view->projeto  = $rst[0];
 					$this->view->idpronac = $_REQUEST['idPronac'];
-					//xd($rst[0]);
 				}else{
 					parent::message("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado.", "listarprojetos/listarprojetos", "ERROR");
 					return;
@@ -3103,12 +3097,12 @@ $objAcesso = new Acesso();
 				$data = "00/00/0000";
 				$dias = "0";
 			}
-			echo json_encode(array('dataImpressao'=>$data,'dias'=>$dias));
+			$this->_helper->json(array('dataImpressao'=>$data,'dias'=>$dias));
 			return;
 		}else{
 			$data = "00/00/0000";
 			$dias = "0";
-			echo json_encode(array('dataImpressao'=>$data,'dias'=>$dias));
+			$this->_helper->json(array('dataImpressao'=>$data,'dias'=>$dias));
 			return;
 		}
 	}
@@ -3181,7 +3175,6 @@ $objAcesso = new Acesso();
 		$data         = date('d/m/Y H:i:s');
 		//buscaProjeto
 		$docs         = TramitarprojetosDAO::buscaProjetoPDF($idpronac);
-		//xd($docs);
 		foreach ($docs as $d):
 
 		//$idDocumento = $d->idDocumento;
@@ -3346,7 +3339,7 @@ $objAcesso = new Acesso();
 
             $tblSituacao = new Situacao();
             $rsSitucao = $tblSituacao->listasituacao(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
-            
+
             $this->view->situacoes = $rsSitucao;
             $this->intTamPag = 10;
 
@@ -3645,9 +3638,9 @@ $objAcesso = new Acesso();
                     if($mecanismo == 'Mecenato'){
                         $mecanismo = "Incentivo Fiscal";
                     }
-                    
 
-                    
+
+
                     $addValTec = '';
                     if(isset($filtro) && $filtro == 'emanalise'){
                         $addValTec = '<td style="border: 1px dotted black;">'.$projeto->usu_nome.'</td>';

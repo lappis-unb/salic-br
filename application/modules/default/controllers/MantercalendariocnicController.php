@@ -86,11 +86,11 @@ class MantercalendariocnicController extends MinC_Controller_Action_Abstract {
         if(!empty ($_POST['colunasFim'])){
 
         $ordem = $_POST['colunasFim'];
-        //xd($ordem);
+        
         }else{
         $ordem = array("N.Reuniao","Dt.Inicio","Dt.Final","Dt.Fechamento","Mecanismo","Status");
         }
-        //xd($ordem);
+        
         $this->view->ordem = $ordem;
     }
 	

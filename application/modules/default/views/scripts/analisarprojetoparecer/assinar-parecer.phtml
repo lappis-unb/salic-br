@@ -1,0 +1,261 @@
+<!-- ========== INA� CIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="modal"></div>
+<div id="total">
+    <div id="breadcrumb">
+        <ul>
+            <li><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">In&iacute;cio</a></li>
+			<li><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>" title="Ir para P&aacute;gina Inicial">Projetos/Produtos para An&aacute;lise</a></li>
+			<li class="last">Assinar Parecer</li>
+        </ul>
+    </div>
+    <!-- ========== FIM BREADCRUMB (LINKS TOPO)========== -->
+
+
+
+    <!-- ==========INA� CIO TA� TULO========== -->
+
+    <div id="titulo">
+        <div>Assinar parecer<span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
+
+    </div>
+
+    <!-- ========== FIM TA� TULO ========== -->
+
+    <!-- ========== INA� CIO CONTEAšDO ==========-->
+
+    <div id="conteudo">
+    <div id="confirma"></div>
+		<?php if($this->verifica15porcento == 0) { ?>
+    
+        <?php if ($this->totaldivulgacao != "true") { ?>
+            <div class="msgERROR">
+                <div class="float_right"></div>
+                <div>Aten&ccedil;&atilde;o! Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total do projeto. Favor readequar os custos em <b><?php echo $this->formatarReal($this->valorRetirar); ?></b> para finalizar sua an&aacute;lise. <br> Favor verificar em todos os produtos que possuem esta etapa!</div>
+            </div>
+            <table class="tabela">
+	            <tr>
+	                <th width="100"><span><b>Pronac</b></span></th>
+	                <th width="350"><span><b>Nome do Projeto</b></span></th>
+	                <th><span><b>Produto</b></span></th>
+	            </tr>
+	            <tr>
+	                <td align="center"><?php echo $this->dados[0]->PRONAC; ?></td>
+	                <td align="center"><?php echo $this->dados[0]->NomeProjeto; ?></td>
+	                <td align="center"><?php echo $this->dados[0]->Produto; ?></td>
+	            </tr>
+	    </table>
+            <table class="tabela">
+                <tr>
+                    <td align="center"><input type="button" class="btn_voltar" style="width: 85px;" onclick="window.location=('<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'produto')); ?>');" /></td>                </tr>
+            </table>
+            <?php } else { ?>
+            <table class="tabela">
+              <tr>
+		<td colspan="5" class="destacar bold">
+                  <strong>Parecer T&eacute;cnico do Projeto</strong>
+		</td>
+	      </tr>     
+	      <tr>
+		<td align="center">PRONAC: </td>
+		<td class="bold"><?php echo $this->dadosEnquadramento[0]->Pronac; ?></td>
+		<td colspan="3"><?php echo $this->dadosEnquadramento[0]->NomeProjeto; ?></td>
+	      </tr>
+	      <tr>
+		<td align="center">Proponente:</td>
+		<td><?php echo $this->dadosEnquadramento[0]->CNPJCPF; ?></td>
+		<td colspan="3"><?php echo $this->dadosEnquadramento[0]->Proponente; ?></td>
+	      </tr>
+	      <tr>
+		<td align="center">&Aacute;rea: </td>
+		<td><?php echo $this->dadosEnquadramento[0]->Area; ?></td>
+		<td>Segmento: </td>
+		<td colspan="2"><?php echo $this->dadosEnquadramento[0]->Segmento; ?></td>
+	      </tr>
+	      <tr>
+		<td align="center">UF:</td>
+		<td><?php echo $this->dadosEnquadramento[0]->UfProjeto; ?></td>
+		<td>Per&iacute;odo de execu&ccedil;&atilde;o:</td>
+		<td><?php echo Data::tratarDataZend($this->dadosEnquadramento[0]->DtInicioExecucao, 'Brasileira') . " a " . Data::tratarDataZend($this->dadosEnquadramento[0]->DtFimExecucao, 'Brasileira'); ?></td>
+		<td>Enquadramento: <?php echo $this->dadosEnquadramento[0]->Enquadramento; ?></td>
+	      </tr>
+	      <tr>
+		<td colspan="5" class="destacar bold">
+                  <strong>Resumo do Projeto</strong>
+		</td>
+	      </tr>
+	      <tr>
+		<td colspan="5">
+                  <?php echo $this->dadosEnquadramento[0]->ResumoProjeto; ?>
+		</td>
+	      </tr>
+	      
+              <tr>
+		<td colspan="5" class="destacar bold">
+                  <strong>Mem&oacute;ria de C&aacute;lculo</strong>
+		</td>
+	      </tr>
+
+              <tr>
+		<td align="center" class="bold" colspan="2">Proponente</td>
+		<td>&nbsp;</td>
+		<td align="center" class="bold" colspan="2">T&eacute;cnico</td>
+	      </tr>
+	      
+              <tr>
+		<td align="center">vl. Solicitado:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlSolicitado); ?></td>
+		<td>&nbsp;</td>
+		<td align="center">Custo do Projeto:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->CustoProjeto); ?></td>
+	      </tr>
+	      
+              <tr>
+		<td align="center">vl. Outras Fontes:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlOutrasFontes); ?></td>
+		<td>&nbsp;</td>
+		<td align="center">vl. Outras Fontes</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlOutrasFontesAprovado); ?></td>
+	      </tr>	      
+
+              <tr>
+		<td align="center" class="bold">Vl. Projeto:</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->VlProjeto); ?></td>
+		<td>&nbsp;</td>
+		<td align="center" class="bold">Custo Total</td>
+		<td><?php echo $this->formatarReal($this->dadosEnquadramento[0]->CustoProjeto); ?></td>		
+	      </tr>	      
+
+              <tr>
+		<td colspan="5" class="destacar bold">
+                  <strong>Produtos</strong>
+		</td>
+	      </tr>
+
+	      <tr>
+		<td colspan="5">
+		  <table>
+		    <tr>
+		      <th>Produto</th>
+		      <th>Tipo</th>
+		      <th>Qtde Produzidas</th>
+		      <th>Qtde Distribui&ccedil;&atilde;o gratuita</th>
+		      <th>Qtde Venda Popular</th>
+		      <th>Qtde Venda Proponente</th>
+		      <th>Pre&ccedil;o m&eacute;dio</th>
+		      <th>Vl. Produto</th>
+		      <th>Receita Prevista</th>
+		    </tr>
+		    <?php $ReceitaTotal = 0; ?>
+		    <?php $ProdutoTotal = 0; ?>
+		    <?php foreach($this->dadosProdutos as $produto): ?>
+		    <tr>
+		      <td align="center"><a target="_blank" href="<?php echo $this->url(array('controller'=> 'analisarprojetoparecer','action' =>'produtosecundario'));?>?idPronac=<?php echo $produto->IdPRONAC; ?>&idProduto=<?php echo $produto->idProduto; ?>&stPrincipal=<?php echo $produto->tpProduto;?>">
+<?php echo $produto->Produto; ?></a></td> <!-- TODO: fazer if do produto principal / secundário -->
+		      <td align="center"><?php echo $produto->tpProduto; ?></td>		      
+		      <td align="center"><?php echo $produto->QtdeProduzida; ?></td>
+		      <td align="center"><?php echo $produto->QtdeDistribuicaoGratuita; ?></td>
+		      <td align="center"><?php echo $produto->QtdeVendaPopular; ?></td>
+		      <td align="center"><?php echo $produto->QtdeVendaProponente; ?></td>
+		      <td align="center"><?php echo $this->formatarReal($produto->PrecoMedio, 'Brasileira'); ?></td>
+		      <td align="center"><?php echo $this->formatarReal($produto->vlProduto, 'Brasileira'); ?></td>
+		      <td align="center"><?php echo $this->formatarReal($produto->ReceitaTotal, 'Brasileira'); ?></td>
+		    </tr>
+		    <?php $ReceitaTotal += $produto->ReceitaTotal; ?>
+		    <?php $ProdutoTotal += $produto->vlProduto; ?>
+		    <?php endforeach; ?>
+		    <tr>
+		      <td colspan="7">&nbsp;</td>
+		      <td class="bold"><?php echo $this->formatarReal($ProdutoTotal, 'Brasileira'); ?></td>
+		      <td class="bold"><?php echo $this->formatarReal($ReceitaTotal, 'Brasileira'); ?></td>
+		    </tr>
+		  </table>
+		</td>
+	      </tr>
+	      
+              <tr>
+		<td colspan="5" class="destacar bold">
+                  <strong>Dilig&ecirc;ncias</strong>
+		</td>
+	      </tr>	      
+	      <tr>
+		<td colspan="5">
+		  <table>
+		    <tr>
+		      <th>Tipo de dilig&ecirc;ncia</th>
+		      <th>Data de Envio</th>
+		      <th>Data de Resposta</th>
+		    </tr>
+		    <?php foreach($this->dadosDiligencias as $diligencia) : ?>
+		    <tr>
+		      <td align="center"><a target="_blank" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'))?>?idPronac=<?php echo $diligencia->IdPRONAC; ?>"><?php echo $diligencia->TipoDiligencia; ?></a>
+		      <td align="center"><?php echo Data::tratarDataZend($diligencia->DtEnvio, 'Brasileira'); ?></td>
+		      <td align="center"><?php echo ($diligencia->DtResposta) ? Data::tratarDataZend($diligencia->DtResposta, 'Brasileira') : '-'; ?></td>
+		    </tr>
+		    <?php endforeach; ?>
+		  </table>
+		</td>
+	      </tr>
+	      
+	      <tr>
+		<td class="destacar bold" colspan="5">
+                  A&ccedil;&otilde;es relevantes para o sucesso do projeto*
+		</td>
+	      </tr>    
+	      <tr>
+		<td colspan="5">
+                  <p><?php echo $this->dadosAlcance->AcoesRelevantes; ?></p>
+		</td>
+	      </tr>
+
+              <tr>
+                <td colspan="5" class="destacar bold">Posicionamento T&eacute;cnico</td>
+              </tr>
+
+	      <tr>
+		<td colspan="2">Parecer:</td>
+		<td><?php echo $this->dadosParecer[0]['p.tpResultado']; ?></td>
+	      </tr>
+	      
+	    </table>
+
+                <div class="tabela" style="text-align: center;" id="txtDevolver">
+                    <input type="button" id="btnDevolver" class="btn_enviar" style="width: 85px;" onclick="devolver();" />
+                    <input type="button" id="btnImprimir" class="btn_imprimir" style="width: 85px;" onclick="devolver();" />
+                    <input type="button" id="btnGerarPdf" class="btn_pdf" style="width: 85px;" onclick="devolver();" />
+                </div>
+        <?php } ?>
+        
+        <?php } else { ?>
+
+        <div class="msgALERT">
+			<div class="float_right"></div>
+        <div>O acerto dos custos administrativos s&atilde;o maiores que 15% do valor total do projeto.<br /> Favor ajustar <?php echo $this->formatarReal($this->verifica15porcento); ?>.</div>
+		</div>
+		<table class="tabela">
+            <tr>
+                <th width="100"><span><b>Pronac</b></span></th>
+                <th width="350"><span><b>Nome do Projeto</b></span></th>
+                <th><span><b>Produto</b></span></th>
+            </tr>
+            <tr>
+                <td align="center"><?php echo $this->dados[0]->PRONAC; ?></td>
+                <td align="center"><?php echo $this->dados[0]->NomeProjeto; ?></td>
+                <td align="center"><?php echo $this->dados[0]->Produto; ?></td>
+            </tr>
+        </table>
+        <table class="tabela">
+                <tr>
+                    <td align="center"><input type="button" class="btn_voltar" style="width: 85px;" onclick="redirecionar('<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>');" /></td>
+                </tr>
+            </table>
+        <?php } ?>
+        
+    </div>
+    <!-- ========== FIM CONTEAšDO ========== -->
+
+    <!-- ========== INA� CIO RODAPA‰ DO CONTEAšDO ========== // -->
+
+    <div id="rodapeConteudo" ><span></span></div>
+    <!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+    <br clear="all" />
+</div>

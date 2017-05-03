@@ -93,10 +93,10 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
                 if ($buscaAgente->count() == 0) {
                     echo "  <input type='hidden' id='novoproponente' value='" . $cnpjcpfSemMask . "' />
-                            <table class='tabela' style='margin:1% auto; width:40%;'>
+                            <table class='tabela'>
                                 <tr>
-                                    <td class='red centro'>Proponente n&atilde;o cadastrado! Deseja cadastrar agora?</td>
-                                    <td class='centro'><input type='button' class='btn_cadastrar_proponente' id='novoprop' onclick='novoproponente();' /></td>
+                                    <td class='red-text centro'>Proponente n&atilde;o cadastrado! Deseja cadastrar agora?</td>
+                                    <td class='centro'><button type='button' class='btn' id='novoprop' onclick='novoproponente();'>cadastrar proponente</button></td>
                                 </tr>
                             </table>";
                     $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -175,12 +175,12 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
                 $enviarEmail = $emailDAO->enviarEmail($emailProponente, $assunto, $texto);
 
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
             } catch (Zend_Exception $e) {
                 echo '<pre>';
                 var_dump($e->getMessage());
                 $this->_helper->viewRenderer->setNoRender(TRUE);
-                echo json_encode(array('error' => true));
+                $this->_helper->json(array('error' => true));
             }
         }
 
@@ -197,9 +197,9 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
             try {
                 $vprp->inserir($dados);
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
             } catch (Zend_Exception $e) {
-                echo json_encode(array('error' => true));
+                $this->_helper->json(array('error' => true));
             }
         }
 
@@ -209,9 +209,9 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
             try {
                 $vprp->alterar($dados, $where);
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
             } catch (Zend_Exception $e) {
-                echo json_encode(array('error' => true));
+                $this->_helper->json(array('error' => true));
             }
         }
 
@@ -221,9 +221,9 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
             try {
                 $vprp->alterar($dados, $where);
-                echo json_encode(array('error' => false));
+                $this->_helper->json(array('error' => false));
             } catch (Zend_Exception $e) {
-                echo json_encode(array('error' => true));
+                $this->_helper->json(array('error' => true));
             }
         }
 

@@ -64,7 +64,7 @@
                             <td><?php echo ((int)$dado->tp_enquadramento == 1) ? 'Artigo 26' : 'Artigo 18'; ?></td>
                             <td><?php echo $dado->dias; ?></td>
                             <td>
-                                <?php if ((int)$dado->dias >= 10): ?>
+                                <?php if ((int)$dado->dias >= 10 || (int)$dado->dias < 10 && $dado->desistenciaRecursal): ?>
                                     <a class="btn waves-effect waves-light cyan tooltipped small"
                                        href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-assinatura')) . "?IdPRONAC={$dado->idpronac}&encaminhar=true" ?>"
                                        data-position="top"
@@ -78,6 +78,14 @@
                         <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?php if (count($this->dados) == 0) : ?>
+		    <table>
+		      <tr>
+			<td class="red-text">Nenhum projeto encontrado.</td>
+		      </tr>
+		    </table>
+		    <?php endif; ?>
+
                     <div class="row">
                         <div class="col s12 m6 l4">
                             <label>Legenda:</label>

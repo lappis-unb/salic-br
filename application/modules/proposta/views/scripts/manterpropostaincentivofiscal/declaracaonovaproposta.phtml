@@ -30,7 +30,7 @@
 
     }
 </style>
-<div style="width:1200px; height: 400px; overflow: auto; text-align:justify;">
+<div style="text-align:justify;">
 
     <form name="frmDeclaracao" id="frmDeclaracao" action="<?php echo $this->acao; ?>" method="post">
         <input type="hidden" name="idAgente" id="idAgente" value="<?php echo $this->agente; ?>"/>
@@ -102,8 +102,9 @@
                         tramita&ccedil;&atilde;o do projeto, e que responderei por eventuais infra&ccedil;&otilde;es que
                         vierem a ser cometidas.</p>
 
-                    <p><label><input type="checkbox" id="deacordo" name="deacordo"><span
-                                style="color: red; font-weight: bold; font-size: 13px; margin-left: 0.7em;">De acordo</span></label>
+                    <p>
+                        <input type="checkbox" id="deacordo" name="deacordo">
+                        <label for="deacordo" style="color: red; font-weight: bold; font-size: 13px; margin-left: 0.7em;">De acordo</label>
                     </p>
 
                 </td>
@@ -111,8 +112,9 @@
         </table>
         <br/>
         <center>
-            <input id="btn_confirmar" type="submit" value=" " name="incluir" style="cursor: pointer; width: 88px;"
-                   class="btn_confirmar"/>&nbsp;
+            <button id="btn_confirmar" class="btn waves-effect waves-light btn-confirmar" type="submit" name="incluir">Confirmar
+                <i class="material-icons right">send</i>
+            </button>
         </center>
         <br/>
     </form>

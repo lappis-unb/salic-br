@@ -148,11 +148,11 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $where['b.Area = ?'] = 0;
             }
         }
-        
+
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -411,10 +411,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosUsuarios);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
         } else { //CNIC
@@ -428,10 +428,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosUsuarios);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
+                $this->_helper->json(array('resposta'=>true,'conteudo'=>$dadosUsuarios));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -596,9 +596,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return2 = $tbRecurso->update($dados, $where);
 
             if($return && $return2){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         } else {
             // IPHAN
@@ -611,9 +611,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return = $tbDistribuirProjeto->update($dados, $where);
 
             if ($return) {
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         die();
@@ -624,7 +624,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
 
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -640,9 +640,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
                 if($dados->tpSolicitacao == 'EO'){
-                    $this->view->nmPagina = 'Enquadramento e Or�amento';
+                    $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
                 } else if($dados->tpSolicitacao == 'OR'){
-                    $this->view->nmPagina = 'Or�amento';
+                    $this->view->nmPagina = 'Or&ccedil;amento';
                 }
 
                 //ATUALIZA OS DADOS DA TABELA tbAnaliseAprovacao
@@ -669,9 +669,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'EN'){
                 $this->view->nmPagina = 'Enquadramento';
             } else if($dados->tpSolicitacao == 'EO'){
-                $this->view->nmPagina = 'Enquadramento e Or�amento';
+                $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
             } else if($dados->tpSolicitacao == 'OR'){
-                $this->view->nmPagina = 'Or�amento';
+                $this->view->nmPagina = 'Or&ccedil;amento';
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
@@ -693,7 +693,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function encaminharRecursoChecklistAction() {
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -712,7 +712,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $return = $tbRecurso->update($dados, $where);
 
         if(!$return){
-            parent::message("N�o foi poss�vel encaminhar o recurso para o Checklist de Publica��o", "recurso?tipoFiltro=analisados", "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel encaminhar o recurso para o Checklist de Publica&ccedil;&atilde;o", "recurso?tipoFiltro=analisados", "ERROR");
         }
         parent::message("Recurso encaminhado com sucesso!", "recurso?tipoFiltro=analisados", "CONFIRM");
     }
@@ -722,7 +722,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 94 && $this->idPerfil != 110){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &acute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -738,9 +738,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
                 if($dados->tpSolicitacao == 'EO'){
-                    $this->view->nmPagina = 'Enquadramento e Or�amento';
+                    $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
                 } else if($dados->tpSolicitacao == 'OR'){
-                    $this->view->nmPagina = 'Or�amento';
+                    $this->view->nmPagina = 'Or&ccedil;amento';
                 }
 
                 //ATUALIZA OS DADOS DA TABELA tbAnaliseAprovacao
@@ -750,7 +750,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $tbDistribuicaoProjetoComissao = new tbDistribuicaoProjetoComissao();
                 $tbDistribuicaoProjetoComissao->update($e, $w);
 
-                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
 
@@ -767,9 +767,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'EN'){
                 $this->view->nmPagina = 'Enquadramento';
             } else if($dados->tpSolicitacao == 'EO'){
-                $this->view->nmPagina = 'Enquadramento e Or�amento';
+                $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
             } else if($dados->tpSolicitacao == 'OR'){
-                $this->view->nmPagina = 'Or�amento';
+                $this->view->nmPagina = 'Or&ccedil;amento';
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
@@ -777,7 +777,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo',  'Descricao');
             $objSegmentocultural = new Segmentocultural();
             $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($this->view->projetosEN->cdArea);
 
@@ -807,7 +807,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $enquadramentoProjeto = $this->_request->getParam('enquadramentoProjeto');
         $parecerProjeto = $this->_request->getParam('parecerProjeto');
         $dsParecer = $this->_request->getParam('dsParecer');
-        
+
         try {
             //ATUALIAZA A �REA E SEGMENTO DO PROJETO
             $d = array();
@@ -918,7 +918,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $tbRecurso = new tbRecurso();
                     $tbRecurso->update($dados, $where);
                 }
-                parent::message("A avalia��o do recurso foi finalizada com sucesso! ", "recurso/painel-recursos", "CONFIRM");
+                parent::message("A avalia&ccedil;&atilde;o do recurso foi finalizada com sucesso! ", "recurso/painel-recursos", "CONFIRM");
             }
 
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso?id=$idRecurso", "CONFIRM");
@@ -932,7 +932,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function componenteComissaoSalvarEnquadramentoAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $auth = Zend_Auth::getInstance();
@@ -947,11 +947,11 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
         if($parecerProjeto == 1){ //1=N�o; 2=Sim
             $situacaoProjeto = 'D14';
-            $providenciaProjeto = 'Recurso indeferido na CNIC pelo componente da comiss�o.';
+            $providenciaProjeto = 'Recurso indeferido na CNIC pelo componente da comiss&atilde;o.';
             $stAnalise = 'IC';
         } else {
             $situacaoProjeto = 'D03';
-            $providenciaProjeto = 'Recurso deferido na CNIC pelo componente da comiss�o.';
+            $providenciaProjeto = 'Recurso deferido na CNIC pelo componente da comiss&atilde;o.';
             $stAnalise = 'AC';
         }
 
@@ -1066,7 +1066,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $tbRecurso = new tbRecurso();
                     $tbRecurso->update($dados, $where);
                 }
-                parent::message("A avalia��o do recurso foi finalizada com sucesso!", "recurso/analisar-recursos-cnic", "CONFIRM");
+                parent::message("A avalia&ccedil;&atilde;o do recurso foi finalizada com sucesso!", "recurso/analisar-recursos-cnic", "CONFIRM");
             }
 
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "CONFIRM");
@@ -1079,7 +1079,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function coordParecerFinalizarRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
+
         $idRecurso = $this->_request->getParam("idRecurso");
         $idDistribuirProjeto = $this->_request->getParam("idDistProj");
 
@@ -1098,9 +1098,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
 
             if($return && $return2){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
 
         } else {
@@ -1120,9 +1120,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $return2 = $tbRecurso->update($dados, $where);
 
             if($return && $return2){
-                echo json_encode(array('resposta'=>true));
+                $this->_helper->json(array('resposta'=>true));
             } else {
-                echo json_encode(array('resposta'=>false));
+                $this->_helper->json(array('resposta'=>false));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -1174,7 +1174,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $Projetos = new Projetos();
         $w = array();
         $w['situacao'] = 'D20';
-        $w['ProvidenciaTomada'] = 'Recurso encaminhado � reuni�o da CNIC para avalia��o do componente da comiss�o.';
+        $w['ProvidenciaTomada'] = 'Recurso encaminhado &agrave; reuni&atilde;o da CNIC para avalia&ccedil;&atilde;o do componente da comiss&atilde;o.';
         $Projetos->alterarSituacao($idPronac, null, $w['situacao'], $w['ProvidenciaTomada']);
 
         $reuniao = new Reuniao();
@@ -1189,9 +1189,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $return = $tbRecurso->update($dados, $where);
 
         if($return){
-            echo json_encode(array('resposta'=>true));
+            $this->_helper->json(array('resposta'=>true));
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         die();
 
@@ -1225,7 +1225,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function analisarRecursosCnicAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -1318,7 +1318,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &acute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -1334,12 +1334,12 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
                 if($dados->tpSolicitacao == 'EO'){
-                    $this->view->nmPagina = 'Enquadramento e Or�amento';
+                    $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
                 } else if($dados->tpSolicitacao == 'OR'){
-                    $this->view->nmPagina = 'Or�amento';
+                    $this->view->nmPagina = 'Or&ccedil;amento';
                 }
 
-                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
 
@@ -1356,9 +1356,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'EN'){
                 $this->view->nmPagina = 'Enquadramento';
             } else if($dados->tpSolicitacao == 'EO'){
-                $this->view->nmPagina = 'Enquadramento e Or�amento';
+                $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
             } else if($dados->tpSolicitacao == 'OR'){
-                $this->view->nmPagina = 'Or�amento';
+                $this->view->nmPagina = 'Or&ccedil;amento';
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
@@ -1383,7 +1383,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function cnicSalvarEnquadramentoAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $auth = Zend_Auth::getInstance();
@@ -1493,7 +1493,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $where = "idRecurso = $idRecurso";
                 $tbRecurso = new tbRecurso();
                 $tbRecurso->update($dados, $where);
-                parent::message("A avalia��o do recurso foi finalizada com sucesso! ", "recurso/analisar-recursos-cnic", "CONFIRM");
+                parent::message("A avalia&ccedil;&atilde;o do recurso foi finalizada com sucesso! ", "recurso/analisar-recursos-cnic", "CONFIRM");
             }
 
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "CONFIRM");
@@ -1507,7 +1507,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function salvarAnaliseDeConteudoAction()
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 110){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $_POST['idPronac'];
@@ -1583,7 +1583,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function cnicSalvarAnaliseDeConteudoAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
         $idPronac = $_POST['idPronac'];
         $idProduto = $_POST['idProduto'];
@@ -1662,7 +1662,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 'NomeProjeto' => utf8_encode($projeto->NomeProjeto)
             );
 
-            $PlanilhaProposta = new PlanilhaProposta();
+            $PlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $dadosSolicitados = $PlanilhaProposta->buscarDadosAvaliacaoDeItem($planilha[0]->idPlanilhaProposta)->current();
             $dadosPlanilhaProposta = array();
             $dadosPlanilhaProposta['Unidade'] = utf8_encode($dadosSolicitados->descUnidade);
@@ -1691,10 +1691,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $dadosPlanilhaProjeto['Justificativa'] = utf8_encode($registro['Justificativa']);
             }
             //$jsonEncode = json_encode($dadosPlanilha);
-            echo json_encode(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosProjeto'=>$dadosProjeto));
+            $this->_helper->json(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosProjeto'=>$dadosProjeto));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         die();
 
@@ -1728,7 +1728,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 'NomeProjeto' => utf8_encode($projeto->NomeProjeto)
             );
 
-            $PlanilhaProposta = new PlanilhaProposta();
+            $PlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $dadosSolicitados = $PlanilhaProposta->buscarDadosAvaliacaoDeItem($planilha[0]->idPlanilhaProposta)->current();
             $dadosPlanilhaProposta = array();
             $dadosPlanilhaProposta['Unidade'] = utf8_encode($dadosSolicitados->descUnidade);
@@ -1767,10 +1767,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $dadosPlanilhaAprovada['dsJustificativa'] = utf8_encode($registro['dsJustificativa']);
             }
 //            $jsonEncode = json_encode($dadosPlanilhaAprovada);
-            echo json_encode(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosPlanilhaAprovada'=>$dadosPlanilhaAprovada, 'dadosProjeto'=>$dadosProjeto));
+            $this->_helper->json(array('resposta'=>true, 'dadosPlanilhaProposta'=>$dadosPlanilhaProposta, 'dadosPlanilhaProjeto'=>$dadosPlanilhaProjeto, 'dadosPlanilhaAprovada'=>$dadosPlanilhaAprovada, 'dadosProjeto'=>$dadosProjeto));
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            $this->_helper->json(array('resposta'=>false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1793,14 +1793,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
         //O valor total dos valores n�o podem ultrapassar o valor solicitado na proposta.
         if($vlTotal > $_POST['valorSolicitado']){
-            echo json_encode(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
+            $this->_helper->json(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
         } else {
             $where = array('idPlanilhaProjeto = ?' => $_POST['idPlanilha']);
             $PlanilhaProjeto = new PlanilhaProjeto();
             if($PlanilhaProjeto->alterar($dados, $where)){
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
             } else {
-                echo json_encode(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
             }
         }
         die();
@@ -1826,14 +1826,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
         //O valor total dos valores n�o podem ultrapassar o valor solicitado na proposta.
         if($vlTotal > $_POST['valorSolicitado']){
-            echo json_encode(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
+            $this->_helper->json(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
         } else {
             $where = array('idPlanilhaAprovacao = ?' => $_POST['idPlanilha']);
             $PlanilhaAprovacao = new PlanilhaAprovacao();
             if($PlanilhaAprovacao->alterar($dados, $where)){
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
             } else {
-                echo json_encode(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
+                $this->_helper->json(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -1912,7 +1912,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 				}
 				else if (strlen($post->justificativa) > 1000)
 				{
-					throw new Exception("A justificativa n�o pode conter mais de 1000 caracteres!");
+					throw new Exception("A justificativa n&atilde;o pode conter mais de 1000 caracteres!");
 				}
 				else
 				{
@@ -1927,7 +1927,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 					$alterarAtendimento = RecursoDAO::avaliarRecurso($dados, $idRecurso);
 					if ($alterarAtendimento) // caso tenha sido alterado com sucesso
 					{
-						parent::message("Solicita��o enviada com sucesso!", "recurso", "CONFIRM");
+						parent::message("Solicita&ccedil;&atilde;o enviada com sucesso!", "recurso", "CONFIRM");
 					}
 					else
 					{
@@ -2001,7 +2001,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 				}
 				else if (strlen($post->justificativa) > 1000)
 				{
-					throw new Exception("A justificativa n�o pode conter mais de 1000 caracteres!");
+					throw new Exception("A justificativa n&atilde;o pode conter mais de 1000 caracteres!");
 				}
 				else if (empty($enquadramento))
 				{
@@ -2051,14 +2051,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	}// fecha m�todo reenquadramentoAction()
 
 	/**
-	 * M�todo com os Projetos Deferidos - Or�amento
+	 * M�todo com os Projetos Deferidos - Or&ccedil;amento
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 
 	/**
-	 * M�todo com os Projetos Deferidos - Or�amento (Parecer Consolidado)
+	 * M�todo com os Projetos Deferidos - Or&ccedil;amento (Parecer Consolidado)
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2070,7 +2070,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	} // fecha m�todo deferidosAction()
 
 	/**
-	 * M�todo com os Projetos Deferidos com Solicita��o de Reenquadramento - Or�amento (Parecer Consolidado)
+	 * M�todo com os Projetos Deferidos com Solicitação de Reenquadramento - Orçamento (Parecer Consolidado)
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2234,7 +2234,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 			{
 				if (!isset($idPronac) || empty($idPronac))
 				{
-					JS::exibirMSG("� necess�rio o n�mero do PRONAC para acessar essa p�gina!");
+					JS::exibirMSG("&Eacute; necess&aacute;rio o n&uacute;mero do PRONAC para acessar essa p&aacute;gina!");
 					JS::redirecionarURL("../");
 				}
 				else
@@ -2338,7 +2338,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     {
         //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.Coordenado Admissibilidade
         if($this->idPerfil != 103 && $this->idPerfil != 127 && $this->idPerfil != 131 && $this->idPerfil != 92){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
         $where = array();

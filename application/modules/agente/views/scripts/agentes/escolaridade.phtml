@@ -1,5 +1,5 @@
 
-<?php require_once "inc/menu.inc.php"; ?>
+<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
 
 <script type="text/javascript">
 
@@ -122,7 +122,7 @@ $(function()
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
 
-		<?php require_once "inc/cabecalho.php";?>
+		<?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
 
 	<?php if(($this->grupoativo == "137")): ?>
 	<table class="tabela">

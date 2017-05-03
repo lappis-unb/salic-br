@@ -74,7 +74,7 @@
 			    idPronac: <?php echo $this->idPronac; ?>
 			},
                         success: function(resposta){
-                            var resposta = JSON.parse(resposta),
+			    var resposta = JSON.parse(JSON.stringify(resposta)),
 				respostaErro = false;
                             
                             resposta.mensagens.forEach(function(mensagem) {

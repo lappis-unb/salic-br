@@ -200,7 +200,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
             $strUrl = '/admissibilidade/mensagem/index';
             $strUrl .= ($this->arrProjeto)? '?idPronac=' . $this->arrProjeto['IdPRONAC'] : '';
-            echo json_encode(array('status' => $mapper->salvar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages(), 'redirect' => $strUrl));
+            $this->_helper->json(array('status' => $mapper->salvar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages(), 'redirect' => $strUrl));
         } else {
             $this->prepareForm(array('dsResposta' => array('show' => false)));
             $this->view->action = 'salvar';
@@ -249,7 +249,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         if ($this->getRequest()->isPost()) {
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
-            echo json_encode(array('status' => $mapper->encaminhar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
+            $this->_helper->json(array('status' => $mapper->encaminhar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
         } else {
             $strUrlAction = '/admissibilidade/mensagem/encaminhar';
             $strUrlAction .= ($this->arrProjeto)? '?idPronac=' . $this->arrProjeto['IdPRONAC'] : '';
@@ -282,7 +282,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
             $strUrl = '/admissibilidade/mensagem/' . $strActionBack;
             $strUrl .= ($this->arrProjeto)? '?idPronac=' . $this->arrProjeto['IdPRONAC'] : '';
-            echo json_encode(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessages(), 'redirect' => $strUrl));
+            $this->_helper->json(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessages(), 'redirect' => $strUrl));
         } else {
             $this->prepareForm(array(
                 'idDestinatario' => array('disabled' => true),
@@ -347,6 +347,6 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $vw = new vwUsuariosOrgaosGrupos();
         $intId = $this->getRequest()->getParam('id', null);
         $arrUsuarios = $vw->carregarUsuariosPorUnidade($intId);
-        echo json_encode($arrUsuarios);
+        $this->_helper->json($arrUsuarios);
     }
 }

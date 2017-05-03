@@ -51,7 +51,7 @@
 </div>
 <div id="titulo">
     <div>
-        Permiss&otilde;es do SalicWeb
+        Permiss&otilde;es do Salic
         <span></span>
         <span class="voltar">
             <a href="javascript:voltar();">Voltar</a>
@@ -150,16 +150,17 @@
                cellspacing="0">
             <tr>
                 <td align="center">
-                    <input type="button"
-                           style="width: 88px"
-                           class="btn_novo"
+                    <button type="button"
+                           class="btn"
                            id="btn_novo"
-                           onclick="window.location.href='<?php echo $this->baseUrl(); ?>/manterusuario/perfissalicweb';"/>
+                           onclick="window.location.href='<?php echo $this->baseUrl(); ?>/manterusuario/perfissalicweb';">novo</button>
+
                     <input type="button"
                            style="width: 88px"
                            class="btn_inicio"
                            id="btn_inicio"
                            onclick="window.location.href='<?php echo $this->baseUrl(); ?>/manterusuario/permissoessalic?pag=1'"/>
+
                     <input type="button"
                            style="width: 88px"
                            class="btn_p_anterior"

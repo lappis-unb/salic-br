@@ -23,7 +23,7 @@ class spSelecionarParecerista extends MinC_Db_Table_Abstract {
     public function exec($idOrgao, $idArea, $idSegmento, $vlProduto)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $sql = "exec sac.dbo.".$this->_name." $idOrgao, '$idArea', '$idSegmento', $vlProduto";
+        $sql = "exec ".$this->_banco.".".$this->_name." $idOrgao, '$idArea', '$idSegmento', $vlProduto";
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);
     }

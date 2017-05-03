@@ -27,7 +27,7 @@ class HistoricoDevolucaoFiscalizacao extends MinC_Db_Table_Abstract {
             $select->where($key, $value);
         }
         $select->order('rf.dtEnvioDevolucao desc');
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

@@ -114,7 +114,7 @@ gerarBreadCrumb($links);
 				<td align="center"><?php if($d->stPrincipal == 1): ?><img src="<?php echo $this->baseUrl(); ?>/public/img/ok_16x16.png" width="20px" style="cursor: pointer;" title="Produto principal" /><?php endif;?></td>
 				<td align="center"><?php echo $d->DtEnvio; ?></td>
 				<td align="center"><?php echo $tempoRestante.'/'. $d->tempoFimParecer; ?></td>
-				<td align="center"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $diligenciado; ?>" title="<?php echo $Titlediligenciado; ?>" width="30px" onclick="redirecionar('<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>')" style="cursor: pointer;" /></td>
+				<td align="center"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $diligenciado; ?>" title="<?php echo $Titlediligenciado; ?>" width="30px" onclick="redirecionar('<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista'))?>?idPronac=<?php echo $d->IdPRONAC ?>&idProduto=<?php echo $d->idProduto ;?>')" style="cursor: pointer;" /></td>
 				<td align="center"><?php echo $d->tempoFimDiligencia; ?></td>
 				<td align="center">
 					<img src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" style="cursor: pointer;" title="Hist�rico" onclick="redirecionar('<?php echo $this->url(array('controller' => 'Analisarprojetoparecer', 'action' => 'historico', 'idPronac'=> $d->IdPRONAC, 'stPrincipal'=> $d->stPrincipal, 'idProduto' => $d->idProduto)); ?>')" />

@@ -75,7 +75,7 @@ abstract class MinC_Controller_Rest_Abstract extends Zend_Rest_Controller{
     protected function carregarUsuario() {
         $keyCpf = Seguranca::dencrypt($this->authorization, $this->encryptHash);
         $cpf = str_replace($this->publicKey, '', $keyCpf);
-        $modelSgcAcesso = new Sgcacesso();
+        $modelSgcAcesso = new Autenticacao_Model_Sgcacesso();
         $this->usuario = $modelSgcAcesso->fetchRow("Cpf = '{$cpf}'");
         # Valida se o usuário é válido.
         if(!$this->usuario){

@@ -27,7 +27,7 @@ class tbFormDocumento extends MinC_Db_Table_Abstract {
                      );
         $select->where('tbfd.idEdital  = ?', $idEdital);
         $select->where('tbfd.idClassificaDocumento = 24');
-        //xd($select->__toString());
+        
         return $this->fetchRow($select);
 
      }

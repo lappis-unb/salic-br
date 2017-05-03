@@ -1,18 +1,4 @@
-<?php 
-/**
- * Formulário com o Relatório de Contas Rejeitadas
- * @author emanuel.sampaio - Politec
- * @since 08/02/2011
- * @version 1.0
- * @package application
- * @subpackage application.views.scripts.movimentacaodeconta
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
-
-/* menu lateral */
-require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php';
-?>
+<?php echo $tihs->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this) ?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
@@ -53,7 +39,7 @@ require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php';
                 var dia2  = $('#data2').val().substr(0,2);
                 var mes2  = $('#data2').val().substr(3,2);
                 var ano2  = $('#data2').val().substr(6,4);
-   
+
             } else if (x == 2) {
                 // pega a data inicial
                 var dia1  = $('#data3').val().substr(0,2);

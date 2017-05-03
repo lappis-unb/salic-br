@@ -78,7 +78,7 @@ class Analisedeconteudo extends MinC_Db_Table_Abstract {
                 $select->where($key,$val);
             }
         }
-//        xd($select->assemble());
+
         return $this->fetchAll($select);
     }
 

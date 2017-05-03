@@ -1,9 +1,9 @@
 <script type="text/javascript">
-     
+
      //jQuery.validator.messages.required = "Campo obrigat&oacute;rio n&atilde;o informado.";
-        
+
     $(document).ready(function(){
-        
+
         $("#frmBloquearConta").validate({
             rules: {
                 tipoConta: { required: true },
@@ -19,7 +19,7 @@
                 if ( element.is(":radio") ) {
                     error.appendTo( element.parent() );
                 }
-                else { 
+                else {
                     error.insertAfter( element );
                 }
             },
@@ -27,36 +27,34 @@
                 form.submit();
             }
         });
-        
+
         $("#msgContaCaptacao").html("");
         $("#msgContaMovimento").html("");
-        
+
         //radio Conta Captacao
         <?php if(!empty($this->contaCapatacaoBloqueada)): ?>
             $("#lbContaCaptacao").before("&nbsp;&nbsp;&nbsp;&nbsp;");
             $("#lbContaCaptacao").after(" <font color='red'>(bloqueada)</font>");
             $("#tipoContaCaptacao").remove();
         <?php endif; ?>
-        
+
         //radio Conta Movimento
         <?php if(!empty($this->contaMovimentoBloqueada)): ?>
             $("#lbContaMovimento").before("&nbsp;&nbsp;&nbsp;&nbsp;");
             $("#lbContaMovimento").after(" <font color='red'>(bloqueada)</font>");
             $("#tipoContaMovimento").remove();
         <?php endif; ?>
-        
+
         //radio Ambas
         <?php if(!empty($this->contaCapatacaoBloqueada) || !empty($this->contaMovimentoBloqueada)): ?>
             $("#tipoContaAmbas").attr("disabled",true);
         <?php endif; ?>
-            
+
     });
-    
-        
+
+
 </script>
-<?php 
-    require_once 'scripts/controlarmovimentacaobancaria/inc/menu.inc.php';
-?>
+<?php echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php'); ?>
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -75,7 +73,7 @@
 
 <div id="conteudo" style="width: 98%; ">
     <form name="frmBloquearConta" id="frmBloquearConta" action="<?php echo $this->url(array('controller' => 'manterbloqueioconta', 'action' => 'gravar-bloqueio-conta')); ?>" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC; ?>"> 
+    <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC; ?>">
     <table class="tabela">
         <tr>
             <th class='destacar' width="20%" nowrap><b>PRONAC</b></th>

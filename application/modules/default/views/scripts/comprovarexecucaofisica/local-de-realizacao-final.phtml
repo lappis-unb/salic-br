@@ -357,7 +357,7 @@
     }
 </script>
 
-<?php require_once "scripts/comprovarexecucaofisica/inc/menu-relatorio-final.php"; ?>
+<?php echo $this->partial('comprovarexecucaofisica/inc/menu-relatorio-final.php', $this) ?>
 <div id="alerta" class="sumir"></div>
 <div id="modalPerguntas" class="sumir"></div>
 <div id="camposObrigatorios" class="sumir"></div>
@@ -511,7 +511,7 @@
                     <select name="novoUf" id="novoUf" class="select_simples input_font_pq" disabled="disabled">
                         <option value=""> - Selecione - </option>
                         <?php foreach ($this->UFs as $UFs) { ?>
-                            <option value="<?php echo $UFs->idUF; ?>"><?php echo $UFs->Descricao; ?></option>
+                            <option value="<?php echo $UFs->idUF; ?>"><?php echo $UFs->Sigla; ?></option>
                         <?php } ?>
                     </select>
                 </td>

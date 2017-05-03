@@ -21,7 +21,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
             $PermissoesGrupo[] = 134; // coordenador
             $PermissoesGrupo[] = 123; //
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+                parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
             // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
@@ -55,7 +55,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
 
         $aprovacaoDao = new Aprovacao();
         $selectAp = $aprovacaoDao->totalAprovadoProjeto(true);
-        $abrangenciaDao = new Abrangencia();
+        $abrangenciaDao = new Proposta_Model_DbTable_Abrangencia();
         $selectAb = $abrangenciaDao->abrangenciaProjeto(true);
         $projetosDao = new Projetos();
 
@@ -149,7 +149,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
                 $this->view->historicoDevolucao = array();
             }
         }
-        //xd($this->view->relatorioFiscalizacao);
+        
     }
 
     public function parecerdocoordenadorAction() {
@@ -454,7 +454,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
                 $resposta = array('result' => false, 'mensagem' => utf8_encode('N?o foi possivel4!'));
             }
         }
-        echo json_encode($resposta);
+        $this->_helper->json($resposta);
     }
 
     public function url(array $urlOptions = array(), $name = null, $reset = false, $encode = true) {

@@ -565,7 +565,7 @@
                    	<?php if ($tbresposta->Acao == '1') { ?>
                             <?php echo $this->escape($tbresposta->PRONAC); ?>
                         <?php } else { ?>
-                            <!--<a href="<?php //echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?>?idPronac=<?php //echo $tbresposta->idPRONAC;?>&situacao=C30&tpDiligencia=126"><?php //echo $this->escape($tbresposta->PRONAC); ?></a>-->
+                            <!--<a href="<?php //echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')); ?>?idPronac=<?php //echo $tbresposta->idPRONAC;?>&situacao=C30&tpDiligencia=126"><?php //echo $this->escape($tbresposta->PRONAC); ?></a>-->
                             <a href="<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'parecerconsolidado'), '', true); ?>/idpronac/<?php echo $tbresposta->idPRONAC;?>"><?php echo $this->escape($tbresposta->PRONAC); ?></a>
                         <?php } ?>	
                     </td>

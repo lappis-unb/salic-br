@@ -280,4 +280,20 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($query);
     }
 
+
+    public function verificarDesistenciaRecursal($idPronac)
+    {
+        $select = $this->select();
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $queryDesistenciaRecursal = $this->select();
+        $queryDesistenciaRecursal->setIntegrityCheck(false);
+        $queryDesistenciaRecursal->from(array('tbRecurso' => 'tbRecurso'), array('idRecurso'), $this->getSchema("SAC.dbo"));
+        $queryDesistenciaRecursal->where("tpSolicitacao = ?", "DR");
+        $queryDesistenciaRecursal->where("siRecurso = ?", 15);
+        $queryDesistenciaRecursal->where("stEstado = ?", 1);
+        $queryDesistenciaRecursal->where("IdPRONAC = ?", $idPronac);
+        
+        return ($this->_db->fetchOne($query)) ? $this->_db->fetchOne($query) : false;
+    }
 }

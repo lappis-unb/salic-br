@@ -15,12 +15,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
 
-    /**
-     * Reescreve o m�todo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init() {
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         if(empty($auth->getIdentity()->usu_codigo)){
@@ -59,11 +53,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 135; // Tec. De Fiscaliza��o
         $PermissoesGrupo[] = 138; // Coord. de Avalia��o
         $PermissoesGrupo[] = 139; // Tec. de Avalia��o
+        $PermissoesGrupo[] = 151; // Coord. de Avalia��o
+        $PermissoesGrupo[] = 148; // Tec. de Avalia��o
         parent::perfil(1, $PermissoesGrupo);
 
         parent::init();
     }
-
 
     public function indexAction() {
         $this->_redirect("relatorio/proposta");
@@ -113,7 +108,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
         //$post = Zend_Registry::get('post');
 
-        //xd($_POST['html']);
         $pdf = new PDFCreator($_POST['html']);
 
         $pdf->gerarPdf();
@@ -674,108 +668,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
-
-        //**************//
-//        header("Content-Type: text/html; charset=ISO-8859-1");
-//        $this->_helper->layout->disableLayout();
-//        $post = Zend_Registry::get('post');
-//
-//        $tbl = new Projetos();
-//
-//        //recuperando filtros do POST
-//        $arrBusca = array();
-//        //$arrBusca["pr.idProjeto is not null"] = "";
-//        if ($post->fundo != "") {
-//            $arrBusca["p.idEdital <> ?"] = "0";
-//            $tblCD = new tbClassificaDocumento();
-//            $rsCD = $tblCD->fundoSetorialXClassificacao(array("f.stModalidadeDocumento is not null" => "", "cdTipoFundo = ?" => $post->fundo));
-//            $arrClassificaDocumento = array();
-//            foreach($rsCD as $registro){
-//                $arrClassificaDocumento[] = $registro->idClassificaDocumento;
-//            }
-//            if(!empty ($arrClassificaDocumento)){
-//                $arrBusca["cl.idClassificaDocumento IN (?)"] = $arrClassificaDocumento;
-//            }
-//        }
-//
-//        if($post->dtInicioExec != "" && $post->dtFimExec != ""){
-//            $di = data::dataAmericana($post->dtInicioExec);
-//            $df = data::dataAmericana($post->dtFimExec);
-//            $arrBusca["pr.DtInicioExecucao BETWEEN '$di' AND '$df'"] = '';
-//            $arrBusca["pr.DtFimExecucao BETWEEN '$di' AND '$df'"] = '';
-//        }
-//        if($post->planoAnual != ""){ $arrBusca["p.stPlanoAnual = ?"] = $post->planoAnual; }
-//        if($post->datafixa != ""){ $arrBusca["p.stDataFixa = ?"] = $post->datafixa; }
-//        if($post->classificacao != ""){ $arrBusca["cl.idClassificaDocumento = ?"] = $post->classificacao; }
-//        if($post->edital != ""){ $arrBusca["e.idEdital = ?"] = $post->edital; }
-//        if($post->pronac != ""){ $arrBusca["pr.AnoProjeto+pr.Sequencial = ?"] = $post->pronac; }
-//        if($post->cnpfcpf != ""){ $arrBusca["pr.CgcCpf = ?"] = retiraMascara($post->cnpfcpf); }
-//        if($post->nomeProjeto != ""){ $arrBusca["pr.NomeProjeto like (?)"] = "%".$post->nomeProjeto."%"; }
-//        if($post->nomeProponente != ""){ $arrBusca["nm.Descricao like (?)"] = "%".$post->nomeProponente."%"; }
-//        if($post->area != ""){ $arrBusca["ar.Codigo = ?"] = $post->area; }
-//        if($post->segmento != ""){ $arrBusca["sg.Codigo = ?"] = $post->segmento; }
-//        if($post->mecanismo != ""){ $arrBusca["pr.Mecanismo = ?"] = $post->mecanismo; }
-//        if($post->propRegular != ""){ $arrBusca["inab.Habilitado = ?"] = $post->propRegular; }
-//        if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
-//        if($post->uf != ""){ $arrBusca["pr.UfProjeto = ?"] = $post->uf; }
-//        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $arrBusca);
-//        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $arrBusca);
-//        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $arrBusca);
-//
-//        $total = $tbl->relatorioProjeto($arrBusca , null, null, null, true);
-//
-//        if($post->tipo == 'xls' || $post->tipo == 'pdf') {
-//            //Verifica se foi solicitado a ordena��o
-//            if(!empty($post->ordenacao)) {
-//                $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}";
-//            } else {
-//                $ordem = array('1');
-//            }
-//
-//            $tamanho = -1;
-//            $inicio = -1;
-//            $pag = 0;
-//            $totalPag = 0;
-//            $fim = 0;
-//
-//            $rs = $tbl->relatorioProjeto($arrBusca , $ordem, null, null , false);
-//            $this->_forward('preparar-xls-pdf', null, null, array(
-//                    'dados'=>$rs,
-//                    'view'=>'relatorio/preparar-xls-pdf-resultado-projeto.phtml',
-//                    'tipo'=> $post->tipo
-//                    )
-//            );
-//
-//        } else {
-//            //controlando a paginacao
-//            $this->intTamPag = 10;
-//            $pag = 1;
-//            if (isset($post->pag)) $pag = $post->pag;
-//            if (isset($post->tamPag)) $this->intTamPag = $post->tamPag;
-//            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-//            $fim = $inicio + $this->intTamPag;
-//
-//            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
-//            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-//            if ($fim>$total) $fim = $total;
-//
-//            //Varifica se foi solicitado a ordena��o
-//            if(!empty($post->ordenacao)) {
-//                $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}";
-//            }else {
-//                $ordem = array('1');
-//            }
-//
-//            $rs = $tbl->relatorioProjeto($arrBusca, $ordem, $tamanho, $inicio);
-//        }
-//
-//        $this->view->registros = $rs;
-//        $this->view->pag = $pag;
-//        $this->view->total = $total;
-//        $this->view->inicio = ($inicio+1);
-//        $this->view->fim = $fim;
-//        $this->view->totalPag = $totalPag;
-//        $this->view->parametrosBusca = $_POST;
     }
 
     public function imprimirRelatorioAction(){
@@ -1014,7 +906,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtLiberacao", "dtLiberacao", "SAC.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial)", "dtLiberacao_Final", $arrBusca);
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "SAC.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial)", "dtPortaria_Final", $arrBusca);
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "SAC.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial)", "dtPublicacao_Final", $arrBusca);
-//xd($arrBusca);
         $total = $tbl->extratorProjeto($arrBusca, array(), null, null);
         $total = count($total);
 
@@ -1203,7 +1094,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function gerencialAction(){
-        $this->_forward("visual-tecnico");
+        $this->forward("visual-tecnico");
     }
 
     public function visualTecnicoAction(){
@@ -1276,7 +1167,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
 		$_POST['html'] = str_replace('display:none', '', $_POST['html']);
 	    $_POST['html'] = str_replace('type="button"', 'type="hidden"', $_POST['html']);
-        //xd($_POST['html']);
 
         $UF = new Uf();
         $b = $UF->buscar();
@@ -1353,6 +1243,6 @@ $startPos = 72;
 //
 //        $tbl = new Projetos();
 //        $rs = $tbl->parecerProjetos();
-//        xd($rs);
+
 //    }
 }

@@ -262,7 +262,7 @@ class Minc_Notification_Message {
      * @param array $listParameters Parametros para exibir os dados da notificação.
      */
     public function __construct($listResgistrationIds = NULL, $title = NULL, $text = NULL, $listParameters = NULL) {
-        $config = new Zend_Config_Ini("./application/configs/config.ini");
+        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/application.ini', APPLICATION_ENV);
         $this->gcmUrl = $config->get('default')->resources->view->service->gcmUrl;
         $this->gcmApiKey = $config->get('default')->resources->view->service->gcmApiKey;
         $this->modelMensagem = new Mensagem();

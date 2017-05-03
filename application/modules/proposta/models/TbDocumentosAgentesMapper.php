@@ -72,26 +72,24 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                     'dsdocumento' => $arrPost['observacao'],
                     'idagente' => $dadosProjeto['idAgente'],
                 );
-                //var_dump($dadosArquivo);die;
 
                 if ($arrPost['tipoDocumento'] == 1) {
                     $table = $this;
                     $model = new Proposta_Model_TbDocumentosAgentes();
-
                 } else {
                     $table = new Proposta_Model_TbDocumentosPreProjetoMapper();
                     $model = new Proposta_Model_TbDocumentosPreProjeto();
                 }
-//                xd($table->findBy($where));
+
                 $docCadastrado = $table->findBy($where);
 
                 if($table->findBy($where)){
                     $this->setMessage('Tipo de documento j&aacute; cadastrado!');
                     $booResult = false;
                 }
-
                 if ($this->getDbTable()->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
-                    $dadosArquivo['imDocumento'] = new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})");
+                    $dadosArquivo['imdocumento'] = new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})");
+                    //$dadosArquivo['imDocumento'] = new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})");
                     try {
                         if($booResult) {
                             $model->setOptions($dadosArquivo);

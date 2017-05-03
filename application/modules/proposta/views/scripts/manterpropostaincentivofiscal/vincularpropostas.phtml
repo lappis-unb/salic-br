@@ -95,25 +95,21 @@
         confirmaracao();
     }
 </script>
-
-<?php require_once "inc/menu_responsavel.inc.php"; // menu ?>
-
+<?php echo $this->partial("manterpropostaincentivofiscal/inc/menu_responsavel.inc.php", $this); ?>
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
-        <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
+        <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listarproposta')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Vincular Propostas </li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
 <!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Vincular Propostas <span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
 </div>
 <!-- ========== FIM Tï¿½TULO ========== -->
-
 <div id="conteudo">
     <div id="confirmartroca"></div>
     <div id="confirma"></div>
@@ -157,11 +153,11 @@
             </tr>
             <?php foreach ($this->propostas as $p){ ?>
             <tr>
-                <td align="center"><?php echo $p->idpreprojeto;?></td>
-                <td><?php echo $p->nomeprojeto;?></td>
-                <td><?php echo Mascara::addMaskCPF($p->cpf); ?></td>
-                <td><?php echo $p->nome;?></td>
-                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $p->idpreprojeto;?>" /></td>
+                <td align="center"><?php echo $p->idPreProjeto;?></td>
+                <td><?php echo $p->NomeProjeto;?></td>
+                <td><?php echo Mascara::addMaskCPF($p->Cpf); ?></td>
+                <td><?php echo $p->Nome;?></td>
+                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $p->idPreProjeto;?>" /></td>
             </tr>
             <?php } ?>
             <tr>
@@ -189,11 +185,11 @@
             </tr>
             <?php foreach ($this->propostasD as $pd):?>
             <tr>
-                <td align="center"><?php echo $pd->idpreprojeto;?></td>
-                <td><?php echo $pd->nomeprojeto;?></td>
-                <td><?php echo Mascara::addMaskCPF($pd->cpf); ?></td>
-                <td><?php echo $pd->nome;?></td>
-                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $pd->idpreprojeto;?>" /></td>
+                <td align="center"><?php echo $pd->idPreProjeto;?></td>
+                <td><?php echo $pd->NomeProjeto;?></td>
+                <td><?php echo Mascara::addMaskCPF($pd->Cpf); ?></td>
+                <td><?php echo $pd->Nome;?></td>
+                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $pd->idPreProjeto;?>" /></td>
             </tr>
             <?php endforeach; ?>
             <tr>

@@ -92,7 +92,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $arrConfig = $db->getConfig();
-                $strDb = str_replace(array('.scSAC', '.dbo', '.scdne', '.scsac', '.scQuiz'), '', $this->_schema);
+                $strDb = str_replace(array('.scAGENTES', '.scSAC', '.dbo', '.scdne', '.scsac', '.scQuiz'), '', $this->_schema);
                 $strDb = str_replace('.sccorp', '', strtolower($strDb));
 
                 $arrConfig['dbname'] = strtoupper($strDb);
@@ -132,7 +132,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         } else if (is_int(strpos($this->_schema, 'scSAC'))) {
             $this->_schema = str_replace('.scSAC', '', $this->_schema);
         }
-
     }
 
     /**

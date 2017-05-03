@@ -9,7 +9,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
     private $_movimentacaoAlterarProposta = '95';
 
-    private $_situacaoAlterarProjeto = 'E90'; // @todo situacao correta 'E90'
+    private $_situacaoAlterarProjeto = Projeto_Model_Situacao::PROJETO_LIBERADO_PARA_AJUSTES;
 
     private $_diasParaAlterarProjeto = 10;
 
@@ -38,7 +38,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                 'titleShort' => 'Proposta',
                 'titleFull' => 'Proposta Cultural',
                 'projeto' => $idPreProjeto,
-                'listagem' => array('Lista de propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
+                'listagem' => array('Lista de propostas' => array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listarproposta')),
             );
 
             // Alterar projeto
@@ -216,23 +216,21 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         $ufRegionalizacaoPlanilha = $TPP->buscarItensUfRegionalizacao($idPreProjeto);
 
-        // definindo os criterios de regionalizacao
-        if (!empty($ufRegionalizacaoPlanilha)) {
-            $calcDivugacao = 0.2;
-            $calcCaptacao = 0.1;
-            $limiteCaptacao = 100000;
+        # definindo os criterios de regionalizacao
+        if (!empty($ufRegionalizacaoPlanilha)) { # sudeste e sul
+            $calcDivugacao = 0.2;     # custo de divulgacao 20%
+            $calcCaptacao = 0.1;      # custo para captação 10%
+            $limiteCaptacao = 100000; # valor máximo para captação 100.000,00
 
             $idUf = $ufRegionalizacaoPlanilha->idUF;
             $idMunicipio = $ufRegionalizacaoPlanilha->idMunicipio;
-        } else {
-            $calcDivugacao = 0.3;
-            $calcCaptacao = 0.2;
-            $limiteCaptacao = 200000;
+        } else { # demais regiões
+            $calcDivugacao = 0.3;     # custo de divulgação 30%
+            $calcCaptacao = 0.15;     # custo para captação 15%
+            $limiteCaptacao = 150000; # valor máximo para captação 150.000,00
 
             $arrBusca['idprojeto'] = $idPreProjeto;
             $arrBusca['stabrangencia'] = 1;
-            $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
-            $rsAbrangencia = $tblAbrangencia->findBy($arrBusca);
 
             $idUf = 1;
             $idMunicipio = 1;
@@ -675,29 +673,4 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         }
         return true;
     }
-
-    protected function calcularPercentualCaptado($valorTotal, $valorCaptado)
-    {
-        if (empty($valorCaptado) || $valorCaptado <= 0)
-            return 0;
-
-        return number_format(($valorCaptado * 100) / $valorTotal, 2, ",", ".");
-    }
-
-    protected function percentualCaptadoByProposta($idPreProjeto, $idProjeto)
-    {
-        if (empty($idProjeto) || empty($idPreProjeto))
-            return false;
-
-        $planilhaproposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-        $total = $planilhaproposta->somarPlanilhaProposta($idPreProjeto)->toArray();
-
-        $rsProjeto = ConsultarDadosProjetoDAO::obterDadosProjeto(array('idPronac' => $idProjeto));
-
-        $valorTotal = $total['soma'];
-        $valorcaptado = $rsProjeto[0]->ValorCaptado;
-
-        return $this->calcularPercentualCaptado($valorTotal, $valorcaptado);
-    }
-
 }

@@ -14,7 +14,7 @@ class paCoordenadorDoPerfil extends MinC_Db_Table_Abstract {
     protected $_name  = 'paCoordenadorDoPerfil';
 
     public function buscarUsuarios($codPerfil, $codOrgao){
-        $sql = "exec ".$this->_banco.".dbo.".$this->_name." $codPerfil, $codOrgao ";
+        $sql = "exec ".$this->_banco.".".$this->_name." $codPerfil, $codOrgao ";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);

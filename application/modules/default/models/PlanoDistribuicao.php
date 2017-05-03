@@ -40,7 +40,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
         if(isset($dados['stPlanoDistribuicaoProduto'])){ $tmpRsPlanoDistribuicao->stPlanoDistribuicaoProduto = $dados['stPlanoDistribuicaoProduto'] ; }
 
 //        echo "<pre>";
-//        xd($tmpRsPlanoDistribuicao);
+
         //SALVANDO O OBJETO CRIADO
 
         $id = $tmpRsPlanoDistribuicao->save();
@@ -67,14 +67,29 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 
             $slct->setIntegrityCheck(false);
 
-            $slct->from(array("a"=> $this->_name), $this->_getCols(), $this->_schema);
+            $cols = array_merge($this->_getCols(), array(
+                "FORMAT(a.QtdeProponente, '0,0','pt-br') as QtdeProponente",
+                "FORMAT(a.QtdeProduzida, '0,0','pt-br') as QtdeProduzida",
+                "FORMAT(a.QtdePatrocinador, '0,0','pt-br') as QtdePatrocinador",
+                "FORMAT(a.QtdeOutros, '0,0','pt-br') as QtdeOutros",
+                "FORMAT(a.QtdeVendaPopularPromocional, '0,0','pt-br') as QtdeVendaPopularPromocional",
+                "FORMAT(a.QtdeVendaNormal, '0,0','pt-br') as QtdeVendaNormal",
+                "FORMAT(a.QtdeVendaPromocional, '0,0','pt-br') as QtdeVendaPromocional",
+                "FORMAT(a.QtdeVendaPopularNormal, '0,0','pt-br') as QtdeVendaPopularNormal",
+                "FORMAT(a.vlUnitarioPopularNormal, 'N','pt-br') as vlUnitarioPopularNormal",
+                "FORMAT( a.vlUnitarioNormal, 'N','pt-br') AS vlUnitarioNormal",
+                "FORMAT( a.ReceitaPopularNormal, 'N','pt-br') AS ReceitaPopularNormal",
+                "FORMAT( a.ReceitaPopularPromocional, 'N','pt-br') AS ReceitaPopularPromocional",
+                "FORMAT( a.PrecoUnitarioPromocional, 'N','pt-br') AS PrecoUnitarioPromocional",
+                "FORMAT( a.PrecoUnitarioNormal, 'N', 'pt-br') AS PrecoUnitarioNormal",
+                "FORMAT(( ReceitaPopularPromocional ) + ( ReceitaPopularNormal )+ ( PrecoUnitarioNormal )+ ( PrecoUnitarioPromocional ),'N','pt-br') AS Receita"
+            ));
+
+            $slct->from(array("a"=> $this->_name), $cols, $this->_schema);
             $slct->joinInner(array("b"=>"produto"),
                             "a.idproduto = b.codigo",
                             array("Produto"=>"b.descricao"),
                             $this->_schema);
-//            $slct->joinLeft(array("c"=>"verificacao"),
-//                            "a.idposicaodalogo = c.idverificacao",
-//                            array("PosicaoLogomarca"=>"c.descricao"),  $this->_schema);
             $slct->joinInner(array("ar"=>"area"),
                             "a.area = ar.codigo",
                             array("DescricaoArea"=>"ar.descricao"),  $this->_schema);
@@ -92,7 +107,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 
             // adicionando linha order ao select
             $slct->order($order);
-                //xd($slct->__toString());
+
             // paginacao
             if ($tamanho > -1)
             {
@@ -103,6 +118,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
                     }
                     $slct->limit($tamanho, $tmpInicio);
             }
+            //echo $slct;die;
 
             //SETANDO A QUANTIDADE DE REGISTROS
             $this->_totalRegistros = $this->pegaTotal($where);
@@ -293,7 +309,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             'avg(vlUnitarioProponenteIntegral) vlUnitarioNormal',
             'sum(vlReceitaProponenteIntegral) as PrecoUnitarioNormal',
             'sum(vlReceitaProponenteParcial) as PrecoUnitarioPromocional',
-            '(sum(vlReceitaPopularParcial) + sum(vlReceitaPopularIntegral)+  sum(vlReceitaProponenteIntegral)+ sum(vlReceitaProponenteParcial)) as  PrecoUnitarioPromocional'
+            //'(sum(vlReceitaPopularParcial) + sum(vlReceitaPopularIntegral)+  sum(vlReceitaProponenteIntegral)+ sum(vlReceitaProponenteParcial)) as  PrecoUnitarioPromocional'
         );
 
         $sql = $this->select()
@@ -312,8 +328,8 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
     }
 
     public function buscarIdVinculada($idPreProjeto) {
-        $sqlVinculada = "SELECT idOrgao as idVinculada 
-                                    FROM sac.dbo.PlanoDistribuicaoProduto t 
+        $sqlVinculada = "SELECT idOrgao as idVinculada
+                                    FROM sac.dbo.PlanoDistribuicaoProduto t
                                     INNER JOIN vSegmento s on (t.Segmento = s.Codigo)
                                     WHERE t.stPrincipal = 1 and idProjeto = '{$idPreProjeto}'";
 

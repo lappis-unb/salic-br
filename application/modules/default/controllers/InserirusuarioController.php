@@ -15,7 +15,7 @@ class InserirusuarioController extends MinC_Controller_Action_Abstract {
 
         $buscarUsuario = $usuario->buscar(array(), array('usu_codigo desc'), array('1'))->current()->toArray();
         $usuarioCadastrar =  $buscarUsuario['usu_codigo']+1;
-//        xd($usuarioCadastrar);
+
         $usurioLogin = str_replace(' ', '_', $buscarDadosAgente['Descricao']);
         $dados = array(
             'usu_codigo'=>$usuarioCadastrar,
@@ -43,7 +43,7 @@ class InserirusuarioController extends MinC_Controller_Action_Abstract {
             'usu_andar' => 0,
             'usu_telefone' => 0,
         );
-//        xd($dados);
+
         $senha = substr($cpf, 0,6);
         $inserir = $usuario->inserirUsuarios($dados);
         $alterarSenha = $usuario->alterarSenha($cpf, $senha);

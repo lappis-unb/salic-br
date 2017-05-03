@@ -9,28 +9,22 @@
             <li class="last">Principal</li>
         </ul>
     </div>
-    <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
     </div>
-    <!-- ========== FIM CONTEUDO ========== -->
-    <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
     <div id="rodapeConteudo"><span></span></div>
-    <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
     <br clear="all"/>
     <?php $ponto = ''; ?>
     <?php
-    if (empty($_GET['acao'])) {
-        $acao = "";
-    } else {
-        $acao = $_GET['acao'];
-    }
+        if (empty($_GET['acao'])) {
+            $acao = "";
+        } else {
+            $acao = $_GET['acao'];
+        }
     ?>
     <?php $ponto = '*'; ?>
     <?php echo $this->partial("agentes/inc/menu.inc.php", $this); ?>
-    <!-- ========== INICIO TITULO ========== -->
     <div id="titulo">
         <div id="novo">Novo cadastro<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
     </div>
-    <!-- ========== FIM TITULO ========== -->
 <?php endif; ?>
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
@@ -115,11 +109,9 @@
                         &nbsp; <span id="erroNome" class="spanError"></span>
                     </td>
                     <td align="center">
-
-                        <?php if( !$this->ehProponente ) : ?>
+                        <?php if (!$this->ehProponente) : ?>
                             <label for="visao"> Informe a vis&atilde;o do Agente: </label>
-                            <select name="visao" id="visao"
-                                    onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
+                            <select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
                                     class="input_simples" style="width: 250px;">
                                 <?php if ($this->modulo != "movimentacaobancaria"): ?>
                                     <option value="0" selected="selected"> - Selecione -</option>
@@ -134,7 +126,12 @@
                             &nbsp; <span id="erroVisao" class="spanError"></span>
                             &nbsp; <span id="spanVisao"></span>
                         <?php else : ?>
-                            <input type="hidden" name="visao" value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"
+                            <label for="visao"> Informe a vis&atilde;o do Agente: </label>
+                            <select name="visao" id="visao"
+                                    onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
+                                    class="input_simples" style="width: 250px;">
+                                        <option value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"> <?php echo $this->combovisoes[0]['Descricao']; ?> </option>
+                            </select>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -250,8 +247,7 @@
                     </td>
                     <td>
                         <label for="cidade">Cidade *</label> <br/>
-                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples"
-                                style="width: 250px;">
+                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
                             <option value="0"> - Selecione -</option>
 
                             <?php if ($this->combocidades): ?>
@@ -287,7 +283,7 @@
                     </td>
                     <td>
                         <label for="tipoLogradouro">Tipo de Logradouro *</label> <br/>
-                        <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" style="width: 250px;">
+                        <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" >
 
                             <?php if (!isset($this->tipoLogradouro) || empty($this->tipoLogradouro)) { ?>
                                 <option value="0"> - Selecione -</option>
@@ -299,19 +295,16 @@
                                     <?php echo($combotipologradouro); ?>
                                 </option>
                             <?php endforeach; ?>
-
                         </select>
                         <span id="erroTipoLogradouro" class="spanError"></span>
                     </td>
                     <td>
                         <label for="logradouro">Logradouro *</label> <br/>
-                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro"
-                               maxlength="50" size="50"/>
+                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro" maxlength="50" size="30"/>
                         <span id="erroLogradouro" class="spanError"></span>
                     </td>
                 </tr>
                 <tr>
-
                     <td>
                         <label for="numero">N&uacute;mero *</label> <br/>
                         <input class="input_simples" type="text" name="numero" id="numero" maxlength="10" size="30"/>
@@ -319,14 +312,12 @@
                     </td>
                     <td>
                         <label for="complemento">Complemento</label> <br/>
-                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70"
-                               size="50"/>
+                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70" size="50"/>
                         <span id="erroComplemento" class="spanError"></span>
                     </td>
-                    <td colspan="2">
+                    <td colspan="">
                         <label for="bairro">Bairro *</label> <br/>
-                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro"
-                               maxlength="70" size="50"/>
+                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro" maxlength="70" size="40"/>
                         <span id="erroBairro" class="spanError"></span>
                     </td>
                 </tr>
@@ -470,7 +461,8 @@
             <?php } ?>
             <table class="tabela">
                 <tr>
-                    <td class="centro"><input type="button" class="btn_salvar" value=" " onclick="validaAgenteNovo();"/>
+                    <td class="centro">
+                        <button type="button" class="btn" value=" " onclick="validaAgenteNovo();"/>salvar</button>
                     </td>
                 </tr>
             </table>
@@ -512,7 +504,7 @@
                         $('#msgAjax').html(data.error);
                         $('#msgAjax').show();
                         $('#imgPF').hide();
-                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...[ " + data.error + " ]");
+                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...");
                     } else {
                         // Preenche os dados
                         $('#idPessoa').val(data.dados.idPessoa);
@@ -628,24 +620,24 @@
                 url: '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentecadastrado")); ?>',
 
                 success: function (data) {
-                    if (data[0].msgCPF == 'cadastrado') {
-                        console.log(data);
-                        $('#novocadastro').hide();
-                        $('#carregando').show();
-                        var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
-                        document.dispatchEvent(event);
+                    if (data.length > 0) { 
+                        if (data[0].msgCPF == 'cadastrado') {
+                            $('#novocadastro').hide();
+                            $('#carregando').show();
+                            var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
+                            document.dispatchEvent(event);
                         <?php if ($this->modulo != "movimentacaobancaria") : ?>
                         window.location = '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentes")); ?>/id/' + data[0].idAgente;
                         <?php endif; ?>
+                        }
+                        else if (data[0].msgCPF == 'invalido') {
+                            $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
+                        }
+                        else if (data[0].msgCPF == 'novo') {
+                            $('#novo').html('Preencha os dados abaixo!');
+                            $('.novo').show();
+                        }
                     }
-                    else if (data[0].msgCPF == 'invalido') {
-                        $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
-                    }
-                    else if (data[0].msgCPF == 'novo') {
-                        $('#novo').html('Preencha os dados abaixo!');
-                        $('.novo').show();
-                    }
-
                 },
                 error: function (data) {
                     alert("Falha na recupera\xE7\xE3o dos dados.\nN\xE3o foi poss\xEDvel carregar agente!");

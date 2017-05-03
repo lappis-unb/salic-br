@@ -332,15 +332,20 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
             $slct->union(array($slct1, $slct3, $slct4, $slct5));
         }
 
-        $slctMaster = $this->select();
-        $slctMaster->setIntegrityCheck(false);
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $slctMaster = $db->select();
+        //$slctMaster->setIntegrityCheck(false);
         $slctMaster->from(
                         array('Master'=>$slct),
-                        array('*')
+                        array('*'),
+                        null
                      );
+
 
         //adicionando linha order ao select
         $slctMaster->order($order);
+
+        //$slctMaster = 'SELECT "Master".* FROM ( '.$slct. ')AS "Master"';
 
         // paginacao
         if ($tamanho > -1) {
@@ -351,10 +356,10 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
             $slctMaster->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->__toString());
+        //echo ($slctMaster);die;
         //xd(str_replace('"',"",$slct->assemble()));
         //xd($slctMaster->assemble());
-        return $this->fetchAll($slctMaster);
+        return $db->fetchAll($slctMaster);
 
 
 
