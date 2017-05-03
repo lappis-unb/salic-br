@@ -1,17 +1,24 @@
+Release 2.0.8
+  * Fix [Manter usuários] correções em férias e atestados
+  * Fix [Manter usuários] Correção de charset
+  * Fix [Manter usuários] Correção de charset
+  * Fix [Planilha orçamentária] Destaca item na planilha orcamentaria quando ultrapassa o valor praticado
+  * Fix [Recurso] Corrigindo listagem de áreas
+
 Release 2.0.7
-  * [Fix] [Acompanhamento] Corrige erro ao Analisar comprovacao de objeto
-  * [Fix] [Admissibilidade] bug ao mudar de perfil e tentar acessar uma tela admissibilidade sem perfis corretos
-  * [Fix] [Agentes] Erro ao inserir area cultural para usuarios
-  * [Fix] [Agentes] corrige id cidade ao cadastrar agente
-  * [Fix] [CNIC] votantes: marcando membros natos previamente selecionados
-  * [Fix] [CNIC] votantes: permitindo que se escolha membros
-  * [Fix] [Manter pareceristas] corrigindo credenciamento de áreas de pareceristas
-  * [Fix] [Prestação de contas] habilitar projeto: removida a penalidade
-  * [Fix] [Readequações] técnico finaliza readequação
-  * [Fix] [Readequações] parecerista finalizando readequação
-  * [Fix] [Readequações] corrigindo links para projeto
-  * [Fix] [Recursos] corrigindo charset
-  * [Fix] [Recursos] corrigindo carregamento de combos de área
+  * Fix [Acompanhamento] Corrige erro ao Analisar comprovacao de objeto
+  * Fix [Admissibilidade] bug ao mudar de perfil e tentar acessar uma tela admissibilidade sem perfis corretos
+  * Fix [Agentes] Erro ao inserir area cultural para usuarios
+  * Fix [Agentes] corrige id cidade ao cadastrar agente
+  * Fix [CNIC] votantes: marcando membros natos previamente selecionados
+  * Fix [CNIC] votantes: permitindo que se escolha membros
+  * Fix [Manter pareceristas] corrigindo credenciamento de áreas de pareceristas
+  * Fix [Prestação de contas] habilitar projeto: removida a penalidade
+  * Fix [Readequações] técnico finaliza readequação
+  * Fix [Readequações] parecerista finalizando readequação
+  * Fix [Readequações] corrigindo links para projeto
+  * Fix [Recursos] corrigindo charset
+  * Fix [Recursos] corrigindo carregamento de combos de área
 
 Release 2.0.6
   * Fix: [Proponente] Corrigindo conversao JSON
