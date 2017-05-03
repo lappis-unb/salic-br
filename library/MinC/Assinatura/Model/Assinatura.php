@@ -1,6 +1,6 @@
 <?php
 
-class MinC_Assinatura_Core_Model_Model_Assinatura implements MinC_Assinatura_Core_Model_IModelAssinatura
+class MinC_Assinatura_Model_Assinatura implements MinC_Assinatura_Model_IModelAssinatura
 {
     /**
      * @var int $idPronac
@@ -37,7 +37,7 @@ class MinC_Assinatura_Core_Model_Model_Assinatura implements MinC_Assinatura_Cor
 
     /**
      * @param int $cod_grupo
-     * @return MinC_Assinatura_Core_Model_Model_Assinatura
+     * @return MinC_Assinatura_Model_Assinatura
      */
     public function setCodGrupo($cod_grupo)
     {
@@ -55,7 +55,7 @@ class MinC_Assinatura_Core_Model_Model_Assinatura implements MinC_Assinatura_Cor
 
     /**
      * @param int $cod_orgao
-     * @return MinC_Assinatura_Core_Model_Model_Assinatura
+     * @return MinC_Assinatura_Model_Assinatura
      */
     public function setCodOrgao($cod_orgao)
     {
@@ -73,7 +73,7 @@ class MinC_Assinatura_Core_Model_Model_Assinatura implements MinC_Assinatura_Cor
 
     /**
      * @param int $idPronac
-     * @return MinC_Assinatura_Core_Model_Model_Assinatura
+     * @return MinC_Assinatura_Model_Assinatura
      */
     public function setIdPronac($idPronac)
     {
@@ -91,7 +91,7 @@ class MinC_Assinatura_Core_Model_Model_Assinatura implements MinC_Assinatura_Cor
 
     /**
      * @param MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter $servicoAutenticacao
-     * @return MinC_Assinatura_Core_Model_Model_Assinatura
+     * @return MinC_Assinatura_Model_Assinatura
      */
     public function setServicoAutenticacao($servicoAutenticacao)
     {
@@ -109,7 +109,7 @@ class MinC_Assinatura_Core_Model_Model_Assinatura implements MinC_Assinatura_Cor
 
     /**
      * @param string $dsManifestacao
-     * @return MinC_Assinatura_Core_Model_Model_Assinatura
+     * @return MinC_Assinatura_Model_Assinatura
      */
     public function setDsManifestacao($dsManifestacao)
     {
@@ -127,7 +127,7 @@ class MinC_Assinatura_Core_Model_Model_Assinatura implements MinC_Assinatura_Cor
 
     /**
      * @param int $idTipoDoAtoAdministrativo
-     * @return MinC_Assinatura_Core_Model_Model_Assinatura
+     * @return MinC_Assinatura_Model_Assinatura
      */
     public function setIdTipoDoAtoAdministrativo($idTipoDoAtoAdministrativo)
     {
