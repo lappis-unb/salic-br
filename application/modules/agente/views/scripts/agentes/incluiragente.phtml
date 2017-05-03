@@ -1,34 +1,17 @@
-<?php if ($this->modulo != "movimentacaobancaria") : ?>
-    <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
-    <div id="breadcrumb">
-        <ul>
-            <li class="first"><a
-                    href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>"
-                    title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
-            <li><a href="#" title="Agentes">Manter Agentes</a></li>
-            <li class="last">Principal</li>
-        </ul>
-    </div>
-    </div>
-    <div id="rodapeConteudo"><span></span></div>
-    <br clear="all"/>
-    <?php $ponto = ''; ?>
-    <?php
-        if (empty($_GET['acao'])) {
-            $acao = "";
-        } else {
-            $acao = $_GET['acao'];
-        }
-    ?>
-    <?php $ponto = '*'; ?>
-    <?php echo $this->partial("agentes/inc/menu.inc.php", $this); ?>
-    <div id="titulo">
-        <div id="novo">Novo cadastro<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
-    </div>
-<?php endif; ?>
-<!-- ========== INICIO CONTEUDO ========== -->
-<div id="conteudo">
-    <div id="confirma"></div>
+<div class="row">
+    <?php if ($this->modulo != "movimentacaobancaria") : ?>
+        <?php $ponto = ''; ?>
+        <?php
+            if (empty($_GET['acao'])) {
+                $acao = "";
+            } else {
+                $acao = $_GET['acao'];
+            }
+        ?>
+        <?php $ponto = '*'; ?>
+        <?php echo $this->partial("agentes/inc/menu.inc.php", $this); ?>
+    <?php endif; ?>
+
     <div id="carregando" class="sumir">
         <table class="tabela">
             <tr>
@@ -43,26 +26,23 @@
             </tr>
         </table>
     </div>
-    <div id="novocadastro">
+
+    <div id="novocadastro" class="col s10">
+        <h4 id="novo">Novo cadastro</h4>
         <form name="formCadAgentes" id="formCadAgentes" method="post"
               action="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
-            <input type="hidden" name="grupologado" id="grupologado" class="input_simples"
-                   value="<?php echo $this->grupoativo; ?>"/>
+            <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>"/>
             <input type="hidden" name="acao" id="acao" value="<?php echo $acao; ?>"/>
             <input type="hidden" name="idResponsavel" id="idResponsavel"
                    value="<?php echo $this->idResponsavelKeyLog; ?>"/>
-            <?php if ($this->modulo != "movimentacaobancaria") { ?>
-                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples"
-                       value=""/>
-            <?php } else { ?>
-                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples"
-                       value="true"/>
-                <input type="hidden" name="caminho" id="caminho" class="input_simples"
-                       value="<?php echo $this->caminho; ?>"/>
+            <?php if ($this->modulo != "movimentacaobancaria") : ?>
+                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples" value=""/>
+            <?php else : ?>
+                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples" value="true"/>
+                <input type="hidden" name="caminho" id="caminho" class="input_simples" value="<?php echo $this->caminho; ?>"/>
                 <input type="hidden" name="modal" id="modal" class="input_simples" value="<?php echo $this->modal; ?>"/>
-            <?php } ?>
-            <input type="hidden" name="idpronac" id="idpronac" class="input_simples"
-                   value="<?php echo $this->idpronac; ?>"/>
+            <?php endif; ?>
+            <input type="hidden" name="idpronac" id="idpronac" class="input_simples" value="<?php echo $this->idpronac; ?>"/>
 
             <center>
                 <div id="cadDirigente" class="msgALERT sumir" style="width: 96%;">
@@ -71,23 +51,19 @@
                     </div>
                 </div>
             </center>
-
-            <table id="tabDados" class="tabela">
-                <tr>
-                    <th colspan="6">DADOS PRINCIPAIS</th>
-                </tr>
-                <tr>
-                    <td>
+            <fieldset>
+                <legend>DADOS PRINCIPAIS</legend>
+                <div class="row">
+                    <div class="input-field col s2">
                         <input type="radio" name="Tipo" id="0" value="0" class="with-gap"
-                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"
-                               checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();"/>  CPF&nbsp;&nbsp;
+                               checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();"/>  <label for="0">CPF</label>
                         <input type="radio" name="Tipo" id="1" value="1" class="with-gap"
-                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"
                                onclick="filtroCNPJ();" onkeypress="filtroCNPJ();"/>
-                         CNPJ
-                        <br/>
+                        <label for="1">CNPJ</label>
+                    </div>
+                    <div class="input-field col s3">
                         <label for="cpf"> </label>
-                        <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14"
+                        <input class="" type="text" name="cpf" id="cpf" maxlength="14"
                                onkeyup="mascara(this, format_cpf);"
                                onclick="limpar_campo(this, '');"
                                onkeypress="limpar_campo(this, '');"
@@ -95,24 +71,21 @@
                                onmouseout="restaurar_campo(this, '');"
                                value="<?php echo $this->cpf; ?>"/>
 
-                        &nbsp; <span id="erroCpf" class="spanError"></span>
+                        <span id="erroCpf" class="spanError"></span>
                         <input type="hidden" id="idAgente" name="idAgente"/>
-                    </td>
-                    <td>
-                        <label for="nome">Nome *</label>
-                        <br/>
+                    </div>
+                    <div class="input-field col s4">
                         <input type="hidden" id="idPessoa" name="idPessoa"/>
-                        <input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50"
+                        <input class="" type="text" name="nome" id="nome" maxlength="70" size="50"
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
                                onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');"/>
-
-                        &nbsp; <span id="erroNome" class="spanError"></span>
-                    </td>
-                    <td align="center">
+                        <label for="nome">Nome *</label>
+                        <span id="erroNome" class="spanError"></span>
+                    </div>
+                    <div class="input-field col s3">
                         <?php if (!$this->ehProponente) : ?>
-                            <label for="visao"> Informe a vis&atilde;o do Agente: </label>
                             <select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
-                                    class="input_simples" style="width: 250px;">
+                                    class="" >
                                 <?php if ($this->modulo != "movimentacaobancaria"): ?>
                                     <option value="0" selected="selected"> - Selecione -</option>
                                 <?php endif; ?>
@@ -123,20 +96,20 @@
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </select>
-                            &nbsp; <span id="erroVisao" class="spanError"></span>
-                            &nbsp; <span id="spanVisao"></span>
-                        <?php else : ?>
                             <label for="visao"> Informe a vis&atilde;o do Agente: </label>
+                            <span id="erroVisao" class="spanError"></span>
+                            <span id="spanVisao"></span>
+                        <?php else : ?>
                             <select name="visao" id="visao"
                                     onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
-                                    class="input_simples" style="width: 250px;">
+                                    class="" >
                                         <option value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"> <?php echo $this->combovisoes[0]['Descricao']; ?> </option>
                             </select>
+                            <label for="visao"> Informe a vis&atilde;o do Agente: </label>
                         <?php endif; ?>
-                    </td>
-                </tr>
-            </table>
-
+                </div>
+            </div>
+            </fieldset>
             <!-- ========== INICIO LISTA DE AREA ABERTA DE ACORDO COM A VISAO ========== -->
             <div id="visaocomponente" class="sumir">
                 <table id="tbvisaocomponente" class="tabela sumir">
@@ -213,22 +186,18 @@
             </div>
             <!-- ========== FIM LISTA DE AREA ABERTA DE ACORDO COM A VISAO ========== -->
             <!-- ========== INICIO FORMULARIO ENDERECO ========== -->
-            <table id="tabEndereco" class="tabela">
-                <tr>
-                    <th colspan="3">Novo Endere&ccedil;o</th>
-                </tr>
-                <tr>
-                    <td width="30%">
-                        <label for="cep">CEP *</label><br/>
+            <div class="row">
+                <fieldset>
+                    <legend>Novo Endere&ccedil;o</legend>
+                    <div class="input-field col s3">
                         <input class="input_simples" type="text" name="cep" id="cep" maxlength="10"
                                onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
                                onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value=""/>
-
-                        &nbsp; <span id="erroCep" class="spanError"></span>
-                    </td>
-                    <td width="30%">
-                        <label for="uf">UF *</label> <br/>
+                        <label for="cep">CEP *</label><br/>
+                        <span id="erroCep" class="spanError"></span>
+                    </div>
+                    <div class="input-field col s2">
                         <select name="uf" id="uf" class="input_simples" disabled="disabled"
                                 onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');">
 
@@ -243,10 +212,10 @@
                                 </option>
                             <?php endforeach; ?>
                         </select>
+                        <label for="uf">UF *</label> <br/>
                         <span id="erroUf" class="spanError"></span>
-                    </td>
-                    <td>
-                        <label for="cidade">Cidade *</label> <br/>
+                    </div>
+                    <div class="input-field col s2">
                         <select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
                             <option value="0"> - Selecione -</option>
 
@@ -259,30 +228,25 @@
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </select>
+                        <label for="cidade">Cidade *</label>
                         <span id="erroCidade" class="spanError"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="tipoEndereco">Tipo de Endere&ccedil;o *</label> <br/>
+                    </div>
+                    <div class="input-field col s2">
                         <select name="tipoEndereco" id="tipoEndereco" class="input_simples" style="width: 250px;">
-
                             <?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
                                 <option value="0"> - Selecione -</option>
                             <?php } ?>
-
                             <?php foreach ($this->combotiposenderecos as $key => $combotipoendereco): ?>
                                 <option value="<?php echo $key; ?>"
                                     <?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
                                     <?php echo $combotipoendereco; ?>
                                 </option>
                             <?php endforeach; ?>
-
                         </select>
+                        <label for="tipoEndereco">Tipo de Endere&ccedil;o *</label> <br/>
                         <span id="erroTipoEndereco" class="spanError"></span>
-                    </td>
-                    <td>
-                        <label for="tipoLogradouro">Tipo de Logradouro *</label> <br/>
+                    </div>
+                    <div class="input-field col s2">
                         <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" >
 
                             <?php if (!isset($this->tipoLogradouro) || empty($this->tipoLogradouro)) { ?>
@@ -296,74 +260,62 @@
                                 </option>
                             <?php endforeach; ?>
                         </select>
+                        <label for="tipoLogradouro">Tipo de Logradouro *</label> <br/>
                         <span id="erroTipoLogradouro" class="spanError"></span>
-                    </td>
-                    <td>
-                        <label for="logradouro">Logradouro *</label> <br/>
+                    </div>
+                    <div class="input-field col s2">
                         <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro" maxlength="50" size="30"/>
+                        <label for="logradouro">Logradouro *</label> <br/>
                         <span id="erroLogradouro" class="spanError"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="numero">N&uacute;mero *</label> <br/>
+                    </div>
+                    <div class="input-field col s2">
                         <input class="input_simples" type="text" name="numero" id="numero" maxlength="10" size="30"/>
+                        <label for="numero">N&uacute;mero *</label> <br/>
                         <span id="erroNumero" class="spanError"></span>
-                    </td>
-                    <td>
-                        <label for="complemento">Complemento</label> <br/>
+                    </div>
+                    <div class="input-field col s2">
                         <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70" size="50"/>
+                        <label for="complemento">Complemento</label> <br/>
                         <span id="erroComplemento" class="spanError"></span>
-                    </td>
-                    <td colspan="">
-                        <label for="bairro">Bairro *</label> <br/>
+                    </div>
+                    <div class="input-field col s2">
                         <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro" maxlength="70" size="40"/>
+                        <label for="bairro">Bairro *</label> <br/>
                         <span id="erroBairro" class="spanError"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <label>Autorizo divulgar o endere&ccedil;o?</label>&nbsp;
-                        <input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1"
-                               class="checkradio with-gap"
-                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        &nbsp; Sim &nbsp;
-                        <input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0"
-                               class="checkradio with-gap"
-                               checked="checked"
-                               style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        N&atilde;o
-                    </td>
-                </tr>
-            </table>
-
+                    </div>
+                    <div class="input-field col s3">
+                        <p>Autorizo divulgar o endere&ccedil;o?</p>
+                        <p>
+                            <input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1"
+                                   class="checkradio with-gap"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                            <label for="divulgarEnderecoS"> Sim </label>
+                            <input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0"
+                                   class="checkradio with-gap"
+                                   checked="checked"
+                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                            <label for="divulgarEnderecoN">N&atilde;o</label>
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
             <!-- ========== FIM FORMULARIO ENDERECO ========== -->
-
             <?php if ($this->modulo != "movimentacaobancaria") { ?>
-
                 <!-- ========== INICIO FORMULARIO FONE ========== -->
-                <table id="tabFone" class="tabela">
-                    <tr>
-                        <th colspan="5">TELEFONE</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="tipoFone">Tipo *</label>
-                            <br/>
+                <div class="row">
+                    <fieldset>
+                        <legend>TELEFONE</legend>
+                        <div class="input-field col s2">
                             <select name="tipoFone" id="tipoFone" class="input_simples">
                                 <option value=""> - Selecione -</option>
-
                                 <?php foreach ($this->combotipostelefones as $key => $combotipotelefone) { ?>
                                     <option value="<?php echo $key; ?>"><?php echo $combotipotelefone; ?></option>
                                 <?php } ?>
-
                             </select>
-
-                            &nbsp; <span id="erroTipoFone" class="spanError"></span>
-                        </td>
-                        <td>
-                            <label for="ufFone">UF *</label>
-                            <br/>
+                            <label for="tipoFone">Tipo *</label>
+                            <span id="erroTipoFone" class="spanError"></span>
+                        </div>
+                        <div class="input-field col s1">
                             <select name="ufFone" id="ufFone" class="input_simples"
                                     onchange="carregar_combo(this.value,'dddFone','<?php echo $this->url(array('controller' => 'ddd', 'action' => 'combo')); ?>');">
                                 <option value="0"> --</option>
@@ -371,67 +323,49 @@
                                 <?php foreach ($this->comboestados as $key => $combouffone) { ?>
                                     <option value="<?php echo $key; ?>"><?php echo $combouffone; ?></option>
                                 <?php } ?>
-
                             </select>
-
-                            &nbsp; <span id="erroUfFone" class="spanError"></span>
-                        </td>
-                        <td>
-                            <label for="dddFone">DDD *</label>
-                            <br/>
+                            <label for="ufFone">UF *</label>
+                            <span id="erroUfFone" class="spanError"></span>
+                        </div>
+                        <div class="input-field col s3">
                             <select name="dddFone" id="dddFone" class="input_simples">
                                 <option value=""> --</option>
                             </select>
-
-                            &nbsp; <span id="erroDddFone" class="spanError"></span>
-                        </td>
-                        <td>
-                            <label for="fone">Telefone *</label>
-                            <br/>
+                            <label for="dddFone">DDD *</label>
+                            <span id="erroDddFone" class="spanError"></span>
+                        </div>
+                        <div class="input-field col s3">
                             <input type="text" name="fone" id="fone" maxlength="10" class="input_simples w100"
                                    onkeyup="mascara(this, format_tel);"
                                    onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
                                    onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');"
                                    value=""/>
-
-                            &nbsp; <span id="erroFone" class="spanError"></span>
-                        </td>
-                        <td>
-                            <label>Divulgar? *</label>
-                            <br/>
-                            <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1"
-                                   class="checkradio with-gap"
-                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                            Sim
-                            <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0"
-                                   class="checkradio with-gap"
-                                   checked="checked"
-                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                            N&atilde;o
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="5">E-MAIL</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="tipoEmail">Tipo *</label>
-                            <br/>
+                            <label for="fone">Telefone *</label>
+                            <span id="erroFone" class="spanError"></span>
+                        </div>
+                        <div class="input-field col s3">
+                            <p>Divulgar? *</p>
+                            <p>
+                            <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio with-gap" />
+                            <label for="divulgarFoneS" >Sim</label>
+                            <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio with-gap" checked="checked" />
+                            <label for="divulgarFoneN" >N&atilde;o</label>
+                            </p>
+                    </fieldset>
+                    <fieldset>
+                        <legend>E-MAIL</legend>
+                        <div class="input-field col s3">
                             <select name="tipoEmail" id="tipoEmail" class="input_simples">
                                 <option value="0">- Selecione -</option>
 
                                 <?php foreach ($this->combotiposemails as $key => $combotipoemail) { ?>
                                     <option value="<?php echo $key; ?>"><?php echo $combotipoemail; ?></option>
                                 <?php } ?>
-
                             </select>
-
-                            &nbsp; <span id="erroTipoEmail" class="spanError"></span>
-                        </td>
-                        <td>
-                            <label for="email">E-mail *</label>
-                            <br/>
+                            <label for="tipoEmail">Tipo *</label>
+                            <span id="erroTipoEmail" class="spanError"></span>
+                        </div>
+                        <div class="input-field col s4">
                             <input type="text" name="email" id="email" class="input_simples w200" size="50"
                                    maxlength="70"
                                    onclick="limpar_campo(this, '');"
@@ -439,35 +373,30 @@
                                    onblur="restaurar_campo(this, '');"
                                    onmouseout="restaurar_campo(this, '');"
                                    value=""/>
+                            <label for="email">E-mail *</label>
 
                             &nbsp; <span id="erroEmail" class="spanError"></span>
-                        </td>
-                        <td colspan="3">
-                            <label>Posso Divulgar? *</label>
-                            <br/>
-                            <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1"
-                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"
-                                   class="with-gap"/>
-                            Sim &nbsp;
-                            <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0"
-                                   class="checkradio with-gap"
-                                   checked="checked"
-                                   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                            N&atilde;o
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                        <div class="input-field col s2">
+                            <p>Posso Divulgar? *</p>
+                            <p>
+                                <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1"
+                                       style="background: none; border: 0%; float:none; clear:auto; display:inline;"
+                                       class="with-gap"/>
+                                <label for="divulgarEmailS">Sim </label>
+                                <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0"
+                                       class="checkradio with-gap"
+                                       checked="checked"
+                                       style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                                <label for="divulgarEmailN">N&atilde;o</label>
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
                 <!-- ========== FIM FORMULARIO E-MAIL ========== -->
             <?php } ?>
-            <table class="tabela">
-                <tr>
-                    <td class="centro">
-                        <button type="button" class="btn" value=" " onclick="validaAgenteNovo();"/>salvar</button>
-                    </td>
-                </tr>
-            </table>
+            <button type="button" class="btn" value=" " onclick="validaAgenteNovo();"/>salvar</button>
         </form>
-    </div>
 </div>
 
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
@@ -560,20 +489,7 @@
         <?php if($this->modulo != "movimentacaobancaria"): ?>
         $('#cadDirigente').show(); // mostra a aba com os dirigentes
         <?php endif; ?>
-        //	visao = document.getElementById("visao");
-        //	for (i = 1; i < visao.length; i++) // varre todo o option de origem
-        //	{
-        //		visao.remove(i); // remove os options
-        //		i--;
-        //	}
-        //
-        //	// adiciona a visao de proponente
-        //	var novoOption = document.createElement("option"); // cria um novo option
-        //	novoOption.text  = "Proponente"; // texto do option
-        //	novoOption.value = 144; // valor do option
-        //	visao.options.add(novoOption); // adiciona o novo option no select
     }
-
 
     function buscaragente(cpf) {
         $('#erroCpf').html('Aguarde!');
@@ -620,7 +536,7 @@
                 url: '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentecadastrado")); ?>',
 
                 success: function (data) {
-                    if (data.length > 0) { 
+                    if (data.length > 0) {
                         if (data[0].msgCPF == 'cadastrado') {
                             $('#novocadastro').hide();
                             $('#carregando').show();
@@ -781,17 +697,16 @@
                         novo.text = txtCidade; // atribui um texto ao option
                         document.getElementById("cidade").options.add(novo);
                     }
-                } // fecha if
-
-            } // fecha else
-
-        } // fecha onreadystatechange
+                }
+            }
+        }
 
         ajax.send(null);
 
     } // fecha funcao buscar_cep()
 
     $(document).ready(function () {
+        $3('select').material_select();
 
         var tipocpf = '<?php echo $this->tipocpf; ?>';
         var cpf = '<?php echo $this->cpf; ?>';

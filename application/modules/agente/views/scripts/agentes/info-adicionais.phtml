@@ -1,5 +1,6 @@
-<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
-
+<div class="row">
+    <?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
+    <div class="col s10">
 <script type="text/javascript">
     $(document).ready(function(){
         // mascaras dos campos
@@ -63,8 +64,6 @@
 
     });
 </script>
-
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -72,25 +71,15 @@
         <li class="last">Informa&ccedil;&otilde;es Adicionais</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
     <div>Informa&ccedil;&otilde;es Adicionais <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TITULO ========== -->
-
-
 <div class="sumir" id="camposObrigatorios"></div>
-
-<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
-
-    <?php //echo $this->partial('agentes/inc/cabecalho.php', $this)?>
+    <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
     <div id="formNovo">
         <form id="formInfoAdicionais" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvar-info-adicionais'));?>" method="post">
-            <table class="tabela" style="width:40%;">
+            <table class="tabela">
                 <input type="hidden" name="agente" id="agente" value="<?php echo $this->id; ?>" />
                 <th colspan="2">Dados do Proponente</th>
                 <tr>
@@ -177,11 +166,5 @@
     </div>
 
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-
-
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-
-<br clear="all" />
+</div>
+</div>
