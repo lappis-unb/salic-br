@@ -54,6 +54,7 @@
             <?php if (!empty($user['cpf']) && !empty($user['nome'])) : ?>
                 <li>Usu&aacute;rio <strong><?php echo $user['nome']; ?> [<?php echo Validacao::mascaraCPFCNPJ($user['cpf']); ?>]</strong></li>
             <?php endif; ?>
+	    <?php if (isset($auth['usu_codigo']) || ($auth['cpf'])) : ?>
             <li>
                 <a
                     class="btn-floating small waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sair do Sistema"
@@ -61,6 +62,7 @@
                     <i class="material-icons">power_settings_new</i>
                 </a>
             </li>
+	    <?php endif; ?>
         </ul>
     </div>
 
@@ -68,6 +70,8 @@
     $logoLink =  $this->url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => ''), '', true);
     if( isset($auth['usu_codigo']) && !isset($auth['cpf']) ) {
         $logoLink =  $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => ''), '', true);
+    } else if (!isset($auth['usu_codigo'])) {
+        $logoLink = $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'index'), '', true);
     }
     ?>
     <div id="logo">
