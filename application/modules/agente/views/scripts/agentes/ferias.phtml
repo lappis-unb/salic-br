@@ -286,16 +286,16 @@
         ?>
 
         <tr>
-            <td width="180">Quantidade de dias: <span id="qtdDias"><?php echo $d->qtdDias; ?></span></td>
+            <td width="180">Quantidade de dias: <span id="qtdDias"><?php echo $d->qtddias; ?></span></td>
             <td align="center">Data das férias: </td>
-            <td width="150" align="center"><?php echo $d->dtInicio; ?></td>
+            <td width="150" align="center"><?php echo $d->dtinicio; ?></td>
             <td width="10" align="center">à</td>
-            <td width="150" align="center"><?php echo $d->dtFim; ?></td>
+            <td width="150" align="center"><?php echo $d->dtfim; ?></td>
             <td width="50" align="center" style="background: white;"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $siAusencia; ?>.gif" title="<?php echo $title; ?>" border="0" style="cursor: pointer;" /></td>
             <td width="50" align="center">
             <?php if(($this->grupoativo == "94")){ ?>
             <?php if(($d->siAusencia != 2) && ($d->siAusencia != 3) && ($d->siAusencia != 4)){ ?>
-                <img style="cursor:pointer;" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/cancelar-p.gif" title="Alterar férias" onclick="remarcarferias('<?php echo $d->idAusencia; ?>','<?php echo $d->qtdDias; ?>');"/>
+                <img style="cursor:pointer;" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/cancelar-p.gif" title="Alterar férias" onclick="remarcarferias('<?php echo $d->idAusencia; ?>','<?php echo $d->qtddias; ?>');"/>
             <?php } ?>
             <?php } ?>
             </td>
