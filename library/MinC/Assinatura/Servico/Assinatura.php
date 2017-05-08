@@ -14,19 +14,14 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
 
     private $isValidarOrdemAssinatura = true;
 
-    function __construct(stdClass $post, stdClass $identidadeUsuarioLogado)
+    function __construct($post, $identidadeUsuarioLogado)
     {
-//$this->auth->getIdentity()
-        $configuracoesAplicacao = Zend_Registry::get("config")->toArray();
-        if($configuracoesAplicacao
-            && is_array($configuracoesAplicacao['Assinatura'])
-            && $configuracoesAplicacao['Assinatura']['isServicoHabilitado'] == true)
-        {
 
-            $servicoAutenticacao = new MinC_Assinatura_Servico_Autenticacao($configuracoesAplicacao);
-            $this->metodoAutenticacao = $servicoAutenticacao->obterMetodoAutenticacao();
-            $this->servicoDocumento = new MinC_Assinatura_Servico_Documento();
-        }
+xd($configuracoesAplicacao);
+        $servicoAutenticacao = new MinC_Assinatura_Servico_Autenticacao($post, $identidadeUsuarioLogado);
+        $this->metodoAutenticacao = $servicoAutenticacao->obterMetodoAutenticacao();
+        $this->servicoDocumento = new MinC_Assinatura_Servico_Documento();
+
     }
 
     public function validarOrdemDeAssinaturas($isValidarOrdemAssinatura)

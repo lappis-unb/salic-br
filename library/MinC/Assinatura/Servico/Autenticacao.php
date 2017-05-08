@@ -7,22 +7,35 @@ class MinC_Assinatura_Servico_Autenticacao implements MinC_Assinatura_Servico_IS
     private $identidadeUsuarioLogado;
 
     public function __construct(
-        array $configuracoesAplicacao,
-        stdClass $post,
-        stdClass $identidadeUsuarioLogado
+        $post,
+        $identidadeUsuarioLogado
     ) {
-        $this->configuracoesAplicacao = $configuracoesAplicacao;
         $this->post = $post;
         $this->identidadeUsuarioLogado = $identidadeUsuarioLogado;
+        $this->configuracoesAplicacao = Zend_Registry::get("config")->toArray();
+
         $this->validarDefinicaoDePropriedades();
     }
 
     protected function validarDefinicaoDePropriedades() {
+xd($this->configuracoesAplicacao);
+//        if($configuracoesAplicacao
+//            && is_array($configuracoesAplicacao['Assinatura'])
+//            && $configuracoesAplicacao['Assinatura']['isServicoHabilitado'] == true)
+//        {
+        if(!is_array($this->configuracoesAplicacao['Assinatura'])) {
+            throw new Exception("&Eacute; necess&aacute;rio informar a propriedade 'Assinatura' no arquivo de configuracao do sistema.");
+        }
+
+        if($this->configuracoesAplicacao['Assinatura']['isServicoHabilitado'] != true) {
+            throw new Exception("&Eacute; necess&aacute;rio informar a propriedade 'Assinatura' no arquivo de configuracao do sistema.");
+        }
+
         if(!is_array($this->configuracoesAplicacao['Assinatura']['Autenticacao'])
             || count($this->configuracoesAplicacao['Assinatura']['Autenticacao']) < 1
             || !$this->configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo'])
         {
-            throw new Exception("É necessário informar a propriedade Assiantura.Autenticacao.Metodo no arquivo de configuracao do sistema.");
+            throw new Exception("&Eacute; necess&aacute;rio informar a propriedade 'Assinatura.Autenticacao.Metodo' no arquivo de configuracao do sistema.");
         }
     }
 
