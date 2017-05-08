@@ -4,6 +4,8 @@ class Assinatura_IndexController extends Assinatura_GenericController
 {
     private $idTipoDoAtoAdministrativo;
 
+    private $grupoAtivo;
+
     public function init()
     {
         parent::init();
@@ -149,17 +151,37 @@ class Assinatura_IndexController extends Assinatura_GenericController
                 throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
             }
 
-            $objAssinatura = new MinC_Assinatura_Servico_Assinatura();
             $post = $this->getRequest()->getPost();
+            $objAssinatura = new MinC_Assinatura_Servico_Assinatura($post, $this->auth->getIdentity());
+            
             if ($post) {
 
                 foreach ($arrayIdPronacs as $idPronac) {
-                    $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
-                    $objAssinatura->assinarProjeto(
-                        $idPronac,
-                        $post['password'],
-                        $post['dsManifestacao']
+
+                    $objProjeto = new Projeto_Model_DbTable_Projetos();
+                    $dadosProjeto = $objProjeto->findBy(array(
+                        'IdPRONAC' => $idPronac
+                    ));
+
+                    $objEnquadramento = new Admissibilidade_Model_Enquadramento();
+                    $arrayPesquisa = array(
+                        'AnoProjeto' => $dadosProjeto['AnoProjeto'],
+                        'Sequencial' => $dadosProjeto['Sequencial'],
+                        'IdPRONAC' => $idPronac
                     );
+
+                    $dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+
+                    $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
+                    $modelAssinatura->setCodGrupo($this->grupoAtivo->codGrupo)
+                                    ->setCodOrgao($this->grupoAtivo->codOrgao)
+                                    ->setIdPronac($idPronac)
+                                    ->setDsManifestacao($post['dsManifestacao'])
+                                    ->setIdPronac($idPronac)
+                                    ->setIdAtoGestao($dadosEnquadramento['IdEnquadramento'])
+                    ;
+                    $objAssinatura->assinarProjeto($modelAssinatura);
+//                        $post['password'],
                 }
 
                 if (count($arrayIdPronacs) > 1) {
