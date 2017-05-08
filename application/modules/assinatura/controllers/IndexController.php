@@ -17,7 +17,7 @@ class Assinatura_IndexController extends Assinatura_GenericController
 
     public function indexAction()
     {
-        $this->redirect("/{$this->moduleName}/enquadramento/gerenciar-projetos");
+        $this->redirect("/{$this->moduleName}/index/gerenciar-projetos");
     }
 
     public function gerenciarAssinaturasAction()
@@ -80,14 +80,6 @@ class Assinatura_IndexController extends Assinatura_GenericController
                 'IdPronac = ?' => $idPronac
             ));
 
-            $objEnquadramento = new Admissibilidade_Model_Enquadramento();
-            $arrayPesquisa = array(
-                'AnoProjeto' => $this->view->projeto['AnoProjeto'],
-                'Sequencial' => $this->view->projeto['Sequencial'],
-                'IdPRONAC' => $idPronac
-            );
-            $this->view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
-
             $objAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
             $this->view->assinaturas = $objAssinatura->obterAssinaturas($idPronac, $idTipoDoAtoAdministrativo);
 
@@ -142,7 +134,7 @@ class Assinatura_IndexController extends Assinatura_GenericController
 
             if (is_array($get->IdPRONAC)) {
                 $idPronacUnidos = implode(',', $get->IdPRONAC);
-                $this->redirect("/{$this->moduleName}/enquadramento-assinatura/assinar-projeto?IdPRONAC={$idPronacUnidos}");
+                $this->redirect("/{$this->moduleName}/index/assinar-projeto?IdPRONAC={$idPronacUnidos}");
             }
 
             $this->view->IdPRONAC = $get->IdPRONAC;
@@ -171,6 +163,7 @@ class Assinatura_IndexController extends Assinatura_GenericController
                     );
 
                     $dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+//Enviar O IdEnquadramento como "IdAtoGestao" via post do módulo de enquadramento quando for redirecionar para a assinatura
 
                     $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
                     $modelAssinatura->setCodGrupo($this->grupoAtivo->codGrupo)

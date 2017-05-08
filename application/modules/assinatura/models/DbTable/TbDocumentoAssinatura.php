@@ -87,6 +87,15 @@ class Assinatura_Model_DbTable_TbDocumentoAssinatura extends MinC_Db_Table_Abstr
             $this->_schema
         );
 
+        $query->joinLeft(
+            array('Enquadramento' => 'Enquadramento'),
+            "Enquadramento.IdPRONAC = Projetos.IdPRONAC
+             AND Enquadramento.AnoProjeto = Projetos.AnoProjeto
+             AND Enquadramento.Sequencial = Projetos.Sequencial",
+            array("Enquadramento.IdEnquadramento"),
+            $this->_schema
+        );
+
         if ($codOrgao) {
             $query->where("Projetos.Orgao = ?", $codOrgao);
         }
