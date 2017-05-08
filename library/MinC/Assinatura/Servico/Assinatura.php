@@ -1,11 +1,11 @@
 <?php
 
-class MinC_Assinatura_Servico_Assinatura
+class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_IServico
 {
     /**
-     * @var MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter $servicoAutenticacao
+     * @var MinC_Assinatura_Autenticacao_IAutenticacaoAdapter $metodoAutenticacao
      */
-    private $servicoAutenticacao;
+    private $metodoAutenticacao;
 
     /**
      * @var MinC_Assinatura_Servico_Documento $servicoDocumento
@@ -14,21 +14,17 @@ class MinC_Assinatura_Servico_Assinatura
 
     private $isValidarOrdemAssinatura = true;
 
-    function __construct()
+    function __construct(stdClass $post, stdClass $identidadeUsuarioLogado)
     {
+//$this->auth->getIdentity()
         $configuracoesAplicacao = Zend_Registry::get("config")->toArray();
-        if(
-            $configuracoesAplicacao
+        if($configuracoesAplicacao
             && is_array($configuracoesAplicacao['Assinatura'])
-            && $configuracoesAplicacao['Assinatura']['isServicoHabilitado'] == true
-        ) {
-            $metodoAutenticacao = "Padrao";
-            if(is_array($configuracoesAplicacao['Assinatura']['Autenticacao'])
-               && count($configuracoesAplicacao['Assinatura']['Autenticacao']) > 0
-               && $configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']) {
-                $metodoAutenticacao =  ucfirst($configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']);
-            }
-            $this->servicoAutenticacao = new MinC_Assinatura_Core_Autenticacao_{$metodoAutenticacao}();
+            && $configuracoesAplicacao['Assinatura']['isServicoHabilitado'] == true)
+        {
+
+            $servicoAutenticacao = new MinC_Assinatura_Servico_Autenticacao($configuracoesAplicacao);
+            $this->metodoAutenticacao = $servicoAutenticacao->obterMetodoAutenticacao();
             $this->servicoDocumento = new MinC_Assinatura_Servico_Documento();
         }
     }
@@ -39,10 +35,10 @@ class MinC_Assinatura_Servico_Assinatura
     }
 
     /**
-     * @return MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
+     * @return MinC_Assinatura_Autenticacao_IAutenticacaoAdapter
      */
     public function obterServicoAutenticacao() {
-        return $this->servicoAutenticacao;
+        return $this->metodoAutenticacao;
     }
 
     /**
@@ -67,32 +63,19 @@ class MinC_Assinatura_Servico_Assinatura
             throw new Exception ("O Tipo do Ato Administrativo &eacute; obrigat&oacute;rio.");
         }
 
-        $objProjeto = new Projeto_Model_DbTable_Projetos();
-        $dadosProjeto = $objProjeto->findBy(array(
-            'IdPRONAC' => $modelAssinatura->getIdPronac()
-        ));
 
-        $objEnquadramento = new Admissibilidade_Model_Enquadramento();
-        $arrayPesquisa = array(
-            'AnoProjeto' => $dadosProjeto['AnoProjeto'],
-            'Sequencial' => $dadosProjeto['Sequencial'],
-            'IdPRONAC' => $modelAssinatura->getIdPronac()
-        );
-
-        $dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
         $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
         $dadosDocumentoAssinatura = $objModelDocumentoAssinatura->findBy(
             array(
                 'IdPRONAC' => $modelAssinatura->getIdPronac(),
-                'idTipoDoAtoAdministrativo' => $modelAssinatura->getIdTipoDoAtoAdministrativo()
+                'idTipoDoAtoAdministrativo' => $modelAssinatura->getIdTipoDoAtoAdministrativo(),
+                'cdSituacao' => Assinatura_Model_TbDocumentoAssinatura::CD_SITUACAO_DISPONIVEL_PARA_ASSINATURA
             )
         );
 
         $objTbAtoAdministrativo = new Assinatura_Model_DbTable_TbAtoAdministrativo();
         $dadosAtoAdministrativoAtual = $objTbAtoAdministrativo->obterAtoAdministrativoAtual(
             $modelAssinatura->getIdTipoDoAtoAdministrativo(),
-//            $this->grupoAtivo->codGrupo,
-//            $this->grupoAtivo->codOrgao
             $modelAssinatura->getCodGrupo(),
             $modelAssinatura->getCodOrgao()
         );
@@ -107,8 +90,8 @@ class MinC_Assinatura_Servico_Assinatura
         $dadosInclusaoAssinatura = array(
             'idPronac' => $modelAssinatura->getIdPronac(),
             'idAtoAdministrativo' => $dadosAtoAdministrativoAtual['idAtoAdministrativo'],
-            'idAtoDeGestao' => $dadosEnquadramento['IdEnquadramento'],
-            'dtAssinatura' => $objEnquadramento->getExpressionDate(),
+            'idAtoDeGestao' => $modelAssinatura->getIdAtoGestao(), //$dadosEnquadramento['IdEnquadramento']
+            'dtAssinatura' => $objTbAtoAdministrativo->getExpressionDate(),
             'idAssinante' => $usuario['usu_codigo'],
             'dsManifestacao' => $modelAssinatura->getDsManifestacao(),
             'idDocumentoAssinatura' => $dadosDocumentoAssinatura['idDocumentoAssinatura']

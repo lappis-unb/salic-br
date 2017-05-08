@@ -27,6 +27,30 @@ class MinC_Assinatura_Model_Assinatura implements MinC_Assinatura_Model_IModelAs
      */
     private $cod_orgao;
 
+
+    /**
+     * @var int $idAtoGestao
+     */
+    private $idAtoGestao;
+
+    /**
+     * @return int
+     */
+    public function getIdAtoGestao()
+    {
+        return $this->idAtoGestao;
+    }
+
+    /**
+     * @param int $idAtoGestao
+     * @return MinC_Assinatura_Model_Assinatura
+     */
+    public function setIdAtoGestao($idAtoGestao)
+    {
+        $this->idAtoGestao = $idAtoGestao;
+        return $this;
+    }
+
     /**
      * @return int
      */
@@ -82,7 +106,7 @@ class MinC_Assinatura_Model_Assinatura implements MinC_Assinatura_Model_IModelAs
     }
 
     /**
-     * @return MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
+     * @return MinC_Assinatura_Autenticacao_IAutenticacaoAdapter
      */
     public function getServicoAutenticacao()
     {
@@ -90,7 +114,7 @@ class MinC_Assinatura_Model_Assinatura implements MinC_Assinatura_Model_IModelAs
     }
 
     /**
-     * @param MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter $servicoAutenticacao
+     * @param MinC_Assinatura_Autenticacao_IAutenticacaoAdapter $servicoAutenticacao
      * @return MinC_Assinatura_Model_Assinatura
      */
     public function setServicoAutenticacao($servicoAutenticacao)

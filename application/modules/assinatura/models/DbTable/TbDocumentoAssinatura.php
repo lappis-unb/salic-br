@@ -54,6 +54,7 @@ class Assinatura_Model_DbTable_TbDocumentoAssinatura extends MinC_Db_Table_Abstr
                 'Projetos.Situacao',
                 'Projetos.DtSituacao',
                 'Projetos.Orgao',
+                'tbDocumentoAssinatura.cdSituacao',
                 'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, GETDATE())',
                 '(' . $queryPlanilhaOrcamentaria->assemble() . ') as vlAprovado'
             ),
@@ -90,10 +91,10 @@ class Assinatura_Model_DbTable_TbDocumentoAssinatura extends MinC_Db_Table_Abstr
             $query->where("Projetos.Orgao = ?", $codOrgao);
         }
 
-        $query->where("tbDocumentoAssinatura.Situacao = ?", Assinatura_Model_TbDocumentoAssinatura::CD_SITUACAO_ABERTO);
+        $query->where("tbDocumentoAssinatura.cdSituacao = ?", Assinatura_Model_TbDocumentoAssinatura::CD_SITUACAO_DISPONIVEL_PARA_ASSINATURA);
         $query->where("Projetos.Situacao in (?)", array('B04'));
         $query->order($ordenacao);
-//xd($query->assemble());
+//xd($this->_db->fetchAll($query));
         return $this->_db->fetchAll($query);
     }
 
