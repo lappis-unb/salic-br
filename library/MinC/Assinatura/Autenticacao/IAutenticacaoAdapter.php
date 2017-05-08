@@ -1,6 +1,6 @@
 <?php
 
-interface MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
+interface MinC_Assinatura_Autenticacao_IAutenticacaoAdapter
 {
     /**
      * @return boolean
@@ -11,4 +11,9 @@ interface MinC_Assinatura_Core_Autenticacao_IAutenticacaoAdapter
      * @return array
      */
     public function obterInformacoesAssinante();
+
+    /**
+     * @return array
+     */
+    public function obterTemplateAutenticacao();
 }
