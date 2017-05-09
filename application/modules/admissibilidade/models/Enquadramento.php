@@ -225,9 +225,6 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($select);
     }
 
-
-
-
     public function verificarDesistenciaRecursal($idPronac)
     {
         $select = $this->select();
@@ -241,6 +238,17 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         $queryDesistenciaRecursal->where("stEstado = ?", 1);
         $queryDesistenciaRecursal->where("IdPRONAC = ?", $idPronac);
         
-        return ($this->_db->fetchOne($query)) ? $this->_db->fetchOne($query) : false;
+        return ($this->_db->fetchOne($queryDesistenciaRecursal)) ? $this->_db->fetchOne($queryDesistenciaRecursal) : false;
+    }
+
+    public function obterEnquadramentoPorProjeto($idPronac, $anoProjeto, $sequencial)
+    {
+        $arrayPesquisa = array(
+            'AnoProjeto' => $anoProjeto,
+            'Sequencial' => $sequencial,
+            'IdPRONAC' => $idPronac
+        );
+
+        return $this->findBy($arrayPesquisa);
     }
 }

@@ -16,12 +16,9 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
 
     function __construct($post, $identidadeUsuarioLogado)
     {
-
-xd($configuracoesAplicacao);
         $servicoAutenticacao = new MinC_Assinatura_Servico_Autenticacao($post, $identidadeUsuarioLogado);
         $this->metodoAutenticacao = $servicoAutenticacao->obterMetodoAutenticacao();
         $this->servicoDocumento = new MinC_Assinatura_Servico_Documento();
-
     }
 
     public function validarOrdemDeAssinaturas($isValidarOrdemAssinatura)
@@ -85,7 +82,6 @@ xd($configuracoesAplicacao);
         $dadosInclusaoAssinatura = array(
             'idPronac' => $modelAssinatura->getIdPronac(),
             'idAtoAdministrativo' => $dadosAtoAdministrativoAtual['idAtoAdministrativo'],
-            'idAtoDeGestao' => $modelAssinatura->getIdAtoGestao(), //$dadosEnquadramento['IdEnquadramento']
             'dtAssinatura' => $objTbAtoAdministrativo->getExpressionDate(),
             'idAssinante' => $usuario['usu_codigo'],
             'dsManifestacao' => $modelAssinatura->getDsManifestacao(),

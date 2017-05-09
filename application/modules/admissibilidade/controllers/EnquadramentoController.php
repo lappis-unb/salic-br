@@ -234,10 +234,15 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $post = $this->getRequest()->getPost();
         $objDocumentoAssinatura = new MinC_Assinatura_Servico_Assinatura($post, $this->auth->getIdentity());
         $idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
+
+        $enquadramento = new Admissibilidade_Model_Enquadramento();
+        $dadosEnquadramento = $enquadramento->obterEnquadramentoPorProjeto($idPronac, $dadosProjeto['AnoProjeto'], $dadosProjeto['Sequencial']);
+
         $objDocumentoAssinatura->obterServicoDocumento()->criarDocumentoAssinatura
         (
             $idPronac,
-            $idTipoDoAtoAdministrativo
+            $idTipoDoAtoAdministrativo,
+            $dadosEnquadramento['IdEnquadramento']
         );
 
         $objProjeto = new Projetos();
@@ -261,7 +266,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $dados = $enquadramento->obterProjetosEnquadradosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
 
         foreach ($dados as $dado) {
-            $dado->desistenciaRecursal = $enquadramento->verificarDesistenciaRecursal($idPronac);
+            $dado->desistenciaRecursal = $enquadramento->verificarDesistenciaRecursal($dado['IdPRONAC']);
             $this->view->dados[] = $dado;
         }
 

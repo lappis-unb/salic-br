@@ -12,3 +12,14 @@ EXEC sp_addextendedproperty 'MS_Description', '1 - Aberto     - Disponível para
  * Alteração da coluna "idAtoDeGestao" da tabela "TbAssinatura" para que seja possível
  */
 ALTER TABLE sac.dbo.TbAssinatura ALTER COLUMN idAtoDeGestao INT;
+
+
+/**
+ * Remoção da coluna "idAtoDeGestao" na tabela "TbAssinatura"
+ */
+ALTER TABLE sac.dbo.TbAssinatura DROP COLUMN idAtoDeGestao;
+
+/**
+ * Adição da coluna "idAtoDeGestao" na tabela "sac.dbo.tbDocumentoAssinatura"
+ */
+ALTER TABLE sac.dbo.tbDocumentoAssinatura ADD idAtoDeGestao INT NULL;

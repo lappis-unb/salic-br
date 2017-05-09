@@ -2,14 +2,10 @@
 
 class MinC_Assinatura_Servico_Autenticacao implements MinC_Assinatura_Servico_IServico
 {
-    private $configuracoesAplicacao = array();
     private $post;
     private $identidadeUsuarioLogado;
 
-    public function __construct(
-        $post,
-        $identidadeUsuarioLogado
-    ) {
+    public function __construct($post, $identidadeUsuarioLogado) {
         $this->post = $post;
         $this->identidadeUsuarioLogado = $identidadeUsuarioLogado;
         $this->configuracoesAplicacao = Zend_Registry::get("config")->toArray();
@@ -17,31 +13,28 @@ class MinC_Assinatura_Servico_Autenticacao implements MinC_Assinatura_Servico_IS
         $this->validarDefinicaoDePropriedades();
     }
 
+    /**
+     * @return bool
+     */
     protected function validarDefinicaoDePropriedades() {
-xd($this->configuracoesAplicacao);
-//        if($configuracoesAplicacao
-//            && is_array($configuracoesAplicacao['Assinatura'])
-//            && $configuracoesAplicacao['Assinatura']['isServicoHabilitado'] == true)
-//        {
+
         if(!is_array($this->configuracoesAplicacao['Assinatura'])) {
             throw new Exception("&Eacute; necess&aacute;rio informar a propriedade 'Assinatura' no arquivo de configuracao do sistema.");
         }
 
         if($this->configuracoesAplicacao['Assinatura']['isServicoHabilitado'] != true) {
-            throw new Exception("&Eacute; necess&aacute;rio informar a propriedade 'Assinatura' no arquivo de configuracao do sistema.");
+            throw new Exception("&Eacute; necess&aacute;rio habilitar o serviço de assinatura para acessar esse recurso, informando a propriedade 'Assinatura.isServicoHabilitado' no arquivo de configuracao do sistema.");
         }
 
         if(!is_array($this->configuracoesAplicacao['Assinatura']['Autenticacao'])
             || count($this->configuracoesAplicacao['Assinatura']['Autenticacao']) < 1
-            || !$this->configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo'])
-        {
+            || !$this->configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']) {
             throw new Exception("&Eacute; necess&aacute;rio informar a propriedade 'Assinatura.Autenticacao.Metodo' no arquivo de configuracao do sistema.");
         }
     }
 
     /**
      * @return MinC_Assinatura_Autenticacao_IAutenticacaoAdapter
-     * @return mixed
      */
     public function obterMetodoAutenticacao() {
         $metodoAutenticacao =  ucfirst($this->configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']);
