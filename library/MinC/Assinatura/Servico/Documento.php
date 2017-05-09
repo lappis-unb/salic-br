@@ -2,7 +2,7 @@
 
 class MinC_Assinatura_Servico_Documento implements MinC_Assinatura_Servico_IServico
 {
-    public function criarDocumentoAssinatura($idPronac, $idTipoDoAtoAdministrativo)
+    public function criarDocumentoAssinatura($idPronac, $idTipoDoAtoAdministrativo, $idAtoDeGestao)
     {
         $auth = Zend_Auth::getInstance();
 
@@ -11,6 +11,7 @@ class MinC_Assinatura_Servico_Documento implements MinC_Assinatura_Servico_IServ
         $dadosDocumentoAssinatura = array(
             'IdPRONAC' => $idPronac,
             'idTipoDoAtoAdministrativo' => $idTipoDoAtoAdministrativo,
+            'idAtoDeGestao' => $idAtoDeGestao,
             'conteudo' => $conteudo,
             'idCriadorDocumento' => $auth->getIdentity()->usu_codigo
         );

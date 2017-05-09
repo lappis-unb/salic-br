@@ -88,12 +88,17 @@
                                         </a>
                                     </td>
                                     <td class="center-align" align="center">
+                                        <?php
+                                        $parametrosAssinatura = "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true";
+                                        ?>
                                         <a class="btn waves-effect waves-light tooltipped small"
-                                           href="<?php echo $this->url(array(
+                                           href="<?php echo $this->url(
+                                               array(
                                                    'module' => 'assinatura',
                                                    'controller' => 'index',
                                                    'action' => 'assinar-projeto'
-                                               )) . "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true" ?>"
+                                               )
+                                           ) . $parametrosAssinatura ?>"
                                            data-position="top"
                                            data-delay="50"
                                            data-tooltip="Assinar">

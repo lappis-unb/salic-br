@@ -150,19 +150,8 @@ class Assinatura_IndexController extends Assinatura_GenericController
 
                 foreach ($arrayIdPronacs as $idPronac) {
 
-                    $objProjeto = new Projeto_Model_DbTable_Projetos();
-                    $dadosProjeto = $objProjeto->findBy(array(
-                        'IdPRONAC' => $idPronac
-                    ));
 
-                    $objEnquadramento = new Admissibilidade_Model_Enquadramento();
-                    $arrayPesquisa = array(
-                        'AnoProjeto' => $dadosProjeto['AnoProjeto'],
-                        'Sequencial' => $dadosProjeto['Sequencial'],
-                        'IdPRONAC' => $idPronac
-                    );
-
-                    $dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+//$dadosEnquadramento['IdEnquadramento']
 //Enviar O IdEnquadramento como "IdAtoGestao" via post do módulo de enquadramento quando for redirecionar para a assinatura
 
                     $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
@@ -170,8 +159,6 @@ class Assinatura_IndexController extends Assinatura_GenericController
                                     ->setCodOrgao($this->grupoAtivo->codOrgao)
                                     ->setIdPronac($idPronac)
                                     ->setDsManifestacao($post['dsManifestacao'])
-                                    ->setIdPronac($idPronac)
-                                    ->setIdAtoGestao($dadosEnquadramento['IdEnquadramento'])
                     ;
                     $objAssinatura->assinarProjeto($modelAssinatura);
 //                        $post['password'],
