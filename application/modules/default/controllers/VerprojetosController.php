@@ -44,9 +44,8 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
      */
     public function indexAction() {
 
-            Zend_Layout::startMvc(array('layout' => 'layout_login'));
-
-
+        Zend_Layout::startMvc(array('layout' => 'layout'));
+        
         if (isset($_REQUEST['idPronac'])) {
 
             $idPronac = $_GET['idPronac'];
@@ -1537,7 +1536,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
     public function dadosBancariosLiberacaoAction(){
 
 
-        Zend_Layout::startMvc(array('layout' => 'layout_login'));
+        Zend_Layout::startMvc(array('layout' => 'layout'));
 
         $idPronac = $this->_request->getParam("idPronac");
 
@@ -1562,7 +1561,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
     public function dadosBancariosCaptacaoAction() {
 
-        Zend_Layout::startMvc(array('layout' => 'layout_login'));
+        Zend_Layout::startMvc(array('layout' => 'layout'));
 
 
         $idPronac = $this->_request->getParam("idPronac");
