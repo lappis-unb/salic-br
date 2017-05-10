@@ -27,30 +27,27 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
     public function getSchema($strSchema = null, $isReturnDb = true, $strNameDb = null)
     {
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-            $db = Zend_Db_Table::getDefaultAdapter();
-
-            if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-                if (is_null($strNameDb)) {
-                    $strNameDb = 'dbo';
-                }
-
-                if ($isReturnDb && strpos($strSchema, '.') === false) {
-                    if ($strSchema) {
-                        $strSchema = $strSchema . "." . $strNameDb;
-                    } else {
-                        $strSchema = $strNameDb;
-                    }
-                } elseif (strpos($strSchema, '.') === false) {
-                    $strSchema = $strNameDb;
-                }
-            } else if (!$strSchema) {
-                $strSchema = $this->_schema;
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            if (is_null($strNameDb)) {
+                $strNameDb = 'dbo';
             }
 
-            return $strSchema;
+            if ($isReturnDb && strpos($strSchema, '.') === false) {
+                if ($strSchema) {
+                    $strSchema = $strSchema . "." . $strNameDb;
+                } else {
+                    $strSchema = $strNameDb;
+                }
+            } elseif (strpos($strSchema, '.') === false) {
+                $strSchema = $strNameDb;
+            }
+        } else if (!$strSchema) {
+            $strSchema = $this->_schema;
+        }
 
-
+        return $strSchema;
     }
 
 
@@ -173,9 +170,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         return $schema . '.' . $this->getName($tableName);
     }
 
-    /**
-     * @todo Implementar Inversao de controle + Singleton cascateado por Classes.
-     */
     public static function getStaticTableName($schema = null, $tableName = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -189,8 +183,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
         return $schema .  $tableName;
     }
-
-
 
     public function __destruct()
     {
@@ -346,14 +338,10 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
     /**
      * Deleta varios registros conforme o where.
-     *
      * @name deleteBy
      * @param array $arrWhere - Array com os parametros para o where, onde chave do array e a coluna da tabela e o valor do array e o valor da coluna.
      * @return int - Quantidade de rows deletadas.
      * @throws Exception
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  06/09/2016
      */
     public function deleteBy(array $arrWhere) {
 
@@ -366,13 +354,9 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
-     *
      * @name findAll
      * @param array $where
      * @return array
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  05/09/2016
      */
     public function findAll(array $where = array(), array $order = array()) {
         $select = $this->select();
@@ -389,9 +373,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     /**
      * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
      * @return MinC_Db_Table_Select
-     * @author Wouerner <wouerner@gmail.com>
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      * @return string
      */
     public static function getConcatExpression()
@@ -479,16 +460,12 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
     /**
      * Retorna o resultado com chave e valor apenas.
-     *
      * @name fetchPairs
      * @param string $key
      * @param string $value
      * @param array $where
      * @param string $order
      * @return array
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  01/09/2016
      */
     public function fetchPairs($key, $value , array $where = [], $order = '')
     {
