@@ -45,6 +45,7 @@
                                 <th class="center-align">&Aacute;rea</th>
                                 <th class="center-align">Segmento</th>
                                 <th class="center-align">Dias</th>
+                                <th class="center-align" align="center">Tipo</th>
                                 <th class="center-align" align="center">Ver</th>
                                 <th class="center-align" align="center">Assinar</th>
                             </tr>
@@ -74,20 +75,23 @@
                                     <td class="center-align" align="center"><?php echo $dado['area']; ?></td>
                                     <td class="center-align" align="center"><?php echo $dado['segmento']; ?></td>
                                     <td class="center-align" align="center"><?php echo $dado['dias']; ?></td>
+                                    <td class="center-align" align="center"><?php echo $dado['tipoDoAtoAdministrativo']; ?></td>
                                     <td class="center-align" align="center">
+                                        <?php
+                                        $parametrosVisualicacao = "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true";
+                                        ?>
                                         <a class="btn waves-effect waves-light tooltipped small "
                                            href="<?php echo $this->url(array(
                                                    'module' => 'assinatura',
                                                    'controller' => 'index',
                                                    'action' => 'visualizar-projeto'
-                                               )) . "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true" ?>"
+                                               )) . $parametrosVisualicacao ?>"
                                            data-position="top"
                                            data-delay="50"
                                            data-tooltip="Visualizar">
                                             <i class="material-icons">search</i>
                                         </a>
                                     </td>
-                                    <td class="center-align" align="center">
                                         <?php
                                         $parametrosAssinatura = "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true";
                                         ?>

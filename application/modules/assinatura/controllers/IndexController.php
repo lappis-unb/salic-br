@@ -26,7 +26,10 @@ class Assinatura_IndexController extends Assinatura_GenericController
         $documentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
 
         $ordenacao = array("projetos.DtSituacao asc");
-        $this->view->dados = $documentoAssinatura->obterProjetosEncaminhadosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
+        $this->view->dados = $documentoAssinatura->obterProjetosComAssinaturasAbertas($this->grupoAtivo->codOrgao, $ordenacao);
+//xd($this->view->dados);
+        // tipoDoAtoAdministrativo
+        // idTipoDoAtoAdministrativo
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
     }
 
@@ -150,10 +153,6 @@ class Assinatura_IndexController extends Assinatura_GenericController
 
                 foreach ($arrayIdPronacs as $idPronac) {
 
-
-//$dadosEnquadramento['IdEnquadramento']
-//Enviar O IdEnquadramento como "IdAtoGestao" via post do módulo de enquadramento quando for redirecionar para a assinatura
-
                     $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
                     $modelAssinatura->setCodGrupo($this->grupoAtivo->codGrupo)
                                     ->setCodOrgao($this->grupoAtivo->codOrgao)
@@ -161,7 +160,6 @@ class Assinatura_IndexController extends Assinatura_GenericController
                                     ->setDsManifestacao($post['dsManifestacao'])
                     ;
                     $objAssinatura->assinarProjeto($modelAssinatura);
-//                        $post['password'],
                 }
 
                 if (count($arrayIdPronacs) > 1) {
