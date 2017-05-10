@@ -817,6 +817,8 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         try {
             $validacao = new stdClass();
 
+            $this->atualizarDadosPessoaJuridicaVerificandoCNAECultural($idPreProjeto);
+
             $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $arrResultado = $tbPreProjeto->spChecklistParaApresentacaoDeProposta($idPreProjeto);
 
@@ -1175,6 +1177,25 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->view->dados = $busca;
         $this->view->dadoscount = count($busca);
         $this->view->idAgenteProponente = $this->idAgenteProponente;
+    }
+
+    public function atualizarDadosPessoaJuridicaVerificandoCNAECultural($idPreProjeto) {
+
+        $TbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+        $proponente = $TbPreProjeto->buscarProponenteProposta($idPreProjeto);
+
+        $cnae = $TbPreProjeto->verificarCNAEProponenteComProdutoPrincipal($idPreProjeto);
+
+        # Se o CNAE estiver vazio, forçar atualização do proponente com os dados do webservice da receita
+        if (isCnpjValid($proponente->CNPJCPF) && empty($cnae)) {
+
+            $servicoReceita = new ServicosReceitaFederal();
+            $dadosPessoaJuridica = $servicoReceita->consultarPessoaJuridicaReceitaFederal($proponente->CNPJCPF, true);
+
+            return true;
+        }
+
+        return false;
     }
 
 }

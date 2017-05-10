@@ -3311,5 +3311,44 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         return $result;
     }
 
+    public function buscarProponenteProposta($idPreProjeto) {
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from(array('pre'=>'preprojeto'), array(), $this->_schema)
+            ->join(array('a' => 'agentes'), 'pre.idagente = a.idagente', array('*'), $this->getSchema('agentes'))
+            ->where("pre.idpreprojeto = ?", $idPreProjeto);
+        ;
+        return $db->fetchRow($sql);
+
+    }
+
+
+    public function verificarCNAEProponenteComProdutoPrincipal($idPreProjeto) {
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(['proposta' => $this->_name], '', $this->_schema);
+
+        $select->joinInner(['agentes' => 'agentes'], 'proposta.idAgente = agentes.idAgente', '', $this->getSchema('agentes'));
+
+        $select->joinInner(['vw' => 'vwPessoaJuridica_CNAE'], 'agentes.CNPJCPF = vw.NR_CNPJ', '*', $this->_schema);
+
+        $select->joinInner(['produtoprincipal' => 'vwPlanoDeDistribuicaoProduto'],
+            'proposta.idPreProjeto = produtoprincipal.idProjeto', '', $this->_schema);
+
+        $select->joinInner(['cnae' => 'tbCnaeCultural'], 'produtoprincipal.Area = cnae.cdArea AND produtoprincipal.Segmento = cnae.cdSegmento AND vw.CD_CNAE  = cnae.cdCnae', '', $this->_schema);
+
+        $select->where('agentes.TipoPessoa = ?', 1);
+        $select->where('produtoprincipal.stPrincipal = ?', 1);
+        $select->where('proposta.idPreProjeto  = ?', $idPreProjeto);
+        $select->limit(1);
+
+        return $this->fetchRow($select);
+
+    }
+
 
 }
