@@ -3343,7 +3343,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $select->where('agentes.TipoPessoa = ?', 1);
         $select->where('produtoprincipal.stPrincipal = ?', 1);
-//        $select->where('proposta.idPreProjeto  = ?', $idPreProjeto);
+        $select->where('proposta.idPreProjeto  = ?', $idPreProjeto);
         $select->limit(1);
 
         return $this->fetchRow($select);
