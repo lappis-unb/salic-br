@@ -448,7 +448,7 @@
             '/projeto/projeto/verificar-in2017/idPronac/' + $('#pronacProjeto').attr("data-pronac"),
             function(data) {
                 if(data.IN2017 == false) {
-                    $('#pronacProjeto').append(' [IN2016]');
+                    $('#pronacProjeto').append(' [IN2013]');
                     $('#planoDistribuicaoId').click( function() {
                         carregaDados('<?php echo $this->url(['controller' => 'consultardadosprojeto', 'action' => 'plano-de-distribuicao']); ?><?php echo $codPronac;?>','conteudo');
                     });
