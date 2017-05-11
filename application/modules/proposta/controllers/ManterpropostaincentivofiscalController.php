@@ -1179,25 +1179,37 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->view->idAgenteProponente = $this->idAgenteProponente;
     }
 
+    /**
+     * Este metodo deve estar igual à regra de negocio 1.3 da spCheckListParaApresentacaoDeProposta
+     * @param $idPreProjeto
+     * @return ArrayObject|bool|mixed
+     */
     public function atualizarDadosPessoaJuridicaVerificandoCNAECultural($idPreProjeto)
     {
 
         $TbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $proponente = $TbPreProjeto->buscarProponenteProposta($idPreProjeto);
 
-        # verifica se eh pessoa fisica ou juridica
-        if (isCnpjValid($proponente->CNPJCPF)) {
+        $tbDistribuicao = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
+        $produtoPrincipal = $tbDistribuicao->findBy(array('idProjeto' => $idPreProjeto, 'stPrincipal' => 1));
 
-            $cnae = $TbPreProjeto->verificarCNAEProponenteComProdutoPrincipal($idPreProjeto);
+        $segmentosIsentos = array('4D', '5A', '5D', '5E', '5S', '6I');
 
-            # Se o CNAE estiver vazio, forçar atualização do proponente com os dados do webservice da receita
-            if (empty($cnae)) {
-                $servicoReceita = new ServicosReceitaFederal();
-                $dadosPessoaJuridica = $servicoReceita->consultarPessoaJuridicaReceitaFederal($proponente->CNPJCPF);
+        if (isCnpjValid($proponente->CNPJCPF) && isset($produtoPrincipal['Segmento'])) {
 
-                return $dadosPessoaJuridica;
+            if (!in_array($produtoPrincipal['Segmento'], $segmentosIsentos)) {
+
+                $cnae = $TbPreProjeto->verificarCNAEProponenteComProdutoPrincipal($idPreProjeto);
+
+                # Se o CNAE estiver vazio, forçar atualização do proponente com os dados do webservice da receita
+                if (empty($cnae)) {
+                    $servicoReceita = new ServicosReceitaFederal();
+                    $dadosPessoaJuridica = $servicoReceita->consultarPessoaJuridicaReceitaFederal($proponente->CNPJCPF, true);
+                    return $dadosPessoaJuridica;
+                }
+                return false;
             }
-            return false;
+            return true;
         }
         return true; #pf
     }
