@@ -1078,7 +1078,6 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         if (!$this->getUsuIdentificacao()) {
             throw new Exception("Identificacao do usu&aacute;rio n&atilde;o informada.");
         }
-
         if (!$this->getUsuSenha()) {
             throw new Exception("Senha do usu&aacute;rio n&atilde;o informada.");
         }

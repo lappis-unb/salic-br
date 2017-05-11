@@ -17,7 +17,7 @@ class Assinatura_IndexController extends Assinatura_GenericController
 
     public function indexAction()
     {
-        $this->redirect("/{$this->moduleName}/index/gerenciar-projetos");
+        $this->redirect("/{$this->moduleName}/index/gerenciar-assinaturas");
     }
 
     public function gerenciarAssinaturasAction()
@@ -102,9 +102,6 @@ class Assinatura_IndexController extends Assinatura_GenericController
         }
     }
 
-    /**
-     * @todo Revisar
-     */
     public function assinarProjetoAction()
     {
         $get = Zend_Registry::get('get');
@@ -149,32 +146,38 @@ class Assinatura_IndexController extends Assinatura_GenericController
 
             $post = $this->getRequest()->getPost();
             $objAssinatura = new MinC_Assinatura_Servico_Assinatura($post, $this->auth->getIdentity());
-            
+
             if ($post) {
+                try {
+                    $this->view->dsManifestacao = $post['dsManifestacao'];
+                    foreach ($arrayIdPronacs as $idPronac) {
 
-                foreach ($arrayIdPronacs as $idPronac) {
+                        $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
+                        $modelAssinatura->setCodGrupo($this->grupoAtivo->codGrupo)
+                            ->setCodOrgao($this->grupoAtivo->codOrgao)
+                            ->setIdPronac($idPronac)
+                            ->setIdTipoDoAtoAdministrativo($idTipoDoAtoAdministrativo)
+                            ->setDsManifestacao($post['dsManifestacao']);
+                        $objAssinatura->assinarProjeto($modelAssinatura);
+                    }
 
-                    $modelAssinatura = new MinC_Assinatura_Model_Assinatura();
-                    $modelAssinatura->setCodGrupo($this->grupoAtivo->codGrupo)
-                                    ->setCodOrgao($this->grupoAtivo->codOrgao)
-                                    ->setIdPronac($idPronac)
-                                    ->setDsManifestacao($post['dsManifestacao'])
-                    ;
-                    $objAssinatura->assinarProjeto($modelAssinatura);
-                }
-
-                if (count($arrayIdPronacs) > 1) {
+                    if (count($arrayIdPronacs) > 1) {
+                        parent::message(
+                            "Projetos assinados com sucesso!",
+                            "/{$this->moduleName}/index/gerenciar-assinaturas",
+                            'CONFIRM'
+                        );
+                    }
                     parent::message(
-                        "Projetos assinados com sucesso!",
-                        "/{$this->moduleName}/index/gerenciar-assinaturas",
+                        "Projeto assinado com sucesso!",
+                        "/{$this->moduleName}/index/visualizar-projeto?IdPRONAC={$idPronac}",
                         'CONFIRM'
                     );
+                } catch (Exception $objException) {
+                    $this->_helper->viewRenderer->setNoRender(false);
+                    $this->_helper->flashMessenger->addMessage($objException->getMessage());
+                    $this->_helper->flashMessengerType->addMessage("ERROR");
                 }
-                parent::message(
-                    "Projeto assinado com sucesso!",
-                    "/{$this->moduleName}/index/visualizar-projeto?IdPRONAC={$idPronac}",
-                    'CONFIRM'
-                );
             }
 
             $objProjeto = new Projeto_Model_DbTable_Projetos();
@@ -190,10 +193,10 @@ class Assinatura_IndexController extends Assinatura_GenericController
                 'idVerificacao = ?' => $idTipoDoAtoAdministrativo
             ));
 
-            $post = $this->getRequest()->getPost();
-            $objAssinatura = new MinC_Assinatura_Servico_Assinatura($post, $this->auth->getIdentity());
             $this->view->templateAutenticacao = $objAssinatura->obterServicoAutenticacao()->obterTemplateAutenticacao();
-            
+
+            $this->view->idTipoDoAtoAdministrativo = $get->idTipoDoAtoAdministrativo;
+
         } catch (Exception $objException) {
             parent::message(
                 $objException->getMessage(),
