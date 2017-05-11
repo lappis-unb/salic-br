@@ -16,4 +16,5 @@ interface MinC_Assinatura_Autenticacao_IAutenticacaoAdapter
      * @return array
      */
     public function obterTemplateAutenticacao();
+
 }
