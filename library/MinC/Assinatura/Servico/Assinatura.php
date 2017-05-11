@@ -55,6 +55,8 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
             throw new Exception ("O Tipo do Ato Administrativo &eacute; obrigat&oacute;rio.");
         }
 
+        $servicoAutenticacao = $this->obterServicoAutenticacao();
+        $servicoAutenticacao->autenticar();
 
         $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
         $dadosDocumentoAssinatura = $objModelDocumentoAssinatura->findBy(
@@ -76,7 +78,7 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
             throw new Exception ("A fase atual de assinaturas do projeto atual n&atilde;o permite realizar essa opera&ccedil;&atilde;o.");
         }
 
-        $usuario = $this->obterServicoAutenticacao()->obterInformacoesAssinante();
+        $usuario = $servicoAutenticacao->obterInformacoesAssinante();
         $objTbAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
 
         $dadosInclusaoAssinatura = array(

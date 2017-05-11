@@ -4,6 +4,7 @@ class MinC_Assinatura_Servico_Autenticacao implements MinC_Assinatura_Servico_IS
 {
     private $post;
     private $identidadeUsuarioLogado;
+    private $configuracoesAplicacao;
 
     public function __construct($post, $identidadeUsuarioLogado) {
         $this->post = $post;
@@ -31,6 +32,12 @@ class MinC_Assinatura_Servico_Autenticacao implements MinC_Assinatura_Servico_IS
             || !$this->configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']) {
             throw new Exception("&Eacute; necess&aacute;rio informar a propriedade 'Assinatura.Autenticacao.Metodo' no arquivo de configuracao do sistema.");
         }
+
+        $metodoAutenticacao =  ucfirst($this->configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']);
+        if(!class_exists("MinC_Assinatura_Autenticacao_{$metodoAutenticacao}")) {
+            throw new Exception("Classe definida no arquivo de configura&ccedil;&atilde;o do sistema inexistente.");
+        }
+
     }
 
     /**
@@ -38,7 +45,7 @@ class MinC_Assinatura_Servico_Autenticacao implements MinC_Assinatura_Servico_IS
      */
     public function obterMetodoAutenticacao() {
         $metodoAutenticacao =  ucfirst($this->configuracoesAplicacao['Assinatura']['Autenticacao']['Metodo']);
-        $metodoAutenticacao = "MinC_Assinatura_Autenticacao_{$metodoAutenticacao}";
-        return new $metodoAutenticacao($this->post, $this->identidadeUsuarioLogado);
+        $classeDeAutenticacao = "MinC_Assinatura_Autenticacao_{$metodoAutenticacao}";
+        return new $classeDeAutenticacao($this->post, $this->identidadeUsuarioLogado);
     }
 }

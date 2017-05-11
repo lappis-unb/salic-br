@@ -96,6 +96,7 @@ class Assinatura_IndexController extends Assinatura_GenericController
                     'idTipoDoAtoAdministrativo' => $idTipoDoAtoAdministrativo
                 )
             );
+
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/{$this->moduleName}/index/visualizar-projeto?IdPRONAC={$idPronac}&idTipoDoAtoAdministrativo={$idTipoDoAtoAdministrativo}");
         }
@@ -189,6 +190,10 @@ class Assinatura_IndexController extends Assinatura_GenericController
                 'idVerificacao = ?' => $idTipoDoAtoAdministrativo
             ));
 
+            $post = $this->getRequest()->getPost();
+            $objAssinatura = new MinC_Assinatura_Servico_Assinatura($post, $this->auth->getIdentity());
+            $this->view->templateAutenticacao = $objAssinatura->obterServicoAutenticacao()->obterTemplateAutenticacao();
+            
         } catch (Exception $objException) {
             parent::message(
                 $objException->getMessage(),
