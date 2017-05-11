@@ -107,9 +107,6 @@
                                     <td class="center-align" align="center">
                                         <?php
                                         $parametrosAssinatura = "?IdPRONAC={$dado['IdPRONAC']}&idTipoDoAtoAdministrativo={$dado['idTipoDoAtoAdministrativo']}&encaminhar=true";
-                                        if($dado['IdEnquadramento']) {
-                                            $parametrosAssinatura .= "&IdAtoGestao={$dado['IdEnquadramento']}";
-                                        }
                                         ?>
                                         <a class="btn waves-effect waves-light tooltipped small"
                                            href="<?php echo $this->url(array(
