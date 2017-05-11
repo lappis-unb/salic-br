@@ -280,7 +280,6 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($query);
     }
 
-
     public function verificarDesistenciaRecursal($idPronac)
     {
         $select = $this->select();
@@ -295,5 +294,17 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         $queryDesistenciaRecursal->where("IdPRONAC = ?", $idPronac);
         
         return ($this->_db->fetchOne($query)) ? $this->_db->fetchOne($query) : false;
+    }
+
+    public function findBy($where) 
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(PDO::FETCH_ASSOC);
+
+        $select = $db->select()->from($this->_name, "*, cast( Observacao as TEXT) as Observacao", $this->_schema);
+        self::setWhere($select, $where);
+
+        $result = $db->fetchRow($select);
+        return $result;
     }
 }
