@@ -12,18 +12,13 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
      */
     private $servicoDocumento;
 
-    private $isValidarOrdemAssinatura = true;
+    public $isMovimentarProjetoPorOrdemAssinatura = true;
 
     function __construct($post, $identidadeUsuarioLogado)
     {
         $servicoAutenticacao = new MinC_Assinatura_Servico_Autenticacao($post, $identidadeUsuarioLogado);
         $this->metodoAutenticacao = $servicoAutenticacao->obterMetodoAutenticacao();
         $this->servicoDocumento = new MinC_Assinatura_Servico_Documento();
-    }
-
-    public function validarOrdemDeAssinaturas($isValidarOrdemAssinatura)
-    {
-        $this->isValidarOrdemAssinatura = $isValidarOrdemAssinatura;
     }
 
     /**
@@ -81,6 +76,17 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
         $usuario = $servicoAutenticacao->obterInformacoesAssinante();
         $objTbAssinatura = new Assinatura_Model_DbTable_TbAssinatura();
 
+        $assinaturaExistente = $objTbAssinatura->buscar(array(
+            'idPronac = ?' => $modelAssinatura->getIdPronac(),
+            'idAtoAdministrativo = ?' => $dadosAtoAdministrativoAtual['idAtoAdministrativo'],
+            'idAssinante = ?' => $usuario['usu_codigo'],
+            'idDocumentoAssinatura = ?' => $dadosDocumentoAssinatura['idDocumentoAssinatura']
+        ));
+
+        if($assinaturaExistente) {
+            throw new Exception ("O documento j&aacute; foi assinado pelo usu&aacute;rio logado nesta fase atual.");
+        }
+
         $dadosInclusaoAssinatura = array(
             'idPronac' => $modelAssinatura->getIdPronac(),
             'idAtoAdministrativo' => $dadosAtoAdministrativoAtual['idAtoAdministrativo'],
@@ -92,7 +98,7 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
 
         $objTbAssinatura->inserir($dadosInclusaoAssinatura);
 
-        if($this->isValidarOrdemAssinatura) {
+        if($this->isMovimentarProjetoPorOrdemAssinatura) {
             $orgaoDestino = $objTbAtoAdministrativo->obterProximoOrgaoDeDestino($modelAssinatura->getIdTipoDoAtoAdministrativo(), $dadosAtoAdministrativoAtual['idOrdemDaAssinatura']);
 
             if ($orgaoDestino) {

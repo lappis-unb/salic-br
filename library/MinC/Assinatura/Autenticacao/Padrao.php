@@ -10,7 +10,7 @@ class MinC_Assinatura_Autenticacao_Padrao implements MinC_Assinatura_Autenticaca
     public function __construct($post, $identidadeUsuarioLogado)
     {
         $this->usuario = new Autenticacao_Model_Usuario();
-        $this->usuario->setUsuIdentificacao($identidadeUsuarioLogado->usu_codigo);
+        $this->usuario->setUsuIdentificacao($identidadeUsuarioLogado->usu_identificacao);
         $this->usuario->setUsuSenha($post['password']);
     }
 
@@ -30,7 +30,7 @@ class MinC_Assinatura_Autenticacao_Padrao implements MinC_Assinatura_Autenticaca
      */
     public function obterInformacoesAssinante()
     {
-        $usuariosBuscar = $this->usuario->buscar(array('usu_identificacao = ?' => $this->usuario))->current();
+        $usuariosBuscar = $this->usuario->buscar(array('usu_identificacao = ?' => $this->usuario->getUsuIdentificacao()))->current();
         return $usuariosBuscar->toArray();
     }
 
