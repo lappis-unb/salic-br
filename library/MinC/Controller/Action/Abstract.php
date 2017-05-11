@@ -104,12 +104,12 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
      * @param string $type
      * @return void
      */
-    protected function message($msg, $url, $type = null)
+    protected function message($msg, $url, $type = null, $options = array())
     {
-        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->viewRenderer->setNoRender(false);
         $this->_helper->flashMessenger->addMessage($msg);
         $this->_helper->flashMessengerType->addMessage($type);
-        $this->redirect($url);
+        $this->redirect($url, $options);
     }
 
     /**
