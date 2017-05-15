@@ -9,9 +9,24 @@ class Assinatura_Model_TbDocumentoAssinatura extends MinC_Db_Model
     protected $_dt_criacao;
     protected $_idCriadorDocumento;
     protected $_cdSituacao;
+    protected $_idAtoDeGestao;
 
     const CD_SITUACAO_DISPONIVEL_PARA_ASSINATURA = 1;
     const CD_SITUACAO_FECHADO_PARA_ASSINATURA = 2;
+
+    public function getIdAtoDeGestao()
+    {
+        return $this->_idAtoDeGestao;
+    }
+
+    /**
+     * @return Assinatura_Model_TbDocumentoAssinatura
+     */
+    public function setIdAtoDeGestao($idAtoDeGestao)
+    {
+        $this->_idAtoDeGestao = $idAtoDeGestao;
+        return $this;
+    }
 
     /**
      * @return mixed

@@ -3,36 +3,45 @@
 class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_IServico
 {
     /**
-     * @var MinC_Assinatura_Autenticacao_IAutenticacaoAdapter $metodoAutenticacao
+     * @var MinC_Assinatura_Autenticacao_IAutenticacaoAdapter $servicoAutenticacao
      */
-    private $metodoAutenticacao;
+    private $servicoAutenticacao;
 
     /**
-     * @var MinC_Assinatura_Servico_Documento $servicoDocumento
+     * @var MinC_Assinatura_Servico_DocumentoAssinatura $servicoDocumentoAssinatura
      */
-    private $servicoDocumento;
+    private $servicoDocumentoAssinatura;
+
+    public $post;
+
+    public $identidadeUsuarioLogado;
 
     public $isMovimentarProjetoPorOrdemAssinatura = true;
 
     function __construct($post, $identidadeUsuarioLogado)
     {
-        $servicoAutenticacao = new MinC_Assinatura_Servico_Autenticacao($post, $identidadeUsuarioLogado);
-        $this->metodoAutenticacao = $servicoAutenticacao->obterMetodoAutenticacao();
-        $this->servicoDocumento = new MinC_Assinatura_Servico_Documento();
+        $this->post = $post;
+        $this->identidadeUsuarioLogado = $identidadeUsuarioLogado;
     }
 
     /**
      * @return MinC_Assinatura_Autenticacao_IAutenticacaoAdapter
      */
     public function obterServicoAutenticacao() {
-        return $this->metodoAutenticacao;
+        if(!isset($this->servicoAutenticacao)) {
+            $this->servicoAutenticacao = new MinC_Assinatura_Servico_Autenticacao($this->post, $this->identidadeUsuarioLogado);
+        }
+        return $this->servicoAutenticacao;
     }
 
     /**
-     * @return MinC_Assinatura_Servico_Documento
+     * @return MinC_Assinatura_Servico_DocumentoAssinatura
      */
     public function obterServicoDocumento() {
-        return $this->servicoDocumento;
+        if(!isset($this->servicoDocumentoAssinatura)) {
+            $this->servicoDocumentoAssinatura = new MinC_Assinatura_Servico_DocumentoAssinatura();
+        }
+        return $this->servicoDocumentoAssinatura;
     }
 
     public function assinarProjeto(MinC_Assinatura_Model_Assinatura $modelAssinatura)
@@ -51,7 +60,9 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
         }
 
         $servicoAutenticacao = $this->obterServicoAutenticacao();
-        $servicoAutenticacao->autenticar();
+        if(!$servicoAutenticacao->autenticar()) {
+            throw new Exception ("Os dados utilizados para autentica&ccedil;&atilde;o s&atilde;o inv&aacute;lidos.");
+        }
 
         $objModelDocumentoAssinatura = new Assinatura_Model_DbTable_TbDocumentoAssinatura();
         $dadosDocumentoAssinatura = $objModelDocumentoAssinatura->findBy(

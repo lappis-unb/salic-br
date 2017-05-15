@@ -21,8 +21,9 @@ class MinC_Assinatura_Autenticacao_Padrao implements MinC_Assinatura_Autenticaca
     {
         $isUsuarioESenhaValidos = $this->usuario->isUsuarioESenhaValidos();
         if (!$isUsuarioESenhaValidos) {
-            throw new Exception ("Usu&aacute;rio ou Senha inv&aacute;lida.");
+            return false;
         }
+        return true;
     }
 
     /**
