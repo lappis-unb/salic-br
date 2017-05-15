@@ -44,4 +44,3 @@ Caso a forma de autenticação escolhida seja a ``padrão`` as dependências sã
      * Módulo: Projeto
      * Classe: Projeto_Model_DbTable_Projetos
           
-          
