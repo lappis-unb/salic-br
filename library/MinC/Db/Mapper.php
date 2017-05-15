@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Class MinC_Db_Mapper
- *
- * @name MinC_Db_Mapper
- * @package default
- * @subpackage controllers
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since ${DATE}
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class MinC_Db_Mapper
 {
     protected $_isBeginTransaction = false;
