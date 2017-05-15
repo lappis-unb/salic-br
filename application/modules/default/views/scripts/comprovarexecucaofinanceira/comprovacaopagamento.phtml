@@ -60,7 +60,8 @@
 
 <div class="col s10">
 <?php if (!$this->vrSituacao) : ?>
-    <div id="breadcrumb">
+    <div class="row" id="breadcrumb">
+    <div class="col s12" >
         <ul>
             <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
             <li class="second"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => '')) . '?idPronac=' . Seguranca::encrypt($this->idpronac); ?>" title="Ir para In&iacute;cio">Consultar dados do Projeto</a></li>
@@ -69,12 +70,18 @@
             <li class="last">Comprovar Pagamento</li>
         </ul>
     </div>
+    </div>
 <?php endif; ?>
 
-<div id="titulo">
-    <div>Comprovar Pagamento<?php if ($this->idComprovantePagamento) : ?> - editando item<?php else : ?> - cadastrar item<?php endif; ?>
+<div class="row" >
+    <div class="col s8" >
+        <h5>
+            Comprovar Pagamento<?php if ($this->idComprovantePagamento) : ?> - editando item<?php else : ?> - cadastrar item<?php endif; ?>
+        </h5>
+    </div>
+    <div class="col s4 align-right" >
         <?php if (!$this->vrSituacao || !$this->pagCompRecusado) : ?>
-        <span class="voltar"><a href="<?php echo $voltarHref; ?>" title="Ir para p&aacute;gina anterior">Voltar</a></span>
+            <span class="voltar"><a href="<?php echo $voltarHref; ?>" title="Ir para p&aacute;gina anterior">Voltar</a></span>
         <?php endif; ?>
     </div>
 </div>
