@@ -275,6 +275,9 @@ class Admissibilidade_EnquadramentoAssinaturaController extends Assinatura_Gener
         }
     }
 
+    /**
+     * @todo Mover para o módulo de de Assinatura (Controller).
+     */
     public function gerarPdfAction()
     {
         ini_set("memory_limit", "5000M");
