@@ -26,11 +26,6 @@ Caso a forma de autenticação escolhida seja a ``padrão`` as dependências sã
 
 ---
 
-     * Módulo: Admissibilidade 
-     * Classe: Admissibilidade_Model_Enquadramento
-
----
-
      * Módulo: Assinatura 
      * Classe: Assinatura_Model_DbTable_TbAssinatura
 
