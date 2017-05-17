@@ -22,7 +22,8 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     function obterServicoDocumentoAssinatura()
     {
         if(!isset($this->servicoDocumentoAssinatura)) {
-            $this->servicoDocumentoAssinatura = new Admissibilidade_EnquadramentoDocumentoAssinaturaController();
+            require_once __DIR__ . DIRECTORY_SEPARATOR . "EnquadramentoDocumentoAssinatura.php";
+            $this->servicoDocumentoAssinatura = new Admissibilidade_EnquadramentoDocumentoAssinaturaController($this->getRequest()->getPost());
         }
         return $this->servicoDocumentoAssinatura;
     }
@@ -232,13 +233,13 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 }
                 parent::message('Projetos encaminhados com sucesso.', '/admissibilidade/enquadramento/encaminhar-assinatura', 'CONFIRM');
             }
-            $this->carregarListaEncaminhamentoPortaria();
+            $this->carregarListaEncaminhamentoAssinatura();
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-assinatura');
         }
     }
 
-    private function carregarListaEncaminhamentoPortaria() {
+    private function carregarListaEncaminhamentoAssinatura() {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
         $enquadramento = new Admissibilidade_Model_Enquadramento();
 
@@ -247,7 +248,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $dados = $enquadramento->obterProjetosEnquadradosParaAssinatura($this->grupoAtivo->codOrgao, $ordenacao);
 
         foreach ($dados as $dado) {
-            $dado->desistenciaRecursal = $enquadramento->verificarDesistenciaRecursal($dado['IdPRONAC']);
+            $dado->desistenciaRecursal = $enquadramento->verificarDesistenciaRecursal($dado->IdPRONAC);
             $this->view->dados[] = $dado;
         }
 

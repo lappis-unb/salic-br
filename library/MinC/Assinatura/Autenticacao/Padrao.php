@@ -43,7 +43,7 @@ class MinC_Assinatura_Autenticacao_Padrao implements MinC_Assinatura_Autenticaca
     public function obterTemplateAutenticacao()
     {
         $view = new Zend_View();
-        $view->setScriptPath(APPLICATION_PATH . '/../library/MinC/Assinatura/Autenticacao/templates');
+        $view->setScriptPath(__DIR__ . '/templates');
         return $view->render('padrao.phtml');
     }
 }
