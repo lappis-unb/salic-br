@@ -66,7 +66,7 @@ class Proposta_DeslocamentoController extends Proposta_GenericController {
             $this->view->movimentacaoAtual = $rsStatusAtual['movimentacao'];
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necess�rio informar o n�mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
     }

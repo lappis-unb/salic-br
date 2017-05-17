@@ -60,7 +60,7 @@ class tbAporteCaptacao extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     * @todo: verificar se eh necessario inserir o try catch com rollback na transacao
      */
     public function cadastrarAporteCaptacaoPronac($idPronac, $idCaptacao, $idUsuario)
     {
@@ -69,11 +69,11 @@ class tbAporteCaptacao extends MinC_Db_Table_Abstract
     	#
     	$captacoes = $tbTmpCaptacaoModel->find($idCaptacao);
     	if (!$captacoes->count() || 1 < $captacoes->count()) {
-    		throw new Exception('Capta��o inv�lida.');
+    		throw new Exception('Capta&ccedil;&atilde;o inv&aacute;lida.');
     	}
     	$captacao = $captacoes->current();
     	if (!($captacao instanceof Zend_Db_Table_Row)) {
-    		throw new Exception('Capta��o inv�lida.');
+    		throw new Exception('Capta&ccedil;&atilde;o inv&aacute;lida.');
     	}
     	#
         $contaBancariaModel = new ContaBancaria();
@@ -82,12 +82,13 @@ class tbAporteCaptacao extends MinC_Db_Table_Abstract
         	'c.Sequencial = ?' => $captacao->nrSequencial,
         ));
     	if (!$contasBancarias->count() || 1 < $contasBancarias->count()) {
-    		throw new Exception('Conta banc�ria inv�lida.');
+    		throw new Exception('Conta banc&aacute;ria inv&aacute;lida.');
     	}
     	$contaBancaria = $contasBancarias->current();
     	if (!($contaBancaria instanceof Zend_Db_Table_Row)) {
-    		throw new Exception('Conta banc�ria inv�lida.');
+    		throw new Exception('Conta banc&aacute;ria inv&aacute;lida.');
     	}
+
 		$this->getAdapter()->beginTransaction();
     	$this->inserir(array(
 	    	'idPRONAC' => $idPronac,

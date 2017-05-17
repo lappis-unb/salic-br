@@ -33,8 +33,9 @@ class Agente_Model_TbVinculoPropostaMapper extends MinC_Db_Mapper
     {
         $booStatus = true;
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-        $this->beginTransaction();
+
         try {
+            $this->beginTransaction();
             $msg = "Respons&aacute;vel vinculado com sucesso!";
 
             if ($arrData['opcaovinculacao'] == 1) {
