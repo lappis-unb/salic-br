@@ -540,8 +540,9 @@ class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
 
         if (isset($_POST['idpronac'])) {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $db->beginTransaction();
+
             try {
+                $db->beginTransaction();
                 $dados = array(
                     'idPronac' => $_POST['idpronac'],
                     'idTipoDiligencia' => 174,

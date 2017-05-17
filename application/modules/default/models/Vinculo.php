@@ -276,7 +276,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
         } catch (Zend_Exception $ex) {
             //$db->rollback();
             
-            parent::message("N?o foi poss�vel realizar a opera�?o!", "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
     }
 

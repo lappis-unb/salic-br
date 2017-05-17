@@ -817,7 +817,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         } catch(Zend_Exception $e) {
 
             $db->rollBack();
-            parent::message("Erro na devolu��o da solicita��o", "manterreadequacao?tipoFiltro=$tipoFiltro" ,"ERROR");
+            parent::message("Erro na devolu&ccedil;&atilde;o da solicita&ccedil;&atilde;o", "manterreadequacao?tipoFiltro=$tipoFiltro" ,"ERROR");
 
         }
 
