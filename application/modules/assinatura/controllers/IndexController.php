@@ -193,7 +193,7 @@ class Assinatura_IndexController extends Assinatura_GenericController
                 'idVerificacao = ?' => $idTipoDoAtoAdministrativo
             ));
 
-            $this->view->templateAutenticacao = $objAssinatura->obterServicoAutenticacao()->obterTemplateAutenticacao();
+            $this->view->templateAutenticacao = $objAssinatura->obterServicoAutenticacao()->obterMetodoAutenticacao()->obterTemplateAutenticacao();
 
             $this->view->idTipoDoAtoAdministrativo = $get->idTipoDoAtoAdministrativo;
 

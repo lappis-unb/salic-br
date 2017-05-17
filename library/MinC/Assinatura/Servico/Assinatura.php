@@ -25,7 +25,7 @@ class MinC_Assinatura_Servico_Assinatura implements MinC_Assinatura_Servico_ISer
     }
 
     /**
-     * @return MinC_Assinatura_Autenticacao_IAutenticacaoAdapter
+     * @return MinC_Assinatura_Servico_Autenticacao
      */
     public function obterServicoAutenticacao() {
         if(!isset($this->servicoAutenticacao)) {

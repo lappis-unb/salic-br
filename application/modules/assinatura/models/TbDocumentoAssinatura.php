@@ -51,16 +51,16 @@ class Assinatura_Model_TbDocumentoAssinatura extends MinC_Db_Model
      */
     public function getIdDocumentoAssinatura()
     {
-        return $this->_id_documento_assinatura;
+        return $this->_idDocumentoAssinatura;
     }
 
     /**
-     * @param mixed $id_documento_assinatura
+     * @param mixed $_idDocumentoAssinatura
      * @return Assinatura_Model_TbDocumentoAssinatura
      */
-    public function setIdDocumentoAssinatura($id_documento_assinatura)
+    public function setIdDocumentoAssinatura($_idDocumentoAssinatura)
     {
-        $this->_id_documento_assinatura = $id_documento_assinatura;
+        $this->_idDocumentoAssinatura = $_idDocumentoAssinatura;
         return $this;
     }
 

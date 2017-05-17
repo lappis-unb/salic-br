@@ -4,6 +4,13 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
 {
     public $idPronac;
 
+    private $post;
+
+    function __construct($post)
+    {
+        $this->post = $post;
+    }
+
     function encaminharProjetoParaAssinatura() {
 
         if(!$this->idPronac) {
@@ -21,8 +28,8 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
-        $post = $this->getRequest()->getPost();
-        $objDocumentoAssinatura = new MinC_Assinatura_Servico_Assinatura($post, $this->auth->getIdentity());
+        $auth = Zend_Auth::getInstance();
+        $objDocumentoAssinatura = new MinC_Assinatura_Servico_Assinatura($this->post, $auth->getIdentity());
         $idTipoDoAtoAdministrativo = Assinatura_Model_DbTable_TbAssinatura::TIPO_ATO_ENQUADRAMENTO;
 
         $enquadramento = new Admissibilidade_Model_Enquadramento();
@@ -33,12 +40,11 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
         $objModelDocumentoAssinatura->setIdTipoDoAtoAdministrativo($idTipoDoAtoAdministrativo);
         $objModelDocumentoAssinatura->setIdAtoDeGestao($dadosEnquadramento['IdEnquadramento']);
         $objModelDocumentoAssinatura->setConteudo($this->gerarDocumentoAssinatura());
-        $auth = Zend_Auth::getInstance();
         $objModelDocumentoAssinatura->setIdCriadorDocumento($auth->getIdentity()->usu_codigo);
 
         $servicoDocumento = $objDocumentoAssinatura->obterServicoDocumento();
+//xd($objModelDocumentoAssinatura);
         $servicoDocumento->registrarDocumentoAssinatura($objModelDocumentoAssinatura);
-
         $objProjeto = new Projetos();
         $objProjeto->alterarSituacao($this->idPronac, null, 'B04', 'Projeto encamihado para Portaria.');
 
@@ -57,7 +63,7 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
     function gerarDocumentoAssinatura()
     {
         $view = new Zend_View();
-        $view->setScriptPath(__DIR__ . '/views/scripts/enquadramento-documento-assinatura');
+        $view->setScriptPath(__DIR__ . DIRECTORY_SEPARATOR . '../views/scripts/enquadramento-documento-assinatura');
 
         $view->titulo = 'Enquadramento';
 
@@ -73,9 +79,9 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
 
         $objAgentes = new Agente_Model_DbTable_Agentes();
         $dadosAgente = $objAgentes->buscarFornecedor(array('a.CNPJCPF = ?' => $view->projeto['CgcCpf']));
-
         $arrayDadosAgente = $dadosAgente->current();
-        $view->nomeAgente = $arrayDadosAgente['nome'];
+
+        $view->nomeAgente = (count($arrayDadosAgente) > 0) ? $arrayDadosAgente['nome'] : ' - ';
 
         $mapperArea = new Agente_Model_AreaMapper();
         $view->areaCultural = $mapperArea->findBy(array(
@@ -102,8 +108,6 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
         );
 
         $view->dadosEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
-
-        $view->templateTipoDocumento = $view->render('enquadramento.phtml');
 
         return $view->render('documento-assinatura.phtml');
     }
