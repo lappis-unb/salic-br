@@ -10,12 +10,12 @@
             window.open("<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'visualizar-opinioes'), null, true); ?>?idPronac="+id,"_blank");
         });
 
-        $('.btn_imprimir').click(function(){
+        $('.botao_imprimir').click(function(){
 	      window.open("<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'imprimir-listagem')); ?>","_blank");
               $('#pesquisa').submit();
         });
 
-        $('.btn_xls').click(function(){
+        $('.botao_xls').click(function(){
 	    $('#pesquisa').attr('action', '<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'xls-listagem')); echo $this->urlComplement; ?>');
 	    $("#pesquisa").submit();
         });
@@ -265,14 +265,14 @@ function parseUrlWithParams($url, $params = array()) {
                     </select>
                     &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>">
                     <!--input type="button" class="btn_recarregar" value=""-->
-                    <button type="button" class="btn" value=""><i class="material-icons">refresh</i></button>
+                    <button type="button" class="btn botao_recarregar" value=""><i class="material-icons">refresh</i></button>
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="pronac" value="<?php echo $this->pronacProjeto;?>">
                     <!--input type="button" class="btn_imprimir" title="Imprimir" /-->
-                    <button type="button" class="btn" title="Imprimir"><i class="material-icons">print</i></button>
+                    <button type="button" class="btn botao_imprimir" title="Imprimir"><i class="material-icons">print</i></button>
                     <!--input type="button" class="btn_xls" title="Gerar Excel" /-->
-                    <button type="button" class="btn" title="Gerar Excel" >Excel</button>
+                    <button type="button" class="btn botao_xls" title="Gerar Excel" >Excel</button>
                  </form>
     </p>
     <div class="center-align">

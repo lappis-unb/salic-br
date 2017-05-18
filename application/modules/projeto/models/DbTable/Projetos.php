@@ -46,7 +46,7 @@ class Projeto_Model_DbTable_Projetos extends MinC_Db_Table_Abstract
             )
         );
         $objQuery->where('projetos.IdPRONAC = ?', $idPronac);
-//xd($objQuery->assemble());
+
         return $this->_db->fetchRow($objQuery);
     }
 

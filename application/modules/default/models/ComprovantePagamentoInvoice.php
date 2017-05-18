@@ -94,7 +94,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         $this->validarCadastrar();
         try {
             Zend_Db_Table::getDefaultAdapter()->beginTransaction();
-            $this->getFornecedor()->setIdFornecedorExterior(
+            $this->getFornecedor()->setId(
                     $this->getFornecedor()->insert(
                             array(
                                 'dsNome' => $this->getFornecedor()->getNome(),
@@ -106,7 +106,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
                 array(
                     'tpDocumento' => $this->getTipoDocumento(),
                     'nrComprovante' => $this->getNif(),
-                    'idFornecedorExterior' => $this->getFornecedor()->getIdFornecedorExterior(),
+                    'idFornecedorExterior' => $this->getFornecedor()->getId(),
                     'nrSerie' => $this->getSerie(),
                     'dtEmissao' => $this->getDataEmissao()->format('Y-m-d h:i:s'),
                     'idArquivo' => $this->getArquivo(),

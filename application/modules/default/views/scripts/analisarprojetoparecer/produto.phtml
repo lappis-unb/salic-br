@@ -1,25 +1,20 @@
 <?php
-$hrefAnalisedeconteudo = $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'analisedeconteudo'));
-$hrefAlterarintemsolicitado = $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'alterarintemsolicitado'));
+    $hrefAnalisedeconteudo = $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'analisedeconteudo'));
+    $hrefAlterarintemsolicitado = $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'alterarintemsolicitado'));
 
-/* INICIO DA GUIA DE LINKS */
-$controller = 'analisarprojetoparecer';
-$links = array();
-$links[] = array('Projetos/Produtos para An&aacute;lise' => array('controller' => 'analisarprojetoparecer', 'action' => 'index'));
-$links[] = array('An&aacute;lise do Produto' => array());
+    /* INICIO DA GUIA DE LINKS */
+    $controller = 'analisarprojetoparecer';
+    $links = array();
+    $links[] = array('Projetos/Produtos para An&aacute;lise' => array('controller' => 'analisarprojetoparecer', 'action' => 'index'));
+    $links[] = array('An&aacute;lise do Produto' => array());
 
-/* FIM DA GUIA DE LINKS */
+    /* FIM DA GUIA DE LINKS */
 ?>
-
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
 <link type="text/css" rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.css" />
 
-<?php /*if($this->grupoAtivo == 94): ?>
-    <?php //echo $this->partial('inc/menu.inc.php', $this) // menu lateral ?>
-<?php endif;*/ ?>
-
-<!-- ========== INÃCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">In&iacute;cio</a></li>
@@ -28,23 +23,15 @@ $links[] = array('An&aacute;lise do Produto' => array());
         <li class="last">An&aacute;lise do Produtos</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-
-<!-- ========== INÃCIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>An&aacute;lise do Produto <span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span></div>
 </div>
-<!-- ========== FIM Tï¿½TULO ========== -->
-
 <div id="dialog-valor" class="sumir" title="Valor Inv&aacute;lido">
     <div class="msgERROR">
         <div>Valor de remanejamento maior que o permitido! M&aacute;ximo : <span id="valorpossivelApresentacao"></span></div>
     </div>
 </div>
-
-<!-- ========== INÃCIO CONTEï¿½DO ========== -->
+<!-- ========== INÍCIO CONTE¿DO ========== -->
 <div id="conteudo">
     <table class="tabela" >
         <tr>
@@ -82,7 +69,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                 <tr>
                     <td colspan="5">&nbsp;</td>
                 </tr>
-		<tr>
+                <tr>
                     <td rowspan="2" id="Lei8313" colspan="2">
                         <b>Lei 8.313/91 alterada pela Lei 9.874/1999 * </b>
                         <p style="margin-top: 10px;">
@@ -124,7 +111,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                         </p>
                     </td>
                     <td id="AlineaArtigo18">
-                        <b>Alï¿½nea Artigo 18</b>
+                        <b>Alinea Artigo 18</b>
                         <p style="margin-top: 10px;">
                             <input type="text" class="input_simples" name="AlineaArtigo18" />
                             <input type="hidden" name="AlineaArt18" id="AlineaArt18" />
@@ -163,7 +150,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                         </p>
                     </td>
                 </tr>
-	    </table>
+            </table>
             <table class="tabela" style="width: 95%;">
                 <tr>
                     <td colspan="5">
@@ -174,23 +161,22 @@ $links[] = array('An&aacute;lise do Produto' => array());
                         </p>
                     </td>
                 </tr>
-
                 <tr>
                     <td colspan="5">
-                        <b>Justificativa do enquadramento*</b>
+                        <b>Parecer de Conteúdo do Produto*</b>
                         <p>
                         <center>
                             <textarea class="textarea_simples" id="ParecerDeConteudo" name="ParecerDeConteudo" rows="10" style="width: 98%;"></textarea>
                         </center>
                     </td>
-                    <?php if($this->grupoAtivo == 93):?>
-                </tr>
+                <?php if($this->grupoAtivo == 93):?>
+                    </tr>
                 <?php else: ?>
-                <tr id="btSalvar">
-                    <td colspan="6" align="center">
-                        <input type="button" id="btSalvarAnaliseDeConteudo" value=" " class="btn_salvar"/>
-                    </td>
-                </tr>
+                    <tr id="btSalvar">
+                        <td colspan="6" align="center">
+                            <input type="button" id="btSalvarAnaliseDeConteudo" value=" " class="btn_salvar"/>
+                        </td>
+                    </tr>
                 <?php endif; ?>
             </table>
         </form>
@@ -236,9 +222,9 @@ $links[] = array('An&aacute;lise do Produto' => array());
                 </td>
             </tr>
             <?php
-            $nrcidade = 0;
-            foreach ($arrayCidades as $cidade => $planilha) {
-                            ?>
+                $nrcidade = 0;
+                foreach ($arrayCidades as $cidade => $planilha) {
+            ?>
             <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                 <td colspan="11">
                     <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;">
@@ -249,51 +235,51 @@ $links[] = array('An&aacute;lise do Produto' => array());
             <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" cidade="<?php echo $nrcidade; ?>">
                 <td colspan="11">
                     <table class="tabela">
-                <?php
-                /* INICIO PLANILHA DE ITENS */
-                $primeiro = 0;
-                foreach ($planilha['itens'] as $idPlanilhaProjeto => $valPlanilha) {
-                                            $valorprodutosolicitado = 0;
-                                            $valorprodutoparecerista = 0;
-                                            $trCampo = "<tr>";
-                                            $conteudo = "<tr class='item' idPlanilhaProjeto='{$idPlanilhaProjeto}' id='item{$idPlanilhaProjeto}'>";
+                        <?php
+                            /* INICIO PLANILHA DE ITENS */
+                            $primeiro = 0;
+                            foreach ($planilha['itens'] as $idPlanilhaProjeto => $valPlanilha) {
+                                $valorprodutosolicitado = 0;
+                                $valorprodutoparecerista = 0;
+                                $trCampo = "<tr>";
+                                $conteudo = "<tr class='item' idPlanilhaProjeto='{$idPlanilhaProjeto}' id='item{$idPlanilhaProjeto}'>";
 
-                                            foreach ($valPlanilha as $camp => $cont) {
-                                                $trCampo .= "<th>{$camp}</th>";
-                                                if ($camp == 'Valor Unit&aacute;rio' || $camp == 'Valor Solicitado' || $camp == 'Valor Sugerido pelo Parecerista') {
-                                                    if ($camp == 'Valor Sugerido pelo Parecerista') {
-                                                        $conteudo .= "<td class='ValorSugerido' style='width:10;'>{$this->formatarReal($cont)}</td>";
-                                                    }
-                                                    else {
-                                                        $conteudo .= "<td style='width:12%;'>{$this->formatarReal($cont)}</td>";
-                                                    }
-                                                }
-                                                else {
-                                                    if ($camp == 'Justificativas do Parecerista') {
-                                                        $conteudo .= "<td class='JustParecerista'>{$cont}</td>";
-                                                    }
-                                                    else {
-                                                        $conteudo .= "<td>{$cont}</td>";
-                                                    }
-                                                }
-                                            }
-                                            $trCampo .= "</tr>";
-                                            $conteudo .= "</tr>";
-
-                                            if ($primeiro == 0) {
-                                                echo $trCampo;
-                                            }
-
-                                            echo $conteudo;
-                                            $primeiro++;
+                                foreach ($valPlanilha as $camp => $cont) {
+                                    $trCampo .= "<th>{$camp}</th>";
+                                    if ($camp == 'Valor Unitário' || $camp == 'Valor Solicitado' || $camp == 'Valor Sugerido pelo Parecerista') {
+                                        if ($camp == 'Valor Sugerido pelo Parecerista') {
+                                            $conteudo .= "<td class='ValorSugerido right-align'>{$this->formatarReal($cont)}</td>";
                                         }
-                                        ?>
+                                        else {
+                                            $conteudo .= "<td  class='right-align'>{$this->formatarReal($cont)}</td>";
+                                        }
+                                    }
+                                    else {
+                                        if ($camp == 'Justificativas do Parecerista') {
+                                            $conteudo .= "<td class='JustParecerista'>{$cont}</td>";
+                                        }
+                                        else {
+                                            $conteudo .= "<td>{$cont}</td>";
+                                        }
+                                    }
+                                }
+                                $trCampo .= "</tr>";
+                                $conteudo .= "</tr>";
+
+                                if ($primeiro == 0) {
+                                    echo $trCampo;
+                                }
+
+                                echo $conteudo;
+                                $primeiro++;
+                            }
+                        ?>
                         <tr style="font-weight: bold;">
-                            <td class="esquerda black-text" style="font-size: 12pt; width: 12%;" colspan="7">Total de UF</td>
-                            <td class="esquerda black-text" style="font-size: 12pt; width: 15%;"><?php echo $planilha['totalUfSolicitado']; ?></td>
-                            <td class="esquerda black-text" style="font-size: 12pt; width: 12%;">&nbsp;</td>
-                            <td class="valorUfSugerido esquerda black-text" style="font-size: 12pt; width: 15%;"><?php echo $planilha['totalUfSugerido']; ?></td>
-                            <td class="esquerda black-text" style="font-size: 12pt; width: 12%;">&nbsp;</td>
+                            <td class="left-align black-text" style="font-size: 12pt; " colspan="7">Total de UF</td>
+                            <td class="right-align black-text" style="font-size: 12pt; "><?php echo $planilha['totalUfSolicitado']; ?></td>
+                            <td class="right-align black-text" style="font-size: 12pt;">&nbsp;</td>
+                            <td class="valorUfSugerido  right-align" style="font-size: 12pt; width: 15%;"><?php echo $planilha['totalUfSugerido']; ?></td>
+                            <td class="left-align black-text" style="font-size: 12pt; width: 12%;">&nbsp;</td>
                         </tr>
                     </table>
                 </td>
@@ -329,7 +315,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
     <?php if(($this->stPrincipal == 1) && ($this->grupoAtivo == 94)){ ?>
     <table class="tabela">
         <tr>
-                <td><input type="button" id="abaProdutosSecundarios" class="btn_adicionar" onclick="abrirfechar('produtosSecundarios');"/>Dados dos Produtos Secund&aacute;rios</td>
+            <td><input type="button" id="abaProdutosSecundarios" class="btn_adicionar" onclick="abrirfechar('produtosSecundarios');"/>Dados dos Produtos Secund&aacute;rios</td>
         </tr>
     </table>
     <table class="tabela sumir" id="produtosSecundarios" style="width:95%" width="95%">
@@ -340,7 +326,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
         <?php if (!empty($this->produtosSecundarios) ) {?>
             <?php foreach($this->produtosSecundarios as $ps){ ?>
             <tr>
-                <td align="left">
+                <td class="" align="left">
                     <a target="_blanck" href="<?php echo $this->url(array('controller'=> 'analisarprojetoparecer','action' =>'produtosecundario'));?>?idPronac=<?php echo $ps['IdPRONAC']; ?>&idProduto=<?php echo $ps['idProduto']; ?>&stPrincipal=<?php echo $ps['stPrincipal'];?>">
                         <?php echo $ps['Produto'] ;?>
                     </a>
@@ -544,9 +530,9 @@ $links[] = array('An&aacute;lise do Produto' => array());
 <div id="confirma" class="sumir"></div>
 <div id="camposObrigatorios" class="sumir"></div>
 
-<!-- ========== INÃCIO RODAPï¿½ DO CONTE&UACUTE;DO ========== -->
+<!-- ========== INÍCIO RODAP¿ DO CONTE&UACUTE;DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPï¿½ DO CONTE&UACUTE;DO ========== -->
+<!-- ========== FIM RODAP¿ DO CONTE&UACUTE;DO ========== -->
 <input type="hidden" name="grupoAtivo" id="grupoAtivo" value="<?php echo $this->grupoAtivo; ?>" />
 <br clear="all" />
 
@@ -596,7 +582,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
 	    var acoesRelevantes = CKEDITOR.instances['AcoesRelevantes'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
 	    <?php endif; ?>
             if( parecer.length  < 11){
-                alertar('O parecer t&eacute;cnico deve ter no mï¿½nimo 11 caracter!');
+                alertar('O parecer t&eacute;cnico deve ter no m¿nimo 11 caracter!');
             } else {
                 $('#formAnaliseConteudo').submit();
             }
@@ -823,10 +809,10 @@ $links[] = array('An&aacute;lise do Produto' => array());
                     {
 
                         var texto = $('#justificativa'+$('#idPlanilhaProjeto').val()).val();
-                        texto = texto.replace(/^\s+|\s+$/g,""); //retirando espaï¿½os
+                        texto = texto.replace(/^\s+|\s+$/g,""); //retirando espa¿os
                         if (texto.length <= 0 || texto=="")
                         {
-                            alertar('Dados obrigatï¿½rios nï¿½o informados.');
+                            alertar('Dados obrigat¿rios n¿o informados.');
                             return false;
                         }
                         else
@@ -835,7 +821,7 @@ $links[] = array('An&aacute;lise do Produto' => array());
                             $('#totalcalculos'+$('#idPlanilhaProjeto').val()).val(vlSugerido);
 
                             var dados = $('#formSalvarItem').serialize();
-                            $(this).append('<br><center>Aguarde, salvando informaï¿½ï¿½es...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
+                            $(this).append('<br><center>Aguarde, salvando informa¿¿es...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
                             $.post($('#formSalvarItem').attr('action'),dados
                             ,function(data)
                             {
@@ -856,16 +842,13 @@ $links[] = array('An&aacute;lise do Produto' => array());
                                 $("#valorpossivelApresentacao").html(valorpossivelApresentacao);
 
                                 este.dialog('close');
-                                janelaAlerta('Informaï¿½ï¿½es salvas com sucesso');
+                                janelaAlerta('Informa¿¿es salvas com sucesso');
                             });
-
                         }
                     }
                 }
             });
         });
-
-
     }
 
     function recuperaTotalSugerido()

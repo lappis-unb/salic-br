@@ -825,7 +825,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                 parent::message("Documento recusado com sucesso!", "tramitardocumentos/receber", "CONFIRM");
             } catch (Zend_Exception $ex) {
                 $db->rollBack();
-                parent::message("N�o foi poss�vel recusar o Documento!", "tramitardocumentos/receber", "ERROR");
+                parent::message("N&atilde;o foi poss&iacute;vel recusar o Documento!", "tramitardocumentos/receber", "ERROR");
             }
         }
     }

@@ -167,7 +167,7 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento', 'Segmento.tp_enquadramento'));
         $select->where("projetos.situacao in ( ? )", array('B02', 'B03'));
         $select->where("projetos.Orgao = ?", $codOrgao);
-//xd($select->assemble());
+
         !empty($order) ? $select->order($order) : null;
         !empty($limit) ? $select->limit($limit) : null;
         return $this->_db->fetchAll($select);
@@ -250,5 +250,17 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         );
 
         return $this->findBy($arrayPesquisa);
+    }
+
+    public function findBy($where)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(PDO::FETCH_ASSOC);
+
+        $select = $db->select()->from($this->_name, "*, cast( Observacao as TEXT) as Observacao", $this->_schema);
+        self::setWhere($select, $where);
+
+        $result = $db->fetchRow($select);
+        return $result;
     }
 }

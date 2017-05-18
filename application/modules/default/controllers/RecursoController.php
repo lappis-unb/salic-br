@@ -339,7 +339,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     //ATUALIZA A SITUA��O DO PROJETO
                     $w = array();
                     $w['situacao'] = 'B11';
-                    $w['ProvidenciaTomada'] = 'Recurso encaminhado para avalia��o da unidade vinculada.';
+                    $w['ProvidenciaTomada'] = 'Recurso encaminhado para avalia&ccedil;&atildeo da unidade vinculada.';
                     $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
                     $w['Logon'] = $this->idUsuario;
                     $where = "IdPRONAC = $dp->IdPRONAC";
@@ -622,7 +622,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
 
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -638,9 +638,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
                 if($dados->tpSolicitacao == 'EO'){
-                    $this->view->nmPagina = 'Enquadramento e Or�amento';
+                    $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
                 } else if($dados->tpSolicitacao == 'OR'){
-                    $this->view->nmPagina = 'Or�amento';
+                    $this->view->nmPagina = 'Or&ccedil;amento';
                 }
 
                 //ATUALIZA OS DADOS DA TABELA tbAnaliseAprovacao
@@ -667,9 +667,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'EN'){
                 $this->view->nmPagina = 'Enquadramento';
             } else if($dados->tpSolicitacao == 'EO'){
-                $this->view->nmPagina = 'Enquadramento e Or�amento';
+                $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
             } else if($dados->tpSolicitacao == 'OR'){
-                $this->view->nmPagina = 'Or�amento';
+                $this->view->nmPagina = 'Or&ccedil;amento';
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
@@ -691,7 +691,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function encaminharRecursoChecklistAction() {
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -710,7 +710,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $return = $tbRecurso->update($dados, $where);
 
         if(!$return){
-            parent::message("N�o foi poss�vel encaminhar o recurso para o Checklist de Publica��o", "recurso?tipoFiltro=analisados", "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel encaminhar o recurso para o Checklist de Publica&ccedil;&atilde;o", "recurso?tipoFiltro=analisados", "ERROR");
         }
         parent::message("Recurso encaminhado com sucesso!", "recurso?tipoFiltro=analisados", "CONFIRM");
     }
@@ -720,7 +720,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 94 && $this->idPerfil != 110){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &acute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -736,9 +736,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
                 if($dados->tpSolicitacao == 'EO'){
-                    $this->view->nmPagina = 'Enquadramento e Or�amento';
+                    $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
                 } else if($dados->tpSolicitacao == 'OR'){
-                    $this->view->nmPagina = 'Or�amento';
+                    $this->view->nmPagina = 'Or&ccedil;amento';
                 }
 
                 //ATUALIZA OS DADOS DA TABELA tbAnaliseAprovacao
@@ -775,7 +775,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo',  'Descricao');
             $objSegmentocultural = new Segmentocultural();
             $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($this->view->projetosEN->cdArea);
 
@@ -915,7 +915,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $tbRecurso = new tbRecurso();
                     $tbRecurso->update($dados, $where);
                 }
-                parent::message("A avalia��o do recurso foi finalizada com sucesso! ", "recurso/painel-recursos", "CONFIRM");
+                parent::message("A avalia&ccedil;&atilde;o do recurso foi finalizada com sucesso! ", "recurso/painel-recursos", "CONFIRM");
             }
 
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso?id=$idRecurso", "CONFIRM");
@@ -929,7 +929,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function componenteComissaoSalvarEnquadramentoAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $auth = Zend_Auth::getInstance();
@@ -944,11 +944,11 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
         if($parecerProjeto == 1){ //1=N�o; 2=Sim
             $situacaoProjeto = 'D14';
-            $providenciaProjeto = 'Recurso indeferido na CNIC pelo componente da comiss�o.';
+            $providenciaProjeto = 'Recurso indeferido na CNIC pelo componente da comiss&atilde;o.';
             $stAnalise = 'IC';
         } else {
             $situacaoProjeto = 'D03';
-            $providenciaProjeto = 'Recurso deferido na CNIC pelo componente da comiss�o.';
+            $providenciaProjeto = 'Recurso deferido na CNIC pelo componente da comiss&atilde;o.';
             $stAnalise = 'AC';
         }
 
@@ -1062,7 +1062,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $tbRecurso = new tbRecurso();
                     $tbRecurso->update($dados, $where);
                 }
-                parent::message("A avalia��o do recurso foi finalizada com sucesso!", "recurso/analisar-recursos-cnic", "CONFIRM");
+                parent::message("A avalia&ccedil;&atilde;o do recurso foi finalizada com sucesso!", "recurso/analisar-recursos-cnic", "CONFIRM");
             }
 
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "CONFIRM");
@@ -1167,7 +1167,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $Projetos = new Projetos();
         $w = array();
         $w['situacao'] = 'D20';
-        $w['ProvidenciaTomada'] = 'Recurso encaminhado � reuni�o da CNIC para avalia��o do componente da comiss�o.';
+        $w['ProvidenciaTomada'] = 'Recurso encaminhado &agrave; reuni&atilde;o da CNIC para avalia&ccedil;&atilde;o do componente da comiss&atilde;o.';
         $Projetos->alterarSituacao($idPronac, null, $w['situacao'], $w['ProvidenciaTomada']);
 
         $reuniao = new Reuniao();
@@ -1218,7 +1218,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function analisarRecursosCnicAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -1311,7 +1311,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &acute;rea do sistema!", "principal", "ALERT");
         }
 
         $get = Zend_Registry::get('get');
@@ -1327,9 +1327,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
                 if($dados->tpSolicitacao == 'EO'){
-                    $this->view->nmPagina = 'Enquadramento e Or�amento';
+                    $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
                 } else if($dados->tpSolicitacao == 'OR'){
-                    $this->view->nmPagina = 'Or�amento';
+                    $this->view->nmPagina = 'Or&ccedil;amento';
                 }
 
                 $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
@@ -1351,7 +1351,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             } else if($dados->tpSolicitacao == 'EO'){
                 $this->view->nmPagina = 'Enquadramento e Or&ccedil;amento';
             } else if($dados->tpSolicitacao == 'OR'){
-                $this->view->nmPagina = 'Or�amento';
+                $this->view->nmPagina = 'Or&ccedil;amento';
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
@@ -1376,7 +1376,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function cnicSalvarEnquadramentoAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $auth = Zend_Auth::getInstance();
@@ -1393,7 +1393,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             //ATUALIAZA A SITUA��O, �REA E SEGMENTO DO PROJETO
             $d = array();
             $d['situacao'] = 'D20';
-            $d['ProvidenciaTomada'] = 'Recurso em an�lise pela Comiss�o Nacional de Incentivo � Cultura - CNIC.';
+            $d['ProvidenciaTomada'] = 'Recurso em an&aacute;lise pela Comiss&atilde;o Nacional de Incentivo &agrave; Cultura - CNIC.';
             $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
             $d['Area'] = $areaCultural;
             $d['Segmento'] = $segmentoCultural;
@@ -1485,7 +1485,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $where = "idRecurso = $idRecurso";
                 $tbRecurso = new tbRecurso();
                 $tbRecurso->update($dados, $where);
-                parent::message("A avalia��o do recurso foi finalizada com sucesso! ", "recurso/analisar-recursos-cnic", "CONFIRM");
+                parent::message("A avalia&ccedil;&atilde;o do recurso foi finalizada com sucesso! ", "recurso/analisar-recursos-cnic", "CONFIRM");
             }
 
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "CONFIRM");
@@ -1499,7 +1499,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function salvarAnaliseDeConteudoAction()
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 110){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $idPronac = $_POST['idPronac'];
@@ -1575,7 +1575,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     public function cnicSalvarAnaliseDeConteudoAction()
 	{
         if($this->idPerfil != 118){
-            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+            parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
         $idPronac = $_POST['idPronac'];
         $idProduto = $_POST['idProduto'];
@@ -1903,7 +1903,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 				}
 				else if (strlen($post->justificativa) > 1000)
 				{
-					throw new Exception("A justificativa n�o pode conter mais de 1000 caracteres!");
+					throw new Exception("A justificativa n&atilde;o pode conter mais de 1000 caracteres!");
 				}
 				else
 				{
@@ -1918,7 +1918,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 					$alterarAtendimento = RecursoDAO::avaliarRecurso($dados, $idRecurso);
 					if ($alterarAtendimento) // caso tenha sido alterado com sucesso
 					{
-						parent::message("Solicita��o enviada com sucesso!", "recurso", "CONFIRM");
+						parent::message("Solicita&ccedil;&atilde;o enviada com sucesso!", "recurso", "CONFIRM");
 					}
 					else
 					{
@@ -1991,7 +1991,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 				}
 				else if (strlen($post->justificativa) > 1000)
 				{
-					throw new Exception("A justificativa n�o pode conter mais de 1000 caracteres!");
+					throw new Exception("A justificativa n&atilde;o pode conter mais de 1000 caracteres!");
 				}
 				else if (empty($enquadramento))
 				{
@@ -2041,14 +2041,14 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	}// fecha m�todo reenquadramentoAction()
 
 	/**
-	 * M�todo com os Projetos Deferidos - Or�amento
+	 * M�todo com os Projetos Deferidos - Or&ccedil;amento
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 
 	/**
-	 * M�todo com os Projetos Deferidos - Or�amento (Parecer Consolidado)
+	 * M�todo com os Projetos Deferidos - Or&ccedil;amento (Parecer Consolidado)
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2060,7 +2060,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	} // fecha m�todo deferidosAction()
 
 	/**
-	 * M�todo com os Projetos Deferidos com Solicita��o de Reenquadramento - Or�amento (Parecer Consolidado)
+	 * M�todo com os Projetos Deferidos com Solicitação de Reenquadramento - Orçamento (Parecer Consolidado)
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2223,7 +2223,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 			{
 				if (!isset($idPronac) || empty($idPronac))
 				{
-					JS::exibirMSG("� necess�rio o n�mero do PRONAC para acessar essa p�gina!");
+					JS::exibirMSG("&Eacute; necess&aacute;rio o n&uacute;mero do PRONAC para acessar essa p&aacute;gina!");
 					JS::redirecionarURL("../");
 				}
 				else
