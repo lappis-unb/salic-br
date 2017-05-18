@@ -363,8 +363,9 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
      */
     public function alterarSenha($username, $password)
     {
-        $this->_db->beginTransaction();
+
         try {
+            $this->_db->beginTransaction();
             $senha = $this->select();
             $senha->from($this, array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
             );

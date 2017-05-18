@@ -199,9 +199,9 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelEditalFinal   = new EditalFinal();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
-        
+
         try {
+            $db->beginTransaction();
 
             $modelEditalFinal->salvarTextoEdital($dadosTextosEdital);
             
@@ -229,10 +229,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelEditalFinal   = new EditalFinal();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         try {
-
+            $db->beginTransaction();
             $modelEditalFinal->update($dadosTextosEdital, array('idTextoEdital = ?' => $idTextoEdital));
             
             $db->commit();
@@ -257,11 +257,12 @@ class EditalController extends MinC_Controller_Action_Abstract {
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         $where = array('idTextoEdital = ?' => $idTextoEdital);
         
         try {
+            $db->beginTransaction();
              //deleta o criterio de avaliação
              $modelEditalFinal->delete($where);
 
@@ -927,10 +928,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelModulo    = new tbModulo();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         try {
-
+            $db->beginTransaction();
             $dadoModulo = array('dsModulo' => $nomeModulo);
  
             $where['idModulo = ?'] = $idModulo;
@@ -987,10 +988,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
 
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         try {
-
+            $db->beginTransaction();
             if($regraCampo == 'DN'){
 
                 $dadosCriterioParticipacao = array(
@@ -1161,21 +1162,22 @@ class EditalController extends MinC_Controller_Action_Abstract {
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         $where = array('idCriterioParticipacao = ?' => $idCriterioParticipacao);
         
         try {
+            $db->beginTransaction();
              //deleta o criterio de avaliação
              $modelRegiaoCriterioParticipacao->delete($where);
              $modelCriterioParticipacao->delete($where);
 
             $db->commit();
-            parent::message('Criterio de Participacao excluído!', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
+            parent::message('Crit&eacute;rio de Participacao excluído!', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
-            parent::message('Erro ao excluir Criterio de Participacao', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
+            parent::message('Erro ao excluir Crit&eacute;rio de Participacao', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
         }
         
     }
@@ -1200,10 +1202,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelParcelaFormaPagamento    = new tbParcelaFormaPagamento();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         try {
-
+            $db->beginTransaction();
             $dadosFormaPagamento = array(
                     'idCategoria'               => $idCategoria,
                     'dsFormaPagamento'          => $dsFormaPagamento,
@@ -1265,12 +1267,12 @@ class EditalController extends MinC_Controller_Action_Abstract {
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         $where = array('idFormaPagamento = ?' => $idFormaPagamento);
 
         try {
-            
+            $db->beginTransaction();
             // Deleta todas as parcelas do pagamento
             $modelParcelaFormaPagamento->delete($where);
             
@@ -1341,9 +1343,9 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelModuloParticipacao = new tbModuloParticipacao();
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
-        try {
 
+        try {
+            $db->beginTransaction();
             //Cria uma instância do modulo, grava e recupera o id.
             $idModulo = $nModulo->salvarModulo($nomeModulo);
 
@@ -1386,9 +1388,9 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelCategoria = new tbCategoria();
  
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
-        try {
 
+        try {
+            $db->beginTransaction();
             $dados = array(
                 'nmCategoria'   => $nomeCategoria,
                 'idModulo'      => $idModulo
@@ -1418,9 +1420,9 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelCategoria = new tbCategoria();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
-        try {
 
+        try {
+            $db->beginTransaction();
             $dadoCategoria = array(
                 'nmCategoria' => $nomeCategoria
             );
@@ -1455,10 +1457,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $editalComposicao = new tbEditalComposicao();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         try {
-
+            $db->beginTransaction();
             // idEdital
             $arrEdital = array(
                 'idTpEdital'    => $tipoEdital, 
@@ -1540,10 +1542,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $tbEditalAreaSegmento           = new tbEditalAreaSegmento();
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         try {
-
+            $db->beginTransaction();
             $dados = array(
                 'nmEdital'              => $nmEdital,
                 'nrEdital'              => $nrEdital,
@@ -1683,10 +1685,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         $msg = '';
         try {
-
+            $db->beginTransaction();
             if($idCriterioAvaliacao != ''){
                 $nEdital->update($dados, array('idCriterioAvaliacao = ?' => $idCriterioAvaliacao));
                 $msg = 'Critério de avaliação atualizado com sucesso!';
@@ -1717,16 +1719,17 @@ class EditalController extends MinC_Controller_Action_Abstract {
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         
         $where = array('idCriterioAvaliacao = ?' => $idCriterio);
         
         try {
+            $db->beginTransaction();
              //deleta o criterio de avaliação
              $criterioAvaliacao->delete($where);
 
             $db->commit();
-            parent::message('Critério de avaliação excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'CONFIRM');
+            parent::message('Crit&eacute;rio de avaliação excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
@@ -1802,10 +1805,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         );
             
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
+
         $msg = '';
-        try { 
-            
+        try {
+            $db->beginTransaction();
             $idPlnalinhaOrcamentaria = $modelPlanilhaOrcamentaria->inserir($dadosPlanilhaOrcamentaria);
             
             

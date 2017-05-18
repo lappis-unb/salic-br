@@ -343,10 +343,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-        $db->beginTransaction();
+
         $projetos = new Projetos();
 
         try {
+            $db->beginTransaction();
 
             foreach ($buscaDadosProjeto as $dp) {
 
@@ -390,7 +391,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
 
                     $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para an�lise e emiss�o de parecer t�cnico</strong>.');
                 } else {
-                    $msg = "Distribui��o Realizada com sucesso!";
+                    $msg = "Distribui&ccedil;&atilde;o Realizada com sucesso!";
 
                     // DISTRIBUIR OU REDISTRIBUIR ( COORDENADOR DE PARECER )
 
@@ -778,7 +779,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
                 /****************************************************************************************************************/
             }
             $db->commit();
-            parent::message("Conclu�do com sucesso!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
+            parent::message("Conclu&iacute;do com sucesso!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
 
         } catch (Zend_Exception $ex) {
             $db->rollBack();
@@ -852,7 +853,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
 
         if (count($ferias) > 0) {
             $situacao = '0';
-            $situacaoTexto = 'F�rias';
+            $situacaoTexto = 'F&eacute;rias';
         }
 
         if (count($atestado) > 0) {
@@ -862,7 +863,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract
 
         if ((count($ferias) > 0) && (count($atestado) > 0)) {
             $situacao = '0';
-            $situacaoTexto = 'F�rias e Atestado';
+            $situacaoTexto = 'F&eacute;rias e Atestado';
         }
 
         // CREDENCIAMENTO

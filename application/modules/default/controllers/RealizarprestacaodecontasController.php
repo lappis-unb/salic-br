@@ -2807,10 +2807,10 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 			$this->_redirect("realizarprestacaodecontas/planilhaorcamentaria?idPronac={$idPronac}&tipoMsg=ALERT&msg=N�o houve comprova��o para este item.");
 		}
 	}
-
+    // @todo: avaliar este try catch com transacao
     public function validaritemAction()
     {
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
 
         $idPronac = $this->_request->getParam("idPronac");
         $idPlanilhaItem = $this->_request->getParam("idPlanilhaItem");
@@ -2872,7 +2872,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $this->_helper->flashMessenger->addMessage('Item validado com sucesso!');
             $this->_helper->flashMessengerType->addMessage('CONFIRM');
         } else {
-            $this->_helper->flashMessenger->addMessage('Preencha os dados para valida��o de item.');
+            $this->_helper->flashMessenger->addMessage('Preencha os dados para valida&ccedil;&atilde;o de item.');
             $this->_helper->flashMessengerType->addMessage('ERROR');
         }
         $tblComprovantePag->getAdapter()->commit();
