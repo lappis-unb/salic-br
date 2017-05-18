@@ -975,7 +975,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         if ($planilhaProjeto->alterar($dados, $where)) {
             echo "Salvo com sucesso!";
         } else {
-            echo "N?o foi poss&iacute;vel salvar!";
+            echo "N&atilde;o foi poss&iacute;vel salvar!";
         }
     }
 
@@ -1130,7 +1130,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
 
                 $tbDistribuirParecer->getAdapter()->commit();
 
-                parent::message("An¿lise conclu¿da com sucesso !", "Analisarprojetoparecer/index", "CONFIRM");
+                parent::message("An&aacute;lise conclu&iacute;da com sucesso !", "Analisarprojetoparecer/index", "CONFIRM");
 
             } catch (Zend_Db_Exception $e) {
 
@@ -1314,7 +1314,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
 
                 $tbDistribuirParecer->getAdapter()->commit();
 
-                parent::message("An¿lise conclu¿da com sucesso !", "Analisarprojetoparecer/index", "CONFIRM");
+                parent::message("An&aacute;lise conclu&iacute;da com sucesso !", "Analisarprojetoparecer/index", "CONFIRM");
 
             } catch (Zend_Db_Exception $e) {
 

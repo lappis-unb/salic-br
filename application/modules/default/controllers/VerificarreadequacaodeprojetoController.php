@@ -2089,12 +2089,12 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $dados = $db->fetchAll($sqldev5);
 
                     $db->commit();
-                    parent::message("Devolu��o da solicita��o feita com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"CONFIRM");
+                    parent::message("Devolu&ccedil;&atilde;o da solicita&ccedil;&atilde;o feita com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"CONFIRM");
 
                  } catch(Zend_Exception $e){
 
                     $db->rollBack();
-                    parent::message("Erro na devolu��o da solicita��o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"ERROR");
+                    parent::message("Erro na devolu&ccedil;&atilde;o da solicita&ccedil;&atilde;o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"ERROR");
 
                  }
 
@@ -2550,7 +2550,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                 } catch(Zend_Exception $e){
 
                 $db->rollBack();
-                parent::message("Erro na devolu��o da solicita��o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
+                parent::message("Erro na devolu&ccedil;&atilde;o da solicita&ccedil;&atilde;o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"ERROR");
 
              }
 
@@ -2726,7 +2726,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
             catch (Zend_Exception $e) {
                 $db->rollBack();
-                parent::message("Erro na devolu��o da solicita��o", "manterreadequacao?tipoFiltro=7:d", "ERROR");
+                parent::message("Erro na devolu&ccedil;&atilde;o da solicita&ccedil;&atilde;o", "manterreadequacao?tipoFiltro=7:d", "ERROR");
             }
 	} // fecha m�todo encaminhacomponentecomissaoAction()
 
@@ -2859,7 +2859,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $sqlAlteraVariavel3 = ReadequacaoProjetos::reencaminharPar5($idAcao,$this->getIdUsuario,$justificativa,$Orgao,$idPerfil, $idAgente, $_POST['AgentePerfil']);
                     $db->fetchAll($sqlAlteraVariavel3);
 
-                $db->commit();
+                    $db->commit();
                     parent::message("Projeto reencaminhado com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento" ,"CONFIRM");
 
                 } catch(Zend_Exception $e){
@@ -2903,7 +2903,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $sqlEncaminhar = ReadequacaoProjetos::retornaSQLencaminharParecerista("sqlCoordPareceristaEncaminhar",$idAvaliacaoItemPedidoAlteracao,$idAcao,$stAcao,$justificativa,$agenteNovo,$Orgao,$idAgenteRemetente,$idPerfilRemetente);
                     $db->fetchAll($sqlEncaminhar);
 
-                $db->commit();
+                    $db->commit();
                     parent::message("Projeto encaminhado com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"CONFIRM");
 
                 } catch(Zend_Exception $e){
@@ -2953,7 +2953,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $sqlAlteraVariavel3 = ReadequacaoProjetos::reencaminharPar3($idAvaliacaoItemPedidoAlteracao,$idAgente,$justificativa,$idOrgao, $this->getIdUsuario, $this->codGrupo);
                     $dados = $db->fetchAll($sqlAlteraVariavel3);
 
- 		$db->commit();
+ 		            $db->commit();
                     parent::message("Projeto encaminhado com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordparecerista" ,"CONFIRM");
 
                 } catch(Zend_Exception $e){
@@ -3305,7 +3305,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             } catch(Zend_Exception $e) {
                 //Exce�ao pois houve erro ao tentar inserir ou atualizar dados na base.
                 $db->rollBack();
-                parent::message("Erro ao finalizar a an�lise dos produtos.", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac" ,"ERROR");
+                parent::message("Erro ao finalizar a an&aacute;lise dos produtos.", "verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac" ,"ERROR");
                     /* Try _ Catch, � utilizado para tratamento de erros.
                      * o $e->getMessage(), � utilizado para saber qual o tipo de erro que retornou.
                     */

@@ -303,12 +303,12 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
 
 
 //            $db->commit();
-            parent::message("Solicita��o enviada com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"CONFIRM");
+            parent::message("Solicita&ccedil;&atilde;o enviada com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"CONFIRM");
 
          } catch(Zend_Exception $e){
 
 //            $db->rollBack();
-            parent::message("Erro na finaliza��o da solicita��o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"ERROR");
+            parent::message("Erro na finaliza&ccedil;&atilde;o da solicita&ccedil;&atilde;o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"ERROR");
 
          }
 
