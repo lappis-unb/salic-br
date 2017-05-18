@@ -752,11 +752,12 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $mprInternet = new Agente_Model_InternetMapper();
                 $mprNomes->beginTransaction();
                 $mprInternet->saveCustom($arrPost);
+                $mprNomes->commit();
+
             } catch (Exception $e) {
                 $mprNomes->rollBack();
                 parent::message("Erro ao salvar: " . $e->getMessage(), "/agente/manteragentes/agentes?acao=cc", "ERROR");
             }
-            $mprNomes->commit();
             parent::message("Cadastro realizado com sucesso!", "/agente/manteragentes/agentes?acao=cc", "CONFIRM");
         }
         parent::message("Erro ao salvar: N&atilde;o existe dados para salvar!", "/agente/manteragentes/agentes?acao=cc", "ERROR");

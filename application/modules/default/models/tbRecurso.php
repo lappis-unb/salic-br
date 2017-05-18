@@ -10,7 +10,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 	protected $_name   = "tbRecurso";
 
 	/**
-	 * M�todo para buscar o(s) recursos(s)
+	 * Metodo para buscar o(s) recursos(s)
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $idPlanilhaAprovacao integer
@@ -81,7 +81,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			,"AGENTES.dbo"
 		);
 
-		// avalia��o do ministro
+		// avaliacao do ministro
 		$select->joinLeft(
 			array("papm" => "tbPlanilhaAprovacao")
 			,"rx.idPlanilhaAprovacao = papm.idPlanilhaAprovacaoPai AND papm.tpPlanilha = 'MI'"
@@ -105,14 +105,14 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$select->order("pi.Descricao");
 
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarDados()
+	} // fecha metodo buscarDados()
 
 
 	/**
-	 * M�todo para cadastrar
+	 * Metodo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o �ltimo id cadastrado)
+	 * @return integer (retorna o ultimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
@@ -121,7 +121,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
 
 	/**
-	 * M�todo para alterar
+	 * Metodo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -131,11 +131,11 @@ class tbRecurso extends MinC_Db_Table_Abstract
 	{
 		$where = "idRecurso = " . $where;
 		return $this->update($dados, $where);
-	} // fecha m�todo alterarDados()
+	} // fecha metodo alterarDados()
 
 
 	/**
-	 * M�todo para excluir
+	 * Metodo para excluir
 	 * @access public
 	 * @param integer $idPronac (excluir todos os recursos de um projeto)
 	 * @param integer $idRecurso (excluir um determinado recurso)
@@ -156,11 +156,11 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		}
 
 		return $this->delete($where);
-	} // fecha m�todo excluirDados()
+	} // fecha metodo excluirDados()
 
 
 	/**
-	 * M�todo para buscar os projetos com solicita��o de recurso
+	 * Metodo para buscar os projetos com solicitacao de recurso
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $tpSolicitacao string
@@ -278,11 +278,11 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$select->order("Pr.NomeProjeto");
 
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarSolicitacaoRecurso()
+	} // fecha metodo buscarSolicitacaoRecurso()
 
 
 	/**
-	 * M�todo para buscar os projetos com solicita��o de recurso
+	 * Metodo para buscar os projetos com solicitacao de recurso
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $tpSolicitacao string
@@ -298,8 +298,8 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr("
                     CASE
                         WHEN tp.tpSolicitacao = 'EN' THEN 'Enquadramento'
-                        WHEN tp.tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
-                        WHEN tp.tpSolicitacao = 'OR' THEN 'Or�amento'
+                        WHEN tp.tpSolicitacao = 'EO' THEN 'Enquadramento e Or&ccedil;amento'
+                        WHEN tp.tpSolicitacao = 'OR' THEN 'Or&ccedil;amento'
                         WHEN tp.tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                     END AS tpSolicitacao,
                     tp.stAnalise,
@@ -350,11 +350,11 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarSolicitacaoRecurso()
+	} // fecha metodo buscarSolicitacaoRecurso()
 
 
 	/**
-	 * M�todo que busca a planilha de de or�amento de custos
+	 * Metodo que busca a planilha de de orcamento de custos
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $tpPlanilha string
@@ -368,7 +368,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 					,PD.Descricao
 					,CASE
 						WHEN PAP.idProduto = 0
-							THEN 'Administra��o do Projeto'
+							THEN 'Administra&ccedil;&atilde;o do Projeto'
 							ELSE PD.Descricao
 						END AS Produto
 					,PAP.qtItem AS quantidade_con
@@ -464,9 +464,9 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso,a.tpSolicitacao as tipo"),
                 new Zend_Db_Expr("CASE
                                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
-                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
+                                    WHEN tpSolicitacao = 'OR' THEN 'Or&ccedil;amento'
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&ccedil;amento'
                                  END AS tpSolicitacao,
                                  CASE
                                     WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
@@ -476,7 +476,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr("c.idUnidade"),
                 new Zend_Db_Expr("CASE 
                                     WHEN c.idUnidade IN(262,272,166,171,179) THEN 'SECRETARIA'
-                                    ELSE d.Sigla + '- '+ ISNULL(e.Descricao,'Aguardando distribui��o')
+                                    ELSE d.Sigla + '- '+ ISNULL(e.Descricao,'Aguardando distribui&ccedil;&atilde;o')
                                  END as Vinculada, b.Situacao"),
             )
         );
@@ -551,7 +551,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 a.tpSolicitacao,
                 CASE
                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
-                    WHEN tpSolicitacao = 'OR' THEN 'Orçamento'
+                    WHEN tpSolicitacao = 'OR' THEN 'Or&ccedil;amento'
                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                     WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&ccedil;amento'
                     WHEN tpSolicitacao = 'ER' THEN 'Recurso Enquadramento'
@@ -603,12 +603,12 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso, a.tpSolicitacao"),
                 new Zend_Db_Expr("CASE
                                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
-                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
+                                    WHEN tpSolicitacao = 'OR' THEN 'Or&ccedil;amento'
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&ccedil;amento'
                                  END AS descTpSolicitacao,
                                  CASE
-                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera��o'
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera&ccedil;&atilde;o'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso
                 "),
@@ -669,7 +669,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha m�todo buscarPlanilhaDeCustos()
+    } // fecha metodo buscarPlanilhaDeCustos()
 
     public function atualizarStatusRecursosNaoSubmetidos($idNrReuniao) {
         $sql = "UPDATE SAC.dbo.tbRecurso
@@ -684,7 +684,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha m�todo buscarPlanilhaDeCustos()
+    } // fecha metodo buscarPlanilhaDeCustos()
 
     public function painelRecursosEnquadramento($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
     {

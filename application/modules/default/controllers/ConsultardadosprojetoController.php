@@ -1461,7 +1461,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $rsProjeto = $Projetos->buscar(array("IdPronac=?"=>$idPronac))->current();
             $this->view->projeto = $rsProjeto;
 
-            // verifica se h� pedidos de reconsidera��o e de recurso
+            // verifica se ha pedidos de reconsideracao e de recurso
             $tbRecurso = new tbRecurso();
             $recursos = $tbRecurso->buscar(array('IdPRONAC = ?'=>$idPronac));
             $pedidoReconsideracao = 0;
@@ -1487,9 +1487,9 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                     $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                                     $this->view->produtosReconsideracao = $dadosProdutos;
                                     //xd($PlanoDistribuicaoProduto)
-                                    $tipoDaPlanilha = 3; // 3=Planilha Or�ament�ria Aprovada Ativa
+                                    $tipoDaPlanilha = 3; // 3=Planilha Orcamentaria Aprovada Ativa
 //                                    if($dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
-//                                        $tipoDaPlanilha = 4; // 4=Cortes Or�ament�rios Aprovados
+//                                        $tipoDaPlanilha = 4; // 4=Cortes Orcamentarios Aprovados
 //                                    }
                                     $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
                                     $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, $tipoDaPlanilha);

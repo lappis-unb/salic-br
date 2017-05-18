@@ -58,10 +58,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
         $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
         $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo',  'Descricao');
         $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
         $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
-
+        
         //Monta o combo das visoes disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();
         $visoes = $visaoTable->buscarVisao(null, null, true);
@@ -678,7 +678,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $buscarMandato = $tbDirigenteMandato->mandatoRepetido($idAgente, $dtInicioVigencia, $dtTerminoVigencia);
 
             if (count($buscarMandato) > 0) {
-                parent::message("N&atilde;o poderá inserir um novo mandato, pois já existe um mandato em vigor para esse dirigente!mandatos", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
+                parent::message("N&atilde;o poder&aacute; inserir um novo mandato, pois j&aacute; existe um mandato em vigor para esse dirigente!mandatos", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
             }
 
             if(count($_FILES) > 0) {
@@ -1094,7 +1094,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $qtdEmail = $this->_request->getParam("qtdEmail");
 
         if ($qtdEmail <= 1) {
-            parent::message("Você tem que ter pelo menos um email cadastrado!", "agente/agentes/emails/id/" . $idAgente, "ALERT");
+            parent::message("Voc&eacirc; tem que ter pelo menos um email cadastrado!", "agente/agentes/emails/id/" . $idAgente, "ALERT");
         } else {
             try {
 
@@ -1366,10 +1366,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $dados = $tbAusencia->carregarAusencia($idAgente, $ano, 2, null);
 
         $totalDias = 0;
-
+        
         foreach ($dados as $d) {
             if (($d->siAusencia == 0) OR ($d->siAusencia == 1)) {
-                $totalDias = $totalDias + $d->qtdDias;
+                $totalDias = $totalDias + $d->qtddias;
             }
         }
 
@@ -1398,7 +1398,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
         if (count($repetida) > 0) {
-            parent::message("Já existe agendamento de f&eacute;rias para o per&iacute;odo solicitado!", "agente/agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
+            parent::message("J&aacute; existe agendamento de f&eacute;rias para o per&iacute;odo solicitado!", "agente/agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
         }
 
         try {
@@ -1424,7 +1424,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             // Alterar o ultimo registro cadastrado colocando o seu próprio id no campo idalteracao
             $altera = $tbAusencia->alteraAusencia($dados, $ultimoRegistro[0]->id);
 
-            parent::message("Suas férias foram agendas para " . $dtInicio . " à " . $dtFim . ". Aguarde Aprova&ccedil;&atilde;o do Coordenador.
+            parent::message("Suas f&eacute;rias foram agendas para " . $dtInicio . " &agrave; " . $dtFim . ". Aguarde Aprova&ccedil;&atilde;o do Coordenador.
 							<br /> Caso n&atilde;o tenha resposta favor entre em contato com o mesmo!", "agente/agentes/ferias/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Error! " . $e->getMessage(), "agente/agentes/ferias/id/" . $idAgente, "ERROR");
@@ -1470,7 +1470,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
                 if (count($repetida) > 0) {
-                    parent::message("Já existe férias marcada dentro desse per&iacute;odo!", "agente/agentes/ferias/id/" . $idAgente, "ALERT");
+                    parent::message("J&aacute; existe f&eacute;rias marcada dentro desse per&iacute;odo!", "agente/agentes/ferias/id/" . $idAgente, "ALERT");
                 }
 
 
@@ -1618,7 +1618,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             $salvarArquivo = $tbArquivo->cadastrarDados($dadosArquivo);
             $idArquivo = $tbArquivo->buscarUltimo();
-
+            
             $dadosArquivoImagem = array('idArquivo' => $idArquivo['idArquivo'],
                 'biArquivo' => $arquivoBinario
             );
@@ -1669,13 +1669,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $tbDistribuirParecer = new tbDistribuirParecer();
                 $projetoDAO = new Projetos();
                 $projetos = $projetoDAO->buscaProjetosProdutosAnaliseInicial(array('idAgenteParecerista = ?' => $idAgente, 'DtDistribuicao >= ?' => '' . $dtInicio . '', 'DtDistribuicao <= ?' => '' . $dtFim . ''));
-
+                
                 foreach ($projetos as $p) {
-                    $dados = array('Observacao' => 'Devolvido por motivo de atestado médico.',
+                    $dados = array('Observacao' => 'Devolvido por motivo de atestado m&eacute;dico.',
                             'idUsuario' => $this->getIdUsuario,
                             'DtDevolucao' => $dtAtual
                     );
                     $salvar = $tbDistribuirParecer->atualizarParecer($dados, $p->idDistribuirParecer);
+                    
                 }
             }
             /* ********************************************************************************************** */
@@ -1777,13 +1778,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $qtdArea = $tbCredenciamentoParecerista->QtdArea($idAgente);
         if ((($qtdArea[0]->qtd) >= 3) and (($qtdSegmento[0]->qtd) == 0)) {
-            parent::message("Você só pode credenciar  3 (três) áreas culturais!", "agente/agentes/credenciamento/id/" . $idAgente, "ALERT");
+            parent::message("Voc&ecirc; s&oacute; pode credenciar  3 (tr&ecirc;s) &aacute;reas culturais!", "agente/agentes/credenciamento/id/" . $idAgente, "ALERT");
         }
 
         $verificarCadastrado = $tbCredenciamentoParecerista->verificarCadastrado($idAgente, $segmentoCultural, $areaCultural);
 
         if (count($verificarCadastrado) > 0) {
-            parent::message("Área e segmento já credenciado!", "agente/agentes/credenciamento/id/" . $idAgente, "ALERT");
+            parent::message("&Aacute;rea e segmento j&aacute; credenciado!", "agente/agentes/credenciamento/id/" . $idAgente, "ALERT");
         }
 
         try {
@@ -1961,7 +1962,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                         $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
                     }
                 } catch (Exception $e) {
-                    parent::message("Erro ao salvar a área e segmento: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
+                    parent::message("Erro ao salvar a &aacute;rea e segmento: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
                 }
             }
 
@@ -2317,7 +2318,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                         $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
                     }
                 } catch (Exception $e) {
-                    parent::message("Erro ao salvar a área e segmento: " . $e->getMessage(), $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+                    parent::message("Erro ao salvar a &aacute;rea e segmento: " . $e->getMessage(), $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
                 }
             }
 

@@ -1,16 +1,12 @@
-<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
-
-<!-- ========== IN&Iacute;CIO BREADCRUMB (LINKS TOPO) ========== -->
+<div class="row">
+    <?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
+<div class="col s10">
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li class="last">Manter Agentes</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-<!-- ========== IN&Iacute;CIO T&Iacute;TULO ========== -->
 <div id="titulo">
     <div>Dados principais
         <span class="voltar">
@@ -22,9 +18,6 @@
         </span>
     </div>
 </div>
-<!-- ========== FIM T&Iacute;TULO ========== -->
-
-<!-- ========== IN&Iacute;CIO CONTEUDO ========== -->
 <div id="conteudo">
     <div id="confirma"></div>
     <div>
@@ -63,7 +56,6 @@
                 <td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $this->dados[0]->divulgarendereco == "1" ? "SIM" : "N&Atilde;O"; ?></td>
             </tr>
         </table>
-
         <table class="tabela <?php echo $this->telefones ? 'sumir' : ''; ?>">
             <tr>
                 <th>TELEFONES</th>
@@ -133,11 +125,11 @@
                             <th colspan="5">INFORMA&Ccedil;&Otilde;ES PROFISSIONAIS</th>
                         </tr>
                         <tr>
-                            <td width="140" align="center"><b>PROFISS&Atilde;O</b></td>
-                            <td width="140" align="center"><b>CARGO</b></td>
-                            <td width="170" align="center"><b>ENDERE&Ccedil;O</b></td>
-                            <td width="120" align="center"><b>DATA ENTRADA</b></td>
-                            <td width="120" align="center"><b>DATA SA&Iacute;DA</b></td>
+                            <td align="center"><b>PROFISS&Atilde;O</b></td>
+                            <td align="center"><b>CARGO</b></td>
+                            <td align="center"><b>ENDERE&Ccedil;O</b></td>
+                            <td align="center"><b>DATA ENTRADA</b></td>
+                            <td align="center"><b>DATA SA&Iacute;DA</b></td>
                         </tr>
                         <?php foreach($this->formacoes as $f){ ?>
                         <tr>
@@ -177,12 +169,12 @@
                             }
                         ?>
                         <tr>
-                            <td width="180">Quantidade de dias: <span id="qtdDias"><?php echo $d->qtdDias; ?></span></td>
+                            <td >Quantidade de dias: <span id="qtdDias"><?php echo $d->qtdDias; ?></span></td>
                             <td align="center">Data das férias: </td>
-                            <td width="150" align="center"><?php echo $d->dtInicio; ?></td>
-                            <td width="10" align="center">à</td>
-                            <td width="150" align="center"><?php echo $d->dtFim; ?></td>
-                            <td width="50" align="center" style="background: white;"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $siAusencia; ?>.gif" title="<?php echo $title; ?>" border="0" style="cursor: pointer;" /></td>
+                            <td align="center"><?php echo $d->dtInicio; ?></td>
+                            <td align="center">à</td>
+                            <td align="center"><?php echo $d->dtFim; ?></td>
+                            <td align="center" style="background: white;"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $siAusencia; ?>.gif" title="<?php echo $title; ?>" border="0" style="cursor: pointer;" /></td>
                         </tr>
                         <tr class="<?php echo $d->dsJustificativaAusencia == ' ' ? 'sumir' : ''; ?>">
                             <td colspan="6" class="fundo_linha"><b>JUSTIFICATIVA:</b> <br /> <?php echo $d->dsJustificativaAusencia; ?></td>
@@ -190,7 +182,6 @@
                         <?php } ?>
                     </table>
                 <?php } ?>
-
             <?php } ?>
         </div>
 
@@ -213,19 +204,8 @@
             <?php } ?>
         </table>
         <?php } else { ?>
-        <!--<table class="tabela" id="salvos">
-            <tr>
-                <td>O Parecerista n&Atilde;o esta credenciado a nenhuma area e segmento!</td>
-            </tr>
-        </table>-->
         <?php } ?>
     </div>
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-
-
-<!-- ========== IN&Iacute;CIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-
-<br clear="all" />
+</div>
+</div>

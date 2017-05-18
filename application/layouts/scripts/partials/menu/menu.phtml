@@ -714,6 +714,8 @@ if (isset ($auth['cpf'])) {
         });
         return $arrMenu;
     }, $arrMenu);
+} else if (!isset($auth['usu_codigo']) && !isset($auth['cpf'])) {
+    $arrMenu = [];
 }
 ?>
 <style>
