@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <td class="destacar bold">Tipo do Recurso</td>
-                    <td class="destacar bold">Tipo da Solicitação</td>
+                    <td class="destacar bold">Tipo da Solicita&ccedil;&atilde;o</td>
                 </tr>
                 <tr>
                     <td><?php echo $this->dadosReconsideracao->tpRecursoDesc; ?></td>
@@ -81,13 +81,13 @@
                 
                 <?php if($this->dadosReconsideracao->siRecurso != 1){ ?>
                 <tr>
-                    <td class="destacar bold" colspan="3">Avaliação da Pedido</td>
+                    <td class="destacar bold" colspan="3">Avalia&ccedil;&atilde;o da Pedido</td>
                 </tr>
                 <tr>
                     <td colspan="2"><?php echo $this->dadosReconsideracao->dsAvaliacao; ?></td>
                 </tr>
                 <tr>
-                    <td class="destacar bold" colspan="2">Dt. Avaliação</td>
+                    <td class="destacar bold" colspan="2">Dt. Avalia&ccedil;&atilde;o</td>
                 </tr>
                 <tr>
                     <td colspan="2"><?php echo Data::tratarDataZend($this->dadosReconsideracao->dtAvaliacao, 'Brasileira'); ?></td>
@@ -443,7 +443,7 @@
                                                 ?>
                                                 <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                                                     <td>
-                                                        <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
+                                                        <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black-text del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
                                                     </td>
                                                 </tr>
                                                 <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -520,12 +520,12 @@
                                                             $nrcidade++;
                                                             ?>
                                                             <tr>
-                                                                <td colspan="2" class="black" style="font-size: 14pt;">Total da UF</td>
-                                                                <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
-                                                                <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
+                                                                <td colspan="2" class="black-text" style="font-size: 14pt;">Total da UF</td>
+                                                                <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
+                                                                <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
                                                                 <td colspan="3"></td>
-                                                                <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorUnitarioTotalUf, 2, ",", "."); ?></td>
-                                                                <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalUf, 2, ",", "."); ?></td>
+                                                                <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorUnitarioTotalUf, 2, ",", "."); ?></td>
+                                                                <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalUf, 2, ",", "."); ?></td>
                                                                 <td colspan="3"></td>
                                                             </tr>
                                                         </table>
@@ -1110,7 +1110,7 @@
                                         ?>
                                         <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                                             <td>
-                                                <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
+                                                <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black-text del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
                                             </td>
                                         </tr>
                                         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -1187,12 +1187,12 @@
                                                     $nrcidade++;
                                                     ?>
                                                     <tr>
-                                                        <td colspan="2" class="black" style="font-size: 14pt;">Total da UF</td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
+                                                        <td colspan="2" class="black-text" style="font-size: 14pt;">Total da UF</td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
                                                         <td colspan="3"></td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorUnitarioTotalUf, 2, ",", "."); ?></td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalUf, 2, ",", "."); ?></td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorUnitarioTotalUf, 2, ",", "."); ?></td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorAprovadoTotalUf, 2, ",", "."); ?></td>
                                                         <td colspan="3"></td>
                                                     </tr>
                                                 </table>
@@ -1325,7 +1325,7 @@
                                         ?>
                                         <tr class="master produto etapa" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>"  fonte="<?php echo $nrfonte; ?>" >
                                             <td>
-                                                <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
+                                                <div tipo="cidade" fonte="<?php echo $nrfonte; ?>" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>" aberto="true" class="icn_menos" style="width:94%; margin-left:6%;"><span class="black-text del_link" style="font-size: 12pt; font-weight: 800;"><?php echo $cidade; ?></span></div>
                                             </td>
                                         </tr>
                                         <tr class="master produto etapa cidade" produto="<?php echo $nrproduto; ?>" etapa="<?php echo $nretapa; ?>" cidade="<?php echo $nrcidade; ?>"  fonte="<?php echo $nrfonte; ?>">
@@ -1386,10 +1386,10 @@
                                                     $nrcidade++;
                                                     ?>
                                                     <tr>
-                                                        <td colspan="2" class="black" style="font-size: 14pt;">Total da UF</td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
+                                                        <td colspan="2" class="black-text" style="font-size: 14pt;">Total da UF</td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSolicitadoTotalUf, 2, ",", "."); ?></td>
                                                         <td colspan="4"></td>
-                                                        <td class="black" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
+                                                        <td class="black-text" style="font-size: 12pt; font-weight: 600;" align="right"><?php echo @number_format($valorSugeridoTotalUf, 2, ",", "."); ?></td>
                                                         <td colspan="2"></td>
                                                     </tr>
                                                 </table>

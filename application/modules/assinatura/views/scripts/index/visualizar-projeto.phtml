@@ -4,7 +4,7 @@
         array(
             'Gerenciar Projetos' => array(
                 'module' => 'assinatura',
-                'controller' => 'enquadramento',
+                'controller' => 'index',
                 'action' => 'gerenciar-projetos'
             )
         ),
@@ -23,7 +23,7 @@
     echo $this->url(
             array(
                 'module' => 'assinatura',
-                'controller' => 'enquadramento',
+                'controller' => 'index',
                 'action' => 'gerar-pdf'
             )
         )
@@ -90,7 +90,7 @@
                                     'action' => 'exibir'
                                 )) . "?texto=http://{$_SERVER['SERVER_NAME']}" . $this->url(array(
                                     'module' => 'assinatura',
-                                    'controller' => 'enquadramento',
+                                    'controller' => 'index',
                                     'action' => 'visualizar-projeto'
                                 )) . "?IdPRONAC={$this->IdPRONAC}" ?>"/>
                         </div>
@@ -106,7 +106,7 @@
                href="<?php
                echo $this->url(array(
                        'module' => 'assinatura',
-                       'controller' => 'enquadramento',
+                       'controller' => 'index',
                        'action' => 'gerenciar-projetos'
                    ))
                    . "?IdPRONAC={$this->IdPRONAC}";
@@ -115,32 +115,11 @@
                href="<?php
                echo $this->url(array(
                        'module' => 'assinatura',
-                       'controller' => 'enquadramento',
+                       'controller' => 'index',
                        'action' => 'assinar-projeto'
                    ))
-                   . "?IdPRONAC={$this->IdPRONAC}";
+                   . "?IdPRONAC={$this->IdPRONAC}&idTipoDoAtoAdministrativo={$this->idTipoDoAtoAdministrativo}";
                ?>">Assinar</a>
-            <?php if (count($this->assinaturas) >= $this->quantidade_minima_assinaturas): ?>
-                <a class="btn waves-effect waves-dark"
-                   href="<?php
-                   echo $this->url(array(
-                           'module' => 'assinatura',
-                           'controller' => 'enquadramento',
-                           'action' => 'finalizar-assinatura'
-                       ))
-                       . "?IdPRONAC={$this->IdPRONAC}";
-                   ?>">Finalizar</a>
-            <?php endif; ?>
-            <a class="btn waves-effect waves-dark"
-               href="<?php
-               echo $this->url(
-                       array(
-                           'module' => 'assinatura',
-                           'controller' => 'enquadramento',
-                           'action' => 'devolver-projeto'
-                       )
-                   ) . "?IdPRONAC={$this->IdPRONAC}";
-               ?>">Devolver</a>
             <a id="acao_imprimir"
                href="#"
                class="btn waves-effect waves-dark"

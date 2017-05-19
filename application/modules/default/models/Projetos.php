@@ -6353,8 +6353,8 @@ class Projetos extends MinC_Db_Table_Abstract
                         a.Descricao AS dsArea,
                         se.Descricao AS dsSegmento,
                         CASE
-                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                            WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                            WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                         END AS descAvaliacao,
                         p.SolicitadoReal as vlSolicitado,
                         (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
@@ -6420,8 +6420,8 @@ class Projetos extends MinC_Db_Table_Abstract
                         a.Descricao AS dsArea,
                         se.Descricao AS dsSegmento,
                         CASE
-                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                            WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                            WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                         END AS descAvaliacao,
                         p.SolicitadoReal as vlSolicitado,
                         (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
@@ -6512,8 +6512,8 @@ class Projetos extends MinC_Db_Table_Abstract
                         a.Descricao AS dsArea,
                         se.Descricao AS dsSegmento,
                         CASE
-                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor�vel'
-                            WHEN pr.ParecerFavoravel = '2' THEN 'Favor�vel'
+                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel'
+                            WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                         END AS descAvaliacao,
                         SolicitadoReal AS vlSolicitado,
                         CASE

@@ -1,12 +1,7 @@
 <?php
-
-/**
- * Description of GerarsenhaController
- *
- * @author tisomar
- */
-class ManterusuarioController extends MinC_Controller_Action_Abstract {
-private $intTamPag = 10;
+class ManterusuarioController extends MinC_Controller_Action_Abstract 
+{
+    private $intTamPag = 10;
 
     public function init()
     {
@@ -23,7 +18,6 @@ private $intTamPag = 10;
     {
 
         if (filter_input(INPUT_POST, 'alterar')) {
-
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
             $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'","", $senha)));
             $cpf = Mascara::delMaskCPF(filter_input(INPUT_POST, 'cpf'));
@@ -31,13 +25,16 @@ private $intTamPag = 10;
             $sgcAcessoBuscar = $sgcAcesso->buscar(array('Cpf = ?' => $cpf))->current();
 
             if($sgcAcessoBuscar) {
+                $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
+
                 $scgAcessoDados = $sgcAcessoBuscar->toArray();
                 $dados = array(
                         "IdUsuario" 	=> $scgAcessoDados['IdUsuario'],
-                        "Senha" 		=> $senhaFormatada,
+                        "Senha" 		=> $senhaCriptografada,
                         "Situacao" 		=> 1,
                         "DtSituacao" 	=> date("Y-m-d")
                 );
+
                 $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
                 $email 		 = $scgAcessoDados['Email'];
@@ -57,7 +54,6 @@ private $intTamPag = 10;
         }
 
         if (filter_input(INPUT_POST, 'cpf')) {
-            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $cpf = filter_input(INPUT_POST, 'cpf');
 
             $scgAcesso = new Autenticacao_Model_Sgcacesso();
@@ -66,14 +62,16 @@ private $intTamPag = 10;
             $json = array('error' => false);
             if($sgcAcessoBuscar) {
                 $scgAcesso = $sgcAcessoBuscar->toArray();
-                $json = json_encode($scgAcesso);
-                echo $json;
-                $this->_helper->viewRenderer->setNoRender(TRUE);
+
+                $aux = [];
+                foreach ($scgAcesso as $k => $item){
+                   $aux[$k] = utf8_encode($item);
+                }
+
+                $this->_helper->json($aux);
             } else {
                 $dados['semdados'] = 'semdados';
-                $json = json_encode($dados);
-                echo $json;
-                $this->_helper->viewRenderer->setNoRender(TRUE);
+                $this->_helper->json($dados);
             }
         }
     }
@@ -781,7 +779,7 @@ private $intTamPag = 10;
                 {
                 	if(count($buscardados) > 0)
 		            {
-		                parent::message("Perfil já cadastrado!", "/manterusuario/permissoessalic", "CONFIRM");
+		                parent::message("Perfil j&aacute; cadastrado!", "/manterusuario/permissoessalic", "CONFIRM");
 		            }
 
                     $dados = array(

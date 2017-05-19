@@ -696,11 +696,6 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         return true;
     }
 
-    /*
-     * P�gina de cadastro de item de comprova��o financeira
-     * @access public
-     * @return void
-     */
     public function cadastrarcomprovacaopagamentoAction()
     {
         try {
@@ -714,7 +709,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
             #Este Campo sempre � Preenchido, porem quando se tenta enviar um arquivo muito grande A Requisi��o se perde
             #Podemos identificar esta perda pelo campo de pais.
             if (empty($pais)) {
-                throw new Exception('Por favor inserir um arquivo com tamanho m�ximo de 5MB."');
+                throw new Exception('Por favor inserir um arquivo com tamanho máximo de 5MB."');
             }
 
             $arquivoModel = new ArquivoModel();

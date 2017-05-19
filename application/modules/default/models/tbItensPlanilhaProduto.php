@@ -25,8 +25,10 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
      */
     public function buscaItemProduto($where = array())
     {
-        $this->_db->beginTransaction();
+
         try {
+            $this->_db->beginTransaction();
+
             $select = $this->select();
             $select->setIntegrityCheck(false);
 
@@ -67,8 +69,10 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
 
     public function totalBuscaPaginacao($where = array())
     {
-        $this->_db->beginTransaction();
+
         try {
+            $this->_db->beginTransaction();
+
             $select = $this->select();
             $select->setIntegrityCheck(false);
 

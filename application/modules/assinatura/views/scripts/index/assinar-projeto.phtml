@@ -3,7 +3,7 @@
     $links = array(
         array('Gerenciar Projetos' => array(
             'module' => 'assinatura',
-            'controller' => 'enquadramento',
+            'controller' => 'index',
             'action' => 'gerenciar-projetos'
         )),
         array('Assinar' => array())
@@ -21,11 +21,11 @@
         echo $this->url(
                 array(
                     'module' => 'assinatura',
-                    'controller' => 'enquadramento',
+                    'controller' => 'index',
                     'action' => 'assinar-projeto'
                 )
             )
-            . "?IdPRONAC={$this->IdPRONAC}";
+            . "?IdPRONAC={$this->IdPRONAC}&idTipoDoAtoAdministrativo={$this->idTipoDoAtoAdministrativo}";
         ?>"
         method="post">
             <input type="hidden" name="IdPRONAC" value="<?php echo $this->IdPRONAC ?>" />
@@ -104,26 +104,12 @@
                         <textarea style="height: 100%"
                                   class="padding20 bordered"
                                   id="dsManifestacao"
-                                  name="dsManifestacao"></textarea>
+                                  name="dsManifestacao"><?php echo $this->dsManifestacao ?></textarea>
                     </div>
                 </div>
                 <div class="col s1"></div>
             </div>
-            <div class="row">
-                <div class="col s1"></div>
-                <div class="col s5">
-                    <p>
-                        <label>
-                            Senha:
-                            <font color="#f08080">*</font>
-                        </label>
-                    </p>
-                    <div class="bordered padding20">
-                        <input type="password" id="password" name="password" style="width: 100%" />
-                    </div>
-                </div>
-                <div class="col s1"></div>
-            </div>
+            <?php echo $this->templateAutenticacao ?>
             <div class="margin-bottom30">&nbsp;</div>
             <div class="row center-align">
                 <a class="btn waves-effect waves-dark"

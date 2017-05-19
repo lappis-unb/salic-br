@@ -85,6 +85,25 @@ include_once(APPLICATION_PATH . '/layouts/scripts/partials/menu/menu-analise.pht
 // Analise
 
 // ========== INICIO MENU ACOMPANHAMENTO ==========
+$arrMenu['assinatura'] = array(
+    'id' => 'assinatura',
+    'label' => 'Assinatura',
+    'title' => 'Ir para Assinatura',
+    'menu' => array(),
+//    'grupo' => array(90,91,92,93,96,97,Autenticacao_Model_Grupos::COORDENADOR_ANALISE,104,110,114,115,Autenticacao_Model_Grupos::PRESIDENTE_CNIC,Autenticacao_Model_Grupos::COORDENADOR_CNIC,121,122,123,124,125,126,Autenticacao_Model_Grupos::COORDENADOR_ATENDIMENTO,Autenticacao_Model_Grupos::TECNICO_PORTARIA,131,132,135,138,139,148,151),
+);
+$arrMenu['assinatura']['menu'][] = array(
+//    'grupo' => array(114,130),
+    'url' => $this->url(
+        array(
+            'module' => 'assinatura',
+            'controller' => 'index',
+            'action' => 'gerenciar-assinaturas'
+        ), '', true),
+    'title' => 'Ir para Listar Selecionados',
+    'label' => 'Gerenciar Assinaturas'
+);
+
 $arrMenu['acompanhamento'] = array(
     'id' => 'acompanhamento',
     'label' => 'Acompanhamento',
@@ -206,15 +225,15 @@ $arrMenu['acompanhamento']['menu'][] = array(
     ,152
     ),
     'url' => $this->url(array(
-        'module' => 'assinatura',
-        'controller' => 'enquadramento',
+        'module' => 'admissibilidade',
+        'controller' => 'enquadramento-assinatura',
         'action' => 'gerenciar-projetos'
     ), '', true),
     'title' => 'Assinatura',
     'label' => 'Assinatura'
 );
 // ========== FIM MENU ACOMPANHAMENTO ==========
-// ========== INICIO MENU Administrativo ==========
+// ========== INICIO MENU Administrativo =======
 $arrMenu['administrativo'] = array(
     'id' => 'administrativo',
     'label' => 'Administrativo',
@@ -363,11 +382,15 @@ $arrMenu['admissibilidade']['menu'][] = array(
     ,151
     ,152
     ),
-    'url' => $this->url(array(
-        'module' => 'assinatura',
-        'controller' => 'enquadramento',
+    'url' => $this->url(
+        array(
+        'module' => 'admissibilidade',
+        'controller' => 'enquadramento-assinatura',
         'action' => 'gerenciar-projetos'
-    ), '', true),
+        ),
+        '',
+        true
+    ),
     'title' => 'Assinatura',
     'label' => 'Assinatura'
 );
@@ -518,8 +541,8 @@ $arrMenu['relatorios']['menu'][] = array(
     //,152
     //),
     //'url' => $this->url(array(
-        //'module' => 'assinatura',
-        //'controller' => 'enquadramento',
+        //'module' => 'admissibilidade',
+        //'controller' => 'enquadramento-assinatura',
         //'action' => 'gerenciar-projetos'
     //), '', true),
     //'title' => 'Gerenciar Projetos Enquadrados',
@@ -691,6 +714,8 @@ if (isset ($auth['cpf'])) {
         });
         return $arrMenu;
     }, $arrMenu);
+} else if (!isset($auth['usu_codigo']) && !isset($auth['cpf'])) {
+    $arrMenu = [];
 }
 ?>
 <style>

@@ -5,6 +5,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
     private $bln_readequacao = "false";
     private $idPedidoAlteracao = 0;
     private $intTamPag = 10;
+    private $idUsuario;
 
     public function init()
     {
@@ -902,7 +903,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                 $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?' => $idPronac), array('dtPlanilha DESC'))->current();
                 $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
                 $this->view->tpPlanilha = $tpPlanilha;
-$objAcesso = new Acesso();
+                $objAcesso = new Acesso();
                 $dados = array(
                     'tpPlanilha' => $tpPlanilha,
                     'dtPlanilha' => $objAcesso->getExpressionDate(),

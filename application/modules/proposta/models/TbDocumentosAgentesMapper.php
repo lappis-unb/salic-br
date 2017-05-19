@@ -1,17 +1,5 @@
 <?php
 
-/**
- * Class Proposta_Model_TbDocumentoAgentesMapper
- *
- * @name Proposta_Model_TbDocumentoAgentesMapper
- * @package Modules/Agente
- * @subpackage Models
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 29/09/2016
- *
- * @link http://salic.cultura.gov.br
- */
 class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
 {
     public function __construct()
@@ -20,13 +8,7 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
     }
 
     /**
-     * @name saveCustom
-     * @param $arrPost
-     * @param Zend_File_Transfer $file
      * @return bool
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  02/10/2016
      */
     public function saveCustom($arrPost, Zend_File_Transfer $file)
     {

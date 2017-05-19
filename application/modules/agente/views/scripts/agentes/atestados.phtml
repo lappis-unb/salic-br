@@ -162,9 +162,9 @@
         </tr>
         <?php foreach($this->atestados as $at){ ?>
         <tr>
-            <td align="center"><?php echo $at->qtdDias;?></td>
-            <td align="center"><?php echo $at->dtInicio;?></td>
-            <td align="center"><?php echo $at->dtFim;?></td>
+            <td align="center"><?php echo $at->qtddias;?></td>
+            <td align="center"><?php echo $at->dtinicio;?></td>
+            <td align="center"><?php echo $at->dtfim;?></td>
             <td align="center"><?php echo $at->stImpacto == 1 ? 'SIM' : 'NÃO';?></td>
             <td>
                 <a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'abrirarquivo'), '', true); ?>?id=<?php echo $at->idArquivo; ?>"><?php echo $at->nmArquivo;?></a>

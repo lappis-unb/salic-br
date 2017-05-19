@@ -184,4 +184,48 @@
     </div>
     <div class="col s1"></div>
 </div>
-<?php echo $this->templateTipoDocumento ?>
+<div class="row">
+    <div class="col s1"></div>
+    <div class="col s10">
+        <h5>Produ&ccedil;&atilde;o do Projeto</h5>
+        <div class="bordered padding20">
+            <div class="row">
+                <table class="table margin0">
+                    <thead>
+                    <tr>
+                        <th class=""><label>Produto</label></th>
+                        <th><label>Tipo</label></th>
+                        <th><label>Total Produzido</label></th>
+                        <th><label>Total de Receita Prevista</label></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($this->dadosProducaoProjeto as $dadoProducaoProjeto): ?>
+                        <tr>
+                            <td><?php echo $dadoProducaoProjeto['Produto'] ?></td>
+                            <td><?php echo $dadoProducaoProjeto['tpProduto'] ?></td>
+                            <td><?php echo number_format($dadoProducaoProjeto['QtdeProduzida'], 2, ',', '.') ?></td>
+                            <td><?php echo number_format($dadoProducaoProjeto['ReceitaTotal'], 2, ',', '.') ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col s1"></div>
+</div>
+<div class="row">
+    <div class="col s1"></div>
+    <div class="col s10">
+        <p>
+            <label class="margin-bottom20">Motiva&ccedil;&atilde;o do Enquadramento</label>
+        </p>
+        <div class="padding20 bordered">
+            <?php
+            echo $this->dadosEnquadramento['Observacao'];
+            ?>
+        </div>
+    </div>
+    <div class="col s1"></div>
+</div>

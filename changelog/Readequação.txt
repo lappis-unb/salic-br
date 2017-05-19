@@ -1,7 +1,0 @@
-* Alterar os texto da tabela SAC.dbo.tbTipoReadequacao
-	- De Sinópse para Sinopse
-
-* Criar um campo idReadequacao (INT) na tabela SAC.dbo.Aprovacao
-
-* Inserir o registro abaixo na tabela SAC.dbo.tbTipoEncaminhamento
-	- 15 = Readequação Finalizada

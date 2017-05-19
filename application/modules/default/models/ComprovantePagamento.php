@@ -306,7 +306,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
         		'nrComprovante' => $this->numero,
         		'nrSerie' => $this->serie,
         		'dtEmissao' => $this->dataEmissao->format('Y-m-d h:i:s'),
-        		'idArquivo' => $arquivoModel->getId(),
+        		'idArquivo' => is_object($arquivoModel) ? $arquivoModel->getId() : $this->arquivo,
         		'vlComprovacao' => $this->comprovanteValor,
         		'dtPagamento' => $this->comprovanteData->format('Y-m-d h:i:s'),
         		'dsJustificativa' => $this->comprovanteJustificativa,
