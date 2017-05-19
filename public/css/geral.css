@@ -1368,6 +1368,10 @@ div.plan span {
 	cursor:auto;
 }
 
+.valor_maior_que_praticado {
+    background-color: #ff9100;
+    color: #000;
+}
 
 /*--------------------------------------------------------------
 x - REGULARIDADE

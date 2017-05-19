@@ -4,10 +4,10 @@
  * Classe do componente de SEI que gerencia a
  * comunicacao via webservice entre o NovoSalic e o servi�o do Corporativo
  * que consome o Webservice da Receita Federal
- * Este Servi�o � do tipo REST
+ * Este Servico eh do tipo REST
  *
- * @copyright Minist�rio da Cultura
- * @author Hepta/Minc - Alysson Vicu�a de Oliveira
+ * @copyright Ministerio da Cultura
+ * @author Hepta/Minc - Alysson Vicuña de Oliveira
  * @since 18/04/2016
  * @version 1.0
  */
@@ -19,13 +19,13 @@ class ServicosReceitaFederal
     const urlForcar = "?forcarBuscaNaReceita=true";
 
     # Constante usada na classe para conexao com o WS
-    const urlServico = "/minc-pessoa/servicos/"; #Homologa��o
+    const urlServico = "/minc-pessoa/servicos/"; #Homologacao
 
     # Atributos da classe
     #private static $objSoapCliente;
 
     /**
-     * Endere�o do Webservice.
+     * Endereco do Webservice.
      *
      * @var type
      */
@@ -79,11 +79,11 @@ class ServicosReceitaFederal
     }
 
     /**
-     * @author Alysson Vicu�a de Oliveira
+     * @author Alysson Vicuña de Oliveira
      *
      * @param $cnpj - CNPJ a ser consultado
      * @param bool $returnJSON - Define se o retorno sera um JSON ou Array de Objetos
-     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo j� existindo o CPF na base do MINC
+     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo ja existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
     public function consultarPessoaJuridicaReceitaFederal($cnpj, $forcarBuscaReceita = false, $returnJSON = false)
@@ -92,7 +92,7 @@ class ServicosReceitaFederal
         $cnpj = str_replace($chars, "", $cnpj);
 
         if (15 == strlen($cnpj) && !isCnpjValid($cnpj)) {
-            throw new InvalidArgumentException("CPF/CNPJ inv�lido");
+            throw new InvalidArgumentException("CPF/CNPJ inv&aacute;lido");
         }
 
         $url = $this->baseUrl . self::urlServico . self::urlPessoaJuridica . $cnpj;
@@ -120,17 +120,17 @@ class ServicosReceitaFederal
     }
 
     /**
-     * @author Alysson Vicu�a de Oliveira
+     * @author Alysson Vicuña de Oliveira
      *
      * @param $cpf - CPF a ser consultado
      * @param bool $returnJSON - Define se o retorno sera um JSON ou Array de Objetos
-     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo j� existindo o CPF na base do MINC
+     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo ja existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
     public function consultarPessoaFisicaReceitaFederal($cpf, $forcarBuscaReceita = false, $returnJSON = false)
     {
         if (11 == strlen($cpf) && !validaCPF($cpf)) {
-            throw new InvalidArgumentException("CPF/CNPJ inválido");
+            throw new InvalidArgumentException("CPF/CNPJ inv&aacute;lido");
         }
         
         $url = $this->baseUrl . self::urlServico . self::urlPessoaFisica . $cpf;
@@ -202,7 +202,7 @@ class ServicosReceitaFederal
      */
     public function __call($strMethod, $arrParameters)
     {
-        debug("O metodo " . $strMethod . " nao foi encontrado na classe " . get_class($this) . ".<br />" . __FILE__ . "(linha " . __LINE__ . ")", 1);
+        debug("O m&eacute;todo " . $strMethod . " n&atilde;o foi encontrado na classe " . get_class($this) . ".<br />" . __FILE__ . "(linha " . __LINE__ . ")", 1);
     }
 
 }

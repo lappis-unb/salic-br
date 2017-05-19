@@ -227,7 +227,7 @@
                     idPronac: <?php echo $this->idPronac; ?>
                 },
                 success: function(resposta){
-                    var resposta = JSON.parse(resposta),
+                    /* var resposta = JSON.parse(resposta), */
                         respostaErro = false;
                     
                     resposta.mensagens.forEach(function(mensagem) {
@@ -748,7 +748,7 @@
 		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
 		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPronac; ?>&tipoPlanilha=6&link', '', 'planilhaOrcamentariaMontada');
 
-		data = JSON.parse(data);
+		/* data = JSON.parse(data); */
 		$('#idReadequacao').val(data.idReadequacao);
 		$('#btn_excluir').removeClass('sumir');
 		$('#btn_finalizar').removeClass('sumir');

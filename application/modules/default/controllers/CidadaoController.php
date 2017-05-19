@@ -416,13 +416,13 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
                     <th>Nome do Projeto</th>
                     <th>Proponente</th>
                     <th>UF</th>
-                    <th>Munic�pio</th>
+                    <th>Munic&iacute;pio</th>
                     <th>Enquadramento</th>
-                    <th>�rea</th>
+                    <th>&Aacute;rea</th>
                     <th>Segmento</th>
-                    <th>Avalia��o</th>
-		    <th>Dt. In�cio Execu��o</th>
-		    <th>Dt. T�rmino Execu��o</th>
+                    <th>Avalia&ccedil;&atilde;o</th>
+		    <th>Dt. In&iacute;cio Execu&ccedil;&atilde;o</th>
+		    <th>Dt. T&eacute;rmino Execu&ccedil;&atilde;o</th>
 		    <th>Vl.Solicitado</th>
                     <th>Vl.Aprovado</th>
                     <th>Vl.Captado</th>

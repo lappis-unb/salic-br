@@ -8,22 +8,59 @@ class Assinatura_Model_TbDocumentoAssinatura extends MinC_Db_Model
     protected $_conteudo;
     protected $_dt_criacao;
     protected $_idCriadorDocumento;
+    protected $_cdSituacao;
+    protected $_idAtoDeGestao;
+
+    const CD_SITUACAO_DISPONIVEL_PARA_ASSINATURA = 1;
+    const CD_SITUACAO_FECHADO_PARA_ASSINATURA = 2;
+
+    public function getIdAtoDeGestao()
+    {
+        return $this->_idAtoDeGestao;
+    }
+
+    /**
+     * @return Assinatura_Model_TbDocumentoAssinatura
+     */
+    public function setIdAtoDeGestao($idAtoDeGestao)
+    {
+        $this->_idAtoDeGestao = $idAtoDeGestao;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCdSituacao()
+    {
+        return $this->_cdSituacao;
+    }
+
+    /**
+     * @param mixed $cdSituacao
+     * @return Assinatura_Model_TbDocumentoAssinatura
+     */
+    public function setCdSituacao($cdSituacao)
+    {
+        $this->_cdSituacao = $cdSituacao;
+        return $this;
+    }
 
     /**
      * @return mixed
      */
     public function getIdDocumentoAssinatura()
     {
-        return $this->_id_documento_assinatura;
+        return $this->_idDocumentoAssinatura;
     }
 
     /**
-     * @param mixed $id_documento_assinatura
+     * @param mixed $_idDocumentoAssinatura
      * @return Assinatura_Model_TbDocumentoAssinatura
      */
-    public function setIdDocumentoAssinatura($id_documento_assinatura)
+    public function setIdDocumentoAssinatura($_idDocumentoAssinatura)
     {
-        $this->_id_documento_assinatura = $id_documento_assinatura;
+        $this->_idDocumentoAssinatura = $_idDocumentoAssinatura;
         return $this;
     }
 

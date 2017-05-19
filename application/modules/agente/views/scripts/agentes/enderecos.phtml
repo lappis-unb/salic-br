@@ -1,9 +1,7 @@
-
-<?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
-
+<div class="row">
+    <?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
+<div class="col s10">
 <script type="text/javascript">
-
-
 	function enviarform()
 	{
 		if(validaEndereco())
@@ -179,14 +177,8 @@
 
 	} // fecha funcao buscar_cep()
 
-
-
-
-
-
 </script>
 
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
@@ -194,38 +186,21 @@
 		<li class="last">Principal</li>
 	</ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-
-
-<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
 	<div>Endere&ccedil;os <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TITULO ========== -->
-
-
-
-<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
-
-
 	<?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
-
 	<table class="tabela">
 		<tr>
 			<td>Para adicionar um novo endere&ccedil;o, clique em novo ao lado!</td>
 			<th width="150"><input type="button" class="btn_novo" value=" " onclick="novo();"/></th>
 		</tr>
 	</table>
-
-
 	<div id="formNovo" class="sumir">
-
 		<!-- ========== INICIO FORMULARIO ENDERECO ========== -->
-
 		<form id="form" name="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaendereco')); ?>" method="post">
-
 			<table id="tabEndereco" class="tabela">
 				<tr>
 					<th colspan="3">Novo Endere&ccedil;o</th>
@@ -365,15 +340,10 @@
 					</td>
 				</tr>
 			</table>
-
 		</form>
-
 	</div>
-
 	<div id="salvos">
-
 		<?php foreach($this->endereco as $end): ?>
-
 		<table id="tabEndereco" class="tabela">
 			<tr>
 				<th colspan="5">ENDERE&Ccedil;OS</th>
@@ -403,19 +373,8 @@
 				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idEndereco, 'qtdEndereco' => $this->qtdEndereco, 'enderecoCorrespondencia' => $end->Status));?>');" /></td>
 			</tr>
 		</table>
-
 	<?php endforeach; ?>
-
-
 	</div>
-
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-
-
-
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-
-<br clear="all" />
+</div>
+</div>

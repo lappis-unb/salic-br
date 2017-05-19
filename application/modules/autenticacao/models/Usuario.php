@@ -17,6 +17,41 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
     protected $_name = 'usuarios';
     protected $_schema = 'tabelas';
 
+    private $_usu_identificacao;
+    private $_usu_senha;
+
+    /**
+     * @return mixed
+     */
+    public function getUsuIdentificacao()
+    {
+        return $this->_usu_identificacao;
+    }
+
+    /**
+     * @param mixed $usu_identificacao
+     */
+    public function setUsuIdentificacao($usu_identificacao)
+    {
+        $this->_usu_identificacao = $usu_identificacao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsuSenha()
+    {
+        return $this->_usu_senha;
+    }
+
+    /**
+     * @param mixed $usu_senha
+     */
+    public function setUsuSenha($usu_senha)
+    {
+        $this->_usu_senha = $usu_senha;
+    }
+
     /**
      * funcao do banco de dados do sql server no formato PHP.
      *
@@ -121,7 +156,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
         $select = $this->select()
             ->setIntegrityCheck(false)
-            ->from($this->_name, array (
+            ->from($this->_name, array(
                 'usu_codigo',
                 'usu_nome',
                 'usu_identificacao',
@@ -134,8 +169,8 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
                 array(), $this->_schema)
             ->where('usu_identificacao = ?', $username)
             ->where('usu_status  = ?', 1);
-        if(md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()){
-            $select->where("usu_senha  = ?",$auxSenha);
+        if (md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
+            $select->where("usu_senha  = ?", $auxSenha);
         }
 
         $buscar = $this->fetchRow($select);
@@ -363,8 +398,9 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
      */
     public function alterarSenha($username, $password)
     {
-        $this->_db->beginTransaction();
+
         try {
+            $this->_db->beginTransaction();
             $senha = $this->select();
             $senha->from($this, array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
             );
@@ -392,7 +428,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
      */
     public function alterarSenhaSalic($cpf, $password)
     {
-        $cpf= trim($cpf);
+        $cpf = trim($cpf);
         $password = trim($password);
         //parent::name('ausuarios', 'agentes');
         //$this->_db->beginTransaction();
@@ -991,7 +1027,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $objUsuario = $this->select();
         $senha = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
-        $senhaScape = preg_replace("/'/", "''",$senha);
+        $senhaScape = preg_replace("/'/", "''", $senha);
 
         $objUsuario->from(
             $this->_name,
@@ -1038,9 +1074,16 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         }
     }
 
-    public function isUsuarioESenhaValidos($username, $password)
+    public function isUsuarioESenhaValidos()
     {
-        $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($username, $password);
+        if (!$this->getUsuIdentificacao()) {
+            throw new Exception("Identificacao do usu&aacute;rio n&atilde;o informada.");
+        }
+        if (!$this->getUsuSenha()) {
+            throw new Exception("Senha do usu&aacute;rio n&atilde;o informada.");
+        }
+
+        $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($this->getUsuIdentificacao(), $this->getUsuSenha());
 
         $objQuery = $this->select()
             ->setIntegrityCheck(false)
@@ -1055,10 +1098,10 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
                 ),
                 $this->_schema
             )
-            ->where('usu_identificacao = ?', $username)
+            ->where('usu_identificacao = ?', $this->getUsuIdentificacao())
             ->where('usu_status  = ?', 1)
             ->where("usu_senha  = ?", $senhaCriptografada);
-        if($this->fetchRow($objQuery)) {
+        if ($this->fetchRow($objQuery)) {
             return true;
         }
     }

@@ -136,7 +136,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
      */
     public function indexAction()
     {
-        if($this->idPreProjeto) {
+        if ($this->idPreProjeto) {
             $this->redirect("/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $this->idPreProjeto);
         } else {
             $this->redirect("/proposta/manterpropostaincentivofiscal/listarproposta");
@@ -794,11 +794,11 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
                 parent::message("Proposta encaminhada com sucesso para an&aacute;lise no Minist&eacute;rio da Cultura.", "/proposta/manterpropostaincentivofiscal/identificacaodaproposta/idPreProjeto/" . $idPreProjeto, "CONFIRM");
 
-            }else {
+            } else {
                 $this->view->resultado = $arrResultado;
             }
 
-            $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/enviar-proposta/idPreProjeto/" . $this->idPreProjeto ;
+            $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/enviar-proposta/idPreProjeto/" . $this->idPreProjeto;
 
         } else {
             parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
@@ -817,18 +817,20 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         try {
             $validacao = new stdClass();
 
+            $this->atualizarDadosPessoaJuridicaVerificandoCNAECultural($idPreProjeto);
+
             $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $arrResultado = $tbPreProjeto->spChecklistParaApresentacaoDeProposta($idPreProjeto);
 
-            $validado= true;
-            foreach ($arrResultado as $item){
-                if($item->Observacao == 'PENDENTE') {
+            $validado = true;
+            foreach ($arrResultado as $item) {
+                if ($item->Observacao == 'PENDENTE') {
                     $validado = false;
                     break;
                 }
             }
 
-            if($validado) {
+            if ($validado) {
                 $validacao->dsInconsistencia = 'A proposta cultural n&atilde;o possui pend&ecirc;ncias';
                 $validacao->Observacao = true;
                 $validacao->Url = '';
@@ -995,7 +997,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $idAgente = $this->getRequest()->getParam('idagente');
         $start = $this->getRequest()->getParam('start');
         $length = $this->getRequest()->getParam('length');
-        $draw = (int) $this->getRequest()->getParam('draw');
+        $draw = (int)$this->getRequest()->getParam('draw');
         $search = $this->getRequest()->getParam('search');
         $order = $this->getRequest()->getParam('order');
         $columns = $this->getRequest()->getParam('columns');
@@ -1175,6 +1177,41 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->view->dados = $busca;
         $this->view->dadoscount = count($busca);
         $this->view->idAgenteProponente = $this->idAgenteProponente;
+    }
+
+    /**
+     * Este metodo deve estar igual à regra de negocio 1.3 da spCheckListParaApresentacaoDeProposta
+     * @param $idPreProjeto
+     * @return ArrayObject|bool|mixed
+     */
+    public function atualizarDadosPessoaJuridicaVerificandoCNAECultural($idPreProjeto)
+    {
+
+        $TbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+        $proponente = $TbPreProjeto->buscarProponenteProposta($idPreProjeto);
+
+        $tbDistribuicao = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
+        $produtoPrincipal = $tbDistribuicao->findBy(array('idProjeto' => $idPreProjeto, 'stPrincipal' => 1));
+
+        $segmentosIsentos = array('4D', '5A', '5D', '5E', '5S', '6I');
+
+        if (isCnpjValid($proponente->CNPJCPF) && isset($produtoPrincipal['Segmento'])) {
+
+            if (!in_array($produtoPrincipal['Segmento'], $segmentosIsentos)) {
+
+                $cnae = $TbPreProjeto->verificarCNAEProponenteComProdutoPrincipal($idPreProjeto);
+
+                # Se o CNAE estiver vazio, forçar atualização do proponente com os dados do webservice da receita
+                if (empty($cnae)) {
+                    $servicoReceita = new ServicosReceitaFederal();
+                    $dadosPessoaJuridica = $servicoReceita->consultarPessoaJuridicaReceitaFederal($proponente->CNPJCPF, true);
+                    return $dadosPessoaJuridica;
+                }
+                return false;
+            }
+            return true;
+        }
+        return true; #pf
     }
 
 }
