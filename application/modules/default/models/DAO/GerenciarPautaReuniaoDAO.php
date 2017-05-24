@@ -16,7 +16,7 @@ class GerenciarPautaReuniaoDAO
     public static function consultaAgenteUsuario($usu_codigo)
     {
         $sql = "select usu_codigo,
-                idAgente from Tabelas.dbo.Usuarios u
+                idAgente from tabelas.dbo.Usuarios u
                 inner join Agentes.dbo.Agentes a on (u.usu_identificacao=a.CNPJCPF)
                 where usu_codigo=$usu_codigo
                 ";
@@ -36,7 +36,7 @@ class GerenciarPautaReuniaoDAO
     public static function consultaIdAgenteUsuario($usu_codigo)
     {
         $sql = "select usu_codigo,
-                idAgente from Tabelas.dbo.Usuarios u
+                idAgente from tabelas.dbo.Usuarios u
                 inner join Agentes.dbo.Agentes a on (u.usu_identificacao=a.CNPJCPF)
                 where usu_codigo=$usu_codigo
                 ";

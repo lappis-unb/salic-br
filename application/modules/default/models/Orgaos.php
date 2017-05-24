@@ -19,7 +19,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
                 array('o'=>$this->_name),
                 array(
                 'o.Codigo',
-                'Tabelas.dbo.fnEstruturaOrgao(o.codigo, 0) as Sigla',
+                'tabelas.dbo.fnEstruturaOrgao(o.codigo, 0) as Sigla',
                 'org.org_nomeautorizado'
                 )
         );
@@ -27,7 +27,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
                 array('org'=>'vwUsuariosOrgaosGrupos'),
                 'org.uog_orgao = o.Codigo ',
                 array('org.org_nomeautorizado'),
-                'Tabelas.dbo'
+                'tabelas.dbo'
         );
         $select->where('o.Status = ?', 0);
         $select->where('o.idSecretaria IS NOT NULL');

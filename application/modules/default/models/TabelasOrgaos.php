@@ -21,11 +21,11 @@ class TabelasOrgaos extends MinC_Db_Table_Abstract{
         $select->setIntegrityCheck(false);
         $select->from(array('o'=>$this->_name),
                 array('o.org_codigo',
-                new Zend_Db_Expr('Tabelas.dbo.fnEstruturaOrgao(o.org_codigo, 0) + '."':'".' + SUBSTRING(pid_identificacao, 1, 60) orgao_nome'),));
+                new Zend_Db_Expr('tabelas.dbo.fnEstruturaOrgao(o.org_codigo, 0) + '."':'".' + SUBSTRING(pid_identificacao, 1, 60) orgao_nome'),));
          $select->joinInner(array('p'=>'Pessoa_Identificacoes'),
                 'p.pid_pessoa = o.org_pessoa',
                  array('o.org_pessoa'),
-                 'Tabelas.dbo'
+                 'tabelas.dbo'
 
               );
 

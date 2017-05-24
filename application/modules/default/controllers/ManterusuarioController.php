@@ -186,7 +186,7 @@ class ManterusuarioController extends MinC_Controller_Action_Abstract
         $usuariosExternos = new TabelasOrgaos();
         $minc = "MinC";
         $dadosUsuariosExternos = array(
-            'Tabelas.dbo.fnSiglaOrgaoTopo(o.org_codigo) = ?' => $minc,
+            'tabelas.dbo.fnSiglaOrgaoTopo(o.org_codigo) = ?' => $minc,
             'o.org_tipo >= ?' => 3,
             'o.org_status <> ? ' => 0,
             'p.pid_meta_dado = ?' => 1,

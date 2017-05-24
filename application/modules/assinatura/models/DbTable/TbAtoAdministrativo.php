@@ -33,7 +33,7 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
             array('grupos' => 'Grupos'),
             'grupos.gru_codigo = tbAtoAdministrativo.idPerfilDoAssinante',
             array('dsPerfil' => 'grupos.gru_nome'),
-            $this->getSchema('Tabelas')
+            $this->getSchema('tabelas')
         );
         $objQuery->where('idOrgaoDoAssinante = ?', $idOrgaoDoAssinante);
         $objQuery->where('idPerfilDoAssinante = ?', $idPerfilDoAssinante);

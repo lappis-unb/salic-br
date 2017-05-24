@@ -863,7 +863,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             ->join(array('pa' => 'Parecer'), '(p.IdPRONAC = pa.IdPRONAC)', null, 'sac.dbo')
             ->join(array('x' => 'Projetos'), '(x.IdPRONAC = pa.IdPRONAC)', null, 'sac.dbo')
             ->join(array('r' => 'tbReuniao'), '(p.idNrReuniao = r.idNrReuniao)', null, 'sac.dbo' )
-            ->join(array('n' => 'Usuarios'), '(n.usu_codigo = pa.Logon)', null,'Tabelas.dbo')
+            ->join(array('n' => 'Usuarios'), '(n.usu_codigo = pa.Logon)', null,'tabelas.dbo')
             ->where('p.idPronac = ?', $idPronac)
             ->where('pa.idTipoAgente = 6')
             ;

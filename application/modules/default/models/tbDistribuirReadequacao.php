@@ -132,7 +132,7 @@ class tbDistribuirReadequacao extends MinC_Db_Table_Abstract
 
             $select->joinInner(
                 array('d' => 'Usuarios'), 'a.idAvaliador = d.usu_codigo',
-                array(''), $this->getSchema('Tabelas')
+                array(''), $this->getSchema('tabelas')
             );
 
             $select->joinInner(

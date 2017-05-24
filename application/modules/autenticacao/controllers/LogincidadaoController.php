@@ -28,7 +28,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             $cpf = $objIdentity->auth['raw']['cpf'];
             $id = $objIdentity->auth['raw']['id'];
 
-            $arraySGCAcesso = $objSgcAcesso->buscar(array('cpf = ?' => $cpf))->toArray();
+            $arraySGCAcesso = $objSgcAcesso->buscar(array('Cpf = ?' => $cpf))->toArray();
 
             $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $id);
             if($senhaCriptografada != $arraySGCAcesso[0]['Senha']) {

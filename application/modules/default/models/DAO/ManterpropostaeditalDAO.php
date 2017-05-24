@@ -123,7 +123,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
         $sql = " SELECT e.idEdital as idEditalTb,
                         convert(varchar(12),e.NrEdital)as NrEditalTb,
                         convert(char(4),YEAR(e.DtEdital)) as Ano,
-                        Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1) as Unidade ,
+                        tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1) as Unidade ,
                         f.nmFormDocumento as nmDocumento,
                         e.DtEdital as DtEditalTb,v.Descricao as TipoFundo,
                         u.dtIniFase as dtIniFase,c.dsClassificaDocumento as Classificacao,
@@ -151,7 +151,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
             $sql .= " and Objeto like '%{$array['nmEdital']}%'
                        or nmDocumento like '%{$array['nmEdital']}%'";
         }
-        $sql .= " ORDER BY c.dsClassificaDocumento,v.Descricao,Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
+        $sql .= " ORDER BY c.dsClassificaDocumento,v.Descricao,tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
         $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -164,7 +164,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
         $sql = " SELECT e.idEdital as idEditalTb,
                         convert(varchar(12),e.NrEdital)as NrEditalTb,
                         convert(char(4),YEAR(e.DtEdital)) as Ano,
-                        Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1) as Unidade ,
+                        tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1) as Unidade ,
                         f.nmFormDocumento as nmDocumento,
                         e.DtEdital as DtEditalTb,v.Descricao as TipoFundo,
                         u.dtIniFase as dtIniFase,c.dsClassificaDocumento as Classificacao,
@@ -177,7 +177,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null and
                         u.dtIniFase <= {$objAcesso->getDate()} AND u.dtFimFase >= {$objAcesso->getDate()}
-               ORDER BY c.dsClassificaDocumento,v.Descricao,Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
+               ORDER BY c.dsClassificaDocumento,v.Descricao,tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
 
         $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -189,7 +189,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         e.Objeto,
                         convert(varchar(12),e.NrEdital)as NrEditalTb,
                         convert(char(4),YEAR(e.DtEdital)) as Ano,
-                        Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1) as Unidade ,
+                        tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1) as Unidade ,
                         f.nmFormDocumento as nmDocumento,
                         e.DtEdital as DtEditalTb,v.Descricao as TipoFundo,
                         u.dtIniFase as dtIniFase,c.dsClassificaDocumento as Classificacao,
@@ -204,7 +204,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
         if(isset($array['idEdital'])) {
             $sql .= " and e.idEdital = {$array['idEdital']}";
         }
-        $sql .= " ORDER BY c.dsClassificaDocumento,v.Descricao,Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
+        $sql .= " ORDER BY c.dsClassificaDocumento,v.Descricao,tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
         $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);

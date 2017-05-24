@@ -2025,7 +2025,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 //gru_codigo = 129 (C�digo de T�cnico de acompanhamento)
 
         $sql = "SELECT a.usu_codigo, a.usu_nome, a.gru_nome AS Perfil, b.idAgente, a.gru_codigo AS idVerificacao
-                FROM Tabelas..vwUsuariosOrgaosGrupos a
+                FROM tabelas.dbo.vwUsuariosOrgaosGrupos a
                 INNER JOIN AGENTES.dbo.Agentes AS b ON a.usu_identificacao = b.CNPJCPF
                 WHERE sis_codigo = 21 and uog_orgao = $idorgao
                  AND gru_codigo in (121) AND a.uog_status = 1 
@@ -2039,7 +2039,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 //gru_codigo = 93 (C�digo de Coordenador de Parecerista)
 
         $sql = "SELECT a.usu_codigo, a.usu_nome, a.gru_nome AS Perfil, b.idAgente, a.gru_codigo AS idVerificacao
-                FROM Tabelas..vwUsuariosOrgaosGrupos a
+                FROM tabelas.dbo.vwUsuariosOrgaosGrupos a
                 INNER JOIN AGENTES.dbo.Agentes AS b ON a.usu_identificacao = b.CNPJCPF
                 WHERE sis_codigo = 21 and uog_orgao = $idorgao
                 AND gru_codigo IN (121, 93) AND a.uog_status = 1 
@@ -2071,7 +2071,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         if ($sqlDesejado == "listasDeEncaminhamento") {
 
             $sql = "SELECT a.usu_codigo, a.usu_nome, a.gru_nome AS Perfil, b.idAgente, a.gru_codigo AS idVerificacao
-                    FROM Tabelas..vwUsuariosOrgaosGrupos a
+                    FROM tabelas.dbo.vwUsuariosOrgaosGrupos a
                     INNER JOIN AGENTES.dbo.Agentes AS b ON a.usu_identificacao = b.CNPJCPF
                     WHERE sis_codigo = 21 and uog_orgao = $idOrgao
                     AND gru_codigo = 94 AND a.uog_status = 1 

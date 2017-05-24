@@ -47,6 +47,12 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             $strSchema = $this->_schema;
         }
 
+//        if ($db instanceof Zend_Db_Adapter_Pdo_Pgsql) {
+//            if ($strSchema && !is_int(strpos($strSchema, 'bdsalic'))) {
+//                $strSchema = "bdsalic.{$strSchema}";
+//            }
+//        }
+
         return $strSchema;
     }
 
@@ -158,7 +164,10 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function getName($strName = '', $strSchema = '')
     {
-        $strName = strtolower($strName);
+        $db = Zend_Db_Table::getDefaultAdapter();
+        if (!($db instanceof Zend_Db_Adapter_Pdo_Pgsql)) {
+            $strName = strtolower($strName);
+        }
         return $strName;
     }
 
@@ -201,13 +210,14 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
         $select = $this->select()->from($this->_name, $this->_getCols(), $this->_schema);
-
+        $db = Zend_Db_Table::getDefaultAdapter();
         //adiciona quantos filtros foram enviados
-        foreach ($where as $coluna => $valor) {
+        foreach ($where as $condicao => $valor) {
             if (!is_null($valor)) {
-                $select->where($coluna, $valor);
+                $select->where($condicao, $valor);
             }
         }
+
         $select->order($order);
 
         // paginacao

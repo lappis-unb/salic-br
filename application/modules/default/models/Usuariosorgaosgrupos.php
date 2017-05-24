@@ -3,7 +3,7 @@
 class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Tabelas';
-    protected $_schema = 'Tabelas';
+    protected $_schema = 'tabelas';
     protected $_name = 'UsuariosXOrgaosXGrupos';
 
     public function buscarUsuariosOrgaosGrupos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {

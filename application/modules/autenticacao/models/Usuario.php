@@ -13,9 +13,11 @@
 class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 {
 
-    protected $_banco = "tabelas";
-    protected $_name = 'usuarios';
+    protected $_banco = "Tabelas";
+    protected $_name = 'Usuarios';
     protected $_schema = 'tabelas';
+
+    protected $_primary = 'usu_codigo';
 
     private $_usu_identificacao;
     private $_usu_senha;
@@ -164,11 +166,12 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
                 'usu_orgao'),
                 $this->_schema)
             ->joinInner(array(
-                'uog' => 'usuariosxorgaosxgrupos'),
+                'uog' => 'UsuariosXOrgaosXGrupos'),
                 'uog.uog_usuario = usu_codigo AND uog_status = 1',
                 array(), $this->_schema)
             ->where('usu_identificacao = ?', $username)
             ->where('usu_status  = ?', 1);
+
         if (md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
             $select->where("usu_senha  = ?", $auxSenha);
         }
@@ -264,7 +267,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 //        );
 
 //        $select->joinInner(
-//            array("uog" => "usuariosxorgaosxgrupos"),
+//            array("uog" => "UsuariosXOrgaosXGrupos"),
 //            "uog.uog_usuario = usu_codigo AND uog_status = 1",
 //            array(),
 //            parent::getSchema('tabelas')
@@ -436,15 +439,15 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
             $db = Zend_DB_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
             $sql = "UPDATE tabelas.dbo.usuarios
-                        SET usu_senha = Tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),
+                        SET usu_senha = tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),
                             usu_data_validade = ".$this->getDate()."+usu_duracao_senha,
-                            usu_seguranca = Tabelas.dbo.fnSegurancaUsuarios
+                            usu_seguranca = tabelas.dbo.fnSegurancaUsuarios
                             (usu_codigo,usu_identificacao,usu_nome,usu_pessoa,
                              usu_orgao,usu_sala,usu_ramal,usu_nivel,usu_exibicao,
                              usu_SQL_Login,usu_SQL_senha,usu_duracao_senha,
                              usu_data_validade,usu_limite_utilizacao,
-                             Tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),usu_status),
-                         usu_validacao = Tabelas.dbo.fnValidacaoUsuarios
+                             tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),usu_status),
+                         usu_validacao = tabelas.dbo.fnValidacaoUsuarios
                                      (usu_codigo,usu_identificacao,usu_nome)
                          WHERE usu_identificacao = '$cpf' ";
 
@@ -1059,7 +1062,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         );
 
         $sql->joinInner(
-            array("uog" => "usuariosxorgaosxgrupos"),
+            array("uog" => "UsuariosXOrgaosXGrupos"),
             "uog.uog_usuario = usu_codigo AND uog_status = 1",
             array(),
             $this->getSchema("tabelas")

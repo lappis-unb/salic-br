@@ -427,7 +427,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 				         usu.usu_nome AS Emissor, h.dsJustificativa, h.idDocumento, h.idHistorico
 				from SAC.dbo.tbHistoricoDocumento h
 				inner join SAC.dbo.Projetos p on p.IdPRONAC = h.idPronac
-				LEFT JOIN Tabelas.dbo.Usuarios AS usu ON usu.usu_codigo = h.idUsuarioEmissor
+				LEFT JOIN tabelas.dbo.Usuarios AS usu ON usu.usu_codigo = h.idUsuarioEmissor
 				where Acao in(2,4) and stEstado = 1 and h.idDocumento != 0";
 		
 		if($codOrgao){

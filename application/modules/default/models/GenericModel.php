@@ -205,7 +205,7 @@ class GenericModel extends Zend_Db_Table_Abstract
         }
 
 
-//        $select->where('cpf = ?', '00000000000');
+//        $select->where('Cpf = ?', '00000000000');
         //adicionando linha order ao select
 //        $select->order($order);
 

@@ -814,12 +814,13 @@ abstract class Zend_Db_Table_Abstract
                 . '/'.$dbConfig['dbname'].':'.$this->_schema.'.'.$this->_name
                 );
         }
-
         // If $this has no metadata cache or metadata cache misses
         if (null === $this->_metadataCache || !($metadata = $this->_metadataCache->load($cacheId))) {
+
             // Metadata are not loaded from cache
             $isMetadataFromCache = false;
             // Fetch metadata from the adapter's describeTable() method
+
             $metadata = $this->_db->describeTable($this->_name, $this->_schema);
             // If $this has a metadata cache, then cache the metadata
             if (null !== $this->_metadataCache && !$this->_metadataCache->save($metadata, $cacheId)) {
@@ -858,6 +859,7 @@ abstract class Zend_Db_Table_Abstract
      */
     protected function _setupPrimaryKey()
     {
+
         if (!$this->_primary) {
             $this->_setupMetadata();
             $this->_primary = array();
@@ -880,9 +882,11 @@ abstract class Zend_Db_Table_Abstract
         } else if (isset($this->_primary[0])) {
             array_unshift($this->_primary, null);
             unset($this->_primary[0]);
+            unset($this->_primary[0]);
         }
 
         $cols = $this->_getCols();
+
         if (! array_intersect((array) $this->_primary, $cols) == (array) $this->_primary) {
             require_once 'Zend/Db/Table/Exception.php';
             throw new Zend_Db_Table_Exception("Primary key column(s) ("

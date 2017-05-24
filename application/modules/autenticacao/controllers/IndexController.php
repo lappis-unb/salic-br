@@ -47,9 +47,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             } else {
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->login($username, $password);
+
                 if ($buscar) {
                     $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
                     $objUnidades = $Usuario->buscarUnidades($auth['usu_codigo'], 21)->current();
+
                     if($objUnidades) {
                        $objUnidades = $objUnidades->toArray();
                     }
@@ -108,7 +110,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                 // realiza a busca do usuario no banco, fazendo a autenticacao do mesmo
                 $Usuario = new Autenticacao_Model_Sgcacesso();
-                $verificaStatus = $Usuario->buscar(array('cpf = ?' => $username))->toArray();
+                $verificaStatus = $Usuario->buscar(array('Cpf = ?' => $username))->toArray();
+
+
                 if ($verificaStatus) {
                     $verificaStatus = array_change_key_case(reset($verificaStatus));
 
@@ -128,7 +132,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $SenhaFinal = addslashes($password);
                     $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                 }
-
                 if ($buscar) {
                     $verificaSituacao = $verificaStatus['Situacao'];
                     if ($verificaSituacao == 1) {
@@ -658,7 +661,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $cpf = Mascara::delMaskCPF($auth['cpf']);
-        $buscarDados = array_change_key_case($sgcAcesso->buscar(array('cpf = ?' => $cpf))->current()->toArray());
+        $buscarDados = array_change_key_case($sgcAcesso->buscar(array('Cpf = ?' => $cpf))->current()->toArray());
 
         if (count(Zend_Auth::getInstance()->getIdentity()) > 0) {
             if (strlen($buscarDados['cpf']) > 11) {

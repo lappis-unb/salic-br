@@ -2276,7 +2276,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql = $this->select()
             ->setIntegrityCheck(false)
             ->from(array('Orgaos'), null, 'tabelas.dbo')
-            ->join(array('Pessoa_Identificacoes'), 'pid_pessoa = org_pessoa', array('pid_identificacao'),'Tabelas.dbo')
+            ->join(array('Pessoa_Identificacoes'), 'pid_pessoa = org_pessoa', array('pid_identificacao'),'tabelas.dbo')
             ->where('pid_meta_dado = 1')
             ->where('pid_sequencia = 1')
             ->where('org_codigo = ?', 160)

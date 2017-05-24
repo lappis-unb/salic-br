@@ -298,10 +298,10 @@ class PublicacaoDouDAO extends Zend_Db_Table
     public static function Assinatura($funcao = null)
     {
         $sql = "select pf.pxf_funcao, f.fun_descricao, pid.pid_identificacao
-                from Tabelas.dbo.Pessoa_Identificacoes pid
-                inner join Tabelas.dbo.PessoasXFuncoes pf on pid.pid_pessoa = pf.pxf_pessoa
-                 inner join Tabelas.dbo.Funcoes f on pf.pxf_funcao = f.fun_codigo
-                 inner join Tabelas.dbo.Pessoa_Identificacoes pid2 on pf.pxf_entidade = pid2.pid_pessoa
+                from tabelas.dbo.Pessoa_Identificacoes pid
+                inner join tabelas.dbo.PessoasXFuncoes pf on pid.pid_pessoa = pf.pxf_pessoa
+                 inner join tabelas.dbo.Funcoes f on pf.pxf_funcao = f.fun_codigo
+                 inner join tabelas.dbo.Pessoa_Identificacoes pid2 on pf.pxf_entidade = pid2.pid_pessoa
                  where f.fun_status = 1 
                  and pid.pid_meta_dado = 1";
 

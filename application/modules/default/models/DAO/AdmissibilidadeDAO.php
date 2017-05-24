@@ -48,17 +48,17 @@ class AdmissibilidadeDAO extends Zend_Db_Table
         $sql = " select uog.uog_usuario as usu_cod,
                         u.usu_nome + ' - ' + u.usu_identificacao as usu_nome,
                         uog.uog_orgao   as usu_orgao,
-                        Tabelas.dbo.fnEstruturaOrgao(o.org_codigo, 0) as unidade,
+                        tabelas.dbo.fnEstruturaOrgao(o.org_codigo, 0) as unidade,
                         uog.uog_grupo   as gru_codigo,
                         g.gru_nome,
                         uog.uog_status  as status,
                         u.usu_nome
-                   from Tabelas.dbo.UsuariosXOrgaosXGrupos uog
-                  inner join TABELAS.dbo.Usuarios u
+                   from tabelas.dbo.UsuariosXOrgaosXGrupos uog
+                  inner join tabelas.dbo.Usuarios u
                      on u.usu_codigo = uog.uog_usuario
-                  inner join TABELAS.dbo.Orgaos o
+                  inner join tabelas.dbo.Orgaos o
                      on o.org_codigo = uog_orgao
-                  inner join TABELAS.dbo.Grupos g
+                  inner join tabelas.dbo.Grupos g
                      on g.gru_codigo = uog.uog_grupo
                   where uog.uog_usuario = {$params->usu_cod}
                     and uog.uog_grupo   = {$params->gru_codigo}
@@ -81,7 +81,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
 
     public static function atualizarAnalista(stdClass $params)
     {
-        $sql = "update Tabelas.dbo.UsuariosXOrgaosXGrupos
+        $sql = "update tabelas.dbo.UsuariosXOrgaosXGrupos
                    set uog_status  = {$params->uog_status}
                  where uog_usuario = {$params->usu_cod}
                    and uog_grupo   = {$params->gru_codigo}

@@ -91,7 +91,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
      */
     public function alterarSenha($username, $password)
     {
-        $sql = "UPDATE Tabelas.dbo.Usuarios
+        $sql = "UPDATE tabelas.dbo.Usuarios
 					SET usu_senha = TABELAS.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "')
 				WHERE usu_identificacao = '" . $username . "'";
 

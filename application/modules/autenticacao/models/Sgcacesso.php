@@ -3,7 +3,7 @@
 class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 {
 
-    protected $_name = 'sgcacesso';
+    protected $_name = 'SGCacesso';
     protected $_schema = 'controledeacesso';
     protected $_primary = 'Cpf';
 
@@ -68,8 +68,8 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             // configuracoes do banco
             $authAdapter = new Zend_Auth_Adapter_DbTable($db);
             $authAdapter->setTableName(self::obterInstancia()->getTableName())
-                ->setIdentityColumn('cpf')
-                ->setCredentialColumn('senha');
+                ->setIdentityColumn('Cpf')
+                ->setCredentialColumn('Senha');
 
             // seta as credenciais informada pelo usuï¿½rio
             $authAdapter
@@ -101,40 +101,40 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     public function login($username, $password)
     {
         $objSgcAcesso = $this->select();
-        $objSgcAcesso->where('cpf = ?', $username);
+        $objSgcAcesso->where('Cpf = ?', $username);
 
         $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
-        $objSgcAcesso->where("senha in ('{$senhaCriptografada}') as senha)");
+        $objSgcAcesso->where("Senha in ('{$senhaCriptografada}') as senha)");
         $scriptSenha = $this->fetchRow($objSgcAcesso);
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
         $sql->from($this, array
             (
-                'cpf',
-                'senha',
+                'Cpf',
+                'Senha',
             )
         );
-        $sql->where('cpf = ?', $username);
-        $sql->where("senha  = ?", $objSgcAcesso);
+        $sql->where('Cpf = ?', $username);
+        $sql->where("Senha  = ?", $objSgcAcesso);
         $buscar = $this->fetchRow($sql);
 
         if ($buscar) {
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
             $authAdapter->setTableName($this->getTableName())// CONTROLEDEACESSO.dbo.sgcacesso
-            ->setIdentityColumn('cpf')
-                ->setCredentialColumn('senha');
+            ->setIdentityColumn('Cpf')
+                ->setCredentialColumn('Senha');
 
             $authAdapter
-                ->setIdentity($buscar['cpf'])
-                ->setCredential($buscar['senha']);
+                ->setIdentity($buscar['Cpf'])
+                ->setCredential($buscar['Senha']);
 
             $auth = Zend_Auth::getInstance();
             $acesso = $auth->authenticate($authAdapter);
 
             if ($acesso->isValid()) {
-                $authData = $authAdapter->getResultRowObject(null, 'senha');
+                $authData = $authAdapter->getResultRowObject(null, 'Senha');
                 $auth->getStorage()->write($authData);
                 return true;
             }
@@ -148,17 +148,17 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from($this, array(
-                'cpf',
-                'senha',
+                'Cpf',
+                'Senha',
             )
         );
-        $select->where('cpf = ?', $username);
+        $select->where('Cpf = ?', $username);
         if ($password != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
-            $select->where("senha  = ?", $password);
+            $select->where("Senha  = ?", $password);
         }
 
+//xd($select->assemble());
         $buscar = $this->fetchRow($select);
-
         if ($buscar) { // realiza a autenticacao
             // configura??es do banco
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
@@ -166,13 +166,13 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
             $authAdapter->setTableName($this->getTableName(null, null, false)) // CONTROLEDEACESSO.dbo.sgcacesso
-            ->setIdentityColumn('cpf')
-                ->setCredentialColumn('senha');
+            ->setIdentityColumn('Cpf')
+                ->setCredentialColumn('Senha');
 
             // seta as credenciais informada pelo usu?rio
             $authAdapter
-                ->setIdentity($buscar['cpf'])
-                ->setCredential($buscar['senha']);
+                ->setIdentity($buscar['Cpf'])
+                ->setCredential($buscar['Senha']);
 
             // tenta autenticar o usu?rio
             $auth = Zend_Auth::getInstance();
@@ -182,7 +182,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
                 // pega os dados do usu?rio com exce??o da senha
-                $authData = $authAdapter->getResultRowObject(null, 'senha');
+                $authData = $authAdapter->getResultRowObject(null, 'Senha');
 
                 // armazena os dados do usu?rio
                 $auth->getStorage()->write($authData);
