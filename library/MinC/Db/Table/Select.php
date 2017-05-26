@@ -32,11 +32,11 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     //public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
     //{
-        //if($this->isUseSchema) {
-            //$schema = $this->getSchema($schema);
-        //}
+    //if($this->isUseSchema) {
+    //$schema = $this->getSchema($schema);
+    //}
 
-        //return parent::from($name, $cols, $schema);
+    //return parent::from($name, $cols, $schema);
     //}
 
     /**
@@ -80,11 +80,11 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     //public function joinLeft($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
     //{
-        //if($this->isUseSchema) {
-            //$schema = $this->getSchema($schema);
-        //}
+    //if($this->isUseSchema) {
+    //$schema = $this->getSchema($schema);
+    //}
 
-        //return parent::joinLeft($name, $cond, $cols, $schema);
+    //return parent::joinLeft($name, $cond, $cols, $schema);
     //}
 
 
@@ -106,5 +106,16 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         }
 
         return $strSchema;
+    }
+
+    public function where($cond, $value = null, $type = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        if ($db instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $cond = $db->treatConditionsDoubleQuotes($cond);
+        }
+
+        $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);
+        return $this;
     }
 }

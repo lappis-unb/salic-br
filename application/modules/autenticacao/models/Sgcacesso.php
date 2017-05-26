@@ -214,6 +214,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             if (isset($dados['Situacao'])) $objSgcAcesso->Situacao = $dados['Situacao'];
             if (isset($dados['DtSituacao'])) $objSgcAcesso->DtSituacao = $dados['DtSituacao'];
             if (isset($dados['id_login_cidadao'])) $objSgcAcesso->id_login_cidadao = $dados['id_login_cidadao'];
+
             return $objSgcAcesso->save();
         } catch (Exception $objException) {
             throw new Exception($objException->getMessage(), 0, $objException);

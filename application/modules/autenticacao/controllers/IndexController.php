@@ -203,11 +203,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             if (trim($post->email) != trim($post->emailConf)) {
                 parent::message("Digite o email certo!", "/autenticacao/index/cadastrarusuario", "ALERT");
             }
-
             $senha = Gerarsenha::gerasenha(15, true, true, true, false);
             $db = Zend_Db_Table::getDefaultAdapter();
             $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senha);
             $dataFinal = data::dataAmericana($post->dataNasc);
+
 
             $dados = array(
                 "Cpf" => $cpf,
@@ -222,7 +222,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf));
-
             $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
 
             if (!empty ($sgcAcessoBuscaCpfArray)) {
@@ -232,7 +231,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             } else {
                 $sgcAcessoBuscaEmail = $sgcAcesso->buscar(array("Email = ?" => $post->email));
                 $sgcAcessoBuscaEmailArray = $sgcAcessoBuscaEmail->toArray();
-
                 if (!empty ($sgcAcessoBuscaEmailArray)) {
 //                    parent::message("E-mail j&aacute; cadastrado", "/autenticacao/index/cadastrarusuario", "ALERT");
                     $this->_helper->viewRenderer->setNoRender(true);
