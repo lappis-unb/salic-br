@@ -55,7 +55,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ,'t.cdsegmento'
         );
 
-        $sql = $db->select()->distinct()->from(array('a' => 'agentes'), $a, $schemaAgentes)
+        $sql = $db->select()->distinct()->from(array('a' => 'Agentes'), $a, $schemaAgentes)
             ->joinLeft(array('n' => 'nomes'), 'n.idagente = a.idagente', array('n.descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'endereconacional'), 'e.idagente = a.idagente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', array('*', 'm.descricao as dscidade'), $schemaAgentes)
@@ -108,12 +108,12 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(array('a' => 'Agentes'), $a, 'AGENTES.dbo')
-            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'AGENTES.dbo')
-            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'AGENTES.dbo')
-            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'AGENTES.dbo')
-            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'AGENTES.dbo')
-            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'AGENTES.dbo')
+            ->from(array('a' => 'Agentes'), $a, 'agentes.dbo')
+            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes.dbo')
+            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes.dbo')
+            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes.dbo')
+            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes.dbo')
+            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes.dbo')
             ->where('a.TipoPessoa = 0 OR a.TipoPessoa = 1')
             ->where('n.TipoNome = 18 OR n.TipoNome = 19')
             ->where('vis.Visao = 198')
@@ -188,11 +188,11 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(array('E' => 'EnderecoNacional'), $e, 'AGENTES.dbo')
-            ->joinLeft(array('VE' => 'Verificacao'), 'VE.idVerificacao = E.TipoEndereco', $ve, 'AGENTES.dbo')
-            ->joinLeft(array('M' => 'Municipios'), 'M.idMunicipioIBGE = E.Cidade', $m, 'AGENTES.dbo')
-            ->joinLeft(array('U' => 'UF'), 'U.idUF = E.UF', $u, 'AGENTES.dbo')
-            ->joinLeft(array('VL' => 'Verificacao'), 'VL.idVerificacao = E.TipoLogradouro', array('VL.Descricao as dsTipoLogradouro'), 'AGENTES.dbo')
+            ->from(array('E' => 'EnderecoNacional'), $e, 'agentes.dbo')
+            ->joinLeft(array('VE' => 'Verificacao'), 'VE.idVerificacao = E.TipoEndereco', $ve, 'agentes.dbo')
+            ->joinLeft(array('M' => 'Municipios'), 'M.idMunicipioIBGE = E.Cidade', $m, 'agentes.dbo')
+            ->joinLeft(array('U' => 'UF'), 'U.idUF = E.UF', $u, 'agentes.dbo')
+            ->joinLeft(array('VL' => 'Verificacao'), 'VL.idVerificacao = E.TipoLogradouro', array('VL.Descricao as dsTipoLogradouro'), 'agentes.dbo')
             ->where('E.idAgente = ?', $idAgente)
             ->order(array('Status DESC'))
             ;
@@ -267,7 +267,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from(array('tl' => 'telefones'), $tl, $tblAgentes->getSchema('agentes'))
             ->join(array('uf' => 'uf'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $tblAgentes->getSchema('agentes'))
-            ->join(array('ag' => 'agentes'), 'ag.idagente = tl.idagente', array('ag.idagente'), $tblAgentes->getSchema('agentes'))
+            ->join(array('ag' => 'Agentes'), 'ag.idagente = tl.idagente', array('ag.idagente'), $tblAgentes->getSchema('agentes'))
             ->joinLeft(array('ddd' => 'ddd'), 'tl.ddd = ddd.codigo', $ddd, $tblAgentes->getSchema('agentes'))
             ->joinLeft(array('v' => 'verificacao'), 'v.idverificacao = tl.tipotelefone', array('v.descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
             ;
@@ -290,7 +290,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $insert = $db->insert(GenericModel::getStaticTableName('agentes', 'agentes'), $dados); // cadastra
+        $insert = $db->insert(GenericModel::getStaticTableName('agentes', 'Agentes'), $dados); // cadastra
 
         if ($insert)
         {
@@ -352,9 +352,9 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
 
 
-        $where = "idAgente = " . $idAgente; // condicao para alteracao
+        $where = "idAgente = {$idAgente}"; // condicao para alteracao
 
-        $update = $db->update('AGENTES.dbo.Agentes', $dados, $where); // altera
+        $update = $db->update('agentes.dbo.Agentes', $dados, $where); // altera
 
         if ($update)
         {
@@ -378,7 +378,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $insert = $db->insert('AGENTES.dbo.Vinculacao', $dados); // cadastra
+        $insert = $db->insert('agentes.dbo.Vinculacao', $dados); // cadastra
 
         return ($insert) ? true : false;
     }

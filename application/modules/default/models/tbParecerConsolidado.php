@@ -124,13 +124,13 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
                             array('ag'=>'Agentes'),
                             'ag.CNPJCPF = usu.usu_identificacao',
                             array('ag.idAgente'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = ag.idAgente',
                             array('Nome'=>'nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('uog'=>'UsuariosXOrgaosXGrupos'),

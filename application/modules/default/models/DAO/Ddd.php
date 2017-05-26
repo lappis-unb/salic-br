@@ -13,7 +13,7 @@
  */
 class Ddd extends MinC_Db_Table_Abstract
 {
-	protected $_name = 'AGENTES.dbo.DDD'; // nome da tabela
+	protected $_name = 'agentes.dbo.DDD'; // nome da tabela
 
 
 	/**
@@ -24,10 +24,10 @@ class Ddd extends MinC_Db_Table_Abstract
 	 */
 	public function buscar($idUF)
 	{
-		$sql = "SELECT AGENTES.dbo.DDD.idDDD AS id, AGENTES.dbo.DDD.Codigo AS descricao ";
-		$sql.= "FROM AGENTES.dbo.DDD ";
-		$sql.= "WHERE AGENTES.dbo.DDD.idUF = " . $idUF . " ";
-		$sql.= "ORDER BY AGENTES.dbo.DDD.Codigo;";
+		$sql = "SELECT agentes.dbo.DDD.idDDD AS id, agentes.dbo.DDD.Codigo AS descricao ";
+		$sql.= "FROM agentes.dbo.DDD ";
+		$sql.= "WHERE agentes.dbo.DDD.idUF = " . $idUF . " ";
+		$sql.= "ORDER BY agentes.dbo.DDD.Codigo;";
 
 		try {
 			$db = Zend_Db_Table::getDefaultAdapter();

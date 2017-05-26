@@ -20,7 +20,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function buscarPais() {
-        $sql = "SELECT * FROM AGENTES.dbo.Pais";
+        $sql = "SELECT * FROM agentes.dbo.Pais";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -182,12 +182,12 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
 
 			FROM
 			    SAC.dbo.tbDeslocamento de
-			   	LEFT JOIN AGENTES.dbo.Pais paO		 ON de.idPaisOrigem = paO.idPais
-			    LEFT JOIN AGENTES.dbo.UF ufO		 ON de.idUFOrigem = ufO.idUF
-			    LEFT JOIN AGENTES.dbo.Municipios muO ON de.idMunicipioOrigem = muO.idMunicipioIBGE
-			    LEFT JOIN AGENTES.dbo.Pais paD		 ON de.idPaisDestino = paD.idPais
-			    LEFT JOIN AGENTES.dbo.UF ufD		 ON de.idUFDestino = ufD.idUF
-			    LEFT JOIN AGENTES.dbo.Municipios muD ON de.idMunicipioDestino = muD.idMunicipioIBGE
+			   	LEFT JOIN agentes.dbo.Pais paO		 ON de.idPaisOrigem = paO.idPais
+			    LEFT JOIN agentes.dbo.UF ufO		 ON de.idUFOrigem = ufO.idUF
+			    LEFT JOIN agentes.dbo.Municipios muO ON de.idMunicipioOrigem = muO.idMunicipioIBGE
+			    LEFT JOIN agentes.dbo.Pais paD		 ON de.idPaisDestino = paD.idPais
+			    LEFT JOIN agentes.dbo.UF ufD		 ON de.idUFDestino = ufD.idUF
+			    LEFT JOIN agentes.dbo.Municipios muD ON de.idMunicipioDestino = muD.idMunicipioIBGE
 			WHERE
 			    {$meuWhere}
                             $meuOrder";

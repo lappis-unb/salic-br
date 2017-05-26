@@ -58,7 +58,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("e" => "Nomes")
 			,"b.idFornecedor = e.idAgente"
 			,array('Descricao as Fornecedor')
-            ,"Agentes.dbo"
+            ,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("f" => "tbArquivo")
@@ -143,7 +143,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                 array("e" => "Nomes")
                 ,"b.idFornecedor = e.idAgente"
                 ,array()
-                ,"Agentes.dbo"
+                ,"agentes.dbo"
             );
             $select->joinLeft(
                 array("f" => "tbArquivo")
@@ -155,7 +155,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                 array("g" => "Agentes")
                 ,"b.idFornecedor = g.idAgente"
                 ,array()
-                ,"Agentes.dbo"
+                ,"agentes.dbo"
             );
 
             $select->where("c.idPronac = ?", $idPronac);
@@ -178,8 +178,8 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			,array(
                 new Zend_Db_Expr("
                     c.idPlanilhaAprovacao,
-                    Agentes.dbo.fnUFAgente(idFornecedor) AS UFFornecedor,
-                    Agentes.dbo.fnMunicipioAgente(idFornecedor) AS MunicipioFornecedor,
+                    agentes.dbo.fnUFAgente(idFornecedor) AS UFFornecedor,
+                    agentes.dbo.fnMunicipioAgente(idFornecedor) AS MunicipioFornecedor,
                     c.idPronac,
                     d.Descricao AS Item,
                     g.CNPJCPF,
@@ -214,7 +214,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("e" => "Nomes")
 			,"b.idFornecedor = e.idAgente"
 			,array()
-            ,"Agentes.dbo"
+            ,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("f" => "tbArquivo")
@@ -226,7 +226,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("g" => "Agentes")
 			,"b.idFornecedor = g.idAgente"
 			,array()
-            ,"Agentes.dbo"
+            ,"agentes.dbo"
 		);
 
         //Altera��o realizada no dia 25/02/2016 a pedido da area demandante.
@@ -250,8 +250,8 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("a" => $this->_name)
 			,array(
                 new Zend_Db_Expr("
-                    Agentes.dbo.fnUFAgente(idFornecedor) AS UFFornecedor,
-                    Agentes.dbo.fnMunicipioAgente(idFornecedor) AS MunicipioFornecedor,
+                    agentes.dbo.fnUFAgente(idFornecedor) AS UFFornecedor,
+                    agentes.dbo.fnMunicipioAgente(idFornecedor) AS MunicipioFornecedor,
                     SUM(b.vlComprovacao) as vlPagamento
                 ")
             )
@@ -279,14 +279,14 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("g" => "Agentes")
 			,"b.idFornecedor = g.idAgente"
 			,array()
-            ,"Agentes.dbo"
+            ,"agentes.dbo"
 		);
 
         $select->where("c.idPronac = ?", $idPronac);
 
-		$select->order("Agentes.dbo.fnUFAgente(idFornecedor)");
-		$select->order("Agentes.dbo.fnMunicipioAgente(idFornecedor)");
-		$select->group("Agentes.dbo.fnUFAgente(idFornecedor), Agentes.dbo.fnMunicipioAgente(idFornecedor)");
+		$select->order("agentes.dbo.fnUFAgente(idFornecedor)");
+		$select->order("agentes.dbo.fnMunicipioAgente(idFornecedor)");
+		$select->group("agentes.dbo.fnUFAgente(idFornecedor), agentes.dbo.fnMunicipioAgente(idFornecedor)");
 		
         return $this->fetchAll($select);
 	}
@@ -428,11 +428,11 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         );
         $a->joinInner(
                 array('b' => 'Agentes'), "a.CgcCpfMecena = b.CNPJCpf",
-                array(), 'AGENTES.dbo'
+                array(), 'agentes.dbo'
         );
         $a->joinInner(
                 array('c' => 'Nomes'), "b.idAgente = c.idAgente",
-                array(), 'AGENTES.dbo'
+                array(), 'agentes.dbo'
         );
         $a->where('a.AnoProjeto+a.Sequencial = (SELECT x.Anoprojeto+x.Sequencial FROM SAC.dbo.Projetos x WHERE x.idPronac = ? )', $idPronac);
         $a->group(array('a.CgcCpfMecena','c.Descricao'));

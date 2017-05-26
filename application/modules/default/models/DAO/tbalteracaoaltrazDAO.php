@@ -28,7 +28,7 @@ class tbalteracaoaltrazDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idagente = ".$idagente;
-        $alterar = $db->update("AGENTES.dbo.Nomes", $dados, $where);
+        $alterar = $db->update("agentes.dbo.Nomes", $dados, $where);
 
         if ($alterar)
         {

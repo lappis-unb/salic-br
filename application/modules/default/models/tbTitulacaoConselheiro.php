@@ -18,7 +18,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
                             array('nm'=>'Nomes'),
                             'tc.idAgente = nm.idAgente',
                             array('nm.idAgente','Nome'=>'nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->order('nm.Descricao');
 
@@ -64,7 +64,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b'=>'Agentes'), 'a.idAgente = b.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $select->joinInner(
             array('c'=>'Usuarios'), 'c.usu_identificacao = b.CNPJCPF',

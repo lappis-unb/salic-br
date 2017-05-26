@@ -74,13 +74,13 @@ class Licitacao extends MinC_Db_Table_Abstract {
                     array('u'=>'UF'),
                     'lic.UF = u.idUF',
                     array('Descricao as dsEstado'),
-                    'AGENTES.dbo'
+                    'agentes.dbo'
                );
         $slct->joinInner(
                     array('m'=>'Municipios'),
                     'lic.cdMunicipio = m.idMunicipioIBGE',
                     array('Descricao as dsMunicipio'),
-                    'AGENTES.dbo'
+                    'agentes.dbo'
                );
         $slct->where('idlicitacao = ?',$idLicitacao);
 

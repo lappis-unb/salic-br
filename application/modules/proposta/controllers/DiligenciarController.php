@@ -103,7 +103,7 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         $usu_identificacao = trim($idagente['usu_identificacao']);
         $idagente = $idagente['idAgente'];
 
-        $utl = $diligenciaDAO->buscarUltDiligencia(array('idPronac = ?' => $this-> idPronac, 'stEnviado = ?' => 'N', 'stEstado  = ?' => 0, 'idSolicitante = ?' => new Zend_Db_Expr("isnull((SELECT usu_codigo FROM tabelas..usuarios WHERE usu_identificacao='".$usu_identificacao."'), (SELECT idAgente FROM Agentes.dbo.Agentes WHERE CNPJCPF='".$usu_identificacao."'))")))->current();
+        $utl = $diligenciaDAO->buscarUltDiligencia(array('idPronac = ?' => $this-> idPronac, 'stEnviado = ?' => 'N', 'stEstado  = ?' => 0, 'idSolicitante = ?' => new Zend_Db_Expr("isnull((SELECT usu_codigo FROM tabelas..usuarios WHERE usu_identificacao='".$usu_identificacao."'), (SELECT idAgente FROM agentes.dbo.Agentes WHERE CNPJCPF='".$usu_identificacao."'))")))->current();
         if(count($utl) > 0) {
             $this->view->ultimo     = $utl;
         }

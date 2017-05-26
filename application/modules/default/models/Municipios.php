@@ -92,7 +92,7 @@ class Municipios extends MinC_Db_Table_Abstract
             ->order('Descricao');
 
         //$sql = "SELECT idMunicipioIBGE AS id, Descricao AS descricao ";
-        //$sql.= "FROM AGENTES.dbo.Municipios ";
+        //$sql.= "FROM agentes.dbo.Municipios ";
         //$sql.= "WHERE idUFIBGE = " . $idUF . " ";
         //$sql.= "ORDER BY Descricao;";
 

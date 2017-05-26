@@ -157,7 +157,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->from(array('dpc' => $this->_name), array('dpc.IdPRONAC')
         );
         $select->joinInner(
-                array('nm' => 'nomes'), 'dpc.idAgente = nm.idAgente', array('nm.Descricao as nome'), 'Agentes.dbo'
+                array('nm' => 'nomes'), 'dpc.idAgente = nm.idAgente', array('nm.Descricao as nome'), 'agentes.dbo'
         );
         $select->where('dpc.idPronac = ?', $idpronac);
 
@@ -200,7 +200,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
                 ), 'SAC.dbo'
         );
         $select->joinInner(
-                array('tc' => 'tbTitulacaoConselheiro'), 'tc.idAgente = SDPC.idAgente', array(), 'Agentes.dbo'
+                array('tc' => 'tbTitulacaoConselheiro'), 'tc.idAgente = SDPC.idAgente', array(), 'agentes.dbo'
         );
         $select->where('pr.Situacao = ? ', 'C10');
         $select->where('SDPC.stDistribuicao = ? ', 'A');
@@ -214,7 +214,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
 //        SELECT SDPC.idAgente,  COUNT(SDPC.idPronac) as QTD
 //FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao SDPC
 //INNER JOIN SAC.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
-//INNER JOIN Agentes.dbo.tbTitulacaoConselheiro tc on tc.idAgente = SDPC.idAgente
+//INNER JOIN agentes.dbo.tbTitulacaoConselheiro tc on tc.idAgente = SDPC.idAgente
 //WHERE pr.Situacao = 'C10' AND SDPC.stDistribuicao = 'A' and tc.cdArea='6'
 //and not exists (select idpronac from BDCORPORATIVO.scSAC.tbPauta where idpronac = SDPC.idPronac)
 //group by SDPC.idAgente

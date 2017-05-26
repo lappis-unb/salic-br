@@ -3,9 +3,9 @@
 class Natureza extends MinC_Db_Table_Abstract
 {
     //protected $_name = 'AGENTE.dbo.Natureza';
-    protected $_banco = 'AGENTES';
+    protected $_banco = 'agentes';
     protected $_name  = 'Natureza';
-    protected  $_schema = 'AGENTES';
+    protected  $_schema = 'agentes';
 
     /**
      * Retorna registros do banco de dados referente a Agentes(Proponente)
@@ -51,7 +51,7 @@ class Natureza extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Agentes'), 'b.idAgente = a.idAgente',
-            array(''), 'AGENTES.dbo'
+            array(''), 'agentes.dbo'
         );
         
         $select->where('b.CNPJCPF = ?', $cnpjcpf);

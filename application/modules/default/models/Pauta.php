@@ -129,7 +129,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                 array('nm' => 'Nomes'),
                 "nm.idAgente = dpc.idAgente",
                 array('Descricao as nomeComponente'),
-                'AGENTES'
+                'agentes'
         );
         $slct->where('tp.idNrReuniao = ?', $idNrReuniao);
         $slct->where('par.stAtivo = ?', 1);

@@ -1,59 +1,24 @@
 <?php
 
-/**
- * Class Agente_Model_DbTable_Agentes
- *
- * @name Agente_Model_DbTable_Agentes
- * @package Modules/Agente
- * @subpackage Models/DbTable
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 01/09/2016
- *
- * @link http://salic.cultura.gov.br
- *
-    idAgente
-    CNPJCPF
-    CNPJCPFSuperior
-    TipoPessoa
-    DtCadastro
-    DtAtualizacao
-    DtValidade
-    Status
-    Usuario
- */
 class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 {
     /**
-     * _banco
-     *
-     * @var bool
-     * @access protected
+     * @var bool $_banco
      */
     protected $_banco = 'agentes';
 
     /**
-     * _name
-     *
-     * @var bool
-     * @access protected
+     * @var bool $_name
      */
-    protected $_name = 'agentes';
+    protected $_name = 'Agentes';
 
     /**
-     * _schema
-     *
-     * @var string
-     * @access protected
+     * @var string $_schema
      */
     protected $_schema = 'agentes';
 
     /**
-     * _primary
-     *
-     * @var bool
-     * @access protected
+     * @var bool $_primary
      */
     protected $_primary = 'idAgente';
 
@@ -68,11 +33,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
      */
     public function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {
-//        $agentes = new Agente_Model_Agentes();
-//        $agentesM = new Agente_Models_Mapper_Agentes();
         $agentesM = new Agente_Model_DbTable_Agentes();
-//        $agentesM = new Agente_Model_Mapper_Agentes();
-//        $db = Zend_Db_Table::getDefaultAdapter();
 
         $schemaAgentes = parent::getSchema('agentes');
         $schemaSac = parent::getSchema('sac');
@@ -111,7 +72,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $select = $this->select()
             ->setIntegrityCheck(false)
             ->distinct()
-            ->from(array('a' => 'agentes'), $a, $schemaAgentes)
+            ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
             ->joinLeft(array('n' => 'nomes'), 'n.idagente = a.idagente', array('n.descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'endereconacional'), 'e.idagente = a.idagente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
@@ -553,7 +514,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $dadosWhere["c.idCodigoSegmento = ?"] = $idSegmento;
         $dadosWhere["c.idverificacao = ?"] = 251;
         $dadosWhere["u.org_superior = ?"] = $idOrgao;
-        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE ".$this->getDate()." BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
+        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM agentes.dbo.tbAusencia WHERE ".$this->getDate()." BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
 
         foreach ($dadosWhere as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -579,11 +540,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->distinct();
         $slct->from(
             array('a' => $this->_name),
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $slct->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array('u.usu_codigo AS id', 'n.Descricao AS nome'), 'AGENTES.dbo'
+            array('u.usu_codigo AS id', 'n.Descricao AS nome'), 'agentes.dbo'
         );
         $slct->joinInner(
             array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_Identificacao AND sis_codigo = 21 AND (gru_codigo = 94 OR gru_codigo = 105)',
@@ -591,11 +552,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(
             array('v' => 'Visao'), 'n.idAgente = v.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $slct->joinInner(
             array('c' => 'tbCredenciamentoParecerista'), 'a.idAgente = c.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
 
         $dadosWhere["v.Visao = ?"] = 209;
@@ -604,7 +565,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $dadosWhere["c.idCodigoSegmento = ?"] = $idSegmento;
         $dadosWhere["u.org_superior = ?"] = 91;
         $dadosWhere["u.usu_orgao = ?"] = $idOrgao;  // especificidade do IPHAN - puxa codigo do orgao 
-        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE ".$this->getDate()." BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
+        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM agentes.dbo.tbAusencia WHERE ".$this->getDate()." BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
         
         foreach ($dadosWhere as $coluna => $valor) {
             $slct->where($coluna, $valor);

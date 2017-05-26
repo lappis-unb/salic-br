@@ -2517,9 +2517,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                      then '2'
                                   end as Utilidade
                             FROM SAC.dbo.vCadastrarProponente p
-                           INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
-                           INNER JOIN Agentes.dbo.EnderecoNacional e on (p.idAgente = e.idAgente and e.Status = 1)
-                           INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
+                           INNER JOIN agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
+                           INNER JOIN agentes.dbo.EnderecoNacional e on (p.idAgente = e.idAgente and e.Status = 1)
+                           INNER JOIN agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
                             LEFT JOIN  SAC.dbo.vwNatureza n on (p.idAgente =n.idAgente)
                            WHERE p.CNPJCPF='{$cnpjcpf}'
                              AND Correspondencia = 1";
@@ -2558,10 +2558,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                                        then '2'
                                                     end
                                         FROM SAC.dbo.Interessado i
-                                             INNER JOIN Agentes.dbo.Agentes a on (i.CgcCpf = a.CNPJCPF)
-                                             INNER JOIN Agentes.dbo.Nomes            b on (a.idAgente = b.idAgente)
-                                             INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
-                                             INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
+                                             INNER JOIN agentes.dbo.Agentes a on (i.CgcCpf = a.CNPJCPF)
+                                             INNER JOIN agentes.dbo.Nomes            b on (a.idAgente = b.idAgente)
+                                             INNER JOIN agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
+                                             INNER JOIN agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
                                               LEFT JOIN SAC.dbo.vwNatureza n on (a.idAgente =n.idAgente)
                                              WHERE i.CGCCPF='{$cnpjcpf}' and e.Status = 1";
         }
@@ -2606,9 +2606,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                    '{$providenciaTomada}', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
                                    SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
                                    FROM SAC.dbo.PreProjeto p
-                                   INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
-                                   INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
-                                   INNER JOIN Agentes.dbo.UF u on (e.UF = u.idUF)
+                                   INNER JOIN agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
+                                   INNER JOIN agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
+                                   INNER JOIN agentes.dbo.UF u on (e.UF = u.idUF)
                                    WHERE idPreProjeto  = {$idPreProjeto}
                                      AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
 

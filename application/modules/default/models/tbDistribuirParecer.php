@@ -69,8 +69,8 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 				d.idAgenteParecerista, age.CNPJCPF, nm.Descricao AS Parecerista
 				 FROM sac.dbo.tbDistribuirParecer AS d
 				 INNER JOIN sac.dbo.Produto AS p ON d.idProduto = p.Codigo
-				 INNER JOIN AGENTES.dbo.agentes AS age ON age.idAgente = d.idAgenteParecerista
-				 INNER JOIN AGENTES.dbo.Nomes AS nm ON nm.idAgente = d.idAgenteParecerista
+				 INNER JOIN agentes.dbo.Agentes AS age ON age.idAgente = d.idAgenteParecerista
+				 INNER JOIN agentes.dbo.Nomes AS nm ON nm.idAgente = d.idAgenteParecerista
 				 INNER JOIN TABELAS.dbo.usuarios AS usu ON usu.usu_identificacao = age.CNPJCPF
 				 WHERE (idPronac = '$idPronac') and d.idOrgao = $codOrgao and SAC.dbo.fnNomeUsuario(d.idUsuario) is not null";
 
@@ -117,9 +117,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 array('p' => 'Produto'), 'd.idProduto = p.Codigo', array('Descricao as dsProduto')
         );
 
-        $select->joinInner(array("age" => "agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "AGENTES.dbo");
+        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes.dbo");
 
-        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "AGENTES.dbo");
+        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes.dbo");
 
         $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS.dbo'
         );
@@ -163,9 +163,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 array('p' => 'Produto'), 'd.idProduto = p.Codigo', array('Descricao as dsProduto')
         );
 
-        $select->joinInner(array("age" => "agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "AGENTES.dbo");
+        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes.dbo");
 
-        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "AGENTES.dbo");
+        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes.dbo");
 
         $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS.dbo'
         );
@@ -378,7 +378,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
                 $select->joinLeft(
                         array('pp' => 'tbPagamentoParecerista'),'pp.idProduto = t.idDistribuirParecer',
-                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'AGENTES.dbo'
+                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'agentes.dbo'
                 );
 
                 $select->joinInner(
@@ -470,7 +470,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
                 $select->joinLeft(
                         array('pp' => 'tbPagamentoParecerista'),'pp.idProduto = t.idDistribuirParecer',
-                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'AGENTES.dbo'
+                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'agentes.dbo'
                 );
 
                 $select->joinInner(
@@ -764,13 +764,13 @@ public function aguardandoparecerresumo($where) {
                 array("ag" => "Agentes")
                 ,"ag.idAgente = dp.idAgenteParecerista"
                 ,array('ag.idAgente')
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
                 ,"nm.idAgente = dp.idAgenteParecerista"
                 ,array('nmParecerista'=>'nm.Descricao')
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
@@ -869,13 +869,13 @@ public function aguardandoparecerresumo($where) {
                 array("ag" => "Agentes")
                 ,"ag.idAgente = dp.idAgenteParecerista"
                 ,array('ag.idAgente')
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
                 ,"nm.idAgente = dp.idAgenteParecerista"
                 ,array('nmParecerista'=>'nm.Descricao')
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
@@ -983,13 +983,13 @@ public function aguardandoparecerresumo($where) {
                 array("ag" => "Agentes")
                 ,"ag.idAgente = dp.idAgenteParecerista"
                 ,array()
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
                 ,"nm.idAgente = dp.idAgenteParecerista"
                 ,array()
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
@@ -1197,7 +1197,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "ag.idAgente"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
@@ -1205,7 +1205,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "nmParecerista"=>"nm.Descricao"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinLeft(
                 array("cp" => "tbCredenciamentoParecerista")
@@ -1214,7 +1214,7 @@ public function analisePorParecerista($where){
                 "nmParecerista"=>"nm.Descricao",
                 "qtPonto"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinLeft(
                 array("ar" => "Area")
@@ -1240,7 +1240,7 @@ public function analisePorParecerista($where){
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
@@ -1296,13 +1296,13 @@ public function analisePorParecerista($where){
                     array('ag'=>'Agentes'),
                     'ag.idAgente = dp.idAgenteParecerista',
                     array(),
-                    'AGENTES.dbo'
+                    'agentes.dbo'
                     );
             $slct->joinInner(
                     array('nm'=>'Nomes'),
                     'nm.idAgente = dp.idAgenteParecerista',
                     array('nm.idAgente','Nome'=>'nm.Descricao'),
-                    'AGENTES.dbo'
+                    'agentes.dbo'
                     );
             $slct->joinInner(
                     array('usu'=>'Usuarios'),
@@ -1356,11 +1356,11 @@ public function analisePorParecerista($where){
            /* $slct->joinInner(array('ag2'=>'Agentes'),
                             'ag2.CNPJCPF = usu2.usu_identificacao',
                             array('idAgente2'=>'ag2.idAgente'),
-                            'AGENTES.dbo');*/
+                            'agentes.dbo');*/
             /*$slct->joinInner(array('nm2'=>'Nomes'),
                              'nm2.idAgente = ag2.idAgente',
                             array('Nome2'=>'nm2.Descricao'),
-                            'AGENTES.dbo');*/
+                            'agentes.dbo');*/
 
             /*foreach ($where as $coluna => $valor) {
                 $slct->where($coluna, $valor);
@@ -1415,7 +1415,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "ag.idAgente"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
@@ -1423,7 +1423,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "nmParecerista"=>"nm.Descricao"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinLeft(
                 array("cp" => "tbCredenciamentoParecerista")
@@ -1432,7 +1432,7 @@ public function analisePorParecerista($where){
                 "nmParecerista"=>"nm.Descricao",
                 "qtPonto"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinLeft(
                 array("ar" => "Area")
@@ -1458,7 +1458,7 @@ public function analisePorParecerista($where){
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
@@ -1552,7 +1552,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "ag.idAgente"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
@@ -1560,7 +1560,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "nmParecerista"=>"nm.Descricao"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinLeft(
                 array("cp" => "tbCredenciamentoParecerista")
@@ -1569,7 +1569,7 @@ public function analisePorParecerista($where){
                 "nmParecerista"=>"nm.Descricao",
                 "qtPonto"
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinLeft(
                 array("ar" => "Area")
@@ -1595,7 +1595,7 @@ public function analisePorParecerista($where){
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
                 )
-                ,'AGENTES.dbo'
+                ,'agentes.dbo'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")

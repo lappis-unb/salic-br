@@ -52,12 +52,12 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                 ->joinInner(array('a' => 'Agentes'),
                         "a.CNPJCPF = pr.CgcCpf",
                         array('idAgente'),
-                        'Agentes.dbo'
+                        'agentes.dbo'
                 )
                 ->joinInner(array('nm' => 'Nomes'),
                         "a.idAgente = nm.idAgente",
                         array('Descricao as Nome'),
-                        "Agentes.dbo"
+                        "agentes.dbo"
                 )
                 ->joinLeft(array('seg' => 'Segmento'),
                         "seg.Codigo = pr.Segmento",
@@ -103,7 +103,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "Agentes.dbo"
+                        "agentes.dbo"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
@@ -160,7 +160,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "Agentes.dbo"
+                        "agentes.dbo"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
@@ -192,10 +192,10 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
     }
 
     public function buscarProdutosIndex($idPronac) {
-        $sql = "SELECT  TOP 1   SAC.dbo.Projetos.IdPRONAC, AGENTES.dbo.Agentes.idAgente, AGENTES.dbo.Agentes.TipoPessoa, SAC.dbo.Produto.Descricao, SAC.dbo.Produto.Codigo AS idProduto
+        $sql = "SELECT  TOP 1   SAC.dbo.Projetos.IdPRONAC, agentes.dbo.Agentes.idAgente, agentes.dbo.Agentes.TipoPessoa, SAC.dbo.Produto.Descricao, SAC.dbo.Produto.Codigo AS idProduto
 FROM         SAC.dbo.Projetos INNER JOIN
                       SAC.dbo.PreProjeto ON SAC.dbo.Projetos.idProjeto = SAC.dbo.PreProjeto.idPreProjeto INNER JOIN
-                      AGENTES.dbo.Agentes ON SAC.dbo.PreProjeto.idAgente = AGENTES.dbo.Agentes.idAgente INNER JOIN
+                      agentes.dbo.Agentes ON SAC.dbo.PreProjeto.idAgente = agentes.dbo.Agentes.idAgente INNER JOIN
                       SAC.dbo.PlanoDistribuicaoProduto ON SAC.dbo.PreProjeto.idPreProjeto = SAC.dbo.PlanoDistribuicaoProduto.idProjeto INNER JOIN
                       SAC.dbo.Produto ON SAC.dbo.PlanoDistribuicaoProduto.idProduto = SAC.dbo.Produto.Codigo
 WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoProduto.stPlanoDistribuicaoProduto = 1 Order by SAC.dbo.Projetos.IdPRONAC Desc ";
@@ -247,12 +247,12 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                 ->joinInner(array('uf' => 'UF'),
                         'tpa.idUFDespesa = uf.idUF',
                         array('uf.Descricao as uf'),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                 )
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
                         array('mun.Descricao as Municipio'),
-                        'AGENTES.dbo'
+                        'agentes.dbo'
                 )
                 ->joinInner(array('vf' => 'Verificacao'),
                         'tpa.nrFonteRecurso = vf.idVerificacao',
@@ -318,12 +318,12 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                 ->joinInner(array('uf' => 'UF'),
                         'tpa.idUFDespesa = uf.idUF',
                         array('uf.Descricao as uf'),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                 )
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
                         array('mun.Descricao as Municipio'),
-                        'AGENTES.dbo'
+                        'agentes.dbo'
                 )
                 ->joinInner(array('vf' => 'Verificacao'),
                         'tpa.nrFonteRecurso = vf.idVerificacao',
@@ -702,7 +702,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                 array('ag' => 'Agentes'),
                                                 'ag.CNPJCPF = pr.CgcCpf',
                                                 array(),
-                                                'Agentes.dbo'
+                                                'agentes.dbo'
                                         )
                                         ->where('pr.IdPRONAC = ?', $idPronac)
                                         ->where('pdp.stPlanoDistribuicaoProduto = ?', 1);
@@ -754,7 +754,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                     'ag.TipoPessoa',
                                             'ag.idAgente',
                                                 ),
-                                                'Agentes.dbo'
+                                                'agentes.dbo'
                                         )
                                         
                                         ->where('tpa.IdPRONAC = ?', $idPronac);
@@ -801,7 +801,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "Agentes.dbo"
+                        "agentes.dbo"
                 );
         //$slctItens->where("tpPlanilha = ?", 'SR');
         $slctItens->where('tpa.idPronac = ?', $idPronac);
@@ -857,7 +857,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     }
 
     public function buscarUF() {
-        $sql = "select idUF,Sigla,Descricao,Regiao from AGENTES.dbo.UF order by 3 asc";
+        $sql = "select idUF,Sigla,Descricao,Regiao from agentes.dbo.UF order by 3 asc";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -865,7 +865,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     }
 
     public static function buscarMunicipio($iduf) {
-        $sql = "select idMunicipioIBGE, idUFIBGE, Descricao from AGENTES.dbo.Municipios where idUFIBGE = $iduf";
+        $sql = "select idMunicipioIBGE, idUFIBGE, Descricao from agentes.dbo.Municipios where idUFIBGE = $iduf";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

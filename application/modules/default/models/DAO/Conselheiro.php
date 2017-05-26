@@ -12,7 +12,7 @@
 
 class Conselheiro extends Zend_Db_Table
 {
-	protected $_name = 'AGENTES.dbo.Agentes'; // nome da tabela
+	protected $_name = 'agentes.dbo.Agentes'; // nome da tabela
 
 
 
@@ -48,15 +48,15 @@ class Conselheiro extends Zend_Db_Table
 		$sql.= "	SA.Descricao dsArea, ";
 		$sql.= "	T.cdSegmento, ";
 		$sql.= "	SS.Descricao dsSegmento ";
-		$sql.= "FROM AGENTES.dbo.Agentes A, ";
-		$sql.= "	AGENTES.dbo.Nomes N, ";
-		$sql.= "	AGENTES.dbo.EnderecoNacional E, ";
-		$sql.= "	AGENTES.dbo.Municipios M, ";
-		$sql.= "	AGENTES.dbo.UF U, ";
-		$sql.= "	AGENTES.dbo.Verificacao VE, ";
-		$sql.= "	AGENTES.dbo.Verificacao VL, ";
-		$sql.= "	AGENTES.dbo.tbTitulacaoConselheiro T, ";
-		$sql.= "	AGENTES.dbo.Visao V, ";
+		$sql.= "FROM agentes.dbo.Agentes A, ";
+		$sql.= "	agentes.dbo.Nomes N, ";
+		$sql.= "	agentes.dbo.EnderecoNacional E, ";
+		$sql.= "	agentes.dbo.Municipios M, ";
+		$sql.= "	agentes.dbo.UF U, ";
+		$sql.= "	agentes.dbo.Verificacao VE, ";
+		$sql.= "	agentes.dbo.Verificacao VL, ";
+		$sql.= "	agentes.dbo.tbTitulacaoConselheiro T, ";
+		$sql.= "	agentes.dbo.Visao V, ";
 		$sql.= "	SAC.dbo.Area SA, ";
 		$sql.= "	SAC.dbo.Segmento SS ";
 		$sql.= "WHERE V.idAgente = A.idAgente ";
@@ -154,25 +154,25 @@ class Conselheiro extends Zend_Db_Table
 
         public static function consultarNomeAgente($cnpjcpf) {
 
-            $sql = "select agentes.idAgente,
-                            agentes.CNPJCPF,
-                            agentes.CNPJCPFSuperior,
-                            agentes.TipoPessoa,
-                            agentes.DtCadastro,
-                            agentes.DtAtualizacao,
-                            agentes.DtValidade,
-                            agentes.Status,
-                            agentes.Usuario,
+            $sql = "select  Agentes.idAgente,
+                            Agentes.CNPJCPF,
+                            Agentes.CNPJCPFSuperior,
+                            Agentes.TipoPessoa,
+                            Agentes.DtCadastro,
+                            Agentes.DtAtualizacao,
+                            Agentes.DtValidade,
+                            Agentes.Status,
+                            Agentes.Usuario,
                             nomes.idNome,
                             nomes.idAgente,
                             nomes.TipoNome,
                             nomes.Descricao,
                             nomes.Status,
                             nomes.Usuario
-                    from AGENTES.dbo.Agentes agentes
-                    inner join AGENTES.dbo.Nomes nomes
-                    on agentes.idAgente = nomes.idAgente
-                    where agentes.CNPJCPF = '{$cnpjcpf}'";
+                    from agentes.dbo.Agentes Agentes
+                    inner join agentes.dbo.Nomes nomes
+                    on Agentes.idAgente = nomes.idAgente
+                    where Agentes.CNPJCPF = '{$cnpjcpf}'";
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_ASSOC);

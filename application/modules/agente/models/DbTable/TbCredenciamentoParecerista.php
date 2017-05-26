@@ -73,8 +73,8 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         return $this->fetchAll($select);
     }
 
-    //Select count(distinct idCodigoArea) as qtdArea from AGENTES..tbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
-	//Select count(distinct idCodigoSegmento) as qtdSeguimentos from AGENTES..tbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
+    //Select count(distinct idCodigoArea) as qtdArea from agentes.dbotbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
+	//Select count(distinct idCodigoSegmento) as qtdSeguimentos from agentes.dbotbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
     
     public function QtdArea($idAgente) 
     {
@@ -149,7 +149,7 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
     
     public function excluiCredenciamento($idCredenciamento)
 	{
-		$sql ="DELETE FROM Agentes.dbo.tbCredenciamentoParecerista WHERE idCredenciamentoParecerista = ".$idCredenciamento;
+		$sql ="DELETE FROM agentes.dbo.tbCredenciamentoParecerista WHERE idCredenciamentoParecerista = ".$idCredenciamento;
         
         $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

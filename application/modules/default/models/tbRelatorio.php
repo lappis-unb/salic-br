@@ -243,13 +243,13 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                             array('age'=>'Agentes'),
                             'age.idAgente = rel.idAgenteAvaliador',
                             array('age.idAgente'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'age.idAgente = nm.idAgente',
                             array('Nome'=>'nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('usu'=>'Usuarios'),

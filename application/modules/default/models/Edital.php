@@ -63,12 +63,12 @@ class Edital extends MinC_Db_Table_Abstract{
         $slct->joinInner(array('age' => 'Agentes'),
                 'age.idAgente = ava.idAvaliador',
                 array(''),
-                'Agentes.dbo'
+                'agentes.dbo'
         );
         $slct->joinInner(array('nom' => 'Nomes'),
                 'nom.idAgente = age.idAgente',
                 array('age.Descricao'),
-                'Agentes.dbo'
+                'agentes.dbo'
         );
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);

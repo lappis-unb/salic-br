@@ -32,7 +32,7 @@ class Proposta_Model_DbTable_DocumentosProjeto extends MinC_Db_Table_Abstract
         );
         $a->joinInner(
             array('ag' => 'Agentes'), "ag.idAgente = a1.idAgente",
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $a->joinInner(
             array('pr' => 'Projetos'), "pr.CgcCpf = ag.CNPJCPF",

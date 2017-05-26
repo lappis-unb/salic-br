@@ -75,13 +75,13 @@ class Dispensalicitacao extends MinC_Db_Table_Abstract {
                             array('ag'=>'Agentes'),
                             'dis.idAgente = ag.idAgente',
                             array('ag.idAgente','ag.CNPJCPF','ag.TipoPessoa'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = ag.idAgente',
                             array('nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);

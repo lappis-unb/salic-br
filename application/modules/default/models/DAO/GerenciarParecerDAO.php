@@ -168,12 +168,12 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 	{
 
 		$sql = "SELECT    n.idAgente AS idParecerista, n.Descricao AS Nome, u.org_superior AS idOrgao
-				FROM      AGENTES.dbo.Agentes AS a
-						INNER JOIN AGENTES.dbo.Nomes AS n ON a.idAgente = n.idAgente
+				FROM      agentes.dbo.Agentes AS a
+						INNER JOIN agentes.dbo.Nomes AS n ON a.idAgente = n.idAgente
 						INNER JOIN TABELAS.dbo.vwUsuariosOrgaosGrupos AS u ON a.CNPJCPF = u.usu_identificacao
 							AND u.sis_codigo = 21
 							AND (u.gru_codigo = 94 OR u.gru_codigo = 105)
-						INNER JOIN AGENTES.dbo.Visao AS v ON n.idAgente = v.idAgente
+						INNER JOIN agentes.dbo.Visao AS v ON n.idAgente = v.idAgente
 				WHERE     (v.Visao = 209) AND (n.TipoNome = 18)
 				AND u.org_superior=".$idOrgao." order by nome";
 

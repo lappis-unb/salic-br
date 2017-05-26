@@ -20,7 +20,7 @@ class AlteracaoNomeProjetoDAO extends Zend_Db_Table{
                     BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao aipa
                     inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao pt on pt.idPedidoAlteracao = aipa.idPedidoAlteracao
                     inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap on pap.idPedidoAlteracao = pt.idPedidoAlteracao
-                    inner join AGENTES.dbo.Nomes nom on nom.idAgente = aipa.idAgenteAvaliador
+                    inner join agentes.dbo.Nomes nom on nom.idAgente = aipa.idAgenteAvaliador
                 where
                     pap.IdPRONAC = {$idpedidoalteracao} and pt.tpAlteracaoProjeto = 5
                 ";

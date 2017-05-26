@@ -31,8 +31,8 @@ class HistoricoDAO extends Zend_Db_Table
         				Pr.IdPRONAC,
         				dsMensagem
 				from BDCORPORATIVO.scSAC.tbmensagemprojeto mp
-				left join Agentes.dbo.Nomes remetente on remetente.idAgente = mp.idRemetente
-				left join Agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestinatario
+				left join agentes.dbo.Nomes remetente on remetente.idAgente = mp.idRemetente
+				left join agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestinatario
 				left join SAC.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
  				where mp.stAtivo = 'A' and Pr.IdPRONAC = '$pronac'
 				order by mp.dtEncaminhamento desc ";

@@ -116,9 +116,9 @@ class PublicacaoDouDAO extends Zend_Db_Table
 		INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
 		INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
 		INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
-		INNER JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+		INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
 		INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
-		INNER JOIN AGENTES.dbo.Nomes N ON N.idAgente = Ag.idAgente
+		INNER JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente
 		where Ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = Pr.IdPRONAC)
 		and (Pr.Situacao = 'D27' OR Pr.Situacao = 'D28')
 		AND (Enq.Enquadramento = '1' OR Enq.Enquadramento = '2')
@@ -157,9 +157,9 @@ class PublicacaoDouDAO extends Zend_Db_Table
 							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
 							INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
 							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-							INNER JOIN AGENTES.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
-							INNER JOIN AGENTES.dbo.Nomes N ON N.idAgente = Ag.idAgente
+							INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+							INNER JOIN agentes.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
+							INNER JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente
 							INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
 						WHERE Ap.PortariaAprovacao = '" . $portaria . "' 
 						and Ap.DtPortariaAprovacao is not null
@@ -338,10 +338,10 @@ class PublicacaoDouDAO extends Zend_Db_Table
 							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
 							INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
 							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-							INNER JOIN AGENTES.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
+							INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+							INNER JOIN agentes.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
 							INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
-							INNER JOIN AGENTES.dbo.Nomes N ON N.idAgente = Ag.idAgente 
+							INNER JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente 
 							 ";
 
 
@@ -374,10 +374,10 @@ class PublicacaoDouDAO extends Zend_Db_Table
 							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
 							INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
 							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-							INNER JOIN AGENTES.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
+							INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+							INNER JOIN agentes.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
 							INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
-							LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = Ag.idAgente 
+							LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente 
 						WHERE (St.Codigo = 'D27' OR St.Codigo = 'D28')";
 
 
@@ -648,7 +648,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
 
     public static function buscaCargosPublicacao()
     {
-        $sql = "SELECT Descricao FROM Agentes.dbo.Verificacao WHERE idTipo=24 and sistema=21 ORDER BY Descricao";
+        $sql = "SELECT Descricao FROM agentes.dbo.Verificacao WHERE idTipo=24 and sistema=21 ORDER BY Descricao";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -657,7 +657,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
 
     public static function buscaNomesPublicacao()
     {
-        $sql = "SELECT Descricao FROM Agentes.dbo.Verificacao WHERE idTipo=26 and sistema=21 ORDER BY Descricao";
+        $sql = "SELECT Descricao FROM agentes.dbo.Verificacao WHERE idTipo=26 and sistema=21 ORDER BY Descricao";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

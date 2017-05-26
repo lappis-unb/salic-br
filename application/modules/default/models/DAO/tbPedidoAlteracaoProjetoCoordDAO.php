@@ -46,10 +46,10 @@ class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
         join SAC.dbo.Area ar on ar.Codigo = pr.Area
         join SAC.dbo.Segmento seg on seg.Codigo = pr.Segmento
         left join SAC.dbo.Abrangencia abrang on abrang.idProjeto = pr.idPronac AND abrang.stAbrangencia = 1 
-        left join AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = abrang.idMunicipioIBGE
+        left join agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abrang.idMunicipioIBGE
         left join BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto tap on tap.tpAlteracaoProjeto = pap.tpAlteracaoProjeto
         left join SAC.dbo.PreProjeto prep on prep.idPreProjeto = pr.idProjeto
-        left join AGENTES.dbo.Nomes nm on nm.idAgente = prep.idAgente
+        left join agentes.dbo.Nomes nm on nm.idAgente = prep.idAgente
         left join BDCORPORATIVO.scSAC.tbAvaliacaoPedidoAlteracao apa on apa.idPedidoAlteracao = pap.idPedidoAlteracao
         left join BDCORPORATIVO.scSAC.tbProrrogacaoPrazo pp on pp.idPedidoAlteracao = pap.idPedidoAlteracao
         ";

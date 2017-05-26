@@ -75,8 +75,8 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                            --edi.Objeto
                       From SAC.dbo.PreProjeto p
                  left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
-                INNER JOIN AGENTES.dbo.Agentes ag on ag.idAgente = p.idAgente
-                INNER JOIN AGENTES.dbo.Nomes nm on nm.idAgente = ag.idAgente
+                INNER JOIN agentes.dbo.Agentes ag on ag.idAgente = p.idAgente
+                INNER JOIN agentes.dbo.Nomes nm on nm.idAgente = ag.idAgente
                 INNER JOIN SAC.dbo.Edital ed on ed.idEdital = p.idEdital
                 INNER JOIN SAC.dbo.Mecanismo Mec on Mec.Codigo = p.Mecanismo
                 Where p.stestado = 1
@@ -94,7 +94,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 		public static function buscarpreprojeto()
 	{
 		$sql = "select pp.NomeProjeto, nm.Descricao as Nome from SAC.dbo.PreProjeto pp
-                INNER JOIN AGENTES.dbo.Nomes nm on nm.idAgente = pp.idAgente
+                INNER JOIN agentes.dbo.Nomes nm on nm.idAgente = pp.idAgente
                 where pp.idPreProjeto = '23546'";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -106,11 +106,11 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 		public static function buscaendereco($cpf)
 	{
 		$sql = "select Ag.idAgente, Ag.CNPJCPF, en.TipoEndereco,  en.Divulgar, en.TipoLogradouro, en.TipoEndereco, nm.Descricao as Nome, mun.Descricao as Municipio, uf.Descricao as UF, en.Numero, en.Bairro, en.Cep, en.Complemento, en.Logradouro, en.Numero, uf.Descricao as UF 
-                from AGENTES..EnderecoNacional en
-                INNER JOIN AGENTES..Agentes Ag on Ag.idAgente = en.idAgente
-                INNER JOIN AGENTES.dbo.Nomes nm on nm.idAgente = Ag.idAgente
-                INNER JOIN AGENTES.dbo.UF uf on uf.idUF = en.UF
-                LEFT JOIN AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = en.Cidade
+                from agentes.dboEnderecoNacional en
+                INNER JOIN agentes.dboAgentes Ag on Ag.idAgente = en.idAgente
+                INNER JOIN agentes.dbo.Nomes nm on nm.idAgente = Ag.idAgente
+                INNER JOIN agentes.dbo.UF uf on uf.idUF = en.UF
+                LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = en.Cidade
                 where Ag.CNPJCPF= '" . $cpf . "'";
 		
 
@@ -239,7 +239,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         nm.Descricao as nomeAgente
                     From SAC.dbo.PreProjeto p
                left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
-               left join AGENTES.dbo.Nomes nm on nm.idAgente = p.idAgente
+               left join agentes.dbo.Nomes nm on nm.idAgente = p.idAgente
                    Where stestado=1
                      and stTipoDemanda not like 'NA'
                      and not exists (select * from SAC.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )
@@ -254,7 +254,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 
     public static function buscarNomeAgente($array = array()) {
         $sql = "select Descricao
-                  from AGENTES.dbo.Nomes
+                  from agentes.dbo.Nomes
                  where idAgente = {$array['idAgente']} --39318";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

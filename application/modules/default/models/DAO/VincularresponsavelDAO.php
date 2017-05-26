@@ -16,8 +16,8 @@ class VincularresponsavelDAO extends Zend_Db_Table {
        {
 
                $sql = "SELECT a.CNPJCPF,n.Descricao AS NomeAgente, a.idAgente
-                       FROM Agentes.dbo.Agentes as a
-                           INNER JOIN Agentes.dbo.Nomes as n on (a.idAgente = n.idAgente) 
+                       FROM agentes.dbo.Agentes as a
+                           INNER JOIN agentes.dbo.Nomes as n on (a.idAgente = n.idAgente) 
                            ";
 
                if ( !empty ( $proponenteFinal ) )
@@ -41,7 +41,7 @@ class VincularresponsavelDAO extends Zend_Db_Table {
 //                        array('n' => 'Nomes'),
 //                        'a.idAgente = n.idAgente',
 //                        array('Descricao'),
-//                        'AGENTES.dbo'
+//                        'agentes.dbo'
 //                )
 //
 //                ->where('pr.IdPRONAC= ?', $idPronac)

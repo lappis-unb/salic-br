@@ -156,7 +156,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 //                    (select Descricao from SAC.dbo.tbPlanilhaItens where idPlanilhaItens = P.idPlanilhaItem) as Item,
 //                    (select descricao from SAC.dbo.tbPlanilhaUnidade where idUnidade = P.Unidade) as UnidadeF,
 //                    (select Descricao from SAC.dbo.Verificacao where idVerificacao=P.FonteRecurso)as FonteRecursoF,
-//                    (select descricao from Agentes.dbo.uf where iduf = P.UfDespesa) as UfDespesaF,
+//                    (select descricao from agentes.dbo.uf where iduf = P.UfDespesa) as UfDespesaF,
 //                    (select descricao from agentes.dbo.Municipios where idMunicipioIBGE=P.MunicipioDespesa) as MunicipioDespesaF,
 //                    (SELECT Descricao from SAC.dbo.Produto where Codigo = P.idProduto) as ProdutoF
 //                FROM

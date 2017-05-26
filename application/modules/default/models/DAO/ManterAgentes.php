@@ -20,15 +20,15 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 					   VE.Descricao dsTipoEndereco, E.TipoLogradouro, VL.Descricao dsTipoLogradouro, E.Logradouro, E.Numero,
 					   E.Complemento, E.Bairro, T.stTitular, E.Divulgar DivulgarEndereco, E.Status EnderecoCorrespondencia,
 					   T.cdArea, SA.Descricao dsArea, T.cdSegmento, SS.Descricao dsSegmento
-				FROM AGENTES.dbo.Agentes A
-						LEFT join AGENTES.dbo.Nomes N on N.idAgente = A.idAgente
-						LEFT join AGENTES.dbo.EnderecoNacional E on E.idAgente = A.idAgente
-						LEFT join AGENTES.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade
-						LEFT join AGENTES.dbo.UF U on U.idUF = E.UF
-						LEFT join AGENTES.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco
-						LEFT join AGENTES.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
-						LEFT join AGENTES.dbo.tbTitulacaoConselheiro T on T.idAgente = A.idAgente
-						LEFT join AGENTES.dbo.Visao V on V.idAgente = A.idAgente
+				FROM agentes.dbo.Agentes A
+						LEFT join agentes.dbo.Nomes N on N.idAgente = A.idAgente
+						LEFT join agentes.dbo.EnderecoNacional E on E.idAgente = A.idAgente
+						LEFT join agentes.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade
+						LEFT join agentes.dbo.UF U on U.idUF = E.UF
+						LEFT join agentes.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco
+						LEFT join agentes.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
+						LEFT join agentes.dbo.tbTitulacaoConselheiro T on T.idAgente = A.idAgente
+						LEFT join agentes.dbo.Visao V on V.idAgente = A.idAgente
 						LEFT join SAC.dbo.Area SA on SA.Codigo = T.cdArea
 						LEFT join SAC.dbo.Segmento SS on SS.Codigo = T.cdSegmento
 				WHERE (A.TipoPessoa = 0 OR A.TipoPessoa = 1) ";
@@ -63,12 +63,12 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 				,a.CNPJCPFSuperior
 				,n.Descricao AS Nome
 
-			FROM Agentes.dbo.Agentes a
-				,Agentes.dbo.Nomes n
-				,Agentes.dbo.Visao vis
-				,Agentes.dbo.Verificacao ver
-				,Agentes.dbo.Vinculacao vin
-				,Agentes.dbo.Tipo tp
+			FROM agentes.dbo.Agentes a
+				,agentes.dbo.Nomes n
+				,agentes.dbo.Visao vis
+				,agentes.dbo.Verificacao ver
+				,agentes.dbo.Vinculacao vin
+				,agentes.dbo.Tipo tp
 
 			WHERE a.idAgente = n.idAgente
 				AND a.idAgente = vis.idAgente
@@ -109,9 +109,9 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 						"I.Status, " .
 						"I.Divulgar
 							FROM " .
-							"AGENTES.dbo.Internet I, " .
-							"AGENTES.dbo.Tipo T, " .
-							"AGENTES.dbo.Verificacao V
+							"agentes.dbo.Internet I, " .
+							"agentes.dbo.Tipo T, " .
+							"agentes.dbo.Verificacao V
 								WHERE  I.TipoInternet = V.idVerificacao " .
 									"AND T.idTipo = V.IdTipo " .
 									"AND I.idAgente =".$idAgente;
@@ -139,10 +139,10 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 					  "UF.Sigla ufSigla, " .
 					  "F.Numero, " .
 					  "F.Divulgar " .
-					  		"FROM AGENTES.dbo.Telefones F, " .
-					  			 "AGENTES.dbo.Verificacao V, " .
-					  			 "AGENTES.dbo.DDD D, " .
-					  			 "AGENTES.dbo.UF UF	" .
+					  		"FROM agentes.dbo.Telefones F, " .
+					  			 "agentes.dbo.Verificacao V, " .
+					  			 "agentes.dbo.DDD D, " .
+					  			 "agentes.dbo.UF UF	" .
 					  			 	"WHERE F.TipoTelefone = V.idVerificacao " .
 					  			 	"AND F.UF = UF.idUF	" .
 					  			 	"AND F.DDD = D.idDDD " .
@@ -202,7 +202,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 
 	public static function cadastraAgente($cnpjcpf){
 
-		$sqlInsert = "Insert Into Agentes.dbo.Agentes (CNPJCPF) values ('".$cnpjcpf."')";
+		$sqlInsert = "Insert Into agentes.dbo.Agentes (CNPJCPF) values ('".$cnpjcpf."')";
 
 		try
 		{
@@ -222,7 +222,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 
 	public static function cadastraDirigente($cnpjcpf, $cnpjSuperior){
 
-		$sqlInsert = "Insert Into Agentes.dbo.Agentes (CNPJCPF, CNPJCPFSuperior) values ('".$cnpjcpf."', '".$cnpjSuperior."')";
+		$sqlInsert = "Insert Into agentes.dbo.Agentes (CNPJCPF, CNPJCPFSuperior) values ('".$cnpjcpf."', '".$cnpjSuperior."')";
 
 		try
 		{
@@ -242,7 +242,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 
 	public static function associarAgenteDirigente($idAgente, $CNPJSuperior){
 
-		$sql = "UPDATE Agentes.dbo.Agentes SET CNPJCPFSuperior = $CNPJSuperior WHERE idAgente = $idAgente";
+		$sql = "UPDATE agentes.dbo.Agentes SET CNPJCPFSuperior = $CNPJSuperior WHERE idAgente = $idAgente";
 
 		try
 		{
@@ -261,7 +261,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 
 	public static function verificarVincularDirigente($idAgente, $idVinculado, $idVinculoPrincipal){
 
-		$sql = "SELECT * FROM AGENTES.dbo.Vinculacao WHERE idAgente = $idAgente AND idVinculado = $idVinculado AND idVinculoPrincipal = $idVinculoPrincipal";
+		$sql = "SELECT * FROM agentes.dbo.Vinculacao WHERE idAgente = $idAgente AND idVinculado = $idVinculado AND idVinculoPrincipal = $idVinculoPrincipal";
 
 		try
 		{
@@ -281,7 +281,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 
 	public static function vincularDirigente($idAgente, $idVinculado, $idVinculoPrincipal, $Usuario){
 
-		$sql = "INSERT INTO AGENTES.dbo.Vinculacao (idAgente, idVinculado, idVinculoPrincipal, Usuario) " .
+		$sql = "INSERT INTO agentes.dbo.Vinculacao (idAgente, idVinculado, idVinculoPrincipal, Usuario) " .
 				"VALUES($idAgente, $idVinculado, $idVinculoPrincipal, $Usuario)";
 
 		try

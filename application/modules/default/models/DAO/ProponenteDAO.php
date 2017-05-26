@@ -49,11 +49,11 @@ Class ProponenteDAO extends Zend_Db_Table
             ->joinLeft(array('ag' => 'Agentes'),
                 'ag.CNPJCPF = pr.CgcCpf',
                 array(''),
-                'Agentes.dbo')
+                'agentes.dbo')
             ->joinLeft(array('nat' => 'Natureza'),
                 'nat.idAgente = ag.idAgente',
                 array('Direito'),
-                'AGENTES.dbo')
+                'agentes.dbo')
             ->where('pr.IdPRONAC = ?', $idpronac);
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -79,12 +79,12 @@ Class ProponenteDAO extends Zend_Db_Table
                     End as TipoInternet,
                     Internet.Descricao as Email    
                 ")),
-                'AGENTES.dbo')
+                'agentes.dbo')
             ->where('Projetos.IdPRONAC = ?', $idpronac)
             ->joinLeft('Agentes',
                 'Agentes.IdAgente = Internet.IdAgente',
                 array(''),
-                'AGENTES.dbo')
+                'agentes.dbo')
             ->joinLeft('Projetos',
                 'Agentes.CNPJCPF = Projetos.CgcCpf',
                 array(''),
@@ -123,16 +123,16 @@ Class ProponenteDAO extends Zend_Db_Table
                             THEN 'N�o'
                     end as Divulgar
                 ")),
-                'AGENTES.dbo')
+                'agentes.dbo')
             ->where('Projetos.IdPRONAC = ?', $idpronac)
             ->joinInner('Uf',
                 'Uf.idUF = Telefones.UF',
                 array(''),
-                'AGENTES.dbo')
+                'agentes.dbo')
             ->joinInner('Agentes',
                 'Agentes.IdAgente = Telefones.IdAgente',
                 array(''),
-                'AGENTES.dbo')
+                'agentes.dbo')
             ->joinInner('Projetos',
                 'Agentes.CNPJCPF = Projetos.CgcCpf',
                 array(''),
@@ -185,9 +185,9 @@ Class ProponenteDAO extends Zend_Db_Table
 							INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
 							INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
 							INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
-							LEFT JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+							LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
 							LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-							LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente 
+							LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente 
 							LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC and Ta.stEstado = '1'
 							LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 					  		WHERE Pr.idPRONAC = " . $idpronac . " and Ta.stEstado = '1'";
@@ -258,8 +258,8 @@ Class ProponenteDAO extends Zend_Db_Table
         $sql = "SELECT A.CNPJCPF, N.Descricao
 				FROM SAC.dbo.Projetos P
 					,SAC.dbo.Interessado I
-					,AGENTES.dbo.Agentes A
-					,AGENTES.dbo.Nomes N
+					,agentes.dbo.Agentes A
+					,agentes.dbo.Nomes N
 				
 				WHERE P.CgcCpf = I.CgcCpf
 					AND A.idAgente = N.idAgente

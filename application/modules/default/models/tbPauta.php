@@ -63,19 +63,19 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             array('n1'=>'Nomes'),
                             'z.idAgente = n1.idAgente',
                             array("Componente"=>"Descricao"),
-                            "Agentes.dbo"
+                            "agentes.dbo"
                           );
         $slct->joinInner(
                             array('x'=>'Agentes'),
                             'p.CgcCpf = x.CNPJCPF',
                             array(),
-                            "Agentes.dbo"
+                            "agentes.dbo"
                           );
         $slct->joinInner(
                             array('n'=>'Nomes'),
                             'x.idAgente = n.idAgente',
                             array("Proponente"=>"Descricao"),
-                            "Agentes.dbo"
+                            "agentes.dbo"
                           );
         $slct->joinInner(
                             array('r'=>'tbReuniao'),
@@ -203,19 +203,19 @@ class tbPauta extends MinC_Db_Table_Abstract {
                                 array('n1'=>'Nomes'),
                                 'z.idAgente = n1.idAgente',
                                 array(),
-                                "Agentes.dbo"
+                                "agentes.dbo"
                               );
             $slct2->joinInner(
                                 array('x'=>'Agentes'),
                                 'p.CgcCpf = x.CNPJCPF',
                                 array(),
-                                "Agentes.dbo"
+                                "agentes.dbo"
                               );
             $slct2->joinInner(
                                 array('n'=>'Nomes'),
                                 'x.idAgente = n.idAgente',
                                 array(),
-                                "Agentes.dbo"
+                                "agentes.dbo"
                               );
             $slct2->joinInner(
                                 array('r'=>'tbReuniao'),
@@ -300,13 +300,13 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             array('x'=>'Agentes'),
                             'p.CgcCpf = x.CNPJCPF',
                             array(),
-                            "Agentes.dbo"
+                            "agentes.dbo"
                           );
         $slct->joinInner(
                             array('n'=>'Nomes'),
                             'x.idAgente = n.idAgente',
                             array("Proponente"=>"Descricao"),
-                            "Agentes.dbo"
+                            "agentes.dbo"
                           );
         $slct->joinInner(
                             array('r'=>'tbReuniao'),
@@ -366,13 +366,13 @@ class tbPauta extends MinC_Db_Table_Abstract {
                                 array('x'=>'Agentes'),
                                 'p.CgcCpf = x.CNPJCPF',
                                 array(),
-                                "Agentes.dbo"
+                                "agentes.dbo"
                               );
             $slct2->joinInner(
                                 array('n'=>'Nomes'),
                                 'x.idAgente = n.idAgente',
                                 array(),
-                                "Agentes.dbo"
+                                "agentes.dbo"
                               );
             $slct2->joinInner(
                                 array('r'=>'tbReuniao'),
@@ -468,7 +468,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 array('nm' => 'Nomes'),
                 "nm.idAgente = dpc.idAgente",
                 array('Descricao as nomeComponente'),
-                'Agentes.dbo'
+                'agentes.dbo'
         );
         $slct->joinInner(
                 array('pp' => 'PreProjeto'),
@@ -523,7 +523,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     array('nm' => 'Nomes'),
                     "nm.idAgente = dpc.idAgente",
                     array(),
-                    'Agentes.dbo'
+                    'agentes.dbo'
             );
             $slctContador->joinInner(
                     array('pp' => 'PreProjeto'),
@@ -599,7 +599,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 array('nm' => 'Nomes'),
                 "nm.idAgente = dpc.idAgente",
                 array('Descricao as nomeComponente'),
-                'Agentes.dbo'
+                'agentes.dbo'
         );
         $slct->joinInner(
                 array('pp' => 'PreProjeto'),
@@ -684,7 +684,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     array('nm' => 'Nomes'),
                     "nm.idAgente = dpc.idAgente",
                     array(),
-                    'Agentes.dbo'
+                    'agentes.dbo'
             );
             $slctContador->joinInner(
                     array('pp' => 'PreProjeto'),

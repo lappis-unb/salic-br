@@ -24,8 +24,8 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                     projetos.CgcCpf,
                     projetos.AnoProjeto+projetos.Sequencial as nrpronac,
                     projetos.NomeProjeto,
-                    agentes.Descricao,
-                    agentes.idAgente,
+                    Agentes.Descricao,
+                    Agentes.idAgente,
                     areaCultura.Codigo as 'codigoArea',
                     areaCultura.Descricao as 'areaCultura',
                     segmentoCultura.Codigo as 'codigoDescricao',
@@ -37,8 +37,8 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                     on projetos.Segmento = segmentoCultura.Codigo
                     inner join SAC.dbo.PreProjeto as pre
                     on projetos.idProjeto = pre.idPreProjeto
-                    inner join AGENTES.dbo.Nomes as agentes
-                    on pre.idAgente = agentes.idAgente
+                    inner join agentes.dbo.Nomes as Agentes
+                    on pre.idAgente = Agentes.idAgente
 
                 where projetos.IdPRONAC = $idPronac";
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -75,7 +75,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "Agentes.dbo"
+                        "agentes.dbo"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
@@ -115,7 +115,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                         SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa,
                         SAC.dbo.tbPlanilhaItens.idPlanilhaItens,
                         SAC.dbo.tbPlanilhaUnidade.idUnidade,
-                        AGENTES.dbo.Verificacao.idVerificacao,
+                        agentes.dbo.Verificacao.idVerificacao,
                         tpa.qtItem,
                         tpa.nrOcorrencia,
                         tpa.vlUnitario,
@@ -124,10 +124,10 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                         tpa.idPedidoAlteracao,
                         tpa.idAgente,
                         tpa.tpAcao,
-                        AGENTES.dbo.Municipios.Descricao AS DescricaoMunicipio,
+                        agentes.dbo.Municipios.Descricao AS DescricaoMunicipio,
                         SAC.dbo.tbPlanilhaItens.Descricao AS DescricaoItem,
-                        AGENTES.dbo.UF.Descricao AS DescricaoUF,
-                        AGENTES.dbo.Verificacao.Descricao AS DescricaoFonteRecurso,
+                        agentes.dbo.UF.Descricao AS DescricaoUF,
+                        agentes.dbo.Verificacao.Descricao AS DescricaoFonteRecurso,
                         SAC.dbo.tbPlanilhaEtapa.Descricao AS DescricaoEtapa,
                         SAC.dbo.tbPlanilhaUnidade.Descricao AS DescricaoUnidade,
                         prod.Descricao AS dsProduto
@@ -135,9 +135,9 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                         INNER JOIN SAC.dbo.tbPlanilhaEtapa ON tpa.idEtapa = SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa
                         INNER JOIN SAC.dbo.tbPlanilhaItens ON tpa.idPlanilhaItem = SAC.dbo.tbPlanilhaItens.idPlanilhaItens
                         INNER JOIN SAC.dbo.tbPlanilhaUnidade ON tpa.idUnidade = SAC.dbo.tbPlanilhaUnidade.idUnidade
-                        INNER JOIN AGENTES.dbo.Verificacao ON tpa.nrFonteRecurso = AGENTES.dbo.Verificacao.idVerificacao
-                        INNER JOIN AGENTES.dbo.UF ON tpa.idUFDespesa = AGENTES.dbo.UF.idUF
-                        INNER JOIN AGENTES.dbo.Municipios ON tpa.idMunicipioDespesa = AGENTES.dbo.Municipios.idMunicipioIBGE
+                        INNER JOIN agentes.dbo.Verificacao ON tpa.nrFonteRecurso = agentes.dbo.Verificacao.idVerificacao
+                        INNER JOIN agentes.dbo.UF ON tpa.idUFDespesa = agentes.dbo.UF.idUF
+                        INNER JOIN agentes.dbo.Municipios ON tpa.idMunicipioDespesa = agentes.dbo.Municipios.idMunicipioIBGE
                         LEFT JOIN SAC.dbo.Produto prod ON tpa.idProduto = prod.Codigo
                         WHERE (tpa.IdPRONAC = $idPronac) AND (tpa.idPlanilhaAprovacao = $idPlanilhaAprovacao) AND (tpa.idPlanilhaItem = $idPlanilhaItem)
                         and tpa.dtPlanilha in (select max(dtPlanilha) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC=tpa.IdPRONAC
@@ -184,9 +184,9 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
             INNER JOIN SAC.dbo.tbPlanilhaEtapa      AS c ON a.idEtapa = c.idPlanilhaEtapa
             INNER JOIN SAC.dbo.tbPlanilhaItens      AS d ON a.idPlanilhaItem = d.idPlanilhaItens
             INNER JOIN SAC.dbo.Produto              AS e ON a.idProduto = e.Codigo
-            INNER JOIN AGENTES.dbo.UF               AS f ON a.idUFDespesa = f.idUF
-            INNER JOIN AGENTES.dbo.Municipios       AS g ON a.idMunicipioDespesa = g.idMunicipioIBGE
-            INNER JOIN AGENTES.dbo.Agentes          AS h ON a.idAgente = h.idAgente
+            INNER JOIN agentes.dbo.UF               AS f ON a.idUFDespesa = f.idUF
+            INNER JOIN agentes.dbo.Municipios       AS g ON a.idMunicipioDespesa = g.idMunicipioIBGE
+            INNER JOIN agentes.dbo.Agentes          AS h ON a.idAgente = h.idAgente
 
             WHERE a.stAtivo = '$situacao'
             AND a.tpAcao is not null
@@ -242,9 +242,9 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
             INNER JOIN SAC.dbo.tbPlanilhaEtapa      AS c ON a.idEtapa = c.idPlanilhaEtapa
             INNER JOIN SAC.dbo.tbPlanilhaItens      AS d ON a.idPlanilhaItem = d.idPlanilhaItens
             INNER JOIN SAC.dbo.Produto              AS e ON a.idProduto = e.Codigo
-            INNER JOIN AGENTES.dbo.UF               AS f ON a.idUFDespesa = f.idUF
-            INNER JOIN AGENTES.dbo.Municipios       AS g ON a.idMunicipioDespesa = g.idMunicipioIBGE
-            INNER JOIN AGENTES.dbo.Agentes          AS h ON a.idAgente = h.idAgente 
+            INNER JOIN agentes.dbo.UF               AS f ON a.idUFDespesa = f.idUF
+            INNER JOIN agentes.dbo.Municipios       AS g ON a.idMunicipioDespesa = g.idMunicipioIBGE
+            INNER JOIN agentes.dbo.Agentes          AS h ON a.idAgente = h.idAgente 
 
             WHERE a.stAtivo = '$situacao'
             AND a.tpAcao is not null
@@ -452,10 +452,10 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
         $sql = "SELECT  SAC.dbo.tbPlanilhaAprovacao.IdPRONAC, SAC.dbo.tbPlanilhaAprovacao.idPlanilhaAprovacao, SAC.dbo.tbPlanilhaUnidade.Descricao,
                         SAC.dbo.tbPlanilhaEtapa.Descricao AS DescricaoEtapa,
                       SAC.dbo.tbPlanilhaItens.Descricao AS DescricaoItem,  SAC.dbo.tbPlanilhaAprovacao.idUFDespesa,
-                      SAC.dbo.tbPlanilhaAprovacao.idMunicipioDespesa, AGENTES.dbo.Municipios.Descricao AS DescricaoMunicipio,
-                      AGENTES.dbo.UF.Descricao AS DescricaoUF, AGENTES.dbo.Agentes.idAgente, SAC.dbo.tbPlanilhaAprovacao.tpPlanilha,
-                      SAC.dbo.tbPlanilhaUnidade.idUnidade AS Unidade, SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa, SAC.dbo.tbPlanilhaItens.idPlanilhaItens AS idPlanilhaItem, AGENTES.dbo.UF.idUF AS UF,
-                      AGENTES.dbo.Municipios.idMunicipioIBGE, SAC.dbo.tbPlanilhaAprovacao.nrOcorrencia,
+                      SAC.dbo.tbPlanilhaAprovacao.idMunicipioDespesa, agentes.dbo.Municipios.Descricao AS DescricaoMunicipio,
+                      agentes.dbo.UF.Descricao AS DescricaoUF, agentes.dbo.Agentes.idAgente, SAC.dbo.tbPlanilhaAprovacao.tpPlanilha,
+                      SAC.dbo.tbPlanilhaUnidade.idUnidade AS Unidade, SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa, SAC.dbo.tbPlanilhaItens.idPlanilhaItens AS idPlanilhaItem, agentes.dbo.UF.idUF AS UF,
+                      agentes.dbo.Municipios.idMunicipioIBGE, SAC.dbo.tbPlanilhaAprovacao.nrOcorrencia,
                       SAC.dbo.tbPlanilhaAprovacao.vlUnitario, SAC.dbo.tbPlanilhaAprovacao.qtDias, SAC.dbo.tbPlanilhaAprovacao.qtItem,
                       SAC.dbo.tbPlanilhaAprovacao.idUnidade,SAC.dbo.tbPlanilhaAprovacao.tpAcao , CAST(SAC.dbo.tbPlanilhaAprovacao.dsJustificativa AS TEXT) AS dsjustificativa,
                       SAC.dbo.tbPlanilhaAprovacao.stAtivo,
@@ -464,9 +464,9 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                       SAC.dbo.tbPlanilhaUnidade ON SAC.dbo.tbPlanilhaAprovacao.idUnidade = SAC.dbo.tbPlanilhaUnidade.idUnidade INNER JOIN
                       SAC.dbo.tbPlanilhaEtapa ON SAC.dbo.tbPlanilhaAprovacao.idEtapa = SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa INNER JOIN
                       SAC.dbo.tbPlanilhaItens ON SAC.dbo.tbPlanilhaAprovacao.idPlanilhaItem = SAC.dbo.tbPlanilhaItens.idPlanilhaItens INNER JOIN
-                      AGENTES.dbo.UF ON SAC.dbo.tbPlanilhaAprovacao.idUFDespesa = AGENTES.dbo.UF.idUF INNER JOIN
-                      AGENTES.dbo.Municipios ON SAC.dbo.tbPlanilhaAprovacao.idMunicipioDespesa = AGENTES.dbo.Municipios.idMunicipioIBGE INNER JOIN
-                      AGENTES.dbo.Agentes ON SAC.dbo.tbPlanilhaAprovacao.idAgente = AGENTES.dbo.Agentes.idAgente WHERE SAC.dbo.tbPlanilhaAprovacao.stAtivo = '$situacao' and SAC.dbo.tbPlanilhaAprovacao.tpAcao is not null and SAC.dbo.tbPlanilhaAprovacao.idPedidoAlteracao is not null AND SAC.dbo.tbPlanilhaAprovacao.tpPlanilha = 'PA'";
+                      agentes.dbo.UF ON SAC.dbo.tbPlanilhaAprovacao.idUFDespesa = agentes.dbo.UF.idUF INNER JOIN
+                      agentes.dbo.Municipios ON SAC.dbo.tbPlanilhaAprovacao.idMunicipioDespesa = agentes.dbo.Municipios.idMunicipioIBGE INNER JOIN
+                      agentes.dbo.Agentes ON SAC.dbo.tbPlanilhaAprovacao.idAgente = agentes.dbo.Agentes.idAgente WHERE SAC.dbo.tbPlanilhaAprovacao.stAtivo = '$situacao' and SAC.dbo.tbPlanilhaAprovacao.tpAcao is not null and SAC.dbo.tbPlanilhaAprovacao.idPedidoAlteracao is not null AND SAC.dbo.tbPlanilhaAprovacao.tpPlanilha = 'PA'";
         if (!empty($idPronac) and !empty($idEtapa)) {
             $sql .= " AND  SAC.dbo.tbPlanilhaAprovacao.idEtapa = $idEtapa AND SAC.dbo.tbPlanilhaAprovacao.IdPRONAC = $idPronac ";
         }

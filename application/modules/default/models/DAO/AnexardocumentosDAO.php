@@ -133,7 +133,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
               'antigo-agente' as tipoDocumento,
               'Anexado pelo Proponente' as Classificacao
               from sac.dbo.tbDocumentosAgentes a1
-              inner join Agentes.dbo.Agentes ag on ag.idAgente = a1.idAgente
+              inner join agentes.dbo.Agentes ag on ag.idAgente = a1.idAgente
               inner join sac.dbo.projetos pr on pr.CgcCpf = ag.CNPJCPF
         union
         select

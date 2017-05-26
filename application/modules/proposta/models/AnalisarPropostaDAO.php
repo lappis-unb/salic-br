@@ -90,21 +90,21 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                 FROM sac.dbo.PreProjeto p
                     left JOIN agentes.dbo.Agentes a			on p.idAgente = a.idAgente
                     left join agentes.dbo.endereconacional en		on p.idAgente = en.idAgente
-                    left join AGENTES.dbo.Verificacao ve		on en.TipoEndereco = ve.idVerificacao
-                    left join AGENTES.dbo.Verificacao ver		on en.TipoLogradouro = ver.idVerificacao
+                    left join agentes.dbo.Verificacao ve		on en.TipoEndereco = ve.idVerificacao
+                    left join agentes.dbo.Verificacao ver		on en.TipoLogradouro = ver.idVerificacao
                     left join sac.dbo.vCadastrarInternet vci		on p.idAgente = vci.idAgente
-                    left join AGENTES.dbo.Verificacao vemail		on vci.TipoInternet = vemail.idVerificacao
+                    left join agentes.dbo.Verificacao vemail		on vci.TipoInternet = vemail.idVerificacao
                     left join sac.dbo.vwNatureza vna			on p.idAgente = vna.idAgente
-                    left join AGENTES.dbo.Verificacao vdireito		on vna.Direito = vdireito.idVerificacao
-                    left join AGENTES.dbo.Verificacao vesfera		on vna.Esfera = vesfera.idVerificacao
-                    left join AGENTES.dbo.Verificacao vpoder		on vna.Poder = vpoder.idVerificacao
-                    left join AGENTES.dbo.Verificacao vadm		on vna.Administracao = vadm.idVerificacao
+                    left join agentes.dbo.Verificacao vdireito		on vna.Direito = vdireito.idVerificacao
+                    left join agentes.dbo.Verificacao vesfera		on vna.Esfera = vesfera.idVerificacao
+                    left join agentes.dbo.Verificacao vpoder		on vna.Poder = vpoder.idVerificacao
+                    left join agentes.dbo.Verificacao vadm		on vna.Administracao = vadm.idVerificacao
                     left join sac.dbo.vCadastrarDirigente vcd		on p.idAgente = vcd.idVinculoPrincipal
                     left JOIN ControleDeAcesso.dbo.SGCAcesso c		on p.IdUsuario = c.idUsuario
                     left JOIN SAC.dbo.tbHistoricoEmail tbhe		on p.idPreProjeto = tbhe.idProjeto
                     left JOIN SAC.dbo.tbAvaliacaoProposta tbap		on tbhe.idAvaliacaoProposta = tbap.idAvaliacaoProposta
-                    left join AGENTES.dbo.Uf uf                         on uf.idUf = en.UF
-                    left join AGENTES.dbo.Municipios mun                on mun.idMunicipioIBGE = en.Cidade
+                    left join agentes.dbo.Uf uf                         on uf.idUf = en.UF
+                    left join agentes.dbo.Municipios mun                on mun.idMunicipioIBGE = en.Cidade
                     left join SAC.dbo.Verificacao versac    on  p.stProposta = versac.idVerificacao
                 WHERE idPreProjeto = {$idPreProjeto}";
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -126,8 +126,8 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
 
                 FROM
                     sac.dbo.vCadastrarTelefones t
-                        join AGENTES.dbo.Verificacao v on t.TipoTelefone = v.idVerificacao
-                     join AGENTES.dbo.UF uf on t.UF = uf.idUF
+                        join agentes.dbo.Verificacao v on t.TipoTelefone = v.idVerificacao
+                     join agentes.dbo.UF uf on t.UF = uf.idUF
                 WHERE t.idAgente= $idAgente
                 ";
 

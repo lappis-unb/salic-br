@@ -60,19 +60,19 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 array('nm'=>'Nomes'),
                 'nm.idAgente = aaipa.idAgenteRemetente',
                 array('Nome'=>'nm.Descricao'),
-                'AGENTES.dbo'
+                'agentes.dbo'
         );
         $select->joinLeft(
                 array('nm2'=>'Nomes'),
                 'nm2.idAgente = aaipa.idAgenteAcionado',
                 array('Nome2'=>'nm2.Descricao'),
-                'AGENTES.dbo'
+                'agentes.dbo'
         );
         $select->joinInner(
                 array('nm3'=>'Nomes'),
                 'nm3.idAgente = aipa.idAgenteAvaliador',
                 array('Nome3'=>'nm3.Descricao'),
-                'AGENTES.dbo'
+                'agentes.dbo'
         );
         $select->joinInner(
                 array('org'=>'Orgaos'),
@@ -196,12 +196,12 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $slct->joinInner(array('ag' => 'Agentes'),
                 'ag.CNPJCPF = pr.CgcCpf',
                 array(),
-                'AGENTES.dbo'
+                'agentes.dbo'
         );
         $slct->joinInner(array('nm' => 'Nomes'),
                 'nm.idAgente = ag.idAgente',
                 array('nm.Descricao as nome'),
-                'AGENTES.dbo'
+                'agentes.dbo'
         );
         $slct->joinLeft(array('vp' => 'tbVerificaProjeto'),
                 'vp.IdPRONAC = pr.IdPRONAC',

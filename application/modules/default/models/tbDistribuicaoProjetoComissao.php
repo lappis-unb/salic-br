@@ -46,7 +46,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             array('nm'=>'Nomes'),
                             'dpc.idAgente = nm.idAgente',
                             array('Componente'=>'Descricao'),
-                            'Agentes.dbo'
+                            'agentes.dbo'
                           );
 
         $slct->where("pr.Situacao IN (?)", array("C10", "C30"));
@@ -109,7 +109,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                                 array('nm'=>'Nomes'),
                                 'dpc.idAgente = nm.idAgente',
                                 array(),
-                                'Agentes.dbo'
+                                'agentes.dbo'
                               );
 
             $slct2->where("pr.Situacao IN (?)", array("C10", "C30"));
@@ -204,20 +204,20 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             array('nm'=>'Nomes'),
                             'dpc.idAgente = nm.idAgente',
                             array('Componente'=>'Descricao'),
-                            'Agentes.dbo'
+                            'agentes.dbo'
                           );
         $slctAnalisados->joinInner(
                             array('ag'=>'Agentes'),
                             'pr.CgcCpf = ag.CNPJCPF',
                             array(),
-                            'Agentes.dbo'
+                            'agentes.dbo'
                           );
         $slctAnalisados->joinInner(
                             array('nm2'=>'Nomes'),
                             'ag.idAgente = nm2.idAgente',
                             //array( new Zend_Db_Expr('CAST(nm2.Descricao as VARCHAR) as Proponente')),
                             array( new Zend_Db_Expr('convert(varchar(150), nm2.Descricao) as Proponente')),
-                            'Agentes.dbo'
+                            'agentes.dbo'
                           );
         $slctAnalisados->joinInner(
                             array('r'=>'tbReuniao'),
@@ -288,19 +288,19 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             array('nm'=>'Nomes'),
                             'dpc.idAgente = nm.idAgente',
                             array('Componente'=>'Descricao'),
-                            'Agentes.dbo'
+                            'agentes.dbo'
                           );
         $slctNaoAnalisados->joinInner(
                             array('ag'=>'Agentes'),
                             'pr.CgcCpf = ag.CNPJCPF',
                             array(),
-                            'Agentes.dbo'
+                            'agentes.dbo'
                           );
         $slctNaoAnalisados->joinInner(
                             array('nm2'=>'Nomes'),
                             'ag.idAgente = nm2.idAgente',
                             array( new Zend_Db_Expr('convert(varchar(150), nm2.Descricao) as Proponente'), new Zend_Db_Expr('null as NrReuniao')),
-                            'Agentes.dbo'
+                            'agentes.dbo'
                           );
         $slctNaoAnalisados->where("pr.Situacao IN (?)", array("C10", "C30"));
         $slctNaoAnalisados->where("dpc.stDistribuicao = ?", "A");
@@ -400,9 +400,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,p.Situacao as CodSituacao
                 ,p.Situacao + ' - ' + s.Descricao as Situacao
                 ,p.UfProjeto AS UF
-                ,(SELECT TOP 1 m1.Descricao FROM Agentes.dbo.EnderecoNacional x1
-                    INNER JOIN Agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
-                    INNER JOIN Agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE AND x1.Cidade = m1.idMunicipioIBGE)
+                ,(SELECT TOP 1 m1.Descricao FROM agentes.dbo.EnderecoNacional x1
+                    INNER JOIN agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
+                    INNER JOIN agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE AND x1.Cidade = m1.idMunicipioIBGE)
                     WHERE x.idAgente = x1.idAgente) AS Cidade
                 ,t.DtDistribuicao
                 ,p.Area
@@ -451,15 +451,15 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         );
         $slctNaoAnalisados->joinInner(
             array('n'=>'Nomes'), 't.idAgente = n.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $slctNaoAnalisados->joinInner(
             array('x'=>'Agentes'), 'p.CgcCpf = x.CNPJCPF',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $slctNaoAnalisados->joinInner(
             array('z'=>'Nomes'), 'x.idAgente = z.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
 
         $slctNaoAnalisados->where("t.stDistribuicao = ?", 'A');
@@ -504,9 +504,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,p.Situacao AS CodSituacao
                 ,p.Situacao + ' - ' + s.Descricao AS Situacao
                 ,p.UfProjeto AS UF
-                ,(SELECT TOP 1 m1.Descricao FROM Agentes.dbo.EnderecoNacional x1
-                    INNER JOIN Agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
-                    INNER JOIN Agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE and x1.Cidade = m1.idMunicipioIBGE)
+                ,(SELECT TOP 1 m1.Descricao FROM agentes.dbo.EnderecoNacional x1
+                    INNER JOIN agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
+                    INNER JOIN agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE and x1.Cidade = m1.idMunicipioIBGE)
                     WHERE x.idAgente = x1.idAgente) AS Cidade
                 ,z.DtDistribuicao
                 ,p.Area
@@ -558,15 +558,15 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         );
         $slctAnalisados->joinInner(
             array('n'=>'Nomes'), 'z.idAgente = n.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $slctAnalisados->joinInner(
             array('x'=>'Agentes'), 'p.CgcCpf = x.CNPJCPF',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $slctAnalisados->joinInner(
             array('y'=>'Nomes'), 'x.idAgente = y.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $slctAnalisados->joinInner(
             array('r'=>'tbReuniao'), 't.idNrReuniao = r.idNrReuniao',
@@ -742,9 +742,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,p.Situacao as CodSituacao
                     ,p.Situacao + ' - ' + s.Descricao as Situacao
                     ,p.UfProjeto AS UF
-                    ,(SELECT TOP 1 m1.Descricao FROM Agentes.dbo.EnderecoNacional x1
-                        INNER JOIN Agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
-                        INNER JOIN Agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE AND x1.Cidade = m1.idMunicipioIBGE)
+                    ,(SELECT TOP 1 m1.Descricao FROM agentes.dbo.EnderecoNacional x1
+                        INNER JOIN agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
+                        INNER JOIN agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE AND x1.Cidade = m1.idMunicipioIBGE)
                         WHERE x.idAgente = x1.idAgente) AS Cidade
                     ,t.DtDistribuicao
                     ,p.Area
@@ -771,9 +771,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     INNER JOIN SAC.dbo.Situacao AS s ON p.Situacao = s.Codigo
                     INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
                     INNER JOIN SAC.dbo.Segmento AS se ON p.Segmento = se.Codigo
-                    INNER JOIN AGENTES.dbo.Nomes AS n ON t.idAgente = n.idAgente
-                    INNER JOIN AGENTES.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
-                    INNER JOIN AGENTES.dbo.Nomes AS z ON x.idAgente = z.idAgente
+                    INNER JOIN agentes.dbo.Nomes AS n ON t.idAgente = n.idAgente
+                    INNER JOIN agentes.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
+                    INNER JOIN agentes.dbo.Nomes AS z ON x.idAgente = z.idAgente
                 WHERE (t.stDistribuicao = 'A')
                 AND (pr.stAtivo = 1)
                 AND (z.Status = 0)
@@ -799,9 +799,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,p.Situacao AS CodSituacao
                     ,p.Situacao + ' - ' + s.Descricao AS Situacao
                     ,p.UfProjeto AS UF
-                    ,(SELECT TOP 1 m1.Descricao FROM Agentes.dbo.EnderecoNacional x1
-                        INNER JOIN Agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
-                        INNER JOIN Agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE and x1.Cidade = m1.idMunicipioIBGE)
+                    ,(SELECT TOP 1 m1.Descricao FROM agentes.dbo.EnderecoNacional x1
+                        INNER JOIN agentes.dbo.UF u1 ON (x1.UF = u1.idUF)
+                        INNER JOIN agentes.dbo.Municipios m1 ON (x1.UF = m1.idUFIBGE and x1.Cidade = m1.idMunicipioIBGE)
                         WHERE x.idAgente = x1.idAgente) AS Cidade
                     ,z.DtDistribuicao
                     ,p.Area
@@ -829,9 +829,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     INNER JOIN SAC.dbo.Situacao AS s ON p.Situacao = s.Codigo
                     INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
                     INNER JOIN SAC.dbo.Segmento AS se ON p.Segmento = se.Codigo
-                    INNER JOIN AGENTES.dbo.Nomes AS n ON z.idAgente = n.idAgente
-                    INNER JOIN AGENTES.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
-                    INNER JOIN AGENTES.dbo.Nomes AS y ON x.idAgente = y.idAgente
+                    INNER JOIN agentes.dbo.Nomes AS n ON z.idAgente = n.idAgente
+                    INNER JOIN agentes.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
+                    INNER JOIN agentes.dbo.Nomes AS y ON x.idAgente = y.idAgente
                     INNER JOIN SAC.dbo.tbReuniao AS r ON t.idNrReuniao = r.idNrReuniao
                 WHERE (z.stDistribuicao = 'A')
                 AND (pr.idTipoAgente = 6)
@@ -910,11 +910,11 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             array('tc'=>'tbTitulacaoConselheiro'),
                             'tc.idAgente = dpc.idAgente',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
-                            array('tcAux'=>new Zend_Db_Expr('(select nm.idAgente,nm.Descricao as Nome,tc.cdArea,tc.stTitular from AGENTES.dbo.tbTitulacaoConselheiro tc
- inner join AGENTES.dbo.Nomes nm on tc.idAgente = nm.idAgente)')),
+                            array('tcAux'=>new Zend_Db_Expr('(select nm.idAgente,nm.Descricao as Nome,tc.cdArea,tc.stTitular from agentes.dbo.tbTitulacaoConselheiro tc
+ inner join agentes.dbo.Nomes nm on tc.idAgente = nm.idAgente)')),
                             'tcAux.cdArea = tc.cdArea',
                             array('tcAux.idAgente','tcAux.Nome','Perfil'=>new Zend_Db_Expr("CASE WHEN tcAux.stTitular =1 THEN 'Componente da Comissao Titular' ELSE 'Componente da Comissao Suplente' END"))
                             );
@@ -981,19 +981,19 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 array("nm" => "Nomes" ),
                 'dpc.idAgente = nm.idAgente',
                 array(),
-                'Agentes.dbo'
+                'agentes.dbo'
             )
             ->join(
                 array("ag" => "Agentes"),
                 'pr.CgcCpf = ag.CNPJCPF',
                 array(),
-                "Agentes.dbo"
+                "agentes.dbo"
             )
             ->join(
                 array("nm2" => "Nomes"),
                 'ag.idAgente = nm2.idAgente',
                 array(),
-                "Agentes.dbo"
+                "agentes.dbo"
             )
             ->where(
                     "pr.Situacao IN(

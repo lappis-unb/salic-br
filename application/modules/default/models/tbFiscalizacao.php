@@ -23,13 +23,13 @@ class tbFiscalizacao extends MinC_Db_Table_Abstract {
                             array('nm'=>'Nomes'),
                             'nm.idAgente = fisc.idAgente',
                             array('Nome'=>'nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = fisc.idAgente',
                             array('ag.idAgente'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('usu'=>'Usuarios'),
@@ -59,13 +59,13 @@ class tbFiscalizacao extends MinC_Db_Table_Abstract {
                             array('nm2'=>'Nomes'),
                             'nm2.idAgente = fisc.idAgente',
                             array('Nome2'=>'nm2.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );*/
         /*$select->joinInner(
                             array('ag2'=>'Agentes'),
                             'ag2.idAgente = fisc.idAgente',
                             array('idAgente2'=>'ag2.idAgente'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );*/
         /*$select->joinInner(
                             array('usu2'=>'Usuarios'),

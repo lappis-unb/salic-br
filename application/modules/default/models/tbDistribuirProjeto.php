@@ -46,7 +46,7 @@ class tbDistribuirProjeto extends MinC_Db_Table_Abstract
         } else {
             $select->joinLeft(
                 array('c' => 'Nomes'), 'a.idAvaliador = c.idAgente',
-                array(''), 'AGENTES.dbo'
+                array(''), 'agentes.dbo'
             );
         }
         $select->joinInner(

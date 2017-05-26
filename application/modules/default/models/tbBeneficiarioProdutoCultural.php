@@ -52,7 +52,7 @@ class tbBeneficiarioProdutoCultural extends MinC_Db_Table_Abstract {
         );
         $a->joinInner(
                 array('d' => 'Nomes'), "a.idAgente = d.idAgente",
-                array('Descricao as Beneficiario'), 'AGENTES.dbo'
+                array('Descricao as Beneficiario'), 'agentes.dbo'
         );
         $a->joinInner(
                 array('e' => 'tbDocumento'), "a.idDocumento = e.idDocumento",
@@ -64,7 +64,7 @@ class tbBeneficiarioProdutoCultural extends MinC_Db_Table_Abstract {
         );
         $a->joinInner(
                 array('g' => 'Agentes'), "d.idAgente = g.idAgente",
-                array('CNPJCPF'), 'AGENTES.dbo'
+                array('CNPJCPF'), 'agentes.dbo'
         );
         $a->where('a.IdPRONAC = ?', $idPronac);
         $a->order('c.Descricao');

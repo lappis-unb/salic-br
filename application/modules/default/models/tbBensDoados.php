@@ -50,11 +50,11 @@ class tbBensDoados extends MinC_Db_Table_Abstract {
         );
         $slct->joinLeft(
                 array('c' => 'Agentes'), "a.idAgente = c.idAgente",
-                array('CNPJCPF'), 'AGENTES.dbo'
+                array('CNPJCPF'), 'agentes.dbo'
         );
         $slct->joinLeft(
                 array('d' => 'Nomes'), "a.idAgente = d.idAgente",
-                array('Descricao as NomeAgente'), 'AGENTES.dbo'
+                array('Descricao as NomeAgente'), 'agentes.dbo'
         );
         $slct->joinLeft(
                 array('e' => 'tbDocumento'), "a.idDocumentoDoacao = e.idDocumento",

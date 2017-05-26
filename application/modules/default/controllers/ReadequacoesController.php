@@ -3143,7 +3143,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
                             // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
-                            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na AGENTES.dbo.Nomes.
+                            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na agentes.dbo.Nomes.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3606,7 +3606,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 }
 
                 // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
-            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na AGENTES.dbo.Nomes.
+            } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na agentes.dbo.Nomes.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 

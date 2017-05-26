@@ -472,7 +472,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         } else {
             $select->joinLeft(
                 array('d' => 'Nomes'), 'a.idAvaliador = d.idAgente',
-                array(''), 'AGENTES.dbo'
+                array(''), 'agentes.dbo'
             );
         }
 

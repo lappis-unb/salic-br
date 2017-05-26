@@ -21,7 +21,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 	public function buscar($idAgente)
 	{
 		$sql = "SELECT * ";
-		$sql.= "FROM AGENTES.dbo.Internet ";
+		$sql.= "FROM agentes.dbo.Internet ";
 		$sql.= "WHERE idAgente = '" . $idAgente . "'";
 
 		try
@@ -51,7 +51,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 
 		try
 		{
-			$inserir = $db->insert('AGENTES.dbo.Internet', $dados);
+			$inserir = $db->insert('agentes.dbo.Internet', $dados);
 			$db->closeConnection();
 			return true;
 		}
@@ -89,7 +89,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 	{
 		try
 		{
-			$sql = "DELETE FROM AGENTES.dbo.Internet WHERE idInternet = '$id'";
+			$sql = "DELETE FROM agentes.dbo.Internet WHERE idInternet = '$id'";
 
 			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -112,7 +112,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 	{
 		try
 		{
-			$sql = "DELETE FROM AGENTES.dbo.Internet WHERE idAgente =".$idAgente;
+			$sql = "DELETE FROM agentes.dbo.Internet WHERE idAgente =".$idAgente;
 
 			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);

@@ -48,8 +48,8 @@ Class VerificarAlteracaoProjetoDAO extends Zend_Db_Table
                 from SAC..Projetos pr
                 JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpap on tpap.IdPRONAC = pr.IdPRONAC
                 JOIN SAC..tbProposta pp on pp.idPedidoAlteracao = tpap.idPedidoAlteracao
-                JOIN AGENTES..Agentes ag on ag.CNPJCPF = pr.CgcCpf
-                JOIN AGENTES..Nomes nm on nm.idAgente = ag.idAgente
+                JOIN agentes.dboAgentes ag on ag.CNPJCPF = pr.CgcCpf
+                JOIN agentes.dboNomes nm on nm.idAgente = ag.idAgente
                 where pp.idPedidoAlteracao=$idpedidoalteracao";*/
 
         $sql = "select
@@ -68,9 +68,9 @@ Class VerificarAlteracaoProjetoDAO extends Zend_Db_Table
                     BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpap
                     inner JOIN SAC.dbo.Projetos pr on pr.IdPRONAC = tpap.IdPRONAC
                     left JOIN SAC.dbo.tbProposta pp on pp.idPedidoAlteracao = tpap.idPedidoAlteracao
-                    left JOIN AGENTES.dbo.Agentes ag on ag.CNPJCPF = pr.CgcCpf
+                    left JOIN agentes.dbo.Agentes ag on ag.CNPJCPF = pr.CgcCpf
                     inner join SAC.dbo.PreProjeto prepro on pr.idProjeto = prepro.idPreProjeto
-                    inner JOIN AGENTES.dbo.Nomes nm on nm.idAgente = ag.idAgente
+                    inner JOIN agentes.dbo.Nomes nm on nm.idAgente = ag.idAgente
                     inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpax on tpax.idPedidoAlteracao = tpap.idPedidoAlteracao
                     left join BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa on taipa.idPedidoAlteracao = tpap.idPedidoAlteracao AND taipa.tpAlteracaoProjeto = 4
                 where
@@ -112,7 +112,7 @@ Class VerificarAlteracaoProjetoDAO extends Zend_Db_Table
                     inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao pt on pt.idPedidoAlteracao = aipa.idPedidoAlteracao
                     inner join BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto tap on tap.tpAlteracaoProjeto = pt.tpAlteracaoProjeto
                     inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap on pap.idPedidoAlteracao = pt.idPedidoAlteracao
-                    inner join AGENTES.dbo.Nomes nom on nom.idAgente = aipa.idAgenteAvaliador
+                    inner join agentes.dbo.Nomes nom on nom.idAgente = aipa.idAgenteAvaliador
                 where
                     pap.IdPRONAC = {$idPronac} and aipa.tpAlteracaoProjeto = $tipo and tap.tpAlteracaoProjeto = $tipo AND pap.idPedidoAlteracao = $idPedidoAlteracao";
          $db = Zend_Db_Table::getDefaultAdapter();

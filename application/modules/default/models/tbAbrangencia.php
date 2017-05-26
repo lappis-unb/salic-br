@@ -44,19 +44,19 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('p' => 'Pais')
 			,'a.idPais = p.idPais'
 			,array('p.Descricao AS dsPais')
-			,'AGENTES.dbo'
+			,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('u' => 'UF')
 			,'a.idUF = u.idUF'
 			,array('u.Sigla AS dsUF')
-			,'AGENTES.dbo'
+			,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('m' => 'Municipios')
 			,'a.idMunicipioIBGE = m.idMunicipioIBGE'
 			,array('m.Descricao AS dsMunicipioIBGE')
-			,'AGENTES.dbo'
+			,'agentes.dbo'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -95,19 +95,19 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('p' => 'Pais')
 			,'a.idPais = p.idPais'
 			,array('p.Descricao AS dsPais')
-			,'AGENTES.dbo'
+			,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('u' => 'UF')
 			,'a.idUF = u.idUF'
 			,array('u.Sigla AS dsUF')
-			,'AGENTES.dbo'
+			,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('m' => 'Municipios')
 			,'a.idMunicipioIBGE = m.idMunicipioIBGE'
 			,array('m.Descricao AS dsMunicipioIBGE')
-			,'AGENTES.dbo'
+			,'agentes.dbo'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -145,15 +145,15 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
         }
 		$select->joinInner(
 			array('c' => 'Pais'),"b.idPais = c.idPais",
-			array() ,'AGENTES.dbo'
+			array() ,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('d' => 'Uf'),'b.idUF = d.idUF',
-			array() ,'AGENTES.dbo'
+			array() ,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('e' => 'Municipios'),"b.idMunicipioIBGE = e.idMunicipioIBGE",
-			array() ,'AGENTES.dbo'
+			array() ,'agentes.dbo'
 		);
 		
         $select->where('a.IdPRONAC = ?', $idPronac);
@@ -178,15 +178,15 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 		);
         $select->joinInner(
 			array('c' => 'Pais'),"b.idPais = c.idPais",
-			array() ,'AGENTES.dbo'
+			array() ,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('d' => 'Uf'),'b.idUF = d.idUF',
-			array() ,'AGENTES.dbo'
+			array() ,'agentes.dbo'
 		);
 		$select->joinLeft(
 			array('e' => 'Municipios'),"b.idMunicipioIBGE = e.idMunicipioIBGE",
-			array() ,'AGENTES.dbo'
+			array() ,'agentes.dbo'
 		);
 
         $select->where('b.idReadequacao = ?', $idReadequacao);

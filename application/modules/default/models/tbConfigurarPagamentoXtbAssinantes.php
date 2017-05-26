@@ -25,15 +25,15 @@ class tbConfigurarPagamentoXtbAssinantes extends MinC_Db_Table_Abstract {
         );
 
         $select->joinInner(array('ag'=>'Agentes'), "ass.idAgente = ag.idAgente",
-                            array('ag.idAgente'),'AGENTES.dbo'
+                            array('ag.idAgente'),'agentes.dbo'
         );
 
         $select->joinInner(array('nm'=>'Nomes'), "ag.idAgente = nm.idAgente",
-                            array('nm.Descricao as Nome'),'AGENTES.dbo'
+                            array('nm.Descricao as Nome'),'agentes.dbo'
         );
 
         $select->joinInner(array('v'=>'Verificacao'), "ass.idCargo = v.idVerificacao",
-                            array('v.idVerificacao as idCargo','v.Descricao as Cargo'),'AGENTES.dbo'
+                            array('v.idVerificacao as idCargo','v.Descricao as Cargo'),'agentes.dbo'
         );
 
 

@@ -17,7 +17,7 @@
 //    /**
 //     * Nome da tabela do banco
 //     */
-//    protected $_name = 'AGENTES.dbo.Visao';
+//    protected $_name = 'agentes.dbo.Visao';
 //
 //
 //    /**
@@ -83,7 +83,7 @@
 //        $db= Zend_Db_Table::getDefaultAdapter();
 //        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
-//        $insert = $db->insert('AGENTES.dbo.Visao', $dados); // cadastra
+//        $insert = $db->insert('agentes.dbo.Visao', $dados); // cadastra
 //
 //        return $insert ? true : false;
 //    } // fecha m�todo cadastrarVisao()
@@ -103,7 +103,7 @@
 //
 //        $where = "idAgente = " . $idAgente; // condi��o para altera��o
 //
-//        $update = $db->update('AGENTES.dbo.Visao', $dados, $where); // altera
+//        $update = $db->update('agentes.dbo.Visao', $dados, $where); // altera
 //
 //        if ($update) {
 //            return true;
@@ -127,7 +127,7 @@
 //
 //        $where = "idAgente = " . $idAgente; // condi��o para exclus�o
 //
-//        $delete = $db->delete('AGENTES.dbo.Visao', $where); // exclui
+//        $delete = $db->delete('agentes.dbo.Visao', $where); // exclui
 //
 //        if ($delete) {
 //            return true;

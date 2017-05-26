@@ -19,8 +19,8 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 ttc.cdSegmento AS CodigoSegmento,
                 nm.Descricao AS Nome,
                 ttc.idAgente,
-                FROM AGENTES.dbo.tbTitulacaoConselheiro ttc
-                JOIN AGENTES.dbo.Nomes nm ON ttc.idAgente = nm.idAgente
+                FROM agentes.dbo.tbTitulacaoConselheiro ttc
+                JOIN agentes.dbo.Nomes nm ON ttc.idAgente = nm.idAgente
                 where ttc.cdarea = $area and ttc.stTitular = $sttilular ORDER BY ttc.cdArea, ttc.stTitular DESC";
         try
         {
@@ -54,9 +54,9 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
     {
         $sql = "select ag.idAgente,
                 nm.Descricao as Nome
-                from AGENTES.dbo.Agentes ag
-                JOIN AGENTES.dbo.Nomes nm on nm.idAgente = ag.idAgente
-                JOIN AGENTES.dbo.Visao vis on vis.idAgente = ag.idAgente
+                from agentes.dbo.Agentes ag
+                JOIN agentes.dbo.Nomes nm on nm.idAgente = ag.idAgente
+                JOIN agentes.dbo.Visao vis on vis.idAgente = ag.idAgente
                 where vis.visao = 212 and nm.TipoNome=18
                 ";
         try
@@ -80,9 +80,9 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 FROM
                 SAC.dbo.Projetos pr
                 JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao tdpc ON pr.IdPRONAC = tdpc.idPRONAC
-                JOIN AGENTES.dbo.tbTitulacaoConselheiro ttc ON tdpc.idAgente = ttc.idAgente
-                JOIN AGENTES.dbo.Agentes ag ON tdpc.idAgente = ag.idAgente
-                JOIN AGENTES.dbo.Nomes nm ON tdpc.idAgente = nm.idAgente
+                JOIN agentes.dbo.tbTitulacaoConselheiro ttc ON tdpc.idAgente = ttc.idAgente
+                JOIN agentes.dbo.Agentes ag ON tdpc.idAgente = ag.idAgente
+                JOIN agentes.dbo.Nomes nm ON tdpc.idAgente = nm.idAgente
                 WHERE tdpc.stDistribuicao = 'A'";
 
         if (!empty($idPronac))

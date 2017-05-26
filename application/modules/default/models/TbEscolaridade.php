@@ -9,7 +9,7 @@ class TbEscolaridade extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Agentes';
     protected $_name = 'tbEscolaridade';
-    protected $_schema  = 'Agentes';
+    protected $_schema  = 'agentes';
 
 
     public function BuscarEscolaridades($idAgente)
@@ -19,17 +19,17 @@ class TbEscolaridade extends MinC_Db_Table_Abstract {
 
         $select->from(array('E'=>$this->_name),
         			  array('*','CONVERT(CHAR(10), dtInicioCurso, 103) as dtInicio',
-        			  			'CONVERT(CHAR(10), dtFimCurso, 103) as dtFim'),'AGENTES.dbo'
+        			  			'CONVERT(CHAR(10), dtFimCurso, 103) as dtFim'),'agentes.dbo'
         );
 
         $select->joinInner(
                 array('TE'=>'tbTipoEscolaridade'),'TE.idTipoEscolaridade = E.idTipoEscolaridade',
-                array('nmEscolaridade'),'AGENTES.dbo'
+                array('nmEscolaridade'),'agentes.dbo'
         );
 
         $select->joinInner(
                 array('P'=>'Pais'),'P.idPais = E.idPais',
-                array('Descricao as pais'),'AGENTES.dbo'
+                array('Descricao as pais'),'agentes.dbo'
         );
 
         $select->joinLeft(

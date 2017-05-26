@@ -77,7 +77,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
 			array("bc" => "bancos")
 			,"c.Banco = bc.Codigo"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 
 		// busca pelo pronac
@@ -256,7 +256,7 @@ class tbTmpCaptacao extends MinC_Db_Table_Abstract
                 'bc.Sufixo',
                 'bc.DV',
                 'bc.Descricao AS nmBanco'
-            ), "AGENTES.dbo"
+            ), "agentes.dbo"
         );
         $select->joinLeft(array("i" => "Interessado"), "i.CgcCPf = t.nrCpfCnpjIncentivador", array('nomeIncentivador' => 'i.Nome'));
 

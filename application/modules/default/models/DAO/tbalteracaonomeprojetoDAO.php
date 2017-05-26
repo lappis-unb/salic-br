@@ -24,7 +24,7 @@ class tbalteracaonomeprojetoDAO extends Zend_Db_Table
                        dsparecertecnico,
                        nom.Descricao as nometecnico
                        from BDCORPORATIVO.scSAC.tbavaliacaopedidoalteracao apa
-                       join AGENTES.dbo.Nomes nom on nom.idAgente =  apa.idTecnico
+                       join agentes.dbo.Nomes nom on nom.idAgente =  apa.idTecnico
                        where apa.idpedidoalteracao= ".$idpedidoalteracao;
 
         $db= Zend_Db_Table::getDefaultAdapter();

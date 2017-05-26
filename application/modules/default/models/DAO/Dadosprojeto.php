@@ -51,12 +51,12 @@ Class Dadosprojeto extends Zend_Db_Table
             INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
             INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
             INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
-            LEFT JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+            LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
             LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-            LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente 
+            LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente 
             LEFT JOIN SAC.dbo.vwTramitarProjeto Tp ON Tp.idPronac = Pr.idPRONAC
             LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
-            WHERE Pr.idPRONAC = ". $pronac ."";
+            WHERE Pr.idPRONAC = {$pronac}";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

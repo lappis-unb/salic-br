@@ -11,9 +11,9 @@ class tbAbrangenciaDAO extends MinC_Db_Table_Abstract
                 uf.Descricao as uf,
                 pais.Descricao as pais
                 from SAC.dbo.Abrangencia ab
-                join AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = ab.idMunicipioIBGE
-                join AGENTES.dbo.UF uf on uf.idUF = ab.idUF
-                join AGENTES.dbo.Pais pais on pais.idPais = ab.idPais";
+                join agentes.dbo.Municipios mun on mun.idMunicipioIBGE = ab.idMunicipioIBGE
+                join agentes.dbo.UF uf on uf.idUF = ab.idUF
+                join agentes.dbo.Pais pais on pais.idPais = ab.idPais";
         if($idprojeto)
         {
             $sql .= " where ab.idProjeto =".$idprojeto." and ab.stAbrangencia = 1 order by pais, uf , mun asc";

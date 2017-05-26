@@ -279,12 +279,12 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         $select->joinLeft(
                 array('CID' => 'Municipios'), new Zend_Db_Expr('CID.idMunicipioIBGE = PPJ.MunicipioDespesa'), array(
             'CID.Descricao as Cidade'
-                ), 'Agentes.dbo'
+                ), 'agentes.dbo'
         );
         $select->joinLeft(
                 array('FED' => 'UF'), new Zend_Db_Expr('PPJ.UFDespesa = FED.idUF'), array(
             'FED.Sigla as UF'
-                ), 'Agentes.dbo'
+                ), 'agentes.dbo'
         );
         $select->joinLeft(
                 array('PD' => 'Produto'), new Zend_Db_Expr('PPJ.idProduto = PD.Codigo'), array(

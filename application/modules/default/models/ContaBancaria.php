@@ -218,7 +218,7 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
                     dbo.fnDtPortariaAprovacao(p.AnoProjeto,p.Sequencial) AS DtPublicacaoPortaria,
                     dbo.fnInicioCaptacao(p.AnoProjeto,p.Sequencial) AS DtInicioCaptacao,
                     dbo.fnFimCaptacao(p.AnoProjeto,p.Sequencial) AS DtFimCaptacao,
-                    (SELECT dtNascimento FROM Agentes.dbo.tbAgenteFisico f WHERE a.idAgente = f.idAgente) AS DtNascimento,
+                    (SELECT dtNascimento FROM agentes.dbo.tbAgenteFisico f WHERE a.idAgente = f.idAgente) AS DtNascimento,
                     c.Agencia,
                     c.ContaBloqueada AS ContaCaptacao,
                     c.ContaLivre AS ContaMovimento,
@@ -243,11 +243,11 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('a' => 'Agentes'), 'p.CgcCpf = a.CNPJCPF',
-            array(''), 'AGENTES.dbo'
+            array(''), 'agentes.dbo'
         );
         $select->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array(''), 'AGENTES.dbo'
+            array(''), 'agentes.dbo'
         );
 
        //adiciona quantos filtros foram enviados

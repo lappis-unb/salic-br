@@ -141,8 +141,8 @@ class Parecer extends MinC_Db_Table_Abstract
      * from SAC.dbo.tbDistribuirParecer dp
      * inner join SAC.dbo.Produto prod on dp.idProduto = prod.Codigo
      * inner join SAC.dbo.Projetos pro on pro.IdPRONAC = dp.idPRONAC
-     * inner join AGENTES.dbo.Agentes ag on ag.idAgente = dp.idAgenteParecerista
-     * inner join AGENTES.dbo.Nomes nomes on nomes.idAgente = dp.idAgenteParecerista
+     * inner join agentes.dbo.Agentes ag on ag.idAgente = dp.idAgenteParecerista
+     * inner join agentes.dbo.Nomes nomes on nomes.idAgente = dp.idAgenteParecerista
      * --inner join TABELAS.dbo.Usuarios usu on ag.Usuario = usu.usu_codigo
      * --inner join SAC.dbo.tbPlanilhaProjeto pp on pp.idPRONAC = dp.idPRONAC
      * where dp.stEstado = 0
@@ -181,9 +181,9 @@ class Parecer extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('ag' => 'Agentes'),
-            'inner join AGENTES.dbo.Agentes ag on ',
+            'inner join agentes.dbo.Agentes ag on ',
             array(),
-            'AGENTES.dbo'
+            'agentes.dbo'
         );
         $select->joinInner(
             array('org' => 'Usuarios'),

@@ -33,7 +33,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('nom'=>'Nomes'),
                             'nom.idAgente = dis.idDestinatario',
                             array('nom.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                             );
 
         foreach ($where as $coluna => $valor) {
@@ -62,7 +62,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('nom'=>'Nomes'),
                             'nom.idAgente = dis.idDestinatario',
                             array('nom.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                             );
             $slct->joinInner(
                             array('pro'=>'Projetos'),
@@ -98,7 +98,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('nom'=>'Nomes'),
                             'nom.idAgente = dis.idDestinatario',
                             array('nom.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                             );
             $slct->joinInner(
                             array('pp'=>'PreProjeto'),

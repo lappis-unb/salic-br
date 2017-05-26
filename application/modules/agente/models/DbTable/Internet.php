@@ -64,7 +64,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         );
 
         $select->join(
-            array("a" => "agentes"),
+            array("a" => "Agentes"),
             "a.idAgente = e.idagente",
             array(),
             $this->_schema

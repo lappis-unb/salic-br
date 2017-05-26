@@ -17,7 +17,7 @@ class GerenciarPautaReuniaoDAO
     {
         $sql = "select usu_codigo,
                 idAgente from tabelas.dbo.Usuarios u
-                inner join Agentes.dbo.Agentes a on (u.usu_identificacao=a.CNPJCPF)
+                inner join agentes.dbo.Agentes a on (u.usu_identificacao=a.CNPJCPF)
                 where usu_codigo=$usu_codigo
                 ";
 
@@ -37,7 +37,7 @@ class GerenciarPautaReuniaoDAO
     {
         $sql = "select usu_codigo,
                 idAgente from tabelas.dbo.Usuarios u
-                inner join Agentes.dbo.Agentes a on (u.usu_identificacao=a.CNPJCPF)
+                inner join agentes.dbo.Agentes a on (u.usu_identificacao=a.CNPJCPF)
                 where usu_codigo=$usu_codigo
                 ";
         return $sql;

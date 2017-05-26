@@ -12,7 +12,7 @@
 
 class Regiao extends Zend_Db_Table
 {
- protected $_name = 'AGENTES.dbo.UF.Regiao'; // nome da tabela
+ protected $_name = 'agentes.dbo.UF.Regiao'; // nome da tabela
 
 
 
@@ -24,7 +24,7 @@ class Regiao extends Zend_Db_Table
   */
  public static function buscar()
  {
-  $sql = "SELECT DISTINCT Regiao AS Regiao FROM AGENTES.dbo.UF ORDER BY Regiao";
+  $sql = "SELECT DISTINCT Regiao AS Regiao FROM agentes.dbo.UF ORDER BY Regiao";
 
   try
   {

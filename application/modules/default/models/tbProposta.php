@@ -211,7 +211,7 @@ class tbProposta extends MinC_Db_Table_Abstract
 			array('e' => 'Agentes')
 			,'e.idAgente = d.idAgente'
 			,array()
-			,'AGENTES.dbo'
+			,'agentes.dbo'
 		);
 		$select->joinInner(
 			array('f' => 'vProponenteProjetos')

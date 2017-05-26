@@ -24,9 +24,9 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			$sql = "Select C.idAgente,
                                 Ar.Descricao Area,
                                 Nm.Descricao Nome
-                                From AGENTES.dbo.tbTitulacaoConselheiro C
+                                From agentes.dbo.tbTitulacaoConselheiro C
                                 INNER JOIN SAC.dbo.Area Ar on ar.Codigo = C.cdArea
-                                INNER JOIN AGENTES.dbo.Nomes Nm on Nm.idAgente = C.idAgente
+                                INNER JOIN agentes.dbo.Nomes Nm on Nm.idAgente = C.idAgente
                                 Order by Ar.Descricao, Nm.Descricao";
 
 		} else
@@ -38,8 +38,8 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
                                         (SELECT COUNT(SDPC.idPronac) as QTD
                                         FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao SDPC
                                         WHERE SDPC.idAgente = T.idAgente AND SDPC.stDistribuicao = 'A')
-                                        as QTD FROM AGENTES.dbo.tbTitulacaoConselheiro T
-                                        INNER JOIN AGENTES.dbo.Nomes N on N.idAgente =   T.idAgente
+                                        as QTD FROM agentes.dbo.tbTitulacaoConselheiro T
+                                        INNER JOIN agentes.dbo.Nomes N on N.idAgente =   T.idAgente
                                         INNER JOIN SAC.dbo.Area A on A.Codigo =  T.cdArea
                                         WHERE T.stConselheiro = 'A' ORDER BY Nome";
 			} else
@@ -50,9 +50,9 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 					                                A.Descricao Area,
 					                                H.dsJustificativa Just,
 					                                CONVERT(CHAR(10), HT.dtHistorico,103) Data
-					                                    From AGENTES.dbo.Nomes N,
+					                                    From agentes.dbo.Nomes N,
 					                                    SAC.dbo.Area A,
-					                                    AGENTES.dbo.tbTitulacaoConselheiro C,
+					                                    agentes.dbo.tbTitulacaoConselheiro C,
 					                                    BDCORPORATIVO.scAGENTES.tbHistoricoConselheiro H,
 					                                        (SELECT idConselheiro, MAX(dtHistorico) dtHistorico
 					                                            FROM BDCORPORATIVO.scAGENTES.tbHistoricoConselheiro
@@ -162,7 +162,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			'stConselheiro' => 'A'
 		);
 		$whereUpdateSituacao = "idAgente =" . $idAgente;
-		$UpdateSituacao = $db->update('AGENTES.dbo.tbTitulacaoConselheiro', $dadosUpdateSituacao, $whereUpdateSituacao);
+		$UpdateSituacao = $db->update('agentes.dbo.tbTitulacaoConselheiro', $dadosUpdateSituacao, $whereUpdateSituacao);
 
         $objAcesso= new Acesso();
 
@@ -198,7 +198,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 		// Busca para verificar se existe algum componente para a area e segmento do projeto
 		$sqlComponenteAreaSegmento = "SELECT C.idAgente, C.cdArea, C.cdSegmento, C.stTitular " .
-		"FROM AGENTES.dbo.tbTitulacaoConselheiro C " .
+		"FROM agentes.dbo.tbTitulacaoConselheiro C " .
 		"WHERE C.stConselheiro = 'A' AND C.cdArea = " . $areaP . " AND C.cdSegmento = " . $segmentoP;
 
 		$AAS = $db->fetchAll($sqlComponenteAreaSegmento);
@@ -212,9 +212,9 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			//aqui j� est� buscando o id do agente que tem a menor quantidade de projetos
 			$sqlMenor = "SELECT TC.idAgente as agente,
 			                           PXC.Qtd
-			                    FROM AGENTES.dbo.tbTitulacaoConselheiro TC
+			                    FROM agentes.dbo.tbTitulacaoConselheiro TC
 			                    INNER JOIN (SELECT ATC.idAgente, COUNT(DPC.idPronac) Qtd
-			                                FROM  AGENTES.dbo.tbTitulacaoConselheiro ATC
+			                                FROM  agentes.dbo.tbTitulacaoConselheiro ATC
 			                                LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 			                                WHERE ATC.stConselheiro = 'A'
 			                                AND DPC.stDistribuicao = 'A'
@@ -222,13 +222,13 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			                                GROUP BY ATC.idAgente
 			                                UNION
 			                                SELECT ATC.idAgente, COUNT(DPC.idPronac) - COUNT(DPCI.idPronac) Qtd
-			                                FROM  AGENTES.dbo.tbTitulacaoConselheiro ATC
+			                                FROM  agentes.dbo.tbTitulacaoConselheiro ATC
 			                                LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 			                                LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
 			                                WHERE ATC.stConselheiro = 'A'
 			                                AND DPCI.stDistribuicao = 'I'
 			                                AND ATC.idAgente NOT IN (SELECT DISTINCT ATC.idAgente
-			                                                         FROM  AGENTES.dbo.tbTitulacaoConselheiro ATC
+			                                                         FROM  agentes.dbo.tbTitulacaoConselheiro ATC
 			                                                         LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 			                                                         WHERE ATC.stConselheiro = 'A'
 			                                                         AND DPC.stDistribuicao = 'A'

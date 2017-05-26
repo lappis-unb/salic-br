@@ -20,8 +20,8 @@ class ListarprojetosDAO extends Zend_Db_Table {
 			        ag.CNPJCPF, m.Descricao AS NomeProponente, 
 			        a.idEdital, p.Situacao, si.Descricao, a.Mecanismo 
 			 FROM SAC.dbo.PreProjeto AS a
-				 INNER JOIN AGENTES.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
-				 INNER JOIN AGENTES.dbo.Nomes AS m ON a.idAgente = m.idAgente
+				 INNER JOIN agentes.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
+				 INNER JOIN agentes.dbo.Nomes AS m ON a.idAgente = m.idAgente
 				 INNER JOIN SAC.dbo.Projetos p on p.idProjeto = a.idPreProjeto
 				 INNER JOIN SAC.dbo.Situacao si on si.Codigo = p.Situacao";
         
@@ -30,9 +30,9 @@ class ListarprojetosDAO extends Zend_Db_Table {
         	if (!empty($tipoProponente))
         	{
         		
-        		$sql .= " INNER JOIN AGENTES.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
-						  INNER JOIN AGENTES.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
-						  INNER JOIN AGENTES.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
+        		$sql .= " INNER JOIN agentes.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
+						  INNER JOIN agentes.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
+						  INNER JOIN agentes.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
         		
         		$where =  " WHERE (a.stEstado = 1) AND (a.idEdital is null or a.idEdital = 0) AND (a.idAgente IN (".$idAgente.")) AND PRO.siProcuracao = 1 "; 
         		
@@ -72,8 +72,8 @@ class ListarprojetosDAO extends Zend_Db_Table {
 			        c.idClassificaDocumento,
 			        c.dsClassificaDocumento as Classificacao, a.Mecanismo 
 						FROM SAC.dbo.PreProjeto AS a
-							INNER JOIN AGENTES.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
-							INNER JOIN AGENTES.dbo.Nomes AS m ON a.idAgente = m.idAgente
+							INNER JOIN agentes.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
+							INNER JOIN agentes.dbo.Nomes AS m ON a.idAgente = m.idAgente
 							INNER JOIN SAC.dbo.Projetos p on p.idProjeto = a.idPreProjeto
 							INNER JOIN SAC.dbo.Situacao si on si.Codigo = p.Situacao
 							INNER JOIN SAC.dbo.Edital ed on ed.idEdital = a.idEdital
@@ -91,9 +91,9 @@ class ListarprojetosDAO extends Zend_Db_Table {
         	if (!empty($tipoProponente))
         	{
         		
-        		$sql .= " INNER JOIN AGENTES.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
-						  INNER JOIN AGENTES.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
-						  INNER JOIN AGENTES.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
+        		$sql .= " INNER JOIN agentes.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
+						  INNER JOIN agentes.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
+						  INNER JOIN agentes.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
         		
         		$where =  " WHERE (a.stEstado = 1) 
         					AND a.idEdital is not null 
@@ -148,8 +148,8 @@ class ListarprojetosDAO extends Zend_Db_Table {
 			        ag.CNPJCPF, m.Descricao AS NomeProponente, 
 			        a.idEdital, p.Situacao, si.Descricao, a.Mecanismo  
 			 FROM SAC.dbo.PreProjeto AS a
-				 INNER JOIN AGENTES.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
-				 INNER JOIN AGENTES.dbo.Nomes AS m ON a.idAgente = m.idAgente
+				 INNER JOIN agentes.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
+				 INNER JOIN agentes.dbo.Nomes AS m ON a.idAgente = m.idAgente
 				 INNER JOIN SAC.dbo.Projetos p on p.idProjeto = a.idPreProjeto
 				 INNER JOIN SAC.dbo.Situacao si on si.Codigo = p.Situacao";
 			 
@@ -157,9 +157,9 @@ class ListarprojetosDAO extends Zend_Db_Table {
         	if (!empty($tipoProponente))
         	{
         		
-        		$sql .= " INNER JOIN AGENTES.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
-						  INNER JOIN AGENTES.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
-						  INNER JOIN AGENTES.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
+        		$sql .= " INNER JOIN agentes.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
+						  INNER JOIN agentes.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
+						  INNER JOIN agentes.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
         		
         		$where =  " WHERE (a.idAgente IN (".$idAgente.")) AND PRO.siProcuracao = 1 "; 
         		
@@ -178,7 +178,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
         $sql = "(SELECT  0 as Ordem,a.CgcCpf as CNPJCPF, b.idAgente, dbo.fnNome(b.idAgente) AS NomeProponente,a.AnoProjeto+a.Sequencial as Pronac,a.NomeProjeto,
                     a.Situacao + ' - ' + d.Descricao as Situacao
                 FROM SAC.dbo.Projetos                      a
-                INNER JOIN AGENTES.dbo.Agentes             b on (a.CgcCpf   = b.CNPJCPF)
+                INNER JOIN agentes.dbo.Agentes             b on (a.CgcCpf   = b.CNPJCPF)
                 INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso  c on (a.CgcCpf   = c.Cpf)
                 INNER JOIN SAC.dbo.Situacao                d on (a.Situacao = d.Codigo)
                 WHERE c.IdUsuario = $idResponsavel)
@@ -188,10 +188,10 @@ class ListarprojetosDAO extends Zend_Db_Table {
                 (SELECT  1 as Ordem,a.CgcCpf as CNPJCPF, b.idAgente, dbo.fnNome(b.idAgente) AS NomeProponente,a.AnoProjeto+a.Sequencial as Pronac,a.NomeProjeto,
                     a.Situacao + ' - ' + g.Descricao as Situacao
                 FROM SAC.dbo.Projetos                      a
-                INNER JOIN AGENTES.dbo.Agentes             b on (a.CgcCpf       = b.CNPJCPF)
-                INNER JOIN AGENTES.dbo.tbProcuradorProjeto c on (a.IdPRONAC     = c.idPronac)
-                INNER JOIN AGENTES.dbo.tbProcuracao        d on (c.idProcuracao = d.idProcuracao)
-                INNER JOIN AGENTES.dbo.Agentes             f on (d.idAgente     = f.idAgente)
+                INNER JOIN agentes.dbo.Agentes             b on (a.CgcCpf       = b.CNPJCPF)
+                INNER JOIN agentes.dbo.tbProcuradorProjeto c on (a.IdPRONAC     = c.idPronac)
+                INNER JOIN agentes.dbo.tbProcuracao        d on (c.idProcuracao = d.idProcuracao)
+                INNER JOIN agentes.dbo.Agentes             f on (d.idAgente     = f.idAgente)
                 INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso  e on (f.CNPJCPF      = e.Cpf)
                 INNER JOIN SAC.dbo.Situacao                g on (a.Situacao     =   g.Codigo)
                 WHERE c.siEstado = 2 and e.IdUsuario = $idResponsavel ";
@@ -207,9 +207,9 @@ class ListarprojetosDAO extends Zend_Db_Table {
                 (SELECT  1 as Ordem,a.CgcCpf as CNPJCPF, b.idAgente, dbo.fnNome(b.idAgente) AS NomeProponente,a.AnoProjeto+a.Sequencial as Pronac,a.NomeProjeto,
                     a.Situacao + ' - ' + f.Descricao as Situacao
                 FROM SAC.dbo.Projetos                      a
-                INNER JOIN AGENTES.dbo.Agentes             b on (a.CgcCpf       = b.CNPJCPF)
-                INNER JOIN AGENTES.dbo.Vinculacao          c on (b.idAgente     = c.idVinculoPrincipal)
-                INNER JOIN AGENTES.dbo.Agentes             d on (c.idAgente     = d.idAgente)
+                INNER JOIN agentes.dbo.Agentes             b on (a.CgcCpf       = b.CNPJCPF)
+                INNER JOIN agentes.dbo.Vinculacao          c on (b.idAgente     = c.idVinculoPrincipal)
+                INNER JOIN agentes.dbo.Agentes             d on (c.idAgente     = d.idAgente)
                 INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso  e on (d.CNPJCPF      = e.Cpf)
                 INNER JOIN SAC.dbo.Situacao                f on (a.Situacao     = f.Codigo)
                 WHERE e.IdUsuario = $idResponsavel ";
@@ -233,8 +233,8 @@ class ListarprojetosDAO extends Zend_Db_Table {
 			        ag.CNPJCPF, m.Descricao AS NomeProponente, 
 			        a.idEdital, p.Situacao, si.Descricao, a.Mecanismo
 			        FROM SAC.dbo.PreProjeto AS a
-			 INNER JOIN AGENTES.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
-			 INNER JOIN AGENTES.dbo.Nomes AS m ON a.idAgente = m.idAgente
+			 INNER JOIN agentes.dbo.Agentes AS ag ON a.idAgente = ag.idAgente
+			 INNER JOIN agentes.dbo.Nomes AS m ON a.idAgente = m.idAgente
 			 INNER JOIN SAC.dbo.Projetos p on p.idProjeto = a.idPreProjeto
 			 INNER JOIN SAC.dbo.Situacao si on si.Codigo = p.Situacao
 			 WHERE (a.stEstado = 1) ";
@@ -252,8 +252,8 @@ class ListarprojetosDAO extends Zend_Db_Table {
         FROM SAC.dbo.Projetos as p
         INNER JOIN SAC.dbo.Situacao as s on (p.Situacao = s.Codigo)
         INNER JOIN SAC.dbo.PreProjeto pp on (pp.idPreProjeto = p.idProjeto)
-        INNER JOIN AGENTES.dbo.Agentes a on (p.CgcCpf = a.CNPJCPF)
-        INNER JOIN AGENTES.dbo.Nomes n on (a.idAgente = n.idAgente) ";
+        INNER JOIN agentes.dbo.Agentes a on (p.CgcCpf = a.CNPJCPF)
+        INNER JOIN agentes.dbo.Nomes n on (a.idAgente = n.idAgente) ";
 
         if (!empty($cpf)) {
             $sql .= "WHERE p.CgcCpf =  '$cpf'";
@@ -270,9 +270,9 @@ class ListarprojetosDAO extends Zend_Db_Table {
 
     public static function buscaProponentesVinculados($idResponsavel) {
         $sql = "SELECT AG.idAgente, AG.CNPJCPF, NM.Descricao as Nome , VI.idVinculo, VI.siVinculo 
-				FROM AGENTES.dbo.Agentes AG
-				INNER JOIN AGENTES.dbo.Nomes NM ON AG.idAgente = NM.idAgente
-				LEFT JOIN AGENTES.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
+				FROM agentes.dbo.Agentes AG
+				INNER JOIN agentes.dbo.Nomes NM ON AG.idAgente = NM.idAgente
+				LEFT JOIN agentes.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
 				WHERE VI.idUsuarioResponsavel = '".$idResponsavel."'
 				AND VI.siVinculo IN (0,2)
 				ORDER BY NM.Descricao ";
@@ -286,8 +286,8 @@ class ListarprojetosDAO extends Zend_Db_Table {
 
     public static function buscaProponentes2($cpf = null) {
         $sql = "SELECT  DISTINCT a.CNPJCPF,  n.Descricao, a.idAgente
-        FROM AGENTES.dbo.Agentes as a
-        INNER JOIN AGENTES.dbo.Nomes n on (a.idAgente = n.idAgente) ";
+        FROM agentes.dbo.Agentes as a
+        INNER JOIN agentes.dbo.Nomes n on (a.idAgente = n.idAgente) ";
 
         if (!empty($cpf)) {
             $sql .= "WHERE a.CNPJCPF =  '$cpf'";

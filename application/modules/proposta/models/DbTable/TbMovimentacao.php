@@ -127,13 +127,13 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
                 array('age'=>'Agentes'),
                 'age.CNPJCPF = usu.usu_identificacao',
                 array('age.idAgente'),
-                'AGENTES.dbo'
+                'agentes.dbo'
                 );
         $slct->joinInner(
                 array('nm'=>'Nomes'),
                 'age.idAgente = nm.idAgente',
                 array('Nome'=>'nm.Descricao'),
-                'AGENTES.dbo'
+                'agentes.dbo'
                 );
 
         $slct->joinInner(

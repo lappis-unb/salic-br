@@ -2,7 +2,7 @@
 
 class Procuracao extends MinC_Db_Table_Abstract {
 
-    protected $_schema = 'Agentes';
+    protected $_schema = 'agentes';
     protected $_name = 'tbProcuracao';
     protected $_primary = 'idProcuracao';
 

@@ -21,7 +21,7 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         );
         $select->joinInner
                 (
-                array('nm' => 'Nomes'), 'nm.idagente = tc.idAgente', array('nm.Descricao as nome'), 'Agentes.dbo'
+                array('nm' => 'Nomes'), 'nm.idagente = tc.idAgente', array('nm.Descricao as nome'), 'agentes.dbo'
         );
         if (isset($where)) {
             $keys = array_keys($where);
@@ -97,7 +97,7 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
                 array('C' => 'tbTitulacaoConselheiro'), array('C.idAgente')
         );
         $select->joinInner(
-                array('N' => 'Nomes'), 'C.idAgente = N.idAgente', array('N.Descricao as Nome'), 'Agentes.dbo'
+                array('N' => 'Nomes'), 'C.idAgente = N.idAgente', array('N.Descricao as Nome'), 'agentes.dbo'
         );
         $select->joinInner(
                 array('A' => 'Area'), 'C.cdArea = A.Codigo', array('A.Descricao as Area'), 'SAC.dbo'

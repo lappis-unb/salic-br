@@ -12,7 +12,7 @@
 
 class CidadeDAO extends Zend_Db_Table
 {
-	protected $_name = 'AGENTES.dbo.Municipios'; // nome da tabela
+	protected $_name = 'agentes.dbo.Municipios'; // nome da tabela
 
 
 
@@ -27,7 +27,7 @@ class CidadeDAO extends Zend_Db_Table
 	public static function buscar($idUF, $idCidade = null)
 	{
 		$sql = "SELECT idMunicipioIBGE AS id, Descricao AS descricao ";
-		$sql.= "FROM AGENTES.dbo.Municipios ";
+		$sql.= "FROM agentes.dbo.Municipios ";
 		$sql.= "WHERE idUFIBGE = " . $idUF . " ";
 
 		if (!empty($idCidade))

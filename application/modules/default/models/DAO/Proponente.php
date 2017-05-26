@@ -75,13 +75,13 @@ Class Proponente extends MinC_Db_Table_Abstract {
 						        ELSE 'Sim'
 						      END AS Correspondencia,
 						   a.idAgente,e.idEndereco
-						   FROM Agentes.dbo.Agentes as a
-						   INNER JOIN Agentes.dbo.Visao v on (a.idAgente = v.idAgente and Visao = 144)
-						   INNER JOIN Agentes.dbo.Nomes as n on (a.idAgente = n.idAgente and (n.TipoNome =18  or n.TipoNome = 19))
-						   INNER JOIN Agentes.dbo.EnderecoNacional as e on (a.idAgente = e.idAgente and e.Status = 1)
-						   INNER JOIN Agentes.dbo.Verificacao v1 on (e.TipoEndereco = v1.idVerificacao)
-						   INNER JOIN Agentes.dbo.Verificacao v2 on (e.TipoLogradouro = v2.idVerificacao)
-						   INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio)
+						   FROM agentes.dbo.Agentes as a
+						   INNER JOIN agentes.dbo.Visao v on (a.idAgente = v.idAgente and Visao = 144)
+						   INNER JOIN agentes.dbo.Nomes as n on (a.idAgente = n.idAgente and (n.TipoNome =18  or n.TipoNome = 19))
+						   INNER JOIN agentes.dbo.EnderecoNacional as e on (a.idAgente = e.idAgente and e.Status = 1)
+						   INNER JOIN agentes.dbo.Verificacao v1 on (e.TipoEndereco = v1.idVerificacao)
+						   INNER JOIN agentes.dbo.Verificacao v2 on (e.TipoLogradouro = v2.idVerificacao)
+						   INNER JOIN agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio)
 						   LEFT JOIN  SAC.dbo.vwNatureza nt on (a.idAgente = nt.idAgente)
 						   LEFT JOIN SAC.dbo.Projetos Pr on a.CNPJCPF = Pr.CgcCpf
 						  WHERE Pr.IdPronac = " . $pronac . "";
@@ -105,8 +105,8 @@ WHEN It.TipoInternet = 29
 THEN 'Email Institucional'
 End as TipoInternet,
 It.Descricao as Email
-FROM AGENTES.dbo.Internet as It
-LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = It.IdAgente
+FROM agentes.dbo.Internet as It
+LEFT JOIN agentes.dbo.Agentes Ag on Ag.IdAgente = It.IdAgente
 LEFT JOIN SAC.dbo.Projetos Pr ON Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
@@ -140,9 +140,9 @@ THEN 'Sim'
 WHEN Tl.Divulgar = 0
 THEN 'N&atilde;o'
 end as Divulgar
-FROM AGENTES.dbo.Telefones Tl
-LEFT JOIN AGENTES.dbo.Uf as Uf on Uf.idUF = Tl.UF
-LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = Tl.IdAgente
+FROM agentes.dbo.Telefones Tl
+LEFT JOIN agentes.dbo.Uf as Uf on Uf.idUF = Tl.UF
+LEFT JOIN agentes.dbo.Agentes Ag on Ag.IdAgente = Tl.IdAgente
 LEFT JOIN SAC.dbo.Projetos Pr On Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
@@ -174,9 +174,9 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
                                                 INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
                                                 INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
-                                                LEFT JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+                                                LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
                                                 LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-                                                LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente
+                                                LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
                                                 LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC and Ta.stEstado = '1'
                                                 LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and Ta.stEstado = '1'";
@@ -208,9 +208,9 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
                                                 INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
                                                 INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
-                                                LEFT JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+                                                LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
                                                 LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-                                                LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente
+                                                LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
                                                 LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC
                                                 LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '0'";
@@ -240,9 +240,9 @@ where Pr.IdPRONAC = " . $pronac . "";
 							INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
 							INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
 							INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
-							LEFT JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+							LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
 							LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-							LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente
+							LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
 							LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC
 							LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 					  		WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '1'";

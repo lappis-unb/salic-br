@@ -193,7 +193,7 @@ class ProjetosDAO extends Zend_Db_Table
                C.cdArea,
                C.cdSegmento,
                C.stTitular
-               FROM AGENTES.dbo.tbTitulacaoConselheiro C 
+               FROM agentes.dbo.tbTitulacaoConselheiro C 
                WHERE C.stConselheiro = 'A' AND C.cdArea = " . $areaP;
         
         $AAS = $db->fetchAll($sqlComponenteAreaSegmento);
@@ -205,9 +205,9 @@ class ProjetosDAO extends Zend_Db_Table
             //aqui j� est� buscando o id do agente que tem a menor quantidade de projetos
             $sqlMenor = "SELECT TOP 1 TC.idAgente as agente,
 					       PXC.Qtd
-					FROM AGENTES.dbo.tbTitulacaoConselheiro TC
+					FROM agentes.dbo.tbTitulacaoConselheiro TC
 					INNER JOIN (SELECT ATC.idAgente, COUNT(DPC.idPronac) Qtd
-					            FROM  AGENTES.dbo.tbTitulacaoConselheiro ATC
+					            FROM  agentes.dbo.tbTitulacaoConselheiro ATC
 					            LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 					            WHERE ATC.stConselheiro = 'A'
 					            AND DPC.stDistribuicao = 'A'
@@ -215,13 +215,13 @@ class ProjetosDAO extends Zend_Db_Table
 					            GROUP BY ATC.idAgente
 					            UNION
 					            SELECT ATC.idAgente, COUNT(DPC.idPronac) - COUNT(DPCI.idPronac) Qtd
-					            FROM  AGENTES.dbo.tbTitulacaoConselheiro ATC
+					            FROM  agentes.dbo.tbTitulacaoConselheiro ATC
 					            LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 					            LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
 					            WHERE ATC.stConselheiro = 'A'
 					            AND DPCI.stDistribuicao = 'I'
 					            AND ATC.idAgente NOT IN (SELECT DISTINCT ATC.idAgente
-					                                     FROM  AGENTES.dbo.tbTitulacaoConselheiro ATC
+					                                     FROM  agentes.dbo.tbTitulacaoConselheiro ATC
 					                                     LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 					                                     WHERE ATC.stConselheiro = 'A'
 					                                     AND DPC.stDistribuicao = 'A'

@@ -8,7 +8,7 @@
 class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
 
     protected  $_banco  = 'AGENTES';
-    protected  $_schema = 'AGENTES';
+    protected  $_schema  = 'agentes';
     protected  $_name   = 'tbAgentesxVerificacao';
 
     /**
@@ -36,7 +36,7 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
                     );
           $slct->joinInner(
                 array('d' => 'verificacao'), 'c.idVerificacao = d.idVerificacao',
-                array('d.Descricao'),'AGENTES.dbo'
+                array('d.Descricao'),'agentes.dbo'
         );
           $slct->joinInner(
                 array('e' => 'tbArquivo'), 'c.idArquivo = e.idArquivo',

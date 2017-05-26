@@ -17,8 +17,8 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
                 nm.idagente,
                 pr.IdPRONAC,
                 case
-                when ag.TipoPessoa = 1 then 'Pessoa Jurídica '
-                when ag.TipoPessoa = 0 then 'Pessoa Física' end as tipopessoa,
+                when ag.TipoPessoa = 1 then 'Pessoa Jurï¿½dica '
+                when ag.TipoPessoa = 0 then 'Pessoa Fï¿½sica' end as tipopessoa,
                 pr.CgcCpf,
                 endn.Logradouro,
                 endn.Bairro,
@@ -29,12 +29,12 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
                 nat.Direito,
                 nat.Administracao
                 FROM  SAC.dbo.Projetos pr
-                left JOIN AGENTES.dbo.Agentes ag ON ag.CNPJCPF = pr.CgcCpf
-                left JOIN AGENTES.dbo.Nomes nm ON  nm.idAgente  = ag.idAgente
-                left JOIN AGENTES.dbo.EnderecoNacional endn on endn.idAgente = ag.idAgente
-                left join AGENTES.dbo.Natureza nat on nat.idAgente = ag.idAgente
-                left join AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = endn.Cidade
-                left join AGENTES.dbo.UF uf on uf.idUF = endn.UF";
+                left JOIN agentes.dbo.Agentes ag ON ag.CNPJCPF = pr.CgcCpf
+                left JOIN agentes.dbo.Nomes nm ON  nm.idAgente  = ag.idAgente
+                left JOIN agentes.dbo.EnderecoNacional endn on endn.idAgente = ag.idAgente
+                left join agentes.dbo.Natureza nat on nat.idAgente = ag.idAgente
+                left join agentes.dbo.Municipios mun on mun.idMunicipioIBGE = endn.Cidade
+                left join agentes.dbo.UF uf on uf.idUF = endn.UF";
 		
 		if (! empty ( $idpronac )) {
 			$sql .= " where pr.idpronac=$idpronac";
@@ -60,9 +60,9 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
                 tel.DDD,
                 tel.Numero,
                 tel.Divulgar
-                FROM AGENTES.dbo.Telefones tel
-                join AGENTES.dbo.Agentes ag on ag.idAgente = tel.idAgente
-                join AGENTES.dbo.UF uf on uf.idUF = tel.UF
+                FROM agentes.dbo.Telefones tel
+                join agentes.dbo.Agentes ag on ag.idAgente = tel.idAgente
+                join agentes.dbo.UF uf on uf.idUF = tel.UF
                 join SAC.dbo.Projetos pr on pr.CgcCpf = ag.CNPJCPF
                 where pr.IdPRONAC = " . $idpronac;
 		
@@ -76,8 +76,8 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 		$sql = "select
                 inte.TipoInternet as tpemail,
                 inte.Descricao as email
-                from AGENTES.dbo.Internet inte
-                join AGENTES.dbo.Agentes ag on ag.idAgente = inte.idAgente
+                from agentes.dbo.Internet inte
+                join agentes.dbo.Agentes ag on ag.idAgente = inte.idAgente
                 join SAC.dbo.Projetos pr on pr.CgcCpf = ag.CNPJCPF
                 WHERE pr.idpronac =" . $idpronac;
 		
@@ -156,7 +156,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
                 nm.Descricao as nome,
                 cast(tv.dsJustificativa AS TEXT) as justificativa
                 from BDCORPORATIVO.scSAC.tbVotacao tv
-                join Agentes.dbo.Nomes nm on nm.idAgente = tv.idAgente
+                join agentes.dbo.Nomes nm on nm.idAgente = tv.idAgente
                 where nm.tiponome=18 and tv.dsjustificativa is not null and tv.idNrReuniao=" . $idnrreuniao . " and tv.IdPRONAC=" . $idpronac;
 		
 		$db = Zend_Registry::get ( 'db' );

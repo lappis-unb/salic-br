@@ -50,8 +50,8 @@ class AprovacaoDAO extends Zend_Db_Table
                 INNER JOIN SAC..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)
                 INNER JOIN BDCORPORATIVO.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
                 INNER JOIN SAC..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
-                INNER JOIN AGENTES..Agentes ag on ag.CNPJCPF = pr.CgcCpf
-                INNER JOIN AGENTES..Nomes nm on nm.idAgente = ag.idAgente ";
+                INNER JOIN agentes.dboAgentes ag on ag.CNPJCPF = pr.CgcCpf
+                INNER JOIN agentes.dboNomes nm on nm.idAgente = ag.idAgente ";
 
         if ($situacao)
         {
@@ -109,8 +109,8 @@ class AprovacaoDAO extends Zend_Db_Table
                 INNER JOIN SAC..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)
                 INNER JOIN BDCORPORATIVO.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
                 INNER JOIN SAC..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
-                INNER JOIN AGENTES..Agentes ag on ag.CNPJCPF = pr.CgcCpf
-                INNER JOIN AGENTES..Nomes nm on nm.idAgente = ag.idAgente
+                INNER JOIN agentes.dboAgentes ag on ag.CNPJCPF = pr.CgcCpf
+                INNER JOIN agentes.dboNomes nm on nm.idAgente = ag.idAgente
                 where (pr.Situacao = 'D40' and ap.TipoAprovacao= 2) or (pr.Situacao='D40' and ap.TipoAprovacao=4) or (ap.TipoAprovacao = 5)";
 
 

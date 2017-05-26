@@ -355,7 +355,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 	public static function verificarInteressadosAgentes($CNPJCPF)
 	{
 		$sqlInteressados = "SELECT CgcCpf FROM SAC.dbo.Interessado WHERE CgcCpf = '$CNPJCPF'";
-		$sqlAgentes      = "SELECT CNPJCPF FROM AGENTES.dbo.Agentes WHERE CNPJCPF = '$CNPJCPF'";
+		$sqlAgentes      = "SELECT CNPJCPF FROM agentes.dbo.Agentes WHERE CNPJCPF = '$CNPJCPF'";
 
 		$db = Zend_Registry::get ('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

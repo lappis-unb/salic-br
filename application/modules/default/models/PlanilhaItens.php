@@ -285,7 +285,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('nm'=>'Nomes'),
                             "ctxa.idAgente = nm.idAgente",
                             array('Fornecedor'=>'nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         }
         if($idDispensaLicitacao)

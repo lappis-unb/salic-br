@@ -54,9 +54,9 @@ Class DadosprojetoDAO extends Zend_Db_Table{
 			JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
 			JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
 			LEFT JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
-			JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+			JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
 			JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-			JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente 
+			JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente 
 			LEFT JOIN SAC.dbo.vwTramitarProjeto Tp ON Tp.idPronac = Pr.idPRONAC
 			JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 			WHERE Pr.idPRONAC = ". $pronac ."" ;

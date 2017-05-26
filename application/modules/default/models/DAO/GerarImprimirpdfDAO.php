@@ -11,9 +11,9 @@ class GerarImprimirpdfDAO
                 FROM
                     SAC.dbo.PreProjeto p
                 LEFT JOIN
-                    AGENTES.dbo.Agentes a ON (p.idAgente=a.idAgente)
+                    agentes.dbo.Agentes a ON (p.idAgente=a.idAgente)
                 LEFT JOIN
-                    AGENTES.dbo.Nomes n ON (p.idAgente=n.idAgente)
+                    agentes.dbo.Nomes n ON (p.idAgente=n.idAgente)
 
                 WHERE p.idPreProjeto=".$id_projeto ;
 

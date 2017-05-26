@@ -60,7 +60,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $where['idVinculo = ? '] = $idVinculo;
 
-        return $db->update('Agentes.dbo.tbVinculoProposta', array('siVinculoProposta' => $siVinculoProposta), $where);
+        return $db->update('agentes.dbo.tbVinculoProposta', array('siVinculoProposta' => $siVinculoProposta), $where);
     }
 
     /**
@@ -488,7 +488,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      */
     public function inserirAgentes($dadosAgentes) {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $Agentes = $db->insert("Agentes.dbo.Agentes", $dadosAgentes);
+        $Agentes = $db->insert("agentes.dbo.Agentes", $dadosAgentes);
     }
 
     /**
@@ -502,7 +502,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      */
     public function inserirNomes($dadosNomes) {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $Nomes = $db->insert("Agentes.dbo.Nomes", $dadosNomes);
+        $Nomes = $db->insert("agentes.dbo.Nomes", $dadosNomes);
     }
 
     /**
@@ -516,7 +516,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      */
     public function inserirEnderecoNacional($dadosEnderecoNacional) {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $Nomes = $db->insert("Agentes.dbo.EnderecoNacional", $dadosEnderecoNacional);
+        $Nomes = $db->insert("agentes.dbo.EnderecoNacional", $dadosEnderecoNacional);
     }
 
     /**
@@ -530,7 +530,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      */
     public function inserirVisao($dadosVisao) {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $Nomes = $db->insert("Agentes.dbo.Visao", $dadosVisao);
+        $Nomes = $db->insert("agentes.dbo.Visao", $dadosVisao);
     }
 
     /**
@@ -1411,7 +1411,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("uf"=>"UF"),
                         "uf.idUF = ab.idUF",
                         array(),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
 		}
 
@@ -1420,7 +1420,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("mu"=>"Municipios"),
                         "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
                         array(),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
 		}
 
@@ -1443,13 +1443,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("ag"=>"agentes"),
                         "ag.idAgente = p.idAgente",
                         array("ag.CNPJCPF"),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
         $slct->joinInner(
                         array("nm"=>"nomes"),
                         "nm.idAgente = p.idAgente",
                         array("nm.Descricao as Proponente"),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
 
         //adiciona quantos filtros foram enviados
@@ -1517,14 +1517,14 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         if(isset($where['ab.idUF = ?'])){
             $slct->joinInner(
                 array("uf"=>"UF"), "uf.idUF = ab.idUF",
-                array(), "AGENTES.dbo"
+                array(), "agentes.dbo"
             );
         }
 
         if( isset($where['ab.idUF = ?']) || isset($where['ab.idMunicipioIBGE = ?'])){
             $slct->joinInner(
                 array("mu"=>"Municipios"), "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
-                array(), "AGENTES.dbo"
+                array(), "agentes.dbo"
             );
         }
 
@@ -1542,14 +1542,14 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $slct->joinInner(
             array("ag"=>"agentes"), "ag.idAgente = p.idAgente",
-            array("ag.CNPJCPF"), "AGENTES.dbo"
+            array("ag.CNPJCPF"), "agentes.dbo"
         );
 
         $slct->joinInner(
             array("nm"=>"nomes"), "nm.idAgente = p.idAgente",
             array(
                 "nm.Descricao as Proponente"
-            ), "AGENTES.dbo"
+            ), "agentes.dbo"
         );
 
         //adiciona quantos filtros foram enviados
@@ -1697,7 +1697,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("a"=>"Agentes"),
                         "p.idAgente = a.idAgente",
                         array("CNPJCPF"),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
         $slct->joinInner(
                         array("y"=>"Verificacao"),
@@ -2360,13 +2360,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("a"=>"Agentes"),
                         "p.idAgente = a.idAgente",
                         array("CNPJCPF"),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
         $slct->joinInner(
                         array("n"=>"Nomes"),
                         "p.idAgente = n.idAgente",
                         array("NomeAgente"=>"Descricao"),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
         $slct->joinInner(
                         array("e"=>"Edital"),
@@ -2402,13 +2402,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("uf"=>"UF"),
                         "uf.idUF = ab.idUF",
                         array("idUF", "SiglaUF"=>"Sigla", "NomeUF"=>"Descricao", "Regiao"),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
         $slct->joinInner(
                         array("mu"=>"Municipios"),
                         "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
                         array("NomeMunicipio"=>"Descricao"),
-                        "AGENTES.dbo"
+                        "agentes.dbo"
                         );
         $slct->joinInner(
                         array("vr2"=>"Verificacao"),
@@ -2458,13 +2458,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                             array("a"=>"Agentes"),
                             "p.idAgente = a.idAgente",
                             array(),
-                            "AGENTES.dbo"
+                            "agentes.dbo"
                             );
             $slct2->joinInner(
                             array("n"=>"Nomes"),
                             "p.idAgente = n.idAgente",
                             array(),
-                            "AGENTES.dbo"
+                            "agentes.dbo"
                             );
             $slct2->joinInner(
                             array("e"=>"Edital"),
@@ -2500,13 +2500,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                             array("uf"=>"UF"),
                             "uf.idUF = ab.idUF",
                             array(),
-                            "AGENTES.dbo"
+                            "agentes.dbo"
                             );
             $slct2->joinInner(
                             array("mu"=>"Municipios"),
                             "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
                             array(),
-                            "AGENTES.dbo"
+                            "agentes.dbo"
                             );
             $slct2->joinInner(
                             array("vr2"=>"Verificacao"),

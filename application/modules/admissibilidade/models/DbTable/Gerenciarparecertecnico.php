@@ -198,8 +198,8 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 					from SAC.dbo.tbDeslocamento as d
 					INNER JOIN sac.dbo.Projetos p on (d.idProjeto = p.idProjeto)
 					inner join SAC.dbo.Uf as uf on d.idUFOrigem = uf.CodUfIbge
-					inner join AGENTES.dbo.Pais as pa on d.idPaisOrigem = pa.idPais
-					inner join AGENTES.dbo.Municipios m on d.idMunicipioOrigem = m.idMunicipioIBGE
+					inner join agentes.dbo.Pais as pa on d.idPaisOrigem = pa.idPais
+					inner join agentes.dbo.Municipios m on d.idMunicipioOrigem = m.idMunicipioIBGE
 					WHERE p.AnoProjeto+p.Sequencial = '$pronac' order by d.idDeslocamento";
 
     	//xd($sql);
@@ -321,7 +321,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				FROM sac.dbo.Projetos AS a INNER JOIN
 				     sac.dbo.tbPlanilhaProposta AS b ON a.idProjeto = b.idProjeto LEFT OUTER JOIN
 				     sac.dbo.Verificacao AS x ON b.FonteRecurso = x.idVerificacao INNER JOIN
-				     AGENTES.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
+				     agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 				WHERE AnoProjeto+Sequencial = '$pronac'";
 
    	//xd($sql);
@@ -388,7 +388,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				    f.Municipio
 				FROM sac.dbo.Projetos AS a INNER JOIN
 				     sac.dbo.tbPlanilhaProposta AS b ON a.idProjeto = b.idProjeto LEFT OUTER JOIN
-				     AGENTES.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
+				     agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";
 
    	//xd($sql);
@@ -436,7 +436,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				FROM sac.dbo.Projetos AS a
 				     INNER JOIN sac.dbo.tbPlanilhaProposta AS b ON a.idProjeto = b.idProjeto
 				     INNER JOIN sac.dbo.tbPlanilhaUnidade AS e ON b.Unidade = e.idUnidade
-				     INNER JOIN AGENTES.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
+				     INNER JOIN agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";
 
    	//xd($sql);

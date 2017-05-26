@@ -60,25 +60,25 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			array("proponente" => "Agentes")
 			,"proponente.idAgente = r.idAgenteSolicitante"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("nmProponente" => "Nomes")
 			,"nmProponente.idAgente = proponente.idAgente"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("ministro" => "Agentes")
 			,"ministro.idAgente = r.idAgenteAvaliador"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("nmMinistro" => "Nomes")
 			,"nmMinistro.idAgente = ministro.idAgente"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 
 		// avaliacao do ministro
@@ -222,31 +222,31 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			array("Ag" => "Agentes")
 			,"Ag.CNPJCPF = Pr.CgcCpf"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("N" => "Nomes")
 			,"N.idAgente = Ag.idAgente"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("EN" => "EnderecoNacional")
 			,"EN.idAgente = Ag.idAgente"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinInner(
 			array("mun" => "Municipios")
 			,"mun.idMunicipioIBGE = I.Cidade OR mun.idMunicipioIBGE = EN.Cidade"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinInner(
 			array("uf" => "UF")
 			,"uf.idUF = mun.idUFIBGE"
 			,array()
-			,"AGENTES.dbo"
+			,"agentes.dbo"
 		);
 		$select->joinLeft(
 			array("Enq" => "Enquadramento")
@@ -337,7 +337,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$select->joinLeft(
 			array("nm" => "Nomes")
 			,"nm.idAgente = tp.idAgenteAvaliador"
-			,array(), 'AGENTES.dbo'
+			,array(), 'agentes.dbo'
 		);
 
 		$select->where("tp.stEstado = ?", 0);
@@ -416,8 +416,8 @@ class tbRecurso extends MinC_Db_Table_Abstract
 					LEFT JOIN SAC.dbo.tbPlanilhaAprovacao PAP ON (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
 					LEFT JOIN SAC.dbo.tbPlanilhaAprovacao PAPM ON (PAPM.idPlanilhaProposta = PP.idPlanilhaProposta AND PAPM.tpPlanilha = 'MI')
 					LEFT JOIN SAC.dbo.tbPlanilhaItens PIT ON (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					LEFT JOIN AGENTES.dbo.UF UF ON (PAP.idUFDespesa = UF.idUF)
-					LEFT JOIN AGENTES.dbo.Municipios CID ON (PAP.idMunicipioDespesa = CID.idMunicipioIBGE)
+					LEFT JOIN agentes.dbo.UF UF ON (PAP.idUFDespesa = UF.idUF)
+					LEFT JOIN agentes.dbo.Municipios CID ON (PAP.idMunicipioDespesa = CID.idMunicipioIBGE)
 					LEFT JOIN SAC.dbo.tbPlanilhaEtapa E ON (PAP.idEtapa = E.idPlanilhaEtapa)
 					LEFT JOIN SAC.dbo.tbPlanilhaUnidade UNI ON (PAP.idUnidade = UNI.idUnidade)
 					LEFT JOIN SAC.dbo.Produto PD ON (PAP.idProduto = PD.Codigo)
@@ -501,7 +501,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $select->joinLeft(
             array('e' => 'Nomes'),
             'c.idAvaliador = e.idAgente',
-            array(''), 'AGENTES.dbo'
+            array(''), 'agentes.dbo'
         );
 
         //adiciona quantos filtros foram enviados
@@ -622,7 +622,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('c' => 'Nomes'), 'a.idAgenteAvaliador = c.idAgente',
-            array(''), 'AGENTES.dbo'
+            array(''), 'agentes.dbo'
         );
         $select->joinInner(
             array('d' => 'Area'), 'b.Area = d.Codigo',

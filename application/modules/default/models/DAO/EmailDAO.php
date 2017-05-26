@@ -49,13 +49,13 @@ class EmailDAO extends Zend_Db_Table
                         FROM sac.dbo.Projetos p
                         INNER JOIN sac.dbo.PreProjeto pr           ON (p.idProjeto = pr.idPreProjeto)
                         INNER JOIN sac.dbo.tbFiscalizacao f        ON (f.IdPRONAC = p.IdPRONAC)
-                        INNER JOIN Agentes.dbo.Internet i          ON (i.idAgente = pr.idAgente )
+                        INNER JOIN agentes.dbo.Internet i          ON (i.idAgente = pr.idAgente )
                         WHERE (p.IdPRONAC = $idPronac) AND (f.idFiscalizacao = $idFiscalizacao)
                         UNION ALL
                         SELECT t.Descricao AS email
                         FROM sac.dbo.Projetos p
                         INNER JOIN sac.dbo.tbFiscalizacao f        ON (f.IdPRONAC = p.IdPRONAC)
-                        INNER JOIN Agentes.dbo.Internet t   ON (t.idAgente = f.idAgente)
+                        INNER JOIN agentes.dbo.Internet t   ON (t.idAgente = f.idAgente)
                         WHERE (p.IdPRONAC = $idPronac) AND (f.idFiscalizacao = $idFiscalizacao)";
 
 		return $sql;

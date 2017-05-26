@@ -610,7 +610,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         );
 
         $select->joinInner(
-            array('a' => 'agentes'),
+            array('a' => 'Agentes'),
             'u.usu_identificacao = a.cnpjcpf',
             array('a.idagente'),
             parent::getSchema('agentes')
@@ -956,7 +956,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
             array('b' => 'Agentes'),
             'a.usu_identificacao = b.CNPJCPF',
             array('b.idAgente'),
-            "AGENTES.dbo"
+            "agentes.dbo"
         );
         $select->where("a.sis_codigo = ?", 21);
         $select->where("a.gru_codigo = ?", $perfil);

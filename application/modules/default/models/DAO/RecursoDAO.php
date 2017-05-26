@@ -134,12 +134,12 @@ class RecursoDAO extends Zend_Db_Table
                               INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
                               INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
                               INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC 
-                              LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-                              LEFT JOIN AGENTES.dbo.Nomes N on N.idAgente = Ag.idAgente
+                              LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+                              LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
                               INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
-                              LEFT JOIN AGENTES.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
-                                  INNER JOIN Agentes..Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
-                                  INNER JOIN Agentes..UF uf on uf.idUF = mun.idUFIBGE
+                              LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
+                                  INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
+                                  INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
                             WHERE 
                             --Rec.stAtendimento = 'N' AND
                             Rec.tpSolicitacao = 'EN'";
@@ -190,12 +190,12 @@ class RecursoDAO extends Zend_Db_Table
                               SAC.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
                               INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
                               INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-                              LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-                              LEFT JOIN AGENTES.dbo.Nomes N on N.idAgente = Ag.idAgente
+                              LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+                              LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
                               INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
-                              LEFT JOIN AGENTES.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
-                                  INNER JOIN Agentes..Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
-                                  INNER JOIN Agentes..UF uf on uf.idUF = mun.idUFIBGE
+                              LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
+                                  INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
+                                  INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
                               WHERE Rec.stAtendimento = 'N'
                               AND Rec.tpSolicitacao = 'OR'";
 
@@ -244,12 +244,12 @@ class RecursoDAO extends Zend_Db_Table
                               SAC.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
                               INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
                               INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-                              LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-                              LEFT JOIN AGENTES.dbo.Nomes N on N.idAgente = Ag.idAgente
+                              LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+                              LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
                               INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
-                              LEFT JOIN AGENTES.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
-                                  INNER JOIN Agentes..Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
-                                  INNER JOIN Agentes..UF uf on uf.idUF = mun.idUFIBGE
+                              LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
+                                  INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
+                                  INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
 		                 WHERE Rec.stAtendimento = 'N'
 		                  AND Rec.tpSolicitacao = 'PI'";
 
@@ -319,12 +319,12 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
                                   SAC.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
                                   INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
                                   INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-                                  LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-                                  LEFT JOIN AGENTES.dbo.Nomes N on N.idAgente = Ag.idAgente
+                                  LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
+                                  LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
                                   INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
-                                  LEFT JOIN AGENTES.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
-                                      INNER JOIN Agentes..Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
-                                      INNER JOIN Agentes..UF uf on uf.idUF = mun.idUFIBGE
+                                  LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
+                                      INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
+                                      INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
 		                 WHERE Rec.stAtendimento = 'D'
 		                  AND Rec.tpSolicitacao = 'NA'";
 

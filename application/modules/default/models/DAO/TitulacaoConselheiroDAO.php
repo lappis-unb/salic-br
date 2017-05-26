@@ -6,13 +6,13 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class TitulacaoConselheiroDAO extends Zend_Db_Table
 {
-	protected $_name = 'AGENTES.dbo.tbTitulacaoConselheiro'; // nome da tabela
+	protected $_name = 'agentes.dbo.tbTitulacaoConselheiro'; // nome da tabela
 
 
 
@@ -27,8 +27,8 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 					,SC.Descricao Segmento
 					,A.stTitular
 
-				FROM AGENTES.dbo.tbTitulacaoConselheiro A 
-					INNER JOIN AGENTES.dbo.Nomes N ON A.idAgente = N.idAgente 
+				FROM agentes.dbo.tbTitulacaoConselheiro A 
+					INNER JOIN agentes.dbo.Nomes N ON A.idAgente = N.idAgente 
 					INNER JOIN SAC.dbo.Area AC ON A.cdArea = AC.Codigo 
 					LEFT JOIN SAC.dbo.Segmento SC ON A.cdSegmento = SC.Codigo 
 
@@ -52,7 +52,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 	#--Buscando quanto titulares tem na area x
 	public static function buscaTitularArea($area)
 	{
-		$sql = "Select COUNT(*) as QTD FROM AGENTES.dbo.tbTitulacaoConselheiro where cdArea = ".$area." AND stTitular = 1 AND stConselheiro = 'A'";
+		$sql = "Select COUNT(*) as QTD FROM agentes.dbo.tbTitulacaoConselheiro where cdArea = ".$area." AND stTitular = 1 AND stConselheiro = 'A'";
 
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -65,7 +65,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 	#--Buscando quantos suplentes tem na area x--
 	public static function buscaSuplentesArea($area)
 	{
-		$sql = "Select COUNT(*) as QTD FROM AGENTES.dbo.tbTitulacaoConselheiro where cdArea = ".$area." AND stTitular = 0 AND stConselheiro = 'A'";
+		$sql = "Select COUNT(*) as QTD FROM agentes.dbo.tbTitulacaoConselheiro where cdArea = ".$area." AND stTitular = 0 AND stConselheiro = 'A'";
 
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -77,7 +77,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 
 	public static function buscarComponente($idAgente)
 	{
-		$sql = "Select * From AGENTES.dbo.tbTitulacaoConselheiro where idAgente = ".$idAgente;
+		$sql = "Select * From agentes.dbo.tbTitulacaoConselheiro where idAgente = ".$idAgente;
 
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -92,7 +92,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$where = "idAgente =".$idAgente;
-		$i = $db->update('AGENTES.dbo.tbTitulacaoConselheiro', $dados, $where);
+		$i = $db->update('agentes.dbo.tbTitulacaoConselheiro', $dados, $where);
 	}
 
 
@@ -101,7 +101,7 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 	{
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-		$i = $db->insert('AGENTES.dbo.tbTitulacaoConselheiro', $dados);
+		$i = $db->insert('agentes.dbo.tbTitulacaoConselheiro', $dados);
 	}
 
 } // fecha class

@@ -4,12 +4,12 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 	
     public static function buscaIdAgente ($cpf = null)
     {
-//    	$sql = "select * from AGENTES.dbo.Agentes where CNPJCPF = '$cpf'";
+//    	$sql = "select * from agentes.dbo.Agentes where CNPJCPF = '$cpf'";
     	
          $sql = "select usu.usu_identificacao, usu.usu_nome, a.idAgente
                                         FROM TABELAS.dbo.Usuarios usu 
-                                        INNER JOIN AGENTES.dbo.Agentes as a on a.CNPJCPF = usu.usu_identificacao
-                                        INNER JOIN AGENTES.dbo.Nomes as n on n.idAgente = a.idAgente
+                                        INNER JOIN agentes.dbo.Agentes as a on a.CNPJCPF = usu.usu_identificacao
+                                        INNER JOIN agentes.dbo.Nomes as n on n.idAgente = a.idAgente
                                 where usu_identificacao = '$cpf'";    
             
 
@@ -23,21 +23,21 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
 //		$sql = "select usu_identificacao, usu_nome, em.Descricao as email, a.idAgente, usu.usu_codigo 
 //					FROM TABELAS.dbo.Usuarios usu 
-//					INNER JOIN AGENTES.dbo.Agentes as a on a.CNPJCPF = usu.usu_identificacao
-//					INNER JOIN AGENTES.dbo.Internet as em on a.idAgente = em.idAgente
+//					INNER JOIN agentes.dbo.Agentes as a on a.CNPJCPF = usu.usu_identificacao
+//					INNER JOIN agentes.dbo.Internet as em on a.idAgente = em.idAgente
 //				where usu_identificacao = $cpf ";
 //
 //    	$sql = "SELECT a.idAgente, a.CNPJCPF as usu_identificacao, a.Usuario as usu_codigo, i.Descricao as email, n.Descricao as nome,
 //    				a.Usuario as usu_Agentes, i.Usuario as usu_email, n.Usuario as usu_nome
-//				FROM AGENTES.dbo.Agentes a
-//					inner join AGENTES.dbo.Internet i on a.idAgente = i.idAgente 
-//					inner join AGENTES.dbo.Nomes n on a.idAgente = n.idAgente
+//				FROM agentes.dbo.Agentes a
+//					inner join agentes.dbo.Internet i on a.idAgente = i.idAgente
+//					inner join agentes.dbo.Nomes n on a.idAgente = n.idAgente
 //				WHERE a.CNPJCPF = '$cpf' and a.idAgente = $idAgente";
             
          $sql = "select usu.usu_identificacao, usu.usu_nome as nome, a.idAgente
                                         FROM TABELAS.dbo.Usuarios usu 
-                                        INNER JOIN AGENTES.dbo.Agentes as a on a.CNPJCPF = usu.usu_identificacao
-                                        INNER JOIN AGENTES.dbo.Nomes as n on n.idAgente = a.idAgente
+                                        INNER JOIN agentes.dbo.Agentes as a on a.CNPJCPF = usu.usu_identificacao
+                                        INNER JOIN agentes.dbo.Nomes as n on n.idAgente = a.idAgente
                                 where usu_identificacao = '$cpf' and a.idAgente = $idAgente";
             
 //
@@ -129,7 +129,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 	public static function inserirAgente ($cpf, $idusuario)
     {
         $objAcesso= new Acesso();
-    	$sql = "insert into AGENTES.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, {$objAcesso->getDate()}, 0, $idusuario)";
+    	$sql = "insert into agentes.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, {$objAcesso->getDate()}, 0, $idusuario)";
 		//xd($sql);
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -139,7 +139,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
 	public static function inserirEmail ($idAgente, $email, $idusuario)
     {
-    	$sql = "insert into AGENTES.dbo.Internet (idAgente, TipoInternet, Descricao, Status, Divulgar, Usuario) values ($idAgente, 28, '$email', 0, 1, $idusuario)";
+    	$sql = "insert into agentes.dbo.Internet (idAgente, TipoInternet, Descricao, Status, Divulgar, Usuario) values ($idAgente, 28, '$email', 0, 1, $idusuario)";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -149,7 +149,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
 	public static function atualizarEmail ($idAgente, $email, $idusuario)
     {
-    	$sql = "update AGENTES.dbo.Internet set Descricao = '$email' where idAgente = $idAgente and TipoInternet = 28 and Usuario = $idusuario";
+    	$sql = "update agentes.dbo.Internet set Descricao = '$email' where idAgente = $idAgente and TipoInternet = 28 and Usuario = $idusuario";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -159,7 +159,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
 	public static function inserirNome ($idAgente, $nome, $idusuario)
     {
-    	$sql = "insert into AGENTES.dbo.Nomes (idAgente, TipoNome, Descricao, Status, Usuario) values ($idAgente, 18, '$nome', 0, $idusuario)";
+    	$sql = "insert into agentes.dbo.Nomes (idAgente, TipoNome, Descricao, Status, Usuario) values ($idAgente, 18, '$nome', 0, $idusuario)";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -169,7 +169,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
 	public static function atualizarNome ($idAgente, $nome, $idusuario)
     {
-    	$sql = "update AGENTES.dbo.Nomes set Descricao = '$nome' where idAgente = $idAgente and TipoNome = 18 and Usuario = $idusuario";
+    	$sql = "update agentes.dbo.Nomes set Descricao = '$nome' where idAgente = $idAgente and TipoNome = 18 and Usuario = $idusuario";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

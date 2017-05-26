@@ -29,7 +29,7 @@ class tbAporteCaptacao extends MinC_Db_Table_Abstract
     	$select = $this->select()->setIntegrityCheck(false);
     	$select->from($this->_name, array('*'));
     	$select->joinInner(array('i' => 'Interessado'), 'tbAporteCaptacao.CNPJCPF = i.CgcCPf', array('*'), 'SAC.dbo');
-    	$select->joinInner(array('a' => 'agentes'), 'a.CNPJCPf = i.CgcCPf', array('*'), 'Agentes.dbo');
+    	$select->joinInner(array('a' => 'Agentes'), 'a.CNPJCPf = i.CgcCPf', array('*'), 'agentes.dbo');
     	$select->where('nrLote = ?', self::DEPOSITO_EQUIVOCADO_NRLOTE);
     	foreach ($where as $key => $value) {
     		$select->where($key, $value);
@@ -46,7 +46,7 @@ class tbAporteCaptacao extends MinC_Db_Table_Abstract
     	$select = $this->select()->setIntegrityCheck(false);
     	$select->from($this->_name, array('*'));
     	$select->joinInner(array('i' => 'Interessado'), 'tbAporteCaptacao.CNPJCPF = i.CgcCPf', array('*'), 'SAC.dbo');
-    	$select->joinInner(array('a' => 'agentes'), 'a.CNPJCPf = i.CgcCPf', array('*'), 'Agentes.dbo');
+    	$select->joinInner(array('a' => 'Agentes'), 'a.CNPJCPf = i.CgcCPf', array('*'), 'agentes.dbo');
     	$select->where('idVerificacao = ?', Verificacao::DEVOLUCAO_FUNDO_NACIONAL_CULTURA);
     	foreach ($where as $key => $value) {
     		$select->where($key, $value);

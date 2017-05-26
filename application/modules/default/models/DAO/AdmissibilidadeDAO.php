@@ -254,7 +254,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                 FROM   SAC.dbo.PreProjeto AS p
                 INNER JOIN SAC.dbo.tbMovimentacao AS m ON p.idPreProjeto = m.idProjeto AND m.Movimentacao = 127 AND m.stEstado = 0
                 INNER JOIN SAC.dbo.tbAvaliacaoProposta AS x ON p.idPreProjeto = x.idProjeto AND x.ConformidadeOK = 1 AND x.stEstado = 0
-                INNER JOIN AGENTES.dbo.Agentes AS a ON p.idAgente = a.idAgente
+                INNER JOIN agentes.dbo.Agentes AS a ON p.idAgente = a.idAgente
                 WHERE {$meuWhere} (p.stEstado = 1) and p.stTipoDemanda = 'NA'
                 AND (NOT EXISTS
                         (

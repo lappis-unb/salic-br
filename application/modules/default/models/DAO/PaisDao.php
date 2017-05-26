@@ -3,7 +3,7 @@ class PaisDao extends Zend_Db_Table {
 
 
     public function buscarPais() {
-        $sql0 = "select * from Agentes.dbo.Pais";
+        $sql0 = "select * from agentes.dbo.Pais";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

@@ -50,8 +50,8 @@ class VisualizarhistoricoDAO extends Zend_Db_Table
         				Pr.IdPRONAC,
         				dsMensagem
 				from BDCORPORATIVO.scSAC.tbmensagemprojeto mp
-				left join Agentes.dbo.Nomes remetente on remetente.idAgente = mp.idRemetente
-				left join Agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestinatario
+				left join agentes.dbo.Nomes remetente on remetente.idAgente = mp.idRemetente
+				left join agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestinatario
 				left join SAC.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
  				where mp.stAtivo = 'A' and Pr.IdPRONAC = '$pronac'
 				order by mp.dtEncaminhamento desc ";
@@ -66,9 +66,9 @@ class VisualizarhistoricoDAO extends Zend_Db_Table
 		$conselheiro = "SELECT 
 								N.Descricao as nomeConselheiro, 
 								N.idAgente as agente
-						FROM AGENTES.dbo.Agentes A,
-								AGENTES.dbo.Nomes N, 
-								AGENTES.dbo.Visao V 
+						FROM agentes.dbo.Agentes A,
+								agentes.dbo.Nomes N, 
+								agentes.dbo.Visao V 
 				 		WHERE V.idAgente = A.idAgente 
 						AND V.Visao = 210 
 						AND N.idAgente = A.idAgente

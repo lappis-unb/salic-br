@@ -160,8 +160,8 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 			ELSE N.Descricao
 			END AS nmProponente
 			FROM SAC.dbo.Projetos Pr
-			INNER JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
-			INNER JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente
+			INNER JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+			INNER JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
 			INNER JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 			where A.CNPJCPF = " . $cpf . "";
 
@@ -185,11 +185,11 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 				END AS nmproponente
 				FROM SAC.dbo.Projetos Pr
 				INNER JOIN SAC.dbo.Situacao St ON (St.Codigo = Pr.Situacao) and (St.Codigo = 'E10' or St.Codigo = 'D09' or St.Codigo = 'D38' or St.Codigo = 'D11' or St.Codigo = 'D25' or St.Codigo = 'D36')
-				INNER JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
-				INNER JOIN AGENTES.dbo.Visao Vi ON Vi.idAgente = A.idAgente
-				INNER JOIN AGENTES.dbo.Verificacao as ver on ver.idVerificacao = '144'
+				INNER JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+				INNER JOIN agentes.dbo.Visao Vi ON Vi.idAgente = A.idAgente
+				INNER JOIN agentes.dbo.Verificacao as ver on ver.idVerificacao = '144'
 				INNER JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-				INNER JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente
+				INNER JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
 				INNER JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf		";
 
 		if (!empty($idpronac))
@@ -221,11 +221,11 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 				END AS nmproponente
 				FROM SAC.dbo.Projetos Pr
 				INNER JOIN SAC.dbo.Situacao St ON (St.Codigo = Pr.Situacao) and (St.Codigo = 'A14' or St.Codigo = 'A16' or St.Codigo = 'A17' or St.Codigo = 'A41' or St.Codigo = 'D14')
-				INNER JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
-				INNER JOIN AGENTES.dbo.Visao Vi ON Vi.idAgente = A.idAgente
-				INNER JOIN AGENTES.dbo.Verificacao as ver on ver.idVerificacao = '144'
+				INNER JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
+				INNER JOIN agentes.dbo.Visao Vi ON Vi.idAgente = A.idAgente
+				INNER JOIN agentes.dbo.Verificacao as ver on ver.idVerificacao = '144'
 				INNER JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-				INNER JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente
+				INNER JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
 				INNER JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf ";
 
 		if (!empty($idpronac))

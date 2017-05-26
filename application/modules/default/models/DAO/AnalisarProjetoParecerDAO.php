@@ -22,10 +22,10 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
 					                      d.idProduto, pr.Descricao AS Produto, d.idAgenteParecerista, d.idOrgao, u.usu_codigo, CONVERT(CHAR(10),d.DtDistribuicao,103) AS DtDistribuicao2, DATEDIFF(day, d.DtDistribuicao, GETDATE())
 					                      AS NrDias, d.Observacao, 
 					                      CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
-					                       AS DescricaoAnalise, d.TipoAnalise, AGENTES.dbo.fnNome(d.idAgenteParecerista) AS Parecerista
+					                       AS DescricaoAnalise, d.TipoAnalise, agentes.dbo.fnNome(d.idAgenteParecerista) AS Parecerista
 					FROM         SAC.dbo.Projetos AS p INNER JOIN
 					                      SAC.dbo.tbDistribuirParecer AS d ON p.IdPRONAC = d.idPRONAC INNER JOIN
-					                      AGENTES.dbo.Agentes AS a ON d.idAgenteParecerista = a.idAgente INNER JOIN
+					                      agentes.dbo.Agentes AS a ON d.idAgenteParecerista = a.idAgente INNER JOIN
 					                      TABELAS.dbo.Usuarios AS u ON a.CNPJCPF = u.usu_identificacao LEFT OUTER JOIN
 					                      SAC.dbo.Produto AS pr ON d.idProduto = pr.Codigo
 					WHERE     (d.stEstado = 0) AND (d.DtDistribuicao IS NOT NULL) AND (d.DtDevolucao IS NULL) AND (p.Situacao = 'B11' OR
@@ -93,7 +93,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
             $sql = "SELECT p.nomeprojeto,pr.Descricao
                         FROM         SAC.dbo.Projetos AS p INNER JOIN
                                               SAC.dbo.tbDistribuirParecer AS d ON p.IdPRONAC = d.idPRONAC INNER JOIN
-                                              AGENTES.dbo.Agentes AS a ON d.idAgenteParecerista = a.idAgente INNER JOIN
+                                              agentes.dbo.Agentes AS a ON d.idAgenteParecerista = a.idAgente INNER JOIN
                                               TABELAS.dbo.Usuarios AS u ON a.CNPJCPF = u.usu_identificacao LEFT OUTER JOIN
                                               SAC.dbo.Produto AS pr ON d.idProduto = pr.Codigo
                         WHERE     (d.stEstado = 0) AND (d.DtDistribuicao IS NOT NULL) AND (d.DtDevolucao IS NULL) AND (p.Situacao = 'B11' OR
@@ -251,7 +251,7 @@ FROM         SAC.dbo.Projetos AS a
 					  INNER JOIN SAC.dbo.tbPlanilhaUnidade AS e ON b.idUnidade = e.idUnidade
 					  INNER JOIN SAC.dbo.tbPlanilhaItens AS i ON b.idPlanilhaItem = i.idPlanilhaItens
 					  INNER JOIN SAC.dbo.Verificacao AS x ON b.FonteRecurso = x.idVerificacao
-					  INNER JOIN AGENTES.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
+					  INNER JOIN agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 					  WHERE a.IdPRONAC = ".$idpronac;
                                                 if($idItem != null){
                                                    $sql.="and i.idPlanilhaItens = ".$idItem;
@@ -279,10 +279,10 @@ FROM         SAC.dbo.Projetos AS a
 					                      d.idProduto, pr.Descricao AS Produto, d.idAgenteParecerista, d.idOrgao, u.usu_codigo, CONVERT(CHAR(10),d.DtDistribuicao,103) AS DtDistribuicao2, DATEDIFF(day, d.DtDistribuicao, GETDATE())
 					                      AS NrDias, d.Observacao,
 					                      CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
-					                       AS DescricaoAnalise, d.TipoAnalise, AGENTES.dbo.fnNome(d.idAgenteParecerista) AS Parecerista
+					                       AS DescricaoAnalise, d.TipoAnalise, agentes.dbo.fnNome(d.idAgenteParecerista) AS Parecerista
 					FROM         SAC.dbo.Projetos AS p INNER JOIN
 					                      SAC.dbo.tbDistribuirParecer AS d ON p.IdPRONAC = d.idPRONAC INNER JOIN
-					                      AGENTES.dbo.Agentes AS a ON d.idAgenteParecerista = a.idAgente INNER JOIN
+					                      agentes.dbo.Agentes AS a ON d.idAgenteParecerista = a.idAgente INNER JOIN
 					                      TABELAS.dbo.Usuarios AS u ON a.CNPJCPF = u.usu_identificacao LEFT OUTER JOIN
 					                      SAC.dbo.Produto AS pr ON d.idProduto = pr.Codigo
 					WHERE     (d.stEstado = 0) AND (d.DtDistribuicao IS NOT NULL) AND (d.DtDevolucao IS NULL) AND (p.Situacao = 'B11' OR

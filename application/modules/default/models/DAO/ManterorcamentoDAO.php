@@ -136,7 +136,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     INNER JOIN SAC.dbo.Produto AS P ON pp.idProduto = P.Codigo
                     INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
                     INNER JOIN SAC.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
-                    INNER JOIN AGENTES.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
+                    INNER JOIN agentes.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
                     INNER JOIN SAC.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
                     INNER JOIN SAC.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
                     INNER JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
@@ -273,7 +273,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                         INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
                         INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
                         INNER JOIN SAC.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
-                        INNER JOIN AGENTES.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
+                        INNER JOIN agentes.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
                         INNER JOIN SAC.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
                         LEFT JOIN SAC.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
                         LEFT JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
@@ -462,7 +462,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 INNER JOIN SAC.dbo.Produto P ON (pp.idProduto = p.Codigo)
                 INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
                 INNER JOIN SAC.dbo.Uf uf ON uf.CodUfIbge = pp.UfDespesa
-                INNER JOIN AGENTES.dbo.Municipios municipio ON municipio.idMunicipioIBGE = pp.MunicipioDespesa
+                INNER JOIN agentes.dbo.Municipios municipio ON municipio.idMunicipioIBGE = pp.MunicipioDespesa
                 INNER JOIN SAC.dbo.Mecanismo mec ON mec.Codigo = pre.Mecanismo
                 INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = pp.Unidade
                 INNER JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
@@ -565,7 +565,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                         INNER JOIN SAC.dbo.tbPlanilhaEtapa e on (e.idPlanilhaEtapa = pp.idEtapa)
                         INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
                         INNER JOIN SAC.dbo.Uf uf ON uf.CodUfIbge = pp.UfDespesa
-                        INNER JOIN AGENTES.dbo.Municipios municipio ON municipio.idMunicipioIBGE = pp.MunicipioDespesa
+                        INNER JOIN agentes.dbo.Municipios municipio ON municipio.idMunicipioIBGE = pp.MunicipioDespesa
                         INNER JOIN SAC.dbo.Mecanismo mec ON mec.Codigo = pre.Mecanismo
                         INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = pp.Unidade
                         INNER JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
@@ -793,7 +793,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                             left JOIN SAC..Produto pd on pd.Codigo = tpp.idProduto
                             INNER JOIN SAC..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
                             INNER JOIN SAC..tbPlanilhaItens tpi on tpi.idPlanilhaItens = tpp.idPlanilhaItem
-                            INNER JOIN AGENTES..UF uf on uf.idUF = tpp.UfDespesa
+                            INNER JOIN agentes.dboUF uf on uf.idUF = tpp.UfDespesa
                             INNER JOIN SAC..PreProjeto prep on prep.idPreProjeto = tpp.idProjeto
                             INNER JOIN SAC..Mecanismo mec on mec.Codigo = prep.Mecanismo
                             INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = tpp.Unidade
@@ -874,8 +874,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 left JOIN SAC..Produto pd on pd.Codigo = tpp.idProduto
                 INNER JOIN SAC..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
                 INNER JOIN SAC..tbPlanilhaItens tpi on tpi.idPlanilhaItens = tpp.idPlanilhaItem
-                INNER JOIN AGENTES..UF uf on uf.idUF = tpp.UfDespesa
-                INNER JOIN AGENTES.dbo.Municipios municipio ON municipio.idMunicipioIBGE = tpp.MunicipioDespesa
+                INNER JOIN agentes.dboUF uf on uf.idUF = tpp.UfDespesa
+                INNER JOIN agentes.dbo.Municipios municipio ON municipio.idMunicipioIBGE = tpp.MunicipioDespesa
                 INNER JOIN SAC..PreProjeto prep on prep.idPreProjeto = tpp.idProjeto
                 INNER JOIN SAC..Mecanismo mec on mec.Codigo = prep.Mecanismo
                 INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = tpp.Unidade

@@ -12,7 +12,7 @@
 
 class PesquisaFiscalizacaoDAO extends Zend_Db_Table
 {
-	protected $_name = 'AGENTES.dbo.UF'; // nome da tabela
+	protected $_name = 'agentes.dbo.UF'; // nome da tabela
 
 
 
@@ -25,7 +25,7 @@ class PesquisaFiscalizacaoDAO extends Zend_Db_Table
 	public static function buscarregiao()
 	{
 		$sql = "SELECT Distinct Regiao
-				FROM AGENTES.dbo.UF";
+				FROM agentes.dbo.UF";
 
 	
 	

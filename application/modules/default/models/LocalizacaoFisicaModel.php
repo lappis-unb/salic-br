@@ -116,8 +116,8 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     	$select = $this->select();
     	$select->setIntegrityCheck(false);
     	$select->from(array('proj' => "{$this->_schema}.Projetos"), $fields, 'sac.dbo');
-    	$select->joinInner(array('a' => 'Agentes'), 'a.CNPJCPF = proj.CgcCpf', array('a.idAgente', 'a.CNPJCPF'), 'AGENTES.dbo');
-    	$select->joinInner(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao AS NomeProponente'), 'AGENTES.dbo');
+    	$select->joinInner(array('a' => 'Agentes'), 'a.CNPJCPF = proj.CgcCpf', array('a.idAgente', 'a.CNPJCPF'), 'agentes.dbo');
+    	$select->joinInner(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao AS NomeProponente'), 'agentes.dbo');
     	$select->joinInner(array('orgao' => 'Orgaos'), 'orgao.Codigo = proj.Orgao', array('orgao.Sigla as orgaoNome'), 'sac.dbo');
     	$select->joinInner(array('orgaoPai' => 'Orgaos'), 'orgaoPai.org_codigo = orgao.idSecretaria', array('orgaoPai.org_sigla as orgaoPaiNome'), 'tabelas.dbo');
     	$select->order('pronac DESC');

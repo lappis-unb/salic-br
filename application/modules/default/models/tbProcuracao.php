@@ -10,7 +10,7 @@
 class tbProcuracao extends MinC_Db_Table_Abstract
 {
     protected $_banco  = "AGENTES";
-    protected $_schema = "AGENTES";
+    protected $_schema = "agentes";
     protected $_name   = "tbProcuracao";
 
     public function listarProcuracoesPendentes(){
@@ -22,11 +22,11 @@ class tbProcuracao extends MinC_Db_Table_Abstract
     );
     $select->joinInner(
             array('b' => 'Agentes'), "a.idAgente = b.idAgente",
-            array('idAgente'), 'AGENTES.dbo'
+            array('idAgente'), 'agentes.dbo'
     );
     $select->joinInner(
             array('c' => 'Nomes'), "b.idAgente = c.idAgente",
-            array('Descricao as Procurador'), 'AGENTES.dbo'
+            array('Descricao as Procurador'), 'agentes.dbo'
     );
     $select->joinInner(
             array('d' => 'tbDocumento'), "d.idDocumento = a.idDocumento",

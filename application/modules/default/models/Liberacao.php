@@ -308,11 +308,11 @@ class Liberacao extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('a' => 'Agentes'), 'p.CgcCpf = a.CNPJCPF',
-            array( 'CNPJCPF' ), 'AGENTES.dbo'
+            array( 'CNPJCPF' ), 'agentes.dbo'
         );
         $select->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array( 'Descricao as Proponente' ), 'AGENTES.dbo'
+            array( 'Descricao as Proponente' ), 'agentes.dbo'
         );
         $select->joinInner(
             array('u' => 'Usuarios'), 'l.Logon=u.usu_Codigo',
@@ -357,11 +357,11 @@ class Liberacao extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('a' => 'Agentes'), 'p.CgcCpf = a.CNPJCPF',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $select->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), 'agentes.dbo'
         );
         $select->joinInner(
             array('u' => 'Usuarios'), 'l.Logon=u.usu_Codigo',

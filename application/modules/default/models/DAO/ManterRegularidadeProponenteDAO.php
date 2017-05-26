@@ -30,7 +30,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 	{
                 
 
-		$sql = "SELECT TipoPessoa FROM Agentes.dbo.Agentes WHERE CNPJCPF = '$cnpjcpf'";
+		$sql = "SELECT TipoPessoa FROM agentes.dbo.Agentes WHERE CNPJCPF = '$cnpjcpf'";
 
 
 		$db= Zend_Db_Table::getDefaultAdapter();

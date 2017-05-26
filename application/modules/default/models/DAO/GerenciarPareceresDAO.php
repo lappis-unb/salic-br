@@ -455,7 +455,7 @@ FROM         SAC.dbo.Projetos AS a
 					  INNER JOIN SAC.dbo.tbPlanilhaUnidade AS e ON b.idUnidade = e.idUnidade
 					  INNER JOIN SAC.dbo.tbPlanilhaItens AS i ON b.idPlanilhaItem = i.idPlanilhaItens
 					  INNER JOIN SAC.dbo.Verificacao AS x ON b.FonteRecurso = x.idVerificacao
-					  INNER JOIN AGENTES.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
+					  INNER JOIN agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 					  WHERE a.IdPRONAC = ".$idpronac."
 						ORDER BY x.Descricao, Produto, Etapa, UF, Item";
 

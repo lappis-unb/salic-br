@@ -44,7 +44,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from('EnderecoNacional', $e, 'AGENTES.dbo')
+            ->from('EnderecoNacional', $e, 'agentes.dbo')
             ->where('idAgente = ?', $idAgente)
             ;
 
@@ -68,7 +68,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $i =  $db->insert('AGENTES.dbo.EnderecoNacional', $dados);
+        $i =  $db->insert('agentes.dbo.EnderecoNacional', $dados);
     }
 
     public function inserir($dados)
@@ -96,7 +96,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
 
         $where['idAgente = ?'] = $idAgente;
 
-        $i =  $db->update('AGENTES.dbo.EnderecoNacional', $dados, $where);
+        $i =  $db->update('agentes.dbo.EnderecoNacional', $dados, $where);
     }
 
     /**
@@ -114,7 +114,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         try
         {
             $db = Zend_Db_Table::getDefaultAdapter();
-            return $resultado = $db->delete('AGENTES.dbo.EnderecoNacional', array('idEndereco = ? '=> $idEndereco));
+            return $resultado = $db->delete('agentes.dbo.EnderecoNacional', array('idEndereco = ? '=> $idEndereco));
 
         }
         catch (Zend_Exception $e)
@@ -138,7 +138,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         {
             $db = Zend_Db_Table::getDefaultAdapter();
 
-            return $resultado = $db->update('AGENTES.dbo.EnderecoNacional', array('Status = ?' => 0), array('idAgente = ?' => $idAgente));
+            return $resultado = $db->update('agentes.dbo.EnderecoNacional', array('Status = ?' => 0), array('idAgente = ?' => $idAgente));
         }
         catch (Zend_Exception $e)
         {
@@ -160,9 +160,9 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         try
         {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $sql = "UPDATE AGENTES.dbo.EnderecoNacional set Status = 1
+            $sql = "UPDATE agentes.dbo.EnderecoNacional set Status = 1
                     WHERE idAgente = ".$idAgente."
-                    AND idEndereco = (select MIN(idEndereco) as valor from AGENTES.dbo.EnderecoNacional  where idAgente = ".$idAgente.")";
+                    AND idEndereco = (select MIN(idEndereco) as valor from agentes.dbo.EnderecoNacional  where idAgente = ".$idAgente.")";
 
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);

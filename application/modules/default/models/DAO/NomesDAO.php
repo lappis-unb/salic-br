@@ -18,7 +18,7 @@ class NomesDAO extends MinC_Db_Table_Abstract
 	public static function buscarNome($idAgente)
 	{
 
-		$sql = "Select idNome, idAgente, TipoNome, Descricao, Status, Usuario From AGENTES.dbo.Nomes Where idAgente =".$idAgente;
+		$sql = "Select idNome, idAgente, TipoNome, Descricao, Status, Usuario From agentes.dbo.Nomes Where idAgente =".$idAgente;
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -48,7 +48,7 @@ class NomesDAO extends MinC_Db_Table_Abstract
 
         return $db->insert();
 
-        $sql = "Insert Into AGENTES.dbo.Nomes
+        $sql = "Insert Into agentes.dbo.Nomes
             (idAgente, TipoNome, Descricao, Status, Usuario)
             values
             (".$idAgente.", ".$TipoNome.", '".$Descricao."', ".$Status.", ".$Usuario.")";
@@ -88,7 +88,7 @@ class NomesDAO extends MinC_Db_Table_Abstract
 	public static function atualizaNome($idAgente, $TipoNome, $Descricao, $Status, $Usuario)
 	{
 
-		$sql = "Update AGENTES.dbo.Nomes set TipoNome = ".$TipoNome.", Descricao = '".$Descricao."', Status = ".$Status.", Usuario = ".$Usuario."	Where idAgente = ".$idAgente;
+		$sql = "Update agentes.dbo.Nomes set TipoNome = ".$TipoNome.", Descricao = '".$Descricao."', Status = ".$Status.", Usuario = ".$Usuario."	Where idAgente = ".$idAgente;
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -99,7 +99,7 @@ class NomesDAO extends MinC_Db_Table_Abstract
 
     public static function atualizaNomeReadequacao($idAgente, $Descricao)
 	{
-		$sql = "Update AGENTES.dbo.Nomes set Descricao = '".$Descricao."' Where idAgente = ".$idAgente;
+		$sql = "Update agentes.dbo.Nomes set Descricao = '".$Descricao."' Where idAgente = ".$idAgente;
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

@@ -30,11 +30,11 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
             array(),'SAC.dbo'
         );
         $select->joinInner(array('ag'=> 'Agentes'), "pp.idParecerista = ag.idAgente",
-            array(''),'AGENTES.dbo'
+            array(''),'agentes.dbo'
         );
 
         $select->joinInner(array('nm'=> 'Nomes'), "ag.idAgente = nm.idAgente",
-            array(new Zend_Db_Expr('nm.Descricao AS nmParecerista')),'AGENTES.dbo'
+            array(new Zend_Db_Expr('nm.Descricao AS nmParecerista')),'agentes.dbo'
         );
 
 
@@ -88,7 +88,7 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
         );
 
         $select->joinInner(array('a'=> 'Agentes'), "pp.idParecerista = a.idAgente",
-                            array('a.CNPJCPF'),'AGENTES.dbo'
+                            array('a.CNPJCPF'),'agentes.dbo'
         );
 
         $select->joinInner(array('p'=> 'Produto'), "pp.idProduto = p.Codigo",

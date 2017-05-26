@@ -1030,27 +1030,27 @@ public static function deslocamento($pronac)
             ->joinInner('Pais',
                 'tbDeslocamento.idPaisOrigem = Pais.idPais',
                 array(new Zend_Db_Expr('Pais.Descricao AS PaisOrigem')),
-                'Agentes.dbo')
+                'agentes.dbo')
             ->joinInner('uf',
                 'tbDeslocamento.idUFOrigem = uf.iduf',
                 array(new Zend_Db_Expr('uf.Descricao AS UFOrigem')),
-                'Agentes.dbo')
+                'agentes.dbo')
             ->joinInner('Municipios',
                 'tbDeslocamento.idMunicipioOrigem = Municipios.idMunicipioIBGE',
                 array(new Zend_Db_Expr('Municipios.Descricao AS MunicipioOrigem')),
-                'Agentes.dbo')
+                'agentes.dbo')
             ->joinInner('Pais',
                 'tbDeslocamento.idPaisDestino = Pais_2.idPais',
                 array(new Zend_Db_Expr('Pais_2.Descricao AS PaisDestino')),
-                'Agentes.dbo')
+                'agentes.dbo')
             ->joinInner('uf',
                 'tbDeslocamento.idUFDestino = uf_2.iduf',
                 array(new Zend_Db_Expr('uf_2.Descricao AS UFDestino')),
-                'Agentes.dbo')
+                'agentes.dbo')
             ->joinInner('Municipios',
                 'tbDeslocamento.idMunicipioDestino = Municipios_2.idMunicipioIBGE',
                 array(new Zend_Db_Expr('Municipios_2.Descricao AS MunicipioDestino')),
-                'Agentes.dbo');
+                'agentes.dbo');
 
 
 		try
@@ -1635,8 +1635,8 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 					INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
 					INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
 					INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					INNER JOIN AGENTES.dbo.UF UF on (PAP.idUFDespesa = UF.idUF)
-					INNER JOIN AGENTES.dbo.Municipios CID on (PAP.idMunicipioDespesa = CID.idMunicipioIBGE)
+					INNER JOIN agentes.dbo.UF UF on (PAP.idUFDespesa = UF.idUF)
+					INNER JOIN agentes.dbo.Municipios CID on (PAP.idMunicipioDespesa = CID.idMunicipioIBGE)
 					INNER JOIN SAC.dbo.tbPlanilhaEtapa E on (PAP.idEtapa = E.idPlanilhaEtapa)
 					INNER JOIN SAC.dbo.tbPlanilhaUnidade UNI on (PAP.idUnidade = UNI.idUnidade)
 					left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)

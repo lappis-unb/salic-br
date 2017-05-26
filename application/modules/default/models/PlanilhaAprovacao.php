@@ -222,12 +222,12 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             'SAC.dbo'
         );
         $select->joinLeft(array('prod'=>'Produto'), 'pAprovacao.idProduto = prod.Codigo', array('prod.Codigo','prod.Descricao'), 'SAC.dbo');
-        $select->joinInner(array('UFT'=>'UF'), 'pAprovacao.idUFDespesa = UFT.idUF', array('uf'=>'UFT.Sigla'), 'AGENTES.dbo');
+        $select->joinInner(array('UFT'=>'UF'), 'pAprovacao.idUFDespesa = UFT.idUF', array('uf'=>'UFT.Sigla'), 'agentes.dbo');
         $select->joinInner(
             array('CID'=>'Municipios'),
             'pAprovacao.idMunicipioDespesa = CID.idMunicipioIBGE',
             array('cidade'=>'CID.Descricao'),
-            'AGENTES.dbo'
+            'agentes.dbo'
         );
         $select->joinLeft(
             array('cppa'=>'tbComprovantePagamentoxPlanilhaAprovacao'),
@@ -502,8 +502,8 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 'cp.idComprovantePagamento = cppa.idComprovantePagamento',
                 array('cp.tpDocumento', 'cp.nrSerie', 'cp.dtEmissao', 'cp.nrComprovante', 'cp.idArquivo'),
                 'BDCORPORATIVO.scSAC'
-            )->joinInner(array('ag'=>'agentes'), 'ag.idAgente = cp.idFornecedor', array('ag.CNPJCPF'), 'AGENTES.dbo')
-            ->joinInner(array('nm'=>'Nomes'), 'nm.idAgente = cp.idFornecedor', array('nm.Descricao'), 'AGENTES.dbo')
+            )->joinInner(array('ag'=>'Agentes'), 'ag.idAgente = cp.idFornecedor', array('ag.CNPJCPF'), 'agentes.dbo')
+            ->joinInner(array('nm'=>'Nomes'), 'nm.idAgente = cp.idFornecedor', array('nm.Descricao'), 'agentes.dbo')
             ->joinInner(array('arq'=>'tbArquivo'), 'arq.idArquivo = cp.idArquivo', array('arq.nmArquivo'), 'BDCORPORATIVO.scCorp')
             ->joinInner(
                 array('tpi'=>'tbPlanilhaItens'),
@@ -551,16 +551,16 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             'BDCORPORATIVO.scSAC'
                            );
         $select->joinInner(
-                            array('ag'=>'agentes'),
+                            array('ag'=>'Agentes'),
                             'ag.idAgente = cp.idFornecedor',
                             array('ag.CNPJCPF'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = cp.idFornecedor',
                             array('nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('arq'=>'tbArquivo'),
@@ -615,13 +615,13 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array('UFT'=>'UF'),
                             'pAprovacao.idUFDespesa = UFT.idUF',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('CID'=>'Municipios'),
                             'pAprovacao.idMunicipioDespesa = CID.idMunicipioIBGE',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinLeft(
                             array('cppa'=>'tbComprovantePagamentoxPlanilhaAprovacao'),
@@ -870,13 +870,13 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             array('ag'=>'Agentes'),
             'ag.idAgente = lxa.idAgente OR ag.idAgente = dlic.idAgente OR ag.idAgente = cxa.idAgente OR cp.idFornecedor = ag.idAgente',
             array('cpfcnpjFornecedor'=>'ag.CNPJCPF'),
-            'AGENTES.dbo'
+            'agentes.dbo'
         );
         $select->joinLeft(
             array('nm'=>'Nomes'),
             'nm.idAgente = ag.idAgente',
             array('nmFornecedor'=>'nm.Descricao'),
-            'AGENTES.dbo'
+            'agentes.dbo'
         );
         $select->joinLeft(
             array('p'=>'Projetos'),
@@ -1168,12 +1168,12 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         $select->joinInner(
                 array('CID' => 'Municipios'), new Zend_Db_Expr('CID.idMunicipioIBGE = PAP.idMunicipioDespesa'), array(
                 'CID.Descricao as Cidade'
-                ), 'Agentes.dbo'
+                ), 'agentes.dbo'
         );
         $select->joinInner(
                 array('FED' => 'UF'), new Zend_Db_Expr('PAP.idUFDespesa = FED.idUF'), array(
                 'FED.Sigla as UF'
-                ), 'Agentes.dbo'
+                ), 'agentes.dbo'
         );
         $select->joinLeft(
                 array('aa' => 'tbAnaliseAprovacao'), "aa.idPronac = PAP.idPronac and PAP.idProduto = aa.idProduto and aa.tpAnalise = '{$tpPlanilha}'", array('aa.stAvaliacao')
@@ -1275,12 +1275,12 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         $select->joinInner(
                 array('CID' => 'Municipios'), new Zend_Db_Expr('CID.idMunicipioIBGE = PAP.idMunicipioDespesa'), array(
                 'CID.Descricao as Cidade'
-                ), 'Agentes.dbo'
+                ), 'agentes.dbo'
         );
         $select->joinInner(
                 array('FED' => 'UF'), new Zend_Db_Expr('PAP.idUFDespesa = FED.idUF'), array(
                 'FED.Sigla as UF'
-                ), 'Agentes.dbo'
+                ), 'agentes.dbo'
         );
         $select->joinLeft(
                 array('aa' => 'tbAnaliseAprovacao'),
@@ -1391,14 +1391,14 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             ,array(
                 'CID.Descricao as Cidade'
             )
-            ,'AGENTES.dbo'
+            ,'agentes.dbo'
         );
         $select->joinInner(array('FED' => 'UF')
             ,new Zend_Db_Expr('PAP.idUFDespesa = FED.idUF')
             ,array(
                 'FED.Sigla as UF'
             )
-            ,'AGENTES.dbo'
+            ,'agentes.dbo'
         );
         $select->joinLeft(
             array('PD' => 'Produto')
@@ -1494,14 +1494,14 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             ,array(
                 'CID.Descricao as Cidade'
             )
-            ,'AGENTES.dbo'
+            ,'agentes.dbo'
         );
         $select->joinInner(array('FED' => 'UF')
             ,new Zend_Db_Expr('h.idUFDespesa = FED.idUF')
             ,array(
                 'FED.Sigla as UF'
             )
-            ,'AGENTES.dbo'
+            ,'agentes.dbo'
         );
         $select->joinLeft(
             array('PD' => 'Produto')

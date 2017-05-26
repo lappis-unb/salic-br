@@ -219,13 +219,13 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
             array('mun' => 'Municipios'),
             "mun.idUFIBGE = abr.idUF and mun.idMunicipioIBGE = abr.idMunicipioIBGE",
             array(),
-            'AGENTES.dbo'
+            'agentes.dbo'
         );
         $selectAbrangencia->joinInner(
             array('uf' => 'UF'),
             "uf.idUF = abr.idUF",
             array(),
-            'AGENTES.dbo'
+            'agentes.dbo'
         );
         $selectAbrangencia->where('abr.stAbrangencia = ?', 1);
 
@@ -356,9 +356,9 @@ abran.dsExclusao
                     INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
                     INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
                     INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
-                    INNER JOIN Agentes.dbo.Pais	pais on pais.idPais = abran.idPais
-            LEFT JOIN AGENTES.dbo.Uf uf on uf.idUF = abran.idUF
-            LEFT JOIN AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
+                    INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
+            LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
+            LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
 --INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
 --INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
@@ -398,9 +398,9 @@ taipa.stAvaliacaoItemPedidoAlteracao
                     INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
                     INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
                     INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
-                    INNER JOIN Agentes.dbo.Pais	pais on pais.idPais = abran.idPais
-            LEFT JOIN AGENTES.dbo.Uf uf on uf.idUF = abran.idUF
-            LEFT JOIN AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
+                    INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
+            LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
+            LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
 --INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
 --INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
@@ -451,9 +451,9 @@ abran.dsExclusao
                     INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
                     INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
                     INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
-                    INNER JOIN Agentes.dbo.Pais	pais on pais.idPais = abran.idPais
-            LEFT JOIN AGENTES.dbo.Uf uf on uf.idUF = abran.idUF
-            LEFT JOIN AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
+                    INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
+            LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
+            LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
 --INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
 --INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
@@ -488,9 +488,9 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.
                     INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
                     INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
                     INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
-                    INNER JOIN Agentes.dbo.Pais	pais on pais.idPais = abran.idPais
-            LEFT JOIN AGENTES.dbo.Uf uf on uf.idUF = abran.idUF
-            LEFT JOIN AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
+                    INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
+            LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
+            LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
 --INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
 --INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
@@ -529,9 +529,9 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                     INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap on pap.IdPRONAC = pro.IdPRONAC
                     INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao paxta on paxta.idPedidoAlteracao = pap.idPedidoAlteracao
                     INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto tap on tap.tpAlteracaoProjeto = paxta.tpAlteracaoProjeto
-                    INNER JOIN AGENTES.dbo.Uf uf on uf.idUF = abran.idUF
-                    INNER JOIN AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
-                    INNER JOIN Agentes.dbo.Pais	pais on pais.idPais = abran.idPais
+                    INNER JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
+                    INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
+                    INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
                 where
                     pro.IdPRONAC  = $idpedidoalteracao and tap.tpAlteracaoProjeto = 4 and abran.stAbrangencia = 1
                 ";
@@ -549,9 +549,9 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                             mun.Descricao mun,
                             paxta.dsJustificativa
                     FROM
-                        AGENTES.dbo.Pais pais,
-                        AGENTES.dbo.UF uf,
-                        AGENTES.dbo.Municipios mun,
+                        agentes.dbo.Pais pais,
+                        agentes.dbo.UF uf,
+                        agentes.dbo.Municipios mun,
                         SAC.dbo.tbAbrangencia ta,
                         BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpa,
                         BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao paxta
@@ -580,9 +580,9 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                             mun.Descricao mun,
                             paxta.dsJustificativa
                     FROM
-                        AGENTES.dbo.Pais pais,
-                        AGENTES.dbo.UF uf,
-                        AGENTES.dbo.Municipios mun,
+                        agentes.dbo.Pais pais,
+                        agentes.dbo.UF uf,
+                        agentes.dbo.Municipios mun,
                         SAC.dbo.tbAbrangencia ta,
                         BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpa,
                         BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao paxta

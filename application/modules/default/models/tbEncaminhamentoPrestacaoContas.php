@@ -25,13 +25,13 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                             array('a'=>'Agentes'),
                             'a.idAgente = tbepc.idAgenteDestino',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = tbepc.idAgenteOrigem',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('u'=>'Usuarios'),
@@ -87,13 +87,13 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                             array('a'=>'Agentes'),
                             'a.idAgente = tbepc.idAgenteDestino',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = tbepc.idAgenteOrigem',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         /*$select->joinInner(
                             array('u'=>'Usuarios'),
@@ -198,13 +198,13 @@ a.dsJustificativa,
                             array('a'=>'Agentes'),
                             'a.idAgente = tbepc.idAgenteDestino',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = tbepc.idAgenteOrigem',
                             array(),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('u'=>'Usuarios'),
@@ -304,13 +304,13 @@ a.dsJustificativa,
                             array('ag2'=>'Agentes'),
                             'ag2.CNPJCPF = usu2.usu_identificacao',
                             array('idAgente2'=>'ag2.idAgente'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('nm2'=>'Nomes'),
                             'nm2.idAgente = ag2.idAgente',
                             array('Nome2'=>'nm2.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('org2'=>'Orgaos'),
@@ -328,7 +328,7 @@ a.dsJustificativa,
                             array('nm'=>'Nomes'),
                             'nm.idAgente = epc.idAgenteOrigem',
                             array('Nome'=>'nm.Descricao','nm.idAgente'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('org'=>'Orgaos'),

@@ -41,13 +41,13 @@ class Contratoxagentes extends MinC_Db_Table_Abstract {
                             array('ag'=>'Agentes'),
                             'cxa.idAgente = ag.idAgente',
                             array('ag.CNPJCPF','ag.TipoPessoa'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = ag.idAgente',
                             array('nm.Descricao'),
-                            'AGENTES.dbo'
+                            'agentes.dbo'
                            );
 
         foreach ($where as $coluna => $valor) {
