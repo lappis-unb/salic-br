@@ -68,7 +68,7 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
             # Busca na SGCAcesso
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-            $acessos = $sgcAcesso->findBy(array('cpf' => $cpf));
+            $acessos = $sgcAcesso->findBy(array('Cpf' => $cpf));
 
             # Busca na Usuarios
             $mdlusuario = new Autenticacao_Model_Usuario();
@@ -76,7 +76,7 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
             # Busca na Agentes
             $tblAgentes = new Agente_Model_DbTable_Agentes();
-            $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
+            $agente = $tblAgentes->findBy(array('CNPJCPF' => $cpf));
 
             if ($acessos) {
                 $this->idResponsavel = $acessos['idUsuario'];

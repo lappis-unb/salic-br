@@ -6,14 +6,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
     public function init()
     {
-
-
         parent::init();
     }
 
     public function indexAction()
     {
-
         Zend_Layout::startMvc(array('layout' => 'open'));
         $oauthConfigArray = Zend_Registry::get("config")->toArray();
         $this->view->habilitarServicoLoginCidadao = false;
@@ -45,6 +42,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) {
                 throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
             } else {
+
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->login($username, $password);
 
@@ -65,6 +63,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 //                    return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
                     $this->_helper->json(array('status' => 1, 'msg' => 'Login realizado com sucesso!','redirect' => '/principal'));
                 } else {
+
                         //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
                         //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
                         //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
@@ -139,7 +138,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                         $this->_helper->json(array('status' => 1, 'msg' => 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.','redirect' => "/autenticacao/index/alterarsenha?idUsuario={$IdUsuario}"));
                     } else {
                         $agentes = new Agente_Model_DbTable_Agentes();
-                        $verificaAgentes = $agentes->buscar(array('cnpjcpf = ?' => $username))->current();
+                        $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
                         if (!empty ($verificaAgentes)) {
                             //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
                             //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
@@ -260,7 +259,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                             );
                             $tbVinculo->inserir($dadosVinculo);
                         }
-//xd(312312312);
+
                         /**
                          * ==============================================================
                          * FIM DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
