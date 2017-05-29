@@ -9,7 +9,7 @@ Bem vindo/a à documentação do SALIC! Aqui você vai encontrar diversas docume
 
 ## Novo Salic
 * [Docker - Guia de utilizacao dos containers](doc/Guia_utilizacao_docker.md)
-* [Guia de utilizacao do Login Cidadão](doc/Guia_utilizacao_login_cidadao.md)
+* [Login Cidadão - Guia de utilizacao](doc/Guia_utilizacao_login_cidadao.md)
 
 ## Autores
 Várias pessoas colaboraram com o desenvimento do projeto SALIC e decidimos centralizar em um único local todos os praticipantes desse projeto.
