@@ -8,7 +8,7 @@ Bem vindo/a à documentação do SALIC! Aqui você vai encontrar diversas docume
 * [Roteiro de publicação de releases](doc/Roteiro_de_publicacao_de_releases.md)
 
 ## Novo Salic
-* [Guia de utilizacao dos containers Docker](doc/Guia_utilizacao_docker.md)
+* [Docker - Guia de utilizacao dos containers](doc/Guia_utilizacao_docker.md)
 * [Guia de utilizacao do Login Cidadão](doc/Guia_utilizacao_login_cidadao.md)
 
 ## Autores
