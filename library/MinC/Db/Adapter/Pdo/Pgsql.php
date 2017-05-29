@@ -69,12 +69,14 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         $separator = '=';
         if ($colunaLimpa && is_int(strpos($colunaLimpa, $separator))) {
             $arrayColumn = explode($separator, $condition);
-            $column = '"' . trim($arrayColumn[0]) . '"';
-            $condition = "{$column} {$separator} {$arrayColumn[1]}";
+            if(substr(trim($arrayColumn[0]), 0, 1) != '"') {
+                $column = '"' . trim($arrayColumn[0]) . '"';
+                $condition = "{$column} {$separator} {$arrayColumn[1]}";
+            }
         } elseif ($colunaLimpa && is_int(strpos($colunaLimpa, 'in'))) {
             $separator = 'in';
             $arrayColumn = explode($separator, $condition);
-            if(substr(trim($arrayColumn[1]), 0, 1) == '(') {
+            if(substr(trim($arrayColumn[1]), 0, 1) == '(' && substr(trim($arrayColumn[0]), 0, 1) != '"') {
                 $column = '"' . trim($arrayColumn[0]) . '"';
                 $condition = "{$column} {$separator} {$arrayColumn[1]}";
             }

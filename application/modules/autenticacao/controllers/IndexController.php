@@ -186,12 +186,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * cadastrarusuarioAction
-     *
-     * @access public
-     * @return void
-     */
     public function cadastrarusuarioAction()
     {
         Zend_Layout::startMvc(array('layout' => 'open'));
@@ -250,12 +244,14 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                         $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
 
                         $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
+
                         $buscarVisao = $Visao->buscar(array('Visao = ?' => 144, 'stAtivo = ?' => 'A', 'idAgente = ?' => $idAgenteProp));
 
                         /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
                         if (count($buscarVisao) > 0) {
                             $tbVinculo = new Agente_Model_DbTable_TbVinculo();
                             $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsavel cadastrado
+
                             $dadosVinculo = array(
                                 'idAgenteProponente' => $idAgenteProp
                             ,'dtVinculo' => $tbVinculo->getExpressionDate()
@@ -264,7 +260,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                             );
                             $tbVinculo->inserir($dadosVinculo);
                         }
-
+//xd(312312312);
                         /**
                          * ==============================================================
                          * FIM DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
