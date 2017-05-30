@@ -11,7 +11,6 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
     private $idUsuario;
 
     public function init() {
-
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $GrupoAtivo->codGrupo = 1111;
         $auth = Zend_Auth::getInstance();
@@ -24,6 +23,8 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
         $Usuario = new Autenticacao_Model_Usuario();
         $Agente = new Agente_Model_DbTable_Agentes();
         $this->idAgente = $auth['idusuario'];
+
+
     }
 
     public function indexAction() {

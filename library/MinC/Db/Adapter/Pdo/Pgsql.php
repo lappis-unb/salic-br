@@ -63,7 +63,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         return $sql;
     }
 
-    public function treatConditionsDoubleQuotes($condition)
+    public function treatWhereConditionsDoubleQuotes($condition)
     {
         $colunaLimpa = trim($condition);
         $separator = '=';
@@ -83,5 +83,39 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         }
 
         return $condition;
+    }
+
+    public function treatJoinConditionDoubleQuotes($condicao)
+    {
+        $arrayConditions = explode('AND', $condicao);
+        if(count($arrayConditions) > 1) {
+            $condicao = "";
+            foreach ($arrayConditions as $arrayCondition) {
+                if(!empty($condicao)) {
+                    $condicao .= ' AND ';
+                }
+                $condicao .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
+            }
+xd($condicao);
+        } else {
+            $condicaoLimpa = trim($condicao);
+            $separator = '=';
+            if ($condicaoLimpa && is_int(strpos($condicaoLimpa, $separator))) {
+                $arrayColunas = explode($separator, $condicao);
+                $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
+                $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
+                $condicao = "{$coluna1} {$separator} {$coluna2}";
+            }
+
+            return $condicao;
+        }
+    }
+
+    protected function addDoubleQuote($field)
+    {
+        if(substr($field, 0, 1) != '"') {
+            $field = '"' . $field . '"';
+        }
+        return $field;
     }
 }

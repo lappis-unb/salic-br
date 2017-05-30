@@ -114,6 +114,7 @@ class Zend_Auth
      */
     public function authenticate(Zend_Auth_Adapter_Interface $adapter)
     {
+
         $result = $adapter->authenticate();
 
         /**
@@ -123,7 +124,6 @@ class Zend_Auth
         if ($this->hasIdentity()) {
             $this->clearIdentity();
         }
-
         if ($result->isValid()) {
             $this->getStorage()->write($result->getIdentity());
         }

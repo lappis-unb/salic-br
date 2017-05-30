@@ -176,8 +176,8 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
             $select->where("usu_senha  = ?", $auxSenha);
         }
 
+xd($select->assemble());
         $buscar = $this->fetchRow($select);
-
         if ($buscar) // realiza a autenticacao
         {
             // configuracoes do banco

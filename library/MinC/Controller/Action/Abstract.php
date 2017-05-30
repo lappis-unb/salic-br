@@ -300,10 +300,11 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 # configuracoes do layout padrao para o proponente
 //                Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
                 $UsuarioAtivo->codUsuario = $codUsuario;
-
                 # tenta fazer a autenticacao do usuario logado no scriptcase para o zend
                 # Comentado para verificar se faz sentido autenticar duas vezes no sistema.
+
                 $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
+
 
                 # caso o usuario seja passado pelo scriptcase e esteja autenticado
                 if ($autenticar || $auth->hasIdentity()) {
@@ -313,10 +314,11 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 }
                 # ========== FIM AUTENTICACAO MIGRACAO ==========
             } else {
+
                 # ========== INICIO AUTENTICACAO ZEND ==========
                 # caso o usuario nao esteja autenticado pelo scriptcase
                 # verifica se o grupo ativo esta no array de permissoes
-                if (!in_array($GrupoAtivo->codGrupo, $permissoes)) {
+                if (is_array($permissoes) && !in_array($GrupoAtivo->codGrupo, $permissoes)) {
                     $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
 

@@ -45,7 +45,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->login($username, $password);
-
                 if ($buscar) {
                     $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
                     $objUnidades = $Usuario->buscarUnidades($auth['usu_codigo'], 21)->current();
@@ -94,7 +93,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $password = str_replace("##menor##", "<", $password);
         $password = str_replace("##maior##", ">", $password);
         $password = str_replace("##aspa##", "'", $password);
-
+xd(123);
         try {
             if (empty($username) || empty($password)) {
                 # verifica se os campos foram preenchidos

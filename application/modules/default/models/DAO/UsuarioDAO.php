@@ -168,19 +168,10 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
         }
     }
 
-
-    /**
-     * Metodo para buscar todos os dados do usuario de acordo com o seu codigo vindo do SCRIPTCASE
-     * @access public
-     * @static
-     * @param @cod (codigo do usuario)
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
-     * @return object
-     */
     public static function buscarUsuarioScriptcase($idusuario)
     {
         $objSGCAcesso = new Autenticacao_Model_Sgcacesso();
-        return $objSGCAcesso->buscar(array('idusuario = ?' => $idusuario));
+        return $objSGCAcesso->buscar(array('IdUsuario = ?' => $idusuario));
     }
 
     public static function buscarUsuario($cod)
@@ -253,12 +244,13 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
 //        Zend_Db_Table::setDefaultAdapter($db);,
 
         if ($arrUser) {
+
 //            $authAdapter = new Zend_Auth_Adapter_DbTable($db);
             $authAdapter = new Zend_Auth_Adapter_DbTable();
             $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
             $authAdapter->setTableName($objSgcAcesso->getTableName())
-                ->setIdentityColumn('cpf')
-                ->setCredentialColumn('senha');
+                ->setIdentityColumn('Cpf')
+                ->setCredentialColumn('Senha');
 
             // seta as credenciais informada pelo usuario
             $authAdapter
@@ -267,7 +259,6 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
 
             // tenta autenticar o usuario
             $auth = Zend_Auth::getInstance();
-
             $acesso = $auth->authenticate($authAdapter);
 
             // verifica se o acesso foi permitido
