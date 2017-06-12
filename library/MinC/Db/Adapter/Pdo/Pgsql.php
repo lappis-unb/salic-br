@@ -96,7 +96,6 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                 }
                 $condicao .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
             }
-xd($condicao);
         } else {
             $condicaoLimpa = trim($condicao);
             $separator = '=';
@@ -107,8 +106,8 @@ xd($condicao);
                 $condicao = "{$coluna1} {$separator} {$coluna2}";
             }
 
-            return $condicao;
         }
+        return $condicao;
     }
 
     protected function addDoubleQuote($field)
