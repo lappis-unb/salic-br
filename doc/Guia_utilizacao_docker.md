@@ -20,74 +20,9 @@ Para executarmos ações na plataforma docker precisamos executar alguns comando
 
 ## Imagens de Ambiente
 
-As principais imagens utilizadas pelo SALIC são as listadas abaixo.
+As principais imagens utilizadas pelo SALIC podem ser encontradas [aqui](https://hub.docker.com/r/culturagovbr/) .
 
-#### SALIC WEB - Devel - Apache | PHP 5 | Debian
+## Dockerfile
 
-DockerURL:
-```
-https://hub.docker.com/r/culturagovbr/web-apache-php5-debian/
-```
-
-Docker Run Command : 
-```
-docker run -it -v /var/www/:/var/www/ --name webserver-apache-php5-debian --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1 --add-host homolog.cultura.gov.br:10.0.0.13 --add-host mailapp.cultura.gov.br:192.168.11.44 --add-host id.cultura.gov.br:192.168.11.32 -p 80:80 culturagovbr/web-apache-php5-debian:latest
-```
-
-Docker Pull Command :
-```
-docker pull culturagovbr/web-apache-php5-debian
-```
-
-#### SALIC WEB - Production - Apache | PHP 5 | Debian
-
-Docker Run Command :
-```
-docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1 --add-host homolog.cultura.gov.br:10.0.0.13 --add-host mailapp.cultura.gov.br:192.168.10.25 --add-host id.cultura.gov.br:192.168.11.32 --add-host seihomolog.cultura.gov.br:192.168.11.26 --add-host sei.cultura.gov.br:192.168.11.6 -p 80:80 culturagovbr/salic-web
-```
-
-#### SALIC DB - PostgreSQL | Debian
-
-Docker Run Command :
-```
-docker run --name salic-db -p 5432:5432 -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=postgres -e PGDATA=/var/lib/postgresql/data -v /var/www/db/postgresql/data:/var/www/project/db/data -d culturagovbr/salic-db 
-```
-
-## Outras Possibilidades
-
-Abaixo temos algumas outras possibilidades: 
-
-#### GRAYLOG
-
-Docker Run Command : 
-```
-docker run -t -p 9000:9000 -p 12201:12201 -v /graylog2/data:/var/opt/graylog2/data -v /graylog2/logs:/var/log/graylog2 -e GRAYLOG_PASSWORD=123456 --name graylog graylog2/allinone
-```
-
-#### GRAYLOG SERVER
-
-Docker Run Command : 
-```
-docker run -t -p 12900:12900 -p 12201:12201 -p 4001:4001 -e GRAYLOG_SERVER=true -v /var/log --name graylog-server --ulimit nofile=64000:64000 graylog2/allinone
-```
-
-#### GRAYLOG WEB
-
-Docker Run Command : 
-```
-docker run -t -p 9000:9000 -e GRAYLOG_MASTER=172.17.0.4 -e GRAYLOG_WEB=true -e GRAYLOG_PASSWORD=123456 -v /var/log --name graylog-web graylog2/allinone
-```
-
-#### Building Dockerfile
-
-Docker Build Command : 
-```
-docker build -t salic-web .
-```
-
-#### Utilizar Docker-Compose
-
-Docker-Compose Up Command : 
-```
-docker-compose up -d
-```
+O Salic possui um Dockerfile contendo todas as informações necessárias para que tenhamos um ambiente para o funcionamento
+da aplicação. Para acessa-lo, clique [aqui](https://github.com/culturagovbr/docker-salic) .
