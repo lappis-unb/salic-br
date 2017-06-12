@@ -31,7 +31,7 @@ docker run -it -v $(pwd):/var/www --name salic-br -e APPLICATION_ENV="developmen
 
 Or You you can also execute the same command above, but arranging using docker-compose:
 ```
-@todo fill here
+docker-compose up -d
 ```
 
 ## Extra
