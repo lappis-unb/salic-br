@@ -10,4 +10,4 @@ services:
     volumes:
      - (application_location_path):/var/www
     environment:
-     - APPLICATION_ENV="development"
+     - APPLICATION_ENV=development
