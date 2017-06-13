@@ -93,7 +93,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $password = str_replace("##menor##", "<", $password);
         $password = str_replace("##maior##", ">", $password);
         $password = str_replace("##aspa##", "'", $password);
-xd(123);
+
         try {
             if (empty($username) || empty($password)) {
                 # verifica se os campos foram preenchidos

@@ -10,7 +10,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
         if (is_array($bind)) {
             foreach ($bind as $name => $value) {
-                if (!is_int($name) && !preg_match('/^:/', $name)) {
+                if (!is_numeric($name) && !preg_match('/^:/', $name)) {
                     $newName = ":$name";
                     unset($bind[$name]);
                     $bind[$newName] = $value;
@@ -61,13 +61,13 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         $colunaLimpa = trim($condition);
         $separator = '=';
-        if ($colunaLimpa && is_int(strpos($colunaLimpa, $separator))) {
+        if ($colunaLimpa && strpos($colunaLimpa, $separator) !== false) {
             $arrayColumn = explode($separator, $condition);
             if (substr(trim($arrayColumn[0]), 0, 1) != '"') {
                 $column = '"' . trim($arrayColumn[0]) . '"';
                 $condition = "{$column} {$separator} {$arrayColumn[1]}";
             }
-        } elseif ($colunaLimpa && is_int(strpos($colunaLimpa, 'in'))) {
+        } elseif ($colunaLimpa && strpos($colunaLimpa, 'in') !== false) {
             $separator = 'in';
             $arrayColumn = explode($separator, $condition);
             if (substr(trim($arrayColumn[1]), 0, 1) == '(' && substr(trim($arrayColumn[0]), 0, 1) != '"') {
@@ -83,7 +83,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         $arrayConditions = explode('AND', $condicao);
         if (count($arrayConditions) > 1) {
-            $condicao = "";
+            $condicao = '';
             foreach ($arrayConditions as $arrayCondition) {
                 if (!empty($condicao)) {
                     $condicao .= ' AND ';
@@ -93,7 +93,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         } else {
             $condicaoLimpa = trim($condicao);
             $separator = '=';
-            if ($condicaoLimpa && is_int(strpos($condicaoLimpa, $separator))) {
+            if ($condicaoLimpa && strpos($condicaoLimpa, $separator) !== false) {
                 $arrayColunas = explode($separator, $condicao);
                 $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
                 $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
@@ -118,7 +118,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                     $field .= $this->addDoubleQuote($fieldPiece);
                 }
             } else {
-                if(!is_int($field) && strpos($field, "'") === false) {
+                if(!is_numeric($field) && strpos($field, "'") === false) {
                     $field = '"' . $field . '"';
                 }
             }

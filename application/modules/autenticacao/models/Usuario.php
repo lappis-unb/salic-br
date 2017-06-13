@@ -165,18 +165,18 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
                 'usu_senha',
                 'usu_orgao'),
                 $this->_schema)
-            ->joinInner(array(
-                'uog' => 'UsuariosXOrgaosXGrupos'),
+            ->joinInner(
+                array('uog' => 'UsuariosXOrgaosXGrupos'),
                 'uog.uog_usuario = usu_codigo AND uog_status = 1',
                 array(), $this->_schema)
             ->where('usu_identificacao = ?', $username)
-            ->where('usu_status  = ?', 1);
+            ->where('usu_status = ?', 1);
 
         if (md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
             $select->where("usu_senha  = ?", $auxSenha);
         }
 
-xd($select->assemble());
+//xd($select->assemble());
         $buscar = $this->fetchRow($select);
         if ($buscar) // realiza a autenticacao
         {
