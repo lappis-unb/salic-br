@@ -83,6 +83,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
             $cond = $this->databaseAdapter->treatJoinConditionDoubleQuotes($cond);
+            $cols = $this->databaseAdapter->treatColumnsDoubleQuotes($cols);
         }
 
         return parent::joinLeft($name, $cond, $cols, $schema);

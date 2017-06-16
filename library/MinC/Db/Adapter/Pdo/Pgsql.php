@@ -79,29 +79,29 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         return $condition;
     }
 
-    public function treatJoinConditionDoubleQuotes($condicao)
+    public function treatJoinConditionDoubleQuotes($condition)
     {
-        $arrayConditions = explode('AND', $condicao);
+        $arrayConditions = explode('AND', $condition);
         if (count($arrayConditions) > 1) {
-            $condicao = '';
+            $condition = '';
             foreach ($arrayConditions as $arrayCondition) {
-                if (!empty($condicao)) {
-                    $condicao .= ' AND ';
+                if (!empty($condition)) {
+                    $condition .= ' AND ';
                 }
-                $condicao .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
+                $condition .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
             }
         } else {
-            $condicaoLimpa = trim($condicao);
+            $cleanCondition = trim($condition);
             $separator = '=';
-            if ($condicaoLimpa && strpos($condicaoLimpa, $separator) !== false) {
-                $arrayColunas = explode($separator, $condicao);
+            if ($cleanCondition && strpos($cleanCondition, $separator) !== false) {
+                $arrayColunas = explode($separator, $condition);
                 $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
                 $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
-                $condicao = "{$coluna1} {$separator} {$coluna2}";
+                $condition = "{$coluna1} {$separator} {$coluna2}";
             }
 
         }
-        return $condicao;
+        return $condition;
     }
 
     protected function addDoubleQuote($field)
@@ -124,5 +124,19 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             }
         }
         return $field;
+    }
+
+    public function treatColumnsDoubleQuotes($arrayColumns)
+    {
+        foreach($arrayColumns as &$column) {
+            $columnParts = explode(' as ', $column);
+            if(count($columnParts) > 1 ) {
+                $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
+                $columnSecondPart = " as {$columnParts[1]}";
+                $column = $columnFirstPart . $columnSecondPart;
+            } else {
+                $column = $this->addDoubleQuote($column);
+            }
+        }
     }
 }
