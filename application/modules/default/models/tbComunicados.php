@@ -27,19 +27,19 @@ class tbComunicados extends MinC_Db_Table_Abstract {
      * @todo trocar as conversoes de datas conforme o banco
      */
     public function listarComunicados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false) {
-        $slct = $this->select();
-        $slct->setIntegrityCheck(false);
-        $slct->from(
+        $query = $this->select();
+        $query->setIntegrityCheck(false);
+        $query->from(
                 array("c" => $this->_name),
-                array("idcomunicado",
-					  "comunicado",
-					  "idsistema",
-					  "stopcao",
-					  "stestado",
-					  "dtiniciovigencia",
-					  "dtterminovigencia",
-					  "dtiniciovigencia AS dtiniciovigenciapt",
-					  "dtterminovigencia AS dtterminovigenciapt"),
+                array("idComunicado",
+					  "Comunicado",
+					  "idSistema",
+					  "stOpcao",
+					  "stEstado",
+					  "dtInicioVigencia",
+					  "dtTerminoVigencia",
+					  "dtInicioVigencia AS dtiniciovigenciapt",
+					  "dtTerminoVigencia AS dtterminovigenciapt"),
                 $this->_schema
 //					  "CONVERT(CHAR(10),dtInicioVigencia,103) AS dtInicioVigenciaPT",
 //					  "CONVERT(CHAR(10),dtTerminoVigencia, 103) AS dtTerminoVigenciaPT")
@@ -47,7 +47,7 @@ class tbComunicados extends MinC_Db_Table_Abstract {
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
-            $slct->where($coluna, $valor);
+            $query->where($coluna, $valor);
         }
 
 		if($count){
@@ -68,7 +68,7 @@ class tbComunicados extends MinC_Db_Table_Abstract {
             if($rs){ return $rs->total; }else{ return 0; }
         }
         //adicionando linha order ao select
-        $slct->order($order);
+        $query->order($order);
 
         // paginacao
         if ($tamanho > -1) {
@@ -76,12 +76,11 @@ class tbComunicados extends MinC_Db_Table_Abstract {
             if ($inicio > -1) {
                 $tmpInicio = $inicio;
             }
-            $slct->limit($tamanho, $tmpInicio);
+            $query->limit($tamanho, $tmpInicio);
         }
 
-        
-
-        return $this->fetchAll($slct);
+//xd($query->assemble());
+        return $this->fetchAll($query);
     }
 
 

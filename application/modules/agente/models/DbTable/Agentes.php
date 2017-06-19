@@ -265,7 +265,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $objAgentes->where($coluna, $valor);
         }
-xd($objAgentes->assemble());
+//xd($objAgentes->assemble());
         return $this->fetchAll($objAgentes);
     }
 
