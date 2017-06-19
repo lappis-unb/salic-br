@@ -117,4 +117,40 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);
         return $this;
     }
+
+    public function assemble()
+    {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+
+            $sql = self::SQL_SELECT;
+            foreach (array_keys(self::$_partsInit) as $part) {
+                $method = '_render' . ucfirst($part);
+                if (method_exists($this, $method)) {
+                    $sql = $this->$method($sql);
+                }
+            }
+            $sql = str_ireplace('.dbo', '', $sql);
+//
+//            $arrayWhere = explode('WHERE', $sql);
+//            if(count($arrayWhere) > 1) {
+//                $andString = '';
+//                $arrayAndCondition = explode('AND', $arrayWhere[1]);
+//                if(count($arrayAndCondition) > 1) {
+//                    foreach($arrayAndCondition as $andConditions) {
+//                        if(!empty($andString)) {
+//                            $andString .= 'AND';
+//                        }
+//                        $andString .= $this->databaseAdapter->treatWhereConditionsDoubleQuotes($andConditions);
+//                    }
+//                    $andString = ' AND ' . $andString;
+//                }
+//                $sql = $arrayWhere[0] . ' WHERE ' . $this->databaseAdapter->treatWhereConditionsDoubleQuotes($arrayWhere[1]);
+//                $sql .= $andString;
+//            }
+
+            return $sql;
+        } else {
+            return parent::assemble();
+        }
+    }
 }

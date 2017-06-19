@@ -44,35 +44,26 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         }
     }
 
-    public function assemble()
-    {
-        $sql = self::SQL_SELECT;
-        foreach (array_keys(self::$_partsInit) as $part) {
-            $method = '_render' . ucfirst($part);
-            if (method_exists($this, $method)) {
-                $sql = $this->$method($sql);
-            }
-        }
-        $sql = str_ireplace('.dbo', '', $sql);
-        return $sql;
-    }
-
     public function treatWhereConditionsDoubleQuotes($condition)
     {
         $colunaLimpa = trim($condition);
         $separator = '=';
         if ($colunaLimpa && strpos($colunaLimpa, $separator) !== false) {
             $arrayColumn = explode($separator, $condition);
-            if (substr(trim($arrayColumn[0]), 0, 1) != '"') {
-                $column = '"' . trim($arrayColumn[0]) . '"';
-                $condition = "{$column} {$separator} {$arrayColumn[1]}";
+            if (strpos($arrayColumn[0], '"') === false) {
+                $conditionOne = $this->addDoubleQuote(trim($arrayColumn[0]));
+                $conditionTwo = trim($arrayColumn[1]);
+//                $conditionTwo = $this->addSimpleQuote($arrayColumn[1]);
+                $condition = "{$conditionOne} {$separator} {$conditionTwo}";
             }
+
         } elseif ($colunaLimpa && strpos($colunaLimpa, 'in') !== false) {
             $separator = 'in';
             $arrayColumn = explode($separator, $condition);
-            if (substr(trim($arrayColumn[1]), 0, 1) == '(' && substr(trim($arrayColumn[0]), 0, 1) != '"') {
-                $column = '"' . trim($arrayColumn[0]) . '"';
-                $condition = "{$column} {$separator} {$arrayColumn[1]}";
+            if (substr(trim($arrayColumn[1]), 0, 1) == '(' && strpos($arrayColumn[0], '"') === false) {
+                $conditionOne = $this->addDoubleQuote(trim($arrayColumn[0]));
+                $conditionTwo = trim($arrayColumn[1]);
+                $condition = "{$conditionOne} {$separator} {$conditionTwo}";
             }
         }
 
@@ -118,7 +109,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                     $field .= $this->addDoubleQuote($fieldPiece);
                 }
             } else {
-                if(!is_numeric($field) && strpos($field, "'") === false) {
+                if (!is_numeric($field) && strpos($field, "'") === false) {
                     $field = '"' . $field . '"';
                 }
             }
@@ -126,11 +117,28 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         return $field;
     }
 
+    protected function addSimpleQuote($field)
+    {
+        $field = trim($field);
+        if (
+            strpos($field, "'") === false
+            && strpos($field, '"') === false
+            && strpos($field, '(') === false
+            && strpos($field, ')') === false
+            && strpos($field, ')') === false
+        ) {
+
+            $field = "'{$field}'";
+        }
+
+        return $field;
+    }
+
     public function treatColumnsDoubleQuotes($arrayColumns)
     {
-        foreach($arrayColumns as &$column) {
+        foreach ($arrayColumns as &$column) {
             $columnParts = explode(' as ', $column);
-            if(count($columnParts) > 1 ) {
+            if (count($columnParts) > 1) {
                 $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
                 $columnSecondPart = " as {$columnParts[1]}";
                 $column = $columnFirstPart . $columnSecondPart;
