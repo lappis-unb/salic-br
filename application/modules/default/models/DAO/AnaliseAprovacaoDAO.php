@@ -14,7 +14,7 @@ class AnaliseAprovacaoDAO extends Zend_Db_Table
 	/* dados da tabela */
 	protected $_schema  = "SAC.dbo";
 	protected $_name    = "tbAnaliseAprovacao";
-	protected $_primary = "idAnaliseAprovacao";
+
 
 
 
@@ -46,7 +46,7 @@ class AnaliseAprovacaoDAO extends Zend_Db_Table
 		{
 			$where.= "AND idAnaliseAprovacao = $idAnaliseAprovacao ";
 		}
-                
+
 		if (!empty($tpAnalise))
 		{
 			$where.= "AND tpAnalise = '$tpAnalise'";

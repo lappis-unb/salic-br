@@ -15,7 +15,7 @@ class ProjetoDAO extends Zend_Db_Table
 	/* dados da tabela */
 	protected $_schema  = "";
 	protected $_name    = "BDCORPORATIVO.scSAC.Projetos";
-	protected $_primary = "IdPRONAC";
+
 
 
 
@@ -77,9 +77,9 @@ class ProjetoDAO extends Zend_Db_Table
 		return $db->fetchAll($sql);
 	} // fecha buscar()
 
-	public static function buscarDadosProjeto($pronac) 
+	public static function buscarDadosProjeto($pronac)
 	{
-		$sql = "select distinct p.AnoProjeto, p.Sequencial, p.AnoProjeto+p.Sequencial as pronac, p.NomeProjeto, p.Processo, p.CgcCpf, 
+		$sql = "select distinct p.AnoProjeto, p.Sequencial, p.AnoProjeto+p.Sequencial as pronac, p.NomeProjeto, p.Processo, p.CgcCpf,
 				p.Area as codArea, p.Segmento as codSegmento, p.Mecanismo as codMecanismo, p.SolicitadoReal, p.UfProjeto,
 				ar.Descricao as Area, s.Descricao as Segmento, m.Codigo as Mecanismo, m.Descricao as Descricao, p.Situacao
 				from SAC.dbo.Projetos p

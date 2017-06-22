@@ -18,7 +18,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
     protected $_banco = 'agentes';
     protected $_schema = 'agentes';
     protected $_name = 'tbvinculo';
-    protected $_primary = 'idVinculo';
+
 
 
 	public function buscarVinculoProponenteResponsavel($where=array())

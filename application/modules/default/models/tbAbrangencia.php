@@ -19,7 +19,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 //	protected $_banco   = "SAC";
 	protected $_schema  = "sac";
 	protected $_name    = "tbAbrangencia";
-    protected $_primary = 'idAbrangencia';
+
 
 
 	/**
@@ -155,13 +155,13 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('e' => 'Municipios'),"b.idMunicipioIBGE = e.idMunicipioIBGE",
 			array() ,'AGENTES.dbo'
 		);
-		
+
         $select->where('a.IdPRONAC = ?', $idPronac);
 
-        
+
 		return $this->fetchAll($select);
 	} // fecha metodo historicoReadequacao()
-    
+
 	public function buscarLocaisConsolidadoReadequacao($idReadequacao)
 	{
 		$select = $this->select();
@@ -190,7 +190,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 		);
 
         $select->where('b.idReadequacao = ?', $idReadequacao);
-        
+
 		return $this->fetchAll($select);
 	} // fecha metodo historicoReadequacao()
 
@@ -204,13 +204,13 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('a.*')
             ), 'SAC.dbo'
 		);
-        
+
 		// adiciona quantos filtros foram enviados
 		foreach ($where as $coluna => $valor) :
 			$select->where($coluna, $valor);
 		endforeach;
 
-        
+
 		return $this->fetchAll($select);
 	} // fecha metodo historicoReadequacao()
 

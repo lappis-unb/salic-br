@@ -4,7 +4,7 @@ class Assinatura_Model_DbTable_TbAssinatura extends MinC_Db_Table_Abstract
 {
     protected $_schema = 'sac';
     protected $_name = 'tbAssinatura';
-    protected $_primary = 'idAssinatura';
+
 
     const TIPO_ATO_ENQUADRAMENTO = 626;
 

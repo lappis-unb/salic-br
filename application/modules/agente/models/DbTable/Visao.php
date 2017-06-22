@@ -24,7 +24,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idVisao';
+
 
     /**
      * @access public

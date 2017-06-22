@@ -50,14 +50,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
     protected $_schema = 'agentes';
 
     /**
-     * _primary
-     *
-     * @var bool
-     * @access protected
-     */
-    protected $_primary = 'idAgente';
-
-    /**
      * Metodo para buscar agentes
      * @access public
      * @static
@@ -603,18 +595,18 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $dadosWhere["c.idCodigoArea = ?"] = $idArea;
         $dadosWhere["c.idCodigoSegmento = ?"] = $idSegmento;
         $dadosWhere["u.org_superior = ?"] = 91;
-        $dadosWhere["u.usu_orgao = ?"] = $idOrgao;  // especificidade do IPHAN - puxa codigo do orgao 
+        $dadosWhere["u.usu_orgao = ?"] = $idOrgao;  // especificidade do IPHAN - puxa codigo do orgao
         $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE ".$this->getDate()." BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
-        
+
         foreach ($dadosWhere as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
 
         $slct->order('n.Descricao');
-        
+
         return $this->fetchAll($slct);
-    }    
-    
+    }
+
     /**
      * consultaPareceristasPainel
      *

@@ -5,7 +5,7 @@ Class ProponenteDAO extends Zend_Db_Table
 
     protected $_name = 'Projetos';
     protected $_schema = 'SAC';
-    protected $_primary = 'IdPRONAC';
+
 
     public function execPaProponente($idPronac)
     {
@@ -77,7 +77,7 @@ Class ProponenteDAO extends Zend_Db_Table
                     WHEN Internet.TipoInternet = 29
                         THEN 'Email Institucional'
                     End as TipoInternet,
-                    Internet.Descricao as Email    
+                    Internet.Descricao as Email
                 ")),
                 'AGENTES.dbo')
             ->where('Projetos.IdPRONAC = ?', $idpronac)
@@ -175,11 +175,11 @@ Class ProponenteDAO extends Zend_Db_Table
 							Sg.descricao dsSegmento,
 							Pr.SolicitadoReal,
 							CASE WHEN Pr.Mecanismo IN ('2','6')
-							THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial) 
+							THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
 							ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
 							END AS ValorAprovado,
 							SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
-							FROM SAC.dbo.Projetos Pr 
+							FROM SAC.dbo.Projetos Pr
 							INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
 							INNER JOIN SAC.dbo.Area Ar ON  Ar.Codigo = Pr.Area
 							INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
@@ -187,7 +187,7 @@ Class ProponenteDAO extends Zend_Db_Table
 							INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
 							LEFT JOIN AGENTES.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
 							LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
-							LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente 
+							LEFT JOIN AGENTES.dbo.Nomes N ON N.idAgente = A.idAgente
 							LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC and Ta.stEstado = '1'
 							LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 					  		WHERE Pr.idPRONAC = " . $idpronac . " and Ta.stEstado = '1'";
@@ -260,7 +260,7 @@ Class ProponenteDAO extends Zend_Db_Table
 					,SAC.dbo.Interessado I
 					,AGENTES.dbo.Agentes A
 					,AGENTES.dbo.Nomes N
-				
+
 				WHERE P.CgcCpf = I.CgcCpf
 					AND A.idAgente = N.idAgente
 					AND I.CgcCpf = A.CNPJCPF

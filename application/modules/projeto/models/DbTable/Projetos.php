@@ -7,7 +7,7 @@ class Projeto_Model_DbTable_Projetos extends MinC_Db_Table_Abstract
 {
     protected $_schema = 'sac';
     protected $_name = 'Projetos';
-    protected $_primary = 'IdPRONAC';
+
 
     public function alterarOrgao($orgao, $idPronac) {
         $this->update(

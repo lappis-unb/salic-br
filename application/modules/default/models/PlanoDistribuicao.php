@@ -3,7 +3,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 {
     protected $_schema = "sac";
     protected $_name = "planodistribuicaoproduto";
-    protected $_primary = "idPlanoDistribuicao";
+
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
      * @param array $dados - array com dados referentes as colunas da tabela no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"

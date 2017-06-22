@@ -48,7 +48,7 @@ class Proposta_Model_DbTable_TbDeslocamento extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idDeslocamento';
+
 
     public function buscarDeslocamentosGeral($where = array(), $order = array(), $arrNot = array())
     {

@@ -9,7 +9,7 @@ class ArquivoPagamentoParecerista extends MinC_Db_Table_Abstract {
     protected $_name = 'tbPagamentoPareceristaXArquivo';
     protected $_schema = 'SAC';
     protected $_banco = 'SAC';
-    protected $_primary = 'idArquivo';
+
 
     public function inserirArquivodePagamento($idGerarPagamentoParecerista, $idArquivo, $siArquivo){
 

@@ -4,7 +4,7 @@ class Assinatura_Model_DbTable_TbAtoAdministrativo extends MinC_Db_Table_Abstrac
 {
     protected $_schema = 'sac';
     protected $_name = 'tbAtoAdministrativo';
-    protected $_primary = 'idAtoAdministrativo';
+
 
     public function obterPerfilAssinante($idOrgaoDoAssinante, $idPerfilDoAssinante, $idTipoDoAto)
     {

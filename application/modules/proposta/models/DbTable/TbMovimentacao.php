@@ -23,7 +23,7 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
     protected $_banco = "sac";
     protected $_schema = 'sac';
     protected $_name = "tbmovimentacao";
-    protected $_primary = "idMovimentacao";
+
 
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente

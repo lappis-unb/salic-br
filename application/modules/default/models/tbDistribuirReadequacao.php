@@ -14,7 +14,7 @@ class tbDistribuirReadequacao extends MinC_Db_Table_Abstract
 {
 	protected $_schema = "sac";
 	protected $_name   = "tbDistribuirReadequacao";
-    protected $_primary = "idDistribuirReadequacao";
+
 
     public function buscarReadequacaoCoordenadorParecerAguardandoAnalise($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {

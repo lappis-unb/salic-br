@@ -16,7 +16,7 @@ class CaptacaoDAO extends Zend_Db_Table
 	protected $_schema  = "";
 	protected $_name    = "SAC.dbo.Captacao";
 	protected $_nome    = "Captacao";
-	protected $_primary = "IdCaptacao";
+
 
 
 
@@ -125,8 +125,8 @@ class CaptacaoDAO extends Zend_Db_Table
 					,nrCpfCnpjIncentivador
 					,CONVERT(CHAR(10), dtCredito,111) AS dtCredito
 					,vlValorCredito
-					,cdPatrocinio 
-				FROM SAC.dbo.tbTmpCaptacao 
+					,cdPatrocinio
+				FROM SAC.dbo.tbTmpCaptacao
 				WHERE nrAnoProjeto IS NOT NULL AND nrAnoProjeto != '' OR nrSequencial IS NOT NULL AND nrSequencial != ''";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -136,7 +136,7 @@ class CaptacaoDAO extends Zend_Db_Table
 
 	public static function buscarProjetos($pronac)
 	{
-		$sql = "select distinct p.AnoProjeto, p.Sequencial, p.AnoProjeto+p.Sequencial as pronac, p.NomeProjeto, p.Processo, p.CgcCpf, 
+		$sql = "select distinct p.AnoProjeto, p.Sequencial, p.AnoProjeto+p.Sequencial as pronac, p.NomeProjeto, p.Processo, p.CgcCpf,
 				p.Area as codArea, p.Segmento as codSegmento, p.Mecanismo as codMecanismo, p.SolicitadoReal, p.UfProjeto, a.AprovadoReal,
 				ar.Descricao as Area, s.Descricao as Segmento, m.Descricao as Mecanismo, p.Situacao
 				from SAC.dbo.Projetos p
@@ -145,23 +145,23 @@ class CaptacaoDAO extends Zend_Db_Table
 				inner join SAC.dbo.Area ar on ar.Codigo = p.Area
 				left join SAC.dbo.Segmento s on s.Codigo = p.Segmento
 				inner join SAC.dbo.Mecanismo m on m.Codigo = p.Mecanismo
-				where (p.Situacao = 'E10' or p.Situacao = 'E12' or p.Situacao = 'E13') and p.AnoProjeto+p.Sequencial = '{$pronac}' and a.AprovadoReal != 0"; 
+				where (p.Situacao = 'E10' or p.Situacao = 'E12' or p.Situacao = 'E13') and p.AnoProjeto+p.Sequencial = '{$pronac}' and a.AprovadoReal != 0";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
-	
+
 	public static function buscarCaptacao($pronac)
 	{
-		$sql = "select SUM(CaptacaoReal) as captado from SAC.dbo.Captacao 
+		$sql = "select SUM(CaptacaoReal) as captado from SAC.dbo.Captacao
 				where AnoProjeto+Sequencial = '$pronac'";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	} // fecha m�todo buscarErro()
-	
+
 
 	/**
 	 * M�todo para gerar o relat�rio com as capta��es contendo erros

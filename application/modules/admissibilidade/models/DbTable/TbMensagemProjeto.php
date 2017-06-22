@@ -13,7 +13,7 @@
 class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abstract{
     protected $_schema    = 'bdcorporativo.scsac';
     protected $_name      = 'tbMensagemProjeto';
-    protected $_primary   = 'idMensagemProjeto';
+
     public function getAllBy($where = array(), $orWhere = array())
     {
 //        $selectSub = $this->select()

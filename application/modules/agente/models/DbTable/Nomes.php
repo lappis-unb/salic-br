@@ -38,7 +38,7 @@ class Agente_Model_DbTable_Nomes extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idNome';
+
 
     /**
      * Se a tabela possui sequence

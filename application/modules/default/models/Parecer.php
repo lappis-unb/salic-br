@@ -11,7 +11,7 @@ class Parecer extends MinC_Db_Table_Abstract
 
     protected $_schema = 'SAC';
     protected $_name = 'Parecer';
-    protected $_primary = 'IdParecer';
+
 
     public function salvar($dados)
     {
@@ -286,7 +286,7 @@ class Parecer extends MinC_Db_Table_Abstract
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        
+
         return $db->fetchAll($select);
     }
 
@@ -296,14 +296,14 @@ class Parecer extends MinC_Db_Table_Abstract
         $select = new Zend_Db_Expr("SELECT *, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Parecer AS pa
             INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = pa.idPRONAC WHERE pr.Mecanismo = $mecanismo
             order by pa.idParecer");
-        
+
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
-        
+
         return $db->fetchAll($select);
     }
 
@@ -447,7 +447,7 @@ class Parecer extends MinC_Db_Table_Abstract
         $select->where('p.idTipoAgente = ?', 1);
         $select->where('p.idPronac = ?', $idPronac);
 
-        
+
         return $this->fetchAll($select);
     }
 

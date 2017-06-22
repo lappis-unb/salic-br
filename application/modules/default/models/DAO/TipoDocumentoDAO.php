@@ -15,7 +15,7 @@ class TipoDocumentoDAO extends Zend_Db_Table
 	/* dados da tabela */
 	protected $_schema  = "";
 	protected $_name    = "BDCORPORATIVO.scSAC.tbTipoDocumento";
-	protected $_primary = "idTipoDocumento";
+
 
 
 

@@ -4,7 +4,7 @@ class Proposta_Model_DbTable_TbDespacho extends MinC_Db_Table_Abstract
 {
     protected $_schema = 'sac';
     protected $_name = 'tbDespacho';
-    protected $_primary = 'idDespacho';
+
 
     public function devolverProjetoEncaminhadoParaAssinatura($idPronac, $motivoDevolucao, $idTipoDespacho = 129)
     {

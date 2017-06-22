@@ -7,7 +7,7 @@
  */
 class Uf extends MinC_Db_Table_Abstract {
 
-    protected $_primary = "idUF";
+
     protected $_name = 'Uf';
     protected $_schema = 'agentes';
 

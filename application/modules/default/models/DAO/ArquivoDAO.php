@@ -16,7 +16,7 @@ class ArquivoDAO extends Zend_Db_Table
 
     protected $_schema = "";
     protected $_name = "BDCORPORATIVO.scCorp.tbArquivo";
-    protected $_primary = "idArquivo";
+
 
     /**
      * M�todo para cadastrar informa��es dos arquivos
@@ -55,7 +55,7 @@ class ArquivoDAO extends Zend_Db_Table
     }
 
     /**
-     * 
+     *
      */
     public static function deletar($idArquivo)
     {
@@ -113,7 +113,7 @@ class ArquivoImagemDAO extends Zend_Db_Table
 
     protected $_schema = "";
     protected $_name = "BDCORPORATIVO.scCorp.tbArquivoImagem";
-    protected $_primary = "idArquivo";
+
 
     /**
      * M�todo para cadastrar os bin�rios dos arquivos
@@ -143,7 +143,7 @@ class ArquivoImagemDAO extends Zend_Db_Table
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = "UPDATE BDCORPORATIVO.scCorp.tbArquivoImagem SET 
+        $sql = "UPDATE BDCORPORATIVO.scCorp.tbArquivoImagem SET
             biArquivo = {$dados['biArquivo']} WHERE idArquivo = $id";
 
         return $db->fetchAll($sql);

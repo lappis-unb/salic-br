@@ -15,7 +15,7 @@ class vwPainelDeLiberacao extends MinC_Db_Table_Abstract {
     protected $_banco  = 'SAC';
     protected $_schema = 'SAC';
     protected $_name   = 'vwPainelDeLiberacao';
-    protected $_primary = 'IdPRONAC';
+
 
 
     public function listaRelatorios($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false) {
@@ -47,7 +47,7 @@ class vwPainelDeLiberacao extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        
+
         return $this->fetchAll($select);
     }
 

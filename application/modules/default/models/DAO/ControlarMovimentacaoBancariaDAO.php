@@ -15,7 +15,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 	/* dados da tabela */
 	protected $_schema  = "";
 	protected $_name    = "";
-	protected $_primary = "";
+
 
 
 
@@ -30,8 +30,8 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 	 */
 	public static function buscar($pronac, $periodo, $operacao)
 	{
-		/* $sql = "SELECT * 
-				FROM MovimentacaoBancaria 
+		/* $sql = "SELECT *
+				FROM MovimentacaoBancaria
 				WHERE id > 0 ";
 
 		// busca pelo pronac

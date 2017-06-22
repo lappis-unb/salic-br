@@ -15,7 +15,7 @@ class AvaliacaoSubItemCustoDAO extends Zend_Db_Table
 	/* dados da tabela */
 	protected $_schema  = "";
 	protected $_name    = "BDCORPORATIVO.scSAC.tbAvaliacaoSubItemCusto";
-	protected $_primary = "idAvaliacaoSubItemCusto";
+
 
 
 
@@ -40,7 +40,7 @@ class AvaliacaoSubItemCustoDAO extends Zend_Db_Table
 		else
 		{
 			return false;
-		} 
+		}
 	} // fecha m�todo cadastrar()
 
 

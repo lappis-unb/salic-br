@@ -4,7 +4,7 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
 {
     protected $_name = "Enquadramento";
     protected $_schema = "sac";
-    protected $_primary = "IdEnquadramento";
+
 
     public function alterarEnquadramento($dados)
     {
@@ -237,7 +237,7 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
         $queryDesistenciaRecursal->where("siRecurso = ?", 15);
         $queryDesistenciaRecursal->where("stEstado = ?", 1);
         $queryDesistenciaRecursal->where("IdPRONAC = ?", $idPronac);
-        
+
         return ($this->_db->fetchOne($queryDesistenciaRecursal)) ? $this->_db->fetchOne($queryDesistenciaRecursal) : false;
     }
 

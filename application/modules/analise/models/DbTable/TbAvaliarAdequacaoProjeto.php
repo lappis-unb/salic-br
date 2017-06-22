@@ -4,7 +4,7 @@ class Analise_Model_DbTable_TbAvaliarAdequacaoProjeto extends MinC_Db_Table_Abst
 {
     protected $_schema = 'sac';
     protected $_name = 'tbAvaliarAdequacaoProjeto';
-    protected $_primary = 'idAvaliarAdequacaoProjeto';
+
 
 
     public function buscarUltimaAvaliacao($idPronac)

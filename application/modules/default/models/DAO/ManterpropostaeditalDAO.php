@@ -15,11 +15,11 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 	/* dados da tabela */
 	protected $_schema  = "";
 	protected $_name    = "SAC.dbo.PreProjeto";
-	protected $_primary = "idPreProjeto";
 
 
 
-	
+
+
 //	public static function cadastrar($dados)
 //	{
 //		$db= Zend_Db_Table::getDefaultAdapter();
@@ -40,7 +40,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 
 
 
-	
+
 //	public static function alterar($dados, $idPronac)
 //	{
 //		$db= Zend_Db_Table::getDefaultAdapter();
@@ -89,8 +89,8 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
 	} // fecha m�todo buscaredital()
-	
-	
+
+
 		public static function buscarpreprojeto()
 	{
 		$sql = "select pp.NomeProjeto, nm.Descricao as Nome from SAC.dbo.PreProjeto pp
@@ -105,20 +105,20 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 
 		public static function buscaendereco($cpf)
 	{
-		$sql = "select Ag.idAgente, Ag.CNPJCPF, en.TipoEndereco,  en.Divulgar, en.TipoLogradouro, en.TipoEndereco, nm.Descricao as Nome, mun.Descricao as Municipio, uf.Descricao as UF, en.Numero, en.Bairro, en.Cep, en.Complemento, en.Logradouro, en.Numero, uf.Descricao as UF 
+		$sql = "select Ag.idAgente, Ag.CNPJCPF, en.TipoEndereco,  en.Divulgar, en.TipoLogradouro, en.TipoEndereco, nm.Descricao as Nome, mun.Descricao as Municipio, uf.Descricao as UF, en.Numero, en.Bairro, en.Cep, en.Complemento, en.Logradouro, en.Numero, uf.Descricao as UF
                 from AGENTES..EnderecoNacional en
                 INNER JOIN AGENTES..Agentes Ag on Ag.idAgente = en.idAgente
                 INNER JOIN AGENTES.dbo.Nomes nm on nm.idAgente = Ag.idAgente
                 INNER JOIN AGENTES.dbo.UF uf on uf.idUF = en.UF
                 LEFT JOIN AGENTES.dbo.Municipios mun on mun.idMunicipioIBGE = en.Cidade
                 where Ag.CNPJCPF= '" . $cpf . "'";
-		
+
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
-        
+
     public static function buscaEditalConfirmarAvancada($array = array()) {
         $sql = " SELECT e.idEdital as idEditalTb,
                         convert(varchar(12),e.NrEdital)as NrEditalTb,
@@ -293,7 +293,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
     }
 
     public static function buscarPropostaEdital($idAgente){
-        $sql = "Select  
+        $sql = "Select
                     p.idPreProjeto,
                     idagente,
                     NomeProjeto,

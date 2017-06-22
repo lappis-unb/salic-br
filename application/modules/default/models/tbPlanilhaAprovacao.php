@@ -12,7 +12,7 @@
 class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
     protected $_schema = "sac";
     protected $_name   = "tbPlanilhaAprovacao";
-    protected $_primary = "idPlanilhaAprovacao";
+
 
     /**
      * Metodo para cadastrar
@@ -64,7 +64,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         //adicionando linha order ao select
         $slct->order($order);
 
-        
+
         // retornando os registros
         return $this->fetchAll($slct);
 
@@ -82,7 +82,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
                         FROM SAC.dbo.tbPlanilhaProjeto
                         WHERE idPronac = '$idPronac'
         ";
-//        
+//
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
@@ -102,7 +102,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
                         FROM SAC.dbo.tbPlanilhaAprovacao
                         WHERE idPronac = '$idPronac'
         ";
-        
+
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
@@ -143,7 +143,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach($where as $key=>$valor){
             $select->where($key, $valor);
         }
-        
+
 
         return $this->fetchAll($select);
     }
@@ -161,7 +161,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         foreach($where as $key=>$valor){
             $select->where($key, $valor);
         }
-        
+
 
         return $this->fetchAll($select);
     }

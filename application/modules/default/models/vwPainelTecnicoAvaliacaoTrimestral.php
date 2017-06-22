@@ -15,7 +15,7 @@ class vwPainelTecnicoAvaliacaoTrimestral extends MinC_Db_Table_Abstract {
     protected $_banco  = 'SAC';
     protected $_schema = 'SAC';
     protected $_name   = 'vwPainelTecnicoAvaliacaoTrimestral';
-    protected $_primary = 'IdPRONAC';
+
 
 
     public function listaRelatorios($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
@@ -47,7 +47,7 @@ class vwPainelTecnicoAvaliacaoTrimestral extends MinC_Db_Table_Abstract {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        
+
         return $this->fetchAll($select);
     }
 

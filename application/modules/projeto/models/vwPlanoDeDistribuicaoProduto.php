@@ -4,7 +4,7 @@ class Projeto_Model_vwPlanoDeDistribuicaoProduto extends MinC_Db_Table_Abstract 
 
     protected $_schema = 'SAC';
     protected $_name   = 'vwPlanoDeDistribuicaoProduto';
-    protected $_primary = 'IdPRONAC';
+
 
     public function init()
     {

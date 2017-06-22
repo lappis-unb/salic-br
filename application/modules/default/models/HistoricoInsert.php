@@ -13,7 +13,7 @@ class HistoricoInsert extends MinC_Db_Table_Abstract
 {
 	protected $_schema  = "SAC";
 	protected $_name    = "sysobjects";
-	protected $_primary = "Id";
+
 
 	/**
 	 * Metodo para verificar se a trigger HISTORICO_INSERT esta habilitada

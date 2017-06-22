@@ -14,7 +14,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 {
     protected $_name='tbsolicitaritem';
     protected $_schema = 'sac';
-    protected $_primary = 'idSolicitarItem';
+
     /**
      * exibirprodutoetapaitem
      *
@@ -222,7 +222,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         if(!empty($where)){
             $sql .=" AND i.Descricao ".$where;
         }
-        
+
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

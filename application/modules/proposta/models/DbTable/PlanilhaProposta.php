@@ -37,7 +37,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idPlanilhaProposta';
+
 
 //    @todo : esse arquivo deverá ter seus metodos transferidos para Proposta_Model_DbTable_TbPlanilhaProposta e o arquivo apagado
     /*

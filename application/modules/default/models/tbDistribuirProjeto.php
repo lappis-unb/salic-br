@@ -14,7 +14,7 @@ class tbDistribuirProjeto extends MinC_Db_Table_Abstract
 	protected $_banco  = "SAC";
 	protected $_schema = "SAC";
 	protected $_name   = "tbDistribuirProjeto";
-	protected $_primary   = "idDistribuirProjeto";
+
 
     public function painelRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $idPerfil=0) {
 
@@ -75,7 +75,7 @@ class tbDistribuirProjeto extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        
+
         return $this->fetchAll($select);
     }
 }

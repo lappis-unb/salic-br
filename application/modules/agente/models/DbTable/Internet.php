@@ -15,7 +15,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
     /**
      * @var bool
      */
-    protected $_primary = 'idInternet';
+
 
     /**
      * @param string $email

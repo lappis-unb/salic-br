@@ -7,7 +7,7 @@ class Proposta_Model_DbTable_PreProjetoMeta extends MinC_Db_Table_Abstract
 {
     protected $_schema = "sac";
     protected $_name = "tbpreprojetometa";
-    protected $_primary = "idPreProjetoMeta";
+
 
     /**
      * Proposta_Model_DbTable_PreProjeto constructor.

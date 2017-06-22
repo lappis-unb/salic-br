@@ -7,7 +7,7 @@
  */
 class Mensagem extends GenericModel{
 
-    protected $_primary = '';
+
     protected $_name = 'tbMensagem';
     protected $_schema = 'SAC';
 

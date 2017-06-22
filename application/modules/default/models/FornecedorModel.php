@@ -8,11 +8,11 @@ class FornecedorModel extends Minc_Db_Table_Abstract
     protected $_banco = 'agentes';
     protected $_name = 'agentes';
     protected $_schema = 'agentes';
-    protected $_primary = 'idAgente';
-    
+
+
     public function pesquisarFornecedorItem($item)
     {
-        $select = "SELECT 'COTAÇÃO' as Modalidade, b.idAgente,e.CNPJCPF,F.Descricao AS Fornecedor,c.idPlanilhaAprovacao,d.IdPRONAC
+        $select = "SELECT 'COTAï¿½ï¿½O' as Modalidade, b.idAgente,e.CNPJCPF,F.Descricao AS Fornecedor,c.idPlanilhaAprovacao,d.IdPRONAC
                 FROM  BDCORPORATIVO.scSAC.tbCotacao a
                 INNER JOIN BDCORPORATIVO.scSAC.tbCotacaoxAgentes b on (a.idCotacao = b.idCotacao)
                 INNER JOIN BDCORPORATIVO.scSAC.tbCotacaoxPlanilhaAprovacao c on (b.idCotacaoxAgentes = c.idCotacaoxAgentes)
@@ -29,7 +29,7 @@ class FornecedorModel extends Minc_Db_Table_Abstract
                 INNER JOIN AGENTES.DBO.Nomes e on (d.idAgente = e.idAgente)
                 WHERE c.stAtivo = 'S' AND c.idPlanilhaAprovacao = ?
                 UNION ALL
-                SELECT 'LICITAÇAO' as Modalidade, b.idAgente,e.CNPJCPF,F.Descricao AS Fornecedor,c.idPlanilhaAprovacao,d.IdPRONAC
+                SELECT 'LICITAï¿½AO' as Modalidade, b.idAgente,e.CNPJCPF,F.Descricao AS Fornecedor,c.idPlanilhaAprovacao,d.IdPRONAC
                 FROM  BDCORPORATIVO.scSAC.tbLicitacao a
                 INNER JOIN BDCORPORATIVO.scSAC.tbLicitacaoxAgentes b on (a.idLicitacao = b.idLicitacao)
                 INNER JOIN BDCORPORATIVO.scSAC.tbLicitacaoxPlanilhaAprovacao c on (b.idLicitacao = c.idLicitacao)

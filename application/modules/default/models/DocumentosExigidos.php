@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -13,7 +13,7 @@ class DocumentosExigidos extends MinC_Db_Table_Abstract {
     protected $_name   = 'DocumentosExigidos';
     protected $_schema = 'sac';
     protected $_banco  = 'SAC';
-    protected $_primary = 'Codigo';
+
 
     function listarDocumentosExigido($idCodigoDocumentosExigidos = ''){
         $select = $this->select();
@@ -45,6 +45,6 @@ class DocumentosExigidos extends MinC_Db_Table_Abstract {
     }
 
 
-    
+
 }
 ?>

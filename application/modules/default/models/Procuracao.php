@@ -4,13 +4,13 @@ class Procuracao extends MinC_Db_Table_Abstract {
 
     protected $_schema = 'Agentes';
     protected $_name = 'tbProcuracao';
-    protected $_primary = 'idProcuracao';
+
 
     public function buscarProcuracaoProjeto($where = array()) {
         $s = $this->select();
         $s->setIntegrityCheck(false);
         $s->from(
-                array('p' => $this->_name), 
+                array('p' => $this->_name),
                 array(
                     'p.idProcuracao',
                     'p.idDocumento',
@@ -26,23 +26,23 @@ class Procuracao extends MinC_Db_Table_Abstract {
                     'vprp.idVinculoProposta',
                     'vprp.siVinculoProposta'
                 )
-                
+
         );
         $s->joinLeft(
-                array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto", 
+                array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto",
                 array(	'(pr.AnoProjeto+pr.Sequencial) as pronac',
                 		'pr.OrgaoOrigem',
                 		'NomeProjeto'),
                 $this->getSchema('sac')
-                
+
         );
         $s->joinLeft(
-                array('org' => 'Orgaos'), "pr.OrgaoOrigem = org.Codigo", 
+                array('org' => 'Orgaos'), "pr.OrgaoOrigem = org.Codigo",
                 array('org.idSecretaria as OrgaoSuperior'),
                 $this->getSchema('sac')
         );
         $s->joinInner(
-                array('v' => 'tbVinculo'), "v.idVinculo = vprp.idVinculo", 
+                array('v' => 'tbVinculo'), "v.idVinculo = vprp.idVinculo",
                 array(
                     'v.idUsuarioResponsavel',
                     'v.idAgenteProponente',
@@ -56,18 +56,18 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 ), 'CONTROLEDEACESSO.dbo'
         );
         $s->joinInner(
-                array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente", 
+                array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente",
                 array(
                     'nmp.Descricao as NomeProponente',
                 )
         );
         $s->joinInner(
-                array('d' => 'tbDocumento'), "p.idDocumento = d.idDocumento", 
+                array('d' => 'tbDocumento'), "p.idDocumento = d.idDocumento",
                 array(''),
                 "BDCORPORATIVO.scCorp"
         );
         $s->joinInner(
-                array('a' => 'tbArquivo'), "d.idArquivo = a.idArquivo", 
+                array('a' => 'tbArquivo'), "d.idArquivo = a.idArquivo",
                 array(
                     'a.idArquivo',
                     'a.dtEnvio',
@@ -78,17 +78,17 @@ class Procuracao extends MinC_Db_Table_Abstract {
         foreach($where as $key=>$valor){
             $s->where($key, $valor);
         }
-        
+
         $s->order('p.siProcuracao desc');
-        
+
         return $this->fetchAll($s);
     }
-    
+
     public function buscarProcuracaoAceita($where = array()) {
         $s = $this->select();
         $s->setIntegrityCheck(false);
         $s->from(
-                array('p' => $this->_name), 
+                array('p' => $this->_name),
                 array(
                     'p.idProcuracao',
                     'p.idDocumento',
@@ -97,15 +97,15 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 )
         );
         $s->joinInner(
-                array('vprp' => 'tbVinculoProposta'), "p.idVinculoProposta = vprp.idVinculoProposta", 
+                array('vprp' => 'tbVinculoProposta'), "p.idVinculoProposta = vprp.idVinculoProposta",
                 array(
                     'vprp.idPreProjeto',
                     'vprp.idVinculoProposta',
                     'vprp.siVinculoProposta'
                 )
-                
+
         );
-        
+
         foreach($where as $key=>$valor){
             $s->where($key, $valor);
         }

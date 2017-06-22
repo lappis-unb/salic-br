@@ -10,7 +10,7 @@
 class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
     protected $_schema = 'sac';
     protected $_name   = 'PlanoDistribuicaoProduto';
-    protected $_primary = 'idPlanoDistribuicao';
+
 
     /**
      * Metodo para cadastrar

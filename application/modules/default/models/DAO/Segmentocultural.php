@@ -5,7 +5,7 @@ class Segmentocultural extends MinC_Db_Table_Abstract
 
     protected $_name = 'Segmento';
     protected $_schema = 'sac';
-    protected $_primary = 'Codigo';
+
 
     public function buscarSegmento($idArea)
     {

@@ -14,7 +14,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 {
     protected $_schema = "sac";
     protected $_name = "tbReadequacao";
-    protected $_primary = "idReadequacao";
+
 
 
     /**
@@ -111,9 +111,9 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         return $result;
     }
-    
-    
-    
+
+
+
     /**
      * painelReadequacoesCoordenadorAcompanhamento
      *
@@ -132,7 +132,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         $select= array();
         $result= array();
         $total= array();
-        
+
         switch($filtro){
             case 'aguardando_distribuicao':
                 $select = $this->selectView('vwPainelCoordenadorReadequacaoAguardandoAnalise');
@@ -147,7 +147,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                 $select = $this->selectView('vwPainelReadequacaoAguardandoPublicacao');
                 break;
         }
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
@@ -164,13 +164,13 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        
+
         $stmt = $db->query($select);
 
         while ($o = $stmt->fetchObject()) {
             $result[] = $o;
         }
-        
+
         return $result;
     }
 
@@ -248,7 +248,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         $select->where('idReadequacao = ?', $idReadequacao);
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -307,7 +307,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -366,7 +366,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -431,7 +431,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -502,7 +502,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -540,7 +540,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            
+
             return $this->fetchAll($select)->count();
         }
 
@@ -556,7 +556,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -598,7 +598,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         }
 
         if ($qtdeTotal) {
-            
+
             return $this->fetchAll($select)->count();
         }
 
@@ -614,7 +614,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -649,7 +649,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         //adicionando linha order ao select
         $select->order($order);
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -703,7 +703,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         $select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE a.idNrReuniao = cv.idNrReuniao AND a.idPronac = cv.IdPRONAC AND a.idTipoReadequacao = cv.tpTipoReadequacao)", '');
         $select->order(array(6, 1));
 
-        
+
         return $this->fetchAll($select);
     }
 
@@ -875,7 +875,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
     {
         $tbReadequacao = New tbReadequacao();
         $total = null;
-        
+
         switch($filtro){
             case 'aguardando_distribuicao':
                 $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAguardandoAnalise' , $where);
@@ -911,7 +911,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                  b.Segmento,
                  c.dsReadequacao as tpReadequacao,
                  d.dtEnvioAvaliador as dtDistribuicao,
-                 DATEDIFF(DAY,    
+                 DATEDIFF(DAY,
                  d.dtEnvioAvaliador,
                  GETDATE()) as qtDiasEmAnalise,
                  d.idAvaliador,

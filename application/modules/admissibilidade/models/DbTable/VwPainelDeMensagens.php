@@ -4,7 +4,7 @@ class Admissibilidade_Model_DbTable_VwPainelDeMensagens extends MinC_Db_Table_Ab
 {
     protected $_schema    = 'SAC';
     protected $_name      = 'vwPainelDeMensagens';
-    protected $_primary   = 'IdPRONAC';
+
 
     public function carregarPerguntasSemResposta($intIdUsuario, $intIdOrgao)
     {

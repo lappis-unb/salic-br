@@ -17,6 +17,6 @@ class Visao extends MinC_Db_Table_Abstract
     protected $_banco = 'Agentes';
     protected $_name = 'visao';
     protected $_schema = 'agentes';
-    protected $_primary = 'idVisao';
+
 
 }

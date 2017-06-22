@@ -4,7 +4,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
 {
     protected $_banco = 'AGENTES';
     protected $_name = 'uf';
-    protected $_schema = 'AGENTES';
+    protected $_schema = 'agentes';
 
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {

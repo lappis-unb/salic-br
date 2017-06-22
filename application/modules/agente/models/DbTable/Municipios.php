@@ -18,7 +18,7 @@ class Agente_Model_DbTable_Municipios extends MinC_Db_Table_Abstract
 {
     protected $_name = 'municipios';
     protected $_schema = 'agentes';
-    protected $_primary = 'idMunicipioIBGE';
+
 
 
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)

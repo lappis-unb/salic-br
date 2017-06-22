@@ -44,7 +44,7 @@ class Proposta_Model_DbTable_DocumentosExigidos extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'Codigo';
+
 
     /**
      * Realizando a busca na view: vwdocumentosexigidosapresentacaoproposta

@@ -4,7 +4,7 @@ class Autenticacao_Model_Grupos extends MinC_Db_Table_Abstract
 {
     protected $_name = 'usuarios';
     protected $_schema = 'tabelas';
-    protected $_primary = 'gru_codigo';
+
 
     const PROTOCO_DOCUMENTO = 90;
     const PROTOCOLO_RECBIMENTO = 91;

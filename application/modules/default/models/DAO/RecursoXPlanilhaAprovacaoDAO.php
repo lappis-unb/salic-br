@@ -17,7 +17,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 	/* dados da tabela */
 	protected $_schema  = "";
 	protected $_name    = "SAC.dbo.tbRecursoXPlanilhaAprovacao";
-	protected $_primary = "idRecurso";
+
 
 
 
@@ -42,16 +42,16 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 		else
 		{
 			return false;
-		} 
+		}
 	} // fecha m�todo cadastrar()
 
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * M�todo para alterar informa��es dos recursos na planilha de aprova��o
 	 * @access public

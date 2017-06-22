@@ -14,7 +14,7 @@ class tbArquivo extends MinC_Db_Table_Abstract
 {
     protected $_schema = "bdcorporativo.scCorp";
     protected $_name = "tbArquivo";
-    protected $_primary = "idArquivo";
+
 
     /**
      * Metodo para buscar um arquivo pelo seu id
@@ -50,8 +50,8 @@ class tbArquivo extends MinC_Db_Table_Abstract
 
     public static function buscarArquivo($id)
     {
-        $sql = "SELECT A.nmArquivo, AI.biArquivo 
-				FROM BDCORPORATIVO.scCorp.tbArquivo A 
+        $sql = "SELECT A.nmArquivo, AI.biArquivo
+				FROM BDCORPORATIVO.scCorp.tbArquivo A
 				INNER JOIN BDCORPORATIVO.scCorp.tbArquivoImagem AI ON AI.idArquivo = A.idArquivo
 				WHERE A.idArquivo = " . $id;
 

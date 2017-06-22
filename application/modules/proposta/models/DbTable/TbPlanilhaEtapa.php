@@ -14,7 +14,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
 {
 	protected $_schema = 'sac';
 	protected $_name   = 'tbplanilhaetapa';
-    protected $_primary = 'idPlanilhaEtapa';
+
 
     public function listarEtapasProdutos($idPreProjeto)
     {

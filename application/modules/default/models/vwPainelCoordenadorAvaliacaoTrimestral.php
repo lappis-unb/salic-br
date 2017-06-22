@@ -15,7 +15,7 @@ class vwPainelCoordenadorAvaliacaoTrimestral extends MinC_Db_Table_Abstract {
     protected $_banco  = 'SAC';
     protected $_schema = 'SAC';
     protected $_name   = 'vwPainelCoordenadorAvaliacaoTrimestral';
-    protected $_primary = 'IdPRONAC';
+
 
     public function excluirArquivo($idArquivo) {
         $where = "idArquivo = " . $idArquivo;
