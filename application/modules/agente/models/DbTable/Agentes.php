@@ -146,7 +146,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
     public function BuscaAgente($cnpjcpf = null) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->where('cnpjcpf = ?', trim($cnpjcpf));
+        $select->where('CNPJCPF = ?', trim($cnpjcpf));
         return $this->fetchAll($select);
     }
 

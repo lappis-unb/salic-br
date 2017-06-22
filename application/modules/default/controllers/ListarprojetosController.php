@@ -9,13 +9,6 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
     private $idUsuario = 0;
     private $cpfLogado = 0;
 
-    /*     * *
-     * Reescreve o m�todo init()
-     * @access public
-     * @param void
-     * @return void
-     */
-
     public function init() {
         ini_set('memory_limit', '128M');
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
