@@ -390,7 +390,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 if ($result) {
                     $result[0]['Agente'] = utf8_encode('cadastrado'); # o agente ja encontra-se cadastrado
                 } else {
-                    $data = array('cnpjcpf' => $cpf);
+                    $data = array('CNPJCPF' => $cpf);
                     $agentesMapple = new Agente_Model_AgentesMapper();
                     $insere = $agentesMapple->save(new Agente_Model_Agentes($data));
                     $result[0]['Agente'] = 'novo';
@@ -722,7 +722,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $arrPost['cpf'] = Mascara::delMaskCPF(Mascara::delMaskCNPJ($arrPost['cpf']));
             if ($arrPost['idagente'] === '') {
                 $tblAgentes = new Agente_Model_DbTable_Agentes();
-                $result = $tblAgentes->findBy(array('cnpjcpf' => $arrPost['cpf']));
+                $result = $tblAgentes->findBy(array('CNPJCPF' => $arrPost['cpf']));
                 $arrPost['idagente'] = $result['idagente'];
             }
 

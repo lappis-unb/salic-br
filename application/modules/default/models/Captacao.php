@@ -1187,7 +1187,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
         $slct->from(
                     array("c"=>$this->_name),
-                    array("c.CgcCpfMecena AS cnpjcpfIncentivador",
+                    array("c.CgcCpfMecena AS CNPJCPFIncentivador",
                           "c.DtChegadaRecibo AS dtLote",
                           "c.DtRecibo AS dtCaptacao",
                           "c.CaptacaoReal AS vlCaptado",

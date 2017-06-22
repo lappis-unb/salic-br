@@ -54,7 +54,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
         // Busca na Agentes
         $tableAgentes  = new Agente_Model_DbTable_Agentes();
-        $arrAgente = $tableAgentes->findBy(array('cnpjcpf' => trim($cpf)));
+        $arrAgente = $tableAgentes->findBy(array('CNPJCPF' => trim($cpf)));
 
         if ($arrAcesso)  $this->idResponsavel = $arrAcesso['idusuario'];
         if ($arrAgente)  $this->idAgente 	  = $arrAgente['idagente'];

@@ -92,7 +92,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             $pkSgcAcessoSave = $sgcAcesso->salvar($dados);
 
             $objAgentes = new Agente_Model_DbTable_Agentes();
-            $buscarAgente = $objAgentes->buscar(array('cnpjcpf = ?' => $cpf));
+            $buscarAgente = $objAgentes->buscar(array('CNPJCPF = ?' => $cpf));
             $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
             $objVisao = new Visao();
             $buscarVisao = $objVisao->buscar(array('visao = ?' => 144, 'stativo = ?' => 'A', 'idagente = ?' => $idAgenteProp));

@@ -28,8 +28,8 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         $a = array(
             'a.idagente'
-            ,'a.cnpjcpf'
-            ,'a.cnpjcpfsuperior'
+            ,'a.CNPJCPF'
+            ,'a.CNPJCPFSuperior'
             ,'a.tipopessoa'
         );
 
@@ -71,7 +71,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         if (!empty($cnpjcpf)) {
             # busca pelo cpf/cnpj
-            $sql->where('a.cnpjcpf = ?', $cnpjcpf);
+            $sql->where('a.CNPJCPF = ?', $cnpjcpf);
         } if (!empty($nome)) {
             # filtra pelo nome
             $sql->where('n.descricao LIKE ?', '%'.$nome.'%');

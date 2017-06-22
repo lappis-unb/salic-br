@@ -24,7 +24,7 @@
         <?php if(@in_array("cmpsOrd_dtsituacao", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >Dt. Situa&ccedil;&atilde;o</th><?php endif; ?>
         <?php if(@in_array("cmpsOrd_sintese", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >S&iacute;ntese do Projeto</th><?php endif; ?>
         <?php if(@in_array("cmpsOrd_providencia", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >Provid&ecirc;ncia Tomada</th><?php endif; ?>
-        <?php if(@in_array("cmpsOrd_cnpjcpf", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >CNPJ / CPF</th><?php endif; ?>
+        <?php if(@in_array("cmpsOrd_CNPJCPF", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >CNPJ / CPF</th><?php endif; ?>
         <?php if(@in_array("cmpsOrd_proponente", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >Proponente</th><?php endif; ?>
         <?php if(@in_array("cmpsOrd_nrportaria", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >Nr. Portaria</th><?php endif; ?>
         <?php if(@in_array("cmpsOrd_dtportaria", $this->parametrosBusca["visaoAgente"])): ?><th align="center" valign="middle" >Dt. Portaria</th><?php endif; ?>
@@ -55,7 +55,7 @@
         <?php if(@in_array("cmpsOrd_dtsituacao", $this->parametrosBusca["visaoAgente"])): ?><td ><?php echo ConverteData($registro->DtSituacao,5)?></td><?php endif; ?>
         <?php if(@in_array("cmpsOrd_sintese", $this->parametrosBusca["visaoAgente"])): ?><td ><span id="<?php echo $registro->AnoProjeto.$registro->Sequencial?>" class="naoImprimir" style="display: none;"><b><?php echo $registro->NomeProjeto?></b><br><br><?php echo $registro->ResumoProjeto?></span></td><?php endif; ?>
         <?php if(@in_array("cmpsOrd_providencia", $this->parametrosBusca["visaoAgente"])): ?><td ><?php echo $registro->ProvidenciaTomada?></td><?php endif; ?>
-        <?php if(@in_array("cmpsOrd_cnpjcpf", $this->parametrosBusca["visaoAgente"])): ?><td ><?php echo $registro->CgcCpf?></td><?php endif; ?>
+        <?php if(@in_array("cmpsOrd_CNPJCPF", $this->parametrosBusca["visaoAgente"])): ?><td ><?php echo $registro->CgcCpf?></td><?php endif; ?>
         <?php if(@in_array("cmpsOrd_proponente", $this->parametrosBusca["visaoAgente"])): ?><td ><?php echo $registro->Nome?></td><?php endif; ?>
         <?php if(@in_array("cmpsOrd_nrportaria", $this->parametrosBusca["visaoAgente"])): ?><td ><?php echo $registro->NrPortaria?></td><?php endif; ?>
         <?php if(@in_array("cmpsOrd_dtportaria", $this->parametrosBusca["visaoAgente"])): ?><td ><?php echo ConverteData($registro->DtPortaria,5)?></td><?php endif; ?>

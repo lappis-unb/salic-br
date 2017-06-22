@@ -51,7 +51,7 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
             array(
                 new Zend_Db_Expr(
                     'h.Contador, h.AnoProjeto+h.Sequencial as Pronac, h.DtSituacao, h.Situacao,
-                     h.ProvidenciaTomada, u.usu_identificacao as cnpjcpf, u.usu_nome as usuario'
+                     h.ProvidenciaTomada, u.usu_identificacao as CNPJCPF, u.usu_nome as usuario'
                 )
             )
         );
@@ -90,7 +90,7 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
             array(
                 new Zend_Db_Expr(
                     'h.Contador, h.AnoProjeto+h.Sequencial as Pronac, h.DtSituacao, h.Situacao,
-                            CAST(h.ProvidenciaTomada AS TEXT) as ProvidenciaTomada, u.usu_identificacao as cnpjcpf, u.usu_nome as usuario'
+                            CAST(h.ProvidenciaTomada AS TEXT) as ProvidenciaTomada, u.usu_identificacao as CNPJCPF, u.usu_nome as usuario'
                 )
             )
         );

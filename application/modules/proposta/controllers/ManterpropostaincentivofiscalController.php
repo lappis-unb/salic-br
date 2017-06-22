@@ -56,7 +56,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         // Busca na Agentes
         $tblAgentes = new Agente_Model_DbTable_Agentes();
-        $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
+        $agente = $tblAgentes->findBy(array('CNPJCPF' => $cpf));
 
         if ($agente) {
             $this->idResponsavel = $acessos['IdUsuario'];

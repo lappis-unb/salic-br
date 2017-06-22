@@ -21,7 +21,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 
         $slct->joinInner(
                 array('ag' => 'Agentes'), "ag.idagente = vi.idagenteproponente",
-                array('ag.cnpjcpf'),
+                array('ag.CNPJCPF'),
                 $this->_schema
         );
 

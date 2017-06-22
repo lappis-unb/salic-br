@@ -1874,7 +1874,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $arrAuth = (array) Zend_Auth::getInstance()->getIdentity();
         $usuario = isset($arrAuth['IdUsuario']) ? $arrAuth['IdUsuario'] : $arrAuth['usu_codigo'];
         $arrayAgente = array(
-            'cnpjcpf' => $this->_request->getParam("cpf"),
+            'CNPJCPF' => $this->_request->getParam("cpf"),
             'tipopessoa' => $this->_request->getParam("Tipo"),
             'status' => 0,
             'usuario' => $usuario
@@ -1885,7 +1885,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
         $mprAgentes->save($mdlAgente);
 
-        $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
+        $agente = $mprAgentes->findBy(array('CNPJCPF' => $mdlAgente->getCnpjcpf()));
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
         $idAgente = $agente['idAgente'];
         $nome = $this->_request->getParam("nome");
@@ -2220,7 +2220,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $Tipo = $this->_request->getParam("Tipo");
 
         $arrayAgente = array(
-            'cnpjcpf' => $cpf,
+            'CNPJCPF' => $cpf,
             'tipopessoa' => $Tipo,
             'status' => 0,
             'usuario' => $Usuario
@@ -2230,7 +2230,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
         $mprAgentes->save($mdlAgente);
 
-        $agente = $mprAgentes->findBy(array('cnpjcpf' => $cpf));
+        $agente = $mprAgentes->findBy(array('CNPJCPF' => $cpf));
         $idAgente = $agente['idAgente'];
 
         // ================================================ FIM SALVAR CPF/CNPJ =====================================================

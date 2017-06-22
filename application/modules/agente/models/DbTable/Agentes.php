@@ -40,8 +40,8 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         $a = array(
             'a.idagente'
-            ,'a.cnpjcpf'
-            ,'a.cnpjcpfsuperior'
+            ,'a.CNPJCPF'
+            ,'a.CNPJCPFSuperior'
             ,'a.tipopessoa'
         );
 
@@ -88,7 +88,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         if (!empty($cnpjcpf)) {
             # busca pelo cpf/cnpj
-            $select->where('a.cnpjcpf = ?', $cnpjcpf);
+            $select->where('a.CNPJCPF = ?', $cnpjcpf);
         }
         if (!empty($nome)) {
         # filtra pelo nome
@@ -103,7 +103,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $result = ($result)? $result->toArray() : array();
 
         foreach ($result as &$value) {
-            $value['cnpjcpf'] = Mascara::addMaskCpfCnpj($value['cnpjcpf']);
+            $value['CNPJCPF'] = Mascara::addMaskCpfCnpj($value['CNPJCPF']);
             $value['cep'] = Mascara::addMaskCEP($value['cep']);
         }
 
@@ -286,7 +286,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from(
             array('ag' => $this->_name),
-            array('ag.cnpjcpf', 'ag.idagente'),
+            array('ag.CNPJCPF', 'ag.idagente'),
             $this->_schema
         );
         $slct->joinInner(
@@ -313,7 +313,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
 
         $slct->joinLeft(
-            array('usu' => 'usuarios'), "usu.usu_identificacao = ag.cnpjcpf",
+            array('usu' => 'usuarios'), "usu.usu_identificacao = ag.CNPJCPF",
             array('usu.usu_identificacao as usuariovinculo'),
             $this->getSchema('tabelas')
         );
@@ -342,7 +342,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
             array('ag' => $this->_name),
-            array('ag.cnpjcpf', 'ag.idagente'),
+            array('ag.CNPJCPF', 'ag.idagente'),
             $this->_schema
         );
 

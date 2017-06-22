@@ -46,7 +46,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
         // Busca na Agentes
         $tblAgentes = new Agente_Model_DbTable_Agentes();
-        $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
+        $agente = $tblAgentes->findBy(array('CNPJCPF' => $cpf));
 
         if ($acesso) {
             $this->idResponsavel = $acesso['IdUsuario'];

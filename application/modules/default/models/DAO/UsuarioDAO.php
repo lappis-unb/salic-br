@@ -157,7 +157,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
         $sql = "SELECT usu_codigo
 					,idAgente
 				FROM " . UsuarioDAO::getStaticTableName('tabelas') . ".USUARIOS u
-					INNER JOIN " . UsuarioDAO::getStaticTableName('agentes') . ".Agentes a ON (u.usu_identificacao = a.cnpjcpf)
+					INNER JOIN " . UsuarioDAO::getStaticTableName('agentes') . ".Agentes a ON (u.usu_identificacao = a.CNPJCPF)
 				WHERE usu_codigo = $usu_codigo";
         try {
             $db= Zend_Db_Table::getDefaultAdapter();

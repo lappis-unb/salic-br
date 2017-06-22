@@ -73,7 +73,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         // busca pelo cnpj ou cpf
         if (!empty($cpfcnpj))
         {
-            $select->where("a.cnpjcpf = ?", $cpfcnpj);
+            $select->where("a.CNPJCPF = ?", $cpfcnpj);
         }
 
         // busca pelo id do agente
