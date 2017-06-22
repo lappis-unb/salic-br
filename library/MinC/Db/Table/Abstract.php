@@ -507,4 +507,44 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         return $entries;
     }
 
+    public function fetchRow($where = null, $order = null)
+    {
+        if (!($where instanceof Zend_Db_Table_Select)) {
+            $select = $this->select();
+
+            if ($where !== null) {
+                $select = $this->_where($select, $where);
+            }
+
+            if ($order !== null) {
+                $select = $this->_order($select, $order);
+            }
+
+            if(empty($select->assemble())) {
+                $select->from($this->_name,$select::SQL_WILDCARD, $this->_schema);
+            }
+            $select->limit(1);
+        } else {
+            $select = $where->limit(1);
+        }
+        $rows = $this->_fetch($select);
+
+        if (count($rows) == 0) {
+            return null;
+        }
+
+        $data = array(
+            'table'   => $this,
+            'data'     => $rows[0],
+            'readOnly' => $select->isReadOnly(),
+            'stored'  => true
+        );
+
+        $rowClass = $this->getRowClass();
+        if (!class_exists($rowClass)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($rowClass);
+        }
+        return new $rowClass($data);
+    }
 }
