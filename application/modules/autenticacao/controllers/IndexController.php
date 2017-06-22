@@ -348,18 +348,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
 
     /**
-     * alterarsenhaAction
-     *
      * @access public
      * @return void
-     * @author wouerner <wouerner@gmail.com>
      */
     public function alterarsenhaAction()
     {
-
-        // autenticacao proponente (Novo Salic)
-        //parent::perfil(4);
-
         /* ========== INICIO ID DO USUARIO LOGADO ========== */
         $auth = (array) Zend_Auth::getInstance()->getIdentity();
         $Usuario = new Autenticacao_Model_Usuario();
@@ -371,13 +364,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth['IdUsuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
 
-//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
-
         $this->view->cpf = "";
         $this->view->nome = "";
         $dataFormatada = "";
         $this->view->dtNascimento = "";
         $this->view->email = "";
+
         if (count(Zend_Auth::getInstance()->getIdentity()) > 0) {
             $auth = Zend_Auth::getInstance();
 
@@ -411,7 +403,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $idUsuario = $_POST['idUsuarioGet'];
             }
 
-            $buscarSenha = $sgcAcesso->findBy(array('idUsuario' => $idUsuario));
+            $buscarSenha = $sgcAcesso->findBy(array('IdUsuario' => $idUsuario));
             $senhaAtualBanco = $buscarSenha['Senha'];
 
             if (empty ($cpf)) {
@@ -451,6 +443,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
             }
+
             if (trim($senhaNova) == trim($repeteSenha) && !empty($senhaNova) && !empty($repeteSenha)) {
 
                 if (empty ($idUsuario)) {
@@ -458,6 +451,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $idUsuario = $post->idUsuario;
                 }
                 $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("IdUsuario = ?" => $idUsuario));
+
 
                 $cpf = $sgcAcessoBuscaCpf[0]['Cpf'];
                 $nome = $sgcAcessoBuscaCpf[0]['Nome'];
@@ -472,7 +466,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 );
 
                 $sgcAcessoSave = $sgcAcesso->salvar($dados);
-
                 $assunto = "Cadastro SALICWEB";
                 $perfil = "SALICWEB";
                 $mens = "Ol&aacute; " . $nome . ",<br><br>";
