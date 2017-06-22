@@ -3159,7 +3159,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
-            ->where('e.sivinculoproposta = 2')
+            ->where("e.sivinculoproposta = '2'")
             ->where('f.idusuarioresponsavel = ?', $idResponsavel)
         ;
 
