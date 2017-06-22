@@ -217,7 +217,8 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 
             return $objSgcAcesso->save();
         } catch (Exception $objException) {
-            throw new Exception($objException->getMessage(), 0, $objException);
+
+            throw $objException;
         }
     }
 

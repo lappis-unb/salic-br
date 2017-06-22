@@ -587,13 +587,8 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
 
     /**
-     * Metodo para pegar o id do usu?rio logado
      * @access public
-     * @static
-     * @param integer
      * @return object
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      */
     public function getIdUsuario($usu_codigo = null, $usu_identificacao = null)
     {
@@ -611,8 +606,8 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('a' => 'Agentes'),
-            'u.usu_identificacao = a.cnpjcpf',
-            array('a.idagente'),
+            'u.usu_identificacao = a.CNPJCPF',
+            array('a.idAgente'),
             parent::getSchema('agentes')
         );
 
@@ -632,7 +627,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
     public function inserirUsuarios($dados)
     {
-        $insert = $this->insert($dados);
+        return $this->insert($dados);
     }
 
     public function salvarDados($dados)
