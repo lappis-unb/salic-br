@@ -145,17 +145,6 @@ class Zend_Auth
      * Returns the identity from storage or null if no identity is available
      *
      * @return mixed|null
-     * @todo REmover comentário abaixo após refatoração:
-     *  IdUsuario
-        Cpf
-        Nome
-        DtNascimento
-        Email
-        Senha
-        DtCadastro
-        Situacao
-        DtSituacao
-        id_login_cidadao
      */
     public function getIdentity()
     {
