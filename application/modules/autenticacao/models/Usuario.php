@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Classe Usuario DAO
- * @author Equipe RUP - Politec
- * @since 12/07/2010
- * @version 1.0
- * @package application
- * @subpackage application.model.DAO
- * @copyright - 2010 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
- */
 class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 {
 
