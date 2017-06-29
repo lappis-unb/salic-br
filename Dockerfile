@@ -1,6 +1,6 @@
 FROM php:5.6.30-apache
 
-VOLUME ["/var/www", "/var/log/apache2", "/etc/apache2"]
+VOLUME ["/var/www"]
 
 RUN echo "[ ***** ***** ***** ] - Copying files to Image ***** ***** ***** "
 COPY ./src /tmp/src
@@ -21,10 +21,13 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install soap
 RUN apt-get install -y libpq-dev
+RUN docker-php-ext-install calendar
+
 RUN docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-configure pdo_pgsql --with-pgsql
 RUN docker-php-ext-install pgsql pdo_pgsql
 
+RUN echo "[ ***** ***** ***** ] - Setting X-Debug extension ***** ***** ***** "
 # X-Debug
 RUN yes | pecl install xdebug 
 ENV XDEBUGINI_PATH=/usr/local/etc/php/conf.d/xdebug.ini
@@ -35,11 +38,15 @@ RUN echo "xdebug.remote_host="`/sbin/ip route|awk '/default/ { print $3 }'` >> $
 
 RUN chmod +x -R /tmp/src/
 
+WORKDIR /var/www/
+
 EXPOSE 80
 EXPOSE 8888
 EXPOSE 9000
 
-WORKDIR /var/www/
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 RUN echo "[ ***** ***** ***** ] - Begin of Actions inside Image ***** ***** ***** "
 CMD /tmp/src/actions/start.sh
