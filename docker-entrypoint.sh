@@ -8,7 +8,7 @@ if ! [ -d "/var/www/salic-br" ] || ! [ -d "/var/www/salic-br/application" ]; the
         ( set -x; ls -A; sleep 10 )
     fi
     echo "[ ****************** ] Cloning Project repository to tmp folder"
-    git clone -b 'develop' http://git.cultura.gov.br/sistemas/novo-salic.git /tmp/salic-br
+    git clone -b 'develop' https://github.com/culturagovbr/salic-br /tmp/salic-br
     ls -la /tmp/salic-br
 
     echo "[ ****************** ] Copying Project from temporary folder to workdir"
