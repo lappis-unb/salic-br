@@ -25,6 +25,14 @@ RUN docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-configure pdo_pgsql --with-pgsql
 RUN docker-php-ext-install pgsql pdo_pgsql
 
+# X-Debug
+RUN yes | pecl install xdebug 
+ENV XDEBUGINI_PATH=/usr/local/etc/php/conf.d/xdebug.ini
+RUN echo "zend_extension="`find /usr/local/lib/php/extensions/ -iname 'xdebug.so'` > $XDEBUGINI_PATH
+COPY xdebug.ini /tmp/xdebug.ini
+RUN cat /tmp/xdebug.ini >> $XDEBUGINI_PATH
+RUN echo "xdebug.remote_host="`/sbin/ip route|awk '/default/ { print $3 }'` >> $XDEBUGINI_PATH
+
 RUN chmod +x -R /tmp/src/
 
 EXPOSE 80

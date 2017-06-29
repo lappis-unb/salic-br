@@ -11,3 +11,6 @@ services:
      - (application_location_path):/var/www
     environment:
      - APPLICATION_ENV=development
+     # debug
+     - XDEBUG_CONFIG="remote_host=192.168.65.1"
+     - PHP_IDE_CONFIG="serverName=test"
