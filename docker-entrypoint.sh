@@ -8,17 +8,19 @@ if ! [ -d "/var/www/salic-br/application" ]; then
     #    ( set -x; ls -A; sleep 5 )
     #fi
     echo "[ ****************** ] Cloning Project repository to tmp folder"
+    rm -Rf /tmp/salic-br
     git clone -b 'develop' https://github.com/culturagovbr/salic-br /tmp/salic-br
     ls -la /tmp/salic-br
 
     echo "[ ****************** ] Copying Project from temporary folder to workdir"
-    cp /tmp/salic-br/* -r /var/www/salic-br
+#    cp /tmp/salic-br -rT /var/www/salic-br
+    cp /tmp/salic-br -R /var/www/
 
     echo "[ ****************** ] Copying sample application configuration to real one"
     cp /var/www/salic-br/application/configs/exemplo-application.ini /var/www/salic-br/application/configs/application.ini
 
-    echo "[ ****************** ] Changing owner and group from the Project to 'www-data' "
-    chown www-data:www-data -R /var/www/salic-br
+    #echo "[ ****************** ] Changing owner and group from the Project to 'www-data' "
+    #chown www-data:www-data -R /var/www/salic-br
 
     ls -la /var/www/salic-br
 
