@@ -34,7 +34,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         } else {
             parent::perfil(4, $PermissoesGrupo);
         }
-
         $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
 
         // Busca na SGCAcesso
@@ -64,7 +63,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
         $listaExecucaoImediata = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 23), array('idVerificacao'));
         $this->view->listaExecucaoImediata = $listaExecucaoImediata;
-        $this->view->listaExecucaoImediata = $listaExecucaoImediata;
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
@@ -72,7 +70,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->view->usuarioLogado = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
         $this->view->usuarioProponente = $this->usuarioProponente;
         parent::init();
-
         //recupera ID do pre projeto (proposta)
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
@@ -950,10 +947,10 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     public function listarpropostaAction()
     {
+
         $proposta = new Proposta_Model_DbTable_PreProjeto();
         $dadosCombo = array();
         $cpfCnpj = '';
-
         $rsVinculo = ($this->idResponsavel) ? $proposta->listarPropostasCombo($this->idResponsavel) : array();
 
         $agente = array();

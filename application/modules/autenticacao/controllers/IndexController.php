@@ -21,6 +21,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
     public function loginAction()
     {
+
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         try {
@@ -37,6 +38,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->login($username, $password);
+//xd($buscar);
                 if ($buscar) {
                     $auth = array_change_key_case((array)Zend_Auth::getInstance()->getIdentity());
                     $objUnidades = $Usuario->buscarUnidades($auth['usu_codigo'], 21)->current();
