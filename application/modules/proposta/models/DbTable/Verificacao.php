@@ -16,7 +16,8 @@
 class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
 
     protected $_schema = 'sac';
-    protected $_name  = 'verificacao';
+    protected $_name  = 'Verificacao';
+    protected $_primary  = 'idVerificacao';
 
     public function buscarFonteRecurso() {
 //        $sql = "select Verificacao.idVerificacao, ltrim(Verificacao.Descricao) as VerificacaoDescricao

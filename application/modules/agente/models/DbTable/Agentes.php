@@ -144,9 +144,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
      * @todo renomear e substituir onde utiliza este metodo.
      */
     public function BuscaAgente($cnpjcpf = null) {
-        $select = $this->select();
+        $select = $this->select(Zend_Db_Table_Abstract::SELECT_WITH_FROM_PART);
+//        $select->from($this->_name,$select::SQL_WILDCARD, $this->_schema);
         $select->setIntegrityCheck(false);
-        $select->where('CNPJCPF = ?', trim($cnpjcpf));
+        $select->where('CNPJCPF = ?', trim($cnpjcpf)); 
+
         return $this->fetchAll($select);
     }
 

@@ -1,16 +1,7 @@
 <?php
 
-/** VerificarReadequacaoDeProjetoController
- * @author Equipe RUP - Politec
- * @author wouerner <wouerner@gmail.com>
- * @since 17/05/2010
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- */
 class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericController
 {
-
     /**
      * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access private
@@ -43,12 +34,11 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         } else {
             parent::perfil(4, $PermissoesGrupo);
         }
-
         $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
 
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $acessos = $sgcAcesso->findBy(array('cpf' => $cpf));
+        $acessos = $sgcAcesso->findBy(array('Cpf' => $cpf));
 
         // Busca na Usuarios
         $mdlusuario = new Autenticacao_Model_Usuario();
@@ -73,7 +63,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
         $listaExecucaoImediata = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 23), array('idVerificacao'));
         $this->view->listaExecucaoImediata = $listaExecucaoImediata;
-        $this->view->listaExecucaoImediata = $listaExecucaoImediata;
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
@@ -81,7 +70,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->view->usuarioLogado = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
         $this->view->usuarioProponente = $this->usuarioProponente;
         parent::init();
-
         //recupera ID do pre projeto (proposta)
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
@@ -957,18 +945,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             "script" => $script));
     }
 
-    /**
-     * listarpropostaAction
-     *
-     * @access public
-     * @return void
-     */
     public function listarpropostaAction()
     {
+
         $proposta = new Proposta_Model_DbTable_PreProjeto();
         $dadosCombo = array();
         $cpfCnpj = '';
-
         $rsVinculo = ($this->idResponsavel) ? $proposta->listarPropostasCombo($this->idResponsavel) : array();
 
         $agente = array();
