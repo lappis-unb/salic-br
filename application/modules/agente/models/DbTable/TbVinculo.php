@@ -4,7 +4,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'agentes';
     protected $_schema = 'agentes';
-    protected $_name = 'tbvinculo';
+    protected $_name = 'tbVinculo';
     protected $_primary = 'idVinculo';
 
 
@@ -39,8 +39,8 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
             );
 
         $slct->joinLeft(
-                array('vp' => 'tbvinculoproposta'), "vp.idvinculo = vi.idvinculo",
-                array('vp.idvinculoproposta', 'vp.sivinculoproposta'),
+                array('vp' => 'tbVinculoproposta'), "vp.idVinculo = vi.idVinculo",
+                array('vp.idVinculoProposta', 'vp.siVinculoProposta'),
                 $this->_schema
         );
 
