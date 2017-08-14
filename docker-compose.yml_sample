@@ -9,7 +9,7 @@ services:
      - "9000:9000"
     volumes:
      - /var/www/project/salic-br:/var/www/salic-br
-     - /var/www/project/log/apache2:/var/log/apache2
+     - /var/www/project/log/salic-br/apache2:/var/log/apache2
      - /var/www/project/salic-br/public/txt:/var/www/salic-br/public/txt/
      - /var/www/project/salic-br/public/plenaria:/var/www/salic-br/public/plenaria/
     environment:
