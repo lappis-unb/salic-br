@@ -66,7 +66,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
                     )
                     ->joinInner(
                             array('b' => 'Agentes'), "a.CgcCpf = b.CNPJCPF",
-                            array('idAgente', 'dbo.fnNome(b.idAgente) as NomeProponente'), $this->getSchema('agentes')
+                            array('idAgente', 'fnNome(b.idAgente) as NomeProponente'), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('c' => 'SGCacesso'), "a.CgcCpf = c.Cpf",
@@ -77,7 +77,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
         if(!empty($mecanismo)){
             $slct1->where('a.Mecanismo = ?', $mecanismo);
         }
-
+xd($slct1->assemble());
 
         $slct2 = $this->select()
                     ->setIntegrityCheck(false)
