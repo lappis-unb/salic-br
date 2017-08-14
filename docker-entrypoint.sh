@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 echo "[ ****************** ] Starting Endpoint of Application"
-if ! [ -d "/var/www/salic-br/application" ]; then
+if ! [ -d "/var/www/salic-br" ] || ! [ -d "/var/www/salic-br/application" ]; then
     echo "Application not found in /var/www/salic-br - cloning now..."
-    #if [ "$(ls -A /var/www/salic-br)" ]; then
-    #    echo "WARNING: /var/www/salic-br is not empty - press Ctrl+C now if this is an error!"
-    #    ( set -x; ls -A; sleep 5 )
-    #fi
+    if [ "$(ls -A /var/www/salic-br)" ]; then
+        echo "WARNING: /var/www/salic-br is not empty - press Ctrl+C now if this is an error!"
+        ( set -x; ls -A; sleep 5 )
+    fi
     echo "[ ****************** ] Cloning Project repository to tmp folder"
-    rm -Rf /tmp/salic-br
+    #rm -Rf /tmp/salic-br
     git clone -b 'develop' https://github.com/culturagovbr/salic-br /tmp/salic-br
     ls -la /tmp/salic-br
 
