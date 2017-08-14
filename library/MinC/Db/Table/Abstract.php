@@ -486,9 +486,12 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     {
         if (empty($order)) $order = $value;
 
-        $select = $this->select()
-            ->setIntegrityCheck(false)
-            ->order($order);
+        $select = $this->select();
+        if(empty($select->assemble())) {
+            $select->from($this->_name,$select::SQL_WILDCARD, $this->_schema);
+        }
+        $select->setIntegrityCheck(false);
+        $select = $this->_order($select, $order);
 
         foreach ($where as $column => $columnValue) {
             if (is_array($columnValue)) {
