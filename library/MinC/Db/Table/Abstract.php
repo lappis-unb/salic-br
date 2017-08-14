@@ -288,7 +288,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     {
         require_once 'Zend/Db/Table/Select.php';
         $select = new MinC_Db_Table_Select($this);
-        if ($withFromPart == self::SELECT_WITH_FROM_PART) {
+        if ($withFromPart == self::SELECT_WITH_FROM_PART || empty($select->assemble())) {
             $select->from($this->info(self::NAME), $this->_getCols(), $this->info(self::SCHEMA));
         }
         return $select;
