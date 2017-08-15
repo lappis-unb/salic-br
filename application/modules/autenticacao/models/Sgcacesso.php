@@ -157,7 +157,6 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             $select->where("Senha  = ?", $password);
         }
 
-//xd($select->assemble());
         $buscar = $this->fetchRow($select);
         if ($buscar) { // realiza a autenticacao
             // configura??es do banco
@@ -251,7 +250,6 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
         return $this->fetchAll($slct);
     }
 

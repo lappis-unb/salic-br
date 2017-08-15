@@ -222,7 +222,7 @@
                                     <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta['idPreProjeto'])) echo $this->proposta['dtiniciodeexecucaoform']; ?>"/>
                                 </td>
                                 <td>
-                                    <label for="tpProrrogacao">Prorroga&ccedil;&atilde;o autom&aacute;tica?</label><br><?php //xd($this->proposta['tpProrrogacao'] ); ?>
+                                    <label for="tpProrrogacao">Prorroga&ccedil;&atilde;o autom&aacute;tica?</label><br>
                                     <select class="select_simples" name="tpProrrogacao" id="tpProrrogacao" style="width: 5em">
                                         <option value="1" <?php echo($this->proposta['tpProrrogacao'] == "1" ) ? "selected": ""; ?>>Sim</option>
                                         <option value="0" <?php echo($this->proposta['tpProrrogacao'] === "0") ? "selected": ""; ?>>N&atilde;o</option>

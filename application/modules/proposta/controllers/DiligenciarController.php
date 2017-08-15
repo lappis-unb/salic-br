@@ -332,7 +332,6 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         $PreProjetodao          = new Proposta_Model_DbTable_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
-        //xd($post);
         $this->view->idPronac               = $this->idPronac;
         $this->view->idPreProjeto           = $this->idPreProjeto;
         $this->view->idProduto              = $this->idProduto;
@@ -757,7 +756,6 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
-//xd($notification->getResponse());
     }
 
     public function salvardiligenciaAction() {

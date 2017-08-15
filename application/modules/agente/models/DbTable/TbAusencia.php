@@ -142,7 +142,6 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         $select->order('A.idAlteracao');
         $select->order('A.idAusencia');
         
-        //xd($select->__toString());
 
         return $this->fetchAll($select);
 
@@ -186,7 +185,6 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         
         $select->order('A.siAusencia');
         
-		//xd($select->__toString());
         return $this->fetchAll($select);
 
     }
@@ -219,7 +217,6 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         $select->where('A.dtFimAusencia >= ?', $this->getExpressionDate());
         $select->where('A.siAusencia = ?',1);
         
-		//xd($select->assemble());
         return $this->fetchAll($select);
 
     }

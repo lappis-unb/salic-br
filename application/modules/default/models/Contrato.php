@@ -69,7 +69,6 @@ class Contrato  extends MinC_Db_Table_Abstract {
                             'con.idContrato','con.nrContratoSequencial','con.nrContratoAno','con.dtPublicacao','pa.IdPRONAC'
                           ));
 
-        //xd($select->query());die;
 
         return $this->fetchAll($select);
 

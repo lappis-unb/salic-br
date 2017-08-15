@@ -43,7 +43,6 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
         $objModelDocumentoAssinatura->setIdCriadorDocumento($auth->getIdentity()->usu_codigo);
 
         $servicoDocumento = $objDocumentoAssinatura->obterServicoDocumento();
-//xd($objModelDocumentoAssinatura);
         $servicoDocumento->registrarDocumentoAssinatura($objModelDocumentoAssinatura);
         $objProjeto = new Projetos();
         $objProjeto->alterarSituacao($this->idPronac, null, 'B04', 'Projeto encamihado para Portaria.');

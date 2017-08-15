@@ -65,7 +65,6 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         $a->where('d.idPronac = ?', $idPronac);
         $a->order(array('1 DESC', '3 ASC'));
 
-        //xd($a->assemble());
         return $this->fetchAll($a);
     }
 
@@ -106,7 +105,6 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
             ->union(array('('.$a.')', '('.$b.')'))
             ->order('1','2');
 
-        //xd($slctUnion->assemble());
         return $this->fetchAll($slctUnion);
     }
 

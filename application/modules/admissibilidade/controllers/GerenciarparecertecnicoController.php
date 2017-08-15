@@ -107,7 +107,6 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
            $validapronac = $parecer->VerificaPronac($arrBusca);
            if($validapronac > 0){
                $listaparecer = $parecer->listar_parecer($arrBusca);
-               //xd($listaparecer);
                $this->view->parecer = $listaparecer;
            }else{
                 parent::message("PRONAC n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
@@ -380,7 +379,6 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
     			'code39', 'image', $barcodeOptions, $rendererOptions
 			)->draw();
           copy($codigo, 'D:/imagem' );
-//xd($codigo);
     }
     
     public function imprimirparecertecnicoAction()
@@ -389,9 +387,7 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
     	if (isset( $_POST['vpronac'] )){
     		
     		$pronac = $_POST['vpronac'];
-    		//xd($pronac);
     		$busca = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::BuscaProjeto($pronac);
-    		//xd($busca);
     		if ( empty ( $busca ) )
     		{
     			parent::message("Pronac Inexistente na Base de Dados!", "/admissibilidade/gerenciarparecertecnico/imprimirparecertecnico", "ALERT");
@@ -414,18 +410,15 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
     {
     	if (isset( $_GET['pronac'] )){
     		$pronac = $_GET['pronac'];
-    		//xd($pronac);
 
     		$parecer = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::ParecerTecnico($pronac);
     		$this->view->ParecerTecnico = $parecer;
     		
     		$analise = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::AnaliseConteudo($pronac);
     		$this->view->AnaliseConteudo = $analise; 
-    		//xd($analise);
-    		
+
 	    	$fonte = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::FonteRecurso($pronac);
 	        $this->view->FonteRecurso = $fonte; 
-	        //xd($fonte);
 	        $produto = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::Produto($pronac);
 	        $this->view->Produto = $produto;
 	        
@@ -446,8 +439,7 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
     	//echo ($_POST['html']);die;
 
     		$html = $_POST['html'];
-	    	//xd($html);
-	    	
+
 	    	$this->_helper->layout->disableLayout();       
 	        $this->_helper->viewRenderer->setNoRender(); 
 	
@@ -505,7 +497,6 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
                         "stAtivo"               => 1 ,
                         "idTipoAgente"          => 1
                     );
-                    //xd($dados_inserir);
                     $inserirparecer = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::inserirparecer($dados_inserir);
                     if($inserirparecer){
                     parent::message("Parecer inserido com sucesso!", "/admissibilidade/gerenciarparecertecnico/listaparecer?pronac=".$dados[0]->AnoProjeto."".$dados[0]->Sequencial."", "CONFIRM");
@@ -569,7 +560,6 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
         if($validaparecer > 0){
             $exibeparecer = $parecer->listar_parecer($arrBusca);
             $this->view->dados = $exibeparecer;
-            //xd($exibeparecer);
         }else{
             parent::message("Parecer n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
         }
@@ -593,7 +583,6 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
                $this->view->listaparecer = $listaparecer;
 
                $campo = array("Nome do Projeto","Area","Segmento","Resumo do Parecer","Tipo de Parecer","Parecer Favoravel","Data do Parecer","SugeridoReal","SugeridoCusteioReal","SugeridoCapitalReal","idParecer","idEnquadramento","AnoProjeto","Sequencial","Parecerista","SugeridoUfir","Atendimento");
-              //xd(count($listaparecer));
               $html = "<html>";
               $html .= "<style> table{width:800px; font-size:9pt} td, th{border-bottom:1px #EEE solid;}th{background-color: #EEE;}</style>";
               $html .= "<center><h2>Impress�o Parecer</h2></center>";

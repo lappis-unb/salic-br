@@ -22,7 +22,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
-	//xd($sql);
     return $db->fetchAll($sql);
     }
 
@@ -70,7 +69,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				    sac.dbo.Mecanismo AS m ON p.Mecanismo = m.Codigo INNER JOIN
 				    sac.dbo.Situacao AS si ON p.Situacao = si.Codigo
 				WHERE p.AnoProjeto + p.Sequencial = '$pronac'";
-    //xd($sql);
 	$db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -98,7 +96,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				     INNER JOIN sac.dbo.Segmento s             on (p.Segmento = s.Codigo)
 				     INNER JOIN sac.dbo.Mecanismo m            on (p.Mecanismo = m.Codigo)
 				WHERE p.Anoprojeto+p.Sequencial='$pronac'";
-    //xd($sql);
 	$db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -170,7 +167,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 					sac.dbo.Produto AS pr ON a.idProduto = pr.Codigo
 				WHERE (a.idUsuario IS NOT NULL) and p.AnoProjeto + p.Sequencial='$pronac'";
 
-   	//xd($sql);
 
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -202,7 +198,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 					inner join agentes.dbo.Municipios m on d.idMunicipioOrigem = m.idMunicipioIBGE
 					WHERE p.AnoProjeto+p.Sequencial = '$pronac' order by d.idDeslocamento";
 
-    	//xd($sql);
 
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -235,7 +230,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				       INNER JOIN sac.dbo.Projetos p on (pr.idPreProjeto = p.idProjeto)
 				WHERE p.AnoProjeto+p.Sequencial ='$pronac'";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -251,7 +245,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 					INNER JOIN sac.dbo.Verificacao v2 on (d.idVeiculo = v2.idVerificacao)
 					WHERE p.AnoProjeto+p.Sequencial='$pronac'";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -272,7 +265,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 			LEFT JOIN agentes.dbo.Municipios m on (a.idMunicipioIBGE=m.idMunicipioIBGE)
 			WHERE y.AnoProjeto+y.Sequencial = '$pronac' AND a.stAbrangencia = 1";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -305,7 +297,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 
 				WHERE y.AnoProjeto+y.Sequencial='$pronac' AND x.stPlanoDistribuicaoProduto = 1";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -324,7 +315,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				     agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 				WHERE AnoProjeto+Sequencial = '$pronac'";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -345,7 +335,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				     INNER JOIN sac.dbo.Verificacao AS x ON b.FonteRecurso = x.idVerificacao
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY b.idProduto";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -363,7 +352,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				     LEFT OUTER JOIN sac.dbo.tbPlanilhaEtapa AS d ON b.idEtapa = d.idPlanilhaEtapa
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -391,7 +379,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				     agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -412,7 +399,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				     INNER JOIN sac.dbo.tbPlanilhaItens AS i ON b.idPlanilhaItem = i.idPlanilhaItens
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -439,7 +425,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				     INNER JOIN agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";
 
-   	//xd($sql);
     $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -499,7 +484,6 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->query());
 
         return $this->fetchAll($slct);
     }

@@ -175,7 +175,6 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         if(!empty($nomeItem)){
             $sql .=" AND i.Descricao ".$nomeItem;
         }
-        //XD($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

@@ -76,7 +76,6 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
         return $this->fetchAll($slct);
     }
 
@@ -356,13 +355,7 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
             $slctMaster->limit($tamanho, $tmpInicio);
         }
 
-        //echo ($slctMaster);die;
-        //xd(str_replace('"',"",$slct->assemble()));
-        //xd($slctMaster->assemble());
         return $db->fetchAll($slctMaster);
-
-
-
     }
 
     public function abrir($id) {
@@ -378,7 +371,6 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
         $slct->where("iddocumentosagentes = ?", $id);
 
 
-        //xd($slct->__toString());
         //$this->fetchAll("SET TEXTSIZE 10485760;");
         $db = $this->getDefaultAdapter();
         $db->fetchAll("SET TEXTSIZE 10485760;");

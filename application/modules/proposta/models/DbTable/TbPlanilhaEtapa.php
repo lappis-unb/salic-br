@@ -98,7 +98,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
-        //xd($sql);
         return $db->fetchAll($select);
     }
 

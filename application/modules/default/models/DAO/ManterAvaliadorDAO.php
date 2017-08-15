@@ -130,7 +130,6 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
         $objAcesso= new Acesso();
     	$sql = "insert into agentes.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, {$objAcesso->getDate()}, 0, $idusuario)";
-		//xd($sql);
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

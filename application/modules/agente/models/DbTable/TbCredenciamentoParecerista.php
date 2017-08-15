@@ -87,7 +87,6 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         $select->where('A.idAgente = ?', $idAgente);
 
         $select->where('A.siCredenciamento = 1');
-        //xd($select->__toString());
         return $this->fetchAll($select);
 
     }
@@ -106,7 +105,6 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
 
         $select->where('A.siCredenciamento = 1');
         
-        //xd($select->__toString());
         return $this->fetchAll($select);
 
     }
@@ -127,7 +125,6 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
 
         $select->where('A.siCredenciamento = 1');
         
-        //xd($select->__toString());
         return $this->fetchAll($select);
 
     }

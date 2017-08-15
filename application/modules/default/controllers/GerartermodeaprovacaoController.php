@@ -185,8 +185,7 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         $arrBusca['r.NrReuniao = ?']         = $nrReuniao;
         $rsProjetosIndeferidosRecurso = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
-        //xd($rsProjetosAprovadosRecurso->toArray());*/
-        
+
         /**=================================================================*/
         /*=============== TRATAMENTO DE PROJETOS APROVADOS =================*/
         /**=================================================================*/

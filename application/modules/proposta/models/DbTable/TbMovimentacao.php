@@ -160,7 +160,6 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         $slct->where('gru.gru_codigo in (92,131) ');
         $slct->where('proj.IdPRONAC = ? ', $idPronac);
         //$slct->where('usu.usu_codigo <> ? ', $idusuario);
-//xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 

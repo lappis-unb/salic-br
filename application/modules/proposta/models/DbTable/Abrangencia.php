@@ -152,7 +152,6 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        //xd($sql);
         if ($db->query($sql)) {
             return true;
         } else {

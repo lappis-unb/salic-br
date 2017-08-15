@@ -99,7 +99,6 @@ class Proposta_Model_DbTable_DocumentosProjeto extends MinC_Db_Table_Abstract
             ->union(array('(' . $a . ')', '(' . $b . ')', '(' . $c . ')', '(' . $d . ')'))
             ->order('3', '1');
 
-        //xd($slctUnion->assemble());
         return $this->fetchAll($slctUnion);
     }
 }

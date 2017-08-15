@@ -809,7 +809,7 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $seq++;
             }
         }
-        //xd($planilha);
+
         return $planilha;
     }
 

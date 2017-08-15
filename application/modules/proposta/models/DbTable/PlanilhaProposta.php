@@ -84,7 +84,6 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         if ($outras) {
             $somar->where('FonteRecurso <> ?', $outras);
         }
-        //xd($somar->assemble());
         return $this->fetchRow($somar);
     }
 

@@ -318,7 +318,6 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             }
             $a++;
         }
-        //xd($selectCad);
         $this->view->visaoAgente = $visoes;
 
         // busca o agente pelo id

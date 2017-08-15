@@ -146,7 +146,6 @@ $(document).ready(function(){
 						$nameEdital = ListareditaisDAO::buscaNomeEdital($idEdital, $idOrgao, $nrEdital, $logon);
 						//x($nameEdital);
 						$testes[$x] = Array('idEdital'=> $nameEdital[0]->idEdital, 'NrEdital'=> $nameEdital[0]->NrEdital, 'nomeEdital'=> $nameEdital[0]->nomeEdital);
-						//xd($testes);
 		        		$x++;
 					}
 				}
@@ -209,7 +208,6 @@ $(document).ready(function(){
 	        	
 	        }        
 	        array_multisort($t, $teste); //Metodo de Ordenação
-	        //xd($teste);
 	        if($teste){
 		       	foreach ($teste as $bla){?>
 			        <tr>

@@ -255,7 +255,6 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        //xd($sql);
         return $db->fetchAll($sql);
     }
 
@@ -369,7 +368,6 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         if ($outras) {
             $somar->where('FonteRecurso <> ?', $outras);
         }
-        //xd($somar->assemble());
         return $this->fetchRow($somar);
     }
 

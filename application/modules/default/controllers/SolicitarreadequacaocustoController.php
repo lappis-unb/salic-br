@@ -630,7 +630,6 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
        if ($valoracustosdivulgacaocomercializacao > $valorvinteporcento) {
 
            $atualizaPedido = SolicitarReadequacaoCustoDAO::atualizaPedidoAlteracao($dados, $_POST['idPedidoAlteracao']);
-            //xd('2- custo produto');            
             $msg = 'Favor ajustar os custos de Divulga��o / Comercializa��o que excedem <b>'. number_format($valorvinteporcento, '2', ',', '.') .'</b>, valor para que possa enviar sua solicita��o de readequa��o.';
 //            $msg = 'Na readequa&ccedil;�o de planilha or&ccedil;ament�ria, o sistema deve bloquear envio planilha com custos administrativos superior a 15% do valor total do projeto.';
             $novos_valores['error'] = true;

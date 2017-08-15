@@ -1486,7 +1486,6 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                                     $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                                     $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                                     $this->view->produtosReconsideracao = $dadosProdutos;
-                                    //xd($PlanoDistribuicaoProduto)
                                     $tipoDaPlanilha = 3; // 3=Planilha Orcamentaria Aprovada Ativa
 //                                    if($dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
 //                                        $tipoDaPlanilha = 4; // 4=Cortes Orcamentarios Aprovados

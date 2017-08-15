@@ -98,8 +98,7 @@ function excluir(idEdital, idAgente, cpf){
    	<?php if($this->editais){?>
 	        <?php $i = 0; foreach($this->editais as $editais){?>
 		        <?php $dadosEdital = ManterAvaliadorDAO::buscaDadosEdital($editais->idEdital);
-		        //xd($dadosEdital);
-		        
+
 		        	foreach ($dadosEdital as $nomeEdital){
 		        		$idEdital = $nomeEdital->idEdital;
 		        		$nrEdital = $nomeEdital->NrEdital;
@@ -128,7 +127,6 @@ function excluir(idEdital, idAgente, cpf){
 	        	
 	        }        
 	        array_multisort($t, $teste); //Metodo de Ordenação
-	        //xd($teste);
 	        if($teste){
 		       	foreach ($teste as $bla){?>
 			        <tr>

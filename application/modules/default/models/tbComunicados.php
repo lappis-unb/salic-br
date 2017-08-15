@@ -79,7 +79,6 @@ class tbComunicados extends MinC_Db_Table_Abstract {
             $query->limit($tamanho, $tmpInicio);
         }
 
-//xd($query->assemble());
         return $this->fetchAll($query);
     }
 

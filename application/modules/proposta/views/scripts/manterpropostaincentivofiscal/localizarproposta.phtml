@@ -5,7 +5,7 @@
         <th>Nome do Proponente</th>
         <th>Situa&ccedil;&atilde;o</th>
     </tr>
-    <?php foreach ($this->propostas as $prop) { //xd($prop['idPreProjeto']); ?>
+    <?php foreach ($this->propostas as $prop) { ?>
         <?php
             $url = $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'identificacaodaproposta', 'idPreProjeto' => $prop['idpreprojeto']));
         ?>
