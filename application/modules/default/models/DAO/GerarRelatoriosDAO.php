@@ -18,7 +18,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                         CONVERT(VARCHAR(10), ultimaAvaliacao.DtAvaliacao, 103) AS c9
                 from SAC.dbo.PreProjeto ppr
                     inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
                     inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
                     left join SAC.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
                     left join SAC.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.stEstado = 0)
@@ -86,7 +86,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                     CONVERT(VARCHAR(10), ultimaAvaliacao.DtAvaliacao, 103) AS c9
                 from SAC.dbo.PreProjeto ppr
                     inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
                     inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
                     left join SAC.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
                         inner join SAC.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.ConformidadeOK = 1 and ultimaAvaliacao.stEstado = 0)
@@ -140,7 +140,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                     pro.IdPRONAC as c10
                 from SAC.dbo.PreProjeto ppr
                     inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
                     left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25)
                     inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
                     inner join SAC.dbo.Projetos pro on (pro.idProjeto = ppr.idPreProjeto)
@@ -207,7 +207,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                         CONVERT(VARCHAR(10), ultimaAvaliacao.DtAvaliacao, 103) AS c9
                 from SAC.dbo.PreProjeto ppr
                     inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
                     inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
                     left join SAC.dbo.Projetos pro on  pro.idProjeto = ppr.idPreProjeto
                     left join SAC.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)

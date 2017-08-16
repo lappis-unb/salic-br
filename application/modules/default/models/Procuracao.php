@@ -53,7 +53,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO'
+                ), 'controledeacesso'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente", 
@@ -160,7 +160,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO'
+                ), 'controledeacesso'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente",

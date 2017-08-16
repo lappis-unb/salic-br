@@ -5568,7 +5568,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('c' => 'tbProcuracao'), "b.idProcuracao = c.idProcuracao", array('idProcuracao', 'siProcuracao'), 'agentes'
         );
         $a->joinInner(
-            array('e' => 'SGCacesso'), "a.CgcCpf = e.Cpf", array(), 'CONTROLEDEACESSO'
+            array('e' => 'SGCacesso'), "a.CgcCpf = e.Cpf", array(), 'controledeacesso'
         );
         $a->joinInner(
             array('f' => 'Agentes'), "f.idAgente = c.idAgente", array(), 'agentes'
@@ -5612,7 +5612,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('g' => 'Nomes'), "g.idAgente = f.idAgente", array('Descricao AS Procurador'), 'agentes'
         );
         $b->joinInner(
-            array('e' => 'SGCacesso'), "f.CNPJCPF = e.Cpf", array(), 'CONTROLEDEACESSO'
+            array('e' => 'SGCacesso'), "f.CNPJCPF = e.Cpf", array(), 'controledeacesso'
         );
         $b->joinInner(
             array('h' => 'tbDocumento'), "h.idDocumento = c.idDocumento", array('idDocumento'), 'BDCORPORATIVO.scCorp'
@@ -5727,7 +5727,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('b' => 'Agentes'), "a.CgcCpf = b.CNPJCPF", array('idAgente', 'dbo.fnNome(b.idAgente) AS NomeProponente'), 'agentes'
         );
         $a->joinInner(
-            array('c' => 'SGCacesso'), "a.CgcCpf = c.Cpf", array(), 'CONTROLEDEACESSO'
+            array('c' => 'SGCacesso'), "a.CgcCpf = c.Cpf", array(), 'controledeacesso'
         );
         $a->joinInner(
             array('d' => 'Situacao'), "a.Situacao = d.Codigo", array('Descricao', New Zend_Db_Expr('0 AS idSolicitante')), 'SAC'
@@ -5771,7 +5771,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('f' => 'Agentes'), "d.idAgente = f.idAgente", array(), 'agentes'
         );
         $b->joinInner(
-            array('e' => 'SGCacesso'), "f.CNPJCPF = e.Cpf", array(), 'CONTROLEDEACESSO'
+            array('e' => 'SGCacesso'), "f.CNPJCPF = e.Cpf", array(), 'controledeacesso'
         );
         $b->joinInner(
             array('g' => 'Situacao'), "a.Situacao = g.Codigo", array('Descricao', New Zend_Db_Expr('d.idSolicitante')), 'SAC'
@@ -5813,7 +5813,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('d' => 'Agentes'), "c.idAgente = d.idAgente", array(), 'agentes'
         );
         $c->joinInner(
-            array('e' => 'SGCacesso'), "d.CNPJCPF = e.Cpf", array(), 'CONTROLEDEACESSO'
+            array('e' => 'SGCacesso'), "d.CNPJCPF = e.Cpf", array(), 'controledeacesso'
         );
         $c->joinInner(
             array('f' => 'Situacao'), "a.Situacao = f.Codigo", array('Descricao', New Zend_Db_Expr('0 AS idSolicitante')), 'SAC'

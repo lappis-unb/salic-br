@@ -398,11 +398,11 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 //		$this->_idProponente   = $buscarVisaoProponente > 0 ? $this->_idAgente : 0;
 //		$this->_idProcurador   = $buscarVisaoProcurador > 0 ? $this->_idAgente : 0;
 //
-//		// verifica se o usu�rio logado � Interno (base TABELAS) ou Externo (base CONTROLEDEACESSO)
+//		// verifica se o usu�rio logado � Interno (base TABELAS) ou Externo (base controledeacesso)
 //		$this->_idResponsavel = isset($auth->getIdentity()->IdUsuario)  ? $auth->getIdentity()->IdUsuario  : 0;
 //		$this->_idUsuario     = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : 0;
 //
-//		// o usu�rio tem que estar cadastrado no banco TABELAS ou CONTROLEDEACESSO para ter acesso ao sistema
+//		// o usu�rio tem que estar cadastrado no banco TABELAS ou controledeacesso para ter acesso ao sistema
 //		if (empty($this->_idResponsavel) && empty($this->_idUsuario)) :
 //			parent::message('Voc� n�o tem permiss�o para acessar essa �rea do sistema!', 'index', 'ALERT');
 //		endif;
