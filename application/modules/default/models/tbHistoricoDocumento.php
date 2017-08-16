@@ -218,9 +218,9 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 "Destino"=>new Zend_Db_Expr("TABELAS.dbo.fnEstruturaOrgao(h.idunidade,0)"),
                 "h.idLote",
                 "h.idUsuarioEmissor",
-                "Emissor"=>new Zend_Db_Expr("SAC.dbo.fnNomeUsuario(h.idUsuarioEmissor)"),
+                "Emissor"=>new Zend_Db_Expr("sac.dbo.fnNomeUsuario(h.idUsuarioEmissor)"),
                 "h.idUsuarioReceptor",
-                "Receptor"=>new Zend_Db_Expr("SAC.dbo.fnNomeUsuario(h.idUsuarioReceptor)"),
+                "Receptor"=>new Zend_Db_Expr("sac.dbo.fnNomeUsuario(h.idUsuarioReceptor)"),
                 "h.Acao",
                 "Situacao" => new Zend_Db_Expr("CASE WHEN h.Acao = 1 THEN 'Cadastrado'
                                                                WHEN h.Acao = 2 THEN 'Enviado'
@@ -237,7 +237,7 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 "p.NomeProjeto",
                 "idOrigem"=>"p.Orgao",
                 "Origem"=>new Zend_Db_Expr("TABELAS.dbo.fnEstruturaOrgao(h.idorigem,0)"),
-                "Processo"=>new Zend_Db_Expr("SAC.dbo.fnFormataProcesso(p.idPronac)"),
+                "Processo"=>new Zend_Db_Expr("sac.dbo.fnFormataProcesso(p.idPronac)"),
                 ),
                 "SAC"
         );
@@ -323,7 +323,7 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 "dtJuntada"=>"CONVERT(CHAR(20),d.dtJuntada, 120)",
                 "d.imDocumento",
                 "d.noArquivo",
-                "Usuario"=>new Zend_Db_Expr("SAC.dbo.fnNomeUsuario(d.idUsuarioJuntada)")
+                "Usuario"=>new Zend_Db_Expr("sac.dbo.fnNomeUsuario(d.idUsuarioJuntada)")
                 ),
                 "SAC"
         );
@@ -402,11 +402,11 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                     'idUsuarioEmissor','idUsuarioReceptor','idLote','stEstado','Acao',
                     new Zend_Db_Expr("TABELAS.dbo.fnEstruturaOrgao(h.idOrigem, 0) AS Origem"),
                     new Zend_Db_Expr("TABELAS.dbo.fnEstruturaOrgao(h.idUnidade, 0) AS Destino"),
-                    new Zend_Db_Expr("SAC.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo"),
-                    new Zend_Db_Expr("SAC.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor"),
+                    new Zend_Db_Expr("sac.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo"),
+                    new Zend_Db_Expr("sac.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor"),
                     new Zend_Db_Expr("CONVERT(CHAR(10), h.dtTramitacaoEnvio,103) as dtEnvio"),
                     new Zend_Db_Expr("CONVERT(CHAR(10), h.dtTramitacaoRecebida,103) as dtRecebida"),
-                    new Zend_Db_Expr("SAC.dbo.fnNomeUsuario(h.idUsuarioReceptor) AS Receptor"),
+                    new Zend_Db_Expr("sac.dbo.fnNomeUsuario(h.idUsuarioReceptor) AS Receptor"),
                     new Zend_Db_Expr("CASE
                                          WHEN h.Acao = 1 THEN 'Cadastrado'
                                          WHEN h.Acao = 2 THEN 'Enviado'

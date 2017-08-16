@@ -168,7 +168,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
             $where = array();
             $where['p.stTipoDemanda NOT LIKE ?'] = 'NA';
-            $where['NOT EXISTS (?)'] = new Zend_Db_Expr('select * from SAC.dbo.projetos pr where p.idPreProjeto = pr.idProjeto');
+            $where['NOT EXISTS (?)'] = new Zend_Db_Expr('select * from sac.dbo.projetos pr where p.idPreProjeto = pr.idProjeto');
             $where['p.stestado = ?'] = 1;
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
@@ -385,7 +385,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
             $where = array();
             $where['p.stTipoDemanda NOT LIKE ?'] = 'NA';
-            $where['NOT EXISTS (?)'] = new Zend_Db_Expr('select * from SAC.dbo.projetos pr where p.idPreProjeto = pr.idProjeto');
+            $where['NOT EXISTS (?)'] = new Zend_Db_Expr('select * from sac.dbo.projetos pr where p.idPreProjeto = pr.idProjeto');
             $where['p.stestado = ?'] = 1;
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];

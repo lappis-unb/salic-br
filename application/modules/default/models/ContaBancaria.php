@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo que representa a tabela SAC.dbo.ContaBancaria
+ * Modelo que representa a tabela sac.dbo.ContaBancaria
  *
  * @author Danilo Lisboa
  */

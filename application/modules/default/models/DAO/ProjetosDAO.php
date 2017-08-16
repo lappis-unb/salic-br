@@ -30,7 +30,7 @@ class ProjetosDAO extends Zend_Db_Table
             $sql = "SELECT idPronac, Pronac, NomeProjeto, CodSituacao,Situacao,
 						   idParecer, DtConsolidacao,ValorProposta,OutrasFontes,
 						   ValorSolicitado,ValorSugerido,Elaboracao,ValorParecer,PERC,Acima
-								FROM SAC.dbo.vwDesconsolidarParecer
+								FROM sac.dbo.vwDesconsolidarParecer
 									WHERE idSecretaria = 251
 										ORDER BY DtConsolidacao, Pronac";
         }
@@ -39,7 +39,7 @@ class ProjetosDAO extends Zend_Db_Table
     }
 
     /*     * ************************************************************************************************************************
-     * Fun��o que copia as tabelas SAC.dbo.tbPlanilhaProjeto e tbAnaliseDeConteudo
+     * Fun��o que copia as tabelas sac.dbo.tbPlanilhaProjeto e tbAnaliseDeConteudo
      * e cola nas tabelas tbPlanilhaProjetoConselheiro e tbAnaliseConteudoConselheiro
      * *********************************************************************************************************************** */
 
@@ -50,7 +50,7 @@ class ProjetosDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $objAcesso= new Acesso();
 
-        $sql = "	INSERT INTO SAC.dbo.tbPlanilhaAprovacao
+        $sql = "	INSERT INTO sac.dbo.tbPlanilhaAprovacao
                                                 (tpPlanilha,
                                                  dtPlanilha,
                                                  idPlanilhaProjeto,
@@ -102,7 +102,7 @@ class ProjetosDAO extends Zend_Db_Table
                                                 Justificativa,
                                                 NULL,NULL,NULL,NULL,NULL,
                                                 'S'
-                                                FROM SAC.dbo.tbPlanilhaProjeto  WHERE idPRONAC=$idPronac;"; 
+                                                FROM sac.dbo.tbPlanilhaProjeto  WHERE idPRONAC=$idPronac;"; 
         $db->fetchAll($sql);
     }
 
@@ -174,9 +174,9 @@ class ProjetosDAO extends Zend_Db_Table
         $sqlProjetoAreaSegmento = "SELECT Pr.idPRONAC, 
         ar.Codigo as area,
         sg.Codigo as segmento 
-        FROM SAC.dbo.Projetos Pr
-        left JOIN SAC.dbo.Area ar on ar.Codigo = pr.Area
-        left JOIN SAC.dbo.Segmento sg on sg.Codigo = pr.Segmento
+        FROM sac.dbo.Projetos Pr
+        left JOIN sac.dbo.Area ar on ar.Codigo = pr.Area
+        left JOIN sac.dbo.Segmento sg on sg.Codigo = pr.Segmento
         WHERE Pr.idPRONAC = $idPronac";
 
         // Busca a �rea e seguimento do projeto
@@ -208,7 +208,7 @@ class ProjetosDAO extends Zend_Db_Table
 					FROM agentes.dbo.tbTitulacaoConselheiro TC
 					INNER JOIN (SELECT ATC.idAgente, COUNT(DPC.idPronac) Qtd
 					            FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-					            LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+					            LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 					            WHERE ATC.stConselheiro = 'A'
 					            AND DPC.stDistribuicao = 'A'
 					            OR DPC.stDistribuicao IS NULL
@@ -216,13 +216,13 @@ class ProjetosDAO extends Zend_Db_Table
 					            UNION
 					            SELECT ATC.idAgente, COUNT(DPC.idPronac) - COUNT(DPCI.idPronac) Qtd
 					            FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-					            LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
-					            LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
+					            LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+					            LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
 					            WHERE ATC.stConselheiro = 'A'
 					            AND DPCI.stDistribuicao = 'I'
 					            AND ATC.idAgente NOT IN (SELECT DISTINCT ATC.idAgente
 					                                     FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-					                                     LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+					                                     LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 					                                     WHERE ATC.stConselheiro = 'A'
 					                                     AND DPC.stDistribuicao = 'A'
 					                                     OR DPC.stDistribuicao IS NULL)
@@ -238,11 +238,11 @@ class ProjetosDAO extends Zend_Db_Table
             }
 
             $objAcesso= new Acesso();
-            $dados = "Insert into bdcorporativo.scSAC.tbDistribuicaoProjetoComissao " .
+            $dados = "Insert into bdcorporativo.scsac.tbDistribuicaoProjetoComissao " .
                     "(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
                     "values" .
                     "($idPronac, $menor, {$objAcesso->getDate()}, 7522);
-                    UPDATE SAC.dbo.Projetos SET dtSituacao= {$objAcesso->getDate()}, Situacao = 'C10' WHERE IdPRONAC = $idPronac;";
+                    UPDATE sac.dbo.Projetos SET dtSituacao= {$objAcesso->getDate()}, Situacao = 'C10' WHERE IdPRONAC = $idPronac;";
 
             $insere = $db->query($dados);
             // Se tiver componente com a Area e Segmento do projeto ele faz...
@@ -251,11 +251,11 @@ class ProjetosDAO extends Zend_Db_Table
         {
 
             $objAcesso= new Acesso();
-            $dados = "Insert into bdcorporativo.scSAC.tbDistribuicaoProjetoComissao " .
+            $dados = "Insert into bdcorporativo.scsac.tbDistribuicaoProjetoComissao " .
                     "(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
                     "values" .
                     "($idPronac, ".$AAS[0]->idAgente.", {$objAcesso->getDate()}, 7522);
-                    UPDATE SAC.dbo.Projetos SET dtSituacao={$objAcesso->getDate()}, Situacao = 'C10',  WHERE IdPRONAC = $idPronac;";
+                    UPDATE sac.dbo.Projetos SET dtSituacao={$objAcesso->getDate()}, Situacao = 'C10',  WHERE IdPRONAC = $idPronac;";
             $insere = $db->query($dados);
         }
         }
@@ -265,7 +265,7 @@ class ProjetosDAO extends Zend_Db_Table
             die;
         }
         // atualiza a situa��o do projeto
-//        $atualizarProjeto = "UPDATE SAC.dbo.Projetos SET Situacao = 'C10' WHERE IdPRONAC = $idPronac";
+//        $atualizarProjeto = "UPDATE sac.dbo.Projetos SET Situacao = 'C10' WHERE IdPRONAC = $idPronac";
 //        $db->fetchAll($atualizarProjeto);
     }
 
@@ -280,7 +280,7 @@ class ProjetosDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $dados = array('Situacao' => 'C10');
         $where = "IdPRONAC =" . $idPronac;
-        $n = $db->update('SAC.dbo.Projetos', $dados, $where);
+        $n = $db->update('sac.dbo.Projetos', $dados, $where);
         $db->closeConnection();
     }
 
@@ -291,7 +291,7 @@ class ProjetosDAO extends Zend_Db_Table
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac";
-            $alterar = $db->update("SAC.dbo.Projetos", $dados, $where);
+            $alterar = $db->update("sac.dbo.Projetos", $dados, $where);
         }
         catch (Exception $e)
         {

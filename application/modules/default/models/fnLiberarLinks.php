@@ -10,7 +10,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
      * @Deprecated Utililizar metódo links com os mesmos parametros
      */
     public function liberarLinks($tipo, $cpfProponente, $idUsuarioLogado, $idPronac) {
-        $select = new Zend_Db_Expr("SELECT SAC.dbo.fnLiberarLinksIN($tipo,'$cpfProponente',$idUsuarioLogado,$idPronac) as links");
+        $select = new Zend_Db_Expr("SELECT sac.dbo.fnLiberarLinksIN($tipo,'$cpfProponente',$idUsuarioLogado,$idPronac) as links");
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -50,7 +50,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $permissao = new Zend_Db_Expr("SELECT SAC.dbo.fnVerificarPermissao ($Acao,$CNPJCPF_Proponente,$idUsuario_Logado,$idPronac) AS dado");
+        $permissao = new Zend_Db_Expr("SELECT sac.dbo.fnVerificarPermissao ($Acao,$CNPJCPF_Proponente,$idUsuario_Logado,$idPronac) AS dado");
         $Permissao= $db->fetchOne($permissao);
 
         # Pegar o Pronac
@@ -88,7 +88,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
        $contaLiberada = ($contaLiberada)? 'S': 'N';
 
        # Verifica envio de relatório trimestral
-       $relatorioTrimestral = new Zend_Db_Expr("SELECT SAC.dbo.fnQtdeRelatorioTrimestral ($idPronac) AS dado");
+       $relatorioTrimestral = new Zend_Db_Expr("SELECT sac.dbo.fnQtdeRelatorioTrimestral ($idPronac) AS dado");
        $qtAEnviar = $db->fetchRow($relatorioTrimestral);
        $qtAEnviar = ($qtAEnviar->dado) ? $qtAEnviar->dado : 0;
 
@@ -113,7 +113,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
        $dadoPortaria = $db->fetchRow($NrPortaria);
 
        # Verificar Percentual de capta&ccedil;&atilde;o
-       $PercentualCaptado = new Zend_Db_Expr("SELECT SAC.dbo.fnPercentualCaptado ($dadosProjeto->AnoProjeto,$dadosProjeto->Sequencial) AS dado");
+       $PercentualCaptado = new Zend_Db_Expr("SELECT sac.dbo.fnPercentualCaptado ($dadosProjeto->AnoProjeto,$dadosProjeto->Sequencial) AS dado");
        $PercentualCaptado = $db->fetchRow($PercentualCaptado);
 
        $PercentualCaptado = ($PercentualCaptado->dado) ? $PercentualCaptado->dado : 0;

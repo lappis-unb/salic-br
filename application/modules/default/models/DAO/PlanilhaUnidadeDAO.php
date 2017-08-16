@@ -11,7 +11,7 @@
 
 class PlanilhaUnidadeDAO extends Zend_Db_Table
 {
-	protected $_name = 'SAC.dbo.tbPlanilhaUnidade';
+	protected $_name = 'sac.dbo.tbPlanilhaUnidade';
 
 
 
@@ -24,7 +24,7 @@ class PlanilhaUnidadeDAO extends Zend_Db_Table
 	 */
 	public static function buscar()
 	{
-		$sql = "SELECT * FROM SAC.dbo.tbPlanilhaUnidade ORDER BY Descricao";
+		$sql = "SELECT * FROM sac.dbo.tbPlanilhaUnidade ORDER BY Descricao";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);

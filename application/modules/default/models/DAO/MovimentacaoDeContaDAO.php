@@ -30,7 +30,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
     public static function buscarProjeto($agencia, $conta)
     {
         $sql = "SELECT AnoProjeto, Sequencial " .
-        		"FROM SAC.dbo.ContaBancaria " .
+        		"FROM sac.dbo.ContaBancaria " .
         		"WHERE Agencia = '".$agencia."' AND ContaBloqueada = '".$conta."' OR ContaLivre = '".$conta."'";
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -72,7 +72,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
     
     public static function buscarEnquadramento($PRONAC)
     {
-        $sql = "SELECT Enquadramento FROM SAC.dbo.Enquadramento WHERE AnoProjeto+Sequencial = ".$PRONAC;
+        $sql = "SELECT Enquadramento FROM sac.dbo.Enquadramento WHERE AnoProjeto+Sequencial = ".$PRONAC;
 
         $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -86,7 +86,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
         $sql = "SELECT AnoProjeto+Sequencial as PRONAC, " .
         		"CONVERT(CHAR(10), DtInicioExecucao,103), " .
         		"CONVERT(CHAR(10), DtFimExecucao,103) " .
-        		"FROM SAC.dbo.Projetos " .
+        		"FROM sac.dbo.Projetos " .
         		"WHERE AnoProjeto+Sequencial = '".$pronac."' " .
 				"AND '".$data."' between DtInicioExecucao AND DtFimExecucao";
 
@@ -103,7 +103,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
         $sql = "SELECT AnoProjeto+Sequencial as PRONAC, " .
         		"CONVERT(CHAR(10), DtInicioCaptacao,103), " .
         		"CONVERT(CHAR(10), DtFimCaptacao,103) " .
-        		"FROM SAC.dbo.Aprovacao " .
+        		"FROM sac.dbo.Aprovacao " .
         		"Where AnoProjeto+Sequencial = '".$pronac."' " .
         		"AND '".$data."' between DtInicioCaptacao AND DtFimCaptacao";
 
@@ -123,7 +123,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 		
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		$db->insert('SAC.dbo.Captacao',$dados);
+		$db->insert('sac.dbo.Captacao',$dados);
 						
 	}
 
@@ -134,7 +134,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 				
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		$db->insert('SAC.dbo.tbTmpCaptacao',$dados);
+		$db->insert('sac.dbo.tbTmpCaptacao',$dados);
 		return $db->lastInsertId();
 	}
 
@@ -144,14 +144,14 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 		
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		$db->insert('SAC.dbo.tbTmpInconsistenciaCaptacao', $dados);
+		$db->insert('sac.dbo.tbTmpInconsistenciaCaptacao', $dados);
 		
 	}
 
 	public static function deletaContigencia()
 	{
 		
-		$sql = "DELETE FROM SAC.dbo.tbTmpInconsistenciaCaptacao ";
+		$sql = "DELETE FROM sac.dbo.tbTmpInconsistenciaCaptacao ";
 		
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -171,7 +171,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 				CONVERT(CHAR(10), dtCredito,111) as dtCredito,
 				vlValorCredito,
 				cdPatrocinio 
-					FROM SAC.dbo.tbTmpCaptacao
+					FROM sac.dbo.tbTmpCaptacao
 					WHERE nrAnoProjeto is not null AND nrAnoProjeto != '' OR nrSequencial is not null AND nrSequencial != ''";
 		
 		$db = Zend_Db_Table::getDefaultAdapter();

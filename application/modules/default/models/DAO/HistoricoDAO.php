@@ -2,14 +2,14 @@
 class HistoricoDAO extends Zend_Db_Table
 {
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+       	protected $_name    = 'sac.dbo.Projetos';
 
        	
        	public function buscaProjeto($pronac)
 	{
 		$sql = "SELECT IdPRONAC, NomeProjeto, 
 					   CONVERT(CHAR(10),DtProtocolo,103) as Data 
-				FROM SAC.dbo.Projetos 
+				FROM sac.dbo.Projetos 
 				WHERE  IdPRONAC = " . $pronac . " 
 				ORDER By Data";
 		
@@ -30,10 +30,10 @@ class HistoricoDAO extends Zend_Db_Table
         				Pr.NomeProjeto,
         				Pr.IdPRONAC,
         				dsMensagem
-				from bdcorporativo.scSAC.tbmensagemprojeto mp
+				from bdcorporativo.scsac.tbmensagemprojeto mp
 				left join agentes.dbo.Nomes remetente on remetente.idAgente = mp.idRemetente
 				left join agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestinatario
-				left join SAC.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
+				left join sac.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
  				where mp.stAtivo = 'A' and Pr.IdPRONAC = '$pronac'
 				order by mp.dtEncaminhamento desc ";
 					

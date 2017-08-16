@@ -2,7 +2,7 @@
 class Lembretes extends Zend_Db_Table
 {
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+       	protected $_name    = 'sac.dbo.Projetos';
 
     public function buscar($sql)   
     {
@@ -19,7 +19,7 @@ class Lembretes extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $objAcesso= new Acesso();
-      	$sql = "INSERT INTO SAC.dbo.Lembrete (Logon, AnoProjeto, Sequencial, DtLembrete, Lembrete)
+      	$sql = "INSERT INTO sac.dbo.Lembrete (Logon, AnoProjeto, Sequencial, DtLembrete, Lembrete)
 				VALUES (75, '$anoprojeto', '$sequencial', {$objAcesso->getDate()}, '$lembrete')";
        	
 		$resultado = $db->query($sql);
@@ -34,8 +34,8 @@ class Lembretes extends Zend_Db_Table
 		CONVERT(CHAR(10),lm.DtLembrete,103) as dtlembrete,
 		Pr.IdPRONAC, 
 		Pr.NomeProjeto 
-from SAC.dbo.Lembrete lm
-left join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto
+from sac.dbo.Lembrete lm
+left join sac.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto
  where Pr.IdPRONAC = " . $pronac . "  and lm.Sequencial = Pr.Sequencial";
 		
 		$db = Zend_Db_Table::getDefaultAdapter();
@@ -47,7 +47,7 @@ left join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto
 	public function buscaProjeto($pronac){
 
 		$sql1 = "select  IdPRONAC, NomeProjeto, AnoProjeto, Sequencial 
-		 		 from     SAC.dbo.Projetos 
+		 		 from     sac.dbo.Projetos 
  				 where 	 IdPRONAC = ". $pronac;
 	
 			
@@ -61,7 +61,7 @@ left join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto
  	public function alterarLembrete($lembrete)
  	{
 
- 							$sql2 = "update SAC.dbo.Lembrete
+ 							$sql2 = "update sac.dbo.Lembrete
 				SET 
 					Lembrete       		= '".$lembrete."', 
 				where Contador     	= '".$contador."'";

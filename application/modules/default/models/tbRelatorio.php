@@ -41,7 +41,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('pr' => 'Projetos'), 'pr.IdPRONAC = r.idPRONAC', array(
-            'SAC.dbo.fnchecarDiligencia(pr.IdPRONAC) AS Diligencia',
+            'sac.dbo.fnchecarDiligencia(pr.IdPRONAC) AS Diligencia',
             'pr.IdPRONAC',
             'pr.AnoProjeto',
             'pr.Sequencial',

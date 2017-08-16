@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo que representa a tabela SAC.dbo.tbSolicitarItem
+ * Modelo que representa a tabela sac.dbo.tbSolicitarItem
  * @author Jefferson Alessandro
  * @version 1.0 - 08/01/2013
  */
@@ -210,10 +210,10 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
     public  function exibirEtapa($idProduto) {
 
         $sql = "SELECT distinct  e.idPlanilhaEtapa as idEtapa, e.Descricao as Etapa
-					FROM SAC.tbItensPlanilhaProduto p
-					INNER JOIN SAC.Produto pr on (p.idProduto = pr.Codigo)
-					INNER JOIN SAC.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-					INNER JOIN SAC.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
+					FROM sac.tbItensPlanilhaProduto p
+					INNER JOIN sac.Produto pr on (p.idProduto = pr.Codigo)
+					INNER JOIN sac.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
+					INNER JOIN sac.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
 						Where  idProduto = {$idProduto} 
 						 ORDER BY  e.Descricao  ASC ";
 
@@ -225,10 +225,10 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
     public  function exibirItem($idProduto, $idEtapa) {
         $sql = "SELECT i.idPlanilhaItens as idItem,	i.Descricao as NomeDoItem
-				FROM SAC.tbItensPlanilhaProduto p
-				INNER JOIN SAC.Produto pr on (p.idProduto = pr.Codigo)
-				INNER JOIN SAC.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-				INNER JOIN SAC.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
+				FROM sac.tbItensPlanilhaProduto p
+				INNER JOIN sac.Produto pr on (p.idProduto = pr.Codigo)
+				INNER JOIN sac.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
+				INNER JOIN sac.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
 					Where  p.idProduto = ".$idProduto." and e.idPlanilhaEtapa = ".$idEtapa." 
 					ORDER BY  i.Descricao  ASC";
 
@@ -419,7 +419,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
 
         //Codigo anterior
-        /*$sql = "insert into SAC.tbPlanilhaItens (Descricao, idUsuario)
+        /*$sql = "insert into sac.tbPlanilhaItens (Descricao, idUsuario)
                             values ('".$Descricao."', ".$idAgente.")";*/
 
         $cadastrar = $this->insert($dadosassociar);
@@ -438,7 +438,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
 
     public  function buscarItem($idAgente) {
-        $sql = "SELECT TOP 1 idPlanilhaItens FROM SAC.tbPlanilhaItens where idUsuario = ".$idAgente." order by idPlanilhaItens desc";
+        $sql = "SELECT TOP 1 idPlanilhaItens FROM sac.tbPlanilhaItens where idUsuario = ".$idAgente." order by idPlanilhaItens desc";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
@@ -451,7 +451,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $cadastrar = $db->insert("SAC.tbSolicitarItem", $dadosassociar);
+        $cadastrar = $db->insert("sac.tbSolicitarItem", $dadosassociar);
 
         if ($cadastrar) {
             return true;
@@ -481,10 +481,10 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 			            WHEN 1 THEN 'Atendido'
 			            ELSE 'Negado'
 			       END as Estado,Resposta
-			 FROM SAC.tbSolicitarItem sol
-			      INNER JOIN SAC.Produto prod ON sol.idProduto = prod.Codigo
-			      INNER JOIN SAC.tbPlanilhaEtapa et ON sol.idEtapa = et.idPlanilhaEtapa
-			      LEFT JOIN SAC.TbPlanilhaItens it ON sol.idPlanilhaItens = it.idPlanilhaItens";
+			 FROM sac.tbSolicitarItem sol
+			      INNER JOIN sac.Produto prod ON sol.idProduto = prod.Codigo
+			      INNER JOIN sac.tbPlanilhaEtapa et ON sol.idEtapa = et.idPlanilhaEtapa
+			      LEFT JOIN sac.TbPlanilhaItens it ON sol.idPlanilhaItens = it.idPlanilhaItens";
 
         $ct=1;
         foreach ($where as $coluna=>$valor)

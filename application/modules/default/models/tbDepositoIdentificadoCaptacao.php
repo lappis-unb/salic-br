@@ -43,7 +43,7 @@ class tbDepositoIdentificadoCaptacao extends MinC_Db_Table_Abstract
          * @return null
          */
         public function DepositoIdentificadoCaptacao(){
-            $sql ="exec SAC.dbo.spDepositoIdentificadoCaptacao";
+            $sql ="exec sac.dbo.spDepositoIdentificadoCaptacao";
 
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);

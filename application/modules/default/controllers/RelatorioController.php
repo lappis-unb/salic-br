@@ -221,12 +221,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
                     $where['x.stEstado = ?'] = 0;
                     $having["(SELECT TOP 1 idTecnico FROM (
                                 SELECT idTecnico, convert(varchar(30),DtAvaliacao, 120 ) as DtAvaliacao
-                                FROM SAC.dbo.tbAvaliacaoProposta tba
+                                FROM sac.dbo.tbAvaliacaoProposta tba
                                 INNER JOIN tabelas.dbo.Usuarios u on (tba.idTecnico = u.usu_codigo)
                                 WHERE ConformidadeOK < 9 AND tba.idProjeto = p.idPreProjeto
                                 UNION ALL
                                 SELECT 0,convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao
-                                FROM SAC.dbo.tbMovimentacao
+                                FROM sac.dbo.tbMovimentacao
                                 WHERE Movimentacao=96 AND idProjeto = p.idPreProjeto
                             ) as slctPrincipal
                             ORDER BY convert(varchar(30),DtAvaliacao, 120 ) DESC) != ?"] = 0;
@@ -239,12 +239,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
                     $where['x.stEstado = ?'] = 0;
                     $having["(SELECT TOP 1 idTecnico FROM (
                                 SELECT idTecnico, convert(varchar(30),DtAvaliacao, 120 ) as DtAvaliacao
-                                FROM SAC.dbo.tbAvaliacaoProposta tba
+                                FROM sac.dbo.tbAvaliacaoProposta tba
                                 INNER JOIN tabelas.dbo.Usuarios u on (tba.idTecnico = u.usu_codigo)
                                 WHERE ConformidadeOK < 9 AND tba.idProjeto = p.idPreProjeto
                                 UNION ALL
                                 SELECT 0,convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao
-                                FROM SAC.dbo.tbMovimentacao
+                                FROM sac.dbo.tbMovimentacao
                                 WHERE Movimentacao=96 AND idProjeto = p.idPreProjeto
                             ) as slctPrincipal
                             ORDER BY convert(varchar(30),DtAvaliacao, 120 ) DESC) = ?"] = 0;
@@ -399,12 +399,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
                     $where['x.stEstado = ?'] = 0;
                     $having["(SELECT TOP 1 idTecnico FROM (
                                 SELECT idTecnico, convert(varchar(30),DtAvaliacao, 120 ) as DtAvaliacao
-                                FROM SAC.dbo.tbAvaliacaoProposta tba
+                                FROM sac.dbo.tbAvaliacaoProposta tba
                                 INNER JOIN tabelas.dbo.Usuarios u on (tba.idTecnico = u.usu_codigo)
                                 WHERE ConformidadeOK < 9 AND tba.idProjeto = p.idPreProjeto
                                 UNION ALL
                                 SELECT 0,convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao
-                                FROM SAC.dbo.tbMovimentacao
+                                FROM sac.dbo.tbMovimentacao
                                 WHERE Movimentacao=96 AND idProjeto = p.idPreProjeto
                             ) as slctPrincipal
                             ORDER BY convert(varchar(30),DtAvaliacao, 120 ) DESC) != ?"] = 0;
@@ -417,12 +417,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
                     $where['x.stEstado = ?'] = 0;
                     $having["(SELECT TOP 1 idTecnico FROM (
                                 SELECT idTecnico, convert(varchar(30),DtAvaliacao, 120 ) as DtAvaliacao
-                                FROM SAC.dbo.tbAvaliacaoProposta tba
+                                FROM sac.dbo.tbAvaliacaoProposta tba
                                 INNER JOIN tabelas.dbo.Usuarios u on (tba.idTecnico = u.usu_codigo)
                                 WHERE ConformidadeOK < 9 AND tba.idProjeto = p.idPreProjeto
                                 UNION ALL
                                 SELECT 0,convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao
-                                FROM SAC.dbo.tbMovimentacao
+                                FROM sac.dbo.tbMovimentacao
                                 WHERE Movimentacao=96 AND idProjeto = p.idPreProjeto
                             ) as slctPrincipal
                             ORDER BY convert(varchar(30),DtAvaliacao, 120 ) DESC) = ?"] = 0;
@@ -903,9 +903,9 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         if($post->orgaoOrigem != ""){ $arrBusca["pr.OrgaoOrigem = ?"] = $post->orgaoOrigem; }
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $arrBusca);
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtProtocolo", "dtProtocolo", "pr.DtProtocolo", "dtProtocolo_Final", $arrBusca);
-        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtLiberacao", "dtLiberacao", "SAC.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial)", "dtLiberacao_Final", $arrBusca);
-        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "SAC.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial)", "dtPortaria_Final", $arrBusca);
-        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "SAC.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial)", "dtPublicacao_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtLiberacao", "dtLiberacao", "sac.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial)", "dtLiberacao_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "sac.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial)", "dtPortaria_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "sac.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial)", "dtPublicacao_Final", $arrBusca);
         $total = $tbl->extratorProjeto($arrBusca, array(), null, null);
         $total = count($total);
 

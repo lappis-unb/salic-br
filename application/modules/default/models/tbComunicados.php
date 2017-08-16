@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo que representa a tabela SAC.dbo.tbComunicados
+ * Modelo que representa a tabela sac.dbo.tbComunicados
  *
  * @author Danilo Lisboa
  */

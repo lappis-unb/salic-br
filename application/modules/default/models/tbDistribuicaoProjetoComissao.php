@@ -178,7 +178,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                           );
         $slctAnalisados->joinInner(
                             array('par'=>'Parecer'),
-                            'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)',
+                            'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from sac..Parecer where IdPRONAC = pr.IdPRONAC)',
                             array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel' WHEN par.ParecerFavoravel = '2' THEN 'Favor&aacute;vel' END"), 'SugeridoReal'),
                             'SAC'
                           );
@@ -262,7 +262,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                           );
         $slctNaoAnalisados->joinInner(
                             array('par'=>'Parecer'),
-                            'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)',
+                            'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from sac..Parecer where IdPRONAC = pr.IdPRONAC)',
                             array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavor&aacute;vel' WHEN par.ParecerFavoravel = '2' THEN 'Favor&aacute;vel' END"), 'SugeridoReal'),
                             'SAC'
                           );
@@ -420,7 +420,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
-                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
+                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
                 ,e.Enquadramento as Enquadramento ")
             ), 'bdcorporativo.scSAC'
         );
@@ -466,7 +466,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->where("pr.stAtivo = ?", 1);
         $slctNaoAnalisados->where("z.Status = ?", 0);
         $slctNaoAnalisados->where("p.Situacao in (?)", array('C10','C30'));
-        $slctNaoAnalisados->where("NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac)", '');
+        $slctNaoAnalisados->where("NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbPauta o WHERE o.IdPRONAC = p.IdPronac)", '');
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -524,7 +524,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
-                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
+                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
                 ,e.Enquadramento as Enquadramento ")
             ), 'bdcorporativo.scSAC'
         );
@@ -631,7 +631,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
-                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
+                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
                 ,e.Enquadramento as Enquadramento ")
             ), 'SAC'
         );
@@ -762,15 +762,15 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                         WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                     END AS Avaliacao
                     ,p.SolicitadoReal
-                    ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
+                    ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
                     ,e.Enquadramento as Enquadramento
-                FROM bdcorporativo.scSAC.tbDistribuicaoProjetoComissao AS t
-                    INNER JOIN SAC.dbo.Projetos AS p ON t.idPronac = p.idPronac
-                    INNER JOIN SAC.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
-                    LEFT JOIN SAC.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
-                    INNER JOIN SAC.dbo.Situacao AS s ON p.Situacao = s.Codigo
-                    INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
-                    INNER JOIN SAC.dbo.Segmento AS se ON p.Segmento = se.Codigo
+                FROM bdcorporativo.scsac.tbDistribuicaoProjetoComissao AS t
+                    INNER JOIN sac.dbo.Projetos AS p ON t.idPronac = p.idPronac
+                    INNER JOIN sac.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
+                    LEFT JOIN sac.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
+                    INNER JOIN sac.dbo.Situacao AS s ON p.Situacao = s.Codigo
+                    INNER JOIN sac.dbo.Area AS a ON p.Area = a.Codigo
+                    INNER JOIN sac.dbo.Segmento AS se ON p.Segmento = se.Codigo
                     INNER JOIN agentes.dbo.Nomes AS n ON t.idAgente = n.idAgente
                     INNER JOIN agentes.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes AS z ON x.idAgente = z.idAgente
@@ -778,7 +778,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 AND (pr.stAtivo = 1)
                 AND (z.Status = 0)
                 AND (p.Situacao in ('C10', 'C30'))
-                AND (NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac))
+                AND (NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbPauta o WHERE o.IdPRONAC = p.IdPronac))
                 $whereAdd
             )
 
@@ -819,20 +819,20 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                         WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                     END AS Avaliacao
                     ,p.SolicitadoReal
-                    ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
+                    ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
                     ,e.Enquadramento as Enquadramento
-                FROM bdcorporativo.scSAC.tbPauta AS t
-                    INNER JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao AS z ON t.IdPRONAC = z.idPRONAC
-                    INNER JOIN SAC.dbo.Projetos AS p ON t.idPronac = p.idPronac
-                    INNER JOIN SAC.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
-                    LEFT JOIN SAC.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
-                    INNER JOIN SAC.dbo.Situacao AS s ON p.Situacao = s.Codigo
-                    INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
-                    INNER JOIN SAC.dbo.Segmento AS se ON p.Segmento = se.Codigo
+                FROM bdcorporativo.scsac.tbPauta AS t
+                    INNER JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao AS z ON t.IdPRONAC = z.idPRONAC
+                    INNER JOIN sac.dbo.Projetos AS p ON t.idPronac = p.idPronac
+                    INNER JOIN sac.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
+                    LEFT JOIN sac.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
+                    INNER JOIN sac.dbo.Situacao AS s ON p.Situacao = s.Codigo
+                    INNER JOIN sac.dbo.Area AS a ON p.Area = a.Codigo
+                    INNER JOIN sac.dbo.Segmento AS se ON p.Segmento = se.Codigo
                     INNER JOIN agentes.dbo.Nomes AS n ON z.idAgente = n.idAgente
                     INNER JOIN agentes.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes AS y ON x.idAgente = y.idAgente
-                    INNER JOIN SAC.dbo.tbReuniao AS r ON t.idNrReuniao = r.idNrReuniao
+                    INNER JOIN sac.dbo.tbReuniao AS r ON t.idNrReuniao = r.idNrReuniao
                 WHERE (z.stDistribuicao = 'A')
                 AND (pr.idTipoAgente = 6)
                 AND (pr.stAtivo = 1)
@@ -873,16 +873,16 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
-                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
+                ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
                 ,e.Enquadramento as Enquadramento
-            FROM SAC.dbo.Projetos AS p
-                INNER JOIN SAC.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
-                LEFT JOIN SAC.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
-                INNER JOIN SAC.dbo.Situacao AS s ON p.Situacao = s.Codigo
-                INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
-                INNER JOIN SAC.dbo.Segmento AS se ON p.Segmento = se.Codigo
-                INNER JOIN SAC.dbo.Interessado AS i ON p.cgccpf = i.cgccpf
-                INNER JOIN SAC.dbo.tbReuniao AS w1 ON pr.NumeroReuniao = w1.NrReuniao
+            FROM sac.dbo.Projetos AS p
+                INNER JOIN sac.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
+                LEFT JOIN sac.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
+                INNER JOIN sac.dbo.Situacao AS s ON p.Situacao = s.Codigo
+                INNER JOIN sac.dbo.Area AS a ON p.Area = a.Codigo
+                INNER JOIN sac.dbo.Segmento AS se ON p.Segmento = se.Codigo
+                INNER JOIN sac.dbo.Interessado AS i ON p.cgccpf = i.cgccpf
+                INNER JOIN sac.dbo.tbReuniao AS w1 ON pr.NumeroReuniao = w1.NrReuniao
             WHERE (pr.TipoParecer = 1)
             AND (pr.idTipoAgente = 1)
             AND (w1.stEstado = 0)
@@ -952,7 +952,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     SELECT
                         TOP 1 max( DtParecer )
                     from
-                        SAC.dbo.Parecer
+                        sac.dbo.Parecer
                     where
                         IdPRONAC = pr.IdPRONAC
                 )',

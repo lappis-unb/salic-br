@@ -16,17 +16,17 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
                     pa.*,
                     (
                         SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao
+                        FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                        INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
+                        INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao
                         WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao AND c1.idPronac = pa.idPronac
                         GROUP BY a1.idPlanilhaAprovacao
                     ) as valorComprovado,
                     ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) as valorAprovado
-                FROM SAC.dbo.tbPlanilhaAprovacao AS pa
-                    INNER JOIN SAC.dbo.tbPlanilhaItens as pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pEtapa.idPlanilhaEtapa = pa.idEtapa
-                    LEFT JOIN SAC.dbo.Produto AS prod ON prod.Codigo = pa.idProduto
+                FROM sac.dbo.tbPlanilhaAprovacao AS pa
+                    INNER JOIN sac.dbo.tbPlanilhaItens as pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
+                    INNER JOIN sac.dbo.tbPlanilhaEtapa AS pEtapa ON pEtapa.idPlanilhaEtapa = pa.idEtapa
+                    LEFT JOIN sac.dbo.Produto AS prod ON prod.Codigo = pa.idProduto
                 WHERE
                     pa.idPlanilhaAprovacao = ?
                     AND pa.stAtivo = 'S'
@@ -36,9 +36,9 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
                     pa.*,
                     (
                         SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao
+                        FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                        INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
+                        INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao
                         WHERE c1.idPlanilhaItem = pa.idPlanilhaItem
                             AND c1.nrFonteRecurso = pa.nrFonteRecurso
                             AND c1.idProduto = pa.idProduto
@@ -50,10 +50,10 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
                     ) AS vlComprovado,
 
                     ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) as valorAprovado
-                FROM SAC.dbo.tbPlanilhaAprovacao AS pa
-                    INNER JOIN SAC.dbo.tbPlanilhaItens as pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pEtapa.idPlanilhaEtapa = pa.idEtapa
-                    LEFT JOIN SAC.dbo.Produto AS prod ON prod.Codigo = pa.idProduto
+                FROM sac.dbo.tbPlanilhaAprovacao AS pa
+                    INNER JOIN sac.dbo.tbPlanilhaItens as pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
+                    INNER JOIN sac.dbo.tbPlanilhaEtapa AS pEtapa ON pEtapa.idPlanilhaEtapa = pa.idEtapa
+                    LEFT JOIN sac.dbo.Produto AS prod ON prod.Codigo = pa.idProduto
                 WHERE
                     pa.idPlanilhaAprovacao = ?
                     AND pa.stAtivo = 'S'

@@ -297,8 +297,8 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     new Zend_Db_Expr("
                         CASE
                             WHEN a.Mecanismo ='2' OR a.Mecanismo ='6'
-                            THEN SAC.dbo.fnValorAprovadoConvenio(a.AnoProjeto,a.Sequencial)
-                            ELSE SAC.dbo.fnValorAprovado(a.AnoProjeto,a.Sequencial)
+                            THEN sac.dbo.fnValorAprovadoConvenio(a.AnoProjeto,a.Sequencial)
+                            ELSE sac.dbo.fnValorAprovado(a.AnoProjeto,a.Sequencial)
                             END as ValorAprovado
                         "),
                     'b.PortariaAprovacao',
@@ -333,8 +333,8 @@ class Aprovacao extends MinC_Db_Table_Abstract {
 
             $TotalReg = $PaginaAtual*$QntdPorPagina;
             $select =  new Zend_Db_Expr("select * from (select top ". $QntdPorPagina ." * from (SELECT TOP ". $TotalReg ."
-                ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Aprovacao AS ap
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."'  order by ap.idAprovacao)
+                ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM sac.dbo.Aprovacao AS ap
+            INNER JOIN sac.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."'  order by ap.idAprovacao)
             as tabela order by idAprovacao desc) as tabela order by idAprovacao");
 
             try {
@@ -349,8 +349,8 @@ class Aprovacao extends MinC_Db_Table_Abstract {
 
         public function buscarMecanismo($mecanismo) {
 
-            $select =  new Zend_Db_Expr("SELECT ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Aprovacao AS ap
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = $mecanismo  order by ap.idAprovacao");
+            $select =  new Zend_Db_Expr("SELECT ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM sac.dbo.Aprovacao AS ap
+            INNER JOIN sac.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = $mecanismo  order by ap.idAprovacao");
 
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
@@ -364,7 +364,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
 
         public static function buscaTotalAprovadoProjeto($anoProjeto, $sequencial) {
 
-            $select =  new Zend_Db_Expr("SELECT SAC.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial') as total");
+            $select =  new Zend_Db_Expr("SELECT sac.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial') as total");
 
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
@@ -409,7 +409,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac";
-            $alterar = $db->update("SAC.dbo.Aprovacao", $dados, $where);
+            $alterar = $db->update("sac.dbo.Aprovacao", $dados, $where);
         }
         catch (Exception $e)
         {
@@ -424,7 +424,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         $select->from(
                 array($this->_name),
                 array(
-                    'totalAprovado' => new Zend_Db_Expr(" SAC.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial')")
+                    'totalAprovado' => new Zend_Db_Expr(" sac.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial')")
                 )
         );
 
@@ -434,8 +434,8 @@ class Aprovacao extends MinC_Db_Table_Abstract {
     public function buscarDatasCaptacao($pronac, $idProrrogacao) {
 
         $select =  new Zend_Db_Expr("
-            SELECT b.DtInicio,b.DtFinal FROM SAC.dbo.Aprovacao a
-            INNER JOIN SAC.dbo.Prorrogacao b on (a.AnoProjeto = b.AnoProjeto and a.Sequencial = b.Sequencial and  a.idProrrogacao =  b.idProrrogacao)
+            SELECT b.DtInicio,b.DtFinal FROM sac.dbo.Aprovacao a
+            INNER JOIN sac.dbo.Prorrogacao b on (a.AnoProjeto = b.AnoProjeto and a.Sequencial = b.Sequencial and  a.idProrrogacao =  b.idProrrogacao)
             WHERE a.TipoAprovacao ='3' and a.AnoProjeto+a.Sequencial='$pronac' and b.idProrrogacao = $idProrrogacao
         ");
 

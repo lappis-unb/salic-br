@@ -14,7 +14,7 @@ class ConsultaAreaCulturalDAO extends Zend_Db_Table {
 
     public static  function consultaAreaCultural()
     {
-        $sql = "SELECT codigo, descricao as area FROM SAC.dbo.Area";
+        $sql = "SELECT codigo, descricao as area FROM sac.dbo.Area";
 
                 try
 		{

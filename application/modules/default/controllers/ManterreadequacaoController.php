@@ -533,7 +533,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                     $fichatecSolicitada = PedidoAlteracaoDAO::buscarAlteracaoFichaTecnicaFinal($idPronac, $idPedidoAlt);
                     $Solicitada = $fichatecSolicitada[0]['dsFichaTecnica'];
 
-                    $avaliacao = ReadequacaoProjetos::finalizacaoCoordAcomp("SAC.dbo.PreProjeto", "FichaTecnica", $Solicitada, "idPreProjeto", $idPreProjeto);
+                    $avaliacao = ReadequacaoProjetos::finalizacaoCoordAcomp("sac.dbo.PreProjeto", "FichaTecnica", $Solicitada, "idPreProjeto", $idPreProjeto);
                     $result = $db->fetchAll($avaliacao);
 
                 } else if ($tpAlt == 4) {

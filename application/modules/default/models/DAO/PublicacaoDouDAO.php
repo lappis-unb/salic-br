@@ -6,9 +6,9 @@ class PublicacaoDouDAO extends Zend_Db_Table
     public static function buscarPortaria()
     {
         $sql = "SELECT distinct PortariaAprovacao
-                        FROM SAC.dbo.Aprovacao a
+                        FROM sac.dbo.Aprovacao a
                         WHERE a.DtPortariaAprovacao in
-                        (SELECT MAX(DtPortariaAprovacao) FROM SAC.dbo.Aprovacao
+                        (SELECT MAX(DtPortariaAprovacao) FROM sac.dbo.Aprovacao
                         WHERE YEAR(DtPortariaAprovacao) = '" . date('Y') . "')";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -23,8 +23,8 @@ class PublicacaoDouDAO extends Zend_Db_Table
             $filtroOrgao = 'Pr.Area = 2';
         }
         $sql = " SELECT A.IdPRONAC, A.idAprovacao
-                 FROM SAC.dbo.Aprovacao AS A
-                 INNER JOIN SAC.dbo.Projetos AS Pr ON Pr.IdPRONAC = A.IdPRONAC
+                 FROM sac.dbo.Aprovacao AS A
+                 INNER JOIN sac.dbo.Projetos AS Pr ON Pr.IdPRONAC = A.IdPRONAC
                  WHERE A.PortariaAprovacao = '$PortariaAprovacao'
                  AND A.IdPRONAC IS NOT NULL
                  AND $filtroOrgao
@@ -69,8 +69,8 @@ class PublicacaoDouDAO extends Zend_Db_Table
                         Pr.SolicitadoCapitalReal,
                         Pr.Logon,
                         Pr.idProjeto
-                        from SAC.dbo.Projetos Pr
-                        INNER JOIN SAC.dbo.Aprovacao Ap on Pr.IdPRONAC = Ap.IdPRONAC";
+                        from sac.dbo.Projetos Pr
+                        INNER JOIN sac.dbo.Aprovacao Ap on Pr.IdPRONAC = Ap.IdPRONAC";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -81,7 +81,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
     {
         $sql = "SELECT 
 			IdPRONAC
-		from SAC.dbo.Aprovacao
+		from sac.dbo.Aprovacao
 		where idAprovacao = $idAprovacao
 		";
 
@@ -111,15 +111,15 @@ class PublicacaoDouDAO extends Zend_Db_Table
 		THEN I.Nome
 		ELSE N.Descricao
 		END AS NomeProponente
-		FROM 	SAC.dbo.Projetos Pr
-		INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-		INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-		INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
-		INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+		FROM 	sac.dbo.Projetos Pr
+		INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+		INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+		INNER JOIN sac.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
+		INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 		INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
-		INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+		INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
 		INNER JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente
-		where Ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = Pr.IdPRONAC)
+		where Ap.DtAprovacao in (select max(DtAprovacao) from sac..Aprovacao where IdPRONAC = Pr.IdPRONAC)
 		and (Pr.Situacao = 'D27' OR Pr.Situacao = 'D28')
 		AND (Enq.Enquadramento = '1' OR Enq.Enquadramento = '2')
 		AND (Ap.PortariaAprovacao is null or Ap.PortariaAprovacao = '')";
@@ -152,15 +152,15 @@ class PublicacaoDouDAO extends Zend_Db_Table
             CONVERT(CHAR(10),Ap.DtFimCaptacao,103) as DataFimPublicacao,
 			CONVERT(CHAR(10),Ap.DtPortariaAprovacao,103) as DataPortaria, Ar.Codigo AS AreaCodigo,
 			Ap.PortariaAprovacao
-					FROM 	SAC.dbo.Projetos Pr
-							INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-							INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+					FROM 	sac.dbo.Projetos Pr
+							INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+							INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+							INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+							INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 							INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
 							INNER JOIN agentes.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
 							INNER JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente
-							INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+							INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
 						WHERE Ap.PortariaAprovacao = '" . $portaria . "' 
 						and Ap.DtPortariaAprovacao is not null
 						AND Pr.situacao = '$situacao'
@@ -193,26 +193,26 @@ class PublicacaoDouDAO extends Zend_Db_Table
                     CONVERT(CHAR(10),Ap.DtFimCaptacao,103) as DataFimPublicacao,
                     CONVERT(CHAR(10),Ap.DtPortariaAprovacao,103) as DataPortaria, Ar.Codigo AS AreaCodigo,
                     Ap.PortariaAprovacao,
-                    SAC.dbo.fnValorSolicitado(Pr.AnoProjeto,Pr.Sequencial) AS ValorSolicitado,
+                    sac.dbo.fnValorSolicitado(Pr.AnoProjeto,Pr.Sequencial) AS ValorSolicitado,
                     CASE
                         WHEN Pr.Mecanismo ='2' OR Pr.Mecanismo ='6'
-                        THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
-                        ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
+                        THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
+                        ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
                     END AS ValorAprovado,
-                    SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) AS ValorCaptado,
+                    sac.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) AS ValorCaptado,
                     (SELECT sum(b2.vlComprovacao) AS vlPagamento
-                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
-                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
+                        FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a2
+                        INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
+                        INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
                         WHERE a2.stItemAvaliado = 1 
                         AND c2.stAtivo = 'S' 
                         AND (c2.idPronac = Pr.IdPRONAC) ) as ComprovacaoValidada
-                FROM SAC.dbo.Projetos Pr
-                    INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-                    INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-                    INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-                    INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
-                    INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+                FROM sac.dbo.Projetos Pr
+                    INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+                    INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+                    INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+                    INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+                    INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
                 WHERE Ap.PortariaAprovacao = '$portaria' 
                     and ( ap.PortariaAprovacao is not null or DtPublicacaoAprovacao is not null or DtPortariaAprovacao is not null) 
                     and $filtroOrgao
@@ -244,27 +244,27 @@ class PublicacaoDouDAO extends Zend_Db_Table
                     CONVERT(CHAR(10),Ap.DtFimCaptacao,103) as DataFimPublicacao,
                     CONVERT(CHAR(10),Ap.DtPortariaAprovacao,103) as DataPortaria, Ar.Codigo AS AreaCodigo,
                     Ap.PortariaAprovacao,
-                    SAC.dbo.fnValorSolicitado(Pr.AnoProjeto,Pr.Sequencial) AS ValorSolicitado,
+                    sac.dbo.fnValorSolicitado(Pr.AnoProjeto,Pr.Sequencial) AS ValorSolicitado,
                     CASE
                         WHEN Pr.Mecanismo ='2' OR Pr.Mecanismo ='6'
-                        THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
-                        ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
+                        THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
+                        ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
                     END AS ValorAprovado,
-                    SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) AS ValorCaptado,
+                    sac.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) AS ValorCaptado,
                     (SELECT sum(b2.vlComprovacao) AS vlPagamento
-                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
-                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
+                        FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a2
+                        INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
+                        INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
                         WHERE a2.stItemAvaliado = 1 
                         AND c2.stAtivo = 'S' 
                         AND (c2.idPronac = Pr.IdPRONAC) ) as ComprovacaoValidada, r.idTipoReadequacao, CAST(r.dsSolicitacao AS TEXT) AS dsSolicitacao
-                FROM SAC.dbo.tbReadequacao AS r
-                    INNER JOIN SAC.dbo.Projetos Pr ON Pr.IdPRONAC = r.idPronac
-                    INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-                    INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-                    INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-                    INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC AND Ap.idReadequacao = r.idReadequacao
-                    INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+                FROM sac.dbo.tbReadequacao AS r
+                    INNER JOIN sac.dbo.Projetos Pr ON Pr.IdPRONAC = r.idPronac
+                    INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+                    INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+                    INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+                    INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC AND Ap.idReadequacao = r.idReadequacao
+                    INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
                 WHERE Ap.PortariaAprovacao = '$portaria' 
                     and ( ap.PortariaAprovacao is not null or DtPublicacaoAprovacao is not null or DtPortariaAprovacao is not null) 
                     and r.siEncaminhamento = 9
@@ -280,7 +280,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
     public static function retornaSeqPortaria($idAprovacao)
     {
 
-        $sql = "select PortariaAprovacao from SAC.dbo.Aprovacao where idAprovacao = $idAprovacao";
+        $sql = "select PortariaAprovacao from sac.dbo.Aprovacao where idAprovacao = $idAprovacao";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -333,14 +333,14 @@ class PublicacaoDouDAO extends Zend_Db_Table
 					END AS NomeProponente
 					
 
-				FROM 	SAC.dbo.Projetos Pr
-						INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-							INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+				FROM 	sac.dbo.Projetos Pr
+						INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+							INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+							INNER JOIN sac.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
+							INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 							INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
 							INNER JOIN agentes.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
-							INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+							INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
 							INNER JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente 
 							 ";
 
@@ -369,14 +369,14 @@ class PublicacaoDouDAO extends Zend_Db_Table
 					END AS NomeProponente
 					
 
-				FROM 	SAC.dbo.Projetos Pr
-						INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-							INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+				FROM 	sac.dbo.Projetos Pr
+						INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+							INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+							INNER JOIN sac.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC
+							INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 							INNER JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
 							INNER JOIN agentes.dbo.EnderecoNacional En on En.idAgente = Ag.idAgente
-							INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+							INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
 							LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = Ag.idAgente 
 						WHERE (St.Codigo = 'D27' OR St.Codigo = 'D28')";
 
@@ -399,11 +399,11 @@ class PublicacaoDouDAO extends Zend_Db_Table
 			CONVERT(CHAR(10),Ap.DtPublicacaoAprovacao,103) as DataPublicacao,
 			CONVERT(CHAR(10),Ap.DtPortariaAprovacao,103) as DataPortaria,
 			Ap.PortariaAprovacao
-					FROM 	SAC.dbo.Projetos Pr
-							INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-							INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+					FROM 	sac.dbo.Projetos Pr
+							INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+							INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+							INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+							INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 						WHERE Ap.PortariaAprovacao = '2003/10' and Pr.situacao = 'D09'";
 
 
@@ -425,11 +425,11 @@ class PublicacaoDouDAO extends Zend_Db_Table
 			CONVERT(CHAR(10),Ap.DtPublicacaoAprovacao,103) as DataPublicacao,
 			CONVERT(CHAR(10),Ap.DtPortariaAprovacao,103) as DataPortaria,
 			Ap.PortariaAprovacao
-					FROM 	SAC.dbo.Projetos Pr
-							INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-							INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+					FROM 	sac.dbo.Projetos Pr
+							INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+							INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+							INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+							INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 						WHERE Ap.PortariaAprovacao = '2007/10' and Pr.situacao = 'D09'";
 
 
@@ -454,22 +454,22 @@ class PublicacaoDouDAO extends Zend_Db_Table
 						,Ap.PortariaAprovacao
 						,Ap.idAprovacao
 
-					FROM SAC.dbo.Projetos Pr
-						INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-						INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-						INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-						INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+					FROM sac.dbo.Projetos Pr
+						INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+						INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+						INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+						INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 
 					WHERE Pr.situacao = 'D09' 
 						AND Ap.PortariaAprovacao = '$portaria'";
         } else {
             $sql = "SELECT DISTINCT Ap.PortariaAprovacao,
                                         CONVERT(CHAR(10),Ap.DtPublicacaoAprovacao,103) AS DataPublicacao
-					FROM SAC.dbo.Projetos Pr
-						INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-						INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-						INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-						INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+					FROM sac.dbo.Projetos Pr
+						INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+						INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+						INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+						INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 
 					WHERE Pr.situacao = 'D09' 
 						AND Ap.PortariaAprovacao LIKE '2%%%/%%'";
@@ -491,11 +491,11 @@ class PublicacaoDouDAO extends Zend_Db_Table
 			CONVERT(CHAR(10),Ap.DtPublicacaoAprovacao,103) as DataPublicacao,
 			CONVERT(CHAR(10),Ap.DtPortariaAprovacao,103) as DataPortaria,
 			Ap.PortariaAprovacao
-					FROM 	SAC.dbo.Projetos Pr
-							INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-							INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-							INNER JOIN SAC.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
-							INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
+					FROM 	sac.dbo.Projetos Pr
+							INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+							INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+							INNER JOIN sac.dbo.Enquadramento as Enq on Enq.IdPRONAC = Pr.IdPRONAC
+							INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pr.IdPRONAC
 						WHERE Ap.PortariaAprovacao = '$PortariaAprovacao' and Pr.situacao = 'D09'";
 
 
@@ -509,7 +509,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
 
         $where = "idAprovacao = " . (int)$id;
 
-        $alterar = $db->update("SAC.dbo.Aprovacao", $dados, $where);
+        $alterar = $db->update("sac.dbo.Aprovacao", $dados, $where);
 
         if ($alterar) {
             return true;
@@ -523,7 +523,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
 //		$db= Zend_Db_Table::getDefaultAdapter();
 //		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = "UPDATE SAC.dbo.Aprovacao SET PortariaAprovacao = '$PortariaAprovacao', DtPortariaAprovacao = '$DtPortariaAprovacao' where idAprovacao = $idAprovacao";
+        $sql = "UPDATE sac.dbo.Aprovacao SET PortariaAprovacao = '$PortariaAprovacao', DtPortariaAprovacao = '$DtPortariaAprovacao' where idAprovacao = $idAprovacao";
 
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -550,13 +550,13 @@ class PublicacaoDouDAO extends Zend_Db_Table
             }
             $objAcesso= new Acesso();
             $sql = "
-                UPDATE SAC.dbo.Projetos
+                UPDATE sac.dbo.Projetos
                 SET Situacao = '$novaSituacao',
                 ProvidenciaTomada = '$ProvidenciaTomada',
                 DtSituacao = {$objAcesso->getDate()},
                 Logon = '$usuarioLogado'
-                FROM SAC.dbo.Projetos p 
-                INNER JOIN SAC.dbo.Aprovacao a ON (p.AnoProjeto = a.AnoProjeto AND p.Sequencial = a.Sequencial)
+                FROM sac.dbo.Projetos p 
+                INNER JOIN sac.dbo.Aprovacao a ON (p.AnoProjeto = a.AnoProjeto AND p.Sequencial = a.Sequencial)
                 WHERE a.TipoAprovacao = '$TipoAprovacao'
                     AND $area
                     AND p.Situacao = '$situacaoAtual'
@@ -564,9 +564,9 @@ class PublicacaoDouDAO extends Zend_Db_Table
 
             if ($TipoAprovacao != 5 && $TipoAprovacao != 6) {
                 if ($novaSituacao == 'E12') {
-                    $sql .= "AND EXISTS(SELECT TOP 1 * FROM SAC.dbo.Captacao c WHERE c.AnoProjeto = p.AnoProjeto and c.Sequencial = p.Sequencial)";
+                    $sql .= "AND EXISTS(SELECT TOP 1 * FROM sac.dbo.Captacao c WHERE c.AnoProjeto = p.AnoProjeto and c.Sequencial = p.Sequencial)";
                 } else {
-                    $sql .= "AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Captacao c WHERE c.AnoProjeto = p.AnoProjeto and c.Sequencial = p.Sequencial)";
+                    $sql .= "AND NOT EXISTS(SELECT TOP 1 * FROM sac.dbo.Captacao c WHERE c.AnoProjeto = p.AnoProjeto and c.Sequencial = p.Sequencial)";
                 }
             }
 
@@ -585,7 +585,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
             $ProvidenciaTomada = $dados['ProvidenciaTomada'];
             $DtInicioExecucao = strftime("%Y-%m-%d %H:%M:%S", strtotime("+1 days"));
 
-            $sql = "UPDATE SAC.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$ProvidenciaTomada', DtInicioExecucao = '$DtInicioExecucao' WHERE IdPRONAC = '" . $IdPRONAC . "'";
+            $sql = "UPDATE sac.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$ProvidenciaTomada', DtInicioExecucao = '$DtInicioExecucao' WHERE IdPRONAC = '" . $IdPRONAC . "'";
 
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -601,7 +601,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
         $dtSituacao = $dados['dtSituacao'];
         $ProvidenciaTomada = $dados['ProvidenciaTomada'];
 
-        $sql = "UPDATE SAC.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$ProvidenciaTomada', dtSituacao = '$dtSituacao' WHERE IdPRONAC = '" . $IdPRONAC . "'";
+        $sql = "UPDATE sac.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$ProvidenciaTomada', dtSituacao = '$dtSituacao' WHERE IdPRONAC = '" . $IdPRONAC . "'";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -616,7 +616,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
 
     public static function apagarpublicacao($idAprovacao)
     {
-        $sql = "UPDATE SAC.dbo.Aprovacao SET PortariaAprovacao = null, DtPortariaAprovacao = null, DtPublicacaoAprovacao = null, DtInicioCaptacao = null, DtFimCaptacao = null
+        $sql = "UPDATE sac.dbo.Aprovacao SET PortariaAprovacao = null, DtPortariaAprovacao = null, DtPublicacaoAprovacao = null, DtInicioCaptacao = null, DtFimCaptacao = null
 				WHERE idAprovacao = '" . $idAprovacao . "'";
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -628,7 +628,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
     {
         $valida = FALSE;
 
-        $sql = "UPDATE SAC.dbo.Projetos SET Situacao = 'E10' WHERE IdPRONAC = $idPronac";
+        $sql = "UPDATE sac.dbo.Projetos SET Situacao = 'E10' WHERE IdPRONAC = $idPronac";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         if ($db->setFetchMode(Zend_DB::FETCH_ASSOC)) {
@@ -643,7 +643,7 @@ class PublicacaoDouDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = " PortariaAprovacao = '$portaria'";
-        $alterar = $db->update("SAC.dbo.aprovacao", $dados, $where);
+        $alterar = $db->update("sac.dbo.aprovacao", $dados, $where);
     }
 
     public static function buscaCargosPublicacao()

@@ -31,11 +31,11 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                     segmentoCultura.Codigo as 'codigoDescricao',
                     segmentoCultura.Descricao as 'segmentoCultura' from
                     sac.dbo.Projetos as projetos
-                    inner join SAC.dbo.Area as areaCultura
+                    inner join sac.dbo.Area as areaCultura
                     on projetos.Area = areaCultura.Codigo
-                    left join SAC.dbo.Segmento as segmentoCultura
+                    left join sac.dbo.Segmento as segmentoCultura
                     on projetos.Segmento = segmentoCultura.Codigo
-                    inner join SAC.dbo.PreProjeto as pre
+                    inner join sac.dbo.PreProjeto as pre
                     on projetos.idProjeto = pre.idPreProjeto
                     inner join agentes.dbo.Nomes as Agentes
                     on pre.idAgente = Agentes.idAgente
@@ -48,12 +48,12 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public function buscarProdutos($idPronac) {
-//        $sql = "SELECT   DISTINCT  SAC.dbo.Projetos.IdPRONAC, SAC.dbo.Produto.Descricao,
-//                      SAC.dbo.Produto.Codigo AS idProduto
-//FROM         SAC.dbo.Produto INNER JOIN
-//                      SAC.dbo.PlanoDistribuicaoProduto ON SAC.dbo.Produto.Codigo = SAC.dbo.PlanoDistribuicaoProduto.idProduto CROSS JOIN
-//                      SAC.dbo.Projetos
-//WHERE     (SAC.dbo.Projetos.IdPRONAC = $idPronac) AND SAC.dbo.PlanoDistribuicaoProduto.stPlanoDistribuicaoProduto = 1 ORDER BY idProduto ASC";
+//        $sql = "SELECT   DISTINCT  sac.dbo.Projetos.IdPRONAC, sac.dbo.Produto.Descricao,
+//                      sac.dbo.Produto.Codigo AS idProduto
+//FROM         sac.dbo.Produto INNER JOIN
+//                      sac.dbo.PlanoDistribuicaoProduto ON sac.dbo.Produto.Codigo = sac.dbo.PlanoDistribuicaoProduto.idProduto CROSS JOIN
+//                      sac.dbo.Projetos
+//WHERE     (sac.dbo.Projetos.IdPRONAC = $idPronac) AND sac.dbo.PlanoDistribuicaoProduto.stPlanoDistribuicaoProduto = 1 ORDER BY idProduto ASC";
 //
         $slct = $this->select();
         $slct->distinct();
@@ -112,9 +112,9 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
         $sql = "SELECT tpa.idPlanilhaAprovacao,
                         tpa.idProduto,
                         tpa.IdPRONAC,
-                        SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa,
-                        SAC.dbo.tbPlanilhaItens.idPlanilhaItens,
-                        SAC.dbo.tbPlanilhaUnidade.idUnidade,
+                        sac.dbo.tbPlanilhaEtapa.idPlanilhaEtapa,
+                        sac.dbo.tbPlanilhaItens.idPlanilhaItens,
+                        sac.dbo.tbPlanilhaUnidade.idUnidade,
                         agentes.dbo.Verificacao.idVerificacao,
                         tpa.qtItem,
                         tpa.nrOcorrencia,
@@ -125,22 +125,22 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                         tpa.idAgente,
                         tpa.tpAcao,
                         agentes.dbo.Municipios.Descricao AS DescricaoMunicipio,
-                        SAC.dbo.tbPlanilhaItens.Descricao AS DescricaoItem,
+                        sac.dbo.tbPlanilhaItens.Descricao AS DescricaoItem,
                         agentes.dbo.UF.Descricao AS DescricaoUF,
                         agentes.dbo.Verificacao.Descricao AS DescricaoFonteRecurso,
-                        SAC.dbo.tbPlanilhaEtapa.Descricao AS DescricaoEtapa,
-                        SAC.dbo.tbPlanilhaUnidade.Descricao AS DescricaoUnidade,
+                        sac.dbo.tbPlanilhaEtapa.Descricao AS DescricaoEtapa,
+                        sac.dbo.tbPlanilhaUnidade.Descricao AS DescricaoUnidade,
                         prod.Descricao AS dsProduto
-                        FROM SAC.dbo.tbPlanilhaAprovacao tpa
-                        INNER JOIN SAC.dbo.tbPlanilhaEtapa ON tpa.idEtapa = SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa
-                        INNER JOIN SAC.dbo.tbPlanilhaItens ON tpa.idPlanilhaItem = SAC.dbo.tbPlanilhaItens.idPlanilhaItens
-                        INNER JOIN SAC.dbo.tbPlanilhaUnidade ON tpa.idUnidade = SAC.dbo.tbPlanilhaUnidade.idUnidade
+                        FROM sac.dbo.tbPlanilhaAprovacao tpa
+                        INNER JOIN sac.dbo.tbPlanilhaEtapa ON tpa.idEtapa = sac.dbo.tbPlanilhaEtapa.idPlanilhaEtapa
+                        INNER JOIN sac.dbo.tbPlanilhaItens ON tpa.idPlanilhaItem = sac.dbo.tbPlanilhaItens.idPlanilhaItens
+                        INNER JOIN sac.dbo.tbPlanilhaUnidade ON tpa.idUnidade = sac.dbo.tbPlanilhaUnidade.idUnidade
                         INNER JOIN agentes.dbo.Verificacao ON tpa.nrFonteRecurso = agentes.dbo.Verificacao.idVerificacao
                         INNER JOIN agentes.dbo.UF ON tpa.idUFDespesa = agentes.dbo.UF.idUF
                         INNER JOIN agentes.dbo.Municipios ON tpa.idMunicipioDespesa = agentes.dbo.Municipios.idMunicipioIBGE
-                        LEFT JOIN SAC.dbo.Produto prod ON tpa.idProduto = prod.Codigo
+                        LEFT JOIN sac.dbo.Produto prod ON tpa.idProduto = prod.Codigo
                         WHERE (tpa.IdPRONAC = $idPronac) AND (tpa.idPlanilhaAprovacao = $idPlanilhaAprovacao) AND (tpa.idPlanilhaItem = $idPlanilhaItem)
-                        and tpa.dtPlanilha in (select max(dtPlanilha) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC=tpa.IdPRONAC
+                        and tpa.dtPlanilha in (select max(dtPlanilha) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC=tpa.IdPRONAC
                         and idPlanilhaAprovacao=tpa.idPlanilhaAprovacao and idPlanilhaItem=tpa.idPlanilhaItem)";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -179,11 +179,11 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                     a.stAtivo,
                     (a.nrOcorrencia * a.vlUnitario * a.qtDias) AS Total,
                     a.idProduto
-            FROM SAC.dbo.tbPlanilhaAprovacao        AS a
-            INNER JOIN SAC.dbo.tbPlanilhaUnidade    AS b ON a.idUnidade = b.idUnidade
-            INNER JOIN SAC.dbo.tbPlanilhaEtapa      AS c ON a.idEtapa = c.idPlanilhaEtapa
-            INNER JOIN SAC.dbo.tbPlanilhaItens      AS d ON a.idPlanilhaItem = d.idPlanilhaItens
-            INNER JOIN SAC.dbo.Produto              AS e ON a.idProduto = e.Codigo
+            FROM sac.dbo.tbPlanilhaAprovacao        AS a
+            INNER JOIN sac.dbo.tbPlanilhaUnidade    AS b ON a.idUnidade = b.idUnidade
+            INNER JOIN sac.dbo.tbPlanilhaEtapa      AS c ON a.idEtapa = c.idPlanilhaEtapa
+            INNER JOIN sac.dbo.tbPlanilhaItens      AS d ON a.idPlanilhaItem = d.idPlanilhaItens
+            INNER JOIN sac.dbo.Produto              AS e ON a.idProduto = e.Codigo
             INNER JOIN agentes.dbo.UF               AS f ON a.idUFDespesa = f.idUF
             INNER JOIN agentes.dbo.Municipios       AS g ON a.idMunicipioDespesa = g.idMunicipioIBGE
             INNER JOIN agentes.dbo.Agentes          AS h ON a.idAgente = h.idAgente
@@ -237,11 +237,11 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                     a.stAtivo,
                     (a.nrOcorrencia * a.vlUnitario * a.qtDias) AS Total,
                     a.idProduto
-            FROM SAC.dbo.tbPlanilhaAprovacao        AS a
-            INNER JOIN SAC.dbo.tbPlanilhaUnidade    AS b ON a.idUnidade = b.idUnidade
-            INNER JOIN SAC.dbo.tbPlanilhaEtapa      AS c ON a.idEtapa = c.idPlanilhaEtapa
-            INNER JOIN SAC.dbo.tbPlanilhaItens      AS d ON a.idPlanilhaItem = d.idPlanilhaItens
-            INNER JOIN SAC.dbo.Produto              AS e ON a.idProduto = e.Codigo
+            FROM sac.dbo.tbPlanilhaAprovacao        AS a
+            INNER JOIN sac.dbo.tbPlanilhaUnidade    AS b ON a.idUnidade = b.idUnidade
+            INNER JOIN sac.dbo.tbPlanilhaEtapa      AS c ON a.idEtapa = c.idPlanilhaEtapa
+            INNER JOIN sac.dbo.tbPlanilhaItens      AS d ON a.idPlanilhaItem = d.idPlanilhaItens
+            INNER JOIN sac.dbo.Produto              AS e ON a.idProduto = e.Codigo
             INNER JOIN agentes.dbo.UF               AS f ON a.idUFDespesa = f.idUF
             INNER JOIN agentes.dbo.Municipios       AS g ON a.idMunicipioDespesa = g.idMunicipioIBGE
             INNER JOIN agentes.dbo.Agentes          AS h ON a.idAgente = h.idAgente 
@@ -268,7 +268,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public static function inserirCopiaPlanilha($idPronac, $idPedidoAlteracao) {
         $objAcesso= new Acesso();
-        $sql = "insert into SAC.dbo.tbPlanilhaAprovacao
+        $sql = "insert into sac.dbo.tbPlanilhaAprovacao
 
                     SELECT
                     'tpPlanilha' = 'PA',
@@ -299,7 +299,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                     idRecursoDecisao,
                     'stAtivo' = 'N'
 
-                    FROM         SAC.dbo.tbPlanilhaAprovacao
+                    FROM         sac.dbo.tbPlanilhaAprovacao
                     WHERE     (IdPRONAC = $idPronac) AND (stAtivo = 'N') AND (tpPlanilha = 'SR')
 
                     ";
@@ -312,7 +312,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function copiaAprovada($idPronac, $idProduto, $idEtapa, $idPlanilhaItem) {
-        $sql = "insert into SAC.dbo.tbPlanilhaAprovacao
+        $sql = "insert into sac.dbo.tbPlanilhaAprovacao
 
                     SELECT
                     'tpPlanilha' = 'PA',
@@ -343,7 +343,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                     idRecursoDecisao,
                     'stAtivo' = 'S'
 
-                    FROM         SAC.dbo.tbPlanilhaAprovacao
+                    FROM         sac.dbo.tbPlanilhaAprovacao
                     WHERE     (IdPRONAC = $idPronac) AND (idProduto = $idProduto) AND (idEtapa = $idEtapa) AND (idPlanilhaItem = $idPlanilhaItem) AND (stAtivo = 'S') AND (tpPlanilha <> 'PA') AND (tpPlanilha <> 'SR')
 
                     ";
@@ -395,10 +395,10 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
 
         $sql = "select (select SUM (qtItem * nrOcorrencia * vlUnitario)
-                            from SAC.dbo.tbPlanilhaAprovacao
+                            from sac.dbo.tbPlanilhaAprovacao
                             WHERE IdPRONAC = $idPronac and stAtivo= 'S') as totalS,
                             (select SUM (qtItem * nrOcorrencia * vlUnitario)
-                            from SAC.dbo.tbPlanilhaAprovacao
+                            from sac.dbo.tbPlanilhaAprovacao
                             WHERE IdPRONAC = $idPronac and stAtivo= 'N' and tpAcao <> 'E') as totalN
                             ";
 
@@ -411,7 +411,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public static function buscaIdAvaliacaoItemPedidoAlteracao($idPedidoAlteracao, $tpAlteracaoProjeto = null) {
 
-        $sql = "select idAvaliacaoItemPedidoAlteracao from bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao";
+        $sql = "select idAvaliacaoItemPedidoAlteracao from bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao";
         if (!empty($tpAlteracaoProjeto)) :
         	$sql.= " AND tpAlteracaoProjeto = " . $tpAlteracaoProjeto;
         endif;
@@ -423,7 +423,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public static function buscaIdAvaliacaoSubItemPedidoAlteracao($idItemAvaliacaoItemPedidoAlteracao) {
 
-        $sql = "select TOP 1 idAvaliacaoSubItemPedidoAlteracao from bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao WHERE idAvaliacaoItemPedidoAlteracao = $idItemAvaliacaoItemPedidoAlteracao ORDER BY idAvaliacaoSubItemPedidoAlteracao DESC ";
+        $sql = "select TOP 1 idAvaliacaoSubItemPedidoAlteracao from bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao WHERE idAvaliacaoItemPedidoAlteracao = $idItemAvaliacaoItemPedidoAlteracao ORDER BY idAvaliacaoSubItemPedidoAlteracao DESC ";
          $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -432,9 +432,9 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public static function buscaAvaliacoesSubItemPedidoAlteracao($idPedidoAlteracao, $idPlanilhaAprovacao, $idAvaliacaoItemPedidoAlteracao) {
 
-        $sql = "SELECT b.*, c.* from bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS a
-                INNER JOIN bdcorporativo.scSAC.tbAvaliacaoSubItemCusto AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
-                INNER JOIN bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao AS c ON c.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao
+        $sql = "SELECT b.*, c.* from bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao AS a
+                INNER JOIN bdcorporativo.scsac.tbAvaliacaoSubItemCusto AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
+                INNER JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao AS c ON c.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao
                 WHERE a.idPedidoAlteracao = $idPedidoAlteracao
                 AND a.tpAlteracaoProjeto = 7
                 AND b.idPlanilhaAprovacao = $idPlanilhaAprovacao
@@ -449,29 +449,29 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     public static function buscarProdutosItensSemProduto($idPronac = null, $idEtapa = null, $idPlanilhaAprovacao=null, $situacao=null, $idProduto=null) {
 
 
-        $sql = "SELECT  SAC.dbo.tbPlanilhaAprovacao.IdPRONAC, SAC.dbo.tbPlanilhaAprovacao.idPlanilhaAprovacao, SAC.dbo.tbPlanilhaUnidade.Descricao,
-                        SAC.dbo.tbPlanilhaEtapa.Descricao AS DescricaoEtapa,
-                      SAC.dbo.tbPlanilhaItens.Descricao AS DescricaoItem,  SAC.dbo.tbPlanilhaAprovacao.idUFDespesa,
-                      SAC.dbo.tbPlanilhaAprovacao.idMunicipioDespesa, agentes.dbo.Municipios.Descricao AS DescricaoMunicipio,
-                      agentes.dbo.UF.Descricao AS DescricaoUF, agentes.dbo.Agentes.idAgente, SAC.dbo.tbPlanilhaAprovacao.tpPlanilha,
-                      SAC.dbo.tbPlanilhaUnidade.idUnidade AS Unidade, SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa, SAC.dbo.tbPlanilhaItens.idPlanilhaItens AS idPlanilhaItem, agentes.dbo.UF.idUF AS UF,
-                      agentes.dbo.Municipios.idMunicipioIBGE, SAC.dbo.tbPlanilhaAprovacao.nrOcorrencia,
-                      SAC.dbo.tbPlanilhaAprovacao.vlUnitario, SAC.dbo.tbPlanilhaAprovacao.qtDias, SAC.dbo.tbPlanilhaAprovacao.qtItem,
-                      SAC.dbo.tbPlanilhaAprovacao.idUnidade,SAC.dbo.tbPlanilhaAprovacao.tpAcao , CAST(SAC.dbo.tbPlanilhaAprovacao.dsJustificativa AS TEXT) AS dsjustificativa,
-                      SAC.dbo.tbPlanilhaAprovacao.stAtivo,
-                      (SAC.dbo.tbPlanilhaAprovacao.nrOcorrencia * SAC.dbo.tbPlanilhaAprovacao.vlUnitario * SAC.dbo.tbPlanilhaAprovacao.qtDias) AS Total
-                        FROM         SAC.dbo.tbPlanilhaAprovacao INNER JOIN
-                      SAC.dbo.tbPlanilhaUnidade ON SAC.dbo.tbPlanilhaAprovacao.idUnidade = SAC.dbo.tbPlanilhaUnidade.idUnidade INNER JOIN
-                      SAC.dbo.tbPlanilhaEtapa ON SAC.dbo.tbPlanilhaAprovacao.idEtapa = SAC.dbo.tbPlanilhaEtapa.idPlanilhaEtapa INNER JOIN
-                      SAC.dbo.tbPlanilhaItens ON SAC.dbo.tbPlanilhaAprovacao.idPlanilhaItem = SAC.dbo.tbPlanilhaItens.idPlanilhaItens INNER JOIN
-                      agentes.dbo.UF ON SAC.dbo.tbPlanilhaAprovacao.idUFDespesa = agentes.dbo.UF.idUF INNER JOIN
-                      agentes.dbo.Municipios ON SAC.dbo.tbPlanilhaAprovacao.idMunicipioDespesa = agentes.dbo.Municipios.idMunicipioIBGE INNER JOIN
-                      agentes.dbo.Agentes ON SAC.dbo.tbPlanilhaAprovacao.idAgente = agentes.dbo.Agentes.idAgente WHERE SAC.dbo.tbPlanilhaAprovacao.stAtivo = '$situacao' and SAC.dbo.tbPlanilhaAprovacao.tpAcao is not null and SAC.dbo.tbPlanilhaAprovacao.idPedidoAlteracao is not null AND SAC.dbo.tbPlanilhaAprovacao.tpPlanilha = 'PA'";
+        $sql = "SELECT  sac.dbo.tbPlanilhaAprovacao.IdPRONAC, sac.dbo.tbPlanilhaAprovacao.idPlanilhaAprovacao, sac.dbo.tbPlanilhaUnidade.Descricao,
+                        sac.dbo.tbPlanilhaEtapa.Descricao AS DescricaoEtapa,
+                      sac.dbo.tbPlanilhaItens.Descricao AS DescricaoItem,  sac.dbo.tbPlanilhaAprovacao.idUFDespesa,
+                      sac.dbo.tbPlanilhaAprovacao.idMunicipioDespesa, agentes.dbo.Municipios.Descricao AS DescricaoMunicipio,
+                      agentes.dbo.UF.Descricao AS DescricaoUF, agentes.dbo.Agentes.idAgente, sac.dbo.tbPlanilhaAprovacao.tpPlanilha,
+                      sac.dbo.tbPlanilhaUnidade.idUnidade AS Unidade, sac.dbo.tbPlanilhaEtapa.idPlanilhaEtapa, sac.dbo.tbPlanilhaItens.idPlanilhaItens AS idPlanilhaItem, agentes.dbo.UF.idUF AS UF,
+                      agentes.dbo.Municipios.idMunicipioIBGE, sac.dbo.tbPlanilhaAprovacao.nrOcorrencia,
+                      sac.dbo.tbPlanilhaAprovacao.vlUnitario, sac.dbo.tbPlanilhaAprovacao.qtDias, sac.dbo.tbPlanilhaAprovacao.qtItem,
+                      sac.dbo.tbPlanilhaAprovacao.idUnidade,sac.dbo.tbPlanilhaAprovacao.tpAcao , CAST(sac.dbo.tbPlanilhaAprovacao.dsJustificativa AS TEXT) AS dsjustificativa,
+                      sac.dbo.tbPlanilhaAprovacao.stAtivo,
+                      (sac.dbo.tbPlanilhaAprovacao.nrOcorrencia * sac.dbo.tbPlanilhaAprovacao.vlUnitario * sac.dbo.tbPlanilhaAprovacao.qtDias) AS Total
+                        FROM         sac.dbo.tbPlanilhaAprovacao INNER JOIN
+                      sac.dbo.tbPlanilhaUnidade ON sac.dbo.tbPlanilhaAprovacao.idUnidade = sac.dbo.tbPlanilhaUnidade.idUnidade INNER JOIN
+                      sac.dbo.tbPlanilhaEtapa ON sac.dbo.tbPlanilhaAprovacao.idEtapa = sac.dbo.tbPlanilhaEtapa.idPlanilhaEtapa INNER JOIN
+                      sac.dbo.tbPlanilhaItens ON sac.dbo.tbPlanilhaAprovacao.idPlanilhaItem = sac.dbo.tbPlanilhaItens.idPlanilhaItens INNER JOIN
+                      agentes.dbo.UF ON sac.dbo.tbPlanilhaAprovacao.idUFDespesa = agentes.dbo.UF.idUF INNER JOIN
+                      agentes.dbo.Municipios ON sac.dbo.tbPlanilhaAprovacao.idMunicipioDespesa = agentes.dbo.Municipios.idMunicipioIBGE INNER JOIN
+                      agentes.dbo.Agentes ON sac.dbo.tbPlanilhaAprovacao.idAgente = agentes.dbo.Agentes.idAgente WHERE sac.dbo.tbPlanilhaAprovacao.stAtivo = '$situacao' and sac.dbo.tbPlanilhaAprovacao.tpAcao is not null and sac.dbo.tbPlanilhaAprovacao.idPedidoAlteracao is not null AND sac.dbo.tbPlanilhaAprovacao.tpPlanilha = 'PA'";
         if (!empty($idPronac) and !empty($idEtapa)) {
-            $sql .= " AND  SAC.dbo.tbPlanilhaAprovacao.idEtapa = $idEtapa AND SAC.dbo.tbPlanilhaAprovacao.IdPRONAC = $idPronac ";
+            $sql .= " AND  sac.dbo.tbPlanilhaAprovacao.idEtapa = $idEtapa AND sac.dbo.tbPlanilhaAprovacao.IdPRONAC = $idPronac ";
         }
         if (!empty($idPlanilhaAprovacao)) {
-            $sql .=" AND SAC.dbo.tbPlanilhaAprovacao.idPlanilhaAprovacao=$idPlanilhaAprovacao";
+            $sql .=" AND sac.dbo.tbPlanilhaAprovacao.idPlanilhaAprovacao=$idPlanilhaAprovacao";
         }
 
 
@@ -490,7 +490,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     {
 
 
-        $sql = "UPDATE    SAC.dbo.tbPlanilhaAprovacao
+        $sql = "UPDATE    sac.dbo.tbPlanilhaAprovacao
                 SET   tpAcao = '$tpAcao'
         WHERE     (idPlanilhaAprovacao = $idPlanilhaAprovacao) AND tpPlanilha = 'PA' AND stAtivo = 'N'";
 
@@ -549,7 +549,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     public static function deletaPlanilhaAprovacaoExcluida($idPlanilhaAprovacao, $idProduto = null, $idEtapa = null, $idPronac = null, $idItem = null) {
 
 
-        $sql = "DELETE FROM SAC.dbo.tbPlanilhaAprovacao WHERE tpPlanilha = 'PA'";
+        $sql = "DELETE FROM sac.dbo.tbPlanilhaAprovacao WHERE tpPlanilha = 'PA'";
 
         if ( !empty( $idPlanilhaAprovacao ) )
         {
@@ -584,7 +584,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
 
 
-        $sql = "UPDATE    bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE    bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao
                         SET stAvaliacaoItemPedidoAlteracao = '$tipoAlteracao', dsAvaliacao = '$dsAvaliacao' WHERE idPedidoAlteracao = $idPedido";
 
 
@@ -595,7 +595,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function verificaPlanilhaAprovacao($idPronac) {
-        $sql = "select * from SAC.dbo.tbPlanilhaAprovacao WHERE idPRONAC = $idPronac AND tpPlanilha = 'PA'";
+        $sql = "select * from sac.dbo.tbPlanilhaAprovacao WHERE idPRONAC = $idPronac AND tpPlanilha = 'PA'";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -603,7 +603,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function verificaStatus($idPedidoAlteracao, $tpAlteracaoProjeto = null) {
-        $sql = "SELECT stAvaliacaoItemPedidoAlteracao FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao ";
+        $sql = "SELECT stAvaliacaoItemPedidoAlteracao FROM bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao ";
 
 		if (!empty($tpAlteracaoProjeto)) :
 			$sql.= "AND tpAlteracaoProjeto = " . $tpAlteracaoProjeto;
@@ -617,8 +617,8 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public static function verificaStatusItemDeCusto($idPedidoAlteracao, $tpAlteracaoProjeto = null) {
         $sql = "SELECT a.*
-                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS a
-                INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS b on a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao AS a
+                INNER JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao AS b on a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
                 WHERE a.idPedidoAlteracao = $idPedidoAlteracao AND a.tpAlteracaoProjeto = 10 AND b.stAtivo = 0";
 
 		if (!empty($tpAlteracaoProjeto)) :
@@ -632,7 +632,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function verificaStatusFinal($idPedidoAlteracao) {
-        $sql = "SELECT stAvaliacaoItemPedidoAlteracao as stAvaliacao FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao";
+        $sql = "SELECT stAvaliacaoItemPedidoAlteracao as stAvaliacao FROM bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -642,8 +642,8 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public static function verificaAnalise( $idPlanilhaAprovacao, $idAvaliacaoItemPedidoAlteracao ) {
         $sql = " SELECT a.stAvaliacaoSubItemPedidoAlteracao as stAvaliacao, CAST (dsAvaliacaoSubItemPedidoAlteracao as TEXT) as dsAvaliacaoSubItemPedidoAlteracao
-                FROM bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao AS a
-                INNER JOIN bdcorporativo.scSAC.tbAvaliacaoSubItemCusto AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao AS a
+                INNER JOIN bdcorporativo.scsac.tbAvaliacaoSubItemCusto AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
                         AND a.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao
                 WHERE b.idPlanilhaAprovacao = $idPlanilhaAprovacao AND a.idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao AND b.idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao ";
 
@@ -654,10 +654,10 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function verificaAvaliacaoAnalise() {
-        $sql = "SELECT * FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tpa
-    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao tai ON tpa.idPedidoAlteracao = tai.idPedidoAlteracao
-    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoSubItemCusto tsi ON tsi.idAvaliacaoItemPedidoAlteracao = tai.idAvaliacaoItemPedidoAlteracao
-    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao tsu ON tsu.idAvaliacaoSubItemPedidoAlteracao = tsi.idAvaliacaoSubItemPedidoAlteracao";
+        $sql = "SELECT * FROM bdcorporativo.scsac.tbPedidoAlteracaoProjeto tpa
+    INNER JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao tai ON tpa.idPedidoAlteracao = tai.idPedidoAlteracao
+    INNER JOIN bdcorporativo.scsac.tbAvaliacaoSubItemCusto tsi ON tsi.idAvaliacaoItemPedidoAlteracao = tai.idAvaliacaoItemPedidoAlteracao
+    INNER JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao tsu ON tsu.idAvaliacaoSubItemPedidoAlteracao = tsi.idAvaliacaoSubItemPedidoAlteracao";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -667,7 +667,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public function buscarUltimoRemetente($idacao) {
         $sql = "SELECT TOP 1 idAgenteRemetente AS idAgenteRemetente
-                                    FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+                                    FROM bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao
                                     WHERE idAvaliacaoItemPedidoAlteracao = $idacao
                                             AND idPerfilRemetente = 93
                                     ORDER BY dtEncaminhamento DESC";
@@ -678,7 +678,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public function buscarUltimoRemetenteCoordParecerista($idacao) {
         $sql = "SELECT TOP 1 idAgenteRemetente AS idAgenteRemetente
-                                    FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+                                    FROM bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao
                                     WHERE idAvaliacaoItemPedidoAlteracao = $idacao
                                     ORDER BY dtEncaminhamento DESC";
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -688,7 +688,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     public function buscarUltimoRemetenteCoordPareceristaSemBD($idacao) {
         $sql = "SELECT TOP 1 idAgenteRemetente AS idAgenteRemetente
-                                    FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+                                    FROM bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao
                                     WHERE idAvaliacaoItemPedidoAlteracao = $idacao
                                     ORDER BY dtEncaminhamento DESC";
         return $sql;
@@ -708,7 +708,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
     }
 
     public function buscarEtapa() {
-        $sql = "select idPlanilhaEtapa, Descricao, tpCusto from SAC.dbo.tbPlanilhaEtapa";
+        $sql = "select idPlanilhaEtapa, Descricao, tpCusto from sac.dbo.tbPlanilhaEtapa";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

@@ -12,7 +12,7 @@
 
 class Comprovacaofisicadoprojeto extends Zend_Db_Table
 {
-	protected $_name = 'scSAC.dbo.tbComprovanteExecucao'; // nome da tabela
+	protected $_name = 'scsac.dbo.tbComprovanteExecucao'; // nome da tabela
 
 	/**
 	 * M&eacute;todo aguardandoavaliacao()
@@ -28,10 +28,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 			      pro.NomeProjeto,
 			      doc.stParecerComprovante AS StatusComprovante,
 			      CONVERT(CHAR(10), tmp.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), tmp.dtEnvioComprovante,108) AS DataRecebimento
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc,
-			     bdcorporativo.scSAC.Projetos pro,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro,
 			     (SELECT idPronac, MAX(dtEnvioComprovante) dtEnvioComprovante
-			      FROM bdcorporativo.scSAC.tbComprovanteExecucao
+			      FROM bdcorporativo.scsac.tbComprovanteExecucao
 			      WHERE stComprovante = 'A'
 			      GROUP BY idPronac) AS tmp
 			WHERE doc.idPRONAC = pro.IdPRONAC 
@@ -121,9 +121,9 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc,
-			     bdcorporativo.scSAC.Projetos pro, 
-			     bdcorporativo.scSAC.tbTipoDocumento tipodoc,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro, 
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
 			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idPRONAC = pro.IdPRONAC 
 				AND doc.idTipoDocumento = tipodoc.idTipoDocumento
@@ -157,8 +157,8 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc,
-			     bdcorporativo.scSAC.tbTipoDocumento tipodoc,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
 			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento
 				AND doc.idArquivo = arq.idArquivo
@@ -195,10 +195,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -225,10 +225,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -263,10 +263,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -297,10 +297,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -334,10 +334,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -357,10 +357,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -391,10 +391,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 			      doc.stParecerComprovante AS StatusComprovante,
 			      CONVERT(CHAR(10), tmp.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), tmp.dtEnvioComprovante,108) AS DataRecebimento, 
 			      CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc,
-			     bdcorporativo.scSAC.Projetos pro,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro,
 			     (SELECT idPronac, MAX(dtEnvioComprovante) dtEnvioComprovante
-			      FROM bdcorporativo.scSAC.tbComprovanteExecucao
+			      FROM bdcorporativo.scsac.tbComprovanteExecucao
 			      WHERE stComprovante = 'A'
 			      GROUP BY idPronac) AS tmp
 			WHERE doc.idPRONAC = pro.IdPRONAC 
@@ -479,9 +479,9 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc,
-			     bdcorporativo.scSAC.Projetos pro, 
-			     bdcorporativo.scSAC.tbTipoDocumento tipodoc,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro, 
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
 			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idPRONAC = pro.idPRONAC 
 				AND doc.idTipoDocumento = tipodoc.idTipoDocumento
@@ -515,8 +515,8 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc,
-			     bdcorporativo.scSAC.tbTipoDocumento tipodoc,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
 			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento
 				AND doc.idArquivo = arq.idArquivo
@@ -552,10 +552,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -588,10 +588,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -623,10 +623,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				doc.idArquivo, 
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
-				bdcorporativo.scSAC.Projetos pro 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 

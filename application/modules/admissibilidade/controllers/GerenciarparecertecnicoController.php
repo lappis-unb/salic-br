@@ -256,7 +256,7 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
                 $arrWhereFontesIncentivo['tpPlanilha = ? ']='SR';
                 $arrWhereFontesIncentivo['stAtivo = ? ']='N';
                 $arrWhereFontesIncentivo['NrFonteRecurso = ? ']='109';
-                $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                 $arrWhereFontesIncentivo["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                 $fonteincentivo = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereFontesIncentivo);
 
@@ -265,7 +265,7 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
                 $arrWhereOutrasFontes['tpPlanilha = ? ']='SR';
                 $arrWhereOutrasFontes['stAtivo = ? ']='N';
                 $arrWhereOutrasFontes['NrFonteRecurso <> ? ']='109';
-                $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                 $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                 $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
 
@@ -274,7 +274,7 @@ class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_
                 $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
                 $arrWherePlanilhaPA['stAtivo = ? ']='N';
                 $arrWherePlanilhaPA['NrFonteRecurso = ? ']='109';
-                $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                 $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                 $parecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
             }

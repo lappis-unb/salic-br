@@ -400,8 +400,8 @@ class Captacao extends MinC_Db_Table_Abstract {
                         array('ca'=>$this->_name),
                         array('DtRecibo',
                               'CaptacaoReal',
-                              'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
-                              'vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")
+                              'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+                              'vlCaptado'=>new Zend_Db_Expr("sac.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")
                              )
                      );
         $slct->joinInner(
@@ -525,11 +525,11 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slctSA->distinct();
 	        $slctSA->from(
 	                        array('ca'=>$this->_name),
-	                        array('vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+	                        array('vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
 	                        	  'DtRecibo',
 	                              'CaptacaoReal',
-	                              'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
-	                              'vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")
+	                              'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+	                              'vlCaptado'=>new Zend_Db_Expr("sac.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")
 	                             )
 	                     );
 	        $slctSA->joinInner(
@@ -597,11 +597,11 @@ class Captacao extends MinC_Db_Table_Abstract {
 	        $slctSC->distinct();
 	        $slctSC->from(
 	                        array('ca'=>$this->_name),
-	                        array('vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+	                        array('vlCaptado'=>new Zend_Db_Expr("sac.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
 		                       	  'DtRecibo',
 	                              'CaptacaoReal',
-	                              'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
-	                              'vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")
+	                              'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+	                              'vlCaptado'=>new Zend_Db_Expr("sac.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")
                              )
 	                     );
 	        $slctSC->joinInner(
@@ -731,7 +731,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                               'CaptacaoReal'=>new Zend_Db_Expr('SUM(CaptacaoReal)'),
                         	  'p.AnoProjeto',
                         	  'p.Sequencial',
-                         	  'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
+                         	  'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
                              )
                      );
         $slct->joinInner(
@@ -797,7 +797,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 			                       'p.AnoProjeto',
 		                           'p.Sequencial',
 		                           'p.IdPRONAC',
-		                           'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
+		                           'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
 	                         )
 	                     );
 	        $slctCount->joinInner(
@@ -910,10 +910,10 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slctSC->from(
                         array('ca'=>$this->_name),
                         array('vlCaptado'=>new Zend_Db_Expr("SUM(ca.captacaoReal)"),
-                        	  /*'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
+                        	  /*'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)")
 
-                              'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
-                              'vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")*/
+                              'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+                              'vlCaptado'=>new Zend_Db_Expr("sac.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")*/
                              )
                      );
         $slctSC->joinInner(
@@ -982,11 +982,11 @@ class Captacao extends MinC_Db_Table_Abstract {
         $slctSA->distinct();
         $slctSA->from(
                         array('ca'=>$this->_name),
-                        array('vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+                        array('vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
                               /*'CaptacaoReal'=>new Zend_Db_Expr("SUM(ca.captacaoReal)")
 
-                              'vlAutorizado'=>new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
-                              'vlCaptado'=>new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")*/
+                              'vlAutorizado'=>new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(ca.AnoProjeto,ca.Sequencial)"),
+                              'vlCaptado'=>new Zend_Db_Expr("sac.dbo.fnTotalCaptadoProjeto(ca.AnoProjeto,ca.Sequencial)")*/
                              )
                      );
         $slctSA->joinInner(
@@ -1081,7 +1081,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         {
         	$db = Zend_Db_Table::getDefaultAdapter();
         	$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-        	$slct = "select SAC.dbo.fnTotalAprovadoProjeto('{$ano}','{$sequencial}')";
+        	$slct = "select sac.dbo.fnTotalAprovadoProjeto('{$ano}','{$sequencial}')";
         	$valor = $db->fetchAll($slct);
         	return $valor[0]->computed;
         }
@@ -1101,9 +1101,9 @@ class Captacao extends MinC_Db_Table_Abstract {
                           "c.CaptacaoReal",
                           "c.NumeroRecibo",
                           "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patrocínio' WHEN c.TipoApoio = 2 then 'Doa&ccedil;&atilde;o' END "),
-                          "Incentivador" =>  new Zend_Db_Expr("SAC.dbo.fnNome(a.idagente)"),
-                          "DtLiberacao" =>  new Zend_Db_Expr("(SELECT TOP 1 DtLiberacao FROM SAC.dbo.Liberacao l WHERE c.AnoProjeto+c.Sequencial = l.AnoProjeto+l.Sequencial)"),
-                          "Percentual" =>  new Zend_Db_Expr("SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial)"),
+                          "Incentivador" =>  new Zend_Db_Expr("sac.dbo.fnNome(a.idagente)"),
+                          "DtLiberacao" =>  new Zend_Db_Expr("(SELECT TOP 1 DtLiberacao FROM sac.dbo.Liberacao l WHERE c.AnoProjeto+c.Sequencial = l.AnoProjeto+l.Sequencial)"),
+                          "Percentual" =>  new Zend_Db_Expr("sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial)"),
                           "c.idCaptacao"
                         ), "SAC"
                     );
@@ -1194,7 +1194,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                           "c.NumeroRecibo AS numLote",
                           "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patroc&iacute;nio'
                                                                 WHEN c.TipoApoio = 2 then 'Doa&ccedil;&atilde;o' END "),
-                          "Incentivador" =>  new Zend_Db_Expr("SAC.dbo.fnNome(a.idagente)"),
+                          "Incentivador" =>  new Zend_Db_Expr("sac.dbo.fnNome(a.idagente)"),
                         ), "SAC"
                     );
         $slct->joinInner(
@@ -1297,7 +1297,7 @@ class Captacao extends MinC_Db_Table_Abstract {
         $select->from(
                 array($this->_name),
                 array(
-                    "totalCaptado" => new Zend_Db_Expr(" SAC.dbo.fnTotalCaptadoProjeto('$anoProjeto', '$sequencial')")
+                    "totalCaptado" => new Zend_Db_Expr(" sac.dbo.fnTotalCaptadoProjeto('$anoProjeto', '$sequencial')")
                 )
         );
 
@@ -1322,8 +1322,8 @@ class Captacao extends MinC_Db_Table_Abstract {
                                             THEN sac.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
                                             ELSE sac.dbo.fnValorAprovado(p.AnoProjeto,p.Sequencial)
                                         END AS ValorAprovado"),
-                    new Zend_Db_Expr("SAC.dbo.fnCustoProjeto(p.AnoProjeto,p.Sequencial) as ValorCaptado"),
-                    new Zend_Db_Expr("SAC.dbo.fnOutrasFontes(p.idPronac) as OutrasFontes"),
+                    new Zend_Db_Expr("sac.dbo.fnCustoProjeto(p.AnoProjeto,p.Sequencial) as ValorCaptado"),
+                    new Zend_Db_Expr("sac.dbo.fnOutrasFontes(p.idPronac) as OutrasFontes"),
                 	'isBemServico',
                 )
         );

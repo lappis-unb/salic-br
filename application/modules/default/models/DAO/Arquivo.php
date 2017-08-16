@@ -21,7 +21,7 @@ class Arquivo
 	public static function buscar()
 	{
 		$sql = "SELECT idArquivo";
-		$sql.= "FROM bdcorporativo.scSAC.tbComprovanteExecucao ";
+		$sql.= "FROM bdcorporativo.scsac.tbComprovanteExecucao ";
 		
 
 		try

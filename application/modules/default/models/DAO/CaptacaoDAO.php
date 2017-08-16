@@ -14,7 +14,7 @@ class CaptacaoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "SAC.dbo.Captacao";
+	protected $_name    = "sac.dbo.Captacao";
 	protected $_nome    = "Captacao";
 	protected $_primary = "IdCaptacao";
 
@@ -32,7 +32,7 @@ class CaptacaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.Captacao", $dados);
+		$cadastrar = $db->insert("sac.dbo.Captacao", $dados);
 
 		if ($cadastrar)
 		{
@@ -58,7 +58,7 @@ class CaptacaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$db->insert("SAC.dbo.tbTmpCaptacao", $dados);
+		$db->insert("sac.dbo.tbTmpCaptacao", $dados);
 		return $db->lastInsertId();
 	} // fecha m�todo cadastrarErro()
 
@@ -76,7 +76,7 @@ class CaptacaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.tbTmpInconsistenciaCaptacao", $dados);
+		$cadastrar = $db->insert("sac.dbo.tbTmpInconsistenciaCaptacao", $dados);
 
 		if ($cadastrar)
 		{
@@ -99,7 +99,7 @@ class CaptacaoDAO extends Zend_Db_Table
 	 */
 	public static function excluirInconsistencia()
 	{
-		$sql = "DELETE FROM SAC.dbo.tbTmpInconsistenciaCaptacao ";
+		$sql = "DELETE FROM sac.dbo.tbTmpInconsistenciaCaptacao ";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -126,7 +126,7 @@ class CaptacaoDAO extends Zend_Db_Table
 					,CONVERT(CHAR(10), dtCredito,111) AS dtCredito
 					,vlValorCredito
 					,cdPatrocinio 
-				FROM SAC.dbo.tbTmpCaptacao 
+				FROM sac.dbo.tbTmpCaptacao 
 				WHERE nrAnoProjeto IS NOT NULL AND nrAnoProjeto != '' OR nrSequencial IS NOT NULL AND nrSequencial != ''";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -139,12 +139,12 @@ class CaptacaoDAO extends Zend_Db_Table
 		$sql = "select distinct p.AnoProjeto, p.Sequencial, p.AnoProjeto+p.Sequencial as pronac, p.NomeProjeto, p.Processo, p.CgcCpf, 
 				p.Area as codArea, p.Segmento as codSegmento, p.Mecanismo as codMecanismo, p.SolicitadoReal, p.UfProjeto, a.AprovadoReal,
 				ar.Descricao as Area, s.Descricao as Segmento, m.Descricao as Mecanismo, p.Situacao
-				from SAC.dbo.Projetos p
-				left join SAC.dbo.Captacao c on p.AnoProjeto+p.Sequencial = c.AnoProjeto+c.Sequencial
-				left join SAC.dbo.Aprovacao a on a.IdPRONAC = p.IdPRONAC
-				inner join SAC.dbo.Area ar on ar.Codigo = p.Area
-				left join SAC.dbo.Segmento s on s.Codigo = p.Segmento
-				inner join SAC.dbo.Mecanismo m on m.Codigo = p.Mecanismo
+				from sac.dbo.Projetos p
+				left join sac.dbo.Captacao c on p.AnoProjeto+p.Sequencial = c.AnoProjeto+c.Sequencial
+				left join sac.dbo.Aprovacao a on a.IdPRONAC = p.IdPRONAC
+				inner join sac.dbo.Area ar on ar.Codigo = p.Area
+				left join sac.dbo.Segmento s on s.Codigo = p.Segmento
+				inner join sac.dbo.Mecanismo m on m.Codigo = p.Mecanismo
 				where (p.Situacao = 'E10' or p.Situacao = 'E12' or p.Situacao = 'E13') and p.AnoProjeto+p.Sequencial = '{$pronac}' and a.AprovadoReal != 0"; 
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -154,7 +154,7 @@ class CaptacaoDAO extends Zend_Db_Table
 	
 	public static function buscarCaptacao($pronac)
 	{
-		$sql = "select SUM(CaptacaoReal) as captado from SAC.dbo.Captacao 
+		$sql = "select SUM(CaptacaoReal) as captado from sac.dbo.Captacao 
 				where AnoProjeto+Sequencial = '$pronac'";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -188,9 +188,9 @@ class CaptacaoDAO extends Zend_Db_Table
 					,i.idTipoInconsistencia
 					,i.dsTipoInconsistencia
 
-				FROM SAC.dbo.tbTmpCaptacao AS c
-					,SAC.dbo.tbTmpInconsistenciaCaptacao AS ic
-					,SAC.dbo.tbTipoInconsistencia AS i
+				FROM sac.dbo.tbTmpCaptacao AS c
+					,sac.dbo.tbTmpInconsistenciaCaptacao AS ic
+					,sac.dbo.tbTipoInconsistencia AS i
 
 				WHERE   c.idTmpCaptacao        = ic.idTmpCaptacao
 					AND i.idTipoInconsistencia = ic.idTipoInconsistencia ";

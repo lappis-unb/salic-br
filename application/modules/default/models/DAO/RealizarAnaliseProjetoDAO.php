@@ -13,7 +13,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 {
     public static function somarOrcamentoSolicitado($idpronac){
 
-       $sele = "select sum(VlTotal) as somatudo from SAC.dbo.vwOrcamentoSolicitado where idpronac = $idpronac";
+       $sele = "select sum(VlTotal) as somatudo from sac.dbo.vwOrcamentoSolicitado where idpronac = $idpronac";
        $db = Zend_Db_Table::getDefaultAdapter();
        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
        return $db->fetchRow($sele);
@@ -157,7 +157,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                 try{
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                $alterar = $db->update("SAC.dbo.tbPlanilhaAprovacao", $dados, $where);
+                $alterar = $db->update("sac.dbo.tbPlanilhaAprovacao", $dados, $where);
                 return true;
                 }
                 catch (Exception $e){
@@ -178,7 +178,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                     try{
                     $db= Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                    $cadastrar = $db->insert("BSAC.dbo.tbPlanilhaAprovacao", $dados);
+                    $cadastrar = $db->insert("Bsac.dbo.tbPlanilhaAprovacao", $dados);
                     return true;
                     }
                     catch (Exception $e){
@@ -279,15 +279,15 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 						WHEN (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) < (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario) THEN 'Reduzido'
 						END AS Situacao
 
-				FROM SAC.dbo.Projetos PRO
-					 INNER JOIN SAC.dbo.tbPlanilhaProjeto PPJ on PPJ.idPRONAC = PRO.IdPRONAC
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-                                         INNER JOIN SAC.dbo.tbPlanilhaEtapa tpe on tpe.idplanilhaetapa = PAP.idEtapa
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
-                                         left join SAC.dbo.tbAnaliseAprovacao ap on ap.idpronac = pro.idpronac
+				FROM sac.dbo.Projetos PRO
+					 INNER JOIN sac.dbo.tbPlanilhaProjeto PPJ on PPJ.idPRONAC = PRO.IdPRONAC
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+                                         INNER JOIN sac.dbo.tbPlanilhaEtapa tpe on tpe.idplanilhaetapa = PAP.idEtapa
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+                                         left join sac.dbo.tbAnaliseAprovacao ap on ap.idpronac = pro.idpronac
 				WHERE
                                         PP.FonteRecurso = 109
 					AND PAP.tpPlanilha = '$tpplanilha'
@@ -356,9 +356,9 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             ,case
 			when par.idEnquadramento = 1 then 'Artigo 26'
 			when par.idEnquadramento = 2 then 'Artigo 18' end as enquadramento
-            FROM SAC.dbo.Projetos PRO
-			left JOIN SAC.dbo.Parecer par on par.idPRONAC = PRO.IdPRONAC
-			left JOIN SAC.dbo.Enquadramento enq on enq.IdPRONAC  = PRO.IdPRONAC
+            FROM sac.dbo.Projetos PRO
+			left JOIN sac.dbo.Parecer par on par.idPRONAC = PRO.IdPRONAC
+			left JOIN sac.dbo.Enquadramento enq on enq.IdPRONAC  = PRO.IdPRONAC
             WHERE PAR.idTipoAgente = 1 and PRO.IdPRONAC=" . $idPronac;
         // busca de acordo com o pronac
 
@@ -424,10 +424,10 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 		       ,SUM((PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario) - (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario)) AS SOMAVlReduzidoConselheiro
 		       ,SUM(PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) AS VlSugeridoConselheiro";
         }
-        $sql .=" FROM SAC.dbo.Projetos PRO
-		 ,SAC.dbo.tbPlanilhaProjeto PPJ
-		 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-		 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+        $sql .=" FROM sac.dbo.Projetos PRO
+		 ,sac.dbo.tbPlanilhaProjeto PPJ
+		 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+		 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
 		 WHERE PAP.IdPRONAC = PRO.IdPRONAC
 		 AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
 		 AND (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)";
@@ -515,11 +515,11 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 					,PROJ.NomeProjeto
 					,PROD.Descricao AS DescricaoProduto
 					,PDP.stPrincipal
-				FROM SAC.dbo.tbAnaliseAprovacao AP
-				INNER JOIN SAC.dbo.tbAnaliseDeConteudo AC ON AC.idAnaliseDeConteudo = AP.idAnaliseConteudo
-				INNER JOIN SAC.dbo.Produto PROD ON PROD.Codigo  = AP.idProduto
-				INNER JOIN SAC.dbo.Projetos PROJ ON AC.idPronac = PROJ.IdPRONAC AND PROD.Codigo  = AC.idProduto
-				INNER JOIN SAC.dbo.PlanoDistribuicaoProduto PDP on PDP.idProjeto = PROJ.idProjeto  and PDP.idProduto = AP.idProduto AND PDP.stPlanoDistribuicaoProduto = 1 ";
+				FROM sac.dbo.tbAnaliseAprovacao AP
+				INNER JOIN sac.dbo.tbAnaliseDeConteudo AC ON AC.idAnaliseDeConteudo = AP.idAnaliseConteudo
+				INNER JOIN sac.dbo.Produto PROD ON PROD.Codigo  = AP.idProduto
+				INNER JOIN sac.dbo.Projetos PROJ ON AC.idPronac = PROJ.IdPRONAC AND PROD.Codigo  = AC.idProduto
+				INNER JOIN sac.dbo.PlanoDistribuicaoProduto PDP on PDP.idProjeto = PROJ.idProjeto  and PDP.idProduto = AP.idProduto AND PDP.stPlanoDistribuicaoProduto = 1 ";
 
         // busca de acordo com o pronac
         if (!empty($idPronac))
@@ -544,7 +544,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function JustificativaComponente($idpronac)
     {
-        $sql = "select dsAnalise from bdcorporativo.scSAC.tbPauta where idpronac = $idpronac ";
+        $sql = "select dsAnalise from bdcorporativo.scsac.tbPauta where idpronac = $idpronac ";
 //die($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -572,13 +572,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 					,PAP.IdPRONAC
 					,PAP.idProduto
 
-				FROM SAC.dbo.Projetos PRO
-					 JOIN SAC.dbo.tbPlanilhaProjeto PPJ on PPJ.idPRONAC = PRO.IdPRONAC
-					 JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 LEFT JOIN SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+				FROM sac.dbo.Projetos PRO
+					 JOIN sac.dbo.tbPlanilhaProjeto PPJ on PPJ.idPRONAC = PRO.IdPRONAC
+					 JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 LEFT JOIN sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -615,13 +615,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 					,PAP.IdPRONAC
 					,PAP.idProduto
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -666,13 +666,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 					,PP.idEtapa
 					,PAP.idMunicipioDespesa
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -718,7 +718,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("SAC.dbo.Aprovacao", $valores);
+        $cadastrar = $db->insert("sac.dbo.Aprovacao", $valores);
 
         if ($cadastrar)
         {
@@ -739,7 +739,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function verificaraprovacao($idpronac)
     {
-		$sql = "SELECT 1 FROM SAC.dbo.aprovacao WHERE idpronac = $idpronac";
+		$sql = "SELECT 1 FROM sac.dbo.aprovacao WHERE idpronac = $idpronac";
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -777,7 +777,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
 	public static function buscarUltimaReuniao()
 	{
-		$sql = "SELECT * FROM SAC.dbo.tbReuniao WHERE stEstado = 0";
+		$sql = "SELECT * FROM sac.dbo.tbReuniao WHERE stEstado = 0";
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -797,7 +797,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         try{
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $cadastrar = $db->insert("bdcorporativo.scSAC.tbPauta", $dados);
+        $cadastrar = $db->insert("bdcorporativo.scsac.tbPauta", $dados);
         return true;
         }
         catch (Exception $e){
@@ -827,7 +827,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         try{
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $alterar = $db->update("bdcorporativo.scSAC.tbPauta", $dados, $where);
+        $alterar = $db->update("bdcorporativo.scsac.tbPauta", $dados, $where);
         return true;
         }
         catch (Exception $e){
@@ -847,7 +847,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function submeterCnic($idPronac, $idReuniao, $justificativa)
     {
-    	$sql = "UPDATE bdcorporativo.scSAC.tbPauta
+    	$sql = "UPDATE bdcorporativo.scsac.tbPauta
 				SET dsAnalise = '$justificativa',
 					stEnvioPlenario = 'S'
 				WHERE IdPRONAC = $idPronac AND idNrReuniao = $idReuniao";
@@ -879,7 +879,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static  function retornaRegistro($idPronac, $idReuniao)
     {
-        $sql = "SELECT idPRONAC, idNrReuniao, stEnvioPlenario FROM bdcorporativo.scSAC.tbPauta WHERE idPRONAC = $idPronac AND idNrReuniao = $idReuniao";
+        $sql = "SELECT idPRONAC, idNrReuniao, stEnvioPlenario FROM bdcorporativo.scsac.tbPauta WHERE idPRONAC = $idPronac AND idNrReuniao = $idReuniao";
         try
 		{
 			$db = Zend_Db_Table::getDefaultAdapter();
@@ -896,7 +896,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
     public static function retornaIndeferimento()
     {
-         $sql = "select * from SAC.dbo.Situacao where Codigo in ('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14','A41') and StatusProjeto <> 0";
+         $sql = "select * from sac.dbo.Situacao where Codigo in ('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14','A41') and StatusProjeto <> 0";
 
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -944,8 +944,8 @@ public static  function outrasinformacoes($idpronac)
 	                      NrAtoTombamento,
 	                      DtAtoTombamento,
 	                      EsferaTombamento
-	                FROM  SAC.dbo.PreProjeto pr
-	                      INNER JOIN SAC.dbo.Projetos p on (pr.idPreProjeto = p.idProjeto)
+	                FROM  sac.dbo.PreProjeto pr
+	                      INNER JOIN sac.dbo.Projetos p on (pr.idPreProjeto = p.idProjeto)
 	                where p.idPronac =$idpronac";
 
 	      try
@@ -1198,13 +1198,13 @@ public static function divulgacaoProjetosGeral2($pronac){
 public static function divulgacaoProjetosCadastrados($pronac){
 
 	$sql = "
-		    select d.idPosicaoDaLogo, g.Descricao as PosicaoLogo, e.*, f.* from SAC.dbo.Projetos as a
-                    inner join SAC.dbo.tbRelatorio as b on b.idPRONAC = a.IdPRONAC
-                    inner join SAC.dbo.tbRelatorioTrimestral as c on c.idRelatorio = b.idRelatorio
-                    inner join SAC.dbo.PlanoDistribuicaoProduto as d on d.idProjeto = a.idProjeto
-                    inner join SAC.dbo.tbDistribuicaoProduto as e on e.idPlanoDistribuicao = d.idPlanoDistribuicao
-                    inner join SAC.dbo.tbBeneficiario as f on f.idBeneficiario = c.idBeneficiario
-                    left join SAC.dbo.Verificacao as g on g.idVerificacao = d.idPosicaoDaLogo
+		    select d.idPosicaoDaLogo, g.Descricao as PosicaoLogo, e.*, f.* from sac.dbo.Projetos as a
+                    inner join sac.dbo.tbRelatorio as b on b.idPRONAC = a.IdPRONAC
+                    inner join sac.dbo.tbRelatorioTrimestral as c on c.idRelatorio = b.idRelatorio
+                    inner join sac.dbo.PlanoDistribuicaoProduto as d on d.idProjeto = a.idProjeto
+                    inner join sac.dbo.tbDistribuicaoProduto as e on e.idPlanoDistribuicao = d.idPlanoDistribuicao
+                    inner join sac.dbo.tbBeneficiario as f on f.idBeneficiario = c.idBeneficiario
+                    left join sac.dbo.Verificacao as g on g.idVerificacao = d.idPosicaoDaLogo
                     where a.idPRONAC = '$pronac' AND d.stPlanoDistribuicaoProduto = 1 ";
 
 	try
@@ -1291,8 +1291,8 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 					         NoArquivo,
 					         TaArquivo,
 					         idDocumentosAgentes,'tbDocumentosAgentes' as Tabela
-					  FROM SAC.dbo.tbDocumentosAgentes d
-					  INNER JOIN SAC.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)
+					  FROM sac.dbo.tbDocumentosAgentes d
+					  INNER JOIN sac.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)
 					  --WHERE d.idPRONAC = $idpronac";
 
 	      try
@@ -1314,8 +1314,8 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 	    {
 	      $sql = "SELECT NoArquivo AS nmArquivo,
 						imDocumento AS biArquivo
-					  FROM SAC.dbo.tbDocumentosPreProjeto d
-					  INNER JOIN SAC.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)
+					  FROM sac.dbo.tbDocumentosPreProjeto d
+					  INNER JOIN sac.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)
 					  WHERE idDocumentosPreprojetos =  $idpronac
 	      ";
 
@@ -1346,8 +1346,8 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 					         TaArquivo,
 					         d.idDocumento,
 					         'tbDocumento' as Tabela
-					  FROM SAC.dbo.tbDocumento d
-					  INNER JOIN SAC.dbo.tbTipoDocumento e on (d.idTipoDocumento = e.idTipoDocumento)
+					  FROM sac.dbo.tbDocumento d
+					  INNER JOIN sac.dbo.tbTipoDocumento e on (d.idTipoDocumento = e.idTipoDocumento)
 					  WHERE idPronac = $idpronac
 					 -- ORDER BY Data
 
@@ -1410,7 +1410,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 			    Justificativa
 
 			FROM
-			    SAC.dbo.vwOrcamentoSolicitado";
+			    sac.dbo.vwOrcamentoSolicitado";
 
 
         $sql.= " WHERE idPronac = $idPronac";
@@ -1461,7 +1461,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 				    idProduto
 
 				FROM
-				    SAC.dbo.vwOrcamentoSolicitado
+				    sac.dbo.vwOrcamentoSolicitado
 				WHERE idPronac = $idPronac
 				ORDER BY Produto";
 
@@ -1487,7 +1487,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 			    idProduto
 
 			FROM
-			    SAC.dbo.vwOrcamentoSolicitado";
+			    sac.dbo.vwOrcamentoSolicitado";
 
 
             $sql.= " WHERE idPronac = $idPronac";
@@ -1522,7 +1522,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 			    Etapa
 
 			FROM
-			    SAC.dbo.vwOrcamentoSolicitado";
+			    sac.dbo.vwOrcamentoSolicitado";
 
 
             $sql.= " WHERE idPronac = $idPronac";
@@ -1554,10 +1554,10 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
     public static function ValorTotalAdministrativo($idPronac = null, $tpAprovacao=null)
     {
 
-        /*$sql = "select sum((qtItem * nrOcorrencia * vlUnitario)) as valorTotaladministrativo from SAC.dbo.tbPlanilhaAprovacao where tpPlanilha = '$tpAprovacao'
+        /*$sql = "select sum((qtItem * nrOcorrencia * vlUnitario)) as valorTotaladministrativo from sac.dbo.tbPlanilhaAprovacao where tpPlanilha = '$tpAprovacao'
                 and idproduto=0 and idplanilhaitem not in (5249, 206, 1238)";*/
 
-        $sql = "select sum((qtItem * nrOcorrencia * vlUnitario)) as valorTotaladministrativo from SAC.dbo.tbPlanilhaAprovacao
+        $sql = "select sum((qtItem * nrOcorrencia * vlUnitario)) as valorTotaladministrativo from sac.dbo.tbPlanilhaAprovacao
         where tpPlanilha = '$tpAprovacao'
         and idproduto=0
         and idetapa = 4
@@ -1629,19 +1629,19 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
 					,CID.idMunicipioIBGE AS idCidade
 					,CID.Descricao AS Cidade
 					,LTRIM(RTRIM(TI.Descricao)) as FonteRecurso
-				FROM SAC.dbo.Projetos PRO
-					INNER JOIN SAC.dbo.tbPlanilhaProjeto PPJ on PPJ.idPRONAC = PRO.IdPRONAC
-					INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+				FROM sac.dbo.Projetos PRO
+					INNER JOIN sac.dbo.tbPlanilhaProjeto PPJ on PPJ.idPRONAC = PRO.IdPRONAC
+					INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
 					INNER JOIN agentes.dbo.UF UF on (PAP.idUFDespesa = UF.idUF)
 					INNER JOIN agentes.dbo.Municipios CID on (PAP.idMunicipioDespesa = CID.idMunicipioIBGE)
-					INNER JOIN SAC.dbo.tbPlanilhaEtapa E on (PAP.idEtapa = E.idPlanilhaEtapa)
-					INNER JOIN SAC.dbo.tbPlanilhaUnidade UNI on (PAP.idUnidade = UNI.idUnidade)
-					left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
-					inner join SAC.dbo.Verificacao TI on TI.idverificacao = PAP.nrFonteRecurso and TI.idTipo = 5
-                                        inner join SAC.dbo.tbAnaliseAprovacao ap on ap.idpronac = pro.idpronac and tpAnalise='$tpPlanilha'
+					INNER JOIN sac.dbo.tbPlanilhaEtapa E on (PAP.idEtapa = E.idPlanilhaEtapa)
+					INNER JOIN sac.dbo.tbPlanilhaUnidade UNI on (PAP.idUnidade = UNI.idUnidade)
+					left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+					inner join sac.dbo.Verificacao TI on TI.idverificacao = PAP.nrFonteRecurso and TI.idTipo = 5
+                                        inner join sac.dbo.tbAnaliseAprovacao ap on ap.idpronac = pro.idpronac and tpAnalise='$tpPlanilha'
 
 				WHERE --(PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
 					--AND (PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)

@@ -11,7 +11,7 @@
 
 class PlanilhaEtapaDAO extends Zend_Db_Table
 {
-	protected $_name = 'SAC.dbo.tbPlanilhaEtapa';
+	protected $_name = 'sac.dbo.tbPlanilhaEtapa';
 
 
 
@@ -24,7 +24,7 @@ class PlanilhaEtapaDAO extends Zend_Db_Table
 	 */
 	public static function buscar()
 	{
-		$sql = "SELECT * FROM SAC.dbo.tbPlanilhaEtapa ORDER BY Descricao";
+		$sql = "SELECT * FROM sac.dbo.tbPlanilhaEtapa ORDER BY Descricao";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

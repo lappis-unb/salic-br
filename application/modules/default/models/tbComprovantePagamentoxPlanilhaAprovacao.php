@@ -434,7 +434,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                 array('c' => 'Nomes'), "b.idAgente = c.idAgente",
                 array(), 'agentes'
         );
-        $a->where('a.AnoProjeto+a.Sequencial = (SELECT x.Anoprojeto+x.Sequencial FROM SAC.dbo.Projetos x WHERE x.idPronac = ? )', $idPronac);
+        $a->where('a.AnoProjeto+a.Sequencial = (SELECT x.Anoprojeto+x.Sequencial FROM sac.dbo.Projetos x WHERE x.idPronac = ? )', $idPronac);
         $a->group(array('a.CgcCpfMecena','c.Descricao'));
         $a->order(array('2','3'));
 
@@ -527,13 +527,13 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
             array(
                 "a.nrAnoProjeto",
                 "a.nrSequencial",
-                new Zend_Db_Expr("(SELECT SUBSTRING(dsInformacao,2,4) FROM SAC.dbo.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') as NumeroRecibo"),
+                new Zend_Db_Expr("(SELECT SUBSTRING(dsInformacao,2,4) FROM sac.dbo.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') as NumeroRecibo"),
                 "a.nrCpfCnpjIncentivador",
                 new Zend_Db_Expr("(SELECT b.Enquadramento FROM sac.dbo.enquadramento AS b WHERE b.AnoProjeto+b.Sequencial =  a.nrAnoProjeto+a.nrSequencial) AS MedidaProvisoria"),
                 "a.dtChegadaRecibo",
                 "a.dtCredito",
                 new Zend_Db_Expr("0 AS CaptacaoUfir"),
-                new Zend_Db_Expr("(SELECT idUsuario FROM SAC.DBO.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') AS Logon"),
+                new Zend_Db_Expr("(SELECT idUsuario FROM sac.DBO.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') AS Logon"),
                 new Zend_Db_Expr("(SELECT idPronac FROM sac.dbo.Projetos AS p WHERE p.AnoProjeto+p.Sequencial = a.nrAnoProjeto + a.nrSequencial) AS idProjeto")
             )
         );

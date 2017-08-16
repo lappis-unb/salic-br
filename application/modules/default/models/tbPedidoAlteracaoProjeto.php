@@ -155,14 +155,14 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 ),'SAC'
         );
         $slct->joinInner(array('ap' => 'Aprovacao'),
-                'ap.idPronac = pr.idPronac AND ap.DtAprovacao IN (SELECT TOP 1 MAX(DtAprovacao) FROM SAC..Aprovacao WHERE IdPRONAC = pr.IdPRONAC)',
+                'ap.idPronac = pr.idPronac AND ap.DtAprovacao IN (SELECT TOP 1 MAX(DtAprovacao) FROM sac..Aprovacao WHERE IdPRONAC = pr.IdPRONAC)',
                 array(
                 'ap.idAprovacao',
                 'ap.DtPublicacaoAprovacao',
                 'ap.PortariaAprovacao',
                 'ap.DtInicioCaptacao as DtInicioCaptacaoGravada',
                 'ap.DtFimCaptacao as DtFimCaptacaoGravada',
-                'AprovadoReal' => new Zend_Db_Expr('SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)')
+                'AprovadoReal' => new Zend_Db_Expr('sac.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)')
                 ),'SAC'
         );
         $slct->joinInner(array('ar' => 'Area'),
@@ -184,7 +184,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 ),'SAC'
         );
         $slct->joinLeft(array('tp' => 'tbPauta'),
-                'tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)',
+                'tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)',
                 array(),
                 'bdcorporativo.scSAC'
         );
@@ -260,7 +260,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select->where('a.idPedidoAlteracao = ?', $idPedidoAlteracao);
         $select->where('c.tpAlteracaoProjeto = ?', 7);
         $select->where('b.tpAcao = ?', 'I');
-        $select->where(new Zend_Db_Expr("NOT EXISTS(SELECT TOP 1 * FROM SAC.DBO.tbPlanilhaAprovacao d WHERE d.tpPlanilha = 'SR' AND d.stAtivo = 'N' AND b.idProduto = d.idProduto AND a.idPronac = d.idPronac)"));
+        $select->where(new Zend_Db_Expr("NOT EXISTS(SELECT TOP 1 * FROM sac.DBO.tbPlanilhaAprovacao d WHERE d.tpPlanilha = 'SR' AND d.stAtivo = 'N' AND b.idProduto = d.idProduto AND a.idPronac = d.idPronac)"));
 
         return $this->fetchAll($select);
     }

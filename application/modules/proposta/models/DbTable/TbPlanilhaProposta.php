@@ -240,14 +240,14 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
 //                    pp.ValorUnitario as ValorUnitario,
 //                    pp.QtdeDias as QtdDias,
 //                    CAST(pp.dsJustificativa AS TEXT) as Justificativa
-//                  FROM SAC.dbo.PreProjeto AS pre
-//                        INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
-//                        INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-//                        INNER JOIN SAC.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
+//                  FROM sac.dbo.PreProjeto AS pre
+//                        INNER JOIN sac.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
+//                        INNER JOIN sac.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+//                        INNER JOIN sac.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
 //                        INNER JOIN agentes.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
-//                        INNER JOIN SAC.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
-//                        LEFT JOIN SAC.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
-//                        LEFT JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
+//                        INNER JOIN sac.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
+//                        LEFT JOIN sac.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
+//                        LEFT JOIN sac.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
 //                WHERE (pre.idPreProjeto = {$array['idPreProjeto']} and  pp.idEtapa = {$array['etapa']} and pp.idPlanilhaItem = {$array['item']} )
 //                       and pp.idPlanilhaProposta = {$array['idPlanilhaProposta']}";
 
@@ -670,7 +670,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         if( empty($idPlanilhaItem) OR empty($idUnidade))
             return false;
 
-        $exec = new Zend_Db_Expr("EXEC SAC.dbo.spCalcularMedianaItemOrcamentario {$idProduto}, {$idPlanilhaItem}, {$idUFDespesa}, {$idMunicipioDespesa}, {$idUnidade}");
+        $exec = new Zend_Db_Expr("EXEC sac.dbo.spCalcularMedianaItemOrcamentario {$idProduto}, {$idPlanilhaItem}, {$idUFDespesa}, {$idMunicipioDespesa}, {$idUnidade}");
 
         try {
             $db= Zend_Db_Table::getDefaultAdapter();

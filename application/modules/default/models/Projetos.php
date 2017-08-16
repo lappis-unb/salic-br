@@ -302,9 +302,9 @@ class Projetos extends MinC_Db_Table_Abstract
             'pr.DtFimExecucao',
             'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,{$this->getDate()})"),
             'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year({$this->getDate()})) + '/12/31' end"),
-            'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
-            'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
-            'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
+            'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from sac.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
+            'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from sac.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
+            'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from sac.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
         ), "SAC"
         );
 
@@ -376,9 +376,9 @@ class Projetos extends MinC_Db_Table_Abstract
             'pr.DtFimExecucao',
             'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,{$this->getDate()})"),
             'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year({$this->getDate()})) + '/12/31' end"),
-            'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
-            'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
-            'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
+            'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from sac.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
+            'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from sac.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
+            'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from sac.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
         ), "SAC"
         );
 
@@ -468,7 +468,7 @@ class Projetos extends MinC_Db_Table_Abstract
             'ap.PortariaAprovacao',
             'ap.DtInicioCaptacao as DtInicioCaptacaoGravada',
             'ap.DtFimCaptacao as DtFimCaptacaoGravada',
-            'AprovadoReal' => new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC"
+            'AprovadoReal' => new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC"
         );
 
         $slct->joinInner(
@@ -487,7 +487,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                   END")), "SAC"
         );
         $slct->joinInner(
-            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
+            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
         );
         $slct->joinInner(
             array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
@@ -551,21 +551,21 @@ class Projetos extends MinC_Db_Table_Abstract
             'DtFimCaptacao' => New Zend_Db_Expr("CASE WHEN DtFimCaptacao IS NOT NULL THEN ap.DtFimCaptacao
                                                                           WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' THEN pr.DtFimExecucao
                                                                           ELSE CONVERT(char(4),year({$this->getDate()})) + '/12/31' END"),
-            /* 'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili1.DtSolicitacao desc)'),
-              'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili2.DtSolicitacao desc)'),
-              'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili3.DtSolicitacao desc)') */
+            /* 'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from sac.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili1.DtSolicitacao desc)'),
+              'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from sac.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili2.DtSolicitacao desc)'),
+              'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from sac.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili3.DtSolicitacao desc)') */
         ), "SAC"
         );
 
         $slct->joinInner(
-            array("ap" => "Aprovacao"), "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)", array(
+            array("ap" => "Aprovacao"), "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from sac..Aprovacao where IdPRONAC = pr.IdPRONAC)", array(
             'ap.idAprovacao',
             'ap.DtPublicacaoAprovacao',
             'ap.PortariaAprovacao',
             'ap.DtInicioCaptacao as DtInicioCaptacaoGravada',
             'ap.DtFimCaptacao as DtFimCaptacaoGravada',
             //'ap.AprovadoReal',
-            'AprovadoReal' => new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC"
+            'AprovadoReal' => new Zend_Db_Expr("sac.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC"
         );
 
         $slct->joinInner(
@@ -580,7 +580,7 @@ class Projetos extends MinC_Db_Table_Abstract
             'enquadramento' => New Zend_Db_Expr("case when en.Enquadramento = 1 then '26' when en.Enquadramento = 2 then '18' end ")), "SAC"
         );
         $slct->joinInner(
-            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
+            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
         );
         $slct->joinInner(
             array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
@@ -618,7 +618,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $slctContador->from(array("pr" => $this->_name), array("total" => "count(*)"), "SAC"
             );
             $slctContador->joinInner(
-                array("ap" => "Aprovacao"), "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)", array(), "SAC"
+                array("ap" => "Aprovacao"), "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from sac..Aprovacao where IdPRONAC = pr.IdPRONAC)", array(), "SAC"
             );
 
             $slctContador->joinInner(
@@ -631,7 +631,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array(), "SAC"
             );
             $slctContador->joinInner(
-                array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
+                array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
             );
             $slctContador->joinInner(
                 array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array(), "SAC"
@@ -1015,7 +1015,7 @@ class Projetos extends MinC_Db_Table_Abstract
          */
         $select->from(
             array('pr' => $this->_name), array(
-                'SAC.dbo.fnchecarDiligencia(pr.IdPRONAC) AS Diligencia',
+                'sac.dbo.fnchecarDiligencia(pr.IdPRONAC) AS Diligencia',
                 'pr.AnoProjeto',
                 'pr.Sequencial',
                 '(pr.AnoProjeto+pr.Sequencial) as pronac',
@@ -2385,7 +2385,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('p' => $this->_name), array('SAC.dbo.fnchecarDiligencia(p.IdPRONAC) AS Diligencia',
+            array('p' => $this->_name), array('sac.dbo.fnchecarDiligencia(p.IdPRONAC) AS Diligencia',
                 'p.IdPRONAC',
                 '(p.AnoProjeto + p.Sequencial) AS PRONAC',
                 'p.NomeProjeto')
@@ -2540,7 +2540,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('p' => $this->_name), array('SAC.dbo.fnchecarDiligencia(p.IdPRONAC) AS Diligencia',
+            array('p' => $this->_name), array('sac.dbo.fnchecarDiligencia(p.IdPRONAC) AS Diligencia',
                 'p.IdPRONAC',
                 '(p.AnoProjeto + p.Sequencial) AS PRONAC',
                 'p.NomeProjeto')
@@ -3395,7 +3395,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('o' => 'Orgaos'), "p.Orgao = o.Codigo"
         );
         $select->joinInner(
-            array('a' => 'Agentes'), "a.CNPJCPF = p.CgcCpf", array(new Zend_Db_Expr('SAC.dbo.fnNome(a.idAgente) AS NomeProponente')), "agentes"
+            array('a' => 'Agentes'), "a.CNPJCPF = p.CgcCpf", array(new Zend_Db_Expr('sac.dbo.fnNome(a.idAgente) AS NomeProponente')), "agentes"
         );
 //        $select->joinInner(
 //                array('n' => 'Nomes'), "n.idAgente = a.idAgente", array('n.Descricao as NomeProponente'), "agentes"
@@ -3994,17 +3994,17 @@ class Projetos extends MinC_Db_Table_Abstract
                 "DtProtocolo" => "CONVERT(CHAR(11),pr.DtProtocolo,120)", "pr.Orgao", "pr.OrgaoOrigem",
                 "pr.Situacao", "DtSituacao" => "CONVERT(CHAR(11),pr.DtSituacao,120)", "pr.ResumoProjeto",
                 "pr.ProvidenciaTomada", "pr.CgcCpf",
-                "NrPortaria" => new Zend_Db_Expr("SAC.dbo.fnNrPortariaAprovacao(AnoProjeto,Sequencial)"),
-                "DtPortaria" => new Zend_Db_Expr("CONVERT(CHAR(11),SAC.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial),120)"),
-                "DtPublicacao" => new Zend_Db_Expr("CONVERT(CHAR(11),SAC.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial),120)"),
-                "DtInicioCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),SAC.dbo.fnInicioCaptacao(AnoProjeto,Sequencial),120)"),
-                "DtFinalCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),SAC.dbo.fnFimCaptacao(AnoProjeto,Sequencial),120)"),
-                "DtPrimeiraCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),SAC.dbo.fnDtPrimeiraCaptacao(AnoProjeto,Sequencial),120)"),
-                "DtUltimaCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),SAC.dbo.fnDtUltimaCaptacao(AnoProjeto,Sequencial),120)"),
-                "DtLiberacao" => new Zend_Db_Expr("CONVERT(CHAR(11),SAC.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial),120)"),
-                "Valor" => new Zend_Db_Expr("SAC.dbo.fnValorSolicitado(AnoProjeto,Sequencial)"),
-                "VlAprovado" => new Zend_Db_Expr("SAC.dbo.fnAprovadoProjeto(AnoProjeto,Sequencial)"),
-                "Captado" => new Zend_Db_Expr("SAC.dbo.fnTotalCaptadoProjeto(AnoProjeto,Sequencial)")
+                "NrPortaria" => new Zend_Db_Expr("sac.dbo.fnNrPortariaAprovacao(AnoProjeto,Sequencial)"),
+                "DtPortaria" => new Zend_Db_Expr("CONVERT(CHAR(11),sac.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial),120)"),
+                "DtPublicacao" => new Zend_Db_Expr("CONVERT(CHAR(11),sac.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial),120)"),
+                "DtInicioCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),sac.dbo.fnInicioCaptacao(AnoProjeto,Sequencial),120)"),
+                "DtFinalCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),sac.dbo.fnFimCaptacao(AnoProjeto,Sequencial),120)"),
+                "DtPrimeiraCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),sac.dbo.fnDtPrimeiraCaptacao(AnoProjeto,Sequencial),120)"),
+                "DtUltimaCaptacao" => new Zend_Db_Expr("CONVERT(CHAR(11),sac.dbo.fnDtUltimaCaptacao(AnoProjeto,Sequencial),120)"),
+                "DtLiberacao" => new Zend_Db_Expr("CONVERT(CHAR(11),sac.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial),120)"),
+                "Valor" => new Zend_Db_Expr("sac.dbo.fnValorSolicitado(AnoProjeto,Sequencial)"),
+                "VlAprovado" => new Zend_Db_Expr("sac.dbo.fnAprovadoProjeto(AnoProjeto,Sequencial)"),
+                "Captado" => new Zend_Db_Expr("sac.dbo.fnTotalCaptadoProjeto(AnoProjeto,Sequencial)")
             )
         );
         $slct->joinInner(
@@ -4139,7 +4139,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from(
             array('pr' => $this->_name), array(
-                "Custo" => new Zend_Db_Expr("sum(SAC.dbo.fnCustoProjeto(pr.AnoProjeto,pr.Sequencial))"),
+                "Custo" => new Zend_Db_Expr("sum(sac.dbo.fnCustoProjeto(pr.AnoProjeto,pr.Sequencial))"),
                 "Qtde" => new Zend_Db_Expr("count(*)")
             )
         );
@@ -4329,7 +4329,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //        $slct->from(
 //                array('pr' => $this->_name),
 //                array(
-//                    "Diligencia"=>new Zend_Db_Expr("SAC.dbo.fnchecarDiligencia(pr.IdPRONAC)"),
+//                    "Diligencia"=>new Zend_Db_Expr("sac.dbo.fnchecarDiligencia(pr.IdPRONAC)"),
 //                    "IdPRONAC"
 //                    )
 //        );
@@ -4527,21 +4527,21 @@ class Projetos extends MinC_Db_Table_Abstract
                     "tempoFimDiligencia" => new Zend_Db_Expr("(
                         select
                         top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                        from SAC.dbo.tbDiligencia  d
+                        from sac.dbo.tbDiligencia  d
                         where d.idPronac = p.IdPRONAC and d.idProduto = pr.Codigo
                         order by DtSolicitacao desc
                  )"),
                     "DtSolicitacao" => new Zend_Db_Expr("(
                         select
                                 top 1 DtSolicitacao
-                        from SAC.dbo.tbDiligencia  d
+                        from sac.dbo.tbDiligencia  d
                         where d.idPronac = p.IdPRONAC and d.idProduto = pr.Codigo
                         order by DtSolicitacao desc
                  )"),
                     "DtResposta" => new Zend_Db_Expr("(
                         select
                                 top 1 DtResposta
-                        from SAC.dbo.tbDiligencia  d
+                        from sac.dbo.tbDiligencia  d
                         where d.idPronac = p.IdPRONAC and d.idProduto = pr.Codigo
                         order by DtSolicitacao desc
                  )"),
@@ -4600,21 +4600,21 @@ class Projetos extends MinC_Db_Table_Abstract
                     "tempoFimDiligencia" => new Zend_Db_Expr("(
                         select
                                 top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                        from SAC.dbo.tbDiligencia  d
+                        from sac.dbo.tbDiligencia  d
                         where d.idPronac = p.IdPRONAC and d.idProduto = pr.Codigo
                         order by DtSolicitacao desc
                  )"),
                     "DtSolicitacao" => new Zend_Db_Expr("(
                         select
                                 top 1 DtSolicitacao
-                        from SAC.dbo.tbDiligencia  d
+                        from sac.dbo.tbDiligencia  d
                         where d.idPronac = p.IdPRONAC and d.idProduto = pr.Codigo
                         order by DtSolicitacao desc
                  )"),
                     "DtResposta" => new Zend_Db_Expr("(
                         select
                                 top 1 DtResposta
-                        from SAC.dbo.tbDiligencia  d
+                        from sac.dbo.tbDiligencia  d
                         where d.idPronac = p.IdPRONAC and d.idProduto = pr.Codigo
                         order by DtSolicitacao desc
                  )"),
@@ -5036,9 +5036,9 @@ class Projetos extends MinC_Db_Table_Abstract
                 'NomeProjeto' => 'p.NomeProjeto',
                 'CgcCpf' => 'p.CgcCpf',
                 'NrProjeto' => new Zend_Db_Expr('p.AnoProjeto+p.Sequencial'),
-                'Solicitado' => new Zend_Db_Expr('SAC.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)'),
-                'Aprovado' => new Zend_Db_Expr('SAC.dbo.fnAprovadoProjeto(p.AnoProjeto,p.Sequencial)'),
-                'Captado' => new Zend_Db_Expr('SAC.dbo.fnCustoProjeto(p.AnoProjeto,p.Sequencial)'),
+                'Solicitado' => new Zend_Db_Expr('sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)'),
+                'Aprovado' => new Zend_Db_Expr('sac.dbo.fnAprovadoProjeto(p.AnoProjeto,p.Sequencial)'),
+                'Captado' => new Zend_Db_Expr('sac.dbo.fnCustoProjeto(p.AnoProjeto,p.Sequencial)'),
                 'stEstado' => new Zend_Db_Expr('ISNULL((SELECT x.stAcao from tbArquivamento x where x.stAcao = 0 and stEstado = 1 and x.IdPRONAC = p.IdPRONAC),1)'),
                 'Situacao' => new Zend_Db_Expr("p.Situacao + ' - ' + si.Descricao")
             )
@@ -5128,7 +5128,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select = new Zend_Db_Expr("
             SELECT * FROM (
                 SELECT TOP " . $QntdPorPagina . " * FROM (
-                    SELECT TOP " . $TotalReg . " * FROM SAC.dbo.Projetos
+                    SELECT TOP " . $TotalReg . " * FROM sac.dbo.Projetos
                     WHERE Situacao = '" . $where['situacao'] . "' $filtroOrgao ORDER BY IdPRONAC
                 ) AS tabela ORDER BY IdPRONAC desc
             ) AS tabela ORDER BY IdPRONAC");
@@ -5151,7 +5151,7 @@ class Projetos extends MinC_Db_Table_Abstract
         }
 
         $select = new Zend_Db_Expr("
-            SELECT * FROM SAC.dbo.Projetos
+            SELECT * FROM sac.dbo.Projetos
             WHERE Situacao = '" . $where['situacao'] . "' $filtroOrgao ORDER BY IdPRONAC");
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -5165,7 +5165,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
 //        public function cadastrarProjetoFNC(array $dados){
 //
-//            $sql = "EXEC SAC.dbo.paGravarProjeto '{$dados['AnoProjeto']}','{$dados['Sequencial']}','{$dados['UfProjeto']}','{$dados['Area']}','{$dados['Segmento']}','{$dados['NomeProjeto']}','{$dados['Processo']}','{$dados['CgcCpf']}','{$dados['Orgao']}','{$dados['Modalidade']}','NULL','{$dados ['Situacao']}','{$dados ['ProvidenciaTomada']}','NULL','{$dados ['Mecanismo']}','0.00',{$dados['VlCusteio']},{$dados['VlCapital']},'{$dados['Usuario']}','{$dados ['DtProtocolo']}'";
+//            $sql = "EXEC sac.dbo.paGravarProjeto '{$dados['AnoProjeto']}','{$dados['Sequencial']}','{$dados['UfProjeto']}','{$dados['Area']}','{$dados['Segmento']}','{$dados['NomeProjeto']}','{$dados['Processo']}','{$dados['CgcCpf']}','{$dados['Orgao']}','{$dados['Modalidade']}','NULL','{$dados ['Situacao']}','{$dados ['ProvidenciaTomada']}','NULL','{$dados ['Mecanismo']}','0.00',{$dados['VlCusteio']},{$dados['VlCapital']},'{$dados['Usuario']}','{$dados ['DtProtocolo']}'";
 ////
 //            $db= Zend_Db_Table::getDefaultAdapter();
 //            $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -5317,7 +5317,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->joinInner(
                 array('d' => 'tbDiligencia'),
                 'p.IdPRONAC = d.IdPRONAC and d.DtSolicitacao = (
-                    SELECT top 1 d2.DtSolicitacao FROM SAC..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
+                    SELECT top 1 d2.DtSolicitacao FROM sac..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
                 )',
                 array(),
                 'SAC'
@@ -5462,7 +5462,7 @@ class Projetos extends MinC_Db_Table_Abstract
             'p.IdPRONAC = d.IdPRONAC',
             array(
                 'd.idSolicitante',
-                'DtSolicitacao' => new Zend_Db_Expr("(select top 1 d2.DtSolicitacao from SAC.dbo.tbDiligencia  d2 where d2.idPronac = p.IdPRONAC order by d2.DtSolicitacao desc)"),
+                'DtSolicitacao' => new Zend_Db_Expr("(select top 1 d2.DtSolicitacao from sac.dbo.tbDiligencia  d2 where d2.idPronac = p.IdPRONAC order by d2.DtSolicitacao desc)"),
                 'd.DtResposta as DtResposta',
                 'd.stEnviado as stEnviado'
             ), 'SAC'
@@ -5490,7 +5490,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $selectCount->joinInner(
                 array('d' => 'tbDiligencia'),
                 'p.IdPRONAC = d.IdPRONAC and d.DtSolicitacao = (
-                    SELECT top 1 d2.DtSolicitacao FROM SAC..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
+                    SELECT top 1 d2.DtSolicitacao FROM sac..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
                 )',
                 array(),
                 'SAC'
@@ -6129,9 +6129,9 @@ class Projetos extends MinC_Db_Table_Abstract
                             else 'N&atilde;o enquadrado'
                             end as Enquadramento, p.Situacao as codSituacao,
                             (SELECT sum(b1.vlComprovacao)
-                                FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                                INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                                INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao or a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)
+                                FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                                INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                                INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao or a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)
                                 WHERE c1.stAtivo = 'S' AND (c1.idPronac = $idPronac)
                                 GROUP BY c1.idPronac) AS vlComprovado,
                                 CONVERT(varchar(10),sac.dbo.fnInicioCaptacao(p.AnoProjeto,p.Sequencial),103) as DtInicioCaptacao,
@@ -6179,7 +6179,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array('p' => $this->_name),
             array(
                 new Zend_Db_Expr("p.IdPRONAC, p.AnoProjeto+p.Sequencial AS pronac, p.NomeProjeto AS nomeProjeto,
-                        p.CgcCPf, n.Descricao AS nomeProponente, SAC.dbo.fnFormataProcesso(p.idPronac) AS processo")
+                        p.CgcCPf, n.Descricao AS nomeProponente, sac.dbo.fnFormataProcesso(p.idPronac) AS processo")
             )
         );
 
@@ -6357,7 +6357,7 @@ class Projetos extends MinC_Db_Table_Abstract
                             WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                         END AS descAvaliacao,
                         p.SolicitadoReal as vlSolicitado,
-                        (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
+                        (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
                         p.ResumoProjeto
                     ")
         ), 'bdcorporativo.scSAC'
@@ -6394,7 +6394,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select1->where('pr.stAtivo = ?', 1);
         $select1->where('z.Status = ?', 0);
         $select1->where('p.Situacao in (?)', array('C10', 'C30'));
-        $select1->where('NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbPauta  o  WHERE o.IdPRONAC = p.IdPronac)', '');
+        $select1->where('NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbPauta  o  WHERE o.IdPRONAC = p.IdPronac)', '');
 
 
         $select2 = $this->select();
@@ -6424,7 +6424,7 @@ class Projetos extends MinC_Db_Table_Abstract
                             WHEN pr.ParecerFavoravel = '2' THEN 'Favor&aacute;vel'
                         END AS descAvaliacao,
                         p.SolicitadoReal as vlSolicitado,
-                        (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
+                        (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM sac.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
                         p.ResumoProjeto
                     ")
         ), 'bdcorporativo.scSAC'
@@ -6669,14 +6669,14 @@ class Projetos extends MinC_Db_Table_Abstract
                     sac.dbo.fnOutrasFontes(p.idPronac) AS OutrasFontes,
                     CASE
                         WHEN p.Mecanismo ='2' or p.Mecanismo ='6'
-                        THEN SAC.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
-                        ELSE SAC.dbo.fnValorAprovado(p.AnoProjeto,p.Sequencial)
+                        THEN sac.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
+                        ELSE sac.dbo.fnValorAprovado(p.AnoProjeto,p.Sequencial)
                     END AS ValorAprovado,
                     CASE
                         WHEN p.Mecanismo ='2' or p.Mecanismo ='6'
-                        THEN SAC.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
-                        ELSE SAC.dbo.fnValorAprovado(p.AnoProjeto,p.Sequencial) + sac.dbo.fnOutrasFontes(p.idPronac) end as ValorProjeto,
-                    SAC.dbo.fnCustoProjeto (p.AnoProjeto,p.Sequencial) AS ValorCaptado,
+                        THEN sac.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
+                        ELSE sac.dbo.fnValorAprovado(p.AnoProjeto,p.Sequencial) + sac.dbo.fnOutrasFontes(p.idPronac) end as ValorProjeto,
+                    sac.dbo.fnCustoProjeto (p.AnoProjeto,p.Sequencial) AS ValorCaptado,
                     Nome AS Proponente,
                     CAST(p.ResumoProjeto AS TEXT) AS ResumoProjeto,
                     CASE
@@ -7029,7 +7029,7 @@ class Projetos extends MinC_Db_Table_Abstract
         if ($filtro == 'diligenciados') {
             $select->joinInner(
                 array('d' => 'tbDiligencia'), 'p.IdPRONAC = d.IdPRONAC and d.DtSolicitacao = (
-                    SELECT top 1 d2.DtSolicitacao FROM SAC..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
+                    SELECT top 1 d2.DtSolicitacao FROM sac..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
                 )',
                 array(), 'SAC'
             );
@@ -7137,7 +7137,7 @@ class Projetos extends MinC_Db_Table_Abstract
         if ($filtro == 'diligenciados') {
             $select->joinInner(
                 array('d' => 'tbDiligencia'), 'p.IdPRONAC = d.IdPRONAC and d.DtSolicitacao = (
-                    SELECT top 1 d2.DtSolicitacao FROM SAC..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
+                    SELECT top 1 d2.DtSolicitacao FROM sac..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC
                 )',
                 array(), 'SAC'
             );

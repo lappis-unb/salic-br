@@ -13,7 +13,7 @@
 class AprovacaoDAO extends Zend_Db_Table
 {
 
-    protected $_name = 'bdcorporativo.scSAC.tbPauta'; // nome da tabela
+    protected $_name = 'bdcorporativo.scsac.tbPauta'; // nome da tabela
 
     #--verifica se tem algum componente na area e segmento selecionado--
 
@@ -43,13 +43,13 @@ class AprovacaoDAO extends Zend_Db_Table
                 ap.idAprovacao,
                 tr.NrReuniao,
                 nm.Descricao as nome
-                from SAC.dbo.Projetos pr
-                INNER JOIN SAC.dbo.Area ar on ar.Codigo = pr.Area
-                INNER JOIN SAC.dbo.Segmento seg on seg.Codigo = pr.Segmento
-                left JOIN SAC..Enquadramento en on en.IdPRONAC = pr.IdPRONAC
-                INNER JOIN SAC..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)
-                INNER JOIN bdcorporativo.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
-                INNER JOIN SAC..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
+                from sac.dbo.Projetos pr
+                INNER JOIN sac.dbo.Area ar on ar.Codigo = pr.Area
+                INNER JOIN sac.dbo.Segmento seg on seg.Codigo = pr.Segmento
+                left JOIN sac..Enquadramento en on en.IdPRONAC = pr.IdPRONAC
+                INNER JOIN sac..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from sac..Aprovacao where IdPRONAC = pr.IdPRONAC)
+                INNER JOIN bdcorporativo.scsac.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
+                INNER JOIN sac..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
                 INNER JOIN agentes.dboAgentes ag on ag.CNPJCPF = pr.CgcCpf
                 INNER JOIN agentes.dboNomes nm on nm.idAgente = ag.idAgente ";
 
@@ -102,13 +102,13 @@ class AprovacaoDAO extends Zend_Db_Table
                 ap.AprovadoReal,
                 tr.NrReuniao,
                 nm.Descricao as nome
-                from SAC.dbo.Projetos pr
-                INNER JOIN SAC.dbo.Area ar on ar.Codigo = pr.Area
-                INNER JOIN SAC.dbo.Segmento seg on seg.Codigo = pr.Segmento
-                left JOIN SAC..Enquadramento en on en.IdPRONAC = pr.IdPRONAC
-                INNER JOIN SAC..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)
-                INNER JOIN bdcorporativo.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
-                INNER JOIN SAC..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
+                from sac.dbo.Projetos pr
+                INNER JOIN sac.dbo.Area ar on ar.Codigo = pr.Area
+                INNER JOIN sac.dbo.Segmento seg on seg.Codigo = pr.Segmento
+                left JOIN sac..Enquadramento en on en.IdPRONAC = pr.IdPRONAC
+                INNER JOIN sac..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from sac..Aprovacao where IdPRONAC = pr.IdPRONAC)
+                INNER JOIN bdcorporativo.scsac.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
+                INNER JOIN sac..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
                 INNER JOIN agentes.dboAgentes ag on ag.CNPJCPF = pr.CgcCpf
                 INNER JOIN agentes.dboNomes nm on nm.idAgente = ag.idAgente
                 where (pr.Situacao = 'D40' and ap.TipoAprovacao= 2) or (pr.Situacao='D40' and ap.TipoAprovacao=4) or (ap.TipoAprovacao = 5)";
@@ -130,7 +130,7 @@ class AprovacaoDAO extends Zend_Db_Table
     public static function SomarAprovacao($idpronac=null)
     {
         $sql = "select SUM(AprovadoReal) as soma 
-                from SAC..Aprovacao
+                from sac..Aprovacao
                 where idpronac = $idpronac
                 and portariaaprovacao is not null";
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -142,7 +142,7 @@ class AprovacaoDAO extends Zend_Db_Table
     public static function SomarReadeqComplementacao($idpronac=null, $tipoaprovacao=null)
     {
         $sql = "select SUM(AprovadoReal) as soma
-                from SAC..Aprovacao
+                from sac..Aprovacao
                 where idpronac = $idpronac
                 and tipoaprovacao = $tipoaprovacao
                 and portariaaprovacao is null";
@@ -159,7 +159,7 @@ class AprovacaoDAO extends Zend_Db_Table
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac and dtAprovacao in (select max(dtAprovacao) from sac.dbo.aprovacao where idpronac = $idpronac)";
-            $alterar = $db->update("SAC.dbo.Aprovacao", $dados, $where);
+            $alterar = $db->update("sac.dbo.Aprovacao", $dados, $where);
         }
         catch (Exception $e)
         {

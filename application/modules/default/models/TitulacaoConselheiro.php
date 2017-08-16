@@ -69,10 +69,10 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(array('T' => $this->_name), array("T.idAgente",
                     "(SELECT COUNT(SDPC.idPronac) as QTD
-                              FROM bdcorporativo.scSAC.tbDistribuicaoProjetoComissao SDPC
-                              INNER JOIN SAC.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
+                              FROM bdcorporativo.scsac.tbDistribuicaoProjetoComissao SDPC
+                              INNER JOIN sac.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
                               WHERE pr.Situacao = 'C10' and SDPC.idAgente = T.idAgente
-                              and SDPC.idPronac not in (select idpronac from bdcorporativo.scSAC.tbPauta)
+                              and SDPC.idPronac not in (select idpronac from bdcorporativo.scsac.tbPauta)
                       )  as QTD
                      ",
                 "T.cdArea"
@@ -120,10 +120,10 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(array('T' => $this->_name), array("T.idAgente",
                     "(SELECT COUNT(SDPC.idPronac) as QTD
-                              FROM bdcorporativo.scSAC.tbDistribuicaoProjetoComissao SDPC
-                              INNER JOIN SAC.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
+                              FROM bdcorporativo.scsac.tbDistribuicaoProjetoComissao SDPC
+                              INNER JOIN sac.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
                               WHERE pr.Situacao = 'C10' and SDPC.idAgente = T.idAgente
-                              and SDPC.idPronac not in (select idpronac from bdcorporativo.scSAC.tbPauta)
+                              and SDPC.idPronac not in (select idpronac from bdcorporativo.scsac.tbPauta)
                       )  as QTD
                      ",
                 "T.cdArea"

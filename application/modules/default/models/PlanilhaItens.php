@@ -65,7 +65,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
         $select->where('pEtapa.idPlanilhaEtapa = ?', $idetapa);
         $select->where('pAprovacao.stAtivo = ?','S');
         $select->where('cxpa.idContrato is null');
-//        $select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  SAC.dbo.tbDeParaPlanilhaAprovacao'));
+//        $select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  sac.dbo.tbDeParaPlanilhaAprovacao'));
 
         $select->order('pItens.Descricao');
 
@@ -123,7 +123,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
         $select->where('pAprovacao.idProduto = ?', $idproduto);
         $select->where('pEtapa.idPlanilhaEtapa = ?', $idetapa);
         $select->where('pAprovacao.stAtivo = ?','S');
-        //$select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  SAC.dbo.tbDeParaPlanilhaAprovacao'));
+        //$select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  sac.dbo.tbDeParaPlanilhaAprovacao'));
         /*
         if(is_array($ckItens) and count(is_array($ckItens))>0)
             $select->where('pAprovacao.idPlanilhaItem in ('.implode(',',$ckItens).')');
@@ -213,7 +213,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
         //$select->where('cxpa.idCotacao is null');
         //$select->where('dlxpa.idDispensaLicitacao is null');
         //$select->where('lxpa.idLicitacao is null');
-        //$select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  SAC.dbo.tbDeParaPlanilhaAprovacao'));
+        //$select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  sac.dbo.tbDeParaPlanilhaAprovacao'));
 
         $select->order('pItens.Descricao');
 
@@ -313,7 +313,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
         $select->where('pAprovacao.IdPRONAC = ?',$idpronac);
         $select->where('pAprovacao.idProduto = ?', $idproduto);
         $select->where('pEtapa.idPlanilhaEtapa = ?', $idetapa);
-        $select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  SAC.dbo.tbDeParaPlanilhaAprovacao'));
+        $select->where('pAprovacao.idPlanilhaAprovacao in (?)', new Zend_Db_Expr('select idPlanilhaAprovacao  from  sac.dbo.tbDeParaPlanilhaAprovacao'));
 
         $select->order('pItens.Descricao');
 

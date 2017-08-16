@@ -276,7 +276,7 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
             );
 
             $objAcesso = new Acesso();
-            $dados = "Insert into SAC.dbo.tbDocumento
+            $dados = "Insert into sac.dbo.tbDocumento
                   (idPronac, stEstado, imDocumento, idTipoDocumento, idUsuario, dtDocumento, NoArquivo, TaArquivo, idUsuarioJuntada, dtJuntada, idUnidadeCadastro, CodigoCorreio, biDocumento)
                   values
                   (".$idPronac.", 0, null, ".$tipo_doc.", ".$idusuario.", {$objAcesso->getExpressionDate()}, '".$arquivoNome."', ".$arquivoTamanho.", null, null, ".$codOrgao.", '".$cod_ect."', ".$arquivoBinario.")
@@ -310,7 +310,7 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                             'Acao'                  => 1,
                             'stEstado'              => 1
                     );
-                    $resultado2 = TramitarDocumentosDAO::cadHistorico('SAC.dbo.tbHistoricoDocumento',$tbHistoricoDoc);
+                    $resultado2 = TramitarDocumentosDAO::cadHistorico('sac.dbo.tbHistoricoDocumento',$tbHistoricoDoc);
                 }
 
                 $this->_helper->viewRenderer->setNoRender();

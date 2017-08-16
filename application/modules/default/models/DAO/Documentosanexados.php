@@ -1,7 +1,7 @@
 <?php
 Class Documentosanexados extends Zend_Db_Table{
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+       	protected $_name    = 'sac.dbo.Projetos';
 
        	public static function buscar($pronac)
        	{
@@ -9,10 +9,10 @@ Class Documentosanexados extends Zend_Db_Table{
        				CONVERT(CHAR(10),Do.dtDocumento,103) as Data, 
        				Td.dsTipoDocumento, Do.NoArquivo, Pr.IdPRONAC, Pr.NomeProjeto
 				from 
-					SAC.dbo.Projetos Pr
-					LEFT JOIN SAC.dbo.tbDocumento Do ON Do.IdPRONAC = Pr.IdPRONAC
+					sac.dbo.Projetos Pr
+					LEFT JOIN sac.dbo.tbDocumento Do ON Do.IdPRONAC = Pr.IdPRONAC
 					LEFT JOIN bdcorporativo.scCorp.tbArquivo Ar on Ar.idArquivo = Do.idDocumento
-					LEFT JOIN SAC.dbo.tbTipoDocumento Td on Do.idTipoDocumento = Do.idTipoDocumento
+					LEFT JOIN sac.dbo.tbTipoDocumento Td on Do.idTipoDocumento = Do.idTipoDocumento
 					where Pr.IdPRONAC= " . $pronac . "";
        		
        		

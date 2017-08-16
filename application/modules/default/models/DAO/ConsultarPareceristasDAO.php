@@ -26,7 +26,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 					p.UnidadeAnalise, 
 					p.Analista, 
 					p.idProjeto 
-				from SAC.dbo.Projetos p
+				from sac.dbo.Projetos p
 				where IdPRONAC = $idPronac";
 		
 		if(!empty($area)){
@@ -54,7 +54,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 					dp.idProduto as idProduto,
 					dp.stEstado as TipoParecer 
 				From agentes.dbo.Agentes a
-				inner join SAC.dbo.tbDistribuirParecer dp on dp.idAgenteParecerista = a.idAgente
+				inner join sac.dbo.tbDistribuirParecer dp on dp.idAgenteParecerista = a.idAgente
 				inner join TABELAS.dbo.vwUsuariosOrgaosGrupos u on u.usu_identificacao = a.CNPJCPF
 				INNER JOIN agentes.dbo.Nomes AS n ON a.idAgente = n.idAgente
 				INNER JOIN agentes.dbo.Visao AS v ON n.idAgente = v.idAgente 
@@ -82,17 +82,17 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 				WHEN TipoAnalise = 1 THEN 'Custo do Produto' 
 				ELSE 'Custo Administrativo' 
 				END AS DescricaoAnalise, 
-				SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs, 
+				sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs, 
 				pp.idPagamentoParecerista, pp.idComprovantePagamento, p.IdPRONAC, (p.AnoProjeto + p.Sequencial) AS NrProjeto, 
 				p.NomeProjeto, r.Descricao AS Produto, a.Descricao AS Area, s.Descricao AS Segmento, ac.ParecerFavoravel AS Status,
 				pp.idComprovantePagamento as memorando, pp.siPagamento, pp.vlPagamento
-				FROM SAC.dbo.tbDistribuirParecer AS t
+				FROM sac.dbo.tbDistribuirParecer AS t
 				 LEFT JOIN agentes.dbo.tbPagamentoParecerista AS pp ON pp.idProduto = t.idDistribuirParecer
-				 INNER JOIN SAC.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC
-				 INNER JOIN SAC.dbo.Produto AS r ON t.idProduto = r.Codigo
-				 INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
-				 INNER JOIN SAC.dbo.Segmento AS s ON p.Segmento = s.Codigo
-				 LEFT JOIN SAC.dbo.tbAnaliseDeConteudo AS ac ON ac.IdPRONAC = t.IdPRONAC AND ac.idProduto = t.idProduto 
+				 INNER JOIN sac.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC
+				 INNER JOIN sac.dbo.Produto AS r ON t.idProduto = r.Codigo
+				 INNER JOIN sac.dbo.Area AS a ON p.Area = a.Codigo
+				 INNER JOIN sac.dbo.Segmento AS s ON p.Segmento = s.Codigo
+				 LEFT JOIN sac.dbo.tbAnaliseDeConteudo AS ac ON ac.IdPRONAC = t.IdPRONAC AND ac.idProduto = t.idProduto 
 				 WHERE (t.stEstado = 0)  AND (t.TipoAnalise <> 2) AND (p.Situacao IN ('B11','B14')) 
 				 AND (pp.idProduto is not null ) AND (t.idAgenteParecerista = '$idAgente')";
 		
@@ -149,11 +149,11 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 					Seg.Descricao as Segmento,
 					pp.siPagamento as TipoParecer 
 				From agentes.dbo.Agentes a
-				inner join SAC.dbo.tbDistribuirParecer dp on dp.idAgenteParecerista = a.idAgente
-				INNER JOIN SAC.dbo.Projetos AS pro ON dp.idPRONAC = pro.IdPRONAC
-				inner join SAC.dbo.Produto p on p.Codigo = dp.idProduto
-				inner join SAC.dbo.Area Area ON Area.Codigo = pro.Area
-				inner join SAC.dbo.Segmento Seg ON Seg.Codigo = pro.Segmento 
+				inner join sac.dbo.tbDistribuirParecer dp on dp.idAgenteParecerista = a.idAgente
+				INNER JOIN sac.dbo.Projetos AS pro ON dp.idPRONAC = pro.IdPRONAC
+				inner join sac.dbo.Produto p on p.Codigo = dp.idProduto
+				inner join sac.dbo.Area Area ON Area.Codigo = pro.Area
+				inner join sac.dbo.Segmento Seg ON Seg.Codigo = pro.Segmento 
 				inner join agentes.dbo.tbPagamentoParecerista pp on pp.idProduto = dp.idDistribuirParecer
 				inner join agentes.dbo.tbComprovantePagamento cp on cp.idComprovantePagamento = pp.idComprovantePagamento
 				where a.idAgente = ".$idAgente;

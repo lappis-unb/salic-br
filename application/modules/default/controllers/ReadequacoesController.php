@@ -2584,7 +2584,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $dadosRead = $tbReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao))->current();
 
-        //SE FOR READEQUA&ccedil;&atilde;O DE PLANILHA OR&ccedil;AMENT&aacute;RIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR.
+        //SE FOR READEQUA&ccedil;&atilde;O DE PLANILHA OR&ccedil;AMENT&aacute;RIA, O CAMPO TipoParecer DA TABELA sac.dbo.Parecer MUDAR.
         if($dadosRead->idTipoReadequacao == 2){
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
@@ -2966,7 +2966,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $tbReadequacao = new tbReadequacao();
         $dadosRead = $tbReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao))->current();
 
-        //SE FOR READEQUA&ccedil;&atilde;O DE PLANILHA OR&ccedil;AMENT&aacute;RIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDAR.
+        //SE FOR READEQUA&ccedil;&atilde;O DE PLANILHA OR&ccedil;AMENT&aacute;RIA, O CAMPO TipoParecer DA TABELA sac.dbo.Parecer MUDAR.
         if($dadosRead->idTipoReadequacao == 2){
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
@@ -3161,7 +3161,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
                             // READEQUA&ccedil;&atilde;O DE AGÊNCIA BANC&aacute;RIA
-                            } else if($read->idTipoReadequacao == 4){ //Se for readequa&ccedil;&atilde;o de agência banc&aacute;ria, atualiza os dados na SAC.dbo.PreProjeto.// READEQUA&ccedil;&atilde;O DE ALTERA&ccedil;&atilde;O DE RAZ&atilde;O SOCIAL
+                            } else if($read->idTipoReadequacao == 4){ //Se for readequa&ccedil;&atilde;o de agência banc&aacute;ria, atualiza os dados na sac.dbo.PreProjeto.// READEQUA&ccedil;&atilde;O DE ALTERA&ccedil;&atilde;O DE RAZ&atilde;O SOCIAL
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
                                 $agenciaBancaria = str_replace('-', '', $read->dsSolicitacao);
@@ -3185,7 +3185,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $tblContaBancaria->alterar($arrayDadosBancarios, $whereDadosBancarios);
 
                             // READEQUA&ccedil;&atilde;O DE SINOPSE DA OBRA
-                            } else if($read->idTipoReadequacao == 5){ //Se for readequa&ccedil;&atilde;o de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 5){ //Se for readequa&ccedil;&atilde;o de sinopse da obra, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3195,7 +3195,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE IMPACTO AMBIENTAL
-                            } else if($read->idTipoReadequacao == 6){ //Se for readequa&ccedil;&atilde;o de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 6){ //Se for readequa&ccedil;&atilde;o de impacto ambiental, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3205,7 +3205,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE ESPECIFICA&ccedil;&atilde;O T&eacute;CNICA
-                            } else if($read->idTipoReadequacao == 7){ //Se for readequa&ccedil;&atilde;o de especifica&ccedil;&atilde;o t&eacute;cnica, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 7){ //Se for readequa&ccedil;&atilde;o de especifica&ccedil;&atilde;o t&eacute;cnica, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3215,7 +3215,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE ESTRAT&eacute;GIA DE EXECU&ccedil;&atilde;O
-                            } else if($read->idTipoReadequacao == 8){ //Se for readequa&ccedil;&atilde;o de estrat&eacute;gia de execu&ccedil;&atilde;o, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 8){ //Se for readequa&ccedil;&atilde;o de estrat&eacute;gia de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3225,7 +3225,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE LOCAL DE REALIZA&ccedil;&atilde;O
-                            } else if($read->idTipoReadequacao == 9){ //Se for readequa&ccedil;&atilde;o de local de realiza&ccedil;&atilde;o, atualiza os dados na SAC.dbo.Abrangencia.
+                            } else if($read->idTipoReadequacao == 9){ //Se for readequa&ccedil;&atilde;o de local de realiza&ccedil;&atilde;o, atualiza os dados na sac.dbo.Abrangencia.
                                 $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
                                 $tbAbrangencia = new tbAbrangencia();
                                 $abrangencias = $tbAbrangencia->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3241,10 +3241,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na SAC.dbo.Abrangencia
+                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na sac.dbo.Abrangencia
                                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela SAC.dbo.Abrangencia
+                                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela sac.dbo.Abrangencia
                                             $novoLocalRead = array();
                                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3263,7 +3263,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $tbAbrangencia->update($dadosAbr, $whereAbr);
 
                             // READEQUA&ccedil;&atilde;O DE ALTERA&ccedil;&atilde;O DE PROPONENTE
-                            } else if($read->idTipoReadequacao == 10){ //Se for readequa&ccedil;&atilde;o de altera&ccedil;&atilde;o de proponente, atualiza os dados na SAC.dbo.Projetos.
+                            } else if($read->idTipoReadequacao == 10){ //Se for readequa&ccedil;&atilde;o de altera&ccedil;&atilde;o de proponente, atualiza os dados na sac.dbo.Projetos.
 
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3282,7 +3282,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
                             // READEQUA&ccedil;&atilde;O DE PLANO DE DISTRIBUI&ccedil;&atilde;O
-                            } else if($read->idTipoReadequacao == 11){ //Se for readequa&ccedil;&atilde;o de plano de distribui&ccedil;&atilde;o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
+                            } else if($read->idTipoReadequacao == 11){ //Se for readequa&ccedil;&atilde;o de plano de distribui&ccedil;&atilde;o, atualiza os dados na sac.dbo.PlanoDistribuicaoProduto.
                                 $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                                 $planosDistribuicao = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3299,10 +3299,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribui&ccedil;&atilde;o foi excluído, atualiza os status do plano na SAC.dbo.PlanoDistribuicaoProduto
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribui&ccedil;&atilde;o foi excluído, atualiza os status do plano na sac.dbo.PlanoDistribuicaoProduto
                                             $PlanoDistribuicaoProduto->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idProduto = ?'=>$plano->idProduto, 'Area = ?'=>$plano->cdArea, 'Segmento = ?'=>$plano->cdSegmento));
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribui&ccedil;&atilde;o foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDistribuicaoProduto
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribui&ccedil;&atilde;o foi incluído, cria um novo registro na tabela sac.dbo.PlanoDistribuicaoProduto
                                             $novoPlanoDistRead = array();
                                             $novoPlanoDistRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDistRead['idProduto'] = $plano->idProduto;
@@ -3350,7 +3350,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
                             // READEQUA&ccedil;&atilde;O DE PERÍODO DE EXECU&ccedil;&atilde;O
-                            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de período de execu&ccedil;&atilde;o, atualiza os dados na SAC.dbo.Projetos.
+                            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de período de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.Projetos.
                                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3358,7 +3358,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPrj->save();
 
                             // READEQUA&ccedil;&atilde;O DE PLANO DE DIVULGA&ccedil;&atilde;O
-                            } else if($read->idTipoReadequacao == 14){ //Se for readequa&ccedil;&atilde;o de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
+                            } else if($read->idTipoReadequacao == 14){ //Se for readequa&ccedil;&atilde;o de plano de divulgacao, atualiza os dados na sac.dbo.PlanoDeDivulgacao.
                                 $PlanoDeDivulgacao = new PlanoDeDivulgacao();
                                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                                 $planosDivulgacao = $tbPlanoDivulgacao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3375,7 +3375,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi excluído, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi excluído, atualiza os status do plano na sac.dbo.PlanoDeDivulgacao
                                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                                             $tbLogomarca = new tbLogomarca();
                                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3386,7 +3386,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                                 $PlanoDivulgacaoEmQuestao->delete();
                                             }
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi incluído, cria um novo registro na tabela sac.dbo.PlanoDeDivulgacao
                                             $novoPlanoDivRead = array();
                                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -3406,7 +3406,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $tbPlanoDivulgacao->update($dadosPDD, $wherePDD);
 
                             // READEQUA&ccedil;&atilde;O DE RESUMO DO PROJETO
-                            } else if($read->idTipoReadequacao == 15){ //Se for readequa&ccedil;&atilde;o de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 15){ //Se for readequa&ccedil;&atilde;o de resumo do projeto, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3424,7 +3424,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
                             // READEQUA&ccedil;&atilde;O DE OBJETIVOS
-                            } else if($read->idTipoReadequacao == 16){ //Se for readequa&ccedil;&atilde;o de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 16){ //Se for readequa&ccedil;&atilde;o de objetivos, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3434,7 +3434,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE JUSTIFICATIVA
-                            } else if($read->idTipoReadequacao == 17){ //Se for readequa&ccedil;&atilde;o de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 17){ //Se for readequa&ccedil;&atilde;o de justificativa, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3444,7 +3444,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE ACESSIBILIDADE
-                            } else if($read->idTipoReadequacao == 18){ //Se for readequa&ccedil;&atilde;o de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 18){ //Se for readequa&ccedil;&atilde;o de acesibilidade, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3454,7 +3454,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE DEMOCRATIZA&ccedil;&atilde;O DE ACESSO
-                            } else if($read->idTipoReadequacao == 19){ //Se for readequa&ccedil;&atilde;o de democratiza&ccedil;&atilde;o de acesso, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 19){ //Se for readequa&ccedil;&atilde;o de democratiza&ccedil;&atilde;o de acesso, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3464,7 +3464,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE ETAPAS DE TRABALHO
-                            } else if($read->idTipoReadequacao == 20){ //Se for readequa&ccedil;&atilde;o de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 20){ //Se for readequa&ccedil;&atilde;o de etapas de trabalho, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3474,7 +3474,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $dadosPreProjeto->save();
 
                             // READEQUA&ccedil;&atilde;O DE FICHA T&eacute;CNICA
-                            } else if($read->idTipoReadequacao == 21){ //Se for readequa&ccedil;&atilde;o de ficha t&eacute;cnica, atualiza os dados na SAC.dbo.PreProjeto.
+                            } else if($read->idTipoReadequacao == 21){ //Se for readequa&ccedil;&atilde;o de ficha t&eacute;cnica, atualiza os dados na sac.dbo.PreProjeto.
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3624,7 +3624,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
             // READEQUA&ccedil;&atilde;O DE AGÊNCIA BANC&aacute;RIA
-            } else if($read->idTipoReadequacao == 4){ //Se for readequa&ccedil;&atilde;o de agência banc&aacute;ria, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 4){ //Se for readequa&ccedil;&atilde;o de agência banc&aacute;ria, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
                 $agenciaBancaria = str_replace('-', '', $read->dsSolicitacao);
@@ -3648,7 +3648,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $tblContaBancaria->alterar($arrayDadosBancarios, $whereDadosBancarios);
 
             // READEQUA&ccedil;&atilde;O DE SINOPSE DA OBRA
-            } else if($read->idTipoReadequacao == 5){ //Se for readequa&ccedil;&atilde;o de sinopse da obra, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 5){ //Se for readequa&ccedil;&atilde;o de sinopse da obra, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3658,7 +3658,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE IMPACTO AMBIENTAL
-            } else if($read->idTipoReadequacao == 6){ //Se for readequa&ccedil;&atilde;o de impacto ambiental, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 6){ //Se for readequa&ccedil;&atilde;o de impacto ambiental, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3668,7 +3668,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE ESPECIFICA&ccedil;&atilde;O T&eacute;CNICA
-            } else if($read->idTipoReadequacao == 7){ //Se for readequa&ccedil;&atilde;o de especifica&ccedil;&atilde;o t&eacute;cnica, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 7){ //Se for readequa&ccedil;&atilde;o de especifica&ccedil;&atilde;o t&eacute;cnica, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3678,7 +3678,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE ESTRAT&eacute;GIA DE EXECU&ccedil;&atilde;O
-            } else if($read->idTipoReadequacao == 8){ //Se for readequa&ccedil;&atilde;o de estrat&eacute;gia de execu&ccedil;&atilde;o, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 8){ //Se for readequa&ccedil;&atilde;o de estrat&eacute;gia de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3688,7 +3688,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE LOCAL DE REALIZA&ccedil;&atilde;O
-            } else if($read->idTipoReadequacao == 9){ //Se for readequa&ccedil;&atilde;o de local de realiza&ccedil;&atilde;o, atualiza os dados na SAC.dbo.Abrangencia.
+            } else if($read->idTipoReadequacao == 9){ //Se for readequa&ccedil;&atilde;o de local de realiza&ccedil;&atilde;o, atualiza os dados na sac.dbo.Abrangencia.
                 $Abrangencia = new Proposta_Model_DbTable_Abrangencia();
 
                 $tbAbrangencia = new tbAbrangencia();
@@ -3705,10 +3705,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                     if($avaliacao == 'D'){
-                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na SAC.dbo.Abrangencia
+                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na sac.dbo.Abrangencia
                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela SAC.dbo.Abrangencia
+                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela sac.dbo.Abrangencia
                             $novoLocalRead = array();
                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3727,7 +3727,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $tbAbrangencia->update($dadosAbr, $whereAbr);
 
             // READEQUA&ccedil;&atilde;O DE ALTERA&ccedil;&atilde;O DE PROPONENTE
-            } else if($read->idTipoReadequacao == 10){ //Se for readequa&ccedil;&atilde;o de altera&ccedil;&atilde;o de proponente, atualiza os dados na SAC.dbo.Projetos.
+            } else if($read->idTipoReadequacao == 10){ //Se for readequa&ccedil;&atilde;o de altera&ccedil;&atilde;o de proponente, atualiza os dados na sac.dbo.Projetos.
 
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3746,7 +3746,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
             // READEQUA&ccedil;&atilde;O DE PLANO DE DISTRIBUI&ccedil;&atilde;O
-            } else if($read->idTipoReadequacao == 11){ //Se for readequa&ccedil;&atilde;o de plano de distribui&ccedil;&atilde;o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
+            } else if($read->idTipoReadequacao == 11){ //Se for readequa&ccedil;&atilde;o de plano de distribui&ccedil;&atilde;o, atualiza os dados na sac.dbo.PlanoDistribuicaoProduto.
                 $PlanoDistribuicaoProduto = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                 $planosDistribuicaoReadequados = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3833,7 +3833,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
             // READEQUA&ccedil;&atilde;O DE PERÍODO DE EXECU&ccedil;&atilde;O
-            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de período de execu&ccedil;&atilde;o, atualiza os dados na SAC.dbo.Projetos.
+            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de período de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.Projetos.
                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3841,7 +3841,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPrj->save();
 
             // READEQUA&ccedil;&atilde;O DE PLANO DE DIVULGA&ccedil;&atilde;O
-            } else if($read->idTipoReadequacao == 14){ //Se for readequa&ccedil;&atilde;o de plano de divulgacao, atualiza os dados na SAC.dbo.PlanoDeDivulgacao.
+            } else if($read->idTipoReadequacao == 14){ //Se for readequa&ccedil;&atilde;o de plano de divulgacao, atualiza os dados na sac.dbo.PlanoDeDivulgacao.
                 $PlanoDeDivulgacao = new PlanoDeDivulgacao();
                 $tbPlanoDivulgacao = new tbPlanoDivulgacao();
                 $planosDivulgacao = $tbPlanoDivulgacao->buscar(array('idReadequacao=?'=>$idReadequacao));
@@ -3858,7 +3858,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                     if($avaliacao == 'D'){
-                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi excluído, atualiza os status do plano na SAC.dbo.PlanoDeDivulgacao
+                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi excluído, atualiza os status do plano na sac.dbo.PlanoDeDivulgacao
                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                             $tbLogomarca = new tbLogomarca();
                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3867,7 +3867,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                             }
                             $PlanoDivulgacaoEmQuestao->delete();
 
-                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
+                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi incluído, cria um novo registro na tabela sac.dbo.PlanoDeDivulgacao
                             $novoPlanoDivRead = array();
                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -3887,7 +3887,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $tbPlanoDivulgacao->update($dadosPDD, $wherePDD);
 
             // READEQUA&ccedil;&atilde;O DE RESUMO DO PROJETO
-            } else if($read->idTipoReadequacao == 15){ //Se for readequa&ccedil;&atilde;o de resumo do projeto, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 15){ //Se for readequa&ccedil;&atilde;o de resumo do projeto, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3905,7 +3905,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
             // READEQUA&ccedil;&atilde;O DE OBJETIVOS
-            } else if($read->idTipoReadequacao == 16){ //Se for readequa&ccedil;&atilde;o de objetivos, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 16){ //Se for readequa&ccedil;&atilde;o de objetivos, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3915,7 +3915,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE JUSTIFICATIVA
-            } else if($read->idTipoReadequacao == 17){ //Se for readequa&ccedil;&atilde;o de justificativa, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 17){ //Se for readequa&ccedil;&atilde;o de justificativa, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3925,7 +3925,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE ACESSIBILIDADE
-            } else if($read->idTipoReadequacao == 18){ //Se for readequa&ccedil;&atilde;o de acesibilidade, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 18){ //Se for readequa&ccedil;&atilde;o de acesibilidade, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3935,7 +3935,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE DEMOCRATIZA&ccedil;&atilde;O DE ACESSO
-            } else if($read->idTipoReadequacao == 19){ //Se for readequa&ccedil;&atilde;o de democratiza&ccedil;&atilde;o de acesso, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 19){ //Se for readequa&ccedil;&atilde;o de democratiza&ccedil;&atilde;o de acesso, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3945,7 +3945,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE ETAPAS DE TRABALHO
-            } else if($read->idTipoReadequacao == 20){ //Se for readequa&ccedil;&atilde;o de etapas de trabalho, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 20){ //Se for readequa&ccedil;&atilde;o de etapas de trabalho, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
@@ -3955,7 +3955,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $dadosPreProjeto->save();
 
             // READEQUA&ccedil;&atilde;O DE FICHA T&eacute;CNICA
-            } else if($read->idTipoReadequacao == 21){ //Se for readequa&ccedil;&atilde;o de ficha t&eacute;cnica, atualiza os dados na SAC.dbo.PreProjeto.
+            } else if($read->idTipoReadequacao == 21){ //Se for readequa&ccedil;&atilde;o de ficha t&eacute;cnica, atualiza os dados na sac.dbo.PreProjeto.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 

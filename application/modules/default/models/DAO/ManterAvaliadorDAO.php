@@ -49,7 +49,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
 	public static function buscaDadosEdital ($idEdital = null)
     {
-		$sql = "select * from SAC.dbo.Edital where idEdital = $idEdital and NrEdital is not null";
+		$sql = "select * from sac.dbo.Edital where idEdital = $idEdital and NrEdital is not null";
 		
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -62,7 +62,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 //    {
 ////		$sql = "select
 ////			        idAvaliador as idAgente,nmFormDocumento as nmEdital, a.idEdital,d.NrEdital,stAtivo, a.idAvaliador
-////			    from bdcorporativo.scSAC.tbAvaliadorEdital a
+////			    from bdcorporativo.scsac.tbAvaliadorEdital a
 ////			        inner join sac.dbo.Edital b on a.idEdital = b.idEdital
 ////			        inner join bdcorporativo.scQuiz.tbFormDocumento c on c.idEdital = a.idEdital and c.idClassificaDocumento not in (23,24,25)
 ////			        inner join sac.dbo.Edital d on a.idEdital = d.idEdital
@@ -104,7 +104,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
     public static function buscaEditais ($idAgente = null, $idEdital = null)
     {
-    	$sql = "select * from bdcorporativo.scSAC.tbAvaliadorEdital where idAvaliador = $idAgente";
+    	$sql = "select * from bdcorporativo.scsac.tbAvaliadorEdital where idAvaliador = $idAgente";
     	if($idEdital){
     		$sql .= " and idEdital = $idEdital";
     	}
@@ -118,7 +118,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
     public static function buscaEditaisAtivos ($idAgente = null)
     {
-    	$sql = "select * from bdcorporativo.scSAC.tbAvaliadorEdital where idAvaliador = $idAgente and stAtivo = 'A'";
+    	$sql = "select * from bdcorporativo.scsac.tbAvaliadorEdital where idAvaliador = $idAgente and stAtivo = 'A'";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

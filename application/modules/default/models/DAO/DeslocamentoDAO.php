@@ -181,7 +181,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
 			    de.idUsuario
 
 			FROM
-			    SAC.dbo.tbDeslocamento de
+			    sac.dbo.tbDeslocamento de
 			   	LEFT JOIN agentes.dbo.Pais paO		 ON de.idPaisOrigem = paO.idPais
 			    LEFT JOIN agentes.dbo.UF ufO		 ON de.idUFOrigem = ufO.idUF
 			    LEFT JOIN agentes.dbo.Municipios muO ON de.idMunicipioOrigem = muO.idMunicipioIBGE
@@ -206,14 +206,14 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
 
         $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		$db->insert('SAC.dbo.tbdeslocamento', $dados);
+		$db->insert('sac.dbo.tbdeslocamento', $dados);
 
     }
 
     public static function atualizaDeslocamento($paisOrigem,$uf,$cidade,$paisDestino,$ufD,$cidadeD,$quantidade,$idDeslocamento)
     {
 
-    	$sql = "UPDATE SAC.dbo.tbDeslocamento SET idPaisOrigem=".$paisOrigem.", " .
+    	$sql = "UPDATE sac.dbo.tbDeslocamento SET idPaisOrigem=".$paisOrigem.", " .
     			"idUFOrigem = ".$uf.", " .
     			"idMunicipioOrigem = ".$cidade.", " .
     			"idPaisDestino = ".$paisDestino.", " .
@@ -231,7 +231,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function excluiDeslocamento($idDeslocamento){
 
-        $sql ="DELETE FROM SAC.dbo.tbDeslocamento WHERE idDeslocamento = ".$idDeslocamento;
+        $sql ="DELETE FROM sac.dbo.tbDeslocamento WHERE idDeslocamento = ".$idDeslocamento;
 
         $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

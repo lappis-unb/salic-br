@@ -151,13 +151,13 @@ class Edital extends MinC_Db_Table_Abstract{
         $sql = "SELECT
 					SUM(pg.vlParcela) as parcelas
 				FROM
-					bdcorporativo.scSAC.tbPagamento as pg
+					bdcorporativo.scsac.tbPagamento as pg
 					INNER JOIN bdcorporativo.scQuiz.tbPerguntaFormDocto as pfd ON pfd.nrPergunta=pg.nrPergunta
 					INNER JOIN bdcorporativo.scQuiz.tbFormDocumento as fd ON fd.nrFormDocumento=pfd.nrFormDocumento and fd.nrVersaoDocumento=pfd.nrVersaoDocumento
-					INNER JOIN SAC.dbo.Edital as ed ON ed.idEdital= fd.idEdital
+					INNER JOIN sac.dbo.Edital as ed ON ed.idEdital= fd.idEdital
 					INNER JOIN BDSIMEC.pde.atividade AS ati ON ati.atiid=ed.idAti
-					INNER JOIN SAC.dbo.PreProjeto AS pp ON pp.idEdital=ed.idEdital
-					INNER JOIN SAC.dbo.Projetos AS p ON p.idProjeto=pp.idPreProjeto
+					INNER JOIN sac.dbo.PreProjeto AS pp ON pp.idEdital=ed.idEdital
+					INNER JOIN sac.dbo.Projetos AS p ON p.idProjeto=pp.idPreProjeto
 				WHERE
 					ed.idAti=$idAti";
 
@@ -215,7 +215,7 @@ class Edital extends MinC_Db_Table_Abstract{
     }
 
 	public static function buscarIdPi($idEdital){
-        $sql = "SELECT idAti FROM SAC.dbo.Edital where idEdital = $idEdital";
+        $sql = "SELECT idAti FROM sac.dbo.Edital where idEdital = $idEdital";
 
 //		
 

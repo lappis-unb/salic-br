@@ -30,7 +30,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("bdcorporativo.scSAC.tbPlanilhaAprovacao", $dados);
+		$cadastrar = $db->insert("bdcorporativo.scsac.tbPlanilhaAprovacao", $dados);
 
 		if ($cadastrar)
 		{
@@ -77,7 +77,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 		{
 			$where.= "AND tpPlanilha = '$tpPlanilha'";
 		}
-		$alterar = $db->update("SAC.dbo.tbPlanilhaAprovacao", $dados, $where);
+		$alterar = $db->update("sac.dbo.tbPlanilhaAprovacao", $dados, $where);
 
 		if ($alterar)
 		{
@@ -105,7 +105,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 	 */
 	public static function buscar($tpPlanilha, $idPlanilhaAprovacao = null, $idPronac = null, $idProduto = null, $idEtapa = null, $idPlanilhaItem = null, $tpAcao = null, $buscarProduto = false)
 	{
-		$sql = "SELECT * FROM SAC.dbo.tbPlanilhaAprovacao
+		$sql = "SELECT * FROM sac.dbo.tbPlanilhaAprovacao
                         WHERE tpPlanilha = '$tpPlanilha'";
 
                 if (!empty($idPlanilhaAprovacao))

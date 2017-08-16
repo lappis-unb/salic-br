@@ -33,7 +33,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     '(pr.AnoProjeto+pr.Sequencial) as pronac',
                     'pr.NomeProjeto',
                     'pr.DtProtocolo',
-                    new Zend_Db_Expr('SAC.dbo.fnDtAprovacao(pr.AnoProjeto,pr.Sequencial) as DtAprovacao')
+                    new Zend_Db_Expr('sac.dbo.fnDtAprovacao(pr.AnoProjeto,pr.Sequencial) as DtAprovacao')
                 ),
                 'SAC'
         );

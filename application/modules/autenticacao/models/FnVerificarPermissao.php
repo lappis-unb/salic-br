@@ -6,7 +6,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
     protected $_name = 'dbo.fnVerificarPermissao';
 
     public function verificarPermissaoProjeto($idPronac, $idUsuarioLogado) {
-        $select = new Zend_Db_Expr("SELECT SAC.dbo.fnVerificarPermissao(2,'',$idUsuarioLogado,$idPronac) as Permissao");
+        $select = new Zend_Db_Expr("SELECT sac.dbo.fnVerificarPermissao(2,'',$idUsuarioLogado,$idPronac) as Permissao");
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -24,11 +24,11 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
      * @access public
      * @return void
      * @todo Verificar local para metodo.
-     * SAC.dbo.fnVerificarPermissao --> SP removida
+     * sac.dbo.fnVerificarPermissao --> SP removida
      */
     public function verificarPermissaoProposta($idPreProjeto, $idUsuarioLogado)
     {
-        //$select = new Zend_Db_Expr("SELECT SAC.dbo.fnVerificarPermissao(1,'',$idUsuarioLogado,$idPreProjeto) as Permissao");
+        //$select = new Zend_Db_Expr("SELECT sac.dbo.fnVerificarPermissao(1,'',$idUsuarioLogado,$idPreProjeto) as Permissao");
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $acao = 1;
@@ -233,7 +233,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
     }
 
     public function verificarPermissaoAdministrativo($idUsuarioLogado) {
-        $select = new Zend_Db_Expr("SELECT SAC.dbo.fnVerificarPermissao(0,'',$idUsuarioLogado,'') as Permissao");
+        $select = new Zend_Db_Expr("SELECT sac.dbo.fnVerificarPermissao(0,'',$idUsuarioLogado,'') as Permissao");
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);

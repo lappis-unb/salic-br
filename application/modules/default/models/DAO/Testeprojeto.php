@@ -34,8 +34,8 @@ class Testeprojeto extends Zend_Db_Table
 					AS dtEnvioComprovante, 
 				doc.stParecerComprovante, 
 				doc.idComprovanteAnterior 
-			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
-				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
 				bdcorporativo.scCorp.tbArquivo arq, 
 				bdcorporativo.scCorp.tbArquivoImagem arqimg 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
@@ -67,7 +67,7 @@ class Testeprojeto extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		/*$sql = "INSERT INTO bdcorporativo.scSAC.tbComprovanteExecucao ";
+		/*$sql = "INSERT INTO bdcorporativo.scsac.tbComprovanteExecucao ";
 		$sql.= "VALUES ($dados['idPRONAC'], $dados['idTipoDocumento'], $dados['nmComprovante'], $dados['dsComprovante'], $dados['idArquivo'], $dados['idSolicitante'], $dados['dtEnvioComprovante'], $dados['stComprovante'], $dados['stComprovante'], $dados['idComprovanteAnterior'])";*/
 
 	} // fecha m&eacute;todo cadastrar()

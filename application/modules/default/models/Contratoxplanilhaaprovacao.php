@@ -34,7 +34,7 @@ class Contratoxplanilhaaprovacao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('a'=>'scSAC.tbContratoxPlanilhaAprovacao'),
+                array('a'=>'scsac.tbContratoxPlanilhaAprovacao'),
                 array('a.idContrato', 'a.idPlanilhaAprovacao')
         );
         $select->joinInner(

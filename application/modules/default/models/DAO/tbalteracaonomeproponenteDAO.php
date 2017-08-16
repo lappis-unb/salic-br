@@ -2,7 +2,7 @@
 
 class tbalteracaonomeproponenteDAO extends Zend_Db_Table
 {
-    protected $_name = "bdcorporativo.scSAC.tbalteracaonomeproponente";
+    protected $_name = "bdcorporativo.scsac.tbalteracaonomeproponente";
 
     public static function buscarDadosAltNomProp($idpedidoalteracao)
     {
@@ -10,8 +10,8 @@ class tbalteracaonomeproponenteDAO extends Zend_Db_Table
 		  tanp.nmproponente,
 		  tanp.dsjustificativa,
                   tap.idPRONAC
-		  from bdcorporativo.scSAC.tbAlteracaoNomeProponente tanp
-		  join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tanp.idPedidoAlteracao
+		  from bdcorporativo.scsac.tbAlteracaoNomeProponente tanp
+		  join bdcorporativo.scsac.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tanp.idPedidoAlteracao
                   where tanp.idpedidoalteracao =".$idpedidoalteracao;
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -26,8 +26,8 @@ class tbalteracaonomeproponenteDAO extends Zend_Db_Table
                 pr.NomeProjeto,
                 pr.Situacao,
                 sit.Descricao
-                from SAC.dbo.Projetos pr
-                join SAC.dbo.Situacao sit on sit.Codigo = pr.Situacao
+                from sac.dbo.Projetos pr
+                join sac.dbo.Situacao sit on sit.Codigo = pr.Situacao
                 where pr.cgccpf = '".$cpf."'";
 
         $db= Zend_Db_Table::getDefaultAdapter();

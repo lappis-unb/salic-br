@@ -91,7 +91,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
             $componentes[$dadosComponentes->stConselheiro][$a]['Area'] = $dadosComponentes->Area;
             $componentes[$dadosComponentes->stConselheiro][$a]['cdArea'] = $dadosComponentes->cdArea;
             $where['D.idAgente = ? '] = $dadosComponentes->idAgente;
-            $where["D.idPRONAC not in(select IdPRONAC from bdcorporativo.scSAC.tbPauta where IdPRONAC = D.idPRONAC AND stAnalise NOT IN ('AS', 'IS', 'AR'))"] = '?';//incluindo condicao (stAnalise) para contemplar projeto readequados, que um dia ja passaram pela pelanaria e que atualemente encontran-se com (stAnalise) de um projeto ja avaliado
+            $where["D.idPRONAC not in(select IdPRONAC from bdcorporativo.scsac.tbPauta where IdPRONAC = D.idPRONAC AND stAnalise NOT IN ('AS', 'IS', 'AR'))"] = '?';//incluindo condicao (stAnalise) para contemplar projeto readequados, que um dia ja passaram pela pelanaria e que atualemente encontran-se com (stAnalise) de um projeto ja avaliado
             $where['D.stDistribuicao = ?'] = 'A';
             $where['P.Situacao IN (?)'] = array('C10', 'D01', 'C30');
             $projetosdistribuidos = $dpc->buscarProjetosPorComponente($where);
@@ -193,7 +193,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
         );
         $historicoConselheiro->inserir($dadosInserir);
         $where['D.idAgente = ? '] = $idAgente;
-        $where['D.idPRONAC not in(select IdPRONAC from bdcorporativo.scSAC.tbPauta where IdPRONAC = D.idPRONAC)'] = '';
+        $where['D.idPRONAC not in(select IdPRONAC from bdcorporativo.scsac.tbPauta where IdPRONAC = D.idPRONAC)'] = '';
         $dadosdistribuicaoProjeto = $distribuicaoProjeto->buscarProjetosPorComponente($where);
         $objAcesso = new Acesso();
         foreach ($dadosdistribuicaoProjeto as $resu) {

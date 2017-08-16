@@ -33,10 +33,10 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = "SELECT distinct pr.Codigo as idProduto, pr.Descricao as Produto
- 				FROM SAC.dbo.tbItensPlanilhaProduto p
-				INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
-				INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-				INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)	";
+ 				FROM sac.dbo.tbItensPlanilhaProduto p
+				INNER JOIN sac.dbo.Produto pr on (p.idProduto = pr.Codigo)
+				INNER JOIN sac.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
+				INNER JOIN sac.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)	";
 
 
         if(!empty($nomeItem)){
@@ -165,10 +165,10 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
                        pr.Descricao as Produto,
                        e.Descricao as Etapa,
                        i.Descricao as NomeDoItem
-                FROM SAC.dbo.tbItensPlanilhaProduto p
-		INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
-		INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-		INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)";
+                FROM sac.dbo.tbItensPlanilhaProduto p
+		INNER JOIN sac.dbo.Produto pr on (p.idProduto = pr.Codigo)
+		INNER JOIN sac.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
+		INNER JOIN sac.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)";
         if(!empty($item)){
             $sql .=" WHERE i.idPlanilhaItens = ".$item;
         }
@@ -198,10 +198,10 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
                        //p.idPlanilhaItens,
                        //'e.idPlanilhaEtapa as idEtapa', 'e.Descricao as Etapa',
                        //i.Descricao as NomeDoItem
-                //FROM SAC.dbo.tbItensPlanilhaProduto p
-        //INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
-        //INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-        //INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)";
+                //FROM sac.dbo.tbItensPlanilhaProduto p
+        //INNER JOIN sac.dbo.Produto pr on (p.idProduto = pr.Codigo)
+        //INNER JOIN sac.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
+        //INNER JOIN sac.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)";
 
         if(!empty($item)){
             //$sql .=" WHERE i.idPlanilhaItens = ".$item;
@@ -217,7 +217,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
     public static function buscaproduto($where=null) {
         $sql = "SELECT Codigo as codproduto, Descricao as Produto
-				FROM SAC.dbo.Produto WHERE stEstado = 0 ORDER BY Produto "; //WHERE stEstado = 0
+				FROM sac.dbo.Produto WHERE stEstado = 0 ORDER BY Produto "; //WHERE stEstado = 0
         if(!empty($where)){
             $sql .=" AND i.Descricao ".$where;
         }
@@ -247,14 +247,14 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
             ;
 
         //$sql = "SELECT Codigo as codproduto, Descricao as Produto
-                //FROM SAC.dbo.Produto WHERE stEstado = 0 ORDER BY Produto "; //WHERE stEstado = 0
+                //FROM sac.dbo.Produto WHERE stEstado = 0 ORDER BY Produto "; //WHERE stEstado = 0
 
         return $db->fetchAll($sql);
     }
 
     public static function buscaetapa() {
         $sql = "SELECT idPlanilhaEtapa as codetapa, Descricao as Etapa
-				FROM SAC.dbo.TbPlanilhaEtapa";
+				FROM sac.dbo.TbPlanilhaEtapa";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -280,7 +280,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
     }
 
     public static function buscaitem() {
-        $sql = "Select idPlanilhaItens as coditens, Descricao as Item, idUsuario from SAC.dbo.tbPlanilhaItens
+        $sql = "Select idPlanilhaItens as coditens, Descricao as Item, idUsuario from sac.dbo.tbPlanilhaItens
 		 order by Descricao";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -445,7 +445,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
     }
 
     public static function buscarItem($idAgente) {
-        $sql = "SELECT TOP 1 idPlanilhaItens FROM SAC.dbo.tbPlanilhaItens where idUsuario = ".$idAgente." order by idPlanilhaItens desc";
+        $sql = "SELECT TOP 1 idPlanilhaItens FROM sac.dbo.tbPlanilhaItens where idUsuario = ".$idAgente." order by idPlanilhaItens desc";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
@@ -496,10 +496,10 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 			            WHEN 1 THEN 'Atendido'
 			            ELSE 'Negado'
 			       END as Estado,Resposta
-			 FROM SAC.dbo.tbSolicitarItem sol
-			      INNER JOIN SAC.dbo.Produto prod ON sol.idProduto = prod.Codigo
-			      INNER JOIN SAC.dbo.tbPlanilhaEtapa et ON sol.idEtapa = et.idPlanilhaEtapa
-			      LEFT JOIN SAC.dbo.TbPlanilhaItens it ON sol.idPlanilhaItens = it.idPlanilhaItens";
+			 FROM sac.dbo.tbSolicitarItem sol
+			      INNER JOIN sac.dbo.Produto prod ON sol.idProduto = prod.Codigo
+			      INNER JOIN sac.dbo.tbPlanilhaEtapa et ON sol.idEtapa = et.idPlanilhaEtapa
+			      LEFT JOIN sac.dbo.TbPlanilhaItens it ON sol.idPlanilhaItens = it.idPlanilhaItens";
 
         $ct=1;
         foreach ($where as $coluna=>$valor)

@@ -111,7 +111,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     		'*',
     		'pronac' => New Zend_Db_Expr('proj.AnoProjeto + proj.Sequencial'),
     		'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = proj.Logon)'),
-    		'Localizacao' => new Zend_Db_Expr("(SELECT top 1 Localizacao FROM SAC.dbo.{$this->_name} loc WHERE loc.IdPronac = proj.IdPronac ORDER BY loc.DataCriacao DESC)"),
+    		'Localizacao' => new Zend_Db_Expr("(SELECT top 1 Localizacao FROM sac.dbo.{$this->_name} loc WHERE loc.IdPronac = proj.IdPronac ORDER BY loc.DataCriacao DESC)"),
     	);
     	$select = $this->select();
     	$select->setIntegrityCheck(false);
@@ -142,7 +142,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
             array(
                 new Zend_Db_Expr('p.idPronac, p.AnoProjeto+p.Sequencial AS Pronac, p.NomeProjeto, p.CgcCpf'),
                 'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = p.Logon)'),
-    		'Localizacao' => new Zend_Db_Expr("(SELECT Localizacao FROM SAC.dbo.LocalizacaoFisica loc WHERE loc.IdPronac = p.IdPronac AND id = (SELECT max(id) FROM SAC.dbo.LocalizacaoFisica loc1 WHERE loc1.IdPronac = p.IdPronac))")
+    		'Localizacao' => new Zend_Db_Expr("(SELECT Localizacao FROM sac.dbo.LocalizacaoFisica loc WHERE loc.IdPronac = p.IdPronac AND id = (SELECT max(id) FROM sac.dbo.LocalizacaoFisica loc1 WHERE loc1.IdPronac = p.IdPronac))")
            ), 'SAC'
         );
 

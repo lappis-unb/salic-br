@@ -228,7 +228,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
      */
     public static function cadastrar($dados)
     {
-        /* $sql = "INSERT INTO bdcorporativo.scSAC.tbComprovanteExecucao ";
+        /* $sql = "INSERT INTO bdcorporativo.scsac.tbComprovanteExecucao ";
           $sql.= "VALUES ($dados['idPRONAC'], $dados['idTipoDocumento'], $dados['nmComprovante'], $dados['dsComprovante'], $dados['idArquivo'], $dados['idSolicitante'], $dados['dtEnvioComprovante'], $dados['stComprovante'], $dados['stComprovante'], $dados['idComprovanteAnterior'])"; */
     }
 

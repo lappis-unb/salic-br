@@ -203,7 +203,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $arrBusca['e.cdGruposDestino IN (?)']= array('125','126'); //grupo de coordenador de prestacao de contas
                 $arrBusca['e.cdGruposOrigem = ?']= array('132'); //grupo do chefe de divisao
                 $arrBusca['e.stAtivo = ?']= 1;
-                //$arrBusca['d.DtSolicitacao = (SELECT top 1 d2.DtSolicitacao FROM SAC..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC)'] = '(?)'; //seleciona a ultima diligencia realizada
+                //$arrBusca['d.DtSolicitacao = (SELECT top 1 d2.DtSolicitacao FROM sac..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC)'] = '(?)'; //seleciona a ultima diligencia realizada
                 //$arrBusca['d.idTipoDiligencia = ?'] = 174; //Diligencia na Prestacao de contas
             }
 
@@ -246,9 +246,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //DILIGENCIA
                 if(!empty($post->diligencia)){
                     if($post->diligencia == "abertas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                     }elseif($post->diligencia == "respondidas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                     }
                     $bln_dadosDiligencia = true;
                 }
@@ -327,22 +327,22 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //$arrBusca['p.Situacao = ?'] = $post->situacao;
                 $arrBusca["p.Situacao = '".$post->situacao."' AND p.Situacao not in ('E24','E68','E67','G43','G24','E17','E22','L05','L06') "] = '(?)';
                 if($post->situacao != 'E18'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
             }else{
                 $arrBusca['p.Situacao = ?']='E18';
             }*/
             $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDevolvidosAposAnalise;
             if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E18'){
-                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
             }
 
             //DILIGENCIA
             if(!empty($post->diligencia)){
                 if($post->diligencia == "abertas"){
-                    $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                    $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                 }elseif($post->diligencia == "respondidas"){
-                    $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                    $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                 }
             }
 
@@ -401,15 +401,15 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $arrBusca = $this->montaArrBuscaCoincidentes($post);
                 $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDiligenciados;
                 if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E17'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
 
                 //DILIGENCIA
                 if(!empty($post->diligencia)){
                     if($post->diligencia == "abertas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                     }elseif($post->diligencia == "respondidas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                     }
                 }
 
@@ -418,7 +418,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $arrBusca['e.cdGruposDestino IN (?)']= array('125','126'); //grupo de coordenador de prestacao de contas
                 $arrBusca['e.cdGruposOrigem = ?']= array('132'); //grupo do chefe de divisao
                 $arrBusca['e.stAtivo = ?']= 1;
-                $arrBusca['d.DtSolicitacao = (SELECT top 1 d2.DtSolicitacao FROM SAC..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC)'] = '(?)'; //seleciona a ultima diligencia realizada
+                $arrBusca['d.DtSolicitacao = (SELECT top 1 d2.DtSolicitacao FROM sac..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC)'] = '(?)'; //seleciona a ultima diligencia realizada
                 $arrBusca['d.idTipoDiligencia = ?'] = 174; //Diligencia na Prestacao de contas
             }
 
@@ -492,22 +492,22 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             //SITUACAO
             /*if ( isset($post->situacao) && !empty($post->situacao)){
                 $arrBusca["p.Situacao = '".$post->situacao."' AND p.Situacao not in ('E24','E68','E67','G43','G24') "] = '(?)';
-                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
             }else{
 		//$arrBusca['p.Situacao = ?']='E22';
                 $arrBusca['p.Situacao in (?)']= array('E22','L05','L06');
             }*/
             $arrBusca['p.Situacao in (?)'] = $this->arrSituacoesTCE;
             if ( isset($post->situacao) && !empty($post->situacao)){
-                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
             }
 
             //DILIGENCIA
             if(!empty($post->diligencia)){
                 if($post->diligencia == "abertas"){
-                    $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                    $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                 }elseif($post->diligencia == "respondidas"){
-                    $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                    $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                 }
             }
 
@@ -733,9 +733,9 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //DILIGENCIA
                 if(!empty($post->diligencia)){
                     if($post->diligencia == "abertas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                     }elseif($post->diligencia == "respondidas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                     }
                     $bln_dadosDiligencia = true;
                 }
@@ -772,15 +772,15 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //SITUACAO
                 $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDevolvidosAposAnalise;
                 if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E18'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
 
                 //DILIGENCIA
                 if(!empty($post->diligencia)){
                     if($post->diligencia == "abertas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                     }elseif($post->diligencia == "respondidas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                     }
                 }
                 //CONDICOES DE DEVOLVIDO APOS ANALISE
@@ -815,15 +815,15 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //SITUACAO
                 $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDiligenciados;
                 if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E17'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
 
                 //DILIGENCIA
                 if(!empty($post->diligencia)){
                     if($post->diligencia == "abertas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                     }elseif($post->diligencia == "respondidas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                     }
                 }
                 //CONDICOES DE PARA ESTAR COM O COORD. DE PRESTACAO DE CONTAS
@@ -831,7 +831,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $arrBusca['e.cdGruposDestino IN (?)']= array('125','126'); //grupo de coordenador de prestacao de contas
                 $arrBusca['e.cdGruposOrigem = ?']= array('132'); //grupo do chefe de divisao
                 $arrBusca['e.stAtivo = ?']= 1;
-                $arrBusca['d.DtSolicitacao = (SELECT top 1 d2.DtSolicitacao FROM SAC..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC)'] = '(?)'; //seleciona a ultima diligencia realizada
+                $arrBusca['d.DtSolicitacao = (SELECT top 1 d2.DtSolicitacao FROM sac..tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC)'] = '(?)'; //seleciona a ultima diligencia realizada
                 $arrBusca['d.idTipoDiligencia = ?'] = 174; //Diligencia na Prestacao de contas
 
                 $total = 0;
@@ -861,14 +861,14 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 $arrBusca['p.Situacao in (?)'] = $this->arrSituacoesTCE;
                 if ( isset($post->situacao) && !empty($post->situacao)){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
                 //DILIGENCIA
                 if(!empty($post->diligencia)){
                     if($post->diligencia == "abertas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NULL AND idTipoDiligencia = '174')"] = '(?)';
                     }elseif($post->diligencia == "respondidas"){
-                        $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
+                        $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia d where d.idPronac = p.idPronac AND d.DtSolicitacao IS NOT NULL AND d.DtResposta IS NOT NULL AND stEnviado = 'S' AND idTipoDiligencia = '174')"] = '(?)';
                     }
                 }
                 //CONDICOES DE PARA ESTAR COM O COORD. DE PRESTACAO DE CONTAS

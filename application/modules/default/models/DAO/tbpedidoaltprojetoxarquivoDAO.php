@@ -19,7 +19,7 @@ class tbpedidoaltprojetoxarquivoDAO extends Zend_Db_Table
         select
         papxa.idArquivo,
         ta.nmarquivo
-        from bdcorporativo.scSAC.tbPedidoAltProjetoXArquivo papxa
+        from bdcorporativo.scsac.tbPedidoAltProjetoXArquivo papxa
         join bdcorporativo.scCorp.tbArquivo ta on ta.idArquivo = papxa.idArquivo
         where papxa.idPedidoAlteracao =".$idpedidoalteracao;
 

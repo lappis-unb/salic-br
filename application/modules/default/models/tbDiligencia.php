@@ -151,7 +151,7 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 	 */
 	public function fnChecarDiligencia($idPronac)
 	{
-		$sql = 'SELECT SAC.dbo.fnchecarDiligencia('. $idPronac .') AS Diligencia';
+		$sql = 'SELECT sac.dbo.fnchecarDiligencia('. $idPronac .') AS Diligencia';
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

@@ -768,7 +768,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         try{
             $db->beginTransaction();
 
-            /*//UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA SAC.dbo.tbProposta
+            /*//UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA sac.dbo.tbProposta
             $sqlfinalproped = ReadequacaoProjetos::retornaSQLfinalprop($estrategia,$especificacao,$IdProposta);
             $finalproped = $db->fetchAll($sqlfinalproped);*/
 

@@ -28,7 +28,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             ->order("idPlanilhaEtapa ASC")
         ;
 
-        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM sac.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
         return $db->fetchAll($sql);
     }
@@ -213,7 +213,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         //$sql = "SELECT
         //idPlanilhaEtapa ,
         //Descricao
-        //FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
+        //FROM sac..tbPlanilhaEtapa where tpcusto = 'A'";
 
         //$sql.= " ORDER BY Descricao ";
 

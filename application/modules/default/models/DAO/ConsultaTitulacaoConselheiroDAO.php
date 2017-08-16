@@ -78,8 +78,8 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 nm.Descricao,
                 tdpc.stDistribuicao
                 FROM
-                SAC.dbo.Projetos pr
-                JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao tdpc ON pr.IdPRONAC = tdpc.idPRONAC
+                sac.dbo.Projetos pr
+                JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao tdpc ON pr.IdPRONAC = tdpc.idPRONAC
                 JOIN agentes.dbo.tbTitulacaoConselheiro ttc ON tdpc.idAgente = ttc.idAgente
                 JOIN agentes.dbo.Agentes ag ON tdpc.idAgente = ag.idAgente
                 JOIN agentes.dbo.Nomes nm ON tdpc.idAgente = nm.idAgente

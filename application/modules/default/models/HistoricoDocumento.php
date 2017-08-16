@@ -48,7 +48,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.Acao = ?', 6);
@@ -75,7 +75,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.stEstado = ?', 1);
@@ -107,7 +107,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.stEstado = ?', 1);
@@ -140,7 +140,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.stEstado = ?', 1);
@@ -299,7 +299,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     '(p.AnoProjeto + p.Sequencial) AS Pronac',
                     'p.NomeProjeto',
                     //'p.Processo'
-                    'SAC.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo'
+                    'sac.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo'
                 )
         );
         $select->joinInner(

@@ -32,8 +32,8 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
 
                 FROM
                     sac.dbo.PlanoDeDivulgacao pd
-                     join SAC.dbo.Verificacao ve on ve.idVerificacao = pd.idPeca
-                     join SAC.dbo.Verificacao ve1 on ve1.idVerificacao = pd.idVeiculo
+                     join sac.dbo.Verificacao ve on ve.idVerificacao = pd.idPeca
+                     join sac.dbo.Verificacao ve1 on ve1.idVerificacao = pd.idVeiculo
                 WHERE idProjeto = $idPreProjeto
                 ";
 
@@ -70,7 +70,7 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("SAC.dbo.PlanoDeDivulgacao", $divulgacao);
+        $cadastrar = $db->insert("sac.dbo.PlanoDeDivulgacao", $divulgacao);
 
         } catch (Exception $e){
             die("ERRO" . $e->getMessage());
@@ -93,7 +93,7 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
     }
 
     public static function consultarDivulgacao(){
-        $sql = "select idVerificacao, Descricao from SAC.dbo.Verificacao where idTipo = 1 order by Descricao";
+        $sql = "select idVerificacao, Descricao from sac.dbo.Verificacao where idTipo = 1 order by Descricao";
 
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -122,12 +122,12 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
 //		r.idVerificacaoVeiculo,
 //		P.Descricao as PecaDescicao,
 //		V.Descricao as VeiculoDescicao
-//		FROM SAC.dbo.VerificacaoPecaxVeiculo as r
+//		FROM sac.dbo.VerificacaoPecaxVeiculo as r
 //
-//        LEFT JOIN SAC.dbo.Verificacao as P on
+//        LEFT JOIN sac.dbo.Verificacao as P on
 //            r.idVerificacaoPeca = P.idVerificacao
 //
-//        LEFT JOIN SAC.dbo.Verificacao as V on
+//        LEFT JOIN sac.dbo.Verificacao as V on
 //            r.idVerificacaoVeiculo = V.idVerificacao
 //
 //        WHERE idVerificacaoPeca = ".$pecaID ;

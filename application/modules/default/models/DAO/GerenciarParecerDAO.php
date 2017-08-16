@@ -34,13 +34,13 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 		$sql = "SELECT  t.idDistribuirParecer, t.idOrgao, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS NrProjeto, p.NomeProjeto, t.idProduto, r.Descricao AS Produto,
 				        t.DtDevolucao,
 				        CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
-				        AS DescricaoAnalise, t.TipoAnalise, SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs, a.Descricao AS Area,
+				        AS DescricaoAnalise, t.TipoAnalise, sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs, a.Descricao AS Area,
 				        s.Descricao AS Segmento, t.DtEnvio,  CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT
-				FROM    SAC.dbo.tbDistribuirParecer AS t
-						INNER JOIN SAC.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC
-						INNER JOIN SAC.dbo.Produto AS r ON t.idProduto = r.Codigo
-						INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
-						INNER JOIN SAC.dbo.Segmento AS s ON p.Segmento = s.Codigo
+				FROM    sac.dbo.tbDistribuirParecer AS t
+						INNER JOIN sac.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC
+						INNER JOIN sac.dbo.Produto AS r ON t.idProduto = r.Codigo
+						INNER JOIN sac.dbo.Area AS a ON p.Area = a.Codigo
+						INNER JOIN sac.dbo.Segmento AS s ON p.Segmento = s.Codigo
 				WHERE   t.stEstado = 0
 				  	    AND t.FecharAnalise = 0
 					    AND t.TipoAnalise <> 2
@@ -61,7 +61,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 	public static function listarProjetosSub($idPronac)
 	{
 
-		$sql = "SELECT * FROM SAC.dbo.tbDiligencia
+		$sql = "SELECT * FROM sac.dbo.tbDiligencia
                       WHERE idPronac = ".$idPronac."
                       	AND stEstado = 0
                       	AND DtResposta IS NULL";
@@ -88,12 +88,12 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 	                      CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'N�o' END AS IncisoArtigo27_III,
 	                      CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'N�o' END AS IncisoArtigo27_IV,
 	                      CASE WHEN TipoParecer = 1 THEN 'Aprova��o' WHEN TipoParecer = 2 THEN 'Complementa��o' WHEN TipoParecer = 4 THEN 'Redu��o' END AS TipoParecer,
-	                      CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'N�o' END AS ParecerFavoravel, a.ParecerDeConteudo, SAC.dbo.fnNomeParecerista(a.idUsuario)
+	                      CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'N�o' END AS ParecerFavoravel, a.ParecerDeConteudo, sac.dbo.fnNomeParecerista(a.idUsuario)
 	                      AS Parecerista
-				FROM      SAC.dbo.Projetos AS p
-						  INNER JOIN SAC.dbo.Interessado AS i ON p.CgcCpf = i.CgcCpf
-	                      INNER JOIN SAC.dbo.tbAnaliseDeConteudo AS a ON p.IdPRONAC = a.idPronac
-	                      INNER JOIN SAC.dbo.Produto AS pr ON a.idProduto = pr.Codigo
+				FROM      sac.dbo.Projetos AS p
+						  INNER JOIN sac.dbo.Interessado AS i ON p.CgcCpf = i.CgcCpf
+	                      INNER JOIN sac.dbo.tbAnaliseDeConteudo AS a ON p.IdPRONAC = a.idPronac
+	                      INNER JOIN sac.dbo.Produto AS pr ON a.idProduto = pr.Codigo
 				WHERE     (a.idUsuario IS NOT NULL) AND p.IdPRONAC = ".$idPronac." AND idProduto = ".$idProduto;
 
 
@@ -119,9 +119,9 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 				          DtEnvio,
 				          CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT,
 				          Observacao,
-				SAC.dbo.fnNomeUsuario(idUsuario) as Usuario
-				from SAC.dbo.tbdistribuirParecer d
-				inner join SAC.dbo.Produto p on (d.idProduto = p.Codigo)
+				sac.dbo.fnNomeUsuario(idUsuario) as Usuario
+				from sac.dbo.tbdistribuirParecer d
+				inner join sac.dbo.Produto p on (d.idProduto = p.Codigo)
 				where idPronac=".$idPronac." and idProduto = ".$idProduto." and TipoAnalise = ".$TipoAnalise."
 				order by idDistribuirParecer DESC";
 
@@ -141,16 +141,16 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 		$sql = "SELECT     t.idDistribuirParecer, t.idOrgao, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS NrProjeto, p.NomeProjeto, t.idProduto, r.Descricao AS Produto,
                       t.DtDevolucao,
                       CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
-                      AS DescricaoAnalise, t.TipoAnalise, SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs, a.Descricao AS Area,
+                      AS DescricaoAnalise, t.TipoAnalise, sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs, a.Descricao AS Area,
                       s.Descricao AS Segmento,
                       CONVERT(CHAR(10), t.DtDistribuicao, 103) AS DtDistribuicaoPT,
                       CONVERT(CHAR(10), t.DtDevolucao, 103) AS DtDevolucaoPT,
                       t.DtEnvio
-				FROM  SAC.dbo.tbDistribuirParecer AS t INNER JOIN
-                      SAC.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC INNER JOIN
-                      SAC.dbo.Produto AS r ON t.idProduto = r.Codigo INNER JOIN
-                      SAC.dbo.Area AS a ON p.Area = a.Codigo INNER JOIN
-                      SAC.dbo.Segmento AS s ON p.Segmento = s.Codigo
+				FROM  sac.dbo.tbDistribuirParecer AS t INNER JOIN
+                      sac.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC INNER JOIN
+                      sac.dbo.Produto AS r ON t.idProduto = r.Codigo INNER JOIN
+                      sac.dbo.Area AS a ON p.Area = a.Codigo INNER JOIN
+                      sac.dbo.Segmento AS s ON p.Segmento = s.Codigo
 				WHERE (t.stEstado = 0) AND (t.FecharAnalise = 0) AND (t.TipoAnalise <> 2) AND (p.Situacao IN ('B11', 'B14'))
 				AND p.IdPRONAC=".$idPronac." and t.idProduto=".$idProduto." and TipoAnalise = ".$TipoAnalise;
 
@@ -189,7 +189,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 	{
 
 		$sql = "SELECT Codigo, Sigla
-				FROM SAC.dbo.orgaos
+				FROM sac.dbo.orgaos
 				WHERE Vinculo = 1
 						AND Status = 0
 						AND Codigo <> ".$idorgao."
@@ -208,7 +208,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 
 	public static function distribuirParecer($idpronac, $idproduto, $observacao, $tipoanalise, $idusuario, $idAgenteParecerista)
 	{
-		$sql = "UPDATE SAC.dbo.tbDistribuirParecer SET  FecharAnalise=0,
+		$sql = "UPDATE sac.dbo.tbDistribuirParecer SET  FecharAnalise=0,
 														Observacao = '".$observacao."',
 														idUsuario = ".$idusuario.",
 														idAgenteParecerista = ".$idAgenteParecerista."
@@ -225,7 +225,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 
 	public static function encaminharParecer($idpronac, $idproduto, $observacao, $tipoanalise, $idusuario, $idorgao)
 	{
-		$sql = "UPDATE SAC.dbo.tbDistribuirParecer SET DtEnvio=GETDATE(),
+		$sql = "UPDATE sac.dbo.tbDistribuirParecer SET DtEnvio=GETDATE(),
 													   FecharAnalise=0,
 													   Observacao = '".$observacao."',
 													   idUsuario = ".$idusuario.",
@@ -248,7 +248,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 
 	public static function concluirParecer($idpronac, $idproduto, $observacao, $tipoanalise, $idusuario)
 	{
-		$sql = "UPDATE SAC.dbo.tbDistribuirParecer SET FecharAnalise=1, Observacao = '".$observacao."', idUsuario = ".$idusuario."
+		$sql = "UPDATE sac.dbo.tbDistribuirParecer SET FecharAnalise=1, Observacao = '".$observacao."', idUsuario = ".$idusuario."
 					WHERE idpronac    = ".$idpronac."
 					AND   idproduto   = ".$idproduto."
 					AND   tipoanalise = ".$tipoanalise."

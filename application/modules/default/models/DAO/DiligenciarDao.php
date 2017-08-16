@@ -39,9 +39,9 @@ class DiligenciarDao extends Zend_Db_Table
         $where = $this->montarConsulta($consulta);
 
         $sql = "select dil.idDiligencia,pro.NomeProjeto as nomeProjeto,pro.AnoProjeto+pro.Sequencial as pronac,dil.DtSolicitacao as dataSolicitacao,dil.DtResposta as dataResposta,ver.Descricao as tipoDiligencia,dil.Solicitacao,dil.Resposta,arq.nmArquivo,arq.idArquivo,dil.idCodigoDocumentosExigidos
-                from SAC.dbo.Projetos pro
-                inner join SAC.dbo.tbDiligencia dil on dil.idPronac = pro.IdPRONAC
-                inner join SAC.dbo.Verificacao ver on ver.idVerificacao = dil.idTipoDiligencia
+                from sac.dbo.Projetos pro
+                inner join sac.dbo.tbDiligencia dil on dil.idPronac = pro.IdPRONAC
+                inner join sac.dbo.Verificacao ver on ver.idVerificacao = dil.idTipoDiligencia
                 left  join bdcorporativo.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
                 $where " ;
         
@@ -56,9 +56,9 @@ class DiligenciarDao extends Zend_Db_Table
         $where = $this->montarConsulta($consulta);
 
         $sql = "select dil.idDiligencia,pre.NomeProjeto as nomeProjeto,pre.idPreProjeto as pronac,dil.DtSolicitacao as dataSolicitacao,dil.DtResposta as dataResposta,ver.Descricao as tipoDiligencia,dil.Solicitacao,dil.Resposta,arq.nmArquivo,arq.idArquivo,dil.idCodigoDocumentosExigidos
-                from SAC.dbo.PreProjeto pre
-                inner join SAC.dbo.tbDiligencia dil on dil.idPreProjeto = pre.idPreProjeto
-                inner join SAC.dbo.Verificacao ver on ver.idVerificacao = dil.idTipoDiligencia
+                from sac.dbo.PreProjeto pre
+                inner join sac.dbo.tbDiligencia dil on dil.idPreProjeto = pre.idPreProjeto
+                inner join sac.dbo.Verificacao ver on ver.idVerificacao = dil.idTipoDiligencia
                 left  join bdcorporativo.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
                 $where " ;
 
@@ -73,7 +73,7 @@ class DiligenciarDao extends Zend_Db_Table
         $where = $this->montarConsulta($consulta);
 
         $sql = "select pro.NomeProjeto as nomeProjeto,pro.AnoProjeto+pro.Sequencial as pronac
-                from SAC.dbo.Projetos pro
+                from sac.dbo.Projetos pro
                 $where " ;
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -86,7 +86,7 @@ class DiligenciarDao extends Zend_Db_Table
     function dadosPreProjeto($consulta = array()){
         $where = $this->montarConsulta($consulta);
 
-        $sql = "select pre.NomeProjeto as nomeProjeto,idPreProjeto from SAC.dbo.PreProjeto pre
+        $sql = "select pre.NomeProjeto as nomeProjeto,idPreProjeto from sac.dbo.PreProjeto pre
                 $where " ;
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -101,7 +101,7 @@ class DiligenciarDao extends Zend_Db_Table
     function tipoDiligencia($consulta = array()){
         $where = $this->montarConsulta($consulta,' and ');
 
-        $sql = "select idVerificacao,Descricao from SAC.dbo.Verificacao where idTipo = 8 and stEstado = 1 $where " ;
+        $sql = "select idVerificacao,Descricao from sac.dbo.Verificacao where idTipo = 8 and stEstado = 1 $where " ;
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -122,7 +122,7 @@ class DiligenciarDao extends Zend_Db_Table
             $atributos  .=  $key;
             $valores    .=  $values;
         }
-        $sql = "Insert Into SAC.dbo.tbDiligencia({$atributos})values({$valores})";
+        $sql = "Insert Into sac.dbo.tbDiligencia({$atributos})values({$valores})";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -142,7 +142,7 @@ class DiligenciarDao extends Zend_Db_Table
                 $valores    .=   ',';
             $valores    .=  ' '.$key.'='.$values.' ';
         }
-        $sql = "update SAC.dbo.tbDiligencia set $valores $where";
+        $sql = "update sac.dbo.tbDiligencia set $valores $where";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -157,8 +157,8 @@ class DiligenciarDao extends Zend_Db_Table
     function buscarAgenteProjeto($consulta = array()){
         $where = $this->montarConsulta($consulta);
 
-        $sql = "select pre.idAgente from SAC.dbo.Projetos pro
-                inner join SAC.dbo.PreProjeto pre on pro.idProjeto = pre.idPreProjeto $where " ;
+        $sql = "select pre.idAgente from sac.dbo.Projetos pro
+                inner join sac.dbo.PreProjeto pre on pro.idProjeto = pre.idPreProjeto $where " ;
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -170,7 +170,7 @@ class DiligenciarDao extends Zend_Db_Table
     function buscarAgentePreProjeto($consulta = array()){
         $where = $this->montarConsulta($consulta);
 
-        $sql = "select pre.idAgente from SAC.dbo.PreProjeto pre $where " ;
+        $sql = "select pre.idAgente from sac.dbo.PreProjeto pre $where " ;
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

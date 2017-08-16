@@ -454,7 +454,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct->joinInner(
                 array('par' => 'Parecer'),
-                "par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)",
+                "par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from sac..Parecer where IdPRONAC = pr.IdPRONAC)",
                 array('par.ParecerFavoravel'),
                 "SAC"
         );
@@ -585,7 +585,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct->joinInner(
                 array('par' => 'Parecer'),
-                "par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)",
+                "par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from sac..Parecer where IdPRONAC = pr.IdPRONAC)",
                 array('par.ParecerFavoravel'),
                 "SAC"
         );
@@ -739,14 +739,14 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 "pr.IdPRONAC = tp.IdPRONAC",
                 array(
                     '(pr.AnoProjeto+pr.Sequencial) as pronac',
-                    'SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial) AS AprovadoReal',
+                    'sac.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial) AS AprovadoReal',
                     'pr.NomeProjeto',
                     'pr.Situacao',
                     'pr.Area',
                     'pr.Orgao',
                     'TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.orgao, 1) AS orgaoSuperior',
                     'pr.DtProtocolo',
-                    new Zend_Db_Expr('SAC.dbo.fnDtAprovacao(pr.AnoProjeto,pr.Sequencial) as DtAprovacao')
+                    new Zend_Db_Expr('sac.dbo.fnDtAprovacao(pr.AnoProjeto,pr.Sequencial) as DtAprovacao')
                 ),
                 "SAC"
         );
@@ -880,9 +880,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("'An&aacute;lise Inicial' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
-                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
-                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
-                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
+                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scsac.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
+                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scsac.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
+                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scsac.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
                 'c.dsConsolidacao'
             )
         );
@@ -905,9 +905,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
             array('a' => 'tbRecurso'),
             array(
                 new Zend_Db_Expr("'Recurso' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
-                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
-                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
-                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
+                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scsac.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
+                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scsac.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
+                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scsac.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
                 'c.dsConsolidacao'
             ), 'SAC'
         );
@@ -931,9 +931,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
             array('a' => 'tbReadequacao'),
             array(
                 new Zend_Db_Expr("'Readequa��o' AS TipoAprovacao,d.dsReadequacao AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto"),
-                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC and d.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAprovacao"),
-                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC and e.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAbstencao"),
-                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC and f.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoIndeferimento"),
+                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scsac.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC and d.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAprovacao"),
+                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scsac.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC and e.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAbstencao"),
+                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scsac.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC and f.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoIndeferimento"),
                 'c.dsConsolidacao'
             ), 'SAC'
         );

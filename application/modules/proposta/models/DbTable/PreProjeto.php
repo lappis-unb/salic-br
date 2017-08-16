@@ -41,7 +41,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $where['idUsuario = ?'] = $idUsuarioR;
         $where['idAgente = ?'] = $idAgente;
 
-        return $db->update('SAC.dbo.PreProjeto', array('idUsuario' => $idUsuario), $where);
+        return $db->update('sac.dbo.PreProjeto', array('idUsuario' => $idUsuario), $where);
     }
 
     /**
@@ -405,7 +405,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function inserirProposta($dados)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $cadastrar = $db->insert("SAC.dbo.PreProjeto", $dados);
+        $cadastrar = $db->insert("sac.dbo.PreProjeto", $dados);
 
         if ($cadastrar)
         {
@@ -429,7 +429,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function alterarDados($dados, $where)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $cadastrar = $db->update("SAC.dbo.PreProjeto", $dados, $where);
+        $cadastrar = $db->update("sac.dbo.PreProjeto", $dados, $where);
 
         if ($cadastrar)
         {
@@ -946,7 +946,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 "SAC"
                 );
 
-        $condicao = new Zend_Db_Expr("select top 1 * from SAC..Projetos p where p.idProjeto = ap.idProjeto");
+        $condicao = new Zend_Db_Expr("select top 1 * from sac..Projetos p where p.idProjeto = ap.idProjeto");
         $slct->where("ap.idTecnico = ?",$idTecnico);
         $slct->where("m.stEstado = 0");
         $slct->where("m.Movimentacao IN (96,97,128)");
@@ -975,7 +975,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $where['idPreProjeto = ?'] = $idPreProjeto;
 
-        return $db->update('SAC.dbo.PreProjeto', array('idAgente' => $idAgente), $where);
+        return $db->update('sac.dbo.PreProjeto', array('idAgente' => $idAgente), $where);
     }
 
     /**
@@ -1610,7 +1610,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'm.Movimentacao AS CodSituacao',
         );
 
-        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
@@ -1618,7 +1618,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where('gru_codigo = 92')
             ->group('org_superior');
 
-        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: sac.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = x.idTecnico');
@@ -1645,7 +1645,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('NOT EXISTS
                     (
                     SELECT TOP (1) IdPRONAC, AnoProjeto, Sequencial, UfProjeto, Area, Segmento, Mecanismo, NomeProjeto, Processo, CgcCpf, Situacao, DtProtocolo, DtAnalise, Modalidade, Orgao, OrgaoOrigem, DtSaida, DtRetorno, UnidadeAnalise, Analista, DtSituacao, ResumoProjeto, ProvidenciaTomada, Localizacao, DtInicioExecucao, DtFimExecucao, SolicitadoUfir, SolicitadoReal, SolicitadoCusteioUfir, SolicitadoCusteioReal, SolicitadoCapitalUfir, SolicitadoCapitalReal, Logon, idProjeto
-                    FROM SAC.dbo.Projetos AS u
+                    FROM sac.dbo.Projetos AS u
                     WHERE (p.idPreProjeto = idProjeto)
                     )'
                 )
@@ -1740,7 +1740,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $subSql = $db->select()
             ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
@@ -1784,13 +1784,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'p.NomeProjeto',
         );
 
-        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: sac.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
             ;
 
-        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $subSql = $db->select()
             ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
@@ -1912,13 +1912,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: sac.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
             ;
 
-        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
@@ -2040,13 +2040,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'p.idAgente',
         );
 
-        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: sac.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
             ;
 
-        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
@@ -2120,13 +2120,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'p.stTipoDemanda AS TipoDemanda'
         );
 
-        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: sac.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
             ;
 
-        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
@@ -2134,7 +2134,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where('gru_codigo = 92')
             ->group('org_superior');
 
-        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgaoSub = $db->select()
             ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = idTecnico')
@@ -2204,7 +2204,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      */
     public function transformarPropostaEmProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso)
     {
-        $sql = "EXEC SAC.dbo.paPropostaParaProjeto {$idPreProjeto}, '{$cnpjcpf}', {$idOrgao}, {$idUsuario}, {$nrProcesso}";
+        $sql = "EXEC sac.dbo.paPropostaParaProjeto {$idPreProjeto}, '{$cnpjcpf}', {$idOrgao}, {$idUsuario}, {$nrProcesso}";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
@@ -2939,10 +2939,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         //pp.idEtapa as idEtapa,
         //te.Descricao as DescricaoEtapa,
         //pre.idPreProjeto as idPreProjeto
-        //FROM SAC.dbo.PreProjeto pre
-        //INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-        //INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
-        //INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
+        //FROM sac.dbo.PreProjeto pre
+        //INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+        //INNER JOIN sac.dbo.Produto p ON (pp.idProduto = p.Codigo)
+        //INNER JOIN sac..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
         //WHERE idPreProjeto = {$idPreProjeto}";
 
         //$sql.= " ORDER BY te.DescricaoEtapa ";
@@ -2952,7 +2952,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where("tpCusto = 'P'")
         ;
 
-        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM sac.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
         throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
 
@@ -3049,15 +3049,15 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     pp.idEtapa as idEtapa,
                     te.Descricao as DescricaoEtapa,
                     pre.idPreProjeto as idPreProjeto
-                    FROM SAC.dbo.PreProjeto pre
-                    INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                    INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
-                    INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
+                    FROM sac.dbo.PreProjeto pre
+                    INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                    INNER JOIN sac.dbo.Produto p ON (pp.idProduto = p.Codigo)
+                    INNER JOIN sac..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
                     WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY te.DescricaoEtapa ";
 
-        $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa
+        $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM sac.dbo.tbPlanilhaEtapa
             WHERE tpCusto = 'P' ";
 
         $select = $this->select();

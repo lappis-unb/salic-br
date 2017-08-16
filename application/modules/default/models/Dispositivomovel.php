@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstra&ccedil;&atilde;o da tabela SAC.DBo.tbAplicativoSalic
+ * Abstra&ccedil;&atilde;o da tabela sac.DBo.tbAplicativoSalic
  *
  * @author rafael.gloria@cultura.gov.br
  */

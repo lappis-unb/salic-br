@@ -6,7 +6,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
     protected $_name = 'dbo.spValidarApresentacaoDeProjeto';
 
     public function validarEnvioProposta($idPreProjeto) {
-        $select = new Zend_Db_Expr(" exec SAC.dbo.spValidarApresentacaoDeProjeto $idPreProjeto ");
+        $select = new Zend_Db_Expr(" exec sac.dbo.spValidarApresentacaoDeProjeto $idPreProjeto ");
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -17,7 +17,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
     }
 
     public function paChecklistDeEnvioDeProposta($idPreProjeto) {
-        $select = new Zend_Db_Expr(" exec SAC.dbo.paChecklistDeEnvioDeProposta $idPreProjeto ");
+        $select = new Zend_Db_Expr(" exec sac.dbo.paChecklistDeEnvioDeProposta $idPreProjeto ");
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);

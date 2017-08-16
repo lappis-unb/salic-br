@@ -145,7 +145,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         else{
             $select->where('D.DtResposta is null');
         }
-        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from SAC..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
+        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from sac..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
 
         return $this->fetchAll($select);
     }
@@ -190,8 +190,8 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     'CONVERT(CHAR(10),D.DtResposta,103) AS DtResposta',
                     'CONVERT(CHAR(10),D.dtSolicitacao,103) AS dtSolicitacao',
                     'D.Resposta',
-                    new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM bdcorporativo.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
-                    new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM bdcorporativo.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
+                    new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM bdcorporativo.scsac.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
+                    new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM bdcorporativo.scsac.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
                     ),
                 "SAC"
         );
@@ -207,7 +207,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('Pa' => 'Parecer'),
-                'Pa.IdPRONAC = D.idPronac  AND Pa.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = Pr.IdPRONAC)',
+                'Pa.IdPRONAC = D.idPronac  AND Pa.DtParecer = (SELECT TOP 1 max(DtParecer) from sac..Parecer where IdPRONAC = Pr.IdPRONAC)',
                 array("CASE WHEN Pa.ParecerFavoravel in ('2','3')
 				  THEN 'Sim'
 				  ELSE 'N�o'
@@ -226,7 +226,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from SAC..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
+        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from sac..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
         //adicionando linha order ao select
         $select->order($order);
 

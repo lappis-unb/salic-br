@@ -52,7 +52,7 @@ class AnaliseAprovacaoDAO extends Zend_Db_Table
 			$where.= "AND tpAnalise = '$tpAnalise'";
 		}
 
-		$alterar = $db->update("SAC.dbo.tbAnaliseAprovacao", $dados, $where);
+		$alterar = $db->update("sac.dbo.tbAnaliseAprovacao", $dados, $where);
 
 		if ($alterar)
 		{

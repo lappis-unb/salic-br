@@ -1,7 +1,7 @@
 <?php
 Class AreadeTrabalho extends Zend_Db_Table{
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+       	protected $_name    = 'sac.dbo.Projetos';
 
        	public function buscarAnalise()
        	{
@@ -10,7 +10,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
        		CASE WHEN Pa.ParecerFavoravel in ('2','3') THEN 'Sim'
             ELSE 'N�o' End AS ParecerFavoravel,
        		CONVERT(CHAR(10),DPC.dtDistribuicao,103) AS DataRecebimento
- 			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC
+ 			from sac.dbo.Projetos Pr, sac.dbo.Parecer Pa, bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC
 			where Pa.idPRONAC = Pr.idPRONAC
 			AND DPC.idPRONAC = Pr.idPRONAC";
 			//AND DPC.idAgente = idParametro";
@@ -27,7 +27,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
        		CASE WHEN Pa.ParecerFavoravel in ('2','3') THEN 'Sim'
             ELSE 'N�o' End AS ParecerFavoravel,
        		CONVERT(CHAR(10),d.dtSolicitacao,103) AS DataSolicitacao
- 			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, SAC.dbo.tbDiligencia D
+ 			from sac.dbo.Projetos Pr, sac.dbo.Parecer Pa, sac.dbo.tbDiligencia D
 			where Pa.idPRONAC = Pr.idPRONAC
 			AND d.idPRONAC = Pr.idPRONAC
 			AND D.dtResposta IS NULL
@@ -47,7 +47,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
        		CASE WHEN Pa.ParecerFavoravel in ('2','3') THEN 'Sim'
             ELSE 'N�o' End AS ParecerFavoravel,
        		CONVERT(CHAR(10),d.dtResposta,103) AS DataResposta
- 			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, SAC.dbo.tbDiligencia D
+ 			from sac.dbo.Projetos Pr, sac.dbo.Parecer Pa, sac.dbo.tbDiligencia D
 			where Pa.idPRONAC = Pr.idPRONAC
 			AND d.idPRONAC = Pr.idPRONAC
 			AND D.dtResposta IS NOT NULL";

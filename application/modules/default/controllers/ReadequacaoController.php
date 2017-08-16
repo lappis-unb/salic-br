@@ -3,7 +3,7 @@
  * Controller Readequacao (Proponente, Respons�vel / Procurador)
  * Considera��es importantes:
  *  1. O Projeto tem que estar na Fase de Execu��o (2)
- *  2. O Projeto tem que estar Aprovado (SAC.dbo.Aprovacao):
+ *  2. O Projeto tem que estar Aprovado (sac.dbo.Aprovacao):
  * 		2.1. Os dados da Portaria tem que estar preenchidos
  * 		2.2. O Tipo de Aprova��o deve ser 1
  *  3. Os Projetos devem estar vinculados ao Proponente/Respons�vel/Procurador
@@ -32,7 +32,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	private $_idPronac          = 0; // id do pronac/projeto, obrigat�rio para todas as p�ginas
 	private $_idPreProjeto      = 0; // c�digo pr�-projeto do projeto
 	private $_idPedidoAlteracao = 0; // id do pedido de readequa��o do projeto, obrigat�rio caso exista solicita��o de readequa��o
-	private $_vlTotalAprovado   = 0; // valor aprovado do projeto (SAC.dbo.Aprovacao)
+	private $_vlTotalAprovado   = 0; // valor aprovado do projeto (sac.dbo.Aprovacao)
 	private $_vlTotalSolicitado = 0; // valor que o projeto ter� ap�s a solicita��o de readequa��o ser aprovada
 	private $_tipoReadequacao   = ''; // tipo de readequa��o: redu��o, complementa��o ou remanejamento
 	private $_stPedidoAlteracao = ''; // status do pedido de readequa��o atual (A - Ativo, I - Inativo, T - Tempor�rio)

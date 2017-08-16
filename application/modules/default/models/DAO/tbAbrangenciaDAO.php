@@ -10,7 +10,7 @@ class tbAbrangenciaDAO extends MinC_Db_Table_Abstract
                 mun.Descricao as mun,
                 uf.Descricao as uf,
                 pais.Descricao as pais
-                from SAC.dbo.Abrangencia ab
+                from sac.dbo.Abrangencia ab
                 join agentes.dbo.Municipios mun on mun.idMunicipioIBGE = ab.idMunicipioIBGE
                 join agentes.dbo.UF uf on uf.idUF = ab.idUF
                 join agentes.dbo.Pais pais on pais.idPais = ab.idPais";
@@ -21,8 +21,8 @@ class tbAbrangenciaDAO extends MinC_Db_Table_Abstract
         
         if($idpedidoalteracao)
         {
-            $sql .=" join SAC.dbo.Projetos pr on pr.idProjeto = ab.idProjeto and ab.stAbrangencia = 1
-                     join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto pap on pap.idPRONAC = pr.IdPRONAC
+            $sql .=" join sac.dbo.Projetos pr on pr.idProjeto = ab.idProjeto and ab.stAbrangencia = 1
+                     join bdcorporativo.scsac.tbPedidoAlteracaoProjeto pap on pap.idPRONAC = pr.IdPRONAC
                      where pap.idPedidoAlteracao = ".$idpedidoalteracao;
         }
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -34,9 +34,9 @@ class tbAbrangenciaDAO extends MinC_Db_Table_Abstract
     public static function buscarDadosTbAbrangencia($idprojeto=null,$idpedidoalteracao=null)
     {
         $sql = "SELECT c.idPais, c.idUF, c.idMunicipioIBGE, c.idAbrangenciaAntiga, c.tpAcao
-                    FROM bdcorporativo.scSAC.tbAvaliacaoSubItemAbragencia               AS a
-                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao    AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao AND a.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao
-                    INNER JOIN SAC.dbo.tbAbrangencia                                    AS c ON c.idAbrangencia = a.idAbrangencia
+                    FROM bdcorporativo.scsac.tbAvaliacaoSubItemAbragencia               AS a
+                    INNER JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao    AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao AND a.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao
+                    INNER JOIN sac.dbo.tbAbrangencia                                    AS c ON c.idAbrangencia = a.idAbrangencia
                 WHERE a.idAvaliacaoItemPedidoAlteracao = $idpedidoalteracao and b.stAvaliacaoSubItemPedidoAlteracao = 'D'";
 
         $db= Zend_Db_Table::getDefaultAdapter();

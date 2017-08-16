@@ -14,7 +14,7 @@ class TipoDocumentoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "bdcorporativo.scSAC.tbTipoDocumento";
+	protected $_name    = "bdcorporativo.scsac.tbTipoDocumento";
 	protected $_primary = "idTipoDocumento";
 
 
@@ -28,7 +28,7 @@ class TipoDocumentoDAO extends Zend_Db_Table
 	 */
 	public static function buscar()
 	{
-		$sql = "SELECT * FROM SAC.dbo.tbTipoDocumento ORDER BY dsTipoDocumento";
+		$sql = "SELECT * FROM sac.dbo.tbTipoDocumento ORDER BY dsTipoDocumento";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

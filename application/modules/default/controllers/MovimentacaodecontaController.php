@@ -948,7 +948,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                     if($vlrCaptacao > 0){
 
-                        //INSERT NA TABELA SAC.dbo.Captacao
+                        //INSERT NA TABELA sac.dbo.Captacao
                         $dados = array(
                             'AnoProjeto'        => $rs->nrAnoProjeto,
                             'Sequencial'        => $rs->nrSequencial,
@@ -977,7 +977,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                         # validacao removida para atender aporte mesmo em caso de valor zerado para a captacao
                         //if($vlrDevolucao > 0){
-                            # INSERT NA TABELA SAC.dbo.tbAporteCaptacao
+                            # INSERT NA TABELA sac.dbo.tbAporteCaptacao
                             $dadosAporte = array(
                                 'IdPRONAC'          => $rs->idProjeto,
                                 'idVerificacao'     => $tpDevolucao,
@@ -1205,14 +1205,14 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $this->view->filtro = $filtro;
                 switch ($filtro) {
                     case '': //captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
                         break;
                     case 'nc': //nao captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
                         break;
                 }
             } else {
-                $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
             }
 
             $tbCaptacao = new Captacao();
@@ -1308,14 +1308,14 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $this->view->filtro = $filtro;
                 switch ($filtro) {
                     case '': //captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
                         break;
                     case 'nc': //nao captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
                         break;
                 }
             } else {
-                $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
             }
 
             $tbCaptacao = new Captacao();

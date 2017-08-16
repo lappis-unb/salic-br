@@ -14,7 +14,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "SAC.dbo.PreProjeto";
+	protected $_name    = "sac.dbo.PreProjeto";
 	protected $_primary = "idPreProjeto";
 
 
@@ -25,7 +25,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 //		$db= Zend_Db_Table::getDefaultAdapter();
 //		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
-//		$cadastrar = $db->insert("SAC.dbo.tbRecurso", $dados);
+//		$cadastrar = $db->insert("sac.dbo.tbRecurso", $dados);
 //
 //
 //		if ($cadastrar)
@@ -47,7 +47,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 //		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
 //		$where   = "IdPRONAC = $idPronac";
-//		$alterar = $db->update("SAC.dbo.Projetos", $dados, $where);
+//		$alterar = $db->update("sac.dbo.Projetos", $dados, $where);
 //
 //		if ($alterar)
 //		{
@@ -73,16 +73,16 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                            fd.nmFormDocumento as Edital,
                            Mec.Descricao as MecanismoDesc
                            --edi.Objeto
-                      From SAC.dbo.PreProjeto p
+                      From sac.dbo.PreProjeto p
                  left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
                 INNER JOIN agentes.dbo.Agentes ag on ag.idAgente = p.idAgente
                 INNER JOIN agentes.dbo.Nomes nm on nm.idAgente = ag.idAgente
-                INNER JOIN SAC.dbo.Edital ed on ed.idEdital = p.idEdital
-                INNER JOIN SAC.dbo.Mecanismo Mec on Mec.Codigo = p.Mecanismo
+                INNER JOIN sac.dbo.Edital ed on ed.idEdital = p.idEdital
+                INNER JOIN sac.dbo.Mecanismo Mec on Mec.Codigo = p.Mecanismo
                 Where p.stestado = 1
                 and p.idUsuario= '{$array['idUsuario']}'
                 and stTipoDemanda not like 'NA'
-                and not exists (select * from SAC.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )
+                and not exists (select * from sac.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )
                 AND fd.idClassificaDocumento not in (23,24,25)";
 
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -93,7 +93,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 	
 		public static function buscarpreprojeto()
 	{
-		$sql = "select pp.NomeProjeto, nm.Descricao as Nome from SAC.dbo.PreProjeto pp
+		$sql = "select pp.NomeProjeto, nm.Descricao as Nome from sac.dbo.PreProjeto pp
                 INNER JOIN agentes.dbo.Nomes nm on nm.idAgente = pp.idAgente
                 where pp.idPreProjeto = '23546'";
 
@@ -130,9 +130,9 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         u.dtFimFase as dtFimFase,Objeto
                    FROM Sac.dbo.Edital e
              INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
-             INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN sac.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
+             INNER JOIN bdcorporativo.scsac.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scsac.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null";
         if($array['nrEdital']) {
@@ -171,9 +171,9 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         u.dtFimFase as dtFimFase,Objeto
                    FROM Sac.dbo.Edital e
              INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
-             INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN sac.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
+             INNER JOIN bdcorporativo.scsac.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scsac.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null and
                         u.dtIniFase <= {$objAcesso->getDate()} AND u.dtFimFase >= {$objAcesso->getDate()}
@@ -196,9 +196,9 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         u.dtFimFase as dtFimFase,Objeto
                    FROM Sac.dbo.Edital e
              INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
-             INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN sac.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
+             INNER JOIN bdcorporativo.scsac.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scsac.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null ";
         if(isset($array['idEdital'])) {
@@ -216,9 +216,9 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         count(f.nmFormDocumento) as qtd
                    FROM Sac.dbo.Edital e
              INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
-             INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN sac.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
+             INNER JOIN bdcorporativo.scsac.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scsac.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null and
                         u.dtIniFase <= {$objAcesso->getDate()} AND u.dtFimFase >= {$objAcesso->getDate()}
@@ -237,12 +237,12 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         p.idEdital,
                         p.ResumoDoProjeto,
                         nm.Descricao as nomeAgente
-                    From SAC.dbo.PreProjeto p
+                    From sac.dbo.PreProjeto p
                left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
                left join agentes.dbo.Nomes nm on nm.idAgente = p.idAgente
                    Where stestado=1
                      and stTipoDemanda not like 'NA'
-                     and not exists (select * from SAC.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )
+                     and not exists (select * from sac.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )
                      AND fd.idClassificaDocumento not in (23,24,25)
                      and idPreProjeto = {$array['idPreProjeto']}
                 GROUP BY NomeProjeto, Mecanismo, p.idAgente, p.idEdital, idPreProjeto, stTipoDemanda, p.ResumoDoProjeto,nm.Descricao";
@@ -263,13 +263,13 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 
     public static function inserirProposta($array = array()) {
         $db= Zend_Db_Table::getDefaultAdapter();
-    	$db->insert('SAC.dbo.PreProjeto', $array);
+    	$db->insert('sac.dbo.PreProjeto', $array);
     	return $db->lastInsertId();
     }
 
     public static function buscarDadosProposta($array = array()) {
         $sql = "select idPreProjeto
-                  from SAC.dbo.PreProjeto
+                  from sac.dbo.PreProjeto
                  where idAgente          = {$array['idAgente']}
                    and NomeProjeto       = '{$array['nomeProjeto']}'
                    and stTipoDemanda     = 'ED'
@@ -281,7 +281,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
         return $db->fetchAll($sql);
     }
     public static function alterarDadosProposta($array = array()) {
-        $sql = "update SAC.dbo.PreProjeto
+        $sql = "update sac.dbo.PreProjeto
                    set NomeProjeto     = '{$array['NomeProjeto']}',
                        ResumoDoProjeto = '{$array['ResumoDoProjeto']}'
                  where idPreProjeto    = {$array['idPreProjeto']}
@@ -300,12 +300,12 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                     Mecanismo,
                     stTipoDemanda,
                     p.idEdital
-                From SAC.dbo.PreProjeto p
+                From sac.dbo.PreProjeto p
                 left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
                 Where stestado=1
                 and idAgente={$idAgente }
                 and stTipoDemanda not like 'NA'
-                and not exists (select * from SAC.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )AND
+                and not exists (select * from sac.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )AND
                 fd.idClassificaDocumento not in (23,24,25)
                 GROUP BY NomeProjeto, Mecanismo, idagente, p.idEdital, idPreProjeto, stTipoDemanda";
 

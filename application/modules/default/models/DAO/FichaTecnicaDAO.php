@@ -15,10 +15,10 @@ class FichaTecnicaDAO {
         $sql = "select
                    idPreProjeto, pre.FichaTecnica
                 from
-                    SAC.dbo.PreProjeto pre
-                    inner join SAC.dbo.Projetos pro on pro.idProjeto = pre.idPreProjeto
-                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
-                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
+                    sac.dbo.PreProjeto pre
+                    inner join sac.dbo.Projetos pro on pro.idProjeto = pre.idPreProjeto
+                    inner join bdcorporativo.scsac.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
+                    inner join bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
                 where
                     tpa.IdPRONAC = {$idPronac} and tpa.idPedidoAlteracao = $idPedidoAlteracao and tpxa.tpAlteracaoProjeto = 3";
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -32,10 +32,10 @@ class FichaTecnicaDAO {
         $sql = "select
                    idPreProjeto, pre.FichaTecnica
                 from
-                    SAC.dbo.PreProjeto pre
-                    inner join SAC.dbo.Projetos pro on pro.idProjeto = pre.idPreProjeto
-                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
-                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
+                    sac.dbo.PreProjeto pre
+                    inner join sac.dbo.Projetos pro on pro.idProjeto = pre.idPreProjeto
+                    inner join bdcorporativo.scsac.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
+                    inner join bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
                 where
                     tpa.IdPRONAC = {$idPronac} and tpa.idPedidoAlteracao = $idPedidoAlteracao and tpxa.tpAlteracaoProjeto = 3";
         $db= Zend_Db_Table::getDefaultAdapter();

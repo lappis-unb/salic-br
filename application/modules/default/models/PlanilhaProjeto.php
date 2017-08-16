@@ -206,13 +206,13 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
 
     public function parecerFavoravel($idpronac) 
     {
-		$sql = "UPDATE SAC.dbo.tbPlanilhaProjeto
+		$sql = "UPDATE sac.dbo.tbPlanilhaProjeto
 				SET 
 				Quantidade 		= pro.Quantidade
 				,Ocorrencia 		= pro.Ocorrencia
 				,ValorUnitario 	= pro.ValorUnitario
-				FROM SAC.dbo.tbPlanilhaProjeto AS PP
-				INNER JOIN SAC.dbo.tbPlanilhaProposta AS pro ON pro.idPlanilhaProposta = PP.idPlanilhaProposta
+				FROM sac.dbo.tbPlanilhaProjeto AS PP
+				INNER JOIN sac.dbo.tbPlanilhaProposta AS pro ON pro.idPlanilhaProposta = PP.idPlanilhaProposta
 				WHERE PP.idPronac = ".$idpronac;
 
 		$db = Zend_Db_Table::getDefaultAdapter();
@@ -347,13 +347,13 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
     }
     
     public function inserirPlanilhaParaParecerista($idPreProjeto, $idPronac) {
-        $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
+        $sqlParecerista = "INSERT INTO sac.dbo.tbPlanilhaProjeto
                                      (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
                                      TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
                                    SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
                                         Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
                                         MunicipioDespesa, 0
-                                        FROM SAC.dbo.tbPlanilhaProposta
+                                        FROM sac.dbo.tbPlanilhaProposta
                                         WHERE idProjeto = {$idPreProjeto}";
 
         $db = Zend_Db_Table::getDefaultAdapter();

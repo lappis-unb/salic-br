@@ -1,7 +1,7 @@
 <?php
 Class DadosprojetoDAO extends Zend_Db_Table{
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+       	protected $_name    = 'sac.dbo.Projetos';
 
        	public static function buscar($pronac)
        	{
@@ -34,31 +34,31 @@ Class DadosprojetoDAO extends Zend_Db_Table{
 			Pr.Localizacao,
 			CASE En.Enquadramento when 1 then 'Artigo 26' when 2 then 'Artigo 18' else 'N�o enquadrado' end as Enquadramento,
 			Pr.SolicitadoReal,
-			--SAC.dbo.fnOutrasFontes(Pr.idPronac) AS OutrasFontes,
-			CASE WHEN SAC.dbo.fnOutrasFontes(Pr.idPronac) is null
-			Then SAC.dbo.fnValorDaProposta(PP.idPreProjeto)
-			else SAC.dbo.fnValorSolicitado(Pr.AnoProjeto,Pr.Sequencial)
+			--sac.dbo.fnOutrasFontes(Pr.idPronac) AS OutrasFontes,
+			CASE WHEN sac.dbo.fnOutrasFontes(Pr.idPronac) is null
+			Then sac.dbo.fnValorDaProposta(PP.idPreProjeto)
+			else sac.dbo.fnValorSolicitado(Pr.AnoProjeto,Pr.Sequencial)
 			end as ValorProposta,
 			--CASE WHEN Pr.Mecanismo IN ('2','6')
-			--THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
-			--ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
+			--THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
+			--ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
 			--END AS ValorAprovado,
 			CASE WHEN Pr.Mecanismo IN ('2','6')
-			--THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
-			--ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial) + SAC.dbo.fnOutrasFontes(Pr.idPronac)
+			--THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
+			--ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial) + sac.dbo.fnOutrasFontes(Pr.idPronac)
 			--END AS ValorProjeto,
-			--SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
-			FROM SAC.dbo.Projetos Pr
-			JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-			JOIN SAC.dbo.Area Ar ON  Ar.Codigo = Pr.Area
-			JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
-			JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
-			LEFT JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
+			--sac.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
+			FROM sac.dbo.Projetos Pr
+			JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+			JOIN sac.dbo.Area Ar ON  Ar.Codigo = Pr.Area
+			JOIN sac.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
+			JOIN sac.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
+			LEFT JOIN sac.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
 			JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
-			JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
+			JOIN sac.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
 			JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente 
-			LEFT JOIN SAC.dbo.vwTramitarProjeto Tp ON Tp.idPronac = Pr.idPRONAC
-			JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
+			LEFT JOIN sac.dbo.vwTramitarProjeto Tp ON Tp.idPronac = Pr.idPRONAC
+			JOIN sac.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 			WHERE Pr.idPRONAC = ". $pronac ."" ;
 
                         $db = Zend_Db_Table::getDefaultAdapter();

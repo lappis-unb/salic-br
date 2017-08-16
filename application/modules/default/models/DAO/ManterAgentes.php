@@ -29,8 +29,8 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 						LEFT join agentes.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
 						LEFT join agentes.dbo.tbTitulacaoConselheiro T on T.idAgente = A.idAgente
 						LEFT join agentes.dbo.Visao V on V.idAgente = A.idAgente
-						LEFT join SAC.dbo.Area SA on SA.Codigo = T.cdArea
-						LEFT join SAC.dbo.Segmento SS on SS.Codigo = T.cdSegmento
+						LEFT join sac.dbo.Area SA on SA.Codigo = T.cdArea
+						LEFT join sac.dbo.Segmento SS on SS.Codigo = T.cdSegmento
 				WHERE (A.TipoPessoa = 0 OR A.TipoPessoa = 1) ";
 
 		if (!empty($cnpjcpf))
@@ -161,7 +161,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
     public static function buscarAreasCulturais()
     {
         $sql = "SELECT Codigo AS id, Descricao AS descricao ";
-        $sql.= "FROM SAC.dbo.Area ";
+        $sql.= "FROM sac.dbo.Area ";
         $sql.= "WHERE Codigo <> 7 ";
         $sql.= "ORDER BY Descricao;";
 

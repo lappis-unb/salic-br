@@ -14,7 +14,7 @@ class DiligenciaDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "SAC.dbo.tbDiligencia";
+	protected $_name    = "sac.dbo.tbDiligencia";
 	protected $_primary = "idDiligencia";
 
 
@@ -31,7 +31,7 @@ class DiligenciaDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.tbDiligencia", $dados);
+		$cadastrar = $db->insert("sac.dbo.tbDiligencia", $dados);
 
 		if ($cadastrar)
 		{

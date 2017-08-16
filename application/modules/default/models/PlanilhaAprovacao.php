@@ -156,7 +156,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
 
         $select->where('pa.IdPRONAC = ?', $idpronac);
         $select->where('pa.stAtivo = ?','S');
-        $select->where('pa.idPlanilhaAprovacao not in (?)', new Zend_Db_Expr('select idPlanilhaAprovacaoFilho  from  SAC.dbo.tbDeParaPlanilhaAprovacao'));
+        $select->where('pa.idPlanilhaAprovacao not in (?)', new Zend_Db_Expr('select idPlanilhaAprovacaoFilho  from  sac.dbo.tbDeParaPlanilhaAprovacao'));
 
         return $this->fetchAll($select);
     }
@@ -179,17 +179,17 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 new Zend_Db_Expr('(pAprovacao.qtItem*pAprovacao.nrOcorrencia*pAprovacao.vlUnitario) as Total'),
                 /*new Zend_Db_Expr(
                     "(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                    FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                    FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                    INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                    INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                     WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao AND (c1.idPronac = pAprovacao.idPronac)
                     GROUP BY a1.idPlanilhaAprovacao) as vlComprovado"
                 ),*/
                 new Zend_Db_Expr(
                     "(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                    FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                    FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                    INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                    INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                     WHERE c1.idPlanilhaItem = pAprovacao.idPlanilhaItem
                         AND c1.nrFonteRecurso = pAprovacao.nrFonteRecurso
                         AND c1.idProduto = pAprovacao.idProduto
@@ -201,9 +201,9 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 ),
                 new Zend_Db_Expr(
                     "(SELECT sum(b2.vlComprovacao) AS vlPagamento
-                    FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
+                    FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a2
+                    INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
+                    INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
                     WHERE a2.stItemAvaliado = 1 AND c2.stAtivo = 'S' AND c2.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao AND (c2.idPronac = pAprovacao.idPronac)
                     GROUP BY a2.idPlanilhaAprovacao) as ComprovacaoValidada"
                 )
@@ -1284,7 +1284,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         );
         $select->joinLeft(
                 array('aa' => 'tbAnaliseAprovacao'),
-                "aa.idPronac = PAP.idPronac and PAP.idProduto = aa.idProduto and aa.tpAnalise = '{$tpPlanilha}' AND aa.dtAnalise = (SELECT TOP 1 max(dtAnalise) from SAC..tbAnaliseAprovacao WHERE idPronac = PAP.idPronac and PAP.idProduto = idProduto and tpAnalise = '{$tpPlanilha}')",
+                "aa.idPronac = PAP.idPronac and PAP.idProduto = aa.idProduto and aa.tpAnalise = '{$tpPlanilha}' AND aa.dtAnalise = (SELECT TOP 1 max(dtAnalise) from sac..tbAnaliseAprovacao WHERE idPronac = PAP.idPronac and PAP.idProduto = idProduto and tpAnalise = '{$tpPlanilha}')",
                 array('aa.stAvaliacao')
         );
         $select->joinLeft(

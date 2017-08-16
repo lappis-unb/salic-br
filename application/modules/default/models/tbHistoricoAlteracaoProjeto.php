@@ -91,8 +91,8 @@ class tbHistoricoAlteracaoProjeto extends MinC_Db_Table_Abstract {
 
     }
 
-  //  SELECT * from SAC.dbo.tbHistoricoAlteracaoProjeto as P
-  //inner join SAC.dbo.tbHistoricoAlteracaoDocumento as D on D.idHistoricoAlteracaoProjeto = P.idHistoricoAlteracaoProjeto
+  //  SELECT * from sac.dbo.tbHistoricoAlteracaoProjeto as P
+  //inner join sac.dbo.tbHistoricoAlteracaoDocumento as D on D.idHistoricoAlteracaoProjeto = P.idHistoricoAlteracaoProjeto
   //inner join bdcorporativo.scCorp.tbDocumento as Doc on Doc.idDocumento = D.idDocumento
   //inner join bdcorporativo.scCorp.tbArquivo as Arq on Arq.idArquivo = Doc.idArquivo
  // where idPRONAC = 124914 and cdSituacao is not null

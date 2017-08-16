@@ -2,8 +2,8 @@
 /**
  * DAO tbPlanoDistribuicao
  * OBS:
- * 	-> A tabela SAC.dbo.PlanoDistribuicaoProduto armazena os produtos do projeto originais (aprovados)
- *  -> A tabela SAC.dbo.tbPlanoDistribuicao armazena os produtos do projeto que foram solicitados na readequa��o
+ * 	-> A tabela sac.dbo.PlanoDistribuicaoProduto armazena os produtos do projeto originais (aprovados)
+ *  -> A tabela sac.dbo.tbPlanoDistribuicao armazena os produtos do projeto que foram solicitados na readequa��o
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 20/04/2012
  * @version 1.0

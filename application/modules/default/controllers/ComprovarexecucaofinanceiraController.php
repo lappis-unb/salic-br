@@ -151,7 +151,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         $this->view->idpronac   = $post->idpronac;
         /*
         $dao      = new ComprovarexecucaofinanceiraDao();
-        $resposta = $dao->selectTable('SAC.dbo.Projetos',array('DtProtocolo'),array('IdPRONAC'=>" = {$this->view->idpronac}"));
+        $resposta = $dao->selectTable('sac.dbo.Projetos',array('DtProtocolo'),array('IdPRONAC'=>" = {$this->view->idpronac}"));
 
         $anoLicitacao = date('Y',strtotime($resposta[0]->DtProtocolo));
         if($anoLicitacao <= 2009){

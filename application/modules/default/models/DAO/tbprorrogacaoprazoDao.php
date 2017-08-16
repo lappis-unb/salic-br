@@ -11,8 +11,8 @@ class tbprorrogacaoprazoDao extends Zend_Db_Table
             ppraz.dtfimprazo,
             ppraz.dsjustificativa,
             tap.idPRONAC
-            from bdcorporativo.scSAC.tbProrrogacaoPrazo ppraz
-            join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = ppraz.idPedidoAlteracao
+            from bdcorporativo.scsac.tbProrrogacaoPrazo ppraz
+            join bdcorporativo.scsac.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = ppraz.idPedidoAlteracao
             where ppraz.idpedidoalteracao = ".$idpedidoalteracao;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

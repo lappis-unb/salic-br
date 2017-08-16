@@ -16,7 +16,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "SAC.dbo.tbRecursoXPlanilhaAprovacao";
+	protected $_name    = "sac.dbo.tbRecursoXPlanilhaAprovacao";
 	protected $_primary = "idRecurso";
 
 
@@ -33,7 +33,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.tbRecursoXPlanilhaAprovacao", $dados);
+		$cadastrar = $db->insert("sac.dbo.tbRecursoXPlanilhaAprovacao", $dados);
 
 		if ($cadastrar)
 		{
@@ -66,7 +66,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idRecurso = $id";
-		$alterar = $db->update("SAC.dbo.tbRecursoXPlanilhaAprovacao", $dados, $where);
+		$alterar = $db->update("sac.dbo.tbRecursoXPlanilhaAprovacao", $dados, $where);
 
 		if ($alterar)
 		{

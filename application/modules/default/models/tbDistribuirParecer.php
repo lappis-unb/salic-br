@@ -65,14 +65,14 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
        $sql = "SELECT distinct d.idPronac, tabelas.dbo.fnEstruturaOrgao(d.idOrgao,0) AS Unidade,
 				d.DtEnvio, CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT,
 				d.Observacao, d.idUsuario,
-				SAC.dbo.fnNomeUsuario(d.idUsuario) AS Remetente,
+				sac.dbo.fnNomeUsuario(d.idUsuario) AS Remetente,
 				d.idAgenteParecerista, age.CNPJCPF, nm.Descricao AS Parecerista
 				 FROM sac.dbo.tbDistribuirParecer AS d
 				 INNER JOIN sac.dbo.Produto AS p ON d.idProduto = p.Codigo
 				 INNER JOIN agentes.dbo.Agentes AS age ON age.idAgente = d.idAgenteParecerista
 				 INNER JOIN agentes.dbo.Nomes AS nm ON nm.idAgente = d.idAgenteParecerista
 				 INNER JOIN TABELAS.dbo.usuarios AS usu ON usu.usu_identificacao = age.CNPJCPF
-				 WHERE (idPronac = '$idPronac') and d.idOrgao = $codOrgao and SAC.dbo.fnNomeUsuario(d.idUsuario) is not null";
+				 WHERE (idPronac = '$idPronac') and d.idOrgao = $codOrgao and sac.dbo.fnNomeUsuario(d.idUsuario) is not null";
 
                 
 		try
@@ -104,7 +104,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             "DtDistribuicao",
             "CONVERT(CHAR(10),DtDistribuicao,103) AS DtDistribuicaoPT",            "CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT",
             "cast(d.Observacao as Text) as Observacao",
-            "SAC.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
+            "sac.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
             "d.idAgenteParecerista",
             "d.stDiligenciado",
             "DtSolicitacao" => new Zend_Db_Expr('(select top 1 DtSolicitacao from tbDiligencia dili1 where dili1.idPronac = d.idPronac and dili1.idProduto = d.idProduto order by dili1.DtSolicitacao desc)'),
@@ -150,7 +150,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             "DtDevolucao",
             "CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT",
             "CAST(Observacao AS TEXT) AS Observacao",
-            "SAC.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
+            "sac.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
             "d.idAgenteParecerista",
             "d.stDiligenciado",
             "DtSolicitacao" => new Zend_Db_Expr('(select top 1 DtSolicitacao from tbDiligencia dili1 where dili1.idPronac = d.idPronac and dili1.idProduto = d.idProduto order by dili1.DtSolicitacao desc)'),
@@ -206,7 +206,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
 //                "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-                "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
+                "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
             ));
 
             $select->joinInner(
@@ -232,7 +232,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             $dadosWhere = array('t.stEstado = ?' => 0,
                                 't.FecharAnalise not in(1)' => '?',
                                 't.tipoanalise IN (3,1)' => '?', //solucao para mostrar projetos novo e projeto do legado
-                                't.tipoanalise = (SELECT TOP 1 max(tipoanalise) FROM SAC..tbDistribuirParecer WHERE idPRONAC = p.IdPRONAC and stEstado=0 and TipoAnalise in (1,3) )' => '?',  //solucao para mostrar projetos novo e projeto do legado
+                                't.tipoanalise = (SELECT TOP 1 max(tipoanalise) FROM sac..tbDistribuirParecer WHERE idPRONAC = p.IdPRONAC and stEstado=0 and TipoAnalise in (1,3) )' => '?',  //solucao para mostrar projetos novo e projeto do legado
                                 'p.Situacao IN (\'B11\', \'B14\')' => '',
                                 't.idOrgao = ?' => $org_codigo);
 
@@ -312,7 +312,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
 		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
 
@@ -372,7 +372,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
 		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
 
@@ -464,7 +464,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
 		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
 
@@ -533,8 +533,8 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                     "CONVERT(CHAR(10), t.DtDevolucao, 103) AS DtDevolucaoPT",
                     "CONVERT(CHAR(10), t.DtDistribuicao, 103) AS DtDistribuicaoPT",
                     "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-                    "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
-                    "(Select SUM(x.Ocorrencia*x.Quantidade*x.ValorUnitario) FROM SAC.dbo.tbPlanilhaProjeto x WHERE p.IdPRONAC = x.idPRONAC and x.FonteRecurso = 109 and x.idProduto = t.idProduto) as Valor",
+                    "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+                    "(Select SUM(x.Ocorrencia*x.Quantidade*x.ValorUnitario) FROM sac.dbo.tbPlanilhaProjeto x WHERE p.IdPRONAC = x.idPRONAC and x.FonteRecurso = 109 and x.idProduto = t.idProduto) as Valor",
 		    "(SELECT x1.Segmento FROM sac.dbo.PlanoDistribuicaoProduto x1
 		     WHERE x1.idProjeto = p.idProjeto and x1.idProduto = t.idProduto)  AS
 		    idSegmento, (SELECT x1.Segmento FROM sac.dbo.PlanoDistribuicaoProduto x1
@@ -592,7 +592,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 		                 "CONVERT(CHAR(10), t.DtDevolucao, 103) AS DtDevolucaoPT",
 		                 "CONVERT(CHAR(10), t.DtDistribuicao, 103) AS DtDistribuicaoPT",
                                  "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
         ));
 
 				/*$select->joinInner(
@@ -1171,21 +1171,21 @@ public function analisePorParecerista($where){
                         "tempoFimDiligencia"=>new Zend_Db_Expr("(
                                 select
                                         top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")  ,
                          "DtSolicitacao"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtSolicitacao
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )") ,
                          "DtResposta"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtResposta
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")
@@ -1389,21 +1389,21 @@ public function analisePorParecerista($where){
                         "tempoFimDiligencia"=>new Zend_Db_Expr("(
                                 select
                                         top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")  ,
                          "DtSolicitacao"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtSolicitacao
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )") ,
                          "DtResposta"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtResposta
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")
@@ -1526,21 +1526,21 @@ public function analisePorParecerista($where){
                         "tempoFimDiligencia"=>new Zend_Db_Expr("(
                                 select
                                         top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")  ,
                          "DtSolicitacao"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtSolicitacao
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )") ,
                          "DtResposta"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtResposta
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")
@@ -1982,7 +1982,7 @@ public function analisePorParecerista($where){
     }
 
     public function checarValidacaoProdutosSecundarios($idPronac) {
-      $sql = "SELECT SAC.dbo.fnchecarValidacaoProdutoSecundario($idPronac)";
+      $sql = "SELECT sac.dbo.fnchecarValidacaoProdutoSecundario($idPronac)";
 
       $db= Zend_Db_Table::getDefaultAdapter();
       $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -1990,8 +1990,8 @@ public function analisePorParecerista($where){
     }
 
     public function inserirDistribuicaoParaParecer($idPreProjeto, $idPronac, $idVinculada ) {
-        $sqlDistribuirParecer = "INSERT INTO SAC.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
-                                         SELECT {$idPronac},idProduto, 3,{$idVinculada}, {$this->getDate()}, stPrincipal FROM SAC.dbo.PlanoDistribuicaoProduto
+        $sqlDistribuirParecer = "INSERT INTO sac.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
+                                         SELECT {$idPronac},idProduto, 3,{$idVinculada}, {$this->getDate()}, stPrincipal FROM sac.dbo.PlanoDistribuicaoProduto
                                           WHERE idProjeto = {$idPreProjeto}";
         $db= Zend_Db_Table::getDefaultAdapter();
         return $db->query($sqlDistribuirParecer);

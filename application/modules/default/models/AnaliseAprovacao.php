@@ -83,7 +83,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
                     'AC.ParecerFavoravel AS stAvaliacao_Antigo',
                     'Cast(AC.ParecerDeConteudo as Text)  AS dsAvaliacao_Antigo',
                     'AC.idUsuario AS idAgente_Antigo',
-                    'SAC.dbo.fnNomeParecerista(AC.idUsuario) AS Parecerista'
+                    'sac.dbo.fnNomeParecerista(AC.idUsuario) AS Parecerista'
                 )
         );
         $select->where('aa.tpAnalise = ?', $tpanalise);

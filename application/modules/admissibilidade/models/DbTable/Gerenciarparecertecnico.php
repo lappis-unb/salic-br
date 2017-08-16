@@ -15,7 +15,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
     	$sql = "select
 					AnoProjeto+Sequencial as pronac,
 					Situacao
-				from SAC.dbo.Projetos" ;
+				from sac.dbo.Projetos" ;
 
    		/*$sql .= "where AnoProjeto+Sequencial = '$pronac' and
    		(Situacao = 'E12' or Situacao = 'C16' or Situacao = 'D11' or Situacao = 'A14' or Situacao = 'D25' or Situacao = 'E23')";*/
@@ -191,9 +191,9 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 					uf.Descricao as UfDestino,
 					d.idMunicipioDestino,
 					m.Descricao as MunicipioDestino
-					from SAC.dbo.tbDeslocamento as d
+					from sac.dbo.tbDeslocamento as d
 					INNER JOIN sac.dbo.Projetos p on (d.idProjeto = p.idProjeto)
-					inner join SAC.dbo.Uf as uf on d.idUFOrigem = uf.CodUfIbge
+					inner join sac.dbo.Uf as uf on d.idUFOrigem = uf.CodUfIbge
 					inner join agentes.dbo.Pais as pa on d.idPaisOrigem = pa.idPais
 					inner join agentes.dbo.Municipios m on d.idMunicipioOrigem = m.idMunicipioIBGE
 					WHERE p.AnoProjeto+p.Sequencial = '$pronac' order by d.idDeslocamento";
@@ -293,7 +293,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
 				    Usuario
 				FROM sac.dbo.PlanoDistribuicaoProduto x
 				INNER JOIN sac.dbo.Projetos y on (x.idProjeto = y.idProjeto)
-				INNER JOIN SAC.dbo.Produto pd on x.idProduto = pd.Codigo
+				INNER JOIN sac.dbo.Produto pd on x.idProduto = pd.Codigo
 
 				WHERE y.AnoProjeto+y.Sequencial='$pronac' AND x.stPlanoDistribuicaoProduto = 1";
 
@@ -436,7 +436,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-            return $db->insert("SAC.dbo.Parecer",$dados);
+            return $db->insert("sac.dbo.Parecer",$dados);
        }
 
 

@@ -14,7 +14,7 @@ class RecursoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "SAC.dbo.tbRecurso";
+	protected $_name    = "sac.dbo.tbRecurso";
 	protected $_primary = "idRecurso";
 
 
@@ -31,7 +31,7 @@ class RecursoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.tbRecurso", $dados);
+		$cadastrar = $db->insert("sac.dbo.tbRecurso", $dados);
 
 
 		if ($cadastrar)
@@ -60,7 +60,7 @@ class RecursoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "IdPRONAC = $idPronac";
-		$alterar = $db->update("SAC.dbo.Projetos", $dados, $where);
+		$alterar = $db->update("sac.dbo.Projetos", $dados, $where);
 
 		if ($alterar)
 		{
@@ -83,7 +83,7 @@ class RecursoDAO extends Zend_Db_Table
 	 */
 	public static function buscarIdRecurso()
 	{
-		$sql = "SELECT MAX(idRecurso) AS idRecurso from SAC.dbo.tbRecurso";
+		$sql = "SELECT MAX(idRecurso) AS idRecurso from sac.dbo.tbRecurso";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -129,14 +129,14 @@ class RecursoDAO extends Zend_Db_Table
                                 mun.Descricao +' - '+ uf.Sigla AS Cidade,
                                 Rec.stAtendimento,
                                 Rec.tpSolicitacao
-                        FROM 	SAC.dbo.tbRecurso Rec INNER JOIN
-                              SAC.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
-                              INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
-                              INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
-                              INNER JOIN SAC.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC 
+                        FROM 	sac.dbo.tbRecurso Rec INNER JOIN
+                              sac.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
+                              INNER JOIN sac.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
+                              INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
+                              INNER JOIN sac.dbo.Enquadramento Enq on Enq.IdPRONAC = Pr.IdPRONAC 
                               LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
                               LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
-                              INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+                              INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
                               LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
                                   INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
                                   INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
@@ -186,13 +186,13 @@ class RecursoDAO extends Zend_Db_Table
                                 mun.Descricao +' - '+ uf.Sigla AS Cidade,
                                 Rec.stAtendimento,
                                 Rec.tpSolicitacao
-                        FROM 	SAC.dbo.tbRecurso Rec INNER JOIN
-                              SAC.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
-                              INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
-                              INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
+                        FROM 	sac.dbo.tbRecurso Rec INNER JOIN
+                              sac.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
+                              INNER JOIN sac.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
+                              INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
                               LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
                               LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
-                              INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+                              INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
                               LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
                                   INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
                                   INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
@@ -240,13 +240,13 @@ class RecursoDAO extends Zend_Db_Table
                                 mun.Descricao +' - '+ uf.Sigla AS Cidade,
                                 Rec.stAtendimento,
                                 Rec.tpSolicitacao
-                        FROM 	SAC.dbo.tbRecurso Rec INNER JOIN
-                              SAC.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
-                              INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
-                              INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
+                        FROM 	sac.dbo.tbRecurso Rec INNER JOIN
+                              sac.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
+                              INNER JOIN sac.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
+                              INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
                               LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
                               LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
-                              INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+                              INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
                               LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
                                   INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
                                   INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
@@ -274,19 +274,19 @@ class RecursoDAO extends Zend_Db_Table
 	public static function buscarParecer($idAgente, $idPronac)
 	{
 		/*$sql = "select Pr.IdPRONAC, Pa.ParecerFavoravel,Pa.Conselheiro, Pa.Parecerista, Pa.ResumoParecer, Pa.TipoParecer, Tpa.dsItem, Tpa.dsJustificativa, Tpa.dtPlanilha 
-from SAC.dbo.Parecer Pa
-INNER JOIN SAC.dbo.Projetos Pr on Pr.IdPRONAC = Pa.idPRONAC
-LEFT JOIN SAC.dbo.tbRecurso Re on Re.IdPRONAC = Pr.IdPRONAC
-INNER JOIN SAC.dbo.Aprovacao Ap on Ap.IdPRONAC = Pa.idPRONAC
-INNER JOIN SAC.dbo.Enquadramento En on En.IdEnquadramento = Pa.idEnquadramento
-LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
+from sac.dbo.Parecer Pa
+INNER JOIN sac.dbo.Projetos Pr on Pr.IdPRONAC = Pa.idPRONAC
+LEFT JOIN sac.dbo.tbRecurso Re on Re.IdPRONAC = Pr.IdPRONAC
+INNER JOIN sac.dbo.Aprovacao Ap on Ap.IdPRONAC = Pa.idPRONAC
+INNER JOIN sac.dbo.Enquadramento En on En.IdEnquadramento = Pa.idEnquadramento
+LEFT JOIN sac.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 
 		// caso o id do pronac seja informado
 		if (!empty($idPronac))
 		{
 			$sql.= "AND Pr.IdPRONAC = '". $idPronac ."' ";
 		}*/
-		$sql = "SELECT * FROM SAC.dbo.tbPlanilhaAprovacao WHERE idAgente = $idAgente AND IdPRONAC = $idPronac";
+		$sql = "SELECT * FROM sac.dbo.tbPlanilhaAprovacao WHERE idAgente = $idAgente AND IdPRONAC = $idPronac";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -315,13 +315,13 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
                                     mun.Descricao +' - '+ uf.Sigla AS Cidade,
                                     Rec.stAtendimento,
                                     Rec.tpSolicitacao
-                            FROM 	SAC.dbo.tbRecurso Rec INNER JOIN
-                                  SAC.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
-                                  INNER JOIN SAC.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
-                                  INNER JOIN SAC.dbo.Area Ar on Ar.Codigo = Pr.Area
+                            FROM 	sac.dbo.tbRecurso Rec INNER JOIN
+                                  sac.dbo.Projetos Pr ON Rec.IdPRONAC = Pr.IdPRONAC
+                                  INNER JOIN sac.dbo.Segmento Seg on Seg.Codigo = Pr.Segmento
+                                  INNER JOIN sac.dbo.Area Ar on Ar.Codigo = Pr.Area
                                   LEFT JOIN agentes.dbo.Agentes Ag on Ag.CNPJCPF = Pr.CgcCpf
                                   LEFT JOIN agentes.dbo.Nomes N on N.idAgente = Ag.idAgente
-                                  INNER JOIN SAC.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
+                                  INNER JOIN sac.dbo.Interessado I on I.CgcCpf = Pr.CgcCpf
                                   LEFT JOIN agentes.dbo.EnderecoNacional EN on EN.idAgente = Ag.idAgente
                                       INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = I.Cidade or mun.idMunicipioIBGE = EN.Cidade
                                       INNER JOIN agentes.dbo.UF uf on uf.idUF = mun.idUFIBGE
@@ -348,7 +348,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	
 		public static function alterarSituacao($idPronac)
 	{
-		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = 'D20' WHERE IdPRONAC = $idPronac";
+		$sql = "UPDATE sac.dbo.Projetos SET Situacao = 'D20' WHERE IdPRONAC = $idPronac";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -360,7 +360,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 
 		public static function alterarEnquadramento($idPronac, $enquadramento)
 	{
-		$sql = "UPDATE SAC.dbo.Enquadramento SET Enquadramento = '$enquadramento' WHERE IdPRONAC = $idPronac";
+		$sql = "UPDATE sac.dbo.Enquadramento SET Enquadramento = '$enquadramento' WHERE IdPRONAC = $idPronac";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -374,7 +374,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	
 	{
 
-				$sql = "UPDATE SAC.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', dsAvaliacao = '$justificativa', stAtendimento = 'D', idAgenteAvaliador = '469' WHERE idRecurso = $idRecurso";
+				$sql = "UPDATE sac.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', dsAvaliacao = '$justificativa', stAtendimento = 'D', idAgenteAvaliador = '469' WHERE idRecurso = $idRecurso";
 		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -391,7 +391,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	
 	{
 
-				$sql = "UPDATE SAC.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', stAtendimento = 'D', idAgenteAvaliador = '469' WHERE idRecurso = $idPronac";
+				$sql = "UPDATE sac.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', stAtendimento = 'D', idAgenteAvaliador = '469' WHERE idRecurso = $idPronac";
 		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -407,7 +407,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	
 	{
 
-				$sql = "UPDATE SAC.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', stAtendimento = 'I', idAgenteAvaliador = '469' WHERE idRecurso = $idPronac";
+				$sql = "UPDATE sac.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', stAtendimento = 'I', idAgenteAvaliador = '469' WHERE idRecurso = $idPronac";
 		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -423,7 +423,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	
 	{
 
-				$sql = "UPDATE SAC.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', dsAvaliacao = '$justificativa', stAtendimento = 'I', idAgenteAvaliador = '469' WHERE idRecurso = $idRecurso";
+				$sql = "UPDATE sac.dbo.tbRecurso SET dtAvaliacao = '$dtAvaliacao', dsAvaliacao = '$justificativa', stAtendimento = 'I', idAgenteAvaliador = '469' WHERE idRecurso = $idRecurso";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -439,7 +439,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.tbRecurso", $dados);
+		$cadastrar = $db->insert("sac.dbo.tbRecurso", $dados);
 
 
 		if ($cadastrar)
@@ -465,7 +465,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$where = "IdEnquadramento = $id";
-		$cadastrar = $db->update("SAC.dbo.Enquadramento", $dados, $where);
+		$cadastrar = $db->update("sac.dbo.Enquadramento", $dados, $where);
 
 		if ($cadastrar)
 		{
@@ -483,7 +483,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	public static function alterarEnquadramento18($idPronac)
 	{
 
-	$sql = "UPDATE SAC.dbo.Enquadramento SET Enquadramento = '1' WHERE idRecurso = $idRecurso";
+	$sql = "UPDATE sac.dbo.Enquadramento SET Enquadramento = '1' WHERE idRecurso = $idRecurso";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -498,7 +498,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	public static function alterarEnquadramento26($idPronac)
 	{
 
-	$sql = "UPDATE SAC.dbo.Enquadramento SET Enquadramento = '2' WHERE idRecurso = $idRecurso";
+	$sql = "UPDATE sac.dbo.Enquadramento SET Enquadramento = '2' WHERE idRecurso = $idRecurso";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -546,15 +546,15 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 					,PAP.dsJustificativa dsJustificativaMinistro, RPA.dsJustificativa justproponente
 					,PAP.tpPlanilha
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
-					 LEFT JOIN SAC.dbo.tbRecursoXPlanilhaAprovacao RPA on RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
-					 LEFT JOIN SAC.dbo.tbRecurso Rec on Rec.idRecurso = RPA.idRecurso
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+					 LEFT JOIN sac.dbo.tbRecursoXPlanilhaAprovacao RPA on RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
+					 LEFT JOIN sac.dbo.tbRecurso Rec on Rec.idRecurso = RPA.idRecurso
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC 
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -615,13 +615,13 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 					,PAP.IdPRONAC
 					,PAP.idProduto
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -658,13 +658,13 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 					,PAP.IdPRONAC
 					,PAP.idProduto
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -699,7 +699,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.Parecer", $dados);
+		$cadastrar = $db->insert("sac.dbo.Parecer", $dados);
 
 
 		if ($cadastrar)
@@ -725,7 +725,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idRecurso = $id";
-		$alterar = $db->update("SAC.dbo.tbRecurso", $dados, $where);
+		$alterar = $db->update("sac.dbo.tbRecurso", $dados, $where);
 
 		if ($alterar)
 		{
@@ -748,7 +748,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.tbPlanilhaAprovacao", $dados);
+		$cadastrar = $db->insert("sac.dbo.tbPlanilhaAprovacao", $dados);
 
 		if ($cadastrar)
 		{
@@ -770,7 +770,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$where = "idPlanilhaAprovacao = $id";
-		$alterar = $db->update("SAC.dbo.tbPlanilhaAprovacao", $dados, $where);
+		$alterar = $db->update("sac.dbo.tbPlanilhaAprovacao", $dados, $where);
 
 		if ($alterar)
 		{
@@ -791,7 +791,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	{
 		$sql = "SELECT * 
 
-				FROM SAC.dbo.tbPlanilhaAprovacao  
+				FROM sac.dbo.tbPlanilhaAprovacao  
 
 				WHERE idPlanilhaAprovacao = $id ";
 
@@ -808,7 +808,7 @@ LEFT JOIN SAC.dbo.tbPlanilhaAprovacao Tpa on Tpa.IdPRONAC = Pr.IdPRONAC";
 	 */
 	public static function buscarJustificativaProponente($idRecurso, $idPlanilha)
 	{
-		$sql = "SELECT dsJustificativa FROM SAC.dbo.tbRecursoXPlanilhaAprovacao WHERE idRecurso = " . (int)$idRecurso . " AND idPlanilhaAprovacao = " . (int)$idPlanilha;
+		$sql = "SELECT dsJustificativa FROM sac.dbo.tbRecursoXPlanilhaAprovacao WHERE idRecurso = " . (int)$idRecurso . " AND idPlanilhaAprovacao = " . (int)$idPlanilha;
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

@@ -129,7 +129,7 @@ class Parecer extends MinC_Db_Table_Abstract
      * > somente se selecionar um parecerista
      * -- Se solicitar valor por produto linkar com planilha projeto
      *
-     * --Select distinct AnoProjeto + Sequencial from SAC.dbo.Projetos pro
+     * --Select distinct AnoProjeto + Sequencial from sac.dbo.Projetos pro
      * select
      * pro.AnoProjeto + pro.Sequencial as PRONAC,
      * pro.NomeProjeto,
@@ -138,13 +138,13 @@ class Parecer extends MinC_Db_Table_Abstract
      * DATEDIFF(DAY, dp.DtDistribuicao, dp.DtDevolucao) as QtdDias,
      * nomes.Descricao as Parecerista--,
      * --pp.ValorUnitario as ValorPagamento
-     * from SAC.dbo.tbDistribuirParecer dp
-     * inner join SAC.dbo.Produto prod on dp.idProduto = prod.Codigo
-     * inner join SAC.dbo.Projetos pro on pro.IdPRONAC = dp.idPRONAC
+     * from sac.dbo.tbDistribuirParecer dp
+     * inner join sac.dbo.Produto prod on dp.idProduto = prod.Codigo
+     * inner join sac.dbo.Projetos pro on pro.IdPRONAC = dp.idPRONAC
      * inner join agentes.dbo.Agentes ag on ag.idAgente = dp.idAgenteParecerista
      * inner join agentes.dbo.Nomes nomes on nomes.idAgente = dp.idAgenteParecerista
      * --inner join TABELAS.dbo.Usuarios usu on ag.Usuario = usu.usu_codigo
-     * --inner join SAC.dbo.tbPlanilhaProjeto pp on pp.idPRONAC = dp.idPRONAC
+     * --inner join sac.dbo.tbPlanilhaProjeto pp on pp.idPRONAC = dp.idPRONAC
      * where dp.stEstado = 0
      * and dp.FecharAnalise = 1
      * and pro.AnoProjeto + pro.Sequencial = '103920'
@@ -276,8 +276,8 @@ class Parecer extends MinC_Db_Table_Abstract
 
         $TotalReg = $PaginaAtual * $QntdPorPagina;
         $select = new Zend_Db_Expr("select * from (select top " . $QntdPorPagina . " * from (SELECT TOP " . $TotalReg . "
-                pa.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Parecer AS pa
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = pa.idPRONAC WHERE pr.Mecanismo = '" . $mecanismo . "'
+                pa.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM sac.dbo.Parecer AS pa
+            INNER JOIN sac.dbo.Projetos AS pr ON pr.IdPRONAC = pa.idPRONAC WHERE pr.Mecanismo = '" . $mecanismo . "'
             order by pa.idParecer) as tabela order by idParecer desc) as tabela order by idParecer");
 
         try {
@@ -293,8 +293,8 @@ class Parecer extends MinC_Db_Table_Abstract
     public function buscaPareceresTotal($mecanismo)
     {
 
-        $select = new Zend_Db_Expr("SELECT *, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Parecer AS pa
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = pa.idPRONAC WHERE pr.Mecanismo = $mecanismo
+        $select = new Zend_Db_Expr("SELECT *, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM sac.dbo.Parecer AS pa
+            INNER JOIN sac.dbo.Projetos AS pr ON pr.IdPRONAC = pa.idPRONAC WHERE pr.Mecanismo = $mecanismo
             order by pa.idParecer");
         
         try {

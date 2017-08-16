@@ -44,7 +44,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 	{
 
 
-		$sql = "SELECT CgcCpf FROM SAC.dbo.Interessado WHERE CgcCpf = '$cnpjcpf'";
+		$sql = "SELECT CgcCpf FROM sac.dbo.Interessado WHERE CgcCpf = '$cnpjcpf'";
 
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -60,7 +60,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
                       AnoProjeto + Sequencial AS Pronac, CONVERT(VARCHAR(10), DtEmissao, 103)
                       AS DtEmissaoFormatada, CONVERT(VARCHAR(10), DtValidade, 103) AS DtValidadeFormatada,
                       cdProtocoloNegativa 
-						FROM         SAC.dbo.CertidoesNegativas
+						FROM         sac.dbo.CertidoesNegativas
 						WHERE     (CgcCpf = '$cnpjcpf') AND (CodigoCertidao = 49)
 						ORDER BY idCertidoesnegativas DESC";
 
@@ -78,7 +78,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
                       AnoProjeto + Sequencial AS Pronac, CONVERT(VARCHAR(10), DtEmissao, 103)
                       AS DtEmissaoFormatada, CONVERT(VARCHAR(10), DtValidade, 103) AS DtValidadeFormatada,
                       cdProtocoloNegativa
-						FROM         SAC.dbo.CertidoesNegativas
+						FROM         sac.dbo.CertidoesNegativas
 						WHERE     (CgcCpf = '$cnpjcpf') AND (CodigoCertidao = 70)
 						ORDER BY idCertidoesnegativas DESC";
 
@@ -96,7 +96,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
                       AnoProjeto + Sequencial AS Pronac, CONVERT(VARCHAR(10), DtEmissao, 103)
                       AS DtEmissaoFormatada, CONVERT(VARCHAR(10), DtValidade, 103) AS DtValidadeFormatada,
                       cdProtocoloNegativa
-						FROM         SAC.dbo.CertidoesNegativas
+						FROM         sac.dbo.CertidoesNegativas
 						WHERE     (CgcCpf = '$cnpjcpf') AND (CodigoCertidao = 51)
 						ORDER BY idCertidoesnegativas DESC";
 
@@ -113,7 +113,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
                       AnoProjeto + Sequencial AS Pronac, CONVERT(VARCHAR(10), DtEmissao, 103)
                       AS DtEmissaoFormatada, CONVERT(VARCHAR(10), DtValidade, 103) AS DtValidadeFormatada,
                       cdProtocoloNegativa, cdSituacaoCertidao
-						FROM         SAC.dbo.CertidoesNegativas
+						FROM         sac.dbo.CertidoesNegativas
 						WHERE     (CgcCpf = '$cnpjcpf') AND (CodigoCertidao = 244)
 						ORDER BY idCertidoesnegativas DESC ";
 
@@ -131,7 +131,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
                       AnoProjeto + Sequencial AS Pronac, CONVERT(VARCHAR(10), DtEmissao, 103)
                       AS DtEmissaoFormatada, CONVERT(VARCHAR(10), DtValidade, 103) AS DtValidadeFormatada,
                       cdProtocoloNegativa
-						FROM         SAC.dbo.CertidoesNegativas
+						FROM         sac.dbo.CertidoesNegativas
 						WHERE     (CgcCpf = '$cnpjcpf') AND (CodigoCertidao = 52)
 						ORDER BY idCertidoesnegativas DESC";
 
@@ -152,7 +152,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
             $cpfCnpj = str_replace("/", "", $cpfCnpj);
             $cpfCnpj = str_replace("-", "", $cpfCnpj);
             
-            $sql = "select  CgcCpf,CodigoCertidao  from SAC.dbo.CertidoesNegativas where CgcCpf = '$cpfCnpj' and CodigoCertidao = $codigoCertidao";
+            $sql = "select  CgcCpf,CodigoCertidao  from sac.dbo.CertidoesNegativas where CgcCpf = '$cpfCnpj' and CodigoCertidao = $codigoCertidao";
 
 
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -200,13 +200,13 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 
                 if ( isset($_POST['codigoSituacao']) )
                 {
-                    echo $sql = "INSERT INTO SAC.dbo.CertidoesNegativas
+                    echo $sql = "INSERT INTO sac.dbo.CertidoesNegativas
                           (CgcCpf, CodigoCertidao, DtEmissao, DtValidade, AnoProjeto, Sequencial, cdProtocoloNegativa, cdSituacaoCertidao, Logon)
                     VALUES     ('$cpfCnpj',$codigoCertidao,'$dataEmissaoFormatada','$dataValidadeFormatada',$anoProjeto,$sequencial,$protocolo,$codigoSituacao, ' )";
                 }
                 else
                 {
-                    echo $sql = "INSERT INTO SAC.dbo.CertidoesNegativas
+                    echo $sql = "INSERT INTO sac.dbo.CertidoesNegativas
                           (CgcCpf, CodigoCertidao, DtEmissao, DtValidade, AnoProjeto, Sequencial, cdProtocoloNegativa, Logon)
                     VALUES     ('$cpfCnpj',$codigoCertidao,'$dataEmissaoFormatada','$dataValidadeFormatada',$anoProjeto,$sequencial,$protocolo, 1)";
                 }
@@ -247,7 +247,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 
                 if ( isset( $_POST['situacao'] ) )
                 {
-                    echo $sql = "UPDATE    SAC.dbo.CertidoesNegativas
+                    echo $sql = "UPDATE    sac.dbo.CertidoesNegativas
                                     SET    DtEmissao = '$dataEmissaoFormatada', 
                                     cdProtocoloNegativa = $protocolo, 
                                     cdSituacaoCertidao = $codigoSituacao , 
@@ -257,7 +257,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
                 }
                 else
                 {
-                    echo $sql = "UPDATE    SAC.dbo.CertidoesNegativas
+                    echo $sql = "UPDATE    sac.dbo.CertidoesNegativas
                         SET    DtEmissao = '$dataEmissaoFormatada', 
                         DtValidade = '$dataValidadeFormatada',
                         cdProtocoloNegativa = $protocolo  ,

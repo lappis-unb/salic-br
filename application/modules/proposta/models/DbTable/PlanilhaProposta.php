@@ -151,15 +151,15 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 //                    MunicipioDespesa,
 //                    idUsuario,
 //                    CAST(dsJustificativa AS TEXT) AS dsJustificativa,
-//                    (SELECT Descricao FROM SAC.dbo.tbPlanilhaEtapa WHERE idPlanilhaEtapa = P.idEtapa) as Etapa,
-//                    (select Descricao from SAC.dbo.tbPlanilhaItens where idPlanilhaItens = P.idPlanilhaItem) as Item,
-//                    (select descricao from SAC.dbo.tbPlanilhaUnidade where idUnidade = P.Unidade) as UnidadeF,
-//                    (select Descricao from SAC.dbo.Verificacao where idVerificacao=P.FonteRecurso)as FonteRecursoF,
+//                    (SELECT Descricao FROM sac.dbo.tbPlanilhaEtapa WHERE idPlanilhaEtapa = P.idEtapa) as Etapa,
+//                    (select Descricao from sac.dbo.tbPlanilhaItens where idPlanilhaItens = P.idPlanilhaItem) as Item,
+//                    (select descricao from sac.dbo.tbPlanilhaUnidade where idUnidade = P.Unidade) as UnidadeF,
+//                    (select Descricao from sac.dbo.Verificacao where idVerificacao=P.FonteRecurso)as FonteRecursoF,
 //                    (select descricao from agentes.dbo.uf where iduf = P.UfDespesa) as UfDespesaF,
 //                    (select descricao from agentes.dbo.Municipios where idMunicipioIBGE=P.MunicipioDespesa) as MunicipioDespesaF,
-//                    (SELECT Descricao from SAC.dbo.Produto where Codigo = P.idProduto) as ProdutoF
+//                    (SELECT Descricao from sac.dbo.Produto where Codigo = P.idProduto) as ProdutoF
 //                FROM
-//                    SAC.dbo.tbPlanilhaProposta as P
+//                    sac.dbo.tbPlanilhaProposta as P
 //                WHERE
 //                    idProjeto = ".$id_projeto."
 //                ORDER BY
@@ -322,7 +322,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 //        $sql = "
 //            SELECT TOP 1
 //            tpp.idProjeto as idProposta
-//            FROM SAC..tbPlanilhaProposta tpp
+//            FROM sac..tbPlanilhaProposta tpp
 //            WHERE tpp.idProjeto = $idPreProjeto";
 
         $select = $this->select();

@@ -63,7 +63,7 @@ Class Proponente extends MinC_Db_Table_Abstract {
 						      WHEN Direito = 35
 						           THEN 'Sem fins lucrativos'
 						      END AS Utilidade,
-						   SAC.dbo.fnNomeResponsavel(a.Usuario) as Responsavel,
+						   sac.dbo.fnNomeResponsavel(a.Usuario) as Responsavel,
 						   CASE
 						      WHEN e.Divulgar = 0
 						        THEN 'N�o'
@@ -82,8 +82,8 @@ Class Proponente extends MinC_Db_Table_Abstract {
 						   INNER JOIN agentes.dbo.Verificacao v1 on (e.TipoEndereco = v1.idVerificacao)
 						   INNER JOIN agentes.dbo.Verificacao v2 on (e.TipoLogradouro = v2.idVerificacao)
 						   INNER JOIN agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio)
-						   LEFT JOIN  SAC.dbo.vwNatureza nt on (a.idAgente = nt.idAgente)
-						   LEFT JOIN SAC.dbo.Projetos Pr on a.CNPJCPF = Pr.CgcCpf
+						   LEFT JOIN  sac.dbo.vwNatureza nt on (a.idAgente = nt.idAgente)
+						   LEFT JOIN sac.dbo.Projetos Pr on a.CNPJCPF = Pr.CgcCpf
 						  WHERE Pr.IdPronac = " . $pronac . "";
 
 
@@ -107,7 +107,7 @@ End as TipoInternet,
 It.Descricao as Email
 FROM agentes.dbo.Internet as It
 LEFT JOIN agentes.dbo.Agentes Ag on Ag.IdAgente = It.IdAgente
-LEFT JOIN SAC.dbo.Projetos Pr ON Ag.CNPJCPF = Pr.CgcCpf
+LEFT JOIN sac.dbo.Projetos Pr ON Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -143,7 +143,7 @@ end as Divulgar
 FROM agentes.dbo.Telefones Tl
 LEFT JOIN agentes.dbo.Uf as Uf on Uf.idUF = Tl.UF
 LEFT JOIN agentes.dbo.Agentes Ag on Ag.IdAgente = Tl.IdAgente
-LEFT JOIN SAC.dbo.Projetos Pr On Ag.CNPJCPF = Pr.CgcCpf
+LEFT JOIN sac.dbo.Projetos Pr On Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
 
@@ -164,21 +164,21 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 Sg.descricao dsSegmento,
                                                 Pr.SolicitadoReal,
                                                 CASE WHEN Pr.Mecanismo IN ('2','6')
-                                                THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
-                                                ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
+                                                THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
+                                                ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
                                                 END AS ValorAprovado,
-                                                SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
-                                                FROM SAC.dbo.Projetos Pr
-                                                INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-                                                INNER JOIN SAC.dbo.Area Ar ON  Ar.Codigo = Pr.Area
-                                                INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
-                                                INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
-                                                INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
+                                                sac.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
+                                                FROM sac.dbo.Projetos Pr
+                                                INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+                                                INNER JOIN sac.dbo.Area Ar ON  Ar.Codigo = Pr.Area
+                                                INNER JOIN sac.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
+                                                INNER JOIN sac.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
+                                                INNER JOIN sac.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
                                                 LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
-                                                LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
+                                                LEFT JOIN sac.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
                                                 LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
-                                                LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC and Ta.stEstado = '1'
-                                                LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
+                                                LEFT JOIN sac.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC and Ta.stEstado = '1'
+                                                LEFT JOIN sac.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and Ta.stEstado = '1'";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -198,21 +198,21 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 Sg.descricao dsSegmento,
                                                 Pr.SolicitadoReal,
                                                 CASE WHEN Pr.Mecanismo IN ('2','6')
-                                                THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
-                                                ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
+                                                THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
+                                                ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
                                                 END AS ValorAprovado,
-                                                SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
-                                                FROM SAC.dbo.Projetos Pr
-                                                INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-                                                INNER JOIN SAC.dbo.Area Ar ON  Ar.Codigo = Pr.Area
-                                                INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
-                                                INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
-                                                INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
+                                                sac.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
+                                                FROM sac.dbo.Projetos Pr
+                                                INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+                                                INNER JOIN sac.dbo.Area Ar ON  Ar.Codigo = Pr.Area
+                                                INNER JOIN sac.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
+                                                INNER JOIN sac.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
+                                                INNER JOIN sac.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
                                                 LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
-                                                LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
+                                                LEFT JOIN sac.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
                                                 LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
-                                                LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC
-                                                LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
+                                                LEFT JOIN sac.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC
+                                                LEFT JOIN sac.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '0'";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -230,21 +230,21 @@ where Pr.IdPRONAC = " . $pronac . "";
 							Sg.descricao dsSegmento,
 							Pr.SolicitadoReal,
 							CASE WHEN Pr.Mecanismo IN ('2','6')
-							THEN SAC.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
-							ELSE SAC.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
+							THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
+							ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
 							END AS ValorAprovado,
-							SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
-							FROM SAC.dbo.Projetos Pr
-							INNER JOIN SAC.dbo.Situacao St ON St.Codigo = Pr.Situacao
-							INNER JOIN SAC.dbo.Area Ar ON  Ar.Codigo = Pr.Area
-							INNER JOIN SAC.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
-							INNER JOIN SAC.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
-							INNER JOIN SAC.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
+							sac.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) as ValorCaptado
+							FROM sac.dbo.Projetos Pr
+							INNER JOIN sac.dbo.Situacao St ON St.Codigo = Pr.Situacao
+							INNER JOIN sac.dbo.Area Ar ON  Ar.Codigo = Pr.Area
+							INNER JOIN sac.dbo.Segmento Sg ON Sg.Codigo = Pr.Segmento
+							INNER JOIN sac.dbo.Mecanismo Mc ON Mc.Codigo = Pr.Mecanismo
+							INNER JOIN sac.dbo.Enquadramento En ON En.idPRONAC =  Pr.idPRONAC
 							LEFT JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
-							LEFT JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
+							LEFT JOIN sac.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
 							LEFT JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
-							LEFT JOIN SAC.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC
-							LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
+							LEFT JOIN sac.dbo.tbArquivamento Ta ON Ta.idPronac = Pr.idPRONAC
+							LEFT JOIN sac.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 					  		WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '1'";
 
         $db= Zend_Db_Table::getDefaultAdapter();

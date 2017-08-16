@@ -9,7 +9,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
     protected   $_banco = 'SAC';
     protected   $_schema = 'SAC';
     protected   $_name = 'Liberacao';
-    protected   $_base = 'SAC.dbo.Liberacao';
+    protected   $_base = 'sac.dbo.Liberacao';
 
     public function liberacaoPorProjeto($idPronac){
 
@@ -271,7 +271,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
     }
 
     public function buscarCertidoesVencidas($cpf) {
-        $sql = "select CONVERT(CHAR(10), DtValidade,103) as DtValidade from SAC.dbo.CertidoesNegativas where CgcCpf = '$cpf'";
+        $sql = "select CONVERT(CHAR(10), DtValidade,103) as DtValidade from sac.dbo.CertidoesNegativas where CgcCpf = '$cpf'";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -284,7 +284,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
 
     public function liberarProjeto($dados) {
 
-        $sql = "insert into SAC.dbo.Liberacao
+        $sql = "insert into sac.dbo.Liberacao
 				values
 				('$dados[AnoProjeto]', '$dados[Sequencial]', 1, '$dados[DtLiberacao]', '$dados[DtDocumento]', '$dados[NumeroDocumento]', '$dados[VlOutrasFontes]', '$dados[Observacao]', '$dados[CgcCpf]', '$dados[Permissao]', $dados[Logon])";
 

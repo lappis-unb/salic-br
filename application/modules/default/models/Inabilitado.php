@@ -69,7 +69,7 @@ class Inabilitado extends MinC_Db_Table_Abstract {
 
         $sql = "UPDATE ".$this->_name." set ";
 
-        $sql = "UPDATE SAC.dbo.Inabilitado SET 
+        $sql = "UPDATE sac.dbo.Inabilitado SET 
                          	Logon 			= '".$dados['Logon']."',
     			 			Habilitado 		= '".$dados['Habilitado']."',
     			 			Orgao 			= '".$dados['Orgao']."'

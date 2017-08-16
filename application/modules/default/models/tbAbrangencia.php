@@ -2,8 +2,8 @@
 /**
  * DAO tbAbrangencia
  * OBS:
- * 	-> A tabela SAC.dbo.Abrangencia armazena os locais de realizacao do projeto originais (aprovados)
- *  -> A tabela SAC.dbo.tbAbrangencia armazena os locais de realizacao do projeto que foram solicitados na readequacao
+ * 	-> A tabela sac.dbo.Abrangencia armazena os locais de realizacao do projeto originais (aprovados)
+ *  -> A tabela sac.dbo.tbAbrangencia armazena os locais de realizacao do projeto que foram solicitados na readequacao
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 18/04/2012
  * @version 1.0

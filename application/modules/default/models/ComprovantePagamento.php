@@ -395,20 +395,20 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
                     (
                         SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                        FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                        INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                        INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                         WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
                         GROUP BY a1.idPlanilhaAprovacao
                     ) AS valorComprovado, CAST(cpxpa.dsJustificativa AS TEXT) as JustificativaTecnico
 
-                FROM bdcorporativo.scSAC.tbComprovantePagamento AS comp
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
-                    INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
+                FROM bdcorporativo.scsac.tbComprovantePagamento AS comp
+                    INNER JOIN bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
+                    INNER JOIN sac.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
+                    INNER JOIN sac.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
+                    INNER JOIN sac.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
                     INNER JOIN bdcorporativo.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
-                    LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
+                    LEFT JOIN sac.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
                 WHERE
                     cpxpa.idComprovantePagamento = ?";
         $db = $this->getAdapter();
@@ -461,9 +461,9 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado'),
                 new Zend_Db_Expr('(
                                             SELECT sum(b1.vlComprovacao) AS vlPagamento
-                                            FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                                            INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                                            INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                                            FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                                            INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                                            INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                                             WHERE c1.stAtivo = \'S\' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
                                             GROUP BY a1.idPlanilhaAprovacao
                                    ) AS valorComprovado')
@@ -539,12 +539,12 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                             ELSE f.Descricao
                         END
                     ) as produto, b.*, d.Descricao as etapa, e.Descricao as item
-            FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a
-            INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b ON b.idComprovantePagamento = a.idComprovantePagamento
-            INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c ON c.idPlanilhaAprovacao = a.idPlanilhaAprovacao
-            INNER JOIN SAC.dbo.tbPlanilhaEtapa AS d ON d.idPlanilhaEtapa = c.idEtapa
-            INNER JOIN SAC.dbo.tbPlanilhaItens AS e ON e.idPlanilhaItens = c.idPlanilhaItem
-            LEFT JOIN SAC.dbo.Produto AS f ON f.Codigo = c.idProduto
+            FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a
+            INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b ON b.idComprovantePagamento = a.idComprovantePagamento
+            INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c ON c.idPlanilhaAprovacao = a.idPlanilhaAprovacao
+            INNER JOIN sac.dbo.tbPlanilhaEtapa AS d ON d.idPlanilhaEtapa = c.idEtapa
+            INNER JOIN sac.dbo.tbPlanilhaItens AS e ON e.idPlanilhaItens = c.idPlanilhaItem
+            LEFT JOIN sac.dbo.Produto AS f ON f.Codigo = c.idProduto
             WHERE
                 stItemAvaliado = 3
                 AND IdPRONAC = ?

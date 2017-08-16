@@ -246,7 +246,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         }
 
 
-        //INSERE LOCAIS DE REALIZACAO (tabela SAC.dbo.Abrangencia)
+        //INSERE LOCAIS DE REALIZACAO (tabela sac.dbo.Abrangencia)
         for ($i = 1; $i <= count($locais); $i++) {
             $dados = array("idProjeto" => $this->idPreProjeto,
                 "stAbrangencia" => 1,
@@ -434,7 +434,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
         $estados = $post->estados;
         $cidades = $post->cidades;
 
-        //INSERE LOCAIS DE REALIZACAO (tabela SAC.dbo.Abrangencia)
+        //INSERE LOCAIS DE REALIZACAO (tabela sac.dbo.Abrangencia)
         $dadosAbrangencia = array(
             "idprojeto" => $this->idPreProjeto,
             "stabrangencia" => 1,

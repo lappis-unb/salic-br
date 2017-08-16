@@ -16,8 +16,8 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     public function buscarDocumentoOpcao($idOpcao)
     {
         die('enviado para o dbtable documentosexigidos');
-        $sql = "select codigo, descricao from SAC.dbo.vwDocumentosExigidosApresentacaoProposta where opcao = {$idOpcao} order by descricao ";
-        //$sql = "select codigo,descricao from SAC.dbo.DocumentosExigidos where opcao=$idOpcao order by descricao";
+        $sql = "select codigo, descricao from sac.dbo.vwDocumentosExigidosApresentacaoProposta where opcao = {$idOpcao} order by descricao ";
+        //$sql = "select codigo,descricao from sac.dbo.DocumentosExigidos where opcao=$idOpcao order by descricao";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -57,7 +57,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     p.tpProrrogacao,
                     a.CNPJCPF,
                     agentes.dbo.fnNome(p.idAgente) as NomeAgente,
-                    SAC.dbo.fnNomeTecnicoMinc(tbap.idTecnico) as tecnico,
+                    sac.dbo.fnNomeTecnicoMinc(tbap.idTecnico) as tecnico,
                     en.TipoEndereco,
                     en.TipoLogradouro,
                     en.Logradouro,
@@ -101,11 +101,11 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     left join agentes.dbo.Verificacao vadm		on vna.Administracao = vadm.idVerificacao
                     left join sac.dbo.vCadastrarDirigente vcd		on p.idAgente = vcd.idVinculoPrincipal
                     left JOIN ControleDeAcesso.dbo.SGCAcesso c		on p.IdUsuario = c.idUsuario
-                    left JOIN SAC.dbo.tbHistoricoEmail tbhe		on p.idPreProjeto = tbhe.idProjeto
-                    left JOIN SAC.dbo.tbAvaliacaoProposta tbap		on tbhe.idAvaliacaoProposta = tbap.idAvaliacaoProposta
+                    left JOIN sac.dbo.tbHistoricoEmail tbhe		on p.idPreProjeto = tbhe.idProjeto
+                    left JOIN sac.dbo.tbAvaliacaoProposta tbap		on tbhe.idAvaliacaoProposta = tbap.idAvaliacaoProposta
                     left join agentes.dbo.Uf uf                         on uf.idUf = en.UF
                     left join agentes.dbo.Municipios mun                on mun.idMunicipioIBGE = en.Cidade
-                    left join SAC.dbo.Verificacao versac    on  p.stProposta = versac.idVerificacao
+                    left join sac.dbo.Verificacao versac    on  p.stProposta = versac.idVerificacao
                 WHERE idPreProjeto = {$idPreProjeto}";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -166,10 +166,10 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                             v.Descricao as posicaoLogo
                         FROM
                             sac.dbo.PlanoDistribuicaoProduto pp
-                            left join SAC.dbo.Produto p on pp.idProduto = p.Codigo
-                            left join SAC.dbo.Area a on pp.Area = a.Codigo
-                            left join SAC.dbo.Segmento s on pp.Segmento = s.Codigo
-                            left join SAC.dbo.Verificacao v on pp.idPosicaoDaLogo = v.idVerificacao
+                            left join sac.dbo.Produto p on pp.idProduto = p.Codigo
+                            left join sac.dbo.Area a on pp.Area = a.Codigo
+                            left join sac.dbo.Segmento s on pp.Segmento = s.Codigo
+                            left join sac.dbo.Verificacao v on pp.idPosicaoDaLogo = v.idVerificacao
                         WHERE idProjeto=$idPreProjeto AND pp.stPlanoDistribuicaoProduto = 1
                 ";
 
@@ -296,8 +296,8 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     ve.Descricao as Veiculo
                 FROM
                     sac.dbo.PlanoDeDivulgacao p
-                    left join SAC.dbo.Verificacao v on p.idPeca = v.idVerificacao
-                    left join SAC.dbo.Verificacao ve on p.idVeiculo = ve.idVerificacao
+                    left join sac.dbo.Verificacao v on p.idPeca = v.idVerificacao
+                    left join sac.dbo.Verificacao ve on p.idVeiculo = ve.idVerificacao
                 WHERE idProjeto=$idPreProjeto
                 ";
 
@@ -316,7 +316,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                         dex.Descricao
                     FROM
                         sac.dbo.tbDocumentosPreProjeto p
-                        left join SAC.dbo.DocumentosExigidos dex on p.CodigoDocumento = dex.Codigo
+                        left join sac.dbo.DocumentosExigidos dex on p.CodigoDocumento = dex.Codigo
                     WHERE
                         idprojeto=$idPreProjeto
                 ";
@@ -339,7 +339,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     FROM
 
                             sac.dbo.tbDocumentosAgentes tbd
-                            join SAC.dbo.DocumentosExigidos dex on (tbd.CodigoDocumento = dex.Codigo)
+                            join sac.dbo.DocumentosExigidos dex on (tbd.CodigoDocumento = dex.Codigo)
                     WHERE
                             tbd.idAgente= $idAgente
                 ";
@@ -355,12 +355,12 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
             SELECT * FROM
             (
                 SELECT idProjeto,idTecnico,usu_Nome, convert(varchar(30),DtAvaliacao, 120 ) as DtAvaliacao, Avaliacao, convert(varchar(30),dtResposta, 120 ) as dtResposta, dsResposta
-                FROM SAC.dbo.tbAvaliacaoProposta p
+                FROM sac.dbo.tbAvaliacaoProposta p
                 INNER JOIN tabelas.dbo.Usuarios u on (p.idTecnico = u.usu_codigo)
                 WHERE ConformidadeOK < 9
                 UNION ALL
                 SELECT idProjeto,0,'Proponente' as Tecnico, convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao,'Proposta Cultural ENVIADA ao Minist&eacute;rio da Cultura para Conformidade Visual' as Avaliacao, '' as dtResposta, '' as dsResposta
-                FROM SAC.dbo.tbMovimentacao
+                FROM sac.dbo.tbMovimentacao
                 WHERE Movimentacao=96
             ) as slctPrincipal
             WHERE idProjeto = {$idPreProjeto}
@@ -517,7 +517,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     {
         try {
 
-            $sql = "UPDATE SAC.dbo.tbDespacho
+            $sql = "UPDATE sac.dbo.tbDespacho
                      SET stEstado = 1
                      WHERE idProposta = $IdProjeto AND stEstado <> 1;";
 
@@ -547,7 +547,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
     public static function inserirDocumentoProponente($dado)
     {
         try {
-            $sql = "INSERT INTO SAC.dbo.DocumentosProponente
+            $sql = "INSERT INTO sac.dbo.DocumentosProponente
                 (idProjeto,CodigoDocumento)
                 VALUES (" . $dado['idPreProjeto'] . "," . $dado['CodigoDocumento'] . ");";
 
@@ -704,7 +704,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
 
     public static function buscarFonte($idfonte)
     {
-        $sql = "select idVerificacao,descricao from SAC.dbo.Verificacao where idVerificacao=$idfonte order by descricao
+        $sql = "select idVerificacao,descricao from sac.dbo.Verificacao where idVerificacao=$idfonte order by descricao
                 ";
 
 
@@ -717,7 +717,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
 
     public static function buscarProduto($idproduto)
     {
-        $sql = " select Codigo,Descricao from SAC.dbo.Produto where Codigo = $idproduto order by descricao
+        $sql = " select Codigo,Descricao from sac.dbo.Produto where Codigo = $idproduto order by descricao
                 ";
 
 
@@ -746,8 +746,8 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
         $sql = "    select i.idPlanilhaItens,i.Descricao as nomeitem,pp.Quantidade,pp.Ocorrencia,pp.ValorUnitario,pp.QtdeDias,pu.Descricao as nomeUni,uf.Uf
                         from sac.dbo.tbPlanilhaItens i
                         left join sac.dbo.tbPlanilhaProposta pp on i.idPlanilhaItens = pp.idPlanilhaItem
-                        left join SAC.dbo.tbPlanilhaUnidade pu on pp.Unidade = pu.idUnidade
-                        left join SAC.dbo.Uf uf on pp.UfDespesa = uf.CodUfIbge
+                        left join sac.dbo.tbPlanilhaUnidade pu on pp.Unidade = pu.idUnidade
+                        left join sac.dbo.Uf uf on pp.UfDespesa = uf.CodUfIbge
                         where idPlanilhaItens = $iditem
                         order by i.descricao
                 ";

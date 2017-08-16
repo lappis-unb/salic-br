@@ -14,7 +14,7 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao";
+	protected $_name    = "bdcorporativo.scsac.tbAvaliacaoSubItemPlanoDistribuicao";
 	protected $_primary = "idAvaliacaoSubItemPedidoAlteracao";
 
 
@@ -31,7 +31,7 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao", $dados);
+		$cadastrar = $db->insert("bdcorporativo.scsac.tbAvaliacaoSubItemPlanoDistribuicao", $dados);
 
 		if ($cadastrar)
 		{
@@ -61,7 +61,7 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 
 		$where   = "idAvaliacaoSubItemPedidoAlteracao = $id";
                 $where  .= "idPlano = $idPlano";
-		$alterar = $db->update("bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao", $dados, $where);
+		$alterar = $db->update("bdcorporativo.scsac.tbAvaliacaoSubItemPlanoDistribuicao", $dados, $where);
 
 		if ($alterar)
 		{
