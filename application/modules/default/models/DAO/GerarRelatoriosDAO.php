@@ -262,8 +262,8 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
     }
 
     public static function consultaClassificacoes() {
-        $sql = "select cd.idClassificaDocumento as idClassificacao,cd.dsClassificaDocumento as nmClassificacao from bdcorporativo.scSAC.tbClassificaDocumento cd
-                    inner join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idClassificaDocumento = cd.idClassificaDocumento
+        $sql = "select cd.idClassificaDocumento as idClassificacao,cd.dsClassificaDocumento as nmClassificacao from BDCORPORATIVO.scSAC.tbClassificaDocumento cd
+                    inner join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idClassificaDocumento = cd.idClassificaDocumento
                     where
                     fd.stModalidadeDocumento is not null
                     group by cd.idClassificaDocumento,cd.dsClassificaDocumento
@@ -281,7 +281,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
     public static function consultaEditais($idFundo = null, $idClassificacao = null) {
         $sql = "select e.idEdital as id, fd.nmFormDocumento as descricao, e.nrEdital
                 from SAC.dbo.Edital e
-                    inner join bdcorporativo.scQuiz.tbFormDocumento fd on e.idEdital = fd.idEdital and fd.idClassificaDocumento not in (23,24,25)
+                    inner join BDCORPORATIVO.scQuiz.tbFormDocumento fd on e.idEdital = fd.idEdital and fd.idClassificaDocumento not in (23,24,25)
                     inner join SAC.dbo.PreProjeto ppr on ppr.idEdital = e.idEdital ";
 
 
