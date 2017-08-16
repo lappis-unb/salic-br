@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.alterarprojeto
- * @copyright (c) 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright (c) 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -79,12 +79,12 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
             var dtFimExecucao = parseInt(faseExecFim.split("/")[2].toString() + faseExecFim.split("/")[1].toString() + faseExecFim.split("/")[0].toString());
 
             if (dtFimExecucao <= dtInicioExecucao){
-                $("#mensagemData").html('<font color="red">Data final de elaboraç&atilde;o é menor ou igual a inicial</font>');
+                $("#mensagemData").html('<font color="red">Data final de elabora&ccedil;&atilde;o &eacute; menor ou igual a inicial</font>');
                 return false;
             }
         });
 
-        // calendário
+        // calend&aacute;rio
         $.datepicker.regional['pt-BR'] = {
             closeText: 'Fechar',
             prevText: '&#x3c;Anterior',
@@ -104,7 +104,7 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
         };
         $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-        // id dos campos que utilizarão o calendário
+        // id dos campos que utilizar&atilde;o o calend&aacute;rio
         $("#dtInicioExecucao, #dtFimExecucao").datepicker($.datepicker.regional['pt-BR']);
     });
 </script>
@@ -204,9 +204,9 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
     </form>
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />
 <iframe name="enviar_arquivo" id="enviar_arquivo" style="height: 20px; display: none;"></iframe>

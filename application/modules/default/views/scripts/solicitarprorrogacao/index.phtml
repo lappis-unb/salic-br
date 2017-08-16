@@ -1,11 +1,11 @@
 <script type="text/javascript">
     $(document).ready(function(){
-	// máscaras dos campos
+	// m&aacute;scaras dos campos
 	$("#dtInicio, #dtFinal").keyup(function(){
             mascara(this, format_data); // data
 	});
 
-	// calendário
+	// calend&aacute;rio
 	$.datepicker.regional['pt-BR'] =  {
             closeText: 'Fechar',
             prevText: '&#x3c;Anterior',
@@ -25,7 +25,7 @@
 	};
 	$.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-	// id dos campos que utilizarão o calendário
+	// id dos campos que utilizar&atilde;o o calend&aacute;rio
 	$("#dtInicio, #dtFinal").datepicker($.datepicker.regional['pt-BR']);
 
         $('#btn_salvar').click(function(){
@@ -66,13 +66,13 @@
     <ul>
         <li class="first"><a href="#" title="In&iacute;cio">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar dados do Projeto">Consultar dados do Projeto</a></li>
-        <li class="last">Solicitar Prorrogação</li>
+        <li class="last">Solicitar Prorroga&ccedil;&atilde;o</li>
     </ul>
 </div>
 
 
 <div id="titulo">
-    <div>Solicitar Prorrogação <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar Dados do Projeto">Voltar</a></span></div>
+    <div>Solicitar Prorroga&ccedil;&atilde;o <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar Dados do Projeto">Voltar</a></span></div>
 </div>
 
 
@@ -100,8 +100,8 @@
     <?php foreach ($this->DatasProjeto as $datasAtuais) { ?>
     <table class="tabela">
         <tr>
-            <th colspan="2">Período de Execução Atual</th>
-            <th colspan="2">Período de Captação Atual</th>
+            <th colspan="2">Período de Execu&ccedil;&atilde;o Atual</th>
+            <th colspan="2">Período de Capta&ccedil;&atilde;o Atual</th>
         </tr>
         <tr>
             <td class="destacar bold" align="center" width="25%">Data Inícial Atual</td>
@@ -122,7 +122,7 @@
     <form id="formulario" action="<?php echo $this->url(array('controller' => 'solicitarprorrogacao', 'action' => 'cadastrar-prorrogacao')); ?>" method="post" enctype="multipart/form-data">
         <table class="tabela">
             <tr>
-                <th colspan="2">Novo Período de Captação</th>
+                <th colspan="2">Novo Período de Capta&ccedil;&atilde;o</th>
             </tr>
             <tr>
                 <td class="destacar bold" align="right" width="100px">Data Início<span style="color: red;">*</span></td>
@@ -137,7 +137,7 @@
                 <td align="center">
                     <textarea name="justificativa" id="justificativa" cols="" rows="3" style="width: 99%;" class="textarea_simples"></textarea>
                     <input type="hidden" name="pronac" id="pronac" value="<?php echo $this->idPronac; ?>">
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px; float: left;">Limite máximo de 250 caracteres</span>
+                    <br clear="all" /><span style="color: #FF9999; font-size: 11px; float: left;">Limite m&aacute;ximo de 250 caracteres</span>
                 </td>
             </tr>
             <tr>

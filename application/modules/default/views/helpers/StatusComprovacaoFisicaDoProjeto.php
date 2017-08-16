@@ -1,19 +1,19 @@
 <?php
 /**
- * Nomes dos status da comprovação física do projeto
+ * Nomes dos status da comprova&ccedil;&atilde;o física do projeto
  * @author Equipe RUP - Politec
  * @since 14/05/2010
  * @version 1.0
  * @package application
  * @subpackage application.views.helpers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_StatusComprovacaoFisicaDoProjeto
 {
 	/**
-	 * Método com os status dos comprovantes de status do projeto
+	 * M&eacute;todo com os status dos comprovantes de status do projeto
 	 * @access public
 	 * @param string $status
 	 * @return string $nomeStatus
@@ -22,15 +22,15 @@ class Zend_View_Helper_StatusComprovacaoFisicaDoProjeto
 	{
 		if ($status == 'AG')
 		{
-			$nomeStatus = "Aguardando Avaliação";
+			$nomeStatus = "Aguardando Avalia&ccedil;&atilde;o";
 		}
 		else if ($status == 'AV')
 		{
-			$nomeStatus = "Em Avaliação";
+			$nomeStatus = "Em Avalia&ccedil;&atilde;o";
 		}
 		else if ($status == 'EA')
 		{
-			$nomeStatus = "Em Aprovação";
+			$nomeStatus = "Em Aprova&ccedil;&atilde;o";
 		}
 		else if ($status == 'AD')
 		{
@@ -50,6 +50,6 @@ class Zend_View_Helper_StatusComprovacaoFisicaDoProjeto
 		}
 
 		return $nomeStatus;
-	} // fecha método statusComprovacaoFisicaDoProjeto()
+	} // fecha m&eacute;todo statusComprovacaoFisicaDoProjeto()
 
 } // fecha class

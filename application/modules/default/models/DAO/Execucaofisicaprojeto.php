@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Execucaofisicaprojeto extends Zend_Db_Table
 {
 	/**
-	 * Método para buscar documentos de um PRONAC
+	 * M&eacute;todo para buscar documentos de um PRONAC
 	 * @access public
 	 * @static
 	 * @param integer $idPronac
@@ -57,12 +57,12 @@ class Execucaofisicaprojeto extends Zend_Db_Table
 			$this->view->message = "Erro ao buscar Comprovantes: " . $e->getMessage();
 		}
 
-	} // fecha método buscar()
+	} // fecha m&eacute;todo buscar()
 
 
 
 	/**
-	 * Método para cadastrar documentos do PRONAC
+	 * M&eacute;todo para cadastrar documentos do PRONAC
 	 * @access public
 	 * @param void
 	 * @return object
@@ -72,12 +72,12 @@ class Execucaofisicaprojeto extends Zend_Db_Table
 		/*$sql = "INSERT INTO BDCORPORATIVO.scSAC.tbComprovanteExecucao ";
 		$sql.= "VALUES ($dados['idPRONAC'], $dados['idTipoDocumento'], $dados['nmComprovante'], $dados['dsComprovante'], $dados['idArquivo'], $dados['idSolicitante'], $dados['dtEnvioComprovante'], $dados['stComprovante'], $dados['stComprovante'], $dados['idComprovanteAnterior'])";*/
 
-	} // fecha método cadastrar()
+	} // fecha m&eacute;todo cadastrar()
 
 
 
 	/**
-	 * Método para alterar documentos do PRONAC
+	 * M&eacute;todo para alterar documentos do PRONAC
 	 * @access public
 	 * @param void
 	 * @return object
@@ -85,12 +85,12 @@ class Execucaofisicaprojeto extends Zend_Db_Table
 	public static function alterar()
 	{
 		
-	} // fecha método alterar()
+	} // fecha m&eacute;todo alterar()
 
 
 
 	/**
-	 * Método para excluir documentos do PRONAC
+	 * M&eacute;todo para excluir documentos do PRONAC
 	 * @access public
 	 * @param void
 	 * @return object
@@ -98,7 +98,7 @@ class Execucaofisicaprojeto extends Zend_Db_Table
 	public static function excluir()
 	{
 		
-	} // fecha método excluir()
+	} // fecha m&eacute;todo excluir()
 
 } // fecha class
 ?>

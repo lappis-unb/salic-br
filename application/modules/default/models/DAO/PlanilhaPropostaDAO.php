@@ -26,7 +26,7 @@ class PlanilhaPropostaDAO extends Zend_Db_Table
 	 */
 	public static function buscar($idPlanilha)
 	{	
-		throw new Exception('Função não está sendo utilizada!');
+		throw new Exception('Fun&ccedil;&atilde;o n&atilde;o est&aacute; sendo utilizada!');
 		
 		$sql = "SELECT * 
 				FROM SAC.dbo.tbPlanilhaProposta PL

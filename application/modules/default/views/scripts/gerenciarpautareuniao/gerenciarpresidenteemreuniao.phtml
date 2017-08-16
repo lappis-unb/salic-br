@@ -132,7 +132,7 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
         }, '3000');
     }
 
-    /*** função mantida para historico  ********
+    /*** fun&ccedil;&atilde;o mantida para historico  ********
     function JSVerificaArquivosVotacao(){
         $.ajax({
             async: true,
@@ -341,9 +341,9 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
                     texto = 'Cancelando';
                 
                 if(tipo == 'readequacao'){
-                    $("#loadingbtnvotacao_"+idpronac+"_"+idtiporeadequacao).html('<center>'+texto+' votação...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
+                    $("#loadingbtnvotacao_"+idpronac+"_"+idtiporeadequacao).html('<center>'+texto+' vota&ccedil;&atilde;o...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
                 } else {
-                    $("#loadingbtnvotacao_"+idpronac).html('<center>'+texto+' votação...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
+                    $("#loadingbtnvotacao_"+idpronac).html('<center>'+texto+' vota&ccedil;&atilde;o...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
                 }
             },
             complete: function(){
@@ -391,7 +391,7 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
                         texto = 'iniciar';
                     else
                         texto = 'cancelar';
-                    message('Erro! Não foi possível '+texto+' a votação do projeto '+ pronac + '. <br>'+data.descricao, 'ERROR');
+                    message('Erro! N&atilde;o foi possível '+texto+' a vota&ccedil;&atilde;o do projeto '+ pronac + '. <br>'+data.descricao, 'ERROR');
                 }
             }
             , dataType : 'json'

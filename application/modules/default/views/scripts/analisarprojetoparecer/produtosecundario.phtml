@@ -3,7 +3,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
 ?>
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div> Análise do Produto Secundário</div>
+	<div> An&aacute;lise do Produto Secund&aacute;rio</div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -17,7 +17,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
         <table class="tabela" >
             <tr>
                 <th>
-                    Análise de Conteúdo do Projeto Nr: <?php echo $this->projeto->PRONAC; ?> - <?php echo $this->projeto->NomeProjeto; ?>
+                    An&aacute;lise de Conteúdo do Projeto Nr: <?php echo $this->projeto->PRONAC; ?> - <?php echo $this->projeto->NomeProjeto; ?>
                     <br/>Produto <?php
             if ($this->projeto->stPrincipal) {
                 echo 'Principal';
@@ -31,7 +31,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
         <!-- FIM ANALISE DE CONTEÚDO  -->
         <table class="tabela">
             <tr>
-                <td><input type="button" id="abaAnaliseConteudo" class="btn_adicionar" />Análise de conteúdo</td>
+                <td><input type="button" id="abaAnaliseConteudo" class="btn_adicionar" />An&aacute;lise de conteúdo</td>
             </tr>
         </table>
         <!-- Formulario -->
@@ -132,7 +132,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
                     </tr>
                     <tr>
                         <td colspan="5">
-                            <b>Enquadramento Favorável? *</b>
+                            <b>Enquadramento Favor&aacute;vel? *</b>
                             <p style="margin-top: 10px;">
                                 <input type="radio" style="margin-right: 5px;" value="1" class="ParecerFavoravel" name="ParecerFavoravel" checked="checked" />Sim &nbsp;&nbsp;
                                 <input type="radio" style="margin-right: 5px;" value="0" class="ParecerFavoravel" name="ParecerFavoravel" />N&atilde;o
@@ -164,7 +164,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
         </div>
         <table class="tabela">
             <tr>
-                <td><input type="button" id="abaAnaliseCusto" class="btn_adicionar" />Análise de custos <input id="valorpossivel" value="<?php echo $this->valorpossivel;?>" type="hidden"/></td>
+                <td><input type="button" id="abaAnaliseCusto" class="btn_adicionar" />An&aacute;lise de custos <input id="valorpossivel" value="<?php echo $this->valorpossivel;?>" type="hidden"/></td>
             </tr>
         </table>
         <div id="divAnaliseCusto" style="display:none;">
@@ -232,7 +232,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
                                                 foreach ($valPlanilha as $camp => $cont) 
                                                 {
                                                     $trCampo .= "<th>{$camp}</th>";
-                                                    if ($camp == 'Valor Unitário' || $camp == 'Valor Solicitado' || $camp == 'Valor Sugerido pelo Parecerista') 
+                                                    if ($camp == 'Valor Unit&aacute;rio' || $camp == 'Valor Solicitado' || $camp == 'Valor Sugerido pelo Parecerista') 
                                                     {
                                                         if ($camp == 'Valor Sugerido pelo Parecerista') 
                                                         {
@@ -320,9 +320,9 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
 
 <div id="confirma"></div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <input type="hidden" name="grupoAtivo" id="grupoAtivo" value="<?php echo $this->grupoAtivo; ?>" />
 <br clear="all" />
 <script type="text/javascript">
@@ -573,10 +573,10 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
                     {
 
                     	var texto = $('#justificativa'+$('#idPlanilhaProjeto').val()).val();
-                            texto = texto.replace(/^\s+|\s+$/g,""); //retirando espaços
+                            texto = texto.replace(/^\s+|\s+$/g,""); //retirando espa&ccedil;os
                     	if (texto.length <= 0 || texto=="")
                         {
-                                alertar('Dados obrigatórios não informados.');
+                                alertar('Dados obrigatórios n&atilde;o informados.');
                           	return false; 
                         }
                         else
@@ -585,7 +585,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
                                 $('#totalcalculos'+$('#idPlanilhaProjeto').val()).val(vlSugerido);
                                 
                             var dados = $('#formSalvarItem').serialize();
-                            $(this).append('<br><center>Aguarde, salvando informações...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
+                            $(this).append('<br><center>Aguarde, salvando informa&ccedil;&otilde;es...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
                             $.post($('#formSalvarItem').attr('action'),dados
                             ,function(data)
                             {
@@ -606,7 +606,7 @@ $hrefAlterarintemsolicitado = $this->url(array('controller' => 'Analisarprojetop
                                 $("#valorpossivelApresentacao").html(valorpossivelApresentacao);
                                 
                                 este.dialog('close');
-                                janelaAlerta('Informações salvas com sucesso');
+                                janelaAlerta('Informa&ccedil;&otilde;es salvas com sucesso');
                             });
 
                         }

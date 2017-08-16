@@ -172,7 +172,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
         }
         catch (Zend_Exception_Db $e)
         {
-            $this->view->message = "Erro ao buscar Área Cultural: " . $e->getMessage();
+            $this->view->message = "Erro ao buscar &aacute;rea Cultural: " . $e->getMessage();
         }
 
         return $db->fetchAll($sql);

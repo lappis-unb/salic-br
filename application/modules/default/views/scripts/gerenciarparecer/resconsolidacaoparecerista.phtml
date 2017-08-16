@@ -30,7 +30,7 @@ $resconsolidacaopareceristaHref = $this->url(array('controller' => 'gerenciarpar
         <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
         <!-- ========== BUTTON VOLTAR ========== -->
         <div id="titulo">
-            <div>Análise por Parecerista<span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+            <div>An&aacute;lise por Parecerista<span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
         </div>
         <!-- ========== FIM TÍTULO ========== -->
         <!-- ========== GRID NOME DA PROPOSTA ========== -->
@@ -45,7 +45,7 @@ $resconsolidacaopareceristaHref = $this->url(array('controller' => 'gerenciarpar
                     <td>Status:<?php echo $this->parecerista['ferias']; ?></td>
                 </tr>
                 <tr>
-                    <td> Áreas/Segmento</td>
+                    <td> &aacute;reas/Segmento</td>
                     <td>
                         <?php
                         foreach ($this->parecerista['area_segmento_nivel'] as $val) {
@@ -146,9 +146,9 @@ $resconsolidacaopareceristaHref = $this->url(array('controller' => 'gerenciarpar
                     <table class="tabela">
                         <tr>
                               <td align="center"><input type="button" class="btn_enviar"></td>
-                              <!-- ========== PAGINAÇ?O ========== -->
+                              <!-- ========== PAGINA&ccedil;?O ========== -->
                                 <?php if($this->qtdRegistro > 5){ echo "<p>" . $this->buscar . "</p>"; } ?>
-                                <!-- ========== FIM PAGINAÇ?O ========== -->
+                                <!-- ========== FIM PAGINA&ccedil;?O ========== -->
                         </tr>
                     </table>
                 </table>

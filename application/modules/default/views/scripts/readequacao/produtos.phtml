@@ -1,17 +1,17 @@
 <?php
 /**
- * PRODUTOS: Solicitação de cadastros, alterações e inclusões de novos Produtos (Plano de Distribuição)
+ * PRODUTOS: Solicita&ccedil;&atilde;o de cadastros, altera&ccedil;&otilde;es e inclus&otilde;es de novos Produtos (Plano de Distribui&ccedil;&atilde;o)
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 30/03/2012
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.readequacao
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2012 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
 echo $this->partial('inc/menu.inc.php', $this) // menu
-// define os valores dos campos do formulário, se será lido o dado original ou o dado readequado
+// define os valores dos campos do formul&aacute;rio, se ser&aacute; lido o dado original ou o dado readequado
 $dadosAP = $this->dadosAP;
 $dadosSR = $this->dadosSR;
 $dados   = count($dadosSR) > 0 ? $dadosSR : $dadosAP;
@@ -98,7 +98,7 @@ $idPronacCrip = Seguranca::encrypt($this->idPronac);
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

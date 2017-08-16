@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_StatusDiligencia
 {
 	/**
-	 * Método para verificar o status da diligencia
+	 * M&eacute;todo para verificar o status da diligencia
 	 * @access public
 	 * @param integer $idPronac
 	 * @return string
@@ -48,7 +48,7 @@ class Zend_View_Helper_StatusDiligencia
 		    else if ($d[0]->DtSolicitacao && round(data::CompararDatas($d[0]->DtDistribuicao)) > $d[0]->tempoFimDiligencia) 
 		    {
 		        $diligencias['img'] = "notice2.png";
-				$diligencias['msg'] = "Diligencia não respondida";
+				$diligencias['msg'] = "Diligencia n&atilde;o respondida";
 		    } 
 		    else 
 		    {
@@ -58,9 +58,9 @@ class Zend_View_Helper_StatusDiligencia
 	            
 	    endforeach;
 	           
-		return 'Não terminei';
+		return 'N&atilde;o terminei';
 			
 			
-	} // fecha método verificarStatusDiligencia()
+	} // fecha m&eacute;todo verificarStatusDiligencia()
 
 } // fecha class

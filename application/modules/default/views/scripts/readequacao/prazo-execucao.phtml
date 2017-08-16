@@ -1,17 +1,17 @@
 <?php 
 /**
- * PRAZO DE EXECUÇÃO: Solicitação de prorrogação de Prazo de Execução do Projeto
+ * PRAZO DE EXECU&ccedil;&atilde;O: Solicita&ccedil;&atilde;o de prorroga&ccedil;&atilde;o de Prazo de Execu&ccedil;&atilde;o do Projeto
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 30/03/2012
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.readequacao
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2012 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
 echo $this->partial('inc/menu.inc.php', $this) // menu
-    // define os valores dos campos do formulário, se será lido o dado original ou o dado readequado
+    // define os valores dos campos do formul&aacute;rio, se ser&aacute; lido o dado original ou o dado readequado
     $DtInicioExecucaoAP = isset($this->dadosAP->DtInicioExecucao)    ? $this->dadosAP->DtInicioExecucao    : '';
     $DtFimExecucaoAP    = isset($this->dadosAP->DtFimExecucao)       ? $this->dadosAP->DtFimExecucao       : '';
     $DtInicioExecucaoSR = isset($this->dadosSR['dtInicioNovoPrazo']) ? $this->dadosSR['dtInicioNovoPrazo'] : '';
@@ -24,15 +24,15 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 
 <script type="text/javascript">
     /**
-     * Funções que são chamadas após a página ser carregada
+     * Fun&ccedil;&otilde;es que s&atilde;o chamadas após a p&aacute;gina ser carregada
      */
     $(document).ready(function(){
-	// máscaras dos campos
+	// m&aacute;scaras dos campos
 	$("#dtInicioExecucaoSR, #dtFimExecucaoSR").keyup(function(){
             mascara(this, format_data); // data
 	});
 
-	// calendário
+	// calend&aacute;rio
 	$.datepicker.regional['pt-BR'] =  {
             closeText: 'Fechar',
             prevText: '&#x3c;Anterior',
@@ -52,7 +52,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 	};
 	$.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-	// id dos campos que utilizarão o calendário
+	// id dos campos que utilizar&atilde;o o calend&aacute;rio
 	$("#dtInicioExecucaoSR, #dtFimExecucaoSR").datepicker($.datepicker.regional['pt-BR']);
     }); // fim $(document).ready()
 </script>
@@ -80,7 +80,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 	<?php echo $this->partial('readequacao/inc/topo.inc.php', $this); ?>
 	<!-- ========== FIM TOPO PROJETO ========== -->
 
-	<!-- ========== INÍCIO FORMULÁRIO ========== -->
+	<!-- ========== INÍCIO FORMUL&aacute;RIO ========== -->
 	<form name="formReadequacao" id="formReadequacao" action="<?php echo $this->url(array('controller' => 'readequacao', 'action' => 'prazo-execucao')); ?>" method="post" enctype="multipart/form-data">
             <input type="hidden" name="stPedidoAlteracao" id="stPedidoAlteracao" value="T" />
             <input type="hidden" name="siVerificacao" id="siVerificacao" value="0" />
@@ -107,7 +107,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                 <tr>
                     <td colspan="4">
                         <textarea name="justificativa" id="justificativa" class="textarea_simples w99p" rows="7" cols=""><?php echo $Justificativa; ?></textarea>
-                        <span style="float: left; color: red;">Limite máximo de 600 caracteres</span>
+                        <span style="float: left; color: red;">Limite m&aacute;ximo de 600 caracteres</span>
                     </td>
                 </tr>
                 <tr class="destacar bold">
@@ -117,7 +117,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                     <td colspan="4">
                         <div>
                             <span style="float: left; margin-right: 10px;"><input type="file" name="arquivo[]" id="arquivo" class="multi input_simples w99p" accept="pdf" /></span>
-                            <span style="float: left; color: red;">Tamanho máximo de 5 MB</span>
+                            <span style="float: left; color: red;">Tamanho m&aacute;ximo de 5 MB</span>
                         </div>
                     </td>
                 </tr>
@@ -146,7 +146,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                 </tr>
             </table>
 	</form>
-	<!-- ========== FIM FORMULÁRIO ========== -->
+	<!-- ========== FIM FORMUL&aacute;RIO ========== -->
 
 	<!-- ========== INÍCIO HISTÓRICO ========== -->
         <div id="historico"></div>
@@ -158,7 +158,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

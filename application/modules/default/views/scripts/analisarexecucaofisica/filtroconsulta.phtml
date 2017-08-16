@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.alterarprojeto
- * @copyright ? 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ? 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -61,7 +61,7 @@
                 $("#spandtExecucaoFim").show();
             }else if(opcao == '4'){
                 $('#labelTipo1').html('De:');
-                $('#labelTipo2').html('até:');
+                $('#labelTipo2').html('at&eacute;:');
                 $("#spandtExecucaoIni").show();
                 $("#spandtExecucaoFim").show();
             }else{
@@ -101,7 +101,7 @@
             gerarRelatorio(datafim, diffdias);
         });
 
-        // calendário
+        // calend&aacute;rio
         $(function()
             {
                 $.datepicker.regional['pt-BR'] = {
@@ -230,7 +230,7 @@
                     </td>
                 </tr>
             <tr>
-                <td class="bold">Situação do projeto</td>
+                <td class="bold">Situa&ccedil;&atilde;o do projeto</td>
                 <td colspan="3">
                     <select name='Situacao' class='select_simples focus'>
                         <option value='0' selected>- Selecione -</option>
@@ -279,8 +279,8 @@
                 <td colspan="3">
                     <select name='stRelatorio' class='select_simples habilitar focus'>
                         <option value='0' selected>- Selecione -</option>
-                        <option value="1">Aguardando análise</option>
-                        <option value="2">Em análise</option>
+                        <option value="1">Aguardando an&aacute;lise</option>
+                        <option value="2">Em an&aacute;lise</option>
                         <option value="3">Analisado</option>
                     </select>
                 </td>

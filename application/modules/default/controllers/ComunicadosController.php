@@ -15,7 +15,7 @@
 class ComunicadosController extends MinC_Controller_Action_Abstract
 {
 	/**
-	 * @var integer (variável com o id do grupo ativo)
+	 * @var integer (vari&aacute;vel com o id do grupo ativo)
 	 * @access private
 	 */
 	private $GrupoAtivoSalic = 0;
@@ -23,22 +23,22 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 	
 	
     /**
-	 * Reescreve o método init()
+	 * Reescreve o m&eacute;todo init()
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
     public function init()
 	{
-		$auth = Zend_Auth::getInstance(); // pega a autenticação
+		$auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
 
-		// define as permissões
+		// define as permiss&otilde;es
 		$PermissoesGrupo = array();
 		$PermissoesGrupo[] = 97;  // Gestor Salic
 		
 		parent::perfil(1, $PermissoesGrupo);
 
-		// pega o idAgente do usuário logado
+		// pega o idAgente do usu&aacute;rio logado
 		if (isset($auth->getIdentity()->usu_codigo))
 		{
 			$this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -60,7 +60,7 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 	} 
 
 	/**
-	 * Método index()
+	 * M&eacute;todo index()
 	 * @access public
 	 * @param void
 	 * @return void
@@ -69,10 +69,10 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 	{
 		$this->_redirect("comunicados/consultar");
 		
-	} // fecha método indexAction()
+	} // fecha m&eacute;todo indexAction()
 
 	/**
-	 * Método novo()
+	 * M&eacute;todo novo()
 	 * @access public
 	 * @param void
 	 * @return void
@@ -81,10 +81,10 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 	{
 		
 		
-	} // fecha método novoAction()
+	} // fecha m&eacute;todo novoAction()
 	
 	/**
-	 * Método consultar()
+	 * M&eacute;todo consultar()
 	 * @access public
 	 * @param void
 	 * @return void
@@ -95,10 +95,10 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 		
 		
 		
-	} // fecha método consultarAction()
+	} // fecha m&eacute;todo consultarAction()
 	
 	/**
-	 * Método ativos()
+	 * M&eacute;todo ativos()
 	 * @access public
 	 * @param void
 	 * @return List
@@ -108,10 +108,10 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 		
 			
 		
-	} // fecha método ativosAction()
+	} // fecha m&eacute;todo ativosAction()
 
 	/**
-	 * Método listarComunicados()
+	 * M&eacute;todo listarComunicados()
 	 * @access public
 	 * @param void
 	 * @return List
@@ -176,7 +176,7 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 	}
 		
 	/**
-	 * Método desativados()
+	 * M&eacute;todo desativados()
 	 * @access public
 	 * @param void
 	 * @return List
@@ -185,11 +185,11 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 	{
 		
 		
-	} // fecha método desativadosAction()
+	} // fecha m&eacute;todo desativadosAction()
 	
 	
 	/**
-	 * Método editar()
+	 * M&eacute;todo editar()
 	 * @access public
 	 * @param void
 	 * @return List
@@ -207,10 +207,10 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 		
 		$this->view->comunicado = $comunicado;
 		
-	} // fecha método editarAction()
+	} // fecha m&eacute;todo editarAction()
 	
 	/**
-	 * Método salvar()
+	 * M&eacute;todo salvar()
 	 * @access public
 	 * @param void
 	 * @return List
@@ -278,7 +278,7 @@ class ComunicadosController extends MinC_Controller_Action_Abstract
 		
 		
 		
-	} // fecha método salvarAction()
+	} // fecha m&eacute;todo salvarAction()
 
 	
 	

@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -23,6 +23,6 @@ class Zend_View_Helper_CorLinhaOnMouseOver
 		$linha = "onmouseover=\"this.style.backgroundColor='". $bg ."'\" onfocus=\" \" ";
 		$linha.= "onmouseout=\"this.style.backgroundColor=''\"   onblur=\" \"";
 		return $linha;
-	} // fecha método corLinhaOnMouserOver()
+	} // fecha m&eacute;todo corLinhaOnMouserOver()
 
 } // fecha class

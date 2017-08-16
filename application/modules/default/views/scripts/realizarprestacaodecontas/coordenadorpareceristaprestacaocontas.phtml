@@ -1,11 +1,11 @@
 <?php
 /**
- * Prestação de Contas (UC45) - AECI Prestação de Contas
+ * Presta&ccedil;&atilde;o de Contas (UC45) - AECI Presta&ccedil;&atilde;o de Contas
  * @author Equipe RUP - Politec
  * @since 27/12/2010
  * @version 1.0
  * @subpackage application.view.scripts.tecnicoprestacaocontas
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -60,7 +60,7 @@ window.onload = function() {areadetrabalho();};
     	$("#idPronac").val(idPronac);
     	
 	$("#encaminhar2").dialog({
-         title : 'Encaminhar Projeto para Análise',
+         title : 'Encaminhar Projeto para An&aacute;lise',
          resizable: false,
          width:560,
          height:580,
@@ -123,7 +123,7 @@ window.onload = function() {areadetrabalho();};
 	  </script>
 
 <div style="display: none;" id="encaminhar2"
-	title="Encaminhar projeto para análise">
+	title="Encaminhar projeto para an&aacute;lise">
 <form name="formencaminhar"
 	id="form<?php //echo $AnaliseGeral->ID_PRONAC; ?>"
 	action="<?php echo $this->url(array('controller'=>'realizarprestacaodecontas', 'action'=>'encaminharprestacaodecontas')); ?>"
@@ -145,8 +145,8 @@ window.onload = function() {areadetrabalho();};
 
 <textarea name="dsjustificativa" id="dsjustificativa" rows="6"
 	cols="50" style="width: 95%;"
-	onclick="limpar_campo(this, 'Digite a observação...');" onkeypress=" "
-	onblur="restaurar_campo(this, 'Digite a observação...');">Digite a observação...</textarea>
+	onclick="limpar_campo(this, 'Digite a observa&ccedil;&atilde;o...');" onkeypress=" "
+	onblur="restaurar_campo(this, 'Digite a observa&ccedil;&atilde;o...');">Digite a observa&ccedil;&atilde;o...</textarea>
 
 <br />
 <br>
@@ -154,7 +154,7 @@ window.onload = function() {areadetrabalho();};
 <tr>
 	<td><b>Encaminhar para:</b></td>
 	<td><select name="passaValor" id="passaValor" style="width: 70%;" >
-		<option value="0">Selecione uma opção</option>
+		<option value="0">Selecione uma op&ccedil;&atilde;o</option>
                                 <?php foreach($this->listaEntidades as $listaEntidades): ?>
                                 <option
 			value="<?php echo $listaEntidades->Codigo;?>"><?php echo $listaEntidades->Sigla; ?></option>
@@ -162,7 +162,7 @@ window.onload = function() {areadetrabalho();};
                             </select></td>
 </tr>
 <tr>
-	<td><b style="margin-left: 2.6em;">Destinatário:</b></td>
+	<td><b style="margin-left: 2.6em;">Destinat&aacute;rio:</b></td>
 	<td><select name="recebeValor" id="recebeValor"
 		style="width: 70%; margin-top: 0.5em;"></select></td>
 </tr>
@@ -180,12 +180,12 @@ window.onload = function() {areadetrabalho();};
 	<tr>
 		<th>Data de Envio</th>
 		<th>Remetente</th>
-		<th>Destinatário</th>
-		<th>Órgão</th>
+		<th>Destinat&aacute;rio</th>
+		<th>Órg&atilde;o</th>
 	</tr>
 	<tr>
 		<td><?php echo $date = date('d/m/Y') ; ?></td>
-		<td><?php echo 'Zé Lelé'; ?></td>
+		<td><?php echo 'Z&eacute; Lel&eacute;'; ?></td>
 		<td><?php echo 'Lex Luthor'; ?></td>
 		<td><?php echo 'Zona Fantasma'; ?></td>
 	</tr>
@@ -199,7 +199,7 @@ window.onload = function() {areadetrabalho();};
 <table class="tabela">
 	<tr>
 		<td><input type="button" id="abrir_fechar" class="btn_adicionar" />AGUARDANDO
-		ANÁLISE</td>
+		AN&aacute;LISE</td>
 		<td width="100"  align="right" >Quantidade: 
 		<?php echo "0".count($this->CoordParecerPresContas);?></td>
 	</tr>
@@ -214,7 +214,7 @@ window.onload = function() {areadetrabalho();};
 			<th width="60">Número</th>
 			<th width="60">Pronac</th>
 			<th>Nome do Projeto</th>
-			<th width="220">Área / Segmento</th>
+			<th width="220">&aacute;rea / Segmento</th>
 			<th width="60">Cidade</th>
 			<th width="60">Data de Recebimento</th>
 			<th width="130">Enviar Mensagem</th>	
@@ -258,7 +258,7 @@ window.onload = function() {areadetrabalho();};
 									?>
 <table class="tabela">
 	<tr>
-		<th>Você não possui projetos Aguardando Análise.</th>
+		<th>Você n&atilde;o possui projetos Aguardando An&aacute;lise.</th>
 	</tr>
 </table>
 <?php } ?>

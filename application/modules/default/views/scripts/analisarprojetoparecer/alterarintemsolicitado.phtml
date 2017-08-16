@@ -145,7 +145,7 @@ header("Pragma: no-cache");
                             });
                             function calcula_planilha_projeto(cont)
                             {
-                                // recebe os valores do formulário
+                                // recebe os valores do formul&aacute;rio
                                 var qtd        = $('#qtd' + cont).val(),
                                     ocorrencia = $('#ocorrencia' + cont).val(),
                                     valor      = $('#vlunitario' + cont).val(),
@@ -157,15 +157,15 @@ header("Pragma: no-cache");
                                 // adiciona o ponto na casa decimal
                                 .replace(/(\d)(\d{2})$/, "$1.$2");
         
-                                // converte para float e adiciona precisão decimal
+                                // converte para float e adiciona precis&atilde;o decimal
                                 qtd        = parseFloat(qtd).toFixed(2);
                                 ocorrencia = parseFloat(ocorrencia).toFixed(2);
                                 valor      = parseFloat(valor).toFixed(2);
 
-                                // variável com o resultado
+                                // vari&aacute;vel com o resultado
                                 resultado = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-                                // se não for número
+                                // se n&atilde;o for número
                                 if (isNaN(resultado))
                                 {
                                     resultado = '';
@@ -190,7 +190,7 @@ header("Pragma: no-cache");
                                 } // fecha else
 
                                 $('#calcular_total' + cont).html(resultado);
-                            } // fecha função calcular_planilha_projeto()
+                            } // fecha fun&ccedil;&atilde;o calcular_planilha_projeto()
                             /*function valida_val_parec_relat(i, valor_solicitado)
                             {
                                 // pega o valor total do relator
@@ -208,7 +208,7 @@ header("Pragma: no-cache");
                                 calcular_total = parseFloat(calcular_total);
                                 valor_solicitado = parseFloat(valor_solicitado);
 
-                                // se o valor do parecerista é maior que o valor do relator
+                                // se o valor do parecerista &eacute; maior que o valor do relator
                                 if (calcular_total > valor_solicitado)
                                 {
                                     // reseta os campo (atribui os valores iniciais)
@@ -236,7 +236,7 @@ header("Pragma: no-cache");
                                     });
                                     $('.ui-dialog-titlebar-close').remove();
                                 }
-                            } // fecha função validar_val_parec_relat()
+                            } // fecha fun&ccedil;&atilde;o validar_val_parec_relat()
                             */
 
 function validar_val_parec_relat(i)

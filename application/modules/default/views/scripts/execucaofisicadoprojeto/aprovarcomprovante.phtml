@@ -1,12 +1,12 @@
 <?php
 /**
- * Aprovação de comprovantes (Acesso: COORDENADORES)
+ * Aprova&ccedil;&atilde;o de comprovantes (Acesso: COORDENADORES)
  * @author Equipe RUP - Politec
  * @since 28/04/2010
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.execucaofisicadoprojeto
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -14,7 +14,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="last">Comprovação de Execução Física do Projeto</li>
+		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -23,7 +23,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Comprovação de Execução Física do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'comprovantesemaprovacao')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
+	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'comprovantesemaprovacao')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -34,7 +34,7 @@
 
 
 
-	<!-- ========== INÍCIO FORMULÁRIO APROVAÇÃO ========== -->
+	<!-- ========== INÍCIO FORMUL&aacute;RIO APROVA&ccedil;&atilde;O ========== -->
 	<form name="formAlterar" id="formAlterar" method="post" 
 		action="<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'aprovarcomprovante')); ?>?pronac=<?php echo $_GET['pronac']; ?>&doc=<?php echo $_GET['doc']; ?>">
 	
@@ -77,7 +77,7 @@
 							<td><?php echo $s->nmComprovante; ?></td>
 						</tr>
 						<tr>
-							<th>DESCRIÇÃO</th>
+							<th>DESCRI&ccedil;&atilde;O</th>
 							<td><?php echo $s->dsComprovante; ?></td>
 						</tr>
 						<tr>
@@ -87,10 +87,10 @@
 						<?php endforeach; ?>
 					</table>
 
-					<!-- ========== SOLICITAÇÃO DE ALTERAÇÃO ========== -->
+					<!-- ========== SOLICITA&ccedil;&atilde;O DE ALTERA&ccedil;&atilde;O ========== -->
 					<table style="width:48%; float:left;">
 						<tr class="titulo_tabela centro">
-							<th colspan="2">SOLICITAÇÃO DE ALTERAÇÃO - <?php echo $d->dtEnvioComprovante; ?></th>
+							<th colspan="2">SOLICITA&ccedil;&atilde;O DE ALTERA&ccedil;&atilde;O - <?php echo $d->dtEnvioComprovante; ?></th>
 						</tr>
 						<tr>
 							<th width="20%">TIPO DE DOCUMENTO</th>
@@ -101,7 +101,7 @@
 							<td <?php if ($d->nmComprovante != $s->nmComprovante) echo "class=\"red\""; ?>><?php echo $d->nmComprovante; ?></td>
 						</tr>
 						<tr>
-							<th>DESCRIÇÃO</th>
+							<th>DESCRI&ccedil;&atilde;O</th>
 							<td <?php if ($d->dsComprovante != $s->dsComprovante) echo "class=\"red\""; ?>><?php echo $d->dsComprovante; ?></td>
 						</tr>
 						<tr>
@@ -133,7 +133,7 @@
 				<td><?php echo $d->nmComprovante; ?></td>
 			</tr>
 			<tr>
-				<th>DESCRIÇÃO</th>
+				<th>DESCRI&ccedil;&atilde;O</th>
 				<td><?php echo $d->dsComprovante; ?></td>
 			</tr>
 			<tr>
@@ -147,7 +147,7 @@
 	
 		<tr>
 			<td colspan="2" style="border:none; background:#ffc;" class="centro">
-				<p>Autor do Parecer: João da Silva - Analista MinC</p>
+				<p>Autor do Parecer: Jo&atilde;o da Silva - Analista MinC</p>
 				<br />
 				<p><?php echo $d->dsParecerComprovante; ?></p>
 			</td>
@@ -184,12 +184,12 @@
 
 
 
-	<!-- ========== BOTÕES VOLTAR E ETC ========== -->
+	<!-- ========== BOT&otilde;ES VOLTAR E ETC ========== -->
 	<table class="tabela">
 		<tr>
 			<td>
 				<div class="float_left">
-					<input type="button" class="btn_voltar" title=" Página Anterior "
+					<input type="button" class="btn_voltar" title=" P&aacute;gina Anterior "
 						onkeypress=" " 
 						onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'comprovantesemaprovacao')); ?>?pronac=<?php echo $_GET['pronac']; ?>');" />
 				</div>
@@ -201,7 +201,7 @@
 	</table>
 
 	</form>
-	<!-- ========== FIM FORMULÁRIO APROVAÇÃO ========== -->
+	<!-- ========== FIM FORMUL&aacute;RIO APROVA&ccedil;&atilde;O ========== -->
 
 
 
@@ -210,8 +210,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

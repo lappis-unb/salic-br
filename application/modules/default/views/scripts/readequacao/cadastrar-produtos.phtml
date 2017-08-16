@@ -1,16 +1,16 @@
 <?php
     /**
-     * PRODUTOS: inclusões de novos Produtos (Plano de Distribuição)
+     * PRODUTOS: inclus&otilde;es de novos Produtos (Plano de Distribui&ccedil;&atilde;o)
      * @author emanuel.sampaio <emanuelonline@gmail.com>
      * @since 30/03/2012
      * @version 1.0
      * @package application
      * @subpackage application.views.scripts.readequacao
-     * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+     * @copyright © 2012 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
      * @link http://salic.cultura.gov.br
      */
     echo $this->partial('inc/menu.inc.php', $this) // menu
-    // pega o id do produto, e, define os valores dos campos do formulário, se será lido o dado original ou o dado readequado
+    // pega o id do produto, e, define os valores dos campos do formul&aacute;rio, se ser&aacute; lido o dado original ou o dado readequado
     $idProduto = $this->idProduto;
 
     if (!empty($idProduto)) :
@@ -26,7 +26,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
 
 <script type="text/javascript">
     /**
-     * Ações que serão executadas após o carregamento da página
+     * A&ccedil;&otilde;es que ser&atilde;o executadas após o carregamento da p&aacute;gina
      */
     $(document).ready(function(){
 
@@ -59,7 +59,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
             return true;
         });
 
-        // máscaras dos campos
+        // m&aacute;scaras dos campos
         $('#patrocinador, #divulgacao, #beneficiario, #normal, #promocional').keyup(function() {
             mascara(this, format_num); // somente números
         });
@@ -94,7 +94,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
         document.getElementById('total').disabled              = true;
 
 
-        // exclusão de local de realização
+        // exclus&atilde;o de local de realiza&ccedil;&atilde;o
         $('#patrocinador, #divulgacao, #beneficiario, #normal, #promocional, #vlNormal, #vlPromocional').blur(function()
         {
             /* ========== INÍCIO SOMA DE INGRESSOS ========== */
@@ -126,7 +126,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
             // total de ingressos
             total = patrocinador + divulgacao + beneficiario + normal + promocional;
 
-            if (isNaN(total)) { // se não for número
+            if (isNaN(total)) { // se n&atilde;o for número
                 total = '';
             } else {
                 total = (parseFloat(total)).toFixed(0); // armazena o resultado
@@ -154,21 +154,21 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
             vlNormal = vlNormal.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
             vlNormal = vlNormal.replace(/(\d{0})(\d)/, "$1$2");
             vlNormal = vlNormal.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
-            vlNormal = parseFloat(vlNormal).toFixed(2); // converte para float e adiciona precisão decimal
+            vlNormal = parseFloat(vlNormal).toFixed(2); // converte para float e adiciona precis&atilde;o decimal
 
             vlPromocional = document.getElementById('vlPromocional').value;
             vlPromocional = vlPromocional.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
             vlPromocional = vlPromocional.replace(/(\d{0})(\d)/, "$1$2");
             vlPromocional = vlPromocional.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
-            vlPromocional = parseFloat(vlPromocional).toFixed(2); // converte para float e adiciona precisão decimal
+            vlPromocional = parseFloat(vlPromocional).toFixed(2); // converte para float e adiciona precis&atilde;o decimal
 
-            // variável com o resultado
+            // vari&aacute;vel com o resultado
             total_normal      = parseFloat(vlNormal * normal).toFixed(2); // armazena o resultado
             total_promocional = parseFloat(vlPromocional * promocional).toFixed(2); // armazena o resultado
 
 
             // total de ingressos (normal + promocional)
-            if (isNaN(total_normal) || isNaN(total_promocional)) { // se não for número
+            if (isNaN(total_normal) || isNaN(total_promocional)) { // se n&atilde;o for número
                 total_geral = '';
             } else {
                 total_geral = (parseFloat(total_normal) + parseFloat(total_promocional)).toFixed(2); // armazena o resultado
@@ -192,7 +192,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
 
 
             // total de ingressos (normal)
-            if (isNaN(total_normal)) { // se não for número
+            if (isNaN(total_normal)) { // se n&atilde;o for número
                 total_normal = '';
             } else {
                 // formata para real
@@ -214,7 +214,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
 
 
             // total de ingressos (promocional)
-            if (isNaN(total_promocional)) { // se não for número
+            if (isNaN(total_promocional)) { // se n&atilde;o for número
                 total_promocional = '';
             } else {
                 // formata para real
@@ -238,7 +238,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
 
 
         <?php if (!empty($idProduto)) { ?>
-            // exclusão do produto
+            // exclus&atilde;o do produto
             $('.btn_exclusao').click(function() {
                 if ($('#tpProduto').val() == 0) {
                     $('#tpAcao').attr('value', 'E');
@@ -288,7 +288,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
     <?php echo $this->partial('readequacao/inc/topo.inc.php', $this); ?>
     <!-- ========== FIM TOPO PROJETO ========== -->
 
-    <!-- ========== INÍCIO FORMULÁRIO ========== -->
+    <!-- ========== INÍCIO FORMUL&aacute;RIO ========== -->
     <form name="formReadequacao" id="formReadequacao" action="<?php echo $this->url(array('controller' => 'readequacao', 'action' => 'cadastrar-produtos')); ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="stPedidoAlteracao" id="stPedidoAlteracao" value="T" />
         <input type="hidden" name="siVerificacao" id="siVerificacao" value="0" />
@@ -322,12 +322,12 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
                 <td>
                     <label for="tpProduto">Produto Principal?</label><br />
                     <?php if (!empty($idProduto)) { ?>
-                        <?php echo $dados[0]->stPrincipal == 0 ? 'Não' : 'Sim'; ?>
+                        <?php echo $dados[0]->stPrincipal == 0 ? 'N&atilde;o' : 'Sim'; ?>
                         <input type="hidden" name="tpProduto" id="tpProduto" value="<?php echo $dados[0]->stPrincipal; ?>" />
                     <?php } else { ?>
                     <select name="tpProduto" id="tpProduto" class="select_simples ">
                         <!-- <option value="1">Sim</option> -->
-                        <option value="0">Não</option>
+                        <option value="0">N&atilde;o</option>
                     </select>
                     <?php } ?>
                 </td>
@@ -458,12 +458,12 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
             </tr>
         </table>
     </form>
-    <!-- ========== FIM FORMULÁRIO ========== -->
+    <!-- ========== FIM FORMUL&aacute;RIO ========== -->
 
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

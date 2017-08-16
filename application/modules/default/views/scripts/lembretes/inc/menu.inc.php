@@ -5,7 +5,7 @@
 	<!-- início: conteúdo principal #container -->
 	<div id="container">
 
-		<!-- início: navegação local #qm0 -->
+		<!-- início: navega&ccedil;&atilde;o local #qm0 -->
 		<script type="text/javascript">
 		function layout_fluido()
 		{
@@ -34,7 +34,7 @@
 		</style>
 
 		<?php
-		// pega a variável com o id do pronac via get
+		// pega a vari&aacute;vel com o id do pronac via get
 		$getPronac = isset($_GET['idPronac']) ? $_GET['idPronac'] : $_GET['pronac'];
 		?>
 
@@ -59,7 +59,7 @@
 			});
 		});
 		</script>
-		<!-- final: navegação local #qm0 -->
+		<!-- final: navega&ccedil;&atilde;o local #qm0 -->
 	</div>
 </div>
 <!-- ========== FIM MENU ========== -->

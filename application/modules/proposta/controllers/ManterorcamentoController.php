@@ -19,7 +19,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
     {
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura";
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura";
 
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $PermissoesGrupo = array();
@@ -53,7 +53,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
         } else {
             if ($idPreProjeto != '0') {
-                parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necess&aacute;rio informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
         $this->idUsuario = !empty($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
@@ -137,7 +137,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
     }
 
     /**
-     * altera ordem de apresentação das etapas no orcamento
+     * altera ordem de apresenta&ccedil;&atilde;o das etapas no orcamento
      *
      * @access public
      * @return void

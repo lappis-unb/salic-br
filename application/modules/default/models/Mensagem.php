@@ -12,7 +12,7 @@ class Mensagem extends GenericModel{
     protected $_schema = 'SAC';
 
     /**
-     * Salva a informaç&atilde;o de para quais dispositivos foram enviadas as mensagens no banco de dados.
+     * Salva a informa&ccedil;&atilde;o de para quais dispositivos foram enviadas as mensagens no banco de dados.
      *
      * @param Zend_Db_Table_Row_Abstract $messageRow
      */

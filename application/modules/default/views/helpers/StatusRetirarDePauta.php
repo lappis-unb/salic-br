@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.views.helpers
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2012 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class Zend_View_Helper_StatusRetirarDePauta
 	 */
 	function statusRetirarDePauta($idPronac, $idAgenteEnvio = null)
 	{
-		// busca as solicitações ativas
+		// busca as solicita&ccedil;&otilde;es ativas
 		$tbRetirarDePauta = new tbRetirarDePauta();
 		if (empty($idAgenteEnvio))
 		{
@@ -33,6 +33,6 @@ class Zend_View_Helper_StatusRetirarDePauta
 		$order = array('idRetirarDePauta DESC');
 
 		return $tbRetirarDePauta->buscarDados($where, $order)->current();
-	} // fecha método statusRetirarDePauta()
+	} // fecha m&eacute;todo statusRetirarDePauta()
 
 } // fecha class

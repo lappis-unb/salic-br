@@ -219,15 +219,15 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         # definindo os criterios de regionalizacao
         if (!empty($ufRegionalizacaoPlanilha)) { # sudeste e sul
             $calcDivugacao = 0.2;     # custo de divulgacao 20%
-            $calcCaptacao = 0.1;      # custo para captação 10%
-            $limiteCaptacao = 100000; # valor máximo para captação 100.000,00
+            $calcCaptacao = 0.1;      # custo para capta&ccedil;&atilde;o 10%
+            $limiteCaptacao = 100000; # valor m&aacute;ximo para capta&ccedil;&atilde;o 100.000,00
 
             $idUf = $ufRegionalizacaoPlanilha->idUF;
             $idMunicipio = $ufRegionalizacaoPlanilha->idMunicipio;
-        } else { # demais regiões
-            $calcDivugacao = 0.3;     # custo de divulgação 30%
-            $calcCaptacao = 0.15;     # custo para captação 15%
-            $limiteCaptacao = 150000; # valor máximo para captação 150.000,00
+        } else { # demais regi&otilde;es
+            $calcDivugacao = 0.3;     # custo de divulga&ccedil;&atilde;o 30%
+            $calcCaptacao = 0.15;     # custo para capta&ccedil;&atilde;o 15%
+            $limiteCaptacao = 150000; # valor m&aacute;ximo para capta&ccedil;&atilde;o 150.000,00
 
             $arrBusca['idprojeto'] = $idPreProjeto;
             $arrBusca['stabrangencia'] = 1;
@@ -356,7 +356,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         if (empty($idPreProjeto))
             return false;
 
-        # se não passar o metakey, tenta recuperar a tabela do objeto
+        # se n&atilde;o passar o metakey, tenta recuperar a tabela do objeto
         if (empty($metakey))
             $metakey = str_replace('dbo.', '', $object->getTableName());
 
@@ -379,7 +379,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         $serializado = $this->serializarObjeto($object, $where);
 
-        # se não passar o metakey, salva o nome da tabela do objeto
+        # se n&atilde;o passar o metakey, salva o nome da tabela do objeto
         if (empty($metakey))
             $metakey = str_replace('dbo.', '', $object->getTableName());
 
@@ -429,7 +429,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         # recupera e verifica se os itens existem
         $itens = $this->unserializarObjeto($object, $idPreProjeto, $metakey);
 
-        # se não tiver itens, não eh pra restaurar
+        # se n&atilde;o tiver itens, n&atilde;o eh pra restaurar
         if (empty($itens) || !is_array($itens))
             return false;
 
@@ -485,7 +485,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         $PPM = new Proposta_Model_DbTable_PreProjetoMeta();
 
-        # Recupera informações da proposta atual
+        # Recupera informa&ccedil;&otilde;es da proposta atual
         $proposta = $this->_proposta;
 
 
@@ -571,7 +571,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
             $this->view->ResponsabilidadeSocialSalvo = true;
         }
 
-        # detalhes técnicos
+        # detalhes t&eacute;cnicos
         $metadetalhesTecnicos = $PPM->buscarMeta($idPreProjeto, 'alterarprojeto_detalhestecnicos');
         if (!$metadetalhesTecnicos) {
 
@@ -621,7 +621,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         $TPDD = new Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto();
         $detalhamentoProdutos = $this->unserializarObjeto($TPDD, $idPreProjeto, 'alterarprojeto_tbdetalhaplanodistribuicao');
 
-        # se não tiver itens, não eh pra restaurar
+        # se n&atilde;o tiver itens, n&atilde;o eh pra restaurar
         if (empty($produtos) || !is_array($produtos))
             return false;
 

@@ -5,25 +5,25 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
-        // máscaras dos campos
+        // m&aacute;scaras dos campos
         $("#dtInicio, #dtFinal").keyup(function () {
             mascara(this, format_data); // data
         });
 
-        // id dos campos que utilizarão o calendário
+        // id dos campos que utilizar&atilde;o o calend&aacute;rio
         $("#dtInicio, #dtFinal").datepicker();
 
-	// adicionando funcionalidade de excluir pedido de prorrogação
+	// adicionando funcionalidade de excluir pedido de prorroga&ccedil;&atilde;o
 	$("#btn_exclusao").click(function(){
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente excluir o pedido de prorrogação?');
+            $("#alerta").html('Deseja realmente excluir o pedido de prorroga&ccedil;&atilde;o?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width: 380,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -75,15 +75,15 @@ if ($this->camposObrigatoriosException) :
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second"><a href="<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'index')); ?>" title="Lista de Solitações de Item">Lista de Pedidos de Prorrogação</a></li>
-        <li class="last">Analisar Pedido de Prorrogação</li>
+        <li class="second"><a href="<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'index')); ?>" title="Lista de Solita&ccedil;&otilde;es de Item">Lista de Pedidos de Prorroga&ccedil;&atilde;o</a></li>
+        <li class="last">Analisar Pedido de Prorroga&ccedil;&atilde;o</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
 <div id="titulo">
-    <div>Analisar Pedido de Prorrogação
+    <div>Analisar Pedido de Prorroga&ccedil;&atilde;o
       <span class="voltar"><a href="<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'index')); ?>">Voltar</a></span>
     </div>
 </div>
@@ -94,7 +94,7 @@ if ($this->camposObrigatoriosException) :
         <table class="tabela">
             <?php foreach ($this->dados as $dp) { ?>
                 <tr>
-                    <th colspan="2">Identificação</th>
+                    <th colspan="2">Identifica&ccedil;&atilde;o</th>
                 </tr>
                 <tr>
                     <td class="destacar bold" width="20%">Pronac</td>
@@ -108,13 +108,13 @@ if ($this->camposObrigatoriosException) :
 
             <table class="tabela">
                 <tr>
-                    <th colspan="4">Período de Captação Solicitado</th>
+                    <th colspan="4">Período de Capta&ccedil;&atilde;o Solicitado</th>
                 </tr>
                 <tr>
                     <td class="destacar bold" align="center" width="25%">Dt.Pedido</td>
                     <td class="destacar bold" align="center" width="25%">Dt.Início <span style="color: red;">*</span></td>
                     <td class="destacar bold" align="center" width="25%">Dt.Final <span style="color: red;">*</span></td>
-                    <td class="destacar bold" align="center" width="25%">Análise <span style="color: red;">*</span></td>
+                    <td class="destacar bold" align="center" width="25%">An&aacute;lise <span style="color: red;">*</span></td>
                 </tr>
                 <tr>
                     <td align="center"><?php echo Data::tratarDataZend($dp->DtPedido, 'Brasileira'); ?></td>
@@ -136,7 +136,7 @@ if ($this->camposObrigatoriosException) :
                             <input id="enviarCoordenador" type="radio" name="opcaoDeferimento" value="<?php echo ProrrogacaoModel::ENCAMINHAR_COORDENADOR; ?>">
                             <label for="enviarCoordenador">Deseja enviar para o coordenador</label><br/>
                             <input id="aprovarSemCoordenador" type="radio" name="opcaoDeferimento" value="<?php echo ProrrogacaoModel::PUBLICAR_DOU; ?>">
-                            <label for="aprovarSemCoordenador">Deseja Aprovar sem a supervisão do coordenador</label>
+                            <label for="aprovarSemCoordenador">Deseja Aprovar sem a supervis&atilde;o do coordenador</label>
                         </div>
                     </td>
                 </tr>
@@ -151,7 +151,7 @@ if ($this->camposObrigatoriosException) :
                         <textarea name="justificativa" id="justificativa" cols="" rows="3" style="width: 99%;" class="textarea_simples"><?php echo $this->justificativa; ?></textarea>
                         <input type="hidden" name="idProrrogacao" value="<?php echo $dp->idProrrogacao; ?>">
                         <input type="hidden" name="tpAcao" id="tpAcao" value="">
-                        <br clear="all" /><span style="color: #FF9999; font-size: 11px; float: left;">Limite máximo de 250 caracteres</span>
+                        <br clear="all" /><span style="color: #FF9999; font-size: 11px; float: left;">Limite m&aacute;ximo de 250 caracteres</span>
                     </td>
                 </tr>
             <?php } ?>
@@ -166,7 +166,7 @@ if ($this->camposObrigatoriosException) :
     <br clear="all" />
 
 </div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

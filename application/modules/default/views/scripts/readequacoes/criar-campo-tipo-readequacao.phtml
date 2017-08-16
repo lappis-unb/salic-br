@@ -9,7 +9,7 @@
             //$("#descSolicitacao").numeric();
         });
         function validarAgenciaBancaria(nrAgencia){
-            // faz a verificação do agente via post
+            // faz a verifica&ccedil;&atilde;o do agente via post
             $.ajax({
                 type: "GET",
 //                dataType: 'json',
@@ -42,7 +42,7 @@
                     $("#descSolicitacao").val("");
                     $('#agenciaResultado').html("");
                     $("#msgAlerta").dialog("destroy");
-                    $("#msgAlerta").html('Falha na recuperação dos dados!');
+                    $("#msgAlerta").html('Falha na recupera&ccedil;&atilde;o dos dados!');
                     $("#msgAlerta").dialog({
                         resizable: false,
                         title: 'Alerta!',
@@ -78,7 +78,7 @@
             cpfcnpj = cpfcnpj.replace("/","");
             var cpfcnpj = cpfcnpj.replace("-","");
 
-            // faz a verificação do agente via post
+            // faz a verifica&ccedil;&atilde;o do agente via post
             $.ajax({
                 type: "POST",
                 dataType: 'json',
@@ -91,7 +91,7 @@
                         $('#nmAgenteCadastrado').html(data[0]['agente']['Nome']);
                     } else {
                         $("#msgAlerta").dialog("destroy");
-                        $("#msgAlerta").html('CPF ou CNPJ inválido.');
+                        $("#msgAlerta").html('CPF ou CNPJ inv&aacute;lido.');
                         $("#msgAlerta").dialog({
                             resizable: false,
                             title: 'Alerta!',
@@ -113,7 +113,7 @@
                     $("#descSolicitacao").val("");
                     $('#nmAgenteCadastrado').html("");
                     $("#msgAlerta").dialog("destroy");
-                    $("#msgAlerta").html('Falha na recuperação dos dados!');
+                    $("#msgAlerta").html('Falha na recupera&ccedil;&atilde;o dos dados!');
                     $("#msgAlerta").dialog({
                         resizable: false,
                         title: 'Alerta!',
@@ -174,23 +174,23 @@
     $(document).ready(function(){
         var texto = '';
         <?php if($this->tipoReadequacao == 3){ ?>
-        texto = 'Alteração de Razão Social';
+        texto = 'Altera&ccedil;&atilde;o de Raz&atilde;o Social';
         <?php } else if($this->tipoReadequacao == 4){ ?>
-        texto = 'Nova agência bancária';
+        texto = 'Nova agência banc&aacute;ria';
         <?php } else if($this->tipoReadequacao == 5){ ?>
         texto = 'Sinopse da Obra';
         <?php } else if($this->tipoReadequacao == 6){ ?>
         texto = 'Impacto Ambiental';
         <?php } else if($this->tipoReadequacao == 7){ ?>
-        texto = 'Especificação Técnica';
+        texto = 'Especifica&ccedil;&atilde;o T&eacute;cnica';
         <?php } else if($this->tipoReadequacao == 8){ ?>
-        texto = 'Estratégia de Execução';
+        texto = 'Estrat&eacute;gia de Execu&ccedil;&atilde;o';
         <?php } else if($this->tipoReadequacao == 10){ ?>
-        texto = 'Informe um CPF ou CNPJ válido e cadastrado no sistema SALIC.';
+        texto = 'Informe um CPF ou CNPJ v&aacute;lido e cadastrado no sistema SALIC.';
         <?php } else if($this->tipoReadequacao == 12){ ?>
         texto = 'Nome do Projeto';
         <?php } else if($this->tipoReadequacao == 13){ ?>
-        texto = 'Nova data final de execução';
+        texto = 'Nova data final de execu&ccedil;&atilde;o';
         <?php } else if($this->tipoReadequacao == 15){ ?>
         texto = 'Síntese do Projeto';
         <?php } else if($this->tipoReadequacao == 16){ ?>
@@ -200,11 +200,11 @@
         <?php } else if($this->tipoReadequacao == 18){ ?>
         texto = 'Acessibilidade';
         <?php } else if($this->tipoReadequacao == 19){ ?>
-        texto = 'Democratização de Acesso';
+        texto = 'Democratiza&ccedil;&atilde;o de Acesso';
         <?php } else if($this->tipoReadequacao == 20){ ?>
         texto = 'Etapas de Trabalho';
         <?php } else if($this->tipoReadequacao == 21){ ?>
-        texto = 'Ficha Técnica';
+        texto = 'Ficha T&eacute;cnica';
         <?php } ?>
         $("#campoCriadoTipoReadequacao").append('<span class="red-text" id="textAjuda"></span>');
         $("#textAjuda").html(texto);

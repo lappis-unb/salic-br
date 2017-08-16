@@ -122,7 +122,7 @@
     <!-- ======= PLANILHA DE CUSTOSTO ========= -->
     <table class="tabela">
             <tr>
-                    <th colspan="12" class="center">Planilha de Orçamento Sugerido</th>
+                    <th colspan="12" class="center">Planilha de Or&ccedil;amento Sugerido</th>
             </tr>
 
             <?php
@@ -147,7 +147,7 @@
             $totalVal_03_UF = (float) 0;
 
             // arrays que servem para armazenar os elementos, e, posteriormente,
-            // verificar se o elemento já encontra-se no array e evitar a sua "impressão" duplicada na tela
+            // verificar se o elemento j&aacute; encontra-se no array e evitar a sua "impress&atilde;o" duplicada na tela
             $arrayIncentivo = array();
             $arrayProdutos  = array();
             $arrayEtapas    = array();
@@ -165,8 +165,8 @@
              * Percorre todos os produtos
              */
 
-                    // variáveis que servirão para fazer comparação dos itens já existentes,
-                    // e, evitar "imprimir" um iten já "impresso"
+                    // vari&aacute;veis que servir&atilde;o para fazer compara&ccedil;&atilde;o dos itens j&aacute; existentes,
+                    // e, evitar "imprimir" um iten j&aacute; "impresso"
             $comparadorIncentivo = $resposta->idFonte;
             $comparadorProdutos  = $resposta->idFonte . $resposta->idProduto;
             $comparadorEtapas    = $resposta->idFonte . $resposta->idProduto . $resposta->idPlanilhaEtapa;
@@ -241,7 +241,7 @@
                             <th>Unidade</th>
                             <th>Qtde</th>
                             <th>Ocor.</th>
-                            <th width="12%">Vl. Unitário</th>
+                            <th width="12%">Vl. Unit&aacute;rio</th>
                             <th width="12%">Vl. Solicitado</th>
                             <th width="12%">Vl. Sugerido do Parecerista</th>
                             <th>Justificativa do Parecerista</th>
@@ -255,7 +255,7 @@
                     <?php
                     $totalItens = 0;
 
-                    $i = $resposta->idPlanilhaProjeto; // criará id único
+                    $i = $resposta->idPlanilhaProjeto; // criar&aacute; id único
                     ?>
 
                     <tr onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);" onblur="out_tr(this);" onclick="click_tr(this);" onkeypress="click_tr(this);"

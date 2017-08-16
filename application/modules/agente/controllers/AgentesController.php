@@ -260,7 +260,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
             if (!$dados) {
-                parent::message("Agente não encontrado!", "agente/agentes/buscaragente", "ALERT");
+                parent::message("Agente n&atilde;o encontrado!", "agente/agentes/buscaragente", "ALERT");
             }
 
             $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
@@ -2538,13 +2538,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             try {
                 // validacao dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigatórios n&atilde;o informados:<br /><br />é necessário informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigatórios n&atilde;o informados:<br /><br />&eacute; necess&aacute;rio informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) { // valida cnpj/cpf
-                    throw new Exception("O CPF/CNPJ informado é inválido!");
+                    throw new Exception("O CPF/CNPJ informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) { // valida cpf
-                    throw new Exception("O CPF informado é inválido!");
+                    throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) { // valida cnpj
-                    throw new Exception("O CNPJ informado é inválido!");
+                    throw new Exception("O CNPJ informado &eacute; inv&aacute;lido!");
                 } else {
                     // redireciona para a pagina com a busca dos dados com paginacao
                     $this->_redirect("agente/agentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
@@ -2577,7 +2577,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         if (!$buscar) {
             // redireciona para a pagina de cadastro de agentes, e, exibe uma notificacao relativa ao cadastro
-            parent::message("Agente n&atilde;o cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            parent::message("Agente n&atilde;o cadastrado!<br /><br />Por favor, cadastre o mesmo no formul&aacute;rio abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
             // ========== INICIO PAGINACAO ==========
             // criando a paginacao

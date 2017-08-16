@@ -121,7 +121,7 @@
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Início</a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index'), '', true); ?>" title="Recurso">Recurso</a></li>
-        <li>Aguardando Análise</li>
+        <li>Aguardando An&aacute;lise</li>
         <li class="last">Avalia&ccedil;&atilde;o de Recurso</li>
     </ul>
 </div>
@@ -153,7 +153,7 @@
                 <th colspan="4">SOLICITA&Ccedil;&Atilde;O</th>
             </tr>
             <tr>
-                <td colspan="4" class="destacar bold" align="center">Descrição do Recurso</td>
+                <td colspan="4" class="destacar bold" align="center">Descri&ccedil;&atilde;o do Recurso</td>
             </tr>
             <tr>
                 <td colspan="4"><?php echo $this->recurso->dsSolicitacaoRecurso; ?></td>
@@ -161,7 +161,7 @@
             <tr>
                 <td class="destacar bold w150" align="center">Tipo do Recurso</td>
                 <td><?php echo $this->recurso->tpRecursoDesc; ?></td>
-                <td class="destacar bold w150" align="center">Tipo do Solicitação</td>
+                <td class="destacar bold w150" align="center">Tipo do Solicita&ccedil;&atilde;o</td>
                 <td><?php echo $this->recurso->tpSolicitacaoDesc; ?></td>
             </tr>
         </table>
@@ -173,9 +173,9 @@
             </tr>
             <tr>
                 <td class="destacar bold w150" align="center">Entidade Vinculada</td>
-                <td><?php echo ($this->statusDeAvaliacao[0]) ? $this->statusDeAvaliacao[0]->ParecerFavoravel : 'Não avaliado'; ?></td>
+                <td><?php echo ($this->statusDeAvaliacao[0]) ? $this->statusDeAvaliacao[0]->ParecerFavoravel : 'N&atilde;o avaliado'; ?></td>
                 <td class="destacar bold w100" align="center">CNIC</td>
-                <td><?php echo ($this->statusDeAvaliacao[1]) ? $this->statusDeAvaliacao[1]->ParecerFavoravel : 'Não avaliado'; ?></td>
+                <td><?php echo ($this->statusDeAvaliacao[1]) ? $this->statusDeAvaliacao[1]->ParecerFavoravel : 'N&atilde;o avaliado'; ?></td>
             </tr>
         </table>
         <?php } ?>
@@ -217,7 +217,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" width="130px;">Destinatário: <span class="asterisco_dinamico sumir">*</span></td>
+                <td class="destacar bold" width="130px;">Destinat&aacute;rio: <span class="asterisco_dinamico sumir">*</span></td>
                 <td>
                     <select name="destinatario" id="destinatario" class="select_simples" disabled="disabled">
                         <option value=""> - Selecione - </option>
@@ -236,7 +236,7 @@
     <br clear="all" />
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

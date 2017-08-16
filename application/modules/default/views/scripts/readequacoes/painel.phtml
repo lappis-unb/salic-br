@@ -18,14 +18,14 @@
                 pronacSelecionado = $('#pronacSelecionado').val();
 
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente finalizar a análise da readequação?');
+            $("#alerta").html('Deseja realmente finalizar a an&aacute;lise da readequa&ccedil;&atilde;o?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width: 380,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -41,7 +41,7 @@
             var id = $(this).attr('idReadequacao');
 
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente devolver a readequação para uma nova análise?');
+            $("#alerta").html('Deseja realmente devolver a readequa&ccedil;&atilde;o para uma nova an&aacute;lise?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -49,7 +49,7 @@
                 height: 180,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -84,7 +84,7 @@
 
             if(componente==''){
                 $("#alerta").dialog("destroy");
-                $("#alerta").html('Favor selecionar o componente da comissão!');
+                $("#alerta").html('Favor selecionar o componente da comiss&atilde;o!');
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -100,14 +100,14 @@
 
             } else {
                 $("#alerta").dialog("destroy");
-                $("#alerta").html('Deseja realmente enviar a readequação para a análise da CNIC?<br /><br />Ao enviar a readequação será removida do seu painel.');
+                $("#alerta").html('Deseja realmente enviar a readequa&ccedil;&atilde;o para a an&aacute;lise da CNIC?<br /><br />Ao enviar a readequa&ccedil;&atilde;o ser&aacute; removida do seu painel.');
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
                     width: 430,
                     modal: true,
                     buttons : {
-                        'Não' : function(){
+                        'N&atilde;o' : function(){
                             $(this).dialog('close');
                         },
                         'Sim' : function(){
@@ -131,7 +131,7 @@
                                         $('.ui-dialog-titlebar-close').remove();
                                         window.setTimeout('location.reload()', 1000);
                                     } else {
-                                        alertaModal("Não foi possível finalizar a readequação.");
+                                        alertaModal("N&atilde;o foi possível finalizar a readequa&ccedil;&atilde;o.");
                                     }
                                 },
                                 dataType : 'json'
@@ -151,10 +151,10 @@
 
 <?php
 $situacoes = array(
-    'aguardando_distribuicao' => 'Aguardando distribuição',
-    'em_analise' => 'Em análise',
+    'aguardando_distribuicao' => 'Aguardando distribui&ccedil;&atilde;o',
+    'em_analise' => 'Em an&aacute;lise',
     'analisados' => 'Analisados',
-    'aguardando_publicacao' => 'Aguardando publicação',
+    'aguardando_publicacao' => 'Aguardando publica&ccedil;&atilde;o',
 );
 ?>
 
@@ -204,7 +204,7 @@ $situacoes = array(
     </form>
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <table class="tabela">
         <tbody>
             <tr>
@@ -229,12 +229,12 @@ $situacoes = array(
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac; ?>'">
                     <?php endif; ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -252,7 +252,7 @@ $situacoes = array(
             echo " de ". $this->paginacao['total']. " Projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php } ?>
 
 
@@ -272,7 +272,7 @@ $situacoes = array(
 
         <?php if(count($this->dados)>0): ?>
 
-            <!-- ============ PAGINAÇÃO ============ -->
+            <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
             <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
             <center>
                 <?php
@@ -308,12 +308,12 @@ $situacoes = array(
                                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                                            onclick="location.href='<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac; ?>'">
                                 <?php endif; ?>
-                                Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                                P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                                     <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                                     <?php endfor; ?>
                                 </select>
-                                &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                                &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                                 <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                                 <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                                 <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -324,7 +324,7 @@ $situacoes = array(
                     </tr>
                 </tbody>
             </table>
-            <!-- ========== FIM PAGINAÇÃO ========== -->
+            <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
         <?php }  ?>
         <?php endif; ?>
 
@@ -354,7 +354,7 @@ $situacoes = array(
 </div>
 
 <div id="modalConfirmacao" class="sumir"></div>
-<div id="modalAvaliacao" class="sumir" title="Avalição de Readequação">
+<div id="modalAvaliacao" class="sumir" title="Avali&ccedil;&atilde;o de Readequa&ccedil;&atilde;o">
     <form name="formencaminhar" action="<?php echo $this->baseUrl(); ?>/verificarreadequacaodeprojeto/encaminhacoordacompanhamento" method="post">
         <table class="tabela">
             <tr>
@@ -399,7 +399,7 @@ $situacoes = array(
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" width="130px;">Destinatário:</td>
+                <td class="destacar bold" width="130px;">Destinat&aacute;rio:</td>
                 <td>
                     <select name="destinatario" id="destinatario" class="select_simples" disabled="disabled" style="width:100%;"></select>
                 </td>
@@ -407,7 +407,7 @@ $situacoes = array(
         </table>
     </form>
 </div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

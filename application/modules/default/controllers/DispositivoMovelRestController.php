@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Registro do dispositivo para envio de notificações.
+ * Registro do dispositivo para envio de notifica&ccedil;&otilde;es.
  * 
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2016 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 class DispositivoMovelRestController extends Minc_Controller_AbstractRest{
     
@@ -28,7 +28,7 @@ class DispositivoMovelRestController extends Minc_Controller_AbstractRest{
         $modelDispositivoMovel = new Dispositivomovel();
         $dispositivo = $modelDispositivoMovel->salvar($registrationId, $cpf);
 
-        # Resposta da autenticação.
+        # Resposta da autentica&ccedil;&atilde;o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($dispositivo));
     }
     

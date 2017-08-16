@@ -133,7 +133,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu vertical
             var idEtapa   = $(this).attr('idEtapa');
             var idItem    = $(this).attr('idPlanilhaItem');
             var nomeEtapa = $(this).attr('etapa');
-            $("#form" + idplanilhaaprovacao).each(function() // necessário para resetar o formulário, pois, quando a modal ï¿½ fechada o mesmo não é resetado
+            $("#form" + idplanilhaaprovacao).each(function() // necess&aacute;rio para resetar o formul&aacute;rio, pois, quando a modal ï¿½ fechada o mesmo n&atilde;o &eacute; resetado
             {
                 this.reset();
                 calcular_planilha_projeto(idplanilhaaprovacao); // recalcula o valor total do produto
@@ -214,7 +214,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu vertical
             
             if(valorEtapa != idEtapa)
             {
-                $("#mensagemAlerta").html("Este item será movido para a etapa de " + txtEtapa + "!");
+                $("#mensagemAlerta").html("Este item ser&aacute; movido para a etapa de " + txtEtapa + "!");
                 abreAlerta();
             }
         });
@@ -316,7 +316,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu vertical
                     if($.trim(justificativa) == ''){
                         $("#error").html('O campo justificativa &eacute; obrigat&oacute;rio!');
                         $("#error").dialog('open');
-                        //msgErro.html('Campo obrigatório não preenchido');
+                        //msgErro.html('Campo obrigatório n&atilde;o preenchido');
                         return false;
                     }
                     

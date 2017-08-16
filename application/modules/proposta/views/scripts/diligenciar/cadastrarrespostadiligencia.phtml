@@ -53,7 +53,7 @@
             </tr>
         <?php } ?>
         <tr>
-            <td colspan="3" class="destacar" style="text-align: center; text-transform: uppercase;">SOLICITAÇÃO</td>
+            <td colspan="3" class="destacar" style="text-align: center; text-transform: uppercase;">SOLICITA&ccedil;&atilde;O</td>
         </tr>
         <tr>
             <td colspan="3"><pre class="tag_pre"><?php echo strip_tags($this->solicitacao);?></pre></td>
@@ -85,7 +85,7 @@
             <tr>
                 <td class="destacar bold" align="center">Arquivo</td>
                 <td class="destacar bold" align="center">Dt.Envio</td>
-                <td class="destacar bold" align="center">Ação</td>
+                <td class="destacar bold" align="center">A&ccedil;&atilde;o</td>
             </tr>
             <?php foreach ($this->arquivos as $arquivos) { ?>
             <tr id="linha<?php echo $arquivos->idArquivo; ?>">
@@ -209,7 +209,7 @@
             height:160,
             modal: true,
             buttons : {
-                'Não' : function(){
+                'N&atilde;o' : function(){
                     $("#pergunta").dialog('close');
                 },
                 'Sim' : function(){
@@ -238,7 +238,7 @@
                                 $('.ui-dialog-titlebar-close').remove();
                                 window.setTimeout('$("#alerta").dialog("close")', 1000);
                             } else {
-                                alertaModal("Não foi possível finalizar o relatório.");
+                                alertaModal("N&atilde;o foi possível finalizar o relatório.");
                             }
                         },
                         dataType : 'json'
@@ -286,7 +286,7 @@
             <tbody>
                 <tr class="fundo">
                     <td class="" colspan="2" align="left">
-                        Enviar anexo (tamanho máximo de 5 MB)
+                        Enviar anexo (tamanho m&aacute;ximo de 5 MB)
                         <br/>
                         Tipos de arquivos permitidos:
                         <font color="red">PDF</font>

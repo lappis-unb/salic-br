@@ -206,7 +206,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 //        return $db->fetchAll($select);
-        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanoDistribuicaoProduto");
+        throw new Exception("M&eacute;todo transferido para: Proposta_Model_DbTable_PlanoDistribuicaoProduto");
         return $db->fetchAll($sql);
 
     }
@@ -226,7 +226,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanilhaProposta");
+        throw new Exception("M&eacute;todo transferido para: Proposta_Model_DbTable_PlanilhaProposta");
 
         return $db->fetchAll($sql);
 
@@ -241,7 +241,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->where('tpp.idProjeto = ?', $idPreProjeto)
             ->limit(1)
             ;
-        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanilhaProposta");
+        throw new Exception("M&eacute;todo transferido para: Proposta_Model_DbTable_PlanilhaProposta");
 
         return $db->fetchAll($sql);
     }
@@ -290,13 +290,13 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarEtapasProdutos($idPreProjeto)
     {
-        throw new Exception('Método transferido para : Proposta_Model_DbTable_PreProjeto');
+        throw new Exception('M&eacute;todo transferido para : Proposta_Model_DbTable_PreProjeto');
 
     }
 
     public function listarEtapasProdutos($idPreProjeto)
     {
-        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
     }
 
     public static function buscarEtapasProdutosPlanilha($idPreProjeto) {
@@ -371,7 +371,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
         //die($sql);
         return $db->fetchAll($sql);
     }
@@ -396,7 +396,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
-        throw new Exception("Método transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
+        throw new Exception("M&eacute;todo transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
         
         return $db->fetchAll($sql);
     }
@@ -425,7 +425,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
-        throw new Exception("Método transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
+        throw new Exception("M&eacute;todo transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
         return $db->fetchAll($sql);
     }
 
@@ -494,12 +494,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      * @param bool $idItem
      * @access public
      * @return void
-     * @todo método transferido para Proposta_Model_DbtTable_PreProjeto
-     * @deprecated método transferido para Proposta_Model_DbtTable_PreProjeto'
+     * @todo m&eacute;todo transferido para Proposta_Model_DbtTable_PreProjeto
+     * @deprecated m&eacute;todo transferido para Proposta_Model_DbtTable_PreProjeto'
      */
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
-        throw new Exception('método transferido para Proposta_Model_DbtTable_PreProjeto');
+        throw new Exception('m&eacute;todo transferido para Proposta_Model_DbtTable_PreProjeto');
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -647,7 +647,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         //$sql .= " order by 2 asc";
 		
-        throw new Exception('Método transferido para tbItensPlanilhaProduto');
+        throw new Exception('M&eacute;todo transferido para tbItensPlanilhaProduto');
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -660,7 +660,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 on Verificacao.idTipo = Tipo.idTipo
                 where Tipo.idTipo = 5";
 
-        throw new Exception('Método transferido para Proposta_Model_DbTable_Verificacao');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_Verificacao');
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -691,7 +691,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaUnidade');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_TbPlanilhaUnidade');
         return $db->fetchAll($sql);
     }
 
@@ -728,7 +728,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     public function listarProdutos($idPreProjeto)
     {
         echo '<pre>';
-        var_dump ('Método transferido para Proposta Model DbTable Preprojeto');
+        var_dump ('M&eacute;todo transferido para Proposta Model DbTable Preprojeto');
         exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -841,7 +841,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         $sql.= " ORDER BY tpe.Descricao ";
 
-        throw new Exception('Método transferido para tbplanilhaproposta');
+        throw new Exception('M&eacute;todo transferido para tbplanilhaproposta');
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -901,7 +901,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     public function listarItensCustosAdministrativos($idPreProjeto, $tipoCusto)
     {
         echo '<pre>';
-        var_dump ('Método transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
+        var_dump ('M&eacute;todo transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
         exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -970,7 +970,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         //$sql = "SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa
             //FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'A' AND idPlanilhaEtapa <> 6";
 
-        throw new Exception('Método transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
         return $db->fetchAll($sql);
     }
 
@@ -991,7 +991,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
             ;
 
-        throw new Exception('Método transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
         return $db->fetchAll($sql);
     }
 

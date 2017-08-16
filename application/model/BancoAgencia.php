@@ -2,7 +2,7 @@
 /**
  * Description of bancoAgencia
  *
- * @author Fernão Lopes
+ * @author Fern&atilde;o Lopes
  */
 
 class BancoAgencia extends GenericModel {

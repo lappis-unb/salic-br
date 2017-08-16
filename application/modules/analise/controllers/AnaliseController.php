@@ -31,7 +31,7 @@ class Analise_AnaliseController extends Analise_GenericController
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
         if (isset($auth->getIdentity()->usu_codigo)) {
             // LEMBRAR :
-            // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
+            // $this->grupoAtivo->codOrgao  => Org&atilde;o logado   ==== Projetos.Orgao
             $this->codGrupo = $GrupoAtivo->codGrupo;
             $this->codOrgao = $GrupoAtivo->codOrgao;
             $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : null;
@@ -267,7 +267,7 @@ class Analise_AnaliseController extends Analise_GenericController
             # alterar a situacao do projeto
             $tbProjetos = new Projetos();
 
-            # verificar se o projeto já possui avaliador
+            # verificar se o projeto j&aacute; possui avaliador
             $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
             $avaliacao = $tbAvaliacao->buscarUltimaAvaliacao($idPronac);
 
@@ -373,7 +373,7 @@ class Analise_AnaliseController extends Analise_GenericController
             # $d->Email =   'salicweb@gmail.com';
             $email = trim(strtolower($d->Email));
             $mens = '<b>Pronac: ' . $d->pronac . ' - ' . $d->NomeProjeto . '<br>Proponente: ' . $d->Destinatario . '<br> </b>' . $Mensagem;
-            $assunto = 'Pronac:  ' . $d->pronac . ' - Avaliação adequação do projeto';
+            $assunto = 'Pronac:  ' . $d->pronac . ' - Avalia&ccedil;&atilde;o adequa&ccedil;&atilde;o do projeto';
 
             $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens);
 

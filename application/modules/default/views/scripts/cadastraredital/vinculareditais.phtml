@@ -5,7 +5,7 @@
 
 function incluir(){
 
-    document.getElementById("vincular").title = "Confirmação";
+    document.getElementById("vincular").title = "Confirma&ccedil;&atilde;o";
 
 	// modal com os ddos do dirigente
 	$("#vincular").dialog("destroy");
@@ -36,7 +36,7 @@ function excluir(idEdital, idAgente, cpf){
 	$("#idEdit").val(idEdital);
 	$("#idAgen").val(idAgente);
 	$("#cpf2").val(cpf);
-    document.getElementById("excluir").title = "Confirmação";
+    document.getElementById("excluir").title = "Confirma&ccedil;&atilde;o";
 
     $("#excluir").dialog("destroy");
     $("#excluir").dialog
@@ -48,7 +48,7 @@ function excluir(idEdital, idAgente, cpf){
         ,
         buttons:
         {
-            'Não':function()
+            'N&atilde;o':function()
             {
                 $(this).dialog('close');
                 //return false;
@@ -126,7 +126,7 @@ function excluir(idEdital, idAgente, cpf){
 	        	$t[] = $bla['NrEdital'];
 	        	
 	        }        
-	        array_multisort($t, $teste); //Metodo de Ordenação
+	        array_multisort($t, $teste); //Metodo de Ordena&ccedil;&atilde;o
 	        if($teste){
 		       	foreach ($teste as $bla){?>
 			        <tr>
@@ -144,7 +144,7 @@ function excluir(idEdital, idAgente, cpf){
 	 <?php } else {?>
 	 <tr>
 			<br />
-				<div class="center" align="center">Não há Editais vinculados para <?php echo $this->nomeAvaliador; ?></div>
+				<div class="center" align="center">N&atilde;o h&aacute; Editais vinculados para <?php echo $this->nomeAvaliador; ?></div>
 			<br />	
 			<br />
 	</tr>	
@@ -157,9 +157,9 @@ function excluir(idEdital, idAgente, cpf){
    	</div>
 </div>
         <!-- ========== FIM CONTEÚDO ========== -->
-        <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+        <!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
         <div id="rodapeConteudo"><span></span></div>
-        <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+        <!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
         <br clear="all" />
 </div>

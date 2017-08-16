@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstração da tabela SAC.DBo.tbAplicativoSalic
+ * Abstra&ccedil;&atilde;o da tabela SAC.DBo.tbAplicativoSalic
  *
  * @author rafael.gloria@cultura.gov.br
  */
@@ -18,7 +18,7 @@ class Dispositivomovel extends MinC_Db_Table_Abstract
     }
     
     /**
-     * Salva o dispositivo que está conectado, salva o CPF do usuário e atualiza a última data de acesso.
+     * Salva o dispositivo que est&aacute; conectado, salva o CPF do usu&aacute;rio e atualiza a última data de acesso.
      *
      * @param string $registrationId
      * @param string $cpf Optional
@@ -77,7 +77,7 @@ class Dispositivomovel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Lista dispositivos que receberão a notificação.
+     * Lista dispositivos que receber&atilde;o a notifica&ccedil;&atilde;o.
      *
      * @param array $listaResultadoDispositivo
      * @return array
@@ -92,7 +92,7 @@ class Dispositivomovel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Lista de id dos dispositivos que receberão a notificação.
+     * Lista de id dos dispositivos que receber&atilde;o a notifica&ccedil;&atilde;o.
      *
      * @param array $listaResultadoDispositivo
      * @return array

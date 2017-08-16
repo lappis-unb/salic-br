@@ -11,7 +11,7 @@
  
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Finalizar Pagamento de Parecerista <span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span></div>
+    <div>Finalizar Pagamento de Parecerista <span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span></div>
 </div>
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 
@@ -43,12 +43,12 @@
                             <input class="btn_ultimo" id="btn_ultimo" type="button"
                                    onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'];?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                        P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                                 <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     </form>
@@ -64,7 +64,7 @@
             ?>
         </center>
 
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
         <table class="tabela">
             <tr>
@@ -115,11 +115,11 @@
                             <td style="text-align: right;"><?php echo $this->formatarReal($pa['vlTotalPagamento']); ?></td>
                         </tr>
                         <tr>
-                            <td colspan="2">Nº da ordem bancária:</td>
+                            <td colspan="2">Nº da ordem banc&aacute;ria:</td>
                             <td colspan="3"><?php echo $pa['nrOrdemBancaria']; ?></td>
                         </tr>
                         <tr>
-                            <td colspan="2">Data da ordem bancária:</td>
+                            <td colspan="2">Data da ordem banc&aacute;ria:</td>
                             <td colspan="3"><?php echo $pa['dtOrdemBancaria']; ?></td>
                         </tr>
                         <tr>
@@ -159,12 +159,12 @@
                                 <input class="btn_ultimo" id="btn_ultimo" type="button"
                                        onclick="location.href='<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'finalizar-pagamento-parecerista')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'];?>'">
                             <?php } ?>
-                            Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                            P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                                 <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                                     <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                                 <?php endfor; ?>
                             </select>
-                            &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                            &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                             <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                             <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         </form>
@@ -180,7 +180,7 @@
                 ?>
             </center>
 
-            <!-- ========== FIM PAGINAÇÃO ========== -->
+            <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
     <?php else: ?>
         <table class="tabela">
@@ -197,9 +197,9 @@
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 <div id="dialog"></div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />
 
 <script>
@@ -212,7 +212,7 @@
         
         var retorno = true;
         
-        //Mandar um alerta de confirmação
+        //Mandar um alerta de confirma&ccedil;&atilde;o
 //        return false;
 
         if(retorno){
@@ -226,9 +226,9 @@
                 draggable: false,
                 resizable: false,
                 closeOnEscape: false,
-                title: 'Confirmação',
+                title: 'Confirma&ccedil;&atilde;o',
                 buttons: { 
-                    Não:function() {
+                    N&atilde;o:function() {
                         $(this).dialog('close');
                     },
                     Sim:function() {

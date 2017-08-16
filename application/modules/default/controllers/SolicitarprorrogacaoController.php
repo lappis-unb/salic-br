@@ -7,13 +7,13 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
 
     private $idUsuario = 0;
     /**
-     * Reescreve o método init()
+     * Reescreve o m&eacute;todo init()
      * @access public
      * @param void
      * @return void
@@ -22,7 +22,7 @@ class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
         parent::perfil(4);
         
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
         $this->idUsuario = $auth->getIdentity()->IdUsuario;
         $idpronac = $this->_request->getParam("idpronac");
         if (strlen($idpronac) > 7) {
@@ -52,13 +52,13 @@ class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
         $dataI = explode('/', $_POST['dtInicio']);
         $dtI = checkdate($dataI[1], $dataI[0], $dataI[2]);
         if(!$dtI){
-            parent::message("Data Início inválida.", "solicitarprorrogacao", "ERROR");
+            parent::message("Data Início inv&aacute;lida.", "solicitarprorrogacao", "ERROR");
         }
 
         $dataF = explode('/', $_POST['dtFinal']);
         $dtF = checkdate($dataF[1], $dataF[0], $dataF[2]);
         if(!$dtF){
-            parent::message("Data Final inválida.", "solicitarprorrogacao", "ERROR");
+            parent::message("Data Final inv&aacute;lida.", "solicitarprorrogacao", "ERROR");
         }
 
         $pa = new paChecklistSolicitacaoProrrogacaoPrazo();
@@ -75,13 +75,13 @@ class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
 
             if(!empty($_FILES['arquivo']['tmp_name'])){
                 $arquivoNome     = $_FILES['arquivo']['name']; // nome
-                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome tempor&aacute;rio
                 $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
                 $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
                 if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens&atilde;o
+                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin&aacute;rio
                     $arquivoHash     = Upload::setHash($arquivoTemp); // hash
                 }
 
@@ -107,7 +107,7 @@ class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
                     'nmArquivo'         => $arquivoNome,
                     'sgExtensao'        => $arquivoExtensao,
                     'biArquivo'         => $data,
-                    'dsDocumento'       => 'Cadastro de Prorrogação de Prazo de Captação',
+                    'dsDocumento'       => 'Cadastro de Prorroga&ccedil;&atilde;o de Prazo de Capta&ccedil;&atilde;o',
                     'idPronac'          => $_POST['pronac'],
                     'idTipoDocumento'   => 27
                 );
@@ -135,7 +135,7 @@ class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
             $vw = new vwSolicitarProrrogacaoPrazoCaptacao();
             $vw->inserir($dados);
 
-            parent::message("Pedido de prorrogação enviado ao Ministério da Cultura com sucesso!", "consultardadosprojeto/index?idPronac=". Seguranca::encrypt($DadosProjeto->IdPRONAC), "CONFIRM");
+            parent::message("Pedido de prorroga&ccedil;&atilde;o enviado ao Minist&eacute;rio da Cultura com sucesso!", "consultardadosprojeto/index?idPronac=". Seguranca::encrypt($DadosProjeto->IdPRONAC), "CONFIRM");
         }
     }
 

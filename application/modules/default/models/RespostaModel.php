@@ -43,13 +43,13 @@ class RespostaModel
     public function validarCadastrar()
     {
         if (!$this->tipoResposta) {
-            throw new Exception('Tipo de resposta inválida para cadastro / edição de resposta.');
+            throw new Exception('Tipo de resposta inv&aacute;lida para cadastro / edi&ccedil;&atilde;o de resposta.');
         }
         if (!$this->questao) {
-            throw new Exception('Questão inválida para cadastro / edição de resposta.');
+            throw new Exception('Quest&atilde;o inv&aacute;lida para cadastro / edi&ccedil;&atilde;o de resposta.');
         }
         if (in_array($this->tipoResposta, array(self::RADIO, self::CHECKBOX)) && !$this->nome) {
-            throw new Exception('Nome inválido para cadastro / edição de resposta.');
+            throw new Exception('Nome inv&aacute;lido para cadastro / edi&ccedil;&atilde;o de resposta.');
         }
     }
 
@@ -59,7 +59,7 @@ class RespostaModel
     public function validarEditar()
     {
         if (!$this->resposta) {
-            throw new Exception('Identificador inválido para edição de resposta.');
+            throw new Exception('Identificador inv&aacute;lido para edi&ccedil;&atilde;o de resposta.');
         }
     }
 

@@ -34,7 +34,7 @@ class Zend_View_Helper_StatusAvalicacaoPedidoAlteracao
                     $resposta = 2;
                 }else
                 {
-                    $resposta = "Aguardando Aprovação";
+                    $resposta = "Aguardando Aprova&ccedil;&atilde;o";
                 }
 
             }
@@ -49,7 +49,7 @@ class Zend_View_Helper_StatusAvalicacaoPedidoAlteracao
                         
                     }else
                     {
-                        $resposta = "Retorno ao Técnico";
+                        $resposta = "Retorno ao T&eacute;cnico";
                     }
 
                 }
@@ -62,7 +62,7 @@ class Zend_View_Helper_StatusAvalicacaoPedidoAlteracao
                             $resposta = 4;
                         }else
                         {
-                            $resposta = "Não Aprovado/Indeferido";
+                            $resposta = "N&atilde;o Aprovado/Indeferido";
                         }
 
                     }

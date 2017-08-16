@@ -201,7 +201,7 @@ class AprovacaoModel implements ModelInterface
      */
     public function atualizar()
     {
-        throw new Exception('Não implementado');
+        throw new Exception('N&atilde;o implementado');
     }
 
     /**
@@ -211,7 +211,7 @@ class AprovacaoModel implements ModelInterface
      */
     public function buscar($id = null)
     {
-        throw new Exception('Não implementado');
+        throw new Exception('N&atilde;o implementado');
     }
 
     /**
@@ -221,7 +221,7 @@ class AprovacaoModel implements ModelInterface
      */
     public function deletar($id)
     {
-        throw new Exception('Não implementado');
+        throw new Exception('N&atilde;o implementado');
     }
 
 }

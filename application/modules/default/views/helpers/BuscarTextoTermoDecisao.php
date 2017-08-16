@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -40,7 +40,7 @@ class Zend_View_Helper_BuscarTextoTermoDecisao
         //retorna codigo do termo no banco de dados
         public function parseTag($textoTermo,$arrDados)
 	{
-            $prefixoSugestaoPlenaria = "<b>c) Sugestão da Plenária da CNIC</b><br><br>";
+            $prefixoSugestaoPlenaria = "<b>c) Sugest&atilde;o da Plen&aacute;ria da CNIC</b><br><br>";
             $sugestaoPlenaria = (!empty($arrDados['parecerCNIC'])) ? $prefixoSugestaoPlenaria.$arrDados['parecerCNIC'] : "";
             
             $arr1 = array("{@SUGESTAO_PARECER@}",//====== 1

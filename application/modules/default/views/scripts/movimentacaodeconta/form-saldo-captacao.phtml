@@ -7,7 +7,7 @@
         <td width="60%" id="pronac"><?php echo $this->formatarReal($this->totalAprovado ? $this->totalAprovado : 0);?></td>
     </tr>
     <tr>
-        <td class='destacarAAA' nowrap><b>Valor total já captado</b>:</td>
+        <td class='destacarAAA' nowrap><b>Valor total j&aacute; captado</b>:</td>
         <td id="projeto"><?php echo $this->formatarReal($this->totalCaptado ? $this->totalCaptado : 0);?></td>
     </tr>
     <tr>
@@ -15,7 +15,7 @@
         <td id="cpfcnpj"><?php echo $this->formatarReal($this->totalCaptadoNoLote ? $this->totalCaptadoNoLote :  0);?></td>
     </tr>
     <tr>
-        <td class='destacarAAA'><b>Valor excedente de captação</b>:</td>
+        <td class='destacarAAA'><b>Valor excedente de capta&ccedil;&atilde;o</b>:</td>
         <td id="cpfcnpj"><?php echo $this->formatarReal($this->vlExcedenteCaptado ? $this->vlExcedenteCaptado : 0);?></td>
     </tr>
 </table>
@@ -27,8 +27,8 @@
             <th colspan="2">Destino do valor excedente</th>
         </tr>
         <tr>
-            <td class="destacar" width="50%"><label for="captacao">Captação</label></td>
-            <td class="destacar" width="50%"><label for="devolucao">Devolução</label></td>
+            <td class="destacar" width="50%"><label for="captacao">Capta&ccedil;&atilde;o</label></td>
+            <td class="destacar" width="50%"><label for="devolucao">Devolu&ccedil;&atilde;o</label></td>
         </tr>
         <tr>
             <td style="padding: 0">
@@ -46,7 +46,7 @@
                             <select name="tpApoio" id="formTpApoio" class="input_simples">
                                 <option value=""> - Selecione - </option>
                                 <option value="1">Patrocínio</option>
-                                <option value="2">Doação</option>
+                                <option value="2">Doa&ccedil;&atilde;o</option>
                             </select>
                         </td>
                     </tr>
@@ -62,10 +62,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td nowrap><b>Tipo de devolução: <span class="red bold">*</span></b></td>
+                        <td nowrap><b>Tipo de devolu&ccedil;&atilde;o: <span class="red bold">*</span></b></td>
                         <td>
                             <select name="tpDevolucao" id="formTpDevolucao" class="input_simples">
-                                <option value="350">Devolução FNC</option>
+                                <option value="350">Devolu&ccedil;&atilde;o FNC</option>
                             </select>
                         </td>
                     </tr>

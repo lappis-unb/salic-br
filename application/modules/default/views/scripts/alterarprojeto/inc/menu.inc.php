@@ -162,7 +162,7 @@ if (in_array($this->grupoAtivo, array(92,93,104,113,114,115,124,125,126,128,131,
 
         <table class="tabela">
             <tr class="fundo">
-                <td class="" colspan="2" align="left">Enviar anexo (tamanho máximo de 10 MB)<br>Tipos de arquivos permitidos: <font color="red">PDF</font></td>
+                <td class="" colspan="2" align="left">Enviar anexo (tamanho m&aacute;ximo de 10 MB)<br>Tipos de arquivos permitidos: <font color="red">PDF</font></td>
             </tr>
             <tr class="fundo">
                 <td class="destacar bold" align="right" width="1">Arquivo</td>

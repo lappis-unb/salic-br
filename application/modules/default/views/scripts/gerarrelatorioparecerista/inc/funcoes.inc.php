@@ -272,7 +272,7 @@ function carregarPgHtml(pagina,idSelect,dados,textoIni){
     if(textoIni == undefined)
         textoIni = 'Todos';
 
-    var selectVazio = '<option value="">Não encontrado!</option>';
+    var selectVazio = '<option value="">N&atilde;o encontrado!</option>';
     
     
     var select      = '<option value="">'+textoIni+'</option>';

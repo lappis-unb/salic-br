@@ -1,19 +1,19 @@
 <?php
 /**
- * Helper para verificar a situação do projeto
+ * Helper para verificar a situa&ccedil;&atilde;o do projeto
  * @author Equipe RUP - Politec
  * @since 16/09/2011
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_VerificarSituacaoProjeto
 {
 	/**
-	 * Método para verificar a situação do projeto
+	 * M&eacute;todo para verificar a situa&ccedil;&atilde;o do projeto
 	 * @access public
 	 * @param integer $idPronac
 	 * @return string
@@ -24,7 +24,7 @@ class Zend_View_Helper_VerificarSituacaoProjeto
 
 			$Projeto = new Projetos();
 
-			// busca a situação do projeto
+			// busca a situa&ccedil;&atilde;o do projeto
 			$buscarSituacao = $Projeto->buscar(array('IdPRONAC = ?' => $idPronac))->current();
 
 			if (count($buscarSituacao) > 0) :
@@ -36,6 +36,6 @@ class Zend_View_Helper_VerificarSituacaoProjeto
 		else :
 			return 0;
 		endif;
-	} // fecha método verificarSituacaoProjeto()
+	} // fecha m&eacute;todo verificarSituacaoProjeto()
 
 } // fecha class

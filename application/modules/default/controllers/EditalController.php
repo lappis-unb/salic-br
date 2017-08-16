@@ -11,7 +11,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC72
         if (isset($auth->getIdentity()->usu_codigo)) {
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu&aacute;rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -70,7 +70,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
     }
     
     /**
-     * Método atualizaListaTextos()
+     * M&eacute;todo atualizaListaTextos()
      * atualiza a lista de textos
      * @access public
      * @param void
@@ -183,7 +183,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         } else {
             
             if($nrCodReferencia == 1){
-                $dsTexto = "Criterio de Avaliação";
+                $dsTexto = "Criterio de Avalia&ccedil;&atilde;o";
             } else {
                  $dsTexto = "Forma de Pagamento";
             }
@@ -263,7 +263,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         try {
             $db->beginTransaction();
-             //deleta o criterio de avaliação
+             //deleta o criterio de avalia&ccedil;&atilde;o
              $modelEditalFinal->delete($where);
 
             $db->commit();
@@ -392,10 +392,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelCategoriaModulo        = new tbCategoria();
         $modelEditalTipoParticipacao = new tbEditalTipoParticipacao();
         
-        // validar se existe o Edital ou é do proprietário
+        // validar se existe o Edital ou &eacute; do propriet&aacute;rio
         $edital = $modelEdital->buscar(array('idEdital = ?' => $idEdital));
         if(count($edital) == 0){
-            parent::message('Edital não encontrado ou não pertence a esse orgão!', 'edital/', 'ALERT');
+            parent::message('Edital n&atilde;o encontrado ou n&atilde;o pertence a esse org&atilde;o!', 'edital/', 'ALERT');
         }
         
         $arrModulos     = array();
@@ -632,7 +632,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         $criterios = $modelCriteriosAvaliacao->buscar(array('idEdital = ?' => $idEdital));
         if(count($criterios) == 0){
-            parent::message('Informe os critérios de avaliação!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ALERT');
+            parent::message('Informe os crit&eacute;rios de avalia&ccedil;&atilde;o!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ALERT');
         }
         
         $arrModulos     = array();
@@ -700,7 +700,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         $criterios = $modelCriteriosAvaliacao->buscar(array('idEdital = ?' => $idEdital));
         if(count($criterios) == 0){
-            parent::message('Informe os critérios de avaliação!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ALERT');
+            parent::message('Informe os crit&eacute;rios de avalia&ccedil;&atilde;o!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ALERT');
         }
         
         $arrModulos     = array();
@@ -761,7 +761,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         $criterios = $modelCriteriosAvaliacao->buscar(array('idEdital = ?' => $idEdital));
         if(count($criterios) == 0){
-            parent::message('Informe os critérios de avaliação!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ALERT');
+            parent::message('Informe os crit&eacute;rios de avalia&ccedil;&atilde;o!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ALERT');
         }
         
         $fluxoPagamentoEdital = $modelFluxoEdital->buscarFluxoPorEdital(array('ef.idEdital = ?' => $idEdital, 'ef.idFluxo = ?' => 3));
@@ -918,7 +918,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
 
     public function atualizaInfoGeralModuloAction(){
         
-         //Recupera as informações: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
+         //Recupera as informa&ccedil;&otilde;es: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
         $idEdital           = $this->_request->getParam('idEdital');
         $idModulo           = $this->_request->getParam('idModulo');
         $nomeModulo         = $this->_request->getParam('nomeModulo');
@@ -948,12 +948,12 @@ class EditalController extends MinC_Controller_Action_Abstract {
             }
             
             $db->commit();
-            parent::message('Informações gerais atualizado com sucesso!', 'edital/informacoes-modulo/idEdital/'.$idEdital.'/idModulo/'.$idModulo, 'CONFIRM');
+            parent::message('Informa&ccedil;&otilde;es gerais atualizado com sucesso!', 'edital/informacoes-modulo/idEdital/'.$idEdital.'/idModulo/'.$idModulo, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
             xd($exc);
-            parent::message('Erro ao atualizar as informações gerais', 'edital/informacoes-modulo/idEdital/'.$idEdital.'/idModulo/'.$idModulo, 'ERROR');
+            parent::message('Erro ao atualizar as informa&ccedil;&otilde;es gerais', 'edital/informacoes-modulo/idEdital/'.$idEdital.'/idModulo/'.$idModulo, 'ERROR');
             
         }
         
@@ -1137,12 +1137,12 @@ class EditalController extends MinC_Controller_Action_Abstract {
             }
 
             $db->commit();
-            parent::message('Critério de Participação cadastrado com sucesso!', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
+            parent::message('Crit&eacute;rio de Participa&ccedil;&atilde;o cadastrado com sucesso!', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
             xd($exc->getMessage());
-            parent::message('Erro ao cadastrar os Critérios de Participação', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
+            parent::message('Erro ao cadastrar os Crit&eacute;rios de Participa&ccedil;&atilde;o', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
             
         }
     }
@@ -1158,7 +1158,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelRegiaoCriterioParticipacao = new tbRegiaoCriterioParticipacao();
         
         if(($idCriterioParticipacao == '') || ($idEdital == '')){
-            parent::message('Criterio de Participacao não encontrado.', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
+            parent::message('Criterio de Participacao n&atilde;o encontrado.', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -1168,7 +1168,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         try {
             $db->beginTransaction();
-             //deleta o criterio de avaliação
+             //deleta o criterio de avalia&ccedil;&atilde;o
              $modelRegiaoCriterioParticipacao->delete($where);
              $modelCriterioParticipacao->delete($where);
 
@@ -1307,7 +1307,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
                 $formaPagamento = $modelFormaPagamento->buscarFormaPagamentoPorId($idFormaPagamento);
 
                 if (count($formaPagamento) == 0) {
-                    $retorno['error'] = utf8_encode('Forma de Pagamento não encontrado!');
+                    $retorno['error'] = utf8_encode('Forma de Pagamento n&atilde;o encontrado!');
                 } else {
                     $retorno['dados']['idFormaPagamento']       = $formaPagamento[0]['idFormaPagamento'];
                     $retorno['dados']['idCategoria']            = $formaPagamento[0]['idCategoria'];
@@ -1332,7 +1332,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
     
     public function salvaModuloAction() {
 
-        //Recupera as informações: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
+        //Recupera as informa&ccedil;&otilde;es: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
         $idEdital           = $this->_request->getParam('idEdital');
         $nomeModulo         = $this->_request->getParam('nomeModulo');
         $tipoParticipacao   = $this->_request->getParam('tipoParticipacaoModulo');
@@ -1380,7 +1380,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
 
     public function salvaCategoriaAction() {
 
-        //Recupera as informações: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
+        //Recupera as informa&ccedil;&otilde;es: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
         $idEdital       = $this->_request->getParam('idEdital');
         $idModulo       = $this->_request->getParam('idModulo');
         $nomeCategoria  = $this->_request->getParam('nomeCategoria');
@@ -1411,7 +1411,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
     
     public function atualizaInfoGeralCategoriaAction(){
              
-         //Recupera as informações: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
+         //Recupera as informa&ccedil;&otilde;es: nome do modulo a ser cadastrado, e o id do Edital a ser associado.
         $idEdital           = $this->_request->getParam('idEdital');
         $idModulo           = $this->_request->getParam('idModulo');
         $idCategoria        = $this->_request->getParam('idCategoria');
@@ -1432,11 +1432,11 @@ class EditalController extends MinC_Controller_Action_Abstract {
             $modelCategoria->atualizaCategoria($dadoCategoria, $where);
 
             $db->commit();
-            parent::message('Informações gerais da categoria atualizado com sucesso!', 'edital/informacoes-categoria/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
+            parent::message('Informa&ccedil;&otilde;es gerais da categoria atualizado com sucesso!', 'edital/informacoes-categoria/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
-            parent::message('Erro ao atualizar as informações gerais da Categoria', 'edital/informacoes-categoria/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
+            parent::message('Erro ao atualizar as informa&ccedil;&otilde;es gerais da Categoria', 'edital/informacoes-categoria/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
             
         }
         
@@ -1488,7 +1488,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
                 $nEdital->salvarFluxoEdital($dados);
             }
 
-            //Salva a composição(ões) que o Edital pode(m) ter
+            //Salva a composi&ccedil;&atilde;o(&otilde;es) que o Edital pode(m) ter
             foreach ($composicao as $comp) {
 
                 $dados = array(
@@ -1560,7 +1560,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
 
 
             $where = array('idEdital = ?' => $idEdital);
-            //Atualizando informações na tabela tbEdital
+            //Atualizando informa&ccedil;&otilde;es na tabela tbEdital
             $nEdital->salvardadosgerais($dados, $where);
 
             
@@ -1595,7 +1595,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
                     $dadosTipoParticipacao = array(
                         'idEdital'          => $idEdital,
                         'idTpParticipacao'  => $tpart,
-                        'qtParticipacao'    => $qtTipoParticipacao[$tpart-1] //Array de Tipos de Participação começa com 0. Array de Qntd começa com 1. Por isso a diminuição do valor para pegar o valor correspondente.
+                        'qtParticipacao'    => $qtTipoParticipacao[$tpart-1] //Array de Tipos de Participa&ccedil;&atilde;o come&ccedil;a com 0. Array de Qntd come&ccedil;a com 1. Por isso a diminui&ccedil;&atilde;o do valor para pegar o valor correspondente.
                     );
                     
                     $modelEditalTipoParticipacao->associarEditalTipoParticipacao($dadosTipoParticipacao);
@@ -1608,12 +1608,12 @@ class EditalController extends MinC_Controller_Action_Abstract {
                 parent::message('Dados salvos com sucesso!', 'edital/informacao-geral/idEdital/' . $idEdital, 'CONFIRM');
             }
             
-            parent::message('Informações gerais do Edital com sucesso!', 'edital/criterios-avaliacao/idEdital/' . $idEdital, 'CONFIRM');
+            parent::message('Informa&ccedil;&otilde;es gerais do Edital com sucesso!', 'edital/criterios-avaliacao/idEdital/' . $idEdital, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
             xd($exc->getMessage());
-            parent::message('Erro ao cadastrar as Informações gerais do Edital', 'edital/informacao-geral/idEdital/'.$idEdital, 'ERROR');
+            parent::message('Erro ao cadastrar as Informa&ccedil;&otilde;es gerais do Edital', 'edital/informacao-geral/idEdital/'.$idEdital, 'ERROR');
         }
         
     }
@@ -1691,10 +1691,10 @@ class EditalController extends MinC_Controller_Action_Abstract {
             $db->beginTransaction();
             if($idCriterioAvaliacao != ''){
                 $nEdital->update($dados, array('idCriterioAvaliacao = ?' => $idCriterioAvaliacao));
-                $msg = 'Critério de avaliação atualizado com sucesso!';
+                $msg = 'Crit&eacute;rio de avalia&ccedil;&atilde;o atualizado com sucesso!';
             }else{
                 $nEdital->salvarcriterioavaliacao($dados);
-                $msg = 'Critério de avaliação cadastrado com sucesso!';
+                $msg = 'Crit&eacute;rio de avalia&ccedil;&atilde;o cadastrado com sucesso!';
             }
             //Salva o Edital e recupera o ID
 
@@ -1715,7 +1715,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         $criterioAvaliacao = new tbCriteriosAvaliacao();
         if(($idCriterio == '') || ($idEdital == '')){
-            parent::message('Critério de avaliação excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ERROR');
+            parent::message('Crit&eacute;rio de avalia&ccedil;&atilde;o excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ERROR');
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -1725,15 +1725,15 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         try {
             $db->beginTransaction();
-             //deleta o criterio de avaliação
+             //deleta o criterio de avalia&ccedil;&atilde;o
              $criterioAvaliacao->delete($where);
 
             $db->commit();
-            parent::message('Crit&eacute;rio de avaliação excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'CONFIRM');
+            parent::message('Crit&eacute;rio de avalia&ccedil;&atilde;o excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
-            parent::message('Erro ao excluir o critério de avaliação', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ERROR');
+            parent::message('Erro ao excluir o crit&eacute;rio de avalia&ccedil;&atilde;o', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ERROR');
         }
         
     }
@@ -1756,7 +1756,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
                 $criterio = $criterioAvaliacao->buscarCriteriosAvaliacao(array('idCriterioAvaliacao = ?' => $idCriterio));
 
                 if (count($criterio) == 0) {
-                    $retorno['error'] = utf8_encode('Critério não encontrado!');
+                    $retorno['error'] = utf8_encode('Crit&eacute;rio n&atilde;o encontrado!');
                 } else {
                     $retorno['dados']['idCriterioAvaliacao']    = $criterio[0]['idCriterioAvaliacao'];
                     $retorno['dados']['idEdital']               = $criterio[0]['idEdital'];
@@ -1828,17 +1828,17 @@ class EditalController extends MinC_Controller_Action_Abstract {
             );
                 
                 $modelPlanilhaItemPlanilhaEtapa->salvarPlanilhaEtapaPlanilhaItem($dadosPlanilhaItemPlanilhaEtapa);
-                $msg = 'Etapa/Item cadastrado à planilha orçamentária com sucesso!';
+                $msg = 'Etapa/Item cadastrado &agrave; planilha or&ccedil;ament&aacute;ria com sucesso!';
 //            }
             
             //Salva o Edital e recupera o ID
             $db->commit();
-            parent::message('Etapa/Item cadastrado à planilha orçamentária com sucesso', 'edital/modulosedital/idEdital/'.$idEdital, 'CONFIRM');
+            parent::message('Etapa/Item cadastrado &agrave; planilha or&ccedil;ament&aacute;ria com sucesso', 'edital/modulosedital/idEdital/'.$idEdital, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
             xd($exc);
-            parent::message('Erro ao cadastrar a etapa/item à planilha orçamentária.', 'edital/modulosedital/idEdital/'.$idEdital, 'ERROR');
+            parent::message('Erro ao cadastrar a etapa/item &agrave; planilha or&ccedil;ament&aacute;ria.', 'edital/modulosedital/idEdital/'.$idEdital, 'ERROR');
         }
         
     }
@@ -1864,7 +1864,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
                 $planilhaOrcamentaria = $modelPlanilhaItemPlanilhaEtapa->buscarPlanilhaOrcamentaria(array('idPlanOrcEdital = ?' => $idPlanOrcEdital));
                 
                 if (count($planilhaOrcamentaria) == 0) {
-                    $retorno['error'] = utf8_encode('Ítem/Etapa não encontrados!');
+                    $retorno['error'] = utf8_encode('Ítem/Etapa n&atilde;o encontrados!');
                 } else {
                     $retorno['dados']['dsOutro']        = $planilhaOrcamentaria[0]['dsOutro'];
                     $retorno['dados']['qtUnidade']      = $planilhaOrcamentaria[0]['qtUnidade'];

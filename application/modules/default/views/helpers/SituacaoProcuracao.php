@@ -1,6 +1,6 @@
 <?php
 /**
- * Situação da procuração
+ * Situa&ccedil;&atilde;o da procura&ccedil;&atilde;o
  * @author Equipe RUP - Politec
  * @since 29/03/2010
  * @version 1.0
@@ -13,7 +13,7 @@
 class Zend_View_Helper_SituacaoProcuracao
 {
 	/**
-	 * Informa a situação da procuração
+	 * Informa a situa&ccedil;&atilde;o da procura&ccedil;&atilde;o
 	 * @access public
 	 * @param integer $stvinculo
 	 * @return string

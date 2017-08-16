@@ -1,11 +1,11 @@
 <?php 
 /**
- * Prestação de Contas (UC45)
+ * Presta&ccedil;&atilde;o de Contas (UC45)
  * @author Equipe RUP - Politec
  * @since 28/01/2011
  * @version 1.0
  * @subpackage application.view.scripts.prestacaodeocontas
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -88,7 +88,7 @@
             }
         });
         $('.ui-dialog-titlebar-close').open();
-    } // fecha função logout()
+    } // fecha fun&ccedil;&atilde;o logout()
 
     function JSRecuperarDataSituacao(NrPronac){
 
@@ -132,7 +132,7 @@
 
     <div class="msgALERT">
         <div class="float_right" style="cursor: pointer;"><input type="button" class="btn_close" title="Fechar mensagem" id="msg-ALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
-        <div>Não há projetos na fase de Prestação de Contas. <br /></div>
+        <div>N&atilde;o h&aacute; projetos na fase de Presta&ccedil;&atilde;o de Contas. <br /></div>
     </div>
 <?php elseif(!empty($this->parametrosBuscaPrestacaoContas['pronac']) && $this->bln_pronacValido == "false"): ?>
     <div class="msgALERT">
@@ -142,7 +142,7 @@
 <?php elseif(!empty($this->parametrosBuscaPrestacaoContas['pronac']) && $this->totalProjetosOS <= 0): ?>
     <div class="msgALERT">
         <div class="float_right" style="cursor: pointer;"><input type="button" class="btn_close" title="Fechar mensagem" id="msg-ALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
-        <div>Este projeto não está na fase de Prestação de Contas. <br /></div>
+        <div>Este projeto n&atilde;o est&aacute; na fase de Presta&ccedil;&atilde;o de Contas. <br /></div>
     </div>
 <?php else: ?>
     <?php if( !empty($this->parametrosBuscaPrestacaoContas['pronac']) || !empty($this->parametrosBuscaPrestacaoContas['situacao'])): //so mostra as 4 grids se nao enviar Pronac e Situacao no filtro?>
@@ -207,7 +207,7 @@
         <table class="tabela">
             <tr>
 
-                <td><input type="button" id="devolvidosaposanalise" class="btn_adicionar"  onclick="JSMostraOcultaElemento('devolvidosaposanalise')" />DEVOLVIDOS APÓS ANÁLISE</td>
+                <td><input type="button" id="devolvidosaposanalise" class="btn_adicionar"  onclick="JSMostraOcultaElemento('devolvidosaposanalise')" />DEVOLVIDOS APÓS AN&aacute;LISE</td>
                 <td width="100" align="right" >Quantidade: <?php echo $this->totalDevolvidosAposAnalise;?></td>
             </tr>
         </table>
@@ -288,7 +288,7 @@
         <?php if ((isset($this->parametrosBuscaPrestacaoContas['tpPeriodoExecucao']) && !empty($this->parametrosBuscaPrestacaoContas['tpPeriodoExecucao'])) || !empty($this->parametrosBuscaPrestacaoContas['pronac']) || !empty($this->parametrosBuscaPrestacaoContas['NomeProjeto']) || !empty($this->parametrosBuscaPrestacaoContas['uf']) || !empty($this->parametrosBuscaPrestacaoContas['mecanismo']) || !empty($this->parametrosBuscaPrestacaoContas['situacao'])){ ?>
             <table class="tabela">
                 <tr>
-                    <td><input type="button" id="projetosoutrassituacoes" class="btn_adicionar" onclick="JSMostraOcultaElemento('projetosoutrassituacoes')"/>OUTRAS SITUAÇÕES</td>
+                    <td><input type="button" id="projetosoutrassituacoes" class="btn_adicionar" onclick="JSMostraOcultaElemento('projetosoutrassituacoes')"/>OUTRAS SITUA&ccedil;&otilde;ES</td>
                     <td width="100" align="right" >Quantidade: <?php echo $this->totalProjetosOS; ?></td>
                 </tr>
             </table>

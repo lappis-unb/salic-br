@@ -8,7 +8,7 @@
             modal: true,
             autoOpen:false,
             buttons: {
-                'Não': function(){
+                'N&atilde;o': function(){
                     $('#confirm').dialog('close');
                 },
                 'Sim': function(){
@@ -108,7 +108,7 @@
                     <?php
                     foreach ($this->BuscarSelect as $select) {
                     ?>
-                        <option value="<?php echo $select['idAgente'].'/'.$select['perfil']; ?>"><?php echo isset($select['orgao']) ? $select['orgao'] : "Á".'rea: '.$select['Area']; echo ' / '.$select['TipoUsuario'] . ' - ' . $select['nome'] ?></option>
+                        <option value="<?php echo $select['idAgente'].'/'.$select['perfil']; ?>"><?php echo isset($select['orgao']) ? $select['orgao'] : "&aacute;".'rea: '.$select['Area']; echo ' / '.$select['TipoUsuario'] . ' - ' . $select['nome'] ?></option>
                         
                     <?php } ?>
                 </select>
@@ -124,8 +124,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

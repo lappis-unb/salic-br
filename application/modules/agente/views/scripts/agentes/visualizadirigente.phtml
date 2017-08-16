@@ -28,45 +28,45 @@ if ($this->grupoAtivo != 118) {
         var dtfim           = $("#dtTerminoVigencia").val();
         var arquivo         = $("#idArquivo").val();
 
-       //validação campos do mandato
+       //valida&ccedil;&atilde;o campos do mandato
             if(documento == 0)
             {
-                $("#lbTipoDocumento").html("Dados obrigatórios não informados!");
+                $("#lbTipoDocumento").html("Dados obrigatórios n&atilde;o informados!");
                 return false;
             }else{
                 $("#lbTipoDocumento").html("");
             }
             if(documento == "")
             {
-                $("#lbTipoDocumento").html("Dados obrigatórios não informados!");
+                $("#lbTipoDocumento").html("Dados obrigatórios n&atilde;o informados!");
                 return false;
             }else{
                 $("#lbTipoDocumento").html("");
             }
             if(numeroDocumento == "")
             {
-                $("#lbNumeroDoc").html("Dados obrigatórios não informados!");
+                $("#lbNumeroDoc").html("Dados obrigatórios n&atilde;o informados!");
                 return false;
             }else{
                 $("#lbNumeroDoc").html("");
             }
             if(dtinicio == "")
             {
-                $("#lbPeriodo").html("Dados obrigatórios não informados!");
+                $("#lbPeriodo").html("Dados obrigatórios n&atilde;o informados!");
                 return false;
             }else{
                 $("#lbPeriodo").html("");
             }
             if(dtfim == "")
             {
-                $("#lbPeriodo").html("Dados obrigatórios não informados!");
+                $("#lbPeriodo").html("Dados obrigatórios n&atilde;o informados!");
                 return false;
             }else{
                 $("#lbPeriodo").html("");
             }
             if((!validarData(dtinicio)) || (!validarData(dtfim)))
             {
-                $("#lbPeriodo").html("Data inválida!");
+                $("#lbPeriodo").html("Data inv&aacute;lida!");
                 return false;
             }else{
                 $("#lbPeriodo").html("");
@@ -80,7 +80,7 @@ if ($this->grupoAtivo != 118) {
             }
             if(arquivo == "")
             {
-                $("#lbDocumentoAnexo").html("Dados obrigatórios não informados!");
+                $("#lbDocumentoAnexo").html("Dados obrigatórios n&atilde;o informados!");
                 return false;
             }else{
                 $("#lbDocumentoAnexo").html("");
@@ -93,13 +93,13 @@ if ($this->grupoAtivo != 118) {
     $(document).ready(function()
     {
 
-        // máscaras dos campos
+        // m&aacute;scaras dos campos
         $("#periodo1, #periodo2").keyup(function()
         {
             mascara(this, format_data); // data
         });
 
-        // calendário
+        // calend&aacute;rio
         $.datepicker.regional['pt-BR'] =
             {
             closeText: 'Fechar',
@@ -120,7 +120,7 @@ if ($this->grupoAtivo != 118) {
         };
         $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-        // id dos campos que utilizarão o calendário
+        // id dos campos que utilizar&atilde;o o calend&aacute;rio
         $("#dtInicioVigencia, #dtTerminoVigencia").datepicker($.datepicker.regional['pt-BR']);
 
 
@@ -140,7 +140,7 @@ if ($this->grupoAtivo != 118) {
     <?php if ($this->vinculado == 'sim'): ?>
         <center>
             <div class="msgALERT" style="width: 96%;">
-                <div style="float: left;">Dirigente já vinculado a instituição!</div>
+                <div style="float: left;">Dirigente j&aacute; vinculado a institui&ccedil;&atilde;o!</div>
             </div>
         </center>
     <?php endif; ?>
@@ -155,7 +155,7 @@ if ($this->grupoAtivo != 118) {
                     <?php endif; ?>
                 </td>
                 <td width="250"><b>NOME:</b> <?php echo $this->dadosD[0]->nome; ?></td>
-                <td><b>VISÕES:</b><?php
+                <td><b>VIS&otilde;ES:</b><?php
                     foreach ($this->visoesD as $v) {
                         echo " | " . $v->Descricao;
                     }
@@ -164,7 +164,7 @@ if ($this->grupoAtivo != 118) {
         </table>
         <table id="tabEndereco" class="tabela ">
             <tr>
-                <th colspan="5">ENDEREÇOS</th>
+                <th colspan="5">ENDERE&ccedil;OS</th>
             </tr>
             <tr>
                 <td><label>CEP:</label> <?php echo Mascara::addMaskCep($this->dadosD[0]->cep); ?></td>
@@ -172,7 +172,7 @@ if ($this->grupoAtivo != 118) {
                 <td><label>Cidade:</label> <?php echo $this->dadosD[0]->dscidade; ?></td>
             </tr>
             <tr>
-                <td colspan="2"><label>Tipo de Endereço:</label> <?php echo $this->dadosD[0]->dstipoendereco; ?></td>
+                <td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $this->dadosD[0]->dstipoendereco; ?></td>
                 <td><label>Tipo de Logradouro:</label> <?php echo $this->dadosD[0]->dstipologradouro; ?></td>
             </tr>
             <tr>
@@ -184,8 +184,8 @@ if ($this->grupoAtivo != 118) {
                 <td><label>Bairro:</label> <?php echo $this->dadosD[0]->bairro; ?></td>
             </tr>
             <tr>
-                <td><label>Endereço para correspondência:</label> <?php echo $this->dadosD[0]->status == "1" ? "SIM" : "NÃO"; ?></td>
-                <td colspan="2"><label>Autorizo divulgar o endereço:</label> <?php echo $this->dadosD[0]->divulgarendereco == "1" ? "SIM" : "NÃO"; ?></td>
+                <td><label>Endere&ccedil;o para correspondência:</label> <?php echo $this->dadosD[0]->status == "1" ? "SIM" : "N&atilde;O"; ?></td>
+                <td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $this->dadosD[0]->divulgarendereco == "1" ? "SIM" : "N&atilde;O"; ?></td>
             </tr>
         </table>
         <table id="tabFone" class="tabela">
@@ -205,7 +205,7 @@ if ($this->grupoAtivo != 118) {
                     <td align="center"><?php echo $t->ufsigla; ?></td>
                     <td align="center"><?php echo $t->ddd; ?></td>
                     <td><?php echo $t->numero; ?></td>
-                    <td><?php echo $t->divulgar == "1" ? "SIM" : "NÃO"; ?></td>
+                    <td><?php echo $t->divulgar == "1" ? "SIM" : "N&atilde;O"; ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -223,12 +223,12 @@ if ($this->grupoAtivo != 118) {
                 <tr>
                     <td><?php echo $e->tipo; ?></td>
                     <td><?php echo $e->descricao; ?></td>
-                    <td><?php echo $e->divulgar == "1" ? "SIM" : "NÃO"; ?></td>
-                    <td><?php echo $e->status == "1" ? "SIM" : "NÃO"; ?></td>
+                    <td><?php echo $e->divulgar == "1" ? "SIM" : "N&atilde;O"; ?></td>
+                    <td><?php echo $e->status == "1" ? "SIM" : "N&atilde;O"; ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
-        <!-- ========== INICIO DO FORMULÁRIO DE MANDATO ========== -->
+        <!-- ========== INICIO DO FORMUL&aacute;RIO DE MANDATO ========== -->
         <form name="formmandato" id="formmandato" enctype="multipart/form-data" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'mandato')); ?>" method="POST">
             <table id="tabMandato" class="tabela">
                 <tr>
@@ -242,7 +242,7 @@ if ($this->grupoAtivo != 118) {
                     <td class="destacar bold">Num. Documento<p><span class="red" id="lbNumeroDoc"></span></td>
                     <td class="destacar bold">Período de Vigência<p><span class="red" id="lbPeriodo"></span></td>
                     <td class="destacar bold">Documento anexo<p><span class="red" id="lbDocumentoAnexo"></span></td>
-                    <td class="destacar bold">Ação</td>
+                    <td class="destacar bold">A&ccedil;&atilde;o</td>
                 </tr>
                 <!--?php foreach ($this->mandatoM as $m): ?-->
                 <tr>
@@ -260,7 +260,7 @@ if ($this->grupoAtivo != 118) {
                         <input class="select_simples" size="10" maxlength="12" name="dsNumeroDocumento" id="dsNumeroDocumento"  >
                     </td>
                     <td align="">
-                        <input class="select_simples" type="text" name="dtInicioVigencia" id="dtInicioVigencia" maxlength="10" class="input_simples btn_calendario" onkeypress="mascara(this,format_num)"  style="width: 5em"> à
+                        <input class="select_simples" type="text" name="dtInicioVigencia" id="dtInicioVigencia" maxlength="10" class="input_simples btn_calendario" onkeypress="mascara(this,format_num)"  style="width: 5em"> &agrave;
                         <input class="select_simples" type="text" name="dtTerminoVigencia" id="dtTerminoVigencia" maxlength="10" class="input_simples btn_calendario" onkeypress="mascara(this,format_num)" style="width: 5em">
                     </td>
                     <td class="centro">
@@ -283,7 +283,7 @@ if ($this->grupoAtivo != 118) {
                 <tr>
                     <td><?php echo $m->Descricao; ?></td>
                     <td><?php echo $m->dsNumeroDocumento; ?></td>
-                    <td><?php echo date('d/m/Y',strtotime($m->dtInicioMandato)).' à '.date('d/m/Y',strtotime($m->dtFimMandato)); ?></td>
+                    <td><?php echo date('d/m/Y',strtotime($m->dtInicioMandato)).' &agrave; '.date('d/m/Y',strtotime($m->dtFimMandato)); ?></td>
                     <td href="#"><a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'upload','action'=>'abrir')); ?>?id=<?php echo $m->idArquivo; ?>"><?php echo $m->nmArquivo ?></td>
                     <td align="center"><input type="button" class="btn_exclusao" value=" " onclick="excluir('<?php echo $m->idAgentexVerificacao ?>');" /></td>
                 </tr>
@@ -312,8 +312,8 @@ if ($this->grupoAtivo != 118) {
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

@@ -19,7 +19,7 @@ class ServicosSEI
 
     public function __construct()
     {
-        // @TODO: mover configuração para application.ini
+        // @TODO: mover configura&ccedil;&atilde;o para application.ini
         //$this->caminhoWSDLSEI = "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";
         $this->caminhoWSDLSEI = "http://seitreinamento.cultura.gov.br/sei/controlador_ws.php?servico=sei";
         if (APPLICATION_ENV == "production") {

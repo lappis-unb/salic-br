@@ -1,9 +1,9 @@
 <script type="text/javascript">
     /**
-     * Funções que são chamadas após a página ser carregada
+     * Fun&ccedil;&otilde;es que s&atilde;o chamadas após a p&aacute;gina ser carregada
      */
     $(document).ready(function(){
-        // máscaras dos campos
+        // m&aacute;scaras dos campos
         $('#dtInicio, #dtFim').keyup(function(){
             mascara(this, format_data); // data
         });
@@ -18,7 +18,7 @@
             }
         });
 
-        // calendário
+        // calend&aacute;rio
         $.datepicker.regional['pt-BR'] = {
             closeText: 'Fechar',
             prevText: '&#x3c;Anterior',
@@ -38,12 +38,12 @@
         };
         $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-        // id dos campos que utilizarão o calendário
+        // id dos campos que utilizar&atilde;o o calend&aacute;rio
         $('#dtInicio, #dtFim').datepicker($.datepicker.regional['pt-BR']);
     }); // fim $(document).ready()
 
     /**
-     * Função responsável pela correção das inconsistências
+     * Fun&ccedil;&atilde;o respons&aacute;vel pela corre&ccedil;&atilde;o das inconsistências
      */
     function corrigirInconsistenciaCaptacaoNaoVigente(item, tipo){
         if (tipo != ''){
@@ -59,7 +59,7 @@
                 height: 370,
                 title: 'Corrigir Inconsistência',
                 buttons: {
-                    Não: function(){
+                    N&atilde;o: function(){
                         $(this).dialog('close');
                         $('#captacao_nao_vigente' + item).find('option[value=""]').attr('selected',true);
                     },
@@ -71,7 +71,7 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         }
-    } // fecha função corrigirInconsistenciaCaptacaoNaoVigente()
+    } // fecha fun&ccedil;&atilde;o corrigirInconsistenciaCaptacaoNaoVigente()
 </script>
 
 <div id="modalCaptacaoNaoVigente" class="sumir">
@@ -102,7 +102,7 @@
 <table class="tabela">
     <?php if ($this->registros->count() <= 0) : ?>
     <tr>
-        <td align="center" ><em>Consulta efetuada com sucesso, por&eacute;m, n&atilde;o existem contas com captações identificadas para o filtro solicitado!</em></td>
+        <td align="center" ><em>Consulta efetuada com sucesso, por&eacute;m, n&atilde;o existem contas com capta&ccedil;&otilde;es identificadas para o filtro solicitado!</em></td>
     </tr>
     <?php else: ?>
         <?php $ct=1;
@@ -144,8 +144,8 @@
             <?php } ?>
             </td>
             <td align="center"><?php echo Validacao::mascaraCPFCNPJ($projeto->nrCpfCnpjProponente); ?></td>
-            <td align="center"><?php echo !empty($projeto->Agencia) ? $projeto->Agencia : '<em>Não informada</em>'; ?></td>
-            <td align="center"><?php echo !empty($projeto->ContaBloqueada) ? $projeto->ContaBloqueada : '<em>Não informada</em>'; ?></td>
+            <td align="center"><?php echo !empty($projeto->Agencia) ? $projeto->Agencia : '<em>N&atilde;o informada</em>'; ?></td>
+            <td align="center"><?php echo !empty($projeto->ContaBloqueada) ? $projeto->ContaBloqueada : '<em>N&atilde;o informada</em>'; ?></td>
             <td align="center"><?php echo Validacao::mascaraCPFCNPJ($projeto->nrCpfCnpjIncentivador); ?></td>
             <td align="center"><?php echo $projeto->dtCredito; ?></td>
             <td align="right" class="<?php echo ($projeto->vlValorCredito == 'D') ? 'red' : 'blue' ; ?>"><?php echo $this->formatarReal($projeto->vlValorCredito); ?></td>
@@ -158,12 +158,12 @@
             <td class="centro" id="coluna_<?php echo $projeto->tpValidacao."_".$ct; ?>">
                 <?php /*<select class="input_simples" name="captacao_nao_vigente" id="captacao_nao_vigente<?php echo $ct; ?>" onchange="corrigirInconsistenciaCaptacaoNaoVigente('<?php echo $ct; ?>', this.value);">*/?>
                 <select class="input_simples updateTmpCaptacao" idTmpCaptacao="<?php echo $projeto->idTmpCaptacao; ?>">
-                    <option value="0">- Selecione a correção -</option>
+                    <option value="0">- Selecione a corre&ccedil;&atilde;o -</option>
                     <option value="2" <?php echo $projeto->cdPatrocinio == 2 ? 'selected="selected"' : ''; ?>>Patrocínio</option>
-                    <option value="1" <?php echo $projeto->cdPatrocinio == 1 ? 'selected="selected"' : ''; ?>>Doação</option>
-                    <option value="3" <?php echo $projeto->cdPatrocinio == 3 ? 'selected="selected"' : ''; ?>>Devolução Judicial</option>
-                    <option value="5" <?php echo $projeto->cdPatrocinio == 5 ? 'selected="selected"' : ''; ?>>Devolução FNC</option>
-                    <option value="4" <?php echo $projeto->cdPatrocinio == 4 ? 'selected="selected"' : ''; ?>>Outras devoluções</option>
+                    <option value="1" <?php echo $projeto->cdPatrocinio == 1 ? 'selected="selected"' : ''; ?>>Doa&ccedil;&atilde;o</option>
+                    <option value="3" <?php echo $projeto->cdPatrocinio == 3 ? 'selected="selected"' : ''; ?>>Devolu&ccedil;&atilde;o Judicial</option>
+                    <option value="5" <?php echo $projeto->cdPatrocinio == 5 ? 'selected="selected"' : ''; ?>>Devolu&ccedil;&atilde;o FNC</option>
+                    <option value="4" <?php echo $projeto->cdPatrocinio == 4 ? 'selected="selected"' : ''; ?>>Outras devolu&ccedil;&otilde;es</option>
                 </select>
             </td>
         </tr>

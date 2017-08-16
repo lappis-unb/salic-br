@@ -5,7 +5,7 @@
     <!-- início: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -53,8 +53,8 @@
                 clear: both;
             }
         </style>
-        <div style="display:none" id="dialog-alert">Solicitação Enviada com Sucesso</div>
-        <div style="display:none" id="produtoDesativado">Não há produtos cadastrados para este projeto!</div>
+        <div style="display:none" id="dialog-alert">Solicita&ccedil;&atilde;o Enviada com Sucesso</div>
+        <div style="display:none" id="produtoDesativado">N&atilde;o h&aacute; produtos cadastrados para este projeto!</div>
         <div style="display:none" id="pergunta">Seu projeto sofreu <?php echo $this->verificarReadequacao; ?>. Tem certeza que deseja enviar planilha?</div>
         <div id="menuContexto">
             <div class="top"></div>

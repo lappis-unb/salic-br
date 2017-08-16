@@ -43,7 +43,7 @@
             $codPronac .= $get->idPronac;
         }
 
-        $auth = Zend_Auth::getInstance();// instancia da autenticação
+        $auth = Zend_Auth::getInstance();// instancia da autentica&ccedil;&atilde;o
         $idusuario = $auth->getIdentity()->usu_codigo;
         ?>
 

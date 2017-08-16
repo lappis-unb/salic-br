@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_VerificarStatusDiligencia
 {
 	/**
-	 * Método para verificar o status da diligencia
+	 * M&eacute;todo para verificar o status da diligencia
 	 * @access public
 	 * @param integer $idPronac
 	 * @return string
@@ -51,6 +51,6 @@ class Zend_View_Helper_VerificarStatusDiligencia
 		else :
 			return 'D';
 		endif;
-	} // fecha método verificarStatusDiligencia()
+	} // fecha m&eacute;todo verificarStatusDiligencia()
 
 } // fecha class

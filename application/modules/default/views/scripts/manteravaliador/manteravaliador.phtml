@@ -2,7 +2,7 @@
 
 function incluir(){
 
-    document.getElementById("modalEditais").title = "Confirmação";
+    document.getElementById("modalEditais").title = "Confirma&ccedil;&atilde;o";
 
 	// modal com os ddos do dirigente
 	$("#modalEditais").dialog("destroy");
@@ -34,7 +34,7 @@ function excluir(idEdital, idAgente, cpf){
 	$("#idEdit").val(idEdital);
 	$("#idAgen").val(idAgente);
 	$("#cpf2").val(cpf);
-    document.getElementById("excluir").title = "Confirmação";
+    document.getElementById("excluir").title = "Confirma&ccedil;&atilde;o";
 
     $("#excluir").dialog("destroy");
     $("#excluir").dialog
@@ -93,11 +93,11 @@ $(document).ready(function(){
 				}
 			});
 			if(nome == false){
-				msgnome.html('Campo nome é obrigatório!');
+				msgnome.html('Campo nome &eacute; obrigatório!');
 				msgnome.css("color", "red");
 			}
 			if(email == false){
-				msgemail.html('Campo email é obrigatório!');
+				msgemail.html('Campo email &eacute; obrigatório!');
 				msgemail.css("color", "red");
 			}
 			if(nome && email){
@@ -156,7 +156,7 @@ $(document).ready(function(){
         	foreach ($testes as $blas){
         		$p[] = $blas['NrEdital'];
         	}        
-	        array_multisort($p, $testes); //Metodo de Ordenação
+	        array_multisort($p, $testes); //Metodo de Ordena&ccedil;&atilde;o
 	        //x($testes);
         	if($testes){
         		foreach ($testes as $ble){?>
@@ -207,7 +207,7 @@ $(document).ready(function(){
 	        	$t[] = $bla['NrEdital'];
 	        	
 	        }        
-	        array_multisort($t, $teste); //Metodo de Ordenação
+	        array_multisort($t, $teste); //Metodo de Ordena&ccedil;&atilde;o
 	        if($teste){
 		       	foreach ($teste as $bla){?>
 			        <tr>
@@ -225,7 +225,7 @@ $(document).ready(function(){
 	 <?php }else{?>
 	 <tr>
 			<br />
-				<div class="center" align="center">Não há Editais vinculados para "<?php echo $this->nomeAvaliador; ?>"</div>
+				<div class="center" align="center">N&atilde;o h&aacute; Editais vinculados para "<?php echo $this->nomeAvaliador; ?>"</div>
 			<br />	
 			<br />
 	</tr>

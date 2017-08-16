@@ -79,7 +79,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     public function validarAcessoAdmissibilidade()
     {
         if (empty($this->idPreProjeto)) {
-            parent::message("Necessário informar o n&uacute;mero da proposta.", "/admissibilidade/admissibilidade/listar-propostas", "ALERT");
+            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/admissibilidade/admissibilidade/listar-propostas", "ALERT");
         }
     }
 
@@ -1800,8 +1800,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     }
 
     /**
-     * ListarPropostas que vão ser avaliadas pelos tecnicos e Coordenadores de Admissibilidade.
-     * A proposta são divididas em 2 areas SAV e SEFIC.
+     * ListarPropostas que v&atilde;o ser avaliadas pelos tecnicos e Coordenadores de Admissibilidade.
+     * A proposta s&atilde;o divididas em 2 areas SAV e SEFIC.
      * Tecnico só pode ver a suas proprias propostas.
      *
      * @access public
@@ -2581,7 +2581,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $sqlSequencialProjetos = " INSERT INTO SAC.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
             $resultado = $db->query($sqlSequencialProjetos);
             if (!$resultado) {
-                throw new Exception ("Não é possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
+                throw new Exception ("N&atilde;o &eacute; possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
             }
         }
 
@@ -2636,7 +2636,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             }
 
-            # INSERIR INFORMAÇÕES NA TABELA CONTABANCARIA
+            # INSERIR INFORMA&ccedil;&otilde;ES NA TABELA CONTABANCARIA
             $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
                                  SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario}
                                    FROM SAC.dbo.PreProjeto
@@ -2647,7 +2647,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 throw new Exception ("N&atilde;o &eacute; poss&iacute;vel incluir mais de %d registros na ContaBancaria");
             }
 
-                # CARREGAR INFORMAÇÕES PARA ENVIAR EMAIL
+                # CARREGAR INFORMA&ccedil;&otilde;ES PARA ENVIAR EMAIL
                 $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
                                       idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),".$objInteressado->getDate().",111))";
                 $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);

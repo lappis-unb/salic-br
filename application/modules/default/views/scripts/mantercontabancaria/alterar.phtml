@@ -63,7 +63,7 @@
 
             if($('#campofalso').val() == ''){
                 $("#erro").dialog("destroy");
-                $("#erro").html("Informe uma agência válida!");
+                $("#erro").html("Informe uma agência v&aacute;lida!");
                 $("#erro").dialog({
                   resizable: false,
                         title: 'Alerta!',
@@ -100,7 +100,7 @@
             
             if(preenchimento) {
                 $("#erro").dialog("destroy");
-                $("#erro").html("Dados obrigátorios não informados.");
+                $("#erro").html("Dados obrig&aacute;torios n&atilde;o informados.");
                 $("#erro").dialog({
                   resizable: false,
                         title: 'Alerta!',
@@ -118,7 +118,7 @@
                 
                 if(igualidade){
                     $("#erro").dialog("destroy");
-                    $("#erro").html("As contas Capta&ccedil;&atilde;o e Movimento não podem ser iguais.");
+                    $("#erro").html("As contas Capta&ccedil;&atilde;o e Movimento n&atilde;o podem ser iguais.");
                     $("#erro").dialog({
                       resizable: false,
                             title: 'Alerta!',
@@ -160,7 +160,7 @@
                                 height:160,
                                 modal: true,
                                 buttons : {
-                              'Não' : function(){
+                              'N&atilde;o' : function(){
                                     $(this).dialog('close');
                                 },
                                     'Sim' : function(){
@@ -181,7 +181,7 @@
 <?php  endif; ?>
     <div id="erro"></div>
 
-        <!-- ========== INÍCIO FORMULÁRIO DE BUSCA ========== -->
+        <!-- ========== INÍCIO FORMUL&aacute;RIO DE BUSCA ========== -->
         <form class="form" name="formBuscar" id="formBuscar" method="post" action="<?php echo $this->url(array('controller' => 'mantercontabancaria', 'action' => 'salvar')); ?>">
             <table class="tabela">
                 <tr>
@@ -204,7 +204,7 @@
                 <tr>
                     <td class="destacar bold" align="left" style="width: 25%">Banco</td>
                     <td class="destacar bold" align="left" style="width: 25%">Agência <span class="required" style="color: red;">*</span></td>
-                    <td class="destacar bold" align="left" style="width: 25%">Captação <span class="required" style="color: red;">*</span></td>
+                    <td class="destacar bold" align="left" style="width: 25%">Capta&ccedil;&atilde;o <span class="required" style="color: red;">*</span></td>
                     <td class="destacar bold" align="left" style="width: 25%">Movimento</td>
                 </tr>
                 <tr>
@@ -217,7 +217,7 @@
                     </td>
                     <td>
                         <input type="text" class="input_simples obrigatorio" name="Agencia" id="Agencia" maxlength="5" value="<?php echo $this->DadosBancarios['Agencia']; ?>">
-                        <span class="sumir" id="AgenciaInvalida"><b style="color: red;">Agência inválida</b></span>
+                        <span class="sumir" id="AgenciaInvalida"><b style="color: red;">Agência inv&aacute;lida</b></span>
                     </td>
                     <td>
                         <input type="text" class="input_simples obrigatorio" name="ContaBloqueada" id="ContaBloqueada" onBlur="formatarContaBloqueada(12,this.value.length)" maxlength="12" value="<?php echo $this->DadosBancarios['ContaBloqueada']; ?>">
@@ -239,7 +239,7 @@
                 </tr>
             </table>
 
-            <!-- ========== FIM FORMULÁRIO DE BUSCA ========== -->
+            <!-- ========== FIM FORMUL&aacute;RIO DE BUSCA ========== -->
 
             <p align="center" style="margin-top: 10px;">
                 <input type="button" class="btn_salvar" />
@@ -345,9 +345,9 @@
 
 
 <?php  if($this->modal != "s"): ?>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />
 

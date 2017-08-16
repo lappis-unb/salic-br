@@ -2,9 +2,9 @@
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
     <div style="display:none" id="pergunta"><?php if ($this->existirPlanilhaCusto == 'ok') { ?>Seu projeto sofreu <?php echo $this->verificarReadequacao; ?>.<br /><br /><?php } ?>Tem certeza que deseja Enviar e Finalizar?</div>
-    <div style="display:none" id="validarPlan">Antes de enviar a solicitação é necessário cadastrar os Itens de Custos para os Produtos sem planilha orçamentária!</div>
-    <div style="display:none" id="dialog-alerta">Solicitação realizada com sucesso!</div>
-    <div style="display:none" id="dialog-em-analise">Há pedido de readequação em análise. Favor aguardar.</div>
+    <div style="display:none" id="validarPlan">Antes de enviar a solicita&ccedil;&atilde;o &eacute; necess&aacute;rio cadastrar os Itens de Custos para os Produtos sem planilha or&ccedil;ament&aacute;ria!</div>
+    <div style="display:none" id="dialog-alerta">Solicita&ccedil;&atilde;o realizada com sucesso!</div>
+    <div style="display:none" id="dialog-em-analise">H&aacute; pedido de readequa&ccedil;&atilde;o em an&aacute;lise. Favor aguardar.</div>
 
     <!-- início: conteúdo principal #container -->
     <div id="container">
@@ -27,7 +27,7 @@
                 $("#rodapeConteudo").css("margin-left", "225px");
                 $(".sanfonaDiv").css("clear", "both");
                 $(".sanfonaDiv").css("width", "91%");
-            } // fecha função layout_fluido()
+            } // fecha fun&ccedil;&atilde;o layout_fluido()
 
             $(document).ready(function()
             {
@@ -78,7 +78,7 @@
             </div>
         <?php } ?>
 
-        <?php if ($menu == "Com Menu" || $menu == "Botão") { ?>
+        <?php if ($menu == "Com Menu" || $menu == "Bot&atilde;o") { ?>
             <div id="menuContexto">
                 <div class="top"></div>
                 <div id="qm0" class="qmmc">
@@ -87,11 +87,11 @@
                     <a href="#" id="botaoProjetosConfigura" title="Projetos" class="abrir_fechar4">Projetos</a>
                     <div class="sanfonaDiv" style="width: 90%;">
                         <a href='#' id='abrir_fechar'>Produtos</a>
-                        <a href='#' class='abrir_fechar5'>Ficha Técnica</a>
-                        <a href='#' class='abrir_fechar6'>Local de Realização</a>
+                        <a href='#' class='abrir_fechar5'>Ficha T&eacute;cnica</a>
+                        <a href='#' class='abrir_fechar6'>Local de Realiza&ccedil;&atilde;o</a>
                         <a href='#' class='abrir_fechar7'>Nome do Projeto</a>
-                        <a href='#' class='abrir_fechar8'>Prorrogar Prazos de Execução</a>
-                        <a href='#' class='abrir_fechar9'>Prorrogar Prazos de Captação</a>
+                        <a href='#' class='abrir_fechar8'>Prorrogar Prazos de Execu&ccedil;&atilde;o</a>
+                        <a href='#' class='abrir_fechar9'>Prorrogar Prazos de Capta&ccedil;&atilde;o</a>
                         <a href='#' id='abrir_fechar2'>Proposta Pedagógica</a>
                     </div>
                     <?php if (count($this->buscaPlanilhaCusto) > 0) { ?>
@@ -101,12 +101,12 @@
                 <div class="sanfonaDiv"></div>
                 <div class="bottom"></div>
 
-                <?php if ($menu == "Botão") { ?>
+                <?php if ($menu == "Bot&atilde;o") { ?>
                     <div style='background:#f8f8f8; padding-top: 3.5em;'>
                         <ul id='menuGerenciar' style="border:0; width:auto;">
                             <li style="text-align: center;">
                                 <form name="Produto" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'incluirproduto')); ?>" method="post" style="text-align:center; margin:auto; width:auto; padding-left:3em;">
-                                    <!--<input type="button" id="menuFinal" value="Enviar Solicitação" class="btn" />-->
+                                    <!--<input type="button" id="menuFinal" value="Enviar Solicita&ccedil;&atilde;o" class="btn" />-->
                                     <input type="button" id="menuFinal" class="btn_enviar_solicitacao" />
                                     <input type="hidden" name="idpronac " value="<?php echo $idPronac; ?>" />
                                 </form>
@@ -124,7 +124,7 @@
         <?php } ?>
 
 
-        <?php /* if($menu=="Botão"){ ?>
+        <?php /* if($menu=="Bot&atilde;o"){ ?>
           <div id="menuContexto">
           <div class="top"></div>
           <div id="qm0" class="qmmc sanfona">
@@ -141,7 +141,7 @@
           <ul id='menuGerenciar' style="border:0; width:auto;">
           <li style="text-align: center;">
           <form name="Produto" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto','action' => 'incluirproduto')); ?>" method="post" style="text-align:center; margin:auto; width:auto; padding-left:3em;">
-          <input type="button" id="menuFinal" value="Enviar Solicitação" class="btn" />
+          <input type="button" id="menuFinal" value="Enviar Solicita&ccedil;&atilde;o" class="btn" />
           <input type="hidden" name="idpronac " value="<?php echo $idPronac; ?>" />
           </form>
           </li>
@@ -263,7 +263,7 @@
                                 closeOnEscape: true,
                                 autoOpen:true,
                                 buttons: {
-                                    'Não': function()
+                                    'N&atilde;o': function()
                                     {
                                         $(this).dialog('close');
                                         var idpronac = <?php echo $idPronac; ?>;
@@ -342,5 +342,5 @@
 
 </script>
 
-<!-- final: navegação local #qm0 -->
+<!-- final: navega&ccedil;&atilde;o local #qm0 -->
 <!-- ========== FIM MENU ========== -->

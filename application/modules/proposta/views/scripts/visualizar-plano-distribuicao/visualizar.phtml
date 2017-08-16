@@ -114,13 +114,13 @@
                                     <td class="right-align">{{ produto.qtGratuitaDivulgacao }}</td>
                                     <td class="right-align">{{ produto.qtGratuitaPatrocinador }}</td>
                                     <td class="right-align">{{ produto.qtGratuitaPopulacao }}</td>
-                                    <!--Preço Popular -->
+                                    <!--Pre&ccedil;o Popular -->
                                     <td class="right-align">{{ produto.qtPopularIntegral }}</td>
                                     <td class="right-align">{{ produto.qtPopularParcial }}</td>
                                     <td class="right-align">{{ produto.vlUnitarioPopularIntegral }}</td>
                                     <td class="right-align">{{ produto.vlReceitaPopularIntegral }}</td>
                                     <td class="right-align">{{ produto.vlReceitaPopularParcial }}</td>
-                                    <!--Preço Popular -->
+                                    <!--Pre&ccedil;o Popular -->
                                     <td class="right-align">{{ produto.qtProponenteIntegral }}</td>
                                     <td class="right-align">{{ produto.qtProponenteParcial }}</td>
                                     <td class="right-align">{{ produto.vlUnitarioProponenteIntegral }}</td>
@@ -141,13 +141,13 @@
                                 <td class="right-align"><b>{{ qtGratuitaDivulgacaoTotal }}</b></td>
                                 <td class="right-align"><b>{{ qtGratuitaPatrocinadorTotal }}</b></td>
                                 <td class="right-align"><b>{{ qtGratuitaPopulacaoTotal }}</b></td>
-                                <!--Preço Popular -->
+                                <!--Pre&ccedil;o Popular -->
                                 <td class="right-align"><b>{{ qtPopularIntegralTotal }}</b></td>
                                 <td class="right-align"><b>{{ qtPopularParcialTotal }}</b></td>
                                 <td> - </td>
                                 <td class="right-align"><b>{{ vlReceitaPopularIntegralTotal }}</b></td>
                                 <td class="right-align"><b>{{ vlReceitaPopularParcialTotal }}</b></td>
-                                <!--Fim: Preço Popular -->
+                                <!--Fim: Pre&ccedil;o Popular -->
                                 <td class="right-align"><b>{{ qtProponenteIntegralTotal }}</b></td>
                                 <td class="right-align"><b>{{ qtProponenteParcialTotal }}</b></td>
                                 <td> - </td>
@@ -208,7 +208,7 @@
         },
         abbreviations: {
             thousand: 'mil',
-            million: 'milhões',
+            million: 'milh&otilde;es',
             billion: 'b',
             trillion: 't'
         },
@@ -287,9 +287,9 @@ Vue.component('visualizar-plano-distribuicao', {
             "qtGratuitaDivulgacao" : 0,
             "qtGratuitaPatrocinador": 0,
             "qtGratuitaPopulacao": 0,
-            "vlUnitarioPopularIntegral": 0.0, // Preço popular: Preço Unitario do Ingresso
-            "qtPrecoPopularValorIntegral" : 0, //Preço Popular: Quantidade de Inteira
-            "qtPrecoPopularValorParcial": 0,//Preço Popular: Quantidade de meia entrada
+            "vlUnitarioPopularIntegral": 0.0, // Pre&ccedil;o popular: Pre&ccedil;o Unitario do Ingresso
+            "qtPrecoPopularValorIntegral" : 0, //Pre&ccedil;o Popular: Quantidade de Inteira
+            "qtPrecoPopularValorParcial": 0,//Pre&ccedil;o Popular: Quantidade de meia entrada
             "vlUnitarioProponenteIntegral": 0,
             "qtPopularIntegral": 0,
             "qtPopularParcial": 0,
@@ -302,15 +302,15 @@ Vue.component('visualizar-plano-distribuicao', {
     },
     props:['idpreprojeto','idplanodistribuicao', 'idmunicipioibge', 'iduf', 'disabled'],
     computed:{
-        // Limite: preço popular: Quantidade de Inteira
+        // Limite: pre&ccedil;o popular: Quantidade de Inteira
         qtPrecoPopularValorIntegralLimite: function() {
             return ((this.qtExemplares * 0.5)  - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) * 0.6 ;
         },
-        // Limite: preço popular: Quantidade de meia entrada
+        // Limite: pre&ccedil;o popular: Quantidade de meia entrada
         qtPrecoPopularValorParcialLimite: function () {
             return  ( ((this.qtExemplares * 0.5) - (parseInt(this.qtGratuitaDivulgacao) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao))) *0.4 );
         },
-        //Preço Popular: Valor da inteira
+        //Pre&ccedil;o Popular: Valor da inteira
         vlReceitaPopularIntegral: function() {
             if (this.radio == 'n') {
                 return parseInt(this.qtPopularIntegral) * parseFloat(this.vlUnitarioPopularIntegral);
@@ -358,7 +358,7 @@ Vue.component('visualizar-plano-distribuicao', {
             }
             return total;
         },
-        // Total de divulgação gratuita.
+        // Total de divulga&ccedil;&atilde;o gratuita.
         qtGratuitaDivulgacaoTotal: function(){
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
@@ -366,7 +366,7 @@ Vue.component('visualizar-plano-distribuicao', {
             }
             return total;
         },
-        // Total de divulgação Patrocinador
+        // Total de divulga&ccedil;&atilde;o Patrocinador
         qtGratuitaPatrocinadorTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++) {
@@ -374,7 +374,7 @@ Vue.component('visualizar-plano-distribuicao', {
             }
             return total;
         },
-        // Total de divulgação gratuita.
+        // Total de divulga&ccedil;&atilde;o gratuita.
         qtGratuitaPopulacaoTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++) {
@@ -382,7 +382,7 @@ Vue.component('visualizar-plano-distribuicao', {
             }
             return total;
         },
-        //Preço Popular: Quantidade de Inteira
+        //Pre&ccedil;o Popular: Quantidade de Inteira
         qtPopularIntegralTotal: function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
@@ -390,7 +390,7 @@ Vue.component('visualizar-plano-distribuicao', {
             }
             return total;
         },
-        //Preço Popular: Quantidade de mei entrada
+        //Pre&ccedil;o Popular: Quantidade de mei entrada
         qtPopularParcialTotal:function() {
             total = 0 ;
             for ( var i = 0 ; i < this.produtos.length ; i++){
@@ -466,25 +466,25 @@ Vue.component('visualizar-plano-distribuicao', {
                 this.qtGratuitaPopulacao = this.qtExemplares;
             }
         },
-        //Distribuição Gratuita: Divulgação
+        //Distribui&ccedil;&atilde;o Gratuita: Divulga&ccedil;&atilde;o
         qtGratuitaDivulgacao: function(val)  {
             if (this.radio == 'n'){
                 quantidade = this.qtExemplares * 0.1;
                 if(val > quantidade) {
-                    alert("Valor não pode passar de: "+quantidade);
+                    alert("Valor n&atilde;o pode passar de: "+quantidade);
                     this.qtGratuitaDivulgacao = this.qtExemplares * 0.1;
                 }
                 return;
             }
             this.qtGratuitaDivulgacao = 0;
         },
-        //Distribuição Gratuita: Patrocinador
+        //Distribui&ccedil;&atilde;o Gratuita: Patrocinador
         patrocinador: function(val)  {
             quantidade = this.qtExemplares * 0.1;
 
             if (this.radio == 'n') {
                 if(val > quantidade) {
-                    alert("Valor não pode passar de: "+quantidade);
+                    alert("Valor n&atilde;o pode passar de: "+quantidade);
                     this.qtGratuitaPatrocinador = this.qtExemplares * 0.1;
                 }
                 return;
@@ -494,7 +494,7 @@ Vue.component('visualizar-plano-distribuicao', {
         vlUnitarioPopularIntegral: function() {
             if (this.radio == 'n') {
                 if (this.vlUnitarioPopularIntegral > 50.00) {
-                    alert('O valor não pode ser maior que 50.00');
+                    alert('O valor n&atilde;o pode ser maior que 50.00');
                     this.vlUnitarioPopularIntegral = 50.00;
                 }
                 return;
@@ -504,7 +504,7 @@ Vue.component('visualizar-plano-distribuicao', {
         qtPrecoPopularValorIntegral: function(val){
             if (this.radio == 'n') {
                 if (this.qtPrecoPopularValorIntegral > this.qtPrecoPopularValorIntegralLimite) {
-                    alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorIntegralLimite);
+                    alert('O valor n&atilde;o pode ser maior que ' + this.qtPrecoPopularValorIntegralLimite);
                 }
                 return ;
             }
@@ -513,7 +513,7 @@ Vue.component('visualizar-plano-distribuicao', {
         qtPrecoPopularValorParcial: function(val){
             if (this.radio == 'n') {
                 if (this.qtPrecoPopularValorParcial > this.qtPrecoPopularValorParcialLimite) {
-                    alert('O valor não pode ser maior que ' + this.qtPrecoPopularValorParcialLimite);
+                    alert('O valor n&atilde;o pode ser maior que ' + this.qtPrecoPopularValorParcialLimite);
                 }
                 return;
             }
@@ -533,9 +533,9 @@ Vue.component('visualizar-plano-distribuicao', {
 
                 this.qtGratuitaDivulgacao = 0;
                 this.qtGratuitaPatrocinador = 0;
-                this.vlUnitarioPopularIntegral = 0.0; // Preço popular: Preço Unitario do Ingresso
-                this.qtPrecoPopularValorIntegral = 0; //Preço Popular: Quantidade de Inteira
-                this.qtPrecoPopularValorParcial =  0;//Preço Popular: Quantidade de meia entrada
+                this.vlUnitarioPopularIntegral = 0.0; // Pre&ccedil;o popular: Pre&ccedil;o Unitario do Ingresso
+                this.qtPrecoPopularValorIntegral = 0; //Pre&ccedil;o Popular: Quantidade de Inteira
+                this.qtPrecoPopularValorParcial =  0;//Pre&ccedil;o Popular: Quantidade de meia entrada
                 this.vlUnitarioProponenteIntegral =  0;
                 this.qtPopularIntegral = 0,
                 this.qtPopularParcial = 0;
@@ -576,12 +576,12 @@ Vue.component('visualizar-plano-distribuicao', {
             if (this.radio == 'n'){
                 quantidade = this.qtExemplares * 0.1;
                 if(val < quantidade) {
-                    alert("Valor não pode ser menor que: "+quantidade);
+                    alert("Valor n&atilde;o pode ser menor que: "+quantidade);
                     this.qtGratuitaPopulacao = this.qtExemplares * 0.1;
                 }
 
                 if((parseInt( this.qtGratuitaDivulgacao ) + parseInt(this.qtGratuitaPatrocinador) + parseInt(this.qtGratuitaPopulacao)) > (this.qtExemplares * 0.3)) {
-                    alert("A soma dos valores de divulgação, patrocinador e população não pode passar de 30%");
+                    alert("A soma dos valores de divulga&ccedil;&atilde;o, patrocinador e popula&ccedil;&atilde;o n&atilde;o pode passar de 30%");
                     this.$refs.patrocinador.focus();
                 }
             } else {

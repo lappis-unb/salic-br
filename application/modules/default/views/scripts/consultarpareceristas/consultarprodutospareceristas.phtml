@@ -117,7 +117,7 @@ $(document).ready(function(){
                         dados += data;
                         $("#parecerista").html(dados);
                     } else {
-                        var dados = '<option value=""> - Nenhum Parecerista para o Órgão Selecionado - </option>';
+                        var dados = '<option value=""> - Nenhum Parecerista para o Órg&atilde;o Selecionado - </option>';
                         $("#parecerista").html(dados);
                     }
                 }
@@ -230,7 +230,7 @@ function buscarPronac(v)
                 	<select name="filtro[tipo_produto]" class="input_simples" style="width: 250px;">
                 		<option value="0">Todos</option>
                 		<option value="1">Principal</option>
-                        <option value="0">Secundário</option>
+                        <option value="0">Secund&aacute;rio</option>
                     </select>
                 </td>
             </tr>
@@ -244,7 +244,7 @@ function buscarPronac(v)
                 </td>
            	</tr>
             <tr>
-            	<td width="150"><label for="periodo">Período da Análise</label></td>
+            	<td width="150"><label for="periodo">Período da An&aacute;lise</label></td>
             	<td width="150">
             		<select name="filtro[periodo]" id="periodo" class="input_simples" style="width: 250px;" onchange="datas(this.value);">
             			<option value="0">Todos</option>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Login e autenticação via REST
+ * Login e autentica&ccedil;&atilde;o via REST
  *
  * @version 1.1
  * @package application
@@ -59,7 +59,7 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
             if($buscar){
                 $result->usuario = Zend_Auth::getInstance()->getIdentity();
                 $result->authorization = $this->encryptAuthorization();
-                # Corrigi caracteres não utf8 para retornar dados da requisição corretamente.
+                # Corrigi caracteres n&atilde;o utf8 para retornar dados da requisi&ccedil;&atilde;o corretamente.
                 if($result->usuario && $result->usuario->Nome){
                     $result->usuario->Nome = utf8_encode($result->usuario->Nome);
                 }
@@ -77,12 +77,12 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
             }
         }
 
-        # Resposta da autenticação.
+        # Resposta da autentica&ccedil;&atilde;o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
 
     /**
-     * Gera a chave de acesso do usuï¿½rio para utilizar os serviços que precisam de identificação de usuário.
+     * Gera a chave de acesso do usuï¿½rio para utilizar os servi&ccedil;os que precisam de identifica&ccedil;&atilde;o de usu&aacute;rio.
      *
      * @return string
      */

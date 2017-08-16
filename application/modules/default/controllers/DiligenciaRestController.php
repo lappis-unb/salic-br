@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2016 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 class DiligenciaRestController extends Minc_Controller_AbstractRest {
 
@@ -31,7 +31,7 @@ class DiligenciaRestController extends Minc_Controller_AbstractRest {
             $diligencia->texto = html_entity_decode(utf8_encode($diligencia->texto), ENT_COMPAT, 'UTF-8');
         }
 
-        # Resposta do serviço.
+        # Resposta do servi&ccedil;o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($diligencia));
     }
     

@@ -251,7 +251,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->setIntegrityCheck(false);
         $slctNaoAnalisados->from(
                         array('dpc'=>$this->_name),
-                        array(new Zend_Db_Expr("'Não analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,'.$this->getDate().')'))
+                        array(new Zend_Db_Expr("'N&atilde;o analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,'.$this->getDate().')'))
                         ,$this->_schema
                      );
         $slctNaoAnalisados->joinInner(

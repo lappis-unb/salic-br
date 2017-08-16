@@ -1,7 +1,7 @@
 <script type="text/javascript">
     function retirarAcento(text) {
         var varString = text;
-        var stringAcentos = new String('àâêôûãõáéíóúçüÀÂÊÔÛÃÕÁÉÍÓÚÇÜ');
+        var stringAcentos = new String('&agrave;âêôû&atilde;&otilde;&aacute;&eacute;íóú&ccedil;ü&agrave;ÂÊÔÛ&atilde;&otilde;&aacute;&eacute;ÍÓÚ&ccedil;Ü');
         var stringSemAcento = new String('aaeouaoaeioucuAAEOUAOAEIOUCU');
 
         var i = new Number();
@@ -121,8 +121,8 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => ''), '', true); ?>" title="Ir para Relatorio">Gerar Relatório Análise</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">Início</a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => ''), '', true); ?>" title="Ir para Relatorio">Gerar Relatório An&aacute;lise</a></li>
         <li class="last">Proposta</li>
     </ul>
 </div>
@@ -216,8 +216,8 @@
                     <td align="left" colspan="2">
                         <select name="estado" style="width: 200px;" class="input_simples cmpDesabilitar">
                             <option value="">- Selecione -</option>
-                            <option value="enviada">Enviada ao MinC p/ avaliação</option>
-                            <option value="construcao">Proposta em construção</option>
+                            <option value="enviada">Enviada ao MinC p/ avalia&ccedil;&atilde;o</option>
+                            <option value="construcao">Proposta em constru&ccedil;&atilde;o</option>
                             <option value="diligenciada">Proposta diligenciada</option>
                             <option value="respondida">Diligência respondida</option>
                             <option value="arquivada">Proposta arquivada</option>
@@ -241,7 +241,7 @@
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

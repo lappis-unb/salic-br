@@ -177,13 +177,13 @@
                                         else{
                                             //$('#pareceratualizado').val($('#justificativa').val());
                                             $("#formEnviar").submit();
-                                            $("#tela").html("<br><br><br><br><br><center>Salvando informações, aguarde...<br><img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif' /></center><br>");
+                                            $("#tela").html("<br><br><br><br><br><center>Salvando informa&ccedil;&otilde;es, aguarde...<br><img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif' /></center><br>");
                                         }
                                     }
                                     else{
                                         //$('#pareceratualizado').val($('#justificativa').val());
                                         $("#formEnviar").submit();
-                                        $("#tela").html("<br><br><br><br><br><center>Salvando informações, aguarde...<br><img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif' /></center><br>");
+                                        $("#tela").html("<br><br><br><br><br><center>Salvando informa&ccedil;&otilde;es, aguarde...<br><img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif' /></center><br>");
                                     }
                                 }
                                 $('html').css('overflow', 'auto');
@@ -521,13 +521,13 @@
                 <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">O valor dos custos administrativos do projeto est&aacute;: <?php echo $this->formatarReal($this->verifica15porcento); ?> acima do permitido pela IN n&ordm; 1 de 05/10/2010 Artigo 24 Inciso V.<br /><br />Favor readequar para finalizar sua an&aacute;lise.</div><br>
             <?php }?>
             <?php if($this->totaldivulgacao == "true"){ ?>
-                <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">Custo de Divulgação/Comercialização superior a 20% do valor total do projeto.<br><br>Favor readequar os custos em <?php echo $this->formatarReal($this->valorReadequar20porcento); ?> para finalizar sua an&aacute;lise.</div>
+                <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total do projeto.<br><br>Favor readequar os custos em <?php echo $this->formatarReal($this->valorReadequar20porcento); ?> para finalizar sua an&aacute;lise.</div>
             <?php }?>
             <?php if($this->totalcaptacaorecurso == "true"){ ?>
-                <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">O Item "Remuneração para captação de recursos" está superior a 10% do valor total do projeto ou acima de R$100.000,00.<br><br>Favor readequar os custos em <?php echo $this->formatarReal($this->valorReadequar10porcento); ?> para finalizar sua an&aacute;lise.</div>
+                <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">O Item "Remunera&ccedil;&atilde;o para capta&ccedil;&atilde;o de recursos" est&aacute; superior a 10% do valor total do projeto ou acima de R$100.000,00.<br><br>Favor readequar os custos em <?php echo $this->formatarReal($this->valorReadequar10porcento); ?> para finalizar sua an&aacute;lise.</div>
             <?php }?>
     <?php //} elseif ( $this->totaldivulgacao == "true" and $this->parecerfavoravel != 'NAO') { ?>
-          <!--  <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">Aten&ccedil;&atilde;o! Custo de Divulgação/Comercialização superior a 20% do valor total do projeto.<br><br>Favor readequar os custos em <?php echo $this->formatarReal($this->valorReadequar20porcento); ?> para finalizar sua an&aacute;lise.</div> -->
+          <!--  <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">Aten&ccedil;&atilde;o! Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total do projeto.<br><br>Favor readequar os custos em <?php echo $this->formatarReal($this->valorReadequar20porcento); ?> para finalizar sua an&aacute;lise.</div> -->
     <?php } else {*/ ?>
             <br>
             <!--<table class="w1000" style="margin:auto;">-->
@@ -551,7 +551,7 @@
 
             <table class="tabela">
                 <tr align="center">
-                    <td class="destacar bold" colspan="2">Verificação de Limites Orçamentários</td>
+                    <td class="destacar bold" colspan="2">Verifica&ccedil;&atilde;o de Limites Or&ccedil;ament&aacute;rios</td>
                 </tr>
                 <?php foreach ($this->resultadoCheckList as $dsResultado) { ?>
                 <tr>

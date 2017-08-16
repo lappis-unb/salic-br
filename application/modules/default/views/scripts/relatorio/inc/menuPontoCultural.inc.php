@@ -54,7 +54,7 @@
     }
 </script>
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <?php
 
             $get = Zend_Registry::get("get");
@@ -77,7 +77,7 @@
             <div class="bottom"></div>
         </div>
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navega&ccedil;&atilde;o local #qm0 -->
    
 <div id="modalExcluirProposta" style="display:none"></div>
 <!-- ========== FIM MENU ========== -->

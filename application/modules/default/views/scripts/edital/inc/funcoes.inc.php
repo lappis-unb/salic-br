@@ -113,7 +113,7 @@ var formulario = {
                 case 'ALTERAR':
                     formulario.montarMensagem.inimensagem();
                     if(data.mensagem=='')
-                        formulario.montarMensagem.addmensagem('Alteração Realizada Com Sucesso!');
+                        formulario.montarMensagem.addmensagem('Altera&ccedil;&atilde;o Realizada Com Sucesso!');
                     else
                         formulario.montarMensagem.addmensagem(data.mensagem);
                     formulario.resetForm();
@@ -122,7 +122,7 @@ var formulario = {
                 case 'EXCLUIR':
                     formulario.montarMensagem.inimensagem();
                     if(data.mensagem=='')
-                        formulario.montarMensagem.addmensagem('Exclusão Realizada Com Sucesso!');
+                        formulario.montarMensagem.addmensagem('Exclus&atilde;o Realizada Com Sucesso!');
                     else
                         formulario.montarMensagem.addmensagem(data.mensagem);
                     formulario.resetForm();

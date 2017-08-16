@@ -64,7 +64,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
                                  'Pa.idPRONAC = Pr.IdPRONAC',
                             array("CASE WHEN Pa.ParecerFavoravel in ('2','3')
                                     THEN 'Sim'
-                                    ELSE 'Não'
+                                    ELSE 'N&atilde;o'
                                     End AS ParecerFavoravel",
                                     "Pa.idTipoAgente"
                                 ),'SAC.dbo'

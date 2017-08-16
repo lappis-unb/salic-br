@@ -21,7 +21,7 @@
         $("#rodapeConteudo").css("margin-left", "225px");
         $(".sanfonaDiv").css("clear", "both");
         $(".sanfonaDiv").css("width", "91%");
-    } // fecha função layout_fluido()
+    } // fecha fun&ccedil;&atilde;o layout_fluido()
 
     $(document).ready(function()
     {
@@ -36,8 +36,8 @@
 <div id="menuContexto">
     <div class="top"></div>
     <div id="qm0" class="qmmc sanfona">
-        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'edital', 'action' => 'informacao-geral', 'idEdital' => $this->idEdital), '', true); ?>" title="Informações gerais">Informações gerais</a>
-        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'edital', 'action' => 'criterios-avaliacao', 'idEdital' => $this->idEdital), '', true); ?>" title="Critérios de avaliação">Critérios de avaliação</a>
+        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'edital', 'action' => 'informacao-geral', 'idEdital' => $this->idEdital), '', true); ?>" title="Informa&ccedil;&otilde;es gerais">Informa&ccedil;&otilde;es gerais</a>
+        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'edital', 'action' => 'criterios-avaliacao', 'idEdital' => $this->idEdital), '', true); ?>" title="Crit&eacute;rios de avalia&ccedil;&atilde;o">Crit&eacute;rios de avalia&ccedil;&atilde;o</a>
     </div>
     <br clear="left" />
     <div class="bottom"></div>

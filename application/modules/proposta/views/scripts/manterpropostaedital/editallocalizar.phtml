@@ -2,10 +2,10 @@
     $(document).ready(function() {
         $(".data").datepicker({
             dateFormat: 'dd/mm/yy',
-            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+            dayNames: ['Domingo','Segunda','Ter&ccedil;a','Quarta','Quinta','Sexta','S&aacute;bado','Domingo'],
             dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom' ],
-            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','S&aacute;b','Dom' ],
+            monthNames: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
             monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
             nextText: 'Próximo',
             prevText: 'Anterior',
@@ -27,10 +27,10 @@
                 mensagem = 'Selecione 2 datas para o campo Data Edital';
             }
             if(($("#dtInicoInscricaoInicial").val() && !$("#dtInicoInscricaoFinal").val()) || (!$("#dtInicoInscricaoInicial").val() && $("#dtInicoInscricaoFinal").val())) {
-                mensagem = 'Selecione 2 datas para o campo Data Inicio Inscrição';
+                mensagem = 'Selecione 2 datas para o campo Data Inicio Inscri&ccedil;&atilde;o';
             }
             if(($("#dtFinalInscricaoInicial").val() && !$("#dtFinalInscricaoFinal").val()) || (!$("#dtFinalInscricaoInicial").val() && $("#dtFinalInscricaoFinal").val())) {
-                mensagem = 'Selecione 2 datas para o campo Dt.Fim Inscrição';
+                mensagem = 'Selecione 2 datas para o campo Dt.Fim Inscri&ccedil;&atilde;o';
             }
             if(!mensagem) {
                 $(".formulario").submit();
@@ -61,7 +61,7 @@
             </tr>
                   <tr class="fundo">
                 <td class="direita" colspan="1">
-                    <label for=""><b>Classificação </b></label>
+                    <label for=""><b>Classifica&ccedil;&atilde;o </b></label>
                 </td>
                 <td class="esquerda" colspan="1">
                     <input type="text" class="input_simples" name="Classificacao" id="Classificacao"  />
@@ -96,7 +96,7 @@
             </tr>
             <tr class="fundo">
                 <td class="direita" colspan="1">
-                    <label for="cep" ><b>Data Inicio Inscrição </b></label>
+                    <label for="cep" ><b>Data Inicio Inscri&ccedil;&atilde;o </b></label>
                 </td>
                 <td class="esquerda" colspan="1">
                     <input type="text" class="input_simples data" name="dtInicoInscricaoInicial" id="dtInicoInscricaoInicial" maxlength="10" />
@@ -106,7 +106,7 @@
             </tr>
             <tr class="fundo">
                 <td class="direita" colspan="1">
-                    <label for="cep" ><b>Dt.Fim Inscrição </b></label>
+                    <label for="cep" ><b>Dt.Fim Inscri&ccedil;&atilde;o </b></label>
                 </td>
                 <td class="esquerda" colspan="1">
                     <input type="text" class="input_simples data" name="dtFinalInscricaoInicial" id="dtFinalInscricaoInicial" maxlength="10" />

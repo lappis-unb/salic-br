@@ -15,12 +15,12 @@
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
     <fieldset>
-        <legend> Passo 2 - Definir informações gerais do Edital</legend>
+        <legend> Passo 2 - Definir informa&ccedil;&otilde;es gerais do Edital</legend>
         <div id="criteriosAvaliacao" class="">
             <table class="tabela">
                 <tr>
                     <td class="bold w150 esquerdo">
-                        Reutilizar Critérios de Avalição
+                        Reutilizar Crit&eacute;rios de Avali&ccedil;&atilde;o
                     </td>
                     <td>
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/botaoReutilizar.png" style="cursor: pointer;" onclick="JSReutilizar()"/>&nbsp;&nbsp;</th>  
@@ -38,10 +38,10 @@
                 <input type="hidden" name="idCriterioAvaliacao" id="idCriterioAvaliacao" value="<?php echo $this->idCriterioAvaliacao; ?>" />
                 <table class="tabela" id="tbCriterioAvaliacao">
                     <tr>
-                        <th colspan="8" style="font-size: 14px">Critérios de Avali&ccedil;&atilde;o</th>
+                        <th colspan="8" style="font-size: 14px">Crit&eacute;rios de Avali&ccedil;&atilde;o</th>
                     </tr>
                     <tr>
-                        <td class="destacar bold w150 esquerdo">Critério de Avali&ccedil;&atilde;o <span style="color: red;">*</span></td>
+                        <td class="destacar bold w150 esquerdo">Crit&eacute;rio de Avali&ccedil;&atilde;o <span style="color: red;">*</span></td>
                         <td colspan="4">
                             <input maxlength="200" type="text" name="nomeCriterio" id="nmCriterioAvaliacao" class="input_simples w400 required"><br/>
                             <label id="msgErrorNomeCriterio" class="error"></label>
@@ -79,7 +79,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="destacar bold w150 esquerdo">Texto de ajuda do critério de Avalia&ccedil;&atilde;o (opcional)</td>
+                        <td class="destacar bold w150 esquerdo">Texto de ajuda do crit&eacute;rio de Avalia&ccedil;&atilde;o (opcional)</td>
                         <td colspan="7"><textarea style="width: 99%; height: 150px" maxlength="490" name="txtCriterio" id="txCriterioAvaliacao" class="input_simples w400"></textarea></td>
                     </tr>
                     <tr>
@@ -100,16 +100,16 @@
                 <?php if ($this->qtdCriterioAvaliacao == 0): ?>
                     <table class="tabela">
                         <tr>
-                            <td class="centro"><em>Nenhum critério de avaliação cadastrado!</em></td>
+                            <td class="centro"><em>Nenhum crit&eacute;rio de avalia&ccedil;&atilde;o cadastrado!</em></td>
                         </tr>
                     </table>
                 <?php else: ?>
                     <table class="tabela">
                         <tr>
-                            <th colspan="9">Critérios de Avaliaç&Atilde;o adicionados</th>
+                            <th colspan="9">Crit&eacute;rios de Avalia&ccedil;&Atilde;o adicionados</th>
                         </tr>
                         <tr>
-                            <td class="destacar bold">Critério</td>
+                            <td class="destacar bold">Crit&eacute;rio</td>
                             <td class="destacar bold">Peso</td>
                             <td class="destacar bold">Nota Inicial</td>
                             <td class="destacar bold">Nota Final</td>
@@ -141,7 +141,7 @@
                                     <span class="textoDeAjuda" style="cursor: pointer;" txt="<?php echo $ca['txCriterioAvaliacao']; ?>"><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png"></span>
                                 </td>  
                                 <td style="vertical-align: top;">
-                                    <?php echo ($ca['stDesempate']) ? 'Sim' : 'Não'; ?>
+                                    <?php echo ($ca['stDesempate']) ? 'Sim' : 'N&atilde;o'; ?>
                                 </td>
                                 <td style="vertical-align: top;">
                                     <?php 
@@ -154,7 +154,7 @@
 
                                         $i++;
                                     ?>
-                                    <?php echo ($ca['orDesempate']) != '0' ? 'Sim' : 'Não'; ?>
+                                    <?php echo ($ca['orDesempate']) != '0' ? 'Sim' : 'N&atilde;o'; ?>
                                 </td>
                                 <td nowrap class="centro">
                                     <input type="button" class="btn_editar" onclick="editarCriterio('<?php echo $ca['idCriterioAvaliacao']; ?>');" />
@@ -176,10 +176,10 @@
     <input type="hidden" id="idarrayordem" value="<?php echo $numerosOrdem; ?>" />
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
-<!-- ========== INï¿½CIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="txtdialog" title="Texto de Ajuda" style="display: none;">
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />
 
 <script type="text/javascript">
@@ -269,27 +269,27 @@
 
             if(ordems != '[]'){
                 if(in_array(orDesempate, ordems)){
-                    $('#txtmsg').append('Ordem de desempate não pode se repetir!<br />');
+                    $('#txtmsg').append('Ordem de desempate n&atilde;o pode se repetir!<br />');
                     $('#msg').show();
                     enviar = 1;
                 }
             }
             
             if (parseFloat(notaFim) < parseFloat(notaInicio)) {
-                $('#txtmsg').append('A Nota Final não pode ser menor que a Nota Inicial!<br />');
+                $('#txtmsg').append('A Nota Final n&atilde;o pode ser menor que a Nota Inicial!<br />');
                 $('#msg').show();
                 enviar = 1;
             }
 
             if ((nrPeso == '0') || (nrPeso == '00') || (nrPeso == '000')) {
-                $('#txtmsg').append('Peso não pode ser igual a 0<br />');
+                $('#txtmsg').append('Peso n&atilde;o pode ser igual a 0<br />');
                 $('#msg').show();
                 enviar = 1;
             }
             
             
             if ((varNota == '0') || (varNota == '00') || (varNota == '000') || (varNota == '0000')) {
-                $('#txtmsg').append('Variação da Nota não pode ser igual a 0<br />');
+                $('#txtmsg').append('Varia&ccedil;&atilde;o da Nota n&atilde;o pode ser igual a 0<br />');
                 $('#msg').show();
                 enviar = 1;
             }
@@ -398,7 +398,7 @@
 
     function excluir(id) {
         $("#alerta").dialog("destroy");
-        $("#alerta").html("Tem certeza que deseja excluir o critério de avaliação?");
+        $("#alerta").html("Tem certeza que deseja excluir o crit&eacute;rio de avalia&ccedil;&atilde;o?");
         $("#alerta").dialog({
             resizable: false,
             title: 'Alerta!',
@@ -406,7 +406,7 @@
             height: 170,
             modal: true,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $(this).dialog('close');
                 },
                 'Sim': function() {

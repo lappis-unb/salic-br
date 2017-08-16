@@ -5,10 +5,10 @@
     $(document).ready(function(){
         $('.dataPicker').datepicker({
             dateFormat: 'dd/mm/yy',
-            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+            dayNames: ['Domingo','Segunda','Ter&ccedil;a','Quarta','Quinta','Sexta','S&aacute;bado','Domingo'],
             dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom' ],
-            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','S&aacute;b','Dom' ],
+            monthNames: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
             monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
             nextText: 'Próximo',
             prevText: 'Anterior'
@@ -75,7 +75,7 @@
         });
 
         //********************
-        //SE O USUÁRIO OPTAR POR FILTRAR PELO CAMPO DE PRONAC, O MESMO DESABILITA A OBRIGATORIEDADE DO CAMPO ESTADO.
+        //SE O USU&aacute;RIO OPTAR POR FILTRAR PELO CAMPO DE PRONAC, O MESMO DESABILITA A OBRIGATORIEDADE DO CAMPO ESTADO.
         $('#pronac').keyup(function(){
             var campo = $(this);
             if(campo.val().length > 0){

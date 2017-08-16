@@ -122,7 +122,7 @@
             alertar('Informe o Cargo do Coordenador');
             return false;
         } else if(nmSecretario == ''){
-            alertar('Informe o nome do secretário');
+            alertar('Informe o nome do secret&aacute;rio');
             return false;
         } else {
 
@@ -174,9 +174,9 @@
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
     <?php if($this->grupo == 93){ ?>
-    <div>Enviar para Pagamento <span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span></div>
+    <div>Enviar para Pagamento <span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span></div>
      <?php } else { ?>
-    <div>Gerar Memorando de Pagamento <span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span></div>
+    <div>Gerar Memorando de Pagamento <span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span></div>
      <?php } ?>
 </div>
 <!-- ========== INÍCIO CONTEÚDO ========== -->
@@ -191,7 +191,7 @@
     <form id="form137" action="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'gerarmemorando')); ?>" method="POST">
         <table class="tabela">
             <tr>
-                <td align="center" class="fundo_linha3"><b style="color: green"> É PERMITIDO GERAR MEMORANDO DE APENAS UM PARECERISTA POR VEZ!</b></td>
+                <td align="center" class="fundo_linha3"><b style="color: green"> &eacute; PERMITIDO GERAR MEMORANDO DE APENAS UM PARECERISTA POR VEZ!</b></td>
             </tr>
         </table>
 
@@ -213,12 +213,12 @@
                     <input type="text" name="cargoCoordenador" id="cargoCoordenador" value="Coordenador" class="input_simples" size="40" />
                 </td>
                 <td>
-                    <label for="nmSecretario">Secretário</label><br />
+                    <label for="nmSecretario">Secret&aacute;rio</label><br />
                     <input type="text" name="nmSecretario" id="nmSecretario" value="Henilton Parente de Menezes" class="input_simples" size="40" />
                 </td>
                 <td>
-                    <label for="nmSecretario">Cargo Secretário</label><br />
-                    <input type="text" name="cargoSecretario" id="cargoSecretario" value="Secretário" class="input_simples" size="40" />
+                    <label for="nmSecretario">Cargo Secret&aacute;rio</label><br />
+                    <input type="text" name="cargoSecretario" id="cargoSecretario" value="Secret&aacute;rio" class="input_simples" size="40" />
                 </td>
             </tr>
         </table>
@@ -272,11 +272,11 @@
         </tr>
     </table>
     </form>
-        <!--===============================================================PAGINAÇÂO============================================================================================-->
+        <!--===============================================================PAGINA&ccedil;ÂO============================================================================================-->
 
-<!-- ========== PAGINAÇ?O ========== -->
+<!-- ========== PAGINA&ccedil;?O ========== -->
 <?php if($this->qtdDocumentos > 5){ echo "<p>" . $this->dadospainel . "</p>"; } ?>
-<!-- ========== FIM PAGINAÇ?O ========== -->
+<!-- ========== FIM PAGINA&ccedil;?O ========== -->
 
 <?php } else { ?>
     <table class="tabela">
@@ -289,7 +289,7 @@
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

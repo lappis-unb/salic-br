@@ -35,7 +35,7 @@
             modal: true,
             autoOpen:false,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $(this).dialog('close');
                 },
                 'Sim': function() {
@@ -67,7 +67,7 @@
             modal: true,
             autoOpen:false,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $(this).dialog('close');
                 },
                 'Sim': function() {
@@ -129,7 +129,7 @@
                 <td class="destacar bold" width="70">Situa&ccedil;&atilde;o</td>
                 <td>
                     <select name="situacao" style="width: 180px; margin-right: 15px;" class="input_simples">
-                        <option value="aprovacaoInicial">Aprovação inicial</option>
+                        <option value="aprovacaoInicial">Aprova&ccedil;&atilde;o inicial</option>
                         <option value="complementacao" <?php echo $this->filtro=='complementacao'?'selected="selected"':''; ?>>Complementa&ccedil;&atilde;o</option>
                         <option value="prorrogacao" <?php echo $this->filtro=='prorrogacao'?'selected="selected"':''; ?>>Prorroga&ccedil;&atilde;o</option>
                         <option value="reducao" <?php echo $this->filtro=='reducao'?'selected="selected"':''; ?>>Redu&ccedil;&atilde;o</option>
@@ -172,12 +172,12 @@
         <tr class="destacar bold">
             <td>Pronac</td>
             <td>Nome do Projeto</td>
-            <td>Dt. Início Execução</td>
-            <td>Dt. Fim Execução</td>
-            <td>Dt. Início Captação</td>
-            <td>Dt. Fim Captação</td>
+            <td>Dt. Início Execu&ccedil;&atilde;o</td>
+            <td>Dt. Fim Execu&ccedil;&atilde;o</td>
+            <td>Dt. Início Capta&ccedil;&atilde;o</td>
+            <td>Dt. Fim Capta&ccedil;&atilde;o</td>
             <?php if($this->filtro == 'readequacao'){ ?>
-            <td>Tipo Readequação</td>
+            <td>Tipo Readequa&ccedil;&atilde;o</td>
             <?php } ?>
         </tr>
         <?php foreach ($this->projetosPublicados as $p){ ?>

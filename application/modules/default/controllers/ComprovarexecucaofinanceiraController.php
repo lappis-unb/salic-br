@@ -709,7 +709,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
             #Este Campo sempre ï¿½ Preenchido, porem quando se tenta enviar um arquivo muito grande A Requisiï¿½ï¿½o se perde
             #Podemos identificar esta perda pelo campo de pais.
             if (empty($pais)) {
-                throw new Exception('Por favor inserir um arquivo com tamanho mÃ¡ximo de 5MB."');
+                throw new Exception('Por favor inserir um arquivo com tamanho m&aacute;ximo de 5MB."');
             }
 
             $arquivoModel = new ArquivoModel();
@@ -826,7 +826,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
                 if($_FILES['arquivo']['name'] != '') {
                     $comprovantePagamentoModel->atualizar(4, true);
                 } else {
-                    // nao atualiza arquivo se não houver novo upload
+                    // nao atualiza arquivo se n? houver novo upload
                     $comprovantePagamentoModel->atualizar(4);                               
                 } 
 
@@ -862,7 +862,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
                 if($_FILES['arquivoInternacional']['name'] != '') {
                     $comprovantePagamentoModel->atualizar(4, true);
                 } else {
-                    // nao atualiza arquivo se não houver novo upload
+                    // nao atualiza arquivo se n? houver novo upload
                     $comprovantePagamentoModel->atualizar(4);                               
                 } 
             }
@@ -2634,8 +2634,8 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
 
  
      /**
-      * Função criada a pedido da Área Finalistica em 13/04/2016
-      * @author: Fernão Lopes Ginez de Lara
+      * Fun?o criada a pedido da ?rea Finalistica em 13/04/2016
+      * @author: Fern? Lopes Ginez de Lara
       * @access public
       * @param void
       * @return void
@@ -2666,7 +2666,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         } catch (Exception $e) {
             $message = $e->getMessage();
             if (strpos($e->getMessage(), 'DateTime::__construct()') !== false) {
-                $message = 'Não foi possível enviar os comprovantes de pagamento!';
+                $message = 'N? foi poss?el enviar os comprovantes de pagamento!';
             }
             $this->view->message = $message;
             $this->view->message_type = 'ERROR';

@@ -64,7 +64,7 @@
     <div style="width:100%; margin: 0 auto;">
         <table class="tabela" summary=" ">
             <tr>
-                <th width="90%" style="text-align:left; padding-left:2%" colspan="2">TIPOS DE READEQUAÇÕES</th>
+                <th width="90%" style="text-align:left; padding-left:2%" colspan="2">TIPOS DE READEQUA&ccedil;&otilde;ES</th>
                 <th width="10%" align="center">Quantidade de Projetos</th>
             </tr>
         </table>
@@ -88,7 +88,7 @@
                 <tr>
                     <th width="7%" align="center">PRONAC</th>
                     <th width="37%" style="text-align:left;">Nome do projeto</th>
-                    <th width="20%" align="center">Área / Segmento</th>
+                    <th width="20%" align="center">&aacute;rea / Segmento</th>
                     <th width="5%" align="center">Qtd de dias</th>
                     <th width="8%" align="center">Data de Recebimento</th>
                     <th width="5%" align="center">Estado(s)</th>
@@ -104,7 +104,7 @@
                     <td style="text-align:left;"><?php echo $AguardAnalise10->NomeProjeto; ?></td>
                     <td align="center"><?php echo $AguardAnalise10->areaDesc." / ".$AguardAnalise10->segmentoDesc; ?></td>
                     <td align="center"><?php if($AguardAnalise10->DataEnvio==''){echo '';} else { ?>  <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise10->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-                    <td align="center"><?php if($AguardAnalise10->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise10->DataEnvio,'brasileiro');} ?></td>
+                    <td align="center"><?php if($AguardAnalise10->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise10->DataEnvio,'brasileiro');} ?></td>
                     <td align="center">
                         <?php foreach($this->UFs as $UFs): ?>
                         <?php if($AguardAnalise10->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -131,13 +131,13 @@
         </div>
     </div>
     <br />
-    <p align="center" style="font-weight: bold">TOTAL DE SOLICITAÇÕES: <?php echo $this->AguardAnaliseQNTD; ?></p>
+    <p align="center" style="font-weight: bold">TOTAL DE SOLICITA&ccedil;&otilde;ES: <?php echo $this->AguardAnaliseQNTD; ?></p>
     <br />
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

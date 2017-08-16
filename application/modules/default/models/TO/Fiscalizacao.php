@@ -39,37 +39,37 @@ class Fiscalizacao{
 		return $this->observacao;
 	}
 	
-	// Esta função tem por objetivo instancia o objeto Projeto
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto Projeto
 	public function setProjeto (Projeto $projeto)
 	{
 		$this->projeto = $projeto;
 	}
 
-	// Esta função tem por objetivo instancia o objeto Arquivo
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto Arquivo
 	public function setArquivo (Arquivo $arquivo)
 	{
 		$this->arquivo = $arquivo;
 	}
 	
-	// Esta função tem por objetivo instancia o objeto Agente
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto Agente
 	public function setAgente (Agente $agente)
 	{
 		$this->agente = $agente;
 	}
 	
-	// Esta função tem por objetivo instancia o objeto TipologiaFiscalizacao
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto TipologiaFiscalizacao
 	public function setTipologiaFiscalizacao (TipologiaFiscalizacao $tipologiafiscalizacao)
 	{
 		$this->fipologiafiscalizacao = $tipologiafiscalizacao;
 	}	
 	
-	// Esta função tem por objetivo instancia o objeto EstadoFiscalizacao 
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto EstadoFiscalizacao 
 	public function setEstadoFiscalizacao (EstadoFiscalizacao $estadofiscalizacao)
 	{
 		$this->estadofiscalizacao = $estadofiscalizacao;
 	}
 	
-	// Esta função tem por objetivo instancia o objeto Orgão
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto Org&atilde;o
 	public function setOrgao (Orgao $orgao)
 	{
 		$this->orgao = $orgao;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstração da tabela SAC.dbo.tbMensagemDispositivoMovel
+ * Abstra&ccedil;&atilde;o da tabela SAC.dbo.tbMensagemDispositivoMovel
  *
  * @author rafael.gloria@cultura.gov.br
  */

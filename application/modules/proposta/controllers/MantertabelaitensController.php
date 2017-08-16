@@ -171,7 +171,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                     $associaritem = new MantertabelaitensDAO();
                     $associaritem = $associaritem->associarItemObj($dadosassociar);
                     if ($associaritem) {
-                        parent::message("A solicitação foi encaminhada ao Minc. Aguarde a resposta!", "/proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+                        parent::message("A solicita&ccedil;&atilde;o foi encaminhada ao Minc. Aguarde a resposta!", "/proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
                     }
                 }else if ($solicitacao == 'novoitem');
                 {

@@ -156,7 +156,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initView()
     {
-        /* configuraççes do layout padrão do sistema */
+        /* configura&ccedil;&ccedil;es do layout padr&atilde;o do sistema */
         Zend_Layout::startMvc(array(
                 'layout'     => 'layout',
                 'layoutPath' => APPLICATION_PATH.'/layout/',
@@ -256,7 +256,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     public function _initLayouts()
     {
-        /* configuraççes do layout padrão do sistema */
+        /* configura&ccedil;&ccedil;es do layout padr&atilde;o do sistema */
 //        Zend_Layout::startMvc(array(
 //            'layout'     => 'layout',
 //            'layoutPath' => APPLICATION_PATH.'/layout/',

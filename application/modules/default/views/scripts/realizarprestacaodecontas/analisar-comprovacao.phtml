@@ -21,7 +21,7 @@ function mascara($mask,$str){
         <?php if ($this->grupoAtivo != 121) { //Tecnico de Acompanhamento ?>
             <li class=""><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'tecnicoprestacaocontas'));?>">Analisar presta&ccedil;&atilde;o de contas</a></li>
         <?php } ?>
-        <li class=""><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac' => $this->projeto->IdPRONAC, 'idPlanilhaAprovacao' => $this->projeto->idPlanilhaAprovacao, 'idPlanilhaItem' => $this->projeto->idPlanilhaItens), '', true); ?>">Planilha or&ccedil;amentária comprovada</a></li>
+        <li class=""><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac' => $this->projeto->IdPRONAC, 'idPlanilhaAprovacao' => $this->projeto->idPlanilhaAprovacao, 'idPlanilhaItem' => $this->projeto->idPlanilhaItens), '', true); ?>">Planilha or&ccedil;ament&aacute;ria comprovada</a></li>
         <li class="last">Analisar item</li>
     </ul>
 </div>
@@ -158,7 +158,7 @@ function mascara($mask,$str){
                 <td>R$ <?php echo number_format($this->projeto->vlAprovado, 2, ',', '.');?></td>
                 <td class="destacar" align="right"><b>Valor Comprovado:</b></td>
                 <td>R$ <?php echo number_format($vlcpTotal, 2, ',', '.');?></td>
-                <td class="destacar" align="right"><b>Comprovação Validada:</b></td>
+                <td class="destacar" align="right"><b>Comprova&ccedil;&atilde;o Validada:</b></td>
                 <td>R$ <?php echo number_format($this->projeto->vlComprovado, 2, ',', '.');?></td>
             </tr>
         </tbody>
@@ -222,7 +222,7 @@ function mascara($mask,$str){
                             <?php
                                 switch ($comprovante->tpFormaDePagamento) {
                                     case 1: echo 'Cheque'; break;
-                                    case 2: echo 'Transferência Bancária'; break;
+                                    case 2: echo 'Transferência Banc&aacute;ria'; break;
                                     case 3: echo 'Saque/Dinheiro'; break;
                                 }
                             ?>
@@ -257,7 +257,7 @@ function mascara($mask,$str){
                                     value="1"
                                     <?php echo 1 == $comprovante->stItemAvaliado ? 'checked="checked"': ''; ?>
                                     >
-                                <label for="situacao-1-<?php echo $comprovanteNodeId; ?>">Comprovação validada</label><br>
+                                <label for="situacao-1-<?php echo $comprovanteNodeId; ?>">Comprova&ccedil;&atilde;o validada</label><br>
                                 <input
                                     type="radio"
                                     id="situacao-3-<?php echo $comprovanteNodeId; ?>"
@@ -265,11 +265,11 @@ function mascara($mask,$str){
                                     value="3"
                                     <?php echo 3 == $comprovante->stItemAvaliado ? 'checked="checked"': ''; ?>
                                     >
-                                <label for="situacao-3-<?php echo $comprovanteNodeId; ?>">Comprovação recusada</label><br>
+                                <label for="situacao-3-<?php echo $comprovanteNodeId; ?>">Comprova&ccedil;&atilde;o recusada</label><br>
                         </td>
                     </tr>
                     <tr>
-                        <td class="destacar" align="right"><b>Ocorrência do Técnico</b></td>
+                        <td class="destacar" align="right"><b>Ocorrência do T&eacute;cnico</b></td>
                         <td colspan="5">
                                 <textarea
                                     name="comprovantePagamento[<?php echo $comprovante->idPlanilhaAprovacao; ?>][observacao]"
@@ -307,7 +307,7 @@ function mascara($mask,$str){
 <br clear="all" />
 
 <div id="rodapeConteudo" ><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />
 
 <style>

@@ -14,7 +14,7 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
     function encaminharProjetoParaAssinatura() {
 
         if(!$this->idPronac) {
-            throw new Exception("Identificador do Projeto não informado.");
+            throw new Exception("Identificador do Projeto n&atilde;o informado.");
         }
 
         $objTbProjetos = new Projeto_Model_DbTable_Projetos();

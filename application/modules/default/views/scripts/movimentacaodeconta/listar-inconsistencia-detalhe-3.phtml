@@ -13,7 +13,7 @@ function JSCadastarIncentivador(cpfCnpj, element) {
         data : {cpf : cpfCnpj, caminho: "", modal : "s", modulo : "movimentacaobancaria"},
         success: function(data){
             $('#divDinamicaAgentes').html(data.error ? data.msg : data);
-//            $(element).replaceWith("<font color='green'>[Correção enviada]</font>");
+//            $(element).replaceWith("<font color='green'>[Corre&ccedil;&atilde;o enviada]</font>");
         },
         complete: function() {
             $("#resultadoFinalizar").html("");
@@ -56,7 +56,7 @@ function JSVerificaIncentivador(cpfCnpj, element, event) {
         dataType : 'json',
         success: function(data){
             if (data.existe) {
-                $(element).replaceWith("<font color='green'>[Correção enviada]</font>");
+                $(element).replaceWith("<font color='green'>[Corre&ccedil;&atilde;o enviada]</font>");
             }
             if (event) {
             	JSCadastarIncentivador(cpfCnpj, element);

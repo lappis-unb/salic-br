@@ -53,7 +53,7 @@
                                 if ($this->infoProjeto[0]->dtInicioFiscalizacaoProjeto != '') {
                                     echo date('d/m/Y', strtotime($this->infoProjeto[0]->dtInicioFiscalizacaoProjeto));
                                 } else {
-                                    echo 'Não informado';
+                                    echo 'N&atilde;o informado';
                                 }
                             ?>
                         </td>
@@ -63,7 +63,7 @@
                                 if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') {
                                     echo date('d/m/Y', strtotime($this->infoProjeto[0]->dtFimFiscalizacaoProjeto));
                                 } else {
-                                    echo 'Não informado';
+                                    echo 'N&atilde;o informado';
                                 }
                             ?>
                         </td>
@@ -86,7 +86,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="destacar" align="center"><b>Identificaç&atilde;o do T&eacute;cnico</b></td>
+                        <td colspan="2" class="destacar" align="center"><b>Identifica&ccedil;&atilde;o do T&eacute;cnico</b></td>
                     </tr>
                     <tr>
                         <td>
@@ -100,7 +100,7 @@
                     </tr>
                     <tr>
                         <td colspan="2"><b>Dados para Fiscaliza&ccedil;&atilde;o</b><br>
-                            <?php echo!empty($this->infoProjeto[0]->dsFiscalizacaoProjeto) ? $this->infoProjeto[0]->dsFiscalizacaoProjeto : 'Não informado'; ?>
+                            <?php echo!empty($this->infoProjeto[0]->dsFiscalizacaoProjeto) ? $this->infoProjeto[0]->dsFiscalizacaoProjeto : 'N&atilde;o informado'; ?>
                         </td>
                     </tr>
                 </table>
@@ -116,7 +116,7 @@
                     </tr>
                     <?php if ($value->CNPJCPF) { ?>
                     <tr>
-                        <td colspan="2" class="destacar" align="center"><b>Identificaç&atilde;o do Parecerista</b></td>
+                        <td colspan="2" class="destacar" align="center"><b>Identifica&ccedil;&atilde;o do Parecerista</b></td>
                     </tr>
                     <tr>
                         <td>
@@ -131,7 +131,7 @@
                     <?php } ?>
                     <tr>
                         <td colspan="2"><b>Observa&ccedil;&atilde;o</b><br>
-                            <?php echo!empty($value->dsObservacao) ? $value->dsObservacao : 'Não informado'; ?>
+                            <?php echo!empty($value->dsObservacao) ? $value->dsObservacao : 'N&atilde;o informado'; ?>
                         </td>
                     </tr>
                 </table>
@@ -143,60 +143,60 @@
     <br clear="all"/>
     
     
-    <!-- =======================   INICIO DOS DADOS DA FISCALIZAÇ?O ===================================>-->
+    <!-- =======================   INICIO DOS DADOS DA FISCALIZA&ccedil;?O ===================================>-->
     <?php $y = 1;
     // INICIO RELATORIO
     if (!$this->email) { if (count($relatorio)) { ?>
     <table class="tabela">
         <tr>
-            <td class="destacar" align="center"><b>Fiscalizaç&atilde;o Conclu&iacute;da para Parecer</b></td>
+            <td class="destacar" align="center"><b>Fiscaliza&ccedil;&atilde;o Conclu&iacute;da para Parecer</b></td>
         </tr>
     </table>
             
     <table class="tabela">
-        <!-- ************************************** Resumo da Execuç&atilde;o ************************************ -->
+        <!-- ************************************** Resumo da Execu&ccedil;&atilde;o ************************************ -->
         <tr>
-            <td colspan="3" class="destacar" align="center"><b>Resumo da Execuç&atilde;o</b></td>
+            <td colspan="3" class="destacar" align="center"><b>Resumo da Execu&ccedil;&atilde;o</b></td>
         </tr>
         <tr>
             <td colspan="3">
                 <fieldset>
-                    <legend><?php echo $y++.'.'; ?> Aç&otilde;es Programadas</legend>
+                    <legend><?php echo $y++.'.'; ?> A&ccedil;&otilde;es Programadas</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsAcoesProgramadas))
-                                echo !empty($relatorio->dsAcoesProgramadas) ? $relatorio->dsAcoesProgramadas : 'Não informado'; ?>
+                                echo !empty($relatorio->dsAcoesProgramadas) ? $relatorio->dsAcoesProgramadas : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
                 <fieldset>
-                    <legend><?php echo $y++.'.'; ?> Aç&otilde;es Executadas</legend>
+                    <legend><?php echo $y++.'.'; ?> A&ccedil;&otilde;es Executadas</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsAcoesExecutadas))
-                        echo !empty($relatorio->dsAcoesExecutadas) ? $relatorio->dsAcoesExecutadas : 'Não informado'; ?>
+                        echo !empty($relatorio->dsAcoesExecutadas) ? $relatorio->dsAcoesExecutadas : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
                 <fieldset>
-                    <legend><?php echo $y++.'.'; ?> Benef&iacute;cios Alcançados</legend>
+                    <legend><?php echo $y++.'.'; ?> Benef&iacute;cios Alcan&ccedil;ados</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsBeneficioAlcancado))
-                        echo !empty($relatorio->dsBeneficioAlcancado) ? $relatorio->dsBeneficioAlcancado : 'Não informado'; ?>
+                        echo !empty($relatorio->dsBeneficioAlcancado) ? $relatorio->dsBeneficioAlcancado : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
                 <fieldset>
                     <legend><?php echo $y++.'.'; ?> Dificuldades Encontradas</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsDificuldadeEncontrada))
-                        echo !empty($relatorio->dsDificuldadeEncontrada) ? $relatorio->dsDificuldadeEncontrada : 'Não informado'; ?>
+                        echo !empty($relatorio->dsDificuldadeEncontrada) ? $relatorio->dsDificuldadeEncontrada : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
             </td>
         </tr>
         <?php if($dtInicioFiscalizacao < $dtDeCorte){ ?>
         <tr>
-            <!-- ************************************** Situaç&atilde;o do Conv&ecirc;nio na Realizaç&atilde;o da Fiscalizaç&atilde;o ************************************ -->
-            <td colspan="3" class="destacar" align="center"><b>Situaç&atilde;o do Conv&ecirc;nio na Realizaç&atilde;o da Fiscalizaç&atilde;o</b></td>
+            <!-- ************************************** Situa&ccedil;&atilde;o do Conv&ecirc;nio na Realiza&ccedil;&atilde;o da Fiscaliza&ccedil;&atilde;o ************************************ -->
+            <td colspan="3" class="destacar" align="center"><b>Situa&ccedil;&atilde;o do Conv&ecirc;nio na Realiza&ccedil;&atilde;o da Fiscaliza&ccedil;&atilde;o</b></td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Situaç&atilde;o SIAFI </td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Situa&ccedil;&atilde;o SIAFI </td>
             <td>
                 <?php if (isset($relatorio->stSiafi))
                         $selected = $relatorio->stSiafi; ?>
@@ -211,7 +211,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Prestaç&atilde;o de Contas Apresentada?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Presta&ccedil;&atilde;o de Contas Apresentada?</td>
             <td>
                 <?php if (isset($relatorio->stPrestacaoContas))
                     $selected = $relatorio->stPrestacaoContas; ?>
@@ -241,7 +241,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Foi cumprido o prazo para entrega da prestação de contas?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Foi cumprido o prazo para entrega da presta&ccedil;&atilde;o de contas?</td>
             <td>
                 <?php if (isset($relatorio->stCumpridoPrazo))
                 $selected = $relatorio->stCumpridoPrazo; ?>
@@ -257,11 +257,11 @@
         </tr>
         <?php } ?>
         <tr>
-            <!-- ****************************************** Utilizaç&atilde;o de Recursos ************************************************************* -->
-            <td colspan="3" class="destacar" align="center"><b>Utilizaç&atilde;o de Recursos</b></td>
+            <!-- ****************************************** Utiliza&ccedil;&atilde;o de Recursos ************************************************************* -->
+            <td colspan="3" class="destacar" align="center"><b>Utiliza&ccedil;&atilde;o de Recursos</b></td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Foi apurado por unidade fiscalizadora ou auditora a aplicaç&atilde;o irregular de recursos?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Foi apurado por unidade fiscalizadora ou auditora a aplica&ccedil;&atilde;o irregular de recursos?</td>
             <td>
                 <?php if (isset($relatorio->stApuracaoUFiscalizacao))
                 $selected = $relatorio->stApuracaoUFiscalizacao; ?>
@@ -276,7 +276,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Comprovou a correta utilizaç&atilde;o dos recursos da contrapartida?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Comprovou a correta utiliza&ccedil;&atilde;o dos recursos da contrapartida?</td>
             <td>
                 <?php if (isset($relatorio->stComprovacaoUtilizacaoRecurso))
                     $selected = $relatorio->stComprovacaoUtilizacaoRecurso; ?>
@@ -313,7 +313,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu despesas com multas, juros, taxas banc&aacute;rias ou correç&atilde;o monet&aacute;ria?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu despesas com multas, juros, taxas banc&aacute;rias ou corre&ccedil;&atilde;o monet&aacute;ria?</td>
             <td>
                 <?php if (isset($relatorio->stOcorreuDespesas))
                     $selected = $relatorio->stOcorreuDespesas; ?>
@@ -344,7 +344,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu despesa com taxa de administraç&atilde;o?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu despesa com taxa de administra&ccedil;&atilde;o?</td>
             <td>
                 <?php if (isset($relatorio->stDespesaAdministracao))
                     $selected = $relatorio->stDespesaAdministracao; ?>
@@ -359,7 +359,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> H&aacute; transfer&ecirc;ncia de recurso para clubes/associaç&otilde;es ou outras entidades cong&ecirc;neres?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> H&aacute; transfer&ecirc;ncia de recurso para clubes/associa&ccedil;&otilde;es ou outras entidades cong&ecirc;neres?</td>
             <td>
                 <?php if (isset($relatorio->stTransferenciaRecurso))
                         $selected = $relatorio->stTransferenciaRecurso; ?>
@@ -374,7 +374,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> H&aacute; despesas com publicidade, salvo as de car&aacute;ter educativo, informativo ou de orientaç&atilde;o social?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> H&aacute; despesas com publicidade, salvo as de car&aacute;ter educativo, informativo ou de orienta&ccedil;&atilde;o social?</td>
             <td>
                 <?php if (isset($relatorio->stDespesasPublicidade))
                         $selected = $relatorio->stDespesasPublicidade; ?>
@@ -389,7 +389,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu aditamento prevendo alteraç&atilde;o de objeto?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu aditamento prevendo altera&ccedil;&atilde;o de objeto?</td>
             <td>
                 <?php if (isset($relatorio->stOcorreuAditamento))
                         $selected = $relatorio->stOcorreuAditamento; ?>
@@ -430,7 +430,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu aplicaç&atilde;o de recursos em outra finalidade que n&atilde;o a do objeto pactuado?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Ocorreu aplica&ccedil;&atilde;o de recursos em outra finalidade que n&atilde;o a do objeto pactuado?</td>
             <td>
                 <?php if (isset($relatorio->stAplicacaoRecursosFinalidade))
                         $selected = $relatorio->stAplicacaoRecursosFinalidade; ?>
@@ -521,7 +521,7 @@
         </tr>
         <?php if($dtInicioFiscalizacao < $dtDeCorte){ ?>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> A documentaç&atilde;o est&aacute; completa e arquivada?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> A documenta&ccedil;&atilde;o est&aacute; completa e arquivada?</td>
             <td>
                 <?php if (isset($relatorio->stDocumentacaoCompleta))
                         $selected = $relatorio->stDocumentacaoCompleta; ?>
@@ -606,7 +606,7 @@
         </tr>
         <?php } ?>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> As despesas coincidem com as informadas na relaç&atilde;o de pagamentos?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> As despesas coincidem com as informadas na rela&ccedil;&atilde;o de pagamentos?</td>
             <td>
                 <?php if (isset($relatorio->stDespesaCoincidem))
                         $selected = $relatorio->stDespesaCoincidem; ?>
@@ -739,7 +739,7 @@
         </tr>
         <?php if($dtInicioFiscalizacao < $dtDeCorte){ ?>
         <tr>
-            <td colspan="2"><?php echo $y++.'.'; ?> Alcançou a finalidade esperada?</td>
+            <td colspan="2"><?php echo $y++.'.'; ?> Alcan&ccedil;ou a finalidade esperada?</td>
             <td>
                 <?php if (isset($relatorio->stFinalidadeEsperada))
                         $selected = $relatorio->stFinalidadeEsperada; ?>
@@ -773,7 +773,7 @@
             <td colspan="2">
                 <?php echo $y++.'.'; ?>
                 <?php if($dtInicioFiscalizacao < $dtDeCorte){ ?>
-                    A execuç&atilde;o respeitou o aprovado?
+                    A execu&ccedil;&atilde;o respeitou o aprovado?
                 <?php } else { ?>
                     O projeto est&aacute; sendo executado de acordo com o aprovado?
                 <?php } ?>
@@ -834,14 +834,14 @@
                     <legend><?php echo $y++.'.'; ?> Evid&ecirc;ncias</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsEvidencia))
-                        echo !empty($relatorio->dsEvidencia) ? $relatorio->dsEvidencia : 'Não informado'; ?>
+                        echo !empty($relatorio->dsEvidencia) ? $relatorio->dsEvidencia : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
                 <fieldset>
-                    <legend><?php echo $y++.'.'; ?> Recomendaç&otilde;es da Equipe</legend>
+                    <legend><?php echo $y++.'.'; ?> Recomenda&ccedil;&otilde;es da Equipe</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsRecomendacaoEquipe))
-                        echo !empty($relatorio->dsRecomendacaoEquipe) ? $relatorio->dsRecomendacaoEquipe : 'Não informado'; ?>
+                        echo !empty($relatorio->dsRecomendacaoEquipe) ? $relatorio->dsRecomendacaoEquipe : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
                 <?php if($dtInicioFiscalizacao < $dtDeCorte){ ?>
@@ -849,7 +849,7 @@
                     <legend><?php echo $y++.'.'; ?> Conclus&atilde;o da Equipe</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsConclusaoEquipe))
-                        echo !empty($relatorio->dsConclusaoEquipe) ? $relatorio->dsConclusaoEquipe : 'Não informado'; ?>
+                        echo !empty($relatorio->dsConclusaoEquipe) ? $relatorio->dsConclusaoEquipe : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
                 <?php } ?>
@@ -858,17 +858,17 @@
         <tr>
             <td colspan="3">
                 <fieldset>
-                    <legend><?php echo $y++.'.'; ?> Parecer da Fiscalização</legend>
+                    <legend><?php echo $y++.'.'; ?> Parecer da Fiscaliza&ccedil;&atilde;o</legend>
                     <table class="tabela"><tr><td>
                         <?php if (isset($relatorio->dsParecerTecnico))
-                        echo !empty($relatorio->dsParecerTecnico) ? $relatorio->dsParecerTecnico : 'Não informado'; ?>
+                        echo !empty($relatorio->dsParecerTecnico) ? $relatorio->dsParecerTecnico : 'N&atilde;o informado'; ?>
                     </td></tr></table>
                 </fieldset>
                   <fieldset>
                       <legend><?php echo $y++.'.'; ?> Parecer do Coordenador</legend>
                       <table class="tabela"><tr><td>
                             <?php if (isset($relatorio->dsParecer))
-                            echo !empty($relatorio->dsParecer) ? $relatorio->dsParecer : 'Não informado'; ?>
+                            echo !empty($relatorio->dsParecer) ? $relatorio->dsParecer : 'N&atilde;o informado'; ?>
                       </td></tr></table>
                    </fieldset>
                 </td>
@@ -886,7 +886,7 @@
     <?php } ?>
         
     <br clear="all"/>
-    <!-- =======================   FIM DOS DADOS DA FISCALIZAÇ?O ===================================>-->
+    <!-- =======================   FIM DOS DADOS DA FISCALIZA&ccedil;?O ===================================>-->
 
     <table class="tabela" >
         <tr>
@@ -900,7 +900,7 @@
                         <td style="width: 25%; padding-left: 5%; text-decoration: underline;" colspan="2"><a href="<?php echo $this->url(array("controller" => "upload", "action" => "abrir")) ?>?id=<?php echo  $arquivo->idArquivo ?>"><?php echo $arquivo->nmArquivo;?></a></td>
                     </tr>
            <?php } } else { ?>
-                <tr><td style="color:red;" colspan="2">Não há arquivos anexados!</td></tr>
+                <tr><td style="color:red;" colspan="2">N&atilde;o h&aacute; arquivos anexados!</td></tr>
             <?php
             }
        }//FIM - RELATORIO FISCALIZACAO

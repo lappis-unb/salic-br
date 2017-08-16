@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Mensagens de notificações para os dispositivos móveis.
+ * Mensagens de notifica&ccedil;&otilde;es para os dispositivos móveis.
  * 
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2016 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 class MensagemRestController extends Minc_Controller_AbstractRest{
     
@@ -45,7 +45,7 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         if($objListaRs){
             $listaMensagens = $this->formatarUtf8Mensagens($objListaRs->toArray());
         }
-        # Resposta do serviço.
+        # Resposta do servi&ccedil;o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode(array(
             'list' => $listaMensagens,
             'total' => (int)$total)
@@ -68,7 +68,7 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
             $result = (object)$mensagem->toArray();
         }
         
-        # Resposta do serviço.
+        # Resposta do servi&ccedil;o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
 
@@ -86,7 +86,7 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
             $result = (object)$mensagem->toArray();
         }
         
-        # Resposta do serviço.
+        # Resposta do servi&ccedil;o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
 

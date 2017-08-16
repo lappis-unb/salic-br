@@ -159,16 +159,16 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             try {
                 // validacao dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigatórios não informados:<br /><br />É necessário informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigatórios n&atilde;o informados:<br /><br />&eacute; necess&aacute;rio informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) // valida cnpj/cpf
                 {
-                    throw new Exception("O CPF/CNPJ informado é inválido!");
+                    throw new Exception("O CPF/CNPJ informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) // valida cpf
                 {
-                    throw new Exception("O CPF informado é inválido!");
+                    throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) // valida cnpj
                 {
-                    throw new Exception("O CNPJ informado é inválido!");
+                    throw new Exception("O CNPJ informado &eacute; inv&aacute;lido!");
                 } else {
                     // redireciona para a pagina com a busca dos dados com paginacao
                     $this->_redirect("agente/manteragentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
@@ -202,7 +202,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
         if (!$buscar) {
             // redireciona para a pagina de cadastro de agentes, e, exibe uma notificacao relativa ao cadastro
-            parent::message("Agente não cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            parent::message("Agente n&atilde;o cadastrado!<br /><br />Por favor, cadastre o mesmo no formul&aacute;rio abaixo!", "agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
             // ========== INICIO PAGINACAO ==========
             // criando a paginacao
@@ -348,9 +348,9 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 endforeach;
 
                 if ($cadastrar) {
-                    parent::message("Alteração realizada com sucesso!", "manteragentes/alterarvisao?idAgente=" . $idAgente, "CONFIRM");
+                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "manteragentes/alterarvisao?idAgente=" . $idAgente, "CONFIRM");
                 } else {
-                    throw new Exception("Erro ao efetuar alteração das visões do agente!");
+                    throw new Exception("Erro ao efetuar altera&ccedil;&atilde;o das vis&otilde;es do agente!");
                 }
             } // fecha try
             catch (Exception $e) {
@@ -650,7 +650,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
             // caso nao existam mais vagas para titular e suplentes
             if ($Q_titulares[0]->QTD >= 1 && $Q_suplentes[0]->QTD >= 2) {
-                $novos_dados[$i]['msgAS'] = utf8_encode('A Área Cultural selecionada já conta com 1 Titular e 2 Suplentes!');
+                $novos_dados[$i]['msgAS'] = utf8_encode('A &aacute;rea Cultural selecionada j&aacute; conta com 1 Titular e 2 Suplentes!');
             } else if ($Q_titulares[0]->QTD == 0 && $Q_suplentes[0]->QTD == 0) {
                 $novos_dados[0]['Nome'] = 'Sem cadastro';
                 $novos_dados[0]['Titular'] = '';
@@ -858,7 +858,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 }
             } // fecha try
             catch (Exception $e) {
-                $this->view->message = "Erro ao salvar o endereço: " . $e->getMessage();
+                $this->view->message = "Erro ao salvar o endere&ccedil;o: " . $e->getMessage();
             }
             // ========== FIM SALVAR ENDERECO ==========
 
@@ -883,7 +883,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 }
             } // fecha try
             catch (Exception $e) {
-                $this->view->message = "Erro ao salvar a visão: " . $e->getMessage();
+                $this->view->message = "Erro ao salvar a vis&atilde;o: " . $e->getMessage();
             }
             // ========== FIM SALVAR VISAO ==========
 

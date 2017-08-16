@@ -26,3 +26,4 @@ Várias pessoas colaboraram com o desenvimento do projeto SALIC e decidimos cent
   
 Clique [aqui](doc/Autores.md) para visualizar.
 
+&eacute;

@@ -34,7 +34,7 @@
         $("#cxInicioDesarquivar").val(cxInicio);
         $("#cxFinalDesarquivar").val(cxFinal);
 
-        document.getElementById("modalJustificativa").title = "Justificativa para solicitação de desarquivamento";
+        document.getElementById("modalJustificativa").title = "Justificativa para solicita&ccedil;&atilde;o de desarquivamento";
 
         // modal com os ddos do dirigente
         $("#modalJustificativa").dialog("destroy");
@@ -64,7 +64,7 @@
 <!-- ========== FIM BRADCRUMB (LINKS TOPO) ========== -->
 
 
-<div id="confirm1" title="Confirma&ccedil;&atilde;o" style="display: none">Dados obrigatórios não informados!</div>
+<div id="confirm1" title="Confirma&ccedil;&atilde;o" style="display: none">Dados obrigatórios n&atilde;o informados!</div>
 <div class="sumir" id="modalJustificativa" title="Justificativa de Recusa do Projeto" >
     <form name="formencaminhar" id="" method="post">
         <table class="tabela">
@@ -78,7 +78,7 @@
             </tr>
        	</table>
 
-       	* Por favor informe uma justificativa para a solicitação de desarquivamento:
+       	* Por favor informe uma justificativa para a solicita&ccedil;&atilde;o de desarquivamento:
        	<br />	<br><label for="justificativa">Justificativa</label><br>
 
        	<textarea name="justificativa" id="justificativa" rows="6" cols="50" style="width:100%;" onclick="limpar_campo(this, 'Digite a justificativa...');" onkeypress=" "
@@ -110,11 +110,11 @@
 
 
 <div id="conteudo" align="center">
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <?php if ($this->qtdDocs > 30) {
     echo $this->Arquivados;
 } ?>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <table class="tabela">
         <tr>
             <th width="5%">Pronac</th>
@@ -141,17 +141,17 @@
         </tr>
     <?php } ?>
     </table>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
 <?php if ($this->qtdDocs > 30) {
     echo $this->Arquivados;
 } ?>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

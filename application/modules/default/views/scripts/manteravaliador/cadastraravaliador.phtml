@@ -21,7 +21,7 @@ $(document).ready(function(){
 	          return false;
 	    }
 	    if (cpf.length < 11){ 
-	    	recebe.html('CPF Inválido.');
+	    	recebe.html('CPF Inv&aacute;lido.');
 	    	recebe.css("color", "red");
 	          return false;
 	    }
@@ -40,7 +40,7 @@ $(document).ready(function(){
 	                soma += numeros.charAt(10 - i) * i;
 	          resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
 	          if (resultado != digitos.charAt(0)){
-	        	  recebe.html('CPF Inválido.');
+	        	  recebe.html('CPF Inv&aacute;lido.');
 	        	  recebe.css("color", "red");
 	                return false;
 	          }
@@ -50,13 +50,13 @@ $(document).ready(function(){
 	                soma += numeros.charAt(11 - i) * i;
 	          resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
 	          if (resultado != digitos.charAt(1)){ 
-	        	  recebe.html('CPF Inválido.');
+	        	  recebe.html('CPF Inv&aacute;lido.');
 	        	  recebe.css("color", "red");
 	                return false;}
 	          return true;
 	          }
 	    else
-	    	recebe.html('CPF Inválido.');
+	    	recebe.html('CPF Inv&aacute;lido.');
 	    	recebe.css("color", "red");
 	          return false;
 	});

@@ -171,7 +171,7 @@
                 <?php foreach ($this->itensVinculados as $itensVinculados) { ?>
                 <tr>
                     <td>
-                        <?php echo $itensVinculados->dsProduto ? $itensVinculados->dsProduto : 'Administração do Projeto'; ?>
+                        <?php echo $itensVinculados->dsProduto ? $itensVinculados->dsProduto : 'Administra&ccedil;&atilde;o do Projeto'; ?>
                         <input type="hidden" name="produto[]" value="<?php echo $itensVinculados->idProduto; ?>">
                     </td>
                     <td>
@@ -206,9 +206,9 @@
     <br clear="left" />
     
 </div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />
 
 <div id="msgAlerta" class="sumir"></div>
@@ -234,7 +234,7 @@
                 height:160,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $("#msgConfirm").dialog('close');
                     },
                     'Sim' : function(){
@@ -351,7 +351,7 @@
             // validar item vinculado
             if (!$('input[name=item\\[\\]]').length) {
                 preenchimento = true;
-                message = 'Selecione o item para vincular a cotação.';
+                message = 'Selecione o item para vincular a cota&ccedil;&atilde;o.';
             }
 
             if(preenchimento) {

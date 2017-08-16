@@ -26,7 +26,7 @@
 
                 if($(this).parent().parent().find('#justificativaencaminha').val()=='Digite a justificativa...')
                 {
-                    alert("Dados obrigatórios não informados");
+                    alert("Dados obrigatórios n&atilde;o informados");
                     return false;
 		
                 }
@@ -58,7 +58,7 @@
                 width: 440,
                 modal: true,
                 buttons: {
-                    'Não': function() {
+                    'N&atilde;o': function() {
                         $(this).dialog('close');
                     },
                     Sim: function() {
@@ -79,7 +79,7 @@
                 width: 440,
                 modal: true,
                 buttons: {
-                    'Não': function() {
+                    'N&atilde;o': function() {
                         $(this).dialog('close');
                     },
                     Sim: function() {
@@ -94,11 +94,11 @@
     </script>
 
     <div id="dialog-desabilitar" title="Desabilitar" style="display:none">
-		Deseja realmente desabilitar o Componente da Comissão?
+		Deseja realmente desabilitar o Componente da Comiss&atilde;o?
     </div>
 
     <div id="dialog-habilitar" title="Habilitar" style="display:none">
-		Deseja realmente habilitar o Componente da Comissão?
+		Deseja realmente habilitar o Componente da Comiss&atilde;o?
     </div>
 
     <div style="width:100%; margin: 0 auto;">
@@ -106,13 +106,13 @@
         <table width="95%" cellspacing="0" cellpadding="0" summary=" ">
             <tr>
                 <td width="66%" style="text-align:left; padding-left:4%" colspan="2">HABILITADOS</td>
-                <td width="18%" align="center">Área Cultural</td>
+                <td width="18%" align="center">&aacute;rea Cultural</td>
                 <td width="8%" align="center">Quantidade de Projetos</td>
                 <td width="8%" align="center">Desabilitar</td>
             </tr>
         </table>
 
-        <!-- Foreach que lista todos os componentes da comissão -->
+        <!-- Foreach que lista todos os componentes da comiss&atilde;o -->
 
         <?php foreach ($this->componente as $comp): ?>
 
@@ -129,14 +129,14 @@
             </thead>
         </table>
 
-        <!-- Modal para Desabilitar o componente da comissão -->
+        <!-- Modal para Desabilitar o componente da comiss&atilde;o -->
 
 
 
-        <div id="desabilita<?php echo $comp->idAgente; ?>d" title="Desabilitar Componente da Comissão" style="display:none;">
+        <div id="desabilita<?php echo $comp->idAgente; ?>d" title="Desabilitar Componente da Comiss&atilde;o" style="display:none;">
 
             <form name="formd" id="form<?php echo $comp->idAgente; ?>d" action="<?php echo $this->baseUrl(); ?>/projetosgerenciar/desabilitarcomponente" method="post">
-						Informe o motivo da desabilitação do componente da comissão:
+						Informe o motivo da desabilita&ccedil;&atilde;o do componente da comiss&atilde;o:
                 <br /><br>
                 <label for="justificativaencaminha">Justificativa</label><br>
                 <textarea name="justificativa" id="justificativaencaminha"rows="6" cols="50" style="width:100%;"
@@ -160,13 +160,13 @@
 
         <?php if ($pro) {
  ?>
-                                                           <!-- foreach que lista os projetos do componente da comissão -->
+                                                           <!-- foreach que lista os projetos do componente da comiss&atilde;o -->
 
 <?php foreach ($pro as $projetos): ?>
 
                                                                <!-- Modal para encaminhar o projeto -->
 
-                                                               <div style="display:none;" id="encaminhar<?php echo $projetos->idPRONAC; ?><?php echo $projetos->idAgente; ?>" title="Encaminhar projeto para comissão" >
+                                                               <div style="display:none;" id="encaminhar<?php echo $projetos->idPRONAC; ?><?php echo $projetos->idAgente; ?>" title="Encaminhar projeto para comiss&atilde;o" >
                                                                    <form name="formencaminhar" id="form<?php echo $projetos->idPRONAC; ?><?php echo $projetos->idAgente; ?>" action="<?php echo $this->baseUrl(); ?>/projetosgerenciar/encaminharprojeto" method="post">
                                                                        <table>
                                                                            <tr>
@@ -258,7 +258,7 @@
                                                                <table width="95%" cellspacing="0" cellpadding="0" summary=" ">
                                                                    <tr>
                                                                        <td width="74%" style="text-align:left; padding-left:4%;" colspan="2">DESABILITADOS</td>
-                                                                       <td width="18%" align="center">Área Cultural</td>
+                                                                       <td width="18%" align="center">&aacute;rea Cultural</td>
                                                                        <td width="8%" align="center">Habilitar</td>
                                                                    </tr>
                                                                </table>
@@ -272,9 +272,9 @@
 
 <?php foreach ($this->desabilitados as $comp): ?>
 
-                                                                   <div id="habilitar<?php echo $comp->idAgente; ?>" title="Habilitar Componente da Comissão" style="display:none;">
+                                                                   <div id="habilitar<?php echo $comp->idAgente; ?>" title="Habilitar Componente da Comiss&atilde;o" style="display:none;">
                                                                <form name="forma" id="form<?php echo $comp->idAgente; ?>a" action="<?php echo $this->baseUrl(); ?>/projetosgerenciar/habilitarcomponente" method="post">
-                                                   			Informe o motivo da habilitação do componente da comissão:
+                                                   			Informe o motivo da habilita&ccedil;&atilde;o do componente da comiss&atilde;o:
                                                                    <br />	<br><label for="justificativaencaminha">Justificativa</label><br>
 
                                                                    <textarea name="justificativa" id="justificativaencaminha"rows="6" cols="50" style="width:100%;"
@@ -311,7 +311,7 @@
                         </table>
 
                         <div id="hab<?php echo $comp->idAgente; ?>" style="display:none;">
-                            <table width="92%" cellspacing="0" cellpadding="0" style="margin:0 0 0 5%;" summary="Tabela com o motivo da desabilitação do agente">
+                            <table width="92%" cellspacing="0" cellpadding="0" style="margin:0 0 0 5%;" summary="Tabela com o motivo da desabilita&ccedil;&atilde;o do agente">
                                 <tr>
                                     <td align="center">Motivo</td>
                                     <td align="center">Desabilitado desde:</td>
@@ -339,8 +339,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />
