@@ -46,19 +46,19 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array('Descricao as Item')
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("e" => "Nomes")
 			,"b.idFornecedor = e.idAgente"
 			,array('Descricao as Fornecedor')
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 		$select->joinLeft(
 			array("f" => "tbArquivo")
@@ -131,19 +131,19 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                 array("c" => "tbPlanilhaAprovacao")
                 ,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
                 ,array()
-                ,"SAC.dbo"
+                ,"SAC"
             );
             $select->joinLeft(
                 array("d" => "tbPlanilhaItens")
                 ,"c.idPlanilhaItem = d.idPlanilhaItens"
                 ,array()
-                ,"SAC.dbo"
+                ,"SAC"
             );
             $select->joinLeft(
                 array("e" => "Nomes")
                 ,"b.idFornecedor = e.idAgente"
                 ,array()
-                ,"agentes.dbo"
+                ,"agentes"
             );
             $select->joinLeft(
                 array("f" => "tbArquivo")
@@ -155,7 +155,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                 array("g" => "Agentes")
                 ,"b.idFornecedor = g.idAgente"
                 ,array()
-                ,"agentes.dbo"
+                ,"agentes"
             );
 
             $select->where("c.idPronac = ?", $idPronac);
@@ -202,19 +202,19 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("e" => "Nomes")
 			,"b.idFornecedor = e.idAgente"
 			,array()
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 		$select->joinLeft(
 			array("f" => "tbArquivo")
@@ -226,7 +226,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("g" => "Agentes")
 			,"b.idFornecedor = g.idAgente"
 			,array()
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 
         //Altera��o realizada no dia 25/02/2016 a pedido da area demandante.
@@ -267,19 +267,19 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("g" => "Agentes")
 			,"b.idFornecedor = g.idAgente"
 			,array()
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 
         $select->where("c.idPronac = ?", $idPronac);
@@ -330,13 +330,13 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("e" => "tbItemCusto")
@@ -386,25 +386,25 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("f" => "tbPlanilhaEtapa")
 			,"c.idEtapa = f.idPlanilhaEtapa"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("g" => "tbPlanilhaUnidade")
 			,"c.idUnidade= g.idUnidade"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 
         //Linha retirada para corrigir problema na Visualiza��o dos Projetos (24/02/2016)

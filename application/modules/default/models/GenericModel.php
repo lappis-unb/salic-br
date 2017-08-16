@@ -102,7 +102,7 @@ class GenericModel extends Zend_Db_Table_Abstract
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
             if ($isReturnDb && strpos($strSchema, '.') === false) {
-                $strSchema = $strSchema . ".dbo";
+                $strSchema = $strSchema . "";
             } elseif (strpos($strSchema, '.') === false) {
                 $strSchema = "dbo";
             }

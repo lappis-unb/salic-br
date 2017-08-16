@@ -118,19 +118,19 @@ class tbMovimentacaoBancaria extends MinC_Db_Table_Abstract
 			array("bc" => "bancos")
 			,"m.nrBanco = bc.Codigo"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("a" => "Agentes")
 			,"mi.nrCNPJCPF = a.CNPJCPF"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("n" => "Nomes")
 			,"a.idAgente = n.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
                 
                // $select->where("mi.vlSaldoInicial > 0.00");

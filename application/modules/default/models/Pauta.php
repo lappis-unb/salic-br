@@ -100,25 +100,25 @@ class Pauta extends MinC_Db_Table_Abstract {
                     'pr.NomeProjeto',
                     'pr.IdPRONAC'
                 ),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('ar' => 'Area'),
                 "pr.Area = ar.Codigo",
                 array('ar.Descricao as area'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('seg' => 'Segmento'),
                 "pr.Segmento = seg.Codigo",
                 array('seg.Descricao as segmento'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('par' => 'Parecer'),
                 "par.IdPRONAC = tp.IdPRONAC",
                 array('par.ParecerFavoravel'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('dpc' => 'tbDistribuicaoProjetoComissao'),

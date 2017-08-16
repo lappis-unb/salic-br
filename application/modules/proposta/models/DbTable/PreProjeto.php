@@ -937,13 +937,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->from(
                     array("ap" => "tbAvaliacaoProposta"),
                     array("*"),
-                    "SAC.dbo"
+                    "SAC"
             );
         $slct->joinInner(
                 array("m"=>"tbMovimentacao"),
                 "ap.idProjeto = m.idProjeto",
                 array(),
-                "SAC.dbo"
+                "SAC"
                 );
 
         $condicao = new Zend_Db_Expr("select top 1 * from SAC..Projetos p where p.idProjeto = ap.idProjeto");
@@ -1373,7 +1373,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->from(
                     array("p"=>$this->_name),
                     array("idProjeto"=>"idPreProjeto", "NomeProposta"=>"NomeProjeto", "idAgente"),
-                    "SAC.dbo"
+                    "SAC"
                     );
 
 		if(!($dados->proposta)){
@@ -1381,19 +1381,19 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("m"=>"tbMovimentacao"),
                         "p.idPreProjeto = m.idProjeto AND m.stEstado = 0",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("vr"=>"Verificacao"),
                         "m.movimentacao = vr.idVerificacao and vr.idTipo = 4",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("x"=>"tbAvaliacaoProposta"),
                         "p.idPreProjeto = x.idProjeto AND x.stEstado = 0",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
 		}
@@ -1402,7 +1402,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("ab"=>"Abrangencia"),
                         "p.idPreProjeto = ab.idProjeto AND ab.stAbrangencia = 1",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
 		}
 
@@ -1411,7 +1411,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("uf"=>"UF"),
                         "uf.idUF = ab.idUF",
                         array(),
-                        "agentes.dbo"
+                        "agentes"
                         );
 		}
 
@@ -1420,7 +1420,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("mu"=>"Municipios"),
                         "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
                         array(),
-                        "agentes.dbo"
+                        "agentes"
                         );
 		}
 
@@ -1429,7 +1429,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("pdp"=>"PlanoDistribuicaoProduto"),
                         "pdp.idProjeto = p.idPreProjeto AND pdp.stPlanoDistribuicaoProduto = 1",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
         }
 
@@ -1437,19 +1437,19 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("pp"=>"tbPlanilhaProposta"),
                         "pp.idProjeto = p.idPreProjeto",
                         array("valor"=>new Zend_Db_Expr("sum(Quantidade*Ocorrencia*ValorUnitario)")),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("ag"=>"agentes"),
                         "ag.idAgente = p.idAgente",
                         array("ag.CNPJCPF"),
-                        "agentes.dbo"
+                        "agentes"
                         );
         $slct->joinInner(
                         array("nm"=>"nomes"),
                         "nm.idAgente = p.idAgente",
                         array("nm.Descricao as Proponente"),
-                        "agentes.dbo"
+                        "agentes"
                         );
 
         //adiciona quantos filtros foram enviados
@@ -1491,65 +1491,65 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->from(
             array("p"=>$this->_name),
             array("idProjeto"=>"idPreProjeto", "NomeProposta"=>"NomeProjeto", "idAgente", "p.stEstado", "p.DtArquivamento"),
-            "SAC.dbo"
+            "SAC"
         );
 
         $slct->joinInner(
             array("m"=>"tbMovimentacao"), "p.idPreProjeto = m.idProjeto AND m.stEstado = 0",
-            array('m.Movimentacao', 'm.stEstado AS estadoMovimentacao'), "SAC.dbo"
+            array('m.Movimentacao', 'm.stEstado AS estadoMovimentacao'), "SAC"
         );
         $slct->joinInner(
             array("vr"=>"Verificacao"), "m.movimentacao = vr.idVerificacao and vr.idTipo = 4",
-            array(), "SAC.dbo"
+            array(), "SAC"
         );
         $slct->joinLeft(
             array("x"=>"tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0",
-            array('x.ConformidadeOK', 'x.stEstado AS estadoAvaliacao'), "SAC.dbo"
+            array('x.ConformidadeOK', 'x.stEstado AS estadoAvaliacao'), "SAC"
         );
 
         if( isset($where['ab.idUF = ?']) || isset($where['ab.idMunicipioIBGE = ?'])){
             $slct->joinInner(
                 array("ab"=>"Abrangencia"), "p.idPreProjeto = ab.idProjeto AND ab.stAbrangencia = 1",
-                array(), "SAC.dbo"
+                array(), "SAC"
             );
         }
 
         if(isset($where['ab.idUF = ?'])){
             $slct->joinInner(
                 array("uf"=>"UF"), "uf.idUF = ab.idUF",
-                array(), "agentes.dbo"
+                array(), "agentes"
             );
         }
 
         if( isset($where['ab.idUF = ?']) || isset($where['ab.idMunicipioIBGE = ?'])){
             $slct->joinInner(
                 array("mu"=>"Municipios"), "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
-                array(), "agentes.dbo"
+                array(), "agentes"
             );
         }
 
         if( isset($where['pdp.Area = ?']) || isset($where['pdp.Segmento = ?'])){
             $slct->joinInner(
                 array("pdp"=>"PlanoDistribuicaoProduto"), "pdp.idProjeto = p.idPreProjeto AND pdp.stPlanoDistribuicaoProduto = 1",
-                array(), "SAC.dbo"
+                array(), "SAC"
             );
         }
 
         $slct->joinLeft(
             array("pp"=>"tbPlanilhaProposta"), "pp.idProjeto = p.idPreProjeto",
-            array("valor"=>new Zend_Db_Expr("sum(Quantidade*Ocorrencia*ValorUnitario)")), "SAC.dbo"
+            array("valor"=>new Zend_Db_Expr("sum(Quantidade*Ocorrencia*ValorUnitario)")), "SAC"
         );
 
         $slct->joinInner(
             array("ag"=>"agentes"), "ag.idAgente = p.idAgente",
-            array("ag.CNPJCPF"), "agentes.dbo"
+            array("ag.CNPJCPF"), "agentes"
         );
 
         $slct->joinInner(
             array("nm"=>"nomes"), "nm.idAgente = p.idAgente",
             array(
                 "nm.Descricao as Proponente"
-            ), "agentes.dbo"
+            ), "agentes"
         );
 
         //adiciona quantos filtros foram enviados
@@ -1634,9 +1634,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(array("p" => $this->_name), $p, "SAC.dbo")
-            ->join(array("m" => "tbMovimentacao"), 'p.idPreProjeto = m.idProjeto AND m.stEstado = 0', $m, "SAC.dbo")
-            ->joinInner(array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", $x, "SAC.dbo")
+            ->from(array("p" => $this->_name), $p, "SAC")
+            ->join(array("m" => "tbMovimentacao"), 'p.idPreProjeto = m.idProjeto AND m.stEstado = 0', $m, "SAC")
+            ->joinInner(array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", $x, "SAC")
             ->joinInner(array("a" => "Agentes"), 'p.idAgente = a.idAgente', array('a.CNPJCPF'), $this->getSchema('agentes'))
             ->joinInner(array("y" => "Verificacao"), 'm.Movimentacao = y.idVerificacao', null,  $this->_schema)
             ->joinLeft(array("ap1" => 'tbAvaliacaoProposta'), "p.idPreProjeto = ap1.idProjeto AND ap1.stEnviado = 'S'", array(new Zend_Db_Expr('DATEDIFF(d, ap1.DtEnvio, '.$this->getDate().') AS diasDiligencia')),  $this->_schema)
@@ -1685,25 +1685,25 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("m"=>"tbMovimentacao"),
                         "p.idPreProjeto = m.idProjeto AND m.stEstado = 0",
                         array("idMovimentacao", "CodSituacao"=>"m.Movimentacao", "DtMovimentacao"=>"CONVERT(CHAR(20),m.DtMovimentacao, 120)", "diasDesdeMovimentacao"=>"DATEDIFF(d, m.DtMovimentacao, ".$this->getDate().")"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinLeft(
                         array("x"=>"tbAvaliacaoProposta"),
                         "p.idPreProjeto = x.idProjeto AND x.stEstado = 0",
                         array("idAvaliacaoProposta", "DtAdmissibilidade"=>"CONVERT(CHAR(20),x.DtAvaliacao, 120)", "diasCorridos"=>"DATEDIFF(d, x.DtAvaliacao, ".$this->getDate().")"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("a"=>"Agentes"),
                         "p.idAgente = a.idAgente",
                         array("CNPJCPF"),
-                        "agentes.dbo"
+                        "agentes"
                         );
         $slct->joinInner(
                         array("y"=>"Verificacao"),
                         "m.Movimentacao = y.idVerificacao",
                         array("Situacao"=>"Descricao"),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
         //adiciona quantos filtros foram enviados
@@ -1750,8 +1750,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->distinct()
-            ->from(array('a' => 'tbAvaliacaoProposta'), array('a.idTecnico'), "SAC.dbo")
-            ->join(array('p' => 'PreProjeto'), 'p.idPreProjeto = a.idProjeto', null, "SAC.dbo")
+            ->from(array('a' => 'tbAvaliacaoProposta'), array('a.idTecnico'), "SAC")
+            ->join(array('p' => 'PreProjeto'), 'p.idPreProjeto = a.idProjeto', null, "SAC")
             ->join(array('u' => 'Usuarios'), 'u.usu_codigo = a.idTecnico', 'u.usu_nome as Tecnico', 'TABELAS')
             ->where('ConformidadeOK<>1')
             ->where('p.stEstado = 1')
@@ -2242,7 +2242,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array("p"=>$this->_name), array("*"));
-        $slct->joinInner(array("ap"=>"tbAvaliacaoProposta"), "p.idPreProjeto = ap.idProjeto", array("*"), "SAC.dbo");
+        $slct->joinInner(array("ap"=>"tbAvaliacaoProposta"), "p.idPreProjeto = ap.idProjeto", array("*"), "SAC");
 
         $slct->where("ap.stEstado = ?", 0);
         $slct->where("p.idPreProjeto = ?", $idPreProjeto);
@@ -2301,7 +2301,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array("pj"=>$this->_name), array("*"));
-        $slct->joinInner(array("p"=>"Projetos"), "pj.idPreProjeto = p.idProjeto", array("*"), "SAC.dbo");
+        $slct->joinInner(array("p"=>"Projetos"), "pj.idPreProjeto = p.idProjeto", array("*"), "SAC");
 
         $slct->where("pj.idAgente = ?", $idAgente);
         return $this->fetchAll($slct);
@@ -2324,55 +2324,55 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->from(
                     array("p"=>$this->_name),
                     array("idProjeto"=>"idPreProjeto", "NomeProposta"=>"NomeProjeto", "idAgente", "DtCadastro"=>"CONVERT(CHAR(20),p.dtAceite, 120)"),
-                    "SAC.dbo"
+                    "SAC"
                     );
         $slct->joinLeft(
                         array("m"=>"tbMovimentacao"),
                         "p.idPreProjeto = m.idProjeto AND m.stEstado = 0",
                         array("idMovimentacao", "CodSituacao"=>"m.Movimentacao", "DtMovimentacao"=>"CONVERT(CHAR(20),m.DtMovimentacao, 120)"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinLeft(
                         array("x"=>"tbAvaliacaoProposta"),
                         "p.idPreProjeto = x.idProjeto AND x.stEstado = 0",
                         array("ConformidadeOK"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinLeft(
                         array("x1"=>"tbAvaliacaoProposta"),
                         "p.idPreProjeto = x1.idProjeto",
                         array("DtEnvioMinC"=>"CONVERT(CHAR(20),x1.DtEnvio , 120)"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinLeft(
                         array("mv"=>"tbMovimentacao"),
                         "p.idPreProjeto = mv.idProjeto and mv.stEstado = 0",
                         array("stMovimentacao"=>"movimentacao"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinLeft(
                         array("vr"=>"Verificacao"),
                         "mv.movimentacao = vr.idVerificacao and vr.idTipo = 4",
                         array("Movimentacao"=>"Descricao"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("a"=>"Agentes"),
                         "p.idAgente = a.idAgente",
                         array("CNPJCPF"),
-                        "agentes.dbo"
+                        "agentes"
                         );
         $slct->joinInner(
                         array("n"=>"Nomes"),
                         "p.idAgente = n.idAgente",
                         array("NomeAgente"=>"Descricao"),
-                        "agentes.dbo"
+                        "agentes"
                         );
         $slct->joinInner(
                         array("e"=>"Edital"),
                         "e.idEdital = p.idEdital",
                         array("idOrgao"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("fd"=>"tbFormDocumento"),
@@ -2390,31 +2390,31 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("o"=>"Orgaos"),
                         "o.Codigo = e.idEdital",
                         array("SiglaOrgao"=>"Sigla"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("ab"=>"Abrangencia"),
                         "p.idPreProjeto = ab.idProjeto AND ab.stAbrangencia = 1",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinInner(
                         array("uf"=>"UF"),
                         "uf.idUF = ab.idUF",
                         array("idUF", "SiglaUF"=>"Sigla", "NomeUF"=>"Descricao", "Regiao"),
-                        "agentes.dbo"
+                        "agentes"
                         );
         $slct->joinInner(
                         array("mu"=>"Municipios"),
                         "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
                         array("NomeMunicipio"=>"Descricao"),
-                        "agentes.dbo"
+                        "agentes"
                         );
         $slct->joinInner(
                         array("vr2"=>"Verificacao"),
                         "e.cdTipoFundo = vr2.idVerificacao and vr2.idTipo = 15",
                         array("FundoNome"=>"Descricao", "idFundo"=>"idVerificacao"),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
         if($count){
@@ -2428,49 +2428,49 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                             array("m"=>"tbMovimentacao"),
                             "p.idPreProjeto = m.idProjeto AND m.stEstado = 0",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinLeft(
                             array("x"=>"tbAvaliacaoProposta"),
                             "p.idPreProjeto = x.idProjeto AND x.stEstado = 0",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinLeft(
                             array("x1"=>"tbAvaliacaoProposta"),
                             "p.idPreProjeto = x1.idProjeto",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinLeft(
                             array("mv"=>"tbMovimentacao"),
                             "p.idPreProjeto = mv.idProjeto and mv.stEstado = 0",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinLeft(
                             array("vr"=>"Verificacao"),
                             "mv.movimentacao = vr.idVerificacao and vr.idTipo = 4",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinInner(
                             array("a"=>"Agentes"),
                             "p.idAgente = a.idAgente",
                             array(),
-                            "agentes.dbo"
+                            "agentes"
                             );
             $slct2->joinInner(
                             array("n"=>"Nomes"),
                             "p.idAgente = n.idAgente",
                             array(),
-                            "agentes.dbo"
+                            "agentes"
                             );
             $slct2->joinInner(
                             array("e"=>"Edital"),
                             "e.idEdital = p.idEdital",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinInner(
                             array("fd"=>"tbFormDocumento"),
@@ -2488,31 +2488,31 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                             array("o"=>"Orgaos"),
                             "o.Codigo = e.idEdital",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinInner(
                             array("ab"=>"Abrangencia"),
                             "p.idPreProjeto = ab.idProjeto AND ab.stAbrangencia = 1",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct2->joinInner(
                             array("uf"=>"UF"),
                             "uf.idUF = ab.idUF",
                             array(),
-                            "agentes.dbo"
+                            "agentes"
                             );
             $slct2->joinInner(
                             array("mu"=>"Municipios"),
                             "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
                             array(),
-                            "agentes.dbo"
+                            "agentes"
                             );
             $slct2->joinInner(
                             array("vr2"=>"Verificacao"),
                             "e.cdTipoFundo = vr2.idVerificacao and vr2.idTipo = 15",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
 
             //adiciona quantos filtros foram enviados

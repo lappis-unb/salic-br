@@ -135,7 +135,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
                             "proj.IdPRONAC = dp.idPronac OR proj.idProjeto = dpp.idProposta",
                             array("proj.AnoProjeto",
                                   "proj.Sequencial"),
-                            "SAC.dbo"
+                            "SAC"
                           );
             
             //adiciona quantos filtros foram enviados
@@ -189,7 +189,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
                           );
             $slct->joinInner(
                             array('p'=>'Projetos'), "dp.idPronac = p.IdPRONAC",
-                            array('idPronac', new Zend_Db_Expr('p.AnoProjeto + p.Sequencial as Pronac'), 'NomeProjeto'), "SAC.dbo"
+                            array('idPronac', new Zend_Db_Expr('p.AnoProjeto + p.Sequencial as Pronac'), 'NomeProjeto'), "SAC"
                           );
 
             $slct->where('dp.stAtivoDocumentoProjeto = ?', 'E');
@@ -222,7 +222,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
                           );
             $slct->joinInner(
                             array('p'=>'Projetos'), "dp.idPronac = p.IdPRONAC",
-                            array('idPronac', new Zend_Db_Expr('p.AnoProjeto + p.Sequencial as Pronac'), 'NomeProjeto'), "SAC.dbo"
+                            array('idPronac', new Zend_Db_Expr('p.AnoProjeto + p.Sequencial as Pronac'), 'NomeProjeto'), "SAC"
                           );
 
             $slct->where('dp.stAtivoDocumentoProjeto = ?', 'E');
@@ -256,7 +256,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
                           );
             $slct->joinInner(
                             array('p'=>'Projetos'), "dp.idPronac = p.IdPRONAC",
-                            array('idPronac', new Zend_Db_Expr('p.AnoProjeto + p.Sequencial as Pronac'), 'NomeProjeto'), "SAC.dbo"
+                            array('idPronac', new Zend_Db_Expr('p.AnoProjeto + p.Sequencial as Pronac'), 'NomeProjeto'), "SAC"
                           );
 
             $slct->where('dp.idTipoDocumento = ?', 1);

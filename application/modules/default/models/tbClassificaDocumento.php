@@ -36,7 +36,7 @@ class tbClassificaDocumento extends MinC_Db_Table_Abstract
                         array("e"=>"Edital"),
                         "f.idEdital =e.idEdital",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
         //adiciona quantos filtros foram enviados

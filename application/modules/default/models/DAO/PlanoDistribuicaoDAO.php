@@ -11,7 +11,7 @@
 
 class PlanoDistribuicaoDAO extends Zend_Db_Table {
     /* dados da tabela */
-    protected $_schema  = "SAC.dbo";
+    protected $_schema  = "SAC";
     protected $_name    = "tbPlanoDistribuicao";
     protected $_primary = "idPlano";
 
@@ -106,7 +106,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
 
 class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
     /* dados da tabela */
-    protected $_schema  = "SAC.dbo";
+    protected $_schema  = "SAC";
     protected $_name    = "PlanoDistribuicaoProduto";
     protected $_primary = "idPlano";
 

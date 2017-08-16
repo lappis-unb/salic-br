@@ -14,7 +14,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slctVlAprovado->from(
                         array("tbPlanilhaAprovacao"),
                         array(new Zend_Db_Expr("ROUND(SUM(qtItem*nrOcorrencia*vlUnitario),2)")),
-                        "SAC.dbo"
+                        "SAC"
                      );
         $slctVlAprovado->where("IdPRONAC = p.idPronac and stAtivo='S' and nrFonteRecurso=109");
 
@@ -39,55 +39,55 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             array('d'=>'tbDistribuirParecer'),
                             'p.IdPRONAC = d.idPRONAC',
                             array("idOrgao"),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('s'=>'Situacao'),
                             'p.Situacao = s.Codigo',
                             array("DescSituacao"=>"Descricao"),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('a'=>'Area'),
                             'p.Area = a.Codigo',
                             array("DescArea"=>"Descricao"),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('se'=>'Segmento'),
                             'p.Segmento = se.Codigo',
                             array("DescSegmento"=>"Descricao"),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('n1'=>'Nomes'),
                             'z.idAgente = n1.idAgente',
                             array("Componente"=>"Descricao"),
-                            "agentes.dbo"
+                            "agentes"
                           );
         $slct->joinInner(
                             array('x'=>'Agentes'),
                             'p.CgcCpf = x.CNPJCPF',
                             array(),
-                            "agentes.dbo"
+                            "agentes"
                           );
         $slct->joinInner(
                             array('n'=>'Nomes'),
                             'x.idAgente = n.idAgente',
                             array("Proponente"=>"Descricao"),
-                            "agentes.dbo"
+                            "agentes"
                           );
         $slct->joinInner(
                             array('r'=>'tbReuniao'),
                             't.idNrReuniao = r.idNrReuniao',
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('o'=>'Orgaos'),
                             'd.idOrgao = o.Codigo',
                             array("Orgao"=>"Sigla"),
-                            "SAC.dbo"
+                            "SAC"
                           );
 
         //=============== VALOR SOLICITADO ======================//
@@ -97,7 +97,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slctVlSolicitado->from(
                             array("tbPlanilhaProposta"),
                             array(new Zend_Db_Expr("ROUND(SUM(Quantidade*Ocorrencia*ValorUnitario),2)")),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slctVlSolicitado->where("idProjeto = p.idProjeto and idProduto <> '206'");
         }else{
@@ -106,7 +106,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slctVlSolicitado->from(
                             array("tbPlanilhaAprovacao"),
                             array(new Zend_Db_Expr("ROUND(SUM(qtItem*nrOcorrencia*vlUnitario),2)")),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slctVlSolicitado->where("idPronac = p.idPronac AND idProduto <> '206' AND tpPlanilha = 'SR'");
         }
@@ -119,7 +119,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slctVlSugerido->from(
                             array("tbPlanilhaProjeto"),
                             array(new Zend_Db_Expr("ROUND(SUM(Quantidade*Ocorrencia*ValorUnitario),2)")),
-                            "SAC.dbo"
+                            "SAC"
                          );
             $slctVlSugerido->where("IdPRONAC = p.idPronac and idProduto <> '206'");
         }else{
@@ -128,7 +128,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
             $slctVlSugerido->from(
                             array("tbPlanilhaAprovacao"),
                             array(new Zend_Db_Expr("ROUND(SUM(qtItem*nrOcorrencia*vlUnitario),2)")),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slctVlSugerido->where("idPronac = p.idPronac AND idProduto <> '206' AND tpPlanilha = 'PA'");
         }
@@ -139,7 +139,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slctVlAprovado->from(
                         array("tbPlanilhaAprovacao"),
                         array(new Zend_Db_Expr("ROUND(SUM(qtItem*nrOcorrencia*vlUnitario),2)")),
-                        "SAC.dbo"
+                        "SAC"
                      );
         $slctVlAprovado->where("IdPRONAC = p.idPronac and stAtivo='S' and nrFonteRecurso=109");
 
@@ -179,55 +179,55 @@ class tbPauta extends MinC_Db_Table_Abstract {
                                 array('d'=>'tbDistribuirParecer'),
                                 'p.IdPRONAC = d.idPRONAC',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('s'=>'Situacao'),
                                 'p.Situacao = s.Codigo',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('a'=>'Area'),
                                 'p.Area = a.Codigo',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('se'=>'Segmento'),
                                 'p.Segmento = se.Codigo',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('n1'=>'Nomes'),
                                 'z.idAgente = n1.idAgente',
                                 array(),
-                                "agentes.dbo"
+                                "agentes"
                               );
             $slct2->joinInner(
                                 array('x'=>'Agentes'),
                                 'p.CgcCpf = x.CNPJCPF',
                                 array(),
-                                "agentes.dbo"
+                                "agentes"
                               );
             $slct2->joinInner(
                                 array('n'=>'Nomes'),
                                 'x.idAgente = n.idAgente',
                                 array(),
-                                "agentes.dbo"
+                                "agentes"
                               );
             $slct2->joinInner(
                                 array('r'=>'tbReuniao'),
                                 't.idNrReuniao = r.idNrReuniao',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('o'=>'Orgaos'),
                                 'd.idOrgao = o.Codigo',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
 
             //adiciona quantos filtros foram enviados
@@ -264,7 +264,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $slctInterno->from(
                         array("tbPlanilhaAprovacao"),
                         array(new Zend_Db_Expr("ROUND(SUM(qtItem*nrOcorrencia*vlUnitario),2)")),
-                        "SAC.dbo"
+                        "SAC"
                      );
         $slctInterno->where("IdPRONAC = p.idPronac and stAtivo='S' and nrFonteRecurso=109");
 
@@ -282,37 +282,37 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             array('s'=>'Situacao'),
                             'p.Situacao = s.Codigo',
                             array("DescSituacao"=>"Descricao"),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('a'=>'Area'),
                             'p.Area = a.Codigo',
                             array("DescArea"=>"Descricao"),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('se'=>'Segmento'),
                             'p.Segmento = se.Codigo',
                             array("DescSegmento"=>"Descricao"),
-                            "SAC.dbo"
+                            "SAC"
                           );
         $slct->joinInner(
                             array('x'=>'Agentes'),
                             'p.CgcCpf = x.CNPJCPF',
                             array(),
-                            "agentes.dbo"
+                            "agentes"
                           );
         $slct->joinInner(
                             array('n'=>'Nomes'),
                             'x.idAgente = n.idAgente',
                             array("Proponente"=>"Descricao"),
-                            "agentes.dbo"
+                            "agentes"
                           );
         $slct->joinInner(
                             array('r'=>'tbReuniao'),
                             't.idNrReuniao = r.idNrReuniao',
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                           );
 
         $slctInterno = $this->select();
@@ -348,37 +348,37 @@ class tbPauta extends MinC_Db_Table_Abstract {
                                 array('s'=>'Situacao'),
                                 'p.Situacao = s.Codigo',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('a'=>'Area'),
                                 'p.Area = a.Codigo',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('se'=>'Segmento'),
                                 'p.Segmento = se.Codigo',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
             $slct2->joinInner(
                                 array('x'=>'Agentes'),
                                 'p.CgcCpf = x.CNPJCPF',
                                 array(),
-                                "agentes.dbo"
+                                "agentes"
                               );
             $slct2->joinInner(
                                 array('n'=>'Nomes'),
                                 'x.idAgente = n.idAgente',
                                 array(),
-                                "agentes.dbo"
+                                "agentes"
                               );
             $slct2->joinInner(
                                 array('r'=>'tbReuniao'),
                                 't.idNrReuniao = r.idNrReuniao',
                                 array(),
-                                "SAC.dbo"
+                                "SAC"
                               );
 
             $slctInterno2 = $this->select();
@@ -438,25 +438,25 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     'pr.NomeProjeto',
                     'pr.IdPRONAC'
                 ),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('ar' => 'Area'),
                 "pr.Area = ar.Codigo",
                 array('ar.Descricao as area'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('seg' => 'Segmento'),
                 "pr.Segmento = seg.Codigo",
                 array('seg.Descricao as segmento'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('par' => 'Parecer'),
                 "par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)",
                 array('par.ParecerFavoravel'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('dpc' => 'tbDistribuicaoProjetoComissao'),
@@ -493,25 +493,25 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     array('pr' => 'Projetos'),
                     "pr.IdPRONAC = tp.IdPRONAC",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('ar' => 'Area'),
                     "pr.Area = ar.Codigo",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('seg' => 'Segmento'),
                     "pr.Segmento = seg.Codigo",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('par' => 'Parecer'),
                     "par.IdPRONAC = tp.IdPRONAC",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('dpc' => 'tbDistribuicaoProjetoComissao'),
@@ -569,25 +569,25 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     'pr.NomeProjeto',
                     'pr.IdPRONAC'
                 ),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('ar' => 'Area'),
                 "pr.Area = ar.Codigo",
                 array('ar.Descricao as area'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('seg' => 'Segmento'),
                 "pr.Segmento = seg.Codigo",
                 array('seg.Descricao as segmento'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('par' => 'Parecer'),
                 "par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)",
                 array('par.ParecerFavoravel'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('dpc' => 'tbDistribuicaoProjetoComissao'),
@@ -654,25 +654,25 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     array('pr' => 'Projetos'),
                     "pr.IdPRONAC = tp.IdPRONAC",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('ar' => 'Area'),
                     "pr.Area = ar.Codigo",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('seg' => 'Segmento'),
                     "pr.Segmento = seg.Codigo",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('par' => 'Parecer'),
                     "par.IdPRONAC = tp.IdPRONAC",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('dpc' => 'tbDistribuicaoProjetoComissao'),
@@ -748,13 +748,13 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     'pr.DtProtocolo',
                     new Zend_Db_Expr('SAC.dbo.fnDtAprovacao(pr.AnoProjeto,pr.Sequencial) as DtAprovacao')
                 ),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('a' => 'Area'),
                 "a.Codigo = pr.Area",
                 array('a.Descricao as descricaoArea'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('par' => 'Parecer'),
@@ -762,7 +762,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 array('par.TipoParecer',
                       'par.ParecerFavoravel',
                       'par.ResumoParecer'),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array('r' => 'tbReuniao'),
@@ -802,13 +802,13 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     array('pr' => 'Projetos'),
                     "pr.IdPRONAC = tp.IdPRONAC",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('par' => 'Parecer'),
                     "par.IdPRONAC = tp.IdPRONAC AND par.stAtivo = 1",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctContador->joinInner(
                     array('r' => 'tbReuniao'),
@@ -888,7 +888,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct1->joinInner(
             array('b' => 'Projetos'), "a.IdPRONAC = b.IdPRONAC",
-            array(), "SAC.dbo"
+            array(), "SAC"
         );
         $slct1->joinInner(
             array('c' => 'tbConsolidacaoVotacao'), "b.IdPRONAC = c.idPRONAC",
@@ -913,7 +913,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct2->joinInner(
             array('b' => 'Projetos'), "a.IdPRONAC = b.IdPRONAC",
-            array(), "SAC.dbo"
+            array(), "SAC"
         );
         $slct2->joinInner(
             array('c' => 'tbConsolidacaoVotacao'), "b.IdPRONAC = c.idPRONAC",
@@ -939,7 +939,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct3->joinInner(
             array('b' => 'Projetos'), "a.IdPRONAC = b.IdPRONAC",
-            array(), "SAC.dbo"
+            array(), "SAC"
         );
         $slct3->joinInner(
             array('c' => 'tbConsolidacaoVotacao'), "b.IdPRONAC = c.idPRONAC AND a.idTipoReadequacao = c.tpTipoReadequacao",
@@ -947,7 +947,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct3->joinInner(
             array('d' => 'tbTipoReadequacao'), "a.idTipoReadequacao = d.idTipoReadequacao",
-            array(), "SAC.dbo"
+            array(), "SAC"
         );
         $slct3->where('a.siEncaminhamento = ?', 8);
         $slct3->where('a.idNrReuniao = ?', $idNrReuniao);

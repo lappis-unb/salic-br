@@ -117,9 +117,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 array('p' => 'Produto'), 'd.idProduto = p.Codigo', array('Descricao as dsProduto')
         );
 
-        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes.dbo");
+        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes");
 
-        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes.dbo");
+        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes");
 
         $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS'
         );
@@ -163,9 +163,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 array('p' => 'Produto'), 'd.idProduto = p.Codigo', array('Descricao as dsProduto')
         );
 
-        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes.dbo");
+        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes");
 
-        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes.dbo");
+        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes");
 
         $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS'
         );

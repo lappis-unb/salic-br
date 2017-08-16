@@ -101,7 +101,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                                                                WHEN a.TipoAprovacao = 4 THEN 'Redu��o'
                                                                WHEN a.TipoAprovacao = 8 THEN 'Readequa��o' END"),
                         "a.idReadequacao"
-                        ), "SAC.dbo"
+                        ), "SAC"
                     );
         $slct->joinInner(
                         array("p"=>"Projetos"),
@@ -110,23 +110,23 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                               "Pronac"=>new Zend_Db_Expr("p.AnoProjeto + p.Sequencial"),
                               "p.NomeProjeto",
                             ),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinLeft(
                         array("tbr"=>"tbReadequacao"),
                         "p.IdPRONAC = tbr.idPronac AND a.idReadequacao = tbr.idReadequacao",
-                        array(), "SAC.dbo"
+                        array(), "SAC"
                         );
         $slct->joinLeft(
                         array("tbtpr"=>"tbTipoReadequacao"),
                         "tbr.idTipoReadequacao = tbtpr.idTipoReadequacao",
-                        array('tbtpr.dsReadequacao'), "SAC.dbo"
+                        array('tbtpr.dsReadequacao'), "SAC"
                         );
         $slct->joinInner(
                         array("m"=>"Mecanismo"),
                         "p.Mecanismo = m.Codigo",
                         array("Mecanismo"=>"m.Descricao"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -138,29 +138,29 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $slctCount->setIntegrityCheck(false);
             $slctCount->from(
                          array("a"=>$this->_name),
-                         array('total'=>"count(*)"), "SAC.dbo"
+                         array('total'=>"count(*)"), "SAC"
                         );
             $slctCount->joinInner(
                             array("p"=>"Projetos"),
                             "a.AnoProjeto = p.AnoProjeto and a.Sequencial = p.Sequencial",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct->joinLeft(
                         array("tbr"=>"tbReadequacao"),
                         "p.IdPRONAC = tbr.idPronac AND a.idReadequacao = tbr.idReadequacao",
-                        array(), "SAC.dbo"
+                        array(), "SAC"
                         );
             $slct->joinLeft(
                         array("tbtpr"=>"tbTipoReadequacao"),
                         "tbr.idTipoReadequacao = tbtpr.idTipoReadequacao",
-                        array('tbtpr.dsReadequacao'), "SAC.dbo"
+                        array('tbtpr.dsReadequacao'), "SAC"
                         );
             $slct->joinInner(
                         array("m"=>"Mecanismo"),
                         "p.Mecanismo = m.Codigo",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
             //adiciona quantos filtros foram enviados

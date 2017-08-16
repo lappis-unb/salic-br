@@ -987,13 +987,13 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 array("ag" => "Agentes"),
                 'pr.CgcCpf = ag.CNPJCPF',
                 array(),
-                "agentes.dbo"
+                "agentes"
             )
             ->join(
                 array("nm2" => "Nomes"),
                 'ag.idAgente = nm2.idAgente',
                 array(),
-                "agentes.dbo"
+                "agentes"
             )
             ->where(
                     "pr.Situacao IN(

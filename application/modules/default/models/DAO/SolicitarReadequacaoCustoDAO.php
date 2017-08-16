@@ -57,7 +57,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                 ->joinInner(array('nm' => 'Nomes'),
                         "a.idAgente = nm.idAgente",
                         array('Descricao as Nome'),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinLeft(array('seg' => 'Segmento'),
                         "seg.Codigo = pr.Segmento",
@@ -88,7 +88,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
         $slct->distinct();
         $slct->from(array('pr' => 'Projetos'),
                         array('IdPRONAC'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(
                         array('prep' => 'PreProjeto'),
@@ -103,7 +103,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
@@ -145,7 +145,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
         $slct->distinct();
         $slct->from(array('pr' => 'Projetos'),
                         array('IdPRONAC'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(
                         array('prep' => 'PreProjeto'),
@@ -160,7 +160,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
@@ -228,26 +228,26 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'idEtapa',
                             'stAtivo'
                         ),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpe' => 'tbPlanilhaEtapa'),
                         'tpa.idEtapa = tpe.idPlanilhaEtapa',
                         array('Etapa' => 'tpe.Descricao'),
-                        "SAC.dbo")
+                        "SAC")
                 ->joinInner(array('tpu' => 'tbPlanilhaUnidade'),
                         'tpa.idUnidade = tpu.idUnidade',
                         array('Unidade' => 'tpu.Descricao'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpi' => 'tbPlanilhaItens'),
                         'tpa.idPlanilhaItem = tpi.idPlanilhaItens',
                         array('tpi.Descricao as Item'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('uf' => 'UF'),
                         'tpa.idUFDespesa = uf.idUF',
                         array('uf.Descricao as uf'),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
@@ -299,26 +299,26 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'idEtapa',
                             'stAtivo'
                         ),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpe' => 'tbPlanilhaEtapa'),
                         'tpa.idEtapa = tpe.idPlanilhaEtapa',
                         array('Etapa' => 'tpe.Descricao'),
-                        "SAC.dbo")
+                        "SAC")
                 ->joinInner(array('tpu' => 'tbPlanilhaUnidade'),
                         'tpa.idUnidade = tpu.idUnidade',
                         array('Unidade' => 'tpu.Descricao'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpi' => 'tbPlanilhaItens'),
                         'tpa.idPlanilhaItem = tpi.idPlanilhaItens',
                         array('tpi.Descricao as Item'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('uf' => 'UF'),
                         'tpa.idUFDespesa = uf.idUF',
                         array('uf.Descricao as uf'),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
@@ -801,7 +801,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "agentes.dbo"
+                        "agentes"
                 );
         //$slctItens->where("tpPlanilha = ?", 'SR');
         $slctItens->where('tpa.idPronac = ?', $idPronac);

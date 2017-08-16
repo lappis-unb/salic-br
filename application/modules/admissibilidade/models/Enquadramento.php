@@ -232,7 +232,7 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
 
         $queryDesistenciaRecursal = $this->select();
         $queryDesistenciaRecursal->setIntegrityCheck(false);
-        $queryDesistenciaRecursal->from(array('tbRecurso' => 'tbRecurso'), array('idRecurso'), $this->getSchema("SAC.dbo"));
+        $queryDesistenciaRecursal->from(array('tbRecurso' => 'tbRecurso'), array('idRecurso'), $this->getSchema("SAC"));
         $queryDesistenciaRecursal->where("tpSolicitacao = ?", "DR");
         $queryDesistenciaRecursal->where("siRecurso = ?", 15);
         $queryDesistenciaRecursal->where("stEstado = ?", 1);

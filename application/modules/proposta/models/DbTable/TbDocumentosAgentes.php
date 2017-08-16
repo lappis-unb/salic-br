@@ -57,7 +57,7 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(
             array("b"=>"DocumentosExigidos"), "a.CodigoDocumento = b.Codigo",
-            array("Descricao"), "SAC.dbo"
+            array("Descricao"), "SAC"
         );
 
         //adiciona quantos filtros foram enviados

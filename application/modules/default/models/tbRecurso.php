@@ -60,25 +60,25 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			array("proponente" => "Agentes")
 			,"proponente.idAgente = r.idAgenteSolicitante"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("nmProponente" => "Nomes")
 			,"nmProponente.idAgente = proponente.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("ministro" => "Agentes")
 			,"ministro.idAgente = r.idAgenteAvaliador"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("nmMinistro" => "Nomes")
 			,"nmMinistro.idAgente = ministro.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 
 		// avaliacao do ministro
@@ -222,31 +222,31 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			array("Ag" => "Agentes")
 			,"Ag.CNPJCPF = Pr.CgcCpf"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("N" => "Nomes")
 			,"N.idAgente = Ag.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("EN" => "EnderecoNacional")
 			,"EN.idAgente = Ag.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinInner(
 			array("mun" => "Municipios")
 			,"mun.idMunicipioIBGE = I.Cidade OR mun.idMunicipioIBGE = EN.Cidade"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinInner(
 			array("uf" => "UF")
 			,"uf.idUF = mun.idUFIBGE"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("Enq" => "Enquadramento")

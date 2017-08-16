@@ -101,7 +101,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
             $slctContador->setIntegrityCheck(false);
             $slctContador->from(array("aa"=>$this->_name),
                             array("total" => "count(*)"),
-                                  "SAC.dbo");
+                                  "SAC");
             $slctContador->joinInner(
                     array('prod' => 'Produto'),
                     'aa.idProduto = prod.Codigo',

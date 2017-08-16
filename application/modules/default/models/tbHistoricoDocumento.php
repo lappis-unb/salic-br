@@ -33,19 +33,19 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 array("pr"=>"Projetos"),
                 "pr.IdPRONAC = hd.idPronac",
                 array("IdPRONAC", "Pronac"=>new Zend_Db_Expr("pr.AnoProjeto + pr.Sequencial"), "NomeProjeto"),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("oo"=>"Orgaos"),
                 "oo.Codigo = hd.idOrigem",
                 array("Origem"=>"Sigla"),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("od"=>"Orgaos"),
                 "od.Codigo = hd.idUnidade",
                 array("Destino"=>"Sigla"),
-                "SAC.dbo"
+                "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -80,19 +80,19 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 array("pr"=>"Projetos"),
                 "pr.IdPRONAC = hd.idPronac",
                 array(),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("oo"=>"Orgaos"),
                 "oo.Codigo = hd.idOrigem",
                 array(),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("od"=>"Orgaos"),
                 "od.Codigo = hd.idUnidade",
                 array(),
-                "SAC.dbo"
+                "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -122,25 +122,25 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 array("d"=>"tbDocumento"),
                 "d.idDocumento = hd.idDocumento",
                 array("NoArquivo", "dtDocumento"=>"CONVERT(CHAR(20),dtDocumento, 120)", "CodigoCorreio", "idDocumento"),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array("pr"=>"Projetos"),
                 "pr.IdPRONAC = hd.idPronac",
                 array("IdPRONAC", "Pronac"=>new Zend_Db_Expr("pr.AnoProjeto + pr.Sequencial"), "NomeProjeto"),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("oo"=>"Orgaos"),
                 "oo.Codigo = hd.idOrigem",
                 array("Origem"=>"Sigla"),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("od"=>"Orgaos"),
                 "od.Codigo = hd.idUnidade",
                 array("Destino"=>"Sigla"),
-                "SAC.dbo"
+                "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -175,25 +175,25 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 array("d"=>"tbDocumento"),
                 "d.idDocumento = hd.idDocumento",
                 array(),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array("pr"=>"Projetos"),
                 "pr.IdPRONAC = hd.idPronac",
                 array(),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("oo"=>"Orgaos"),
                 "oo.Codigo = hd.idOrigem",
                 array(),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinLeft(
                 array("od"=>"Orgaos"),
                 "od.Codigo = hd.idUnidade",
                 array(),
-                "SAC.dbo"
+                "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -227,7 +227,7 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                                                                WHEN h.Acao = 3 THEN 'Recebido'
                                                                WHEN h.Acao = 4 THEN 'Recusado'
                                                                WHEN h.Acao = 6 THEN 'Anexado' END"),
-                ), "SAC.dbo"
+                ), "SAC"
         );
         $slct->joinInner(
                 array("p"=>"Projetos"),
@@ -239,7 +239,7 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 "Origem"=>new Zend_Db_Expr("TABELAS.dbo.fnEstruturaOrgao(h.idorigem,0)"),
                 "Processo"=>new Zend_Db_Expr("SAC.dbo.fnFormataProcesso(p.idPronac)"),
                 ),
-                "SAC.dbo"
+                "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -252,13 +252,13 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
             $slctCount->setIntegrityCheck(false);
             $slctCount->from(
                     array("h"=>$this->_name),
-                    array('total'=>"count(*)"), "SAC.dbo"
+                    array('total'=>"count(*)"), "SAC"
             );
             $slctCount->joinInner(
                     array("p"=>"Projetos"),
                     "p.IdPRONAC = h.idPronac",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
 
             //adiciona quantos filtros foram enviados
@@ -304,7 +304,7 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                                                            WHEN h.Acao = 3 THEN 'Recebido'
                                                            WHEN h.Acao = 4 THEN 'Recusado'
                                                            WHEN h.Acao = 6 THEN 'Anexado' END"),
-                ), "SAC.dbo"
+                ), "SAC"
         );
         $slct->joinInner(
                 array("p"=>"Projetos"),
@@ -313,7 +313,7 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 "Pronac"=>new Zend_Db_Expr("p.AnoProjeto + p.Sequencial"),
                 "p.NomeProjeto"
                 ),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array("d"=>"tbDocumento"),
@@ -325,13 +325,13 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
                 "d.noArquivo",
                 "Usuario"=>new Zend_Db_Expr("SAC.dbo.fnNomeUsuario(d.idUsuarioJuntada)")
                 ),
-                "SAC.dbo"
+                "SAC"
         );
         $slct->joinInner(
                 array("t"=>"tbTipoDocumento"),
                 "d.idTipoDocumento = t.idTipoDocumento",
                 array("t.dsTipoDocumento"),
-                "SAC.dbo"
+                "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -344,25 +344,25 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
             $slctCount->setIntegrityCheck(false);
             $slctCount->from(
                     array("h"=>$this->_name),
-                    array('total'=>"count(*)"), "SAC.dbo"
+                    array('total'=>"count(*)"), "SAC"
             );
             $slctCount->joinInner(
                     array("p"=>"Projetos"),
                     "p.IdPRONAC = h.idPronac",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctCount->joinInner(
                     array("d"=>"tbDocumento"),
                     "d.idPronac = p.idPronac",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
             $slctCount->joinInner(
                     array("t"=>"tbTipoDocumento"),
                     "d.idTipoDocumento = t.idTipoDocumento",
                     array(),
-                    "SAC.dbo"
+                    "SAC"
             );
 
             //adiciona quantos filtros foram enviados

@@ -12,7 +12,7 @@
 class PlanilhaProjetoConselheiroDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
-	protected $_schema  = "SAC.dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbPlanilhaProjetoConselheiro";
 	protected $_primary = "idPlanilhaProjeto";
 

@@ -453,7 +453,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $sql->from(
             'Orgaos',
             array("*"),
-            "TABELAS.dbo"
+            "TABELAS"
         );
         $sql->where('org_codigo = ?', $usu_orgao);
 
@@ -514,7 +514,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $sql->from(
             'Usuarios',
             array("usu_nome"),
-            "TABELAS.dbo"
+            "TABELAS"
         );
         $sql->where('usu_codigo = ?', $usu_codigo);
 
@@ -846,13 +846,13 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $slct->from(
             array("uog" => "UsuariosXOrgaosXGrupos"),
             array("*"),
-            "TABELAS.dbo"
+            "TABELAS"
         );
         $slct->joinInner(
             array("g" => "Grupos"),
             "g.gru_codigo = uog.uog_grupo",
             array(),
-            "TABELAS.dbo"
+            "TABELAS"
         );
         $slct->where("g.gru_nome LIKE ? ", "%coordenador%");
         $slct->where("uog.uog_usuario = ? ", $idUsuario);
@@ -871,13 +871,13 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $slct->from(
             array("uog" => "UsuariosXOrgaosXGrupos"),
             array("*"),
-            "TABELAS.dbo"
+            "TABELAS"
         );
         $slct->joinInner(
             array("g" => "Grupos"),
             "g.gru_codigo = uog.uog_grupo",
             array(),
-            "TABELAS.dbo"
+            "TABELAS"
         );
         $slct->where("g.gru_nome LIKE ? ", "%coordenador - geral%");
         $slct->where("uog.uog_usuario = ? ", $idUsuario);
@@ -930,13 +930,13 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $select->from(
             array('a' => 'vwUsuariosOrgaosGrupos'),
             array('a.usu_codigo', 'a.usu_nome', 'a.gru_nome AS Perfil', 'a.gru_codigo AS idVerificacao'),
-            "TABELAS.dbo"
+            "TABELAS"
         );
         $select->joinInner(
             array('b' => 'Agentes'),
             'a.usu_identificacao = b.CNPJCPF',
             array('b.idAgente'),
-            "agentes.dbo"
+            "agentes"
         );
         $select->where("a.sis_codigo = ?", 21);
         $select->where("a.gru_codigo = ?", $perfil);
@@ -966,13 +966,13 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
             array("a" => "tbAvaliacaoProposta"),
             "u.usu_codigo = a.idTecnico",
             array(),
-            "SAC.dbo"
+            "SAC"
         );
         $slct->joinInner(
             array("p" => "PreProjeto"),
             "p.idPreProjeto = a.idProjeto",
             array(),
-            "SAC.dbo"
+            "SAC"
         );
 
         //adiciona quantos filtros foram enviados

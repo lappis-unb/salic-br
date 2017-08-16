@@ -60,7 +60,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
         $slct->from(array('pr' => 'Projetos'),
                         array('IdPRONAC'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(
                         array('prep' => 'PreProjeto'),
@@ -75,7 +75,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),

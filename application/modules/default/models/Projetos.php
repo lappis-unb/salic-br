@@ -305,7 +305,7 @@ class Projetos extends MinC_Db_Table_Abstract
             'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
             'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
             'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
-        ), "SAC.dbo"
+        ), "SAC"
         );
 
         $slct->joinInner(
@@ -314,38 +314,38 @@ class Projetos extends MinC_Db_Table_Abstract
             'ap.DtFimCaptacao',
             'ap.DtPublicacaoAprovacao',
             'ap.PortariaAprovacao',
-            'ap.AprovadoReal'), "SAC.dbo"
+            'ap.AprovadoReal'), "SAC"
         );
 
         $slct->joinInner(
-            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC.dbo"
+            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC"
         );
         $slct->joinInner(
-            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC.dbo"
+            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC"
         );
         $slct->joinInner(
             array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array('en.Enquadramento as nrenq',
             'en.Observacao',
             'enquadramento' => New Zend_Db_Expr("case when en.Enquadramento = 1 then '26'
-                when en.Enquadramento = 2 then '18' end ")), "SAC.dbo"
+                when en.Enquadramento = 2 then '18' end ")), "SAC"
         );
         $slct->joinInner(
             array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC", array(), "BDCORPORATIVO.scSAC"
         );
         $slct->joinInner(
-            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC.dbo"
+            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
         );
         $slct->joinInner(
-            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes.dbo"
+            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes"
         );
         $slct->joinInner(
-            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes.dbo"
+            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes"
         );
         /* $slct->joinInner(
           array("tvp"=>"tbVerificaProjeto"),
           "tvp.IdPRONAC = pr.IdPRONAC",
           array(),
-          "SAC.dbo"
+          "SAC"
           ); */
 
         if (!empty($situacao)) {
@@ -379,7 +379,7 @@ class Projetos extends MinC_Db_Table_Abstract
             'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
             'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
             'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
-        ), "SAC.dbo"
+        ), "SAC"
         );
 
         /* dateadd(day,1,getdate()) as DtInicioCaptacao,
@@ -390,35 +390,35 @@ class Projetos extends MinC_Db_Table_Abstract
             array("ap" => "Aprovacao"), "ap.idPronac = pr.idPronac", array(
             'ap.DtPublicacaoAprovacao',
             'ap.PortariaAprovacao',
-            'ap.AprovadoReal'), "SAC.dbo"
+            'ap.AprovadoReal'), "SAC"
         );
 
         $slct->joinInner(
-            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC.dbo"
+            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC"
         );
         $slct->joinInner(
-            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC.dbo"
+            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC"
         );
         $slct->joinInner(
             array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array('en.Enquadramento as nrenq',
             'en.Observacao',
             'enquadramento' => New Zend_Db_Expr("case when en.Enquadramento = 1 then '26'
-                when en.Enquadramento = 2 then '18' end ")), "SAC.dbo"
+                when en.Enquadramento = 2 then '18' end ")), "SAC"
         );
         $slct->joinInner(
             array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC", array(), "BDCORPORATIVO.scSAC"
         );
         $slct->joinInner(
-            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC.dbo"
+            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
         );
         $slct->joinInner(
-            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes.dbo"
+            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes"
         );
         $slct->joinInner(
-            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes.dbo"
+            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes"
         );
         $slct->joinLeft(
-            array("tvp" => "tbVerificaProjeto"), "tvp.IdPRONAC = ag.idAgente", array(), "SAC.dbo"
+            array("tvp" => "tbVerificaProjeto"), "tvp.IdPRONAC = ag.idAgente", array(), "SAC"
         );
 
         if (!empty($situacao)) {
@@ -458,7 +458,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                                 THEN pr.DtFimExecucao
                                                                                 ELSE CONVERT(char(4),year({$this->getDate()})) + '/12/31'
                                                                        END"),
-        ), "SAC.dbo"
+        ), "SAC"
         );
 
         $slct->joinInner(
@@ -468,14 +468,14 @@ class Projetos extends MinC_Db_Table_Abstract
             'ap.PortariaAprovacao',
             'ap.DtInicioCaptacao as DtInicioCaptacaoGravada',
             'ap.DtFimCaptacao as DtFimCaptacaoGravada',
-            'AprovadoReal' => new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC.dbo"
+            'AprovadoReal' => new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC"
         );
 
         $slct->joinInner(
-            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC.dbo"
+            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC"
         );
         $slct->joinInner(
-            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC.dbo"
+            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC"
         );
         $slct->joinInner(
             array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array('en.Enquadramento as nrenq',
@@ -484,19 +484,19 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                             THEN '26'
                                                                        WHEN en.Enquadramento = 2
                                                                             THEN '18'
-                                                                  END")), "SAC.dbo"
+                                                                  END")), "SAC"
         );
         $slct->joinInner(
             array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM BDCORPORATIVO.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "BDCORPORATIVO.scSAC"
         );
         $slct->joinInner(
-            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC.dbo"
+            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
         );
         $slct->joinInner(
-            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes.dbo"
+            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes"
         );
         $slct->joinInner(
-            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes.dbo"
+            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes"
         );
         $slct->joinLeft(
             array("vp" => "tbVerificaProjeto"), "vp.IdPRONAC = pr.IdPRONAC", array('vp.idUsuario',
@@ -515,7 +515,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                                               END "),
             'tempoAnalise' => New Zend_Db_Expr("DATEDIFF(day, vp.DtRecebido, {$this->getDate()})"),
             "vp.dtRecebido"
-        ), "SAC.dbo"
+        ), "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -554,7 +554,7 @@ class Projetos extends MinC_Db_Table_Abstract
             /* 'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili1.DtSolicitacao desc)'),
               'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili2.DtSolicitacao desc)'),
               'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac and idTipoDiligencia=181 order by dili3.DtSolicitacao desc)') */
-        ), "SAC.dbo"
+        ), "SAC"
         );
 
         $slct->joinInner(
@@ -565,31 +565,31 @@ class Projetos extends MinC_Db_Table_Abstract
             'ap.DtInicioCaptacao as DtInicioCaptacaoGravada',
             'ap.DtFimCaptacao as DtFimCaptacaoGravada',
             //'ap.AprovadoReal',
-            'AprovadoReal' => new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC.dbo"
+            'AprovadoReal' => new Zend_Db_Expr("SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)")), "SAC"
         );
 
         $slct->joinInner(
-            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC.dbo"
+            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC"
         );
         $slct->joinInner(
-            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC.dbo"
+            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC"
         );
         $slct->joinInner(
             array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array('en.Enquadramento as nrenq',
             'en.Observacao',
-            'enquadramento' => New Zend_Db_Expr("case when en.Enquadramento = 1 then '26' when en.Enquadramento = 2 then '18' end ")), "SAC.dbo"
+            'enquadramento' => New Zend_Db_Expr("case when en.Enquadramento = 1 then '26' when en.Enquadramento = 2 then '18' end ")), "SAC"
         );
         $slct->joinInner(
             array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM BDCORPORATIVO.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "BDCORPORATIVO.scSAC"
         );
         $slct->joinInner(
-            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC.dbo"
+            array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
         );
         $slct->joinInner(
-            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes.dbo"
+            array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes"
         );
         $slct->joinInner(
-            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes.dbo"
+            array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array("nm.Descricao as nome"), "agentes"
         );
         $slct->joinLeft(
             array("vp" => "tbVerificaProjeto"), "vp.IdPRONAC = pr.IdPRONAC", array('vp.idUsuario',
@@ -603,7 +603,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                  END "),
             "DATEDIFF(day, vp.DtRecebido, {$this->getDate()}) AS tempoAnalise",
             "vp.dtRecebido"
-        ), "SAC.dbo"
+        ), "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -615,35 +615,35 @@ class Projetos extends MinC_Db_Table_Abstract
 
             $slctContador = $this->select();
             $slctContador->setIntegrityCheck(false);
-            $slctContador->from(array("pr" => $this->_name), array("total" => "count(*)"), "SAC.dbo"
+            $slctContador->from(array("pr" => $this->_name), array("total" => "count(*)"), "SAC"
             );
             $slctContador->joinInner(
-                array("ap" => "Aprovacao"), "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)", array(), "SAC.dbo"
+                array("ap" => "Aprovacao"), "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)", array(), "SAC"
             );
 
             $slctContador->joinInner(
-                array("ar" => "Area"), "ar.Codigo = pr.Area", array(), "SAC.dbo"
+                array("ar" => "Area"), "ar.Codigo = pr.Area", array(), "SAC"
             );
             $slctContador->joinInner(
-                array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array(), "SAC.dbo"
+                array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array(), "SAC"
             );
             $slctContador->joinInner(
-                array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array(), "SAC.dbo"
+                array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array(), "SAC"
             );
             $slctContador->joinInner(
                 array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM BDCORPORATIVO.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "BDCORPORATIVO.scSAC"
             );
             $slctContador->joinInner(
-                array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array(), "SAC.dbo"
+                array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array(), "SAC"
             );
             $slctContador->joinInner(
-                array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes.dbo"
+                array("ag" => "Agentes"), "ag.CNPJCPF = pr.CgcCpf", array(), "agentes"
             );
             $slctContador->joinInner(
-                array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array(), "agentes.dbo"
+                array("nm" => "Nomes"), "nm.idAgente = ag.idAgente", array(), "agentes"
             );
             $slctContador->joinLeft(
-                array("vp" => "tbVerificaProjeto"), "vp.IdPRONAC = pr.IdPRONAC", array(), "SAC.dbo"
+                array("vp" => "tbVerificaProjeto"), "vp.IdPRONAC = pr.IdPRONAC", array(), "SAC"
             );
 
             //adiciona quantos filtros foram enviados
@@ -695,14 +695,14 @@ class Projetos extends MinC_Db_Table_Abstract
             'pr.DtFimExecucao',
             'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,{$this->getDate()})"),
             'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year({$this->getDate()})) + '/12/31' end")
-        ), "SAC.dbo"
+        ), "SAC"
         );
 
         $slct->joinInner(
-            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC.dbo"
+            array("ar" => "Area"), "ar.Codigo = pr.Area", array("ar.Descricao as area"), "SAC"
         );
         $slct->joinInner(
-            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC.dbo"
+            array("seg" => "Segmento"), "seg.Codigo = pr.Segmento", array('seg.Descricao as segmento'), "SAC"
         );
 
         $slct->where('pr.IdPRONAC = ?', $idPronac);
@@ -1295,7 +1295,7 @@ class Projetos extends MinC_Db_Table_Abstract
         );
 
         $select->joinLeft(
-            array('i' => 'Interessado'), 'Projetos.CgcCpf = i.CgcCpf', array('Nome as Proponente'), "SAC.dbo"
+            array('i' => 'Interessado'), 'Projetos.CgcCpf = i.CgcCpf', array('Nome as Proponente'), "SAC"
         );
         $select->joinLeft(
             array('PreProjeto'), "Projetos.idProjeto = PreProjeto.idPreProjeto", array('PreProjeto.stPlanoAnual')
@@ -1563,7 +1563,7 @@ class Projetos extends MinC_Db_Table_Abstract
             )
         );
         $select->joinLeft(
-            array('i' => 'Interessado'), 'p.CgcCpf = i.CgcCpf', array('Nome as Proponente'), "SAC.dbo"
+            array('i' => 'Interessado'), 'p.CgcCpf = i.CgcCpf', array('Nome as Proponente'), "SAC"
         );
         $select->joinLeft(
             array('tf' => 'tbFiscalizacao'), 'tf.IdPRONAC = p.IdPRONAC', array('idFiscalizacao',
@@ -1573,13 +1573,13 @@ class Projetos extends MinC_Db_Table_Abstract
             'dsFiscalizacaoProjeto',
             'dtRespostaSolicitada',
             'idUsuarioInterno AS idTecnico'
-        ), "SAC.dbo"
+        ), "SAC"
         );
         $select->joinLeft(
             array('tbNm' => 'Nomes'), "tf.idAgente = tbNm.idAgente", array('Descricao AS nmTecnico'), 'agentes'
         );
         $select->joinLeft(
-            array('trf' => 'tbRelatorioFiscalizacao'), 'tf.idFiscalizacao = trf.idFiscalizacao', array('stAvaliacao'), "SAC.dbo"
+            array('trf' => 'tbRelatorioFiscalizacao'), 'tf.idFiscalizacao = trf.idFiscalizacao', array('stAvaliacao'), "SAC"
         );
         $select->joinLeft(
             array('AUXF' => $tbFiscalizacao), 'AUXF.IdPRONAC = tf.IdPRONAC', array()
@@ -2944,25 +2944,25 @@ class Projetos extends MinC_Db_Table_Abstract
             array("A" => "Agentes")
             , "A.CNPJCPF = Pr.CgcCpf"
             , array()
-            , "agentes.dbo"
+            , "agentes"
         );
         $select->joinLeft(
             array("Vi" => "Visao")
             , "Vi.idAgente = A.idAgente"
             , array()
-            , "agentes.dbo"
+            , "agentes"
         );
         $select->joinLeft(
             array("N" => "Nomes")
             , "N.idAgente = A.idAgente"
             , array()
-            , "agentes.dbo"
+            , "agentes"
         );
         $select->joinLeft(
             array("VER" => "Verificacao")
             , "VER.idVerificacao = '144'"
             , array()
-            , "agentes.dbo"
+            , "agentes"
         );
 
 // filta pelas situa??es
@@ -3201,7 +3201,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
 
-        $slct->from(array("a" => "vwUsuariosOrgaosGrupos"), array("usu_codigo", "usu_nome"), "TABELAS.dbo");
+        $slct->from(array("a" => "vwUsuariosOrgaosGrupos"), array("usu_codigo", "usu_nome"), "TABELAS");
         $slct->where("gru_codigo = ? ", $idGrupo);
         $slct->where("uog_orgao = ? ", $idOrgaoDestino);
         $slct->where("uog_status = ? ", 1);
@@ -3395,10 +3395,10 @@ class Projetos extends MinC_Db_Table_Abstract
             array('o' => 'Orgaos'), "p.Orgao = o.Codigo"
         );
         $select->joinInner(
-            array('a' => 'Agentes'), "a.CNPJCPF = p.CgcCpf", array(new Zend_Db_Expr('SAC.dbo.fnNome(a.idAgente) AS NomeProponente')), "agentes.dbo"
+            array('a' => 'Agentes'), "a.CNPJCPF = p.CgcCpf", array(new Zend_Db_Expr('SAC.dbo.fnNome(a.idAgente) AS NomeProponente')), "agentes"
         );
 //        $select->joinInner(
-//                array('n' => 'Nomes'), "n.idAgente = a.idAgente", array('n.Descricao as NomeProponente'), "agentes.dbo"
+//                array('n' => 'Nomes'), "n.idAgente = a.idAgente", array('n.Descricao as NomeProponente'), "agentes"
 //        );
 //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -3909,15 +3909,15 @@ class Projetos extends MinC_Db_Table_Abstract
         );
         $slct->joinLeft(
             array('ag' => 'Agentes'), 'ag.CNPJCPF = pr.CgcCpf',
-            array(), "agentes.dbo"
+            array(), "agentes"
         );
         $slct->joinLeft(
             array('nm' => 'Nomes'), 'ag.idAgente = nm.idAgente',
-            array(), "agentes.dbo"
+            array(), "agentes"
         );
         $slct->joinLeft(
             array('inab' => 'Inabilitado'), 'inab.CgcCpf = pr.CgcCpf and pr.AnoProjeto = inab.AnoProjeto and pr.Sequencial = inab.Sequencial',
-            array(), "SAC.dbo"
+            array(), "SAC"
         );
         $slct->joinLeft(
             array('p' => 'PreProjeto'), 'pr.idProjeto = p.idPreProjeto',
@@ -3925,7 +3925,7 @@ class Projetos extends MinC_Db_Table_Abstract
         );
 //        $slct->joinLeft(
 //            array("e" => "Edital"), "e.idEdital = p.idEdital",
-//            array(), "SAC.dbo"
+//            array(), "SAC"
 //        );
 //        $slct->joinLeft(
 //            array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)",
@@ -3937,15 +3937,15 @@ class Projetos extends MinC_Db_Table_Abstract
 //        );
         $slct->joinLeft(
             array("ap" => "Aprovacao"), "ap.Anoprojeto = pr.AnoProjeto and ap.Sequencial = pr.Sequencial",
-            array(), "Sac.dbo"
+            array(), "Sac"
         );
         $slct->joinLeft(
             array("e" => "EnderecoNacional"), "ag.idAgente = e.idAgente and e.Status = 1",
-            array(), "agentes.dbo"
+            array(), "agentes"
         );
         $slct->joinLeft(
             array("u" => "vUFMunicipio"), "e.UF = u.idUF and e.Cidade = u.idMunicipio",
-            array('u.Municipio'), "agentes.dbo"
+            array('u.Municipio'), "agentes"
         );
 
         //adiciona quantos filtros foram enviados
@@ -4008,25 +4008,25 @@ class Projetos extends MinC_Db_Table_Abstract
             )
         );
         $slct->joinInner(
-            array('ar' => 'Area'), 'ar.Codigo = pr.Area', array("AreaNome" => "Descricao"), "SAC.dbo"
+            array('ar' => 'Area'), 'ar.Codigo = pr.Area', array("AreaNome" => "Descricao"), "SAC"
         );
         $slct->joinInner(
-            array('seg' => 'Segmento'), 'seg.Codigo = pr.Segmento', array("SegmentoNome" => "Descricao"), "SAC.dbo"
+            array('seg' => 'Segmento'), 'seg.Codigo = pr.Segmento', array("SegmentoNome" => "Descricao"), "SAC"
         );
         $slct->joinInner(
-            array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array("Nome"), "SAC.dbo"
+            array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array("Nome"), "SAC"
         );
         $slct->joinInner(
-            array('mec' => 'Mecanismo'), 'pr.Mecanismo = mec.Codigo', array("MecanismoNome" => "Descricao"), "SAC.dbo"
+            array('mec' => 'Mecanismo'), 'pr.Mecanismo = mec.Codigo', array("MecanismoNome" => "Descricao"), "SAC"
         );
         $slct->joinInner(
-            array('o' => 'Orgaos'), 'pr.Orgao = o.Codigo', array("OrgaoNome" => "Sigla"), "SAC.dbo"
+            array('o' => 'Orgaos'), 'pr.Orgao = o.Codigo', array("OrgaoNome" => "Sigla"), "SAC"
         );
         $slct->joinInner(
-            array('oo' => 'Orgaos'), 'pr.OrgaoOrigem = oo.Codigo', array("OrgaoOrigemNome" => "Sigla"), "SAC.dbo"
+            array('oo' => 'Orgaos'), 'pr.OrgaoOrigem = oo.Codigo', array("OrgaoOrigemNome" => "Sigla"), "SAC"
         );
         $slct->joinInner(
-            array('sit' => 'Situacao'), 'pr.Situacao = sit.Codigo', array("SituacaoNome" => "Descricao"), "SAC.dbo"
+            array('sit' => 'Situacao'), 'pr.Situacao = sit.Codigo', array("SituacaoNome" => "Descricao"), "SAC"
         );
 
 //adiciona quantos filtros foram enviados
@@ -4041,25 +4041,25 @@ class Projetos extends MinC_Db_Table_Abstract
                 array('pr' => $this->_name), array("total" => "count(*)")
             );
             $slct2->joinInner(
-                array('ar' => 'Area'), 'ar.Codigo = pr.Area', array(), "SAC.dbo"
+                array('ar' => 'Area'), 'ar.Codigo = pr.Area', array(), "SAC"
             );
             $slct2->joinInner(
-                array('seg' => 'Segmento'), 'seg.Codigo = pr.Segmento', array(), "SAC.dbo"
+                array('seg' => 'Segmento'), 'seg.Codigo = pr.Segmento', array(), "SAC"
             );
             $slct2->joinInner(
-                array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array(), "SAC.dbo"
+                array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array(), "SAC"
             );
             $slct2->joinInner(
-                array('mec' => 'Mecanismo'), 'pr.Mecanismo = mec.Codigo', array(), "SAC.dbo"
+                array('mec' => 'Mecanismo'), 'pr.Mecanismo = mec.Codigo', array(), "SAC"
             );
             $slct2->joinInner(
-                array('o' => 'Orgaos'), 'pr.Orgao = o.Codigo', array(), "SAC.dbo"
+                array('o' => 'Orgaos'), 'pr.Orgao = o.Codigo', array(), "SAC"
             );
             $slct2->joinInner(
-                array('oo' => 'Orgaos'), 'pr.OrgaoOrigem = oo.Codigo', array(), "SAC.dbo"
+                array('oo' => 'Orgaos'), 'pr.OrgaoOrigem = oo.Codigo', array(), "SAC"
             );
             $slct2->joinInner(
-                array('sit' => 'Situacao'), 'pr.Situacao = sit.Codigo', array(), "SAC.dbo"
+                array('sit' => 'Situacao'), 'pr.Situacao = sit.Codigo', array(), "SAC"
             );
 
 //adiciona quantos filtros foram enviados
@@ -4105,10 +4105,10 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->joinInner(
             array('o' => 'Orgaos'), 'pr.Orgao = o.Codigo',
             //array("idSecretaria", "Sigla"),
-            array(), "SAC.dbo"
+            array(), "SAC"
         );
         $slct->joinInner(
-            array('s' => 'Situacao'), 'pr.Situacao = s.Codigo', array("SituacaoNome" => "Descricao"), "SAC.dbo"
+            array('s' => 'Situacao'), 'pr.Situacao = s.Codigo', array("SituacaoNome" => "Descricao"), "SAC"
         );
 
 //adiciona quantos filtros foram enviados
@@ -4144,10 +4144,10 @@ class Projetos extends MinC_Db_Table_Abstract
             )
         );
         $slct->joinInner(
-            array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array("Cidade"), "SAC.dbo"
+            array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array("Cidade"), "SAC"
         );
         $slct->joinInner(
-            array('u' => 'UF'), 'pr.UfProjeto = u.UF', array("UF" => "Descricao", "Regiao"), "SAC.dbo"
+            array('u' => 'UF'), 'pr.UfProjeto = u.UF', array("UF" => "Descricao", "Regiao"), "SAC"
         );
 
 //adiciona quantos filtros foram enviados
@@ -4162,10 +4162,10 @@ class Projetos extends MinC_Db_Table_Abstract
                 array('pr' => $this->_name), array("total" => "count(*)")
             );
             $slct2->joinInner(
-                array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array(), "SAC.dbo"
+                array('i' => 'Interessado'), 'pr.CgcCpf = i.CgcCpf', array(), "SAC"
             );
             $slct2->joinInner(
-                array('u' => 'UF'), 'pr.UfProjeto = u.UF', array(), "SAC.dbo"
+                array('u' => 'UF'), 'pr.UfProjeto = u.UF', array(), "SAC"
             );
 
 //adiciona quantos filtros foram enviados
@@ -4217,22 +4217,22 @@ class Projetos extends MinC_Db_Table_Abstract
         $slct->joinLeft(array('p' => 'PreProjeto'), 'pr.idProjeto = p.idPreProjeto', array(), 'SAC'
         );
         $slct->joinLeft(
-            array("m" => "tbMovimentacao"), "p.idPreProjeto = m.idProjeto AND m.stEstado = 0", array(), "SAC.dbo"
+            array("m" => "tbMovimentacao"), "p.idPreProjeto = m.idProjeto AND m.stEstado = 0", array(), "SAC"
         );
         $slct->joinLeft(
-            array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", array(), "SAC.dbo"
+            array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", array(), "SAC"
         );
         $slct->joinLeft(
-            array("x1" => "tbAvaliacaoProposta"), "p.idPreProjeto = x1.idProjeto", array(), "SAC.dbo"
+            array("x1" => "tbAvaliacaoProposta"), "p.idPreProjeto = x1.idProjeto", array(), "SAC"
         );
         $slct->joinLeft(
-            array("mv" => "tbMovimentacao"), "p.idPreProjeto = mv.idProjeto and mv.stEstado = 0", array(), "SAC.dbo"
+            array("mv" => "tbMovimentacao"), "p.idPreProjeto = mv.idProjeto and mv.stEstado = 0", array(), "SAC"
         );
         $slct->joinLeft(
-            array("vr" => "Verificacao"), "mv.movimentacao = vr.idVerificacao and vr.idTipo = 4", array(), "SAC.dbo"
+            array("vr" => "Verificacao"), "mv.movimentacao = vr.idVerificacao and vr.idTipo = 4", array(), "SAC"
         );
         $slct->joinLeft(
-            array("e" => "Edital"), "e.idEdital = p.idEdital", array(), "SAC.dbo"
+            array("e" => "Edital"), "e.idEdital = p.idEdital", array(), "SAC"
         );
         $slct->joinLeft(
             array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)", array(), "BDCORPORATIVO.scQuiz"
@@ -4241,7 +4241,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array("cl" => "tbClassificaDocumento"), "cl.idClassificaDocumento = fd.idClassificaDocumento", array(), "BDCORPORATIVO.scSAC"
         );
         $slct->joinLeft(
-            array("vr2" => "Verificacao"), "e.cdTipoFundo = vr2.idVerificacao and vr2.idTipo = 15", array(), "SAC.dbo"
+            array("vr2" => "Verificacao"), "e.cdTipoFundo = vr2.idVerificacao and vr2.idTipo = 15", array(), "SAC"
         );
 
         if ($count) {
@@ -4262,22 +4262,22 @@ class Projetos extends MinC_Db_Table_Abstract
             $slct2->joinLeft(array('p' => 'PreProjeto'), 'pr.idProjeto = p.idPreProjeto', array(), 'SAC'
             );
             $slct2->joinLeft(
-                array("m" => "tbMovimentacao"), "p.idPreProjeto = m.idProjeto AND m.stEstado = 0", array(), "SAC.dbo"
+                array("m" => "tbMovimentacao"), "p.idPreProjeto = m.idProjeto AND m.stEstado = 0", array(), "SAC"
             );
             $slct2->joinLeft(
-                array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", array(), "SAC.dbo"
+                array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", array(), "SAC"
             );
             $slct2->joinLeft(
-                array("x1" => "tbAvaliacaoProposta"), "p.idPreProjeto = x1.idProjeto", array(), "SAC.dbo"
+                array("x1" => "tbAvaliacaoProposta"), "p.idPreProjeto = x1.idProjeto", array(), "SAC"
             );
             $slct2->joinLeft(
-                array("mv" => "tbMovimentacao"), "p.idPreProjeto = mv.idProjeto and mv.stEstado = 0", array(), "SAC.dbo"
+                array("mv" => "tbMovimentacao"), "p.idPreProjeto = mv.idProjeto and mv.stEstado = 0", array(), "SAC"
             );
             $slct2->joinLeft(
-                array("vr" => "Verificacao"), "mv.movimentacao = vr.idVerificacao and vr.idTipo = 4", array(), "SAC.dbo"
+                array("vr" => "Verificacao"), "mv.movimentacao = vr.idVerificacao and vr.idTipo = 4", array(), "SAC"
             );
             $slct2->joinLeft(
-                array("e" => "Edital"), "e.idEdital = p.idEdital", array(), "SAC.dbo"
+                array("e" => "Edital"), "e.idEdital = p.idEdital", array(), "SAC"
             );
             $slct2->joinLeft(
                 array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)", array(), "BDCORPORATIVO.scQuiz"
@@ -4286,7 +4286,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 array("cl" => "tbClassificaDocumento"), "cl.idClassificaDocumento = fd.idClassificaDocumento", array(), "BDCORPORATIVO.scSAC"
             );
             $slct2->joinLeft(
-                array("vr2" => "Verificacao"), "e.cdTipoFundo = vr2.idVerificacao and vr2.idTipo = 15", array(), "SAC.dbo"
+                array("vr2" => "Verificacao"), "e.cdTipoFundo = vr2.idVerificacao and vr2.idTipo = 15", array(), "SAC"
             );
 
 //adiciona quantos filtros foram enviados
@@ -4337,19 +4337,19 @@ class Projetos extends MinC_Db_Table_Abstract
 //                array('dp' => 'tbDistribuirParecer'),
 //                'pr.IdPRONAC = dp.idPRONAC',
 //                array(),
-//                "SAC.dbo"
+//                "SAC"
 //        );
 //        $slct->joinInner(
 //                array('ag' => 'Agentes'),
 //                'dp.idAgenteParecerista = ag.idAgente',
 //                array(),
-//                "agentes.dbo"
+//                "agentes"
 //        );
 //        $slct->joinInner(
 //                array('us' => 'Usuarios'),
 //                'ag.CNPJCPF = us.usu_identificacao',
 //                array(),
-//                "TABELAS.dbo"
+//                "TABELAS"
 //        );
 //
 //        //adiciona quantos filtros foram enviados
@@ -4368,19 +4368,19 @@ class Projetos extends MinC_Db_Table_Abstract
 //                    array('dp' => 'tbDistribuirParecer'),
 //                    'pr.IdPRONAC = dp.idPRONAC',
 //                    array(),
-//                    "SAC.dbo"
+//                    "SAC"
 //            );
 //            $slct2->joinInner(
 //                    array('ag' => 'Agentes'),
 //                    'd.idAgenteParecerista = ag.idAgente',
 //                    array(),
-//                    "agentes.dbo"
+//                    "agentes"
 //            );
 //            $slct2->joinInner(
 //                    array('us' => 'Usuarios'),
 //                    'ag.CNPJCPF = us.usu_identificacao',
 //                    array(),
-//                    "TABELAS.dbo"
+//                    "TABELAS"
 //            );
 //
 //            //adiciona quantos filtros foram enviados
@@ -6264,41 +6264,41 @@ class Projetos extends MinC_Db_Table_Abstract
             )
         );
         $select->joinLeft(
-            array('pr' => 'PreProjeto'), 'p.idProjeto = pr.idPreProjeto', array('stPlanoAnual'), "SAC.dbo"
+            array('pr' => 'PreProjeto'), 'p.idProjeto = pr.idPreProjeto', array('stPlanoAnual'), "SAC"
         );
         $select->joinLeft(
             array('nom' => 'Nomes'), "nom.idAgente = pr.idAgente", array('nom.Descricao AS nmAgente'), 'agentes'
         );
         $select->joinInner(
-            array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array('Descricao AS dsSegmento'), "SAC.dbo"
+            array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array('Descricao AS dsSegmento'), "SAC"
         );
         $select->joinInner(
-            array('si' => 'Situacao'), 'p.Situacao = si.Codigo', array('Descricao AS dsSituacao'), "SAC.dbo"
+            array('si' => 'Situacao'), 'p.Situacao = si.Codigo', array('Descricao AS dsSituacao'), "SAC"
         );
         $select->joinInner(
-            array('a' => 'Area'), 'p.Area = a.Codigo', array('Descricao AS dsArea'), "SAC.dbo"
+            array('a' => 'Area'), 'p.Area = a.Codigo', array('Descricao AS dsArea'), "SAC"
         );
         $select->joinInner(
-            array('m' => 'Mecanismo'), 'p.Mecanismo = m.Codigo', array('Descricao AS dsMecanismo'), "SAC.dbo"
+            array('m' => 'Mecanismo'), 'p.Mecanismo = m.Codigo', array('Descricao AS dsMecanismo'), "SAC"
         );
         $select->joinLeft(
-            array('e' => 'EnderecoNacional'), 'pr.idAgente = e.idAgente', array(), "agentes.dbo"
+            array('e' => 'EnderecoNacional'), 'pr.idAgente = e.idAgente', array(), "agentes"
         );
         $select->joinLeft(
-            array('u' => 'UF'), 'u.idUF = e.UF', array('Regiao', 'Sigla as uf'), "agentes.dbo"
+            array('u' => 'UF'), 'u.idUF = e.UF', array('Regiao', 'Sigla as uf'), "agentes"
         );
         $select->joinLeft(
-            array('mu' => 'Municipios'), 'mu.idUFIBGE = e.UF and mu.idMunicipioIBGE = e.Cidade', array('Descricao AS cidade'), "agentes.dbo"
+            array('mu' => 'Municipios'), 'mu.idUFIBGE = e.UF and mu.idMunicipioIBGE = e.Cidade', array('Descricao AS cidade'), "agentes"
         );
         $select->joinLeft(
-            array('tf' => 'tbFiscalizacao'), 'tf.IdPRONAC = p.IdPRONAC', array('idFiscalizacao', 'dtInicioFiscalizacaoProjeto', 'dtFimFiscalizacaoProjeto', 'stFiscalizacaoProjeto', 'dsFiscalizacaoProjeto', 'dtRespostaSolicitada', 'idUsuarioInterno as idTecnico'), "SAC.dbo"
+            array('tf' => 'tbFiscalizacao'), 'tf.IdPRONAC = p.IdPRONAC', array('idFiscalizacao', 'dtInicioFiscalizacaoProjeto', 'dtFimFiscalizacaoProjeto', 'stFiscalizacaoProjeto', 'dsFiscalizacaoProjeto', 'dtRespostaSolicitada', 'idUsuarioInterno as idTecnico'), "SAC"
         );
         $select->joinLeft(
             array('tbNm' => 'Nomes'), "tf.idAgente = tbNm.idAgente", array('nmTecnico' => 'tbNm.Descricao'), 'agentes'
         );
         $select->joinLeft(
             array('trf' => 'tbRelatorioFiscalizacao'), 'tf.idFiscalizacao = trf.idFiscalizacao',
-            array('stAvaliacao'), "SAC.dbo"
+            array('stAvaliacao'), "SAC"
         );
         $select->joinLeft(
             array('AUXF' => $tbFiscalizacao), 'AUXF.IdPRONAC = tf.IdPRONAC'
