@@ -235,19 +235,19 @@ class ContaBancaria extends MinC_Db_Table_Abstract {
 
         $select->joinInner(
             array('p' => 'Projetos'), 'c.AnoProjeto = p.AnoProjeto AND c.Sequencial = p.Sequencial',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('x' => 'Area'), 'p.Area = x.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('a' => 'Agentes'), 'p.CgcCpf = a.CNPJCPF',
-            array(''), 'agentes.dbo'
+            array(''), 'agentes'
         );
         $select->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array(''), 'agentes.dbo'
+            array(''), 'agentes'
         );
 
        //adiciona quantos filtros foram enviados

@@ -57,20 +57,20 @@ class EncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                             array('a'=>'idAgente'),
                             'a.idAgente = tbepc.idAgenteDestino',
                             array('u.usu_nome'),
-                            'SAC.dbo'
+                            'SAC'
                            );
     	$select->joinInner(
                             array('a'=>'Area'),
                             'p.Area = a.Codigo',
                             array('a.Descricao as Area'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->joinInner(
                             array('s'=>'Segmento'),
                             'p.Segmento = s.Codigo',
                             array('s.Descricao as Segmento'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 */
 

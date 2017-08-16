@@ -66,7 +66,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                         array('prep' => 'PreProjeto'),
                         'prep.idPreProjeto = pr.idProjeto',
                         array('idPreprojeto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('ag' => 'Agentes'),
@@ -87,7 +87,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                         array('tpd' => 'tbPlanoDistribuicao'),
                         'tpd.idPedidoAlteracao = tpap.idPedidoAlteracao',
                         array('tpd.idProduto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinLeft(
                         array('pd' => 'Produto'),
@@ -95,7 +95,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
                         array(
                             'pd.Descricao as produto'
                         ),
-                        'SAC.dbo'
+                        'SAC'
                 )
                         
                 ->where('pr.IdPRONAC= ?', $idPronac);

@@ -183,13 +183,13 @@ class Parecer extends MinC_Db_Table_Abstract
             array('ag' => 'Agentes'),
             'inner join agentes.dbo.Agentes ag on ',
             array(),
-            'agentes.dbo'
+            'agentes'
         );
         $select->joinInner(
             array('org' => 'Usuarios'),
             'ag.Usuario = usu.usu_codigo ',
             array('usu.usu_nome'),
-            'TABELAS.dbo'
+            'TABELAS'
         );
         $select->joinInner(
             array('are' => 'Area'),
@@ -438,11 +438,11 @@ class Parecer extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array('e' => 'Enquadramento'), 'p.idPronac = e.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('pr' => 'Projetos'), 'p.idPronac = pr.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->where('p.idTipoAgente = ?', 1);
         $select->where('p.idPronac = ?', $idPronac);

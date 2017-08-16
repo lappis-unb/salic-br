@@ -35,15 +35,15 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         $select = $table->select()
             ->from(array('taa' =>'tbAnaliseAprovacao'),
                 array('stArtigo18','stArtigo26'),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pr' => 'projetos'),
                 'pr.idpronac = taa.idpronac',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pdp' => 'PlanoDistribuicaoProduto'),
                 'pdp.idproduto=taa.idproduto and pdp.idprojeto = pr.idprojeto',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->where('taa.idpronac = ?', $idpronac)
             ->where('pdp.stPrincipal = 1')
             ->where('taa.tpanalise = ?', $tpAnalise)
@@ -968,7 +968,7 @@ public static  function outrasinformacoes($idpronac)
         $select = $table->select()
             ->from('Abrangencia',
                 array('idPais'),
-                'SAC.dbo')
+                'SAC')
             ->where('Projetos.IdPRONAC = ? AND Abrangencia.stAbrangencia = \'1\'',  $idpronac)
             ->joinInner('PreProjeto',
                 'Abrangencia.idProjeto = PreProjeto.idPreProjeto',
@@ -976,27 +976,27 @@ public static  function outrasinformacoes($idpronac)
                     CONVERT(CHAR(10), PreProjeto.DtInicioDeExecucao, 103) AS DtInicioDeExecucao,
                     CONVERT(CHAR(10), PreProjeto.DtFinalDeExecucao, 103) AS DtFinalDeExecucao
                 ')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner('Projetos',
                 'PreProjeto.idPreProjeto = Projetos.idProjeto',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinLeft('Pais',
                 'Abrangencia.idPais = Pais.idPais',
                 array('Descricao'),
-                'agentes.dbo')
+                'agentes')
             ->joinLeft('Uf',
                 'Abrangencia.idUF= Uf.idUF',
                 array(new Zend_Db_Expr('
                     Uf.Descricao AS UF
                 ')),
-                'agentes.dbo')
+                'agentes')
             ->joinLeft('Municipios',
                 'Abrangencia.idMunicipioIBGE = Municipios.idMunicipioIBGE',
                 array(new Zend_Db_Expr('
                     Municipios.Descricao AS Cidade
                 ')),
-                'agentes.dbo'
+                'agentes'
                 );
 
 		try
@@ -1021,36 +1021,36 @@ public static function deslocamento($pronac)
         $select = $table->select()
             ->from('tbDeslocamento',
                 array('idDeslocamento','idProjeto','Qtde'),
-                'SAC.dbo')
+                'SAC')
             ->where('Projetos.IdPRONAC = ?',$pronac)
             ->joinInner('Projetos',
                 'tbDeslocamento.idProjeto = Projetos.idProjeto',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinInner('Pais',
                 'tbDeslocamento.idPaisOrigem = Pais.idPais',
                 array(new Zend_Db_Expr('Pais.Descricao AS PaisOrigem')),
-                'agentes.dbo')
+                'agentes')
             ->joinInner('uf',
                 'tbDeslocamento.idUFOrigem = uf.iduf',
                 array(new Zend_Db_Expr('uf.Descricao AS UFOrigem')),
-                'agentes.dbo')
+                'agentes')
             ->joinInner('Municipios',
                 'tbDeslocamento.idMunicipioOrigem = Municipios.idMunicipioIBGE',
                 array(new Zend_Db_Expr('Municipios.Descricao AS MunicipioOrigem')),
-                'agentes.dbo')
+                'agentes')
             ->joinInner('Pais',
                 'tbDeslocamento.idPaisDestino = Pais_2.idPais',
                 array(new Zend_Db_Expr('Pais_2.Descricao AS PaisDestino')),
-                'agentes.dbo')
+                'agentes')
             ->joinInner('uf',
                 'tbDeslocamento.idUFDestino = uf_2.iduf',
                 array(new Zend_Db_Expr('uf_2.Descricao AS UFDestino')),
-                'agentes.dbo')
+                'agentes')
             ->joinInner('Municipios',
                 'tbDeslocamento.idMunicipioDestino = Municipios_2.idMunicipioIBGE',
                 array(new Zend_Db_Expr('Municipios_2.Descricao AS MunicipioDestino')),
-                'agentes.dbo');
+                'agentes');
 
 
 		try
@@ -1072,20 +1072,20 @@ public static function divulgacao($pronac)
     $select = $table->select()
         ->from('PlanoDeDivulgacao',
             array(''),
-            'SAC.dbo')
+            'SAC')
         ->where('Projetos.IdPRONAC = ? AND PlanoDeDivulgacao.stPlanoDivulgacao = 1 ',$pronac)
         ->joinInner('Projetos',
             'PlanoDeDivulgacao.idProjeto = Projetos.idProjeto',
             array(''),
-            'SAC.dbo')
+            'SAC')
         ->joinInner('Verificacao',
             'PlanoDeDivulgacao.idPeca = Verificacao.idVerificacao',
             array(new Zend_Db_Expr('Verificacao.Descricao AS Peca')),
-            'SAC.dbo')
+            'SAC')
         ->joinInner('Verificacao',
             'PlanoDeDivulgacao.idVeiculo = Verificacao_2.idVerificacao',
             array(new Zend_Db_Expr('Verificacao_2.Descricao AS Veiculo')),
-            'SAC.dbo')
+            'SAC')
          ->order('Peca ASC')
          ->order('Veiculo ASC');
 
@@ -1131,23 +1131,23 @@ public static function divulgacaoProjetosGeral($pronac){
     $select = $table->select()
         ->from(array('d' => 'PlanoDeDivulgacao'),
             array('idPlanoDivulgacao', 'idPeca'),
-            'SAC.dbo')
+            'SAC')
         ->joinInner(array('p' => 'Projetos'),
             'd.idProjeto = p.idProjeto',
             array(''),
-            'SAC.dbo')
+            'SAC')
         ->joinInner(array('v' => 'Verificacao'),
             'd.idVeiculo = v.idVerificacao',
             array(new Zend_Db_Expr('v.idVerificacao AS idVeiculo'), new Zend_Db_Expr('v.Descricao AS Veiculo')),
-            'SAC.dbo')
+            'SAC')
         ->joinInner(array('v2' => 'Verificacao'),
             'd.idPeca = v2.idVerificacao',
             array(new Zend_Db_Expr('v2.Descricao AS Peca')),
-            'SAC.dbo')
+            'SAC')
         ->joinLeft(array('logo' => 'tbLogomarca'),
             'logo.idPlanoDivulgacao = d.idPlanoDivulgacao',
             array('dsPosicao'),
-            'SAC.dbo')
+            'SAC')
         ->joinLeft(array('doc' => 'tbDocumento'),
             'doc.idDocumento = logo.idDocumento',
             array('idArquivo'),
@@ -1237,27 +1237,27 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
                  a.Codigo as idArea,
                  b.Codigo as idSegmento
                 ')),
-            'SAC.dbo')
+            'SAC')
         ->joinInner(array('y' => 'Projetos'),
              'x.idProjeto = y.idProjeto',
              array('Localizacao'),
-             'SAC.dbo')
+             'SAC')
         ->joinInner(array('p' => 'Produto'),
             'x.idProduto = p.Codigo',
             array(new Zend_Db_Expr('p.Descricao AS Produto')),
-            'SAC.dbo')
+            'SAC')
         ->joinInner(array('a' => 'Area'),
             'x.Area = a.Codigo',
             array(new Zend_Db_Expr('a.Descricao AS Area'),new Zend_Db_Expr('b.Descricao AS Segmento')),
-            'SAC.dbo')
+            'SAC')
         ->joinInner(array('b' => 'Segmento'),
             'x.Segmento = b.Codigo',
             array(''),
-            'SAC.dbo')
+            'SAC')
         ->joinInner(array('v' => 'Verificacao'),
             'x.idPosicaoDaLogo = v.idVerificacao',
             array(new Zend_Db_Expr('v.Descricao AS PosicaoDaLogo')),
-            'SAC.dbo')
+            'SAC')
         ->where('y.IdPRONAC = ?',$pronac)
         ->where('x.stPlanoDistribuicaoProduto = 1');
 

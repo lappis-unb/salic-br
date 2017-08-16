@@ -41,7 +41,7 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('cxpa'=>'tbContratoxPlanilhaAprovacao'),
@@ -75,7 +75,7 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -111,7 +111,7 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('cxpa'=>'tbCotacaoxPlanilhaAprovacao'),
@@ -162,7 +162,7 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         if($idCotacao)
         $select->joinInner(

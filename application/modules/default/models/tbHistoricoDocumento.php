@@ -418,15 +418,15 @@ class tbHistoricoDocumento extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('p' => 'Projetos'), 'h.idPronac = p.IdPRONAC',
-            array(new Zend_Db_Expr('AnoProjeto+Sequencial AS Pronac'),'NomeProjeto',new Zend_Db_Expr('h.idDocumento')), 'SAC.dbo'
+            array(new Zend_Db_Expr('AnoProjeto+Sequencial AS Pronac'),'NomeProjeto',new Zend_Db_Expr('h.idDocumento')), 'SAC'
         );
         $select->joinLeft(
             array('doc' => 'tbDocumento'), 'h.idDocumento = doc.idDocumento',
-            array('NoArquivo', 'CodigoCorreio'), 'SAC.dbo'
+            array('NoArquivo', 'CodigoCorreio'), 'SAC'
         );
         $select->joinLeft(
             array('td' => 'tbTipoDocumento'), 'doc.idTipoDocumento = td.idTipoDocumento',
-            array('dsTipoDocumento'), 'SAC.dbo'
+            array('dsTipoDocumento'), 'SAC'
         );
 
         //adiciona quantos filtros foram enviados

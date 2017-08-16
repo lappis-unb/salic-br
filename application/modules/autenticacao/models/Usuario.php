@@ -464,7 +464,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
     {
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
-        $sql->from('Orgaos', array('idSecretaria'), 'SAC.dbo');
+        $sql->from('Orgaos', array('idSecretaria'), 'SAC');
         $sql->where('Codigo = ?', $usu_orgao);
         return $this->fetchRow($sql);
     }

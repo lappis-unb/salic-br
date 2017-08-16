@@ -25,7 +25,7 @@ class TabelasOrgaos extends MinC_Db_Table_Abstract{
          $select->joinInner(array('p'=>'Pessoa_Identificacoes'),
                 'p.pid_pessoa = o.org_pessoa',
                  array('o.org_pessoa'),
-                 'tabelas.dbo'
+                 'tabelas'
 
               );
 

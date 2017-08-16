@@ -65,13 +65,13 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                 array('mc'=>'Mecanismo'),
                 "mc.Codigo = pr.Mecanismo",
                 array('mc.Descricao as dsMecanismo'),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array("org"=>'Orgaos'),
                 "org.org_codigo = pr.Orgao",
                 array('org.org_superior', 'org.org_codigo'),
-                'TABELAS.dbo'
+                'TABELAS'
         );
         foreach ($where as $key => $valor) {
             if (!is_array($valor) and (!$valor == '' or !$valor == 0)) {
@@ -124,10 +124,10 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('b' => 'tbRelatorioTrimestral'), 'b.idRelatorio = a.idRelatorio', array(
-                    "CAST(b.dsObjetivosMetas AS TEXT) AS dsObjetivosMetas", 'b.stRelatorioTrimestral'), 'SAC.dbo'
+                    "CAST(b.dsObjetivosMetas AS TEXT) AS dsObjetivosMetas", 'b.stRelatorioTrimestral'), 'SAC'
         );
         $select->joinLeft(
-                array('c' => 'tbBeneficiario'), 'c.idRelatorio = a.idRelatorio', array('c.dsBeneficiario', 'c.tpBeneficiario', 'c.nrCNPJ', 'c.nrCPF', 'CAST(c.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'CAST(c.dsEntrega AS TEXT) AS dsEntrega'), 'SAC.dbo'
+                array('c' => 'tbBeneficiario'), 'c.idRelatorio = a.idRelatorio', array('c.dsBeneficiario', 'c.tpBeneficiario', 'c.nrCNPJ', 'c.nrCPF', 'CAST(c.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'CAST(c.dsEntrega AS TEXT) AS dsEntrega'), 'SAC'
         );
         $select->where("a.idPRONAC = '" . $idpronac . "'");
         $select->where("b.stRelatorioTrimestral = 1");
@@ -151,10 +151,10 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                 array('a' => $this->_name), array('a.idRelatorio')
         );
         $select->joinInner(
-                array('b' => 'tbRelatorioTrimestral'), 'b.idRelatorio = a.idRelatorio', array('b.dsObjetivosMetas'), 'SAC.dbo'
+                array('b' => 'tbRelatorioTrimestral'), 'b.idRelatorio = a.idRelatorio', array('b.dsObjetivosMetas'), 'SAC'
         );
         $select->joinInner(
-                array('c' => 'tbBeneficiario'), 'c.idRelatorio = a.idRelatorio', array('c.dsBeneficiario', 'c.tpBeneficiario', 'c.nrCNPJ', 'c.nrCPF', 'c.dsPublicoAlvo', 'c.dsEntrega'), 'SAC.dbo'
+                array('c' => 'tbBeneficiario'), 'c.idRelatorio = a.idRelatorio', array('c.dsBeneficiario', 'c.tpBeneficiario', 'c.nrCNPJ', 'c.nrCPF', 'c.dsPublicoAlvo', 'c.dsEntrega'), 'SAC'
         );
         $select->where("a.idPRONAC = '" . $idpronac . "'");
         $select->where("a.idAgenteAvaliador IS NOT NULL ");
@@ -177,10 +177,10 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                 array('a' => $this->_name), array('a.idRelatorio')
         );
         $select->joinInner(
-                array('b' => 'tbRelatorioTrimestral'), 'b.idRelatorio = a.idRelatorio', array(''), 'SAC.dbo'
+                array('b' => 'tbRelatorioTrimestral'), 'b.idRelatorio = a.idRelatorio', array(''), 'SAC'
         );
         $select->joinInner(
-                array('c' => 'tbAcesso'), 'c.idRelatorio = a.idRelatorio', array('c.idAcesso', 'c.idRelatorio', 'CAST(c.dsAcesso AS TEXT) AS dsAcesso', 'CAST(c.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'c.qtPessoa', 'CAST(c.dsLocal AS TEXT) AS dsLocal', 'CAST(c.dsEstruturaSolucao AS TEXT) AS dsEstruturaSolucao', 'c.tpAcesso', 'c.stAcesso', 'c.stQtPessoa', 'c.stPublicoAlvo', 'c.stLocal', 'c.stEstrutura', 'c.dsJustificativaAcesso'), 'SAC.dbo'
+                array('c' => 'tbAcesso'), 'c.idRelatorio = a.idRelatorio', array('c.idAcesso', 'c.idRelatorio', 'CAST(c.dsAcesso AS TEXT) AS dsAcesso', 'CAST(c.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'c.qtPessoa', 'CAST(c.dsLocal AS TEXT) AS dsLocal', 'CAST(c.dsEstruturaSolucao AS TEXT) AS dsEstruturaSolucao', 'c.tpAcesso', 'c.stAcesso', 'c.stQtPessoa', 'c.stPublicoAlvo', 'c.stLocal', 'c.stEstrutura', 'c.dsJustificativaAcesso'), 'SAC'
         );
         $select->where("a.idPRONAC = '" . $idpronac . "'");
         $select->where("a.tpRelatorio = 'T'");
@@ -243,38 +243,38 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                             array('age'=>'Agentes'),
                             'age.idAgente = rel.idAgenteAvaliador',
                             array('age.idAgente'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'age.idAgente = nm.idAgente',
                             array('Nome'=>'nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('usu'=>'Usuarios'),
                             'usu.usu_identificacao = age.CNPJCPF',
                             array(),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('uog'=>'UsuariosXOrgaosXGrupos'),
                             'uog.uog_usuario = usu.usu_codigo',
                             array(),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('gru'=>'Grupos'),
                             'gru.gru_codigo = uog.uog_grupo',
                             array('Perfil'=>'gru.gru_nome','cdPerfil'=>'gru.gru_codigo'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
 
         $select->joinInner(
                             array('org'=>'Orgaos'),
                             'org.Codigo = uog.uog_orgao',
                             array('Orgao'=>'org.Sigla'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('gru.gru_codigo = 121');
         $select->where('rel.idPRONAC = ?', $idPronac);
@@ -295,13 +295,13 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                             array('b'=>'Projetos'),
                             'b.IdPRONAC = a.idPRONAC',
                             array('*'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('c'=>'tbRelatorioTrimestral'),
                             'a.idRelatorio = c.idRelatorio',
                             array('c.idRelatorioTrimestral', 'c.idRelatorio', 'CAST(c.dsParecer AS TEXT) AS dsParecer', 'CAST(c.dsObjetivosMetas AS TEXT) AS dsObjetivosMetas', 'c.dtCadastro', 'c.stRelatorioTrimestral', 'c.nrRelatorioTrimestral'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('a.IdPRONAC = ?', $idPronac);
         $select->where('c.stRelatorioTrimestral != 1');
@@ -321,7 +321,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                             array('b'=>'tbAcesso'),
                             'a.idRelatorio = b.idRelatorio',
                              array('b.idAcesso', 'b.idRelatorio', 'CAST(b.dsAcesso AS TEXT) AS dsAcesso', 'CAST(b.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'convert(varchar(10),b.qtPessoa) as qtPessoa', 'CAST(b.dsLocal AS TEXT) AS dsLocal', 'CAST(b.dsEstruturaSolucao AS TEXT) AS dsEstruturaSolucao', 'b.tpAcesso', 'b.stAcesso', 'b.stQtPessoa', 'b.stPublicoAlvo', 'b.stLocal', 'b.stEstrutura', 'b.dsJustificativaAcesso'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('a.idPRONAC = ?', $idPronac);
         $select->where('b.tpAcesso = ?', $tpAcesso);
@@ -340,7 +340,7 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                             array('b'=>'tbBeneficiario'),
                             'a.idRelatorio = b.idRelatorio',
                             array('b.idRelatorio', 'b.dsBeneficiario', 'b.tpBeneficiario', 'b.nrCNPJ', 'b.nrCPF', 'CAST(b.dsPublicoAlvo AS TEXT) AS dsPublicoAlvo', 'CAST(b.dsEntrega AS TEXT) AS dsEntrega'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('a.idPRONAC = ?', $idPronac);
 
@@ -359,13 +359,13 @@ class tbRelatorio extends MinC_Db_Table_Abstract {
                             array('b'=>'Projetos'),
                             'a.idPRONAC = b.IdPRONAC',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('c'=>'Liberacao'),
                             'c.AnoProjeto = b.AnoProjeto and c.Sequencial = b.Sequencial',
                             array('*'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('a.idPRONAC = ?', $idPronac);
 

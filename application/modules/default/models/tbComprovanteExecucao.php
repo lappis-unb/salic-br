@@ -68,19 +68,19 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbTipoDocumento'),
                     'e.idTipoDocumento = b.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinLeft(
                     array('f' => 'tbRelatorioTrimestral'),
                     'f.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -120,19 +120,19 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbTipoDocumento'),
                     'e.idTipoDocumento = b.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('f' => 'tbRelatorioTrimestral'),
                     'f.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -171,19 +171,19 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbTipoDocumento'),
                     'e.idTipoDocumento = b.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('f' => 'tbRelatorioTrimestral'),
                     'f.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -222,19 +222,19 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbTipoDocumento'),
                     'e.idTipoDocumento = b.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinLeft(
                     array('f' => 'tbRelatorioTrimestral'),
                     'f.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -273,19 +273,19 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbTipoDocumento'),
                     'e.idTipoDocumento = b.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('f' => 'tbRelatorioTrimestral'),
                     'f.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -323,13 +323,13 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbTipoDocumento'),
                     'e.idTipoDocumento = b.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);

@@ -476,15 +476,15 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
             ->joinInner(array('pa' => 'tbPlanilhaAprovacao'),
                 'pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pit' => 'tbPlanilhaItens'),
                 'pit.idPlanilhaItens = pa.idPlanilhaItem',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pEtapa' => 'tbPlanilhaEtapa'),
                 'pa.idEtapa = pEtapa.idPlanilhaEtapa',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('arq' => 'tbArquivo'),
                 'arq.idArquivo = comp.idArquivo',
                 array('nmArquivo'),
@@ -492,7 +492,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
             ->joinLeft(array('prod' => 'Produto'),
                 'pa.idProduto = prod.Codigo',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->where('pa.idPlanilhaItem = ?', $item)
             ->where('pa.nrFonteRecurso = 109'); //BATIZADO: Incentivo Fiscal Federal
 

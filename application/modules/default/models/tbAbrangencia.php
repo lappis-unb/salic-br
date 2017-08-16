@@ -44,19 +44,19 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('p' => 'Pais')
 			,'a.idPais = p.idPais'
 			,array('p.Descricao AS dsPais')
-			,'agentes.dbo'
+			,'agentes'
 		);
 		$select->joinLeft(
 			array('u' => 'UF')
 			,'a.idUF = u.idUF'
 			,array('u.Sigla AS dsUF')
-			,'agentes.dbo'
+			,'agentes'
 		);
 		$select->joinLeft(
 			array('m' => 'Municipios')
 			,'a.idMunicipioIBGE = m.idMunicipioIBGE'
 			,array('m.Descricao AS dsMunicipioIBGE')
-			,'agentes.dbo'
+			,'agentes'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -95,19 +95,19 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('p' => 'Pais')
 			,'a.idPais = p.idPais'
 			,array('p.Descricao AS dsPais')
-			,'agentes.dbo'
+			,'agentes'
 		);
 		$select->joinLeft(
 			array('u' => 'UF')
 			,'a.idUF = u.idUF'
 			,array('u.Sigla AS dsUF')
-			,'agentes.dbo'
+			,'agentes'
 		);
 		$select->joinLeft(
 			array('m' => 'Municipios')
 			,'a.idMunicipioIBGE = m.idMunicipioIBGE'
 			,array('m.Descricao AS dsMunicipioIBGE')
-			,'agentes.dbo'
+			,'agentes'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -130,30 +130,30 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('a' => 'Projetos'),
 			array(
                 new Zend_Db_Expr('b.idAbrangencia, b.idPais, c.Descricao as Pais, b.idUF, d.Descricao as UF, b.idMunicipioIBGE as idCidade, e.Descricao as Cidade')
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
         if($tabela == 'Abrangencia'){
 		$select->joinInner(
                 array('b' => 'Abrangencia'),"a.idProjeto = b.idProjeto AND b.stAbrangencia = 1",
-                array(new Zend_Db_Expr("'N' AS tpSolicitacao")) ,'SAC.dbo'
+                array(new Zend_Db_Expr("'N' AS tpSolicitacao")) ,'SAC'
 		);
         } else {
 		$select->joinInner(
                 array('b' => 'tbAbrangencia'),"a.idPronac = b.idPronac AND stAtivo='S'",
-                array('b.tpSolicitacao') ,'SAC.dbo'
+                array('b.tpSolicitacao') ,'SAC'
 		);
         }
 		$select->joinInner(
 			array('c' => 'Pais'),"b.idPais = c.idPais",
-			array() ,'agentes.dbo'
+			array() ,'agentes'
 		);
 		$select->joinLeft(
 			array('d' => 'Uf'),'b.idUF = d.idUF',
-			array() ,'agentes.dbo'
+			array() ,'agentes'
 		);
 		$select->joinLeft(
 			array('e' => 'Municipios'),"b.idMunicipioIBGE = e.idMunicipioIBGE",
-			array() ,'agentes.dbo'
+			array() ,'agentes'
 		);
 		
         $select->where('a.IdPRONAC = ?', $idPronac);
@@ -170,23 +170,23 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('a' => 'Projetos'),
 			array(
                 new Zend_Db_Expr('b.idAbrangencia, b.idPais, c.Descricao as Pais, b.idUF, d.Descricao as UF, b.idMunicipioIBGE as idCidade, e.Descricao as Cidade')
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
 		$select->joinInner(
             array('b' => 'tbAbrangencia'),"a.idPronac = b.idPronac",
-            array('b.tpSolicitacao','b.tpAnaliseTecnica','b.tpAnaliseComissao') ,'SAC.dbo'
+            array('b.tpSolicitacao','b.tpAnaliseTecnica','b.tpAnaliseComissao') ,'SAC'
 		);
         $select->joinInner(
 			array('c' => 'Pais'),"b.idPais = c.idPais",
-			array() ,'agentes.dbo'
+			array() ,'agentes'
 		);
 		$select->joinLeft(
 			array('d' => 'Uf'),'b.idUF = d.idUF',
-			array() ,'agentes.dbo'
+			array() ,'agentes'
 		);
 		$select->joinLeft(
 			array('e' => 'Municipios'),"b.idMunicipioIBGE = e.idMunicipioIBGE",
-			array() ,'agentes.dbo'
+			array() ,'agentes'
 		);
 
         $select->where('b.idReadequacao = ?', $idReadequacao);
@@ -202,7 +202,7 @@ class tbAbrangencia extends MinC_Db_Table_Abstract
 			array('a' => 'Abrangencia'),
 			array(
                 new Zend_Db_Expr('a.*')
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
         
 		// adiciona quantos filtros foram enviados

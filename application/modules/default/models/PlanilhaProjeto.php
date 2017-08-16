@@ -34,7 +34,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
                 array('tbPlanilhaItens'),
                 'idPlanilhaItem = idPlanilhaItens',
                 array(),
-                'SAC.dbo'
+                'SAC'
         );
 
 
@@ -279,12 +279,12 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         $select->joinLeft(
                 array('CID' => 'Municipios'), new Zend_Db_Expr('CID.idMunicipioIBGE = PPJ.MunicipioDespesa'), array(
             'CID.Descricao as Cidade'
-                ), 'agentes.dbo'
+                ), 'agentes'
         );
         $select->joinLeft(
                 array('FED' => 'UF'), new Zend_Db_Expr('PPJ.UFDespesa = FED.idUF'), array(
             'FED.Sigla as UF'
-                ), 'agentes.dbo'
+                ), 'agentes'
         );
         $select->joinLeft(
                 array('PD' => 'Produto'), new Zend_Db_Expr('PPJ.idProduto = PD.Codigo'), array(
@@ -327,19 +327,19 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         );
         $select->joinLeft(
             array('b' => 'Produto'), "a.idProduto = b.Codigo",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbPlanilhaEtapa'), "a.idEtapa = c.idPlanilhaEtapa",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('d' => 'tbPlanilhaItens'), "a.idPlanilhaItem = d.idPlanilhaItens",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPlanilhaUnidade'), "a.idUnidade = e.idUnidade",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->where('a.idPlanilhaProjeto = ?', $idPlanilhaProjeto);
         

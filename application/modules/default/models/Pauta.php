@@ -35,19 +35,19 @@ class Pauta extends MinC_Db_Table_Abstract {
                     'pr.DtProtocolo',
                     new Zend_Db_Expr('SAC.dbo.fnDtAprovacao(pr.AnoProjeto,pr.Sequencial) as DtAprovacao')
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('ar' => 'Area'),
                 'ar.Codigo = pr.Area',
                 array('ar.Descricao as Area'),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('seg' => 'Segmento'),
                 'seg.Codigo = pr.Segmento',
                 array('seg.Descricao as Segmento'),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('pa' => 'Parecer'),
@@ -56,7 +56,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     'pa.ResumoParecer',
                     'pa.ParecerFavoravel'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinLeft(
                 array('cv' => 'tbConsolidacaoVotacao'),
@@ -68,7 +68,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                 array('ap' => 'aprovacao'),
                 'ap.IdPRONAC = tp.IdPRONAC',
                 array('ap.AprovadoReal'),
-                'SAC.dbo'
+                'SAC'
         );
         $select->where('tp.idNrReuniao = ?', $idNrReuniao);
         if ($idpronac) {
@@ -159,7 +159,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     '(pr.AnoProjeto+pr.Sequencial) as pronac',
                     'pr.NomeProjeto',
                     'pr.IdPRONAC'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $a->where('tp.idPRONAC = ?', $idpronac);
         $a->where('tp.idNrReuniao = ?', $idnrreuniao);
@@ -174,7 +174,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     new Zend_Db_Expr('2 as tpConsolidacaoVotacao'),
                     'a.stAnalise',
                     'a.idNrReuniao'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $b->joinInner(
                 array('b' => 'projetos'),
@@ -183,7 +183,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     '(b.AnoProjeto+b.Sequencial) as pronac',
                     'b.NomeProjeto',
                     'b.IdPRONAC'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $b->where('b.idPRONAC = ?', $idpronac);
         $b->where('a.idNrReuniao = ?', $idnrreuniao);
@@ -198,7 +198,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     new Zend_Db_Expr('3 as tpConsolidacaoVotacao'),
                     'a.stAnalise',
                     'a.idNrReuniao'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $c->joinInner(
                 array('b' => 'projetos'),
@@ -207,7 +207,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     '(b.AnoProjeto+b.Sequencial) as pronac',
                     'b.NomeProjeto',
                     'b.IdPRONAC'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         if(empty($idTipoReadequacao)){
             $idTipoReadequacao = 0;
@@ -263,13 +263,13 @@ class Pauta extends MinC_Db_Table_Abstract {
                     'pr.Orgao',
                     'pr.Area'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('pa' => 'Parecer'),
                 'pa.IdPRONAC = pt.IdPRONAC and pa.stAtivo = 1',
                 array('pa.TipoParecer'),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('r' => 'tbReuniao'),
@@ -279,7 +279,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                     'r.DtInicio',
                     'r.DtFinal'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinLeft(
                 array('cv' => 'tbConsolidacaoVotacao'),
@@ -306,7 +306,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                 array('r' => 'tbReuniao'),
                 'r.idNrReuniao = pt.idNrReuniao',
                 array(''),
-                'SAC.dbo'
+                'SAC'
         );
         $select->where('r.NrReuniao = ?', $NrReuniao);
         $select->where('(pt.stAnalise in (?)', array('AC', 'IC'));

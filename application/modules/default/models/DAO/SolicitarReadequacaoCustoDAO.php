@@ -42,17 +42,17 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'pr.NomeProjeto',
                             'pr.CgcCpf'
                         )
-                        , 'SAC.dbo'
+                        , 'SAC'
                 )
                 ->joinInner(array('ar' => 'Area'),
                         "ar.Codigo = pr.Area",
                         array('Descricao as area'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(array('a' => 'Agentes'),
                         "a.CNPJCPF = pr.CgcCpf",
                         array('idAgente'),
-                        'agentes.dbo'
+                        'agentes'
                 )
                 ->joinInner(array('nm' => 'Nomes'),
                         "a.idAgente = nm.idAgente",
@@ -62,7 +62,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                 ->joinLeft(array('seg' => 'Segmento'),
                         "seg.Codigo = pr.Segmento",
                         array('Descricao as segmento'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('pr.IdPRONAC = ?', $idPronac);
 
@@ -94,7 +94,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array('prep' => 'PreProjeto'),
                         'prep.idPreProjeto = pr.idProjeto',
                         array('idPreprojeto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('ag' => 'Agentes'),
@@ -117,7 +117,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'tpd.idProduto',
                             'tpd.idPlanoDistribuicao'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinLeft(
                         array('pd' => 'Produto'),
@@ -125,7 +125,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'pd.Descricao as produto'
                         ),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('pr.IdPRONAC= ?', $idPronac)
                 ->where('tpd.idProduto IS NOT NULL')
@@ -151,7 +151,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array('prep' => 'PreProjeto'),
                         'prep.idPreProjeto = pr.idProjeto',
                         array('idPreprojeto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('ag' => 'Agentes'),
@@ -174,7 +174,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'pdp.idProduto',
                             'pdp.idPlanoDistribuicao'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinLeft(
                         array('pd' => 'Produto'),
@@ -182,7 +182,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'pd.Descricao as produto'
                         ),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('pr.IdPRONAC= ?', $idPronac)
                 ->where('pd.Descricao IS NOT NULL');
@@ -252,12 +252,12 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
                         array('mun.Descricao as Municipio'),
-                        'agentes.dbo'
+                        'agentes'
                 )
                 ->joinInner(array('vf' => 'Verificacao'),
                         'tpa.nrFonteRecurso = vf.idVerificacao',
                         array('vf.Descricao as FonteRecurso')
-                        , 'SAC.dbo'
+                        , 'SAC'
                 )
                 ->where('tpa.stAtivo = ?', 'S');
         if (!empty($idPronac)) {
@@ -323,12 +323,12 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
                         array('mun.Descricao as Municipio'),
-                        'agentes.dbo'
+                        'agentes'
                 )
                 ->joinInner(array('vf' => 'Verificacao'),
                         'tpa.nrFonteRecurso = vf.idVerificacao',
                         array('vf.Descricao as FonteRecurso')
-                        , 'SAC.dbo'
+                        , 'SAC'
                 )
                 ->where('tpa.stAtivo = ?', 'N')
                 ->where('tpa.tpPlanilha = ?', 'SR')
@@ -660,7 +660,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                             'tpa.idProduto',
                                             'tpa.idPlanilhaAprovacao'
                                         ),
-                                        'SAC.dbo'
+                                        'SAC'
                                         )
                                         ->where('IdPRONAC = ?', $idPronac);
         if (!empty($idCodigoProduto)) {
@@ -683,26 +683,26 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                             'pdp.idProduto',
                                             'pd.Descricao AS produto'
                                         ),
-                                        'SAC.dbo'
+                                        'SAC'
                                         )
                                         ->joinInner(
                                                 array('pr' => 'Projetos'),
                                                 'pdp.idProjeto = pr.idProjeto',
                                                 array(),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
                                         ->joinInner(
                                                 array('pd' => 'Produto'),
                                                 'pdp.idProduto = pd.Codigo',
                                                 array(),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
 
                                         ->joinInner(
                                                 array('ag' => 'Agentes'),
                                                 'ag.CNPJCPF = pr.CgcCpf',
                                                 array(),
-                                                'agentes.dbo'
+                                                'agentes'
                                         )
                                         ->where('pr.IdPRONAC = ?', $idPronac)
                                         ->where('pdp.stPlanoDistribuicaoProduto = ?', 1);
@@ -720,7 +720,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                         array(
                                             'tpd.idProduto',
                                          ),
-                                        'SAC.dbo'
+                                        'SAC'
                                         )
                                         ->joinInner(
                                                 array('prd' => 'Produto'),
@@ -729,7 +729,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                     'prd.Codigo',
                                                     'prd.Descricao as produto',
                                                 ),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
                                         ->joinInner(
                                                 array('tpa' => 'tbPedidoAlteracaoProjeto'),
@@ -744,7 +744,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                 array('pr' => 'Projetos'),
                                                 'tpa.IdPRONAC = pr.IdPRONAC',
                                                 array(),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
                                         ->joinInner(
                                                 array('ag' => 'Agentes'),
@@ -754,7 +754,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                     'ag.TipoPessoa',
                                             'ag.idAgente',
                                                 ),
-                                                'agentes.dbo'
+                                                'agentes'
                                         )
                                         
                                         ->where('tpa.IdPRONAC = ?', $idPronac);
@@ -768,7 +768,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $slctEtapa->setIntegrityCheck(false);
         $slctEtapa->from('tbPlanilhaEtapa',
                 array(),
-                'SAC.dbo'
+                'SAC'
         );
         $slctEtapa->where('tpCusto= ?', $tipoproduto);
         return $this->fetchAll($slctEtapa);
@@ -780,19 +780,19 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $slctItens->from(
                         array('tpa' => 'tbPlanilhaAprovacao'),
                         array('*'),
-                        'SAC.dbo'
+                        'SAC'
                         )
                 ->joinInner(
                         array('pr' => 'Projetos'),
                         'tpa.idPronac = pr.IdPRONAC',
                         array(''),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('prep' => 'PreProjeto'),
                         'prep.idPreProjeto = pr.idProjeto',
                         array('idPreprojeto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('ag' => 'Agentes'),
@@ -837,12 +837,12 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'ver.idVerificacao',
                             '(ltrim(ver.Descricao)) as VerificacaoDescricao'
                         ),
-                        'SAC.dbo')
+                        'SAC')
                 ->joinInner(
                         array('tp' => 'Tipo'),
                         'ver.idTipo = tp.idTipo',
                         array(),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('tp.idTipo = ?', '5');
         return $this->fetchAll($fonte);
@@ -877,7 +877,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $verifica->setIntegrityCheck(false);
         $verifica->from('tbPlanilhaAprovacao',
                         array(),
-                        'SAC.dbo')
+                        'SAC')
                 ->where('idPRONAC = ?', $idpronac)
                 ->where('tpPlanilha = ?', $tpplanilha);
         return $this->fetchAll($verifica)->current();

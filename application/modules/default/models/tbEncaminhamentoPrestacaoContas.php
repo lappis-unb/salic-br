@@ -25,31 +25,31 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                             array('a'=>'Agentes'),
                             'a.idAgente = tbepc.idAgenteDestino',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = tbepc.idAgenteOrigem',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('u'=>'Usuarios'),
                             'u.usu_identificacao = a.CNPJCPF',
                             array('NomeDestino'=>'u.usu_nome'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('uu'=>'Usuarios'),
                             'uu.usu_identificacao = ag.CNPJCPF',
                             array('NomeOrigem'=>'uu.usu_nome'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('o'=>'Orgaos'),
                             'u.usu_orgao = o.org_codigo',
                             array('o.org_sigla'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
 		$select->where('tbepc.idPronac = ?',$idPronac);
 
@@ -81,49 +81,49 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                             array('proj'=>'Projetos'),
                             'proj.IdPRONAC = tbepc.idPronac',
                             array("*"),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('a'=>'Agentes'),
                             'a.idAgente = tbepc.idAgenteDestino',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = tbepc.idAgenteOrigem',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         /*$select->joinInner(
                             array('u'=>'Usuarios'),
                             'u.usu_identificacao = a.CNPJCPF',
                             array('NomeDestino'=>'u.usu_nome'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('uu'=>'Usuarios'),
                             'uu.usu_identificacao = ag.CNPJCPF',
                             array('NomeOrigem'=>'uu.usu_nome'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('o'=>'Orgaos'),
                             'u.usu_orgao = o.org_codigo',
                             array('o.org_sigla'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );*/
         $select->joinInner(
                             array('s'=>'Segmento'),
                             'proj.Segmento = s.Codigo',
                             array('s.Descricao as Segmento'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('ar'=>'Area'),
                             'proj.Area = ar.Codigo',
                             array('ar.Descricao as Area'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
                 $select->where('tbepc.idOrgaoDestino = ?',$idOrgao);
@@ -154,19 +154,19 @@ a.dsJustificativa,
                             array('b'=>'Projetos'),
                             'a.idPronac = b.IdPRONAC',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('c'=>'Usuarios'),
                             'a.idAgenteOrigem = c.usu_codigo',
                             array(),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('d'=>'Usuarios'),
                             'a.idAgenteOrigem = d.usu_codigo',
                             array(),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
 
         $select->where('a.idPronac = ?',$idPronac);
@@ -192,49 +192,49 @@ a.dsJustificativa,
                             array('proj'=>'Projetos'),
                             'proj.IdPRONAC = tbepc.idPronac',
                             array("*"),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('a'=>'Agentes'),
                             'a.idAgente = tbepc.idAgenteDestino',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = tbepc.idAgenteOrigem',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('u'=>'Usuarios'),
                             'u.usu_identificacao = a.CNPJCPF',
                             array('NomeDestino'=>'u.usu_nome'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('uu'=>'Usuarios'),
                             'uu.usu_identificacao = ag.CNPJCPF',
                             array('NomeOrigem'=>'uu.usu_nome'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('o'=>'Orgaos'),
                             'u.usu_orgao = o.org_codigo',
                             array('o.org_sigla'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('s'=>'Segmento'),
                             'proj.Segmento = s.Codigo',
                             array('s.Descricao as Segmento'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('ar'=>'Area'),
                             'proj.Area = ar.Codigo',
                             array('ar.Descricao as Area'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
 		$select->where('tbepc.idOrgao = ?',$idOrgao);
@@ -298,49 +298,49 @@ a.dsJustificativa,
                             array('usu2'=>'Usuarios'),
                             'epc.idAgenteDestino = usu2.usu_codigo',
                             array(),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('ag2'=>'Agentes'),
                             'ag2.CNPJCPF = usu2.usu_identificacao',
                             array('idAgente2'=>'ag2.idAgente'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('nm2'=>'Nomes'),
                             'nm2.idAgente = ag2.idAgente',
                             array('Nome2'=>'nm2.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('org2'=>'Orgaos'),
                             'org2.Codigo = epc.idOrgaoDestino',
                             array('Orgao2'=>'org2.Sigla'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('gr2'=>'Grupos'),
                             'epc.cdGruposDestino = gr2.gru_codigo',
                             array('Perfil2'=>'gr2.gru_nome','cdPerfil2'=>'gr2.gru_codigo'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = epc.idAgenteOrigem',
                             array('Nome'=>'nm.Descricao','nm.idAgente'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('org'=>'Orgaos'),
                             'org.Codigo = epc.idOrgaoOrigem',
                             array('Orgao'=>'org.Sigla'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('gr'=>'Grupos'),
                             'epc.cdGruposOrigem = gr.gru_codigo',
                             array('Perfil'=>'gr.gru_nome','cdPerfil'=>'gr.gru_codigo'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
 
         $select->where('idPronac = ?', $idPronac);

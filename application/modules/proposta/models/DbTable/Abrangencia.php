@@ -218,13 +218,13 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
             array('mun' => 'Municipios'),
             "mun.idUFIBGE = abr.idUF and mun.idMunicipioIBGE = abr.idMunicipioIBGE",
             array(),
-            'agentes.dbo'
+            'agentes'
         );
         $selectAbrangencia->joinInner(
             array('uf' => 'UF'),
             "uf.idUF = abr.idUF",
             array(),
-            'agentes.dbo'
+            'agentes'
         );
         $selectAbrangencia->where('abr.stAbrangencia = ?', 1);
 

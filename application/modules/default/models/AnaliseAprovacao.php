@@ -184,15 +184,15 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('prod' => 'Produto'), 'aa.idProduto = prod.Codigo',
-                array('prod.Descricao as produto'), 'SAC.dbo'
+                array('prod.Descricao as produto'), 'SAC'
         );
         $select->joinInner(
                 array('proj' => 'Projetos'), 'proj.IdPRONAC = aa.idPRONAC',
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         $select->joinInner(
                 array('PDP' => 'PlanoDistribuicaoProduto'), 'PDP.idProjeto = proj.idProjeto and PDP.idProduto = aa.idProduto',
-                array('PDP.stPrincipal'), 'SAC.dbo'
+                array('PDP.stPrincipal'), 'SAC'
         );
         $select->joinInner(
                 array('AC' => 'tbAnaliseDeConteudo'), 'aa.idAnaliseConteudo = AC.idAnaliseDeConteudo',

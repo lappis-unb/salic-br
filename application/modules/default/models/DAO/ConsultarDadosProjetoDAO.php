@@ -48,35 +48,35 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                                 ELSE \'N&atilde;o enquadrado\'
                             END as Enquadramento')
                          ),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinLeft(array('e' => 'Enquadramento'),
                     'p.idPronac = e.idPronac',
                     array(''),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('i' => 'Interessado'),
                     'p.CgcCPf = i.CgcCPf',
                     array(''),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('a' => 'Area'),
                     'p.Area = a.Codigo',
                     array(new Zend_Db_Expr('a.Descricao as Area')),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('s' => 'Segmento'),
                     'p.Segmento = s.Codigo',
                     array(new Zend_Db_Expr('s.Descricao AS Segmento')),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('m' => 'Mecanismo'),
                     'p.Mecanismo = m.Codigo',
                     array(new Zend_Db_Expr('m.Descricao as Mecanismo')),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('si' => 'Situacao'),
                     'p.Situacao = si.Codigo',
                     array(''),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinLeft(array('h' => 'vwTramitarProjeto'),
                     'p.idPronac = h.idPronac',
                     array('Destino', 'DtTramitacaoEnvio', 'dtTramitacaoRecebida', new Zend_Db_Expr('h.Situacao AS Estado'), 'meDespacho'),
-                    'SAC.dbo')
+                    'SAC')
                 ->where('p.IdPRONAC = ?', $dados['idPronac']);
 
             try {

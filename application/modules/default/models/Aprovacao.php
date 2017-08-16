@@ -234,12 +234,12 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     'a.DtFimExecucao',
                     new Zend_Db_Expr('sac.dbo.fnInicioCaptacao(a.AnoProjeto,a.Sequencial) as dtInicioCaptacao'),
                     new Zend_Db_Expr('sac.dbo.fnFimCaptacao(a.AnoProjeto,a.Sequencial) as dtFimCaptacao')
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
                 array('b' => 'Aprovacao'),
                 'a.AnoProjeto = b.AnoProjeto AND a.Sequencial = b.Sequencial',
-                array('b.PortariaAprovacao'), 'SAC.dbo'
+                array('b.PortariaAprovacao'), 'SAC'
         );
 
         foreach ($where as $comando => $valores) {
@@ -254,7 +254,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(
                 array('r' => 'tbReadequacao'),
-                array('idReadequacao', 'CAST(r.dsSolicitacao AS TEXT) AS dsSolicitacao'), 'SAC.dbo'
+                array('idReadequacao', 'CAST(r.dsSolicitacao AS TEXT) AS dsSolicitacao'), 'SAC'
         );
         $select->joinInner(
                 array('a' => 'Projetos'), 'r.idPronac = a.IdPRONAC',
@@ -262,15 +262,15 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     'a.IdPRONAC', 'a.AnoProjeto', 'a.Sequencial', 'a.NomeProjeto', 'a.DtInicioExecucao', 'a.DtFimExecucao',
                     new Zend_Db_Expr('sac.dbo.fnInicioCaptacao(a.AnoProjeto,a.Sequencial) as dtInicioCaptacao'),
                     new Zend_Db_Expr('sac.dbo.fnFimCaptacao(a.AnoProjeto,a.Sequencial) as dtFimCaptacao')
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
                 array('b' => 'Aprovacao'), 'a.AnoProjeto = b.AnoProjeto AND a.Sequencial = b.Sequencial AND b.idReadequacao = r.idReadequacao',
-                array('b.PortariaAprovacao'), 'SAC.dbo'
+                array('b.PortariaAprovacao'), 'SAC'
         );
         $select->joinInner(
                 array('tpr' => 'tbTipoReadequacao'), 'tpr.idTipoReadequacao = r.idTipoReadequacao',
-                array('tpr.idTipoReadequacao','tpr.dsReadequacao'), 'SAC.dbo'
+                array('tpr.idTipoReadequacao','tpr.dsReadequacao'), 'SAC'
         );
 
         foreach ($where as $comando => $valores) {
@@ -304,20 +304,20 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     'b.PortariaAprovacao',
                     'b.DtPublicacaoAprovacao',
                     'b.DtPortariaAprovacao'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
                 array('b' => 'Aprovacao'),
                 'a.AnoProjeto = b.AnoProjeto AND a.Sequencial = b.Sequencial',
-                array('b.PortariaAprovacao'), 'SAC.dbo'
+                array('b.PortariaAprovacao'), 'SAC'
         );
         $select->joinInner(
                 array('c' => 'Area'), 'c.Codigo = a.Area',
-                array(''), 'SAC.dbo'
+                array(''), 'SAC'
         );
         $select->joinInner(
                 array('d' => 'Segmento'), 'd.Codigo = a.Segmento',
-                array(''), 'SAC.dbo'
+                array(''), 'SAC'
         );
 
         foreach ($where as $comando => $valores) {

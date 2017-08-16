@@ -12,7 +12,7 @@ Class Proponente extends MinC_Db_Table_Abstract {
         $consulta->from(array('a' => 'vwAgentesSeusProjetos'), array(
             'a.idAgente',
             'a.NomeProponente'
-        ), 'SAC.dbo')
+        ), 'SAC')
         ->where('IdUsuario = ?', $idUsuario)
         ->group(array('a.idAgente', 'a.NomeProponente'))
         ->order(array('a.NomeProponente'))

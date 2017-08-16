@@ -29,13 +29,13 @@ class tbAcesso extends MinC_Db_Table_Abstract{
                     array('b' => 'tbRelatorioTrimestral'),
                     'b.idRelatorioTrimestral = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('c' => 'tbRelatorio'),
                     'c.idRelatorio = b.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('c.IdPRONAC = ?', $idpronac);

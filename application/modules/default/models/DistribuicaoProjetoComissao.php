@@ -19,7 +19,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
             'Pr.NomeProjeto',
             'Pr.idPRONAC',
             'Pr.Situacao'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(array('Pa' => 'Parecer'), 'Pa.idPRONAC = Pr.IdPRONAC', array
             (
@@ -28,7 +28,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
                 ELSE 'Nao'
                 End AS ParecerFavoravel",
             "Pa.idTipoAgente"
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinLeft(
                 array('pt' => 'tbPauta'), "pt.IdPRONAC = Pr.IdPRONAC", array("pt.idNrReuniao"), 'BDCORPORATIVO.scSAC'
@@ -58,7 +58,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
                            array('(Pr.AnoProjeto + Pr.Sequencial) AS PRONAC',
                                  'Pr.NomeProjeto',
                                  'Pr.idPRONAC',
-                                 'Pr.Situacao'), 'SAC.dbo'
+                                 'Pr.Situacao'), 'SAC'
         );
         $select->joinInner(array('Pa' => 'Parecer'),
                                  'Pa.idPRONAC = Pr.IdPRONAC',
@@ -67,7 +67,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
                                     ELSE 'N&atilde;o'
                                     End AS ParecerFavoravel",
                                     "Pa.idTipoAgente"
-                                ),'SAC.dbo'
+                                ),'SAC'
         );
         $select->joinLeft(array('pt'=>'tbPauta'),
                                 "pt.IdPRONAC = Pr.IdPRONAC",
@@ -125,7 +125,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
             '(P.AnoProjeto + P.Sequencial) AS PRONAC',
             'P.NomeProjeto',
             'P.Area'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         foreach ($where as $key => $valor) {
             $select->where($key, $valor);
@@ -157,7 +157,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->from(array('dpc' => $this->_name), array('dpc.IdPRONAC')
         );
         $select->joinInner(
-                array('nm' => 'nomes'), 'dpc.idAgente = nm.idAgente', array('nm.Descricao as nome'), 'agentes.dbo'
+                array('nm' => 'nomes'), 'dpc.idAgente = nm.idAgente', array('nm.Descricao as nome'), 'agentes'
         );
         $select->where('dpc.idPronac = ?', $idpronac);
 
@@ -197,10 +197,10 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->joinInner(
                 array('pr' => 'projetos'), 'pr.IdPRONAC = SDPC.idPronac', array(
             '(COUNT(SDPC.idPronac)) as QTD'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
-                array('tc' => 'tbTitulacaoConselheiro'), 'tc.idAgente = SDPC.idAgente', array(), 'agentes.dbo'
+                array('tc' => 'tbTitulacaoConselheiro'), 'tc.idAgente = SDPC.idAgente', array(), 'agentes'
         );
         $select->where('pr.Situacao = ? ', 'C10');
         $select->where('SDPC.stDistribuicao = ? ', 'A');

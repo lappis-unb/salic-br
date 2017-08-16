@@ -41,7 +41,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'tbTipoReadequacao'), 'a.idTipoReadequacao = b.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinLeft(
             array('c' => 'tbDocumento'), 'a.idDocumento = c.idDocumento',
@@ -284,11 +284,11 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b' => 'tbTipoEncaminhamento'), 'a.siEncaminhamento = b.idTipoEncaminhamento',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinLeft(
             array('d' => 'tbDocumento'), 'd.idDocumento = a.idDocumento',
@@ -335,15 +335,15 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                 a.stEstado,
                 e.idArquivo,
                 e.nmArquivo
-            "), 'SAC.dbo'
+            "), 'SAC'
         );
         $select->joinInner(
             array('b' => 'tbTipoEncaminhamento'), 'a.siEncaminhamento = b.idTipoEncaminhamento',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinLeft(
             array('d' => 'tbDocumento'), 'd.idDocumento = a.idDocumento',
@@ -355,7 +355,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
 //        $select->joinLeft(
 //            array('f' => 'Aprovacao'), 'f.idReadequacao = a.idReadequacao',
-//            array(''), 'SAC.dbo'
+//            array(''), 'SAC'
 //        );
 
         //adiciona quantos filtros foram enviados
@@ -404,11 +404,11 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b' => 'tbTipoEncaminhamento'), 'a.siEncaminhamento = b.idTipoEncaminhamento',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinLeft(
             array('d' => 'tbDocumento'), 'd.idDocumento = a.idDocumento',
@@ -420,7 +420,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('f' => 'tbDistribuirReadequacao'), 'f.idReadequacao = a.idReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         //adiciona quantos filtros foram enviados
@@ -453,32 +453,32 @@ class tbReadequacao extends MinC_Db_Table_Abstract
             array('a' => 'tbDistribuirReadequacao'),
             array(
                 new Zend_Db_Expr("a.idDistribuirReadequacao, c.IdPRONAC, c.AnoProjeto+c.Sequencial AS Pronac, c.NomeProjeto, a.DtEncaminhamento, $nome, a.idAvaliador AS idTecnico, CAST(b.dsSolicitacao as TEXT) AS dsSolicitacao, b.idReadequacao, e.dsReadequacao as tipoReadequacao")
-            ), 'SAC.dbo'
+            ), 'SAC'
         );
         $select->joinInner(
             array('b' => 'tbReadequacao'), 'a.idReadequacao = b.idReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Projetos'), 'c.IdPRONAC = b.IdPRONAC',
-            array('c.CgcCpf'), 'SAC.dbo'
+            array('c.CgcCpf'), 'SAC'
         );
 
         if ($idPerfil == 121) {
             $select->joinLeft(
                 array('d' => 'Usuarios'), 'a.idAvaliador = d.usu_codigo',
-                array(''), 'TABELAS.dbo'
+                array(''), 'TABELAS'
             );
         } else {
             $select->joinLeft(
                 array('d' => 'Nomes'), 'a.idAvaliador = d.idAgente',
-                array(''), 'agentes.dbo'
+                array(''), 'agentes'
             );
         }
 
         $select->joinInner(
             array('e' => 'tbTipoReadequacao'), 'e.idTipoReadequacao = b.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         //adiciona quantos filtros foram enviados
@@ -523,15 +523,15 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('d' => 'tbDistribuirReadequacao'), 'd.idReadequacao = a.idReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         //adiciona quantos filtros foram enviados
@@ -573,23 +573,23 @@ class tbReadequacao extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Usuarios'), 'a.idAvaliador = c.usu_codigo',
-            array(''), 'TABELAS.dbo'
+            array(''), 'TABELAS'
         );
         $select->joinInner(
             array('d' => 'Area'), 'b.Area = d.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('e' => 'Segmento'), 'b.Segmento = e.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('f' => 'tbTipoReadequacao'), 'f.idTipoReadequacao = a.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         //adiciona quantos filtros foram enviados
@@ -630,15 +630,15 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b' => 'tbReadequacaoXParecer'), 'b.idReadequacao = a.idReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Parecer'), 'c.IdParecer = b.idParecer',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('d' => 'Usuarios'), 'd.usu_codigo = c.Logon',
-            array(''), 'TABELAS.dbo'
+            array(''), 'TABELAS'
         );
 
         //adiciona quantos filtros foram enviados
@@ -674,27 +674,27 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b' => 'Projetos'), 'b.IdPRONAC = a.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Area'), 'b.Area = c.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('d' => 'Segmento'), 'b.Segmento = d.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('g' => 'tbDistribuirReadequacao'), 'g.idReadequacao = a.idReadequacao AND g.idUnidade = 400',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('h' => 'Usuarios'), 'h.usu_codigo = g.idAvaliador',
-            array(''), 'TABELAS.dbo'
+            array(''), 'TABELAS'
         );
         $select->joinInner(
             array('i' => 'tbTipoReadequacao'), 'i.idTipoReadequacao = a.idTipoReadequacao',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->where('a.stEstado = ? ', 0);

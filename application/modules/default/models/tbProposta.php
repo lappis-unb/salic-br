@@ -199,25 +199,25 @@ class tbProposta extends MinC_Db_Table_Abstract
 			array('c' => 'Projetos')
 			,'c.IdPRONAC = b.IdPRONAC'
 			,array('NomeProjeto AS NomeProjeto','CgcCpf AS CNPJCPF')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(
 			array('d' => 'PreProjeto')
 			,'d.idPreProjeto = c.idProjeto'
 			,array('EstrategiadeExecucao as EstrategiadeExecucao','EspecificacaoTecnica as EspecificacaoTecnica')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(
 			array('e' => 'Agentes')
 			,'e.idAgente = d.idAgente'
 			,array()
-			,'agentes.dbo'
+			,'agentes'
 		);
 		$select->joinInner(
 			array('f' => 'vProponenteProjetos')
 			,'c.CgcCpf = f.CgcCpf'
 			,array('Nome AS proponente','CgcCpf')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(
 			array('g' => 'tbPedidoAlteracaoXTipoAlteracao')

@@ -44,7 +44,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from('EnderecoNacional', $e, 'agentes.dbo')
+            ->from('EnderecoNacional', $e, 'agentes')
             ->where('idAgente = ?', $idAgente)
             ;
 

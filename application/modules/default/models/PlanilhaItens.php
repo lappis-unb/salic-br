@@ -25,7 +25,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
          *
          *
@@ -38,19 +38,19 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array('id'=>'pAprovacao.idPlanilhaAprovacao'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('pEtapa'=>'tbPlanilhaEtapa'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->joinLeft(
@@ -91,7 +91,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         */
@@ -104,19 +104,19 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array('id'=>'pAprovacao.idPlanilhaAprovacao'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('pEtapa'=>'tbPlanilhaEtapa'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -156,7 +156,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array('id'=>'pAprovacao.idPlanilhaAprovacao'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         /* erro UC26
@@ -170,20 +170,20 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
          //*/
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('pEtapa'=>'tbPlanilhaEtapa'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->joinLeft(
@@ -241,7 +241,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
          *
          */
@@ -254,19 +254,19 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array('id'=>'pAprovacao.idPlanilhaAprovacao'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('pEtapa'=>'tbPlanilhaEtapa'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         if($idCotacao){
             $select->joinInner(
@@ -285,7 +285,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array('nm'=>'Nomes'),
                             "ctxa.idAgente = nm.idAgente",
                             array('Fornecedor'=>'nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         }
         if($idDispensaLicitacao)
@@ -344,12 +344,12 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
 			,array('tpi.idPlanilhaItens AS id'
 				,'tpi.Descricao AS descricao'
 			)
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(array('tipp' => 'tbItensPlanilhaProduto')
 			,'tpi.idPlanilhaItens = tipp.idPlanilhaItens'
 			,array()
-			,'SAC.dbo'
+			,'SAC'
 		);
 
 		// adiciona quantos filtros foram enviados

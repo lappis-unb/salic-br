@@ -17,7 +17,7 @@ class Votante extends MinC_Db_Table_Abstract
                 array('nm' => 'nomes'),
                 "nm.idagente = tbv.idagente",
                 array('nm.descricao'),
-                'agentes.dbo'
+                'agentes'
         );
         $select->where('tbv.idreuniao = ?', $idreuniao);
         $select->order('nm.descricao asc');

@@ -41,13 +41,13 @@ class tbDocumentoAceitacao extends MinC_Db_Table_Abstract
                     array('b' => 'tbRelatorioConsolidado'),
                     'b.idRelatorioConsolidado = a.idRelatorioConsolidado',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('c' => 'tbRelatorio'),
                     'c.idRelatorio = b.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('d' => 'tbDocumento'),

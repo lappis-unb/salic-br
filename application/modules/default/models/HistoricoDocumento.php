@@ -210,20 +210,20 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                 array('org' => 'Orgaos'),
                 'org.org_codigo = p.orgao',
                 array('org.org_sigla as Origem'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->joinLeft(
                 array('usue' => 'Usuarios'),
                 'usue.usu_codigo = h.idUsuarioEmissor',
                 array('usue.usu_nome as Emissor'),
-                'tabelas.dbo'
+                'tabelas'
         );
         $select->joinLeft(
                 array('usud' => 'Usuarios'),
                 'usud.usu_codigo = h.idUsuarioReceptor',
                 array('usud.usu_nome as Receptor'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->where('h.idDocumento = ?', 0);
@@ -306,20 +306,20 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                 array('org' => 'Orgaos'),
                 'org.org_codigo = p.orgao',
                 array('org.org_sigla as Origem'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->joinLeft(
                 array('usue' => 'Usuarios'),
                 'usue.usu_codigo = h.idUsuarioEmissor',
                 array('usue.usu_nome as Emissor'),
-                'tabelas.dbo'
+                'tabelas'
         );
         $select->joinLeft(
                 array('usud' => 'Usuarios'),
                 'usud.usu_codigo = h.idUsuarioReceptor',
                 array('usud.usu_nome as Receptor'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->where('h.idDocumento = ?', 0);

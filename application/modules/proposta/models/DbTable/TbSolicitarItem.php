@@ -43,15 +43,15 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('p' => 'Produto'), "s.idProduto = p.Codigo",
-            array('Codigo as idProduto', 'Descricao as Produto'), 'SAC.dbo'
+            array('Codigo as idProduto', 'Descricao as Produto'), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPlanilhaEtapa'), "s.idEtapa = e.idPlanilhaEtapa",
-            array('idPlanilhaEtapa', 'Descricao as Etapa'), 'SAC.dbo'
+            array('idPlanilhaEtapa', 'Descricao as Etapa'), 'SAC'
         );
         $select->joinLeft(
             array('i' => 'tbPlanilhaItens'), "s.idPlanilhaItens = i.idPlanilhaItens",
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados

@@ -47,7 +47,7 @@ class Dispensalicitacao extends MinC_Db_Table_Abstract {
                             array('pa'=>'tbPlanilhaAprovacao'),
                             'dlpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao',
                             array('pa.IdPRONAC'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('pa.IdPRONAC = ?', $idpronac);
@@ -75,13 +75,13 @@ class Dispensalicitacao extends MinC_Db_Table_Abstract {
                             array('ag'=>'Agentes'),
                             'dis.idAgente = ag.idAgente',
                             array('ag.idAgente','ag.CNPJCPF','ag.TipoPessoa'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = ag.idAgente',
                             array('nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);

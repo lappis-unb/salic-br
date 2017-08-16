@@ -58,7 +58,7 @@ class Verificacao extends MinC_Db_Table_Abstract
             , 'v.idTipo = t.idTipo'
             , array('t.idTipo'
             , 't.Descricao AS dsTipo')
-            , 'SAC.dbo'
+            , 'SAC'
         );
 
         foreach ($where as $coluna => $valor) {

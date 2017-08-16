@@ -125,13 +125,13 @@ class Nomes extends MinC_Db_Table_Abstract
 			array("usu" => "Usuarios")
 			,"age.CNPJCPF = usu.usu_identificacao"
 			,array()
-                        ,'TABELAS.dbo'
+                        ,'TABELAS'
 		);
                 $select->joinInner(
 			array("uxoxg" => "UsuariosXOrgaosXGrupos")
 			,"usu.usu_codigo = uxoxg.uog_usuario"
 			,array()
-                        ,'TABELAS.dbo'
+                        ,'TABELAS'
 		);
                 $select->where('uxoxg.uog_grupo = 94');
                 if($idOrgao)

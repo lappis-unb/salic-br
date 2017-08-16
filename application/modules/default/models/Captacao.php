@@ -409,7 +409,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                             'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
                             array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"),
                                   "NomeProjeto"),
-                            'SAC.dbo'
+                            'SAC'
                           );
         $slct->joinInner(
                             array('ag'=>'Agentes'),
@@ -468,7 +468,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                                 array('p'=>'Projetos'),
                                 'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
                             array(),
-                                'SAC.dbo'
+                                'SAC'
                               );
             $slctCount->joinInner(
                                 array('a'=>'Area'),
@@ -536,7 +536,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	                            array('p'=>'Projetos'),
 	                            'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
 	                            array(),
-	                            'SAC.dbo'
+	                            'SAC'
 	                          );
 	        $slctSA->joinInner(
 	                            array('ag'=>'Agentes'),
@@ -609,7 +609,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                             'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
                             array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"),
                                   "NomeProjeto"),
-                            'SAC.dbo'
+                            'SAC'
                           );
         	$slctSC->joinInner(
                             array('ag'=>'Agentes'),
@@ -740,7 +740,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                             array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"),
                                   "NomeProjeto",
                                   "IdPRONAC"),
-                            'SAC.dbo'
+                            'SAC'
                           );
         $slct->joinInner(
                             array('ag'=>'Agentes'),
@@ -804,7 +804,7 @@ class Captacao extends MinC_Db_Table_Abstract {
 	                            array('p'=>'Projetos'),
 	                            'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
 	                            array(),
-	                            'SAC.dbo'
+	                            'SAC'
 	                          );
 	        $slctCount->joinInner(
 	                            array('ag'=>'Agentes'),
@@ -918,7 +918,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                      );
         $slctSC->joinInner(
                             array('p'=>'Projetos'),'(ca.AnoProjeto+ca.Sequencial) = (p.AnoProjeto+p.Sequencial)',
-                            array(),'SAC.dbo'
+                            array(),'SAC'
                           );
         $slctSC->joinInner(
                             array('ag'=>'Agentes'),
@@ -993,7 +993,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                             array('p'=>'Projetos'),
                             'ca.AnoProjeto+ca.Sequencial = p.AnoProjeto+p.Sequencial',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                           );
         $slctSA->joinInner(
                             array('ag'=>'Agentes'),
@@ -1215,14 +1215,14 @@ class Captacao extends MinC_Db_Table_Abstract {
 			array("a2" => 'Agentes'),
 			'p.CgcCpf = a2.CNPJCPF',
 			array(),
-			'agentes.dbo'
+			'agentes'
                         );
 
         $slct->joinLeft(
                         array('n' => 'Nomes'),
                         'n.idAgente = a2.idAgente',
                         array('n.Descricao AS NomeProponente'),
-                        'agentes.dbo'
+                        'agentes'
                         );
 
         //adiciona quantos filtros foram enviados
@@ -1272,14 +1272,14 @@ class Captacao extends MinC_Db_Table_Abstract {
 			array("a2" => 'Agentes'),
 			'p.CgcCpf = a2.CNPJCPF',
 			array(),
-			'agentes.dbo'
+			'agentes'
                 );
 
         $slct->joinLeft(
                         array('n' => 'Nomes'),
                         'n.idAgente = a2.idAgente',
                         array(),
-                        'agentes.dbo'
+                        'agentes'
                 );
 
         //adiciona quantos filtros foram enviados
@@ -1329,13 +1329,13 @@ class Captacao extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('p' => 'Projetos'), 'c.Anoprojeto = p.Anoprojeto and c.Sequencial = p.Sequencial',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('i' => 'Interessado'), 'c.CgcCPfMecena = i.CgcCPf',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
-        $select->joinLeft(array('a' => 'Agentes'), 'a.CNPJCPf = c.CgcCPfMecena', array('idAgente'), 'agentes.dbo');
+        $select->joinLeft(array('a' => 'Agentes'), 'a.CNPJCPf = c.CgcCPfMecena', array('idAgente'), 'agentes');
 
        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {

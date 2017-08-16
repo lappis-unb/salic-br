@@ -29,21 +29,21 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
         if($tabela == 'PlanoDeDivulgacao'){
             $select->joinInner(
                 array('b' => 'PlanoDeDivulgacao'), 'a.idProjeto = b.idProjeto AND b.stPlanoDivulgacao = 1',
-                array(new Zend_Db_Expr("'N' as tpSolicitacao")), 'SAC.dbo'
+                array(new Zend_Db_Expr("'N' as tpSolicitacao")), 'SAC'
             );
         } else {
             $select->joinInner(
                 array('b' => 'tbPlanoDivulgacao'),"a.idPronac = b.idPronac AND stAtivo='S'",
-                array('b.tpSolicitacao') ,'SAC.dbo'
+                array('b.tpSolicitacao') ,'SAC'
             );
         }
         $select->joinLeft(
             array('c' => 'Verificacao'), 'c.idVerificacao = b.idPeca',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinLeft(
             array('d' => 'Verificacao'), 'd.idVerificacao = b.idVeiculo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->where('a.IdPRONAC = ?', $idPronac);
@@ -60,19 +60,19 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
 			array('a' => 'Projetos'),
 			array(
                 new Zend_Db_Expr("b.idPlanoDivulgacao, b.idPeca, c.Descricao as Peca, b.idVeiculo, d.Descricao as Veiculo")
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
         $select->joinInner(
             array('b' => 'tbPlanoDivulgacao'),"a.idPronac = b.idPronac",
-            array('b.tpSolicitacao','b.tpAnaliseTecnica','b.tpAnaliseComissao') ,'SAC.dbo'
+            array('b.tpSolicitacao','b.tpAnaliseTecnica','b.tpAnaliseComissao') ,'SAC'
         );
         $select->joinLeft(
             array('c' => 'Verificacao'), 'c.idVerificacao = b.idPeca',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinLeft(
             array('d' => 'Verificacao'), 'd.idVerificacao = b.idVeiculo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->where('b.idReadequacao = ?', $idReadequacao);
@@ -88,7 +88,7 @@ class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
 			array('a' => 'PlanoDeDivulgacao'),
 			array(
                 new Zend_Db_Expr('a.*')
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
 
 		// adiciona quantos filtros foram enviados

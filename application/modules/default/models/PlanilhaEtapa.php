@@ -17,13 +17,13 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->joinLeft(
@@ -70,13 +70,13 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -112,13 +112,13 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->joinLeft(
@@ -176,13 +176,13 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         if($idCotacao)
         $select->joinInner(

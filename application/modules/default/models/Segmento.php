@@ -24,7 +24,7 @@ class Segmento extends MinC_Db_Table_Abstract
         );
 
         $slct->joinInner(array('a'=>'Area'),'LEFT(s.Codigo, 1) = a.Codigo',
-                            array(),'SAC.dbo'
+                            array(),'SAC'
         );
 
         //adiciona quantos filtros foram enviados

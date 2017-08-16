@@ -34,7 +34,7 @@ class Consolidacaovotacao extends MinC_Db_Table_Abstract{
                                  '(pr.AnoProjeto+pr.Sequencial) as pronac',
                                  'pr.NomeProjeto'
                                  ),
-                            'SAC.dbo'
+                            'SAC'
                           );
         $select->where('cv.idNrReuniao = ?', $idnrreuniao);
         $select->where('cv.IdPRONAC = ?', $idpronac);

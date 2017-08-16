@@ -108,12 +108,12 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(array('a' => 'Agentes'), $a, 'agentes.dbo')
-            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes.dbo')
-            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes.dbo')
-            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes.dbo')
-            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes.dbo')
-            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes.dbo')
+            ->from(array('a' => 'Agentes'), $a, 'agentes')
+            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes')
+            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes')
+            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes')
+            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes')
+            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes')
             ->where('a.TipoPessoa = 0 OR a.TipoPessoa = 1')
             ->where('n.TipoNome = 18 OR n.TipoNome = 19')
             ->where('vis.Visao = 198')
@@ -188,11 +188,11 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(array('E' => 'EnderecoNacional'), $e, 'agentes.dbo')
-            ->joinLeft(array('VE' => 'Verificacao'), 'VE.idVerificacao = E.TipoEndereco', $ve, 'agentes.dbo')
-            ->joinLeft(array('M' => 'Municipios'), 'M.idMunicipioIBGE = E.Cidade', $m, 'agentes.dbo')
-            ->joinLeft(array('U' => 'UF'), 'U.idUF = E.UF', $u, 'agentes.dbo')
-            ->joinLeft(array('VL' => 'Verificacao'), 'VL.idVerificacao = E.TipoLogradouro', array('VL.Descricao as dsTipoLogradouro'), 'agentes.dbo')
+            ->from(array('E' => 'EnderecoNacional'), $e, 'agentes')
+            ->joinLeft(array('VE' => 'Verificacao'), 'VE.idVerificacao = E.TipoEndereco', $ve, 'agentes')
+            ->joinLeft(array('M' => 'Municipios'), 'M.idMunicipioIBGE = E.Cidade', $m, 'agentes')
+            ->joinLeft(array('U' => 'UF'), 'U.idUF = E.UF', $u, 'agentes')
+            ->joinLeft(array('VL' => 'Verificacao'), 'VL.idVerificacao = E.TipoLogradouro', array('VL.Descricao as dsTipoLogradouro'), 'agentes')
             ->where('E.idAgente = ?', $idAgente)
             ->order(array('Status DESC'))
             ;

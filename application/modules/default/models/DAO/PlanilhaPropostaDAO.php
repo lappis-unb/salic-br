@@ -11,7 +11,7 @@
 
 class PlanilhaPropostaDAO extends Zend_Db_Table
 {
-	protected $_schema = 'SAC.dbo';
+	protected $_schema = 'SAC';
 	protected $_name   = 'tbPlanilhaProposta';
 
 

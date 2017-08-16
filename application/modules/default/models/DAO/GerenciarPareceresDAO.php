@@ -135,11 +135,11 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 								   ELSE \'Sim\'
 							  END as IncisoArtigo27_IV
 				')),
-				'SAC.dbo')
+				'SAC')
 			->joinInner(array('p' => 'Produto'),
 				'a.idProduto = p.Codigo',
 				array(new Zend_Db_Expr('p.Descricao as Produto')),
-			    'SAC.dbo')
+			    'SAC')
 		 	->where('idPronac = ?',$idPronac);
 
 
@@ -338,23 +338,23 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                                END AS ParecerFavoravel,
                                SAC.dbo.fnNomeParecerista(a.idUsuario) AS Parecerista
                             ')),
-                    'SAC.dbo')
+                    'SAC')
             ->joinInner(array('i' => 'Interessado'),
                 'p.CgcCpf = i.CgcCpf',
                 array(new Zend_Db_Expr('i.Nome AS Proponente')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('a' => 'tbAnaliseDeConteudo'),
                 'p.IdPRONAC = a.idPronac',
                 array('a.ParecerDeConteudo','a.idProduto'),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pr' => 'Produto'),
                 'a.idProduto = pr.Codigo',
                 array(new Zend_Db_Expr('pr.Descricao AS Produto')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
             'p.idProjeto = pd.idProjeto and pd.idProduto = pr.Codigo AND pd.stPlanoDistribuicaoProduto = 1',
             array('pd.stPrincipal'),
-            'SAC.dbo')
+            'SAC')
             ->where('a.idUsuario IS NOT NULL AND p.IdPRONAC = ?', $idpronac)
             ->order('pd.stPrincipal DESC');
 

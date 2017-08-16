@@ -77,7 +77,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
                 array(
                     'td.dsTipoDocumento'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         if ($idnrdocumento) {
             $select->where('d.idDocumento = ?', $idnrdocumento);

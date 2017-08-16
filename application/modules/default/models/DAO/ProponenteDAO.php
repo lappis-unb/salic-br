@@ -41,19 +41,19 @@ Class ProponenteDAO extends Zend_Db_Table
                         when ag.tipoPessoa = 0 then \'Pessoa F�sica\'
                         when ag.tipoPessoa = 1 then \'Pessoa Jur�dica\'
                     end as tipoPessoa')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('itn' => 'Interessado'),
                 'pr.CgcCpf = itn.CgcCpf',
                 array('Nome', 'Endereco', 'CgcCpf', 'Uf', 'Cidade', 'Esfera', 'Responsavel', 'Cep', 'Administracao', 'Utilidade'),
-                'SAC.dbo')
+                'SAC')
             ->joinLeft(array('ag' => 'Agentes'),
                 'ag.CNPJCPF = pr.CgcCpf',
                 array(''),
-                'agentes.dbo')
+                'agentes')
             ->joinLeft(array('nat' => 'Natureza'),
                 'nat.idAgente = ag.idAgente',
                 array('Direito'),
-                'agentes.dbo')
+                'agentes')
             ->where('pr.IdPRONAC = ?', $idpronac);
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -79,16 +79,16 @@ Class ProponenteDAO extends Zend_Db_Table
                     End as TipoInternet,
                     Internet.Descricao as Email    
                 ")),
-                'agentes.dbo')
+                'agentes')
             ->where('Projetos.IdPRONAC = ?', $idpronac)
             ->joinLeft('Agentes',
                 'Agentes.IdAgente = Internet.IdAgente',
                 array(''),
-                'agentes.dbo')
+                'agentes')
             ->joinLeft('Projetos',
                 'Agentes.CNPJCPF = Projetos.CgcCpf',
                 array(''),
-                'SAC.dbo');
+                'SAC');
 
         $resultado = $db->fetchAll($select);
 
@@ -123,20 +123,20 @@ Class ProponenteDAO extends Zend_Db_Table
                             THEN 'N�o'
                     end as Divulgar
                 ")),
-                'agentes.dbo')
+                'agentes')
             ->where('Projetos.IdPRONAC = ?', $idpronac)
             ->joinInner('Uf',
                 'Uf.idUF = Telefones.UF',
                 array(''),
-                'agentes.dbo')
+                'agentes')
             ->joinInner('Agentes',
                 'Agentes.IdAgente = Telefones.IdAgente',
                 array(''),
-                'agentes.dbo')
+                'agentes')
             ->joinInner('Projetos',
                 'Agentes.CNPJCPF = Projetos.CgcCpf',
                 array(''),
-                'SAC.dbo');
+                'SAC');
 
         $resultado = $db->fetchAll($select);
 

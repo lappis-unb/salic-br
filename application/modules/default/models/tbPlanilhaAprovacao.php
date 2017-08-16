@@ -50,7 +50,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
 
         $slct->joinLeft(
                 array('b' => 'tbPlanilhaItens'), "a.idPlanilhaItem = b.idPlanilhaItens",
-                array('Descricao'), 'SAC.dbo'
+                array('Descricao'), 'SAC'
         );
 
         // adicionando clausulas where
@@ -125,19 +125,19 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         );
         $select->joinLeft(
             array('b' => 'Produto'), "a.idProduto = b.Codigo",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbPlanilhaEtapa'), "a.idEtapa = c.idPlanilhaEtapa",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('d' => 'tbPlanilhaItens'), "a.idPlanilhaItem = d.idPlanilhaItens",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPlanilhaUnidade'), "a.idUnidade = e.idUnidade",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
 
         foreach($where as $key=>$valor){

@@ -102,7 +102,7 @@ class Prorrogacao extends MinC_Db_Table_Abstract {
         $slct->joinLeft(
                 array('b'=>'Usuarios'),
                 'a.Logon = b.usu_codigo',
-                array('usu_nome as Usuario'), 'TABELAS.dbo'
+                array('usu_nome as Usuario'), 'TABELAS'
         );
         $slct->where('idPronac = ?', $idPronac);
 

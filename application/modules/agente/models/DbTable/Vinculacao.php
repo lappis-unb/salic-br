@@ -46,17 +46,17 @@ class Agente_Model_DbTable_Vinculacao extends MinC_Db_Table_Abstract
         $slct->joinInner(
                 array('b' => 'Agentes'),
                 'a.idAgente = b.idAgente',
-                array('idAgente'), 'agentes.dbo'
+                array('idAgente'), 'agentes'
         );
         $slct->joinInner(
                 array('c' => 'Agentes'),
                 'a.idVinculoPrincipal = c.idAgente',
-                array(), 'agentes.dbo'
+                array(), 'agentes'
         );
         $slct->joinInner(
                 array('d' => 'Visao'),
                 'd.idAgente = a.idAgente',
-                array(), 'agentes.dbo'
+                array(), 'agentes'
         );
         $slct->where('b.CNPJCPF = ? ', $cpfProcurador);
         $slct->where('c.CNPJCPF = ? ', $cpfPropoenente);

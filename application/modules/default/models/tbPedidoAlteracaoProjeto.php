@@ -48,37 +48,37 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 array('gru2'=>'Grupos'),
                 'gru2.gru_nome = ta.dsTipoAgente',
                 array('Perfil2'=>'gru.gru_nome','cdPerfil2'=>'gru.gru_codigo'),
-                'TABELAS.dbo'
+                'TABELAS'
         );
         $select->joinInner(
                 array('gru'=>'Grupos'),
                 'gru.gru_codigo = aaipa.idPerfilRemetente',
                 array('Perfil'=>'gru.gru_nome','cdPerfil'=>'gru.gru_codigo'),
-                'TABELAS.dbo'
+                'TABELAS'
         );
         $select->joinInner(
                 array('nm'=>'Nomes'),
                 'nm.idAgente = aaipa.idAgenteRemetente',
                 array('Nome'=>'nm.Descricao'),
-                'agentes.dbo'
+                'agentes'
         );
         $select->joinLeft(
                 array('nm2'=>'Nomes'),
                 'nm2.idAgente = aaipa.idAgenteAcionado',
                 array('Nome2'=>'nm2.Descricao'),
-                'agentes.dbo'
+                'agentes'
         );
         $select->joinInner(
                 array('nm3'=>'Nomes'),
                 'nm3.idAgente = aipa.idAgenteAvaliador',
                 array('Nome3'=>'nm3.Descricao'),
-                'agentes.dbo'
+                'agentes'
         );
         $select->joinInner(
                 array('org'=>'Orgaos'),
                 'org.Codigo = aaipa.idOrgao',
                 array('Orgao'=>'org.Sigla'),
-                'SAC.dbo'
+                'SAC'
         );
 
         $select->where('pap.IdPRONAC = ?', $idPronac);
@@ -152,7 +152,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 'DtFimCaptacao' => New Zend_Db_Expr("CASE WHEN DtFimCaptacao IS NOT NULL THEN ap.DtFimCaptacao
 													WHEN CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year({$this->getDate()})) + '/12/31' THEN pr.DtFimExecucao 
 													ELSE CONVERT(char(4),year({$this->getDate()})) + '/12/31' END"),
-                ),'SAC.dbo'
+                ),'SAC'
         );
         $slct->joinInner(array('ap' => 'Aprovacao'),
                 'ap.idPronac = pr.idPronac AND ap.DtAprovacao IN (SELECT TOP 1 MAX(DtAprovacao) FROM SAC..Aprovacao WHERE IdPRONAC = pr.IdPRONAC)',
@@ -163,25 +163,25 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 'ap.DtInicioCaptacao as DtInicioCaptacaoGravada',
                 'ap.DtFimCaptacao as DtFimCaptacaoGravada',
                 'AprovadoReal' => new Zend_Db_Expr('SAC.dbo.fnTotalAprovadoProjeto(pr.AnoProjeto,pr.Sequencial)')
-                ),'SAC.dbo'
+                ),'SAC'
         );
         $slct->joinInner(array('ar' => 'Area'),
                 'ar.Codigo = pr.Area',
                 array('ar.Descricao AS area'),
-                'SAC.dbo'
+                'SAC'
         );
         $slct->joinInner(
                 array('seg' => 'Segmento'),
                 'seg.Codigo = pr.Segmento',
                 array('seg.Descricao as segmento'),
-                'SAC.dbo'
+                'SAC'
         );
         $slct->joinInner(array('en'  => 'Enquadramento'),
                 'en.IdPRONAC = pr.IdPRONAC',
                 array('en.Enquadramento as nrenq',
                 'en.Observacao',
                 'enquadramento' => new Zend_Db_Expr("case when en.Enquadramento = 1 then '26' when en.Enquadramento = 2 then '18' end ")
-                ),'SAC.dbo'
+                ),'SAC'
         );
         $slct->joinLeft(array('tp' => 'tbPauta'),
                 'tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM BDCORPORATIVO.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)',
@@ -191,17 +191,17 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $slct->joinLeft(array('tr' => 'tbReuniao'),
                 'tr.idNrReuniao = tp.idNrReuniao',
                 array('tr.NrReuniao'),
-                'SAC.dbo'
+                'SAC'
         );
         $slct->joinInner(array('ag' => 'Agentes'),
                 'ag.CNPJCPF = pr.CgcCpf',
                 array(),
-                'agentes.dbo'
+                'agentes'
         );
         $slct->joinInner(array('nm' => 'Nomes'),
                 'nm.idAgente = ag.idAgente',
                 array('nm.Descricao as nome'),
-                'agentes.dbo'
+                'agentes'
         );
         $slct->joinLeft(array('vp' => 'tbVerificaProjeto'),
                 'vp.IdPRONAC = pr.IdPRONAC',
@@ -217,7 +217,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 'DATEDIFF(day, vp.DtRecebido, '.$this->getDate().') AS tempoAnalise',
                 'vp.dtRecebido'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
 
         // adiciona quantos filtros foram enviados
@@ -251,7 +251,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('b'=>'tbPlanoDistribuicao'), 'a.idPedidoAlteracao = b.idPedidoAlteracao',
-                array('idProduto'), 'SAC.dbo'
+                array('idProduto'), 'SAC'
         );
         $select->joinInner(
                 array('c'=>'tbPedidoAlteracaoXTipoAlteracao'), 'a.idPedidoAlteracao = c.idPedidoAlteracao',
@@ -276,17 +276,17 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.IdPRONAC = b.IdPRONAC',
-            array(new Zend_Db_Expr('AnoProjeto+Sequencial AS PRONAC'), 'NomeProjeto', 'Orgao'), 'SAC.dbo'
+            array(new Zend_Db_Expr('AnoProjeto+Sequencial AS PRONAC'), 'NomeProjeto', 'Orgao'), 'SAC'
         );
 
         $select->joinInner(
             array('c' => 'Area'), 'b.Area = c.Codigo',
-            array('Descricao AS Area'), 'SAC.dbo'
+            array('Descricao AS Area'), 'SAC'
         );
 
         $select->joinLeft(
             array('d' => 'Segmento'), 'b.Segmento = d.Codigo',
-            array('Descricao AS Segmento'), 'SAC.dbo'
+            array('Descricao AS Segmento'), 'SAC'
         );
 
         $select->joinInner(
@@ -330,15 +330,15 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('b' => 'Projetos'), 'a.IdPRONAC = b.IdPRONAC',
-            array(new Zend_Db_Expr('AnoProjeto+Sequencial AS PRONAC'), 'NomeProjeto'), 'SAC.dbo'
+            array(new Zend_Db_Expr('AnoProjeto+Sequencial AS PRONAC'), 'NomeProjeto'), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Area'), 'b.Area = c.Codigo',
-            array('Descricao AS Area'), 'SAC.dbo'
+            array('Descricao AS Area'), 'SAC'
         );
         $select->joinLeft(
             array('d' => 'Segmento'), 'b.Segmento = d.Codigo',
-            array('Descricao AS Segmento'), 'SAC.dbo'
+            array('Descricao AS Segmento'), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPedidoAlteracaoXTipoAlteracao'), 'a.idPedidoAlteracao = e.idPedidoAlteracao',

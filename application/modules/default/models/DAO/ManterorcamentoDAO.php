@@ -705,15 +705,15 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     new Zend_Db_Expr('p.Codigo AS CodigoProduto'),
                     new Zend_Db_Expr('idPreProjeto AS PreProjeto'),
                     new Zend_Db_Expr(' pre.idPreProjeto AS idProposta')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
                 'pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('p' => 'Produto'),
                 'pd.idProduto = p.Codigo',
                 array(new Zend_Db_Expr('Descricao AS DescricaoProduto')),
-                'SAC.dbo')
+                'SAC')
             ->where('idPreProjeto = ?', $idPreProjeto)
             ->group('p.Codigo')
             ->group('p.Descricao')

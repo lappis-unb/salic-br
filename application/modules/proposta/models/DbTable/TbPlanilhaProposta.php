@@ -387,19 +387,19 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array('b' => 'Produto'), "a.idProduto = b.Codigo",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbPlanilhaEtapa'), "a.idEtapa = c.idPlanilhaEtapa",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('d' => 'tbPlanilhaItens'), "a.idPlanilhaItem = d.idPlanilhaItens",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPlanilhaUnidade'), "a.Unidade = e.idUnidade",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->where('a.idPlanilhaProposta = ?', $idPlanilhaProposta);
 

@@ -53,9 +53,9 @@ class Mensagem extends GenericModel{
         $consulta = $this->select();
         $consulta->setIntegrityCheck(false);
         $consulta
-            ->from(array('m' => 'tbMensagem'), array('total' => new Zend_Db_Expr('COUNT(DISTINCT m.idMensagem)')), 'SAC.dbo')
-            ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC.dbo')
-            ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC.dbo');
+            ->from(array('m' => 'tbMensagem'), array('total' => new Zend_Db_Expr('COUNT(DISTINCT m.idMensagem)')), 'SAC')
+            ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC')
+            ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC');
         $this->montarFiltrosListarDeDispositivo($consulta, $objParam);
 
         $rs = $this->fetchRow($consulta);
@@ -85,9 +85,9 @@ class Mensagem extends GenericModel{
                 'titulo',
                 'descricao',
                 'dtEnvio',
-                'dtAcesso'), 'SAC.dbo')
-            ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC.dbo')
-            ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC.dbo')
+                'dtAcesso'), 'SAC')
+            ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC')
+            ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC')
             ->group(array(
                 'm.idMensagem',
                 'tpMensagem',

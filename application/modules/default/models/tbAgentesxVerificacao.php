@@ -36,7 +36,7 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
                     );
           $slct->joinInner(
                 array('d' => 'verificacao'), 'c.idVerificacao = d.idVerificacao',
-                array('d.Descricao'),'agentes.dbo'
+                array('d.Descricao'),'agentes'
         );
           $slct->joinInner(
                 array('e' => 'tbArquivo'), 'c.idArquivo = e.idArquivo',

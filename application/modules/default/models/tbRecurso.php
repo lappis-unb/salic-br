@@ -312,32 +312,32 @@ class tbRecurso extends MinC_Db_Table_Abstract
                     nm.Descricao AS nomeComponente,
                     tp.idRecurso,
                     tp.tpSolicitacao as tipoSolicitacao")
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
 		$select->joinInner(
 			array("pr" => "Projetos")
 			,"pr.IdPRONAC = tp.IdPRONAC"
-			,array(), 'SAC.dbo'
+			,array(), 'SAC'
 		);
 		$select->joinInner(
 			array("ar" => "Area")
 			,"pr.Area = ar.Codigo"
-			,array(), 'SAC.dbo'
+			,array(), 'SAC'
 		);
 		$select->joinInner(
 			array("seg" => "Segmento")
 			,"pr.Segmento = seg.Codigo"
-			,array(), 'SAC.dbo'
+			,array(), 'SAC'
 		);
 		$select->joinLeft(
 			array("par" => "Parecer")
 			,"par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)"
-			,array(), 'SAC.dbo'
+			,array(), 'SAC'
 		);
 		$select->joinLeft(
 			array("nm" => "Nomes")
 			,"nm.idAgente = tp.idAgenteAvaliador"
-			,array(), 'agentes.dbo'
+			,array(), 'agentes'
 		);
 
 		$select->where("tp.stEstado = ?", 0);
@@ -483,25 +483,25 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->joinLeft(
             array('c' => 'tbDistribuirProjeto'),
             'b.IdPRONAC = c.IdPRONAC',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->joinLeft(
             array('d' => 'Orgaos'),
             'c.idUnidade = d.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->joinLeft(
             array('e' => 'Nomes'),
             'c.idAvaliador = e.idAgente',
-            array(''), 'agentes.dbo'
+            array(''), 'agentes'
         );
 
         //adiciona quantos filtros foram enviados
@@ -566,7 +566,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'tbTipoEncaminhamento'), 'a.siRecurso = b.idTipoEncaminhamento',
-            array('dsEncaminhamento AS siRecursoDesc'), 'SAC.dbo'
+            array('dsEncaminhamento AS siRecursoDesc'), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados
@@ -618,19 +618,19 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Nomes'), 'a.idAgenteAvaliador = c.idAgente',
-            array(''), 'agentes.dbo'
+            array(''), 'agentes'
         );
         $select->joinInner(
             array('d' => 'Area'), 'b.Area = d.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('e' => 'Segmento'), 'b.Segmento = e.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados
@@ -711,7 +711,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados

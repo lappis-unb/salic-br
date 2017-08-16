@@ -40,7 +40,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbDocumento'),
@@ -58,13 +58,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('g' => 'tbTipoDocumento'),
                     'g.idTipoDocumento = e.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('h' => 'tbRelatorioTrimestral'),
                     'h.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -92,7 +92,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbDocumento'),
@@ -110,13 +110,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('g' => 'tbTipoDocumento'),
                     'g.idTipoDocumento = e.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('h' => 'tbRelatorioTrimestral'),
                     'h.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -145,7 +145,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbDocumento'),
@@ -163,13 +163,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('g' => 'tbTipoDocumento'),
                     'g.idTipoDocumento = e.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('h' => 'tbRelatorioTrimestral'),
                     'h.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);
@@ -197,7 +197,7 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('d' => 'tbRelatorio'),
                     'd.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('e' => 'tbDocumento'),
@@ -215,13 +215,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('g' => 'tbTipoDocumento'),
                     'g.idTipoDocumento = e.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('h' => 'tbRelatorioTrimestral'),
                     'h.idRelatorio = d.idRelatorio',
                     array(''),
-                    'SAC.dbo'
+                    'SAC'
                     );
 
             $select->where('d.idPRONAC = ?', $idpronac);

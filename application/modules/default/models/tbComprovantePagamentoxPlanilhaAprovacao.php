@@ -424,15 +424,15 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $a->setIntegrityCheck(false);
         $a->from(
                 array('a' => 'Captacao'),
-                array( new Zend_Db_Expr("'RECEITA' AS tipo, a.CgcCpfMecena, c.Descricao AS Nome, sum(CaptacaoReal) AS vlIncentivado") ) , 'SAC.dbo'
+                array( new Zend_Db_Expr("'RECEITA' AS tipo, a.CgcCpfMecena, c.Descricao AS Nome, sum(CaptacaoReal) AS vlIncentivado") ) , 'SAC'
         );
         $a->joinInner(
                 array('b' => 'Agentes'), "a.CgcCpfMecena = b.CNPJCpf",
-                array(), 'agentes.dbo'
+                array(), 'agentes'
         );
         $a->joinInner(
                 array('c' => 'Nomes'), "b.idAgente = c.idAgente",
-                array(), 'agentes.dbo'
+                array(), 'agentes'
         );
         $a->where('a.AnoProjeto+a.Sequencial = (SELECT x.Anoprojeto+x.Sequencial FROM SAC.dbo.Projetos x WHERE x.idPronac = ? )', $idPronac);
         $a->group(array('a.CgcCpfMecena','c.Descricao'));
@@ -457,15 +457,15 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         );
         $b->joinInner(
                 array('c' => 'tbPlanilhaAprovacao'), "a.idPlanilhaAprovacao = c.idPlanilhaAprovacao",
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         $b->joinInner(
                 array('d' => 'tbPlanilhaItens'), "c.idPlanilhaItem = d.idPlanilhaItens",
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         $b->joinInner(
                 array('f' => 'tbPlanilhaEtapa'), "c.idEtapa = f.idPlanilhaEtapa",
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         //Linha retirada para corrigir problema na Visualiza��o dos Projetos (24/02/2016)
         #$b->where('c.stAtivo = ?', 'S');

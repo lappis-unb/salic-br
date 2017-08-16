@@ -21,15 +21,15 @@ class PagarParecerista extends MinC_Db_Table_Abstract {
         );
 
         $select->joinInner(array('ag'=> 'Agentes'), "pp.idParecerista = ag.idAgente",
-                            array('ag.CNPJCPF','idAgente as idParecerista'),'agentes.dbo'
+                            array('ag.CNPJCPF','idAgente as idParecerista'),'agentes'
         );
 
         $select->joinInner(array('nm'=> 'Nomes'), "ag.idAgente = nm.idAgente",
-                            array('nm.Descricao as nmParecerista'),'agentes.dbo'
+                            array('nm.Descricao as nmParecerista'),'agentes'
         );
 
         $select->joinLeft(array('af'=> 'tbAgenteFisico'), "pp.idParecerista = af.idAgente",
-                            array('af.nrIdentificadorProcessual'),'agentes.dbo'
+                            array('af.nrIdentificadorProcessual'),'agentes'
         );
 
         $select->joinInner(array('pro'=> 'Projetos'), "pp.idPronac = pro.idPRONAC",
@@ -81,11 +81,11 @@ class PagarParecerista extends MinC_Db_Table_Abstract {
         );
 
         $select->joinInner(array('ag'=> 'Agentes'), "pp.idParecerista = ag.idAgente",
-                            array('ag.CNPJCPF'),'agentes.dbo'
+                            array('ag.CNPJCPF'),'agentes'
         );
 
         $select->joinInner(array('nm'=> 'Nomes'), "ag.idAgente = nm.idAgente",
-                            array('nm.Descricao as nmParecerista'),'agentes.dbo'
+                            array('nm.Descricao as nmParecerista'),'agentes'
         );
 
         foreach ($where as $coluna => $valor) {

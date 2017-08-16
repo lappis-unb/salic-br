@@ -53,7 +53,7 @@ class Cotacao extends MinC_Db_Table_Abstract {
                             array('pa'=>'tbPlanilhaAprovacao'),
                             'cpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao',
                             array('pa.IdPRONAC'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('pa.IdPRONAC = ?', $idpronac);
         $select->order('cot.dtCotacao');

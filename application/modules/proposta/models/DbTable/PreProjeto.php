@@ -564,7 +564,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()->from('vwUsuariosOrgaosGrupos', array('usu_codigo', 'uog_orgao'), 'tabelas.dbo')
+        $sql = $db->select()->from('vwUsuariosOrgaosGrupos', array('usu_codigo', 'uog_orgao'), 'tabelas')
             ->where('sis_codigo=21')
             ->where('gru_codigo=92')
             ->where('uog_status = 1')
@@ -1612,7 +1612,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
             ->where('sis_codigo = 21')
             ->where('gru_codigo = 92')
@@ -1620,7 +1620,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
-            ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
+            ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = x.idTecnico');
 
         $x = array(
@@ -1742,7 +1742,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $subSql = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
             ->where('sis_codigo = 21')
             ->where('gru_codigo = 92')
@@ -1752,7 +1752,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->distinct()
             ->from(array('a' => 'tbAvaliacaoProposta'), array('a.idTecnico'), "SAC.dbo")
             ->join(array('p' => 'PreProjeto'), 'p.idPreProjeto = a.idProjeto', null, "SAC.dbo")
-            ->join(array('u' => 'Usuarios'), 'u.usu_codigo = a.idTecnico', 'u.usu_nome as Tecnico', 'TABELAS.dbo')
+            ->join(array('u' => 'Usuarios'), 'u.usu_codigo = a.idTecnico', 'u.usu_nome as Tecnico', 'TABELAS')
             ->where('ConformidadeOK<>1')
             ->where('p.stEstado = 1')
             ->where("($subSql) = ?", $idOrgao)
@@ -1786,13 +1786,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
-            ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
+            ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
             ;
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $subSql = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
             ->where('sis_codigo = 21')
             ->where('gru_codigo = 92')
@@ -1914,13 +1914,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
-            ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
+            ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
             ;
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = a.idTecnico')
             ->where('sis_codigo = 21')
             ->where('gru_codigo = 92')
@@ -2042,13 +2042,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
-            ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
+            ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
             ;
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
             ->where('sis_codigo = 21')
             ->where('gru_codigo = 92')
@@ -2122,13 +2122,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
-            ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
+            ->from(array('Usuarios'), 'usu_nome', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
             ;
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = x.idTecnico')
             ->where('sis_codigo = 21')
             ->where('gru_codigo = 92')
@@ -2136,7 +2136,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgaoSub = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas')
             ->where('usu_codigo = idTecnico')
             ->where('sis_codigo = 21')
             ->where('gru_codigo = 92')
@@ -2264,7 +2264,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(array('vwUsuariosOrgaosGrupos'), array('org_superior AS idOrgao'), 'tabelas.dbo')
+            ->from(array('vwUsuariosOrgaosGrupos'), array('org_superior AS idOrgao'), 'tabelas')
             ->where('usu_codigo = ?', 4676)
             ->where('sis_codigo=21')
             ->where('gru_codigo = 92')
@@ -2275,8 +2275,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(array('Orgaos'), null, 'tabelas.dbo')
-            ->join(array('Pessoa_Identificacoes'), 'pid_pessoa = org_pessoa', array('pid_identificacao'),'tabelas.dbo')
+            ->from(array('Orgaos'), null, 'tabelas')
+            ->join(array('Pessoa_Identificacoes'), 'pid_pessoa = org_pessoa', array('pid_identificacao'),'tabelas')
             ->where('pid_meta_dado = 1')
             ->where('pid_sequencia = 1')
             ->where('org_codigo = ?', 160)

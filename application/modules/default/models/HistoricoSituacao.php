@@ -58,7 +58,7 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('u' => 'Usuarios'), 'u.usu_codigo = h.Logon',
-            array(), 'TABELAS.dbo'
+            array(), 'TABELAS'
         );
 
         foreach ($where as $coluna => $valor) {
@@ -97,12 +97,12 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
 
         $select->joinLeft(
             array('u' => 'Usuarios'), 'u.usu_codigo = h.Logon',
-            array(), 'TABELAS.dbo'
+            array(), 'TABELAS'
         );
 
         $select->joinInner(
             array('p' => 'Projetos'), 'h.AnoProjeto = p.AnoProjeto AND h.Sequencial = p.Sequencial',
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
 
         foreach ($where as $coluna => $valor) {

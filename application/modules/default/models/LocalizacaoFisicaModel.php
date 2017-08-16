@@ -95,7 +95,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     			'TecnicoAntigoNome' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = loc.TecnicoAntigo)'),
     			'TecnicoAtualNome' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = loc.TecnicoAtual)'),
     		),
-    		'sac.dbo'
+    		'sac'
     	);
     	$select->where('Pronac = ?', $idPronac);
     	$select->order('DataCriacao DESC');
@@ -115,11 +115,11 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     	);
     	$select = $this->select();
     	$select->setIntegrityCheck(false);
-    	$select->from(array('proj' => "{$this->_schema}.Projetos"), $fields, 'sac.dbo');
-    	$select->joinInner(array('a' => 'Agentes'), 'a.CNPJCPF = proj.CgcCpf', array('a.idAgente', 'a.CNPJCPF'), 'agentes.dbo');
-    	$select->joinInner(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao AS NomeProponente'), 'agentes.dbo');
-    	$select->joinInner(array('orgao' => 'Orgaos'), 'orgao.Codigo = proj.Orgao', array('orgao.Sigla as orgaoNome'), 'sac.dbo');
-    	$select->joinInner(array('orgaoPai' => 'Orgaos'), 'orgaoPai.org_codigo = orgao.idSecretaria', array('orgaoPai.org_sigla as orgaoPaiNome'), 'tabelas.dbo');
+    	$select->from(array('proj' => "{$this->_schema}.Projetos"), $fields, 'sac');
+    	$select->joinInner(array('a' => 'Agentes'), 'a.CNPJCPF = proj.CgcCpf', array('a.idAgente', 'a.CNPJCPF'), 'agentes');
+    	$select->joinInner(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao AS NomeProponente'), 'agentes');
+    	$select->joinInner(array('orgao' => 'Orgaos'), 'orgao.Codigo = proj.Orgao', array('orgao.Sigla as orgaoNome'), 'sac');
+    	$select->joinInner(array('orgaoPai' => 'Orgaos'), 'orgaoPai.org_codigo = orgao.idSecretaria', array('orgaoPai.org_sigla as orgaoPaiNome'), 'tabelas');
     	$select->order('pronac DESC');
     	return $select;
     }
@@ -143,20 +143,20 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('p.idPronac, p.AnoProjeto+p.Sequencial AS Pronac, p.NomeProjeto, p.CgcCpf'),
                 'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = p.Logon)'),
     		'Localizacao' => new Zend_Db_Expr("(SELECT Localizacao FROM SAC.dbo.LocalizacaoFisica loc WHERE loc.IdPronac = p.IdPronac AND id = (SELECT max(id) FROM SAC.dbo.LocalizacaoFisica loc1 WHERE loc1.IdPronac = p.IdPronac))")
-           ), 'SAC.dbo'
+           ), 'SAC'
         );
 
         $select->joinInner(
             array('a' => 'Interessado'), 'a.CgcCpf = p.CgcCpf',
-            array('a.Nome AS NomeProponente'), 'SAC.dbo'
+            array('a.Nome AS NomeProponente'), 'SAC'
         );
         $select->joinInner(
             array('o' => 'Orgaos'), 'o.Codigo = p.Orgao',
-            array('Codigo','Sigla'), 'SAC.dbo'
+            array('Codigo','Sigla'), 'SAC'
         );
         $select->joinInner(
             array('org' => 'Orgaos'), 'org.org_codigo = o.idSecretaria',
-            array(''), 'TABELAS.dbo'
+            array(''), 'TABELAS'
         );
 
         //adiciona quantos filtros foram enviados

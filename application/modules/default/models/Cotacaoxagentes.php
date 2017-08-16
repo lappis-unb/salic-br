@@ -41,13 +41,13 @@ class Cotacaoxagentes extends MinC_Db_Table_Abstract {
                             array('ag'=>'Agentes'),
                             'cxa.idAgente = ag.idAgente',
                             array('ag.CNPJCPF','ag.TipoPessoa'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = ag.idAgente',
                             array('nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);

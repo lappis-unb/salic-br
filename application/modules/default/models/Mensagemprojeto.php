@@ -29,13 +29,13 @@ class Mensagemprojeto extends MinC_Db_Table_Abstract {
                 array(
                     'nmd.Descricao as nomeDestinatario',
                 ),
-                'agentes.dbo'
+                'agentes'
         );
         $select->joinInner(
                 array('nmr' => 'Nomes'),
                 "nmr.idAgente = mp.idRemetente",
                 array('nmr.Descricao as nomeRemetente'),
-                'agentes.dbo'
+                'agentes'
         );
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);

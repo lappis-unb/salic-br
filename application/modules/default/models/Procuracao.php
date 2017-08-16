@@ -53,7 +53,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO.dbo'
+                ), 'CONTROLEDEACESSO'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente", 
@@ -140,12 +140,12 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto",
                 array(	'(pr.AnoProjeto+pr.Sequencial) as pronac',
                 		'pr.OrgaoOrigem',
-                		'NomeProjeto'), 'SAC.dbo'
+                		'NomeProjeto'), 'SAC'
 
         );
         $s->joinInner(
                 array('org' => 'Orgaos'), "pr.Orgao = org.Codigo",
-                array('org.idSecretaria as OrgaoSuperior'), 'SAC.dbo'
+                array('org.idSecretaria as OrgaoSuperior'), 'SAC'
 
         );
         $s->joinInner(
@@ -160,7 +160,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO.dbo'
+                ), 'CONTROLEDEACESSO'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente",

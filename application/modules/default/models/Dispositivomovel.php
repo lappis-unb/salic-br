@@ -57,12 +57,12 @@ class Dispositivomovel extends MinC_Db_Table_Abstract
             $consulta = $this->select();
             $consulta->setIntegrityCheck(false);
             $consulta
-                ->from(array('projetos' => 'vwAgentesSeusProjetos'), array(), 'SAC.dbo')
+                ->from(array('projetos' => 'vwAgentesSeusProjetos'), array(), 'SAC')
                 ->join(array('usuario' => 'SGCacesso'), 'projetos.IdUsuario = usuario.IdUsuario', array(
-                    'cpf' => 'Cpf'), 'ControleDeAcesso.dbo')
+                    'cpf' => 'Cpf'), 'ControleDeAcesso')
                 ->join(array('dispositivo' => 'tbDispositivoMovel'), 'usuario.Cpf = dispositivo.nrCPF', array(
                     'idDispositivoMovel',
-                    'idRegistration'), 'SAC.dbo')
+                    'idRegistration'), 'SAC')
                 ->where('projetos.IdPRONAC = ?', $idPronac)
                 ->group(array(
                     'cpf',

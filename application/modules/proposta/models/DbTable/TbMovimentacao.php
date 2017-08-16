@@ -108,52 +108,52 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
                 array('pre'=>'PreProjeto'),
                 'pre.idPreProjeto = mov.idProjeto',
                 array(),
-                'SAC.dbo'
+                'SAC'
                 );
 
         $slct->joinLeft(
                 array('proj'=>'Projetos'),
                 'proj.idProjeto = mov.idProjeto',
                 array(),
-                'SAC.dbo'
+                'SAC'
                 );
         $slct->joinInner(
                 array('usu'=>'Usuarios'),
                 'usu.usu_codigo = mov.Usuario',
                 array(),
-                'TABELAS.dbo'
+                'TABELAS'
                 );
         $slct->joinInner(
                 array('age'=>'Agentes'),
                 'age.CNPJCPF = usu.usu_identificacao',
                 array('age.idAgente'),
-                'agentes.dbo'
+                'agentes'
                 );
         $slct->joinInner(
                 array('nm'=>'Nomes'),
                 'age.idAgente = nm.idAgente',
                 array('Nome'=>'nm.Descricao'),
-                'agentes.dbo'
+                'agentes'
                 );
 
         $slct->joinInner(
                 array('uog'=>'UsuariosXOrgaosXGrupos'),
                 'uog.uog_usuario = usu.usu_codigo',
                 array(),
-                'TABELAS.dbo'
+                'TABELAS'
                 );
         $slct->joinInner(
                 array('gru'=>'Grupos'),
                 'gru.gru_codigo = uog.uog_grupo',
                 array('Perfil'=>'gru.gru_nome', 'cdPerfil'=>'gru.gru_codigo'),
-                'TABELAS.dbo'
+                'TABELAS'
                 );
 
         $slct->joinInner(
                 array('org'=>'Orgaos'),
                 'org.Codigo = uog.uog_orgao and org.Codigo = usu.usu_orgao',
                 array('Orgao'=>'org.Sigla'),
-                'SAC.dbo'
+                'SAC'
         );
 
 

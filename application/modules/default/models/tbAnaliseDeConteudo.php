@@ -116,7 +116,7 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('p' => 'Produto'),'a.idProduto = p.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->where('a.idPronac = ?', $idPronac);
 

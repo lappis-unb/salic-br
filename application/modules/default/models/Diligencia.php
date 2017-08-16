@@ -115,7 +115,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     '(Pr.AnoProjeto + Pr.Sequencial) AS PRONAC',
                     'Pr.NomeProjeto'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('Pa' => 'Parecer'),
@@ -125,7 +125,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
 				  ELSE 'N�o'
 				  End AS ParecerFavoravel"
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->where('Pa.TipoParecer = ?', 1);
         $select->where('Pa.stAtivo = ?', 1);
@@ -203,7 +203,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     '(Pr.AnoProjeto + Pr.Sequencial) AS PRONAC',
                     'Pr.NomeProjeto'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('Pa' => 'Parecer'),
@@ -213,7 +213,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
 				  ELSE 'N�o'
 				  End AS ParecerFavoravel"
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('DPC' => 'tbDistribuicaoProjetoComissao'),

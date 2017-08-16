@@ -26,7 +26,7 @@ class Pessoaidentificacoes extends MinC_Db_Table_Abstract {
              array('pd'=>'Pessoa_Dados'),
              'pi.pid_pessoa = pd.pdd_pessoa',
              array('pd.pdd_dado'),
-             'tabelas.dbo'
+             'tabelas'
          );
         foreach ($where as $coluna => $valor){
             $select->where($coluna, $valor);
