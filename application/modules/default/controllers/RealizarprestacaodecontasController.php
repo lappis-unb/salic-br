@@ -327,14 +327,14 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //$arrBusca['p.Situacao = ?'] = $post->situacao;
                 $arrBusca["p.Situacao = '".$post->situacao."' AND p.Situacao not in ('E24','E68','E67','G43','G24','E17','E22','L05','L06') "] = '(?)';
                 if($post->situacao != 'E18'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
             }else{
                 $arrBusca['p.Situacao = ?']='E18';
             }*/
             $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDevolvidosAposAnalise;
             if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E18'){
-                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
             }
 
             //DILIGENCIA
@@ -401,7 +401,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $arrBusca = $this->montaArrBuscaCoincidentes($post);
                 $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDiligenciados;
                 if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E17'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
 
                 //DILIGENCIA
@@ -492,14 +492,14 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             //SITUACAO
             /*if ( isset($post->situacao) && !empty($post->situacao)){
                 $arrBusca["p.Situacao = '".$post->situacao."' AND p.Situacao not in ('E24','E68','E67','G43','G24') "] = '(?)';
-                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
             }else{
 		//$arrBusca['p.Situacao = ?']='E22';
                 $arrBusca['p.Situacao in (?)']= array('E22','L05','L06');
             }*/
             $arrBusca['p.Situacao in (?)'] = $this->arrSituacoesTCE;
             if ( isset($post->situacao) && !empty($post->situacao)){
-                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
             }
 
             //DILIGENCIA
@@ -772,7 +772,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //SITUACAO
                 $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDevolvidosAposAnalise;
                 if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E18'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
 
                 //DILIGENCIA
@@ -815,7 +815,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 //SITUACAO
                 $arrBusca['p.Situacao in (?)']= $this->arrSituacoesDiligenciados;
                 if(isset($post->situacao) && !empty($post->situacao) && $post->situacao != 'E17'){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
 
                 //DILIGENCIA
@@ -861,7 +861,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 $arrBusca['p.Situacao in (?)'] = $this->arrSituacoesTCE;
                 if ( isset($post->situacao) && !empty($post->situacao)){
-                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
+                    $arrBusca["NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbEncaminhamentoPrestacaoContas where idOrgaoDestino in ('177','12')and stAtivo=1)"] = '(?)'; //eliminando projetos que estao em consultoria
                 }
                 //DILIGENCIA
                 if(!empty($post->diligencia)){

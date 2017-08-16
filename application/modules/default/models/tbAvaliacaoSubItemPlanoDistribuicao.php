@@ -13,8 +13,8 @@
 class tbAvaliacaoSubItemPlanoDistribuicao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "BDCORPORATIVO.scSAC";
+	protected $_banco   = "bdcorporativo";
+	protected $_schema  = "bdcorporativo.scSAC";
 	protected $_name    = "tbAvaliacaoSubItemPlanoDistribuicao";
 
 
@@ -33,7 +33,7 @@ class tbAvaliacaoSubItemPlanoDistribuicao extends MinC_Db_Table_Abstract
 			array('b' => 'tbAvaliacaoSubItemPedidoAlteracao')
 			,'a.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao'
 			,array('b.idAvaliacaoSubItemPedidoAlteracao as idAvaliacaoSubItem', 'b.stAvaliacaoSubItemPedidoAlteracao as avaliacao', 'b.dsAvaliacaoSubItemPedidoAlteracao as descricao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
                 $select->where('a.idPlano = ?', $idPlano);
                 $select->where('b.idAvaliacaoItemPedidoAlteracao = ?', $idAvaliacao);

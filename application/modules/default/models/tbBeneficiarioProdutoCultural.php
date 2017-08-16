@@ -56,11 +56,11 @@ class tbBeneficiarioProdutoCultural extends MinC_Db_Table_Abstract {
         );
         $a->joinInner(
                 array('e' => 'tbDocumento'), "a.idDocumento = e.idDocumento",
-                array(''), 'BDCORPORATIVO.scCorp'
+                array(''), 'bdcorporativo.scCorp'
         );
         $a->joinInner(
                 array('f' => 'tbArquivo'), "e.idArquivo = f.idArquivo",
-                array('idArquivo','nmArquivo','dtEnvio'), 'BDCORPORATIVO.scCorp'
+                array('idArquivo','nmArquivo','dtEnvio'), 'bdcorporativo.scCorp'
         );
         $a->joinInner(
                 array('g' => 'Agentes'), "d.idAgente = g.idAgente",

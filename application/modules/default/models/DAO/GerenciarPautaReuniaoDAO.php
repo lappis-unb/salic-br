@@ -112,7 +112,7 @@ class GerenciarPautaReuniaoDAO
                 CAST(tcv.dsConsolidacao AS TEXT) as dsConsolidacao
                 from bdcorporativo.scsac.tbpauta tp
                 JOIN SAC..Projetos pr on pr.IdPRONAC = tp.IdPRONAC
-                JOIN BDCORPORATIVO.scSAC.tbConsolidacaoVotacao tcv on tcv.IdPRONAC = tp.IdPRONAC and tcv.idNrReuniao = tp.idNrReuniao
+                JOIN bdcorporativo.scSAC.tbConsolidacaoVotacao tcv on tcv.IdPRONAC = tp.IdPRONAC and tcv.idNrReuniao = tp.idNrReuniao
                 where tp.idNrReuniao = $idnrreuniao
                 and tp.idpronac = $idpronac
                 and tp.stAnalise in ('AS','IS')";
@@ -132,7 +132,7 @@ class GerenciarPautaReuniaoDAO
     public static function BuscarConsolidacaoReuniao($idnrreuniao, $idpronac)
     {
         $sql = "select dsConsolidacao
-                from BDCORPORATIVO.scSAC.tbconsolidacaovotacao
+                from bdcorporativo.scSAC.tbconsolidacaovotacao
                 where idnrreuniao = $idnrreuniao
                 and idpronac = $idpronac";
         try

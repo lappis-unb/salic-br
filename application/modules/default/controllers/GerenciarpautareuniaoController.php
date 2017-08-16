@@ -2154,7 +2154,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             if($GrupoAtivo->codGrupo == '118' || $GrupoAtivo->codGrupo == '133') { //118 = componente da comissao  133 = membros natos
                 $arrBuscaVotados['vt.idAgente = ?'] = $idagente;
             }else{
-                $arrBuscaVotados['vt.idAgente = (?)'] = new Zend_Db_Expr('(SELECT TOP 1 max(idAgente) from BDCORPORATIVO.scSAC.tbVotacao where IdPRONAC = pr.IdPRONAC)');
+                $arrBuscaVotados['vt.idAgente = (?)'] = new Zend_Db_Expr('(SELECT TOP 1 max(idAgente) from bdcorporativo.scSAC.tbVotacao where IdPRONAC = pr.IdPRONAC)');
             }
             $arrBuscaVotados['tp.idNrReuniao = ?'] = $idNrReuniao;
             $arrBuscaVotados['vt.idNrReuniao = ?'] = $idNrReuniao;

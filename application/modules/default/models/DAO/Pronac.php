@@ -12,7 +12,7 @@
 
 class Pronac extends Zend_Db_Table
 {
-	protected $_name = 'BDCORPORATIVO.scSAC.Projetos'; // nome da tabela
+	protected $_name = 'bdcorporativo.scSAC.Projetos'; // nome da tabela
 
 
 
@@ -96,7 +96,7 @@ class Pronac extends Zend_Db_Table
 					,prod.Descricao AS DescricaoProduto
 				FROM SAC.dbo.Produto prod
 					,SAC.dbo.tbAnaliseConteudoConselheiro ana
-					,BDCORPORATIVO.scSAC.Projetos proj
+					,bdcorporativo.scSAC.Projetos proj
 
 				WHERE prod.Codigo = ana.idProduto 
 					AND ana.IdPRONAC = proj.IdPRONAC ";

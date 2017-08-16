@@ -2,15 +2,15 @@
 
 class tbalteracaonomeprojetoDAO extends Zend_Db_Table
 {
-    protected $_name = "BDCORPORATIVO.scSAC.tbalteracaonomeprojeto";
+    protected $_name = "bdcorporativo.scSAC.tbalteracaonomeprojeto";
 
     public static function buscarDadosNmProj($idpedidoalteracao)
     {
         $sql = "       select tba.nmprojeto,
                        tba.dsjustificativa,
                        tap.idPRONAC
-                       from BDCORPORATIVO.scSAC.tbalteracaonomeprojeto tba
-                       join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tba.idPedidoAlteracao
+                       from bdcorporativo.scSAC.tbalteracaonomeprojeto tba
+                       join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tba.idPedidoAlteracao
                        where tba.idpedidoalteracao= ".$idpedidoalteracao;
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -23,7 +23,7 @@ class tbalteracaonomeprojetoDAO extends Zend_Db_Table
         $sql = "select dtparecertecnico,
                        dsparecertecnico,
                        nom.Descricao as nometecnico
-                       from BDCORPORATIVO.scSAC.tbavaliacaopedidoalteracao apa
+                       from bdcorporativo.scSAC.tbavaliacaopedidoalteracao apa
                        join agentes.dbo.Nomes nom on nom.idAgente =  apa.idTecnico
                        where apa.idpedidoalteracao= ".$idpedidoalteracao;
 

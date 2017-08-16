@@ -208,7 +208,7 @@ class ProjetosDAO extends Zend_Db_Table
 					FROM agentes.dbo.tbTitulacaoConselheiro TC
 					INNER JOIN (SELECT ATC.idAgente, COUNT(DPC.idPronac) Qtd
 					            FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-					            LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+					            LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 					            WHERE ATC.stConselheiro = 'A'
 					            AND DPC.stDistribuicao = 'A'
 					            OR DPC.stDistribuicao IS NULL
@@ -216,13 +216,13 @@ class ProjetosDAO extends Zend_Db_Table
 					            UNION
 					            SELECT ATC.idAgente, COUNT(DPC.idPronac) - COUNT(DPCI.idPronac) Qtd
 					            FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-					            LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
-					            LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
+					            LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+					            LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
 					            WHERE ATC.stConselheiro = 'A'
 					            AND DPCI.stDistribuicao = 'I'
 					            AND ATC.idAgente NOT IN (SELECT DISTINCT ATC.idAgente
 					                                     FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-					                                     LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+					                                     LEFT JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 					                                     WHERE ATC.stConselheiro = 'A'
 					                                     AND DPC.stDistribuicao = 'A'
 					                                     OR DPC.stDistribuicao IS NULL)
@@ -238,7 +238,7 @@ class ProjetosDAO extends Zend_Db_Table
             }
 
             $objAcesso= new Acesso();
-            $dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
+            $dados = "Insert into bdcorporativo.scSAC.tbDistribuicaoProjetoComissao " .
                     "(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
                     "values" .
                     "($idPronac, $menor, {$objAcesso->getDate()}, 7522);
@@ -251,7 +251,7 @@ class ProjetosDAO extends Zend_Db_Table
         {
 
             $objAcesso= new Acesso();
-            $dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
+            $dados = "Insert into bdcorporativo.scSAC.tbDistribuicaoProjetoComissao " .
                     "(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
                     "values" .
                     "($idPronac, ".$AAS[0]->idAgente.", {$objAcesso->getDate()}, 7522);

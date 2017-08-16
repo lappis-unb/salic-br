@@ -1195,7 +1195,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     'biArquivo' => $arquivoBinario
                 );
 
-                $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
+                $dadosAI = "Insert into bdcorporativo.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
                 $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1319,7 +1319,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'biArquivo' => $arquivoBinario
             );
 
-            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
+            $dadosAI = "Insert into bdcorporativo.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
             $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1624,7 +1624,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'biArquivo' => $arquivoBinario
             );
 
-            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
+            $dadosAI = "Insert into bdcorporativo.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
             $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);

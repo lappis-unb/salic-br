@@ -39,7 +39,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
         $PreProjeto = $PreProjeto->buscaCompleta(array('idpreprojeto = ?' => $idPreProjeto));
         $cpfCnpjProponente = $PreProjeto[0]->CNPJCPF;
 
-        //SELECT @CPF_Logado = CPF FROM CONTROLEDEACESSO.dbo.SGCacesso WHERE IdUsuario = @idUsuario_Logado
+        //SELECT @CPF_Logado = CPF FROM controledeacesso.dbo.SGCacesso WHERE IdUsuario = @idUsuario_Logado
         $sql = $db->select()
             ->from('sgcacesso', 'cpf', $this->getSchema('controledeacesso'))
             ->where('IdUsuario = ?', $idUsuarioLogado)

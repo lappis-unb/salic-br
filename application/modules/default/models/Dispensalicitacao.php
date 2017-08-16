@@ -41,7 +41,7 @@ class Dispensalicitacao extends MinC_Db_Table_Abstract {
                             array('dlpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             'dis.idDispensaLicitacao = dlpa.idDispensaLicitacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinInner(
                             array('pa'=>'tbPlanilhaAprovacao'),

@@ -14,12 +14,12 @@ class EncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
 
     protected $_name   = 'tbEncaminhamentoPrestacaoContas';
     protected $_schema = 'scSAC';
-    protected $_banco  = 'BDCORPORATIVO';
+    protected $_banco  = 'bdcorporativo';
 
 
 
     /*
-     * INSERT INTO [BDCORPORATIVO].[scSAC].[tbEncaminhamentoPrestacaoContas]
+     * INSERT INTO [bdcorporativo].[scSAC].[tbEncaminhamentoPrestacaoContas]
 					([idPronac],[idAgenteOrigem],[dtInicioEncaminhamento],[dsJustificativa]
 					,[idOrgao],[idAgenteDestino],[idTipoAgente],[dtFimEncaminhamento]
 					,[stAtivo])

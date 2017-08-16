@@ -11,8 +11,8 @@
  */
 class Arquivo extends MinC_Db_Table_Abstract {
     protected $_name = 'tbArquivo';
-    protected $_schema = 'BDCORPORATIVO.scCorp';
-    protected $_banco = 'BDCORPORATIVO';
+    protected $_schema = 'bdcorporativo.scCorp';
+    protected $_banco = 'bdcorporativo';
 
     /**
      * Insere arquvos de Marca
@@ -74,7 +74,7 @@ class Arquivo extends MinC_Db_Table_Abstract {
 
     public function buscarAnexosDiligencias($idDiligencia) {
         $sql = "SELECT a.idArquivo,a.nmArquivo,a.dtEnvio,b.idDiligencia
-                FROM  BDCORPORATIVO.scCorp.tbArquivo AS a
+                FROM  bdcorporativo.scCorp.tbArquivo AS a
                 INNER JOIN SAC.dbo.tbDiligenciaxArquivo AS b on (a.idArquivo = b.idArquivo)
                 WHERE b.idDiligencia = $idDiligencia";
 

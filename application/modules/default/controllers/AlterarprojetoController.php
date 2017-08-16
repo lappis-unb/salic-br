@@ -77,7 +77,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         }
 
 
-        $tbDocumentos = new tbTipoDocumentoBDCORPORATIVO();
+        $tbDocumentos = new tbTipoDocumentobdcorporativo();
         $this->view->tiposDocumento = $tbDocumentos->buscar(array(), 'dsTipoDocumento desc');
 
         $pronac = $this->_request->getParam("pronac");
@@ -1684,7 +1684,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
                     'idAgente' => $post->idagente,
                     'stAtivoDocumentoAgente' => 1
                 );
-                $tabela = new tbDocumentoAgenteBDCORPORATIVO();
+                $tabela = new tbDocumentoAgentebdcorporativo();
                 $tabela->inserir($dados);
             } else {
                 $dados = array(
@@ -1693,7 +1693,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
                     'idPronac' => $post->idpronac,
                     'stAtivoDocumentoProjeto' => 1
                 );
-                $tabela = new tbDocumentoProjetoBDCORPORATIVO();
+                $tabela = new tbDocumentoProjetobdcorporativo();
                 $tabela->inserir($dados);
             }
 

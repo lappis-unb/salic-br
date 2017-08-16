@@ -30,7 +30,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbPlanilhaAprovacao", $dados);
+		$cadastrar = $db->insert("bdcorporativo.scSAC.tbPlanilhaAprovacao", $dados);
 
 		if ($cadastrar)
 		{

@@ -395,8 +395,8 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
                     (
                         SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
                         INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                         WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
                         GROUP BY a1.idPlanilhaAprovacao
@@ -407,7 +407,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
                     INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
                     INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
-                    INNER JOIN BDCORPORATIVO.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
+                    INNER JOIN bdcorporativo.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
                     LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
                 WHERE
                     cpxpa.idComprovantePagamento = ?";
@@ -461,8 +461,8 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr('ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado'),
                 new Zend_Db_Expr('(
                                             SELECT sum(b1.vlComprovacao) AS vlPagamento
-                                            FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                                            INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                                            FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                                            INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
                                             INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                                             WHERE c1.stAtivo = \'S\' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
                                             GROUP BY a1.idPlanilhaAprovacao
@@ -488,7 +488,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
             ->joinInner(array('arq' => 'tbArquivo'),
                 'arq.idArquivo = comp.idArquivo',
                 array('nmArquivo'),
-                'BDCORPORATIVO.scCorp')
+                'bdcorporativo.scCorp')
             ->joinLeft(array('prod' => 'Produto'),
                 'pa.idProduto = prod.Codigo',
                 array(''),

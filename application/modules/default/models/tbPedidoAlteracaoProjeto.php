@@ -6,8 +6,8 @@
  */
 class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
     /* dados da tabela */
-    protected $_banco   = "BDCORPORATIVO";
-    protected $_schema  = "BDCORPORATIVO.scSAC";
+    protected $_banco   = "bdcorporativo";
+    protected $_schema  = "bdcorporativo.scSAC";
     protected $_name    = "tbPedidoAlteracaoProjeto";
 
 
@@ -24,25 +24,25 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 array('paxta'=>'tbPedidoAlteracaoXTipoAlteracao'),
                 'paxta.idPedidoAlteracao = pap.idPedidoAlteracao',
                 array(),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $select->joinInner(
                 array('aipa'=>'tbAvaliacaoItemPedidoAlteracao'),
                 'aipa.idPedidoAlteracao = pap.idPedidoAlteracao',
                 array('idAgente3'=>'aipa.idAgenteAvaliador'),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $select->joinInner(
                 array('aaipa'=>'tbAcaoAvaliacaoItemPedidoAlteracao'),
                 'aaipa.idAvaliacaoItemPedidoAlteracao = aipa.idAvaliacaoItemPedidoAlteracao',
                 array('idAgente'=>'aaipa.idAgenteRemetente','idAgente2'=>'aaipa.idAgenteAcionado'),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $select->joinInner(
                 array('ta'=>'tbTipoAgente'),
                 'ta.idTipoAgente = aaipa.idTipoAgente',
                 array(),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $select->joinInner(
                 array('gru2'=>'Grupos'),
@@ -96,7 +96,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select->joinInner(array('paxta'=>'tbPedidoAlteracaoXTipoAlteracao'),
                 'paxta.idPedidoAlteracao = pa.idPedidoAlteracao',
                 array('*'),
-                'BDCORPORATIVO.scSAC');
+                'bdcorporativo.scSAC');
 
         // adicionando clausulas where
         foreach ($where as $coluna => $valor) {
@@ -131,7 +131,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
 													WHEN rex.tpAlteracaoProjeto = 8 THEN 'Prorroga&ccedil;&atilde;o de Prazo de Capta&ccedil;&atilde;o'
 													WHEN rex.tpAlteracaoProjeto = 9 THEN 'Prorroga&ccedil;&atilde;o de Prazo de Execu&ccedil;&atilde;o'
 													ELSE 'Itens de Custo' END"),
-                ),'BDCORPORATIVO.scSAC'
+                ),'bdcorporativo.scSAC'
         );
         $slct->joinInner(array('pr' => 'Projetos'),
                 'pr.IdPRONAC = re.IdPRONAC',
@@ -184,9 +184,9 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 ),'SAC'
         );
         $slct->joinLeft(array('tp' => 'tbPauta'),
-                'tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM BDCORPORATIVO.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)',
+                'tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scSAC.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)',
                 array(),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $slct->joinLeft(array('tr' => 'tbReuniao'),
                 'tr.idNrReuniao = tp.idNrReuniao',
@@ -255,7 +255,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('c'=>'tbPedidoAlteracaoXTipoAlteracao'), 'a.idPedidoAlteracao = c.idPedidoAlteracao',
-                array(''), 'BDCORPORATIVO.scSAC'
+                array(''), 'bdcorporativo.scSAC'
         );
         $select->where('a.idPedidoAlteracao = ?', $idPedidoAlteracao);
         $select->where('c.tpAlteracaoProjeto = ?', 7);
@@ -271,7 +271,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select->distinct();
         $select->from(
             array('a' => $this->_name),
-            array('IdPRONAC', 'dtSolicitacao', 'stPedidoAlteracao'), 'BDCORPORATIVO.scSAC'
+            array('IdPRONAC', 'dtSolicitacao', 'stPedidoAlteracao'), 'bdcorporativo.scSAC'
         );
 
         $select->joinInner(
@@ -291,7 +291,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
 
         $select->joinInner(
             array('e' => 'tbPedidoAlteracaoXTipoAlteracao'), 'a.idPedidoAlteracao = e.idPedidoAlteracao',
-            array('idPedidoAlteracao', 'tpAlteracaoProjeto'), 'BDCORPORATIVO.scSAC'
+            array('idPedidoAlteracao', 'tpAlteracaoProjeto'), 'bdcorporativo.scSAC'
         );
 
        //adiciona quantos filtros foram enviados
@@ -326,7 +326,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         $select->distinct();
         $select->from(
             array('a' => $this->_name),
-            array('IdPRONAC', 'stPedidoAlteracao', 'siVerificacao'), 'BDCORPORATIVO.scSAC'
+            array('IdPRONAC', 'stPedidoAlteracao', 'siVerificacao'), 'bdcorporativo.scSAC'
         );
         $select->joinInner(
             array('b' => 'Projetos'), 'a.IdPRONAC = b.IdPRONAC',
@@ -342,15 +342,15 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('e' => 'tbPedidoAlteracaoXTipoAlteracao'), 'a.idPedidoAlteracao = e.idPedidoAlteracao',
-            array('idPedidoAlteracao', 'tpAlteracaoProjeto', 'stVerificacao AS stItem'), 'BDCORPORATIVO.scSAC'
+            array('idPedidoAlteracao', 'tpAlteracaoProjeto', 'stVerificacao AS stItem'), 'bdcorporativo.scSAC'
         );
         $select->joinInner(
             array('f' => 'tbAvaliacaoItemPedidoAlteracao'), 'e.idPedidoAlteracao = f.idPedidoAlteracao and e.tpAlteracaoProjeto = f.tpAlteracaoProjeto',
-            array('dtInicioAvaliacao', 'dtFimAvaliacao', 'idAvaliacaoItemPedidoAlteracao'), 'BDCORPORATIVO.scSAC'
+            array('dtInicioAvaliacao', 'dtFimAvaliacao', 'idAvaliacaoItemPedidoAlteracao'), 'bdcorporativo.scSAC'
         );
         $select->joinInner(
             array('g' => 'tbAcaoAvaliacaoItemPedidoAlteracao'), 'f.idAvaliacaoItemPedidoAlteracao = g.idAvaliacaoItemPedidoAlteracao',
-            array('idOrgao', 'idAcaoAvaliacaoItemPedidoAlteracao AS idAcao', 'stVerificacao AS stAcao'), 'BDCORPORATIVO.scSAC'
+            array('idOrgao', 'idAcaoAvaliacaoItemPedidoAlteracao AS idAcao', 'stVerificacao AS stAcao'), 'bdcorporativo.scSAC'
         );
        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {

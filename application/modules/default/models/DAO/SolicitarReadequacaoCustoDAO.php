@@ -79,7 +79,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
 //FROM "SAC"."dbo"."Projetos" AS "pr"
 //INNER JOIN "SAC"."dbo"."PreProjeto" AS "prep" ON prep.idPreProjeto = pr.idProjeto
 //INNER JOIN "Agentes"."dbo"."Agentes" AS "ag" ON ag.idAgente = prep.idAgente
-//LEFT JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpap on tpap.idpronac = pr.idpronac
+//LEFT JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tpap on tpap.idpronac = pr.idpronac
 //LEFT JOIN "SAC"."dbo"."tbPlanoDistribuicao" AS tpd ON tpd.idPedidoAlteracao = tpap.idPedidoAlteracao
 //LEFT JOIN "SAC"."dbo"."Produto" AS "pd" ON tpd.idProduto = pd.Codigo WHERE (pr.IdPRONAC= '127152')
                 
@@ -109,7 +109,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
                         'tpap.IdPRONAC = pr.IdPRONAC',
                         array(),
-                        'BDCORPORATIVO.scSAC'
+                        'bdcorporativo.scSAC'
                 )
                 ->joinLeft(
                         array('tpd' => 'tbPlanoDistribuicao'),
@@ -166,7 +166,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
                         'tpap.IdPRONAC = pr.IdPRONAC',
                         array(),
-                        'BDCORPORATIVO.scSAC'
+                        'bdcorporativo.scSAC'
                 )
                 ->joinLeft(
                         array('pdp' => 'planoDistribuicaoProduto'),
@@ -445,14 +445,14 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $db->insert('BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto', $dados);
+        $db->insert('bdcorporativo.scSAC.tbPedidoAlteracaoProjeto', $dados);
         return $db->lastInsertId();
     }
 
     public static function alterarPedidoAlterado($post) {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $db->update('BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto', $dados, $where);
+        $db->update('bdcorporativo.scSAC.tbPedidoAlteracaoProjeto', $dados, $where);
     }
 
     public static function atualizaPedidoAlteracao($dados, $idPedido) {
@@ -461,7 +461,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            $db->update('BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto', $dados, $where);
+            $db->update('bdcorporativo.scSAC.tbPedidoAlteracaoProjeto', $dados, $where);
         } catch (Exception $e) {
             return 'ERRO:' . $e->getMessage();
         }
@@ -473,7 +473,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $idAgente = $post['idAgente'];
         $acao = $post['acao'];
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scSAC.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = 'T' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idAgente and idPedidoAlteracao = $idPedido ";
 
 
@@ -491,7 +491,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $idAgente = $post['idAgente'];
         $acao = $post['acao'];
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scSAC.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = 'A' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idAgente and idPedidoAlteracao = $idPedido ";
 
 
@@ -507,7 +507,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
 
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scSAC.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = '$status' WHERE IdPRONAC =  $idPronac ";
 
 
@@ -553,7 +553,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     public static function atualizaPedidoAlteracaoIndex($idPronac, $idPedido, $idSolicitante, $acao) {
 
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scSAC.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = '$acao' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idSolicitante and idPedidoAlteracao = $idPedido ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -565,7 +565,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            $db->insert('BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao', $dados);
+            $db->insert('bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao', $dados);
         } catch (Zend_Exception $e) {
             die('erro:' . $e->getMessage());
         }
@@ -574,7 +574,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     public static function atualizaPedidoTipoAlteracao($idPedidoAlteracao, $justificativa) {
 
 
-        $sql = "update BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao set dsJustificativa = '$justificativa'
+        $sql = "update bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao set dsJustificativa = '$justificativa'
                 where idPedidoAlteracao = $idPedidoAlteracao and tpAlteracaoProjeto = 10    ";
 
 
@@ -588,7 +588,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     }
 
     public static function verificaPedidoTipoAlteracao($idPedidoAlteracao, $tpalteracaoprojeto) {
-        $sql = "select 1 from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE idPedidoAlteracao = '$idPedidoAlteracao' and tpAlteracaoProjeto = $tpalteracaoprojeto";
+        $sql = "select 1 from bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE idPedidoAlteracao = '$idPedidoAlteracao' and tpAlteracaoProjeto = $tpalteracaoprojeto";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -601,7 +601,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $idAgente = $post['idAgente'];
         $acao = $post['acao'];
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scSAC.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = 'T' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idAgente and idPedidoAlteracao = $idPedido ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -611,7 +611,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
     public function verificaPedidoAlteracao($idPronac) {
     
-        $sql = "Select idPedidoAlteracao, stPedidoAlteracao  from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto
+        $sql = "Select idPedidoAlteracao, stPedidoAlteracao  from bdcorporativo.scSAC.tbPedidoAlteracaoProjeto
                     WHERE IdPRONAC = $idPronac order by idPedidoAlteracao Desc ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -643,7 +643,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
     public static function buscaIdPedidoAlteracao($idPronac) {
 
-        $sql = "select MAX(idPedidoAlteracao) as idpedidoalteracao from  BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where idpronac = $idPronac";
+        $sql = "select MAX(idPedidoAlteracao) as idpedidoalteracao from  bdcorporativo.scSAC.tbPedidoAlteracaoProjeto where idpronac = $idPronac";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -738,7 +738,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                     'tpa.IdPRONAC'
 
                                                 ),
-                                                'BDCORPORATIVO.scSac'
+                                                'bdcorporativo.scSac'
                                         )
                                         ->joinInner(
                                                 array('pr' => 'Projetos'),

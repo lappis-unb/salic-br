@@ -190,8 +190,8 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     'CONVERT(CHAR(10),D.DtResposta,103) AS DtResposta',
                     'CONVERT(CHAR(10),D.dtSolicitacao,103) AS dtSolicitacao',
                     'D.Resposta',
-                    new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM BDCORPORATIVO.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
-                    new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM BDCORPORATIVO.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
+                    new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM bdcorporativo.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
+                    new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM bdcorporativo.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
                     ),
                 "SAC"
         );
@@ -219,7 +219,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
                 array('DPC' => 'tbDistribuicaoProjetoComissao'),
                 'Pa.IdPRONAC = DPC.idPronac',
                 array(),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
 
         //adiciona quantos filtros foram enviados

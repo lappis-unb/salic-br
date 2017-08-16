@@ -18,13 +18,13 @@ class UploadDAO extends MinC_Db_Table_Abstract {
         $select = $table->select()
             ->from('tbArquivo',
                 array('dsTipoPadronizado', 'nmArquivo'),
-                'BDCORPORATIVO.scCorp')
+                'bdcorporativo.scCorp')
             ->where('tbArquivo.idArquivo = ?',  $id)
             ->joinInner(
                 'tbArquivoImagem',
                 'tbArquivo.idArquivo = tbArquivoImagem.idArquivo',
                 array('biArquivo'),
-                'BDCORPORATIVO.scCorp');
+                'bdcorporativo.scCorp');
 
         $resultado = $db->fetchAll('SET TEXTSIZE 2147483647');
         return $db->fetchAll($select);

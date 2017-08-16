@@ -12,8 +12,8 @@
 
 class tbArquivoImagem extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "BDCORPORATIVO";
-	protected $_schema = "BDCORPORATIVO.scCorp";
+	protected $_banco  = "bdcorporativo";
+	protected $_schema = "bdcorporativo.scCorp";
 	protected $_name   = "tbArquivoImagem";
 
 
@@ -94,7 +94,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
             $slct->from(
                         array('ai' => $this->_name),
                         array("dtEnvioForm"=>"CONVERT(CHAR(10),dtEnvio,103)"),
-                              "BDCORPORATIVO.scCorp");
+                              "bdcorporativo.scCorp");
 
             $slct->joinInner(
                             array('a'=>'tbArquivo'),
@@ -105,7 +105,7 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
                                    "a.nrTamanho",
                                    "a.stAtivo",
                                    "a.sgExtensao"),
-                            "BDCORPORATIVO.scCorp"
+                            "bdcorporativo.scCorp"
                           );
 
             $slct->joinInner(
@@ -113,21 +113,21 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
                             "a.idArquivo = d.idArquivo",
                             array("d.idDocumento",
                                   "CAST(d.dsDocumento AS TEXT) AS dsDocumento"),
-                            "BDCORPORATIVO.scCorp"
+                            "bdcorporativo.scCorp"
                           );
 
             $slct->joinLeft(
                             array('dp'=>'tbDocumentoProjeto'),
                             "d.idTipoDocumento = dp.idTipoDocumento AND d.idDocumento = dp.idDocumento ",
                             array("dp.idPronac", "dp.stAtivoDocumentoProjeto"),
-                            "BDCORPORATIVO.scCorp"
+                            "bdcorporativo.scCorp"
                           );
 
             $slct->joinLeft(
                             array('dpp'=>'tbDocumentoProposta'),
                             "d.idTipoDocumento = dpp.idTipoDocumento AND d.idDocumento = dpp.idDocumento ",
                             array("dpp.idProposta"),
-                            "BDCORPORATIVO.scCorp"
+                            "bdcorporativo.scCorp"
                           );
 
             $slct->joinLeft(
@@ -172,20 +172,20 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
             $slct->setIntegrityCheck(false);
             $slct->from(
                         array('ai' => $this->_name),
-                        array(),"BDCORPORATIVO.scCorp"
+                        array(),"bdcorporativo.scCorp"
                     );
             $slct->joinInner(
                             array('a'=>'tbArquivo'), "ai.idArquivo = a.idArquivo",
                             array('idArquivo', 'nmArquivo', 'dtEnvio', 'nrTamanho'),
-                            "BDCORPORATIVO.scCorp"
+                            "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('d'=>'tbDocumento'), "a.idArquivo = d.idArquivo",
-                            array('idDocumento', 'CAST(dsDocumento AS TEXT) AS dsDocumento'), "BDCORPORATIVO.scCorp"
+                            array('idDocumento', 'CAST(dsDocumento AS TEXT) AS dsDocumento'), "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('dp'=>'tbDocumentoProjeto'), "dp.idDocumento = d.idDocumento",
-                            array(), "BDCORPORATIVO.scCorp"
+                            array(), "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('p'=>'Projetos'), "dp.idPronac = p.IdPRONAC",
@@ -205,20 +205,20 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
             $slct->setIntegrityCheck(false);
             $slct->from(
                         array('ai' => $this->_name),
-                        array(),"BDCORPORATIVO.scCorp"
+                        array(),"bdcorporativo.scCorp"
                     );
             $slct->joinInner(
                             array('a'=>'tbArquivo'), "ai.idArquivo = a.idArquivo",
                             array('idArquivo', 'nmArquivo', 'dtEnvio', 'nrTamanho'),
-                            "BDCORPORATIVO.scCorp"
+                            "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('d'=>'tbDocumento'), "a.idArquivo = d.idArquivo",
-                            array('idDocumento', 'CAST(dsDocumento AS TEXT) AS dsDocumento'), "BDCORPORATIVO.scCorp"
+                            array('idDocumento', 'CAST(dsDocumento AS TEXT) AS dsDocumento'), "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('dp'=>'tbDocumentoProjeto'), "dp.idDocumento = d.idDocumento",
-                            array(), "BDCORPORATIVO.scCorp"
+                            array(), "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('p'=>'Projetos'), "dp.idPronac = p.IdPRONAC",
@@ -239,20 +239,20 @@ class tbArquivoImagem extends MinC_Db_Table_Abstract
             $slct->setIntegrityCheck(false);
             $slct->from(
                         array('ai' => $this->_name),
-                        array(),"BDCORPORATIVO.scCorp"
+                        array(),"bdcorporativo.scCorp"
                     );
             $slct->joinInner(
                             array('a'=>'tbArquivo'), "ai.idArquivo = a.idArquivo",
                             array('idArquivo', 'nmArquivo', 'dtEnvio', 'nrTamanho'),
-                            "BDCORPORATIVO.scCorp"
+                            "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('d'=>'tbDocumento'), "a.idArquivo = d.idArquivo",
-                            array('idDocumento', 'CAST(dsDocumento AS TEXT) AS dsDocumento'), "BDCORPORATIVO.scCorp"
+                            array('idDocumento', 'CAST(dsDocumento AS TEXT) AS dsDocumento'), "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('dp'=>'tbDocumentoProjeto'), "dp.idDocumento = d.idDocumento",
-                            array('stAtivoDocumentoProjeto'), "BDCORPORATIVO.scCorp"
+                            array('stAtivoDocumentoProjeto'), "bdcorporativo.scCorp"
                           );
             $slct->joinInner(
                             array('p'=>'Projetos'), "dp.idPronac = p.IdPRONAC",

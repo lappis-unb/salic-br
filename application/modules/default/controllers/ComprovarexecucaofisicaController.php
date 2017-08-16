@@ -517,7 +517,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     $Arquivo = new Arquivo();
                     $Arquivo->inserirUploads($dadosArquivo);
 
-                    $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                    $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                     $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>18), array('idDocumento DESC'));
                     $pldiv['idDocumento'] = $dadosDocumento[0]->idDocumento;
                 }
@@ -578,7 +578,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         $Arquivo = new Arquivo();
                         $Arquivo->inserirUploads($dadosArquivo);
 
-                        $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                        $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                         $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>18), array('idDocumento DESC'));
 
                         $dados = array(
@@ -734,7 +734,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     $Arquivo = new Arquivo();
                     $Arquivo->inserirUploads($dadosArquivo);
 
-                    $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                    $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                     $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>$_POST['tipoDocumento']), array('idDocumento DESC'));
 
                     $dados = array(
@@ -1466,7 +1466,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>25), array('idDocumento DESC'));
             }
 
@@ -1576,7 +1576,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $DocumentoDoacao = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>26), array('idDocumento DESC'));
             }
 
@@ -1621,7 +1621,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $documentoAceite = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>25), array('idDocumento DESC'));
             }
 
@@ -1699,7 +1699,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $DocumentoDoacao = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>26), array('idDocumento DESC'));
             }
 
@@ -1744,7 +1744,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $documentoAceite = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>25), array('idDocumento DESC'));
             }
 

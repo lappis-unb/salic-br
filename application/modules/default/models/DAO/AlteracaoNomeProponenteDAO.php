@@ -38,9 +38,9 @@ class AlteracaoNomeProponenteDAO  extends Zend_Db_Table{
                     aipa.dtFimAvaliacao as dtparecertecnico,
                     nom.Descricao as nometecnico
                 from
-                    BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao aipa
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao pt on pt.idPedidoAlteracao = aipa.idPedidoAlteracao
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap on pap.idPedidoAlteracao = pt.idPedidoAlteracao
+                    bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao aipa
+                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao pt on pt.idPedidoAlteracao = aipa.idPedidoAlteracao
+                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto pap on pap.idPedidoAlteracao = pt.idPedidoAlteracao
                     inner join agentes.dbo.Nomes nom on nom.idAgente = aipa.idAgenteAvaliador
                 where
                     pap.IdPRONAC = {$idpedidoalteracao} and pt.tpAlteracaoProjeto = 1

@@ -201,8 +201,8 @@ class PublicacaoDouDAO extends Zend_Db_Table
                     END AS ValorAprovado,
                     SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) AS ValorCaptado,
                     (SELECT sum(b2.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
+                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
+                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
                         INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
                         WHERE a2.stItemAvaliado = 1 
                         AND c2.stAtivo = 'S' 
@@ -252,8 +252,8 @@ class PublicacaoDouDAO extends Zend_Db_Table
                     END AS ValorAprovado,
                     SAC.dbo.fnCustoProjeto (Pr.AnoProjeto,Pr.Sequencial) AS ValorCaptado,
                     (SELECT sum(b2.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
+                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
+                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
                         INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
                         WHERE a2.stItemAvaliado = 1 
                         AND c2.stAtivo = 'S' 

@@ -2,7 +2,7 @@
 class Votante extends MinC_Db_Table_Abstract
 {
     protected $_name = 'tbVotante';
-    protected $_schema = 'BDCORPORATIVO.scSAC';
+    protected $_schema = 'bdcorporativo.scSAC';
 
     public function selecionarvotantes($idreuniao) {
         $db = Zend_Db_Table::getDefaultAdapter();

@@ -26,8 +26,8 @@ class Projetos extends Zend_Db_Table
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "select top 1 * 
-        from BDCORPORATIVO.scCorp.tbArquivo a inner join
-        BDCORPORATIVO.scCorp.tbArquivoImagem b
+        from bdcorporativo.scCorp.tbArquivo a inner join
+        bdcorporativo.scCorp.tbArquivoImagem b
         on a.idArquivo = b.idArquivo where a.idArquivo = 406";
         $resultado = $db->fetchAssoc($sql);
         return $resultado;

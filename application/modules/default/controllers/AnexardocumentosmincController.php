@@ -69,7 +69,7 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
     }
 
     public function indexAction() {
-        $tbTipoDocumento = new tbTipoDocumentoBDCORPORATIVO();
+        $tbTipoDocumento = new tbTipoDocumentobdcorporativo();
         $result = $tbTipoDocumento->buscar(array(), array(2));
         $this->view->tpDocumentos = $result;
     }

@@ -735,7 +735,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		try{
                     $db->beginTransaction();
-                    //UPDATE - CAMPOS: dsAvaliacao NA TABELA BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                    //UPDATE - CAMPOS: dsAvaliacao NA TABELA bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
 //                    $sqlfinalproped = ReadequacaoProjetos::retornaSQLfinalprop($estrategia,$especificacao,$IdProposta);
 //                    $finalproped = $db->fetchAll($sqlfinalproped);
 
@@ -2108,7 +2108,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  * ************************************************************************************************************************/
  	public function finalizageralAction(){
         $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
-            //idAcaoAvaliacaoItemPedidoAlteracao da Tabela BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+            //idAcaoAvaliacaoItemPedidoAlteracao da Tabela bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
             $idAcao = $_GET['id'];
 
 //            $new = new tbProposta();
@@ -3551,7 +3551,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                 $dadosAvaliacao = array('stAvaliacaoItemPedidoAlteracao' => 'AP', 'dtFimAvaliacao' => date('Y-m-d H:i:s'));
                 $avaliacao = $buscaInformacoes->atualizarAvaliacaopedido($dadosAvaliacao, $where);
-                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from BDCORPORATIVO.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
+                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from bdcorporativo.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
                 $dadosAcao = array('stAtivo' => '1', 'dtEncaminhamento' => date('Y-m-d H:i:s'));
                 $atualizapedidotipo = $buscaInformacoes->atualizarAvaliacaoAcao($dadosAcao, $where);
 

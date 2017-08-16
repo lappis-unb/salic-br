@@ -14,7 +14,7 @@ class AvaliacaoSubItemCustoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "BDCORPORATIVO.scSAC.tbAvaliacaoSubItemCusto";
+	protected $_name    = "bdcorporativo.scSAC.tbAvaliacaoSubItemCusto";
 	protected $_primary = "idAvaliacaoSubItemCusto";
 
 
@@ -31,7 +31,7 @@ class AvaliacaoSubItemCustoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemCusto", $dados);
+		$cadastrar = $db->insert("bdcorporativo.scSAC.tbAvaliacaoSubItemCusto", $dados);
 
 		if ($cadastrar)
 		{
@@ -54,7 +54,7 @@ class AvaliacaoSubItemCustoDAO extends Zend_Db_Table
 	 */
 	public static function verificar($idPlanilhaAprovacao)
 	{
-		$sql = "SELECT * FROM BDCORPORATIVO.scSAC.tbAvaliacaoSubItemCusto WHERE idPlanilhaAprovacao = $idPlanilhaAprovacao";
+		$sql = "SELECT * FROM bdcorporativo.scSAC.tbAvaliacaoSubItemCusto WHERE idPlanilhaAprovacao = $idPlanilhaAprovacao";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

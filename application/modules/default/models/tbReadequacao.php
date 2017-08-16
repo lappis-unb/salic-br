@@ -45,11 +45,11 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array('c' => 'tbDocumento'), 'a.idDocumento = c.idDocumento',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
         $select->joinLeft(
             array('d' => 'tbArquivo'), 'c.idArquivo = d.idArquivo',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
 
         foreach ($where as $coluna => $valor) {
@@ -292,11 +292,11 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array('d' => 'tbDocumento'), 'd.idDocumento = a.idDocumento',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
         $select->joinLeft(
             array('e' => 'tbArquivo'), 'e.idArquivo = d.idArquivo',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
 
         //adiciona quantos filtros foram enviados
@@ -347,11 +347,11 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array('d' => 'tbDocumento'), 'd.idDocumento = a.idDocumento',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
         $select->joinLeft(
             array('e' => 'tbArquivo'), 'e.idArquivo = d.idArquivo',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
 //        $select->joinLeft(
 //            array('f' => 'Aprovacao'), 'f.idReadequacao = a.idReadequacao',
@@ -412,11 +412,11 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array('d' => 'tbDocumento'), 'd.idDocumento = a.idDocumento',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
         $select->joinLeft(
             array('e' => 'tbArquivo'), 'e.idArquivo = d.idArquivo',
-            array(''), 'BDCORPORATIVO.scCorp'
+            array(''), 'bdcorporativo.scCorp'
         );
         $select->joinInner(
             array('f' => 'tbDistribuirReadequacao'), 'f.idReadequacao = a.idReadequacao',
@@ -700,7 +700,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         $select->where('a.stEstado = ? ', 0);
         $select->where('a.idNrReuniao = ? ', $idNrReuniao);
         $select->where('a.siEncaminhamento = ? ', 8);
-        $select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE a.idNrReuniao = cv.idNrReuniao AND a.idPronac = cv.IdPRONAC AND a.idTipoReadequacao = cv.tpTipoReadequacao)", '');
+        $select->where("NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbConsolidacaoVotacao AS cv WHERE a.idNrReuniao = cv.idNrReuniao AND a.idPronac = cv.IdPRONAC AND a.idTipoReadequacao = cv.tpTipoReadequacao)", '');
         $select->order(array(6, 1));
 
         
@@ -714,7 +714,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                 FROM  SAC.dbo.tbReadequacao a
                 INNER JOIN SAC.dbo.Projetos c on (a.idPronac = c.IdPRONAC)
                 WHERE siEncaminhamento = 8
-                      AND NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
+                      AND NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
@@ -730,7 +730,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
                WHERE a.stEstado = 0 and
                     (a.siEncaminhamento = 9 and a.idNrReuniao = $idNrReuniao ) or
                     (a.siEncaminhamento = 8 and a.stEstado = 0
-                    AND EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.idPronac = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
+                    AND EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbConsolidacaoVotacao b WHERE a.idPronac = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);

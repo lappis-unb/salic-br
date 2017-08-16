@@ -2,7 +2,7 @@
 
 class tbalteracaoaltrazDAO extends Zend_Db_Table
 {
-    protected $_name = "BDCORPORATIVO.scSAC.tbalteracaorazaosocialprojeto";
+    protected $_name = "bdcorporativo.scSAC.tbalteracaorazaosocialprojeto";
 
     public static function buscarDadosAltRaz($idpedidoalteracao)
     {
@@ -11,8 +11,8 @@ class tbalteracaoaltrazDAO extends Zend_Db_Table
                        trsp.dsjustificativa,
                        tap.idPRONAC,
                        prepr.idAgente
-                       from BDCORPORATIVO.scSAC.tbalteracaorazaosocialprojeto trsp
-                       join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = trsp.idPedidoAlteracao
+                       from bdcorporativo.scSAC.tbalteracaorazaosocialprojeto trsp
+                       join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = trsp.idPedidoAlteracao
                        join SAC.dbo.Projetos pr on pr.IdPRONAC = tap.idPRONAC
                        join SAC.dbo.PreProjeto prepr on prepr.idPreProjeto = pr.idProjeto
                        where trsp.idpedidoalteracao= ".$idpedidoalteracao;

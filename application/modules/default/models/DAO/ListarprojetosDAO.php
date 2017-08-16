@@ -78,8 +78,8 @@ class ListarprojetosDAO extends Zend_Db_Table {
 							INNER JOIN SAC.dbo.Situacao si on si.Codigo = p.Situacao
 							INNER JOIN SAC.dbo.Edital ed on ed.idEdital = a.idEdital
 							INNER JOIN SAC.dbo.Verificacao v on v.idVerificacao = ed.cdTipoFundo
-							INNER JOIN BDCORPORATIVO.scQuiz.tbFormDocumento f ON f.idEdital = a.idEdital
-							INNER JOIN BDCORPORATIVO.scSAC.tbClassificaDocumento c on c.idClassificaDocumento = f.idClassificaDocumento";
+							INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON f.idEdital = a.idEdital
+							INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c on c.idClassificaDocumento = f.idClassificaDocumento";
 		
 		
 		 $where = " WHERE (a.stEstado = 1) 
@@ -179,7 +179,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
                     a.Situacao + ' - ' + d.Descricao as Situacao
                 FROM SAC.dbo.Projetos                      a
                 INNER JOIN agentes.dbo.Agentes             b on (a.CgcCpf   = b.CNPJCPF)
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso  c on (a.CgcCpf   = c.Cpf)
+                INNER JOIN controledeacesso.dbo.SGCacesso  c on (a.CgcCpf   = c.Cpf)
                 INNER JOIN SAC.dbo.Situacao                d on (a.Situacao = d.Codigo)
                 WHERE c.IdUsuario = $idResponsavel)
 
@@ -192,7 +192,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
                 INNER JOIN agentes.dbo.tbProcuradorProjeto c on (a.IdPRONAC     = c.idPronac)
                 INNER JOIN agentes.dbo.tbProcuracao        d on (c.idProcuracao = d.idProcuracao)
                 INNER JOIN agentes.dbo.Agentes             f on (d.idAgente     = f.idAgente)
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso  e on (f.CNPJCPF      = e.Cpf)
+                INNER JOIN controledeacesso.dbo.SGCacesso  e on (f.CNPJCPF      = e.Cpf)
                 INNER JOIN SAC.dbo.Situacao                g on (a.Situacao     =   g.Codigo)
                 WHERE c.siEstado = 2 and e.IdUsuario = $idResponsavel ";
 
@@ -210,7 +210,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
                 INNER JOIN agentes.dbo.Agentes             b on (a.CgcCpf       = b.CNPJCPF)
                 INNER JOIN agentes.dbo.Vinculacao          c on (b.idAgente     = c.idVinculoPrincipal)
                 INNER JOIN agentes.dbo.Agentes             d on (c.idAgente     = d.idAgente)
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso  e on (d.CNPJCPF      = e.Cpf)
+                INNER JOIN controledeacesso.dbo.SGCacesso  e on (d.CNPJCPF      = e.Cpf)
                 INNER JOIN SAC.dbo.Situacao                f on (a.Situacao     = f.Codigo)
                 WHERE e.IdUsuario = $idResponsavel ";
 

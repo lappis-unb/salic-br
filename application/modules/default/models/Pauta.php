@@ -12,7 +12,7 @@
  */
 class Pauta extends MinC_Db_Table_Abstract {
 
-    protected $_schema = 'BDCORPORATIVO.scsac';
+    protected $_schema = 'bdcorporativo.scsac';
     protected $_name = 'tbPauta';
 
     public function PautaAprovada($idNrReuniao, $idpronac=null) {
@@ -62,7 +62,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                 array('cv' => 'tbConsolidacaoVotacao'),
                 'cv.IdPRONAC = pr.IdPRONAC',
                 array('Cast(cv.dsConsolidacao as TEXT) as dsConsolidacao'),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $select->joinLeft(
                 array('ap' => 'aprovacao'),
@@ -234,7 +234,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                 array('dp' => 'tbDistribuicaoProjetoComissao'),
                 'dp.IdPRONAC = tp.idPRONAC',
                 array(),
-                "BDCORPORATIVO.scSAC"
+                "bdcorporativo.scSAC"
         );
         $select->where("dp.idAgente = ?", $idAgente);
         if ($aprovacao) {
@@ -285,7 +285,7 @@ class Pauta extends MinC_Db_Table_Abstract {
                 array('cv' => 'tbConsolidacaoVotacao'),
                 "cv.IdPRONAC = pt.IdPRONAC and cv.IdNrReuniao = pt.IdNrReuniao",
                 array('CAST(cv.dsConsolidacao as TEXT) as dsConsolidacao'),
-                "BDCORPORATIVO.scSAC"
+                "bdcorporativo.scSAC"
         );
         foreach ($idpronac as $resu) {
             $select->orwhere('pt.IdPRONAC = ?', $resu);

@@ -11,7 +11,7 @@ Class Documentosanexados extends Zend_Db_Table{
 				from 
 					SAC.dbo.Projetos Pr
 					LEFT JOIN SAC.dbo.tbDocumento Do ON Do.IdPRONAC = Pr.IdPRONAC
-					LEFT JOIN BDCORPORATIVO.scCorp.tbArquivo Ar on Ar.idArquivo = Do.idDocumento
+					LEFT JOIN bdcorporativo.scCorp.tbArquivo Ar on Ar.idArquivo = Do.idDocumento
 					LEFT JOIN SAC.dbo.tbTipoDocumento Td on Do.idTipoDocumento = Do.idTipoDocumento
 					where Pr.IdPRONAC= " . $pronac . "";
        		
@@ -60,7 +60,7 @@ Class Documentosanexados extends Zend_Db_Table{
 				}
 
             $objAcesso= new Acesso();
-			$tbArquivo = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivo " .
+			$tbArquivo = "INSERT INTO bdcorporativo.scCorp.tbArquivo " .
 								"(nmArquivo, sgExtensao, dsTipo, dtEnvio ,stAtivo)  " .
 							"VALUES ('$name', '$fileType', 'application/pdf', ".$objAcesso->getDate().",'A')";
 				$db = Zend_Db_Table::getDefaultAdapter();
@@ -73,7 +73,7 @@ Class Documentosanexados extends Zend_Db_Table{
 		{
 			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);
-			$tbArquivoImagem = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivoImagem " .
+			$tbArquivoImagem = "INSERT INTO bdcorporativo.scCorp.tbArquivoImagem " .
 								"(idArquivo,biArquivo) " .
 							"VALUES ($idGeradoArquivo,$data)";
 			$resultado = $db->query();
@@ -84,7 +84,7 @@ Class Documentosanexados extends Zend_Db_Table{
 		{
 			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB :: FETCH_OBJ);				
-			$idGerado = $db->fetchOne("SELECT MAX(idArquivo) as id from BDCORPORATIVO.scCorp.tbArquivo");	
+			$idGerado = $db->fetchOne("SELECT MAX(idArquivo) as id from bdcorporativo.scCorp.tbArquivo");	
 			return $idGerado;
 		}
 	

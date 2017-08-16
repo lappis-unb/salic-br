@@ -34,10 +34,10 @@ class Anexardocumentos extends Zend_Db_Table
 					AS dtEnvioComprovante, 
 				doc.stParecerComprovante, 
 				doc.idComprovanteAnterior 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scCorp.tbArquivoImagem arqimg 
+			FROM bdcorporativo.scSAC.tbComprovanteExecucao doc, 
+				bdcorporativo.scSAC.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scCorp.tbArquivoImagem arqimg 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND arq.idArquivo = arqimg.idArquivo 
@@ -67,7 +67,7 @@ class Anexardocumentos extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		/*$sql = "INSERT INTO BDCORPORATIVO.scSAC.tbComprovanteExecucao ";
+		/*$sql = "INSERT INTO bdcorporativo.scSAC.tbComprovanteExecucao ";
 		$sql.= "VALUES ($dados['idPRONAC'], $dados['idTipoDocumento'], $dados['nmComprovante'], $dados['dsComprovante'], $dados['idArquivo'], $dados['idSolicitante'], $dados['dtEnvioComprovante'], $dados['stComprovante'], $dados['stComprovante'], $dados['idComprovanteAnterior'])";*/
 
 	} // fecha m&eacute;todo cadastrar()

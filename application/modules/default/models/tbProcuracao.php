@@ -30,7 +30,7 @@ class tbProcuracao extends MinC_Db_Table_Abstract
     );
     $select->joinInner(
             array('d' => 'tbDocumento'), "d.idDocumento = a.idDocumento",
-            array('idArquivo'), 'BDCORPORATIVO.scCorp'
+            array('idArquivo'), 'bdcorporativo.scCorp'
     );
 
     $select->where('a.siProcuracao = ?', 0);

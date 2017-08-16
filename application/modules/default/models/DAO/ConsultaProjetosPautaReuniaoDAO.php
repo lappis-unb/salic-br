@@ -16,7 +16,7 @@ class ConsultaProjetosPautaReuniaoDAO extends Zend_Db_Table
     public static function consultaqtdprojeto($idnrreuniao, $condicao=null)
     {
         $sql = " select COUNT(1) as qtd 
-                 from BDCORPORATIVO.scSAC.tbPauta
+                 from bdcorporativo.scSAC.tbPauta
                  where idNrReuniao=$idnrreuniao";
 
         if ($condicao and $condicao == 'SP')
@@ -67,7 +67,7 @@ class ConsultaProjetosPautaReuniaoDAO extends Zend_Db_Table
 		      FROM  SAC.dbo.Projetos pr
 		      JOIN SAC.dbo.Segmento seg ON pr.Segmento = seg.Codigo
                       left JOIN SAC.dbo.Parecer par ON pr.IdPRONAC = par.idPRONAC
-                      JOIN BDCORPORATIVO.scSAC.tbPauta tp ON pr.IdPRONAC = tp.IdPRONAC
+                      JOIN bdcorporativo.scSAC.tbPauta tp ON pr.IdPRONAC = tp.IdPRONAC
                       JOIN SAC.dbo.Area ar ON pr.Area = ar.Codigo
                       JOIN SAC.dbo.tbReuniao tr ON tr.idNrReuniao = tp.idNrReuniao
                       where tr.stEstado = 0 and par.stAtivo=1 and tp.stAnalise <> 'AR'
@@ -78,7 +78,7 @@ class ConsultaProjetosPautaReuniaoDAO extends Zend_Db_Table
         }
         if (!empty($stAnalise))
         {
-            $sql .=" and not exists(select * from BDCORPORATIVO.scSAC.tbVotacao where idPRONAC = idPronac and idNrReuniao=NumeroReuniao )  ";
+            $sql .=" and not exists(select * from bdcorporativo.scSAC.tbVotacao where idPRONAC = idPronac and idNrReuniao=NumeroReuniao )  ";
         }
         if (!empty($order))
         {
@@ -109,7 +109,7 @@ class ConsultaProjetosPautaReuniaoDAO extends Zend_Db_Table
             FROM
                 SAC.dbo.Projetos AS Projetos INNER JOIN
                 SAC.dbo.Area AS Area ON Projetos.Area = Area.Codigo INNER JOIN
-               BDCORPORATIVO.scSAC.tbPauta AS Pauta ON Projetos.IdPRONAC = Pauta.IdPRONAC INNER JOIN
+               bdcorporativo.scSAC.tbPauta AS Pauta ON Projetos.IdPRONAC = Pauta.IdPRONAC INNER JOIN
                SAC.dbo.tbReuniao ON Pauta.idNrReuniao = SAC.dbo.tbReuniao.idNrReuniao
             WHERE     (SAC.dbo.tbReuniao.stEstado = 0 ) ";
 

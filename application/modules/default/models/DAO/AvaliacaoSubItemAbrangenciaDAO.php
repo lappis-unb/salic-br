@@ -30,7 +30,7 @@ class AvaliacaoSubItemAbrangenciaDAO extends MinC_Db_Table_Abstract
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemAbragencia", $dados);
+		$cadastrar = $db->insert("bdcorporativo.scSAC.tbAvaliacaoSubItemAbragencia", $dados);
 
 		if ($cadastrar)
 		{

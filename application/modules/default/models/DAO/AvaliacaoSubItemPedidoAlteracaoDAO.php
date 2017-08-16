@@ -14,7 +14,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao";
+	protected $_name    = "bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao";
 	protected $_primary = "idAvaliacaoSubItemPedidoAlteracao";
 
 
@@ -28,7 +28,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 	 */
 	public static function buscar($idAvaliacaoItemPedidoAlteracao = null)
 	{
-		$sql = "SELECT idAvaliacaoItemPedidoAlteracao AS id FROM BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao";
+		$sql = "SELECT idAvaliacaoItemPedidoAlteracao AS id FROM bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao";
                 if (!empty($idAvaliacaoItemPedidoAlteracao))
                 {
                     $sql.= " WHERE idAvaliacaoItemPedidoAlteracao = " . $idAvaliacaoItemPedidoAlteracao;
@@ -53,7 +53,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao", $dados);
+		$cadastrar = $db->insert("bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao", $dados);
 
 		if ($cadastrar)
 		{
@@ -81,7 +81,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idAvaliacaoSubItemPedidoAlteracao = $id";
-		$alterar = $db->update("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao", $dados, $where);
+		$alterar = $db->update("bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao", $dados, $where);
 
 		if ($alterar)
 		{
@@ -104,7 +104,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 	 */
 	public static function buscarUltimo()
 	{
-		$sql = "SELECT MAX(idAvaliacaoSubItemPedidoAlteracao) AS id FROM BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao";
+		$sql = "SELECT MAX(idAvaliacaoSubItemPedidoAlteracao) AS id FROM bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

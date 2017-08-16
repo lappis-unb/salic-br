@@ -154,7 +154,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
                             INNER JOIN SAC.dbo.Projetos AS p on d.idPronac = p.IdPRONAC
                             LEFT JOIN Sac.dbo.DocumentosExigidos AS doc on d.idCodigoDocumentosExigidos = doc.Codigo
                             INNER JOIN SAC.dbo.Verificacao AS v on d.idTipoDiligencia = v.idVerificacao
-                            LEFT JOIN BDCORPORATIVO.scCorp.tbArquivo AS a on d.idArquivo = a.idArquivo";
+                            LEFT JOIN bdcorporativo.scCorp.tbArquivo AS a on d.idArquivo = a.idArquivo";
 
             if($idPronac !=null || $idProduto !=null || $idSolicitante !=null || $idDiligencia !=null){
                 $sql.=" WHERE ";

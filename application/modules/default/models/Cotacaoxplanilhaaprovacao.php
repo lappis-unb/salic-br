@@ -63,7 +63,7 @@ class Cotacaoxplanilhaaprovacao extends MinC_Db_Table_Abstract {
                 array('f' => 'tbCotacaoxAgentes'),
                 'a.idCotacaoxAgentes = f.idCotacaoxAgentes',
                 array('f.idAgente'),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $select->joinInner(
                 array('g' => 'Nomes'),

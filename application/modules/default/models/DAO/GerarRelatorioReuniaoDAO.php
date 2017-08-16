@@ -16,17 +16,17 @@ class GerarRelatorioReuniaoDAO extends Zend_Db_Table {
 
         $sql = "SELECT
                     tbReuniao.idNrReuniao,
-                    BDCORPORATIVO.scSAC.tbPauta.IdPRONAC,
+                    bdcorporativo.scSAC.tbPauta.IdPRONAC,
                     tbReuniao.NrReuniao,
                     tbReuniao.DtInicio,
                     tbReuniao.DtFechamento,
                     tbReuniao.stEstado,
-                    BDCORPORATIVO.scSAC.tbPauta.stEnvioPlenario
+                    bdcorporativo.scSAC.tbPauta.stEnvioPlenario
                 FROM         
-                   BDCORPORATIVO.scSAC.tbPauta
+                   bdcorporativo.scSAC.tbPauta
                 INNER JOIN
                    SAC.dbo.tbReuniao as tbReuniao
-                   ON BDCORPORATIVO.scSAC.tbPauta.idNrReuniao = tbReuniao.idNrReuniao
+                   ON bdcorporativo.scSAC.tbPauta.idNrReuniao = tbReuniao.idNrReuniao
                 WHERE     (tbReuniao.stEstado = 0)";
 
         try
@@ -69,7 +69,7 @@ class GerarRelatorioReuniaoDAO extends Zend_Db_Table {
 FROM         SAC.dbo.Projetos AS pr INNER JOIN
                       SAC.dbo.Segmento AS seg ON pr.Segmento = seg.Codigo INNER JOIN
                       SAC.dbo.Parecer AS par ON pr.IdPRONAC = par.idPRONAC INNER JOIN
-                      BDCORPORATIVO.scSAC.tbPauta AS tp ON pr.IdPRONAC = tp.IdPRONAC INNER JOIN
+                      bdcorporativo.scSAC.tbPauta AS tp ON pr.IdPRONAC = tp.IdPRONAC INNER JOIN
                       SAC.dbo.Area AS ar ON pr.Area = ar.Codigo INNER JOIN
                       SAC.dbo.tbReuniao AS tr ON par.idPRONAC = pr.IdPRONAC where stEnvioPlenario = 'S'
 and     (tr.stEstado = 0)";
@@ -96,7 +96,7 @@ and     (tr.stEstado = 0)";
     {
         $sql = "SELECT DISTINCT
                       SAC.dbo.Projetos.IdPRONAC AS Pronac,
-                      BDCORPORATIVO.scSAC.tbPauta.idNrReuniao AS NumeroReuniao,
+                      bdcorporativo.scSAC.tbPauta.idNrReuniao AS NumeroReuniao,
                       SAC.dbo.Projetos.NomeProjeto,
                       SAC.dbo.tbReuniao.stEstado AS StatusEstado,
                       SAC.dbo.tbPlanilhaAprovacao.nrOcorrencia AS NumeroOcorrencia,
@@ -108,11 +108,11 @@ and     (tr.stEstado = 0)";
                       SAC.dbo.tbPlanilhaAprovacao.nrOcorrencia * SAC.dbo.tbPlanilhaAprovacao.vlUnitario * SAC.dbo.tbPlanilhaAprovacao.qtItem AS Total
                 FROM
                       SAC.dbo.Projetos INNER JOIN
-                      BDCORPORATIVO.scSAC.tbPauta
-                      ON SAC.dbo.Projetos.IdPRONAC = BDCORPORATIVO.scSAC.tbPauta.IdPRONAC
+                      bdcorporativo.scSAC.tbPauta
+                      ON SAC.dbo.Projetos.IdPRONAC = bdcorporativo.scSAC.tbPauta.IdPRONAC
                 INNER JOIN
                       SAC.dbo.tbReuniao
-                      ON BDCORPORATIVO.scSAC.tbPauta.idNrReuniao = SAC.dbo.tbReuniao.idNrReuniao
+                      ON bdcorporativo.scSAC.tbPauta.idNrReuniao = SAC.dbo.tbReuniao.idNrReuniao
                 INNER JOIN
                       SAC.dbo.tbPlanilhaAprovacao ON  SAC.dbo.Projetos.IdPRONAC = SAC.dbo.tbPlanilhaAprovacao.IdPRONAC
                 INNER JOIN

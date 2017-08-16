@@ -77,11 +77,11 @@ class tbTermoAceiteObra extends MinC_Db_Table_Abstract {
 
         $slct->joinLeft(
                 array('b' => 'tbDocumento'), "a.idDocumentoTermo = b.idDocumento",
-                array(''), 'BDCORPORATIVO.scCorp'
+                array(''), 'bdcorporativo.scCorp'
         );
         $slct->joinLeft(
                 array('c' => 'tbArquivo'), "b.idArquivo = c.idArquivo",
-                array('idArquivo','nmArquivo','sgExtensao','dtEnvio'), 'BDCORPORATIVO.scCorp'
+                array('idArquivo','nmArquivo','sgExtensao','dtEnvio'), 'bdcorporativo.scCorp'
         );
 
         // adicionando clausulas where

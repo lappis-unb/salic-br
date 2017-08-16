@@ -115,7 +115,7 @@ class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$_POST['pronac'],'idTipoDocumento =?'=>27), array('idDocumento DESC'));
                 $idDocumento = $dadosDocumento[0]->idDocumento;
             }

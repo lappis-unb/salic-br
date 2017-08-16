@@ -48,35 +48,35 @@ class tbHistoricoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 array('Doc' => 'tbDocumento'),
                 'Doc.idDocumento = D.idDocumento',
                 array("*"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct->joinInner(
                 array('Arq' => 'tbArquivo'),
                 'Arq.idArquivo = Doc.idArquivo',
                 array("*"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct->joinLeft(
                 array('ArqAg' => 'tbDocumentoAgente'),
                 'ArqAg.idDocumento = Doc.idDocumento',
                 array("ArqAg.idAgente as AgenteDoc"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct->joinLeft(
                 array('ArqPr' => 'tbDocumentoProjeto'),
                 'ArqPr.idDocumento = Doc.idDocumento',
                array("ArqPr.idPronac as ProjetoDoc"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct->joinLeft(
                 array('E' => 'tbTipoDocumento'),
                 'Doc.idTipoDocumento = E.idTipoDocumento',
                 array('E.dsTipoDocumento as Descricao'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
   
@@ -93,8 +93,8 @@ class tbHistoricoAlteracaoProjeto extends MinC_Db_Table_Abstract {
 
   //  SELECT * from SAC.dbo.tbHistoricoAlteracaoProjeto as P
   //inner join SAC.dbo.tbHistoricoAlteracaoDocumento as D on D.idHistoricoAlteracaoProjeto = P.idHistoricoAlteracaoProjeto
-  //inner join BDCORPORATIVO.scCorp.tbDocumento as Doc on Doc.idDocumento = D.idDocumento
-  //inner join BDCORPORATIVO.scCorp.tbArquivo as Arq on Arq.idArquivo = Doc.idArquivo
+  //inner join bdcorporativo.scCorp.tbDocumento as Doc on Doc.idDocumento = D.idDocumento
+  //inner join bdcorporativo.scCorp.tbArquivo as Arq on Arq.idArquivo = Doc.idArquivo
  // where idPRONAC = 124914 and cdSituacao is not null
 
 }

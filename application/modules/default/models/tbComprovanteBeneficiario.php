@@ -46,13 +46,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('e' => 'tbDocumento'),
                     'e.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('f' => 'tbArquivo'),
                     'f.idArquivo = e.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('g' => 'tbTipoDocumento'),
@@ -98,13 +98,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('e' => 'tbDocumento'),
                     'e.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('f' => 'tbArquivo'),
                     'f.idArquivo = e.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('g' => 'tbTipoDocumento'),
@@ -151,13 +151,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('e' => 'tbDocumento'),
                     'e.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('f' => 'tbArquivo'),
                     'f.idArquivo = e.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('g' => 'tbTipoDocumento'),
@@ -203,13 +203,13 @@ class tbComprovanteBeneficiario extends MinC_Db_Table_Abstract
                     array('e' => 'tbDocumento'),
                     'e.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('f' => 'tbArquivo'),
                     'f.idArquivo = e.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('g' => 'tbTipoDocumento'),

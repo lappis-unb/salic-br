@@ -7,9 +7,9 @@
  */
 class Arquivolicitacao extends MinC_Db_Table_Abstract{
 
-    protected $_banco   = 'BDCORPORATIVO';
+    protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbArquivoLicitacao';
-    protected $_schema  = 'BDCORPORATIVO.scSAC';
+    protected $_schema  = 'bdcorporativo.scSAC';
 
     public function buscarArquivos($idlicitacao){
         $select = $this->select();
@@ -25,7 +25,7 @@ class Arquivolicitacao extends MinC_Db_Table_Abstract{
                             array('arq'=>'tbArquivo'),
                             'arq.idArquivo = al.idArquivo',
                             array('arq.nmArquivo','arq.sgExtensao','arq.nrTamanho'),
-                            'BDCORPORATIVO.scCorp'
+                            'bdcorporativo.scCorp'
                            );
         $select->where('al.idlicitacao = ?', $idlicitacao);
 

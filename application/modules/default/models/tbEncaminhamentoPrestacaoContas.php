@@ -7,8 +7,8 @@
 class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
 
     protected $_name   = 'tbEncaminhamentoPrestacaoContas';
-    protected $_schema = 'BDCORPORATIVO.scSAC';
-    protected $_banco  = 'BDCORPORATIVO';
+    protected $_schema = 'bdcorporativo.scSAC';
+    protected $_banco  = 'bdcorporativo';
 
     public function EncaminhamentoPrestacaoContas($idPronac){
     	$select = $this->select();

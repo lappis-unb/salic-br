@@ -34,7 +34,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
         $sql = " select tp.IdPRONAC,
                  dsAnalise,
                  stAnalise
-                 from BDCORPORATIVO.scSAC.tbPauta tp
+                 from bdcorporativo.scSAC.tbPauta tp
                  INNER JOIN SAC.dbo.parecer par on par.idpronac = tp.idpronac and par.stAtivo = 1
                  INNER JOIN SAC.dbo.tbReuniao r on r.idNrReuniao = tp.idNrReuniao
                  where
@@ -59,8 +59,8 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
                tv.idPRONAC,
                pr.anoprojeto+sequencial as pronac,
                pr.nomeprojeto
-               FROM BDCORPORATIVO.scSAC.tbVotacao tv
-               join BDCORPORATIVO.scSAC.tbPauta tp on tp.IdPRONAC = tv.IdPRONAC and tp.idNrReuniao = tv.idNrReuniao
+               FROM bdcorporativo.scSAC.tbVotacao tv
+               join bdcorporativo.scSAC.tbPauta tp on tp.IdPRONAC = tv.IdPRONAC and tp.idNrReuniao = tv.idNrReuniao
                join sac.dbo.projetos pr on pr.idpronac = tv.idpronac
                where tv.idNrReuniao = " . $idReuniao;
 
@@ -98,8 +98,8 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
               , pr.AnoProjeto+pr.Sequencial as pronac
               , tp.stAnalise ,
                pr.NomeProjeto
-               FROM BDCORPORATIVO.scSAC.tbVotacao tv
-               join BDCORPORATIVO.scSAC.tbPauta tp on tp.IdPRONAC = tv.IdPRONAC and tp.idNrReuniao = tv.idNrReuniao
+               FROM bdcorporativo.scSAC.tbVotacao tv
+               join bdcorporativo.scSAC.tbPauta tp on tp.IdPRONAC = tv.IdPRONAC and tp.idNrReuniao = tv.idNrReuniao
                join SAC.dbo.Projetos pr on pr.IdPRONAC = tv.IdPRONAC
                WHERE tp.stAnalise='AC' or tp.stAnalise='IC' and  tv.idNrReuniao = " . $idReuniao;
         try
@@ -120,7 +120,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $dados = array('IdPRONAC' => $idPronac, 'idAgente' => $idAgente, 'idNrReuniao' => $idReuniao);
 
-        $cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbVotacao", $dados);
+        $cadastrar = $db->insert("bdcorporativo.scSAC.tbVotacao", $dados);
 
         if ($cadastrar)
         {
@@ -161,7 +161,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbvotante", $votantes);
+        $cadastrar = $db->insert("bdcorporativo.scSAC.tbvotante", $votantes);
 
         if ($cadastrar)
         {
@@ -178,7 +178,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
         $sql = "SELECT 
                 tbv.idagente,
                 nm.descricao
-                from BDCORPORATIVO.scSAC.tbvotante tbv
+                from bdcorporativo.scSAC.tbvotante tbv
                 join agentes.dbo.nomes nm on nm.idagente = tbv.idagente
                 where tbv.idreuniao =" . $idreuniao . " and nm.TipoNome=18 order by 2 asc";
 

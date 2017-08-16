@@ -53,7 +53,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO'
+                ), 'controledeacesso'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente", 
@@ -64,7 +64,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
         $s->joinInner(
                 array('d' => 'tbDocumento'), "p.idDocumento = d.idDocumento", 
                 array(''),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         $s->joinInner(
                 array('a' => 'tbArquivo'), "d.idArquivo = a.idArquivo", 
@@ -73,7 +73,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                     'a.dtEnvio',
                     'a.nmArquivo'
                 ),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         foreach($where as $key=>$valor){
             $s->where($key, $valor);
@@ -160,7 +160,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO'
+                ), 'controledeacesso'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente",
@@ -171,7 +171,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
         $s->joinInner(
                 array('d' => 'tbDocumento'), "p.idDocumento = d.idDocumento",
                 array(''),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         $s->joinInner(
                 array('a' => 'tbArquivo'), "d.idArquivo = a.idArquivo",
@@ -180,7 +180,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                     'a.dtEnvio',
                     'a.nmArquivo'
                 ),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         foreach($where as $key=>$valor){
             $s->where($key, $valor);

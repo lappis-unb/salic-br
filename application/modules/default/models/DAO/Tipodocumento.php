@@ -21,7 +21,7 @@ class Tipodocumento
 	public static function buscar()
 	{
 		$sql = "SELECT DISTINCT dsTipoDocumento, idTipoDocumento ";
-		$sql.= "FROM BDCORPORATIVO.scSAC.tbTipoDocumento ";
+		$sql.= "FROM bdcorporativo.scSAC.tbTipoDocumento ";
 		$sql.= "ORDER BY dsTipoDocumento;";
 
 		try

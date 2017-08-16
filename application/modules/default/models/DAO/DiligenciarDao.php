@@ -42,7 +42,7 @@ class DiligenciarDao extends Zend_Db_Table
                 from SAC.dbo.Projetos pro
                 inner join SAC.dbo.tbDiligencia dil on dil.idPronac = pro.IdPRONAC
                 inner join SAC.dbo.Verificacao ver on ver.idVerificacao = dil.idTipoDiligencia
-                left  join BDCORPORATIVO.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
+                left  join bdcorporativo.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
                 $where " ;
         
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -59,7 +59,7 @@ class DiligenciarDao extends Zend_Db_Table
                 from SAC.dbo.PreProjeto pre
                 inner join SAC.dbo.tbDiligencia dil on dil.idPreProjeto = pre.idPreProjeto
                 inner join SAC.dbo.Verificacao ver on ver.idVerificacao = dil.idTipoDiligencia
-                left  join BDCORPORATIVO.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
+                left  join bdcorporativo.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
                 $where " ;
 
         $db = Zend_Db_Table::getDefaultAdapter();

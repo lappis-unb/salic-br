@@ -52,7 +52,7 @@ class Contrato  extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbContratoxPlanilhaAprovacao'),
                             'con.idContrato = cpa.idContrato',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinInner(
                             array('pa'=>'tbPlanilhaAprovacao'),
@@ -89,7 +89,7 @@ class Contrato  extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbContratoxPlanilhaAprovacao'),
                             'con.idContrato = cpa.idContrato',
                             array('cpa.idPlanilhaAprovacao'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinInner(
                             array('pa'=>'tbPlanilhaAprovacao'),

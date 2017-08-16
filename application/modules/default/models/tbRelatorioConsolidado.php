@@ -155,13 +155,13 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 array('d' => 'tbDocumento'),
                 'd.idDocumento = c.idDocumento',
                 array('idArquivo'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
         $select->joinInner(
                 array('e' => 'tbArquivo'),
                 'e.idArquivo = d.idArquivo',
                 array('nmArquivo'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
        $select->joinLeft(
                 array('f' => 'tbDescricaoRelatorioConsolidado'),
@@ -188,7 +188,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
                 array('d' => 'tb'),
                 'd.idDocumento = c.idDocumento',
                 array('idArquivo'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
         // paginacao
         if ($tamanho > -1) {

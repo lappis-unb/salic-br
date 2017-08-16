@@ -40,11 +40,11 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
         );
           $slct->joinInner(
                 array('e' => 'tbArquivo'), 'c.idArquivo = e.idArquivo',
-                array('e.nmArquivo'),'BDCORPORATIVO.scCorp'
+                array('e.nmArquivo'),'bdcorporativo.scCorp'
         );
           $slct->joinInner(
                 array('f' => 'tbArquivoImagem'), 'e.idArquivo = f.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),'bdcorporativo.scCorp'
         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {

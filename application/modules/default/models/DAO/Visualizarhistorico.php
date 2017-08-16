@@ -16,7 +16,7 @@ class Visualizarhistorico extends Zend_Db_Table
     public function inserirMensagem($PRONAC,$componenteComissao,$mensagem)   
     {
         $objAcesso= new Acesso();
-       	$sql = "INSERT INTO BDCORPORATIVO.scSAC.tbMensagemProjeto (idPRONAC, idRemetente, idDestinatario, dtEncaminhamento, dsMensagem, stAtivo)
+       	$sql = "INSERT INTO bdcorporativo.scSAC.tbMensagemProjeto (idPRONAC, idRemetente, idDestinatario, dtEncaminhamento, dsMensagem, stAtivo)
 					        VALUES ($PRONAC, 75, $componenteComissao, {$objAcesso->getDate()}, '$mensagem', 'A')";
        	//echo $sql; die();
        	$db = Zend_Db_Table::getDefaultAdapter();
@@ -49,7 +49,7 @@ class Visualizarhistorico extends Zend_Db_Table
         idDestinatario, 
         destinatario.Descricao as nmDestinatario,
         dsMensagem
-from BDCORPORATIVO.scSAC.tbmensagemprojeto mp
+from bdcorporativo.scSAC.tbmensagemprojeto mp
 left join agentes.dbo.Nomes remetente on remetente.idAgente = mp.idRemetente
 left join agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestinatario
 left join SAC.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC

@@ -14,7 +14,7 @@ class ProjetoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "BDCORPORATIVO.scSAC.Projetos";
+	protected $_name    = "bdcorporativo.scSAC.Projetos";
 	protected $_primary = "IdPRONAC";
 
 

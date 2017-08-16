@@ -544,7 +544,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function JustificativaComponente($idpronac)
     {
-        $sql = "select dsAnalise from BDCORPORATIVO.scSAC.tbPauta where idpronac = $idpronac ";
+        $sql = "select dsAnalise from bdcorporativo.scSAC.tbPauta where idpronac = $idpronac ";
 //die($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -797,7 +797,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         try{
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbPauta", $dados);
+        $cadastrar = $db->insert("bdcorporativo.scSAC.tbPauta", $dados);
         return true;
         }
         catch (Exception $e){
@@ -827,7 +827,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         try{
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $alterar = $db->update("BDCORPORATIVO.scSAC.tbPauta", $dados, $where);
+        $alterar = $db->update("bdcorporativo.scSAC.tbPauta", $dados, $where);
         return true;
         }
         catch (Exception $e){
@@ -847,7 +847,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function submeterCnic($idPronac, $idReuniao, $justificativa)
     {
-    	$sql = "UPDATE BDCORPORATIVO.scSAC.tbPauta
+    	$sql = "UPDATE bdcorporativo.scSAC.tbPauta
 				SET dsAnalise = '$justificativa',
 					stEnvioPlenario = 'S'
 				WHERE IdPRONAC = $idPronac AND idNrReuniao = $idReuniao";
@@ -879,7 +879,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static  function retornaRegistro($idPronac, $idReuniao)
     {
-        $sql = "SELECT idPRONAC, idNrReuniao, stEnvioPlenario FROM BDCORPORATIVO.scSAC.tbPauta WHERE idPRONAC = $idPronac AND idNrReuniao = $idReuniao";
+        $sql = "SELECT idPRONAC, idNrReuniao, stEnvioPlenario FROM bdcorporativo.scSAC.tbPauta WHERE idPRONAC = $idPronac AND idNrReuniao = $idReuniao";
         try
 		{
 			$db = Zend_Db_Table::getDefaultAdapter();
@@ -1151,11 +1151,11 @@ public static function divulgacaoProjetosGeral($pronac){
         ->joinLeft(array('doc' => 'tbDocumento'),
             'doc.idDocumento = logo.idDocumento',
             array('idArquivo'),
-            'BDCORPORATIVO.scCorp')
+            'bdcorporativo.scCorp')
         ->joinLeft(array('arq' => 'tbArquivo'),
             'arq.idArquivo = doc.idArquivo',
             array('nmArquivo'),
-            'BDCORPORATIVO.scCorp')
+            'bdcorporativo.scCorp')
         ->where('p.IdPRONAC = ?', $pronac)
         ->where('d.stPlanoDivulgacao = 1');
 

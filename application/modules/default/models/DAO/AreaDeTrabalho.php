@@ -10,7 +10,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
        		CASE WHEN Pa.ParecerFavoravel in ('2','3') THEN 'Sim'
             ELSE 'N�o' End AS ParecerFavoravel,
        		CONVERT(CHAR(10),DPC.dtDistribuicao,103) AS DataRecebimento
- 			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC
+ 			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC
 			where Pa.idPRONAC = Pr.idPRONAC
 			AND DPC.idPRONAC = Pr.idPRONAC";
 			//AND DPC.idAgente = idParametro";

@@ -74,7 +74,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                            Mec.Descricao as MecanismoDesc
                            --edi.Objeto
                       From SAC.dbo.PreProjeto p
-                 left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
+                 left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
                 INNER JOIN agentes.dbo.Agentes ag on ag.idAgente = p.idAgente
                 INNER JOIN agentes.dbo.Nomes nm on nm.idAgente = ag.idAgente
                 INNER JOIN SAC.dbo.Edital ed on ed.idEdital = p.idEdital
@@ -129,10 +129,10 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         u.dtIniFase as dtIniFase,c.dsClassificaDocumento as Classificacao,
                         u.dtFimFase as dtFimFase,Objeto
                    FROM Sac.dbo.Edital e
-             INNER JOIN BDCORPORATIVO.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
+             INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
              INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN BDCORPORATIVO.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN BDCORPORATIVO.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null";
         if($array['nrEdital']) {
@@ -170,10 +170,10 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         u.dtIniFase as dtIniFase,c.dsClassificaDocumento as Classificacao,
                         u.dtFimFase as dtFimFase,Objeto
                    FROM Sac.dbo.Edital e
-             INNER JOIN BDCORPORATIVO.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
+             INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
              INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN BDCORPORATIVO.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN BDCORPORATIVO.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null and
                         u.dtIniFase <= {$objAcesso->getDate()} AND u.dtFimFase >= {$objAcesso->getDate()}
@@ -195,10 +195,10 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         u.dtIniFase as dtIniFase,c.dsClassificaDocumento as Classificacao,
                         u.dtFimFase as dtFimFase,Objeto
                    FROM Sac.dbo.Edital e
-             INNER JOIN BDCORPORATIVO.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
+             INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
              INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN BDCORPORATIVO.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN BDCORPORATIVO.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null ";
         if(isset($array['idEdital'])) {
@@ -215,10 +215,10 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
         $sql = " SELECT f.nmFormDocumento,
                         count(f.nmFormDocumento) as qtd
                    FROM Sac.dbo.Edital e
-             INNER JOIN BDCORPORATIVO.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
+             INNER JOIN bdcorporativo.scQuiz.tbFormDocumento f ON (e.idEdital = f.idEdital)
              INNER JOIN SAC.dbo.Verificacao v on (e.cdTipoFundo = v.idVerificacao)
-             INNER JOIN BDCORPORATIVO.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
-             INNER JOIN BDCORPORATIVO.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
+             INNER JOIN bdcorporativo.scSAC.tbEditalXtbFaseEdital u ON (u.idEdital = e.idEdital)
+             INNER JOIN bdcorporativo.scSAC.tbClassificaDocumento c ON (f.idClassificaDocumento = c.idClassificaDocumento)
                   WHERE u.idFaseEdital = '2' AND
                         f.stModalidadeDocumento is not null and
                         u.dtIniFase <= {$objAcesso->getDate()} AND u.dtFimFase >= {$objAcesso->getDate()}
@@ -238,7 +238,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         p.ResumoDoProjeto,
                         nm.Descricao as nomeAgente
                     From SAC.dbo.PreProjeto p
-               left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
+               left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
                left join agentes.dbo.Nomes nm on nm.idAgente = p.idAgente
                    Where stestado=1
                      and stTipoDemanda not like 'NA'
@@ -301,7 +301,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                     stTipoDemanda,
                     p.idEdital
                 From SAC.dbo.PreProjeto p
-                left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
+                left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = p.idEdital OR  p.idEdital IS NULL
                 Where stestado=1
                 and idAgente={$idAgente }
                 and stTipoDemanda not like 'NA'

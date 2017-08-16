@@ -89,13 +89,13 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
 
         $queryMensagensNaoRespondidas = $this->select();
         $queryMensagensNaoRespondidas->setIntegrityCheck(false);
-        $queryMensagensNaoRespondidas->from(array('tbMensagemProjeto' => 'tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
+        $queryMensagensNaoRespondidas->from(array('tbMensagemProjeto' => 'tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("bdcorporativo.scsac"));
         $queryMensagensNaoRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NULL");
 
         $queryMensagensRespondidas = $this->select();
         $queryMensagensRespondidas->setIntegrityCheck(false);
-        $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
+        $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("bdcorporativo.scsac"));
         $queryMensagensRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NOT NULL");
 
@@ -180,13 +180,13 @@ class Admissibilidade_Model_Enquadramento extends MinC_Db_Table_Abstract
 
         $queryMensagensNaoRespondidas = $this->select();
         $queryMensagensNaoRespondidas->setIntegrityCheck(false);
-        $queryMensagensNaoRespondidas->from(array('tbMensagemProjeto' => 'tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
+        $queryMensagensNaoRespondidas->from(array('tbMensagemProjeto' => 'tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("bdcorporativo.scsac"));
         $queryMensagensNaoRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NULL");
 
         $queryMensagensRespondidas = $this->select();
         $queryMensagensRespondidas->setIntegrityCheck(false);
-        $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
+        $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("bdcorporativo.scsac"));
         $queryMensagensRespondidas->where("Projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
         $queryMensagensRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NOT NULL");
 

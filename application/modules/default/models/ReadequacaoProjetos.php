@@ -116,7 +116,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         return $db->fetchAll($sql0);
     }
     public function buscarLocaisCadastradosFinal($idPedidoAlteracao) {
-        $sql0 = " select * from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao where tpAlteracaoProjeto  = 4 and idPedidoAlteracao = $idPedidoAlteracao";
+        $sql0 = " select * from bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao where tpAlteracaoProjeto  = 4 and idPedidoAlteracao = $idPedidoAlteracao";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -124,7 +124,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function buscaridPedidoAlteracao($idPedidoAlteracao) {
-        $sql0 = "  select * from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql0 = "  select * from bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                     where idPedidoAlteracao =  $idPedidoAlteracao";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -132,7 +132,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function buscarTipoAlteracaoInserido($idPedidoAlteracao) {
-        $sql0 = " select * from   BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE tpAlteracaoProjeto = 7 AND idPedidoAlteracao = $idPedidoAlteracao";
+        $sql0 = " select * from   bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE tpAlteracaoProjeto = 7 AND idPedidoAlteracao = $idPedidoAlteracao";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
@@ -142,7 +142,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         $sql0 = "SELECT *, plano.stPrincipal, CAST(plano.dsjustificativa AS TEXT) AS JustificativaProponente
 					FROM SAC.dbo.tbPlanoDistribuicao AS plano 
 						INNER JOIN SAC.dbo.Segmento AS segmento ON plano.cdSegmento = segmento.Codigo
-						LEFT JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao AS x ON plano.idPedidoAlteracao = x.idPedidoAlteracao
+						LEFT JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao AS x ON plano.idPedidoAlteracao = x.idPedidoAlteracao
 					WHERE plano.idPedidoAlteracao = $idPedidoAlteracao and plano.idProduto = $idProduto ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -174,7 +174,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 					INNER JOIN SAC.dbo.Produto AS produto ON plano.idProduto = produto.Codigo 
 					INNER JOIN SAC.dbo.Segmento AS segmento ON plano.Segmento = segmento.Codigo 
 					LEFT JOIN SAC.dbo.tbPlanoDistribuicao AS pla ON plano.idPlanoDistribuicao = pla.idPlanoDistribuicao 
-					LEFT JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao AS x ON pla.idPedidoAlteracao = x.idPedidoAlteracao
+					LEFT JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao AS x ON pla.idPedidoAlteracao = x.idPedidoAlteracao
 				WHERE plano.idProjeto = $idProjeto and plano.idProduto = $idProduto";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -204,7 +204,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function buscarSolicitacao($idPronac) {
-        $sql1 = "select MAX(idPedidoAlteracao)as idPedidoAlteracao   from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where IdPRONAC = $idPronac";
+        $sql1 = "select MAX(idPedidoAlteracao)as idPedidoAlteracao   from bdcorporativo.scSAC.tbPedidoAlteracaoProjeto where IdPRONAC = $idPronac";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql1);
@@ -232,7 +232,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 (idPlanoDistribuicao, cdArea, cdSegmento, idPedidoAlteracao,idProduto,idPosicaoLogo,qtPatrocinador,qtProduzida,qtOutros,qtVendaNormal,qtVendaPromocional,vlUnitarioNormal,vlUnitarioPromocional,stPrincipal,tpAcao,tpPlanoDistribuicao,dtPlanoDistribuicao)
                 select
                 plano.idPlanoDistribuicao, plano.Area, plano.Segmento, pedido.idPedidoAlteracao,plano.idProduto,plano.idPosicaoDaLogo,plano.QtdePatrocinador,plano.QtdeProduzida,plano.QtdeOutros,plano.QtdeVendaNormal,plano.QtdeVendaPromocional,plano.PrecoUnitarioNormal,plano.PrecoUnitarioPromocional,stPrincipal,'N','S', {$objAcesso->getDate()}   from SAC.dbo.PlanoDistribuicaoProduto as plano,
-                BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto as pedido
+                bdcorporativo.scSAC.tbPedidoAlteracaoProjeto as pedido
                 inner join SAC.dbo.Projetos as projetos
                 on projetos.IdPRONAC = pedido.IdPRONAC
                 where plano.idProjeto = $idProjeto and pedido.idPedidoAlteracao = $idPedidoAlteracao and plano.idProduto = $idProduto";
@@ -246,7 +246,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto (IdPRONAC, idSolicitante,dtSolicitacao,stPedidoAlteracao)
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbPedidoAlteracaoProjeto (IdPRONAC, idSolicitante,dtSolicitacao,stPedidoAlteracao)
                 VALUES ('$idPronac','$idSolicitante',{$objAcesso->getDate()},'$stPedido')";
 
 
@@ -408,7 +408,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
 
         $sql = "INSERT INTO
-                BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao(idPedidoAlteracao, tpAlteracaoProjeto, dsJustificativa)
+                bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao(idPedidoAlteracao, tpAlteracaoProjeto, dsJustificativa)
                 VALUES     ($idPedidoAlteracao,7,'$justificativa')";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -418,7 +418,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function atualizaPedidoTipoAlteracao($idPedidoAlteracao, $justificativa) {
 
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET     idPedidoAlteracao = $idPedidoAlteracao, tpAlteracaoProjeto = 7 , dsJustificativa = '$justificativa' WHERE idPedidoAlteracao = $idPedidoAlteracao";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -428,7 +428,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function verificaPedidoTipoAlteracao($idPedidoAlteracao) {
         $sql = "select TOP 1 idPedidoAlteracao
-                from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao order by idPedidoAlteracao desc";
+                from bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao order by idPedidoAlteracao desc";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -436,14 +436,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function verificarBotao($idPedidoAlteracao) {
-        $sql = "select * from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where idPedidoAlteracao=$idPedidoAlteracao and stPedidoAlteracao = 'A'";
+        $sql = "select * from bdcorporativo.scSAC.tbPedidoAlteracaoProjeto where idPedidoAlteracao=$idPedidoAlteracao and stPedidoAlteracao = 'A'";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
     public static function verificarMenu($idPronac) {
-        $sql = "select stPedidoAlteracao from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where idPronac = $idPronac";
+        $sql = "select stPedidoAlteracao from bdcorporativo.scSAC.tbPedidoAlteracaoProjeto where idPronac = $idPronac";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -471,7 +471,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public static function alterarPedido($idPedidoAlteracao, $status) {
 
         $objAcesso = Acesso();
-        $sql = "update BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto
+        $sql = "update bdcorporativo.scSAC.tbPedidoAlteracaoProjeto
                 set dtSolicitacao = {$objAcesso->getDate()},stPedidoAlteracao= '$status'
                 where idPedidoAlteracao = $idPedidoAlteracao";
 
@@ -483,7 +483,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function inserirJustificativa($idPedidoAlteracao, $dsJustificativa, $status) {
 
-        $sql = "insert into BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao(idPedidoAlteracao,tpAlteracaoProjeto,dsJustificativa)
+        $sql = "insert into bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao(idPedidoAlteracao,tpAlteracaoProjeto,dsJustificativa)
                 values ($idPedidoAlteracao,$status,'$dsJustificativa')";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -493,7 +493,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function alterarJustificativa($idPedidoAlteracao, $dsJustificativa) {
 
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao SET dsJustificativa = '".$dsJustificativa."' WHERE idPedidoAlteracao = '".$idPedidoAlteracao."';";
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao SET dsJustificativa = '".$dsJustificativa."' WHERE idPedidoAlteracao = '".$idPedidoAlteracao."';";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -523,7 +523,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function alterarSolicitacao($idPedidoAlteracao, $stPedido) {
-        $sql = "update BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto set stPedidoAlteracao = '$stPedido'
+        $sql = "update bdcorporativo.scSAC.tbPedidoAlteracaoProjeto set stPedidoAlteracao = '$stPedido'
                 where idPedidoAlteracao = $idPedidoAlteracao";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -547,7 +547,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 					,tpProrrogacao
 					,CONVERT(CHAR(10), dtInicioNovoPrazo, 103) AS dtInicioNovoPrazo
 					,CONVERT(CHAR(10), dtFimNovoPrazo, 103) AS dtFimNovoPrazo
-				FROM BDCORPORATIVO.scSAC.tbProrrogacaoPrazo 
+				FROM bdcorporativo.scSAC.tbProrrogacaoPrazo 
 				WHERE idPedidoAlteracao = $idPedidoAlteracao AND tpProrrogacao = '$tpProrrogacao'";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -589,7 +589,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
 
     public function insertPrazo($idPedidoAlteracao, $dtInicioNovoPrazo, $dtFimNovoPrazo, $tpProrrogacao) {
-        $sql = "insert into BDCORPORATIVO.scSAC.tbProrrogacaoPrazo (idPedidoAlteracao,dtInicioNovoPrazo,dtFimNovoPrazo,tpProrrogacao)
+        $sql = "insert into bdcorporativo.scSAC.tbProrrogacaoPrazo (idPedidoAlteracao,dtInicioNovoPrazo,dtFimNovoPrazo,tpProrrogacao)
                 values ($idPedidoAlteracao,'$dtInicioNovoPrazo','$dtFimNovoPrazo','$tpProrrogacao')";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -598,7 +598,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public function updatePrazo($idPedidoAlteracao, $dtInicioNovoPrazo, $dtFimNovoPrazo, $tpProrrogacao) {
-        $sql = "update BDCORPORATIVO.scSAC.tbProrrogacaoPrazo set dtInicioNovoPrazo = '$dtInicioNovoPrazo',dtFimNovoPrazo ='$dtFimNovoPrazo'
+        $sql = "update bdcorporativo.scSAC.tbProrrogacaoPrazo set dtInicioNovoPrazo = '$dtInicioNovoPrazo',dtFimNovoPrazo ='$dtFimNovoPrazo'
                 where idPedidoAlteracao = $idPedidoAlteracao and tpProrrogacao = '$tpProrrogacao'";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -629,13 +629,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         a.siVerificacao,
                         g.stVerificacao AS stItem
 
-                        FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto               AS a
+                        FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto               AS a
                         INNER JOIN SAC.dbo.Projetos                                     AS b ON a.IdPRONAC = b.IdPRONAC
                         INNER JOIN SAC.dbo.Area                                         AS c ON b.Area = c.Codigo
                         LEFT JOIN SAC.dbo.Segmento					AS d ON b.Segmento = d.Codigo
                         INNER JOIN SAC.dbo.Abrangencia					AS e ON b.idProjeto = e.idProjeto
                         INNER JOIN agentes.dbo.Municipios				AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                         INNER JOIN agentes.dbo.UF					AS h ON e.idUF = h.idUF
 
                         WHERE a.stPedidoAlteracao = 'I'
@@ -673,16 +673,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 							ELSE 'Item de Custo'
 						END AS Situacao
 
-                        FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto               AS a
+                        FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto               AS a
                         INNER JOIN SAC.dbo.Projetos                                     AS b ON a.IdPRONAC = b.IdPRONAC
                         INNER JOIN SAC.dbo.Area                                         AS c ON b.Area = c.Codigo
                         LEFT JOIN SAC.dbo.Segmento					AS d ON b.Segmento = d.Codigo
                         INNER JOIN SAC.dbo.Abrangencia					AS e ON b.idProjeto = e.idProjeto
                         INNER JOIN agentes.dbo.Municipios				AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                         INNER JOIN agentes.dbo.UF					AS h ON e.idUF = h.idUF
                         ,(SELECT MAX(tpAlteracaoProjeto) AS tpAlteracaoProjeto, idPedidoAlteracao
-							  FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+							  FROM bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
 							  WHERE tpAlteracaoProjeto IN (7, 10)
 							  GROUP BY idPedidoAlteracao) AS tmp
                         WHERE a.stPedidoAlteracao = 'I'
@@ -708,13 +708,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         b.NomeProjeto AS NomeProjeto,
                         h.Sigla
 
-                        FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto		AS a
+                        FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto		AS a
                         INNER JOIN SAC.dbo.Projetos					AS b ON a.IdPRONAC = b.IdPRONAC
                         INNER JOIN SAC.dbo.Area						AS c ON b.Area = c.Codigo
                         LEFT JOIN SAC.dbo.Segmento					AS d ON b.Segmento = d.Codigo
                         INNER JOIN SAC.dbo.Abrangencia					AS e ON b.idProjeto = e.idProjeto
                         INNER JOIN agentes.dbo.Municipios				AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                         INNER JOIN agentes.dbo.UF					AS h ON e.idUF = h.idUF
 
                         WHERE a.stPedidoAlteracao = 'I' ";
@@ -738,16 +738,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao,
                         j.stVerificacao AS stAcao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                     WHERE a.stPedidoAlteracao = 'I'
                     AND a.siVerificacao in (0,1)
@@ -789,18 +789,18 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                                     ELSE 'Item de Custo'
                             END AS Situacao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
                     ,(SELECT MAX(tpAlteracaoProjeto) AS tpAlteracaoProjeto, idPedidoAlteracao
-                                                      FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+                                                      FROM bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                                                       WHERE tpAlteracaoProjeto IN (7,10)
                                                       GROUP BY idPedidoAlteracao) AS tmp
                     WHERE a.stPedidoAlteracao = 'I'
@@ -845,18 +845,18 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                                     ELSE 'Item de Custo'
                             END AS Situacao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                          AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
                     ,(SELECT MAX(tpAlteracaoProjeto) AS tpAlteracaoProjeto, idPedidoAlteracao
-                                                      FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+                                                      FROM bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                                                       WHERE tpAlteracaoProjeto IN (7)
                                                       GROUP BY idPedidoAlteracao) AS tmp
                     WHERE a.stPedidoAlteracao = 'I'
@@ -892,13 +892,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         a.siVerificacao,
                         g.stVerificacao AS stItem
 
-                        FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto		AS a
+                        FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto		AS a
                         INNER JOIN SAC.dbo.Projetos					AS b ON a.IdPRONAC = b.IdPRONAC
                         INNER JOIN SAC.dbo.Area						AS c ON b.Area = c.Codigo
                         LEFT JOIN SAC.dbo.Segmento					AS d ON b.Segmento = d.Codigo
                         INNER JOIN SAC.dbo.Abrangencia					AS e ON b.idProjeto = e.idProjeto
                         INNER JOIN agentes.dbo.Municipios				AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                         INNER JOIN agentes.dbo.UF					AS h ON e.idUF = h.idUF
 
                         WHERE a.stPedidoAlteracao = 'I'
@@ -923,16 +923,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao,
                         j.stVerificacao AS stAcao
 
-                        FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                        FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                         INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                         INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                         LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                         INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                         INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                         INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                        INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                        INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                        INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                         WHERE a.stPedidoAlteracao = 'I'
                         AND a.siVerificacao in (0,1)
@@ -961,16 +961,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 							ELSE 'Item de Custo'
 						END AS Situacao
 
-                        FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto               AS a
+                        FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto               AS a
                         INNER JOIN SAC.dbo.Projetos                                     AS b ON a.IdPRONAC = b.IdPRONAC
                         INNER JOIN SAC.dbo.Area                                         AS c ON b.Area = c.Codigo
                         LEFT JOIN SAC.dbo.Segmento					AS d ON b.Segmento = d.Codigo
                         INNER JOIN SAC.dbo.Abrangencia					AS e ON b.idProjeto = e.idProjeto
                         INNER JOIN agentes.dbo.Municipios				AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                         INNER JOIN agentes.dbo.UF					AS h ON e.idUF = h.idUF
                         ,(SELECT MAX(tpAlteracaoProjeto) AS tpAlteracaoProjeto, idPedidoAlteracao
-							  FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+							  FROM bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
 							  WHERE tpAlteracaoProjeto IN (7,10)
 							  GROUP BY idPedidoAlteracao) AS tmp
                         WHERE a.stPedidoAlteracao = 'I'
@@ -1019,16 +1019,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.stVerificacao AS stAcao,
                         j.idAgenteAcionado
 
-                        FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                        FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                         INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                         INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                         LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                         INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                         INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                         INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                        INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao
-                        INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                         WHERE a.stPedidoAlteracao = 'I'
                         AND a.siVerificacao in (0,1)
@@ -1064,18 +1064,18 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao,
                         j.stVerificacao AS stAcao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
                     ,(SELECT MAX(tpAlteracaoProjeto) AS tpAlteracaoProjeto, idPedidoAlteracao
-							  FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+							  FROM bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
 							  WHERE tpAlteracaoProjeto = 7
 							  GROUP BY idPedidoAlteracao) AS tmp
 
@@ -1106,16 +1106,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.stVerificacao AS stAcao,
                         i.stAvaliacaoItemPedidoAlteracao AS situacao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                     WHERE a.stPedidoAlteracao = 'I'
                     AND a.siVerificacao in (0,1)
@@ -1159,16 +1159,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.idAcaoAvaliacaoItemPedidoAlteracao,
                         j.stVerificacao AS stAcao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                     WHERE a.stPedidoAlteracao = 'I'
                     AND a.siVerificacao = 1
@@ -1205,16 +1205,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao,
                         j.stVerificacao AS stAcao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                   AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                   AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                     WHERE a.stPedidoAlteracao = 'I'
                     AND a.siVerificacao = 1
@@ -1250,16 +1250,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao,
                         j.stVerificacao AS stAcao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                           AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                           AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON A.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                     WHERE a.stPedidoAlteracao = 'I'
                     AND a.siVerificacao = 1
@@ -1289,16 +1289,16 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         j.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao,
                         j.stVerificacao AS stAcao
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto                           AS a
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto                           AS a
                     INNER JOIN SAC.dbo.Projetos                                         AS b ON a.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.Area                                             AS c ON b.Area = c.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS d ON b.Segmento = d.Codigo
                     INNER JOIN SAC.dbo.Abrangencia                                      AS e ON b.idProjeto = e.idProjeto
                     INNER JOIN agentes.dbo.Municipios                                   AS f ON e.idMunicipioIBGE = f.idMunicipioIBGE
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON a.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON a.idPedidoAlteracao = g.idPedidoAlteracao
                     INNER JOIN agentes.dbo.UF                                           AS h ON e.idUF = h.idUF
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS i ON g.idPedidoAlteracao = i.idPedidoAlteracao and g.tpAlteracaoProjeto = i.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
 
                     WHERE a.stPedidoAlteracao = 'I'
                     AND a.siVerificacao = 1
@@ -1341,12 +1341,12 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         g.dsJustificativa as dsJustificativaSolicitacao
 
                     FROM SAC.dbo.tbProposta AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON c.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.PreProjeto                                       AS d ON d.idPreProjeto = c.idProjeto
                     INNER JOIN agentes.dbo.Agentes                                      AS e ON e.idAgente = d.idAgente
                     INNER JOIN SAC.dbo.vProponenteProjetos                              AS f ON c.CgcCpf = f.CgcCpf
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = a.idPedidoAlteracao
 
                     WHERE b.IdPRONAC = $id_Pronac 
                     AND g.tpAlteracaoProjeto = 6
@@ -1363,8 +1363,8 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         g.stVerificacao
 
                     FROM SAC.dbo.tbProposta AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = a.idPedidoAlteracao
 
                     WHERE b.IdPRONAC = '$id_Pronac' 
                     AND b.siVerificacao = 1
@@ -1403,14 +1403,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         g.dsJustificativa,
                         h.dsAvaliacao
                     FROM SAC.dbo.tbProposta AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON c.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.PreProjeto                                       AS d ON d.idPreProjeto = c.idProjeto
                     INNER JOIN agentes.dbo.Agentes                                      AS e ON e.idAgente = d.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS f ON f.IdPRONAC = c.IdPRONAC
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = f.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS h ON h.idPedidoAlteracao = g.idPedidoAlteracao and h.tpAlteracaoProjeto = g.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS i ON i.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS f ON f.IdPRONAC = c.IdPRONAC
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = f.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS h ON h.idPedidoAlteracao = g.idPedidoAlteracao and h.tpAlteracaoProjeto = g.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS i ON i.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
                     INNER JOIN SAC.dbo.vProponenteProjetos                              AS j ON c.CgcCpf = j.CgcCpf
 
                     WHERE b.IdPRONAC = $id_Pronac
@@ -1447,14 +1447,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.stAvaliacaoItemPedidoAlteracao,
                         g.dsJustificativa
                     FROM SAC.dbo.tbProposta AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON c.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.PreProjeto                                       AS d ON d.idPreProjeto = c.idProjeto
                     INNER JOIN agentes.dbo.Agentes                                      AS e ON e.idAgente = d.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS f ON f.IdPRONAC = c.IdPRONAC
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = f.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS h ON h.idPedidoAlteracao = g.idPedidoAlteracao and h.tpAlteracaoProjeto = g.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS i ON i.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS f ON f.IdPRONAC = c.IdPRONAC
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao      AS g ON g.idPedidoAlteracao = f.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS h ON h.idPedidoAlteracao = g.idPedidoAlteracao and h.tpAlteracaoProjeto = g.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS i ON i.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
                     INNER JOIN SAC.dbo.vProponenteProjetos                              AS j ON c.CgcCpf = j.CgcCpf
                     WHERE b.IdPRONAC = $id_Pronac
                     AND g.stVerificacao = 1
@@ -1490,13 +1490,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao					AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                          AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                    LEFT JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                     INNER JOIN agentes.dbo.Agentes                                      AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                        AS j ON i.idAgente = j.idAgente
                     WHERE c.IdPRONAC = $id_Pronac
@@ -1528,13 +1528,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao					AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                         AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto = 10
+                    LEFT JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto = 10
                     INNER JOIN SAC.dbo.vProponenteProjetos				AS i ON c.CgcCpf = i.CgcCpf
 
                     WHERE c.IdPRONAC = $id_Pronac
@@ -1542,13 +1542,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
                         SELECT TOP 1 h.idAvaliacaoItemPedidoAlteracao
                         FROM SAC.dbo.tbPlanoDistribuicao				AS a
-                        INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto		AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                        INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto		AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                         INNER JOIN SAC.dbo.Projetos					AS c ON b.IdPRONAC = c.IdPRONAC
                         INNER JOIN SAC.dbo.Produto					AS d ON a.idProduto = d.Codigo
                         INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                         LEFT JOIN SAC.dbo.Segmento					AS f ON a.cdSegmento = f.Codigo
                         INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                        LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto = 10
+                        LEFT JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto = 10
                         INNER JOIN SAC.dbo.vProponenteProjetos				AS i ON c.CgcCpf = i.CgcCpf
                         WHERE c.IdPRONAC = $id_Pronac
                         ORDER BY h.idAvaliacaoItemPedidoAlteracao DESC)";
@@ -1581,23 +1581,23 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao,
                         e.Codigo AS cdArea
                         ,(select TOP 1 bb.stAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano and aa.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS avaliacao
                         ,CAST((select TOP 1 bb.dsAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano and aa.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS TEXT) AS dsJustificativa
 
 
                     FROM SAC.dbo.tbPlanoDistribuicao					AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     	AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     	AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                          AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                     INNER JOIN agentes.dbo.Agentes                                      AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                        AS j ON i.idAgente = j.idAgente
                     ,(SELECT MAX(idPlano) AS idPlano, idProduto
@@ -1605,7 +1605,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                             GROUP BY idProduto
                             HAVING MAX(idPlano) > 0) AS tmp
                     ,(SELECT MAX(idAvaliacaoItemPedidoAlteracao) AS idAvaliacaoItemPedidoAlteracao
-                            FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                            FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                             WHERE stAvaliacaoItemPedidoAlteracao != 'AP'
                             AND stAvaliacaoItemPedidoAlteracao != 'IN'
                             GROUP BY idAvaliacaoItemPedidoAlteracao) AS tmp2
@@ -1646,23 +1646,23 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao,
                         e.Codigo AS cdArea
                         ,(select TOP 1 bb.stAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano and aa.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS avaliacao
                         ,CAST((select TOP 1 bb.dsAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano and aa.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS TEXT) AS dsJustificativa
 
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     	AS b
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     	AS b
                     LEFT JOIN SAC.dbo.tbPlanoDistribuicao					AS a ON b.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                          AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                     INNER JOIN agentes.dbo.Agentes                                      AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                        AS j ON i.idAgente = j.idAgente
                     ,(SELECT MAX(idPlano) AS idPlano, idProduto
@@ -1670,7 +1670,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                             GROUP BY idProduto
                             HAVING MAX(idPlano) > 0) AS tmp
                     ,(SELECT MAX(idAvaliacaoItemPedidoAlteracao) AS idAvaliacaoItemPedidoAlteracao
-                            FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                            FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                             WHERE stAvaliacaoItemPedidoAlteracao != 'AP'
                             AND stAvaliacaoItemPedidoAlteracao != 'IN'
                             GROUP BY idAvaliacaoItemPedidoAlteracao) AS tmp2
@@ -1715,23 +1715,23 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao,
                         e.Codigo AS cdArea
                         ,(select TOP 1 bb.stAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS avaliacao
                         ,(select TOP 1 bb.dsAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS dsJustificativa
 
 
                     FROM SAC.dbo.tbPlanoDistribuicao					AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     	AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     	AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                 	AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                     INNER JOIN agentes.dbo.Agentes                                      AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                        AS j ON i.idAgente = j.idAgente
                     ,(SELECT MAX(idPlano) AS idPlano, idProduto
@@ -1739,7 +1739,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                             GROUP BY idProduto
                             HAVING MAX(idPlano) > 0) AS tmp
                     ,(SELECT MAX(idAvaliacaoItemPedidoAlteracao) AS idAvaliacaoItemPedidoAlteracao
-                            FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                            FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                             WHERE stAvaliacaoItemPedidoAlteracao != 'AP'
                             AND stAvaliacaoItemPedidoAlteracao != 'IN'
                             GROUP BY idAvaliacaoItemPedidoAlteracao) AS tmp2
@@ -1780,23 +1780,23 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao,
                         e.Codigo AS cdArea
                         ,(select TOP 1 bb.stAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS avaliacao
                         ,(select TOP 1 bb.dsAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS dsJustificativa
 
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     	AS b
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     	AS b
                     LEFT JOIN SAC.dbo.tbPlanoDistribuicao					AS a ON b.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                 	AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                     INNER JOIN agentes.dbo.Agentes                                      AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                        AS j ON i.idAgente = j.idAgente
                     ,(SELECT MAX(idPlano) AS idPlano, idProduto
@@ -1804,7 +1804,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                             GROUP BY idProduto
                             HAVING MAX(idPlano) > 0) AS tmp
                     ,(SELECT MAX(idAvaliacaoItemPedidoAlteracao) AS idAvaliacaoItemPedidoAlteracao
-                            FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                            FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                             WHERE stAvaliacaoItemPedidoAlteracao != 'AP'
                             AND stAvaliacaoItemPedidoAlteracao != 'IN'
                             GROUP BY idAvaliacaoItemPedidoAlteracao) AS tmp2
@@ -1846,22 +1846,22 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao,
                         h.dsAvaliacao
                         ,(select TOP 1 bb.stAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS avaliacao
                         ,(select TOP 1 bb.dsAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS dsJustificativa
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     	AS b 
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     	AS b 
                     LEFT JOIN SAC.dbo.tbPlanoDistribuicao					AS a  ON a.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                          AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                     INNER JOIN agentes.dbo.Agentes                                      AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                        AS j ON i.idAgente = j.idAgente
 
@@ -1871,7 +1871,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                             GROUP BY idProduto
                             HAVING MIN(idPlano) > 0) AS tmp
                     ,(SELECT MAX(idAvaliacaoItemPedidoAlteracao) AS idAvaliacaoItemPedidoAlteracao
-                            FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                            FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                             WHERE stAvaliacaoItemPedidoAlteracao in ('AP','IN')  AND tpAlteracaoProjeto = 7) AS tmp2
 
                     WHERE c.IdPRONAC = $id_Pronac
@@ -1906,22 +1906,22 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         h.idAvaliacaoItemPedidoAlteracao,
                         h.dsAvaliacao
                         ,(select TOP 1 bb.stAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS avaliacao
                         ,(select TOP 1 bb.dsAvaliacaoSubItemPedidoAlteracao
-                                from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
-                                inner join BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
+                                from bdcorporativo.scSAC.tbAvaliacaoSubItemPlanoDistribuicao as aa
+                                inner join bdcorporativo.scSAC.tbAvaliacaoSubItemPedidoAlteracao as bb on aa.idAvaliacaoSubItemPedidoAlteracao = bb.idAvaliacaoSubItemPedidoAlteracao
                                 where aa.idPlano = a.idPlano ORDER BY aa.idAvaliacaoSubItemPedidoAlteracao desc) AS dsJustificativa
 
-                    FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     	AS b 
+                    FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     	AS b 
                     LEFT JOIN SAC.dbo.tbPlanoDistribuicao					AS a  ON a.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                          AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                     LEFT JOIN SAC.dbo.Segmento                                          AS f ON a.cdSegmento = f.Codigo
                     INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                     INNER JOIN agentes.dbo.Agentes                                      AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                        AS j ON i.idAgente = j.idAgente
 
@@ -1931,7 +1931,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                             GROUP BY idProduto
                             HAVING MIN(idPlano) > 0) AS tmp
                     ,(SELECT MAX(idAvaliacaoItemPedidoAlteracao) AS idAvaliacaoItemPedidoAlteracao
-                            FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                            FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                             WHERE stAvaliacaoItemPedidoAlteracao in ('AP','IN')  AND tpAlteracaoProjeto = 10) AS tmp2
 
                     WHERE c.IdPRONAC = $id_Pronac
@@ -1966,15 +1966,15 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         a.IdProposta,
                         i.idOrgao,
                         h.stAvaliacaoItemPedidoAlteracao
-                FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto AS b
+                FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto AS b
                 LEFT JOIN SAC.dbo.tbProposta                                            AS a ON a.idPedidoAlteracao = b.idPedidoAlteracao
                 INNER JOIN SAC.dbo.Projetos 						AS c ON c.IdPRONAC = b.IdPRONAC
                 INNER JOIN SAC.dbo.PreProjeto 						AS d ON d.idPreProjeto = c.idProjeto
                 INNER JOIN agentes.dbo.Agentes 						AS e ON e.idAgente = d.idAgente
-                INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto 		AS f ON f.IdPRONAC = c.IdPRONAC
-                INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao 		AS g ON g.idPedidoAlteracao = f.idPedidoAlteracao
-                INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 		AS h ON h.idPedidoAlteracao = g.idPedidoAlteracao and h.tpAlteracaoProjeto = g.tpAlteracaoProjeto
-                INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao 	AS i ON i.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
+                INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto 		AS f ON f.IdPRONAC = c.IdPRONAC
+                INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao 		AS g ON g.idPedidoAlteracao = f.idPedidoAlteracao
+                INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 		AS h ON h.idPedidoAlteracao = g.idPedidoAlteracao and h.tpAlteracaoProjeto = g.tpAlteracaoProjeto
+                INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao 	AS i ON i.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
                 INNER JOIN SAC.dbo.vProponenteProjetos 					AS j ON c.CgcCpf = j.CgcCpf
                 WHERE b.IdPRONAC = $id_Pronac
                 AND g.stVerificacao in (1,2)
@@ -1995,7 +1995,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLfinalprop1($idPedidoAlteracao, $tpAlteracaoProjeto) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET stVerificacao = 2
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND tpAlteracaoProjeto = $tpAlteracaoProjeto
@@ -2004,7 +2004,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function consultarIdAvaliacao($idPedidoAlteracao) {
-        $sql = "SELECT * FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+        $sql = "SELECT * FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND tpAlteracaoProjeto = 7";
                 //AND stAvaliacaoItemPedidoAlteracao = 'EA' ";
@@ -2012,7 +2012,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function consultarIdAcaoAvaliacao($idAvaliacaoPedidoAlteracao) {
-        $sql = "SELECT idAcaoAvaliacaoItemPedidoAlteracao AS idAcaoAvaliacao, idOrgao FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "SELECT idAcaoAvaliacaoItemPedidoAlteracao AS idAcaoAvaliacao, idOrgao FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacaoPedidoAlteracao
                 AND stAtivo = 0 ";
         return $sql;
@@ -2020,7 +2020,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalprop2($idAvaliacao, $especificacao='.',$status, $tpAlteracaoProjeto = null) {
         $objAcesso = Acesso();
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 SET dtFimAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = '$status', dsAvaliacao = '$especificacao'
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
 
@@ -2032,7 +2032,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLfinalprop3($idAcao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stAtivo = 1
                 WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcao ";
         return $sql;
@@ -2040,7 +2040,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalprop4($idAvaliacao, $idOrgao,$idAgenteRemetente,$idPerfilRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacao','','','3','$idOrgao','0','2',{$objAcesso->getDate()},'$idAgenteRemetente','$idPerfilRemetente')";
         return $sql;
     }
@@ -2053,15 +2053,15 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         $objAcesso = Acesso();
         if ($sqlDesejado == "readequacaoEA") {
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'EA'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
         } else if ($sqlDesejado == "readequacaoAP") {
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'AP'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
         } else if ($sqlDesejado == "readequacaoIN") {
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     SET idAgenteAvaliador = $AgenteLogin, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'IN'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
         }
@@ -2071,7 +2071,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function PropostaAltCampo($idAvaliacao) {
 
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stVerificacao = 1
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao
                 AND stAtivo = 0 ";
@@ -2115,13 +2115,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     h.idAvaliacaoItemPedidoAlteracao
 
                 FROM SAC.dbo.tbPlanoDistribuicao				AS a
-                INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     	AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     	AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                 INNER JOIN SAC.dbo.Projetos                                     AS c ON b.IdPRONAC = c.IdPRONAC
                 INNER JOIN SAC.dbo.Produto                                      AS d ON a.idProduto = d.Codigo
                 INNER JOIN SAC.dbo.Area						AS e ON a.cdArea = e.Codigo
                 INNER JOIN SAC.dbo.Segmento                                 	AS f ON a.cdSegmento = f.Codigo
                 INNER JOIN SAC.dbo.Verificacao					AS g ON a.idPosicaoLogo = g.idVerificacao
-                INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
+                INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao 	AS h ON h.idPedidoAlteracao = a.idPedidoAlteracao and h.tpAlteracaoProjeto in (7,10)
                 INNER JOIN SAC.dbo.vProponenteProjetos				AS i ON c.CgcCpf = i.CgcCpf
 
                 WHERE c.IdPRONAC = $idPronac
@@ -2147,7 +2147,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     {
 
         $sql = "SELECT *
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlt ";
 
         return $sql;
@@ -2156,7 +2156,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public static function alteraStatusProposta($idAvaliacao) {
 
         $sql = "SELECT *
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
 		
         return $sql;
@@ -2170,15 +2170,15 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         $objAcesso = Acesso();
         if ($sqlDesejado == "readequacaoEA") {
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'EA'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlteracao ";
         } else if ($sqlDesejado == "readequacaoAP") {
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'AP'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlteracao ";
         } else if ($sqlDesejado == "readequacaoIN") {
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     SET idAgenteAvaliador = $idAgente, dtInicioAvaliacao = {$objAcesso->getDate()}, stAvaliacaoItemPedidoAlteracao = 'IN'
                     WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlteracao ";
         }
@@ -2192,7 +2192,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function readequacaoAltCampo($idPedido) {
 
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stVerificacao = 1
                 WHERE idAvaliacaoItemPedidoAlteracao = $idPedido
                 AND stAtivo = 0 ";
@@ -2307,7 +2307,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public static function retornaSQLencaminhar($sqlDesejado, $ID_PRONAC, $idPedidoAlteracao, $tpAlteracaoProjeto, $justificativa, $Orgao, $idAgenteReceber) {
         if ($sqlDesejado == "sqlAlteraVariavelAltProj") {
 
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto
+            $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoProjeto
                     SET siVerificacao = 1
                     WHERE idPedidoAlteracao = $idPedidoAlteracao
                     AND IdPRONAC = $ID_PRONAC ";
@@ -2315,7 +2315,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         if ($sqlDesejado == "sqlAlteraVariavelTipoAlt") {
 
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                     SET stVerificacao = 1
                     WHERE idPedidoAlteracao = $idPedidoAlteracao
                     AND tpAlteracaoProjeto = $tpAlteracaoProjeto ";
@@ -2323,14 +2323,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         if ($sqlDesejado == "sqlCoordAcompEncaminhar") {
 
-            $sql = "INSERT BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+            $sql = "INSERT bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     VALUES ('$idPedidoAlteracao','$tpAlteracaoProjeto','','','','AG','')";
         }
 
         if ($sqlDesejado == "sqlRecuperarRegistro") {
 
             $sql = "SELECT TOP 1 idAvaliacaoItemPedidoAlteracao
-                    FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                    FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                     WHERE idPedidoAlteracao = '$idPedidoAlteracao'
                     AND tpAlteracaoProjeto = '$tpAlteracaoProjeto'
                     ORDER BY 1 DESC ";
@@ -2341,7 +2341,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 //SQL PARA GERAR UMA A��O NA TABELA tbAcaoAvaliacaoItemPedidoAlteracao
     public static function retornaSQLtbAcao($idAvaliacaoItemPedidoAlteracao, $justificativa, $tipoAg, $Orgao, $idAgenteReceber, $idAgenteRemente, $idPerfilRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteReceber','" . $justificativa . "','$tipoAg','$Orgao','0','0',{$objAcesso->getDate()},'$idAgenteRemente','$idPerfilRemetente')";
         return $sql;
     }
@@ -2354,7 +2354,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         if ($sqlDesejado == "sqlAlteraVariavel") {
 
-            $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+            $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                     SET stAtivo = 1
                     WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcao
                     AND idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao ";
@@ -2363,7 +2363,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         if ($sqlDesejado == "sqlCoordPareceristaEncaminhar") {
             $objAcesso = Acesso();
-            $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+            $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                     VALUES ('$idAvaliacaoItemPedidoAlteracao','$agenteNovo','" . $justificativa . "','1','$Orgao','0','0',{$objAcesso->getDate()}, '$idAgenteRemetente', '$idPerfilRemetente')";
         }
 
@@ -2371,7 +2371,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLReencaminharPar($idPedidoAlteracao, $tpAlteracaoProjeto) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET stVerificacao = 1
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND tpAlteracaoProjeto = $tpAlteracaoProjeto ";
@@ -2379,13 +2379,13 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function reencaminharPar($idPedidoAlteracao, $tpAlteracaoProjeto) {
-        $sql = "INSERT BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 VALUES ('$idPedidoAlteracao','$tpAlteracaoProjeto','','','','AG','')";
         return $sql;
     }
 
     public static function reencaminharPar1($idAcao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stAtivo = 1
                 WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcao ";
         return $sql;
@@ -2393,7 +2393,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function reencaminharPar2($idPedidoAlteracao, $tpAlteracaoProjeto) {
         $sql = "SELECT TOP 1 idAvaliacaoItemPedidoAlteracao
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND tpAlteracaoProjeto = $tpAlteracaoProjeto
                 ORDER BY 1 DESC";
@@ -2406,22 +2406,22 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function verificaPedidoAlteracaoProjetoProduto($idPronac) {
-        $sql = "select * from BDCORPORATIVO.scSac.tbPedidoAlteracaoProjeto tpa inner join
-        BDCORPORATIVO.scSac.tbPedidoAlteracaoXTipoAlteracao paxta on tpa.idPedidoAlteracao = paxta.idPedidoAlteracao WHERE idPronac = $idPronac AND tpAlteracaoProjeto = 7";
+        $sql = "select * from bdcorporativo.scSac.tbPedidoAlteracaoProjeto tpa inner join
+        bdcorporativo.scSac.tbPedidoAlteracaoXTipoAlteracao paxta on tpa.idPedidoAlteracao = paxta.idPedidoAlteracao WHERE idPronac = $idPronac AND tpAlteracaoProjeto = 7";
         return $sql;
     }
 
 
     public static function reencaminharPar3($idAvaliacaoItemPedidoAlteracao, $idAgente, $justificativa, $Orgao, $idAgenteRemetente, $idPerfilRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgente','" . $justificativa . "','1','$Orgao','0','0',{$objAcesso->getDate()}, $idAgenteRemetente, $idPerfilRemetente)";
         return $sql;
     }
 
     public static function reencaminharPar4() {
         $sql = "SELECT TOP 1 idAvaliacaoItemPedidoAlteracao
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND tpAlteracaoProjeto = $tpAlteracaoProjeto
                 ORDER BY 1 DESC ";
@@ -2430,7 +2430,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function reencaminharPar5($idAvaliacaoItemPedidoAlteracao, $idAgenteLogado, $justificativa, $Orgao, $idPerfil, $idAgente, $idGrupo) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteLogado','" . $justificativa . "','$idPerfil','$Orgao','0','0',{$objAcesso->getDate()}, '$idAgente', '$idGrupo')";
         return $sql;
     }
@@ -2441,7 +2441,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizarTec($idPedidoAlteracao,$situacao,$justificativa) {
         $objAcesso = Acesso();
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 SET stAvaliacaoItemPedidoAlteracao = '".$situacao."', dtFimAvaliacao = {$objAcesso->getDate()}, dsAvaliacao = '".$justificativa."'
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND dtFimAvaliacao = '1900-01-01 00:00:00.000'
@@ -2451,14 +2451,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizarTec2($idPedidoAlteracao) {
         $sql = "SELECT a.idAvaliacaoItemPedidoAlteracao, a.idAgenteAvaliador, idOrgao
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao AS a
-                INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS a
+                INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
                 WHERE idPedidoAlteracao = $idPedidoAlteracao AND tpAlteracaoProjeto = 7 AND stAtivo = 0 ";
         return $sql;
     }
 
     public static function retornaSQLfinalizarTec3($idPedidoAlteracao, $tpAlteracaoProjeto) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET stVerificacao = 2
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND tpAlteracaoProjeto = $tpAlteracaoProjeto ";
@@ -2466,7 +2466,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     }
 
     public static function retornaSQLfinalizarTec4($idAvaliacaoItemPedidoAlteracao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stAtivo = 1
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao
                 AND stAtivo = 0 ";
@@ -2475,7 +2475,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizarTec5($idAvaliacaoItemPedidoAlteracao, $idAgenteAvaliador, $observacoes, $idOrgao, $idAgenteRemetente, $idGrupoRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','$observacoes','3','$idOrgao','0','2',{$objAcesso->getDate()}, $idAgenteRemetente, $idGrupoRemetente) ";
         return $sql;
     }
@@ -2486,29 +2486,29 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLInclusaoItem($idPedidoAlteracao,$idAgenteAvaliador) {
         $objAcesso = Acesso();
-        $sql = "INSERT BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 VALUES ('$idPedidoAlteracao','10','$idAgenteAvaliador',{$objAcesso->getDate()},'','AG','')";
         return $sql;
     }
     public static function retornaSQLInclusaoItemId($idPedidoAlteracao) {
         $sql = "SELECT idAvaliacaoItemPedidoAlteracao
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idPedidoAlteracao = $idPedidoAlteracao AND tpAlteracaoProjeto = 10 AND stAvaliacaoItemPedidoAlteracao = 'AG'";
         return $sql;
     }
     public static function retornaSQLInclusaoPar($idAvaliacaoItemPedidoAlteracao, $idAgenteAvaliador, $observacoes, $idOrgao, $idAgenteRemetente, $idGrupoRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','$observacoes','2','$idOrgao','0','2',{$objAcesso->getDate()}, $idAgenteRemetente, $idGrupoRemetente) ";
         return $sql;
     }
     public static function retornaSQLAtualizaUltimoPedidoPar($idAcaoAvaliacao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao SET stAtivo = 1
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao SET stAtivo = 1
                 WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcaoAvaliacao AND stAtivo = 0 ";
         return $sql;
     }
     public static function retornaSQLAtualizaUltimoPedidoParecerista($idAvaliacao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao SET stAtivo = 1
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao SET stAtivo = 1
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacao ";
         return $sql;
     }
@@ -2520,7 +2520,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizarPar($idPedidoAlteracao,$situacao,$justificativa) {
         $objAcesso = Acesso();
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 SET stAvaliacaoItemPedidoAlteracao = '".$situacao."', dtFimAvaliacao = {$objAcesso->getDate()}, dsAvaliacao = '".$justificativa."'
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND dtFimAvaliacao = '1900-01-01 00:00:00.000' ";
@@ -2529,15 +2529,15 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizarPar2($idPedidoAlteracao) {
         $sql = "SELECT a.idAvaliacaoItemPedidoAlteracao, a.idAgenteAvaliador, idOrgao
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao AS a
-                INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS a
+                INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracao
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND stAtivo = 0 ";
         return $sql;
     }
 
     public static function retornaSQLfinalizarPar3($idAvaliacaoItemPedidoAlteracao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stAtivo = 1
                 WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao
                 AND stAtivo = 0 ";
@@ -2546,7 +2546,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizarPar4($idAvaliacaoItemPedidoAlteracao, $idAgenteAvaliador, $idOrgao, $idAgenteRemetente, $idGrupoRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','','3','$idOrgao','0','2',{$objAcesso->getDate()}, $idAgenteRemetente, $idGrupoRemetente) ";
         return $sql;
     }
@@ -2554,18 +2554,18 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     //serve somente para o item de custo (IC)
     public static function retornaSQLfinalizarPar4IC($idAvaliacaoItemPedidoAlteracao, $idAgenteAvaliador, $idOrgao, $idAgenteRemetente, $idGrupoRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$idAvaliacaoItemPedidoAlteracao','$idAgenteAvaliador','','2','$idOrgao','0','2',{$objAcesso->getDate()}, $idAgenteRemetente, $idGrupoRemetente) ";
         return $sql;
     }
 
     public static function retornaSQLfinalizarParST($idAvaliacaoItemPedidoAlteracao) {
-        $sql = "select * from BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao ";
+        $sql = "select * from bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao ";
         return $sql;
     }
 
     public static function retornaSQLfinalizarParST2($idPedidoAlteracao, $tpAlteracaoProjeto) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET stVerificacao = 2
                 WHERE idPedidoAlteracao = $idPedidoAlteracao
                 AND tpAlteracaoProjeto = $tpAlteracaoProjeto ";
@@ -2581,10 +2581,10 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         if ($sqlDesejado == "sqlListarHistorico") {
 
             $sql = "SELECT distinct e.IdPRONAC, e.NomeProjeto, b.idPedidoAlteracao, a.dtEncaminhamento, a.idOrgao, f.Sigla, a.idTipoAgente, a.dsObservacao, stAtivo, a.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao, b.tpAlteracaoProjeto
-                    FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracaO
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao AS c ON b.idPedidoAlteracao = c.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto AS d ON c.idPedidoAlteracao = d.idPedidoAlteracao
+                    FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS a
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracaO
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao AS c ON b.idPedidoAlteracao = c.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto AS d ON c.idPedidoAlteracao = d.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos AS e ON d.IdPRONAC = e.IdPRONAC
                     INNER JOIN SAC.dbo.Orgaos AS f ON a.idOrgao = f.Codigo ";
         }
@@ -2592,10 +2592,10 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         if ($sqlDesejado == "sqlListarHistoricoUnico") {
 
             $sql = "SELECT distinct e.IdPRONAC, e.NomeProjeto, b.idPedidoAlteracao, a.dtEncaminhamento, a.idOrgao, f.Sigla, a.idTipoAgente, a.dsObservacao, c.tpAlteracaoProjeto, stAtivo, a.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao, b.tpAlteracaoProjeto, b.idAvaliacaoItemPedidoAlteracao
-                    FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracaO
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao AS c ON b.idPedidoAlteracao = c.idPedidoAlteracao and c.tpAlteracaoProjeto = b.tpAlteracaoProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto AS d ON c.idPedidoAlteracao = d.idPedidoAlteracao
+                    FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS a
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracaO
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao AS c ON b.idPedidoAlteracao = c.idPedidoAlteracao and c.tpAlteracaoProjeto = b.tpAlteracaoProjeto
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto AS d ON c.idPedidoAlteracao = d.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos AS e ON d.IdPRONAC = e.IdPRONAC
                     INNER JOIN SAC.dbo.Orgaos AS f ON a.idOrgao = f.Codigo
                     WHERE stAtivo = 0 ";
@@ -2609,10 +2609,10 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         SELECT *, CAST(dsObservacao AS text) as dsObservacao FROM
             (
         SELECT distinct e.IdPRONAC, e.NomeProjeto, b.idPedidoAlteracao, a.dtEncaminhamento, a.idOrgao, f.Sigla, a.idTipoAgente, a.dsObservacao, stAtivo, a.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao, b.tpAlteracaoProjeto, i.usu_nome AS Remetente, g.gru_nome AS perfilRemetente, k.usu_nome AS Destinatario, l.dsTipoAgente AS perfilDestinatario
-                FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS a
-                INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracaO
-                INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao AS c ON b.idPedidoAlteracao = c.idPedidoAlteracao
-                INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto AS d ON c.idPedidoAlteracao = d.idPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS a
+                INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS b ON a.idAvaliacaoItemPedidoAlteracao = b.idAvaliacaoItemPedidoAlteracaO
+                INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao AS c ON b.idPedidoAlteracao = c.idPedidoAlteracao
+                INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto AS d ON c.idPedidoAlteracao = d.idPedidoAlteracao
                 INNER JOIN SAC.dbo.Projetos AS e ON d.IdPRONAC = e.IdPRONAC
                 INNER JOIN SAC.dbo.Orgaos AS f ON a.idOrgao = f.Codigo
                 INNER JOIN TABELAS.dbo.Grupos AS g ON g.gru_codigo = a.idPerfilRemetente
@@ -2620,7 +2620,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 INNER JOIN TABELAS.dbo.Usuarios AS i ON i.usu_identificacao = h.CNPJCPF
                 LEFT JOIN agentes.dbo.Agentes AS j ON j.idAgente = a.idAgenteAcionado
                 LEFT JOIN TABELAS.dbo.Usuarios AS k ON k.usu_identificacao = j.CNPJCPF
-                INNER JOIN BDCORPORATIVO.scSAC.tbTipoAgente AS l ON l.idTipoAgente = a.idTipoAgente
+                INNER JOIN bdcorporativo.scSAC.tbTipoAgente AS l ON l.idTipoAgente = a.idTipoAgente
                 where b.idAvaliacaoItemPedidoAlteracao = $idavaliacao ) as minhaTabela";
         return $sql;
     }
@@ -2630,7 +2630,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
      * *********************************************************************** */
 
     public static function retornaSQLdevolverMinc($idAcao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stAtivo = 1
                 WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcao ";
         return $sql;
@@ -2638,20 +2638,20 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLdevolverMinc2($idAcao) {
         $sql = "SELECT idAvaliacaoItemPedidoAlteracao, idOrgao
-                FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcao ";
         return $sql;
     }
 
     public static function retornaSQLdevolverMinc3($id) {
         $sql = "SELECT idPedidoAlteracao, tpAlteracaoProjeto
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idAvaliacaoItemPedidoAlteracao = $id ";
         return $sql;
     }
 
     public static function retornaSQLdevolverMinc4($idPedidoAlt, $tpAlt) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET stVerificacao = 3
                 WHERE idPedidoAlteracao = $idPedidoAlt
                 AND tpAlteracaoProjeto = $tpAlt ";
@@ -2660,7 +2660,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLdevolverMinc5($id, $idOrgao, $idAgenteRemetente, $idPerfilRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$id','','','3','$idOrgao','0','3',{$objAcesso->getDate()},'$idAgenteRemetente','$idPerfilRemetente') ";
         return $sql;
     }
@@ -2670,7 +2670,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
      * ****************************************************************** */
 
     public static function retornaSQLfinalizaGeral($idAcao) {
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 SET stAtivo = 1
                 WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcao ";
         return $sql;
@@ -2678,14 +2678,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizaGeral2($idAcao) {
         $sql = "SELECT idAvaliacaoItemPedidoAlteracao, idOrgao, dsObservacao
-                FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 WHERE idAcaoAvaliacaoItemPedidoAlteracao = $idAcao ";
         return $sql;
     }
 
     public static function retornaSQLfinalizaGeral3($id) {
         $sql = "SELECT idPedidoAlteracao, tpAlteracaoProjeto, stAvaliacaoItemPedidoAlteracao, idAgenteAvaliador 
-                FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                FROM bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao
                 WHERE idAvaliacaoItemPedidoAlteracao = $id ";
         return $sql;
     }
@@ -2697,7 +2697,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
             $and = " AND tpAlteracaoProjeto = $tpAlt ";
         }
 
-        $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+        $sql = "UPDATE bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET stVerificacao = 4
                 WHERE idPedidoAlteracao = $idPedidoAlt
                 $and ";
@@ -2706,21 +2706,21 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function retornaSQLfinalizaGeral5($id, $idOrgao, $idAgenteRemetente, $idPerfilRemetente) {
         $objAcesso = Acesso();
-        $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+        $sql = "INSERT INTO bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                 VALUES ('$id','','','4','$idOrgao','1','4',{$objAcesso->getDate()},'$idAgenteRemetente','$idPerfilRemetente') ";
         return $sql;
     }
 
     public static function retornaSQLfinalizaGeral6($idPedidoAlt) {
         $sql = "SELECT IdPRONAC
-                FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto
+                FROM bdcorporativo.scSAC.tbPedidoAlteracaoProjeto
                 WHERE idPedidoAlteracao = $idPedidoAlt ";
         return $sql;
     }
 
     public static function retornaSQLfinalizaGeral7($idPedidoAlt) {
         $sql = "SELECT tpAlteracaoProjeto
-                FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+                FROM bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 WHERE idPedidoAlteracao = $idPedidoAlt AND tpAlteracaoProjeto in (7,10) ";
         return $sql;
     }
@@ -2760,14 +2760,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         i.dsJustificativa
 
                     FROM SAC.dbo.tbProposta AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto             AS b ON b.idPedidoAlteracao = a.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                         AS c ON c.IdPRONAC = b.IdPRONAC
                     INNER JOIN SAC.dbo.PreProjeto                                       AS d ON d.idPreProjeto = c.idProjeto
                     INNER JOIN agentes.dbo.Agentes                                      AS e ON e.idAgente = d.idAgente
                     INNER JOIN SAC.dbo.vProponenteProjetos                              AS f ON c.CgcCpf = f.CgcCpf
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao       AS g ON g.idPedidoAlteracao = b.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS h ON g.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS i ON i.idPedidoAlteracao = g.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao       AS g ON g.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao   AS h ON g.idAvaliacaoItemPedidoAlteracao = h.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao	AS i ON i.idPedidoAlteracao = g.idPedidoAlteracao
 
                     WHERE b.IdPRONAC = ".$id_Pronac."
                     AND h.stAtivo = 1
@@ -2779,7 +2779,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 	public static function buscarJustificativaFinalParecerista($idAvaliacaoItemPedidoAlteracao)
 	{
 		$sql = "SELECT CAST(dsObservacao AS TEXT) AS dsObservacao, idAgenteRemetente  
-				FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao 
+				FROM bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao 
 				WHERE idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao AND idTipoAgente = 2 AND stVerificacao = 2";
 		
 		return $sql;
@@ -2816,7 +2816,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         CAST(a.dsjustificativa AS TEXT) AS JustificativaProponente
 
                     FROM SAC.dbo.tbPlanoDistribuicao				AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                 AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto					AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area					AS e ON a.cdArea = e.Codigo
@@ -2855,7 +2855,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         k.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao                                AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                     AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                      AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area                                         AS e ON a.cdArea = e.Codigo
@@ -2863,7 +2863,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     INNER JOIN SAC.dbo.Verificacao                                  AS g ON a.idPosicaoLogo = g.idVerificacao
                     INNER JOIN agentes.dbo.Agentes                                  AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                    AS j ON i.idAgente = j.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
                     WHERE c.IdPRONAC = $idPronac AND b.idPedidoAlteracao = $idPedidoAlteracao AND k.tpAlteracaoProjeto = 7 AND k.stAvaliacaoItemPedidoAlteracao in ('AG','EA')
                     ORDER BY a.idPlano";
 
@@ -2895,7 +2895,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         k.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao				AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                 AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto					AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area					AS e ON a.cdArea = e.Codigo
@@ -2903,8 +2903,8 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     INNER JOIN SAC.dbo.Verificacao				AS g ON a.idPosicaoLogo = g.idVerificacao
                     INNER JOIN agentes.dbo.Agentes                              AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                AS j ON i.idAgente = j.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS l on l.idAvaliacaoItemPedidoAlteracao = k.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS l on l.idAvaliacaoItemPedidoAlteracao = k.idAvaliacaoItemPedidoAlteracao
                     WHERE c.IdPRONAC = $idPronac AND b.idPedidoAlteracao = $idPedidoAlteracao AND l.stAtivo = 0
                     ORDER BY a.idPlano";
 
@@ -2937,7 +2937,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         k.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao				AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto     AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto     AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                 AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto					AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area					AS e ON a.cdArea = e.Codigo
@@ -2945,8 +2945,8 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     INNER JOIN SAC.dbo.Verificacao				AS g ON a.idPosicaoLogo = g.idVerificacao
                     INNER JOIN agentes.dbo.Agentes                              AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                AS j ON i.idAgente = j.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS l on l.idAvaliacaoItemPedidoAlteracao = k.idAvaliacaoItemPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao AS l on l.idAvaliacaoItemPedidoAlteracao = k.idAvaliacaoItemPedidoAlteracao
                     WHERE c.IdPRONAC = $idPronac AND b.idPedidoAlteracao = $idPedidoAlteracao AND l.stAtivo = 1 AND k.tpAlteracaoProjeto = 7 AND l.idTipoAgente = 1
                     ORDER BY a.idPlano";
 
@@ -2978,7 +2978,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         k.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao                                AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                     AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                      AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area                                         AS e ON a.cdArea = e.Codigo
@@ -2986,7 +2986,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     INNER JOIN SAC.dbo.Verificacao                                  AS g ON a.idPosicaoLogo = g.idVerificacao
                     INNER JOIN agentes.dbo.Agentes                                  AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                    AS j ON i.idAgente = j.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
                     WHERE c.IdPRONAC = $idPronac AND b.idPedidoAlteracao = $idPedidoAlteracao AND k.tpAlteracaoProjeto = 7
                     ORDER BY a.idPlano";
                     //AND k.stAvaliacaoItemPedidoAlteracao in ('AG','EA')
@@ -3019,7 +3019,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         k.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao                                AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                     AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                      AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area                                         AS e ON a.cdArea = e.Codigo
@@ -3027,7 +3027,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     INNER JOIN SAC.dbo.Verificacao                                  AS g ON a.idPosicaoLogo = g.idVerificacao
                     INNER JOIN agentes.dbo.Agentes                                  AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                    AS j ON i.idAgente = j.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
                     WHERE c.IdPRONAC = $idPronac AND b.idPedidoAlteracao = $idPedidoAlteracao AND k.tpAlteracaoProjeto = 7
                     AND k.stAvaliacaoItemPedidoAlteracao in ('AG','EA')
                     ORDER BY a.idPlano";
@@ -3060,7 +3060,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         k.idAvaliacaoItemPedidoAlteracao
 
                     FROM SAC.dbo.tbPlanoDistribuicao                                AS a
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbPedidoAlteracaoProjeto         AS b ON a.idPedidoAlteracao = b.idPedidoAlteracao
                     INNER JOIN SAC.dbo.Projetos                                     AS c ON b.IdPRONAC = c.IdPRONAC
                     INNER JOIN SAC.dbo.Produto                                      AS d ON a.idProduto = d.Codigo
                     INNER JOIN SAC.dbo.Area                                         AS e ON a.cdArea = e.Codigo
@@ -3068,7 +3068,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     INNER JOIN SAC.dbo.Verificacao                                  AS g ON a.idPosicaoLogo = g.idVerificacao
                     INNER JOIN agentes.dbo.Agentes                                  AS i ON c.CgcCpf = i.CNPJCPF
                     INNER JOIN agentes.dbo.Nomes                                    AS j ON i.idAgente = j.idAgente
-                    INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scSAC.tbAvaliacaoItemPedidoAlteracao   AS k on k.idPedidoAlteracao = a.idPedidoAlteracao
                     WHERE c.IdPRONAC = $idPronac AND b.idPedidoAlteracao = $idPedidoAlteracao AND k.tpAlteracaoProjeto = 7
                     AND k.stAvaliacaoItemPedidoAlteracao not in ('AG','EA')
                     ORDER BY a.idPlano";

@@ -19,14 +19,14 @@ Class AreadeTrabalhoDAO extends Zend_Db_Table{
 
 					FROM SAC.dbo.Projetos Pr
 						,SAC.dbo.Parecer Pa
-						,BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC
+						,bdcorporativo.scSAC.tbDistribuicaoProjetoComissao DPC
 
 					WHERE Pa.idPRONAC = Pr.IdPRONAC
 						AND DPC.idPRONAC = Pr.IdPRONAC
 						AND Pr.Situacao = 'C10'
 						AND Pa.TipoParecer = '1'
                                                 AND DPC.idAgente = $idagente
-                                                AND not exists(select 1 from BDCORPORATIVO.scSAC.tbPauta where idpronac = Pr.idPRONAC )
+                                                AND not exists(select 1 from bdcorporativo.scSAC.tbPauta where idpronac = Pr.idPRONAC )
                                                 AND Pa.stAtivo = 1
 			";
 			$db = Zend_Db_Table::getDefaultAdapter();

@@ -89,7 +89,7 @@ class tbDiligencia extends MinC_Db_Table_Abstract
 		$select->joinLeft(
 				array('a'=>'tbArquivo'),'d.idArquivo = a.idArquivo',
 				array('a.nmArquivo','a.sgExtensao'),
-				'BDCORPORATIVO.scCorp'
+				'bdcorporativo.scCorp'
 		);
 
 

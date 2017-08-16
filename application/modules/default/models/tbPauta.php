@@ -1,8 +1,8 @@
 <?php
 class tbPauta extends MinC_Db_Table_Abstract {
 
-    protected $_banco = "BDCORPORATIVO";
-    protected $_schema = "BDCORPORATIVO.scSAC";
+    protected $_banco = "bdcorporativo";
+    protected $_schema = "bdcorporativo.scSAC";
     protected $_name = "tbPauta";
 
     public function buscarProjetosAvaliados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $bln_readequacao=false){
@@ -27,7 +27,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                             array('z'=>'tbDistribuicaoProjetoComissao'),
                             't.IdPRONAC = z.idPRONAC',
                             array("idComponente"=>"idAgente"),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                           );
         $slct->joinInner(
                             array('p'=>'Projetos'),
@@ -167,7 +167,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                                 array('z'=>'tbDistribuicaoProjetoComissao'),
                                 't.IdPRONAC = z.idPRONAC',
                                 array(),
-                                'BDCORPORATIVO.scSAC'
+                                'bdcorporativo.scSAC'
                               );
             $slct2->joinInner(
                                 array('p'=>'Projetos'),
@@ -462,7 +462,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 array('dpc' => 'tbDistribuicaoProjetoComissao'),
                 "pr.IdPRONAC = dpc.idPRONAC",
                 array(),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $slct->joinInner(
                 array('nm' => 'Nomes'),
@@ -621,7 +621,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                                                                 WHEN stAnalise = 'IC'
                                                                     THEN 'Indeferido pelo componente'
                                                                 END "),
-                ),'BDCORPORATIVO.scSAC'
+                ),'bdcorporativo.scSAC'
         );
         $slct->joinInner(
                 array('vt' => 'tbVotacao'),
@@ -635,7 +635,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                                                                 WHEN stVoto = 'I'
                                                                     THEN 'Indeferiu'
                                                                 END ")),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -696,13 +696,13 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     array('cv' => 'tbConsolidacaoVotacao'),
                     "pr.IdPRONAC = cv.IdPRONAC",
                     array(),
-                    'BDCORPORATIVO.scSAC'
+                    'bdcorporativo.scSAC'
             );
             $slctContador->joinInner(
                     array('vt' => 'tbVotacao'),
                     "pr.IdPRONAC = vt.IdPRONAC",
                     array(),
-                    'BDCORPORATIVO.scSAC'
+                    'bdcorporativo.scSAC'
             );
 
             $rs = $this->fetchAll($slctContador)->current();
@@ -783,7 +783,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                 array('cv' => 'tbConsolidacaoVotacao'),
                 "cv.IdPRONAC = tp.IdPRONAC and cv.IdNrReuniao = tp.IdNrReuniao",
                 array('CAST(cv.dsConsolidacao as TEXT) as dsConsolidacao'),
-                "BDCORPORATIVO.scSAC"
+                "bdcorporativo.scSAC"
         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -820,7 +820,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
                     array('cv' => 'tbConsolidacaoVotacao'),
                     "cv.IdPRONAC = tp.IdPRONAC and cv.IdNrReuniao = tp.IdNrReuniao",
                     array(),
-                    "BDCORPORATIVO.scSAC"
+                    "bdcorporativo.scSAC"
             );
             $rs = $this->fetchAll($slctContador)->current();
             if($rs){ return $rs->total; }else{ return 0; }
@@ -859,7 +859,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $select = $db->select()
-            ->from(array('p' => 'tbPauta'), $cols, 'BDCORPORATIVO.scSAC')
+            ->from(array('p' => 'tbPauta'), $cols, 'bdcorporativo.scSAC')
             ->join(array('pa' => 'Parecer'), '(p.IdPRONAC = pa.IdPRONAC)', null, 'sac')
             ->join(array('x' => 'Projetos'), '(x.IdPRONAC = pa.IdPRONAC)', null, 'sac')
             ->join(array('r' => 'tbReuniao'), '(p.idNrReuniao = r.idNrReuniao)', null, 'sac' )
@@ -880,9 +880,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("'An&aacute;lise Inicial' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
-                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
-                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
-                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
+                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
+                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
+                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
                 'c.dsConsolidacao'
             )
         );
@@ -892,7 +892,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct1->joinInner(
             array('c' => 'tbConsolidacaoVotacao'), "b.IdPRONAC = c.idPRONAC",
-            array(), "BDCORPORATIVO.scSAC"
+            array(), "bdcorporativo.scSAC"
         );
         $slct1->where('a.stEnvioPlenario = ?', 'S');
         $slct1->where('a.idNrReuniao = ?', $idNrReuniao);
@@ -905,9 +905,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
             array('a' => 'tbRecurso'),
             array(
                 new Zend_Db_Expr("'Recurso' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
-                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
-                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
-                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
+                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
+                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
+                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
                 'c.dsConsolidacao'
             ), 'SAC'
         );
@@ -917,7 +917,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct2->joinInner(
             array('c' => 'tbConsolidacaoVotacao'), "b.IdPRONAC = c.idPRONAC",
-            array(), "BDCORPORATIVO.scSAC"
+            array(), "bdcorporativo.scSAC"
         );
         $slct2->where('a.siRecurso = ?', 8);
         $slct2->where('a.idNrReuniao = ?', $idNrReuniao);
@@ -931,9 +931,9 @@ class tbPauta extends MinC_Db_Table_Abstract {
             array('a' => 'tbReadequacao'),
             array(
                 new Zend_Db_Expr("'Readequa��o' AS TipoAprovacao,d.dsReadequacao AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto"),
-                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC and d.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAprovacao"),
-                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC and e.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAbstencao"),
-                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC and f.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoIndeferimento"),
+                new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM bdcorporativo.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC and d.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAprovacao"),
+                new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM bdcorporativo.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC and e.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAbstencao"),
+                new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM bdcorporativo.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC and f.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoIndeferimento"),
                 'c.dsConsolidacao'
             ), 'SAC'
         );
@@ -943,7 +943,7 @@ class tbPauta extends MinC_Db_Table_Abstract {
         );
         $slct3->joinInner(
             array('c' => 'tbConsolidacaoVotacao'), "b.IdPRONAC = c.idPRONAC AND a.idTipoReadequacao = c.tpTipoReadequacao",
-            array(), "BDCORPORATIVO.scSAC"
+            array(), "bdcorporativo.scSAC"
         );
         $slct3->joinInner(
             array('d' => 'tbTipoReadequacao'), "a.idTipoReadequacao = d.idTipoReadequacao",

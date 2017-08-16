@@ -47,7 +47,7 @@ class Cotacao extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             'cot.idCotacao = cpa.idCotacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinInner(
                             array('pa'=>'tbPlanilhaAprovacao'),

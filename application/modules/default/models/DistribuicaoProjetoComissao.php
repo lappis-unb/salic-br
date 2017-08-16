@@ -1,7 +1,7 @@
 <?php
 class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
 
-    protected $_schema = 'BDCORPORATIVO.scSAC';
+    protected $_schema = 'bdcorporativo.scSAC';
     protected $_name = 'tbDistribuicaoProjetoComissao';
 
     public function buscarProjetosDistribuidos($idAgente, $idNrReuniao) {
@@ -9,8 +9,8 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(array('DPC' => $this->_name), array(
                 'CONVERT(CHAR(10),DPC.dtDistribuicao,103) AS DataRecebimento',
-                new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM BDCORPORATIVO.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
-                new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM BDCORPORATIVO.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
+                new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM bdcorporativo.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
+                new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM bdcorporativo.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
             )
         );
         $select->joinInner(array('Pr' => 'Projetos'), 'DPC.idPRONAC = Pr.IdPRONAC', array
@@ -31,7 +31,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
                 ), 'SAC'
         );
         $select->joinLeft(
-                array('pt' => 'tbPauta'), "pt.IdPRONAC = Pr.IdPRONAC", array("pt.idNrReuniao"), 'BDCORPORATIVO.scSAC'
+                array('pt' => 'tbPauta'), "pt.IdPRONAC = Pr.IdPRONAC", array("pt.idNrReuniao"), 'bdcorporativo.scSAC'
         );
 
         $select->where('Pr.Situacao in (?)', array('C10', 'D01'));
@@ -71,7 +71,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         );
         $select->joinLeft(array('pt'=>'tbPauta'),
                                 "pt.IdPRONAC = Pr.IdPRONAC",
-                          array("pt.idNrReuniao"),'BDCORPORATIVO.scSAC');
+                          array("pt.idNrReuniao"),'bdcorporativo.scSAC');
 
         $select->where(" NOT EXISTS(
                               SELECT idpronac
@@ -141,7 +141,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(array('dpc' => $this->_name), array('dpc.IdPRONAC')
         );
-        $select->where('not exists(select IdPRONAC from BDCORPORATIVO.scSAC.tbPauta where idpronac = dpc.IdPRONAC)');
+        $select->where('not exists(select IdPRONAC from bdcorporativo.scSAC.tbPauta where idpronac = dpc.IdPRONAC)');
         $select->where('not exists(select IdPRONAC from SAC.dbo.Parecer where idpronac = dpc.IdPRONAC and idTipoAgente = 6)');
         if ($idagente) {
             $select->where('dpc.idAgente = ?', $idagente);
@@ -171,7 +171,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
                 array('dpc' => $this->_name), array('dpc.idPRONAC')
         );
         $select->where('dpc.idPRONAC not in(select idPRONAC from SAC.dbo.Parecer where idPronac = dpc.idPRONAC and idTipoAgente=6)', '');
-        $select->where(new Zend_Db_Expr('NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbPauta  o  WHERE o.IdPRONAC = dpc.idPRONAC)'));
+        $select->where(new Zend_Db_Expr('NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbPauta  o  WHERE o.IdPRONAC = dpc.idPRONAC)'));
         $select->where('dpc.stDistribuicao = ?', 'A');
 
         return $this->fetchAll($select);
@@ -183,7 +183,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->from(
                 array('dpc' => $this->_name), array('dpc.idPRONAC')
         );
-        $select->where("dpc.idPRONAC in (select idPRONAC from BDCORPORATIVO.scSAC.tbPauta where idPronac = dpc.idPRONAC and idNrReuniao = $idnrreuniao )", "");
+        $select->where("dpc.idPRONAC in (select idPRONAC from bdcorporativo.scSAC.tbPauta where idPronac = dpc.idPRONAC and idNrReuniao = $idnrreuniao )", "");
         $select->where('dpc.stDistribuicao = ?', 'A');
         return $this->fetchAll($select);
     }
@@ -205,18 +205,18 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->where('pr.Situacao = ? ', 'C10');
         $select->where('SDPC.stDistribuicao = ? ', 'A');
         $select->where('tc.cdArea = ? ', $cdarea);
-        $select->where('not exists (select idpronac from BDCORPORATIVO.scSAC.tbPauta where idpronac = SDPC.idPronac)', '');
+        $select->where('not exists (select idpronac from bdcorporativo.scSAC.tbPauta where idpronac = SDPC.idPronac)', '');
         $select->group('SDPC.idAgente');
         $select->order('QTD desc');
 
         xd($select->assemble());
 
 //        SELECT SDPC.idAgente,  COUNT(SDPC.idPronac) as QTD
-//FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao SDPC
+//FROM bdcorporativo.scSAC.tbDistribuicaoProjetoComissao SDPC
 //INNER JOIN SAC.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
 //INNER JOIN agentes.dbo.tbTitulacaoConselheiro tc on tc.idAgente = SDPC.idAgente
 //WHERE pr.Situacao = 'C10' AND SDPC.stDistribuicao = 'A' and tc.cdArea='6'
-//and not exists (select idpronac from BDCORPORATIVO.scSAC.tbPauta where idpronac = SDPC.idPronac)
+//and not exists (select idpronac from bdcorporativo.scSAC.tbPauta where idpronac = SDPC.idPronac)
 //group by SDPC.idAgente
     }
 

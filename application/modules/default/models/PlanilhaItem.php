@@ -16,8 +16,8 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
                     pa.*,
                     (
                         SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
+                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
                         INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao
                         WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao AND c1.idPronac = pa.idPronac
                         GROUP BY a1.idPlanilhaAprovacao
@@ -36,8 +36,8 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
                     pa.*,
                     (
                         SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
+                        FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                        INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b1 ON a1.idComprovantePagamento = b1.idComprovantePagamento
                         INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao
                         WHERE c1.idPlanilhaItem = pa.idPlanilhaItem
                             AND c1.nrFonteRecurso = pa.nrFonteRecurso

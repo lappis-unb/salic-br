@@ -56,13 +56,13 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('b' => 'tbDocumento'),
                     'b.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('c' => 'tbArquivo'),
                     'c.idArquivo = b.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -108,13 +108,13 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('b' => 'tbDocumento'),
                     'b.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('c' => 'tbArquivo'),
                     'c.idArquivo = b.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -159,13 +159,13 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('b' => 'tbDocumento'),
                     'b.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('c' => 'tbArquivo'),
                     'c.idArquivo = b.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -210,13 +210,13 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('b' => 'tbDocumento'),
                     'b.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('c' => 'tbArquivo'),
                     'c.idArquivo = b.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -261,13 +261,13 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('b' => 'tbDocumento'),
                     'b.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('c' => 'tbArquivo'),
                     'c.idArquivo = b.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),
@@ -311,13 +311,13 @@ class tbComprovanteExecucao extends MinC_Db_Table_Abstract
                     array('b' => 'tbDocumento'),
                     'b.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('c' => 'tbArquivo'),
                     'c.idArquivo = b.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('d' => 'tbRelatorio'),

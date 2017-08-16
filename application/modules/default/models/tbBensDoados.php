@@ -58,19 +58,19 @@ class tbBensDoados extends MinC_Db_Table_Abstract {
         );
         $slct->joinLeft(
                 array('e' => 'tbDocumento'), "a.idDocumentoDoacao = e.idDocumento",
-                array('idArquivo as idArquivoDoacao'), 'BDCORPORATIVO.scCorp'
+                array('idArquivo as idArquivoDoacao'), 'bdcorporativo.scCorp'
         );
         $slct->joinLeft(
                 array('f' => 'tbArquivo'), "e.idArquivo = f.idArquivo",
-                array('nmArquivo as nmArquivoDoacao'), 'BDCORPORATIVO.scCorp'
+                array('nmArquivo as nmArquivoDoacao'), 'bdcorporativo.scCorp'
         );
         $slct->joinLeft(
                 array('g' => 'tbDocumento'), "a.idDocumentoAceite = g.idDocumento",
-                array('idArquivo as idArquivoAceite'), 'BDCORPORATIVO.scCorp'
+                array('idArquivo as idArquivoAceite'), 'bdcorporativo.scCorp'
         );
         $slct->joinLeft(
                 array('h' => 'tbArquivo'), "g.idArquivo = h.idArquivo",
-                array('nmArquivo as nmArquivoAceite'), 'BDCORPORATIVO.scCorp'
+                array('nmArquivo as nmArquivoAceite'), 'bdcorporativo.scCorp'
         );
 
         // adicionando clausulas where

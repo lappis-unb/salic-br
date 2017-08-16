@@ -13,7 +13,7 @@
 class AprovacaoDAO extends Zend_Db_Table
 {
 
-    protected $_name = 'BDCORPORATIVO.scSAC.tbPauta'; // nome da tabela
+    protected $_name = 'bdcorporativo.scSAC.tbPauta'; // nome da tabela
 
     #--verifica se tem algum componente na area e segmento selecionado--
 
@@ -48,7 +48,7 @@ class AprovacaoDAO extends Zend_Db_Table
                 INNER JOIN SAC.dbo.Segmento seg on seg.Codigo = pr.Segmento
                 left JOIN SAC..Enquadramento en on en.IdPRONAC = pr.IdPRONAC
                 INNER JOIN SAC..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)
-                INNER JOIN BDCORPORATIVO.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
+                INNER JOIN bdcorporativo.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
                 INNER JOIN SAC..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
                 INNER JOIN agentes.dboAgentes ag on ag.CNPJCPF = pr.CgcCpf
                 INNER JOIN agentes.dboNomes nm on nm.idAgente = ag.idAgente ";
@@ -107,7 +107,7 @@ class AprovacaoDAO extends Zend_Db_Table
                 INNER JOIN SAC.dbo.Segmento seg on seg.Codigo = pr.Segmento
                 left JOIN SAC..Enquadramento en on en.IdPRONAC = pr.IdPRONAC
                 INNER JOIN SAC..Aprovacao ap on ap.IdPRONAC = pr.IdPRONAC and ap.DtAprovacao in (select max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC)
-                INNER JOIN BDCORPORATIVO.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
+                INNER JOIN bdcorporativo.scSAC.tbPauta tp on tp.IdPRONAC = pr.IdPRONAC
                 INNER JOIN SAC..tbReuniao tr on tr.idNrReuniao = tp.idNrReuniao
                 INNER JOIN agentes.dboAgentes ag on ag.CNPJCPF = pr.CgcCpf
                 INNER JOIN agentes.dboNomes nm on nm.idAgente = ag.idAgente

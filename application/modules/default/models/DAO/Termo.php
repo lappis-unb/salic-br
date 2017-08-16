@@ -24,7 +24,7 @@ $sql = "select  tr.idNrReuniao,
         pr.NomeProjeto,
         tp.stAnalise, 
         ap.AprovadoReal
-		from BDCORPORATIVO.scSAC.tbPauta tp
+		from bdcorporativo.scSAC.tbPauta tp
         inner join SAC.dbo.Projetos pr  on pr.IdPRONAC = tp.IdPRONAC
         inner join SAC.dbo.tbReuniao tr on tp.idNrReuniao = tr.idNrReuniao
         join SAC.dbo.Aprovacao ap on pr.IdPRONAC = ap.IdPRONAC
@@ -66,7 +66,7 @@ $sql = "        SELECT
 		    when ap.TipoAprovacao = 4 then 'Redu��o'
 		    end as tipoaprovacao
       		FROM SAC.dbo.Projetos pr
-		    INNER JOIN BDCORPORATIVO.scSAC.tbPauta tp ON pr.IdPRONAC = tp.IdPRONAC
+		    INNER JOIN bdcorporativo.scSAC.tbPauta tp ON pr.IdPRONAC = tp.IdPRONAC
 		    INNER JOIN SAC.dbo.tbReuniao tr ON tp.idNrReuniao = tr.idNrReuniao
 		    INNER JOIN SAC.dbo.Parecer par on par.idPRONAC = pr.IdPRONAC
 		    Inner JOIN SAC.dbo.Aprovacao ap ON pr.IdPRONAC = ap.IdPRONAC

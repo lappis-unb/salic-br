@@ -345,7 +345,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$select->where("tp.siRecurso = ?", 8);
 		$select->where("par.stAtivo = ?", 1);
 		$select->where("par.TipoParecer = ?", 7);
-		$select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE tp.idNrReuniao = cv.idNrReuniao and tp.IdPRONAC = cv.IdPRONAC)", '');
+		$select->where("NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbConsolidacaoVotacao AS cv WHERE tp.idNrReuniao = cv.idNrReuniao and tp.IdPRONAC = cv.IdPRONAC)", '');
 		$select->order(array(8,2));
 
         
@@ -664,7 +664,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 FROM  SAC.dbo.tbRecurso  a
                 INNER JOIN SAC.dbo.Projetos c on (a.IdPRONAC = c.idPronac)
                 WHERE siRecurso = 8
-                      AND NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
+                      AND NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
@@ -679,7 +679,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                WHERE a.stEstado = 0 and
                     (a.siRecurso = 9 and a.idNrReuniao = $idNrReuniao ) or
                     (a.siRecurso = 8 and a.stEstado = 0
-                    AND EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
+                    AND EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);

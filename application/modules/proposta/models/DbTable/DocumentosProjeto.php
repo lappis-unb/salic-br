@@ -82,15 +82,15 @@ class Proposta_Model_DbTable_DocumentosProjeto extends MinC_Db_Table_Abstract
             array("idDocumento",
                 new Zend_Db_Expr("'antigo-preprojeto' as tipoDocumento"),
                 new Zend_Db_Expr("'Anexado pelo Proponente' as Classificacao")
-            ), 'BDCORPORATIVO.scCorp'
+            ), 'bdcorporativo.scCorp'
         );
         $d->joinInner(
             array('a5' => 'tbArquivo'), "a4.idArquivo = a5.idArquivo",
-            array("nmArquivo as nome"), 'BDCORPORATIVO.scCorp'
+            array("nmArquivo as nome"), 'bdcorporativo.scCorp'
         );
         $d->joinInner(
             array('tap' => 'tbDocumentoProjeto'), "tap.idDocumento = a4.idDocumento",
-            array("idpronac"), 'BDCORPORATIVO.scCorp'
+            array("idpronac"), 'bdcorporativo.scCorp'
         );
         $d->where('tap.idpronac = ?', $idPronac);
         $d->where('a5.nmArquivo != ?', '');

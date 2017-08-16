@@ -11,7 +11,7 @@
 
 class tbDistribuicao extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "BDCORPORATIVO";
+	protected $_banco  = "bdcorporativo";
 	protected $_schema = "scSAC";
 	protected $_name   = "tbDistribuicao";
 
@@ -110,7 +110,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('edi'=>'Edital'),
                             'pp.idEdital = edi.idEdital',
                             array('NrEdital'),
-                            'SAC'  //'BDCORPORATIVO.scSAC' - Antigo
+                            'SAC'  //'bdcorporativo.scSAC' - Antigo
                             );
             $slct->joinInner(
                             array('pro'=>'Projetos'),
@@ -121,12 +121,12 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
             $slct->joinInner(array('fod' => 'tbFormDocumento'),
                             'fod.idEdital = edi.idEdital and fod.idClassificaDocumento not in (23,24,25)',
                             array('fod.nmFormDocumento'),
-                            'BDCORPORATIVO.scQuiz'
+                            'bdcorporativo.scQuiz'
                             );
             $slct->joinLeft(array('ava' => 'tbAvaliacaoPreProjeto'),
                             'ava.idPreProjeto = pp.idPreProjeto and ava.idAvaliador = dis.idDestinatario',
                             array('nrNotaFinal'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                             );
 
         foreach ($where as $coluna => $valor) {

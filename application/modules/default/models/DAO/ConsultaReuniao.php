@@ -16,15 +16,15 @@ class ConsultaReuniao {
 
     $sql = "SELECT
                  SAC.dbo.tbReuniao.idNrReuniao,
-                 BDCORPORATIVO.scSAC.tbPauta.IdPRONAC,
+                 bdcorporativo.scSAC.tbPauta.IdPRONAC,
                  SAC.dbo.tbReuniao.NrReuniao, tbReuniao.DtInicio,
                  SAC.dbo.tbReuniao.DtFechamento,
                  SAC.dbo.tbReuniao.stEstado
             FROM
-               BDCORPORATIVO.scSAC.tbPauta
+               bdcorporativo.scSAC.tbPauta
             INNER JOIN
                       SAC.dbo.tbReuniao ON
-                      BDCORPORATIVO.scSAC.tbPauta.idNrReuniao = SAC.dbo.tbReuniao.idNrReuniao
+                      bdcorporativo.scSAC.tbPauta.idNrReuniao = SAC.dbo.tbReuniao.idNrReuniao
             WHERE SAC.dbo.tbReuniao.stEstado = 0";
 
                 try

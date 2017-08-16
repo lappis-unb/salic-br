@@ -6,8 +6,8 @@
  */
 class Mensagemprojeto extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'BDCORPORATIVO';
-    protected $_name = 'BDCORPORATIVO.tbmensagemprojeto';
+    protected $_banco = 'bdcorporativo';
+    protected $_name = 'bdcorporativo.tbmensagemprojeto';
     protected $_schema = 'scSAC';
 
     public function buscarMensagemProjeto($where = array(), $orwhere=array()) {

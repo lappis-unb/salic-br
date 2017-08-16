@@ -1,7 +1,7 @@
 <?php
 class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
 {
-    protected $_name = "BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto";
+    protected $_name = "bdcorporativo.scSAC.tbPedidoAlteracaoProjeto";
 
     public static function buscarDadosPedidoAlteracao($idpedidoalteracao = null)
     {
@@ -41,27 +41,27 @@ class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
                   prep.objetivos";
         }
         $sql .= "
-        from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap
+        from bdcorporativo.scSAC.tbPedidoAlteracaoProjeto pap
         join SAC.dbo.Projetos pr on pr.IdPRONAC = pap.idPRONAC
         join SAC.dbo.Area ar on ar.Codigo = pr.Area
         join SAC.dbo.Segmento seg on seg.Codigo = pr.Segmento
         left join SAC.dbo.Abrangencia abrang on abrang.idProjeto = pr.idPronac AND abrang.stAbrangencia = 1 
         left join agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abrang.idMunicipioIBGE
-        left join BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto tap on tap.tpAlteracaoProjeto = pap.tpAlteracaoProjeto
+        left join bdcorporativo.scSAC.tbTipoAlteracaoProjeto tap on tap.tpAlteracaoProjeto = pap.tpAlteracaoProjeto
         left join SAC.dbo.PreProjeto prep on prep.idPreProjeto = pr.idProjeto
         left join agentes.dbo.Nomes nm on nm.idAgente = prep.idAgente
-        left join BDCORPORATIVO.scSAC.tbAvaliacaoPedidoAlteracao apa on apa.idPedidoAlteracao = pap.idPedidoAlteracao
-        left join BDCORPORATIVO.scSAC.tbProrrogacaoPrazo pp on pp.idPedidoAlteracao = pap.idPedidoAlteracao
+        left join bdcorporativo.scSAC.tbAvaliacaoPedidoAlteracao apa on apa.idPedidoAlteracao = pap.idPedidoAlteracao
+        left join bdcorporativo.scSAC.tbProrrogacaoPrazo pp on pp.idPedidoAlteracao = pap.idPedidoAlteracao
         ";
         if(!empty($idpedidoalteracao))
         {
             $sql.=" where pap.idPedidoAlteracao='".$idpedidoalteracao."' and apa.dtparecertecnico in
-            (select max(dtparecertecnico) from BDCORPORATIVO.scSAC.tbavaliacaopedidoalteracao where idPedidoAlteracao = pap.idPedidoAlteracao)";
+            (select max(dtparecertecnico) from bdcorporativo.scSAC.tbavaliacaopedidoalteracao where idPedidoAlteracao = pap.idPedidoAlteracao)";
         }
         else
         {
             $sql.=" where apa.dtParecerTecnico is not null and apa.dsParecerTecnico is not null and idTecnico is not null and apa.dtparecertecnico in
-            (select max(dtparecertecnico) from BDCORPORATIVO.scSAC.tbavaliacaopedidoalteracao where idPedidoAlteracao = pap.idPedidoAlteracao)";
+            (select max(dtparecertecnico) from bdcorporativo.scSAC.tbavaliacaopedidoalteracao where idPedidoAlteracao = pap.idPedidoAlteracao)";
         }
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -75,7 +75,7 @@ class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where   = "idpedidoalteracao = ".$id." and dtparecertecnico='".$data."'";
-        $alterar = $db->update("BDCORPORATIVO.scSAC.tbAvaliacaoPedidoAlteracao", $dados, $where);
+        $alterar = $db->update("bdcorporativo.scSAC.tbAvaliacaoPedidoAlteracao", $dados, $where);
 
         if ($alterar)
         {
@@ -93,7 +93,7 @@ class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idpedidoalteracao = ".$id;
-        $alterar = $db->update("BDCORPORATIVO.scSAC.tbpedidoalteracaoprojeto", $dados, $where);
+        $alterar = $db->update("bdcorporativo.scSAC.tbpedidoalteracaoprojeto", $dados, $where);
 
         if ($alterar)
         {

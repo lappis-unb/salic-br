@@ -17,8 +17,8 @@ class FichaTecnicaDAO {
                 from
                     SAC.dbo.PreProjeto pre
                     inner join SAC.dbo.Projetos pro on pro.idProjeto = pre.idPreProjeto
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
+                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
+                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
                 where
                     tpa.IdPRONAC = {$idPronac} and tpa.idPedidoAlteracao = $idPedidoAlteracao and tpxa.tpAlteracaoProjeto = 3";
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -34,8 +34,8 @@ class FichaTecnicaDAO {
                 from
                     SAC.dbo.PreProjeto pre
                     inner join SAC.dbo.Projetos pro on pro.idProjeto = pre.idPreProjeto
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
+                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoProjeto tpa on tpa.IdPRONAC = pro.IdPRONAC
+                    inner join bdcorporativo.scSAC.tbPedidoAlteracaoXTipoAlteracao tpxa on tpxa.idPedidoAlteracao = tpa.idPedidoAlteracao
                 where
                     tpa.IdPRONAC = {$idPronac} and tpa.idPedidoAlteracao = $idPedidoAlteracao and tpxa.tpAlteracaoProjeto = 3";
         $db= Zend_Db_Table::getDefaultAdapter();

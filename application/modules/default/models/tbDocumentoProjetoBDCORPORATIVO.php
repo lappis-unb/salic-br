@@ -10,10 +10,10 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbDocumentoProjetoBDCORPORATIVO extends MinC_Db_Table_Abstract
+class tbDocumentoProjetobdcorporativo extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "BDCORPORATIVO.scCorp";
+	protected $_banco   = "bdcorporativo";
+	protected $_schema  = "bdcorporativo.scCorp";
 	protected $_name    = "tbDocumentoProjeto";
 }

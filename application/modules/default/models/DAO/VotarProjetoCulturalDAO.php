@@ -89,10 +89,10 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 	public static function consultaValorAprovado($id = null) {
 		$sql = "SELECT DISTINCT
                       SAC.dbo.Projetos.IdPRONAC AS Pronac,
-                      BDCORPORATIVO.scSAC.tbPauta.idNrReuniao AS NumeroReuniao,
+                      bdcorporativo.scSAC.tbPauta.idNrReuniao AS NumeroReuniao,
                       Projetos.NomeProjeto AS NomeProjeto,
                       tbReuniao.stEstado As StatusEstado,
-                      BDCORPORATIVO.scSAC.tbVotacao.stVoto AS StatusVoto,
+                      bdcorporativo.scSAC.tbVotacao.stVoto AS StatusVoto,
                       tbPlanilhaAprovacao.nrOcorrencia AS NumeroOcorrencia,
                       tbPlanilhaAprovacao.vlUnitario AS ValorUnitario,
                       tbPlanilhaAprovacao.qtItem AS QuantidadeItem,
@@ -102,9 +102,9 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
                       ,( tbPlanilhaAprovacao.nrOcorrencia * tbPlanilhaAprovacao.vlUnitario * tbPlanilhaAprovacao.qtItem) AS Total
                 FROM
                       SAC.dbo.Projetos INNER JOIN
-                      BDCORPORATIVO.scSAC.tbPauta ON Projetos.IdPRONAC = BDCORPORATIVO.scSAC.tbPauta.IdPRONAC INNER JOIN
-                      BDCORPORATIVO.scSAC.tbVotacao ON Projetos.IdPRONAC = BDCORPORATIVO.scSAC.tbVotacao.IdPRONAC INNER JOIN
-                      SAC.dbo.tbReuniao ON BDCORPORATIVO.scSAC.tbPauta.idNrReuniao = tbReuniao.idNrReuniao INNER JOIN
+                      bdcorporativo.scSAC.tbPauta ON Projetos.IdPRONAC = bdcorporativo.scSAC.tbPauta.IdPRONAC INNER JOIN
+                      bdcorporativo.scSAC.tbVotacao ON Projetos.IdPRONAC = bdcorporativo.scSAC.tbVotacao.IdPRONAC INNER JOIN
+                      SAC.dbo.tbReuniao ON bdcorporativo.scSAC.tbPauta.idNrReuniao = tbReuniao.idNrReuniao INNER JOIN
                       SAC.dbo.tbPlanilhaAprovacao ON Projetos.IdPRONAC = tbPlanilhaAprovacao.IdPRONAC INNER JOIN
                       SAC.dbo.Area ON Projetos.Area = Area.Codigo
                 WHERE     tbReuniao.stEstado = 0 ";
@@ -128,7 +128,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 		$db->setFetchMode ( Zend_DB::FETCH_OBJ );
 		
 		$where = "idpronac = " . $idpronac . " and idagente=" . $idagente . " and idnrreuniao=" . $idnrreuniao;
-		$alterar = $db->update ( "BDCORPORATIVO.scSAC.tbVotacao", $dados, $where );
+		$alterar = $db->update ( "bdcorporativo.scSAC.tbVotacao", $dados, $where );
 		
 		if ($alterar) {
 			return true;
@@ -140,7 +140,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 	public static function resultadoVotacao($idnrreuniao, $idpronac, $stvoto) {
 		$sql = "select
                 count(stVoto) as qtdvotos
-                from BDCORPORATIVO.scSAC.tbVotacao
+                from bdcorporativo.scSAC.tbVotacao
                 where idNrReuniao=" . $idnrreuniao . " and IdPRONAC=" . $idpronac;
 		if ($stvoto) {
 			$sql .= " and stVoto = '" . $stvoto . "'";
@@ -155,7 +155,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 		$sql = "select
                 nm.Descricao as nome,
                 cast(tv.dsJustificativa AS TEXT) as justificativa
-                from BDCORPORATIVO.scSAC.tbVotacao tv
+                from bdcorporativo.scSAC.tbVotacao tv
                 join agentes.dbo.Nomes nm on nm.idAgente = tv.idAgente
                 where nm.tiponome=18 and tv.dsjustificativa is not null and tv.idNrReuniao=" . $idnrreuniao . " and tv.IdPRONAC=" . $idpronac;
 		
@@ -169,7 +169,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 		$db->setFetchMode ( Zend_DB::FETCH_OBJ );
 		
 		$where = "IdPRONAC = " . $idpronac . " and IdNrReuniao=" . $idnrreuniao;
-		$alterar = $db->update ( "BDCORPORATIVO.scSAC.tbPauta", $dados, $where );
+		$alterar = $db->update ( "bdcorporativo.scSAC.tbPauta", $dados, $where );
 		
 		if ($alterar) {
 			return true;
@@ -182,7 +182,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 		$db = Zend_Registry::get ( 'db' );
 		$db->setFetchMode ( Zend_DB::FETCH_OBJ );
 
-		$alterar = $db->insert ( "BDCORPORATIVO.scSAC.tbconsolidacaovotacao", $dados );
+		$alterar = $db->insert ( "bdcorporativo.scSAC.tbconsolidacaovotacao", $dados );
 
 		if ($alterar) {
 			return true;
@@ -197,7 +197,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 		$db->setFetchMode ( Zend_DB::FETCH_OBJ );
 		
 		$where = "stAnalise = 'AC' or stAnalise = 'IC' and IdNrReuniao=" . $idnrreuniao;
-		$alterar = $db->update ( "BDCORPORATIVO.scSAC.tbPauta", $dados, $where );
+		$alterar = $db->update ( "bdcorporativo.scSAC.tbPauta", $dados, $where );
 		
 		if ($alterar) {
 			return true;

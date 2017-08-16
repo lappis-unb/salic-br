@@ -36,11 +36,11 @@ class tbArquivo extends MinC_Db_Table_Abstract
             , "a.dsHash"
             , "a.stAtivo"
             , "a.dsTipoPadronizado"
-            , "a.idUsuario"), 'BDCORPORATIVO.scCorp'
+            , "a.idUsuario"), 'bdcorporativo.scCorp'
         );
         $select->joinInner(
             array("i" => "tbArquivoImagem"), "a.idArquivo = i.idArquivo",
-            array("i.biArquivo"), 'BDCORPORATIVO.scCorp'
+            array("i.biArquivo"), 'bdcorporativo.scCorp'
         );
 
         $select->where("a.idArquivo = ?", $idArquivo);
@@ -51,8 +51,8 @@ class tbArquivo extends MinC_Db_Table_Abstract
     public static function buscarArquivo($id)
     {
         $sql = "SELECT A.nmArquivo, AI.biArquivo 
-				FROM BDCORPORATIVO.scCorp.tbArquivo A 
-				INNER JOIN BDCORPORATIVO.scCorp.tbArquivoImagem AI ON AI.idArquivo = A.idArquivo
+				FROM bdcorporativo.scCorp.tbArquivo A 
+				INNER JOIN bdcorporativo.scCorp.tbArquivoImagem AI ON AI.idArquivo = A.idArquivo
 				WHERE A.idArquivo = " . $id;
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -75,7 +75,7 @@ class tbArquivo extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
 
         $select->from(array($this->_name),
-            array('*'), 'BDCORPORATIVO.scCorp');
+            array('*'), 'bdcorporativo.scCorp');
 
 
         $select->order('idArquivo desc');

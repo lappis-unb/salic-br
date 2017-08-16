@@ -74,14 +74,14 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
                 array('Doc' => 'tbDocumento'),
                 'Doc.idDocumento = D.idDocumento',
                 array("*"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct->joinLeft(
                 array('Arq' => 'tbArquivo'),
                 'Arq.idArquivo = Doc.idArquivo',
                 array("*"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
         $slct->where('D.idRelatorioConsolidado = ?', $idRelatorioConsolidado);
 

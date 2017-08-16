@@ -2,13 +2,13 @@
 
 class tbalteracaofictecDAO extends Zend_Db_Table
 {
-    protected $_name = "BDCORPORATIVO.scSAC.tbalteracaofichatecnica";
+    protected $_name = "bdcorporativo.scSAC.tbalteracaofichatecnica";
 
     public static function buscarDadosFicTec($idpedidoalteracao)
     {
         $sql = "select dsfichatecnica,
                 dsjustificativa
-                from BDCORPORATIVO.scSAC.tbAlteracaoFichaTecnica
+                from bdcorporativo.scSAC.tbAlteracaoFichaTecnica
                 where idpedidoalteracao= ".$idpedidoalteracao;
         
         $db= Zend_Db_Table::getDefaultAdapter();

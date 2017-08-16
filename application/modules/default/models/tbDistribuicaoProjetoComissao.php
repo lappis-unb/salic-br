@@ -1,8 +1,8 @@
 <?php
 class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 {
-    protected $_banco = "BDCORPORATIVO";
-    protected $_schema = "BDCORPORATIVO.scSAC";
+    protected $_banco = "bdcorporativo";
+    protected $_schema = "bdcorporativo.scSAC";
     protected $_name = "tbDistribuicaoProjetoComissao";
 
     public function buscarProjetoEmPauta_ORIGINAL($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
@@ -57,7 +57,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctInterno->from(
                         array('tbpa'=>'tbPauta'),
                         array('*'),
-                        'BDCORPORATIVO.scSAC'
+                        'bdcorporativo.scSAC'
                      );
         $slctInterno->where("tbpa.IdPRONAC = pr.idPronac");
         $slctInterno->limit(1);
@@ -120,7 +120,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             $slctInterno2->from(
                             array('tbpa'=>'tbPauta'),
                             array('*'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                          );
             $slctInterno2->where("tbpa.IdPRONAC = pr.idPronac");
             $slctInterno2->limit(1);
@@ -167,7 +167,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             array('pa'=>'tbPauta'),
                             '(pa.IdPRONAC = dpc.idPRONAC)',
                             array('idNrReuniao','stAnalise'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                           );
 
         $slctAnalisados->joinInner(
@@ -314,7 +314,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctInterno->from(
                         array('tbpa'=>'tbPauta'),
                         array('*'),
-                        'BDCORPORATIVO.scSAC'
+                        'bdcorporativo.scSAC'
                      );
         $slctInterno->where("tbpa.IdPRONAC = pr.idPronac");
         $slctInterno->limit(1);
@@ -422,7 +422,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
                 ,e.Enquadramento as Enquadramento ")
-            ), 'BDCORPORATIVO.scSAC'
+            ), 'bdcorporativo.scSAC'
         );
 
         $slctNaoAnalisados->joinInner(
@@ -466,7 +466,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->where("pr.stAtivo = ?", 1);
         $slctNaoAnalisados->where("z.Status = ?", 0);
         $slctNaoAnalisados->where("p.Situacao in (?)", array('C10','C30'));
-        $slctNaoAnalisados->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac)", '');
+        $slctNaoAnalisados->where("NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac)", '');
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -526,11 +526,11 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
                 ,e.Enquadramento as Enquadramento ")
-            ), 'BDCORPORATIVO.scSAC'
+            ), 'bdcorporativo.scSAC'
         );
         $slctAnalisados->joinInner(
             array('z'=>'tbDistribuicaoProjetoComissao'), 't.IdPRONAC = z.idPRONAC',
-            array(), 'BDCORPORATIVO.scSAC'
+            array(), 'bdcorporativo.scSAC'
         );
         $slctAnalisados->joinInner(
             array('p'=>'Projetos'), 't.idPronac = p.idPronac',
@@ -764,7 +764,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
                     ,e.Enquadramento as Enquadramento
-                FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao AS t
+                FROM bdcorporativo.scSAC.tbDistribuicaoProjetoComissao AS t
                     INNER JOIN SAC.dbo.Projetos AS p ON t.idPronac = p.idPronac
                     INNER JOIN SAC.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
                     LEFT JOIN SAC.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
@@ -778,7 +778,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 AND (pr.stAtivo = 1)
                 AND (z.Status = 0)
                 AND (p.Situacao in ('C10', 'C30'))
-                AND (NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac))
+                AND (NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac))
                 $whereAdd
             )
 
@@ -821,8 +821,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
                     ,e.Enquadramento as Enquadramento
-                FROM BDCORPORATIVO.scSAC.tbPauta AS t
-                    INNER JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao AS z ON t.IdPRONAC = z.idPRONAC
+                FROM bdcorporativo.scSAC.tbPauta AS t
+                    INNER JOIN bdcorporativo.scSAC.tbDistribuicaoProjetoComissao AS z ON t.IdPRONAC = z.idPRONAC
                     INNER JOIN SAC.dbo.Projetos AS p ON t.idPronac = p.idPronac
                     INNER JOIN SAC.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
                     LEFT JOIN SAC.dbo.Enquadramento AS e ON e.idPronac = p.idPronac
@@ -937,7 +937,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $select->from(
                 array('dpc' => "tbdistribuicaoprojetocomissao"),
                 array(new Zend_Db_Expr('count(*)')),
-                "BDCORPORATIVO.scSAC"
+                "bdcorporativo.scSAC"
               )
             ->join(
                 array('pr' => 'Projetos'),
@@ -1008,7 +1008,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                         SELECT
                             TOP 1 "tbpa" .*
                         FROM
-                            "BDCORPORATIVO"."scSAC"."tbPauta" AS "tbpa"
+                            "bdcorporativo"."scSAC"."tbPauta" AS "tbpa"
                         WHERE
                             (
                                 tbpa.IdPRONAC = pr.idPronac

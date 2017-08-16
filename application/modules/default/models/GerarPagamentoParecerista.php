@@ -124,7 +124,7 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
             array('arq'=>'tbArquivo'),
             "arq.idArquivo = pa.idArquivo",
             array('arq.idArquivo', 'nomeArquivo' => 'arq.nmArquivo'),
-            'BDCORPORATIVO.scCorp'
+            'bdcorporativo.scCorp'
         );
 
         foreach ($where as $coluna => $valor) {

@@ -943,7 +943,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 
                 $dadosAvaliacao = array('stAvaliacaoItemPedidoAlteracao' => 'AP', 'dtFimAvaliacao' => date('Y-m-d H:i:s'));
                 $avaliacao = $buscaInformacoes->atualizarAvaliacaopedido($dadosAvaliacao, $where);
-                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from BDCORPORATIVO.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
+                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from bdcorporativo.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
                 $dadosAcao = array('stAtivo' => '1', 'dtEncaminhamento' => date('Y-m-d H:i:s'));
                 $atualizapedidotipo = $buscaInformacoes->atualizarAvaliacaoAcao($dadosAcao, $where);
 

@@ -729,7 +729,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 array('ave' => 'tbAvaliadorEdital'),
                 'ave.idEdital = pp.idEdital',
                 array('ave.idAvaliador'),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $slct->joinInner(array('nom' => 'Nomes'),
                 'nom.idAgente = ave.idAvaliador',
@@ -761,7 +761,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 array('ave' => 'tbAvaliadorEdital'),
                 'ave.idEdital = pp.idEdital',
                 array(new Zend_Db_Expr('distinct(ave.idAvaliador)')),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
         $slct->joinInner(array('nom' => 'Nomes'),
                 'nom.idAgente = ave.idAvaliador',
@@ -803,7 +803,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 array('fd' => 'tbFormDocumento'),
                 'fd.idEdital = p.idEdital OR p.idEdital IS NOT NULL',
                 array('fd.nrFormDocumento', 'fd.nrVersaoDocumento'),
-                'BDCORPORATIVO.scQuiz'
+                'bdcorporativo.scQuiz'
         );
 
         $slct->joinInner(array('nm' => 'Nomes'),
@@ -2378,13 +2378,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         array("fd"=>"tbFormDocumento"),
                         "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)",
                         array("Edital"=>"nmFormDocumento", "idEdital"),
-                        "BDCORPORATIVO.scQuiz"
+                        "bdcorporativo.scQuiz"
                         );
         $slct->joinInner(
                         array("cl"=>"tbClassificaDocumento"),
                         "cl.idClassificaDocumento = fd.idClassificaDocumento",
                         array("idClassificaDocumento", "dsClassificaDocumento"),
-                        "BDCORPORATIVO.scSAC"
+                        "bdcorporativo.scSAC"
                         );
         $slct->joinInner(
                         array("o"=>"Orgaos"),
@@ -2476,13 +2476,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                             array("fd"=>"tbFormDocumento"),
                             "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)",
                             array(),
-                            "BDCORPORATIVO.scQuiz"
+                            "bdcorporativo.scQuiz"
                             );
             $slct2->joinInner(
                             array("cl"=>"tbClassificaDocumento"),
                             "cl.idClassificaDocumento = fd.idClassificaDocumento",
                             array(),
-                            "BDCORPORATIVO.scSAC"
+                            "bdcorporativo.scSAC"
                             );
             $slct2->joinInner(
                             array("o"=>"Orgaos"),

@@ -181,7 +181,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 				,'p.idSolicitante'
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 103) AS dtSolicitacao'
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 108) AS hrSolicitacao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -215,13 +215,13 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			array('b' => 'tbAvaliacaoSubItemPlanoDistribuicao')
 			,'a.idPlano = b.idPlano'
 			,array('')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 		$select->joinInner(
 			array('c' => 'tbAvaliacaoSubItemPedidoAlteracao')
 			,'c.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao'
 			,array('')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 
                 $select->where('a.idPedidoAlteracao = ?', $idPedidoAlteracao);
