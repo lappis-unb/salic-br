@@ -174,7 +174,7 @@ Class ProponenteDAO extends Zend_Db_Table
 							Ar.descricao dsArea,
 							Sg.descricao dsSegmento,
 							Pr.SolicitadoReal,
-							CASE WHEN Pr.Mecanismo IN ('2','6')
+							CASE WHEN Pr.Mecanismo in ('2','6')
 							THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial) 
 							ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
 							END AS ValorAprovado,
@@ -208,7 +208,7 @@ Class ProponenteDAO extends Zend_Db_Table
                     Ar.descricao dsArea,
                     Sg.descricao dsSegmento,
                     Pr.SolicitadoReal,
-                    CASE WHEN Pr.Mecanismo IN ('2','6')
+                    CASE WHEN Pr.Mecanismo in ('2','6')
                     THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
                     ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
                     END AS ValorAprovado,
@@ -235,7 +235,7 @@ Class ProponenteDAO extends Zend_Db_Table
                     Ar.descricao dsArea,
                     Sg.descricao dsSegmento,
                     Pr.SolicitadoReal,
-                    CASE WHEN Pr.Mecanismo IN ('2','6')
+                    CASE WHEN Pr.Mecanismo in ('2','6')
                     THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
                     ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
                     END AS ValorAprovado,

@@ -353,7 +353,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 181;
         }
@@ -368,7 +368,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 182;
         }
@@ -396,7 +396,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $projetosReadequados = $projetos->buscarProjetosCheckList($arrBusca);
@@ -413,7 +413,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $projetosDiligenciadosReadequados = $projetos->buscarProjetosCheckList($arrBusca);
@@ -430,7 +430,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $salicReadequados = $projetos->buscarProjetosCheckList($arrBusca);
@@ -463,7 +463,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
         
         $projetosAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
@@ -480,7 +480,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $projetosDiligenciadosAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
@@ -499,7 +499,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $salicAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
@@ -530,7 +530,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
 
             //calcula o total de registros
@@ -548,7 +548,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 182;
         }
@@ -581,7 +581,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
 
             //calcula o total e retorna para a tela original
@@ -597,7 +597,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
                 if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 182;
 
@@ -642,12 +642,12 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if ($tipoAnalise == "readequados") :
                     $arrBusca = array();
-                    $arrBusca['re.siVerificacao IN (?)'] = array('1');
-                    $arrBusca['rex.tpAlteracaoProjeto IN (?)'] = array('1', '2', '5', '7', '8', '9', '10');
-                    $arrBusca['pr.Situacao NOT IN (?)'] = array('D27', 'D28');
+                    $arrBusca['re.siVerificacao in (?)'] = array('1');
+                    $arrBusca['rex.tpAlteracaoProjeto in (?)'] = array('1', '2', '5', '7', '8', '9', '10');
+                    $arrBusca['pr.Situacao NOT in (?)'] = array('D27', 'D28');
                     if ($this->codGrupo == 121) : // 121 = Tecnico Acompanhamento - Inclui projetos que estao direcionados ao tecnico
                             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
                     endif;
             endif;
             if (!empty($post->ordenacaoR)) { $ordem[] = "{$post->ordenacaoR} {$post->tipoOrdenacaoR}"; }else{$ordem = array('1 ASC');}
@@ -1069,7 +1069,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $arrBusca['(pr.AnoProjeto + pr.Sequencial) = ?'] = $pronac;}
         if(!empty($nrReuniao)){
             $arrBusca['tr.NrReuniao = ?'] = $nrReuniao;}
-        $arrBusca['vp.stAnaliseProjeto IN (?)'] = array('1','2','3');
+        $arrBusca['vp.stAnaliseProjeto in (?)'] = array('1','2','3');
         $arrBusca['vp.stAnaliseProjeto in (SELECT TOP 1 max(stAnaliseProjeto) from sac..tbVerificaProjeto where IdPRONAC = pr.IdPRONAC)'] = '?';
 
         if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('32 ASC');}

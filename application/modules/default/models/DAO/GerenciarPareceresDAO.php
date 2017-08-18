@@ -30,7 +30,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				            INNER JOIN sac.dbo.Situacao AS s ON p.Situacao = s.Codigo 
 				            INNER JOIN sac.dbo.Orgaos AS o ON p.Orgao = o.Codigo
 				            LEFT JOIN sac.dbo.Enquadramento e ON (p.idPronac = e.idPronac)
-				WHERE     (p.Situacao IN ('C09', 'C20', 'C25')) AND (p.AnoProjeto > '08') AND (p.Mecanismo = '1') ";
+				WHERE     (p.Situacao in ('C09', 'C20', 'C25')) AND (p.AnoProjeto > '08') AND (p.Mecanismo = '1') ";
 		
 				//AND idSecretaria = 251 (Obs: n�o pode ser mais fixo
 				

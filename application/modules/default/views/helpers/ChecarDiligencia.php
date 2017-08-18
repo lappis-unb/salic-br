@@ -40,7 +40,7 @@ class Zend_View_Helper_ChecarDiligencia
 
 			// filtra por tipos de diligências
 			if (count($idTipoDiligencia) > 0) :
-				$where = array_merge($where, array('idTipoDiligencia IN (?)' => $idTipoDiligencia));
+				$where = array_merge($where, array('idTipoDiligencia in (?)' => $idTipoDiligencia));
 			endif;
 
 			$buscarDiligencia = $tbDiligencia->buscar($where, $order);

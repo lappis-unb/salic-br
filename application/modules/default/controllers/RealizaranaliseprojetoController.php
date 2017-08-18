@@ -1498,7 +1498,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                     $arrWhereCustoAdm['idPronac = ?'] = $idpronac;
                     $arrWhereCustoAdm['idProduto = ?'] = 0;
                     $arrWhereCustoAdm['idEtapa = ?'] = 4; //custos administrativos
-                    $arrWhereCustoAdm['idPlanilhaItem NOT IN (?)'] = array(5249, 206, 1238);//Remuneracao de captacao de recursos
+                    $arrWhereCustoAdm['idPlanilhaItem NOT in (?)'] = array(5249, 206, 1238);//Remuneracao de captacao de recursos
                     $arrWhereCustoAdm['tpPlanilha = ? '] = $tpPlanilha;
                     $arrWhereCustoAdm['NrFonteRecurso = ? '] = '109';
                     if ($this->bln_readequacao == "true") {

@@ -49,9 +49,9 @@ class tbContaBloqueada extends MinC_Db_Table_Abstract {
                                 AND cb.IdPRONAC IN
                                     (
                                         CASE
-                                            WHEN (pr.Situacao IN ('E15','E23')) AND (pr.IdPRONAC IN(SELECT idPronac FROM sac..Prorrogacao WHERE Atendimento = 'N' AND idPronac=pr.IdPRONAC))
+                                            WHEN (pr.Situacao in ('E15','E23')) AND (pr.IdPRONAC IN(SELECT idPronac FROM sac..Prorrogacao WHERE Atendimento = 'N' AND idPronac=pr.IdPRONAC))
                                                     THEN pr.IdPRONAC
-                                            WHEN (pr.Situacao NOT IN ('E15','E23'))
+                                            WHEN (pr.Situacao NOT in ('E15','E23'))
                                                     THEN pr.IdPRONAC
                                             ELSE
                                                     NULL
@@ -108,9 +108,9 @@ class tbContaBloqueada extends MinC_Db_Table_Abstract {
                                 AND a.IdPRONAC IN
                                     (
                                         CASE
-                                            WHEN (b.Situacao IN ('E15','E23')) AND (b.IdPRONAC IN(SELECT idPronac FROM sac..Prorrogacao WHERE Atendimento = 'N' AND idPronac=b.IdPRONAC))
+                                            WHEN (b.Situacao in ('E15','E23')) AND (b.IdPRONAC IN(SELECT idPronac FROM sac..Prorrogacao WHERE Atendimento = 'N' AND idPronac=b.IdPRONAC))
                                                     THEN b.IdPRONAC
-                                            WHEN (b.Situacao NOT IN ('E15','E23'))
+                                            WHEN (b.Situacao NOT in ('E15','E23'))
                                                     THEN b.IdPRONAC
                                             ELSE
                                                     NULL

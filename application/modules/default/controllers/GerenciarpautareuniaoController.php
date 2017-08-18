@@ -518,7 +518,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
         //ANALISADOS
         $arrBusca =array();
-        $arrBusca['ar.Codigo IN (?)'] = $arrIdAreas;
+        $arrBusca['ar.Codigo in (?)'] = $arrIdAreas;
         if(isset($idReuniao) && $idReuniao != ""){$arrBusca['r.idNrReuniao = ?']=$idReuniao;}
         $arrReuniao = array();
         if(isset($idReuniao) && $idReuniao != ""){$arrReuniao['r.idNrReuniao = ?']=$idReuniao;}
@@ -527,7 +527,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
         //NAO ANALISADOS
         $arrBusca =array();
-        $arrBusca['ar.Codigo IN (?)'] = $arrIdAreas;
+        $arrBusca['ar.Codigo in (?)'] = $arrIdAreas;
         $arrReuniao = array();
         if(isset($idReuniao) && $idReuniao != "" && $idReuniao==$idReuniaoAutal){
             $arrReuniao['idNrReuniao IS NULL ']= "?";
@@ -2204,7 +2204,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             //BUSCAR PROJETOS DE READEQUACAO
             if(!empty($readequacao) &&  $readequacao == 'true'){
-                //$arrBusca['par.TipoParecer IN (?)'] = array('2','4');
+                //$arrBusca['par.TipoParecer in (?)'] = array('2','4');
                 $where['par.TipoParecer <> ?'] = 1; //parecer de readequacao
                 $readequacao = "true";
             }else{

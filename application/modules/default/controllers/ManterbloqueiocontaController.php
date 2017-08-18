@@ -369,7 +369,7 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
         
         //BUSCA AS CONTAS QUE NAO PODEM SER DESBLOQUEADAS
         $arrBusca = array();
-        if(count($arrIdsContasDesbloqueio)>0){$arrBusca['cb.idContaBloqueada NOT IN (?)'] = $arrIdsContasDesbloqueio;} //id das contas que podem ser desbloqueadas
+        if(count($arrIdsContasDesbloqueio)>0){$arrBusca['cb.idContaBloqueada NOT in (?)'] = $arrIdsContasDesbloqueio;} //id das contas que podem ser desbloqueadas
         $arrBusca['cb.stEstado = ?']         = 1; //registro ativo
         $arrBusca['cb.tpIdentificacaoConta in (select TOP 1 max(tpIdentificacaoConta) from sac..tbcontabloqueada where IdPRONAC = pr.IdPRONAC and stestado=1)'] = "(?)"; //pega apenas um registro por pronac
         $arrBusca['cb.tpAcao = ?']           = 1; //bloqueio sistemico

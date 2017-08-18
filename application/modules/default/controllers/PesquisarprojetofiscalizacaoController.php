@@ -476,7 +476,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
         if ($get->valorMaior != '')
             $where['(sac.dbo.fnTotalAprovadoProjeto(p.AnoProjeto, p.Sequencial)) <= ?'] = $get->valorMaior;
 
-        $where["p.IdPRONAC NOT IN (SELECT IdPRONAC FROM sac.dbo.tbFiscalizacao where stFiscalizacaoProjeto IN ('0','1') )"] = '';
+        $where["p.IdPRONAC NOT in (SELECT IdPRONAC FROM sac.dbo.tbFiscalizacao where stFiscalizacaoProjeto in ('0','1') )"] = '';
         //$where["e.Status = ?"] = 1;
 
         $projetos = New Projetos();
@@ -555,7 +555,7 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
 //        $codOrgao = $GrupoAtivo->codOrgao;
 //        $where['p.Orgao =?'] = $codOrgao;
 //        $where['sac.dbo.fnPercentualCaptado(p.AnoProjeto, p.Sequencial) >= ?'] = 20;
-        $where["p.IdPRONAC NOT IN (SELECT IdPRONAC FROM sac.dbo.tbFiscalizacao where stFiscalizacaoProjeto IN ('0','1') )"] = '';
+        $where["p.IdPRONAC NOT in (SELECT IdPRONAC FROM sac.dbo.tbFiscalizacao where stFiscalizacaoProjeto in ('0','1') )"] = '';
         $resp = $projetosDao->projetosFiscalizacaoPesquisar($where);
 
         $this->view->projetosFiscalizacao = array(

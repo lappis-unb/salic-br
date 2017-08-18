@@ -949,7 +949,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $condicao = new Zend_Db_Expr("select top 1 * from sac..Projetos p where p.idProjeto = ap.idProjeto");
         $slct->where("ap.idTecnico = ?",$idTecnico);
         $slct->where("m.stEstado = 0");
-        $slct->where("m.Movimentacao IN (96,97,128)");
+        $slct->where("m.Movimentacao in (96,97,128)");
         $slct->where("NOT EXISTS({$condicao})");
 
         $rs = $this->fetchAll($slct)->toArray();
@@ -2376,7 +2376,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         );
         $slct->joinInner(
                         array("fd"=>"tbFormDocumento"),
-                        "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)",
+                        "fd.idEdital = p.idEdital AND idClassificaDocumento NOT in (23,24,25)",
                         array("Edital"=>"nmFormDocumento", "idEdital"),
                         "bdcorporativo.scQuiz"
                         );
@@ -2474,7 +2474,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                             );
             $slct2->joinInner(
                             array("fd"=>"tbFormDocumento"),
-                            "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)",
+                            "fd.idEdital = p.idEdital AND idClassificaDocumento NOT in (23,24,25)",
                             array(),
                             "bdcorporativo.scQuiz"
                             );

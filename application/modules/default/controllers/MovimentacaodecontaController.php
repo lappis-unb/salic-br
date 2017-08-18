@@ -174,7 +174,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 					//$this->view->dados   = $this->tbTmpCaptacao->buscarDados($pronac, $data_recibo, $proponente, $incentivador, $data_credito);
 
                                         $arrBusca = array();
-                                        $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
+                                        $arrBusca['idTipoInconsistencia in (?)'] = array(2,3,7);
                                         $this->tbTipoInconsistencia = new tbTipoInconsistencia();
                                         $this->view->inconsistencias = $this->tbTipoInconsistencia->buscar($arrBusca);
                                         $this->view->parametrosBusca = $_POST;
@@ -613,7 +613,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->view->parametrosBuscaInc1 = $_POST;
 
             $arrBusca = array();
-            $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
+            $arrBusca['idTipoInconsistencia in (?)'] = array(2,3,7);
             $tbTipoInconsistencia = new tbTipoInconsistencia();
             $this->view->inconsistencias = $tbTipoInconsistencia->buscar($arrBusca);
 
@@ -1125,7 +1125,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->view->parametrosBusca = $_POST;
 
             $arrBusca = array();
-            $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
+            $arrBusca['idTipoInconsistencia in (?)'] = array(2,3,7);
             $this->tbTipoInconsistencia = new tbTipoInconsistencia();
             $this->view->inconsistencias = $this->tbTipoInconsistencia->buscar($arrBusca);
 

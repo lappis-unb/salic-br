@@ -49,7 +49,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             'agentes'
                           );
 
-        $slct->where("pr.Situacao IN (?)", array("C10", "C30"));
+        $slct->where("pr.Situacao in (?)", array("C10", "C30"));
         $slct->where("dpc.stDistribuicao = ?", "A");
         $slct->where("pa.stAtivo = ?", 1);
         $slctInterno = $this->select();
@@ -112,7 +112,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                                 'agentes'
                               );
 
-            $slct2->where("pr.Situacao IN (?)", array("C10", "C30"));
+            $slct2->where("pr.Situacao in (?)", array("C10", "C30"));
             $slct2->where("dpc.stDistribuicao = ?", "A");
             $slct2->where("pa.stAtivo = ?", 1);
             $slctInterno2 = $this->select();
@@ -302,7 +302,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             array( new Zend_Db_Expr('convert(varchar(150), nm2.Descricao) as Proponente'), new Zend_Db_Expr('null as NrReuniao')),
                             'agentes'
                           );
-        $slctNaoAnalisados->where("pr.Situacao IN (?)", array("C10", "C30"));
+        $slctNaoAnalisados->where("pr.Situacao in (?)", array("C10", "C30"));
         $slctNaoAnalisados->where("dpc.stDistribuicao = ?", "A");
         $slctNaoAnalisados->where("par.stAtivo = ?", 1);
         $slctNaoAnalisados->where("nm2.Status = ?", 0);

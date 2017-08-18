@@ -152,35 +152,35 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         
         //========== PROJETOS APROVADOS SEFIC e SAV - APROVACAO INICIAL =========================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']  = $idpronac;
+        $arrBusca['tp.idPronac in (?)']  = $idpronac;
         //$arrBusca['pr.Situacao = ?']     = "D03";
-        //$arrBusca['pr.Situacao IN (?)']  = array('D03', 'D01');
-        $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+        //$arrBusca['pr.Situacao in (?)']  = array('D03', 'D01');
+        $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
         $arrBusca['par.TipoParecer = ?'] = 1;
         $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
         $rsProjetosAprovados = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
         //========== PROJETOS INDEFERIDOS SEFIC e SAV - APROVACAO INICIAL =======================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']  = $idpronac;
-        //$arrBusca['pr.Situacao IN (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
-        $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+        $arrBusca['tp.idPronac in (?)']  = $idpronac;
+        //$arrBusca['pr.Situacao in (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
+        $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
         $arrBusca['par.TipoParecer = ?'] = 1;
         $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
         $rsProjetosIndeferidos = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
         //========== PROJETOS APROVADOS SEFIC e SAV - RECURSO ==========================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']   = $idpronac;
-        $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+        $arrBusca['tp.idPronac in (?)']   = $idpronac;
+        $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
         $arrBusca['par.TipoParecer <> ?'] = 1;
         $arrBusca['r.NrReuniao = ?']      = $nrReuniao;
         $rsProjetosAprovadosRecurso = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
         //========== PROJETOS INDEFERIDOS SEFIC e SAV - RECUSROS =======================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']      = $idpronac;
-        $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+        $arrBusca['tp.idPronac in (?)']      = $idpronac;
+        $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
         $arrBusca['par.TipoParecer <> ?']    = 1;
         $arrBusca['r.NrReuniao = ?']         = $nrReuniao;
         $rsProjetosIndeferidosRecurso = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
@@ -439,10 +439,10 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         if($this->tipoProjeto == "analiseInicial"){
             //========== PROJETOS APROVADOS SEFIC e SAV - APROVACAO INICIAL =========================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']  = $idpronac;
+            $arrBusca['tp.idPronac in (?)']  = $idpronac;
             //$arrBusca['pr.Situacao = ?']     = "D03";
-            //$arrBusca['pr.Situacao IN (?)']  = array('D03', 'D01');
-            $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+            //$arrBusca['pr.Situacao in (?)']  = array('D03', 'D01');
+            $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
             $arrBusca['par.TipoParecer = ?'] = 1;
             $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;
@@ -451,9 +451,9 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
 
             //========== PROJETOS INDEFERIDOS SEFIC e SAV - APROVACAO INICIAL =======================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']  = $idpronac;
-            //$arrBusca['pr.Situacao IN (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
-            $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+            $arrBusca['tp.idPronac in (?)']  = $idpronac;
+            //$arrBusca['pr.Situacao in (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
+            $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
             $arrBusca['par.TipoParecer = ?'] = 1;
             $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;
@@ -464,8 +464,8 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         if($this->tipoProjeto == "readequacao"){
             //========== PROJETOS APROVADOS SEFIC e SAV - READEQUACAO ==========================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']   = $idpronac;
-            $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+            $arrBusca['tp.idPronac in (?)']   = $idpronac;
+            $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
             $arrBusca['par.TipoParecer <> ?'] = 1;
             $arrBusca['r.NrReuniao = ?']      = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;
@@ -474,8 +474,8 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
 
             //========== PROJETOS INDEFERIDOS SEFIC e SAV - READEQUACAO =======================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']      = $idpronac;
-            $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+            $arrBusca['tp.idPronac in (?)']      = $idpronac;
+            $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
             $arrBusca['par.TipoParecer <> ?']    = 1;
             $arrBusca['r.NrReuniao = ?']         = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;

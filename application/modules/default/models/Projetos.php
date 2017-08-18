@@ -487,7 +487,7 @@ class Projetos extends MinC_Db_Table_Abstract
                                                                   END")), "SAC"
         );
         $slct->joinInner(
-            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
+            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta in (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
         );
         $slct->joinInner(
             array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
@@ -580,7 +580,7 @@ class Projetos extends MinC_Db_Table_Abstract
             'enquadramento' => New Zend_Db_Expr("case when en.Enquadramento = 1 then '26' when en.Enquadramento = 2 then '18' end ")), "SAC"
         );
         $slct->joinInner(
-            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
+            array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta in (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
         );
         $slct->joinInner(
             array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array('tr.NrReuniao'), "SAC"
@@ -631,7 +631,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 array("en" => "Enquadramento"), "en.IdPRONAC = pr.IdPRONAC", array(), "SAC"
             );
             $slctContador->joinInner(
-                array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
+                array("tp" => "tbPauta"), "tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta in (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)", array(), "bdcorporativo.scSAC"
             );
             $slctContador->joinInner(
                 array("tr" => "tbReuniao"), "tr.idNrReuniao = tp.idNrReuniao", array(), "SAC"
@@ -3928,7 +3928,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //            array(), "SAC"
 //        );
 //        $slct->joinLeft(
-//            array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)",
+//            array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT in (23,24,25)",
 //            array(), "bdcorporativo.scQuiz"
 //        );
 //        $slct->joinLeft(
@@ -4235,7 +4235,7 @@ class Projetos extends MinC_Db_Table_Abstract
             array("e" => "Edital"), "e.idEdital = p.idEdital", array(), "SAC"
         );
         $slct->joinLeft(
-            array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)", array(), "bdcorporativo.scQuiz"
+            array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT in (23,24,25)", array(), "bdcorporativo.scQuiz"
         );
         $slct->joinLeft(
             array("cl" => "tbClassificaDocumento"), "cl.idClassificaDocumento = fd.idClassificaDocumento", array(), "bdcorporativo.scSAC"
@@ -4280,7 +4280,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 array("e" => "Edital"), "e.idEdital = p.idEdital", array(), "SAC"
             );
             $slct2->joinLeft(
-                array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT IN (23,24,25)", array(), "bdcorporativo.scQuiz"
+                array("fd" => "tbFormDocumento"), "fd.idEdital = p.idEdital AND idClassificaDocumento NOT in (23,24,25)", array(), "bdcorporativo.scQuiz"
             );
             $slct2->joinLeft(
                 array("cl" => "tbClassificaDocumento"), "cl.idClassificaDocumento = fd.idClassificaDocumento", array(), "bdcorporativo.scSAC"
@@ -6044,7 +6044,7 @@ class Projetos extends MinC_Db_Table_Abstract
         );
 
         $select->joinInner(
-            array('tp' => 'tbpauta'), 'tp.idpronac = pr.idpronac AND tp.dtenviopauta IN (SELECT TOP 1 Max(dtenviopauta) FROM bdcorporativo.scsac.tbpauta WHERE  idpronac = pr.idpronac)', array(''), 'bdcorporativo.scSAC'
+            array('tp' => 'tbpauta'), 'tp.idpronac = pr.idpronac AND tp.dtenviopauta in (SELECT TOP 1 Max(dtenviopauta) FROM bdcorporativo.scsac.tbpauta WHERE  idpronac = pr.idpronac)', array(''), 'bdcorporativo.scSAC'
         );
 
         $select->joinInner(

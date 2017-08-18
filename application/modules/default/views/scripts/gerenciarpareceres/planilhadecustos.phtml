@@ -20,10 +20,10 @@
 
     <!-- Calculo da Porcentagem -->
     <?php if ($this->verifica15porcento): ?>
-        <!-- <div style="padding-bottom: 1em; padding-top: 1em; color: red; font-size: 12pt; text-align: center;">Segundo a IN nº 1, de 05/10/2010, o valor da Etapa de Custos/Administrativos n&atilde;o pode ser maior que 15% do valor total do projeto. O valor atual &eacute; de <?php echo $this->porcentagemAdministrativo; ?>% do total do projeto. Favor readeque!</div> -->
+        <!-- <div style="padding-bottom: 1em; padding-top: 1em; color: red; font-size: 12pt; text-align: center;">Segundo a in nº 1, de 05/10/2010, o valor da Etapa de Custos/Administrativos n&atilde;o pode ser maior que 15% do valor total do projeto. O valor atual &eacute; de <?php echo $this->porcentagemAdministrativo; ?>% do total do projeto. Favor readeque!</div> -->
         <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">Aten&ccedil;&atilde;o! O valor dos
             custos administrativos do projeto est&atilde;o: <?php echo $this->porcentagemAdministrativo; ?>% acima permitido
-            pela IN n°1 de 05/10/2010 Artigo 24 Inciso V.<br/><br/>Favor readequar para finalizar sua analise!
+            pela in n°1 de 05/10/2010 Artigo 24 Inciso V.<br/><br/>Favor readequar para finalizar sua analise!
         </div>
     <?php endif; ?>
     <!-- Fim do calculo da porcentagem -->

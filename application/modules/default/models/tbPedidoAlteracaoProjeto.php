@@ -155,7 +155,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 ),'SAC'
         );
         $slct->joinInner(array('ap' => 'Aprovacao'),
-                'ap.idPronac = pr.idPronac AND ap.DtAprovacao IN (SELECT TOP 1 MAX(DtAprovacao) FROM sac..Aprovacao WHERE IdPRONAC = pr.IdPRONAC)',
+                'ap.idPronac = pr.idPronac AND ap.DtAprovacao in (SELECT TOP 1 MAX(DtAprovacao) FROM sac..Aprovacao WHERE IdPRONAC = pr.IdPRONAC)',
                 array(
                 'ap.idAprovacao',
                 'ap.DtPublicacaoAprovacao',
@@ -184,7 +184,7 @@ class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
                 ),'SAC'
         );
         $slct->joinLeft(array('tp' => 'tbPauta'),
-                'tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta IN (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)',
+                'tp.IdPRONAC = pr.IdPRONAC AND tp.dtEnvioPauta in (SELECT TOP 1 Max(dtEnvioPauta) FROM bdcorporativo.scsac.tbPauta WHERE  IdPRONAC = pr.IdPRONAC)',
                 array(),
                 'bdcorporativo.scSAC'
         );

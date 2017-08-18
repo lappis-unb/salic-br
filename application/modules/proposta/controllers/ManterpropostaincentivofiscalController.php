@@ -494,7 +494,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
-            $arrBuscaN['vi.sivinculo IN (0,2)'] = '';
+            $arrBuscaN['vi.sivinculo in (0,2)'] = '';
             $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY

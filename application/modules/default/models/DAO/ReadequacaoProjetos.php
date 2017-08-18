@@ -683,7 +683,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         INNER JOIN agentes.dbo.UF					AS h ON e.idUF = h.idUF
                         ,(SELECT MAX(tpAlteracaoProjeto) AS tpAlteracaoProjeto, idPedidoAlteracao
 							  FROM bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao
-							  WHERE tpAlteracaoProjeto IN (7, 10)
+							  WHERE tpAlteracaoProjeto in (7, 10)
 							  GROUP BY idPedidoAlteracao) AS tmp
                         WHERE a.stPedidoAlteracao = 'I'
                         AND a.siVerificacao in (0,1)
@@ -915,7 +915,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     INNER JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao   AS j ON i.idAvaliacaoItemPedidoAlteracao = j.idAvaliacaoItemPedidoAlteracao
                     ,(SELECT MAX(tpAlteracaoProjeto) AS tpAlteracaoProjeto, idPedidoAlteracao
 							  FROM bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao
-							  WHERE tpAlteracaoProjeto IN (7, 10)
+							  WHERE tpAlteracaoProjeto in (7, 10)
 							  GROUP BY idPedidoAlteracao) AS tmp
 
                     WHERE a.stPedidoAlteracao = 'I'
@@ -2042,7 +2042,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 FROM tabelas.dbo.vwUsuariosOrgaosGrupos a
                 INNER JOIN agentes.dbo.Agentes AS b ON a.usu_identificacao = b.CNPJCPF
                 WHERE sis_codigo = 21 and uog_orgao = $idorgao
-                AND gru_codigo IN (121, 93) AND a.uog_status = 1 
+                AND gru_codigo in (121, 93) AND a.uog_status = 1 
                 ORDER BY gru_codigo ";
 
 

@@ -428,7 +428,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
 				WHERE ap.stAvaliacao = 1
 					AND PAP.tpPlanilha = '$tpPlanilha'
-					AND PAP.idPlanilhaItem NOT IN (206)
+					AND PAP.idPlanilhaItem NOT in (206)
 					AND (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario) <> (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario)"; // vl solicitado != vl sugerido parecerista
 
 		if (!empty($idPronac))

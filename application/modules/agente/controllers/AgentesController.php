@@ -1,66 +1,43 @@
 <?php
 
-/**
- * AgentesController Responsavel por manter os agentes e seus tipos.
- * @author Equipe RUP - Politec
- * @author wouerner <woeurner@gmail.com>
- * @since 25/05/2011
- * @package agente
- * @subpackage controllers
- */
 class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (variavel com o id do usuario logado)
-     * @access private
      */
     private $getIdUsuario = 0;
 
     /**
      * @var integer (variavel para Parecerista)
-     * @access private
      */
     private $getParecerista = 'N';
 
     /**
      * @var integer (variavel com o id do grupo ativo)
-     * @access private
      */
     private $GrupoAtivoSalic = 0;
 
     /**
-     * combovisoes
-     *
      * @var bool
-     * @access private
      */
     private $combovisoes = array();
 
     /**
-     * modal
-     *
      * @var string
-     * @access private
      */
     private $modal = "n";
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init()
     {
         $mapperArea = new Agente_Model_AreaMapper;
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
         $mapperUF = new Agente_Model_UFMapper();
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo',  'Descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 4, 'idVerificacao' => array(28, 29)));
 
         //Monta o combo das visoes disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();

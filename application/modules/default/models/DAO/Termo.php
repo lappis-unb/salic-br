@@ -71,8 +71,8 @@ $sql = "        SELECT
 		    INNER JOIN sac.dbo.Parecer par on par.idPRONAC = pr.IdPRONAC
 		    Inner JOIN sac.dbo.Aprovacao ap ON pr.IdPRONAC = ap.IdPRONAC
 		WHERE
-		    pr.IdPRONAC IN ($pronac)
-		    AND tp.stAnalise IN ('AS', 'IS', 'AC', 'IC', 'AR')
+		    pr.IdPRONAC in ($pronac)
+		    AND tp.stAnalise in ('AS', 'IS', 'AC', 'IC', 'AR')
 		    AND tr.stEstado = 1 and tr.stPlenaria = 'E'
                     AND par.stAtivo = 1
 		    and ap.dtaprovacao in(select max(dtaprovacao) from sac.dbo.aprovacao where idpronac=pr.IdPRONAC)

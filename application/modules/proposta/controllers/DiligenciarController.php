@@ -1104,7 +1104,7 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         $data = array(
             'DtResposta'    => $objAcesso->getExpressionDate(),
             'stEnviado'     => 'S',
-            'RESPOSTA'      => 'O PROPONENTE N&atilde;O RESPONDEU A DILIGÊNCIA NO PRAZO DETERMINADO PELA IN 3 DE 30 DE DEZEMBRO DE 2010; ESPERANDO DECIS&atilde;O.'
+            'RESPOSTA'      => 'O PROPONENTE N&atilde;O RESPONDEU A DILIGÊNCIA NO PRAZO DETERMINADO PELA in 3 DE 30 DE DEZEMBRO DE 2010; ESPERANDO DECIS&atilde;O.'
         );
         $where = array('idPronac in (?)' => $diligenciaProjeto);
         $diligenciaDao->update($data, $where);
@@ -1115,7 +1115,7 @@ class Proposta_DiligenciarController extends Proposta_GenericController {
         $data = array(
             'dtResposta'    => $objAcesso->getExpressionDate(),
             'stEnviado'     => 'S',
-            'dsResposta'    => 'O PROPONENTE N&atilde;O RESPONDEU A DILIGÊNCIA NO PRAZO DETERMINADO PELA IN 3 DE 30 DE DEZEMBRO DE 2010; ESPERANDO DECIS&atilde;O.'
+            'dsResposta'    => 'O PROPONENTE N&atilde;O RESPONDEU A DILIGÊNCIA NO PRAZO DETERMINADO PELA in 3 DE 30 DE DEZEMBRO DE 2010; ESPERANDO DECIS&atilde;O.'
         );
         $where = array('idPronac in (?)' => $diligenciaProposta);
         $AvaliacaoPropostaDao->update($data, $where);

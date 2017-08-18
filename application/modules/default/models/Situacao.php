@@ -14,7 +14,7 @@ class Situacao extends MinC_Db_Table_Abstract
         );
 
         if (!empty($codigosituacao)) {
-            $select->orWhere('sit.Codigo IN (?) ', $codigosituacao);
+            $select->orWhere('sit.Codigo in (?) ', $codigosituacao);
         }
 
         return $this->fetchAll($select);

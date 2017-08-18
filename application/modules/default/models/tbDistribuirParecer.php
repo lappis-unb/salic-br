@@ -231,9 +231,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
             $dadosWhere = array('t.stEstado = ?' => 0,
                                 't.FecharAnalise not in(1)' => '?',
-                                't.tipoanalise IN (3,1)' => '?', //solucao para mostrar projetos novo e projeto do legado
+                                't.tipoanalise in (3,1)' => '?', //solucao para mostrar projetos novo e projeto do legado
                                 't.tipoanalise = (SELECT TOP 1 max(tipoanalise) FROM sac..tbDistribuirParecer WHERE idPRONAC = p.IdPRONAC and stEstado=0 and TipoAnalise in (1,3) )' => '?',  //solucao para mostrar projetos novo e projeto do legado
-                                'p.Situacao IN (\'B11\', \'B14\')' => '',
+                                'p.Situacao in (\'B11\', \'B14\')' => '',
                                 't.idOrgao = ?' => $org_codigo);
 
             foreach ($dadosWhere as $coluna => $valor) {
@@ -273,9 +273,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
         $dadosWhere = array('t.stEstado = ?' 					=> 0,
                             //'t.FecharAnalise = ?' 				=> 0,
-        					't.FecharAnalise IN (0,2)' 			=> '',
+        					't.FecharAnalise in (0,2)' 			=> '',
                             't.TipoAnalise = ?' 				=> 3,
-                            'p.Situacao IN (\'B11\', \'B14\')'	=> '',
+                            'p.Situacao in (\'B11\', \'B14\')'	=> '',
                             't.DtDevolucao is null'				=> '',
                             't.idAgenteParecerista is not null'	=> '',
                             't.stPrincipal = ? ' 				=> 0,
@@ -341,8 +341,8 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         );
 
 
-        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise IN (0,2)' => '', 't.TipoAnalise = ?' => 3,'p.Situacao IN (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
-//        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise = ?' => 0, 't.TipoAnalise = ?' => 3,'p.Situacao IN (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
+        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise in (0,2)' => '', 't.TipoAnalise = ?' => 3,'p.Situacao in (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
+//        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise = ?' => 0, 't.TipoAnalise = ?' => 3,'p.Situacao in (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
 
 		foreach ($dadosWhere as $coluna => $valor) {
                 $select->where($coluna, $valor);
@@ -412,7 +412,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                     $dadosWhere = array('t.stEstado = ?' 					=> 0,
                                     	't.FecharAnalise = ?' 				=> 1,
                                     	't.TipoAnalise = ?' 				=> 3,
-                                    	'p.Situacao IN (\'B11\',\'B14\')'	=> '',
+                                    	'p.Situacao in (\'B11\',\'B14\')'	=> '',
                                     	't.idOrgao = ?'						=>$org_codigo,
                                     	'pp.idProduto is null ' 			=> ''
 
@@ -424,7 +424,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                      $dadosWhere = array('t.stEstado = ?' 					=> 0,
 	                                     't.FecharAnalise = ?' 				=> 1,
 	                                     't.TipoAnalise = ?' 				=> 3,
-	                                     'p.Situacao IN (\'B11\',\'B14\')'	=> '',
+	                                     'p.Situacao in (\'B11\',\'B14\')'	=> '',
 	                                     'pp.idProduto is not null ' 		=> '',
 	                                     'pp.siPagamento = ? ' 				=> 0
 

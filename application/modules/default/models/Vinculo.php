@@ -1072,7 +1072,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
                 }
 
                 if (count($arrIdsAgentes) > 1) {
-                    $arrBusca['a.idAgente IN (?) '] = $arrIdsAgentes;
+                    $arrBusca['a.idAgente in (?) '] = $arrIdsAgentes;
                 } else {
                     $arrBusca['a.idAgente = ?'] = $idAgente;
                 }

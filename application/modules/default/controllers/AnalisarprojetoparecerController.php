@@ -469,7 +469,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
 
             $dadosWhere["t.stEstado = ?"] = 0;
             $dadosWhere["t.TipoAnalise in (?)"] = array(1, 3);
-            $dadosWhere["p.Situacao IN ('B11', 'B14')"] = '';
+            $dadosWhere["p.Situacao in ('B11', 'B14')"] = '';
             $dadosWhere["p.IdPRONAC = ?"] = $idPronac;
             $dadosWhere["t.stPrincipal = ?"] = 0;
             $Secundarios = $tbDistribuirParecerDAO->dadosParaDistribuirSecundarios($dadosWhere);
@@ -531,7 +531,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
         $dadosWhereSA["t.stEstado = ?"] = 0;
         $dadosWhereSA["t.FecharAnalise = ?"] = 0;
         $dadosWhereSA["t.TipoAnalise = ?"] = 3;
-        $dadosWhereSA["p.Situacao IN ('B11', 'B14')"] = '';
+        $dadosWhereSA["p.Situacao in ('B11', 'B14')"] = '';
         $dadosWhereSA["p.IdPRONAC = ?"] = $idPronac;
         $dadosWhereSA["t.stPrincipal = ?"] = 0;
         $dadosWhereSA["t.DtDevolucao is null"] = '';
@@ -743,7 +743,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
             $dadosWhere["t.stEstado = ?"] = 0;
             $dadosWhere["t.FecharAnalise = ?"] = 0;
             $dadosWhere["t.TipoAnalise = ?"] = 3;
-            $dadosWhere["p.Situacao IN ('B11', 'B14')"] = '';
+            $dadosWhere["p.Situacao in ('B11', 'B14')"] = '';
             $dadosWhere["p.IdPRONAC = ?"] = $idPronac;
             $dadosWhere["t.stPrincipal = ?"] = 0;
 
@@ -1481,7 +1481,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
                     $insereParecer = $parecerDAO->inserir($dadosParecer);
                 }
 
-                // NOVA IN 2017 -> grava campos adicionais
+                // NOVA in 2017 -> grava campos adicionais
                 $projetos = new Projetos();
                 if ($projetos->verificarIN2017($idPronac)) {
                     

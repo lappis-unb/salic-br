@@ -47,6 +47,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         $colunaLimpa = trim($condition);
         $separator = '=';
+
         if ($colunaLimpa && strpos($colunaLimpa, $separator) !== false) {
             $arrayColumn = explode($separator, $condition);
             if (strpos($arrayColumn[0], '"') === false) {
@@ -57,6 +58,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             }
 
         } elseif ($colunaLimpa && strpos($colunaLimpa, 'in') !== false) {
+
             $separator = 'in';
             $arrayColumn = explode($separator, $condition);
             if (substr(trim($arrayColumn[1]), 0, 1) == '(' && strpos($arrayColumn[0], '"') === false) {

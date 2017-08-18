@@ -44,7 +44,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 				WHERE   t.stEstado = 0
 				  	    AND t.FecharAnalise = 0
 					    AND t.TipoAnalise <> 2
-					    AND p.Situacao IN ('B11', 'B14')
+					    AND p.Situacao in ('B11', 'B14')
 					    AND t.idOrgao = " . $org_codigo . "
 					 		ORDER BY t.DtEnvio, r.Descricao, p.AnoProjeto + p.Sequencial, TipoAnalise";
 
@@ -151,7 +151,7 @@ class GerenciarParecerDAO extends MinC_Db_Table_Abstract
                       sac.dbo.Produto AS r ON t.idProduto = r.Codigo INNER JOIN
                       sac.dbo.Area AS a ON p.Area = a.Codigo INNER JOIN
                       sac.dbo.Segmento AS s ON p.Segmento = s.Codigo
-				WHERE (t.stEstado = 0) AND (t.FecharAnalise = 0) AND (t.TipoAnalise <> 2) AND (p.Situacao IN ('B11', 'B14'))
+				WHERE (t.stEstado = 0) AND (t.FecharAnalise = 0) AND (t.TipoAnalise <> 2) AND (p.Situacao in ('B11', 'B14'))
 				AND p.IdPRONAC=".$idPronac." and t.idProduto=".$idProduto." and TipoAnalise = ".$TipoAnalise;
 
 

@@ -47,7 +47,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$tbPedidoAlteracaoProjeto = new tbPedidoAlteracaoProjeto();
 
 		// busca os id do �ltimo pedido de readequa��o n�o finalizado
-		$wherePedido                    = array('IdPRONAC = ?' => $idPronac, 'siVerificacao IN (?)' => array(0, 1), 'stPedidoAlteracao = ?' => 'I');
+		$wherePedido                    = array('IdPRONAC = ?' => $idPronac, 'siVerificacao in (?)' => array(0, 1), 'stPedidoAlteracao = ?' => 'I');
 		$orderPedido                    = array('idPedidoAlteracao DESC');
 		$buscarPedidoAlteracao          = $tbPedidoAlteracaoProjeto->buscar($wherePedido, $orderPedido)->current();
 		$this->_idPedidoAlteracao       = count($buscarPedidoAlteracao) > 0 ? $buscarPedidoAlteracao['idPedidoAlteracao'] : 0;
@@ -2533,11 +2533,11 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                                     $tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
                                     $verificarPedidosAtivos = $tbPedidoAlteracaoXTipoAlteracao->buscar(array('idPedidoAlteracao = ?' => $idPedidoAlt, 'stVerificacao <> ?' => 4));
                                     $arrBusca = array();
-                                    $arrBusca['p.siVerificacao IN (?)'] = array('1');
+                                    $arrBusca['p.siVerificacao in (?)'] = array('1');
                                     $arrBusca['p.IdPRONAC = ?'] = $idPronac;
-                                    $arrBusca['x.tpAlteracaoProjeto IN (?)'] = array('1', '2', '5', '7', '8', '9', '10');
-                                    $arrBusca['a.stAvaliacaoItemPedidoAlteracao IN (?)'] = array('AP');
-                                    $arrBusca['c.stVerificacao NOT IN (?)'] = array('4');
+                                    $arrBusca['x.tpAlteracaoProjeto in (?)'] = array('1', '2', '5', '7', '8', '9', '10');
+                                    $arrBusca['a.stAvaliacaoItemPedidoAlteracao in (?)'] = array('AP');
+                                    $arrBusca['c.stVerificacao NOT in (?)'] = array('4');
 
                                     $buscaChecklist = $tbPedidoAlteracaoXTipoAlteracao->buscarPedidoChecklist($arrBusca);
                                     if (count($verificarPedidosAtivos) == 0 && count($buscaChecklist) == 0) :

@@ -1143,7 +1143,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
      *
      * @access public
      * @return void
-     * @deprecated Este metodo nao eh mais utilizado com a nova IN [in2017]
+     * @deprecated Este metodo nao eh mais utilizado com a nova in [in2017]
      */
     public function salvarmesmoprodutoAction()
     {
@@ -1178,7 +1178,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
      *
      * @access public
      * @return void,
-     * @deprecated Este metodo nao eh mais utilizado com a nova IN [in2017]
+     * @deprecated Este metodo nao eh mais utilizado com a nova in [in2017]
      */
     public function excluiritensprodutosAction()
     {

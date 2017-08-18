@@ -473,7 +473,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $tbRelatorioTec = new tbRelatorioTecnico();
             $arrBuscaF4 = array();
             $arrBuscaF4['idPronac = ?'] = $idPronac;
-            $arrBuscaF4['cdGrupo IN (?)'] = array('125','126');
+            $arrBuscaF4['cdGrupo in (?)'] = array('125','126');
             $rsF4 = $tbRelatorioTec->buscar($arrBuscaF4);
 
             //FASE INICIAL

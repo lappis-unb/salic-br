@@ -93,7 +93,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 				 INNER JOIN sac.dbo.Area AS a ON p.Area = a.Codigo
 				 INNER JOIN sac.dbo.Segmento AS s ON p.Segmento = s.Codigo
 				 LEFT JOIN sac.dbo.tbAnaliseDeConteudo AS ac ON ac.IdPRONAC = t.IdPRONAC AND ac.idProduto = t.idProduto 
-				 WHERE (t.stEstado = 0)  AND (t.TipoAnalise <> 2) AND (p.Situacao IN ('B11','B14')) 
+				 WHERE (t.stEstado = 0)  AND (t.TipoAnalise <> 2) AND (p.Situacao in ('B11','B14')) 
 				 AND (pp.idProduto is not null ) AND (t.idAgenteParecerista = '$idAgente')";
 		
 		if(!empty($idOrgao)){

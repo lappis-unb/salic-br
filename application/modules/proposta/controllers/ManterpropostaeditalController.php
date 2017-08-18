@@ -231,7 +231,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 	        $arrBuscaP['VI.idUsuarioResponsavel = ?'] 	= $this->idResponsavel;
 	        $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
-	        $arrBuscaN['VI.siVinculo IN (0,2)'] 		= '';
+	        $arrBuscaN['VI.siVinculo in (0,2)'] 		= '';
 	        $arrBuscaN['VI.idUsuarioResponsavel = ?'] 	= $this->idResponsavel;
 	        $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
 

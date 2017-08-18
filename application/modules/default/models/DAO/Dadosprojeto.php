@@ -36,11 +36,11 @@ Class Dadosprojeto extends Zend_Db_Table
             Pr.SolicitadoReal,
             sac.dbo.fnOutrasFontes(Pr.idPronac) AS OutrasFontes,
             ISNULL(sac.dbo.fnValorDaProposta(Pr.idPRONAC),sac.dbo.fnValorSolicitado(Pr.AnoProjeto,Pr.Sequencial)) as ValorProposta,
-            CASE WHEN Pr.Mecanismo IN ('2','6')
+            CASE WHEN Pr.Mecanismo in ('2','6')
             THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial) 
             ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial)
             END AS ValorAprovado,
-            CASE WHEN Pr.Mecanismo IN ('2','6')
+            CASE WHEN Pr.Mecanismo in ('2','6')
             THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
             ELSE sac.dbo.fnValorAprovado(Pr.AnoProjeto,Pr.Sequencial) + sac.dbo.fnOutrasFontes(Pr.idPronac)                
             END AS ValorProjeto,

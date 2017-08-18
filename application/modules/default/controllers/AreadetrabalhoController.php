@@ -132,7 +132,7 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
 
 
         $arrBusca = array();
-        $arrBusca['Pr.Situacao IN (?)'] = array('C10','D01');
+        $arrBusca['Pr.Situacao in (?)'] = array('C10','D01');
         $arrBusca['D.DtResposta IS NOT NULL'] = "(?)";
         $arrBusca['D.idTipoDiligencia = ?'] = "126"; //diligencia na cnic
         $arrBusca['DPC.idAgente = ?'] = $idagente;
@@ -164,7 +164,7 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
         $arrBusca['DPC.idAgente = ?'] = $idagente;
         $arrBusca['DPC.stDistribuicao = ?'] = 'A';
         $arrBusca['Pr.Situacao = ?'] = 'C10';
-        $arrBusca['Pa.TipoParecer IN (?)'] = array('2','4');
+        $arrBusca['Pa.TipoParecer in (?)'] = array('2','4');
         $arrBusca['Pa.stAtivo = ?'] = '1';
         //PROJETOS DE READEQUACAO
         $tbanalisereadequacao = $distribuicao->buscarProjetosDistribuidosReadequados($arrBusca);

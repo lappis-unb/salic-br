@@ -216,7 +216,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $where['p.Orgao = ?'] = $codOrgao;
             $where['p.Mecanismo = ?'] = 1;
             $where['p.AnoProjeto > ?'] = '08';
-            $where['p.Situacao IN (?)'] = array("C09", "C20", "C25");
+            $where['p.Situacao in (?)'] = array("C09", "C20", "C25");
 
             $total = $tblProjeto->buscarProjetosConsolidados($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
@@ -247,7 +247,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $where['p.Orgao = ?'] = $codOrgao;
             $where['p.Mecanismo = ?'] = 1;
             $where['p.AnoProjeto > ?'] = '08';
-            $where['p.Situacao IN (?)'] = array("C09", "C20", "C25");
+            $where['p.Situacao in (?)'] = array("C09", "C20", "C25");
 
             $total = $tblProjeto->buscarProjetosConsolidados($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
@@ -424,7 +424,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $where['p.Orgao = ?'] = $codOrgao;
             $where['p.Mecanismo = ?'] = 1;
             $where['p.AnoProjeto > ?'] = '08';
-            $where['p.Situacao IN (?)'] = array("C09", "C20", "C25");
+            $where['p.Situacao in (?)'] = array("C09", "C20", "C25");
 
             $total = $tblProjeto->buscarProjetosConsolidados($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
@@ -438,7 +438,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $where['p.Orgao = ?'] = $codOrgao;
             $where['p.Mecanismo = ?'] = 1;
             $where['p.AnoProjeto > ?'] = '08';
-            $where['p.Situacao IN (?)'] = array("C09", "C20", "C25");
+            $where['p.Situacao in (?)'] = array("C09", "C20", "C25");
 
             $total = $tblProjeto->buscarProjetosConsolidados($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
@@ -599,7 +599,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         $where['p.Orgao = ?'] = $codOrgao;
         $where['p.Mecanismo = ?'] = 1;
         $where['p.AnoProjeto > ?'] = '08';
-        $where['p.Situacao IN (?)'] = array("C09", "C20", "C25");
+        $where['p.Situacao in (?)'] = array("C09", "C20", "C25");
 
         $total = $tblProjeto->buscarProjetosConsolidados($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;

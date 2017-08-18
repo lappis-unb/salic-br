@@ -192,7 +192,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
                array(new Zend_Db_Expr('idRecurso')),
                $this->_schema)
            ->where('siFaseProjeto = ?', 1)
-           ->where('tpRecurso IN (?)', array(2))
+           ->where('tpRecurso in (?)', array(2))
            ->where('idPronac = ?', $idPronac);
         $recursoIndeferido = $db->fetchAll($recursoIndeferido);
 

@@ -49,7 +49,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $this->view->tipoitemfluxo = $tipoitemfluxo;
 
         $composicao = new Composicao();
-        $composicaoEdital = $composicao->buscarComposicao(array('idComposicao NOT IN (?)' => array(2,3,4,6,8,10)));
+        $composicaoEdital = $composicao->buscarComposicao(array('idComposicao NOT in (?)' => array(2,3,4,6,8,10)));
         $this->view->composicao = $composicaoEdital;
         
     }

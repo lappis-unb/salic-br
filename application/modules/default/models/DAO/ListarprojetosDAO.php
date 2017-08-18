@@ -26,7 +26,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 				 INNER JOIN sac.dbo.Situacao si on si.Codigo = p.Situacao";
         
         		
-			 $where = " WHERE (a.stEstado = 1) AND (a.idEdital is null or a.idEdital = 0) AND (a.idAgente IN (".$idAgenteLogado.")) ";
+			 $where = " WHERE (a.stEstado = 1) AND (a.idEdital is null or a.idEdital = 0) AND (a.idAgente in (".$idAgenteLogado.")) ";
         	if (!empty($tipoProponente))
         	{
         		
@@ -34,14 +34,14 @@ class ListarprojetosDAO extends Zend_Db_Table {
 						  INNER JOIN agentes.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
 						  INNER JOIN agentes.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
         		
-        		$where =  " WHERE (a.stEstado = 1) AND (a.idEdital is null or a.idEdital = 0) AND (a.idAgente IN (".$idAgente.")) AND PRO.siProcuracao = 1 "; 
+        		$where =  " WHERE (a.stEstado = 1) AND (a.idEdital is null or a.idEdital = 0) AND (a.idAgente in (".$idAgente.")) AND PRO.siProcuracao = 1 "; 
         		
         	}
 
         	$sql .= $where;
         	
 
-			// $sql .= " WHERE (a.stEstado = 1) AND (a.idEdital is null or a.idEdital = 0) AND (a.idAgente IN (".$idAgente.")) ";
+			// $sql .= " WHERE (a.stEstado = 1) AND (a.idEdital is null or a.idEdital = 0) AND (a.idAgente in (".$idAgente.")) ";
         
         
         if (!empty($dataInicio)) {
@@ -83,7 +83,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 		
 		
 		 $where = " WHERE (a.stEstado = 1) 
-			 		AND (a.idAgente IN (".$idAgenteLogado.")) 
+			 		AND (a.idAgente in (".$idAgenteLogado.")) 
 			 		AND a.idEdital is not null and c.idClassificaDocumento != 23 
 			 		and c.idClassificaDocumento != 24 
 			 		and c.idClassificaDocumento != 25";
@@ -100,7 +100,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
         					AND c.idClassificaDocumento != 23 
 			 				AND c.idClassificaDocumento != 24 
 			 				AND c.idClassificaDocumento != 25 
-			 				AND (a.idAgente IN (".$idAgente.")) 
+			 				AND (a.idAgente in (".$idAgente.")) 
 			 				AND PRO.siProcuracao = 1 "; 
         		
         	}
@@ -153,7 +153,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 				 INNER JOIN sac.dbo.Projetos p on p.idProjeto = a.idPreProjeto
 				 INNER JOIN sac.dbo.Situacao si on si.Codigo = p.Situacao";
 			 
-			$where = " WHERE a.idAgente IN (" . $idAgenteLogado . ")";
+			$where = " WHERE a.idAgente in (" . $idAgenteLogado . ")";
         	if (!empty($tipoProponente))
         	{
         		
@@ -161,7 +161,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 						  INNER JOIN agentes.dbo.tbVinculoProposta VP ON VI.idVinculo = VP.idVinculo
 						  INNER JOIN agentes.dbo.tbProcuracao PRO ON VP.idVinculoProposta = PRO.idVinculoProposta ";
         		
-        		$where =  " WHERE (a.idAgente IN (".$idAgente.")) AND PRO.siProcuracao = 1 "; 
+        		$where =  " WHERE (a.idAgente in (".$idAgente.")) AND PRO.siProcuracao = 1 "; 
         		
         	}
 
@@ -274,7 +274,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 				INNER JOIN agentes.dbo.Nomes NM ON AG.idAgente = NM.idAgente
 				LEFT JOIN agentes.dbo.tbVinculo VI ON AG.idAgente = VI.idAgenteProponente
 				WHERE VI.idUsuarioResponsavel = '".$idResponsavel."'
-				AND VI.siVinculo IN (0,2)
+				AND VI.siVinculo in (0,2)
 				ORDER BY NM.Descricao ";
 
         $db= Zend_Db_Table::getDefaultAdapter();

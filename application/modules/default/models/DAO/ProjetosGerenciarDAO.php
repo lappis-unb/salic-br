@@ -227,7 +227,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			                                LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
 			                                WHERE ATC.stConselheiro = 'A'
 			                                AND DPCI.stDistribuicao = 'I'
-			                                AND ATC.idAgente NOT IN (SELECT DISTINCT ATC.idAgente
+			                                AND ATC.idAgente NOT in (SELECT DISTINCT ATC.idAgente
 			                                                         FROM  agentes.dbo.tbTitulacaoConselheiro ATC
 			                                                         LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 			                                                         WHERE ATC.stConselheiro = 'A'
