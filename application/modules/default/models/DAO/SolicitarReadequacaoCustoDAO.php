@@ -222,7 +222,7 @@ WHERE     sac.dbo.Projetos.IdPRONAC = $idPronac AND sac.dbo.PlanoDistribuicaoPro
                             'qtDias',
                             '(nrOcorrencia * vlUnitario * qtItem) Total',
                             'nrFonteRecurso',
-                            'idUFDespesa as iduf',
+                            'idUFDespesa as idUF',
                             'idMunicipioDespesa as idmun',
                             'tpAcao',
                             'idEtapa',
@@ -293,7 +293,7 @@ WHERE     sac.dbo.Projetos.IdPRONAC = $idPronac AND sac.dbo.PlanoDistribuicaoPro
                             'qtDias',
                             '(nrOcorrencia * vlUnitario * qtItem) Total',
                             'nrFonteRecurso',
-                            'idUFDespesa as iduf',
+                            'idUFDespesa as idUF',
                             'idMunicipioDespesa as idmun',
                             'tpAcao',
                             'idEtapa',
@@ -865,7 +865,7 @@ WHERE     sac.dbo.Projetos.IdPRONAC = $idPronac AND sac.dbo.PlanoDistribuicaoPro
     }
 
     public static function buscarMunicipio($iduf) {
-        $sql = "select idMunicipioIBGE, idUFIBGE, Descricao from agentes.dbo.Municipios where idUFIBGE = $iduf";
+        $sql = "select idMunicipioIBGE, idUFIBGE, Descricao from agentes.dbo.Municipios where idUFIBGE = $idUF";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

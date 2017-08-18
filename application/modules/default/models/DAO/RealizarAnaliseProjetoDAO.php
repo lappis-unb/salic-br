@@ -1032,7 +1032,7 @@ public static function deslocamento($pronac)
                 array(new Zend_Db_Expr('Pais.Descricao AS PaisOrigem')),
                 'agentes')
             ->joinInner('uf',
-                'tbDeslocamento.idUFOrigem = uf.iduf',
+                'tbDeslocamento.idUFOrigem = uf.idUF',
                 array(new Zend_Db_Expr('uf.Descricao AS UFOrigem')),
                 'agentes')
             ->joinInner('Municipios',
@@ -1044,7 +1044,7 @@ public static function deslocamento($pronac)
                 array(new Zend_Db_Expr('Pais_2.Descricao AS PaisDestino')),
                 'agentes')
             ->joinInner('uf',
-                'tbDeslocamento.idUFDestino = uf_2.iduf',
+                'tbDeslocamento.idUFDestino = uf_2.idUF',
                 array(new Zend_Db_Expr('uf_2.Descricao AS UFDestino')),
                 'agentes')
             ->joinInner('Municipios',

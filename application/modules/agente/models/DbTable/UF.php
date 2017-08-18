@@ -2,9 +2,9 @@
 
 class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
 {
-    protected $_banco = 'AGENTES';
-    protected $_name = 'uf';
+    protected $_name = 'UF';
     protected $_schema = 'agentes';
+    protected $_primary = 'idUF';
 
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
@@ -12,7 +12,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
             $this->_name,
-            array('id'=>'iduf',
+            array('id'=>'idUF',
                 'descricao'=> 'sigla'),
             $this->_schema
         );

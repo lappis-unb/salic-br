@@ -241,9 +241,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->idProduto = $idProduto;
         }
 
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $tbMun = new Agente_Model_DbTable_Municipios();
             $cidade = $tbMun->listar($iduf);
@@ -385,7 +385,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         }
 
         $uf = new Agente_Model_DbTable_UF();
-        $estado = $uf->findBy(array("iduf" => $iduf));
+        $estado = $uf->findBy(array("idUF" => $iduf));
         $this->view->Estado = $estado;
 
         $mun = new Agente_Model_DbTable_Municipios();
@@ -747,9 +747,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->dados_cadastrados = array();
         }
 
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $tbMun = new Agente_Model_DbTable_Municipios();
             $cidade = $tbMun->listar($iduf);
@@ -868,9 +868,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->Dados = $buscaDados;
         }
 
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $cidade = $mun->buscar($iduf);
 
@@ -948,10 +948,10 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $buscaDados = $tbPlanilhaProposta->buscarDadosCustos($_GET);
             $this->view->Dados = $buscaDados;
         }
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
 
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $mun = new Agente_Model_DbTable_Municipios();
             $cidade = $mun->listar($iduf);

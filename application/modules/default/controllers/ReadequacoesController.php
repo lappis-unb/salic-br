@@ -74,9 +74,9 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
-        if(isset($_POST['iduf'])) {
+        if(isset($_POST['idUF'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
             $mun = new Agente_Model_DbTable_Municipios();
             $cidade = $mun->listar($iduf);
             $a = 0;
@@ -922,8 +922,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
-        if(isset($_POST['iduf'])) {
-            $iduf = $_POST['iduf'];
+        if(isset($_POST['idUF'])) {
+            $iduf = $_POST['idUF'];
 
             $mun = new Agente_Model_DbTable_Municipios();
             $cidade = $mun->listar($iduf);

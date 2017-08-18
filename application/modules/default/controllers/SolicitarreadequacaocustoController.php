@@ -341,7 +341,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
                 $valorjson['idPlanilhaItem'] = $resultadoarray->idPlanilhaItem;
                 $valorjson['idUnidade'] = $resultadoarray->idUnidade;
                 $valorjson['Etapa'] = $resultadoarray->Etapa;
-                $valorjson['iduf'] = $resultadoarray->iduf;
+                $valorjson['idUF'] = $resultadoarray->iduf;
                 $valorjson['idmun'] = $resultadoarray->idmun;
                 $valorjson['idPlanilhaEtapa'] = $resultadoarray->idEtapa;
                 $valorjson['dsjustificativa'] = !is_null(utf8_encode($resultadoarray->dsJustificativa)) ? utf8_encode($resultadoarray->dsJustificativa) : '';
@@ -504,7 +504,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
                 $valorjson['idPlanilhaItem'] = $resultadoarray->idPlanilhaItem;
                 $valorjson['idUnidade'] = $resultadoarray->idUnidade;
                 $valorjson['Etapa'] = $resultadoarray->Etapa;
-                $valorjson['iduf'] = $resultadoarray->iduf;
+                $valorjson['idUF'] = $resultadoarray->iduf;
                 $valorjson['idmun'] = $resultadoarray->idmun;
                 $valorjson['idPlanilhaEtapa'] = $resultadoarray->idEtapa;
                 $valorjson['dsjustificativa'] = !is_null(utf8_encode($resultadoarray->dsJustificativa)) ? utf8_encode($resultadoarray->dsJustificativa) : '';

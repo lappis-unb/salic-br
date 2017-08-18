@@ -4,7 +4,7 @@ class AjaxController extends MinC_Controller_Action_Abstract {
 
     public function municipioAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $iduf = $_POST['iduf'];
+        $iduf = $_POST['idUF'];
         try {
             $municipio = new Municipios();
             $buscarmunicipio = $municipio->buscar(array('idUFIBGE = ?' => $iduf));
