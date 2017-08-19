@@ -57,7 +57,7 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 from agentes.dbo.Agentes ag
                 JOIN agentes.dbo.Nomes nm on nm.idAgente = ag.idAgente
                 JOIN agentes.dbo.Visao vis on vis.idAgente = ag.idAgente
-                where vis.visao = 212 and nm.TipoNome=18
+                where vis.Visao = 212 and nm.TipoNome=18
                 ";
         try
         {

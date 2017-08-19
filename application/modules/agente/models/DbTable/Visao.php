@@ -52,7 +52,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             );
             $objSelect->joinInner(
                 array('ver' => 'Verificacao'),
-                "ver.idVerificacao = vis.visao",
+                "ver.idVerificacao = vis.Visao",
                 array('ver.Descricao', 'ver.idVerificacao'),
                 $this->getSchema('agentes')
             );
@@ -68,7 +68,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
                 array('area' => 'ar.descricao'),
                 $this->getSchema('sac')
             );
-            $objSelect->where('ver.idVerificacao = vis.visao');
+            $objSelect->where('ver.idVerificacao = vis.Visao');
             $objSelect->where('ver.idtipo = ? ', 16);
             $objSelect->where('sistema = ? ', 21);
 
@@ -77,7 +77,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             }
 
             if (!empty($visao)) {
-                $objSelect->where('vis.visao = ? ', $visao);
+                $objSelect->where('vis.Visao = ? ', $visao);
             }
             $objSelect->order("2");
             $dados = $db->fetchAll($objSelect);

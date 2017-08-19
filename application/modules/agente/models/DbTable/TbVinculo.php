@@ -177,7 +177,7 @@ xd($slct1->assemble());
 
         $slct->joinLeft(
                 array('v' => 'Visao'), "v.idAgente = ag.idAgente AND v.Visao = 146",
-                array('v.visao as UsuarioVinculo'), $this->getSchema('agentes')
+                array('v.Visao as UsuarioVinculo'), $this->getSchema('agentes')
         );
 
         foreach ($where as $coluna => $valor)

@@ -82,7 +82,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     ->join(array('d' => 'Visao'), '(d.idagente = a.idagente)', null,$this->getSchema('agentes'))
                     ->where('b.CNPJCPF = ?', $cpfLogado)
                     ->where('c.CNPJCPF = ?', $cpfCnpjProponente)
-                    ->where('d.visao = 198')
+                    ->where('d.Visao = 198')
                     ;
 
                 $cpfDirigente = $db->fetchRow($sql);
@@ -121,7 +121,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     ->join(array('d' => 'Visao'), '(d.idagente = a.idagente)', null, $this->getSchema('agentes'))
                     ->where('b.CNPJCPF = ?', $cpfLogado )
                     ->where('c.CNPJCPF = ?', $cpfCnpjProponente)
-                    ->where('d.visao = 198')
+                    ->where('d.Visao = 198')
                     ;
 
                     $dirigenteCpf = $db->fetchOne($sql);

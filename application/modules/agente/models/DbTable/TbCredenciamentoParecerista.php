@@ -61,12 +61,12 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
 
         $select->joinLeft(
             array('x'=>'Visao'),'x.idagente = c.idagente',
-            array('x.visao'),
+            array('x.Visao'),
             $this->_schema
         );
 
         $select->where('c.idagente = ?', $idAgente);
-        $select->where('x.visao = ?', 209);
+        $select->where('x.Visao = ?', 209);
         $select->order('a.descricao');
         $select->order('s.descricao');
 

@@ -360,8 +360,8 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
 
         $select->joinLeft(
-            array('v' => 'Visao'), "v.idagente = ag.idagente and v.visao = 146",
-            array('v.visao as usuariovinculo'),
+            array('v' => 'Visao'), "v.idagente = ag.idagente and v.Visao = 146",
+            array('v.Visao as usuariovinculo'),
             $this->_schema
         );
 
