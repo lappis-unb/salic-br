@@ -47,8 +47,8 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         $colunaLimpa = trim($condition);
         $separator = '=';
-
         if ($colunaLimpa && strpos($colunaLimpa, $separator) !== false) {
+
             $arrayColumn = explode($separator, $condition);
             if (strpos($arrayColumn[0], '"') === false) {
                 $conditionOne = $this->addDoubleQuote(trim($arrayColumn[0]));
