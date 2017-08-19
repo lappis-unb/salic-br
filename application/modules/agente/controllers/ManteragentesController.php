@@ -85,11 +85,11 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->cpfLogado = $Cpflogado;
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 4, 'idverificacao' => array(28, 29)));
 
         //Monta o combo das visees disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();

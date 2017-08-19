@@ -57,7 +57,7 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         );
 
         $select->joinInner(
-                array('tp'=>'tbtipoausencia'),'tp.idtipoausencia = a.idtipoausencia',
+                array('tp'=>'tbtipoausencia'),'tp.idTipoausencia = a.idTipoausencia',
                 array('tp.nmausencia as tipoausencia'),
             $this->_schema
         );
@@ -79,7 +79,7 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
                 array('*'),
             $this->getschema('bdcorporativo', true, 'sccorp')
         );
-        $select->where('a.idtipoausencia = ?', $tipo);
+        $select->where('a.idTipoausencia = ?', $tipo);
         if (!empty($idAgente)) {
         	$select->where('a.idAgente = ?', $idAgente);
         }

@@ -786,7 +786,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                         $tpVotacao = 2;
                     } else if($this->_request->getParam("tipo") == 'readequacao'){
                         $tpVotacao = 3;
-                        $idtipo = $_POST['idtipo'];
+                        $idtipo = $_POST['idTipo'];
                     }
 
                     //Inserindo registros na tabela tbVotacao para recber o voto de cada participante da plenaria

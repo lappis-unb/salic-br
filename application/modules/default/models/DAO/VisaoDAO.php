@@ -51,7 +51,7 @@
 //                                left join " . GenericModel::getStaticTableName('sac', 'Area') . " ar on ttc.cdArea = ar.Codigo ";
 //
 //            $sql .= " where ver.idverificacao = vis.Visao
-//				and ver.idtipo = 16 and sistema = 21";
+//				and ver.idTipo = 16 and sistema = 21";
 //
 //            if (!empty($idAgente)) // busca pelo id do agente
 //            {

@@ -36,11 +36,11 @@ class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
             $this->_schema
             );
         $select->joinInner(array('tipo'=>'Tipo'),
-            'v.idtipo = tipo.idtipo' ,
+            'v.idTipo = tipo.idTipo' ,
             null,
             $this->_schema
         );
-        $select->where('tipo.idtipo = ?', '5');
+        $select->where('tipo.idTipo = ?', '5');
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

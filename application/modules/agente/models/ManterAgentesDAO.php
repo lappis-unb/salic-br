@@ -227,7 +227,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from(array('i' => 'internet'), $i, $tblAgentes->getSchema('agentes'))
             ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $tblAgentes->getSchema('agentes'))
-            ->join(array('t' => 'tipo'), 't.idtipo = v.idtipo', null, $tblAgentes->getSchema('agentes'));
+            ->join(array('t' => 'tipo'), 't.idTipo = v.idTipo', null, $tblAgentes->getSchema('agentes'));
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
 

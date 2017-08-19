@@ -153,7 +153,7 @@ class Proposta_DivulgacaoController extends Proposta_GenericController
     {
         $this->verificarPermissaoAcesso(true, false, false);
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        $this->view->itensplano = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 1), array('descricao'));
+        $this->view->itensplano = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 1), array('descricao'));
         $this->view->veiculo = array();
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
