@@ -45,7 +45,7 @@
 //                                vis.usuario ,
 //                                vis.stativo ,
 //                                ar.descricao as area
-//                                from " . GenericModel::getStaticTableName('agentes', 'visao') . " vis
+//                                from " . GenericModel::getStaticTableName('agentes', 'Visao') . " vis
 //                                inner join " . GenericModel::getStaticTableName('agentes', 'Verificacao') . " ver on ver.idverificacao = vis.visao
 //                                left join " . GenericModel::getStaticTableName('agentes', 'tbtitulacaoconselheiro') . " ttc on ttc.idagente =  vis.idagente
 //                                left join " . GenericModel::getStaticTableName('sac', 'area') . " ar on ttc.cdArea = ar.Codigo ";

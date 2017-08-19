@@ -63,7 +63,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
             ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
             ->joinLeft(array('t' => 'tbtitulacaoconselheiro'), 't.idagente = a.idagente', $t, $schemaAgentes)
-            ->joinLeft(array('v' => 'visao'), 'v.idagente = a.idagente', '*', $schemaAgentes)
+            ->joinLeft(array('v' => 'Visao'), 'v.idagente = a.idagente', '*', $schemaAgentes)
             ->joinLeft(array('sa' => 'area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
             ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
             ->where('a.tipopessoa = 0 or a.tipopessoa = 1')

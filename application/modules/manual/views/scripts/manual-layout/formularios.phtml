@@ -565,7 +565,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 	<!--
 	function addTodos() // adiciona todos os options da esquerda para direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visao.length; i++) // varre todo o option de origem
 		{
@@ -580,7 +580,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 
 	function delTodos() // deleta todos os options da direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
 		{
@@ -598,7 +598,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 
 	function addSelecionado() // adiciona o option selecionado da esquerda para direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visao.length; i++) // varre todo o option de origem
 		{
@@ -616,7 +616,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 
 	function delSelecionado() // deleta o option selecionado da direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
 		{
@@ -677,8 +677,8 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 			</tr>
 			<tr>
 				<td class="centro" valign="top">
-					<label for="visao"> </label>
-					<select class="select_simples w300" name="visao[]" id="visao" multiple="multiple" size="7">
+					<label for="Visao"> </label>
+					<select class="select_simples w300" name="visao[]" id="Visao" multiple="multiple" size="7">
 						<option value="144">Proponente</option>
 						<option value="145">Teste 1</option>
 						<option value="146">Teste 2</option>

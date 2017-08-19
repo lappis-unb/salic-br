@@ -16,7 +16,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_name = 'visao';
+    protected $_name = 'Visao';
 
     /**
      * _primary
@@ -46,7 +46,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
 
             $objSelect = $db->select();
             $objSelect->from(
-                array('vis' => 'visao'),
+                array('vis' => 'Visao'),
                 array('idvisao', 'idagente', 'usuario', 'stativo', 'Visao'),
                 $this->getSchema('agentes')
             );

@@ -26,7 +26,7 @@ class Agente_Model_TbTitulacaoConselheiroMapper extends MinC_Db_Mapper
         $titular = $arrData['titular'];
         $areaCultural = $arrData['areacultural'];
         $segmentoCultural = $arrData['segmentocultural'];
-        $intVisao = $arrData['visao'];
+        $intVisao = $arrData['Visao'];
         $idAgente = $arrData['idagente'];
 
         # so salva area e segmento para a visao de componente da comissao e se os campos titular e areaCultural forem informados

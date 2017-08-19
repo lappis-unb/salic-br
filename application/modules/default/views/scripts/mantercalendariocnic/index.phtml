@@ -58,7 +58,7 @@ $(function()
 
 function addTodos() // adiciona todos os options da esquerda para direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visao.length; i++) // varre todo o option de origem
 		{
@@ -74,7 +74,7 @@ function addTodos() // adiciona todos os options da esquerda para direita
 
 	function delTodos() // deleta todos os options da direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
 		{
@@ -93,7 +93,7 @@ function addTodos() // adiciona todos os options da esquerda para direita
 
 	function addSelecionado() // adiciona o option selecionado da esquerda para direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visao.length; i++) // varre todo o option de origem
 		{
@@ -112,7 +112,7 @@ function addTodos() // adiciona todos os options da esquerda para direita
 
 	function delSelecionado() // deleta o option selecionado da direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
 		{
@@ -340,8 +340,8 @@ function validarForm(){
                                     </tr>
                                     <tr>
                                             <td class="centro" valign="top">
-                                                    <label for="visao"> </label>
-                                                    <select class="select w150" name="colunas[]" id="visao" multiple="multiple" size="7">
+                                                    <label for="Visao"> </label>
+                                                    <select class="select w150" name="colunas[]" id="Visao" multiple="multiple" size="7">
 
                                                             <option value="N.Reuniao">N. Reuni?o</option>
                                                             <option value="Dt.Inicio">Dt. Início </option>

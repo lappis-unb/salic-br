@@ -60,7 +60,7 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         );
 
         $select->joinLeft(
-            array('x'=>'visao'),'x.idagente = c.idagente',
+            array('x'=>'Visao'),'x.idagente = c.idagente',
             array('x.visao'),
             $this->_schema
         );

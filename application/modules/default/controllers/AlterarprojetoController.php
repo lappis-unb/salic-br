@@ -312,7 +312,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
 
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
-        $Visao = $this->_request->getParam("visao");
+        $Visao = $this->_request->getParam("Visao");
         $grupologado = $this->_request->getParam("grupologado");
 
         /*

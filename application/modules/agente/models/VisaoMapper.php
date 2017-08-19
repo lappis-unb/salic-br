@@ -30,11 +30,11 @@ class Agente_Model_VisaoMapper extends MinC_Db_Mapper
         if ($arrData['grupologado'] != 118) {
             $arrDataVisao = array(
                 'idagente' => $arrData['idagente'],
-                'visao' => $arrData['visao'],
+                'Visao' => $arrData['Visao'],
                 'usuario' => $arrData['IdUsuario'],
                 'stativo' => 'A'
             );
-            $arrVisao = $this->findBy(array('idagente' => $arrData['idagente'], 'visao' => $arrData['visao']));
+            $arrVisao = $this->findBy(array('idagente' => $arrData['idagente'], 'Visao' => $arrData['Visao']));
             if ($arrVisao) {
                 return $arrVisao['idvisao'];
             } else {

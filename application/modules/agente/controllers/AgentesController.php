@@ -1888,7 +1888,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
-        $Visao = $this->_request->getParam("visao");
+        $Visao = $this->_request->getParam("Visao");
         $grupologado = $this->_request->getParam("grupologado");
         /*
          * Validacao - Se for componente da comissao ele nao salva a visao
@@ -1897,7 +1897,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         if ($grupologado != 118):
             $GravarVisao = array(// insert
                 'idagente' => $idAgente,
-                'visao' => $Visao,
+                'Visao' => $Visao,
                 'usuario' => $usuario,
                 'stativo' => 'A');
             try {
@@ -2234,7 +2234,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
-        $Visao = $this->_request->getParam("visao");
+        $Visao = $this->_request->getParam("Visao");
 
         $grupologado = $this->_request->getParam("grupologado");
 
@@ -2803,7 +2803,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 foreach ($visaoAgente as $visao) {
                     $dados = array(
                         'idagente' => $idAgente,
-                        'visao' => $visao,
+                        'Visao' => $visao,
                         'usuario' => $this->getIdUsuario, // código do usuario logado
                         'stativo' => 'A');
                     $visaoTable->cadastrarVisao($dados);
