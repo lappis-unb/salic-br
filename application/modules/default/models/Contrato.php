@@ -52,13 +52,13 @@ class Contrato  extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbContratoxPlanilhaAprovacao'),
                             'con.idContrato = cpa.idContrato',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinInner(
                             array('pa'=>'tbPlanilhaAprovacao'),
                             'cpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao',
                             array('pa.IdPRONAC'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('pa.IdPRONAC = ?', $idpronac);
@@ -69,7 +69,6 @@ class Contrato  extends MinC_Db_Table_Abstract {
                             'con.idContrato','con.nrContratoSequencial','con.nrContratoAno','con.dtPublicacao','pa.IdPRONAC'
                           ));
 
-        //xd($select->query());die;
 
         return $this->fetchAll($select);
 
@@ -90,13 +89,13 @@ class Contrato  extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbContratoxPlanilhaAprovacao'),
                             'con.idContrato = cpa.idContrato',
                             array('cpa.idPlanilhaAprovacao'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinInner(
                             array('pa'=>'tbPlanilhaAprovacao'),
                             'cpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao',
                             array('pa.IdPRONAC'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('pa.IdPRONAC = ?', $idpronac);

@@ -21,7 +21,7 @@
         echo "<table style=\"margin-left:10px; border:0; background:none;\">";
         echo "<tr colspan=1>";
         echo "<td>";
-        echo "Informações sobre a reunião Reunião";
+        echo "Informa&ccedil;&otilde;es sobre a reuni&atilde;o Reuni&atilde;o";
         echo "</td>";
         echo "<td>";
         echo $numeroReuniao;
@@ -29,7 +29,7 @@
         echo "</tr>";
         echo "<tr colspan=1>";
         echo "<td>";
-        echo "Período para inclusão de projetos";
+        echo "Período para inclus&atilde;o de projetos";
         echo "</td>";
         echo "<td>";
         echo $dataInicio . " " . $dataFechamento;

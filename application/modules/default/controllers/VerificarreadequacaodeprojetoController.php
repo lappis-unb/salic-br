@@ -47,7 +47,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$tbPedidoAlteracaoProjeto = new tbPedidoAlteracaoProjeto();
 
 		// busca os id do �ltimo pedido de readequa��o n�o finalizado
-		$wherePedido                    = array('IdPRONAC = ?' => $idPronac, 'siVerificacao IN (?)' => array(0, 1), 'stPedidoAlteracao = ?' => 'I');
+		$wherePedido                    = array('IdPRONAC = ?' => $idPronac, 'siVerificacao in (?)' => array(0, 1), 'stPedidoAlteracao = ?' => 'I');
 		$orderPedido                    = array('idPedidoAlteracao DESC');
 		$buscarPedidoAlteracao          = $tbPedidoAlteracaoProjeto->buscar($wherePedido, $orderPedido)->current();
 		$this->_idPedidoAlteracao       = count($buscarPedidoAlteracao) > 0 ? $buscarPedidoAlteracao['idPedidoAlteracao'] : 0;
@@ -139,7 +139,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 		if(isset($_POST['verifica2']) and $_POST['verifica2'] == 'x')
 		{
-			$idagente = $_POST['idagente'];
+			$idagente = $_POST['idAgente'];
 				if($idagente != ''){
 					$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 					$AgentesPerfil =  ReadequacaoProjetos::dadosAgentesPerfil($idagente);
@@ -696,7 +696,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 //		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 //
 //                try{
-//                    //UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA SAC.dbo.tbProposta
+//                    //UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA sac.dbo.tbProposta
 //                    $sqlfinalproped = ReadequacaoProjetos::retornaSQLfinalprop($estrategia,$especificacao,$IdProposta);
 //                    $finalproped = $db->fetchAll($sqlfinalproped);
 //
@@ -735,7 +735,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		try{
                     $db->beginTransaction();
-                    //UPDATE - CAMPOS: dsAvaliacao NA TABELA BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao
+                    //UPDATE - CAMPOS: dsAvaliacao NA TABELA bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao
 //                    $sqlfinalproped = ReadequacaoProjetos::retornaSQLfinalprop($estrategia,$especificacao,$IdProposta);
 //                    $finalproped = $db->fetchAll($sqlfinalproped);
 
@@ -1273,7 +1273,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                             $PromocionalPU = "vlUnitarioPromocional = ".$_POST['PromocionalPU'.$ids->idPlano]."";
 
                             $sqldados = $CodArea."".$CodSegmento."".$Patrocinador."".$Divulgacao."".$Beneficiarios."".$NormalTV."".$PromocionalTV."".$NormalPU."".$PromocionalPU;
-                            $updateFrom = "UPDATE SAC.dbo.tbPlanoDistribuicao SET ";
+                            $updateFrom = "UPDATE sac.dbo.tbPlanoDistribuicao SET ";
                             $where = "WHERE idPedidoAlteracao = ".$idPedidoAlteracao;
                             $and1 = "AND idPlano = ".$ids->idPlano;
 
@@ -1341,7 +1341,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                                 }
 
                             $sqldados = $CodArea."".$CodSegmento."".$Patrocinador."".$Divulgacao."".$Beneficiarios."".$NormalTV."".$PromocionalTV."".$NormalPU."".$PromocionalPU;
-                            $updateFrom = "UPDATE SAC.dbo.tbPlanoDistribuicao SET ";
+                            $updateFrom = "UPDATE sac.dbo.tbPlanoDistribuicao SET ";
                             $where = "WHERE idPedidoAlteracao = ".$idPedidoAlteracao;
                             $and1 = "AND idPlano = ".$ids->idPlano;
                             $justificativa .= $justificativa2."<br/><br/>";
@@ -1442,7 +1442,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                                 }
 
                             $sqldados = $CodArea."".$CodSegmento."".$Patrocinador."".$Divulgacao."".$Beneficiarios."".$NormalTV."".$PromocionalTV."".$NormalPU."".$PromocionalPU;
-                            $updateFrom = "UPDATE SAC.dbo.tbPlanoDistribuicao SET ";
+                            $updateFrom = "UPDATE sac.dbo.tbPlanoDistribuicao SET ";
                             $where = "WHERE idPedidoAlteracao = ".$idPedidoAlteracao;
                             $and1 = "AND idPlano = ".$ids->idPlano;
                             $justificativa .= $justificativa2."<br/><br/>";
@@ -2108,7 +2108,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  * ************************************************************************************************************************/
  	public function finalizageralAction(){
         $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
-            //idAcaoAvaliacaoItemPedidoAlteracao da Tabela BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
+            //idAcaoAvaliacaoItemPedidoAlteracao da Tabela bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao
             $idAcao = $_GET['id'];
 
 //            $new = new tbProposta();
@@ -2262,7 +2262,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                         $fichatecSolicitada = PedidoAlteracaoDAO::buscarAlteracaoFichaTecnicaFinal($idPronac, $idPedidoAlt);
                         $Solicitada = $fichatecSolicitada[0]['dsFichaTecnica'];
 
-                        $avaliacao = ReadequacaoProjetos::finalizacaoCoordAcomp("SAC.dbo.PreProjeto", "FichaTecnica", $Solicitada, "idPreProjeto", $idPreProjeto);
+                        $avaliacao = ReadequacaoProjetos::finalizacaoCoordAcomp("sac.dbo.PreProjeto", "FichaTecnica", $Solicitada, "idPreProjeto", $idPreProjeto);
                         $result = $db->fetchAll($avaliacao);
 
                     } else if ($tpAlt == 4){
@@ -2533,11 +2533,11 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                                     $tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
                                     $verificarPedidosAtivos = $tbPedidoAlteracaoXTipoAlteracao->buscar(array('idPedidoAlteracao = ?' => $idPedidoAlt, 'stVerificacao <> ?' => 4));
                                     $arrBusca = array();
-                                    $arrBusca['p.siVerificacao IN (?)'] = array('1');
+                                    $arrBusca['p.siVerificacao in (?)'] = array('1');
                                     $arrBusca['p.IdPRONAC = ?'] = $idPronac;
-                                    $arrBusca['x.tpAlteracaoProjeto IN (?)'] = array('1', '2', '5', '7', '8', '9', '10');
-                                    $arrBusca['a.stAvaliacaoItemPedidoAlteracao IN (?)'] = array('AP');
-                                    $arrBusca['c.stVerificacao NOT IN (?)'] = array('4');
+                                    $arrBusca['x.tpAlteracaoProjeto in (?)'] = array('1', '2', '5', '7', '8', '9', '10');
+                                    $arrBusca['a.stAvaliacaoItemPedidoAlteracao in (?)'] = array('AP');
+                                    $arrBusca['c.stVerificacao NOT in (?)'] = array('4');
 
                                     $buscaChecklist = $tbPedidoAlteracaoXTipoAlteracao->buscarPedidoChecklist($arrBusca);
                                     if (count($verificarPedidosAtivos) == 0 && count($buscaChecklist) == 0) :
@@ -2656,7 +2656,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                 // chama a fun��o para fazer o balanceamento
                 $areaProjeto = $projetos->BuscarAreaSegmentoProjetos($idPronac_Get);
-                $Rtitulacao  = $titulacaoConselheiro->buscarComponenteBalanceamento($areaProjeto['area']);
+                $Rtitulacao  = $titulacaoConselheiro->buscarComponenteBalanceamento($areaProjeto['Area']);
                 $Distribuicao->alterar(array('stDistribuicao' => 'I'), array('idPRONAC = ?'=>$idPronac_Get));
 
                 $dados = array(
@@ -3475,7 +3475,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             try{
                 $db->beginTransaction();
 
-                /*//UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA SAC.dbo.tbProposta
+                /*//UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA sac.dbo.tbProposta
                 $sqlfinalproped = ReadequacaoProjetos::retornaSQLfinalprop($estrategia,$especificacao,$IdProposta);
                 $finalproped = $db->fetchAll($sqlfinalproped);*/
 
@@ -3551,7 +3551,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                 $dadosAvaliacao = array('stAvaliacaoItemPedidoAlteracao' => 'AP', 'dtFimAvaliacao' => date('Y-m-d H:i:s'));
                 $avaliacao = $buscaInformacoes->atualizarAvaliacaopedido($dadosAvaliacao, $where);
-                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from BDCORPORATIVO.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
+                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from bdcorporativo.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
                 $dadosAcao = array('stAtivo' => '1', 'dtEncaminhamento' => date('Y-m-d H:i:s'));
                 $atualizapedidotipo = $buscaInformacoes->atualizarAvaliacaoAcao($dadosAcao, $where);
 

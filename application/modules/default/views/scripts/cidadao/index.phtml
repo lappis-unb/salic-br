@@ -83,7 +83,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Pauta da CNIC n&ordm; <?php echo $this->reuniao['NrReuniao']; ?> <?php if($this->intranet){ echo ' - Intranet'; } else { if(!$this->usuarioInterno){ echo ' - Visão Cidadão'; } } ?> <span class="direita"><a href="http://ouvidoria.cultura.gov.br/" target="_blank" class="faleconosco">Fale conosco</a></span></div>
+    <div>Pauta da CNIC n&ordm; <?php echo $this->reuniao['NrReuniao']; ?> <?php if($this->intranet){ echo ' - Intranet'; } else { if(!$this->usuarioInterno){ echo ' - Vis&atilde;o Cidad&atilde;o'; } } ?> <span class="direita"><a href="http://ouvidoria.cultura.gov.br/" target="_blank" class="faleconosco">Fale conosco</a></span></div>
 </div>
 
 
@@ -106,13 +106,13 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=5&ordem='.$this->novaOrdem.$intranet;?>">UF</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=6&ordem='.$this->novaOrdem.$intranet;?>">Município</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=7&ordem='.$this->novaOrdem.$intranet;?>">Enquadramento</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=8&ordem='.$this->novaOrdem.$intranet;?>">Área</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=8&ordem='.$this->novaOrdem.$intranet;?>">&aacute;rea</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=9&ordem='.$this->novaOrdem.$intranet;?>">Segmento</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=10&ordem='.$this->novaOrdem.$intranet;?>">Avaliação</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=10&ordem='.$this->novaOrdem.$intranet;?>">Avalia&ccedil;&atilde;o</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=11&ordem='.$this->novaOrdem.$intranet;?>">Vl.Solicitado</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'index')).'?pronac='.$this->pronac.'&campo=12&ordem='.$this->novaOrdem.$intranet;?>">Vl.Sugerido</a></th>
                 <?php /*if(!$this->intranet){ ?>
-                <th><?php echo ($this->usuarioInterno) ? 'Opiniões' : 'Cidadão'; ?></th>
+                <th><?php echo ($this->usuarioInterno) ? 'Opini&otilde;es' : 'Cidad&atilde;o'; ?></th>
                 <?php }*/ ?>
             </tr>
         </thead>
@@ -189,7 +189,7 @@
 </div>
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

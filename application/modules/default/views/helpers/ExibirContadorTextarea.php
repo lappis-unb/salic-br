@@ -6,18 +6,18 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_ExibirContadorTextarea
 {
 	/**
-	 * Método com os parametros para exibição do contador
+	 * M&eacute;todo com os parametros para exibi&ccedil;&atilde;o do contador
 	 * @access public
 	 * @param string $nome (nome do campo)
 	 * @param integer $tamanho (maxlenght do input)
-	 * @param integer $limite (quantidade máxima de caracteres - restantes)
+	 * @param integer $limite (quantidade m&aacute;xima de caracteres - restantes)
 	 * @param integer $qtd (quantidade de caracteres preenchidos por default)
 	 * @return string $campo
 	 */
@@ -34,6 +34,6 @@ class Zend_View_Helper_ExibirContadorTextarea
 				</p>";
 
 		return $campo;
-	} // fecha método exibirContadorTextarea()
+	} // fecha m&eacute;todo exibirContadorTextarea()
 
 } // fecha class

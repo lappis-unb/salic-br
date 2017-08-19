@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.recurso
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -49,7 +49,7 @@
         </tr>
         <tr>
             <td>
-                <?php echo (!empty($tbreenquadramento[0]->CgcCpf)) ? Validacao::mascaraCPFCNPJ($this->escape($tbreenquadramento[0]->CgcCpf)) : "<em>Não informado.</em>"; ?>
+                <?php echo (!empty($tbreenquadramento[0]->CgcCpf)) ? Validacao::mascaraCPFCNPJ($this->escape($tbreenquadramento[0]->CgcCpf)) : "<em>N&atilde;o informado.</em>"; ?>
             </td>
             <td><?php echo $this->escape($tbreenquadramento[0]->NomeProponente);?></td>
         </tr>
@@ -67,7 +67,7 @@
 
     <br clear="all" />
 
-    <!-- ========== INÍCIO FORMULÁRIO JUSTIFICATIVA ========== -->
+    <!-- ========== INÍCIO FORMUL&aacute;RIO JUSTIFICATIVA ========== -->
     <div id="dialog-alert" class="sumir">Por favor, digite sua justificativa!</div>
     <form name="form" id="form" action="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'reenquadramento')); ?>?idPronac=<?php echo $this->escape($tbreenquadramento->IdPRONAC);?>" method="post">
         <table class="tabela">
@@ -110,7 +110,7 @@
 
                                         if (texto.length > 0 && texto != 'Digiteseutextoaqui...')
                                         {
-                                            // verifica se o usuário clicou no botão 'Reintegração'
+                                            // verifica se o usu&aacute;rio clicou no bot&atilde;o 'Reintegra&ccedil;&atilde;o'
 
                                             $('#dsRecurso').val(CKEDITOR.instances['dsRecurso'].getData());
                                         }
@@ -123,7 +123,7 @@
                                                 draggable: false,
                                                 resizable: false,
                                                 closeOnEscape: false,
-                                                title: 'Dados obrigatórios não informados!',
+                                                title: 'Dados obrigatórios n&atilde;o informados!',
                                                 buttons:
                                                     {
                                                     Ok:function()
@@ -156,7 +156,7 @@
                     </p>
                     <br clear="all" />
                     <p>
-                        <input type="button" class="btn" value=" Análise do Projeto " onclick="redirecionar('<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'parecerconsolidado', 'idpronac' => $_GET['idPronac'])); ?>');" onkeypress=" " /> &nbsp;
+                        <input type="button" class="btn" value=" An&aacute;lise do Projeto " onclick="redirecionar('<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'parecerconsolidado', 'idpronac' => $_GET['idPronac'])); ?>');" onkeypress=" " /> &nbsp;
                         <input type="submit" class="btn" value=" Salvar " /> &nbsp;
                         <input type="reset" class="btn" value=" Cancelar " onclick="redirecionar('<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')); ?>?idPronac=<?php echo $_GET['idPronac']; ?>');" onkeypress=" " /> &nbsp;
                     </p>
@@ -164,15 +164,15 @@
             </tr>
         </table>
     </form>
-    <!-- ========== FIM FORMULÁRIO JUSTIFICATIVA ========== -->
+    <!-- ========== FIM FORMUL&aacute;RIO JUSTIFICATIVA ========== -->
 
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

@@ -35,23 +35,23 @@ class tbDistribuirProjeto extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.IdPRONAC = b.IdPRONAC',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         if($idPerfil == 110){
             $select->joinLeft(
                 array('c' => 'Usuarios'), 'a.idAvaliador = c.usu_codigo',
-                array(''), 'TABELAS.dbo'
+                array(''), 'TABELAS'
             );
         } else {
             $select->joinLeft(
                 array('c' => 'Nomes'), 'a.idAvaliador = c.idAgente',
-                array(''), 'agentes.dbo'
+                array(''), 'agentes'
             );
         }
         $select->joinInner(
             array('d' => 'tbRecurso'), 'a.IdPRONAC = d.IdPRONAC',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados

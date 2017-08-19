@@ -507,7 +507,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
 
     public function inserirOpiniaoAction(){
         $objAcesso = new Acesso();
-        //INSERT NA TABELA SAC.dbo.tbOpinarProjeto
+        //INSERT NA TABELA sac.dbo.tbOpinarProjeto
         $dados = array(
             'idPronac' => $_POST['idPronac'],
             'idVisao' => 197,

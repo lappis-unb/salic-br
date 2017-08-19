@@ -12,8 +12,8 @@
  */
 class Votacao extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'BDCORPORATIVO';
-    protected $_schema = 'BDCORPORATIVO.scSAC';
+    protected $_banco = 'bdcorporativo';
+    protected $_schema = 'bdcorporativo.scSAC';
     protected $_name = 'tbVotacao';
 
     public function resultadovotacao($idNrReuniao, $idPRONAC, $stvoto = null, $tipoReadequacao = null) {
@@ -48,7 +48,7 @@ class Votacao extends MinC_Db_Table_Abstract {
                           array('nm'=>'nomes'),
                           'nm.idAgente = tv.idAgente',
                           array('nm.descricao as nome'),
-                          'agentes.dbo'
+                          'agentes'
                           );
         $select->where('idNrReuniao = ?', $idNrReuniao);
         $select->where('idPRONAC = ?', $idPRONAC);

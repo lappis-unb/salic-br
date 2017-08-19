@@ -60,7 +60,7 @@ $(document).ready(function(){
 			}
 		});
 		if(validar == false){
-			$("#error").html('Dados obrigatórios não informados!');
+			$("#error").html('Dados obrigatórios n&atilde;o informados!');
 			$("#error").dialog('open');
 			$("#error").dialog
             ({
@@ -113,7 +113,7 @@ $(document).ready(function(){
 				}
 			});
 			if(validar == false){
-				$("#error").html('Dados obrigatórios não informados!');
+				$("#error").html('Dados obrigatórios n&atilde;o informados!');
 				$("#error").dialog('open');
 				$("#error").dialog
 	            ({
@@ -175,14 +175,14 @@ function buscarProjeto(v)
 			{
 				if (data[i].msg == 'ok')
 				{
-					$('#l_localizacao').html('Localização: '+data[i].localizacao);
+					$('#l_localizacao').html('Localiza&ccedil;&atilde;o: '+data[i].localizacao);
 					$('#l_processonome').html(data[i].processonome);
 					$('#idpronac').val(data[i].idpronac);
 					$('#idDestino').val(data[i].Orgao);
 				}
 				else
 				{
-					$('#l_localizacao').html('Projeto não Cadastrado!');
+					$('#l_localizacao').html('Projeto n&atilde;o Cadastrado!');
 					$('#l_processonome').html('');
 					$('#idpronac').val('');
 				}
@@ -397,8 +397,8 @@ echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

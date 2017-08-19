@@ -8,9 +8,9 @@ class GerarRelatorioReuniaoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // tï¿½tulo da pï¿½gina
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
         $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
 
         if ($auth->hasIdentity()) { // caso o usuï¿½rio esteja autenticado
             // verifica as permissï¿½es
@@ -18,7 +18,7 @@ class GerarRelatorioReuniaoController extends MinC_Controller_Action_Abstract {
             $PermissoesGrupo[] = 90; // Protocolo - Documento
             $PermissoesGrupo[] = 91; // Protocolo - Recebimento
             $PermissoesGrupo[] = 92; // Tec. de Admissibilidade
-            $PermissoesGrupo[] = 93; // Coordenador - Geral de Análise (Ministro)
+            $PermissoesGrupo[] = 93; // Coordenador - Geral de An&aacute;lise (Ministro)
             $PermissoesGrupo[] = 94; // Parecerista
             $PermissoesGrupo[] = 96;  // Consulta Gerencial
             $PermissoesGrupo[] = 97;  // Gestor do SALIC
@@ -32,30 +32,30 @@ class GerarRelatorioReuniaoController extends MinC_Controller_Action_Abstract {
             $PermissoesGrupo[] = 121; // Tec. de Acompanhamento
             $PermissoesGrupo[] = 122; // Coord. de Acompanhamento
             $PermissoesGrupo[] = 123; // Coord. Geral de Acompanhamento
-            $PermissoesGrupo[] = 124; // Tec. de Prestação de Contas
-            $PermissoesGrupo[] = 125; // Coord. de Prestação de Contas
-            $PermissoesGrupo[] = 126; // Coord. Geral de Prestação de Contas
-            $PermissoesGrupo[] = 127; // Coord. Geral de Análise
+            $PermissoesGrupo[] = 124; // Tec. de Presta&ccedil;&atilde;o de Contas
+            $PermissoesGrupo[] = 125; // Coord. de Presta&ccedil;&atilde;o de Contas
+            $PermissoesGrupo[] = 126; // Coord. Geral de Presta&ccedil;&atilde;o de Contas
+            $PermissoesGrupo[] = 127; // Coord. Geral de An&aacute;lise
             $PermissoesGrupo[] = 128; // Tec. de Portaria
             $PermissoesGrupo[] = 131; // Coord. de Admissibilidade
-            $PermissoesGrupo[] = 132; // Chefe de Divisão
-            $PermissoesGrupo[] = 135; // Tec. De Fiscalização
-            $PermissoesGrupo[] = 138; // Coord. de Avaliação
-            $PermissoesGrupo[] = 139; // Tec. de Avaliação
-            $PermissoesGrupo[] = 148; // Coord. de Avaliação
-            $PermissoesGrupo[] = 150; // Tec. de Avaliação
+            $PermissoesGrupo[] = 132; // Chefe de Divis&atilde;o
+            $PermissoesGrupo[] = 135; // Tec. De Fiscaliza&ccedil;&atilde;o
+            $PermissoesGrupo[] = 138; // Coord. de Avalia&ccedil;&atilde;o
+            $PermissoesGrupo[] = 139; // Tec. de Avalia&ccedil;&atilde;o
+            $PermissoesGrupo[] = 148; // Coord. de Avalia&ccedil;&atilde;o
+            $PermissoesGrupo[] = 150; // Tec. de Avalia&ccedil;&atilde;o
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuï¿½rio (pega todos os grupos)
+            // pega as unidades autorizadas, org&atilde;os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgão ativo do usuï¿½rio para a visão
+            // manda os dados para a vis&atilde;o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a vis&atilde;o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a vis&atilde;o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a vis&atilde;o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o org&atilde;o ativo do usuï¿½rio para a vis&atilde;o
         } // fecha if
         else {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);

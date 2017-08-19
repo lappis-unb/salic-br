@@ -5,7 +5,7 @@
     <!-- início: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {

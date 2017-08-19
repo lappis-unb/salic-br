@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.views.helpers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -23,6 +23,6 @@ class Zend_View_Helper_FormatarReal
 		$moeda = number_format($moeda, 2, ',', '.');
 
 		return $moeda;
-	} // fecha método formatarReal()
+	} // fecha m&eacute;todo formatarReal()
 
 } // fecha class

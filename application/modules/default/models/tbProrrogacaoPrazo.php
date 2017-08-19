@@ -12,8 +12,8 @@
 
 class tbProrrogacaoPrazo extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "BDCORPORATIVO";
-	protected $_schema = "BDCORPORATIVO.scSAC";
+	protected $_banco  = "bdcorporativo";
+	protected $_schema = "bdcorporativo.scSAC";
 	protected $_name   = "tbProrrogacaoPrazo";
 
 
@@ -93,7 +93,7 @@ class tbProrrogacaoPrazo extends MinC_Db_Table_Abstract
 				,'p.idSolicitante'
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 103) AS dtSolicitacao'
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 108) AS hrSolicitacao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 		$select->joinInner(
 			array('j' => 'tbPedidoAlteracaoXTipoAlteracao')
@@ -101,7 +101,7 @@ class tbProrrogacaoPrazo extends MinC_Db_Table_Abstract
 			,array(
 				'CAST(j.dsJustificativa AS TEXT) AS dsProponente'
 				,'j.tpAlteracaoProjeto')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 		$select->joinInner(
 			array('a' => 'tbAvaliacaoItemPedidoAlteracao')
@@ -114,7 +114,7 @@ class tbProrrogacaoPrazo extends MinC_Db_Table_Abstract
 				,'CONVERT(CHAR(10), a.dtFimAvaliacao, 108) AS hrFimAvaliacao'
 				,'a.stAvaliacaoItemPedidoAlteracao AS stAvaliacao'
 				,'CAST(a.dsAvaliacao AS TEXT) AS dsAvaliacao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 
 		// adiciona quantos filtros foram enviados

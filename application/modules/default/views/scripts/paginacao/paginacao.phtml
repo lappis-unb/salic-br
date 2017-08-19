@@ -1,27 +1,27 @@
 <?php
 /**
- * Páginação de resultados
+ * P&aacute;gina&ccedil;&atilde;o de resultados
  * @author Equipe RUP - Politec
  * @since 29/04/2010
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.paginacao
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 // define a query string
 $queryString = $_SERVER['QUERY_STRING'];
 
-// retira a variável com a página
+// retira a vari&aacute;vel com a p&aacute;gina
 $queryString = explode("&page", $queryString);
 $queryString = explode("page=", $queryString[0]);
 
-if (!empty($queryString[0])) // quando houver mais de uma variável
+if (!empty($queryString[0])) // quando houver mais de uma vari&aacute;vel
 {
 	$queryString = "?" . $queryString[0] . "&page=";
 }
-else // quando houver apenas a variável com a página
+else // quando houver apenas a vari&aacute;vel com a p&aacute;gina
 {
 	$queryString = $queryString[0] . "?page=";
 }
@@ -30,33 +30,33 @@ else // quando houver apenas a variável com a página
 <?php if ($this->pageCount): ?>
 
 <div class="paginationControl centro">
-	<!-- PÁGINA ANTERIOR -->
+	<!-- P&aacute;GINA ANTERIOR -->
 	<?php if (isset($this->previous)): ?>
-		<input type="button" class="btn_p_anterior" value=" " title="Página Anterior" 
+		<input type="button" class="btn_p_anterior" value=" " title="P&aacute;gina Anterior" 
 			onclick="redirecionar('<?php echo $queryString; ?><?php echo $this->previous; ?>');" 
 			onkeypress="redirecionar('<?php echo $queryString; ?><?php echo $this->previous; ?>');" />
 	<?php else: ?>
-		<span class="disabled"><input type="button" class="btn_p_anterior-off" title="Não existe Página Anterior" style="cursor:auto;" /></span>
+		<span class="disabled"><input type="button" class="btn_p_anterior-off" title="N&atilde;o existe P&aacute;gina Anterior" style="cursor:auto;" /></span>
 	<?php endif; ?>
 
-	<!-- NUMERAÇÃO -->
+	<!-- NUMERA&ccedil;&atilde;O -->
 	<?php foreach ($this->pagesInRange as $page): ?>
 		<?php if ($page != $this->current): ?>
-			<input type="button" value=" <?php echo $page; ?> " title="Ir para página <?php echo $page; ?>" style="background:none;font-weight:bold;cursor:pointer;" 
+			<input type="button" value=" <?php echo $page; ?> " title="Ir para p&aacute;gina <?php echo $page; ?>" style="background:none;font-weight:bold;cursor:pointer;" 
 				onclick="redirecionar('<?php echo $queryString; ?><?php echo $page; ?>');" 
 				onkeypress="redirecionar('<?php echo $queryString; ?><?php echo $page; ?>');" />
 		<?php else: ?>
-			<input type="button" value=" <?php echo $page; ?> " title="Você está na página <?php echo $page; ?>" style="background:none;border:none;cursor:auto;" />
+			<input type="button" value=" <?php echo $page; ?> " title="Você est&aacute; na p&aacute;gina <?php echo $page; ?>" style="background:none;border:none;cursor:auto;" />
 		<?php endif; ?>
 	<?php endforeach; ?>
 
-	<!-- PRÓXIMA PÁGINA -->
+	<!-- PRÓXIMA P&aacute;GINA -->
 	<?php if (isset($this->next)): ?>
-		<input type="button" class="btn_p_proximo" value=" " title="Próxima Página"
+		<input type="button" class="btn_p_proximo" value=" " title="Próxima P&aacute;gina"
 			onclick="redirecionar('<?php echo $queryString; ?><?php echo $this->next; ?>');" 
 			onkeypress="redirecionar('<?php echo $queryString; ?><?php echo $this->next; ?>');" />
 	<?php else: ?>
-		<span class="disabled"><input type="button" class="btn_p_proximo-off" title="Não existe Próxima Página" style="cursor:auto;" /></span>
+		<span class="disabled"><input type="button" class="btn_p_proximo-off" title="N&atilde;o existe Próxima P&aacute;gina" style="cursor:auto;" /></span>
 	<?php endif; ?>
 </div>
 

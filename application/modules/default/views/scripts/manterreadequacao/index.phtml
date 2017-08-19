@@ -262,7 +262,7 @@
             var idAcao = $(this).attr('idAcao'),
                 filtro = $(this).attr('tipoFiltro');
             $("#alerta").dialog("destroy");
-            $('#alerta').html('Deseja validar a análise realizada?');
+            $('#alerta').html('Deseja validar a an&aacute;lise realizada?');
             $("#alerta").dialog({
                 modal: true,
                 draggable: false,
@@ -270,7 +270,7 @@
                 title: 'Alerta!',
                 closeOnEscape: false,
                 buttons: {
-                    'Não': function(){
+                    'N&atilde;o': function(){
                         $(this).dialog('close');
                     },
                     'Sim': function(){
@@ -295,7 +295,7 @@
             resizable: false,
             closeOnEscape: false,
             buttons: {
-                'Não': function(){
+                'N&atilde;o': function(){
                     $(this).dialog('close');
                 },
                 'Sim': function(){
@@ -317,7 +317,7 @@
 
 
 <!-- INICIO DA MODAL DE ENCAMINHAMENTO -->
-<div class="sumir" id="modalEncaminhar" title="Encaminhar projeto para análise" >
+<div class="sumir" id="modalEncaminhar" title="Encaminhar projeto para an&aacute;lise" >
     <form name="formencaminhar" id="formEncaminhamento" action="<?php echo $this->baseUrl(); ?>/manterreadequacao/encaminhar-painel-coord-acomp" method="post">
 
         <table class="tabela">
@@ -330,7 +330,7 @@
                 <td><span id="nmProjetoModal"></span></td>
             </tr>
             <tr>
-                <td class="destacar bold" colspan="2">Observação</td>
+                <td class="destacar bold" colspan="2">Observa&ccedil;&atilde;o</td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -353,7 +353,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" width="130px;">Destinatário:</td>
+                <td class="destacar bold" width="130px;">Destinat&aacute;rio:</td>
                 <td>
                     <select name="destinatario" id="destinatario" class="select_simples obrigatorioEncaminhamento" style="width:100%;">
                         <option value=""> - Selecione - </option>
@@ -375,7 +375,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" width="130px;">Destinatário:</td>
+                <td class="destacar bold" width="130px;">Destinat&aacute;rio:</td>
                 <td>
                     <select name="destinatario" id="destinatario" class="select_simples obrigatorioEncaminhamento" style="width:100%;">
                         <option value=""> - Selecione - </option>
@@ -400,8 +400,8 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>">Início</a></li>
-        <li class="sencond">Verificar Readequação de Projeto</li>
-        <li class="last">Verificar readequação de projeto</li>
+        <li class="sencond">Verificar Readequa&ccedil;&atilde;o de Projeto</li>
+        <li class="last">Verificar readequa&ccedil;&atilde;o de projeto</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -409,7 +409,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Verificar readequação de projeto</div>
+    <div>Verificar readequa&ccedil;&atilde;o de projeto</div>
 </div>
 
 
@@ -424,27 +424,27 @@
             </td>
             <td>
                 <select class="input_simples comboFiltro" style="width: 250px;" name="tipoFiltro">
-                    <optgroup label="Aguardando Análise">
+                    <optgroup label="Aguardando An&aacute;lise">
                         <option value="1:a" <?php echo '1:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Nome do proponente</option>
                         <option value="2:a" <?php echo '2:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Troca de Agente</option>
-                        <option value="3:a" <?php echo '3:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Ficha técnica</option>
-                        <option value="4:a" <?php echo '4:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Local de realização</option>
+                        <option value="3:a" <?php echo '3:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Ficha t&eacute;cnica</option>
+                        <option value="4:a" <?php echo '4:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Local de realiza&ccedil;&atilde;o</option>
                         <option value="5:a" <?php echo '5:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Nome do projeto</option>
                         <option value="6:a" <?php echo '6:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Proposta Pedagógica</option>
                         <option value="7:a" <?php echo '7:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Produtos e/ou Itens de Custo</option>
-                        <option value="8:a" <?php echo '8:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Prorrogação de Prazos - Captação</option>
-                        <option value="9:a" <?php echo '9:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Prorrogação de Prazos - Execução</option>
+                        <option value="8:a" <?php echo '8:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Prorroga&ccedil;&atilde;o de Prazos - Capta&ccedil;&atilde;o</option>
+                        <option value="9:a" <?php echo '9:a' == $this->filtro ? 'selected="selected"' : ''; ?>>Prorroga&ccedil;&atilde;o de Prazos - Execu&ccedil;&atilde;o</option>
                     </optgroup>
-                    <optgroup label="Devolvidos Após Análise">
+                    <optgroup label="Devolvidos Após An&aacute;lise">
                         <option value="1:d" <?php echo '1:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Nome do proponente</option>
                         <option value="2:d" <?php echo '2:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Troca de Agente</option>
-                        <option value="3:d" <?php echo '3:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Ficha técnica</option>
-                        <option value="4:d" <?php echo '4:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Local de realização</option>
+                        <option value="3:d" <?php echo '3:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Ficha t&eacute;cnica</option>
+                        <option value="4:d" <?php echo '4:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Local de realiza&ccedil;&atilde;o</option>
                         <option value="5:d" <?php echo '5:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Nome do projeto</option>
                         <option value="6:d" <?php echo '6:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Proposta Pedagógica</option>
                         <option value="7:d" <?php echo '7:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Produtos e/ou Itens de Custo</option>
-                        <option value="8:d" <?php echo '8:d' == $this->filtro ? 'selected="selected"' : ''; ?> >Prorrogação de Prazos - Captação</option>
-                        <option value="9:d" <?php echo '9:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Prorrogação de Prazos - Execução</option>
+                        <option value="8:d" <?php echo '8:d' == $this->filtro ? 'selected="selected"' : ''; ?> >Prorroga&ccedil;&atilde;o de Prazos - Capta&ccedil;&atilde;o</option>
+                        <option value="9:d" <?php echo '9:d' == $this->filtro ? 'selected="selected"' : ''; ?>>Prorroga&ccedil;&atilde;o de Prazos - Execu&ccedil;&atilde;o</option>
                     </optgroup>
                 </select>
             </td>
@@ -452,7 +452,7 @@
     </table>
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -477,12 +477,12 @@
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'manterreadequacao', 'action' => 'index')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronacProjeto; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -499,7 +499,7 @@
             echo " de ". $this->paginacao['total']. " Projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php } ?>
 
 
@@ -510,24 +510,24 @@
             <tr class="titulo_tabela">
                 <th width="70px"><a href="<?php echo $this->url(array('controller' => 'manterreadequacao', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'manterreadequacao', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
-                <th>Área / Segmento</th>
+                <th>&aacute;rea / Segmento</th>
                 <th><a href="<?php echo $this->url(array('controller' => 'manterreadequacao', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=2&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Recebimento</a></th>
-                <th width="1px">Visualizar Readequação</th>
-                <th width="1px">Encaminhar p/ análise</th>
+                <th width="1px">Visualizar Readequa&ccedil;&atilde;o</th>
+                <th width="1px">Encaminhar p/ an&aacute;lise</th>
                 <th width="1px">Controle</th>
             </tr>
             <?php } else { //CABECALHO - DEVOLVIDOS APOS ANALISE ?>
             <tr class="titulo_tabela">
                 <th width="70px"><a href="<?php echo $this->url(array('controller' => 'manterreadequacao', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'manterreadequacao', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
-                <th>Área / Segmento</th>
-                <th width="1px">Data de envio para análise</th>
-                <th width="1px">Data de recebimento da análise</th>
-                <th width="1px">Reencaminhar p/ análise</th>
+                <th>&aacute;rea / Segmento</th>
+                <th width="1px">Data de envio para an&aacute;lise</th>
+                <th width="1px">Data de recebimento da an&aacute;lise</th>
+                <th width="1px">Reencaminhar p/ an&aacute;lise</th>
                 <th width="1px">Visualizar Histórico</th>
-                <th width="1px">Visualizar Readequação</th>
+                <th width="1px">Visualizar Readequa&ccedil;&atilde;o</th>
                 <th width="1px">Diligenciar</th>
-                <?php if($this->filtro == '7:d'){ //Se for o painel de produtos + itens de custo, habilita o botão que encaminha para comissão. ?>
+                <?php if($this->filtro == '7:d'){ //Se for o painel de produtos + itens de custo, habilita o bot&atilde;o que encaminha para comiss&atilde;o. ?>
                 <th width="1px">Encaminhar p/ Componente</th>
                 <?php } ?>
                 <th width="1px">Finalizar</th>
@@ -607,7 +607,7 @@
                     <td><?php echo Data::tratarDataZend($d->dtInicioAvaliacao, 'Brasileira'); ?></td>
                     <td><?php echo Data::tratarDataZend($d->dtFimAvaliacao, 'Brasileira'); ?></td>
                     <td align="center">
-                        <img style="cursor: pointer;" src="<?php echo $this->baseUrl(); ?>/public/img/user_gray.png" alt="Reencaminhar" class="reencaminharProjeto" numPronac="<?php echo $d->PRONAC; ?>" nmProjeto="<?php echo $d->NomeProjeto; ?>" idPronac="<?php echo $d->IdPRONAC; ?>" idPedidoAlteracao="<?php echo $d->idPedidoAlteracao; ?>" tpAlteracaoProjeto="<?php echo $d->tpAlteracaoProjeto; ?>" idAcao="<?php echo $d->idAcao; ?>" alt="Reencaminhar p/ análise" title="Reencaminhar p/ análise" />
+                        <img style="cursor: pointer;" src="<?php echo $this->baseUrl(); ?>/public/img/user_gray.png" alt="Reencaminhar" class="reencaminharProjeto" numPronac="<?php echo $d->PRONAC; ?>" nmProjeto="<?php echo $d->NomeProjeto; ?>" idPronac="<?php echo $d->IdPRONAC; ?>" idPedidoAlteracao="<?php echo $d->idPedidoAlteracao; ?>" tpAlteracaoProjeto="<?php echo $d->tpAlteracaoProjeto; ?>" idAcao="<?php echo $d->idAcao; ?>" alt="Reencaminhar p/ an&aacute;lise" title="Reencaminhar p/ an&aacute;lise" />
                     </td>
                     <td align="center">
                         <img style="cursor: pointer;" border="0" class="visualizarHistorico" src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" idAvaliacao="<?php echo $d->idAvaliacaoItemPedidoAlteracao; ?>" alt="Visualizar Histórico" title="Visualizar Histórico" />
@@ -650,7 +650,7 @@
     //                           $link = $this->baseUrl().'/verificarreadequacaodeprojeto/consultareadequacaoitensdecusto?id='.$d->IdPRONAC;
     //                           break;
                            default:
-                               xd('link não criado ainda.');
+                               xd('link n&atilde;o criado ainda.');
                                $link = $this->baseUrl().'/manterreadequacao';
                                break;
                         } ?>
@@ -659,7 +659,7 @@
                     <td class="centro">
                         <?php echo $this->iconeDiligencia($this->checarDiligencia($d->IdPRONAC, null, array(171)), $d->IdPRONAC, 171, $this->verificarSituacaoProjeto($d->IdPRONAC)); ?>
                     </td>
-                    <?php if($this->filtro == '7:d'){ //Se for o painel de produtos + itens de custo, habilita o botão que encaminha para comissão. ?>
+                    <?php if($this->filtro == '7:d'){ //Se for o painel de produtos + itens de custo, habilita o bot&atilde;o que encaminha para comiss&atilde;o. ?>
                     <td align="center">
                         <img style="cursor: pointer;" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/sair-p-off.gif" onclick="return componentecomissao(<?php echo $d->IdPRONAC; ?>,<?php echo $d->idAcao; ?>)" alt="Encaminhar p/ componente" title="Encaminhar p/ componente" />
                     </td>
@@ -678,7 +678,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
         <?php if($this->qtdDocumentos > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -711,12 +711,12 @@
                         <input class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'manterreadequacao', 'action' => 'index')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronacProjeto; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -726,7 +726,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
     <?php } } ?>
 
@@ -741,7 +741,7 @@
     <br clear="all" />
 
 </div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

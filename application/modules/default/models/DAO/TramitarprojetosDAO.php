@@ -13,13 +13,13 @@
 class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function buscaOrgao($idOrigem = null) {
-        $sql = "select Sigla from SAC.dbo.Orgaos 
+        $sql = "select Sigla from sac.dbo.Orgaos 
 		where Codigo = $idOrigem
 		";
 
         /*
-          $sql = "select Sigla from SAC.dbo.Orgaos o
-          INNER JOIN  SAC.dbo.tbHistoricoDocumento th ON  th.Acao  != 6 AND th.idPronac != '' AND th.idDocumento is NUll
+          $sql = "select Sigla from sac.dbo.Orgaos o
+          INNER JOIN  sac.dbo.tbHistoricoDocumento th ON  th.Acao  != 6 AND th.idPronac != '' AND th.idDocumento is NUll
           where o.Codigo = $idOrigem
           ";
 
@@ -35,7 +35,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function atualizaProjeto($idPronac, $idDestino) {
         $sql = "UPDATE 
-					SAC.dbo.Projetos SET Orgao = $idDestino where IdPRONAC = $idPronac";
+					sac.dbo.Projetos SET Orgao = $idDestino where IdPRONAC = $idPronac";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -45,7 +45,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function buscaProjeto($pronac) {
         $sql = "SELECT org.Sigla, p.*, p.IdPRONAC as idPronac
-				FROM SAC.dbo.Projetos p, SAC.dbo.Orgaos org
+				FROM sac.dbo.Projetos p, sac.dbo.Orgaos org
 				WHERE p.Orgao = org.Codigo AND (AnoProjeto+Sequencial) = '" . $pronac . "'";
         			
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -58,7 +58,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function buscaProjetoPDF($pronac) {
         $sql = "SELECT org.Sigla, p.*, p.IdPRONAC as idPronac, p.AnoProjeto+Sequencial as pronacp
-				FROM SAC.dbo.Projetos p, SAC.dbo.Orgaos org
+				FROM sac.dbo.Projetos p, sac.dbo.Orgaos org
 				WHERE p.Orgao = org.Codigo AND p.IdPRONAC = '" . $pronac . "'";
         			
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -71,8 +71,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function buscaProjetoUnidade($idPronac) {
         $sql = " SELECT AnoProjeto+Sequencial as pronac, NomeProjeto, p.IdPRONAC, Situacao, ProvidenciaTomada, Orgao, ar.stAcao, stEstado, ar.idArquivamento
-				 FROM SAC.dbo.Projetos p
-				 INNER JOIN SAC.dbo.tbArquivamento ar on ar.idPronac = p.IdPRONAC
+				 FROM sac.dbo.Projetos p
+				 INNER JOIN sac.dbo.tbArquivamento ar on ar.idPronac = p.IdPRONAC
 				 WHERE p.Orgao = 290 and ar.stEstado = 1 and p.IdPRONAC = $idPronac";
 
         
@@ -86,7 +86,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function buscaProjetoExistente($idPronac) {
         $sql = " SELECT AnoProjeto+Sequencial as pronac, NomeProjeto, p.IdPRONAC, Situacao, ProvidenciaTomada, Orgao
-				 FROM SAC.dbo.Projetos p
+				 FROM sac.dbo.Projetos p
 				 WHERE p.IdPRONAC = $idPronac";
 
         
@@ -100,7 +100,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function alterarSituacao($situacao, $providenciaTomada, $idPronac) {
 
-        $sql = "UPDATE SAC.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$providenciaTomada' 
+        $sql = "UPDATE sac.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$providenciaTomada' 
 				WHERE idPronac =  $idPronac";
 
         try {
@@ -113,7 +113,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function alterarStatusArquivamento($idPronac) {
-        $sql = "UPDATE SAC.dbo.tbArquivamento 
+        $sql = "UPDATE sac.dbo.tbArquivamento 
 					SET stEstado = 0 
 				WHERE idPronac =  $idPronac and stEstado = 1";
 
@@ -169,7 +169,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
         $sql = " SELECT top 1000
 					ar.idArquivamento,
 					--p.Processo,
-                                        SAC.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
+                                        sac.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
 					AnoProjeto+Sequencial as pronac, 
 					NomeProjeto, 
 					p.IdPRONAC as idPronac, 
@@ -181,8 +181,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					ar.stAcao, 
 					stEstado, 
 					convert(varchar,Data,103)+' '+convert(varchar,Data,108) as Data
-				FROM SAC.dbo.Projetos p
-				INNER JOIN SAC.dbo.tbArquivamento ar on ar.idPronac = p.IdPRONAC
+				FROM sac.dbo.Projetos p
+				INNER JOIN sac.dbo.tbArquivamento ar on ar.idPronac = p.IdPRONAC
 				WHERE p.Orgao = 290 and stAcao = 0 and stEstado = 1";
 
         if ($pronac) {
@@ -266,7 +266,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 				Codigo, 
 				Sigla, 
 				org.org_nomeautorizado 
-				FROM SAC.dbo.Orgaos o 
+				FROM sac.dbo.Orgaos o 
 				INNER JOIN TABELAS.dbo.vwUsuariosOrgaosGrupos org on org.uog_orgao = o.Codigo 
 				WHERE org.sis_codigo = 21 AND org.uog_status = 1
 				ORDER BY Sigla";
@@ -290,7 +290,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					org.org_nomeautorizado as nomeDestino,
 					h.idLote as lote
 					FROM
-					SAC.dbo.tbHistoricoDocumento AS h
+					sac.dbo.tbHistoricoDocumento AS h
 					INNER JOIN
 					TABELAS.dbo.vwUsuariosOrgaosGrupos as org ON org.uog_orgao = h.idUnidade
 					WHERE (h.Acao = $situacao or h.Acao = 4) and h.stEstado = 1";
@@ -311,8 +311,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					h.idUsuarioEmissor as idEmissor,
 					u.usu_nome as Emissor
 					FROM
-					SAC.dbo.tbHistoricoDocumento AS h
-					INNER JOIN SAC.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
+					sac.dbo.tbHistoricoDocumento AS h
+					INNER JOIN sac.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
 					INNER JOIN TABELAS.dbo.Usuarios as u on h.idUsuarioEmissor = u.usu_codigo
 					WHERE (h.idDocumento is NULL or h.idDocumento = 0) and h.stEstado = 1";
 
@@ -338,19 +338,19 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					p.AnoProjeto + p.Sequencial AS Pronac,
 					p.NomeProjeto, p.Orgao AS idOrigem,
 					TABELAS.dbo.fnEstruturaOrgao(p.Orgao, 0) AS Origem,
-					SAC.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
+					sac.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
 					h.meDespacho as despacho,
-					(select top 1 thd.idHistorico from SAC.dbo.tbHistoricoDocumento thd order by thd.idhistorico desc) as idHistorico,
-					--(select top 1 CONVERT(CHAR(10), thd.dtTramitacaoEnvio,103) + ' ' + CONVERT(CHAR(8), thd.dtTramitacaoEnvio,108) AS dtTramitacaoEnvio from SAC.dbo.tbHistoricoDocumento thd order by thd.dtTramitacaoEnvio desc) as dtEnvio,
-					(select top 1 CONVERT(CHAR(10), p.DtSituacao,103) + ' ' + CONVERT(CHAR(8), p.DtSituacao,108) AS dtSituacao from SAC.dbo.Projetos p order by p.DtSituacao desc) as dtSituacao, 
-					(select top 1 h.idLote from SAC.dbo.tbHistoricoDocumento h order by h.idLote desc) as idLote,
+					(select top 1 thd.idHistorico from sac.dbo.tbHistoricoDocumento thd order by thd.idhistorico desc) as idHistorico,
+					--(select top 1 CONVERT(CHAR(10), thd.dtTramitacaoEnvio,103) + ' ' + CONVERT(CHAR(8), thd.dtTramitacaoEnvio,108) AS dtTramitacaoEnvio from sac.dbo.tbHistoricoDocumento thd order by thd.dtTramitacaoEnvio desc) as dtEnvio,
+					(select top 1 CONVERT(CHAR(10), p.DtSituacao,103) + ' ' + CONVERT(CHAR(8), p.DtSituacao,108) AS dtSituacao from sac.dbo.Projetos p order by p.DtSituacao desc) as dtSituacao, 
+					(select top 1 h.idLote from sac.dbo.tbHistoricoDocumento h order by h.idLote desc) as idLote,
 					h.idUnidade AS idDestino,
 					CONVERT(CHAR(10), h.dtTramitacaoEnvio,103) + ' ' + CONVERT(CHAR(10), h.dtTramitacaoEnvio,108) AS dtEnvio,
 					CONVERT(CHAR(10), h.dtTramitacaoRecebida,103) + ' ' + CONVERT(CHAR(10), h.dtTramitacaoRecebida,108) AS dtRecebimento,
 					TABELAS.dbo.fnEstruturaOrgao(h.idUnidade, 0) AS Destino,
-					SAC.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor,
+					sac.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor,
 					h.idUsuarioReceptor,
-					SAC.dbo.fnNomeUsuario(h.idUsuarioReceptor) AS Receptor,
+					sac.dbo.fnNomeUsuario(h.idUsuarioReceptor) AS Receptor,
 					h.Acao as Acao,
 					CASE
 					WHEN h.Acao = 1 THEN 'Cadastrado'
@@ -361,9 +361,9 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					END AS Situacao,
 					h.stEstado
 					FROM
-					SAC.dbo.tbHistoricoDocumento AS h
+					sac.dbo.tbHistoricoDocumento AS h
 					INNER JOIN
-					SAC.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
+					sac.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
 					WHERE (h.idDocumento is NULL or h.idDocumento = 0) and h.stEstado = 1";
 
         //die($sql);
@@ -397,8 +397,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					p.IdPRONAC, 
 					h.idUnidade as idDestino,
 					h.meDespacho as despacho
-					FROM SAC.dbo.Projetos p
-					INNER JOIN SAC.dbo.tbHistoricoDocumento h on h.idPronac = p.IdPRONAC
+					FROM sac.dbo.Projetos p
+					INNER JOIN sac.dbo.tbHistoricoDocumento h on h.idPronac = p.IdPRONAC
 					WHERE AnoProjeto+Sequencial = '$pronac' and h.Acao = $acao
 					group by AnoProjeto, Sequencial, p.IdPRONAC, h.idUnidade, h.meDespacho
 					order by idHistorico desc";
@@ -418,11 +418,11 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
         $objAcesso= new Acesso();
         $sql = "INSERT INTO 
-					SAC.dbo.tbHistoricoDocumento (idPronac, idUnidade, dtTramitacaoEnvio, idUsuarioEmissor, idUsuarioReceptor, idLote, Acao, stEstado, meDespacho)
+					sac.dbo.tbHistoricoDocumento (idPronac, idUnidade, dtTramitacaoEnvio, idUsuarioEmissor, idUsuarioReceptor, idLote, Acao, stEstado, meDespacho)
 					SELECT IdPRONAC, idUnidade = $idDestino, dtTramitacaoEnvio = {$objAcesso->getDate()}, idUsuarioEmissor, idUsuarioReceptor, idLote = $idLote, Acao = $acaoB, stEstado = 1, meDespacho = '$despacho'
 				";
 
-        $sql .= " FROM SAC.dbo.tbHistoricoDocumento 
+        $sql .= " FROM sac.dbo.tbHistoricoDocumento 
 					WHERE Acao = $acaoA and idUnidade = $idDestino and IdPRONAC = $idPronac";
 
         //die($sql);
@@ -437,7 +437,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function buscaUltimoLote() {
-        $sql = "select max(idLote) as idLote from SAC.dbo.tbLote ";
+        $sql = "select max(idLote) as idLote from sac.dbo.tbLote ";
 
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -450,7 +450,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     
     public static function verificaTramitacoesRepetidas() {
         $sql = "SELECT COUNT(idPronac) AS contador, idPronac
-                FROM SAC.dbo.tbHistoricoDocumento
+                FROM sac.dbo.tbHistoricoDocumento
                 WHERE stEstado = 1 AND idDocumento = 0
                 GROUP BY idPronac
                 HAVING COUNT(idPronac) > 1
@@ -466,7 +466,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function verificaHistoricoDocumento($idPronac, $acao) {
-        $sql = "select top 1 * from SAC.dbo.tbHistoricoDocumento where idDocumento = 0 and idPronac = '$idPronac' order by Acao desc";
+        $sql = "select top 1 * from sac.dbo.tbHistoricoDocumento where idDocumento = 0 and idPronac = '$idPronac' order by Acao desc";
 
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -479,7 +479,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function insereLote() {
         $objAcesso= new Acesso();
-        $sql = "INSERT INTO SAC.dbo.tbLote (dtLote) Values ({$objAcesso->getDate()}) ";
+        $sql = "INSERT INTO sac.dbo.tbLote (dtLote) Values ({$objAcesso->getDate()}) ";
 
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -501,7 +501,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					 p.Analista as usuario,
 					 p.DtSituacao,
 					 p.OrgaoOrigem
-					 FROM SAC.dbo.Projetos p 
+					 FROM sac.dbo.Projetos p 
 					 WHERE p.AnoProjeto+p.Sequencial = '$pronac'";
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
@@ -516,12 +516,12 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     public static function mudaStatus($idPronac, $destino, $pronac, $processo, $usuarios, $DtSituacao, $despacho, $origem = null) {
         $objAcesso= new Acesso();
         if ($origem) {
-            $sql = "insert into SAC.dbo.tbHistoricoDocumento 
+            $sql = "insert into sac.dbo.tbHistoricoDocumento 
 				(IdPRONAC, idOrigem, idUnidade, idUsuarioEmissor, Acao, stEstado, meDespacho, dtTramitacaoEnvio) 
 				values 
 				($idPronac, $origem, $destino, $usuarios, 1, 1, '$despacho', {$objAcesso->getDate()}) ";
         } else {
-            $sql = "insert into SAC.dbo.tbHistoricoDocumento 
+            $sql = "insert into sac.dbo.tbHistoricoDocumento 
 				(IdPRONAC, idUnidade, idUsuarioEmissor, Acao, stEstado, meDespacho, dtTramitacaoEnvio) 
 				values 
 				($idPronac, $destino, $usuarios, 1, 1, '$despacho', {$objAcesso->getDate()}) ";
@@ -540,7 +540,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function atualizaStatus($idPronac, $destino, $despacho) {
-        $sql = "UPDATE SAC.dbo.tbHistoricoDocumento 
+        $sql = "UPDATE sac.dbo.tbHistoricoDocumento 
 				SET idUnidade = $destino, meDespacho = '$despacho', Acao = 1
 				WHERE idPronac = $idPronac";
 
@@ -558,7 +558,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     public static function atualizaDados($idPronac) {
 
 
-        $sql = "UPDATE SAC.dbo.tbHistoricoDocumento SET stEstado = 0 WHERE IdPRONAC =  $idPronac and (idDocumento is NULL or idDocumento = 0)";
+        $sql = "UPDATE sac.dbo.tbHistoricoDocumento SET stEstado = 0 WHERE IdPRONAC =  $idPronac and (idDocumento is NULL or idDocumento = 0)";
 
         //print_r($sql);die;
         try {
@@ -572,7 +572,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function atualizaEstado($idPronac) {
-        $sql = "UPDATE SAC.dbo.tbHistoricoDocumento SET stEstado = 0 WHERE idPronac =  $idPronac and (idDocumento is NULL or idDocumento = 0)";
+        $sql = "UPDATE sac.dbo.tbHistoricoDocumento SET stEstado = 0 WHERE idPronac =  $idPronac and (idDocumento is NULL or idDocumento = 0)";
 
         //print_r($sql);die;
         try {
@@ -586,7 +586,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     }
 
     public static function atualizaEstadoRecusa($idPronac) {
-        $sql = "UPDATE SAC.dbo.tbHistoricoDocumento SET stEstado = 0 WHERE idPronac =  $idPronac";
+        $sql = "UPDATE sac.dbo.tbHistoricoDocumento SET stEstado = 0 WHERE idPronac =  $idPronac";
 
         //print_r($sql);die;
         try {
@@ -602,9 +602,9 @@ class TramitarprojetosDAO extends Zend_Db_Table {
     public static function recusarProjeto($idPronac, $acao, $codOrgao, $despacho = null) {
         $objAcesso= new Acesso();
         $sql = "INSERT INTO 
-					SAC.dbo.tbHistoricoDocumento (idPronac, idUnidade, dtTramitacaoEnvio, idLote, idUsuarioEmissor, Acao, stEstado, meDespacho)
+					sac.dbo.tbHistoricoDocumento (idPronac, idUnidade, dtTramitacaoEnvio, idLote, idUsuarioEmissor, Acao, stEstado, meDespacho)
 					SELECT IdPRONAC, idUnidade = $codOrgao, dtTramitacaoEnvio = {$objAcesso->getDate()}, idLote, idUsuarioEmissor, Acao = $acao, stEstado = 1, meDespacho = '$despacho' 
-					FROM SAC.dbo.tbHistoricoDocumento 
+					FROM sac.dbo.tbHistoricoDocumento 
 					WHERE (Acao = 2 and idPronac = $idPronac) ";
 
         //print_r($sql);die;
@@ -626,15 +626,15 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					TABELAS.dbo.fnEstruturaOrgao(h.idOrigem, 0) AS Origem,
 					p.AnoProjeto + p.Sequencial AS Pronac,
 					p.NomeProjeto as NomeProjeto,
-					SAC.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
+					sac.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
 					h.meDespacho as despacho,
-					SAC.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor,
+					sac.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor,
 					CONVERT(CHAR(10), h.dtTramitacaoEnvio,103) as dtEnvio,
 					h.idUnidade AS idDestino,
 					TABELAS.dbo.fnEstruturaOrgao(h.idUnidade, 0) AS Destino,
 					CONVERT(CHAR(10), h.dtTramitacaoRecebida,103) as dtRecebida,
 					h.idUsuarioReceptor,
-					SAC.dbo.fnNomeUsuario(h.idUsuarioReceptor) AS Receptor,
+					sac.dbo.fnNomeUsuario(h.idUsuarioReceptor) AS Receptor,
 					h.idLote as idLote,
 					CASE
 					WHEN h.Acao = 1 THEN 'Cadastrado'
@@ -645,9 +645,9 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					END AS Situacao,
 					h.stEstado
 					FROM
-					SAC.dbo.tbHistoricoDocumento AS h
+					sac.dbo.tbHistoricoDocumento AS h
 					INNER JOIN
-					SAC.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
+					sac.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
 					where h.stEstado = 1 and ((h.idDocumento is NULL) OR (h.idDocumento = 0))";
 
 
@@ -701,7 +701,7 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function inserirSolicitacaoArquivamento($idPronac, $justificativa, $idusuario, $cxInicio, $cxFinal, $acao, $stEstado) {
         $objAcesso= new Acesso();
-        $sql = "insert into SAC.dbo.tbArquivamento 
+        $sql = "insert into sac.dbo.tbArquivamento 
 				(idPronac, Data, Edificio, CaixaInicio, CaixaFinal, stAcao, stEstado, idUsuario, dsJustificativa) 
 				values 
 				($idPronac, {$objAcesso->getDate()}, 0, $cxInicio, $cxFinal, $acao, $stEstado, $idusuario, '$justificativa') ";
@@ -728,8 +728,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 				          WHEN h.Acao = 6 THEN 'Anexado'
 				        END AS Situacao,
 				         usu.usu_nome AS Emissor, h.dsJustificativa, h.idDocumento, h.idHistorico
-				from SAC.dbo.tbHistoricoDocumento h
-				inner join SAC.dbo.Projetos p on p.IdPRONAC = h.idPronac
+				from sac.dbo.tbHistoricoDocumento h
+				inner join sac.dbo.Projetos p on p.IdPRONAC = h.idPronac
 				LEFT JOIN tabelas.dbo.Usuarios AS usu ON usu.usu_codigo = h.idUsuarioEmissor
 				where Acao = 0 and stEstado = 1 and (h.idDocumento is NULL or h.idDocumento = 0) and h.dsJustificativa is not NULL";
 
@@ -749,8 +749,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function buscarDesarquivar() {
         $sql = "  select top 100 ar.* , p.AnoProjeto+p.Sequencial as pronac, p.NomeProjeto, p.Processo, ar.dsJustificativa
-					 from SAC.dbo.tbArquivamento ar
-					 inner join SAC.dbo.Projetos p on p.IdPRONAC = ar.idPronac
+					 from sac.dbo.tbArquivamento ar
+					 inner join sac.dbo.Projetos p on p.IdPRONAC = ar.idPronac
 					 where stAcao = 0 and stEstado = 1 and dsJustificativa is not NULL
 					 order by p.NomeProjeto";
 
@@ -767,8 +767,8 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 
     public static function buscarCancelOrgao($codOrgao = null) {
         $sql = "select distinct idUnidade as idDestino, Sigla as Destino, idLote 
-				from SAC.dbo.tbHistoricoDocumento h
-				inner join SAC.dbo.Orgaos org on org.Codigo = h.idUnidade
+				from sac.dbo.tbHistoricoDocumento h
+				inner join sac.dbo.Orgaos org on org.Codigo = h.idUnidade
 				where Acao = 0 and stEstado = 1 and (h.idDocumento is NULL or h.idDocumento = 0)";
 
         if ($codOrgao) {
@@ -790,13 +790,13 @@ class TramitarprojetosDAO extends Zend_Db_Table {
 					p.AnoProjeto + p.Sequencial AS Pronac,
 					p.NomeProjeto,
 					TABELAS.dbo.fnEstruturaOrgao(p.Orgao, 0) AS Origem,
-					SAC.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
+					sac.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo,
 					CONVERT(CHAR(10), h.dtTramitacaoEnvio,103) + ' ' + CONVERT(CHAR(10), h.dtTramitacaoEnvio,108) AS dtEnvio,
 					TABELAS.dbo.fnEstruturaOrgao(h.idUnidade, 0) AS Destino,
-					SAC.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor,
+					sac.dbo.fnNomeUsuario(h.idUsuarioEmissor) AS Emissor,
                     h.idLote
-                FROM SAC.dbo.tbHistoricoDocumento AS h
-                INNER JOIN SAC.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
+                FROM sac.dbo.tbHistoricoDocumento AS h
+                INNER JOIN sac.dbo.Projetos AS p ON h.idPronac = p.IdPRONAC
                 WHERE (h.idDocumento is NULL or h.idDocumento = 0) and h.stEstado = 1
                     AND(h.idUsuarioEmissor = $idUsuario)
                     AND(h.idLote = $idLote)

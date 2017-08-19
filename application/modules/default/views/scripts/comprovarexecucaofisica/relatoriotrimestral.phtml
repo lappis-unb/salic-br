@@ -65,7 +65,7 @@
                     } else if($relCadastrados->siComprovanteTrimestral == 2) {
                         $msg = 'Enviado';
                     } else if($relCadastrados->siComprovanteTrimestral == 3 || $relCadastrados->siComprovanteTrimestral == 4 || $relCadastrados->siComprovanteTrimestral == 5) {
-                        $msg = 'Em análise';
+                        $msg = 'Em an&aacute;lise';
                     } else if($relCadastrados->siComprovanteTrimestral == 6) {
                         $msg = 'Analisado';
                     }
@@ -91,7 +91,7 @@
                 ?>
             </td>
             <td>-</td>
-            <td><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/etapas-de-trabalho?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Não cadastrado</a></td>
+            <td><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/etapas-de-trabalho?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">N&atilde;o cadastrado</a></td>
         </tr>
         <?php } ?>
         <!-- ***FIM - ESSA PARTE SO SERA HABILITADA PARA UM NOVO CADASTRO*** -->

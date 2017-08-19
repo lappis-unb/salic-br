@@ -15,7 +15,7 @@
         });
 
 	$('#IncluirReadequacao').click(function(){
-            $("#msgAlerta").html('Deseja incluir essa solicitação de readequação?');
+            $("#msgAlerta").html('Deseja incluir essa solicita&ccedil;&atilde;o de readequa&ccedil;&atilde;o?');
             $("#msgAlerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -23,7 +23,7 @@
                 height:170,
                 modal: true,
                 buttons : {
-		    'Não' : function(){
+		    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -43,14 +43,14 @@
         $('.btn_exclusao').click(function(){
             var idReadequacao = $(this).attr('readequacao');
             $("#msgAlerta").dialog("destroy");
-            $("#msgAlerta").html('Deseja excluir a solicitação de readequação?');
+            $("#msgAlerta").html('Deseja excluir a solicita&ccedil;&atilde;o de readequa&ccedil;&atilde;o?');
             $("#msgAlerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width:360,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -218,8 +218,8 @@
         });
         
         $('.btn_finalizar').click(function(){
-	    $('#mensagens').html('<span style="font-weigth: bold; color: grey">Verificando limites orçamentários...</span>');
-	    // verifica limites orçamentários
+	    $('#mensagens').html('<span style="font-weigth: bold; color: grey">Verificando limites or&ccedil;ament&aacute;rios...</span>');
+	    // verifica limites or&ccedil;ament&aacute;rios
             $.ajax({
                 type: 'POST',
                 url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'verificar-limites-orcamentarios'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>',
@@ -240,14 +240,14 @@
 			// sem problemas de limites orcamentarios
 			
 			$("#msgAlerta").dialog("destroy");
-			$("#msgAlerta").html('Deseja realmente finalizar as solicitações de readequação cadastradas?<br /><br />Ao finalizar, todas as solicitações serão encaminhadas ao MinC.');
+			$("#msgAlerta").html('Deseja realmente finalizar as solicita&ccedil;&otilde;es de readequa&ccedil;&atilde;o cadastradas?<br /><br />Ao finalizar, todas as solicita&ccedil;&otilde;es ser&atilde;o encaminhadas ao MinC.');
 			$("#msgAlerta").dialog({
 				resizable: false,
 				title: 'Alerta!',
 				width:360,
 				modal: true,
 				buttons : {
-				    'Não' : function(){
+				    'N&atilde;o' : function(){
 					$(this).dialog('close');
 				    },
 				    'Sim' : function(){
@@ -269,7 +269,7 @@
 			$('.ui-dialog-titlebar-close').remove();
 			
 		    } else {
-			var saidaHtml = "<table class='tabela'><thead><th colspan='2'>Verificação de limites orçamentários</th></thead>";
+			var saidaHtml = "<table class='tabela'><thead><th colspan='2'>Verifica&ccedil;&atilde;o de limites or&ccedil;ament&aacute;rios</th></thead>";
 			
 			for (var m = 0; m < resposta.mensagens.length; m++) {
 			    var item = resposta.mensagens[m];
@@ -346,7 +346,7 @@
             var idPlanilhaAprovacao = $(this).attr('idPlanilhaAprovacao'),
                 itemClicado = $(this);
                 
-            //AO ABRIR A MODAL, LIMPA TODOS OS CAMPOS EDITÁVEIS
+            //AO ABRIR A MODAL, LIMPA TODOS OS CAMPOS EDIT&aacute;VEIS
             $('.modalObrigatorios').each(function(){
                 $(this).css('border-color', '#CCCCCC');
                 $(this).val('');
@@ -356,7 +356,7 @@
             $('#TotalCalculado').css('color','#222222');
             $('#textoErroValores').html('');
 
-            //BUSCA OS DADOS DO ITEM PARA VISUALIZAÇÃO DOS NA MODAL
+            //BUSCA OS DADOS DO ITEM PARA VISUALIZA&ccedil;&atilde;O DOS NA MODAL
             $.ajax({
                 type: 'POST',
                 url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'alterar-item-solicitacao'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>',
@@ -436,7 +436,7 @@
                                     var TotalCalculadoComponente = $('#TotalCalculado').html().replace(/[^\d]/g, "");
                                     if(parseInt(TotalCalculadoComponente) < parseInt(vlComprovadoDoItemValidacao)){
                                         //$('#TotalCalculado').css('color','red');
-                                        mensagem += '- O valor total do item não pode ser menor do que o valor comprovado de '+data.valoresDoItem.vlComprovadoDoItem+'.<br/>';
+                                        mensagem += '- O valor total do item n&atilde;o pode ser menor do que o valor comprovado de '+data.valoresDoItem.vlComprovadoDoItem+'.<br/>';
                                         erros++;
                                     }
                                     
@@ -497,7 +497,7 @@
             var idPlanilhaAprovacao = $(this).attr('idPlanilhaAprovacao'),
                 itemClicado = $(this);
                 
-            //ABRE O MODAL DE CONFIRMAÇÃO DA AÇÃO REALIZADA
+            //ABRE O MODAL DE CONFIRMA&ccedil;&atilde;O DA A&ccedil;&atilde;O REALIZADA
             $("#msgAlerta").dialog("destroy");
             $("#msgAlerta").html('Tem certeza que deseja excluir o item da planilha?');
             $("#msgAlerta").dialog({
@@ -507,12 +507,12 @@
                 height:170,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         itemClicado.parent().parent().removeClass('fundo_linha4');
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
-                        //BUSCA OS DADOS DO ITEM PARA VISUALIZAÇÃO DOS NA MODAL
+                        //BUSCA OS DADOS DO ITEM PARA VISUALIZA&ccedil;&atilde;O DOS NA MODAL
                         $.ajax({
                             type: 'POST',
                             url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'excluir-item-solicitacao'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>',
@@ -532,7 +532,7 @@
         });
         
         $('.multiplicarValores').keyup(function(){
-            // recebe os valores do formulário
+            // recebe os valores do formul&aacute;rio
             var qtd = $('#modalQuantidade').val(),
                 ocorrencia = $('#modalOcorrencia').val(),
                 valor = $('#modalValorUnitario').val();
@@ -543,15 +543,15 @@
             // adiciona o ponto na casa decimal
             .replace(/(\d)(\d{2})$/, "$1.$2");
 
-            // converte para float e adiciona precisão decimal
+            // converte para float e adiciona precis&atilde;o decimal
             qtd        = parseFloat(qtd).toFixed(2);
             ocorrencia = parseFloat(ocorrencia).toFixed(2);
             valor      = parseFloat(valor).toFixed(2);
 
-            // variável com o resultado
+            // vari&aacute;vel com o resultado
             resultado = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-            // se não for número
+            // se n&atilde;o for número
             if (isNaN(resultado))
             {
                 resultado = '';
@@ -579,7 +579,7 @@
         });
         
         $('.newMultiplicarValores').keyup(function(){
-            // recebe os valores do formulário
+            // recebe os valores do formul&aacute;rio
             var qtd = $('#newQuantidade').val(),
                 ocorrencia = $('#newOcorrencia').val(),
                 valor = $('#newValorUnitario').val();
@@ -590,15 +590,15 @@
             // adiciona o ponto na casa decimal
             .replace(/(\d)(\d{2})$/, "$1.$2");
 
-            // converte para float e adiciona precisão decimal
+            // converte para float e adiciona precis&atilde;o decimal
             qtd        = parseFloat(qtd).toFixed(2);
             ocorrencia = parseFloat(ocorrencia).toFixed(2);
             valor      = parseFloat(valor).toFixed(2);
 
-            // variável com o resultado
+            // vari&aacute;vel com o resultado
             resultado = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-            // se não for número
+            // se n&atilde;o for número
             if (isNaN(resultado))
             {
                 resultado = '';
@@ -645,7 +645,7 @@
                     modal: true,
                     title: 'Alerta!',
                     buttons : {
-                        'Não' : function(){
+                        'N&atilde;o' : function(){
                             $(this).dialog('close');
                         },
                         'Sim' : function(){
@@ -717,7 +717,7 @@
         $('#valorEntrePlanilhas').html('&nbsp;');
 	
 <?php
-// armazena idReadequacao somente no caso de planilha orçamentária
+// armazena idReadequacao somente no caso de planilha or&ccedil;ament&aacute;ria
    if(count($this->readequacao)>0){
 
     $idReadequacao = $this->readequacao[0]->idReadequacao;
@@ -732,7 +732,7 @@
 	    } else {
 		idReadequacao = <?php echo $idReadequacao; ?>
 	    }
-	// verifica se há planilha ativa; se falso, cria uma nova planilha
+	// verifica se h&aacute; planilha ativa; se falso, cria uma nova planilha
 	$.ajax({
 	    url: "<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'verificar-planilha-ativa'), '', true) ?>",
 	    type: 'POST',
@@ -782,7 +782,7 @@
 
 <div id="conteudo">
 
-    <!-- ========== INÍCIO FORMULÁRIO ========== -->
+    <!-- ========== INÍCIO FORMUL&aacute;RIO ========== -->
     <form name="formReadequacao" id="formReadequacao" action="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'incluir-solicitacao-readequacao'), null, true); ?><?php echo '?idPronac='. Seguranca::encrypt($this->idPronac); ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" id="idReadequacao" name="idReadequacao" value="<?php if (count($this->readequacao) > 0) { echo $this->readequacao[0]->idReadequacao; } ?>">
     	<input type="hidden" id="tipoReadequacao" name="tipoReadequacao" value="2">
@@ -817,7 +817,7 @@
                                 <td id="valorEntrePlanilhas">
                                     <span class="bold black-text">R$ 0,00</span>
                                 </td>
-                                <td style="width: 1px;"><input type="button" class="btn_incluir" id="AdicionarItem" title="Adicionar Item à Planilha" /></td>
+                                <td style="width: 1px;"><input type="button" class="btn_incluir" id="AdicionarItem" title="Adicionar Item &agrave; Planilha" /></td>
                             </tr>
                         </table>
                     </div>
@@ -844,7 +844,7 @@
 	      </td>
             </tr>
             <tr>
-                <td><span class="red-text">* Campo obrigatório e permite o máximo de 5.000 caracteres</span></td>
+                <td><span class="red-text">* Campo obrigatório e permite o m&aacute;ximo de 5.000 caracteres</span></td>
             </tr>
         </table>
         
@@ -885,9 +885,9 @@
         </table>
     </form>
                                                                                                                 
-    <!-- ========== Fim FORMULÁRIO ========== -->
+    <!-- ========== Fim FORMUL&aacute;RIO ========== -->
 
-    <?php //MODAL DE AVALIAÇÃO DO ITEM ?>
+    <?php //MODAL DE AVALIA&ccedil;&atilde;O DO ITEM ?>
     <div id="modalItem" class="sumir">
         <table class="tabela">
             <tr>
@@ -912,7 +912,7 @@
                 <td class="destacar bold">Unidade</td>
                 <td class="destacar bold">Qtd</td>
                 <td class="destacar bold">Ocorrência</td>
-                <td class="destacar bold">Vl. Unitário</td>
+                <td class="destacar bold">Vl. Unit&aacute;rio</td>
                 <td class="destacar bold">Dias</td>
                 <td class="destacar bold">Total</td>
                 <!--<td class="destacar bold" style="width: 1px;">Reintegrar</td>-->
@@ -929,13 +929,13 @@
         
         <table class="tabela">
             <tr>
-                <th colspan="6">Dados para a readequação</th>
+                <th colspan="6">Dados para a readequa&ccedil;&atilde;o</th>
             </tr>
             <tr class="centro">
                 <td class="destacar bold">Unidade</td>
                 <td class="destacar bold">Qtd</td>
                 <td class="destacar bold">Ocorrência</td>
-                <td class="destacar bold">Vl. Unitário</td>
+                <td class="destacar bold">Vl. Unit&aacute;rio</td>
                 <td class="destacar bold">Dias</td>
                 <td class="destacar bold">Total</td>
             </tr>
@@ -955,7 +955,7 @@
                 <td id="TotalCalculado" class="direita" style="width: 125px;"></td>
             </tr>
             <tr>
-                <td colspan="6" class="destacar bold centro">Justificativa da Readequação <span class="red-text">*</span> <span id="textoErroValores" style="float:right; color: red;"></span></td>
+                <td colspan="6" class="destacar bold centro">Justificativa da Readequa&ccedil;&atilde;o <span class="red-text">*</span> <span id="textoErroValores" style="float:right; color: red;"></span></td>
             </tr>
             <tr>
                 <td colspan="6" class="centro">
@@ -964,12 +964,12 @@
             </tr>
         </table>
     </div>
-    <?php //FIM MODAL DE AVALIAÇÃO DO ITEM ?>
+    <?php //FIM MODAL DE AVALIA&ccedil;&atilde;O DO ITEM ?>
 
-    <?php //MODAL DE INCLUSÃO DE ITEM ?>
+    <?php //MODAL DE INCLUS&atilde;O DE ITEM ?>
     <div id="modalInclusaoItem" class="sumir">
         <table class="tabela">
-            <tr><?php //xd($this->UFs); ?>
+            <tr>
                 <td class="destacar bold" style="width: 33%">Recursos</td>
                 <td class="destacar bold" style="width: 33%">UF</td>
                 <td class="destacar bold" style="width: 33%">Município</td>
@@ -1035,7 +1035,7 @@
                 <td class="destacar bold w150">Unidade</td>
                 <td class="destacar bold">Qtd</td>
                 <td class="destacar bold">Ocorrência</td>
-                <td class="destacar bold">Vl. Unitário</td>
+                <td class="destacar bold">Vl. Unit&aacute;rio</td>
                 <td class="destacar bold">Dias</td>
                 <td class="destacar bold">Total</td>
             </tr>
@@ -1064,12 +1064,12 @@
             </tr>
         </table>
     </div>
-    <?php //MODAL DE INCLUSÃO DE ITEM ?>
+    <?php //MODAL DE INCLUS&atilde;O DE ITEM ?>
 
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

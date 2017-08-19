@@ -2,15 +2,15 @@
 
 class tbalteracaonomeprojetoDAO extends Zend_Db_Table
 {
-    protected $_name = "BDCORPORATIVO.scSAC.tbalteracaonomeprojeto";
+    protected $_name = "bdcorporativo.scsac.tbalteracaonomeprojeto";
 
     public static function buscarDadosNmProj($idpedidoalteracao)
     {
         $sql = "       select tba.nmprojeto,
                        tba.dsjustificativa,
                        tap.idPRONAC
-                       from BDCORPORATIVO.scSAC.tbalteracaonomeprojeto tba
-                       join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tba.idPedidoAlteracao
+                       from bdcorporativo.scsac.tbalteracaonomeprojeto tba
+                       join bdcorporativo.scsac.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tba.idPedidoAlteracao
                        where tba.idpedidoalteracao= ".$idpedidoalteracao;
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -23,7 +23,7 @@ class tbalteracaonomeprojetoDAO extends Zend_Db_Table
         $sql = "select dtparecertecnico,
                        dsparecertecnico,
                        nom.Descricao as nometecnico
-                       from BDCORPORATIVO.scSAC.tbavaliacaopedidoalteracao apa
+                       from bdcorporativo.scsac.tbavaliacaopedidoalteracao apa
                        join agentes.dbo.Nomes nom on nom.idAgente =  apa.idTecnico
                        where apa.idpedidoalteracao= ".$idpedidoalteracao;
 
@@ -39,7 +39,7 @@ class tbalteracaonomeprojetoDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idpronac = ".$idpronac;
-        $alterar = $db->update("SAC.dbo.projetos", $dados, $where);
+        $alterar = $db->update("sac.dbo.projetos", $dados, $where);
 
         if ($alterar)
         {

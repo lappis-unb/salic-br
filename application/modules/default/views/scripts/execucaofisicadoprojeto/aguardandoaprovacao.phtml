@@ -1,12 +1,12 @@
 <?php
 /**
- * Aguardando Aprovação de Comprovantes (Acesso: COORDENADORES)
+ * Aguardando Aprova&ccedil;&atilde;o de Comprovantes (Acesso: COORDENADORES)
  * @author Equipe RUP - Politec
  * @since 12/05/2010
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.execucaofisicaprojeto
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -14,7 +14,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="last">Comprovação de Execução Física do Projeto</li>
+		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -23,7 +23,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Comprovação de Execução Física do Projeto <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -34,7 +34,7 @@
 
 
 
-	<!-- ========== INÍCIO FORMULÁRIO DE BUSCA ========== -->
+	<!-- ========== INÍCIO FORMUL&aacute;RIO DE BUSCA ========== -->
 	<form name="formBuscar" id="formBuscar" method="post" 
 		action="<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'aguardandoaprovacao')); ?>">
 
@@ -50,9 +50,9 @@
 			<td>
 				<label for="status"> </label>
 				<select class="input_simples" name="status" id="status">
-					<option value="AG">Aguardando Avaliação</option>
-					<option value="AV">Em Avaliação</option>
-					<option value="EA">Em Aprovação</option>
+					<option value="AG">Aguardando Avalia&ccedil;&atilde;o</option>
+					<option value="AV">Em Avalia&ccedil;&atilde;o</option>
+					<option value="EA">Em Aprova&ccedil;&atilde;o</option>
 					<option value="AA">Avaliado</option>
 					<option value="TD" selected="selected">Todas</option>
 				</select>
@@ -73,7 +73,7 @@
 	</table>
 
 	</form>
-	<!-- ========== FIM FORMULÁRIO DE BUSCA ========== -->
+	<!-- ========== FIM FORMUL&aacute;RIO DE BUSCA ========== -->
 
 
 
@@ -84,7 +84,7 @@
 			<th>Status</th>
 			<th>Data de Recebimento</th>
 			<th>Data de Resposta</th>
-			<th>Ação</th>
+			<th>A&ccedil;&atilde;o</th>
 		</tr>
 
 		<?php foreach ($this->paginacao as $r): ?>
@@ -104,17 +104,17 @@
 
 
 
-	<!-- ========== PAGINAÇÃO ========== -->
+	<!-- ========== PAGINA&ccedil;&atilde;O ========== -->
 	<?php if ($this->qtd > 20) { echo $this->paginacao; } ?>
 
 
 
-	<!-- ========== BOTÕES VOLTAR E ETC ========== -->
+	<!-- ========== BOT&otilde;ES VOLTAR E ETC ========== -->
 	<table class="tabela">
 		<tr>
 			<td>
 				<div class="float_left">
-					<input type="button" class="btn_voltar" title=" Página Anterior " onkeypress=" " onclick="voltar();" />
+					<input type="button" class="btn_voltar" title=" P&aacute;gina Anterior " onkeypress=" " onclick="voltar();" />
 				</div>
 				<?php if (count($this->paginacao) > 0) : ?>
 				<div class="float_right total_itens">
@@ -132,8 +132,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

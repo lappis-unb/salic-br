@@ -27,13 +27,13 @@ class Projeto
 	private $dataRetorno;
 	private $usuarioLog;
 	
-	// Esta função tem por objetivo instancia o objeto AreaCultural
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto AreaCultural
 	public function setAreaCultural (AreaCultural $areacultural)
 	{
 		$this->areacultural = $areacultural;
 	}
 	
-	// Esta função tem por objetivo instancia o objeto SeguimentoCultural
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto SeguimentoCultural
 	public function setSeguimentoCultural (SeguimentoCultural $seguimentocultural)
 	{
 		$this->areacultural = $seguimentocultural;

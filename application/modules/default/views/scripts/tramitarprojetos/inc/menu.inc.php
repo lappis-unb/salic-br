@@ -17,7 +17,7 @@
     <!-- início: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
         function layout_fluido()
         {
@@ -52,9 +52,9 @@
                 </div>
                 <?php } ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'consultarprojetosarquivados')); ?>" title="Ir para Consultar projetos arquivados">Consultar Projetos Arquivados</a>
-                <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'solicitacoes')); ?>" title="Ir para Solicitações">Solicitações</a>-->
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'guias')); ?>" title="Ir para Guias de tramitação">Guias de Tramitação</a>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'consultarprojetos'));	?>" title="Ir para Consultar projetos">Consultar Tramitação</a>
+                <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'solicitacoes')); ?>" title="Ir para Solicita&ccedil;&otilde;es">Solicita&ccedil;&otilde;es</a>-->
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'guias')); ?>" title="Ir para Guias de tramita&ccedil;&atilde;o">Guias de Tramita&ccedil;&atilde;o</a>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'consultarprojetos'));	?>" title="Ir para Consultar projetos">Consultar Tramita&ccedil;&atilde;o</a>
                 <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'receberprojetos')); ?>" title="Ir para Projetos recebidos">Projetos Recebidos</a>
                 <a class="no_seta last" href="<?php echo $this->url(array('controller' => 'tramitarprojetos', 'action' => 'enviarprojetos')); ?>" title="Ir para Projetos enviados">Projetos Enviados</a>-->
             </div>
@@ -63,7 +63,7 @@
         </div>
 
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navega&ccedil;&atilde;o local #qm0 -->
     </div>
 </div>
 <script type="text/javascript">

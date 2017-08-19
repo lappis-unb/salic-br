@@ -60,25 +60,25 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			array("proponente" => "Agentes")
 			,"proponente.idAgente = r.idAgenteSolicitante"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("nmProponente" => "Nomes")
 			,"nmProponente.idAgente = proponente.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("ministro" => "Agentes")
 			,"ministro.idAgente = r.idAgenteAvaliador"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("nmMinistro" => "Nomes")
 			,"nmMinistro.idAgente = ministro.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 
 		// avaliacao do ministro
@@ -222,31 +222,31 @@ class tbRecurso extends MinC_Db_Table_Abstract
 			array("Ag" => "Agentes")
 			,"Ag.CNPJCPF = Pr.CgcCpf"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("N" => "Nomes")
 			,"N.idAgente = Ag.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("EN" => "EnderecoNacional")
 			,"EN.idAgente = Ag.idAgente"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinInner(
 			array("mun" => "Municipios")
 			,"mun.idMunicipioIBGE = I.Cidade OR mun.idMunicipioIBGE = EN.Cidade"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinInner(
 			array("uf" => "UF")
 			,"uf.idUF = mun.idUFIBGE"
 			,array()
-			,"agentes.dbo"
+			,"agentes"
 		);
 		$select->joinLeft(
 			array("Enq" => "Enquadramento")
@@ -312,32 +312,32 @@ class tbRecurso extends MinC_Db_Table_Abstract
                     nm.Descricao AS nomeComponente,
                     tp.idRecurso,
                     tp.tpSolicitacao as tipoSolicitacao")
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
 		$select->joinInner(
 			array("pr" => "Projetos")
 			,"pr.IdPRONAC = tp.IdPRONAC"
-			,array(), 'SAC.dbo'
+			,array(), 'SAC'
 		);
 		$select->joinInner(
 			array("ar" => "Area")
 			,"pr.Area = ar.Codigo"
-			,array(), 'SAC.dbo'
+			,array(), 'SAC'
 		);
 		$select->joinInner(
 			array("seg" => "Segmento")
 			,"pr.Segmento = seg.Codigo"
-			,array(), 'SAC.dbo'
+			,array(), 'SAC'
 		);
 		$select->joinLeft(
 			array("par" => "Parecer")
-			,"par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)"
-			,array(), 'SAC.dbo'
+			,"par.IdPRONAC = tp.IdPRONAC AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from sac..Parecer where IdPRONAC = pr.IdPRONAC)"
+			,array(), 'SAC'
 		);
 		$select->joinLeft(
 			array("nm" => "Nomes")
 			,"nm.idAgente = tp.idAgenteAvaliador"
-			,array(), 'agentes.dbo'
+			,array(), 'agentes'
 		);
 
 		$select->where("tp.stEstado = ?", 0);
@@ -345,7 +345,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$select->where("tp.siRecurso = ?", 8);
 		$select->where("par.stAtivo = ?", 1);
 		$select->where("par.TipoParecer = ?", 7);
-		$select->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao AS cv WHERE tp.idNrReuniao = cv.idNrReuniao and tp.IdPRONAC = cv.IdPRONAC)", '');
+		$select->where("NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbConsolidacaoVotacao AS cv WHERE tp.idNrReuniao = cv.idNrReuniao and tp.IdPRONAC = cv.IdPRONAC)", '');
 		$select->order(array(8,2));
 
         
@@ -409,26 +409,26 @@ class tbRecurso extends MinC_Db_Table_Abstract
 					,CID.idMunicipioIBGE AS idCidade
 					,CID.Descricao AS Cidade
 					,LTRIM(RTRIM(TI.Descricao)) AS FonteRecurso
-				FROM SAC.dbo.Projetos PRO
-					LEFT JOIN SAC.dbo.tbPlanilhaProjeto PPJ ON PPJ.idPRONAC = PRO.IdPRONAC
-					LEFT JOIN SAC.dbo.tbPlanilhaProposta PP ON (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					LEFT JOIN SAC.dbo.tbPlanilhaItens I ON (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					LEFT JOIN SAC.dbo.tbPlanilhaAprovacao PAP ON (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					LEFT JOIN SAC.dbo.tbPlanilhaAprovacao PAPM ON (PAPM.idPlanilhaProposta = PP.idPlanilhaProposta AND PAPM.tpPlanilha = 'MI')
-					LEFT JOIN SAC.dbo.tbPlanilhaItens PIT ON (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+				FROM sac.dbo.Projetos PRO
+					LEFT JOIN sac.dbo.tbPlanilhaProjeto PPJ ON PPJ.idPRONAC = PRO.IdPRONAC
+					LEFT JOIN sac.dbo.tbPlanilhaProposta PP ON (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					LEFT JOIN sac.dbo.tbPlanilhaItens I ON (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					LEFT JOIN sac.dbo.tbPlanilhaAprovacao PAP ON (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					LEFT JOIN sac.dbo.tbPlanilhaAprovacao PAPM ON (PAPM.idPlanilhaProposta = PP.idPlanilhaProposta AND PAPM.tpPlanilha = 'MI')
+					LEFT JOIN sac.dbo.tbPlanilhaItens PIT ON (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
 					LEFT JOIN agentes.dbo.UF UF ON (PAP.idUFDespesa = UF.idUF)
 					LEFT JOIN agentes.dbo.Municipios CID ON (PAP.idMunicipioDespesa = CID.idMunicipioIBGE)
-					LEFT JOIN SAC.dbo.tbPlanilhaEtapa E ON (PAP.idEtapa = E.idPlanilhaEtapa)
-					LEFT JOIN SAC.dbo.tbPlanilhaUnidade UNI ON (PAP.idUnidade = UNI.idUnidade)
-					LEFT JOIN SAC.dbo.Produto PD ON (PAP.idProduto = PD.Codigo)
-					INNER JOIN SAC.dbo.Verificacao TI ON TI.idverificacao = PAP.nrFonteRecurso AND TI.idTipo = 5
-					INNER JOIN SAC.dbo.tbAnaliseAprovacao ap ON ap.idpronac = pro.idpronac AND tpAnalise = '$tpPlanilha'
-					LEFT JOIN SAC.dbo.tbRecursoXPlanilhaAprovacao RPA ON RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
-					LEFT JOIN SAC.dbo.tbRecurso Rec ON Rec.idRecurso = RPA.idRecurso
+					LEFT JOIN sac.dbo.tbPlanilhaEtapa E ON (PAP.idEtapa = E.idPlanilhaEtapa)
+					LEFT JOIN sac.dbo.tbPlanilhaUnidade UNI ON (PAP.idUnidade = UNI.idUnidade)
+					LEFT JOIN sac.dbo.Produto PD ON (PAP.idProduto = PD.Codigo)
+					INNER JOIN sac.dbo.Verificacao TI ON TI.idverificacao = PAP.nrFonteRecurso AND TI.idTipo = 5
+					INNER JOIN sac.dbo.tbAnaliseAprovacao ap ON ap.idpronac = pro.idpronac AND tpAnalise = '$tpPlanilha'
+					LEFT JOIN sac.dbo.tbRecursoXPlanilhaAprovacao RPA ON RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
+					LEFT JOIN sac.dbo.tbRecurso Rec ON Rec.idRecurso = RPA.idRecurso
 
 				WHERE ap.stAvaliacao = 1
 					AND PAP.tpPlanilha = '$tpPlanilha'
-					AND PAP.idPlanilhaItem NOT IN (206)
+					AND PAP.idPlanilhaItem NOT in (206)
 					AND (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario) <> (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario)"; // vl solicitado != vl sugerido parecerista
 
 		if (!empty($idPronac))
@@ -448,7 +448,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $sql = "SELECT  idRecurso, IdPRONAC, dtSolicitacaoRecurso, CAST(dsSolicitacaoRecurso AS TEXT) AS dsSolicitacaoRecurso,
                         idAgenteSolicitante, dtAvaliacao, dsAvaliacao, stAtendimento,
                         tpSolicitacao, idAgenteAvaliador
-                FROM SAC.dbo.tbRecurso WHERE IdPRONAC = {$idPronac}";
+                FROM sac.dbo.tbRecurso WHERE IdPRONAC = {$idPronac}";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
@@ -469,7 +469,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                                     WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&ccedil;amento'
                                  END AS tpSolicitacao,
                                  CASE
-                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera&ccedil;&atilde;o'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso, a.siRecurso
                 "),
@@ -483,25 +483,25 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->joinLeft(
             array('c' => 'tbDistribuirProjeto'),
             'b.IdPRONAC = c.IdPRONAC',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->joinLeft(
             array('d' => 'Orgaos'),
             'c.idUnidade = d.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
         $select->joinLeft(
             array('e' => 'Nomes'),
             'c.idAvaliador = e.idAgente',
-            array(''), 'agentes.dbo'
+            array(''), 'agentes'
         );
 
         //adiciona quantos filtros foram enviados
@@ -566,7 +566,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'tbTipoEncaminhamento'), 'a.siRecurso = b.idTipoEncaminhamento',
-            array('dsEncaminhamento AS siRecursoDesc'), 'SAC.dbo'
+            array('dsEncaminhamento AS siRecursoDesc'), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados
@@ -618,19 +618,19 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Nomes'), 'a.idAgenteAvaliador = c.idAgente',
-            array(''), 'agentes.dbo'
+            array(''), 'agentes'
         );
         $select->joinInner(
             array('d' => 'Area'), 'b.Area = d.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('e' => 'Segmento'), 'b.Segmento = e.Codigo',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados
@@ -659,12 +659,12 @@ class tbRecurso extends MinC_Db_Table_Abstract
     }
 
     public function atualizarRecursosProximaPlenaria($idNrReuniao) {
-        $sql = "UPDATE SAC.dbo.tbRecurso
+        $sql = "UPDATE sac.dbo.tbRecurso
                      SET idNrReuniao = idNrReuniao + 1
-                FROM  SAC.dbo.tbRecurso  a
-                INNER JOIN SAC.dbo.Projetos c on (a.IdPRONAC = c.idPronac)
+                FROM  sac.dbo.tbRecurso  a
+                INNER JOIN sac.dbo.Projetos c on (a.IdPRONAC = c.idPronac)
                 WHERE siRecurso = 8
-                      AND NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
+                      AND NOT EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
@@ -672,14 +672,14 @@ class tbRecurso extends MinC_Db_Table_Abstract
     } // fecha metodo buscarPlanilhaDeCustos()
 
     public function atualizarStatusRecursosNaoSubmetidos($idNrReuniao) {
-        $sql = "UPDATE SAC.dbo.tbRecurso
+        $sql = "UPDATE sac.dbo.tbRecurso
                     SET stEstado = 1
-               FROM  SAC.dbo.tbRecurso a
-               INNER JOIN SAC.dbo.Projetos c on (a.IdPRONAC = c.idPronac)
+               FROM  sac.dbo.tbRecurso a
+               INNER JOIN sac.dbo.Projetos c on (a.IdPRONAC = c.idPronac)
                WHERE a.stEstado = 0 and
                     (a.siRecurso = 9 and a.idNrReuniao = $idNrReuniao ) or
                     (a.siRecurso = 8 and a.stEstado = 0
-                    AND EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
+                    AND EXISTS(SELECT TOP 1 * FROM bdcorporativo.scsac.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
@@ -711,7 +711,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
 
        //adiciona quantos filtros foram enviados

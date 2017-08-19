@@ -18,7 +18,7 @@
 
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">Início</a></li>
         <li class="second">Relatórios</li>
         <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'projeto'), '', true); ?>" title="Ir para Relatorio">Projetos</a></li>
         <li class="last">Resultado da pesquisa</li>
@@ -37,7 +37,7 @@
 <div id="conteudo">
        
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -62,19 +62,19 @@
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="pronac" value="<?php echo $this->pronac;?>">
                     <input type="hidden" name="cnpfcpf" value="<?php echo $this->cnpfcpf;?>">
                     <input type="hidden" name="nomeProjeto" value="<?php echo $this->nomeProjeto;?>">
                     <input type="hidden" name="nomeProponente" value="<?php echo $this->nomeProponente;?>">
-                    <input type="hidden" name="area" value="<?php echo $this->area;?>">
+                    <input type="hidden" name="Area" value="<?php echo $this->area;?>">
                     <input type="hidden" name="segmento" value="<?php echo $this->segmento;?>">
                     <input type="hidden" name="mecanismo" value="<?php echo $this->mecanismo;?>">
                     <input type="hidden" name="uf" value="<?php echo $this->uf;?>">
@@ -110,7 +110,7 @@
             echo " de ". $this->paginacao['total']. " Projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php } ?>
 
 
@@ -122,13 +122,13 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=2&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=3&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Agente</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Área</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">&aacute;rea</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Segmento</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">UF</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=14&ordem='.$this->paginacao['novaOrdem'];?>">Município</a></th>
                 
                 <?php if($this->paginacao['campo'] != 12){ ?>
-                <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=12&ordem=ASC';?>">Situação</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=12&ordem=ASC';?>">Situa&ccedil;&atilde;o</a></th>
                 <?php } ?>
                 
                 <th><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Solicitado</a></th>
@@ -173,7 +173,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
         <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -206,19 +206,19 @@
                         <input class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'resultado-projeto')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronac.'&cnpfcpf='.$this->cnpfcpf.'&nomeProjeto='.$this->nomeProjeto.'&nomeProponente='.$this->nomeProponente.'&area='.$this->area.'&segmento='.$this->segmento.'&mecanismo='.$this->mecanismo.'&uf='.$this->uf.'&municipio='.$this->municipio.'&situacao='.$this->situacao.'&tpDtSituacao='.$this->tpDtSituacao.'&dtSituacao='.$this->dtSituacao.'&dtSituacao_Final='.$this->dtSituacao_Final.'&tpDtPublicacao='.$this->tpDtPublicacao.'&dtPublicacao='.$this->dtPublicacao.'&dtPublicacao_Final='.$this->dtPublicacao_Final.'&tpDtPortaria='.$this->tpDtPortaria.'&dtPortaria='.$this->dtPortaria.'&dtPortaria_Final='.$this->dtPortaria_Final.'&dtInicioExec='.$this->dtInicioExec.'&dtFimExec='.$this->dtFimExec.'&propRegular='.$this->propRegular.'&planoAnual='.$this->planoAnual.'&datafixa='.$this->datafixa; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="pronac" value="<?php echo $this->pronac;?>">
                         <input type="hidden" name="cnpfcpf" value="<?php echo $this->cnpfcpf;?>">
                         <input type="hidden" name="nomeProjeto" value="<?php echo $this->nomeProjeto;?>">
                         <input type="hidden" name="nomeProponente" value="<?php echo $this->nomeProponente;?>">
-                        <input type="hidden" name="area" value="<?php echo $this->area;?>">
+                        <input type="hidden" name="Area" value="<?php echo $this->area;?>">
                         <input type="hidden" name="segmento" value="<?php echo $this->segmento;?>">
                         <input type="hidden" name="mecanismo" value="<?php echo $this->mecanismo;?>">
                         <input type="hidden" name="uf" value="<?php echo $this->uf;?>">
@@ -247,7 +247,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
     <?php } } ?>
 
@@ -270,7 +270,7 @@
         <input type="hidden" name="cnpfcpf" value="<?php echo $this->cnpfcpf;?>">
         <input type="hidden" name="nomeProjeto" value="<?php echo $this->nomeProjeto;?>">
         <input type="hidden" name="nomeProponente" value="<?php echo $this->nomeProponente;?>">
-        <input type="hidden" name="area" value="<?php echo $this->area;?>">
+        <input type="hidden" name="Area" value="<?php echo $this->area;?>">
         <input type="hidden" name="segmento" value="<?php echo $this->segmento;?>">
         <input type="hidden" name="mecanismo" value="<?php echo $this->mecanismo;?>">
         <input type="hidden" name="uf" value="<?php echo $this->uf;?>">
@@ -296,7 +296,7 @@
 
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

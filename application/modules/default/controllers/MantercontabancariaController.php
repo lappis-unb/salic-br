@@ -157,7 +157,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         
         if(count($AgenciaDados) > 0){
             
-            //INSERE OS DADOS NA TABELA DE HIST�RICO - SAC.dbo.tbHistoricoExclusaoConta
+            //INSERE OS DADOS NA TABELA DE HIST�RICO - sac.dbo.tbHistoricoExclusaoConta
             $objAcesso = new Acesso();
             $dadosInsert = array(
                 'idContaBancaria' => $resp->IdContaBancaria,

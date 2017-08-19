@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe responsável por fazer a autenticação Utilizando o Login Cidadão.
+ * Classe respons&aacute;vel por fazer a autentica&ccedil;&atilde;o Utilizando o Login Cidad&atilde;o.
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 06/10/16 11:25
  */
@@ -51,7 +51,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
      */
     public function errorAction()
     {
-        parent::message("Não foi possível autenticar na aplicação.", "/autenticacao", "ALERT");
+        parent::message("N&atilde;o foi possível autenticar na aplica&ccedil;&atilde;o.", "/autenticacao", "ALERT");
     }
 
     /**

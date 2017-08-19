@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo que representa a tabela SAC.dbo.tbComunicados
+ * Modelo que representa a tabela sac.dbo.tbComunicados
  *
  * @author PEDRO GOMES
  */
@@ -35,16 +35,16 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
                         "idArquivo")
                     );
           $slct->joinInner(
-                array('d' => 'verificacao'), 'c.idVerificacao = d.idVerificacao',
-                array('d.Descricao'),'agentes.dbo'
+                array('d' => 'Verificacao'), 'c.idVerificacao = d.idVerificacao',
+                array('d.Descricao'),'agentes'
         );
           $slct->joinInner(
                 array('e' => 'tbArquivo'), 'c.idArquivo = e.idArquivo',
-                array('e.nmArquivo'),'BDCORPORATIVO.scCorp'
+                array('e.nmArquivo'),'bdcorporativo.scCorp'
         );
           $slct->joinInner(
                 array('f' => 'tbArquivoImagem'), 'e.idArquivo = f.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),'bdcorporativo.scCorp'
         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {

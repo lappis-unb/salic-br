@@ -403,18 +403,18 @@ class tbCumprimentoObjeto extends MinC_Db_Table_Abstract
         $select->joinInner(
                 array('b' => 'Projetos'),
                 'a.idPronac = b.IdPRONAC',
-                array(),'SAC.dbo'
+                array(),'SAC'
         );
         $select->joinInner(
                 array('c' => 'Situacao'),
                 'b.Situacao = c.Codigo',
-                array(),'SAC.dbo'
+                array(),'SAC'
         );
 
         $select->joinInner(
                  array('co' => 'tbCumprimentoObjeto'),
                  ' b.IdPRONAC = co.idPronac',
-                 array(),'SAC.dbo'
+                 array(),'SAC'
         );
 
        //adiciona quantos filtros foram enviados

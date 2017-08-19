@@ -1,12 +1,12 @@
 <?php 
 /**
- * Formulário para upload do arquivo do banco do brasil
+ * Formul&aacute;rio para upload do arquivo do banco do brasil
  * @author emanuel.sampaio - Politec
  * @since 30/06/2011
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.controlarmovimentacaobancaria
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -37,10 +37,10 @@ echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this);
 
     <script type="text/javascript">
         /**
-         * Funções que são chamadas após a página ser carregada
+         * Fun&ccedil;&otilde;es que s&atilde;o chamadas após a p&aacute;gina ser carregada
          */
         $(document).ready(function(){
-            // validações antes do envio do formulário
+            // valida&ccedil;&otilde;es antes do envio do formul&aacute;rio
             $('.btn_enviar').click(function(){
                 if ( $('#arquivo').val() == '' ){
                     $('#msg').show();
@@ -60,7 +60,7 @@ echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this);
 
     <br clear="all" />
     
-    <!-- ========== INÍCIO FORMULÁRIO ========== -->
+    <!-- ========== INÍCIO FORMUL&aacute;RIO ========== -->
     <form name="form" id="form" method="post"
           action="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'upload')); ?>"
           enctype="multipart/form-data">
@@ -88,14 +88,14 @@ echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this);
         </table>
 
     </form>
-    <!-- ========== FIM FORMULÁRIO DE CONSULTA ========== -->
+    <!-- ========== FIM FORMUL&aacute;RIO DE CONSULTA ========== -->
     <br clear="all" />
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

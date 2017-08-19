@@ -93,7 +93,7 @@ function recusar_projeto(idPronac, idDestino, Pronac, NomeProjeto, idLote, idOri
 <?php
 echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu
 ?>
-<div id="confirm1" title="Confirma&ccedil;&atilde;o" style="display: none">Dados obrigatórios não informados!</div>
+<div id="confirm1" title="Confirma&ccedil;&atilde;o" style="display: none">Dados obrigatórios n&atilde;o informados!</div>
 <div id="confirm2" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -217,7 +217,7 @@ echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu
  
 	<table class="tabela">
 		<tr>
-			<td class="centro">Não há projetos para serem enviados!</td>
+			<td class="centro">N&atilde;o h&aacute; projetos para serem enviados!</td>
 		</tr>
 	</table>
  
@@ -236,7 +236,7 @@ echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu
 <div style="display: none" class="enviados">
 <?php $historicodocumento = new HistoricoDocumento();?>
 <?php if (($this->Dest) && ($this->Desp)){
-$auth = Zend_Auth::getInstance(); // instancia da autenticação
+$auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
 $idusuario = $auth->getIdentity()->usu_codigo; ?>
 <fieldset><legend> Projetos enviados </legend>
  	<table class="tabela">
@@ -296,7 +296,7 @@ $idusuario = $auth->getIdentity()->usu_codigo; ?>
 
 	<table class="tabela">
 		<tr>
-			<td class="centro">Não há projetos enviados!</td>
+			<td class="centro">N&atilde;o h&aacute; projetos enviados!</td>
 		</tr>
 	</table>
 
@@ -307,8 +307,8 @@ $idusuario = $auth->getIdentity()->usu_codigo; ?>
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCI RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCI RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

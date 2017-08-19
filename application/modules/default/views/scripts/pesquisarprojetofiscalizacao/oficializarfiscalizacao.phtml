@@ -7,8 +7,8 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')); ?>" title="Ir para Fiscalização do Projeto">Fiscalização do Projeto</a></li>
-        <li class="last">Oficializar Fiscalização</li>
+        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')); ?>" title="Ir para Fiscaliza&ccedil;&atilde;o do Projeto">Fiscaliza&ccedil;&atilde;o do Projeto</a></li>
+        <li class="last">Oficializar Fiscaliza&ccedil;&atilde;o</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -21,7 +21,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
 <!-- ========== FIM TITULO ========== -->
 
 
-<!-- início: área principal #conteudo -->
+<!-- início: &aacute;rea principal #conteudo -->
 <div id="conteudo">
     <form action="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'cadastrarfiscalizacao')); ?>" id="frOficializar" method="post" enctype="multipart/form-data">
         <input type="hidden" name="idPronac" value="<?php echo $this->idPronac; ?>" />
@@ -30,7 +30,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
         <input type="hidden" id="idTecnico" value="<?php echo $this->infoProjeto[0]->idTecnico; ?>">
         <table id="tableItensCusto" class="tabela" >
             <tr>
-                <th colspan="2">Identificação</th>
+                <th colspan="2">Identifica&ccedil;&atilde;o</th>
             </tr>
             <tr>
                 <td class="destacar bold" align="center" width="25%">PRONAC</td>
@@ -52,7 +52,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
 
         <table class="tabela">
             <tr>
-                <th colspan="2">Oficializar Fiscalização</th>
+                <th colspan="2">Oficializar Fiscaliza&ccedil;&atilde;o</th>
             </tr>
             <tr>
                 <td class="destacar bold" align="right" width="180">Data Início<span style="color: red;">*</span></td>
@@ -63,7 +63,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
                 <td><input type="text" name="dtFim" id="dtFim" null="false" maiorque="dtInicio" title="Data Fim" data="true" value="<?php if ($this->infoProjeto[0]->dtFimFiscalizacaoProjeto != '') { echo date('d/m/Y', strtotime($this->infoProjeto[0]->dtFimFiscalizacaoProjeto)); } else { echo ''; } ?>"/></td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Demandante da Fiscalização</td>
+                <td class="destacar bold" align="right">Demandante da Fiscaliza&ccedil;&atilde;o</td>
                 <td><?php echo !empty($this->nomeOrgao) ? $this->nomeOrgao : ''; ?></td>
             </tr>
             <tr>
@@ -94,11 +94,11 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Data de Resposta até <span id="sinalObrigatorio"></span></td>
+                <td class="destacar bold" align="right">Data de Resposta at&eacute; <span id="sinalObrigatorio"></span></td>
                 <td><input type="text" title="Data da Resposta" name="dtResposta" id="dtResposta" maiorquedataatual="true" maiorquedtinicio="dtInicio" menorquedtfim="dtFim" null="true" data="true" value="<?php if ($this->infoProjeto[0]->dtRespostaSolicitada != '') { echo date('d/m/Y', strtotime($this->infoProjeto[0]->dtRespostaSolicitada)); } else { echo ''; } ?>"/></td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Técnico<span style="color: red;">*</span></td>
+                <td class="destacar bold" align="right">T&eacute;cnico<span style="color: red;">*</span></td>
                 <td>
                     <select id="selectAgente" name="idUsuario" null="false">
                         <option value="">- Selecione -</option>
@@ -109,7 +109,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Dados para Fiscalização<span style="color: red;">*</span></td>
+                <td class="destacar bold" align="right">Dados para Fiscaliza&ccedil;&atilde;o<span style="color: red;">*</span></td>
                 <td><textarea name="dsFiscalizacaoProjeto" null="false" cols="80" rows="5"><?php echo !empty($this->infoProjeto[0]->dsFiscalizacaoProjeto) ? $this->infoProjeto[0]->dsFiscalizacaoProjeto : ''; ?></textarea></td>
             </tr>
             <tr>
@@ -137,7 +137,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
 </div>
 
 <div id="rodapeConteudo" ><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />
 
@@ -431,7 +431,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
         if(mensagem== undefined){
             mensagem = '';
         }
-        /* VALIDAÇÃO DO CNPJCPF */
+        /* VALIDA&ccedil;&atilde;O DO CNPJCPF */
         $(form).find('[cnpjcpf=true]').each(function(){
             var este = this;
             var marcado = 'cpf';//buscarRadioMarcado(este);
@@ -444,7 +444,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
                 mensagem += '<br />Preencha o CNPJ.';
             }
         });
-        /* VALIDAÇÃO DA DATA */
+        /* VALIDA&ccedil;&atilde;O DA DATA */
         $(form).find('[data=true]').each(function(){
             var iddata = this;
             var estadata =   $(this).val().slice(6,10)+''+$(this).val().slice(3,5)+''+$(this).val().slice(0,2);
@@ -458,7 +458,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
                     }
                 }
             }
-            /* VALIDAÇÃO DA MAIOR QUE */
+            /* VALIDA&ccedil;&atilde;O DA MAIOR QUE */
             if($(this).attr('maiorque')!=undefined){
                 var maiorid     =   '#'+$(this).attr('maiorque');
                 if($(maiorid).val() != ''){
@@ -469,7 +469,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
                     }
                 }
             }
-            /* VALIDAÇÃO DT RESPOSTA MAIOR QUE DATA FIM */
+            /* VALIDA&ccedil;&atilde;O DT RESPOSTA MAIOR QUE DATA FIM */
             if($(this).attr('maiorquedtinicio')!=undefined && $(this).val() != ""){
                 //maiorquedtinicio="dtInicio" menorquedtfim="dtFim"
                 var idDtIncio  =   '#'+$(this).attr('maiorquedtinicio');
@@ -522,7 +522,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
             //            return false;
         });
 
-        /* VALIDAÇÃO DE NULL */
+        /* VALIDA&ccedil;&atilde;O DE NULL */
         $(form).find('[null=false]').each(function(){
             if($(this).attr('type')=='radio'){
                 var validaRadio = true;

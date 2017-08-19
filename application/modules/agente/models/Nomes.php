@@ -131,7 +131,7 @@ class Agente_Model_Nomes extends MinC_Db_Model
     {
         return array(
             'idnome' => self::getIdnome(),
-            'idagente' => self::getIdagente(),
+            'idAgente' => self::getIdagente(),
             'tiponome' => self::getTiponome(),
             'descricao' => self::getDescricao(),
             'status' => self::getStatus(),

@@ -17,7 +17,7 @@
         <!-- End Piwik Code -->
     <?php } ?>
     <?php
-    /* Parsear os arquivos de configuração */
+    /* Parsear os arquivos de configura&ccedil;&atilde;o */
 //    $applicationConf = Zend_Registry::get('config')->application->{APPLICATION_ENV};
     $config = Zend_Registry::get('config');
     $configLayout = $config->layout->{$this->layout()->name};
@@ -66,7 +66,7 @@
     $this->doctype($config->layout->doctype);
     $this->headMeta()->setHttpEquiv('Content-Type', 'text/html; charset=' . $config->resources->db->params->charset);
     $this->headMeta()->appendName('name', 'Sistema Salic');
-    $this->headMeta()->appendName('description', 'Sistema de Apoio às Leis de Incentivo à Cultura');
+    $this->headMeta()->appendName('description', 'Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura');
     $this->headMeta()->appendName('viewport', 'width=device-width, user-scalable=no');
 
 //    if ($config->layout->meta->layoutName == true)

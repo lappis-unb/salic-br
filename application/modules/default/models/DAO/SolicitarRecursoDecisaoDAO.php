@@ -32,8 +32,8 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
                            THEN 'Projeto Aprovado'
                            ELSE 'Projeto Indeferido'
                       END AS StatusProjeto
-             FROM SAC.dbo.Projetos Pr
-             INNER JOIN SAC.dbo.Situacao St ON (St.Codigo = Pr.Situacao)
+             FROM sac.dbo.Projetos Pr
+             INNER JOIN sac.dbo.Situacao St ON (St.Codigo = Pr.Situacao)
              WHERE pr.Situacao in ('A14','A16','A17','A20','A23','A24','A41','D02','D03','D14','B02')";
 
         // caso o id do pronac seja informado
@@ -78,15 +78,15 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
                     ,(PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) AS VlSugeridoConselheiro
                     ,PAP.dsJustificativa dsJustificativaConselheiro
 
-                FROM SAC.dbo.Projetos PRO
-                    ,SAC.dbo.tbPlanilhaProjeto PPJ
-                     INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-                     INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-                     INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-                     INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-                     left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
-                     LEFT JOIN SAC.dbo.tbRecursoXPlanilhaAprovacao RPA on RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
-                     RIGHT JOIN SAC.dbo.tbRecurso Rec on Rec.idRecurso = RPA.idRecurso
+                FROM sac.dbo.Projetos PRO
+                    ,sac.dbo.tbPlanilhaProjeto PPJ
+                     INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+                     INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+                     INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+                     INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+                     left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+                     LEFT JOIN sac.dbo.tbRecursoXPlanilhaAprovacao RPA on RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
+                     RIGHT JOIN sac.dbo.tbRecurso Rec on Rec.idRecurso = RPA.idRecurso
 
                 WHERE PAP.IdPRONAC = PRO.IdPRONAC
                     AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -159,10 +159,10 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 			THEN I.Nome
 			ELSE N.Descricao
 			END AS nmProponente
-			FROM SAC.dbo.Projetos Pr
+			FROM sac.dbo.Projetos Pr
 			INNER JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
 			INNER JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
-			INNER JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
+			INNER JOIN sac.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 			where A.CNPJCPF = " . $cpf . "";
 
 		$db = Zend_Db_Table::getDefaultAdapter();
@@ -183,14 +183,14 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 				THEN I.Nome
 				ELSE N.Descricao
 				END AS nmproponente
-				FROM SAC.dbo.Projetos Pr
-				INNER JOIN SAC.dbo.Situacao St ON (St.Codigo = Pr.Situacao) and (St.Codigo = 'E10' or St.Codigo = 'D09' or St.Codigo = 'D38' or St.Codigo = 'D11' or St.Codigo = 'D25' or St.Codigo = 'D36')
+				FROM sac.dbo.Projetos Pr
+				INNER JOIN sac.dbo.Situacao St ON (St.Codigo = Pr.Situacao) and (St.Codigo = 'E10' or St.Codigo = 'D09' or St.Codigo = 'D38' or St.Codigo = 'D11' or St.Codigo = 'D25' or St.Codigo = 'D36')
 				INNER JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
 				INNER JOIN agentes.dbo.Visao Vi ON Vi.idAgente = A.idAgente
 				INNER JOIN agentes.dbo.Verificacao as ver on ver.idVerificacao = '144'
-				INNER JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
+				INNER JOIN sac.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
 				INNER JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
-				INNER JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf		";
+				INNER JOIN sac.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf		";
 
 		if (!empty($idpronac))
 		{
@@ -219,14 +219,14 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 				THEN I.Nome
 				ELSE N.Descricao
 				END AS nmproponente
-				FROM SAC.dbo.Projetos Pr
-				INNER JOIN SAC.dbo.Situacao St ON (St.Codigo = Pr.Situacao) and (St.Codigo = 'A14' or St.Codigo = 'A16' or St.Codigo = 'A17' or St.Codigo = 'A41' or St.Codigo = 'D14')
+				FROM sac.dbo.Projetos Pr
+				INNER JOIN sac.dbo.Situacao St ON (St.Codigo = Pr.Situacao) and (St.Codigo = 'A14' or St.Codigo = 'A16' or St.Codigo = 'A17' or St.Codigo = 'A41' or St.Codigo = 'D14')
 				INNER JOIN agentes.dbo.Agentes A ON A.CNPJCPF = Pr.CgcCpf
 				INNER JOIN agentes.dbo.Visao Vi ON Vi.idAgente = A.idAgente
 				INNER JOIN agentes.dbo.Verificacao as ver on ver.idVerificacao = '144'
-				INNER JOIN SAC.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
+				INNER JOIN sac.dbo.PreProjeto PP ON PP.idPreProjeto = Pr.idProjeto
 				INNER JOIN agentes.dbo.Nomes N ON N.idAgente = A.idAgente
-				INNER JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf ";
+				INNER JOIN sac.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf ";
 
 		if (!empty($idpronac))
 		{
@@ -250,7 +250,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
        	$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-	 	$sql = "INSERT INTO SAC.dbo.tbRecursoXPlanilhaAprovacao (idRecurso, idPlanilhaAprovacao, stRecursoAprovacao, dsJustificativa)
+	 	$sql = "INSERT INTO sac.dbo.tbRecursoXPlanilhaAprovacao (idRecurso, idPlanilhaAprovacao, stRecursoAprovacao, dsJustificativa)
      VALUES ('$idrecurso', '$idplanilhaaprovacao', 'N', '$justificativa')";
 
 		$resultado = $db->query($sql);
@@ -267,7 +267,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $objAcesso= new Acesso();
-      	$sql = "INSERT INTO SAC.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
+      	$sql = "INSERT INTO sac.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
 				VALUES ('$idpronac', {$objAcesso->getDate()}, '$recurso', '$idagente', 'E', 'NA')";
 
 		$resultado = $db->query($sql);
@@ -283,7 +283,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $objAcesso= new Acesso();
-      	$sql = "INSERT INTO SAC.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
+      	$sql = "INSERT INTO sac.dbo.tbRecurso (IdPRONAC, dtSolicitacaoRecurso, dsSolicitacaoRecurso, idAgenteSolicitante, stAtendimento, tpSolicitacao)
 				VALUES ('$idpronac', {$objAcesso->getDate()}, '$recurso', '$idagente', 'E', 'AE')";
 
 		$resultado = $db->query($sql);
@@ -385,15 +385,15 @@ FROM         tbPlanilhaProposta INNER JOIN
 					,(PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) AS VlSugeridoConselheiro
 					,PAP.dsJustificativa dsJustificativaConselheiro
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
-					 LEFT JOIN SAC.dbo.tbRecursoXPlanilhaAprovacao RPA on RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
-					 LEFT JOIN SAC.dbo.tbRecurso Rec on Rec.idRecurso = RPA.idRecurso
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+					 LEFT JOIN sac.dbo.tbRecursoXPlanilhaAprovacao RPA on RPA.idPlanilhaAprovacao = PAP.idPlanilhaAprovacao
+					 LEFT JOIN sac.dbo.tbRecurso Rec on Rec.idRecurso = RPA.idRecurso
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -454,13 +454,13 @@ FROM         tbPlanilhaProposta INNER JOIN
 					,PAP.IdPRONAC
 					,PAP.idProduto
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)
@@ -497,13 +497,13 @@ FROM         tbPlanilhaProposta INNER JOIN
 					,PAP.IdPRONAC
 					,PAP.idProduto
 
-				FROM SAC.dbo.Projetos PRO
-					,SAC.dbo.tbPlanilhaProjeto PPJ
-					 INNER JOIN SAC.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
-					 INNER JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
-					 INNER JOIN SAC.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
-					 left join SAC.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
+				FROM sac.dbo.Projetos PRO
+					,sac.dbo.tbPlanilhaProjeto PPJ
+					 INNER JOIN sac.dbo.tbPlanilhaProposta PP on (PPJ.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens I on (PPJ.idPlanilhaItem = I.idPlanilhaItens)
+					 INNER JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = PP.idPlanilhaProposta)
+					 INNER JOIN sac.dbo.tbPlanilhaItens PIT on (PAP.idPlanilhaItem = PIT.idPlanilhaItens)
+					 left join sac.dbo.Produto PD on (PAP.idProduto = PD.Codigo)
 
 				WHERE PAP.IdPRONAC = PRO.IdPRONAC
 					AND (PPJ.Quantidade * PPJ.Ocorrencia * PPJ.ValorUnitario) <> (PP.Quantidade * PP.Ocorrencia * PP.ValorUnitario)

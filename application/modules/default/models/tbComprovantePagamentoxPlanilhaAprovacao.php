@@ -12,7 +12,7 @@
 class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "BDCORPORATIVO";
+	protected $_banco   = "bdcorporativo";
 	protected $_schema  = "bdcorporativo.scsac";
 	protected $_name    = "tbComprovantePagamentoxPlanilhaAprovacao";
 
@@ -34,37 +34,37 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 		$select->from(
 			array("a" => $this->_name)
 			,array('vlComprovado as vlComprovacao')
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinInner(
 			array("b" => "tbComprovantePagamento")
 			,"a.idComprovantePagamento = b.idComprovantePagamento"
 			,array('DtPagamento','tpDocumento','nrComprovante','dtEmissao','idArquivo','tpFormaDePagamento')
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinLeft(
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array('Descricao as Item')
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("e" => "Nomes")
 			,"b.idFornecedor = e.idAgente"
 			,array('Descricao as Fornecedor')
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 		$select->joinLeft(
 			array("f" => "tbArquivo")
 			,"b.idArquivo = f.idArquivo"
 			,array('nmArquivo')
-            ,"BDCORPORATIVO.scCorp"
+            ,"bdcorporativo.scCorp"
 		);
         
         $select->where("c.stAtivo = ?", 'S');
@@ -118,44 +118,44 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                             f.nmArquivo"
                         )
                     )
-                ,"BDCORPORATIVO.scSAC"
+                ,"bdcorporativo.scSAC"
             );
             
             $select->joinInner(
                 array("b" => "tbComprovantePagamento")
                 ,"a.idComprovantePagamento = b.idComprovantePagamento"
                 ,array()
-                ,"BDCORPORATIVO.scSAC"
+                ,"bdcorporativo.scSAC"
             );
             $select->joinLeft(
                 array("c" => "tbPlanilhaAprovacao")
                 ,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
                 ,array()
-                ,"SAC.dbo"
+                ,"SAC"
             );
             $select->joinLeft(
                 array("d" => "tbPlanilhaItens")
                 ,"c.idPlanilhaItem = d.idPlanilhaItens"
                 ,array()
-                ,"SAC.dbo"
+                ,"SAC"
             );
             $select->joinLeft(
                 array("e" => "Nomes")
                 ,"b.idFornecedor = e.idAgente"
                 ,array()
-                ,"agentes.dbo"
+                ,"agentes"
             );
             $select->joinLeft(
                 array("f" => "tbArquivo")
                 ,"b.idArquivo = f.idArquivo"
                 ,array('nmArquivo')
-                ,"BDCORPORATIVO.scCorp"
+                ,"bdcorporativo.scCorp"
             );
             $select->joinLeft(
                 array("g" => "Agentes")
                 ,"b.idFornecedor = g.idAgente"
                 ,array()
-                ,"agentes.dbo"
+                ,"agentes"
             );
 
             $select->where("c.idPronac = ?", $idPronac);
@@ -190,43 +190,43 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                     f.nmArquivo
                 ")
             )
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinInner(
 			array("b" => "tbComprovantePagamento")
 			,"a.idComprovantePagamento = b.idComprovantePagamento"
 			,array()
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinLeft(
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("e" => "Nomes")
 			,"b.idFornecedor = e.idAgente"
 			,array()
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 		$select->joinLeft(
 			array("f" => "tbArquivo")
 			,"b.idArquivo = f.idArquivo"
 			,array()
-            ,"BDCORPORATIVO.scCorp"
+            ,"bdcorporativo.scCorp"
 		);
 		$select->joinLeft(
 			array("g" => "Agentes")
 			,"b.idFornecedor = g.idAgente"
 			,array()
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 
         //Altera��o realizada no dia 25/02/2016 a pedido da area demandante.
@@ -255,31 +255,31 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                     SUM(b.vlComprovacao) as vlPagamento
                 ")
             )
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinInner(
 			array("b" => "tbComprovantePagamento")
 			,"a.idComprovantePagamento = b.idComprovantePagamento"
 			,array()
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinLeft(
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinLeft(
 			array("g" => "Agentes")
 			,"b.idFornecedor = g.idAgente"
 			,array()
-            ,"agentes.dbo"
+            ,"agentes"
 		);
 
         $select->where("c.idPronac = ?", $idPronac);
@@ -318,31 +318,31 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                     (c.qtItem*nrOcorrencia*c.vlUnitario) as vlTotal
                 ")
             )
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinInner(
 			array("b" => "tbComprovantePagamento")
 			,"a.idComprovantePagamento = b.idComprovantePagamento"
 			,array()
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinInner(
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("e" => "tbItemCusto")
 			,"e.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 
         //Linha retirada para corrigir problema na Visualiza��o dos Projetos (24/02/2016)
@@ -374,37 +374,37 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
                     (100 - (sum(b.vlComprovacao) / (c.qtItem*nrOcorrencia*c.vlUnitario)) * 100) AS PercAExecutar
                 ")
             )
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinInner(
 			array("b" => "tbComprovantePagamento")
 			,"a.idComprovantePagamento = b.idComprovantePagamento"
 			,array()
-            ,"BDCORPORATIVO.scSAC"
+            ,"bdcorporativo.scSAC"
 		);
 		$select->joinInner(
 			array("c" => "tbPlanilhaAprovacao")
 			,"a.idPlanilhaAprovacao = c.idPlanilhaAprovacao"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("d" => "tbPlanilhaItens")
 			,"c.idPlanilhaItem = d.idPlanilhaItens"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("f" => "tbPlanilhaEtapa")
 			,"c.idEtapa = f.idPlanilhaEtapa"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 		$select->joinInner(
 			array("g" => "tbPlanilhaUnidade")
 			,"c.idUnidade= g.idUnidade"
 			,array()
-            ,"SAC.dbo"
+            ,"SAC"
 		);
 
         //Linha retirada para corrigir problema na Visualiza��o dos Projetos (24/02/2016)
@@ -424,17 +424,17 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $a->setIntegrityCheck(false);
         $a->from(
                 array('a' => 'Captacao'),
-                array( new Zend_Db_Expr("'RECEITA' AS tipo, a.CgcCpfMecena, c.Descricao AS Nome, sum(CaptacaoReal) AS vlIncentivado") ) , 'SAC.dbo'
+                array( new Zend_Db_Expr("'RECEITA' AS tipo, a.CgcCpfMecena, c.Descricao AS Nome, sum(CaptacaoReal) AS vlIncentivado") ) , 'SAC'
         );
         $a->joinInner(
                 array('b' => 'Agentes'), "a.CgcCpfMecena = b.CNPJCpf",
-                array(), 'agentes.dbo'
+                array(), 'agentes'
         );
         $a->joinInner(
                 array('c' => 'Nomes'), "b.idAgente = c.idAgente",
-                array(), 'agentes.dbo'
+                array(), 'agentes'
         );
-        $a->where('a.AnoProjeto+a.Sequencial = (SELECT x.Anoprojeto+x.Sequencial FROM SAC.dbo.Projetos x WHERE x.idPronac = ? )', $idPronac);
+        $a->where('a.AnoProjeto+a.Sequencial = (SELECT x.Anoprojeto+x.Sequencial FROM sac.dbo.Projetos x WHERE x.idPronac = ? )', $idPronac);
         $a->group(array('a.CgcCpfMecena','c.Descricao'));
         $a->order(array('2','3'));
 
@@ -449,23 +449,23 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $b->setIntegrityCheck(false);
         $b->from(
                 array('a' => $this->_name),
-                array( new Zend_Db_Expr("'DESPESA' AS tipo, f.Descricao as Etapa, d.Descricao AS Item, sum(b.vlComprovacao) AS vlPagamento") ), 'BDCORPORATIVO.scSAC'
+                array( new Zend_Db_Expr("'DESPESA' AS tipo, f.Descricao as Etapa, d.Descricao AS Item, sum(b.vlComprovacao) AS vlPagamento") ), 'bdcorporativo.scSAC'
         );
         $b->joinInner(
                 array('b' => 'tbComprovantePagamento'), "a.idComprovantePagamento = b.idComprovantePagamento",
-                array(), 'BDCORPORATIVO.scSAC'
+                array(), 'bdcorporativo.scSAC'
         );
         $b->joinInner(
                 array('c' => 'tbPlanilhaAprovacao'), "a.idPlanilhaAprovacao = c.idPlanilhaAprovacao",
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         $b->joinInner(
                 array('d' => 'tbPlanilhaItens'), "c.idPlanilhaItem = d.idPlanilhaItens",
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         $b->joinInner(
                 array('f' => 'tbPlanilhaEtapa'), "c.idEtapa = f.idPlanilhaEtapa",
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         //Linha retirada para corrigir problema na Visualiza��o dos Projetos (24/02/2016)
         #$b->where('c.stAtivo = ?', 'S');
@@ -527,13 +527,13 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
             array(
                 "a.nrAnoProjeto",
                 "a.nrSequencial",
-                new Zend_Db_Expr("(SELECT SUBSTRING(dsInformacao,2,4) FROM SAC.dbo.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') as NumeroRecibo"),
+                new Zend_Db_Expr("(SELECT SUBSTRING(dsInformacao,2,4) FROM sac.dbo.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') as NumeroRecibo"),
                 "a.nrCpfCnpjIncentivador",
                 new Zend_Db_Expr("(SELECT b.Enquadramento FROM sac.dbo.enquadramento AS b WHERE b.AnoProjeto+b.Sequencial =  a.nrAnoProjeto+a.nrSequencial) AS MedidaProvisoria"),
                 "a.dtChegadaRecibo",
                 "a.dtCredito",
                 new Zend_Db_Expr("0 AS CaptacaoUfir"),
-                new Zend_Db_Expr("(SELECT idUsuario FROM SAC.DBO.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') AS Logon"),
+                new Zend_Db_Expr("(SELECT idUsuario FROM sac.DBO.tbDepositoIdentificadoCaptacao WHERE SUBSTRING(dsInformacao,1,1)='1') AS Logon"),
                 new Zend_Db_Expr("(SELECT idPronac FROM sac.dbo.Projetos AS p WHERE p.AnoProjeto+p.Sequencial = a.nrAnoProjeto + a.nrSequencial) AS idProjeto")
             )
         );
@@ -550,11 +550,11 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
                 array('a' => $this->_name),
-                array( new Zend_Db_Expr("SUM(b.vlComprovacao) AS vlComprovado") ), 'BDCORPORATIVO.scSAC'
+                array( new Zend_Db_Expr("SUM(b.vlComprovacao) AS vlComprovado") ), 'bdcorporativo.scSAC'
         );
         $select->joinInner(
                 array('b' => 'tbComprovantePagamento'), "a.idComprovantePagamento = b.idComprovantePagamento",
-                array(), 'BDCORPORATIVO.scSAC'
+                array(), 'bdcorporativo.scSAC'
         );
         $select->where('a.idPlanilhaAprovacao = ?', $idPlanilhaAprovacao);
         return $this->fetchRow($select);

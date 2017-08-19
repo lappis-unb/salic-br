@@ -71,7 +71,7 @@
                 $dadosWhere["t.stEstado = ?"]                   = 0;
                 $dadosWhere["t.FecharAnalise = ?"]              = 0;
                 $dadosWhere["t.TipoAnalise = ?"]                = 3;
-                $dadosWhere["p.Situacao IN ('B11', 'B14')"]     = '';
+                $dadosWhere["p.Situacao in ('B11', 'B14')"]     = '';
                 $dadosWhere["p.IdPRONAC = ?"]                   = $d->IdPRONAC;
                 $dadosWhere["t.stPrincipal = ?"]                = 0;
                 $dadosWhere["t.DtDevolucao is null"]       		= '';

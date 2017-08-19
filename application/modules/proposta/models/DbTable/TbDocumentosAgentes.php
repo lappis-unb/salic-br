@@ -57,7 +57,7 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(
             array("b"=>"DocumentosExigidos"), "a.CodigoDocumento = b.Codigo",
-            array("Descricao"), "SAC.dbo"
+            array("Descricao"), "SAC"
         );
 
         //adiciona quantos filtros foram enviados
@@ -76,7 +76,6 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
         return $this->fetchAll($slct);
     }
 
@@ -139,7 +138,7 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
                 array('Descricao',new Zend_Db_Expr("'1' as AgenteDoc, '' as ProjetoDoc"))
         );
 
-        $slct1->where("d.idagente = ".$idAgente);
+        $slct1->where("d.idAgente = ".$idAgente);
 
 
         //seleciona todos os arquivos referente ao projeto -- Para arquivos anexados da forma antiga
@@ -216,20 +215,20 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
                 array('e2' => 'tbDocumento'),
                 'd.idDocumento = e2.idDocumento',
                 array(),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
         $slct4->joinInner(
                 array('a' => 'tbArquivo'),
                 'a.idArquivo = e2.idArquivo',
                 array('a.dtEnvio as Data', 'a.nmArquivo as NoArquivo', 'a.nrTamanho as TaArquivo', 'a.idArquivo  as idDocumentosAgentes'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct4->joinInner(
                 array('e3' => 'tbArquivoImagem'),
                 'a.idArquivo = e3.idArquivo',
                 array(''),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
 
@@ -239,21 +238,21 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
                 array('E' => 'tbTipoDocumento'),
                 'e2.idTipoDocumento = E.idTipoDocumento',
                 array('E.dsTipoDocumento as Descricao'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct4->joinLeft(
                 array('ArqAg' => 'tbDocumentoAgente'),
                 'ArqAg.idDocumento = e2.idDocumento',
                 array("ArqAg.idAgente as AgenteDoc"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct4->joinLeft(
                 array('ArqPr' => 'tbDocumentoProjeto'),
                 'ArqPr.idDocumento = e2.idDocumento',
                array("ArqPr.idPronac as ProjetoDoc"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct4->where("e1.idPronac = ".$idPronac);
@@ -269,7 +268,7 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
                     "d.idTipoDocumento AS CodigoDocumento"
                     //"'Anexados no Manunten�?o'",
                     ),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
 
@@ -282,20 +281,20 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
                 array('e2' => 'tbDocumento'),
                 'd.idDocumento = e2.idDocumento',
                 array(),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
         $slct5->joinInner(
                 array('a' => 'tbArquivo'),
                 'a.idArquivo = e2.idArquivo',
                 array('a.dtEnvio as Data', 'a.nmArquivo as NoArquivo', 'a.nrTamanho as TaArquivo', 'a.idArquivo  as idDocumentosAgentes'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct5->joinInner(
                 array('e3' => 'tbArquivoImagem'),
                 'a.idArquivo = e3.idArquivo',
                 array(''),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
 
@@ -303,21 +302,21 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
                 array('E' => 'tbTipoDocumento'),
                 'e2.idTipoDocumento = E.idTipoDocumento',
                 array('E.dsTipoDocumento as Descricao'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct5->joinLeft(
                 array('ArqAg' => 'tbDocumentoAgente'),
                 'ArqAg.idDocumento = e2.idDocumento',
                 array("ArqAg.idAgente as AgenteDoc"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct5->joinLeft(
                 array('ArqPr' => 'tbDocumentoProjeto'),
                 'ArqPr.idDocumento = e2.idDocumento',
                array("ArqPr.idPronac as ProjetoDoc"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct5->where("d.idPronac = ".$idPronac);
@@ -356,13 +355,7 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
             $slctMaster->limit($tamanho, $tmpInicio);
         }
 
-        //echo ($slctMaster);die;
-        //xd(str_replace('"',"",$slct->assemble()));
-        //xd($slctMaster->assemble());
         return $db->fetchAll($slctMaster);
-
-
-
     }
 
     public function abrir($id) {
@@ -378,7 +371,6 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
         $slct->where("iddocumentosagentes = ?", $id);
 
 
-        //xd($slct->__toString());
         //$this->fetchAll("SET TEXTSIZE 10485760;");
         $db = $this->getDefaultAdapter();
         $db->fetchAll("SET TEXTSIZE 10485760;");

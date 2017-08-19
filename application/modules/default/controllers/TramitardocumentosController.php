@@ -190,7 +190,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
             }
 
             $objAcesso = new Acesso();
-            $dados = "Insert into SAC.dbo.tbDocumento
+            $dados = "Insert into sac.dbo.tbDocumento
                           (idPronac, stEstado, imDocumento, idTipoDocumento, idUsuario, dtDocumento, NoArquivo, TaArquivo, idUsuarioJuntada, dtJuntada, idUnidadeCadastro, CodigoCorreio, biDocumento)
                           values
                           (" . $idpronac . ", 0, null, " . $tipo_doc . ", " . $idusuario . ", {$objAcesso->getExpressionDate()}, '" . $arquivoNome . "', " . $arquivoTamanho . ", null, null, " . $this->codOrgao . ", '" . $cod_ect . "', " . $arquivoBinario . ")
@@ -228,7 +228,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                         'Acao' => 1,
                         'stEstado' => 1
                     );
-                    $resultado2 = TramitarDocumentosDAO::cadHistorico('SAC.dbo.tbHistoricoDocumento', $tbHistoricoDoc);
+                    $resultado2 = TramitarDocumentosDAO::cadHistorico('sac.dbo.tbHistoricoDocumento', $tbHistoricoDoc);
                 }
                 //$db->commit();
                 parent::message("Projeto enviado com Sucesso!", "tramitardocumentos/despachar", "CONFIRM");
@@ -1202,8 +1202,8 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         try {
             $db->beginTransaction();
 
-            $excluirH = TramitarDocumentosDAO::ExcluirDoc($idDoc, 'SAC.dbo.tbHistoricoDocumento');
-            $excluirD = TramitarDocumentosDAO::ExcluirDoc($idDoc, 'SAC.dbo.tbDocumento');
+            $excluirH = TramitarDocumentosDAO::ExcluirDoc($idDoc, 'sac.dbo.tbHistoricoDocumento');
+            $excluirD = TramitarDocumentosDAO::ExcluirDoc($idDoc, 'sac.dbo.tbDocumento');
 
             $db->commit();
             parent::message("Documento Excluido com sucesso!", "tramitardocumentos/" . $action, "CONFIRM");

@@ -16,7 +16,7 @@ function layout_fluido()
 	$("#rodape").css("width", fluidRodape);
 	$("#conteudo").css("min-height", $('#menuContexto').height()); // altura minima do conteudo
 	$("#rodapeConteudo").css("margin-left", "225px");
-} // fecha função layout_fluido()
+} // fecha fun&ccedil;&atilde;o layout_fluido()
 //-->
 </script>
 <!-- ========== FIM AJUSTE DO LAYOUT PARA ACOPLAR MENU LATERAL ========== -->
@@ -30,13 +30,13 @@ function layout_fluido()
     <ul>
         <li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Início">Início</a></li>
         <li class="last">Acompanhamento</li>
-        <li class="last">Verificar Readequação de Projeto</li>
+        <li class="last">Verificar Readequa&ccedil;&atilde;o de Projeto</li>
     </ul>
 </div>
 <div id="mostra"></div>
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>READEQUAÇÃO: NOME DO PROJETO
+    <div>READEQUA&ccedil;&atilde;O: NOME DO PROJETO
         <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span>
         <span style="vertical-align: middle;">
             <?php
@@ -46,10 +46,10 @@ function layout_fluido()
                 <select name="status" disabled="disabled" id="status" style="float: right; width: 12em" class="select_simples" onchange="stAnalise(<?php echo $this->stResult[0]->idAvaliacaoItemPedidoAlteracao; ?>,<?php echo $this->escape($this->idpedidoalteracao) ?>,this ,'solaltnomproj')" >
                 <?php
                 if ($this->dados->stAvaliacaoItemPedidoAlteracao == "AG") {
-                    echo "<option value='0' selected='selected'>Aguardando Análise</option>
-<option value='1'>Em Análise</option>";
+                    echo "<option value='0' selected='selected'>Aguardando An&aacute;lise</option>
+<option value='1'>Em An&aacute;lise</option>";
                 } else if ($this->dados->stAvaliacaoItemPedidoAlteracao == "EA") {
-                    echo "<option value='1' selected='selected'>Em Análise</option>
+                    echo "<option value='1' selected='selected'>Em An&aacute;lise</option>
 <option value='2'>Aprovado</option>
 <option value='3'>Indeferido</option>";
                 } else if ($this->dados->stAvaliacaoItemPedidoAlteracao == "AP") {
@@ -100,7 +100,7 @@ function layout_fluido()
 
             <table class="tabela">
                 <tr>
-                    <th colspan="2">Informações do Projeto</th>
+                    <th colspan="2">Informa&ccedil;&otilde;es do Projeto</th>
                 </tr>
                 <tr>
                     <td colspan="2">Resumo do Projeto:</td>
@@ -109,7 +109,7 @@ function layout_fluido()
                     <td align="center" colspan="2"><textarea class="textarea_simples" style="width: 98%" readonly="readonly" cols="" rows="5"><?php echo strip_tags($this->resultAlteracaoNomeProjeto['Objetivos']); ?></textarea></td>
                 </tr>
                 <tr>
-                    <th colspan="2">Solicitação de Alteração do Nome do Projeto</th>
+                    <th colspan="2">Solicita&ccedil;&atilde;o de Altera&ccedil;&atilde;o do Nome do Projeto</th>
                 </tr>
                 <tr>
                     <td colspan="2">Novo Nome do Projeto: <?php echo $this->escape($this->resultAlteracaoNomeProjeto['nmProjeto']); ?></td>
@@ -130,14 +130,14 @@ function layout_fluido()
                     <tr>
                         <td style="width: 25%; padding-left: 5%; text-decoration: underline;" colspan="2"><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $arquivo->idArquivo; ?>"><?php echo $arquivo->nmarquivo ?></a></td>
                     </tr>
-                    <?php } } else { echo '<tr><td><span style="color: red;">Não há arquivos anexados!</span></td></tr>'; } ?>
+                    <?php } } else { echo '<tr><td><span style="color: red;">N&atilde;o h&aacute; arquivos anexados!</span></td></tr>'; } ?>
 
                 <?php if ($this->resultParecerTecnico) { ?>
                 <tr>
-                    <th colspan="2">Parecer do Técnico</th>
+                    <th colspan="2">Parecer do T&eacute;cnico</th>
                 </tr>
                 <tr>
-                    <td colspan="2">Comentários:</td>
+                    <td colspan="2">Coment&aacute;rios:</td>
                 </tr>
                     <?php
                     $justificativa = "";
@@ -173,7 +173,7 @@ function layout_fluido()
                 <td><?php echo $this->resultConsulta['NomeProjeto']; ?></td>
             </tr>
         </table>
-        <br /><label for="solicitacao">Solicitação:</label><br />
+        <br /><label for="solicitacao">Solicita&ccedil;&atilde;o:</label><br />
         <textarea name="solicitacao" id="solicitacao" rows="6" cols="50" style="width:100%;"></textarea>
         <input type="hidden" name="IdPronac" value="<?php echo $this->dados->IdPRONAC; ?>" />
         <p align="left" style="margin-top:1%;">
@@ -184,8 +184,8 @@ function layout_fluido()
 <!-- FIM DO MODAL DILIGENCIAR -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

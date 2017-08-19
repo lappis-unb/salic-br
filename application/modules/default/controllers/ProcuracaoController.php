@@ -115,7 +115,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 
     	foreach($listaProjetos as $pj)
     	{
-    		$where['p.siProcuracao IN (0,1)'] 	= '';
+    		$where['p.siProcuracao in (0,1)'] 	= '';
     		$where['vprp.idPreProjeto = ?'] 	= $pj->idPreProjeto ;
     		$buscaProcuracao = $procuracaoDAO->buscarProcuracaoAceita($where);
 

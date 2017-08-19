@@ -31,7 +31,7 @@
         // id dos campos que utilizarï¿½o o calendï¿½rio
         $(".btn_calendario").datepicker($.datepicker.regional['pt-BR']);
 
-        // máscaras dos campos
+        // m&aacute;scaras dos campos
 	$(".calendario").keyup(function(){
             mascara(this, format_data); // data
 	});
@@ -50,7 +50,7 @@
                 }
             });
 
-	    // verifica se uma data é menor que a outra
+	    // verifica se uma data &eacute; menor que a outra
 	    var erroData = false;
 	    $('.dtRealizacao').each(function(){
 		var currentType = $(this).attr('id').split('Realizacao')[0],
@@ -80,7 +80,7 @@
 
 	    if (erroData) {
 		$("#camposObrigatorios").dialog("destroy");
-		$("#camposObrigatorios").html("Data fim não pode ser menor que data início");
+		$("#camposObrigatorios").html("Data fim n&atilde;o pode ser menor que data início");
 		$("#camposObrigatorios").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -198,7 +198,7 @@
             var btn = $(this),
                 abrg = btn.attr('abrg');
             $("#modalPerguntas").dialog("destroy");
-            $("#modalPerguntas").html("Deseja realmente excluir o Local de Realização?");
+            $("#modalPerguntas").html("Deseja realmente excluir o Local de Realiza&ccedil;&atilde;o?");
             $("#modalPerguntas").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -206,7 +206,7 @@
                 height:160,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -231,7 +231,7 @@
                                     $('.ui-dialog-titlebar-close').remove();
                                     window.setTimeout('location.reload()', 1000);
                                 } else {
-                                    alertaModal("Não foi possível excluir o Local de Realização.");
+                                    alertaModal("N&atilde;o foi possível excluir o Local de Realiza&ccedil;&atilde;o.");
                                 }
                             },
                             dataType : 'json'
@@ -359,13 +359,13 @@
         <li class="first"><a href="#" title="In&iacute;cio">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar dados do Projeto">Consultar dados do Projeto</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/relatoriotrimestral/idpronac/<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Relat&oacute;rio Trimestral">Relat&oacute;rio Trimestral</a></li>
-        <li class="last">Local de Realização</li>
+        <li class="last">Local de Realiza&ccedil;&atilde;o</li>
     </ul>
 </div>
 
 
 <div id="titulo">
-    <div>Local de Realização <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/relatoriotrimestral/idpronac/<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Voltar">Voltar</a></span></div>
+    <div>Local de Realiza&ccedil;&atilde;o <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/relatoriotrimestral/idpronac/<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Voltar">Voltar</a></span></div>
 </div>
 
 <div id="conteudo">
@@ -393,7 +393,7 @@
     <form id="formCadastro" action="<?php echo $this->url(array('controller' => 'comprovarexecucaofisica', 'action' => 'cadastrar-local-realizacao'), '', true); ?>?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" method="post">
         <table class="tabela">
             <tr align="center">
-                <th colspan="8">Local de Realização</th>
+                <th colspan="8">Local de Realiza&ccedil;&atilde;o</th>
             </tr>
             <tr align="center">
                 <td class="destacar bold">Editar</td>
@@ -401,8 +401,8 @@
                 <td class="destacar bold">UF</td>
                 <td class="destacar bold">Município</td>
                 <td class="destacar bold" width="10%">Status</td>
-                <td class="destacar bold" width="1">Dt. In&iacute;cio Realização</td>
-                <td class="destacar bold" width="1">Dt. Fim Realização</td>
+                <td class="destacar bold" width="1">Dt. In&iacute;cio Realiza&ccedil;&atilde;o</td>
+                <td class="destacar bold" width="1">Dt. Fim Realiza&ccedil;&atilde;o</td>
                 <td class="destacar bold" width="1">Justificativa</td>
             </tr>
             <?php foreach ($this->LocaisDeRealizacao as $LocaisDeRealizacao) { ?>
@@ -415,10 +415,10 @@
                         <td>
                             <?php switch($LocaisDeRealizacao->siAbrangencia){
                                 case 0:
-                                    echo 'Sem Informação';
+                                    echo 'Sem Informa&ccedil;&atilde;o';
                                     break;
                                 case 1:
-                                    echo 'Não Realizado';
+                                    echo 'N&atilde;o Realizado';
                                     break;
                                 case 2:
                                     echo 'Realizado';
@@ -453,15 +453,15 @@
         </br>
         <table class="tabela">
             <tr align="center">
-                <th colspan="8">Local de Realização (Outras fontes)</th>
+                <th colspan="8">Local de Realiza&ccedil;&atilde;o (Outras fontes)</th>
             </tr>
             <tr align="center">
                 <td class="destacar bold">País</td>
                 <td class="destacar bold">UF</td>
                 <td class="destacar bold">Município</td>
                 <td class="destacar bold" width="1">Status</td>
-                <td class="destacar bold" width="1">Dt. In&iacute;cio Realização</td>
-                <td class="destacar bold" width="1">Dt. Fim Realização</td>
+                <td class="destacar bold" width="1">Dt. In&iacute;cio Realiza&ccedil;&atilde;o</td>
+                <td class="destacar bold" width="1">Dt. Fim Realiza&ccedil;&atilde;o</td>
                 <td class="destacar bold" width="1">Justificativa</td>
                 <td class="destacar bold" width="1">Excluir</td>
             </tr>
@@ -536,7 +536,7 @@
         <tr>
             <td>
                 <textarea name="campoModal" id="campoModal" class="textarea_simples" rows="6" cols="" style="width: 98%;"></textarea>
-                <br clear="all" /><span style="color: red; font-size: 11px;">Limite máximo de 500 caracteres</span>
+                <br clear="all" /><span style="color: red; font-size: 11px;">Limite m&aacute;ximo de 500 caracteres</span>
             </td>
         </tr>
     </table>
@@ -544,7 +544,7 @@
 <!-- FIM MODAL DE CADASTRO DA JUSTIFICATIVA ### -->
 
 
-<!-- MODAL DE VISUALIZAÇÃO DA JUSTIFICATIVA ### -->
+<!-- MODAL DE VISUALIZA&ccedil;&atilde;O DA JUSTIFICATIVA ### -->
 <div id="justificativaModalVisualizar" class="sumir">
     <table width="100%" class="table">
         <tr>
@@ -552,7 +552,7 @@
         </tr>
     </table>
 </div>
-<!-- FIM MODAL DE VISUALIZAÇÃO DA JUSTIFICATIVA ### -->
+<!-- FIM MODAL DE VISUALIZA&ccedil;&atilde;O DA JUSTIFICATIVA ### -->
 
 
 <!-- inï¿½cio: detalhe final da div conteudo #rodapeConteudo -->

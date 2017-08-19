@@ -245,7 +245,7 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
         $tbContaBloqueada = new tbContaBloqueada();
         $arrBusca = array();
         $arrBusca['cb.stEstado = ?'] = 1; //registro ativo
-        $arrBusca['cb.tpIdentificacaoConta in (select TOP 1 max(tpIdentificacaoConta) from SAC..tbcontabloqueada where IdPRONAC = pr.IdPRONAC and stestado=1)'] = "(?)"; //pega apenas um registro por pronac
+        $arrBusca['cb.tpIdentificacaoConta in (select TOP 1 max(tpIdentificacaoConta) from sac..tbcontabloqueada where IdPRONAC = pr.IdPRONAC and stestado=1)'] = "(?)"; //pega apenas um registro por pronac
         $arrBusca['cb.tpAcao = ?']   = 1; //bloqueio sistemico
         $rsBloqueioSistemico = $tbContaBloqueada->buscarContasDesbloqueioSistemico($arrBusca);
         
@@ -358,7 +358,7 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
         //BUSCA AS CONTAS QUE PODEM SER DESBLOQUEADAS
         $arrBusca = array();
         $arrBusca['a.stEstado = ?'] = 1; //registro ativo
-        $arrBusca['a.tpIdentificacaoConta in (select TOP 1 max(tpIdentificacaoConta) from SAC..tbcontabloqueada where IdPRONAC = b.IdPRONAC and stestado=1)'] = "(?)"; //pega apenas um registro por pronac
+        $arrBusca['a.tpIdentificacaoConta in (select TOP 1 max(tpIdentificacaoConta) from sac..tbcontabloqueada where IdPRONAC = b.IdPRONAC and stestado=1)'] = "(?)"; //pega apenas um registro por pronac
         $arrBusca['a.tpAcao = ?']   = 1; //bloqueio sistemico
         $rsContasDesbloqueioSistemico = $tbContaBloqueada->queryContasDesbloqueioSistemico($arrBusca);
         
@@ -369,9 +369,9 @@ class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
         
         //BUSCA AS CONTAS QUE NAO PODEM SER DESBLOQUEADAS
         $arrBusca = array();
-        if(count($arrIdsContasDesbloqueio)>0){$arrBusca['cb.idContaBloqueada NOT IN (?)'] = $arrIdsContasDesbloqueio;} //id das contas que podem ser desbloqueadas
+        if(count($arrIdsContasDesbloqueio)>0){$arrBusca['cb.idContaBloqueada NOT in (?)'] = $arrIdsContasDesbloqueio;} //id das contas que podem ser desbloqueadas
         $arrBusca['cb.stEstado = ?']         = 1; //registro ativo
-        $arrBusca['cb.tpIdentificacaoConta in (select TOP 1 max(tpIdentificacaoConta) from SAC..tbcontabloqueada where IdPRONAC = pr.IdPRONAC and stestado=1)'] = "(?)"; //pega apenas um registro por pronac
+        $arrBusca['cb.tpIdentificacaoConta in (select TOP 1 max(tpIdentificacaoConta) from sac..tbcontabloqueada where IdPRONAC = pr.IdPRONAC and stestado=1)'] = "(?)"; //pega apenas um registro por pronac
         $arrBusca['cb.tpAcao = ?']           = 1; //bloqueio sistemico
         $rsContasBloqueadas = $tbContaBloqueada->buscarContasBloqueadas($arrBusca);
         $this->view->contasBloqueadas = $rsContasBloqueadas;

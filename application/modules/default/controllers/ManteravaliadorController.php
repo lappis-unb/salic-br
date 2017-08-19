@@ -3,32 +3,32 @@
 class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 
 	public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+        $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
+        $Usuario = new UsuarioDAO(); // objeto usu&aacute;rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
 
-        if ($auth->hasIdentity()) { // caso o usuário estja autenticado
-            // verifica as permissões
+        if ($auth->hasIdentity()) { // caso o usu&aacute;rio estja autenticado
+            // verifica as permiss&otilde;es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 114; //Coordenador de Editais
 
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo est&aacute; no array de permiss&otilde;es
+                parent::message("Você n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, org&atilde;os e grupos do usu&aacute;rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a vis&atilde;o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usu&aacute;rio para a vis&atilde;o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu&aacute;rio para a vis&atilde;o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu&aacute;rio para a vis&atilde;o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órg&atilde;o ativo do usu&aacute;rio para a vis&atilde;o
 
         } // fecha if
         else {
-            // caso o usuário não esteja autenticado
+            // caso o usu&aacute;rio n&atilde;o esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
 
@@ -37,14 +37,14 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 
     public function indexAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
         //$this->_redirect("tramitarprojetos/despacharprojetos");
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess&atilde;o
+        $codOrgao = $GrupoAtivo->codOrgao; //  Órg&atilde;o ativo na sess&atilde;o
         $this->view->codGrupo = $codGrupo;
 
         /*         * *************************************************************** */
@@ -53,13 +53,13 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
     public function cadastraravaliadorAction()
     {
     	/** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess&atilde;o
+        $codOrgao = $GrupoAtivo->codOrgao; //  Órg&atilde;o ativo na sess&atilde;o
 
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
@@ -77,12 +77,12 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
     {
 
     	/** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess&atilde;o
+        $codOrgao = $GrupoAtivo->codOrgao; //  Órg&atilde;o ativo na sess&atilde;o
 
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
@@ -125,7 +125,7 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 		       	$this->view->dadosEditalAvaliador = $idEdital;
         	}
         	else{
-        		parent::message("CPF não cadastrado!", "/manteravaliador/cadastraravaliador", "ERROR");
+        		parent::message("CPF n&atilde;o cadastrado!", "/manteravaliador/cadastraravaliador", "ERROR");
         	}
 //        if (empty($_GET['cpf'])) {
 //        	if (empty($_POST['cpf'])){
@@ -182,7 +182,7 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 			            $atualizarProjeto = $alterar->alterarAvaliador($dados, $where);
 			            parent::message("Edital Vinculado com Sucesso!", "/manteravaliador/manteravaliador?cpf={$cpf}", "CONFIRM");
 	        		}elseif($vinculado[0]['stAtivo'] == 'A'){
-	        			parent::message("Edital já vinculado!", "/manteravaliador/manteravaliador?cpf={$cpf}", "ALERT");
+	        			parent::message("Edital j&aacute; vinculado!", "/manteravaliador/manteravaliador?cpf={$cpf}", "ALERT");
 	        		}
 	        	}else{
 	        		$dadosInserir = array(
@@ -202,13 +202,13 @@ class ManteravaliadorController extends MinC_Controller_Action_Abstract {
     public function incluireditalAction()
     {
     	/** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess&atilde;o
+        $codOrgao = $GrupoAtivo->codOrgao; //  Órg&atilde;o ativo na sess&atilde;o
 
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;

@@ -4,7 +4,7 @@
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Início</a></li>
         <li class="second"><a href="<?php echo $this->url(array('controller' => 'cidadao', 'action' => '')); ?>" title="Ir para Lista de Projetos">Lista de Projetos</a></li>
-        <li class="last">Visualizar Opiniões</li>
+        <li class="last">Visualizar Opini&otilde;es</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -13,7 +13,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Visualizar Opiniões 
+    <div>Visualizar Opini&otilde;es 
         <?php if(!$this->usuarioInterno){ ?>
         <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span>
         <?php } ?>
@@ -37,18 +37,18 @@
         <tr class="destacar bold centro">
             <td>Tem relevância cultural?</td>
             <td>Deve ser aprovado?</td>
-            <td>O custo está adequado?</td>
+            <td>O custo est&aacute; adequado?</td>
         </tr>
         <tr class="centro">
-            <td>Sim <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst1s); ?></span> x <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst1n); ?></span> Não</td>
-            <td>Sim <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst2s); ?></span> x <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst2n); ?></span> Não</td>
-            <td>Sim <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst3s); ?></span> x <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst3n); ?></span> Não</td>
+            <td>Sim <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst1s); ?></span> x <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst1n); ?></span> N&atilde;o</td>
+            <td>Sim <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst2s); ?></span> x <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst2n); ?></span> N&atilde;o</td>
+            <td>Sim <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst3s); ?></span> x <span class="red bold" style="margin: 0 5px;"><?php echo count($this->qst3n); ?></span> N&atilde;o</td>
         </tr>
     </table>
 
     <table class="tabela">
         <tr>
-            <th>Opiniões (<?php echo count($this->dados); ?>)</th>
+            <th>Opini&otilde;es (<?php echo count($this->dados); ?>)</th>
         </tr>
     </table>
 
@@ -58,13 +58,13 @@
     <table class="tabela">
         <tr>
             <td class="destacar bold" style="width: 1%;" rowspan="3"><?php echo $x; ?></td>
-            <td class="w150 destacars bolds">Tem relevância cultural? <?php if($d->stQuestionamento_1 == 2){ echo 'Não'; } else if($d->stQuestionamento_1 == 1){ echo 'Sim'; } else { echo 'Sem resposta'; } ?></td>
-            <td class="w150 destacars bolds">Deve ser aprovado? <?php if($d->stQuestionamento_2 == 2){ echo 'Não'; } else if($d->stQuestionamento_2 == 1){ echo 'Sim'; } else { echo 'Sem resposta'; } ?></td>
-            <td class="w150 destacars bolds">O custo está adequado? <?php if($d->stQuestionamento_3 == 2){ echo 'Não'; } else if($d->stQuestionamento_3 == 1){ echo 'Sim'; } else { echo 'Sem resposta'; } ?></td>
+            <td class="w150 destacars bolds">Tem relevância cultural? <?php if($d->stQuestionamento_1 == 2){ echo 'N&atilde;o'; } else if($d->stQuestionamento_1 == 1){ echo 'Sim'; } else { echo 'Sem resposta'; } ?></td>
+            <td class="w150 destacars bolds">Deve ser aprovado? <?php if($d->stQuestionamento_2 == 2){ echo 'N&atilde;o'; } else if($d->stQuestionamento_2 == 1){ echo 'Sim'; } else { echo 'Sem resposta'; } ?></td>
+            <td class="w150 destacars bolds">O custo est&aacute; adequado? <?php if($d->stQuestionamento_3 == 2){ echo 'N&atilde;o'; } else if($d->stQuestionamento_3 == 1){ echo 'Sim'; } else { echo 'Sem resposta'; } ?></td>
             <td class="w150">Cadastrada em <?php echo Data::tratarDataZend($d->dtOpiniao, 'Brasileira', true); ?></td>
         </tr>
         <tr>
-            <td class="w150 destacar bold centro" colspan="4">Comentário</td>
+            <td class="w150 destacar bold centro" colspan="4">Coment&aacute;rio</td>
         </tr>
         <tr>
             <td colspan="4"><?php echo $d->dsComentario; ?> <?php if($this->usuarioInterno){ echo (!empty($d->dsEmail)) ? '<br />E-mail: '.$d->dsEmail : ''; } ?></td>
@@ -83,7 +83,7 @@
 </div>
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

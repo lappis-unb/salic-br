@@ -2,14 +2,14 @@
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
  <div style="display:none" id="pergunta"><?php if ($this->existirPlanilhaCusto == 'ok') { ?>Seu projeto sofreu <?php echo $this->verificarReadequacao; ?>.<br /><br /><?php } ?>Tem certeza que deseja Enviar e Finalizar?</div>
- <div style="display:none" id="validarPlan">Antes de enviar a solicitação é necessário cadastrar os Itens de Custos para os Produtos sem planilha orçamentária!</div>
- <div style="display:none" id="dialog-alerta">Solicitação realizada com sucesso!</div>
- <div style="display:none" id="dialog-em-analise">Há pedido de readequação em análise. Favor aguardar.</div>
+ <div style="display:none" id="validarPlan">Antes de enviar a solicita&ccedil;&atilde;o &eacute; necess&aacute;rio cadastrar os Itens de Custos para os Produtos sem planilha or&ccedil;ament&aacute;ria!</div>
+ <div style="display:none" id="dialog-alerta">Solicita&ccedil;&atilde;o realizada com sucesso!</div>
+ <div style="display:none" id="dialog-em-analise">H&aacute; pedido de readequa&ccedil;&atilde;o em an&aacute;lise. Favor aguardar.</div>
 
     <!-- início: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -69,7 +69,7 @@
 
 
 
-        <?php if($menu=="Com Menu" || $menu=="Botão"){?>
+        <?php if($menu=="Com Menu" || $menu=="Bot&atilde;o"){?>
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
@@ -85,7 +85,7 @@
             <div class="sanfonaDiv"></div>
             <div class="bottom"></div>
 
-			<?php if($menu=="Botão"){?>
+			<?php if($menu=="Bot&atilde;o"){?>
             <div style='background:#f8f8f8; padding-top: 3.5em;'>
                 <ul id='menuGerenciar' style="border:0; width:auto;">
                     <li style="text-align: center;">
@@ -101,7 +101,7 @@
         </div>
         <?php }?>
 
-        <?php /*if($menu=="Botão"){?>
+        <?php /*if($menu=="Bot&atilde;o"){?>
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
@@ -198,7 +198,7 @@
                 closeOnEscape: true,
                 autoOpen:true,
                 buttons: {
-                    'Não': function()
+                    'N&atilde;o': function()
                     {
                         $(this).dialog('close');
                         var idpronac = <?php echo $idPronac; ?>;
@@ -272,6 +272,6 @@
 
 </script>
 
-<!-- final: navegação local #qm0 -->
+<!-- final: navega&ccedil;&atilde;o local #qm0 -->
 
 <!-- ========== FIM MENU ========== -->

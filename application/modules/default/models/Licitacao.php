@@ -39,8 +39,8 @@ class Licitacao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('lic'=>$this->_name), array('lic.idLicitacao','lic.nrLicitacao','lic.tpModalidade','lic.dtAberturaLicitacao'));
-        $select->joinInner(array('lpa'=>'tbLicitacaoxPlanilhaAprovacao'), 'lic.idLicitacao = lpa.idLicitacao', array(), 'BDCORPORATIVO.scSAC');
-        $select->joinInner(array('pa'=>'tbPlanilhaAprovacao'), 'lpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao', array('pa.IdPRONAC'), 'SAC.dbo');
+        $select->joinInner(array('lpa'=>'tbLicitacaoxPlanilhaAprovacao'), 'lic.idLicitacao = lpa.idLicitacao', array(), 'bdcorporativo.scSAC');
+        $select->joinInner(array('pa'=>'tbPlanilhaAprovacao'), 'lpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao', array('pa.IdPRONAC'), 'SAC');
         $select->where('pa.IdPRONAC = ?', $idpronac);
         $select->order('lic.dtAberturaLicitacao');
         $select->group(array('lic.idLicitacao','lic.nrLicitacao','lic.tpModalidade','lic.dtAberturaLicitacao','pa.IdPRONAC'));
@@ -74,13 +74,13 @@ class Licitacao extends MinC_Db_Table_Abstract {
                     array('u'=>'UF'),
                     'lic.UF = u.idUF',
                     array('Descricao as dsEstado'),
-                    'agentes.dbo'
+                    'agentes'
                );
         $slct->joinInner(
                     array('m'=>'Municipios'),
                     'lic.cdMunicipio = m.idMunicipioIBGE',
                     array('Descricao as dsMunicipio'),
-                    'agentes.dbo'
+                    'agentes'
                );
         $slct->where('idlicitacao = ?',$idLicitacao);
 

@@ -55,7 +55,7 @@
                 height:160,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -82,7 +82,7 @@
                                     $('.ui-dialog-titlebar-close').remove();
                                     window.setTimeout('location.reload()', 1000);
                                 } else {
-                                    alertaModal("Não foi possível excluir o Bem Doado.");
+                                    alertaModal("N&atilde;o foi possível excluir o Bem Doado.");
                                 }
                             },
                             dataType : 'json'
@@ -142,7 +142,7 @@
                                 modal: true,
                                 autoOpen:true,
                                 draggable:false,
-                                title: 'Cadastrar Beneficiário',
+                                title: 'Cadastrar Benefici&aacute;rio',
                                 buttons: {
                                     'Fechar': function() {
                                         $("#divDinamicaAgentes").remove();
@@ -212,7 +212,7 @@
                                 modal: true,
                                 autoOpen:true,
                                 draggable:false,
-                                title: 'Cadastrar Beneficiário',
+                                title: 'Cadastrar Benefici&aacute;rio',
                                 buttons: {
                                     'Fechar': function() {
                                         $("#divDinamicaAgentes").remove();
@@ -239,7 +239,7 @@
             $("#camposObrigatorios").html(texto);
             $("#camposObrigatorios").dialog({
                 resizable: true,
-                title: 'Observações',
+                title: 'Observa&ccedil;&otilde;es',
                 width:350,
                 modal: true,
                 buttons : {
@@ -266,7 +266,7 @@
             draggable:false,
             title: 'Alerta!',
             buttons: {
-                'Não': function(){
+                'N&atilde;o': function(){
                     $("#agenteMovel").val('');
                     $("#nomeAgenteMovel").html('');
                     $('#cnpjcpfMovel').val('');
@@ -294,7 +294,7 @@
             draggable:false,
             title: 'Alerta!',
             buttons: {
-                'Não': function(){
+                'N&atilde;o': function(){
                     $("#agenteImovel").val('');
                     $("#nomeAgenteImovel").html('');
                     $('#cnpjcpfImovel').val('');
@@ -339,7 +339,7 @@
     <ul>
         <li class="first"><a href="#" title="In&iacute;cio">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar dados do Projeto">Consultar dados do Projeto</a></li>
-        <li class="second">Comprovar Realização do Objeto</li>
+        <li class="second">Comprovar Realiza&ccedil;&atilde;o do Objeto</li>
         <li class="last">Bens Doados</li>
     </ul>
 </div>
@@ -378,7 +378,7 @@
                 <th colspan="2">Bens Móveis</th>
             </tr>
             <tr>
-                <td class="destacar bold" width="200px" align="right">Itens Orçamentários<span style="color: red;">*</span></td>
+                <td class="destacar bold" width="200px" align="right">Itens Or&ccedil;ament&aacute;rios<span style="color: red;">*</span></td>
                 <td>
                     <select class="select_simples obrigatorioMovel" name="itemOrcamentario">
                         <option value=""> - Selecione - </option>
@@ -389,11 +389,11 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Upload de documento de doação<span style="color: red;">*</span></td>
+                <td class="destacar bold" align="right">Upload de documento de doa&ccedil;&atilde;o<span style="color: red;">*</span></td>
                 <td><input type="file" class="obrigatorioMovel" name="documentoDoacao"></td>
             </tr>
             <tr>
-                <td colspan="2" align="center">Beneficiário que recebeu o bem ao final do projeto</td>
+                <td colspan="2" align="center">Benefici&aacute;rio que recebeu o bem ao final do projeto</td>
             </tr>
             <tr>
                 <td class="destacar bold" align="right">CPF/CNPJ<span style="color: red;">*</span></td>
@@ -415,10 +415,10 @@
                 <td><input type="file" class="obrigatorioMovel" name="documentoAceite" /></td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Observações</td>
+                <td class="destacar bold" align="right">Observa&ccedil;&otilde;es</td>
                 <td>
                     <textarea name="observacao" cols="" rows="7" style="width: 99%;" class="textarea_simples"></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
+                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite m&aacute;ximo de 1000 caracteres</span>
                 </td>
             </tr>
         </table>
@@ -436,7 +436,7 @@
                 <th colspan="2">Bens Imóveis</th>
             </tr>
             <tr>
-                <td class="destacar bold" width="200px" align="right">Itens Orçamentários<span style="color: red;">*</span></td>
+                <td class="destacar bold" width="200px" align="right">Itens Or&ccedil;ament&aacute;rios<span style="color: red;">*</span></td>
                 <td>
                     <select class="select_simples obrigatorioImovel" name="itemOrcamentario">
                         <option value=""> - Selecione - </option>
@@ -447,11 +447,11 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Upload de documento de doação<span style="color: red;">*</span></td>
+                <td class="destacar bold" align="right">Upload de documento de doa&ccedil;&atilde;o<span style="color: red;">*</span></td>
                 <td><input type="file" class="obrigatorioImovel" name="documentoDoacao"></td>
             </tr>
             <tr>
-                <td colspan="2" align="center">Beneficiário que recebeu o bem ao final do projeto</td>
+                <td colspan="2" align="center">Benefici&aacute;rio que recebeu o bem ao final do projeto</td>
             </tr>
             <tr>
                 <td class="destacar bold" align="right">CPF/CNPJ<span style="color: red;">*</span></td>
@@ -473,13 +473,13 @@
                 <td><input type="file" class="obrigatorioImovel" name="documentoAceite" /></td>
             </tr>
             <tr>
-                <td colspan="2" align="center">Favor informar nome do cartório, número do registro e de folha, especificando o imóvel também.</td>
+                <td colspan="2" align="center">Favor informar nome do cartório, número do registro e de folha, especificando o imóvel tamb&eacute;m.</td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Observações</td>
+                <td class="destacar bold" align="right">Observa&ccedil;&otilde;es</td>
                 <td>
                     <textarea name="observacao" cols="" rows="7" style="width: 99%;" class="textarea_simples"></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
+                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite m&aacute;ximo de 1000 caracteres</span>
                 </td>
             </tr>
         </table>
@@ -498,14 +498,14 @@
         <?php if(count($this->BensCadastrados)>0) { ?>
         <tr align="center">
             <td class="destacar bold">Tipo do Bem</td>
-            <td class="destacar bold">Item Orçamentário</td>
+            <td class="destacar bold">Item Or&ccedil;ament&aacute;rio</td>
             <td class="destacar bold">CNPJ/CPF</td>
             <td class="destacar bold">Nome</td>
-            <td class="destacar bold">Arquivo Doação</td>
+            <td class="destacar bold">Arquivo Doa&ccedil;&atilde;o</td>
             <td class="destacar bold">Arquivo Aceite</td>
             <td class="destacar bold">Quantidade</td>
-            <td class="destacar bold">Observação</td>
-            <td class="destacar bold">Ação</td>
+            <td class="destacar bold">Observa&ccedil;&atilde;o</td>
+            <td class="destacar bold">A&ccedil;&atilde;o</td>
         </tr>
         <?php foreach ($this->BensCadastrados as $bens) { ?>
         <tr>

@@ -19,7 +19,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.controlarmovimentacaobancaria
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -64,7 +64,7 @@ if($this->cabecalho == 0){
 	<script type="text/javascript">
 	<!--
 	/**
-	 * Função para gerar o pdf da planilha
+	 * Fun&ccedil;&atilde;o para gerar o pdf da planilha
 	 */
 	function pdf()
 	{
@@ -76,16 +76,16 @@ if($this->cabecalho == 0){
 
 
 
-	<!-- INÍCIO GERAÇÃO .PDF -->
+	<!-- INÍCIO GERA&ccedil;&atilde;O .PDF -->
 	<form id="formpdf" name="formpdf" method="post"
 		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'gerarpdf'),'',true); ?>"
 		enctype="multipart/form-data">
 		<input type="hidden" name="html" value="" id="htmlpdf" />
 	</form>
-	<!-- FIM GERAÇÃO .PDF -->
+	<!-- FIM GERA&ccedil;&atilde;O .PDF -->
 
 
-        <!-- INÍCIO GERAÇÃO .PDF -->
+        <!-- INÍCIO GERA&ccedil;&atilde;O .PDF -->
 	<form id="frmPaginacao" name="formfrmPaginacaopdf" method="post"
 		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'pesquisar'),'',true); ?>"
 		enctype="multipart/form-data">
@@ -110,11 +110,11 @@ if($this->cabecalho == 0){
                 <input type="hidden" name="tipoOrdenacao" id="tipoOrdenacao" value="<?php echo (!empty($this->parametrosBusca["tipoOrdenacao"]))?$this->parametrosBusca["tipoOrdenacao"]:""; ?>"/>
             <?php endif; ?>
 	</form>
-	<!-- FIM GERAÇÃO .PDF -->
+	<!-- FIM GERA&ccedil;&atilde;O .PDF -->
 
 
 
-	<!-- ========== INÍCIO ÁREA DE IMPRESSÃO ========== -->
+	<!-- ========== INÍCIO &aacute;REA DE IMPRESS&atilde;O ========== -->
 	<div id="imprimir">
 
 
@@ -147,7 +147,7 @@ if($this->cabecalho == 0){
 		{
 			if (!empty($p[1]) && !empty($p[2]))
 			{
-				$per = 'De ' . $p[1] . ' à ' . $p[2];
+				$per = 'De ' . $p[1] . ' &agrave; ' . $p[2];
 			}
 			else
 			{
@@ -157,13 +157,13 @@ if($this->cabecalho == 0){
 				}
 				if (!empty($p[2]))
 				{
-					$per = 'Até ' . $p[2];
+					$per = 'At&eacute; ' . $p[2];
 				}
 			}
 		}
 		else
 		{
-			$per = 'Buscar todas as informações';
+			$per = 'Buscar todas as informa&ccedil;&otilde;es';
 		}
 		?>
 
@@ -179,8 +179,8 @@ if($this->cabecalho == 0){
 
 		<?php
 		/* ========== INÍCIO CONSTANTE 2 ========== */
-		$array_pronacs_2 = array(); // array com os pronacs, e, que servirá como 'cache' para evitar a impressão de nomes de projetos repetidos
-		$array_movimen_2 = array(); // array com os id da movimentacao dos itens, e, que servirá como 'cache' para evitar a impressão itens
+		$array_pronacs_2 = array(); // array com os pronacs, e, que servir&aacute; como 'cache' para evitar a impress&atilde;o de nomes de projetos repetidos
+		$array_movimen_2 = array(); // array com os id da movimentacao dos itens, e, que servir&aacute; como 'cache' para evitar a impress&atilde;o itens
 		$item_2          = 1; // contador para os itens
 		$saldo_final_2   = (float) 0; // saldo final do extrato
 		foreach ($this->dados as $d) :
@@ -188,7 +188,7 @@ if($this->cabecalho == 0){
 		?>
 
 				<?php
-				/* ========== INÍCIO IMPRESSÃO DO CABEÇALHO COM O PRONAC ========== */
+				/* ========== INÍCIO IMPRESS&atilde;O DO CABE&ccedil;ALHO COM O PRONAC ========== */
 				if (!in_array($d->pronac, $array_pronacs_2)) :
 				$i_2 = 0; // contador para cor de linhas (por pronac)
 				?>
@@ -225,7 +225,7 @@ if($this->cabecalho == 0){
 				</tr>
 				<?php
 				endif;
-				/* ========== FIM IMPRESSÃO DO CABEÇALHO COM O PRONAC ========== */
+				/* ========== FIM IMPRESS&atilde;O DO CABE&ccedil;ALHO COM O PRONAC ========== */
 				?>
 
 				<?php if (!in_array($d->idMovimentacaoBancariaItem, $array_movimen_2)) :  ?>
@@ -275,11 +275,11 @@ if($this->cabecalho == 0){
 				$array_movimen_2[] = $d->idMovimentacaoBancariaItem; // adiciona no cache com os itens com problemas
 
 				// retira ou adiciona no saldo total conforme o tipo de operacao
-				if ($d->tpSaldoInicial == 'D') // subtração
+				if ($d->tpSaldoInicial == 'D') // subtra&ccedil;&atilde;o
 				{
 					$saldo_final_2 -= $d->vlSaldoInicial;
 				}
-				else // adição
+				else // adi&ccedil;&atilde;o
 				{
 					$saldo_final_2 += $d->vlSaldoInicial;
 				}
@@ -297,8 +297,8 @@ if($this->cabecalho == 0){
 
 		<?php
 		/* ========== INÍCIO CONSTANTE 3 ========== */
-		$array_pronacs_3 = array(); // array com os pronacs, e, que servirá como 'cache' para evitar a impressão de nomes de projetos repetidos
-		$array_movimen_3 = array(); // array com os id da movimentacao dos itens, e, que servirá como 'cache' para evitar a impressão itens
+		$array_pronacs_3 = array(); // array com os pronacs, e, que servir&aacute; como 'cache' para evitar a impress&atilde;o de nomes de projetos repetidos
+		$array_movimen_3 = array(); // array com os id da movimentacao dos itens, e, que servir&aacute; como 'cache' para evitar a impress&atilde;o itens
 		$item_3          = 1; // contador para os itens
 		$saldo_final_3   = (float) 0; // saldo final do extrato
 		foreach ($this->dados as $d) :
@@ -306,7 +306,7 @@ if($this->cabecalho == 0){
 		?>
 
 				<?php
-				/* ========== INÍCIO IMPRESSÃO DO CABEÇALHO COM O PRONAC ========== */
+				/* ========== INÍCIO IMPRESS&atilde;O DO CABE&ccedil;ALHO COM O PRONAC ========== */
 				if (!in_array($d->pronac, $array_pronacs_3)) :
 				$i_3 = 0; // contador para cor de linhas (por pronac)
 				?>
@@ -342,12 +342,12 @@ if($this->cabecalho == 0){
 				</tr>
 				<?php
 				endif;
-				/* ========== FIM IMPRESSÃO DO CABEÇALHO COM O PRONAC ========== */
+				/* ========== FIM IMPRESS&atilde;O DO CABE&ccedil;ALHO COM O PRONAC ========== */
 				?>
 
 				<?php if (!in_array($d->idMovimentacaoBancariaItem, $array_movimen_3)) :  ?>
 				<tr <?php echo ($i_3 % 2 != 0) ? 'class="fundo_linha2"' : '' ; ?>  onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);" onblur="out_tr(this);" onclick="click_tr(this);" onkeypress="click_tr(this);">
-					<td align="center"><?php echo $d->dtInicioMovimento; ?> à <?php echo $d->dtFimMovimento; ?></td>
+					<td align="center"><?php echo $d->dtInicioMovimento; ?> &agrave; <?php echo $d->dtFimMovimento; ?></td>
 					<td align="center"><?php echo $d->nrBanco; ?> - <?php echo $d->nmBanco; ?></td>
 					<td align="center"><?php echo $d->nrAgencia; ?></td>
 					<td align="center"><?php echo $d->nrDigitoConta; ?></td>
@@ -390,11 +390,11 @@ if($this->cabecalho == 0){
 				$array_movimen_3[] = $d->idMovimentacaoBancariaItem; // adiciona no cache com os itens com problemas
 
 				// retira ou adiciona no saldo total conforme o tipo de operacao
-				if ($d->cdMovimento == 'D') // subtração
+				if ($d->cdMovimento == 'D') // subtra&ccedil;&atilde;o
 				{
 					$saldo_final_3 -= $d->vlMovimento;
 				}
-				else // adição
+				else // adi&ccedil;&atilde;o
 				{
 					$saldo_final_3 += $d->vlMovimento;
 				}
@@ -459,15 +459,15 @@ if($this->cabecalho == 0){
 
 
 	</div>
-	<!-- ========== FIM ÁREA DE IMPRESSÃO ========== -->
+	<!-- ========== FIM &aacute;REA DE IMPRESS&atilde;O ========== -->
 <table class="tabela">
 
 </table>
 
 
-	<!-- ========== INÍCIO BOTÕES ========== -->
+	<!-- ========== INÍCIO BOT&otilde;ES ========== -->
 
-	<!-- ========== FIM BOTÕES ========== -->
+	<!-- ========== FIM BOT&otilde;ES ========== -->
 
 
 
@@ -476,8 +476,8 @@ if($this->cabecalho == 0){
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

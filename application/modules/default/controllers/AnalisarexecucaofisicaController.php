@@ -579,7 +579,7 @@ class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
         
         // busca os t�cnicos do �rg�o logado
         $Tecnicos = new Usuariosorgaosgrupos();
-        $buscarTecnicos = $Tecnicos->buscardadosAgentesArray(array('uog.uog_orgao = ?' => $this->getIdOrgao, 'uog.gru_codigo IN (?)' => array('121', '129')) );
+        $buscarTecnicos = $Tecnicos->buscardadosAgentesArray(array('uog.uog_orgao = ?' => $this->getIdOrgao, 'uog.gru_codigo in (?)' => array('121', '129')) );
 
         $this->view->tecnicos = $buscarTecnicos;
         $this->view->dadosRelatorios = $buscarRelatorios;

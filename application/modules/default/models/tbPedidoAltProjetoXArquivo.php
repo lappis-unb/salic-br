@@ -13,8 +13,8 @@
 class tbPedidoAltProjetoXArquivo extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "BDCORPORATIVO.scSAC";
+	protected $_banco   = "bdcorporativo";
+	protected $_schema  = "bdcorporativo.scSAC";
 	protected $_name    = "tbPedidoAltProjetoXArquivo";
 
 
@@ -38,7 +38,7 @@ class tbPedidoAltProjetoXArquivo extends MinC_Db_Table_Abstract
 			,'x.idArquivo = a.idArquivo'
 			,array('a.idArquivo'
 				,'a.nmArquivo')
-			,'BDCORPORATIVO.scCorp'
+			,'bdcorporativo.scCorp'
 		);
 
 		// adiciona quantos filtros foram enviados

@@ -15,17 +15,17 @@ class ConsultaReuniao {
     {
 
     $sql = "SELECT
-                 SAC.dbo.tbReuniao.idNrReuniao,
-                 BDCORPORATIVO.scSAC.tbPauta.IdPRONAC,
-                 SAC.dbo.tbReuniao.NrReuniao, tbReuniao.DtInicio,
-                 SAC.dbo.tbReuniao.DtFechamento,
-                 SAC.dbo.tbReuniao.stEstado
+                 sac.dbo.tbReuniao.idNrReuniao,
+                 bdcorporativo.scsac.tbPauta.IdPRONAC,
+                 sac.dbo.tbReuniao.NrReuniao, tbReuniao.DtInicio,
+                 sac.dbo.tbReuniao.DtFechamento,
+                 sac.dbo.tbReuniao.stEstado
             FROM
-               BDCORPORATIVO.scSAC.tbPauta
+               bdcorporativo.scsac.tbPauta
             INNER JOIN
-                      SAC.dbo.tbReuniao ON
-                      BDCORPORATIVO.scSAC.tbPauta.idNrReuniao = SAC.dbo.tbReuniao.idNrReuniao
-            WHERE SAC.dbo.tbReuniao.stEstado = 0";
+                      sac.dbo.tbReuniao ON
+                      bdcorporativo.scsac.tbPauta.idNrReuniao = sac.dbo.tbReuniao.idNrReuniao
+            WHERE sac.dbo.tbReuniao.stEstado = 0";
 
                 try
 		{

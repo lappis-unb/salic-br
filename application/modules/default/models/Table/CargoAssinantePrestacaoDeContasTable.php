@@ -12,7 +12,7 @@ class CargoAssinantePrestacaoDeContasTable extends Zend_Db_Table
      *  
      * @var string 
      */
-    protected $_schema = 'sac.dbo';
+    protected $_schema = 'sac';
 
     /**
      *

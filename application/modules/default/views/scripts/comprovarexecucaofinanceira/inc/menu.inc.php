@@ -759,7 +759,7 @@ function buscarFornecedor(este){
 
 function outroFornecedor(este){
     $("#divPerguntaFornecedor").dialog('close');
-    $("#divPerguntaFornecedor").html('Deseja utilizar este fornecedor na comprovação do pagamento?');
+    $("#divPerguntaFornecedor").html('Deseja utilizar este fornecedor na comprova&ccedil;&atilde;o do pagamento?');
     $("#divPerguntaFornecedor").dialog('open');
     $("#divPerguntaFornecedor").dialog({
         resizable: false,
@@ -769,7 +769,7 @@ function outroFornecedor(este){
         draggable:false,
         title: 'Alerta!',
         buttons: {
-            'Não': function(){
+            'N&atilde;o': function(){
                 $('#'+$(este).attr('idAgente')).val('');
                 $('#'+$(este).attr('idDescricao')).val('');
                 $('#CNPJCPF').val('');
@@ -961,9 +961,9 @@ function fornecedores(){
 }
 </script>
 <script type="text/javascript">
-    var me71 = 'Esse projeto não possui itens de custo para comprovação financeira. Favor incluir todos os itens de custo para inclusão de comprovação financeira.';
-    var me72 = 'Deseja realmente finalizar esse processo? Com essa confirmação você não poderá mais alterar os dados desse processo.';
-    var ag1  = 'Dados obrigatórios não informados.';
+    var me71 = 'Esse projeto n&atilde;o possui itens de custo para comprova&ccedil;&atilde;o financeira. Favor incluir todos os itens de custo para inclus&atilde;o de comprova&ccedil;&atilde;o financeira.';
+    var me72 = 'Deseja realmente finalizar esse processo? Com essa confirma&ccedil;&atilde;o você n&atilde;o poder&aacute; mais alterar os dados desse processo.';
+    var ag1  = 'Dados obrigatórios n&atilde;o informados.';
     var ag4  = 'Deseja realmente excluir dados?';
     var sg1  = '';
     var sg2  = '';

@@ -14,7 +14,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "BDCORPORATIVO.scSAC.tbComprovanteExecucao";
+	protected $_name    = "bdcorporativo.scsac.tbComprovanteExecucao";
 	protected $_primary = "idComprovante";
 
 
@@ -31,7 +31,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbComprovanteExecucao", $dados);
+		$cadastrar = $db->insert("bdcorporativo.scsac.tbComprovanteExecucao", $dados);
 
 		if ($cadastrar)
 		{
@@ -59,7 +59,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idComprovante = $id";
-		$alterar = $db->update("BDCORPORATIVO.scSAC.tbComprovanteExecucao", $dados, $where);
+		$alterar = $db->update("bdcorporativo.scsac.tbComprovanteExecucao", $dados, $where);
 
 		if ($alterar)
 		{
@@ -82,7 +82,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	 */
 	public static function buscarIdComprovante()
 	{
-		$sql = "SELECT MAX(idComprovante) AS id FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao";
+		$sql = "SELECT MAX(idComprovante) AS id FROM bdcorporativo.scsac.tbComprovanteExecucao";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -134,11 +134,11 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 					,doc.idCoordenador
 					,doc.idComprovanteAnterior 
 
-				FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc
-					,SAC.dbo.tbTipoDocumento tipodoc
-					,BDCORPORATIVO.scCorp.tbArquivo arq
-					,BDCORPORATIVO.scCorp.tbArquivoImagem arqimg
-					,SAC.dbo.Projetos proj
+				FROM bdcorporativo.scsac.tbComprovanteExecucao doc
+					,sac.dbo.tbTipoDocumento tipodoc
+					,bdcorporativo.scCorp.tbArquivo arq
+					,bdcorporativo.scCorp.tbArquivoImagem arqimg
+					,sac.dbo.Projetos proj
 
 				WHERE doc.idPRONAC = proj.IdPRONAC 
 					AND doc.idTipoDocumento = tipodoc.idTipoDocumento 
@@ -208,12 +208,12 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 					,doc.idCoordenador
 					,doc.idComprovanteAnterior 
 
-				FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc
-					,SAC.dbo.tbTipoDocumento tipodoc
-					,BDCORPORATIVO.scCorp.tbArquivo arq
-					,BDCORPORATIVO.scCorp.tbArquivoImagem arqimg
+				FROM bdcorporativo.scsac.tbComprovanteExecucao doc
+					,sac.dbo.tbTipoDocumento tipodoc
+					,bdcorporativo.scCorp.tbArquivo arq
+					,bdcorporativo.scCorp.tbArquivoImagem arqimg
 					,(SELECT idComprovanteAnterior, MAX(dtEnvioComprovante) dtEnvioComprovante
-					  FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao
+					  FROM bdcorporativo.scsac.tbComprovanteExecucao
 					  WHERE stComprovante = 'A'
 					  GROUP BY idComprovanteAnterior) AS tmp 
 
@@ -285,10 +285,10 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 					,doc.idCoordenador
 					,doc.idComprovanteAnterior 
 
-				FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc
-					,SAC.dbo.tbTipoDocumento tipodoc
-					,BDCORPORATIVO.scCorp.tbArquivo arq
-					,BDCORPORATIVO.scCorp.tbArquivoImagem arqimg
+				FROM bdcorporativo.scsac.tbComprovanteExecucao doc
+					,sac.dbo.tbTipoDocumento tipodoc
+					,bdcorporativo.scCorp.tbArquivo arq
+					,bdcorporativo.scCorp.tbArquivoImagem arqimg
 
 				WHERE doc.idTipoDocumento         = tipodoc.idTipoDocumento 
 					AND doc.idArquivo             = arq.idArquivo 
@@ -333,10 +333,10 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 					,CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS dtEnvioComprovante
 					,CONVERT(CHAR(10), doc.dtJustificativaCoordenador,103) + ' ' + CONVERT(CHAR(8), doc.dtJustificativaCoordenador,108) AS dtJustificativaCoordenador
 
-				FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc
-					,SAC.dbo.Projetos pro
+				FROM bdcorporativo.scsac.tbComprovanteExecucao doc
+					,sac.dbo.Projetos pro
 					,(SELECT idPronac, MAX(dtEnvioComprovante) dtEnvioComprovante
-					  FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao
+					  FROM bdcorporativo.scsac.tbComprovanteExecucao
 					  WHERE stComprovante = 'A'
 					  GROUP BY idPronac) AS tmp
 
@@ -448,10 +448,10 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 					,doc.idCoordenador
 					,doc.idComprovanteAnterior 
 
-				FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc
-					,SAC.dbo.tbTipoDocumento tipodoc
-					,BDCORPORATIVO.scCorp.tbArquivo arq
-					,BDCORPORATIVO.scCorp.tbArquivoImagem arqimg 
+				FROM bdcorporativo.scsac.tbComprovanteExecucao doc
+					,sac.dbo.tbTipoDocumento tipodoc
+					,bdcorporativo.scCorp.tbArquivo arq
+					,bdcorporativo.scCorp.tbArquivoImagem arqimg 
 
 				WHERE doc.idTipoDocumento         = tipodoc.idTipoDocumento 
 					AND doc.idArquivo             = arq.idArquivo 

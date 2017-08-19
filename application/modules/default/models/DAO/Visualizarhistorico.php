@@ -2,7 +2,7 @@
 class Visualizarhistorico extends Zend_Db_Table
 {
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+       	protected $_name    = 'sac.dbo.Projetos';
 
     public function buscar($sql)   
     {
@@ -16,7 +16,7 @@ class Visualizarhistorico extends Zend_Db_Table
     public function inserirMensagem($PRONAC,$componenteComissao,$mensagem)   
     {
         $objAcesso= new Acesso();
-       	$sql = "INSERT INTO BDCORPORATIVO.scSAC.tbMensagemProjeto (idPRONAC, idRemetente, idDestinatario, dtEncaminhamento, dsMensagem, stAtivo)
+       	$sql = "INSERT INTO bdcorporativo.scsac.tbMensagemProjeto (idPRONAC, idRemetente, idDestinatario, dtEncaminhamento, dsMensagem, stAtivo)
 					        VALUES ($PRONAC, 75, $componenteComissao, {$objAcesso->getDate()}, '$mensagem', 'A')";
        	//echo $sql; die();
        	$db = Zend_Db_Table::getDefaultAdapter();
@@ -31,7 +31,7 @@ class Visualizarhistorico extends Zend_Db_Table
 								IdPRONAC, 
 								NomeProjeto, 
 								CONVERT(CHAR(10),DtProtocolo,103) as Data 
-						FROM SAC.dbo.Projetos WHERE 
+						FROM sac.dbo.Projetos WHERE 
 								IdPRONAC = " . $pronac . " ";
 		
 		$db = Zend_Db_Table::getDefaultAdapter();
@@ -49,10 +49,10 @@ class Visualizarhistorico extends Zend_Db_Table
         idDestinatario, 
         destinatario.Descricao as nmDestinatario,
         dsMensagem
-from BDCORPORATIVO.scSAC.tbmensagemprojeto mp
+from bdcorporativo.scsac.tbmensagemprojeto mp
 left join agentes.dbo.Nomes remetente on remetente.idAgente = mp.idRemetente
 left join agentes.dbo.Nomes destinatario on destinatario.idAgente = mp.idDestinatario
-left join SAC.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
+left join sac.dbo.Projetos Pr on Pr.IdPRONAC = mp.idPRONAC
  where mp.stAtivo = 'A' and Pr.IdPRONAC = " . $pronac . "";
 					
 		$db = Zend_Db_Table::getDefaultAdapter();

@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.controller
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class PaginacaoController extends Zend_Controller_Action
 {
 	/**
-	 * Método da paginação
+	 * M&eacute;todo da pagina&ccedil;&atilde;o
 	 * @access public
 	 * @param void
 	 * @return void

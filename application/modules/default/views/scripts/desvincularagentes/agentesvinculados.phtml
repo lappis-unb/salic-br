@@ -21,7 +21,7 @@
 	<div id="conteudo">
 
 
-<!-- ========== INÍCIO DO SCRIPT PARA CONFIRMAÇÃO DE EXCLUSÃO ========== -->
+<!-- ========== INÍCIO DO SCRIPT PARA CONFIRMA&ccedil;&atilde;O DE EXCLUS&atilde;O ========== -->
 
 				<script language="javascript">
 				function confirmaExclusao(idAgente, cnpjcpf)
@@ -34,16 +34,16 @@
 				</script>
 
 
-<!-- ========== FIM DO SCRIPT PARA CONFIRMAÇÃO DE EXCLUSÃO ========== -->
+<!-- ========== FIM DO SCRIPT PARA CONFIRMA&ccedil;&atilde;O DE EXCLUS&atilde;O ========== -->
 
 
 
-<!-- ========== INICIO DA TABELA DOS DADOS CONTENDO AS INFORMAÇÕES DA INSTITUIÇÃO ========== -->	
-		<table class="tabela" summary="Esta tabela contém os dados da Instituição que contém os agentes que podem ser desvinculados">
+<!-- ========== INICIO DA TABELA DOS DADOS CONTENDO AS INFORMA&ccedil;&otilde;ES DA INSTITUI&ccedil;&atilde;O ========== -->	
+		<table class="tabela" summary="Esta tabela cont&eacute;m os dados da Institui&ccedil;&atilde;o que cont&eacute;m os agentes que podem ser desvinculados">
 					
 			  <?php foreach($this->entidade as $tbentidade): ?>
 			
-				  		<table class="tabela" summary="Esta tabela contém os dados da Instituição que contém os agentes que podem ser desvinculados">
+				  		<table class="tabela" summary="Esta tabela cont&eacute;m os dados da Institui&ccedil;&atilde;o que cont&eacute;m os agentes que podem ser desvinculados">
 
 
 
@@ -53,7 +53,7 @@
                                                                 <?php if ( $cpfCnpj == 11 ) { ?>
 				   					<td class="titulo_tabela" tabindex="2"><strong><?php echo $this->escape($tbentidade->nomeentidade);?></strong></td>
                                                                 <?php } else {?>
-                                                                        <td class="titulo_tabela" tabindex="2"><strong>Nome da Instituição: <?php echo $this->escape($tbentidade->nomeentidade);?></strong></td>
+                                                                        <td class="titulo_tabela" tabindex="2"><strong>Nome da Institui&ccedil;&atilde;o: <?php echo $this->escape($tbentidade->nomeentidade);?></strong></td>
                                                                 <?php }?>
 				 		</tr>
 
@@ -61,22 +61,22 @@
 				<?php endforeach;?>	
 		</table>
 
-<!-- ========== FIM DA TABELA DOS DADOS CONTENDO AS INFORMAÇÕES DA INSTITUIÇÃO ========== -->	
+<!-- ========== FIM DA TABELA DOS DADOS CONTENDO AS INFORMA&ccedil;&otilde;ES DA INSTITUI&ccedil;&atilde;O ========== -->	
 
 
 
-<!-- ========== INICIO DA TABELA DOS DADOS CONTENDO AS INFORMAÇÕES DOS AGENTES QUE PODEM SER DESVINCULADOS DA INSTITUIÇÃO ========== -->	
+<!-- ========== INICIO DA TABELA DOS DADOS CONTENDO AS INFORMA&ccedil;&otilde;ES DOS AGENTES QUE PODEM SER DESVINCULADOS DA INSTITUI&ccedil;&atilde;O ========== -->	
 <form id="formCadastrar" name="formCadastrar" method="post" action="<?php echo $this->url(array('controller' => 'desvincularagentes','action' => 'desvincularagentes')); ?>?cpf=<?php echo $this->escape($tbvinculoagente->CNPJCPF);?>">
    		
    
-<table class="tabela" summary="Esta tabela contém os dados dos Agentes pertencentes á Instituiçãoe e que podem ser desvinculados">
+<table class="tabela" summary="Esta tabela cont&eacute;m os dados dos Agentes pertencentes &aacute; Institui&ccedil;&atilde;oe e que podem ser desvinculados">
 				<tr>
 						<td colspan="5" class="titulo_tabela" tabindex="3">AGENTES VINCULADOS</td>
 				</tr>
 		  		<tr>
 		    			<th tabindex="4">CPF</th>
 		    			<th tabindex="5">Nome</th>
-		    			<th tabindex="6">Visão</th>
+		    			<th tabindex="6">Vis&atilde;o</th>
 		    			<th tabindex="7">Desvincular</th>
 		  		</tr>
 	<?php foreach($this->vinculoagente as $tbvinculoagente): ?>
@@ -90,7 +90,7 @@
 	<?php endforeach;?>
 </table>
 
-<!-- ========== FIM DA TABELA DOS DADOS CONTENDO AS INFORMAÇÕES DOS AGENTES QUE PODEM SER DESVINCULADOS DA INSTITUIÇÃO ========== -->	
+<!-- ========== FIM DA TABELA DOS DADOS CONTENDO AS INFORMA&ccedil;&otilde;ES DOS AGENTES QUE PODEM SER DESVINCULADOS DA INSTITUI&ccedil;&atilde;O ========== -->	
 		
 	
 	</div>
@@ -98,7 +98,7 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 	<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 			<br clear="all" />

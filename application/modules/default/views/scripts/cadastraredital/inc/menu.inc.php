@@ -39,7 +39,7 @@ function layout_fluido()
 	$("#rodapeConteudo").css("margin-left", "225px");
 	$(".sanfonaDiv").css("clear", "both");
 	$(".sanfonaDiv").css("width", "91%");
-} // fecha função layout_fluido()
+} // fecha fun&ccedil;&atilde;o layout_fluido()
 
 $(document).ready(function()
 {
@@ -55,9 +55,9 @@ $(document).ready(function()
     <div class="top"></div>
     <div id="qm0" class="qmmc">
         <a class="no_seta"      href="<?php echo $dadosgeraisHref;?>"       title="Ir para Dados do Edital">Dados do Edital</a>
-        <a class="no_seta"      href="<?php echo $criteriosavaliacaoHref;?>"       title="Ir para Formulario de Elaboraç&atilde;o de Critérios de Avaliaç&atilde;o">Critérios de Avaliaç&atilde;o</a>
-        <a class="no_seta"      href="<?php echo $formapagamentoHref;?>"          title="Ir para Formulario de Elaboraç&atilde;o de Forma de Pagamento">Forma de Pagamento</a>
-        <a class="no_seta"      href="<?php echo $propostacustomizavelHref?>"         title="Ir para Formulario de Elaboraç&atilde;o de Proposta Customizável">Proposta Customizável</a>
+        <a class="no_seta"      href="<?php echo $criteriosavaliacaoHref;?>"       title="Ir para Formulario de Elabora&ccedil;&atilde;o de Crit&eacute;rios de Avalia&ccedil;&atilde;o">Crit&eacute;rios de Avalia&ccedil;&atilde;o</a>
+        <a class="no_seta"      href="<?php echo $formapagamentoHref;?>"          title="Ir para Formulario de Elabora&ccedil;&atilde;o de Forma de Pagamento">Forma de Pagamento</a>
+        <a class="no_seta"      href="<?php echo $propostacustomizavelHref?>"         title="Ir para Formulario de Elabora&ccedil;&atilde;o de Proposta Customiz&aacute;vel">Proposta Customiz&aacute;vel</a>
         <a class="no_seta last"      href="<?php echo $vinculareditaisHref?>"         title="Ir para Vincular Avaliador">Vincular Avaliador</a>
             <br clear="left" />
     </div>

@@ -18,7 +18,7 @@ class tbEditalTipoParticipacao extends MinC_Db_Table_Abstract {
         
         $select->joinInner(array('tp' => 'tbTipoParticipacao'), 'pa.idTpParticipacao = tp.idTpParticipacao' , 
                         array('tp.idTpParticipacao',
-                              'tp.dsTpParticipacao'), 'sac.dbo'
+                              'tp.dsTpParticipacao'), 'sac'
         );
         
         foreach ($where as $coluna => $valor) {

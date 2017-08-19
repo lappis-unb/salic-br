@@ -2,7 +2,7 @@
     $(document).ready(function(){
         $('#btn_confirmar').click(function(){
             $("#modalPerguntas").dialog("destroy");
-            $("#modalPerguntas").html("Deseja realmente enviar as comprovações?");
+            $("#modalPerguntas").html("Deseja realmente enviar as comprova&ccedil;&otilde;es?");
             $("#modalPerguntas").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -10,7 +10,7 @@
                 //height:180,
                 modal: true,
                 buttons : {
-                    'Não' : function() {
+                    'N&atilde;o' : function() {
                         $(this).dialog('close');
                     },
                     'Sim' : function() {
@@ -36,7 +36,7 @@
     <ul>
         <li class="first"><a href="#" title="In&iacute;cio">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar dados do Projeto">Consultar dados do Projeto</a></li>
-        <li class="second">Comprovar Realização do Objeto</li>
+        <li class="second">Comprovar Realiza&ccedil;&atilde;o do Objeto</li>
         <li class="last">Enviar Comprova&ccedil;&atilde;o Financeira e do Objeto</li>
     </ul>
 </div>
@@ -70,7 +70,7 @@
 
     <table class="tabela">
         <tr align="center">
-            <td class="destacar bold" colspan="2">Informações do Relatório</td>
+            <td class="destacar bold" colspan="2">Informa&ccedil;&otilde;es do Relatório</td>
         </tr>
         <?php $i=0; foreach ($this->Resultado as $dsResultado) { ?>
         <tr>

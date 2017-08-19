@@ -38,7 +38,7 @@
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'efetivar-pagamento-parecerista'), '', true); ?>" title="Efetivar pagamento de parecerista">Efetivar Pagamento</a>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'confirmar-pagamento-parecerista'), '', true); ?>" title="Confirmar pagamento de parecerista">Confirmar Pagamento</a>
                
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'confirmacao-pagamento-parecerista'), '', true); ?>" title="Confirmar pagamento de parecerista">Confirmação Pagamento</a>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'confirmacao-pagamento-parecerista'), '', true); ?>" title="Confirmar pagamento de parecerista">Confirma&ccedil;&atilde;o Pagamento</a>
             </div>
 
             <div class="bottom"></div>

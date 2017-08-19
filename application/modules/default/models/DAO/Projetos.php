@@ -11,7 +11,7 @@
 class Projetos extends Zend_Db_Table
 {
 
-    protected $_name = 'SAC.dbo.Projetos';
+    protected $_name = 'sac.dbo.Projetos';
 
     public function buscarCpf($sql)
     {
@@ -26,8 +26,8 @@ class Projetos extends Zend_Db_Table
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $sql = "select top 1 * 
-        from BDCORPORATIVO.scCorp.tbArquivo a inner join
-        BDCORPORATIVO.scCorp.tbArquivoImagem b
+        from bdcorporativo.scCorp.tbArquivo a inner join
+        bdcorporativo.scCorp.tbArquivoImagem b
         on a.idArquivo = b.idArquivo where a.idArquivo = 406";
         $resultado = $db->fetchAssoc($sql);
         return $resultado;
@@ -55,8 +55,8 @@ class Projetos extends Zend_Db_Table
                         a.NomeProjeto, 
                         a.CgcCpf, 
                         b.Descricao    
-                    from SAC.dbo.Projetos a inner join 
-                        SAC.dbo.Situacao b on
+                    from sac.dbo.Projetos a inner join 
+                        sac.dbo.Situacao b on
                         a.Situacao = b.Codigo
                         where
                          b.Codigo in ( 
@@ -70,7 +70,7 @@ class Projetos extends Zend_Db_Table
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-        $sql = "select * from SAC.dbo.Interessado where CgcCpf = '" . $cpf . "'";
+        $sql = "select * from sac.dbo.Interessado where CgcCpf = '" . $cpf . "'";
         $resultado = $db->fetchAll($sql);
         return $resultado;
     }
@@ -84,8 +84,8 @@ class Projetos extends Zend_Db_Table
                             a.NomeProjeto, 
                             a.CgcCpf, 
                             b.Nome
-                    from scSAC.Projetos a inner join
-                            scSAC.Interessado b on
+                    from scsac.Projetos a inner join
+                            scsac.Interessado b on
                             a.CgcCpf = b.CgcCpf
                     where
                             b.CgcCpf = '" . $cpf . "' and a.idPronac = '" . $pronac . "'";
@@ -109,8 +109,8 @@ class Projetos extends Zend_Db_Table
         $sql = "select top 1
                             a.idPRONAC,
                             CONVERT(CHAR(10), a.dtSolicitacao,103) + ' ' + CONVERT(CHAR(8), a.dtSolicitacao,108) AS maior 
-                            from scSAC.tbPedidoAlteracaoProjeto a inner join
-                            SAC.dbo.Projetos b on a.idPRONAC = b.idPRONAC 
+                            from scsac.tbPedidoAlteracaoProjeto a inner join
+                            sac.dbo.Projetos b on a.idPRONAC = b.idPRONAC 
                             where b.CgcCpf = '" . $cpf . "' and a.idPRONAC = '" . $pronac . "' order by a.dtSolicitacao desc";
         $resultado = $db->fetchAll($sql);
         if ($resultado) {
@@ -155,7 +155,7 @@ class Projetos extends Zend_Db_Table
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-        $idGerado = $db->fetchOne("SELECT MAX(idPedidoAlteracao) as maior from scSAC.tbPedidoAlteracaoProjeto");
+        $idGerado = $db->fetchOne("SELECT MAX(idPedidoAlteracao) as maior from scsac.tbPedidoAlteracaoProjeto");
         return $idGerado;
     }
 

@@ -35,10 +35,10 @@ class QuestaoModel
     public function validarCadastrar()
     {
         if (!$this->guia) {
-            throw new Exception('Guia inválida para cadastro / edição de questão.');
+            throw new Exception('Guia inv&aacute;lida para cadastro / edi&ccedil;&atilde;o de quest&atilde;o.');
         }
         if (!$this->pergunta) {
-            throw new Exception('Pergunta inválida para cadastro / edição de questão.');
+            throw new Exception('Pergunta inv&aacute;lida para cadastro / edi&ccedil;&atilde;o de quest&atilde;o.');
         }
     }
 
@@ -48,7 +48,7 @@ class QuestaoModel
     public function validarEditar()
     {
         if (!$this->questao) {
-            throw new Exception('Identificador inválido para edição de questão.');
+            throw new Exception('Identificador inv&aacute;lido para edi&ccedil;&atilde;o de quest&atilde;o.');
         }
     }
 

@@ -41,13 +41,13 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('cxpa'=>'tbContratoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = cxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -75,7 +75,7 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -111,25 +111,25 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('cxpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = cxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('dlxpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = dlxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('lxpa'=>'tbLicitacaoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = lxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -162,35 +162,35 @@ class Produto extends MinC_Db_Table_Abstract
                             array('pAprovacao'=>'tbPlanilhaAprovacao'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         if($idCotacao)
         $select->joinInner(
                             array('ctxpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = ctxpa.idPlanilhaAprovacao and ctxpa.idCotacao = '$idCotacao' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         if($idDispensaLicitacao)
         $select->joinInner(
                             array('dlxpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = dlxpa.idPlanilhaAprovacao and dlxpa.idDispensaLicitacao  = '$idDispensaLicitacao' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         if($idLicitacao)
         $select->joinInner(
                             array('lxpa'=>'tbLicitacaoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = lxpa.idPlanilhaAprovacao and lxpa.idLicitacao  = '$idLicitacao' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         if($idContrato)
         $select->joinInner(
                             array('cnxpa'=>'tbContratoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = cnxpa.idPlanilhaAprovacao and cnxpa.idContrato = '$idContrato' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
 
 

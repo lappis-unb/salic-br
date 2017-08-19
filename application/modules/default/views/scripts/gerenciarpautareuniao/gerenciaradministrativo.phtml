@@ -95,7 +95,7 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
             closeOnEscape : false,
             title : 'Alerta',
             buttons: {
-                'Não': functionnao,
+                'N&atilde;o': functionnao,
                 'Sim': functionsim
             }
         });
@@ -171,7 +171,7 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
         }, novoIntervalo);
     }
     
-    /*** função mantida para historico  ********
+    /*** fun&ccedil;&atilde;o mantida para historico  ********
     function JSVerificaArquivosVotacao(){
         $.ajax({
             async: true,
@@ -231,7 +231,7 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
                                         scrollTop: $("#projetoemvotacao_"+idPronac).offset().top
                                     }, 1000);
                                     
-                                    $("#votacao_"+idPronac).html('<br><center>Carregando dados da votação...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
+                                    $("#votacao_"+idPronac).html('<br><center>Carregando dados da vota&ccedil;&atilde;o...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
                                 
                                     //$.post('../votarprojetocultural/resultadovoto',{idpronac:idPronac},function(data){
                                     $.post('<?php echo $this->url(array('controller' => 'votarprojetocultural', 'action' => 'resultadovoto')); ?>',{idpronac:idPronac},function(data){
@@ -500,7 +500,7 @@ $idpronacatual = isset($verificar[0]->idPRONAC) ? $verificar[0]->idPRONAC : '';
 <input id="statusreuniao" value="fechado" type="hidden"/>
 <input type="hidden" id="reuniaocancelada" value="fechado"/>
 <input type="hidden" id="idpronac"    />
-<input type="hidden" id="idagente"    />
+<input type="hidden" id="idAgente"    />
 <input type="hidden" id="idnrreuniao" />
 <input type="hidden" value="0" name="qtdeVotacoesConsolidadas" id="qtdeVotacoesConsolidadas" class="input_simples"/>
 <input type="hidden" value="0" name="qtdeVerificacoesInicioPlenaria" id="qtdeVerificacoesInicioPlenaria" class="input_simples"/>

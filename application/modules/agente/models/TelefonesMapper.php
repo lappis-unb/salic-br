@@ -23,13 +23,13 @@ class Agente_Model_TelefonesMapper extends MinC_Db_Mapper
 
     public function saveCustom($arrData)
     {
-        $rowsDeleted = $this->deleteBy(array('idagente' => $arrData['idagente']));
+        $rowsDeleted = $this->deleteBy(array('idAgente' => $arrData['idAgente']));
 
         # cadastra todos os telefones
         $arrId = array();
         for ($i = 0; $i < sizeof($arrData['fones']); $i++) {
             $arrData = array(
-                'idagente' => $arrData['idagente'],
+                'idAgente' => $arrData['idAgente'],
                 'tipotelefone' => $arrData['tipofones'][$i],
                 'uf' => $arrData['uffones'][$i],
                 'ddd' => $arrData['dddfones'][$i],

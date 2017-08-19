@@ -4,45 +4,45 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 {
 	public function init()
 	{
-		// configurações do layout padrão
+		// configura&ccedil;&otilde;es do layout padr&atilde;o
 //		Zend_Layout::startMvc(array('layout' => 'layout_login'));
 
 		parent::init(); // chama o init() do pai GenericControllerNew
 	}
 
 	/**
-	 * Página inicial
+	 * P&aacute;gina inicial
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function indexAction()
 	{
-	} // fecha método indexAction()
+	} // fecha m&eacute;todo indexAction()
 
 
 
 	/**
-	 * Página Simples
+	 * P&aacute;gina Simples
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function paginaSimplesAction()
 	{
-	} // fecha método paginaSimplesAction()
+	} // fecha m&eacute;todo paginaSimplesAction()
 
 
 
 	/**
-	 * Página com Menu Lateral
+	 * P&aacute;gina com Menu Lateral
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function paginaMenuLateralAction()
 	{
-	} // fecha método paginaMenuLateralAction()
+	} // fecha m&eacute;todo paginaMenuLateralAction()
 
 
 
@@ -54,7 +54,7 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 	 */
 	public function menuLateralAction()
 	{
-	} // fecha método menuLateralAction()
+	} // fecha m&eacute;todo menuLateralAction()
 
 
 
@@ -66,7 +66,7 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 	 */
 	public function mensagensAction()
 	{
-	} // fecha método mensagensAction()
+	} // fecha m&eacute;todo mensagensAction()
 
 
 
@@ -78,55 +78,55 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 	 */
 	public function menuAbas1Action()
 	{
-	} // fecha método menuAbas1Action()
+	} // fecha m&eacute;todo menuAbas1Action()
 
 	public function menuAbas2Action()
 	{
-	} // fecha método menuAbas2Action()
+	} // fecha m&eacute;todo menuAbas2Action()
 
 	public function menuAbas3Action()
 	{
-	} // fecha método menuAbas3Action()
+	} // fecha m&eacute;todo menuAbas3Action()
 
 	public function menuAbas4Action()
 	{
-	} // fecha método menuAbas4Action()
+	} // fecha m&eacute;todo menuAbas4Action()
 
 
 
 	/**
-	 * Formulários
+	 * Formul&aacute;rios
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function formulariosAction()
 	{
-	} // fecha método formulariosAction()
+	} // fecha m&eacute;todo formulariosAction()
 
 
 
 	/**
-	 * Máscaras em JavaScript
+	 * M&aacute;scaras em JavaScript
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function mascarasJsAction()
 	{
-	} // fecha método mascarasJsAction()
+	} // fecha m&eacute;todo mascarasJsAction()
 
 
 
 	/**
-	 * Máscaras em PHP
+	 * M&aacute;scaras em PHP
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function mascarasPhpAction()
 	{
-	} // fecha método mascarasPhpAction()
+	} // fecha m&eacute;todo mascarasPhpAction()
 
 
 
@@ -138,7 +138,7 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 	 */
 	public function tabelasAction()
 	{
-	} // fecha método tabelasAction()
+	} // fecha m&eacute;todo tabelasAction()
 
 
 
@@ -150,7 +150,7 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 	 */
 	public function gridsAction()
 	{
-	} // fecha método gridsAction()
+	} // fecha m&eacute;todo gridsAction()
 
 
 
@@ -162,7 +162,7 @@ class Layout_ManualController extends MinC_Controller_Action_Abstract
 	 */
 	public function planilhaAction()
 	{
-	} // fecha método planilhaAction()
+	} // fecha m&eacute;todo planilhaAction()
 
 
 

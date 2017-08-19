@@ -13,7 +13,7 @@ class Proposta_Model_DbTable_PlanilhaUnidade extends MinC_Db_Table_Abstract
     public function buscarUnidade() {
 
 //        $sql = "select idUnidade, Sigla, Descricao
-//        FROM SAC.dbo.tbPlanilhaUnidade order by 3";
+//        FROM sac.dbo.tbPlanilhaUnidade order by 3";
 
         $select = $this->select();
         $select->setIntegrityCheck(false);

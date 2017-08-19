@@ -24,13 +24,13 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 						   end as Enquadramento, 
 						   CAST(ResumoParecer AS TEXT) AS ResumoParecer, 
 						   SugeridoReal
-				FROM      SAC.dbo.Projetos AS p 
-							INNER JOIN SAC.dbo.Parecer AS pa ON p.IdPRONAC = pa.idPRONAC AND pa.TipoParecer = '1' 
-				            LEFT OUTER JOIN SAC.dbo.vwMemoriaDeCalculo AS m ON p.IdPRONAC = m.idPronac 
-				            INNER JOIN SAC.dbo.Situacao AS s ON p.Situacao = s.Codigo 
-				            INNER JOIN SAC.dbo.Orgaos AS o ON p.Orgao = o.Codigo
-				            LEFT JOIN SAC.dbo.Enquadramento e ON (p.idPronac = e.idPronac)
-				WHERE     (p.Situacao IN ('C09', 'C20', 'C25')) AND (p.AnoProjeto > '08') AND (p.Mecanismo = '1') ";
+				FROM      sac.dbo.Projetos AS p 
+							INNER JOIN sac.dbo.Parecer AS pa ON p.IdPRONAC = pa.idPRONAC AND pa.TipoParecer = '1' 
+				            LEFT OUTER JOIN sac.dbo.vwMemoriaDeCalculo AS m ON p.IdPRONAC = m.idPronac 
+				            INNER JOIN sac.dbo.Situacao AS s ON p.Situacao = s.Codigo 
+				            INNER JOIN sac.dbo.Orgaos AS o ON p.Orgao = o.Codigo
+				            LEFT JOIN sac.dbo.Enquadramento e ON (p.idPronac = e.idPronac)
+				WHERE     (p.Situacao in ('C09', 'C20', 'C25')) AND (p.AnoProjeto > '08') AND (p.Mecanismo = '1') ";
 		
 				//AND idSecretaria = 251 (Obs: n�o pode ser mais fixo
 				
@@ -135,11 +135,11 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 								   ELSE \'Sim\'
 							  END as IncisoArtigo27_IV
 				')),
-				'SAC.dbo')
+				'SAC')
 			->joinInner(array('p' => 'Produto'),
 				'a.idProduto = p.Codigo',
 				array(new Zend_Db_Expr('p.Descricao as Produto')),
-			    'SAC.dbo')
+			    'SAC')
 		 	->where('idPronac = ?',$idPronac);
 
 
@@ -158,12 +158,12 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 						   CASE WHEN TipoAnalise = 0 THEN 'Conte&uacute;do' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
 						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Conclu�do' ELSE 'Aguardando an�lise' END AS Estado, 
 						   TABELAS.dbo.fnEstruturaOrgao(t.idOrgao, 0) AS Orgao
-				FROM       SAC.dbo.tbDistribuirParecer AS t 
-				INNER JOIN SAC.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC 
-				INNER JOIN SAC.dbo.Orgaos AS x ON p.Orgao = x.Codigo 
-				INNER JOIN SAC.dbo.Produto AS r ON t.idProduto = r.Codigo
-				INNER JOIN SAC.dbo.Area a ON A.Codigo = p.Area
-				INNER JOIN SAC.dbo.Segmento s ON s.Codigo = p.Segmento 
+				FROM       sac.dbo.tbDistribuirParecer AS t 
+				INNER JOIN sac.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC 
+				INNER JOIN sac.dbo.Orgaos AS x ON p.Orgao = x.Codigo 
+				INNER JOIN sac.dbo.Produto AS r ON t.idProduto = r.Codigo
+				INNER JOIN sac.dbo.Area a ON A.Codigo = p.Area
+				INNER JOIN sac.dbo.Segmento s ON s.Codigo = p.Segmento 
 				WHERE (t.stEstado = 0) AND p.IdPRONAC = ".$idpronac;
 				
 				
@@ -191,9 +191,9 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                                         CONVERT(CHAR(11),DtEnvio,103) + CONVERT(CHAR(8),DtEnvio,108) AS DtEnvio ,
                                         CONVERT(CHAR(11),DtDevolucao,103) + CONVERT(CHAR(8),DtDevolucao,108) AS DtDevolucao ,
                                         Observacao,
-				SAC.dbo.fnNomeUsuario(idUsuario) as Usuario
-				from SAC.dbo.tbDistribuirParecer d
-				inner join SAC.dbo.Produto p on (d.idProduto = p.Codigo)
+				sac.dbo.fnNomeUsuario(idUsuario) as Usuario
+				from sac.dbo.tbDistribuirParecer d
+				inner join sac.dbo.Produto p on (d.idProduto = p.Codigo)
 				where idPronac <> ''";
 				
 				// idPronac **********************************************				
@@ -336,25 +336,25 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                                     WHEN ParecerFavoravel = 1 THEN \'Sim\'
                                     ELSE \'N&atilde;o\'
                                END AS ParecerFavoravel,
-                               SAC.dbo.fnNomeParecerista(a.idUsuario) AS Parecerista
+                               sac.dbo.fnNomeParecerista(a.idUsuario) AS Parecerista
                             ')),
-                    'SAC.dbo')
+                    'SAC')
             ->joinInner(array('i' => 'Interessado'),
                 'p.CgcCpf = i.CgcCpf',
                 array(new Zend_Db_Expr('i.Nome AS Proponente')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('a' => 'tbAnaliseDeConteudo'),
                 'p.IdPRONAC = a.idPronac',
                 array('a.ParecerDeConteudo','a.idProduto'),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pr' => 'Produto'),
                 'a.idProduto = pr.Codigo',
                 array(new Zend_Db_Expr('pr.Descricao AS Produto')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
             'p.idProjeto = pd.idProjeto and pd.idProduto = pr.Codigo AND pd.stPlanoDistribuicaoProduto = 1',
             array('pd.stPrincipal'),
-            'SAC.dbo')
+            'SAC')
             ->where('a.idUsuario IS NOT NULL AND p.IdPRONAC = ?', $idpronac)
             ->order('pd.stPrincipal DESC');
 
@@ -368,8 +368,8 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 	public static function emPauta($idpronac)
 	{
 		$sql = "SELECT AnoProjeto, Sequencial, Situacao 
-					FROM SAC.dbo.Projetos p
-					INNER JOIN SAC.dbo.Situacao s ON s.Codigo = p.Situacao
+					FROM sac.dbo.Projetos p
+					INNER JOIN sac.dbo.Situacao s ON s.Codigo = p.Situacao
 						WHERE idPronac = ".$idpronac." AND s.AreaAtuacao='R' and s.StatusProjeto='1'";
 				
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -380,7 +380,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 
 	public static function projetoAprovado($pronac)
 	{
-		$sql = "SELECT  TOP 1 * FROM SAC.dbo.Aprovacao WHERE TipoAprovacao = '1' and (AnoProjeto+Sequencial) = '".$pronac."'";
+		$sql = "SELECT  TOP 1 * FROM sac.dbo.Aprovacao WHERE TipoAprovacao = '1' and (AnoProjeto+Sequencial) = '".$pronac."'";
 				
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -396,12 +396,12 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 						   CASE WHEN TipoAnalise = 0 THEN 'Conte&uacute;do' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
 						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Conclu�do' ELSE 'Aguardando an�lise' END AS Estado, 
 						   TABELAS.dbo.fnEstruturaOrgao(t.idOrgao, 0) AS Orgao
-				FROM       SAC.dbo.tbDistribuirParecer AS t 
-				INNER JOIN SAC.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC 
-				INNER JOIN SAC.dbo.Orgaos AS x ON p.Orgao = x.Codigo 
-				INNER JOIN SAC.dbo.Produto AS r ON t.idProduto = r.Codigo
-				INNER JOIN SAC.dbo.Area a ON A.Codigo = p.Area
-				INNER JOIN SAC.dbo.Segmento s ON s.Codigo = p.Segmento
+				FROM       sac.dbo.tbDistribuirParecer AS t 
+				INNER JOIN sac.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC 
+				INNER JOIN sac.dbo.Orgaos AS x ON p.Orgao = x.Codigo 
+				INNER JOIN sac.dbo.Produto AS r ON t.idProduto = r.Codigo
+				INNER JOIN sac.dbo.Area a ON A.Codigo = p.Area
+				INNER JOIN sac.dbo.Segmento s ON s.Codigo = p.Segmento
 				
 				WHERE p.IdPRONAC = ".$idPronac." AND t.stPrincipal = 1 AND t.stEstado = 0";
 				
@@ -446,15 +446,15 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 			ROUND(b.Quantidade * b.Ocorrencia * b.ValorUnitario, 2) AS Sugerido,
 			CAST(b.Justificativa AS TEXT) AS Justificativa,
 			b.idUsuario
-FROM         SAC.dbo.Projetos AS a
-					  INNER JOIN SAC.dbo.tbPlanilhaProjeto AS b ON a.IdPRONAC = b.idPRONAC
-					  INNER JOIN SAC.dbo.tbPlanilhaProposta AS z ON b.idPlanilhaProposta = z.idPlanilhaProposta
-					  left JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = z.idPlanilhaProposta)
-					  LEFT OUTER JOIN SAC.dbo.Produto AS c ON b.idProduto = c.Codigo
-					  INNER JOIN SAC.dbo.tbPlanilhaEtapa AS d ON b.idEtapa = d.idPlanilhaEtapa
-					  INNER JOIN SAC.dbo.tbPlanilhaUnidade AS e ON b.idUnidade = e.idUnidade
-					  INNER JOIN SAC.dbo.tbPlanilhaItens AS i ON b.idPlanilhaItem = i.idPlanilhaItens
-					  INNER JOIN SAC.dbo.Verificacao AS x ON b.FonteRecurso = x.idVerificacao
+FROM         sac.dbo.Projetos AS a
+					  INNER JOIN sac.dbo.tbPlanilhaProjeto AS b ON a.IdPRONAC = b.idPRONAC
+					  INNER JOIN sac.dbo.tbPlanilhaProposta AS z ON b.idPlanilhaProposta = z.idPlanilhaProposta
+					  left JOIN sac.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = z.idPlanilhaProposta)
+					  LEFT OUTER JOIN sac.dbo.Produto AS c ON b.idProduto = c.Codigo
+					  INNER JOIN sac.dbo.tbPlanilhaEtapa AS d ON b.idEtapa = d.idPlanilhaEtapa
+					  INNER JOIN sac.dbo.tbPlanilhaUnidade AS e ON b.idUnidade = e.idUnidade
+					  INNER JOIN sac.dbo.tbPlanilhaItens AS i ON b.idPlanilhaItem = i.idPlanilhaItens
+					  INNER JOIN sac.dbo.Verificacao AS x ON b.FonteRecurso = x.idVerificacao
 					  INNER JOIN agentes.dbo.vUFMunicipio AS f ON b.UfDespesa = f.idUF AND b.MunicipioDespesa = f.idMunicipio
 					  WHERE a.IdPRONAC = ".$idpronac."
 						ORDER BY x.Descricao, Produto, Etapa, UF, Item";
@@ -478,8 +478,8 @@ FROM         SAC.dbo.Projetos AS a
 					   d.Resposta, 
 					   d.idSolicitante, 
 					   d.idProponente
-				FROM SAC.dbo.tbDiligencia d
-				INNER JOIN SAC.dbo.Verificacao v ON d.idTipoDiligencia = v.idVerificacao
+				FROM sac.dbo.tbDiligencia d
+				INNER JOIN sac.dbo.Verificacao v ON d.idTipoDiligencia = v.idVerificacao
 				WHERE idPronac = ".$idpronac;
 				
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -530,7 +530,7 @@ FROM         SAC.dbo.Projetos AS a
 	
 	public static function devolverParecer($idpronac, $idproduto, $observacao, $tipoanalise, $idusuario, $idorgao)
 	{
-		$sql = "UPDATE SAC.dbo.tbDistribuirParecer SET FecharAnalise=0, Observacao = '".$observacao."', idUsuario = ".$idusuario.", idOrgao = ".$idorgao."  
+		$sql = "UPDATE sac.dbo.tbDistribuirParecer SET FecharAnalise=0, Observacao = '".$observacao."', idUsuario = ".$idusuario.", idOrgao = ".$idorgao."  
 					WHERE idpronac    = ".$idpronac." 
 					AND   idproduto   = ".$idproduto." 
 					AND   tipoanalise = ".$tipoanalise." 
@@ -544,7 +544,7 @@ FROM         SAC.dbo.Projetos AS a
 	//-- Gravar o idParecer nas tabelas tbAnaliseDeConteudo
 	public static function updatetbAnaliseDeConteudo($idpronac)
 	{
-		$sql = "UPDATE SAC.dbo.tbAnaliseDeConteudo SET idParecer = NULL WHERE idPronac = ".$idpronac." and idParecer is not null";
+		$sql = "UPDATE sac.dbo.tbAnaliseDeConteudo SET idParecer = NULL WHERE idPronac = ".$idpronac." and idParecer is not null";
 					
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -554,7 +554,7 @@ FROM         SAC.dbo.Projetos AS a
 	//-- Gravar o idParecer nas tabelas tbPlanilhaProjeto
 	public static function updatetbPlanilhaProjeto($idpronac)
 	{
-		$sql = "UPDATE SAC.dbo.tbPlanilhaProjeto SET idParecer = NULL WHERE idPronac = ".$idpronac." and idParecer is not null";
+		$sql = "UPDATE sac.dbo.tbPlanilhaProjeto SET idParecer = NULL WHERE idPronac = ".$idpronac." and idParecer is not null";
 					
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -565,7 +565,7 @@ FROM         SAC.dbo.Projetos AS a
 	public static function updateProjetos($idpronac)
 	{
         $objAcesso= new Acesso();
-		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = 'B11', 
+		$sql = "UPDATE sac.dbo.Projetos SET Situacao = 'B11', 
 						ProvidenciaTomada = 'Projeto encaminhado para novo parecer t�cnico na unidade de an�lise do MinC.', 
 						DtSituacao = {$objAcesso->getDate()} 
       			WHERE idPronac = ".$idpronac;
@@ -582,7 +582,7 @@ FROM         SAC.dbo.Projetos AS a
 		// Excluir o parecer t�cnico do projeto
 		public static function delPerecer($idpronac)
 		{
-			$sql = "DELETE FROM SAC.dbo.Parecer WHERE TipoParecer = '1' and idPronac = ".$idpronac;
+			$sql = "DELETE FROM sac.dbo.Parecer WHERE TipoParecer = '1' and idPronac = ".$idpronac;
 
 			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -592,7 +592,7 @@ FROM         SAC.dbo.Projetos AS a
 		// Excluir o enquadramento do projeto
 		public static function delEnquadramento($idpronac)
 		{
-			$sql = "DELETE FROM SAC.dbo.Enquadramento WHERE idPronac = ".$idpronac;
+			$sql = "DELETE FROM sac.dbo.Enquadramento WHERE idPronac = ".$idpronac;
 
 			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -609,7 +609,7 @@ FROM         SAC.dbo.Projetos AS a
 	
 	public static function execPareceres()
 	{
-		$sql = "EXEC SAC.dbo.paConsolidarParecer";
+		$sql = "EXEC sac.dbo.paConsolidarParecer";
 		
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

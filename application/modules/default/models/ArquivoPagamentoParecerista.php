@@ -36,11 +36,11 @@ class ArquivoPagamentoParecerista extends MinC_Db_Table_Abstract {
                                   'arq.nmArquivo',
                                   'arq.sgExtensao',
                                   'arq.dtEnvio',
-                                  'nrTamanho'),'BDCORPORATIVO.scCorp'
+                                  'nrTamanho'),'bdcorporativo.scCorp'
         );
 
         $select->joinInner(array('aim'=>'tbArquivoImagem'), "arq.idArquivo = aim.idArquivo",
-                            array('aim.biArquivo'),'BDCORPORATIVO.scCorp'
+                            array('aim.biArquivo'),'bdcorporativo.scCorp'
         );
 
         foreach ($where as $coluna => $valor) {

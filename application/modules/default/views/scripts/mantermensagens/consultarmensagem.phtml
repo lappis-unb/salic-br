@@ -13,7 +13,7 @@
             modal: true,
             autoOpen:false,
             buttons: {
-                'Não': functionnao,
+                'N&atilde;o': functionnao,
                 'Sim': functionsim
             }
         });
@@ -34,7 +34,7 @@
             }
         });
         $(".resposta").click(function(){
-            var idagente = $(this).attr('idagente');
+            var idagente = $(this).attr('idAgente');
             var idmensagem = $(this).attr('idMensagem');
             $("#resposta").dialog({
                 resizable: false,
@@ -150,7 +150,7 @@
             <tr>
                 <th>Data</th>
                 <th>Remetente</th>
-                <th>Destinatário</th>
+                <th>Destinat&aacute;rio</th>
                 <th>Mensagem</th>
                 <th>Responder</th>
             </tr>
@@ -169,7 +169,7 @@
         <?php } else { ?>
             <tr>
                 <th colspan="5">
-                    Não existem mensagens para esse projeto!
+                    N&atilde;o existem mensagens para esse projeto!
                 </th>
             </tr>
         <?php } ?>
@@ -179,8 +179,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

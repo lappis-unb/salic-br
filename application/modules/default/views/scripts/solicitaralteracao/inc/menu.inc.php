@@ -10,10 +10,10 @@ $menuExiste = false;
     <!-- início: conteúdo principal #container -->
     <div id="container">
         <div style="display:none" id="pergunta"><?php if ($this->existirPlanilhaCusto == 'ok') { ?>Seu projeto sofreu <?php echo $this->verificarReadequacao; ?>.<br /><br /><?php } ?>Tem certeza que deseja Enviar e Finalizar?</div>
-        <div style="display:none" id="validarPlan">Antes de enviar a solicitação é necessário cadastrar os Itens de Custos para os Produtos sem planilha orçamentária!</div>
-        <div style="display:none" id="dialog-alerta">Solicitação realizada com sucesso!</div>
-        <div style="display:none" id="dialog-em-analise">Há pedido de readequação em análise. Favor aguardar.</div>
-        <!-- início: navegação local #qm0 -->
+        <div style="display:none" id="validarPlan">Antes de enviar a solicita&ccedil;&atilde;o &eacute; necess&aacute;rio cadastrar os Itens de Custos para os Produtos sem planilha or&ccedil;ament&aacute;ria!</div>
+        <div style="display:none" id="dialog-alerta">Solicita&ccedil;&atilde;o realizada com sucesso!</div>
+        <div style="display:none" id="dialog-em-analise">H&aacute; pedido de readequa&ccedil;&atilde;o em an&aacute;lise. Favor aguardar.</div>
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -32,7 +32,7 @@ $menuExiste = false;
                 $("#rodapeConteudo").css("margin-left", "225px");
                 $(".sanfonaDiv").css("clear", "both");
                 $(".sanfonaDiv").css("width", "91%");
-            } // fecha função layout_fluido()
+            } // fecha fun&ccedil;&atilde;o layout_fluido()
 
             $(document).ready(function()
             {
@@ -85,7 +85,7 @@ $menuExiste = false;
 
 
 
-        <?php if ($menu == "Com Menu" || $menu == "Botão") { ?>
+        <?php if ($menu == "Com Menu" || $menu == "Bot&atilde;o") { ?>
             <div id="menuContexto">
                 <div class="top"></div>
                 <div id="qm0" class="qmmc ">
@@ -107,13 +107,13 @@ $menuExiste = false;
                 <div class="sanfonaDiv"></div>
                 <div class="bottom"></div>
 
-    <?php if ($menu == "Botão") { ?>
+    <?php if ($menu == "Bot&atilde;o") { ?>
                     <div style='background:#f8f8f8;'><br><br><br>
                         <ul id='menuGerenciar' style="border:0">
                             <li>
                                 <form name="Produto" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'incluirproduto')); ?>" method="post">
                                     <input type="hidden" name="idpronac " value="<?php echo $idPronac; ?>">
-                                    <!--<input type="button" id="menuFinal" value="Enviar Solicitação" class="btn" />-->
+                                    <!--<input type="button" id="menuFinal" value="Enviar Solicita&ccedil;&atilde;o" class="btn" />-->
                                     <input type="button" id="menuFinal" class="btn_enviar_solicitacao" />
                                 </form>
                             </li>
@@ -133,7 +133,7 @@ $menuExiste = false;
 
 
 
-        <?php /* if($menu=="Botão"){ ?>
+        <?php /* if($menu=="Bot&atilde;o"){ ?>
           <div id="menuContexto">
           <div class="top"></div>
           <div id="qm0" class="qmmc ">
@@ -151,7 +151,7 @@ $menuExiste = false;
           <li>
           <form name="Produto" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto','action' => 'incluirproduto')); ?>" method="post">
           <input type="hidden" name="idpronac " value="<?php echo $idPronac; ?>">
-          <input type="button" id="menuFinal" value="Enviar Solicitação" class="btn" />
+          <input type="button" id="menuFinal" value="Enviar Solicita&ccedil;&atilde;o" class="btn" />
           </form>
           </li>
           </ul>
@@ -174,7 +174,7 @@ $menuExiste = false;
             $(this).next().toggle('fast');
         });
         
-<?php if ($menu != "Botão") { ?>
+<?php if ($menu != "Bot&atilde;o") { ?>
 
             $('#div_teste2').toggle();
                 
@@ -280,7 +280,7 @@ $menuExiste = false;
                                 closeOnEscape: true,
                                 autoOpen:true,
                                 buttons: {
-                                    'Não': function()
+                                    'N&atilde;o': function()
                                     {
                                         $(this).dialog('close');
                                         var idpronac = <?php echo $idPronac; ?>;
@@ -359,6 +359,6 @@ $menuExiste = false;
 
 </script>
 
-<!-- final: navegação local #qm0 -->
+<!-- final: navega&ccedil;&atilde;o local #qm0 -->
 
 <!-- ========== FIM MENU ========== -->

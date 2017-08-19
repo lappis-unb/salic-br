@@ -220,7 +220,7 @@ if($this->tipoPublicacao == 'readequacao') {
                 $relatorio .= '
                     <p></p>
                     <p class="saltoLinha">
-                        Art. ' . $nrArtigo . '.&ordm; - Alterar a(s) razão(ões) social(ais) do(s) proponente(s) abaixo relacionado(s):
+                        Art. ' . $nrArtigo . '.&ordm; - Alterar a(s) raz&atilde;o(&otilde;es) social(ais) do(s) proponente(s) abaixo relacionado(s):
                     </p>
                 ';
                 $nrArtigo++;
@@ -267,8 +267,6 @@ if($this->tipoPublicacao == 'readequacao') {
             ';
             $AtualIdTipoReadequacao = $idTipoReadequacao;
             
-        } else {
-            //xd('parou aqui');
         }
         
     }
@@ -307,8 +305,8 @@ if($this->tipoPublicacao == 'readequacao') {
         $iniciocaptacao        = $portaria->DataInicio;
         $fimcaptacao           = $portaria->DataFim;
         $resumoprojeto         = $portaria->ResumoProjeto;
-        $areaprojeto           = strtoupper(strtr($portaria->Area ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
-        $areaprojetoCodigo     = strtoupper(strtr($portaria->AreaCodigo ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+        $areaprojeto           = strtoupper(strtr($portaria->Area ,"&aacute;&eacute;íóúâêô&atilde;&otilde;&agrave;èìòù&ccedil;","&aacute;&eacute;ÍÓÚÂÊÔ&atilde;&otilde;&agrave;ÈÌÒÙ&ccedil;"));
+        $areaprojetoCodigo     = strtoupper(strtr($portaria->AreaCodigo ,"&aacute;&eacute;íóúâêô&atilde;&otilde;&agrave;èìòù&ccedil;","&aacute;&eacute;ÍÓÚÂÊÔ&atilde;&otilde;&agrave;ÈÌÒÙ&ccedil;"));
         $situacaoprojeto       = $portaria->Situacao;
         $artigo                = $portaria->Artigo;
         $PortariaAprovacao     = $portaria->PortariaAprovacao;
@@ -403,8 +401,8 @@ if($this->tipoPublicacao == 'readequacao') {
         $iniciocaptacao = $portaria->DataInicio;
         $fimcaptacao = $portaria->DataFim;
         $resumoprojeto = $portaria->ResumoProjeto;
-        $areaprojeto = strtoupper(strtr($portaria->Area ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
-        $areaprojetoCodigo = strtoupper(strtr($portaria->AreaCodigo ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+        $areaprojeto = strtoupper(strtr($portaria->Area ,"&aacute;&eacute;íóúâêô&atilde;&otilde;&agrave;èìòù&ccedil;","&aacute;&eacute;ÍÓÚÂÊÔ&atilde;&otilde;&agrave;ÈÌÒÙ&ccedil;"));
+        $areaprojetoCodigo = strtoupper(strtr($portaria->AreaCodigo ,"&aacute;&eacute;íóúâêô&atilde;&otilde;&agrave;èìòù&ccedil;","&aacute;&eacute;ÍÓÚÂÊÔ&atilde;&otilde;&agrave;ÈÌÒÙ&ccedil;"));
         $situacaoprojeto = $portaria->Situacao;
         $artigo = $portaria->Artigo;
         $PortariaAprovacao = $portaria->PortariaAprovacao;

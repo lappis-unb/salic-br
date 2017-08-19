@@ -8,7 +8,7 @@
 
  class AnaliseConteudoConselheiroDAO extends Zend_Db_Table
  {
-     protected $_name = 'SAC.dbo.tbAnaliseConteudoConselheiro';
+     protected $_name = 'sac.dbo.tbAnaliseConteudoConselheiro';
     
     
      public function alterar($dados, $id)

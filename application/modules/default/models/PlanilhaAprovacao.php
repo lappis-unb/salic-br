@@ -156,7 +156,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
 
         $select->where('pa.IdPRONAC = ?', $idpronac);
         $select->where('pa.stAtivo = ?','S');
-        $select->where('pa.idPlanilhaAprovacao not in (?)', new Zend_Db_Expr('select idPlanilhaAprovacaoFilho  from  SAC.dbo.tbDeParaPlanilhaAprovacao'));
+        $select->where('pa.idPlanilhaAprovacao not in (?)', new Zend_Db_Expr('select idPlanilhaAprovacaoFilho  from  sac.dbo.tbDeParaPlanilhaAprovacao'));
 
         return $this->fetchAll($select);
     }
@@ -179,17 +179,17 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 new Zend_Db_Expr('(pAprovacao.qtItem*pAprovacao.nrOcorrencia*pAprovacao.vlUnitario) as Total'),
                 /*new Zend_Db_Expr(
                     "(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                    FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                    INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                    FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                    INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                    INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                     WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao AND (c1.idPronac = pAprovacao.idPronac)
                     GROUP BY a1.idPlanilhaAprovacao) as vlComprovado"
                 ),*/
                 new Zend_Db_Expr(
                     "(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                    FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                    INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                    FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                    INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                    INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                     WHERE c1.idPlanilhaItem = pAprovacao.idPlanilhaItem
                         AND c1.nrFonteRecurso = pAprovacao.nrFonteRecurso
                         AND c1.idProduto = pAprovacao.idProduto
@@ -201,9 +201,9 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 ),
                 new Zend_Db_Expr(
                     "(SELECT sum(b2.vlComprovacao) AS vlPagamento
-                    FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a2
-                    INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
+                    FROM bdcorporativo.scsac.tbComprovantePagamentoxPlanilhaAprovacao AS a2
+                    INNER JOIN bdcorporativo.scsac.tbComprovantePagamento AS b2 ON (a2.idComprovantePagamento = b2.idComprovantePagamento)
+                    INNER JOIN sac.dbo.tbPlanilhaAprovacao AS c2 ON (a2.idPlanilhaAprovacao = c2.idPlanilhaAprovacao)
                     WHERE a2.stItemAvaliado = 1 AND c2.stAtivo = 'S' AND c2.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao AND (c2.idPronac = pAprovacao.idPronac)
                     GROUP BY a2.idPlanilhaAprovacao) as ComprovacaoValidada"
                 )
@@ -213,63 +213,63 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             array('pEtapa'=>'tbPlanilhaEtapa'),
             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
             array('pEtapa.idPlanilhaEtapa', 'pEtapa.tpCusto','pEtapa.Descricao as descEtapa'),
-            'SAC.dbo'
+            'SAC'
         );
         $select->joinInner(
             array('pItens'=>'tbPlanilhaItens'),
             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
             array('pItens.idPlanilhaItens','pItens.Descricao as descItem'),
-            'SAC.dbo'
+            'SAC'
         );
-        $select->joinLeft(array('prod'=>'Produto'), 'pAprovacao.idProduto = prod.Codigo', array('prod.Codigo','prod.Descricao'), 'SAC.dbo');
-        $select->joinInner(array('UFT'=>'UF'), 'pAprovacao.idUFDespesa = UFT.idUF', array('uf'=>'UFT.Sigla'), 'agentes.dbo');
+        $select->joinLeft(array('prod'=>'Produto'), 'pAprovacao.idProduto = prod.Codigo', array('prod.Codigo','prod.Descricao'), 'SAC');
+        $select->joinInner(array('UFT'=>'UF'), 'pAprovacao.idUFDespesa = UFT.idUF', array('uf'=>'UFT.Sigla'), 'agentes');
         $select->joinInner(
             array('CID'=>'Municipios'),
             'pAprovacao.idMunicipioDespesa = CID.idMunicipioIBGE',
             array('cidade'=>'CID.Descricao'),
-            'agentes.dbo'
+            'agentes'
         );
         $select->joinLeft(
             array('cppa'=>'tbComprovantePagamentoxPlanilhaAprovacao'),
             'pAprovacao.idPlanilhaAprovacao = cppa.idPlanilhaAprovacao',
             array('stItemAvaliado'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('cPagamento'=>'tbComprovantePagamento'),
             'cppa.idComprovantePagamento = cPagamento.idComprovantePagamento',
             array('cPagamento.tpDocumento'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('cpa'=>'tbCotacaoxPlanilhaAprovacao'),
             'cpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
             array('cpa.idCotacao'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('cxa'=>'tbCotacaoxAgentes'),
             'cpa.idCotacaoxAgentes = cxa.idCotacaoxAgentes ',
             array('cxa.idAgente as idFornecedorCotacao'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('dlpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
             'dlpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
             array('dlpa.idDispensaLicitacao'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('lpa'=>'tbLicitacaoxPlanilhaAprovacao'),
             'lpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
             array('lpa.idLicitacao'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('ctpa'=>'tbContratoxPlanilhaAprovacao'),
             'ctpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
             array('ctpa.idContrato'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
         $select->where('pAprovacao.stAtivo = ?','S');
@@ -309,7 +309,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbContratoxPlanilhaAprovacao'),
                             'cpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array('cpa.idContrato'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->where('pAprovacao.idPlanilhaAprovacao = ?', $idPlanilhaAprovacao);
 
@@ -330,19 +330,19 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             'cpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array('cpa.idCotacao'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('dlpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             'dlpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array('dlpa.idDispensaLicitacao'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('lpa'=>'tbLicitacaoxPlanilhaAprovacao'),
                             'lpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array('lpa.idLicitacao'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->where('pAprovacao.idPlanilhaAprovacao = ?', $idPlanilhaAprovacao);
         $select->where('pAprovacao.stAtivo = ?','S');
@@ -378,7 +378,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array('ic'=>'tbItemCusto'),
                             'ic.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array('ic.idItemCusto','ic.dsFabricante','ic.dsItemDeCusto','ic.dsMarca','ic.dsObservacao'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
         $select->where("pAprovacao.stAtivo = 'S'");
@@ -418,49 +418,49 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array('cpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             'cpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('cxa'=>'tbCotacaoxAgentes'),
                             'cpa.idCotacaoxAgentes = cxa.idCotacaoxAgentes ',
                             array('cxa.idAgente as idFornecedorCotacao'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('dlpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             'dlpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('dl'=>'tbDispensaLicitacao'),
                             'dlpa.idDispensaLicitacao = dl.idDispensaLicitacao',
                             array('dl.idAgente as idFornecedorDL'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('lpa'=>'tbLicitacaoxPlanilhaAprovacao'),
                             'lpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('lxa'=>'tbLicitacaoxAgentes'),
                             "lpa.idLicitacao = lxa.idLicitacao and lxa.stVencedor = 'true'",
                             array('lxa.idAgente as idFornecedorL'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('ctpa'=>'tbContratoxPlanilhaAprovacao'),
                             'ctpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('ctxa'=>'tbContratoxAgentes'),
                             'ctpa.idContrato = ctxa.idContrato',
                             array('ctxa.idAgente as idFornecedorContrato'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
         $select->where('pAprovacao.stAtivo = ?','S');
@@ -486,30 +486,30 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 array('xp'=>'Produto'),
                 'pAprovacao.idProduto = xp.Codigo',
                 array("(CASE WHEN xp.Descricao IS NULL THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE xp.Descricao END) as Produto"),
-                'SAC.dbo'
+                'SAC'
             )->joinInner(
                 array('xe'=>'tbPlanilhaEtapa'),
                 'pAprovacao.idEtapa = xe.idPlanilhaEtapa',
                 array('xe.Descricao as Etapa'),
-                'SAC.dbo'
+                'SAC'
             )->joinInner(
                 array('cppa'=>'tbComprovantePagamentoxPlanilhaAprovacao'),
                 'cppa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                 array('cppa.idComprovantePagamento', 'cppa.idPlanilhaAprovacao', 'cppa.stItemAvaliado', 'cppa.dsJustificativa', 'CONVERT(CHAR(23), cppa.dtValidacao, 120) AS dtValidacao', 'cppa.vlComprovado'),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
             )->joinInner(
                 array('cp'=>'tbComprovantePagamento'),
                 'cp.idComprovantePagamento = cppa.idComprovantePagamento',
                 array('cp.tpDocumento', 'cp.nrSerie', 'cp.dtEmissao', 'cp.nrComprovante', 'cp.idArquivo'),
-                'BDCORPORATIVO.scSAC'
-            )->joinInner(array('ag'=>'Agentes'), 'ag.idAgente = cp.idFornecedor', array('ag.CNPJCPF'), 'agentes.dbo')
-            ->joinInner(array('nm'=>'Nomes'), 'nm.idAgente = cp.idFornecedor', array('nm.Descricao'), 'agentes.dbo')
-            ->joinInner(array('arq'=>'tbArquivo'), 'arq.idArquivo = cp.idArquivo', array('arq.nmArquivo'), 'BDCORPORATIVO.scCorp')
+                'bdcorporativo.scSAC'
+            )->joinInner(array('ag'=>'Agentes'), 'ag.idAgente = cp.idFornecedor', array('ag.CNPJCPF'), 'agentes')
+            ->joinInner(array('nm'=>'Nomes'), 'nm.idAgente = cp.idFornecedor', array('nm.Descricao'), 'agentes')
+            ->joinInner(array('arq'=>'tbArquivo'), 'arq.idArquivo = cp.idArquivo', array('arq.nmArquivo'), 'bdcorporativo.scCorp')
             ->joinInner(
                 array('tpi'=>'tbPlanilhaItens'),
                 'pAprovacao.idPlanilhaItem = tpi.idPlanilhaItens',
                 array('tpi.Descricao AS NomeItem', 'tpi.idPlanilhaItens', 'tpi.idPlanilhaItens'),
-                'SAC.dbo'
+                'SAC'
             )->where('pAprovacao.IdPRONAC = ?', $idpronac)
             ->where('pAprovacao.stAtivo = ?','S')
             ->where('pAprovacao.idPlanilhaAprovacao in (?)', $ckItens)
@@ -532,7 +532,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                                 'vlComprovadoPlanilhaAprovacao' => 'vlComprovado',
                                 'idPlanilhaAprovacao',
                             ),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                             );
         $select->joinInner(
                             array('cp'=>'tbComprovantePagamento'),
@@ -548,32 +548,32 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                                 'CAST(cp.dsJustificativa AS TEXT) as dsJustificativa',
                                 'cp.vlComprovacao',
                             ),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.idAgente = cp.idFornecedor',
                             array('ag.CNPJCPF'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = cp.idFornecedor',
                             array('nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('arq'=>'tbArquivo'),
                             'arq.idArquivo = cp.idArquivo',
                             array('arq.nmArquivo'),
-                            'BDCORPORATIVO.scCorp'
+                            'bdcorporativo.scCorp'
                            );
         $select->joinInner(
                             array('pi'=>'tbPlanilhaItens'),
                             'pAprovacao.idPlanilhaItem = pi.idPlanilhaItens',
                             array('pi.idPlanilhaItens',
                                   'pi.Descricao as NomeItem'),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
         $select->where('pAprovacao.stAtivo = ?','S');
@@ -597,73 +597,73 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array('pEtapa'=>'tbPlanilhaEtapa'),
                             'pAprovacao.idEtapa = pEtapa.idPlanilhaEtapa',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('pItens'=>'tbPlanilhaItens'),
                             'pAprovacao.idPlanilhaItem = pItens.idPlanilhaItens',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('prod'=>'Produto'),
                             'pAprovacao.idProduto = prod.Codigo',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('UFT'=>'UF'),
                             'pAprovacao.idUFDespesa = UFT.idUF',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('CID'=>'Municipios'),
                             'pAprovacao.idMunicipioDespesa = CID.idMunicipioIBGE',
                             array(),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinLeft(
                             array('cppa'=>'tbComprovantePagamentoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = cppa.idPlanilhaAprovacao',
                             array('sum(cppa.vlComprovado) as vlComprovado'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('cPagamento'=>'tbComprovantePagamento'),
                             'cppa.idComprovantePagamento = cPagamento.idComprovantePagamento',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('cpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             'cpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('cxa'=>'tbCotacaoxAgentes'),
                             'cpa.idCotacaoxAgentes = cxa.idCotacaoxAgentes ',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('dlpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             'dlpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('lpa'=>'tbLicitacaoxPlanilhaAprovacao'),
                             'lpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('ctpa'=>'tbContratoxPlanilhaAprovacao'),
                             'ctpa.idPlanilhaAprovacao = pAprovacao.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
 //        $select->where("pEtapa.tpCusto = 'P'");
@@ -701,7 +701,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array(
                                 'id'=>'prod.Codigo','nome'=>'prod.Descricao'
                               ),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         if($idCotacao)
@@ -709,28 +709,28 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                             array('ctxpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = ctxpa.idPlanilhaAprovacao and ctxpa.idCotacao = '$idCotacao' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         if($idDispensaLicitacao)
         $select->joinInner(
                             array('dlxpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = dlxpa.idPlanilhaAprovacao and dlxpa.idDispensaLicitacao  = '$idDispensaLicitacao' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         if($idLicitacao)
         $select->joinInner(
                             array('lxpa'=>'tbLicitacaoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = lxpa.idPlanilhaAprovacao and lxpa.idLicitacao  = '$idLicitacao' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         if($idContrato)
         $select->joinInner(
                             array('cnxpa'=>'tbContratoxPlanilhaAprovacao'),
                             "pAprovacao.idPlanilhaAprovacao = cnxpa.idPlanilhaAprovacao and cnxpa.idContrato = '$idContrato' ",
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
 
 
@@ -754,7 +754,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         $select->from(
             array('pa'=>$this->_name),
             array('pa.idPlanilhaAprovacao','vlItem'=>'pa.vlUnitario','vlAprovado'=>new Zend_Db_Expr('pa.vlUnitario*pa.qtItem*pa.nrOcorrencia')),
-            'SAC.dbo'
+            'SAC'
         );
         $select->joinInner(
             array('paux' => $this->valoresAgrupados($idpronac,true)),
@@ -772,13 +772,13 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 'idPlanilhaItens'=>'pli.idPlanilhaItens',
                 'NomeItem'=>'pli.Descricao'
             ),
-            'SAC.dbo'
+            'SAC'
         );
         $select->joinInner(
             array('eta'=>'tbPlanilhaEtapa'),
             'eta.idPlanilhaEtapa = pa.idEtapa',
             array('Etapa'=>'eta.Descricao'),
-            'SAC.dbo'
+            'SAC'
         );
         $select->joinLeft(
             array('pro'=>'Produto'),
@@ -788,7 +788,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                     THEN 'Administra&ccedil;&atilde;o do Projeto'
                     ELSE pro.Descricao END")
             ),
-            'SAC.dbo'
+            'SAC'
         );
         $select->joinLeft(
             array('cpxpa'=>'tbComprovantePagamentoxPlanilhaAprovacao'),
@@ -798,13 +798,13 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 'cpxpa.dsJustificativa',
                 'CONVERT(CHAR(23), cpxpa.dtValidacao, 120) AS dtValidacao'
             ),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('cp'=>'tbComprovantePagamento'),
             'cp.idComprovantePagamento = cpxpa.idComprovantePagamento',
             array(),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('di'=>$selectAux),
@@ -815,7 +815,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             array('lxpa'=>'tbLicitacaoxPlanilhaAprovacao'),
             'lxpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao',
             array(),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('lic'=>'tbLicitacao'),
@@ -828,55 +828,55 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 'objetoLicitacao'=>'lic.dsObjeto',
                 'fundamentoLicitacao'=>'lic.dsFundamentoLegal'
             ),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('lxa'=>'tbLicitacaoxAgentes'),
             'lxa.idLicitacao = lic.idLicitacao and lxa.stVencedor = 1',
             array(),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('dlxpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
             'dlxpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao',
             array(),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('dlic'=>'tbDispensaLicitacao'),
             'dlxpa.idDispensaLicitacao = dlic.idDispensaLicitacao',
             array('dsDispensa'=>'dlic.dsDispensaLicitacao','dtDispensa'=>'dlic.dtContrato'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('cxpa'=>'tbCotacaoxPlanilhaAprovacao'),
             'cxpa.idPlanilhaAprovacao = pa.idPlanilhaAprovacao',
             array(),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('cota'=>'tbCotacao'),
             'cxpa.idCotacao = cota.idCotacao',
             array('cota.dsCotacao','cota.dtCotacao','cota.nrCotacao'),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('cxa'=>'tbCotacaoxAgentes'),
             'cxa.idCotacao = cota.idCotacao and cxa.idCotacaoxAgentes = cxpa.idCotacaoxAgentes',
             array(),
-            'BDCORPORATIVO.scSAC'
+            'bdcorporativo.scSAC'
         );
         $select->joinLeft(
             array('ag'=>'Agentes'),
             'ag.idAgente = lxa.idAgente OR ag.idAgente = dlic.idAgente OR ag.idAgente = cxa.idAgente OR cp.idFornecedor = ag.idAgente',
             array('cpfcnpjFornecedor'=>'ag.CNPJCPF'),
-            'agentes.dbo'
+            'agentes'
         );
         $select->joinLeft(
             array('nm'=>'Nomes'),
             'nm.idAgente = ag.idAgente',
             array('nmFornecedor'=>'nm.Descricao'),
-            'agentes.dbo'
+            'agentes'
         );
         $select->joinLeft(
             array('p'=>'Projetos'),
@@ -886,7 +886,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 '(p.AnoProjeto + p.Sequencial) AS PRONAC',
                 'p.NomeProjeto'
             ),
-            'SAC.dbo'
+            'SAC'
         );
 
         $select->where('pa.idPlanilhaAprovacao = ?', $idPlanilhaAprovacao);
@@ -901,7 +901,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             array('prod'=>'Produto'),
             'pAprovacao.idProduto = prod.Codigo',
             array('nome' => new Zend_Db_Expr("CASE WHEN prod.Descricao IS NULL THEN 'Administra&ccedil;&atilde;o do Projeto' ELSE prod.Descricao END")),
-            'SAC.dbo'
+            'SAC'
         );
         $select->order('prod.Descricao');
         $select->group('pAprovacao.idProduto');
@@ -934,13 +934,13 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                                                                THEN 'Administra&ccedil;&atilde;o do Projeto'
                                                         ELSE prod.Descricao
                                                   END")),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('cxpa'=>'tbContratoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = cxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -973,25 +973,25 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                                                                THEN 'Administra&ccedil;&atilde;o do Projeto'
                                                         ELSE prod.Descricao
                                                   END")),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinLeft(
                             array('cxpa'=>'tbCotacaoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = cxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('dlxpa'=>'tbDispensaLicitacaoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = dlxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
         $select->joinLeft(
                             array('lxpa'=>'tbLicitacaoxPlanilhaAprovacao'),
                             'pAprovacao.idPlanilhaAprovacao = lxpa.idPlanilhaAprovacao',
                             array(),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
@@ -1168,12 +1168,12 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         $select->joinInner(
                 array('CID' => 'Municipios'), new Zend_Db_Expr('CID.idMunicipioIBGE = PAP.idMunicipioDespesa'), array(
                 'CID.Descricao as Cidade'
-                ), 'agentes.dbo'
+                ), 'agentes'
         );
         $select->joinInner(
                 array('FED' => 'UF'), new Zend_Db_Expr('PAP.idUFDespesa = FED.idUF'), array(
                 'FED.Sigla as UF'
-                ), 'agentes.dbo'
+                ), 'agentes'
         );
         $select->joinLeft(
                 array('aa' => 'tbAnaliseAprovacao'), "aa.idPronac = PAP.idPronac and PAP.idProduto = aa.idProduto and aa.tpAnalise = '{$tpPlanilha}'", array('aa.stAvaliacao')
@@ -1275,16 +1275,16 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         $select->joinInner(
                 array('CID' => 'Municipios'), new Zend_Db_Expr('CID.idMunicipioIBGE = PAP.idMunicipioDespesa'), array(
                 'CID.Descricao as Cidade'
-                ), 'agentes.dbo'
+                ), 'agentes'
         );
         $select->joinInner(
                 array('FED' => 'UF'), new Zend_Db_Expr('PAP.idUFDespesa = FED.idUF'), array(
                 'FED.Sigla as UF'
-                ), 'agentes.dbo'
+                ), 'agentes'
         );
         $select->joinLeft(
                 array('aa' => 'tbAnaliseAprovacao'),
-                "aa.idPronac = PAP.idPronac and PAP.idProduto = aa.idProduto and aa.tpAnalise = '{$tpPlanilha}' AND aa.dtAnalise = (SELECT TOP 1 max(dtAnalise) from SAC..tbAnaliseAprovacao WHERE idPronac = PAP.idPronac and PAP.idProduto = idProduto and tpAnalise = '{$tpPlanilha}')",
+                "aa.idPronac = PAP.idPronac and PAP.idProduto = aa.idProduto and aa.tpAnalise = '{$tpPlanilha}' AND aa.dtAnalise = (SELECT TOP 1 max(dtAnalise) from sac..tbAnaliseAprovacao WHERE idPronac = PAP.idPronac and PAP.idProduto = idProduto and tpAnalise = '{$tpPlanilha}')",
                 array('aa.stAvaliacao')
         );
         $select->joinLeft(
@@ -1356,49 +1356,49 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 ,'PAP.tpPessoa'
                 ,'PAP.nrContraPartida'
                 ,'PAP.tpAcao')
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('I' => 'tbPlanilhaItens')
             ,new Zend_Db_Expr('PAP.idPlanilhaItem = I.idPlanilhaItens')
             ,array(
                 'I.Descricao AS Item'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('E' => 'tbPlanilhaEtapa')
             ,new Zend_Db_Expr('PAP.idEtapa = E.idPlanilhaEtapa')
             ,array(
                 'E.Descricao AS Etapa'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('UNI' => 'tbPlanilhaUnidade')
             ,new Zend_Db_Expr('PAP.idUnidade = UNI.idUnidade')
             ,array(
                 'UNI.Descricao AS Unidade'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('TI' => 'Verificacao')
             ,new Zend_Db_Expr('TI.idverificacao = PAP.nrFonteRecurso')
             ,array(
                 'TI.Descricao as FonteRecurso'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('CID' => 'Municipios')
             ,new Zend_Db_Expr('CID.idMunicipioIBGE = PAP.idMunicipioDespesa')
             ,array(
                 'CID.Descricao as Cidade'
             )
-            ,'agentes.dbo'
+            ,'agentes'
         );
         $select->joinInner(array('FED' => 'UF')
             ,new Zend_Db_Expr('PAP.idUFDespesa = FED.idUF')
             ,array(
                 'FED.Sigla as UF'
             )
-            ,'agentes.dbo'
+            ,'agentes'
         );
         $select->joinLeft(
             array('PD' => 'Produto')
@@ -1406,7 +1406,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             ,array(
                 'PD.Descricao as Produto'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
 
         // adiciona quantos filtros foram enviados
@@ -1459,49 +1459,49 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 ,'h.tpPessoa'
                 ,'h.nrContraPartida'
                 ,'h.tpAcao')
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('I' => 'tbPlanilhaItens')
             ,new Zend_Db_Expr('h.idPlanilhaItem = I.idPlanilhaItens')
             ,array(
                 'I.Descricao AS Item'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('E' => 'tbPlanilhaEtapa')
             ,new Zend_Db_Expr('h.idEtapa = E.idPlanilhaEtapa')
             ,array(
                 'E.Descricao AS Etapa'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('UNI' => 'tbPlanilhaUnidade')
             ,new Zend_Db_Expr('h.idUnidade = UNI.idUnidade')
             ,array(
                 'UNI.Descricao AS Unidade'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('TI' => 'Verificacao')
             ,new Zend_Db_Expr('TI.idverificacao = h.nrFonteRecurso')
             ,array(
                 'TI.Descricao as FonteRecurso'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(array('CID' => 'Municipios')
             ,new Zend_Db_Expr('CID.idMunicipioIBGE = h.idMunicipioDespesa')
             ,array(
                 'CID.Descricao as Cidade'
             )
-            ,'agentes.dbo'
+            ,'agentes'
         );
         $select->joinInner(array('FED' => 'UF')
             ,new Zend_Db_Expr('h.idUFDespesa = FED.idUF')
             ,array(
                 'FED.Sigla as UF'
             )
-            ,'agentes.dbo'
+            ,'agentes'
         );
         $select->joinLeft(
             array('PD' => 'Produto')
@@ -1509,7 +1509,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             ,array(
                 'PD.Descricao as Produto'
             )
-            ,'SAC.dbo'
+            ,'SAC'
         );
         $select->joinInner(
             array('p' => 'tbPedidoAlteracaoProjeto')
@@ -1519,7 +1519,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 ,'p.idSolicitante'
                 ,'CONVERT(CHAR(10), p.dtSolicitacao, 103) AS dtSolicitacao'
                 ,'CONVERT(CHAR(10), p.dtSolicitacao, 108) AS hrSolicitacao')
-            ,'BDCORPORATIVO.scSAC'
+            ,'bdcorporativo.scSAC'
         );
         $select->joinInner(
             array('j' => 'tbPedidoAlteracaoXTipoAlteracao')
@@ -1527,7 +1527,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
             ,array(
                 'CAST(j.dsJustificativa AS TEXT) AS dsProponente'
                 ,'j.tpAlteracaoProjeto')
-            ,'BDCORPORATIVO.scSAC'
+            ,'bdcorporativo.scSAC'
         );
         $select->joinInner(
             array('a' => 'tbAvaliacaoItemPedidoAlteracao')
@@ -1540,7 +1540,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 ,'CONVERT(CHAR(10), a.dtFimAvaliacao, 108) AS hrFimAvaliacao'
                 ,'a.stAvaliacaoItemPedidoAlteracao AS stAvaliacao'
                 ,'CAST(a.dsAvaliacao AS TEXT) AS dsAvaliacao')
-            ,'BDCORPORATIVO.scSAC'
+            ,'bdcorporativo.scSAC'
         );
         $select->joinInner(
             array('ai' => 'tbAvaliacaoSubItemPedidoAlteracao')
@@ -1549,7 +1549,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 'ai.idAvaliacaoSubItemPedidoAlteracao AS idAvaliacaoItem'
                 ,'ai.stAvaliacaoSubItemPedidoAlteracao AS stAvaliacaoItem'
                 ,'CAST(ai.dsAvaliacaoSubItemPedidoAlteracao AS TEXT) AS dsAvaliacaoItem')
-            ,'BDCORPORATIVO.scSAC'
+            ,'bdcorporativo.scSAC'
         );
 
         // adiciona quantos filtros foram enviados
@@ -1631,19 +1631,19 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
         );
         $select->joinLeft(
             array('b' => 'Produto'), "a.idProduto = b.Codigo",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbPlanilhaEtapa'), "a.idEtapa = c.idPlanilhaEtapa",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('d' => 'tbPlanilhaItens'), "a.idPlanilhaItem = d.idPlanilhaItens",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPlanilhaUnidade'), "a.idUnidade = e.idUnidade",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->where('a.idPlanilhaAprovacao = ?', $idPlanilhaAprovacao);
 
@@ -1668,7 +1668,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                         $this->_schema
                         )
                 ->joinInner(
-                        array('verificacao' => 'Verificacao'),
+                        array('Verificacao' => 'Verificacao'),
                         'planilhaAprovacao.nrFonteRecurso = verificacao.idVerificacao',
                         array()
                         )

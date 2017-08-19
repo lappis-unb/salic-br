@@ -1,13 +1,13 @@
 <?php
 /**
- * Análise de Cortes Sugeridos
+ * An&aacute;lise de Cortes Sugeridos
  * @author Equipe RUP - Politec
  * @since 07/06/2010
  * @version 1.0
  * @package application
  * @subpackage application.controller.realizaranaliseprojeto
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 echo $this->partial('inc/menu.inc.php', $this) // menu 
 ?>
@@ -70,7 +70,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
             $(".linkplanilha").click(function(){
                 $('.fundo_linha4').removeClass('fundo_linha4');
                 var idplanilhaaprovacao = $(this).attr('idPlanilhaAprovacao');
-                $("#form" + idplanilhaaprovacao).each(function() // necessário para resetar o formulário, pois, quando a modal é fechada o mesmo não é resetado
+                $("#form" + idplanilhaaprovacao).each(function() // necess&aacute;rio para resetar o formul&aacute;rio, pois, quando a modal &eacute; fechada o mesmo n&atilde;o &eacute; resetado
                 {
                     this.reset();
                     calcular_planilha_projeto(idplanilhaaprovacao); // recalcula o valor total do produto
@@ -98,7 +98,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                             }
                             else
                             {
-                                $("#form" + idplanilhaaprovacao).submit(); // envia o formulário
+                                $("#form" + idplanilhaaprovacao).submit(); // envia o formul&aacute;rio
                             }
                         }
                     }
@@ -155,7 +155,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
             <div>Os campos ter&atilde;o seus valores redefinidos!</div>
         </div>
     </div>
-    <!-- ========== INÍCIO TÍTULO PÁGINA ========== -->
+    <!-- ========== INÍCIO TÍTULO P&aacute;GINA ========== -->
     <table class="tabela">
 
         <tr>
@@ -166,7 +166,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
         </tr>
 
     </table>
-    <!-- ========== FIM TÍTULO PÁGINA ========== -->
+    <!-- ========== FIM TÍTULO P&aacute;GINA ========== -->
 
 
 
@@ -204,12 +204,12 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
             </tr>
 
             <?php
-            $totalValRed = (float) 0; // valor total da página
-            $totalItensRed = (int) 0; // total itens da página
+            $totalValRed = (float) 0; // valor total da p&aacute;gina
+            $totalItensRed = (int) 0; // total itens da p&aacute;gina
             // caso tenha projetos
             if (count($this->analiseReduzido) > 0) {
                 foreach ($this->analiseReduzido as $resposta) :
-                    $i = $resposta['idPlanilhaAprovacao']; // criará id único
+                    $i = $resposta['idPlanilhaAprovacao']; // criar&aacute; id único
                     ?>
 
                     <tr onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);" onblur="out_tr(this);" onclick="click_tr(this);" onkeypress="click_tr(this);"
@@ -423,12 +423,12 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                 </tr>
 
                 <?php
-                $totalValRet = (float) 0; // valor total da página
-                $totalItensRet = (int) 0; // total itens da página
+                $totalValRet = (float) 0; // valor total da p&aacute;gina
+                $totalItensRet = (int) 0; // total itens da p&aacute;gina
                 // caso tenha projetos
                 if (count($this->analiseRetirado) > 0) {
                     foreach ($this->analiseRetirado as $resposta) :
-                        $i = $resposta['idPlanilhaAprovacao']; // criará id único
+                        $i = $resposta['idPlanilhaAprovacao']; // criar&aacute; id único
                         ?>
                         <tr onmouseover="over_tr(this);" onmouseout="out_tr(this);" onclick="click_tr(this);" class="red">
                             <td><a <?php echo $resposta['nrFonteRecurso'] == 109 ? "class='linkplanilha' valor='" . $resposta['idPlanilhaAprovacao'] . "' style='text-decoration: underline; cursor:pointer;'" : '' ?> idPlanilhaAprovacao ="<?php echo $resposta['idPlanilhaAprovacao']; ?>" ><?php echo $resposta['item']; ?></a>
@@ -613,7 +613,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 
 
 
-    <!-- ========== BOTÕES ========== -->
+    <!-- ========== BOT&otilde;ES ========== -->
     <br />
     <p class="centro">
         <input type="button" class="btn_p_anterior" value=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'parecerconsolidado')); ?>')" onkeypress="redirecionar('<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'parecerconsolidado')); ?>');"/>
@@ -629,8 +629,8 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

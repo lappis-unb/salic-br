@@ -49,7 +49,7 @@
 
      function addTodos() // adiciona todos os options da esquerda para direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visao.length; i++) // varre todo o option de origem
         {
@@ -65,7 +65,7 @@
 
     function delTodos() // deleta todos os options da direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
         {
@@ -84,7 +84,7 @@
 
     function addSelecionado() // adiciona o option selecionado da esquerda para direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visao.length; i++) // varre todo o option de origem
         {
@@ -103,7 +103,7 @@
 
     function delSelecionado() // deleta o option selecionado da direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
         {
@@ -246,7 +246,7 @@
                                 <option value="EIG">Exatamente igual</option>
                                 <option value="DI">Diferente</option>
                             </select>
-                            <select name="area" id="area" style="width: 200px;" class="input_simples">
+                            <select name="Area" id="Area" style="width: 200px;" class="input_simples">
                                 <option value="">- Selecione - </option>
                                 <?php foreach($this->areas as $area):?>
                                 <option value="<?php echo $area->Codigo; ?>"><?php echo $area->Descricao; ?></option>
@@ -274,8 +274,8 @@
                                 <td width="10%" nowrap><b>Selecione as colunas</b></td>
                                 <td class="centro" valign="top" width="40%">
 
-                                        <label for="visao"> </label>
-                                        <select class="select w200" name="visao[]" id="visao" multiple="multiple" size="7">
+                                        <label for="Visao"> </label>
+                                        <select class="select w200" name="visao[]" id="Visao" multiple="multiple" size="7">
                                         </select>
                                 </td>
                                 <td class="centro" valign="middle" width="10px">

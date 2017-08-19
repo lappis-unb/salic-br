@@ -36,7 +36,7 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="#" title="Ir para Início">Início</a></li>
-        <li><a href="#" title="Tramitação de Documentos">Manter Agentes</a></li>
+        <li><a href="#" title="Tramita&ccedil;&atilde;o de Documentos">Manter Agentes</a></li>
         <li class="last">Principal</li>
     </ul>
 </div>
@@ -56,7 +56,7 @@
     <?php if(($this->grupoativo == "137")): ?>
     <table class="tabela">
         <tr>
-            <td>Para credenciar uma nova área e segmento, clique em novo ao lado!</td>
+            <td>Para credenciar uma nova &aacute;rea e segmento, clique em novo ao lado!</td>
             <th width="150"><input type="button" class="btn_novo" value=" " onclick="novo();"/></th>
         </tr>
     </table>
@@ -73,11 +73,11 @@
         <form id="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvacredenciamento'));?>" method="post">
             <table class="tabela">
                 <tr class="titulo_tabela">
-                    <th colspan="6">LISTA DE ÁREA</th>
+                    <th colspan="6">LISTA DE &aacute;REA</th>
                 </tr>
                 <tr>
                     <td colspan="2" valign="top" width="33%" align="center">
-                        <label for="areaCultural">Área Cultural *</label>
+                        <label for="areaCultural">&aacute;rea Cultural *</label>
                         <select class="input_simples" name="areaCultural" id="areaCultural">
                             <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
                             <option value="0"> - Selecione - </option>
@@ -99,7 +99,7 @@
                         <select name="segmentoCultural" id="segmentoCultural" class="input_simples">
 
                             <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-                            <option value="0"> - Selecione uma Área Cultural - </option>
+                            <option value="0"> - Selecione uma &aacute;rea Cultural - </option>
                             <?php } else { ?>
 
                             <?php if (!isset($this->segmentoCultural) || empty($this->segmentoCultural)) { ?>
@@ -140,10 +140,10 @@
     <?php if(count($this->credenciados) != 0){ ?>
     <table id="salvos" class="tabela">
         <tr>
-            <th colspan="4">Áreas e segmentos já credenciado</th>
+            <th colspan="4">&aacute;reas e segmentos j&aacute; credenciado</th>
         </tr>
         <tr>
-            <td class="destacar bold" align="center">Área</td>
+            <td class="destacar bold" align="center">&aacute;rea</td>
             <td class="destacar bold" align="center"><b>Segmento</b></td>
             <td class="destacar bold" align="center"><b>Nível</b></td>
             <td class="destacar bold" align="center" width="130"><b></b></td>
@@ -160,7 +160,7 @@
     <?php } else { ?>
     <table class="tabela" id="salvos">
         <tr>
-            <td>O Parecerista não está credenciado!</td>
+            <td>O Parecerista n&atilde;o est&aacute; credenciado!</td>
         </tr>
     </table>
     <?php } ?>
@@ -172,8 +172,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

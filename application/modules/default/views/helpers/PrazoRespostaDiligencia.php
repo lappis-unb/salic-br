@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_PrazoRespostaDiligencia
 {
 	/**
-	 * Método que retorna as informacoes sobre o prazo de resposta da diligencia, incluindo o icone que deve ser apresentado na tela
+	 * M&eacute;todo que retorna as informacoes sobre o prazo de resposta da diligencia, incluindo o icone que deve ser apresentado na tela
 	 * @access public
 	 * @param integer $idPronac (id do Projeto que deseja saber informacoes sobre a diligencia)
 	 * @param integer $idTipoDiligencia (id do tipo de diligencia, cada modulo possui um codigo especifico)
@@ -47,7 +47,7 @@ class Zend_View_Helper_PrazoRespostaDiligencia
                             $arrBusca['idDiligencia = ?'] = $idDiligencia;
                         }
 
-			// busca a situação do projeto
+			// busca a situa&ccedil;&atilde;o do projeto
 			$rsDiligencia = $tbDiligencia->buscar($arrBusca, array('DtSolicitacao DESC'))->current();
 
                         if(!empty($rsDiligencia)):
@@ -96,7 +96,7 @@ class Zend_View_Helper_PrazoRespostaDiligencia
 //                    else
 //                        return 40;
 //                }
-//                case(126): //Diligência do Componente da comissão (CNIC)
+//                case(126): //Diligência do Componente da comiss&atilde;o (CNIC)
 //                {
 //                    if($stProrrogacao == 'N')
 //                        return 20;
@@ -159,7 +159,7 @@ class Zend_View_Helper_PrazoRespostaDiligencia
             else if ($rsDiligencia->DtSolicitacao && $rsDiligencia->DtResposta == NULL && $prazoResposta > $prazoPadrao)
             {
                 $arrIcones['icone'] = "notice2.png";
-                $arrIcones['title'] = "Diligência não respondida";
+                $arrIcones['title'] = "Diligência n&atilde;o respondida";
             }
             //diligencia respondida
             else if ($rsDiligencia->DtSolicitacao && $rsDiligencia->DtResposta != NULL)
@@ -168,7 +168,7 @@ class Zend_View_Helper_PrazoRespostaDiligencia
                 if($rsDiligencia->stEnviado == 'N' && $prazoResposta > $prazoPadrao)
                 {
                     $arrIcones['icone'] = "notice2.png";
-                    $arrIcones['title'] = "Diligência não respondida";
+                    $arrIcones['title'] = "Diligência n&atilde;o respondida";
 
                 }else if($rsDiligencia->stEnviado == 'N' && $prazoResposta <= $prazoPadrao){
 

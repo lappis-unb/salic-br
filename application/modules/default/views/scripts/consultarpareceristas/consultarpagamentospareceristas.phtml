@@ -151,7 +151,7 @@ echo $this->partial('consultarpareceristas/inc/menu.inc.php', $this);
             if ($this->Orgaos) {
                 ?>
                 <tr>
-                    <td>Órgão</td>
+                    <td>Órg&atilde;o</td>
                     <td colspan="8">
                         <select id="orgao" name="filtro[orgao]" class="input_simples" style="width: 250px;">
                             <option value="">Todos</option>
@@ -168,9 +168,9 @@ echo $this->partial('consultarpareceristas/inc/menu.inc.php', $this);
             if ($this->Areas) {
                 ?>
                 <tr>
-                    <td>Área</td>
+                    <td>&aacute;rea</td>
                     <td>
-                        <select id="area"  name="filtro[area]" class="input_simples" style="width: 250px;">
+                        <select id="Area"  name="filtro[area]" class="input_simples" style="width: 250px;">
                             <option value="">Todas</option>
                             <?php
                             foreach ($this->Areas as $value) {
@@ -214,7 +214,7 @@ echo $this->partial('consultarpareceristas/inc/menu.inc.php', $this);
                 </tr>
 
             <tr>
-                <td width="150">Período de Análise</td>
+                <td width="150">Período de An&aacute;lise</td>
                 <td width="150" >
                     <select name="filtro[periodo]" id="periodo" class="input_simples" style="width: 250px;" onchange="datas(this.value);">
                         <option value="">Todo</option>

@@ -15,7 +15,7 @@ class ArquivoDAO extends Zend_Db_Table
     /* dados da tabela */
 
     protected $_schema = "";
-    protected $_name = "BDCORPORATIVO.scCorp.tbArquivo";
+    protected $_name = "bdcorporativo.scCorp.tbArquivo";
     protected $_primary = "idArquivo";
 
     /**
@@ -30,7 +30,7 @@ class ArquivoDAO extends Zend_Db_Table
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("BDCORPORATIVO.scCorp.tbArquivo", $dados);
+        $cadastrar = $db->insert("bdcorporativo.scCorp.tbArquivo", $dados);
 
         return $cadastrar ? true : false;
     }
@@ -49,7 +49,7 @@ class ArquivoDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idArquivo = $id";
-        $alterar = $db->update("BDCORPORATIVO.scCorp.tbArquivo", $dados, $where);
+        $alterar = $db->update("bdcorporativo.scCorp.tbArquivo", $dados, $where);
 
         return $alterar ? true : false;
     }
@@ -59,8 +59,8 @@ class ArquivoDAO extends Zend_Db_Table
      */
     public static function deletar($idArquivo)
     {
-        Zend_Registry::get('db')->exec("delete from BDCORPORATIVO.scCorp.tbArquivoImagem WHERE idArquivo = {$idArquivo}");
-        Zend_Registry::get('db')->exec("delete from BDCORPORATIVO.scCorp.tbArquivo WHERE idArquivo = {$idArquivo}");
+        Zend_Registry::get('db')->exec("delete from bdcorporativo.scCorp.tbArquivoImagem WHERE idArquivo = {$idArquivo}");
+        Zend_Registry::get('db')->exec("delete from bdcorporativo.scCorp.tbArquivo WHERE idArquivo = {$idArquivo}");
     }
 
     /**
@@ -72,7 +72,7 @@ class ArquivoDAO extends Zend_Db_Table
      */
     public static function verificarHash($dsHash)
     {
-        $sql = "SELECT * FROM BDCORPORATIVO.scCorp.tbArquivo WHERE dsHash = '$dsHash'";
+        $sql = "SELECT * FROM bdcorporativo.scCorp.tbArquivo WHERE dsHash = '$dsHash'";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -88,7 +88,7 @@ class ArquivoDAO extends Zend_Db_Table
      */
     public static function buscarIdArquivo()
     {
-        $sql = "SELECT MAX(idArquivo) AS id FROM BDCORPORATIVO.scCorp.tbArquivo";
+        $sql = "SELECT MAX(idArquivo) AS id FROM bdcorporativo.scCorp.tbArquivo";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -112,7 +112,7 @@ class ArquivoImagemDAO extends Zend_Db_Table
     /* dados da tabela */
 
     protected $_schema = "";
-    protected $_name = "BDCORPORATIVO.scCorp.tbArquivoImagem";
+    protected $_name = "bdcorporativo.scCorp.tbArquivoImagem";
     protected $_primary = "idArquivo";
 
     /**
@@ -127,7 +127,7 @@ class ArquivoImagemDAO extends Zend_Db_Table
         /* @var $db Zend_Db_Adapter_Sqlsrv */
         $db= Zend_Db_Table::getDefaultAdapter();
         $dados['biArquivo'] = new Zend_Db_Expr("CONVERT(varbinary(MAX),{$dados['biArquivo']})");
-        return $db->insert('BDCORPORATIVO.scCorp.tbArquivoImagem', $dados);
+        return $db->insert('bdcorporativo.scCorp.tbArquivoImagem', $dados);
     }
 
     /**
@@ -143,7 +143,7 @@ class ArquivoImagemDAO extends Zend_Db_Table
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = "UPDATE BDCORPORATIVO.scCorp.tbArquivoImagem SET 
+        $sql = "UPDATE bdcorporativo.scCorp.tbArquivoImagem SET 
             biArquivo = {$dados['biArquivo']} WHERE idArquivo = $id";
 
         return $db->fetchAll($sql);

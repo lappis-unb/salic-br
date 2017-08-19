@@ -20,7 +20,7 @@
         $('.encaminharRecursoCheckList').click(function(){
             var id = $(this).attr('idRecurso');
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente encaminhar o recurso para o Checklist de Publicação?');
+            $("#alerta").html('Deseja realmente encaminhar o recurso para o Checklist de Publica&ccedil;&atilde;o?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -28,7 +28,7 @@
                 height: 180,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -42,7 +42,7 @@
         $('.devolverRecurso').click(function(){
             var id = $(this).attr('idRecurso');
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente devolver o recurso para uma nova análise?');
+            $("#alerta").html('Deseja realmente devolver o recurso para uma nova an&aacute;lise?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -50,7 +50,7 @@
                 height: 180,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -72,7 +72,7 @@
 
             if(componente==''){
                 $("#alerta").dialog("destroy");
-                $("#alerta").html('Favor selecionar o componente da comissão!');
+                $("#alerta").html('Favor selecionar o componente da comiss&atilde;o!');
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -88,14 +88,14 @@
                 
             } else {
                 $("#alerta").dialog("destroy");
-                $("#alerta").html('Deseja realmente enviar o recurso para a análise da CNIC?<br /><br />Ao enviar o recurso será removido do seu painel.');
+                $("#alerta").html('Deseja realmente enviar o recurso para a an&aacute;lise da CNIC?<br /><br />Ao enviar o recurso ser&aacute; removido do seu painel.');
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
                     width: 430,
                     modal: true,
                     buttons : {
-                        'Não' : function(){
+                        'N&atilde;o' : function(){
                             $(this).dialog('close');
                         },
                         'Sim' : function(){
@@ -119,7 +119,7 @@
                                         $('.ui-dialog-titlebar-close').remove();
                                         window.setTimeout('location.reload()', 1000);
                                     } else {
-                                        alertaModal("Não foi possível finalizar o recurso.");
+                                        alertaModal("N&atilde;o foi possível finalizar o recurso.");
                                     }
                                 },
                                 dataType : 'json'
@@ -140,7 +140,7 @@
     <ul>
         <li class="first">Início</li>
         <li>Recurso</li>
-        <li class="last"><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando Análise'; ?></li>
+        <li class="last"><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando An&aacute;lise'; ?></li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -148,7 +148,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando Análise'; ?></div>
+    <div><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando An&aacute;lise'; ?></div>
 </div>
 
 
@@ -170,8 +170,8 @@
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
                 <td width="200">
                     <select name="tipoFiltro" style="width: 160px;" class="input_simples comboFiltro">
-                        <option value="">Aguardando Análise</option>
-                        <option value="emanalise" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='emanalise')?'selected="selected"':''; ?>>Em Análise</option>
+                        <option value="">Aguardando An&aacute;lise</option>
+                        <option value="emanalise" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='emanalise')?'selected="selected"':''; ?>>Em An&aacute;lise</option>
                         <option value="analisados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='analisados')?'selected="selected"':''; ?>>Analisados</option>
                         <option value="analisados_cnic" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='analisados_cnic')?'selected="selected"':''; ?>>Analisados CNIC</option>
                     </select>
@@ -184,7 +184,7 @@
     </form>
     
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -209,12 +209,12 @@
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -232,7 +232,7 @@
             echo " de ". $this->paginacao['total']. " Projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php } ?>
 
 
@@ -255,26 +255,26 @@
 		<?php } ?>
 		
                 <?php if($this->filtro == 'emanalise'){ ?>
-                <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Situação</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Situa&ccedil;&atilde;o</a></th>
 		<th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Vinculada</a></th>
                 <?php } ?>
                 
                 <th>Ver</th>                                       
 
                 <?php if($this->filtro == 'analisados'){ ?>
-                <th>Componente da Comissão</th>
+                <th>Componente da Comiss&atilde;o</th>
                 <?php } ?>	
                 
                 <?php if($this->filtro != 'emanalise'){ ?>
                     <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>                                                             
-                    <th>Ação</th>
+                    <th>A&ccedil;&atilde;o</th>
                     <?php } else if ($this->filtro == '') { ?>
                     <th>Avaliar</th>
                     <?php } ?>
                 <?php } ?>
                 
                 <?php if($this->filtro == 'analisados' || $this->filtro == 'analisados_cnic'){ ?>
-                <th>Devolver para análise</th>
+                <th>Devolver para an&aacute;lise</th>
                 <?php } ?>
             </tr>
         </thead>
@@ -304,13 +304,13 @@
                     <?php
                         switch ($d->siRecurso) {
                             case 3:
-                                echo 'Encaminhado do MinC para a  Unidade de Análise';
+                                echo 'Encaminhado do MinC para a  Unidade de An&aacute;lise';
                                 break;
                             case 4:
-                                echo 'Encaminhado para Parecerista /  Técnico';
+                                echo 'Encaminhado para Parecerista /  T&eacute;cnico';
                                 break;
                             case 7:
-                                echo 'Encaminhado para o Componente da Comissão';
+                                echo 'Encaminhado para o Componente da Comiss&atilde;o';
                                 break;
                         }
                     ?>
@@ -332,7 +332,7 @@
                         <option value="<?php echo $conselheiro->id; ?>"><?php echo $conselheiro->nome; ?></option>
                         <?php } ?>
                     </select>
-                    <?php } else { echo 'Em análise na CNIC'; } ?>
+                    <?php } else { echo 'Em an&aacute;lise na CNIC'; } ?>
                 </td>
                 <?php } ?>
 		
@@ -343,7 +343,7 @@
                         <?php if($d->siRecurso == 6){ ?>
                         <input type="button" name="btn_enviar" class="btn_enviar finalizarRecurso" idRecurso="<?php echo $d->idRecurso; ?>" title="Finalizar">
                         <?php } else { ?>
-                        <input type="button" name="btn_encaminhar" class="btn_finalizar encaminharRecursoCheckList" idRecurso="<?php echo $d->idRecurso; ?>" title="Encaminhar Checklist Publicação">
+                        <input type="button" name="btn_encaminhar" class="btn_finalizar encaminharRecursoCheckList" idRecurso="<?php echo $d->idRecurso; ?>" title="Encaminhar Checklist Publica&ccedil;&atilde;o">
                         <?php } ?>
                     <?php } else if ($this->filtro == '') { ?>
                         <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_avaliar" recurso="<?php echo $d->idRecurso; ?>" pronac="<?php echo $d->PRONAC; ?>" nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Avaliar">
@@ -362,7 +362,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
         <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -395,12 +395,12 @@
                         <input class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -411,7 +411,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
     <?php } } ?>
 
@@ -436,7 +436,7 @@
 
 
 <div id="modalConfirmacao" class="sumir"></div>
-<div id="modalAvaliacao" class="sumir" title="Avalição de Recurso">
+<div id="modalAvaliacao" class="sumir" title="Avali&ccedil;&atilde;o de Recurso">
     <form name="formencaminhar" action="<?php echo $this->baseUrl(); ?>/verificarreadequacaodeprojeto/encaminhacoordacompanhamento" method="post">
         <table class="tabela">
             <tr>
@@ -483,7 +483,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold" width="130px;">Destinatário:</td>
+                <td class="destacar bold" width="130px;">Destinat&aacute;rio:</td>
                 <td>
                     <select name="destinatario" id="destinatario" class="select_simples" disabled="disabled" style="width:100%;"></select>
                 </td>
@@ -493,7 +493,7 @@
 </div>
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

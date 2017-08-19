@@ -84,7 +84,7 @@
 
         $("#ListaMarcas").tablesorter();
 
-        //MARCADOR DE ROWS PARA ATENDER NECESSIDADE DE ANÁLISE DE TRABALHO DOS TÉCNICOS DE ACOMPANHAMENTO
+        //MARCADOR DE ROWS PARA ATENDER NECESSIDADE DE AN&aacute;LISE DE TRABALHO DOS T&eacute;CNICOS DE ACOMPANHAMENTO
 
         $('[class^="linha"]').click(function(){
             if($(this).hasClass('fundo_linha4')){
@@ -144,7 +144,7 @@
                     <a target="_blank" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $lista->idPronac; ?>"><?php echo $lista->Pronac; ?></a>
                 </td>
                 <td class="bold">
-                    <?php //Verifica se o NomeProjeto já está no array (lista). Se estiver, não mostra o NomeProjeto.
+                    <?php //Verifica se o NomeProjeto j&aacute; est&aacute; no array (lista). Se estiver, n&atilde;o mostra o NomeProjeto.
 //                        if (!in_array($lista->NomeProjeto, $arrayNomeProjeto)) {
                             echo $lista->NomeProjeto;
 //                        }

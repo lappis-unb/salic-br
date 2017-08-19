@@ -33,14 +33,14 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                 <input type="hidden" name="idFiscalizacao" value="<?php echo $projeto->idFiscalizacao;?>">
                 <table class="tabela">
                     <tr>
-                        <th colspan="4">Fiscalizaç&atilde;o Conclu&iacute;da para Parecer</th>
+                        <th colspan="4">Fiscaliza&ccedil;&atilde;o Conclu&iacute;da para Parecer</th>
                     </tr>
                     <tr>
                     	<td colspan="4">&nbsp;</td>
                     </tr>
-                    <!-- ************************************** Identificaç&atilde;o ************************************ -->
+                    <!-- ************************************** Identifica&ccedil;&atilde;o ************************************ -->
                     <tr>
-                        <th colspan="4">Identificaç&atilde;o</th>
+                        <th colspan="4">Identifica&ccedil;&atilde;o</th>
                     </tr>
                     <tr>
                         <th colspan="2" style="width: 50%;">Pronac</th>
@@ -84,7 +84,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <th colspan="4" style="font-weight: bold;">Dados da Fiscalizaç&atilde;o</th>
+                        <th colspan="4" style="font-weight: bold;">Dados da Fiscaliza&ccedil;&atilde;o</th>
                     </tr>
                     <tr>
                         <td style="font-weight: bold; width: 25%;">Data In&iacute;cio: <?php echo date('d/m/Y',strtotime($projeto->dtInicioFiscalizacaoProjeto));
@@ -94,7 +94,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         <td colspan="2"></td>
                     </tr>
                     <tr>
-                        <td colspan="4"><b>Demandante da Fiscalizaç&atilde;o:</b> <?php echo $projeto->nmSolicitante;
+                        <td colspan="4"><b>Demandante da Fiscaliza&ccedil;&atilde;o:</b> <?php echo $projeto->nmSolicitante;
                             ;?></td>
                     </tr>
                     <tr>
@@ -108,10 +108,10 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                                         $print = $parecerista->CNPJCPFParecerista;
                                         $print .= ' ';
                                         $print .= $parecerista->nmParecerista;
-                                        $print .= ' para fiscalizaç?o da ';
+                                        $print .= ' para fiscaliza&ccedil;?o da ';
                                         $print .= $parecerista->orgaoParecerista;
                                         $print .= "<br>&nbsp;&nbsp;";
-                                        $print .= "Observaç?o: </b>";
+                                        $print .= "Observa&ccedil;?o: </b>";
                                         $print .= $parecerista->dsObservacao;
                                         $print .= "<br>";
                                         echo $print;
@@ -169,9 +169,9 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                             <!-- FIM TABELA DE ANEXOS -->
                         </td>
                     </tr>
-                    <!-- ************************************** Dados Apresentados na Fiscalizaç&atilde;o ************************************ -->
+                    <!-- ************************************** Dados Apresentados na Fiscaliza&ccedil;&atilde;o ************************************ -->
                     <tr>
-                        <th colspan="4">Dados Apresentados na Fiscalizaç&atilde;o</th>
+                        <th colspan="4">Dados Apresentados na Fiscaliza&ccedil;&atilde;o</th>
                     </tr>
                     <tr>
                         <td>Processo: <?php echo $projeto->Processo;?></td>
@@ -188,34 +188,34 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                     </tr>
                     <tr>
                         <td>Conv&ecirc;nio: <?php if($projeto['nrConvenio'])echo $projeto['nrConvenio'];?></td>
-                        <td>Data Publicaç&atilde;o do DOU: <?php if($projeto['DtPublicacaoAprovacao'])echo date('d/m/Y',strtotime($projeto['DtPublicacaoAprovacao']));?></td>
+                        <td>Data Publica&ccedil;&atilde;o do DOU: <?php if($projeto['DtPublicacaoAprovacao'])echo date('d/m/Y',strtotime($projeto['DtPublicacaoAprovacao']));?></td>
                         <td colspan="2">Mecanismo: <?php echo $projeto->dsMecanismo;?></td>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <b>Fiscalizaç&atilde;o</b><br>
+                            <b>Fiscaliza&ccedil;&atilde;o</b><br>
                             <div colspan="4" style="border: 1px solid black; padding: 5px;"><?php if($projeto['dsFiscalizacaoProjeto'])echo $projeto['dsFiscalizacaoProjeto'];?></div>
                         </td>
                     </tr>
-                    <!-- ************************************** Resumo da Execuç&atilde;o ************************************ -->
+                    <!-- ************************************** Resumo da Execu&ccedil;&atilde;o ************************************ -->
                     <tr>
-                        <th colspan="4">Resumo da Execuç&atilde;o</th>
+                        <th colspan="4">Resumo da Execu&ccedil;&atilde;o</th>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <b>Aç&otilde;es Programadas</b><br>
+                            <b>A&ccedil;&otilde;es Programadas</b><br>
                             <textarea null="false" class="campoForm" class="campoForm" id="dsAcoesProgramadas" name="dsAcoesProgramadas" cols="1" rows="3" style="width: 80%;"><?php if(isset($relatorio->dsAcoesProgramadas))echo $relatorio->dsAcoesProgramadas;?></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <b>Aç&otilde;es Executadas</b><br>
+                            <b>A&ccedil;&otilde;es Executadas</b><br>
                             <textarea null="false" class="campoForm" id="dsAcoesExecutadas" name="dsAcoesExecutadas" cols="1" rows="3" style="width: 80%;"><?php if(isset($relatorio->dsAcoesExecutadas))echo $relatorio->dsAcoesExecutadas;?></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <b>Benef&iacute;cios Alcançados</b><br>
+                            <b>Benef&iacute;cios Alcan&ccedil;ados</b><br>
                             <textarea null="false" class="campoForm" id="dsBeneficioAlcancado" name="dsBeneficioAlcancado" cols="1" rows="3" style="width: 80%;"><?php if(isset($relatorio->dsBeneficioAlcancado))echo $relatorio->dsBeneficioAlcancado;?></textarea>
                         </td>
                     </tr>
@@ -226,13 +226,13 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <!-- ************************************** Situaç&atilde;o do Conv&ecirc;nio na Realizaç&atilde;o da Fiscalizaç&atilde;o ************************************ -->
+                        <!-- ************************************** Situa&ccedil;&atilde;o do Conv&ecirc;nio na Realiza&ccedil;&atilde;o da Fiscaliza&ccedil;&atilde;o ************************************ -->
                         <th colspan="4">
-                            Situaç&atilde;o do Conv&ecirc;nio na Realizaç&atilde;o da Fiscalizaç&atilde;o
+                            Situa&ccedil;&atilde;o do Conv&ecirc;nio na Realiza&ccedil;&atilde;o da Fiscaliza&ccedil;&atilde;o
                         </th>
                     </tr>
                     <tr>
-                        <td colspan="2">Situaç&atilde;o SIAFI </td>
+                        <td colspan="2">Situa&ccedil;&atilde;o SIAFI </td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stSiafi))$selected = $relatorio->stSiafi;?>
                             <select null="false" class="campoForm" id="stSiafi" name="stSiafi">
@@ -244,7 +244,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Prestaç&atilde;o de Contas Apresentada?</td>
+                        <td colspan="2">Presta&ccedil;&atilde;o de Contas Apresentada?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stPrestacaoContas))$selected = $relatorio->stPrestacaoContas;?>
                             <select null="false" class="campoForm" id="stPrestacaoContas" name="stPrestacaoContas">
@@ -268,7 +268,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Foi Cumprido o prazo para entrega da Prestaç&atilde;o de Contas?</td>
+                        <td colspan="2">Foi Cumprido o prazo para entrega da Presta&ccedil;&atilde;o de Contas?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stCumpridoPrazo))$selected = $relatorio->stCumpridoPrazo;?>
                             <select null="false" class="campoForm" id="stCumpridoPrazo" name="stCumpridoPrazo">
@@ -280,11 +280,11 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <!-- ****************************************** Utilizaç&atilde;o de Recursos ************************************************************* -->
-                        <th colspan="4">Utilizaç&atilde;o de Recursos</th>
+                        <!-- ****************************************** Utiliza&ccedil;&atilde;o de Recursos ************************************************************* -->
+                        <th colspan="4">Utiliza&ccedil;&atilde;o de Recursos</th>
                     </tr>
                     <tr>
-                        <td colspan="2">Foi apurado por unidade fiscalizadora u auditora a aplicaç&atilde;o irregular de recursos?</td>
+                        <td colspan="2">Foi apurado por unidade fiscalizadora u auditora a aplica&ccedil;&atilde;o irregular de recursos?</td>
                         <td colspan="2" >
                             <?php if(isset($relatorio->stApuracaoUFiscalizacao))$selected = $relatorio->stApuracaoUFiscalizacao;?>
                             <select null="false" class="campoForm" id="stApuracaoUFiscalizacao" name="stApuracaoUFiscalizacao">
@@ -296,7 +296,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Comprovou a correta utilizaç&atilde;o dos recursos da contrapartida?</td>
+                        <td colspan="2">Comprovou a correta utiliza&ccedil;&atilde;o dos recursos da contrapartida?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stComprovacaoUtilizacaoRecurso))$selected = $relatorio->stComprovacaoUtilizacaoRecurso;?>
                             <select null="false" class="campoForm" id="stComprovacaoUtilizacaoRecursos" name="stComprovacaoUtilizacaoRecursos">
@@ -308,7 +308,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">H&aacute; compatibilidade entre o desembolso e a evoluç&atilde;o?</td>
+                        <td colspan="2">H&aacute; compatibilidade entre o desembolso e a evolu&ccedil;&atilde;o?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stCompatibilidadeDesembolsoEvo))$selected = $relatorio->stCompatibilidadeDesembolsoEvo;?>
                             <select null="false" class="campoForm" id="stCompatibilidadeDesembolsoEvolucao" name="stCompatibilidadeDesembolsoEvolucao">
@@ -320,7 +320,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Ocorreu despesas com multas, juros, taxas banc&aacute;rias ou correç&atilde;o monet&aacute;ria?</td>
+                        <td colspan="2">Ocorreu despesas com multas, juros, taxas banc&aacute;rias ou corre&ccedil;&atilde;o monet&aacute;ria?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stOcorreuDespesas))$selected = $relatorio->stOcorreuDespesas;?>
                             <select null="false" class="campoForm" id="stOcorreuDespesas" name="stOcorreuDespesas">
@@ -344,7 +344,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Ocorreu despesa com taxa de administraç&atilde;o?</td>
+                        <td colspan="2">Ocorreu despesa com taxa de administra&ccedil;&atilde;o?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stDespesaAdministracao))$selected = $relatorio->stDespesaAdministracao;?>
                             <select null="false" class="campoForm" id="stDespesaAdministracao" name="stDespesaAdministracao">
@@ -356,7 +356,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">H&aacute; transfer&ecirc;ncia de recurso para clubes/associaç&otilde;es ou outras entidades cong&ecirc;neres?</td>
+                        <td colspan="2">H&aacute; transfer&ecirc;ncia de recurso para clubes/associa&ccedil;&otilde;es ou outras entidades cong&ecirc;neres?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stTransferenciaRecurso))$selected = $relatorio->stTransferenciaRecurso;?>
                             <select null="false" class="campoForm" id="stTransferenciaRecurso" name="stTransferenciaRecurso">
@@ -368,7 +368,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">H&aacute; despesas com publicidade, salvo as de car&aacute;ter educativo, informativo ou de orientaç&atilde;o social?</td>
+                        <td colspan="2">H&aacute; despesas com publicidade, salvo as de car&aacute;ter educativo, informativo ou de orienta&ccedil;&atilde;o social?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stDespesasPublicidade))$selected = $relatorio->stDespesasPublicidade;?>
                             <select null="false" class="campoForm" id="stDespesasPublicidade" name="stDespesasPublicidade">
@@ -380,7 +380,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Ocorreu aditamento prevendo alteraç&atilde;o de objeto?</td>
+                        <td colspan="2">Ocorreu aditamento prevendo altera&ccedil;&atilde;o de objeto?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stOcorreuAditamento))$selected = $relatorio->stOcorreuAditamento;?>
                             <select null="false" class="campoForm" id="stOcorreuAditamento" name="stOcorreuAditamento">
@@ -404,7 +404,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Ocorreu aplicaç&atilde;o de recursos em outra finalidade que n&atilde;o a do objeto pactuado?</td>
+                        <td colspan="2">Ocorreu aplica&ccedil;&atilde;o de recursos em outra finalidade que n&atilde;o a do objeto pactuado?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stAplicacaoRecursosFinalidade))$selected = $relatorio->stAplicacaoRecursosFinalidade;?>
                             <select null="false" class="campoForm" id="stAplicacaoRecursosFinalidade" name="stAplicacaoRecursosFinalidade">
@@ -455,7 +455,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">A documentaç&atilde;o est&aacute; completa e arquivada?</td>
+                        <td colspan="2">A documenta&ccedil;&atilde;o est&aacute; completa e arquivada?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stDocumentacaoCompleta))$selected = $relatorio->stDocumentacaoCompleta;?>
                             <select null="false" class="campoForm" id="stDocumentacaoCompleta" name="stDocumentacaoCompleta">
@@ -515,7 +515,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">As despesas coincidem com as informadas na relaç&atilde;o de pagamentos?</td>
+                        <td colspan="2">As despesas coincidem com as informadas na rela&ccedil;&atilde;o de pagamentos?</td>
                         <td colspan="2">
                             <?php if(isset($relatorio->stDespesaCoincidem))$selected = $relatorio->stDespesaCoincidem;?>
                             <select null="false" class="campoForm" id="stDespesaCoincidem" name="stDespesaCoincidem">
@@ -554,7 +554,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                         <td colspan="4">
                             <table width="48%" style="float: left;">
                                 <tr>
-                                    <th colspan="2">Divulgaç&atilde;o</th>
+                                    <th colspan="2">Divulga&ccedil;&atilde;o</th>
                                 </tr>
                                 <tr>
                                     <td>Ci&ecirc;ncia ao Poder legislativo?</td>
@@ -595,10 +595,10 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                             </table>
                             <table width="48%" style="float: right;">
                                 <tr>
-                                    <th colspan="2">Execuç&atilde;o</th>
+                                    <th colspan="2">Execu&ccedil;&atilde;o</th>
                                 </tr>
                                 <tr>
-                                    <td>Alcançou a finalidade esperada?</td>
+                                    <td>Alcan&ccedil;ou a finalidade esperada?</td>
                                     <td>
                                         <?php if(isset($relatorio->stFinalidadeEsperada))$selected = $relatorio->stFinalidadeEsperada;?>
                                         <select null="false" class="campoForm" id="stFinalidadeEsperada" name="stFinalidadeEsperada">
@@ -622,7 +622,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>A execuç&atilde;o respeitou o aprovado?</td>
+                                    <td>A execu&ccedil;&atilde;o respeitou o aprovado?</td>
                                     <td>
                                         <?php if(isset($relatorio->stExecucaoAprovado))$selected = $relatorio->stExecucaoAprovado;?>
                                         <select null="false" class="campoForm" name="stExecucaoAprovado" name="stExecucaoAprovado">
@@ -655,7 +655,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <b>Recomendaç&otilde;es da Equipe</b><br>
+                            <b>Recomenda&ccedil;&otilde;es da Equipe</b><br>
                             <textarea null="false" class="campoForm" id="dsRecomendacaoEquipe" name="dsRecomendacaoEquipe" cols="1" rows="3" style="width: 80%;"><?php if(isset($relatorio->dsRecomendacaoEquipe))echo $relatorio->dsRecomendacaoEquipe;?></textarea>
                         </td>
                     </tr>
@@ -688,7 +688,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
 
                         <p align="center">
                             <input id="Aprovar" class="btn" type="button" value="Aprovar" style="margin-left: 5px;">
-                            <input id="DevolverTecnico" class="btn" type="submit" value="Devolver para Técnico" style="margin-left: 5px;">
+                            <input id="DevolverTecnico" class="btn" type="submit" value="Devolver para T&eacute;cnico" style="margin-left: 5px;">
                             <input id="Salvar" class="btn_salvar" type="button" style="margin-left: 5px;">
                             <input id="Cancelar" class="btn_cancelar" type="button" style="margin-left: 5px;">
                         </p>
@@ -696,7 +696,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
             </form>
         </div>
         <div id="rodapeConteudo" ><span></span></div>
-        <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+        <!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
     </div>
     <br clear="all" />
 </div>
@@ -784,7 +784,7 @@ echo $this->partial("fiscalizarprojetocultural/inc/menu.inc.php", $this);
                 removerBtFechar:true,
                 title : 'Alerta'
             });
-            nomeJanelaAlerta.divConteudo.html(' sfdgfgh Deseja devolver para o técnico? <table><tr><th colspan="4">Justificativa:</th></tr><tr><td colspan="4"><textarea null="false" id="justTecnico" name="justTecnico" cols="1" rows="3" style="width: 80%;"><?php if(isset($relatorio->dsJustificativaDevolucao))echo $relatorio->dsJustificativaDevolucao;?></textarea></td></tr></table>');
+            nomeJanelaAlerta.divConteudo.html(' sfdgfgh Deseja devolver para o t&eacute;cnico? <table><tr><th colspan="4">Justificativa:</th></tr><tr><td colspan="4"><textarea null="false" id="justTecnico" name="justTecnico" cols="1" rows="3" style="width: 80%;"><?php if(isset($relatorio->dsJustificativaDevolucao))echo $relatorio->dsJustificativaDevolucao;?></textarea></td></tr></table>');
             alert('aeaeaea');
             nomeJanelaAlerta.abrirJanela();
             return false;

@@ -157,7 +157,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
             	$this->view->perfilAtual = self::$perfilAtual;
                 $titulo = $_REQUEST['titulo'];
                 $idAgente = $_REQUEST['filtro']['parecerista'];
-                $idArea = $_REQUEST['filtro']['area'];
+                $idArea = $_REQUEST['filtro']['Area'];
                 $idSegmento = $_POST['filtro']['segmento'];
                 $stPrincipal = $_POST['filtro']['produto'];
                 $idTipoAusencia = $_POST['filtro']['statusParecerista'];;
@@ -276,7 +276,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 					$this->view->perfilAtual = self::$perfilAtual;
 
 //					$orgao = $_REQUEST['filtro']['orgao'];
-//					$area = $_REQUEST['filtro']['area'];
+//					$area = $_REQUEST['filtro']['Area'];
 //					$segmento = $_REQUEST['filtro']['segmento'];
 	            	$idAgente = $_REQUEST['filtro']['parecerista'];
 	            	$parecer = $_REQUEST['filtro']['parecer'];
@@ -490,7 +490,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
         	if(isset($_POST['prod'])){
 					$this->view->prod = $_POST['prod'];
 //					$orgao = $_REQUEST['filtro']['orgao'];
-//					$area = $_REQUEST['filtro']['area'];
+//					$area = $_REQUEST['filtro']['Area'];
 //					$segmento = $_REQUEST['filtro']['segmento'];
             		$idAgente = $_REQUEST['filtro']['parecerista'];
             		$parecer = $_REQUEST['filtro']['parecer'];
@@ -558,7 +558,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		            $titulo = $_REQUEST['titulo'];
 					$idAgente = $_REQUEST['filtro']['parecerista'];
 					$orgao = $_REQUEST['filtro']['orgao'];
-		            $area = $_REQUEST['filtro']['area'];
+		            $area = $_REQUEST['filtro']['Area'];
 		            $segmento = $_POST['filtro']['segmento'];
 		            $dataInicio = $_POST['filtro']['periodo']['dataInicio'];
 		            $dataFim = $_POST['filtro']['periodo']['datafim'];

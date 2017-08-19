@@ -77,12 +77,12 @@
 
 <?php $dataAtual = date('d/m/Y - H:i:s'); ?>
 
-<!-- inï¿½cio: área principal #conteudo -->
+<!-- inï¿½cio: &aacute;rea principal #conteudo -->
 <div class="paginaA4">
     <div align="center">
-        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Ministério da Cultura"/>
-        <br clear="all" /><span class="TituloMinC">Ministério da Cultura</span>
-        <br clear="all" /><span class="TituloDoDocumento">Guia de Tramitação de Projetos - Enviado</span>
+        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Minist&eacute;rio da Cultura"/>
+        <br clear="all" /><span class="TituloMinC">Minist&eacute;rio da Cultura</span>
+        <br clear="all" /><span class="TituloDoDocumento">Guia de Tramita&ccedil;&atilde;o de Projetos - Enviado</span>
         <br clear="all" /><span class="DataDoDocumento">N&ordm; do Lote <?php echo $this->idLote; ?> - Data de Envio: <?php echo $dataAtual; ?></span>
         <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->docs); echo (count($this->docs) == 1) ? ' projeto listado' : ' projetos listados'; ?></span>
     </div>
@@ -115,7 +115,7 @@
     
     <table class="tabela">
         <tr>
-            <td><br />Recebi <?php echo (count($this->docs) == 1) ? 'o projeto' : 'os projetos'; ?> acima<br /><br />em ______/______/________<br /><br />às ______:______ horas</td>
+            <td><br />Recebi <?php echo (count($this->docs) == 1) ? 'o projeto' : 'os projetos'; ?> acima<br /><br />em ______/______/________<br /><br />&agrave;s ______:______ horas</td>
             <td align="center"><br />___________________________________________________<br /><span style='font-size:10px'>(Nome e Assinatura)</span></td>
         </tr>
     </table>

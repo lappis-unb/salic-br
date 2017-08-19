@@ -41,31 +41,31 @@ class tbDocumentoAceitacao extends MinC_Db_Table_Abstract
                     array('b' => 'tbRelatorioConsolidado'),
                     'b.idRelatorioConsolidado = a.idRelatorioConsolidado',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('c' => 'tbRelatorio'),
                     'c.idRelatorio = b.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $select->joinInner(
                     array('d' => 'tbDocumento'),
                     'd.idDocumento = a.idDocumento',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('e' => 'tbArquivo'),
                     'e.idArquivo = d.idArquivo',
                     array('*'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
             $select->joinInner(
                     array('f' => 'tbTipoDocumento'),
                     'f.idTipoDocumento = d.idTipoDocumento',
                     array('dsTipoDocumento'),
-                    'BDCORPORATIVO.scCorp'
+                    'bdcorporativo.scCorp'
                     );
 
             $select->where('c.idPRONAC = ?', $idpronac);

@@ -99,10 +99,10 @@
 <div class="paginaA4">
 
     <div align="center">
-        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Ministério da Cultura"/>
-        <br clear="all" /><span class="TituloMinC">Ministério da Cultura</span>
-        <br clear="all" /><span class="TituloDoDocumento">Analisar prestação de contas - <?php echo $this->tituloPag; ?></span>
-        <br clear="all" /><span class="DataDoDocumento">Data da impressão: <?php echo date('d/m/Y - H:i:s'); ?></span>
+        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Minist&eacute;rio da Cultura"/>
+        <br clear="all" /><span class="TituloMinC">Minist&eacute;rio da Cultura</span>
+        <br clear="all" /><span class="TituloDoDocumento">Analisar presta&ccedil;&atilde;o de contas - <?php echo $this->tituloPag; ?></span>
+        <br clear="all" /><span class="DataDoDocumento">Data da impress&atilde;o: <?php echo date('d/m/Y - H:i:s'); ?></span>
         <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->dados).' projetos listados'; ?></span>
     </div>
 
@@ -113,13 +113,13 @@
                 <th width="1px">#</th>
                 <th>PRONAC</th>
                 <th>Nome do Projeto</th>
-                <th>Situação</th>
-                <th>Área / Segmento</th>
+                <th>Situa&ccedil;&atilde;o</th>
+                <th>&aacute;rea / Segmento</th>
                 <th>Mecanismo</th>
                 <?php if(isset($this->filtro) && ($this->filtro == 'emanalise')){ ?>
-                <th>Técnico</th>
+                <th>T&eacute;cnico</th>
                 <th>Dt.Envio</th>
-                <th>Dias em Análise</th>
+                <th>Dias em An&aacute;lise</th>
                 <?php } ?>
             </tr>
         </thead>

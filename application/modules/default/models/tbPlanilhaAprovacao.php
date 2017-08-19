@@ -50,7 +50,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
 
         $slct->joinLeft(
                 array('b' => 'tbPlanilhaItens'), "a.idPlanilhaItem = b.idPlanilhaItens",
-                array('Descricao'), 'SAC.dbo'
+                array('Descricao'), 'SAC'
         );
 
         // adicionando clausulas where
@@ -72,14 +72,14 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
 
     public function copiandoPlanilhaRecurso($idPronac){
 
-        $sql = "INSERT INTO SAC.dbo.tbPlanilhaAprovacao
+        $sql = "INSERT INTO sac.dbo.tbPlanilhaAprovacao
                     (tpPlanilha,dtPlanilha,idPlanilhaProjeto,idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,dsItem,idUnidade,
                     qtItem,nrOcorrencia,vlUnitario,qtDias,tpDespesa,tpPessoa,nrContraPartida,nrFonteRecurso,idUFDespesa,idMunicipioDespesa,
                     dsJustificativa,idAgente,StAtivo)
               SELECT 'CO',{$this->getDate()},idPlanilhaProjeto,idPlanilhaProposta,'$idPronac',idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,
                         Quantidade,Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
                         MunicipioDespesa,Justificativa,idUsuario,'S'
-                        FROM SAC.dbo.tbPlanilhaProjeto
+                        FROM sac.dbo.tbPlanilhaProjeto
                         WHERE idPronac = '$idPronac'
         ";
 //        
@@ -92,14 +92,14 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
 
     public function copiandoPlanilhaRemanejamento($idPronac){
 
-        $sql = "INSERT INTO SAC.dbo.tbPlanilhaAprovacao
+        $sql = "INSERT INTO sac.dbo.tbPlanilhaAprovacao
                         (tpPlanilha,dtPlanilha,idPlanilhaProjeto,idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,dsItem,idUnidade,
                         qtItem,nrOcorrencia,vlUnitario,qtDias,tpDespesa,tpPessoa,nrContraPartida,nrFonteRecurso,idUFDespesa,idMunicipioDespesa,
                         dsJustificativa,idAgente,StAtivo)
                SELECT 'RP',{$this->getDate()},idPlanilhaProjeto,idPlanilhaProposta,'$idPronac',idProduto,idEtapa,idPlanilhaItem,dsItem,idUnidade,
                         qtItem,nrOcorrencia,vlUnitario,qtDias,tpDespesa,tpPessoa,nrContraPartida,nrFonteRecurso,idUFDespesa,idMunicipioDespesa,
                         dsJustificativa,idAgente,'N'
-                        FROM SAC.dbo.tbPlanilhaAprovacao
+                        FROM sac.dbo.tbPlanilhaAprovacao
                         WHERE idPronac = '$idPronac'
         ";
         
@@ -125,19 +125,19 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         );
         $select->joinLeft(
             array('b' => 'Produto'), "a.idProduto = b.Codigo",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbPlanilhaEtapa'), "a.idEtapa = c.idPlanilhaEtapa",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('d' => 'tbPlanilhaItens'), "a.idPlanilhaItem = d.idPlanilhaItens",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPlanilhaUnidade'), "a.idUnidade = e.idUnidade",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
 
         foreach($where as $key=>$valor){

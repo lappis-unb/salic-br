@@ -7,7 +7,7 @@
             modal: true,
             autoOpen:false,
             buttons : {
-                'Não' : functionnao,
+                'N&atilde;o' : functionnao,
                 'Sim' : functionsim
             }
         });
@@ -110,7 +110,7 @@ echo $this->partial('gerenciarpautareuniao/inc/menu.inc.php', $this);
             <?php foreach ($votantes as $nomevotantes) {
             ?>
                     <tr>
-                        <td colspan="3" style="padding-left: 4em;"><label style="font-weight: normal;"><input type="radio" name="votantes<?php echo $count; ?>" class="votantes" value="<?php echo $nomevotantes['idagente'] ?>" <?php echo $nomevotantes['selecionado'] == 1 ? 'checked="checked"' : ''; ?>/> <?php echo $nomevotantes['conselheiro'] ?></label></td>
+                        <td colspan="3" style="padding-left: 4em;"><label style="font-weight: normal;"><input type="radio" name="votantes<?php echo $count; ?>" class="votantes" value="<?php echo $nomevotantes['idAgente'] ?>" <?php echo $nomevotantes['selecionado'] == 1 ? 'checked="checked"' : ''; ?>/> <?php echo $nomevotantes['conselheiro'] ?></label></td>
                     </tr>
             <?php } ?>
             <?php $count++;

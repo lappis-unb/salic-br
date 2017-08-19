@@ -39,7 +39,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $schemaSac = parent::getSchema('sac');
 
         $a = array(
-            'a.idagente'
+            'a.idAgente'
             ,'a.CNPJCPF'
             ,'a.CNPJCPFSuperior'
             ,'a.tipopessoa'
@@ -73,15 +73,15 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->setIntegrityCheck(false)
             ->distinct()
             ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'nomes'), 'n.idagente = a.idagente', array('n.descricao as nome'), $schemaAgentes)
-            ->joinLeft(array('e' => 'endereconacional'), 'e.idagente = a.idagente', $e, $schemaAgentes)
+            ->joinLeft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.descricao as nome'), $schemaAgentes)
+            ->joinLeft(array('e' => 'endereconacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
             ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
-            ->joinLeft(array('ve' => 'verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
-            ->joinLeft(array('vl' => 'verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
-            ->joinLeft(array('t' => 'tbtitulacaoconselheiro'), 't.idagente = a.idagente', $t, $schemaAgentes)
-            ->joinLeft(array('v' => 'visao'), 'v.idagente = a.idagente', '*', $schemaAgentes)
-            ->joinLeft(array('sa' => 'area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
+            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
+            ->joinLeft(array('t' => 'tbTitulacaoConselheiro'), 't.idAgente = a.idAgente', $t, $schemaAgentes)
+            ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
+            ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
             ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
             ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
         ;
@@ -95,7 +95,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $select->where('n.descricao LIKE ?', '%'.$nome.'%');
         } if (!empty($idAgente)) {
             # busca de acordo com o id do agente
-            $select->where('a.idagente = ?',$idAgente);
+            $select->where('a.idAgente = ?',$idAgente);
         }
 
         $select->order(array('e.status Desc', 'n.descricao Asc'));
@@ -176,7 +176,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name), '*', $this->_schema);
-        $slct->joinInner(array('m' => 'nomes'), 'a.idagente=m.idagente', array('*'), $this->_schema);
+        $slct->joinInner(array('m' => 'nomes'), 'a.idAgente=m.idAgente', array('*'), $this->_schema);
 
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -228,7 +228,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             array('A' => $this->_name), array('A.CNPJCPF', 'A.idAgente')
         );
         $select->joinInner(
-            array('U' => 'vwUsuariosOrgaosGrupos'), 'U.usu_identificacao = A.CNPJCPF', array(), 'tabelas.dbo'
+            array('U' => 'vwUsuariosOrgaosGrupos'), 'U.usu_identificacao = A.CNPJCPF', array(), 'tabelas'
         );
         $select->joinInner(
             array('N' => 'Nomes'), 'N.idAgente = A.idAgente', array('N.Descricao AS nome')
@@ -267,7 +267,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $objAgentes->where($coluna, $valor);
         }
-//xd($objAgentes->assemble());
         return $this->fetchAll($objAgentes);
     }
 
@@ -288,17 +287,17 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from(
             array('ag' => $this->_name),
-            array('ag.CNPJCPF', 'ag.idagente'),
+            array('ag.CNPJCPF', 'ag.idAgente'),
             $this->_schema
         );
         $slct->joinInner(
-            array('nm' => 'nomes'), "nm.idagente = ag.idagente",
+            array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
             array('nm.descricao as nomeagente'),
             $this->_schema
 
         );
         $slct->joinLeft(
-            array('vp' => 'tbvinculo'), "vp.idagenteproponente  = ag.idagente",
+            array('vp' => 'tbvinculo'), "vp.idAgenteproponente  = ag.idAgente",
             array("vp.idvinculo as idvinculoproponente", "sivinculo", "idusuarioresponsavel"),
             $this->_schema
         );
@@ -344,25 +343,25 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
             array('ag' => $this->_name),
-            array('ag.CNPJCPF', 'ag.idagente'),
+            array('ag.CNPJCPF', 'ag.idAgente'),
             $this->_schema
         );
 
         $select->joinInner(
-            array('nm' => 'nomes'), "nm.idagente = ag.idagente",
+            array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
             array('nm.descricao as nomeagente'),
             $this->_schema
         );
 
         $select->joinLeft(
-            array('vp' => 'tbvinculo'), "vp.idagenteproponente  = ag.idagente and vp.idusuarioresponsavel = $idResponsavel",
+            array('vp' => 'tbvinculo'), "vp.idAgenteproponente  = ag.idAgente and vp.idusuarioresponsavel = $idResponsavel",
             array("vp.idvinculo as idvinculoproponente", "sivinculo", "idusuarioresponsavel"),
             $this->_schema
         );
 
         $select->joinLeft(
-            array('v' => 'visao'), "v.idagente = ag.idagente and v.visao = 146",
-            array('v.visao as usuariovinculo'),
+            array('v' => 'Visao'), "v.idAgente = ag.idAgente and v.Visao = 146",
+            array('v.Visao as usuariovinculo'),
             $this->_schema
         );
 
@@ -413,7 +412,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         $slct->joinInner(array('n' => 'Nomes'), 'a.idAgente = n.idAgente', array('n.idAgente AS idParecerista', 'n.Descricao AS Nome'));
 
-        $slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao AND u.sis_codigo = 21 AND u.gru_codigo = 94 OR u.gru_codigo = 105', array('u.org_superior AS idOrgao'), 'TABELAS.dbo');
+        $slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao AND u.sis_codigo = 21 AND u.gru_codigo = 94 OR u.gru_codigo = 105', array('u.org_superior AS idOrgao'), 'TABELAS');
 
         $slct->joinInner(array('v' => 'Visao'), 'n.idAgente = v.idAgente', array());
 
@@ -444,9 +443,9 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->joinInner(array('n' => 'Nomes'), 'a.idAgente = n.idAgente', array('n.idAgente AS idParecerista', 'n.Descricao AS Nome'));
 
         if($idOrgao == null){
-            $slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao', array(), 'TABELAS.dbo');
+            $slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao', array(), 'TABELAS');
         }else{
-            $slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao', array('u.uog_orgao AS idOrgao'), 'TABELAS.dbo');
+            $slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao', array('u.uog_orgao AS idOrgao'), 'TABELAS');
         }
 
         $slct->joinInner(array('v' => 'Visao'), 'n.idAgente = v.idAgente', array());
@@ -490,7 +489,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(
             array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_Identificacao AND sis_codigo = 21 AND (gru_codigo = 94 OR gru_codigo = 105)',
-            array(), 'TABELAS.dbo'
+            array(), 'TABELAS'
         );
         $slct->joinInner(
             array('v' => 'Visao'), 'n.idAgente = v.idAgente',
@@ -533,23 +532,23 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->distinct();
         $slct->from(
             array('a' => $this->_name),
-            array(), 'agentes.dbo'
+            array(), 'agentes'
         );
         $slct->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array('u.usu_codigo AS id', 'n.Descricao AS nome'), 'agentes.dbo'
+            array('u.usu_codigo AS id', 'n.Descricao AS nome'), 'agentes'
         );
         $slct->joinInner(
             array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_Identificacao AND sis_codigo = 21 AND (gru_codigo = 94 OR gru_codigo = 105)',
-            array(), 'TABELAS.dbo'
+            array(), 'TABELAS'
         );
         $slct->joinInner(
             array('v' => 'Visao'), 'n.idAgente = v.idAgente',
-            array(), 'agentes.dbo'
+            array(), 'agentes'
         );
         $slct->joinInner(
             array('c' => 'tbCredenciamentoParecerista'), 'a.idAgente = c.idAgente',
-            array(), 'agentes.dbo'
+            array(), 'agentes'
         );
 
         $dadosWhere["v.Visao = ?"] = 209;
@@ -664,13 +663,13 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             array("usu" => "Usuarios")
             , "ag.CNPJCPF = usu.usu_identificacao"
             , array()
-            , 'TABELAS.dbo'
+            , 'TABELAS'
         );
         $select->joinInner(
             array("uog" => "UsuariosXOrgaosXGrupos")
             , "usu.usu_codigo = uog.uog_usuario and uog.uog_status = 1"
             , array()
-            , 'TABELAS.dbo'
+            , 'TABELAS'
         );
         $select->joinInner(
             array("org" => "Orgaos")

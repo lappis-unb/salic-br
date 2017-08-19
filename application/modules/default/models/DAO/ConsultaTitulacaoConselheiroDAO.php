@@ -57,7 +57,7 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 from agentes.dbo.Agentes ag
                 JOIN agentes.dbo.Nomes nm on nm.idAgente = ag.idAgente
                 JOIN agentes.dbo.Visao vis on vis.idAgente = ag.idAgente
-                where vis.visao = 212 and nm.TipoNome=18
+                where vis.Visao = 212 and nm.TipoNome=18
                 ";
         try
         {
@@ -78,8 +78,8 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 nm.Descricao,
                 tdpc.stDistribuicao
                 FROM
-                SAC.dbo.Projetos pr
-                JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao tdpc ON pr.IdPRONAC = tdpc.idPRONAC
+                sac.dbo.Projetos pr
+                JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao tdpc ON pr.IdPRONAC = tdpc.idPRONAC
                 JOIN agentes.dbo.tbTitulacaoConselheiro ttc ON tdpc.idAgente = ttc.idAgente
                 JOIN agentes.dbo.Agentes ag ON tdpc.idAgente = ag.idAgente
                 JOIN agentes.dbo.Nomes nm ON tdpc.idAgente = nm.idAgente

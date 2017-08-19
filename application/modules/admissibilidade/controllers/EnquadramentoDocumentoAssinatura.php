@@ -14,7 +14,7 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
     function encaminharProjetoParaAssinatura() {
 
         if(!$this->idPronac) {
-            throw new Exception("Identificador do Projeto não informado.");
+            throw new Exception("Identificador do Projeto n&atilde;o informado.");
         }
 
         $objTbProjetos = new Projeto_Model_DbTable_Projetos();
@@ -43,7 +43,6 @@ class Admissibilidade_EnquadramentoDocumentoAssinaturaController implements MinC
         $objModelDocumentoAssinatura->setIdCriadorDocumento($auth->getIdentity()->usu_codigo);
 
         $servicoDocumento = $objDocumentoAssinatura->obterServicoDocumento();
-//xd($objModelDocumentoAssinatura);
         $servicoDocumento->registrarDocumentoAssinatura($objModelDocumentoAssinatura);
         $objProjeto = new Projetos();
         $objProjeto->alterarSituacao($this->idPronac, null, 'B04', 'Projeto encamihado para Portaria.');

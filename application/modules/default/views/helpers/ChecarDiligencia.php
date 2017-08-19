@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_ChecarDiligencia
 {
 	/**
-	 * Método para verificar o status da diligencia do projeto
+	 * M&eacute;todo para verificar o status da diligencia do projeto
 	 * @access public
 	 * @param integer $idPronac
 	 * @param integer $idProduto
@@ -40,7 +40,7 @@ class Zend_View_Helper_ChecarDiligencia
 
 			// filtra por tipos de diligências
 			if (count($idTipoDiligencia) > 0) :
-				$where = array_merge($where, array('idTipoDiligencia IN (?)' => $idTipoDiligencia));
+				$where = array_merge($where, array('idTipoDiligencia in (?)' => $idTipoDiligencia));
 			endif;
 
 			$buscarDiligencia = $tbDiligencia->buscar($where, $order);
@@ -81,7 +81,7 @@ class Zend_View_Helper_ChecarDiligencia
 			$TmpDtDistribuicao = !empty($DtDistribuicao) ? (round(Data::CompararDatas($DtDistribuicao))) : 0;
 
 			if ($DtSolicitacao != null && $TmpDtDistribuicao > $TmpFimDiligencia) :
-				return 3; // Diligência não respondida
+				return 3; // Diligência n&atilde;o respondida
 			elseif ($DtSolicitacao != null && $DtResposta != null) :
 				return 2; // Diligência respondida
 			elseif ($DtSolicitacao != null && $DtResposta == null && $stEnviado == 'S') :
@@ -92,6 +92,6 @@ class Zend_View_Helper_ChecarDiligencia
 		else :
 			return 0; // A diligenciar
 		endif;
-	} // fecha método checarDiligencia()
+	} // fecha m&eacute;todo checarDiligencia()
 
 } // fecha class

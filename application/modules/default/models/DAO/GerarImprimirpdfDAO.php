@@ -9,7 +9,7 @@ class GerarImprimirpdfDAO
                     n.Descricao as NomeProponente,
                     a.CNPJCPF as CpfCnpjProponente
                 FROM
-                    SAC.dbo.PreProjeto p
+                    sac.dbo.PreProjeto p
                 LEFT JOIN
                     agentes.dbo.Agentes a ON (p.idAgente=a.idAgente)
                 LEFT JOIN
@@ -78,12 +78,12 @@ class GerarImprimirpdfDAO
                 Usuario,
                 Area,
                 Segmento,
-                (select descricao from SAC.dbo.Produto where codigo = P.idproduto) as Produto,
-                (select descricao from SAC.dbo.area where codigo = P.Area) as AreaFim,
-                (select descricao from SAC.dbo.Segmento where codigo = P.Segmento) as SeguimentoFim,
-                (select Descricao from SAC.dbo.verificacao where idVerificacao = P.idPosicaoDaLogo) as PosicaoDaLogo
+                (select descricao from sac.dbo.Produto where codigo = P.idproduto) as Produto,
+                (select descricao from sac.dbo.area where codigo = P.Area) as AreaFim,
+                (select descricao from sac.dbo.Segmento where codigo = P.Segmento) as SeguimentoFim,
+                (select Descricao from sac.dbo.verificacao where idVerificacao = P.idPosicaoDaLogo) as PosicaoDaLogo
             FROM
-                SAC.dbo.PlanoDistribuicaoProduto as P
+                sac.dbo.PlanoDistribuicaoProduto as P
             WHERE idProjeto=".$id_projeto . " AND P.stPlanoDistribuicaoProduto = 1";
 
 

@@ -10,7 +10,7 @@
 <?php require_once 'scripts/operacional/inc/menu.inc.php'; ?>
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">Início</a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'diagnostico')); ?>">Relatório Operacional</a></li>
         <li class="last">Diagnóstico</li>
     </ul>
@@ -29,7 +29,7 @@
             <tr>
                 <th valign="middle" align="center" bgcolor="#abda5d">PRONAC</th>
                 <th valign="middle" align="center" bgcolor="#abda5d">Nome do Projeto</th>
-                <th valign="middle" align="center" bgcolor="#abda5d">Dt. Situação</th>
+                <th valign="middle" align="center" bgcolor="#abda5d">Dt. Situa&ccedil;&atilde;o</th>
             </tr>
             <?php foreach($this->dados as $dado): ?>
             <tr>
@@ -40,7 +40,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <!-- ========== PAGINAÇÃO ========== -->
+    <!-- ========== PAGINA&ccedil;&atilde;O ========== -->
     <?php if(!isset($_GET['pag'])) {
             $pagina=1;
         } else {
@@ -69,14 +69,14 @@
         <input type="button" class="btn_imprimir" id="btn_imprimir" onclick="window.open('<?php echo $this->baseUrl(); ?>/operacional/imprimirresultadoprojetoporsituacao?situacao=<?php echo $_GET['situacao']; ?>&orgao=<?php echo $_GET['orgao']; ?>')"/>
         <br clear="all" />
         <br clear="all" />
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

@@ -78,7 +78,7 @@ class Proposta_Model_DbTable_DocumentosExigidos extends MinC_Db_Table_Abstract
             ->joinInner(array('d' => 'documentosexigidos'), 'dp.codigodocumento = d.codigo', array('opcao'), $this->_schema)
             ->joinInner(array('p' => 'preprojeto'), 'dp.idprojeto = p.idpreprojeto', null, $this->_schema)
             ->joinInner(array('m' => 'tbmovimentacao'), 'm.idprojeto = p.idpreprojeto', array('idprojeto'), $this->_schema)
-            ->where('movimentacao IN (?)', array(97, 95))
+            ->where('movimentacao in (?)', array(97, 95))
             ->where('m.stestado = ?', 0)
             ->where('m.idprojeto = ?', (int)$idPreProjeto)
         ;
@@ -90,7 +90,7 @@ class Proposta_Model_DbTable_DocumentosExigidos extends MinC_Db_Table_Abstract
             ->joinInner(array('d' => 'documentosexigidos'), 'dpr.codigodocumento = d.codigo', array('opcao'), $this->_schema)
             ->joinInner(array('p' => 'preprojeto'), 'dpr.idprojeto = p.idpreprojeto', null, $this->_schema)
             ->joinInner(array('m' => 'tbmovimentacao'), 'm.idprojeto = p.idpreprojeto', array('idprojeto'), $this->_schema)
-            ->where('movimentacao IN (?)', array(97, 95))
+            ->where('movimentacao in (?)', array(97, 95))
             ->where('m.stestado = ?', 0)
             ->where('m.idprojeto = ?', (int)$idPreProjeto)
         ;
@@ -100,7 +100,7 @@ class Proposta_Model_DbTable_DocumentosExigidos extends MinC_Db_Table_Abstract
             ->union(array($selectProponente, $selectProjeto))
 //            ->joinLeft(['doc' => 'documentosexigidos'], 'vdoc.codigodocumento = doc.codigo', '*', $this->_schema)
 
-//                        left join SAC.dbo.DocumentosExigidos doc on vdoc.CodigoDocumento = doc.Codigo
+//                        left join sac.dbo.DocumentosExigidos doc on vdoc.CodigoDocumento = doc.Codigo
         ;
 
         $resultado = $this->fetchAll($select);

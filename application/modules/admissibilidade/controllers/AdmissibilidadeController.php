@@ -79,7 +79,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     public function validarAcessoAdmissibilidade()
     {
         if (empty($this->idPreProjeto)) {
-            parent::message("Necessário informar o n&uacute;mero da proposta.", "/admissibilidade/admissibilidade/listar-propostas", "ALERT");
+            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/admissibilidade/admissibilidade/listar-propostas", "ALERT");
         }
     }
 
@@ -274,11 +274,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $bln = "false";
 
         if ($tipo == '1') {
-            $tipoDoc = "tbDocumentosAgentes"; //SAC.dbo.tbDocumentosAgentes
+            $tipoDoc = "tbDocumentosAgentes"; //sac.dbo.tbDocumentosAgentes
         } else if ($tipo == '2') {
-            $tipoDoc = "tbDocumentosPreProjeto"; //SAC.dbo.tbDocumentosPreProjeto
+            $tipoDoc = "tbDocumentosPreProjeto"; //sac.dbo.tbDocumentosPreProjeto
         } else if ($tipo == '3') {
-            $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
+            $tipoDoc = "tbDocumento"; //sac.dbo.tbDocumento
         }
 
         @ini_set("mssql.textsize", 10485760);
@@ -316,11 +316,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $bln = "false";
 
         if ($tipo == '1') {
-            $tipoDoc = "tbDocumentosAgentes"; //SAC.dbo.tbDocumentosAgentes
+            $tipoDoc = "tbDocumentosAgentes"; //sac.dbo.tbDocumentosAgentes
         } else if ($tipo == '2') {
-            $tipoDoc = "tbDocumentosPreProjeto"; //SAC.dbo.tbDocumentosPreProjeto
+            $tipoDoc = "tbDocumentosPreProjeto"; //sac.dbo.tbDocumentosPreProjeto
         } else if ($tipo == '3') {
-            $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
+            $tipoDoc = "tbDocumento"; //sac.dbo.tbDocumento
         }
 
         @ini_set("mssql.textsize", 10485760);
@@ -1183,8 +1183,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             }
             //ORGAO USUARIO SUPERIOR LOGADO
-            //$arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) "] = $_SESSION['GrupoAtivo']['codOrgao'];
-            $arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) = "] = $this->codOrgaoSuperior;
+            //$arrBusca[" sac.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) "] = $_SESSION['GrupoAtivo']['codOrgao'];
+            $arrBusca[" sac.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) = "] = $this->codOrgaoSuperior;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(u.usu_orgao, 1) "] = $this->codOrgaoSuperior;
 
 
@@ -1800,8 +1800,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     }
 
     /**
-     * ListarPropostas que vão ser avaliadas pelos tecnicos e Coordenadores de Admissibilidade.
-     * A proposta são divididas em 2 areas SAV e SEFIC.
+     * ListarPropostas que v&atilde;o ser avaliadas pelos tecnicos e Coordenadores de Admissibilidade.
+     * A proposta s&atilde;o divididas em 2 areas SAV e SEFIC.
      * Tecnico só pode ver a suas proprias propostas.
      *
      * @access public
@@ -2477,7 +2477,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $arrayInteressados = $objInteressado->findAll(array('CgcCpf' => $cnpjcpf));
 
         if (!$arrayInteressados) {
-            $sqlInteressado = "INSERT INTO SAC.dbo.Interessado (CgcCpf,TipoPessoa,Nome,Responsavel,Endereco,Cidade,UF,CEP,Natureza,Esfera,Administracao,Utilidade)
+            $sqlInteressado = "INSERT INTO sac.dbo.Interessado (CgcCpf,TipoPessoa,Nome,Responsavel,Endereco,Cidade,UF,CEP,Natureza,Esfera,Administracao,Utilidade)
                               SELECT TOP 1 p.CNPJCPF,
                                  case
                                    when len(p.CNPJCPF)=11
@@ -2485,7 +2485,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                      else  '2'
                                  end as TipoPessoa,
                                  Nome,
-                                 SAC.dbo.fnNomeResponsavel(p.Usuario),
+                                 sac.dbo.fnNomeResponsavel(p.Usuario),
                                  p.Logradouro + ' - ' + p.Bairro,
                                  u.Municipio,
                                  u.UF,
@@ -2516,15 +2516,15 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                    when Direito = 35
                                      then '2'
                                   end as Utilidade
-                            FROM SAC.dbo.vCadastrarProponente p
+                            FROM sac.dbo.vCadastrarProponente p
                            INNER JOIN agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
                            INNER JOIN agentes.dbo.EnderecoNacional e on (p.idAgente = e.idAgente and e.Status = 1)
                            INNER JOIN agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
-                            LEFT JOIN  SAC.dbo.vwNatureza n on (p.idAgente =n.idAgente)
+                            LEFT JOIN  sac.dbo.vwNatureza n on (p.idAgente =n.idAgente)
                            WHERE p.CNPJCPF='{$cnpjcpf}'
                              AND Correspondencia = 1";
         } else {
-            $sqlInteressado = "  UPDATE SAC.dbo.Interessado
+            $sqlInteressado = "  UPDATE sac.dbo.Interessado
                                     SET
                                         Nome     = b.Descricao,
                                         Endereco = e.Logradouro + ' - ' + e.Bairro,
@@ -2557,12 +2557,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                                      when n.Direito = 35
                                                        then '2'
                                                     end
-                                        FROM SAC.dbo.Interessado i
+                                        FROM sac.dbo.Interessado i
                                              INNER JOIN agentes.dbo.Agentes a on (i.CgcCpf = a.CNPJCPF)
                                              INNER JOIN agentes.dbo.Nomes            b on (a.idAgente = b.idAgente)
                                              INNER JOIN agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
                                              INNER JOIN agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
-                                              LEFT JOIN SAC.dbo.vwNatureza n on (a.idAgente =n.idAgente)
+                                              LEFT JOIN sac.dbo.vwNatureza n on (a.idAgente =n.idAgente)
                                              WHERE i.CGCCPF='{$cnpjcpf}' and e.Status = 1";
         }
 
@@ -2571,17 +2571,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             throw new Exception ("Erro ao tentar incluir ou alterar %d registros na tabela Interessado.");
         }
 
-            $sqlSequencialProjetos = "UPDATE SAC.dbo.SequencialProjetos
+            $sqlSequencialProjetos = "UPDATE sac.dbo.SequencialProjetos
                                          SET Sequencial = Sequencial + 1
                                        WHERE Ano = YEAR(".$objInteressado->getDate().")";
 
         $resultado = $db->query($sqlSequencialProjetos);
         $ano = date('Y');
         if ($resultado->rowCount() < 1) {
-            $sqlSequencialProjetos = " INSERT INTO SAC.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
+            $sqlSequencialProjetos = " INSERT INTO sac.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
             $resultado = $db->query($sqlSequencialProjetos);
             if (!$resultado) {
-                throw new Exception ("Não é possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
+                throw new Exception ("N&atilde;o &eacute; possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
             }
         }
 
@@ -2597,20 +2597,20 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $providenciaTomada = 'Projeto encamihado a unidade vinculada para an&aacute;lise e emiss&atilde;o de parecer t&eacute;cnico';
         }
 
-            $sqlProjetos = "INSERT INTO SAC.dbo.Projetos
+            $sqlProjetos = "INSERT INTO sac.dbo.Projetos
                                   (AnoProjeto,Sequencial,UFProjeto,Area,Segmento,Mecanismo,NomeProjeto,CgcCpf,Situacao,DtProtocolo,DtAnalise,
                                    OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
                                    idProjeto,Processo,Logon)
-                                SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
+                                SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, sac.dbo.fnSelecionarArea(idPreProjeto),sac.dbo.fnSelecionarSegmento(idPreProjeto),
                                    Mecanismo, NomeProjeto, a.CNPJCPF, '{$situacaoProjeto}', ".$objInteressado->getDate().", ".$objInteressado->getDate().", {$idOrgao}, {$idOrgao}, ".$objInteressado->getDate().",
                                    '{$providenciaTomada}', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
-                                   SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
-                                   FROM SAC.dbo.PreProjeto p
+                                   sac.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
+                                   FROM sac.dbo.PreProjeto p
                                    INNER JOIN agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
                                    INNER JOIN agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
                                    INNER JOIN agentes.dbo.UF u on (e.UF = u.idUF)
                                    WHERE idPreProjeto  = {$idPreProjeto}
-                                     AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
+                                     AND NOT EXISTS(SELECT TOP 1 * FROM sac.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
 
         $resultado = $db->query($sqlProjetos);
         if (!$resultado) {
@@ -2636,10 +2636,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             }
 
-            # INSERIR INFORMAÇÕES NA TABELA CONTABANCARIA
-            $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
+            # INSERIR INFORMA&ccedil;&otilde;ES NA TABELA CONTABANCARIA
+            $sqlContaBancaria = "INSERT INTO sac.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
                                  SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario}
-                                   FROM SAC.dbo.PreProjeto
+                                   FROM sac.dbo.PreProjeto
                                   WHERE idPreProjeto = {$idPreProjeto}";
             $resultado = $db->query($sqlContaBancaria);
 
@@ -2647,8 +2647,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 throw new Exception ("N&atilde;o &eacute; poss&iacute;vel incluir mais de %d registros na ContaBancaria");
             }
 
-                # CARREGAR INFORMAÇÕES PARA ENVIAR EMAIL
-                $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
+                # CARREGAR INFORMA&ccedil;&otilde;ES PARA ENVIAR EMAIL
+                $sqlHistoricoEmail = "SELECT TOP 1 * FROM sac.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
                                       idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),".$objInteressado->getDate().",111))";
                 $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
                 if(!$arrayHistoricoEmail) {

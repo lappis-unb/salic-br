@@ -51,7 +51,7 @@ class Natureza extends MinC_Db_Table_Abstract
 
         $select->joinInner(
             array('b' => 'Agentes'), 'b.idAgente = a.idAgente',
-            array(''), 'agentes.dbo'
+            array(''), 'agentes'
         );
         
         $select->where('b.CNPJCPF = ?', $cnpjcpf);

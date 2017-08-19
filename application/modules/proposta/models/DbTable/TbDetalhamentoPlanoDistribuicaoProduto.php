@@ -85,7 +85,7 @@ class Proposta_Model_DbTable_TbDetalhamentoPlanoDistribuicaoProduto extends MinC
 
         $slct->order($order);
 
-        $this->delete(new Zend_Db_Expr('idDetalhaPlanoDistribuicao IN (' . $slct .')'));
+        $this->delete(new Zend_Db_Expr('idDetalhaPlanoDistribuicao in (' . $slct .')'));
 
     }
 }

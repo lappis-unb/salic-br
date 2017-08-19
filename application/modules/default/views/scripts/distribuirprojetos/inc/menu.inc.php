@@ -16,7 +16,7 @@
 
    <table>
             <tr class="fundo" style="font-size:8pt;">
-                <td class="" colspan="2" align="left">Enviar anexo (tamanho máximo de 10 MB)<br>ipos de arquivos permitidos:   <font color="red">PDF</font></td>
+                <td class="" colspan="2" align="left">Enviar anexo (tamanho m&aacute;ximo de 10 MB)<br>ipos de arquivos permitidos:   <font color="red">PDF</font></td>
             </tr>
             <tr class="fundo">
                 <td>Arquivo</td>

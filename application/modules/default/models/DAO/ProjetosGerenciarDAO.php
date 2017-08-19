@@ -25,7 +25,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
                                 Ar.Descricao Area,
                                 Nm.Descricao Nome
                                 From agentes.dbo.tbTitulacaoConselheiro C
-                                INNER JOIN SAC.dbo.Area Ar on ar.Codigo = C.cdArea
+                                INNER JOIN sac.dbo.Area Ar on ar.Codigo = C.cdArea
                                 INNER JOIN agentes.dbo.Nomes Nm on Nm.idAgente = C.idAgente
                                 Order by Ar.Descricao, Nm.Descricao";
 
@@ -36,11 +36,11 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
                                         N.Descricao Nome,
                                         A.Descricao Area,
                                         (SELECT COUNT(SDPC.idPronac) as QTD
-                                        FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao SDPC
+                                        FROM bdcorporativo.scsac.tbDistribuicaoProjetoComissao SDPC
                                         WHERE SDPC.idAgente = T.idAgente AND SDPC.stDistribuicao = 'A')
                                         as QTD FROM agentes.dbo.tbTitulacaoConselheiro T
                                         INNER JOIN agentes.dbo.Nomes N on N.idAgente =   T.idAgente
-                                        INNER JOIN SAC.dbo.Area A on A.Codigo =  T.cdArea
+                                        INNER JOIN sac.dbo.Area A on A.Codigo =  T.cdArea
                                         WHERE T.stConselheiro = 'A' ORDER BY Nome";
 			} else
 				if ($sqlDesejado == "sqlDesabilitados") {
@@ -51,11 +51,11 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 					                                H.dsJustificativa Just,
 					                                CONVERT(CHAR(10), HT.dtHistorico,103) Data
 					                                    From agentes.dbo.Nomes N,
-					                                    SAC.dbo.Area A,
+					                                    sac.dbo.Area A,
 					                                    agentes.dbo.tbTitulacaoConselheiro C,
-					                                    BDCORPORATIVO.scAGENTES.tbHistoricoConselheiro H,
+					                                    bdcorporativo.scAGENTES.tbHistoricoConselheiro H,
 					                                        (SELECT idConselheiro, MAX(dtHistorico) dtHistorico
-					                                            FROM BDCORPORATIVO.scAGENTES.tbHistoricoConselheiro
+					                                            FROM bdcorporativo.scAGENTES.tbHistoricoConselheiro
 					                                                WHERE stConselheiro = 'I'
 					                                                    GROUP BY idConselheiro) HT
 					                                                        WHERE C.cdArea = A.Codigo
@@ -86,12 +86,12 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
                     DATEDIFF(DAY,D.dtDistribuicao,{$objAcesso->getDate()}) as Dias,
                     CONVERT(CHAR(10), D.dtDistribuicao,103) AS dtDistribuicao,
                     CONVERT(CHAR(10), D.dtDistribuicao,103) AS dtCompleta
-                    FROM SAC.dbo.Projetos P
-                    Inner Join BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao D on D.idPRONAC = P.idPRONAC
+                    FROM sac.dbo.Projetos P
+                    Inner Join bdcorporativo.scsac.tbDistribuicaoProjetoComissao D on D.idPRONAC = P.idPRONAC
                     WHERE D.stDistribuicao = 'A'
                     AND P.Situacao = 'C10'
                     AND D.idAgente = $idAgente
-                    and not exists (select idpronac from BDCORPORATIVO.scSAC.tbPauta where idpronac = P.idPRONAC)";
+                    and not exists (select idpronac from bdcorporativo.scsac.tbPauta where idpronac = P.idPRONAC)";
 		$projetos = $db->fetchAll($sqlProjetosDoComponente);
 		return $projetos;
 
@@ -107,7 +107,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $objAcesso= new Acesso();
-		$dados = "Update BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
+		$dados = "Update bdcorporativo.scsac.tbDistribuicaoProjetoComissao " .
         " Set idAgente = $agenteNovo, dtDistribuicao = {$objAcesso->getDate()},  dsJustificativa='" . $justificativa . "'" .
 		" Where idAgente =" . $agenteAtual . " AND idPronac=" . $idPronac;
 //                die($dados);
@@ -124,18 +124,18 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 
 		// Busca os projetos que estavam alocados para o componente atual
 		$sqlBuscaProjetosdoComponente = "SELECT D.idPRONAC, D.idAgente, CONVERT(CHAR(10), D.dtDistribuicao,103) AS Data
-		                                        From BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao D
+		                                        From bdcorporativo.scsac.tbDistribuicaoProjetoComissao D
 		                                        where D.stDistribuicao = 'A' AND idAgente=" . $idAgente;
 		$result = $db->fetchAll($sqlBuscaProjetosdoComponente);
 
 		foreach ($result as $dado) {
 			// Deletar todos os dados da duas tabelas abaixo
 			$whereDelete = "idPRONAC=" . $dado->idPRONAC;
-			$deletaDasTabelas = $db->delete('SAC.dbo.Aprovacao', $whereDelete);
-			$deletaDasTabelas2 = $db->delete('SAC.dbo.Enquadramento', $whereDelete);
+			$deletaDasTabelas = $db->delete('sac.dbo.Aprovacao', $whereDelete);
+			$deletaDasTabelas2 = $db->delete('sac.dbo.Enquadramento', $whereDelete);
 
 			// Atualiza a situa��o do projeto para Inativo
-			$dados = "Update BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
+			$dados = "Update bdcorporativo.scsac.tbDistribuicaoProjetoComissao " .
 			"Set stDistribuicao = 'I',  dsJustificativa='" . $justificativa . "'" .
 			"Where idAgente =" . $idAgente . " AND idPronac=" . $dado->idPRONAC . " AND dtDistribuicao='" . $dado->Data . "'";
 
@@ -167,7 +167,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
         $objAcesso= new Acesso();
 
 		// Grava na tabela de historico
-		$dadosInsereHistorico = "Insert into BDCORPORATIVO.scAGENTES.tbHistoricoConselheiro " .
+		$dadosInsereHistorico = "Insert into bdcorporativo.scAGENTES.tbHistoricoConselheiro " .
 		"(idConselheiro, dtHistorico, dsJustificativa, stConselheiro, idResponsavel)" .
 		"values " .
 		"($idAgente, {$objAcesso->getDate()}, '$justificativa', 'A', $usucodigo)";
@@ -186,7 +186,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 		$sqlProjetoAreaSegmento = "SELECT P.idPRONAC, A.Codigo as area, S.Codigo as segmento
-		                                      FROM SAC.dbo.Projetos P, SAC.dbo.Area A, SAC.dbo.Segmento S
+		                                      FROM sac.dbo.Projetos P, sac.dbo.Area A, sac.dbo.Segmento S
 		                                      WHERE P.idPRONAC = " . $idPronac . "  AND  P.Area = A.Codigo  AND  P.Segmento = S.Codigo";
 
 		// Busca a �rea e seguimento do projeto
@@ -215,7 +215,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			                    FROM agentes.dbo.tbTitulacaoConselheiro TC
 			                    INNER JOIN (SELECT ATC.idAgente, COUNT(DPC.idPronac) Qtd
 			                                FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-			                                LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+			                                LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 			                                WHERE ATC.stConselheiro = 'A'
 			                                AND DPC.stDistribuicao = 'A'
 			                                OR DPC.stDistribuicao IS NULL
@@ -223,13 +223,13 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			                                UNION
 			                                SELECT ATC.idAgente, COUNT(DPC.idPronac) - COUNT(DPCI.idPronac) Qtd
 			                                FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-			                                LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
-			                                LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
+			                                LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+			                                LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPCI ON ATC.idAgente = DPCI.idAgente
 			                                WHERE ATC.stConselheiro = 'A'
 			                                AND DPCI.stDistribuicao = 'I'
-			                                AND ATC.idAgente NOT IN (SELECT DISTINCT ATC.idAgente
+			                                AND ATC.idAgente NOT in (SELECT DISTINCT ATC.idAgente
 			                                                         FROM  agentes.dbo.tbTitulacaoConselheiro ATC
-			                                                         LEFT JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
+			                                                         LEFT JOIN bdcorporativo.scsac.tbDistribuicaoProjetoComissao DPC ON ATC.idAgente = DPC.idAgente
 			                                                         WHERE ATC.stConselheiro = 'A'
 			                                                         AND DPC.stDistribuicao = 'A'
 			                                                         OR DPC.stDistribuicao IS NULL)
@@ -245,7 +245,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 					$menor = $dados->agente;
 				}
 	        if (!empty ($agenteP)) {
-				$dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
+				$dados = "Insert into bdcorporativo.scsac.tbDistribuicaoProjetoComissao " .
 				"(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
 				"values" .
 				"($idPronac, $agenteP, {$objAcesso->getDate()}, 7522)";
@@ -258,7 +258,7 @@ class ProjetosGerenciarDAO extends Zend_Db_Table {
 			} else {
 
 				if (!empty ($menor)) {
-					$dados = "Insert into BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao " .
+					$dados = "Insert into bdcorporativo.scsac.tbDistribuicaoProjetoComissao " .
 					"(idPRONAC, idAgente, dtDistribuicao, idResponsavel)" .
 					"values" .
 					"($idPronac, $menor, {$objAcesso->getDate()}, 7522)";

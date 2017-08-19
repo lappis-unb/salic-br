@@ -207,7 +207,7 @@
 
                         $('.multiplicarValores').keyup(function(){
 
-                            // recebe os valores do formulário
+                            // recebe os valores do formul&aacute;rio
                             var qtd = $('#modalQuantidade').val(),
                                 ocorrencia = $('#modalOcorrencia').val(),
                                 valor = $('#modalValorUnitario').val();
@@ -218,15 +218,15 @@
                             // adiciona o ponto na casa decimal
                             .replace(/(\d)(\d{2})$/, "$1.$2");
 
-                            // converte para float e adiciona precisão decimal
+                            // converte para float e adiciona precis&atilde;o decimal
                             qtd        = parseFloat(qtd).toFixed(2);
                             ocorrencia = parseFloat(ocorrencia).toFixed(2);
                             valor      = parseFloat(valor).toFixed(2);
 
-                            // variável com o resultado
+                            // vari&aacute;vel com o resultado
                             resultado = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-                            // se não for número
+                            // se n&atilde;o for número
                             if (isNaN(resultado))
                             {
                                 resultado = '';
@@ -259,7 +259,7 @@
 
                 <table class="tabela">
                     <tr>
-                        <th colspan="4">Parecer Técnico</th>
+                        <th colspan="4">Parecer T&eacute;cnico</th>
                     </tr>
                 </table>
 
@@ -272,8 +272,8 @@
                 <?php $habilitarAnaliseDeCusto = false; ?>
                 <?php foreach ($this->produtosReconsideracao as $produto){ ?>
                 <?php
-                    if($produto->stPrincipal){ //Verifica se é o produto principal
-                        if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal é favorável
+                    if($produto->stPrincipal){ //Verifica se &eacute; o produto principal
+                        if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal &eacute; favor&aacute;vel
                             $habilitarAnaliseDeCusto = true;
                         }
                     }
@@ -289,17 +289,17 @@
                         <td>
                             <table class="tabela">
                                 <tr>
-                                    <th>Análise de Conteúdo</th>
+                                    <th>An&aacute;lise de Conteúdo</th>
                                 </tr>
                             </table>
                             <div id="div_analiseconteudo_<?php echo $produto->idProduto; ?>">
                                 <table class="tabela">
                                     <tr>
-                                        <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento Favorável? *</td>
+                                        <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento Favor&aacute;vel? *</td>
                                     </tr>
                                     <tr>
                                         <td colspan="6">
-                                            <?php echo ($produto->ParecerFavoravel) ? 'Sim' : 'Não'; ?>
+                                            <?php echo ($produto->ParecerFavoravel) ? 'Sim' : 'N&atilde;o'; ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -312,10 +312,10 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <?php echo ($produto->Lei8313 == 1) ? 'Sim' : 'Não';  ?>
+                                            <?php echo ($produto->Lei8313 == 1) ? 'Sim' : 'N&atilde;o';  ?>
                                         </td>
                                         <td>
-                                            <?php echo ($produto->Artigo3 == 1) ? 'Sim' : 'Não';  ?>
+                                            <?php echo ($produto->Artigo3 == 1) ? 'Sim' : 'N&atilde;o';  ?>
                                         </td>
                                         <td>
                                             <?php switch ($produto->IncisoArtigo3) {
@@ -353,8 +353,8 @@
                                         <td class="destacar bold">Inciso(s)</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4"><?php echo ($produto->Lei5761 == 1) ? 'Sim' : 'Não';  ?></td>
-                                        <td id="Artigo27"><?php echo ($produto->Artigo27 == 1) ? 'Sim' : 'Não';  ?></td>
+                                        <td colspan="4"><?php echo ($produto->Lei5761 == 1) ? 'Sim' : 'N&atilde;o';  ?></td>
+                                        <td id="Artigo27"><?php echo ($produto->Artigo27 == 1) ? 'Sim' : 'N&atilde;o';  ?></td>
                                         <td id="IncisoArtigo27">
                                             <input type="checkbox" <?php echo ($produto->IncisoArtigo27_I == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_I_<?php echo $produto->idProduto; ?>" disabled="disabled" />I &nbsp;&nbsp;&nbsp;
                                             <input type="checkbox" <?php echo ($produto->IncisoArtigo27_II == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_II_<?php echo $produto->idProduto; ?>" disabled="disabled" />II &nbsp;&nbsp;&nbsp;
@@ -380,14 +380,14 @@
                 <?php if($habilitarAnaliseDeCusto){ ?>
                 <table class="tabela">
                     <tr>
-                        <td class="bold centro fundo_linha2">Planilha Orçamentária</td>
+                        <td class="bold centro fundo_linha2">Planilha Or&ccedil;ament&aacute;ria</td>
                     </tr>
                 </table>
                 
                 <table class="tabela">
                     <tr>
                         <td align="left" class="bold">
-                            <input type="button" class="btn_adicionar" id="p_planilha_orcamentaria" onclick="mostraOcultaElemento('p_planilha_orcamentaria');" />Análise de Custo
+                            <input type="button" class="btn_adicionar" id="p_planilha_orcamentaria" onclick="mostraOcultaElemento('p_planilha_orcamentaria');" />An&aacute;lise de Custo
                         </td>
                     </tr>
                     <tr class="p_planilha_orcamentaria sumir" align="left" style="padding: 5px">
@@ -626,8 +626,8 @@
 
             <?php $habilitarAnaliseDeCusto = false; ?>
             <?php foreach ($this->produtosReconsideracao as $produto){
-                if($produto->stPrincipal){ //Verifica se é o produto principal
-                    if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal é favorável
+                if($produto->stPrincipal){ //Verifica se &eacute; o produto principal
+                    if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal &eacute; favor&aacute;vel
                         $habilitarAnaliseDeCusto = true;
                     }
                 }
@@ -660,14 +660,14 @@
                 <table class="tabela">
                     <?php if($this->ParecerReconsideracao) : ?>
                         <tr>
-                            <td align="right" class="destacar bold w150">Parecer Favorável?</td>
-                            <td><?php echo $this->ParecerReconsideracao->ParecerFavoravel == 2 ? 'Sim' : 'Não'; ?></td>
+                            <td align="right" class="destacar bold w150">Parecer Favor&aacute;vel?</td>
+                            <td><?php echo $this->ParecerReconsideracao->ParecerFavoravel == 2 ? 'Sim' : 'N&atilde;o'; ?></td>
                             <td align="right" class="destacar bold w150">Dt. Parecer</td>
                             <td><?php echo Data::tratarDataZend($this->ParecerReconsideracao->DtParecer, 'Brasileira'); ?></td>
                         </tr>
                     <?php endif; ?>
                     <tr>
-                        <td align="right" class="destacar bold w150">Área</td>
+                        <td align="right" class="destacar bold w150">&aacute;rea</td>
                         <td valign="top" width="200px"><?php echo $this->projetosENReconsideracao->area; ?></td>
                         <td align="right" class="destacar bold" width="100">Segmento</td>
                         <td><?php echo $this->projetosENReconsideracao->segmento; ?></td>
@@ -725,7 +725,7 @@
         <td>
             <table class="tabela">
                 <tr>
-                    <th colspan="4">AVALIAÇÃO DO COORDENADOR</th>
+                    <th colspan="4">AVALIA&ccedil;&atilde;O DO COORDENADOR</th>
                 </tr>
             </table>
             <table class="tabela">
@@ -736,7 +736,7 @@
                     <td colspan="3"><?php echo $this->dadosRecurso->dsSolicitacaoRecurso; ?></td>
                 </tr>
                 <tr>
-                    <td class="destacar bold">Tipo da Solicitação</td>
+                    <td class="destacar bold">Tipo da Solicita&ccedil;&atilde;o</td>
                     <td class="destacar bold">Tipo do Recurso</td>
                     <td class="destacar bold">Dt. Recurso</td>
                 </tr>
@@ -749,14 +749,14 @@
 
             <table class="tabela">
                 <tr>
-                    <td class="destacar bold" colspan="3">Descrição</td>
+                    <td class="destacar bold" colspan="3">Descri&ccedil;&atilde;o</td>
                 </tr>
                 <tr>
                     <td colspan="2"><?php echo $this->dadosRecurso->dsAvaliacao; ?></td>
                 </tr>
                 <tr>
-                    <td class="destacar bold">Situação</td>
-                    <td class="destacar bold">Dt. Avaliação</td>
+                    <td class="destacar bold">Situa&ccedil;&atilde;o</td>
+                    <td class="destacar bold">Dt. Avalia&ccedil;&atilde;o</td>
                 </tr>
                 <tr>
                     <td><?php echo !empty($this->dadosRecurso->stAtendimento) ? 'Deferido' : ''; ?></td>
@@ -876,7 +876,7 @@
 
                         $('.multiplicarValores').keyup(function(){
 
-                            // recebe os valores do formulário
+                            // recebe os valores do formul&aacute;rio
                             var qtd = $('#modalQuantidade').val(),
                                 ocorrencia = $('#modalOcorrencia').val(),
                                 valor = $('#modalValorUnitario').val();
@@ -887,15 +887,15 @@
                             // adiciona o ponto na casa decimal
                             .replace(/(\d)(\d{2})$/, "$1.$2");
 
-                            // converte para float e adiciona precisão decimal
+                            // converte para float e adiciona precis&atilde;o decimal
                             qtd        = parseFloat(qtd).toFixed(2);
                             ocorrencia = parseFloat(ocorrencia).toFixed(2);
                             valor      = parseFloat(valor).toFixed(2);
 
-                            // variável com o resultado
+                            // vari&aacute;vel com o resultado
                             resultado = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-                            // se não for número
+                            // se n&atilde;o for número
                             if (isNaN(resultado))
                             {
                                 resultado = '';
@@ -928,7 +928,7 @@
 
                 <table class="tabela">
                     <tr>
-                        <th colspan="4">Parecer Técnico</th>
+                        <th colspan="4">Parecer T&eacute;cnico</th>
                     </tr>
                 </table>
 
@@ -941,8 +941,8 @@
                 <?php $habilitarAnaliseDeCusto = false; ?>
                 <?php foreach ($this->produtosRecurso as $produto){ ?>
                 <?php
-                    if($produto->stPrincipal){ //Verifica se é o produto principal
-                        if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal é favorável
+                    if($produto->stPrincipal){ //Verifica se &eacute; o produto principal
+                        if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal &eacute; favor&aacute;vel
                             $habilitarAnaliseDeCusto = true;
                         }
                     }
@@ -958,17 +958,17 @@
                             <td>
                                 <table class="tabela">
                                     <tr>
-                                        <td><input type="button" name="grid1" id="analiseconteudo_<?php echo $produto->idProduto; ?>" class="btn_remover" title="Expandir" onclick="EnquadramentoFavoravel('<?php echo $produto->idProduto; ?>', '<?php echo $produto->ParecerFavoravel; ?>');" />Análise de Conteúdo</td>
+                                        <td><input type="button" name="grid1" id="analiseconteudo_<?php echo $produto->idProduto; ?>" class="btn_remover" title="Expandir" onclick="EnquadramentoFavoravel('<?php echo $produto->idProduto; ?>', '<?php echo $produto->ParecerFavoravel; ?>');" />An&aacute;lise de Conteúdo</td>
                                     </tr>
                                 </table>
                                 <div id="div_analiseconteudo_<?php echo $produto->idProduto; ?>">
                                     <table class="tabela">
                                         <tr>
-                                            <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento Favorável? *</td>
+                                            <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento Favor&aacute;vel? *</td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">
-                                                <?php echo ($produto->ParecerFavoravel) ? 'Sim' : 'Não'; ?>
+                                                <?php echo ($produto->ParecerFavoravel) ? 'Sim' : 'N&atilde;o'; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -981,10 +981,10 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <?php echo ($produto->Lei8313 == 1) ? 'Sim' : 'Não';  ?>
+                                                <?php echo ($produto->Lei8313 == 1) ? 'Sim' : 'N&atilde;o';  ?>
                                             </td>
                                             <td>
-                                                <?php echo ($produto->Artigo3 == 1) ? 'Sim' : 'Não';  ?>
+                                                <?php echo ($produto->Artigo3 == 1) ? 'Sim' : 'N&atilde;o';  ?>
                                             </td>
                                             <td>
                                                 <?php switch ($produto->IncisoArtigo3) {
@@ -1022,8 +1022,8 @@
                                             <td class="destacar bold">Inciso(s)</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"><?php echo ($produto->Lei5761 == 1) ? 'Sim' : 'Não';  ?></td>
-                                            <td id="Artigo27"><?php echo ($produto->Artigo27 == 1) ? 'Sim' : 'Não';  ?></td>
+                                            <td colspan="4"><?php echo ($produto->Lei5761 == 1) ? 'Sim' : 'N&atilde;o';  ?></td>
+                                            <td id="Artigo27"><?php echo ($produto->Artigo27 == 1) ? 'Sim' : 'N&atilde;o';  ?></td>
                                             <td id="IncisoArtigo27">
                                                 <input type="checkbox" <?php echo ($produto->IncisoArtigo27_I == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_I_<?php echo $produto->idProduto; ?>" disabled="disabled" />I &nbsp;&nbsp;&nbsp;
                                                 <input type="checkbox" <?php echo ($produto->IncisoArtigo27_II == 1) ? 'checked="checked"' : '';  ?> style="margin-right: 3px;" value="1" name="IncisoArtigo27_II_<?php echo $produto->idProduto; ?>" disabled="disabled" />II &nbsp;&nbsp;&nbsp;
@@ -1048,14 +1048,14 @@
                 <?php if($habilitarAnaliseDeCusto){ ?>
                 <table class="tabela">
                     <tr>
-                        <td class="bold centro fundo_linha2">Planilha Orçamentária</td>
+                        <td class="bold centro fundo_linha2">Planilha Or&ccedil;ament&aacute;ria</td>
                     </tr>
                 </table>
                 
                 <?php if($this->dadosRecurso->tpSolicitacao == 'EO' || $this->dadosRecurso->tpSolicitacao == 'OR'){ ?>
                 <table class="tabela">
                     <tr>
-                        <td style="font-weight: bold;"><input type="button" name="grid1" id="p_planilha_orcamentaria" class="btn_remover" title="Expandir" />Análise de Custo</td>
+                        <td style="font-weight: bold;"><input type="button" name="grid1" id="p_planilha_orcamentaria" class="btn_remover" title="Expandir" />An&aacute;lise de Custo</td>
                     </tr>
                 </table>
                 <div id="div_p_planilha_orcamentaria">
@@ -1484,8 +1484,8 @@
 
             <?php $habilitarAnaliseDeCusto = false; ?>
             <?php foreach ($this->produtosRecurso as $produto){
-                if($produto->stPrincipal){ //Verifica se é o produto principal
-                    if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal é favorável
+                if($produto->stPrincipal){ //Verifica se &eacute; o produto principal
+                    if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal &eacute; favor&aacute;vel
                         $habilitarAnaliseDeCusto = true;
                     }
                 }
@@ -1517,13 +1517,13 @@
 
                 <table class="tabela">
                     <tr>
-                        <td align="right" class="destacar bold w150">Parecer Favorável?</td>
-                        <td><?php echo $this->ParecerRecurso->ParecerFavoravel == 2 ? 'Sim' : 'Não'; ?></td>
+                        <td align="right" class="destacar bold w150">Parecer Favor&aacute;vel?</td>
+                        <td><?php echo $this->ParecerRecurso->ParecerFavoravel == 2 ? 'Sim' : 'N&atilde;o'; ?></td>
                         <td align="right" class="destacar bold w150">Dt. Parecer</td>
                         <td><?php echo Data::tratarDataZend($this->ParecerRecurso->DtParecer, 'Brasileira'); ?></td>
                     </tr>
                     <tr>
-                        <td align="right" class="destacar bold w150">Área</td>
+                        <td align="right" class="destacar bold w150">&aacute;rea</td>
                         <td valign="top" width="200px"><?php echo $this->projetosENRecurso->area; ?></td>
                         <td align="right" class="destacar bold" width="100">Segmento</td>
                         <td><?php echo $this->projetosENRecurso->segmento; ?></td>

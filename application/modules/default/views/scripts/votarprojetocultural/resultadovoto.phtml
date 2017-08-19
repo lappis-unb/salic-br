@@ -231,16 +231,16 @@
                 tpconsolidacaovotacao : $("#tpconsolidacaovotacao_"+idPronac).val()
             },
             beforeSend: function() {
-                $("#votacao_"+idPronac).html('<br><center>Aguarde, consolidando votação...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
+                $("#votacao_"+idPronac).html('<br><center>Aguarde, consolidando vota&ccedil;&atilde;o...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br>');
             },
             success: function(data)
             {
                 if(!data.error){
                     $("#projetoemvotacao_"+idPronac).addClass("sumir");
-                    message(msgAdicional + ' Votação consolidada com sucesso!', 'CONFIRM');
+                    message(msgAdicional + ' Vota&ccedil;&atilde;o consolidada com sucesso!', 'CONFIRM');
                 }else{
                     $("#projetoemvotacao_"+idPronac).addClass("sumir");
-                    message('Erro! N&atilde;o foi poss&iacute;vel realizar consolidação da votação. ' + data.descricao, 'ERROR');
+                    message('Erro! N&atilde;o foi poss&iacute;vel realizar consolida&ccedil;&atilde;o da vota&ccedil;&atilde;o. ' + data.descricao, 'ERROR');
                 }
                 return false;
             },
@@ -306,7 +306,7 @@
             <td>
                 <span id="processando_<?php echo $this->idpronac; ?>"></span>
                 <fieldset>
-                    <legend>Consolidação da votação</legend>
+                    <legend>Consolida&ccedil;&atilde;o da vota&ccedil;&atilde;o</legend>
                     <table class="tabela">
                         <tr>
                             <th>Aprovados</th>

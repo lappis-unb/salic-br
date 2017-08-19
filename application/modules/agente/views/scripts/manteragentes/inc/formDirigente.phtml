@@ -15,7 +15,7 @@
 			&nbsp; <span id="erroCpf" class="spanError"></span>
 			<input type="hidden" id="idAgente" name="idAgente" />
 			<?php
-			// caso o cpf venha via get, chama a função para buscar os dados de acordo com o cpf
+			// caso o cpf venha via get, chama a fun&ccedil;&atilde;o para buscar os dados de acordo com o cpf
 			if (!empty($_GET['cpf']))
 			{
 				echo "<script>buscardadosdirigente();</script>";
@@ -84,7 +84,7 @@
 
 	<tr>
 		<td colspan="2">
-			<label for="tipoEndereco">Tipo de Endereço *</label>
+			<label for="tipoEndereco">Tipo de Endere&ccedil;o *</label>
 			<br />
 			<select name="tipoEndereco" id="tipoEndereco" style="width:20%;">
 
@@ -170,24 +170,24 @@
 
 	<tr>
 		<td colspan="2">
-			<label>Autorizo divulgar o endereço</label>
+			<label>Autorizo divulgar o endere&ccedil;o</label>
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" class="checkradio" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
 			<label for="divulgarEnderecoS">Sim</label> 
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" class="checkradio" value="0" checked="checked" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarEnderecoN">Não</label>
+			<label for="divulgarEnderecoN">N&atilde;o</label>
 		</td>
 		<td colspan="2">
-			<label>Endereço para correspondências?</label>
+			<label>Endere&ccedil;o para correspondências?</label>
 			<input type="radio" name="enderecoCorrespondencia" id="enderecoCorrespondenciaS" value="1" class="checkradio" checked="checked" style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
 			<label for="enderecoCorrespondenciaS">Sim</label> 
 			<input type="radio" name="enderecoCorrespondencia" id="enderecoCorrespondenciaN" value="0" class="checkradio" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="enderecoCorrespondenciaN">Não</label>
+			<label for="enderecoCorrespondenciaN">N&atilde;o</label>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="4"><span id="erroVisao" class="spanError"></span> &nbsp; 
-			<label for="visao"> Visão do Agente: </label>
-			<select name="visao" id="visao" style="width:20%;">
+			<label for="Visao"> Vis&atilde;o do Agente: </label>
+			<select name="Visao" id="Visao" style="width:20%;">
 				<option value="198">Dirigente</option>
 			</select>
 			&nbsp; <span id="erroVisao" class="spanError"></span>
@@ -199,11 +199,11 @@
 
 
 
-<!-- ========== INÍCIO FORMULÁRIO FONE ========== -->
+<!-- ========== INÍCIO FORMUL&aacute;RIO FONE ========== -->
 <table id="tabFone" class="tabela sumir">
 
 	<tr>
-		<th colspan="6">ADICIONE TELEFONES ATRAVÉS DO FORMULÁRIO ABAIXO!</th>
+		<th colspan="6">ADICIONE TELEFONES ATRAV&eacute;S DO FORMUL&aacute;RIO ABAIXO!</th>
 	</tr>
 
 	<tr>
@@ -253,7 +253,7 @@
 			<input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
 			<label for="divulgarFoneS">Sim</label> 
 			<input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
-			<label for="divulgarFoneN">Não</label>
+			<label for="divulgarFoneN">N&atilde;o</label>
 		</td>
 		<td class="centro" width="3%">
 			<div class="botao_texto">
@@ -263,15 +263,15 @@
 	</tr>
 
 </table>
-<!-- ========== FIM FORMULÁRIO FONE ========== -->
+<!-- ========== FIM FORMUL&aacute;RIO FONE ========== -->
 
 
 
-<!-- ========== INÍCIO FORMULÁRIO E-MAIL ========== -->
+<!-- ========== INÍCIO FORMUL&aacute;RIO E-MAIL ========== -->
 <table id="tabEmail" class="tabela sumir">
 
 	<tr>
-		<th colspan="6">ADICIONE E-MAILS ATRAVÉS DO FORMULÁRIO ABAIXO</th>
+		<th colspan="6">ADICIONE E-MAILS ATRAV&eacute;S DO FORMUL&aacute;RIO ABAIXO</th>
 	</tr>
 
 	<tr>
@@ -302,7 +302,7 @@
 			<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
 			<label for="divulgarEmailS">Sim</label> 
 			<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/> 
-			<label for="divulgarEmailN">Não</label>
+			<label for="divulgarEmailN">N&atilde;o</label>
 		</td>
 		<td>
 			<label>Para correpondência? *</label> 
@@ -310,7 +310,7 @@
 			<input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/> 
 			<label for="enviarEmailS">Sim</label> 
 			<input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/> 
-			<label for="enviarEmailN">Não</label>
+			<label for="enviarEmailN">N&atilde;o</label>
 		</td>
 		<td class="centro" width="3%">
 			<div class="botao_texto">
@@ -320,7 +320,7 @@
 	</tr>
 
 </table>
-<!-- ========== FIM FORMULÁRIO E-MAIL ========== -->
+<!-- ========== FIM FORMUL&aacute;RIO E-MAIL ========== -->
 
 
 
@@ -343,7 +343,7 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 		<th>DDD</th>
 		<th>TELEFONE</th>
 		<th>DIVULGAR?</th>
-		<th width="6%">AÇÃO</th>
+		<th width="6%">A&ccedil;&atilde;O</th>
 	</tr>
 
 	<?php if (isset($this->Fones)): ?>
@@ -370,7 +370,7 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 				<input type="hidden" name="Fones[]" id="Fones[]" value="<?php echo $this->Fones[$i] ?>" />
 			</td>
 			<td class="centro">
-				<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="divulgarFones[]" id="divulgarFones[]" value="<?php echo $this->divulgarFones[$i]?>" />
 			</td>
 			<td class="centro">
@@ -395,7 +395,7 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 		<th>E-MAIL</th>
 		<th>DIVULGAR?</th>
 		<th>PARA CORRESPONDÊNCIA?</th>
-		<th>AÇÃO</th>
+		<th>A&ccedil;&atilde;O</th>
 	</tr>
 
 	<?php if (isset($this->Emails)): ?>
@@ -412,11 +412,11 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 				<input type="hidden" name="Emails[]" id="Emails[]" value="<?php echo $this->Emails[$i]?>" />
 			</td>
 			<td class="centro">
-				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="divulgarEmails[]" id="divulgarEmails[]" value="<?php echo $this->divulgarEmails[$i]?>" />
 			</td>
 			<td class="centro">
-				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="enviarEmails[]" id="enviarEmails[]" value="<?php echo $this->enviarEmails[$i]?>" />
 			</td>
 			<td class="centro">

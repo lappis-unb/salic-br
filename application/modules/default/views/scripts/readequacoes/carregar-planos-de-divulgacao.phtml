@@ -1,22 +1,22 @@
 <?php if($this->idPerfil == 1111){ ?>
 <table class="tabela">
     <tr>
-        <td><input type="button" class="btn_incluir" id="adicionarPlanosDeDivulgacao" title="Adicionar Planos de Divulgação" /></td>
+        <td><input type="button" class="btn_incluir" id="adicionarPlanosDeDivulgacao" title="Adicionar Planos de Divulga&ccedil;&atilde;o" /></td>
     </tr>
 </table>
 <?php } ?>
 
 <table class="tabela">
     <tr>
-        <th>Peça</th>
+        <th>Pe&ccedil;a</th>
         <th>Veículo</th>
-        <th style="width: 150px;">Solicitação Proponente</th>
+        <th style="width: 150px;">Solicita&ccedil;&atilde;o Proponente</th>
         <?php if(in_array($this->siEncaminhamento, array(4,5,6,7,9,10))){ ?>
-        <th style="width: 150px;">Avaliação Técnica</th>
+        <th style="width: 150px;">Avalia&ccedil;&atilde;o T&eacute;cnica</th>
         <?php } ?>
         
         <?php if(in_array($this->siEncaminhamento, array(7,9))){ ?>
-        <th style="width: 150px;">Avaliação Conselheiro</th>
+        <th style="width: 150px;">Avalia&ccedil;&atilde;o Conselheiro</th>
         <?php } ?>
     </tr>
     
@@ -56,11 +56,11 @@
                     switch ($p['tpSolicitacao']) {
                         case 'E':
                             echo 'Excluído';
-                            $title = 'restaurar plano de divulgação excluído';
+                            $title = 'restaurar plano de divulga&ccedil;&atilde;o excluído';
                             break;
                         case 'I':
                             echo 'Incluído';
-                            $title = 'recusar inclusão de plano de divulgação';
+                            $title = 'recusar inclus&atilde;o de plano de divulga&ccedil;&atilde;o';
                             break;
                         case 'A':
                             echo 'Alterado';
@@ -146,7 +146,7 @@
 <div id="modalInclusaoPDD" class="sumir">
     <table class="tabela">
         <tr>
-            <td class="destacar bold" style="width: 50%">Peça</td>
+            <td class="destacar bold" style="width: 50%">Pe&ccedil;a</td>
             <td class="destacar bold" style="width: 50%">Veículo</td>
         </tr>
         <tr>
@@ -179,7 +179,7 @@
             
             $("#modalInclusaoPDD").dialog({
                 resizable: false,
-                title: 'Inclusão de Plano de Divulgação!',
+                title: 'Inclus&atilde;o de Plano de Divulga&ccedil;&atilde;o!',
                 width: 550,
                 modal: true,
                 buttons : {
@@ -231,9 +231,9 @@
         $('.btnExcluirPDD').click(function(){
             var idPlanoDivulgacao = $(this).attr('idPlanoDivulgacao');
                 
-            //ABRE O MODAL DE CONFIRMAÇÃO DA AÇÃO REALIZADA
+            //ABRE O MODAL DE CONFIRMA&ccedil;&atilde;O DA A&ccedil;&atilde;O REALIZADA
             $("#alertaPDD").dialog("destroy");
-            $("#alertaPDD").html('Tem certeza que deseja excluir o plano de divulgação?');
+            $("#alertaPDD").html('Tem certeza que deseja excluir o plano de divulga&ccedil;&atilde;o?');
             $("#alertaPDD").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -241,7 +241,7 @@
                 height:160,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -270,9 +270,9 @@
                 msg = '';
                 
             if(tpAcao == 'I'){
-                msg = 'Tem certeza que deseja excluir o plano de divulgação adicionado?';
+                msg = 'Tem certeza que deseja excluir o plano de divulga&ccedil;&atilde;o adicionado?';
             } else {
-                msg = 'Tem certeza que deseja restaurar o plano de divulgação excluído?';
+                msg = 'Tem certeza que deseja restaurar o plano de divulga&ccedil;&atilde;o excluído?';
             }
             
             $("#alertaPDD").dialog("destroy");
@@ -283,7 +283,7 @@
                 modal: true,
                 title: 'Alerta!',
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -324,7 +324,7 @@
                     modal: true,
                     title: 'Alerta!',
                     buttons : {
-                        'Não' : function(){
+                        'N&atilde;o' : function(){
                             $(this).dialog('close');
                             select.val('');
                         },

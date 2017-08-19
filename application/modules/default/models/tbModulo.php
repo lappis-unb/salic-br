@@ -24,7 +24,7 @@ class tbModulo extends MinC_Db_Table_Abstract {
         $select = $this->select()
                 ->setIntegrityCheck(false)
                 ->from('tbModulo', array('idModulo','dsModulo'))
-                ->join('tbEditalModulo', 'tbEditalModulo.idModulo = tbModulo.idModulo' , array(), 'sac.dbo')
+                ->join('tbEditalModulo', 'tbEditalModulo.idModulo = tbModulo.idModulo' , array(), 'sac')
                 ->where('idEdital = ?', $idEdital);
         
         return $this->fetchAll($select);
@@ -35,7 +35,7 @@ class tbModulo extends MinC_Db_Table_Abstract {
         $select = $this->select()
                 ->setIntegrityCheck(false)
                 ->from($this->_name, array('idModulo','dsModulo'))
-                ->join('tbEditalModulo', 'tbEditalModulo.idModulo = tbModulo.idModulo' , array(), 'sac.dbo');
+                ->join('tbEditalModulo', 'tbEditalModulo.idModulo = tbModulo.idModulo' , array(), 'sac');
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }

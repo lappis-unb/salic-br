@@ -5,10 +5,10 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
 	var minchar;
 
         countChars  = CountCharacters(fieldName);
-        //Atualização para os contadores de caracteres
+        //Atualiza&ccedil;&atilde;o para os contadores de caracteres
         document.getElementById("contador" + fieldName).innerHTML = "Caracteres: " + countChars;
                      
-        //mudança de cor caso ultrapasse o numero de caracteres
+        //mudan&ccedil;a de cor caso ultrapasse o numero de caracteres
         if (countChars <= minchar){
 	    document.getElementById("contador" + fieldName).style.color = "red";
         }else{
@@ -18,7 +18,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
 
    $(document).ready(function(){    
 
-        //inicializao e configuração do editor tinyMCE
+        //inicializao e configura&ccedil;&atilde;o do editor tinyMCE
         tinymce.init({
 	    plugins:"paste,textcolor",
 	    language: "pt_BR",
@@ -39,7 +39,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
 
     });
     
-    //Onde é feita a contagem do elemento do contador
+    //Onde &eacute; feita a contagem do elemento do contador
     function CountCharacters(contador) {
         var body = tinymce.get(contador).getBody();
         var content = tinymce.trim(body.innerText || body.textContent);
@@ -114,7 +114,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
                     }
                 },
                 error: function (data){
-                    $("#infoparecerista").html("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
+                    $("#infoparecerista").html("Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi possível carregar agente!");
                 }
             });
         } else {
@@ -223,8 +223,8 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
 <!-- ========== FIM CONTEÚDO ========== -->
 <div id="confirma"></div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

@@ -13,7 +13,7 @@
 
             if ( codOrgao ==  $('#destino').val()){
                 $('#btn_salvar').hide();
-                $('#mostraMsg').html('<font color="red">Este projeto já se encontra nesta unidade.</font>');
+                $('#mostraMsg').html('<font color="red">Este projeto j&aacute; se encontra nesta unidade.</font>');
             } else {
                 $('#btn_salvar').show();
                 $('#mostraMsg').html('');
@@ -23,7 +23,7 @@
 
     function redirecionarPag(){
         setTimeout(redirecionarPag, 2000);
-        window.location.href="<?php echo $this->url(array('controller'=>'tramitarprojetos', 'action'=>'despacharprojetos')); ?>?msg=Projetos%20com%20situação%20CADASTRADO%20enviado%20com%20sucesso!";
+        window.location.href="<?php echo $this->url(array('controller'=>'tramitarprojetos', 'action'=>'despacharprojetos')); ?>?msg=Projetos%20com%20situa&ccedil;&atilde;o%20CADASTRADO%20enviado%20com%20sucesso!";
     }
 
     function visualizarTextoModal(text){
@@ -210,7 +210,7 @@ if (isset($_GET['pronac'])) {
     $projeto = $this->Projeto;
 }
 
-// mensagem de confirmação
+// mensagem de confirma&ccedil;&atilde;o
 if (isset($_GET['msg']) && !empty($_GET['msg'])) {
     ?>
 <div class="msgCONFIRM">
@@ -348,7 +348,7 @@ echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu
 
     <?php
     $historicodocumento = new HistoricoDocumento();
-    $auth = Zend_Auth::getInstance(); // instancia da autenticação
+    $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
     $idusuario = $auth->getIdentity()->usu_codigo;
     ?>
 
@@ -435,8 +435,8 @@ echo $this->partial('tramitarprojetos/inc/menu.inc.php', $this) // menu
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

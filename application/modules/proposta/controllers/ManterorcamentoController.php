@@ -19,7 +19,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
     {
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura";
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura";
 
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $PermissoesGrupo = array();
@@ -53,7 +53,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
         } else {
             if ($idPreProjeto != '0') {
-                parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necess&aacute;rio informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
         $this->idUsuario = !empty($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
@@ -137,7 +137,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
     }
 
     /**
-     * altera ordem de apresentação das etapas no orcamento
+     * altera ordem de apresenta&ccedil;&atilde;o das etapas no orcamento
      *
      * @access public
      * @return void
@@ -241,9 +241,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->idProduto = $idProduto;
         }
 
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $tbMun = new Agente_Model_DbTable_Municipios();
             $cidade = $tbMun->listar($iduf);
@@ -385,7 +385,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
         }
 
         $uf = new Agente_Model_DbTable_UF();
-        $estado = $uf->findBy(array("iduf" => $iduf));
+        $estado = $uf->findBy(array("idUF" => $iduf));
         $this->view->Estado = $estado;
 
         $mun = new Agente_Model_DbTable_Municipios();
@@ -747,9 +747,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->dados_cadastrados = array();
         }
 
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $tbMun = new Agente_Model_DbTable_Municipios();
             $cidade = $tbMun->listar($iduf);
@@ -868,9 +868,9 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $this->view->Dados = $buscaDados;
         }
 
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $cidade = $mun->buscar($iduf);
 
@@ -948,10 +948,10 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $buscaDados = $tbPlanilhaProposta->buscarDadosCustos($_GET);
             $this->view->Dados = $buscaDados;
         }
-        if (isset($_POST['iduf'])) {
+        if (isset($_POST['idUF'])) {
 
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            $iduf = $_POST['iduf'];
+            $iduf = $_POST['idUF'];
 
             $mun = new Agente_Model_DbTable_Municipios();
             $cidade = $mun->listar($iduf);
@@ -1143,7 +1143,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
      *
      * @access public
      * @return void
-     * @deprecated Este metodo nao eh mais utilizado com a nova IN [in2017]
+     * @deprecated Este metodo nao eh mais utilizado com a nova in [in2017]
      */
     public function salvarmesmoprodutoAction()
     {
@@ -1178,7 +1178,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
      *
      * @access public
      * @return void,
-     * @deprecated Este metodo nao eh mais utilizado com a nova IN [in2017]
+     * @deprecated Este metodo nao eh mais utilizado com a nova in [in2017]
      */
     public function excluiritensprodutosAction()
     {

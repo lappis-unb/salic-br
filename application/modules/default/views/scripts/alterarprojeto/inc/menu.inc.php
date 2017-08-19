@@ -158,11 +158,11 @@ if (in_array($this->grupoAtivo, array(92,93,104,113,114,115,124,125,126,128,131,
 
         <form class="form" id="form" name="form" enctype="multipart/form-data" target="enviar_arquivo" method="post" action="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'incluirarquivo')); ?>">
         <input type="hidden" value="<?php echo $this->parecer->IdPRONAC; ?>" name="idpronac" />
-        <input type="hidden" value="<?php echo $this->parecer->Logon; ?>" name="idagente" />
+        <input type="hidden" value="<?php echo $this->parecer->Logon; ?>" name="idAgente" />
 
         <table class="tabela">
             <tr class="fundo">
-                <td class="" colspan="2" align="left">Enviar anexo (tamanho máximo de 10 MB)<br>Tipos de arquivos permitidos: <font color="red">PDF</font></td>
+                <td class="" colspan="2" align="left">Enviar anexo (tamanho m&aacute;ximo de 10 MB)<br>Tipos de arquivos permitidos: <font color="red">PDF</font></td>
             </tr>
             <tr class="fundo">
                 <td class="destacar bold" align="right" width="1">Arquivo</td>

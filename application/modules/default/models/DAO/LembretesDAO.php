@@ -2,7 +2,7 @@
 class LembretesDAO extends Zend_Db_Table
 {
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+       	protected $_name    = 'sac.dbo.Projetos';
 
     public function buscar($sql)   
     {
@@ -19,7 +19,7 @@ class LembretesDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $objAcesso= new Acesso();
-      	$sql = "INSERT INTO SAC.dbo.Lembrete (Logon, AnoProjeto, Sequencial, DtLembrete, Lembrete)
+      	$sql = "INSERT INTO sac.dbo.Lembrete (Logon, AnoProjeto, Sequencial, DtLembrete, Lembrete)
 				VALUES (75, '$anoprojeto', '$sequencial', {$objAcesso->getDate()}, '$lembrete')";
        	
 		$resultado = $db->query($sql);
@@ -34,8 +34,8 @@ class LembretesDAO extends Zend_Db_Table
 		CONVERT(CHAR(10),lm.DtLembrete,103) as dtlembrete,
 		Pr.IdPRONAC, 
 		Pr.NomeProjeto 
-from SAC.dbo.Lembrete lm
-inner join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencial = Pr.Sequencial
+from sac.dbo.Lembrete lm
+inner join sac.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencial = Pr.Sequencial
  where Pr.IdPRONAC = " . $pronac . " ";
 		
 		$db = Zend_Db_Table::getDefaultAdapter();
@@ -60,8 +60,8 @@ inner join SAC.dbo.Projetos Pr on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
 		Pr.NomeProjeto,
 		Pr.AnoProjeto,
 		Pr.Sequencial 
-from SAC.dbo.Projetos Pr 
-INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencial = Pr.Sequencial
+from sac.dbo.Projetos Pr 
+INNER join sac.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencial = Pr.Sequencial
  where Pr.IdPRONAC = " . $pronac . " and CONVERT(CHAR(10),lm.DtLembrete,103) = '" . $dtlembrete . "'";	
 		
 
@@ -80,7 +80,7 @@ INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
 				NomeProjeto,
 				AnoProjeto,
 				Sequencial 
-				from     SAC.dbo.Projetos 
+				from     sac.dbo.Projetos 
  				where 	 IdPRONAC = ".$pronac;
 	
 			
@@ -94,7 +94,7 @@ INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
  	public function alterarlembrete($contador, $lembrete)
  	{
 
- 			$sql2 = "update SAC.dbo.Lembrete
+ 			$sql2 = "update sac.dbo.Lembrete
 				SET 
 					Lembrete       		= '" . $lembrete . "' 
 				where Contador = '" . $contador . "'";  
@@ -109,7 +109,7 @@ INNER join SAC.dbo.Lembrete lm on Pr.AnoProjeto = lm.AnoProjeto and lm.Sequencia
  	{
 
  	            $sql3 = "DELETE 
- 	               				FROM SAC.dbo.Lembrete 
+ 	               				FROM sac.dbo.Lembrete 
  	            				WHERE Contador = '" . $contador . "'";                       
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB :: FETCH_OBJ);

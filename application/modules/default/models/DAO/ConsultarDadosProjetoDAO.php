@@ -20,17 +20,17 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                         'UfProjeto',
                         'ProvidenciaTomada',
                         new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS NrProjeto'),
-                        new Zend_Db_Expr('SAC.dbo.fnCustoProjeto (p.AnoProjeto,p.Sequencial) AS ValorCaptado'),
+                        new Zend_Db_Expr('sac.dbo.fnCustoProjeto (p.AnoProjeto,p.Sequencial) AS ValorCaptado'),
                         new Zend_Db_Expr('Nome as Proponente,sac.dbo.fnFormataProcesso(p.idPronac) AS Processo'),
                         new Zend_Db_Expr('p.Situacao + \' - \' + si.Descricao AS Situacao'),
-                        new Zend_Db_Expr('SAC.dbo.fnNomeUsuario(idUsuarioEmissor)  AS Emissor'),
-                        new Zend_Db_Expr('SAC.dbo.fnNomeUsuario(idUsuarioReceptor) AS Receptor'),
+                        new Zend_Db_Expr('sac.dbo.fnNomeUsuario(idUsuarioEmissor)  AS Emissor'),
+                        new Zend_Db_Expr('sac.dbo.fnNomeUsuario(idUsuarioReceptor) AS Receptor'),
                         new Zend_Db_Expr('TABELAS.dbo.fnEstruturaOrgao(p.Orgao,0) AS Origem'),
                         new Zend_Db_Expr('convert(varchar(10),DtSituacao,103) AS DtSituacao'),
                         new Zend_Db_Expr('isnull(sac.dbo.fnValorDaProposta(idProjeto)'),
-                        new Zend_Db_Expr('SAC.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)) AS ValorProposta'),
-                        new Zend_Db_Expr('SAC.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial) AS ValorSolicitado'),
-                        new Zend_Db_Expr('SAC.dbo.fnOutrasFontes(p.idPronac) AS OutrasFontes'),
+                        new Zend_Db_Expr('sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)) AS ValorProposta'),
+                        new Zend_Db_Expr('sac.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial) AS ValorSolicitado'),
+                        new Zend_Db_Expr('sac.dbo.fnOutrasFontes(p.idPronac) AS OutrasFontes'),
                         new Zend_Db_Expr('tabelas.dbo.fnEstruturaOrgao(p.Orgao,0) AS Origem'),
                         new Zend_Db_Expr('p.Situacao AS codSituacao'),
                         new Zend_Db_Expr('
@@ -48,35 +48,35 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                                 ELSE \'N&atilde;o enquadrado\'
                             END as Enquadramento')
                          ),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinLeft(array('e' => 'Enquadramento'),
                     'p.idPronac = e.idPronac',
                     array(''),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('i' => 'Interessado'),
                     'p.CgcCPf = i.CgcCPf',
                     array(''),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('a' => 'Area'),
                     'p.Area = a.Codigo',
                     array(new Zend_Db_Expr('a.Descricao as Area')),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('s' => 'Segmento'),
                     'p.Segmento = s.Codigo',
                     array(new Zend_Db_Expr('s.Descricao AS Segmento')),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('m' => 'Mecanismo'),
                     'p.Mecanismo = m.Codigo',
                     array(new Zend_Db_Expr('m.Descricao as Mecanismo')),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinInner(array('si' => 'Situacao'),
                     'p.Situacao = si.Codigo',
                     array(''),
-                    'SAC.dbo')
+                    'SAC')
                 ->joinLeft(array('h' => 'vwTramitarProjeto'),
                     'p.idPronac = h.idPronac',
                     array('Destino', 'DtTramitacaoEnvio', 'dtTramitacaoRecebida', new Zend_Db_Expr('h.Situacao AS Estado'), 'meDespacho'),
-                    'SAC.dbo')
+                    'SAC')
                 ->where('p.IdPRONAC = ?', $dados['idPronac']);
 
             try {

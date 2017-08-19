@@ -1,5 +1,4 @@
 <?php
-//xd($this->stDiligenciaAprovadosInic);
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -262,14 +261,14 @@
         });
 
         $("#MsgAlertas").dialog({
-            title:"Confirmação",
+            title:"Confirma&ccedil;&atilde;o",
             resizable: true,
             width:300,
             height:150,
             modal: true,
             autoOpen:false,
             buttons: {
-                'NÃO': function() {
+                'N&atilde;O': function() {
                     $(this).dialog('close')
                 },
                 'SIM': function() {
@@ -289,7 +288,7 @@
         $("body").append("<div id='divDinamica'></div>");
         $("#divDinamica").html("");
         $('#divDinamica').html("<br>Deseja realmente encaminhar o projeto para a publica&ccedil;&atilde;o no DOU?");
-        var title = 'Confirmação';
+        var title = 'Confirma&ccedil;&atilde;o';
         $("#divDinamica").dialog({
             //resizable: true,
             width:300,
@@ -298,7 +297,7 @@
             autoOpen:true,
             title: title,
             buttons: {
-                'NÃO': function() {
+                'N&atilde;O': function() {
                     $("#divDinamica").remove();
                     $(this).dialog('close');
                     $('html').css('overflow', 'auto');
@@ -445,7 +444,7 @@
 </script>
 <div id="MsgAlertas" style="display:none;">
 </div>
-<div id="error" style="display:none;">Dados Obrigatórios não preenchidos!</div>
+<div id="error" style="display:none;">Dados Obrigatórios n&atilde;o preenchidos!</div>
 <div id="load" class="carregando sumir" style="width:100%; height:100%;" title="Carregando..."><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" alt="carregando"><br/><br/>Carregando...<br>Por Favor, aguarde!!</div>
 
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -461,7 +460,7 @@
 
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
-    <div>Checklist de publicaç&atilde;o <span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+    <div>Checklist de publica&ccedil;&atilde;o <span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TITULO ========== -->
 <!-- ========== INICIO CONTEUDO ========== -->
@@ -473,7 +472,7 @@
     <!-- ================================================================-->
         <table class="tabela">
             <tr>
-                <td><input type="button" name="grid1" id="g1_1" class="btn_remover" title="Recolher" /> PROJETO APROVADO - AGUARDANDO ANÁLISE DOCUMENTAL - PROPONENTE REGULAR</td>
+                <td><input type="button" name="grid1" id="g1_1" class="btn_remover" title="Recolher" /> PROJETO APROVADO - AGUARDANDO AN&aacute;LISE DOCUMENTAL - PROPONENTE REGULAR</td>
             </tr>
         </table>
         <div id="div_g1_1" class="miolo_grid_01">
@@ -482,16 +481,16 @@
                 <tr>
                     <th>pronac</th>
                     <th>Nome do Projeto</th>
-                    <th>Área Cultural/Segmento</th>
+                    <th>&aacute;rea Cultural/Segmento</th>
                     <th>Resumo</th>
                     <th>UF</th>
                     <th>Art.</th>
                     <th>Período de Capta&ccedil;&atilde;o</th>
                     <th>Período de Execu&ccedil;&atilde;o</th>
                     <th>Valor Acumulado</th>
-                    <th>Plenária</th>
+                    <th>Plen&aacute;ria</th>
                     <?php if (!empty ($this->coordenador ) ){?>
-                        <th>Técnico</th>
+                        <th>T&eacute;cnico</th>
                     <?php }?>
                     <th>Status</th>
                     <th>Documentos Pendentes</th>
@@ -514,7 +513,7 @@
                         </a>
                     </td>
                     <td><?php echo $this->escape($projetosAprovadosInic['NomeProjeto']); ?></td>
-                    <td><?php echo $this->escape($projetosAprovadosInic['area']); ?><br/>/<?php echo $this->escape($projetosAprovadosInic['segmento']); ?></td>
+                    <td><?php echo $this->escape($projetosAprovadosInic['Area']); ?><br/>/<?php echo $this->escape($projetosAprovadosInic['segmento']); ?></td>
                     <td><?php echo $this->escape(substr($projetosAprovadosInic['ResumoProjeto'], 0, 100)); ?>...</td>
                     <td><?php echo $this->escape($projetosAprovadosInic['UfProjeto']); ?></td>
                     <td><?php echo $this->escape($projetosAprovadosInic['enquadramento']); ?></td>
@@ -572,7 +571,7 @@
                             $diligencia = 3;
 
                             $diligenciado = "notice2.png";
-                            $Titlediligenciado = "Diligência não respondida";
+                            $Titlediligenciado = "Diligência n&atilde;o respondida";
                         }
                         else
                         {
@@ -623,16 +622,16 @@
                 <tr>
                     <th>pronac</th>
                     <th>Nome do Projeto</th>
-                    <th>Área Cultural/Segmento</th>
+                    <th>&aacute;rea Cultural/Segmento</th>
                     <th>Resumo</th>
                     <th>UF</th>
                     <th>Art.</th>
                     <th>Período de Capta&ccedil;&atilde;o</th>
                     <th>Período de Execu&ccedil;&atilde;o</th>
                     <th>Valor Acumulado</th>
-                    <th>Plenária</th>
+                    <th>Plen&aacute;ria</th>
                     <?php if (!empty ($this->coordenador ) ){?>
-                        <th>Técnico</th>
+                        <th>T&eacute;cnico</th>
                     <?php }?>
                     <th>Status</th>
                     <th>Documentos Pendentes</th>
@@ -656,7 +655,7 @@
                             </a>
                         </td>
                         <td><?php echo $this->escape($projetosDiligenciadosAprovadosInic['NomeProjeto']); ?></td>
-                        <td><?php echo $this->escape($projetosDiligenciadosAprovadosInic['area']); ?><br/>/<?php echo $this->escape($projetosDiligenciadosAprovadosInic['segmento']); ?></td>
+                        <td><?php echo $this->escape($projetosDiligenciadosAprovadosInic['Area']); ?><br/>/<?php echo $this->escape($projetosDiligenciadosAprovadosInic['segmento']); ?></td>
                         <td><?php echo $this->escape(substr($projetosDiligenciadosAprovadosInic['ResumoProjeto'], 0, 100)); ?>...</td>
                         <td><?php echo $this->escape($projetosDiligenciadosAprovadosInic['UfProjeto']); ?></td>
                         <td><?php echo $this->escape($projetosDiligenciadosAprovadosInic['enquadramento']); ?></td>
@@ -713,7 +712,7 @@
                             $diligencia = 3;
 
                             $diligenciado = "notice2.png";
-                            $Titlediligenciado = "Diligência não respondida";
+                            $Titlediligenciado = "Diligência n&atilde;o respondida";
                         }
                         else
                         {
@@ -767,17 +766,17 @@
                 <tr>
                     <th>pronac</th>
                     <th>Nome do Projeto</th>
-                    <th>Área Cultural/Segmento</th>
+                    <th>&aacute;rea Cultural/Segmento</th>
                     <th>Resumo</th>
                     <th>UF</th>
                     <th>Artigo</th>
                     <th>Período de Capta&ccedil;&atilde;o</th>
                     <th>Período de Execu&ccedil;&atilde;o</th>
                     <th>Valor Acumulado</th>
-                    <th>Plenária</th>
+                    <th>Plen&aacute;ria</th>
                     <th>Documentos Pendentes</th>
                     <?php if (!empty ($this->coordenador ) ){?>
-                        <th>Técnico</th>
+                        <th>T&eacute;cnico</th>
                     <?php }?>
                     <th>Status</th>
                     <th>Dilig&ecirc;ncia</th>
@@ -801,7 +800,7 @@
                             </a>
                         </td>
                         <td><?php echo $this->escape($salicAprovadosInic['NomeProjeto']); ?></td>
-                        <td><?php echo $this->escape($salicAprovadosInic['area']); ?><br/>/<?php echo $this->escape($salicAprovadosInic['segmento']); ?></td>
+                        <td><?php echo $this->escape($salicAprovadosInic['Area']); ?><br/>/<?php echo $this->escape($salicAprovadosInic['segmento']); ?></td>
                         <td><?php echo $this->escape(substr($salicAprovadosInic['ResumoProjeto'], 0, 100)); ?>...</td>
                         <td><?php echo $this->escape($salicAprovadosInic['UfProjeto']); ?></td>
                         <td><?php echo $this->escape($salicAprovadosInic['enquadramento']); ?></td>
@@ -858,7 +857,7 @@
                                     $diligencia = 3;
 
                                     $diligenciado = "notice2.png";
-                                    $Titlediligenciado = "Diligência não respondida";
+                                    $Titlediligenciado = "Diligência n&atilde;o respondida";
                                 }
                                 else
                                 {

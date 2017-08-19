@@ -12,13 +12,13 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
     private $arrCodOrgaosSAV = array();
 
     /**
-     * Reescreve o método init()
+     * Reescreve o m&eacute;todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // titulo da pagina
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // titulo da pagina
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 103; // Coordenador de Analise
         $PermissoesGrupo[] = 127; // Coordenador Geral de Analise
@@ -68,10 +68,10 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
                 $this->nomeOrgao      = "";
                 /*if($this->codOrgaoSuperior == 251){ //SEFIC
                     $this->nomeSecretario = "HENILTON PARENTE DE MENEZES";
-                    $this->nomeOrgao      = "Secretário de Fomento e Incentivo à Cultura";
+                    $this->nomeOrgao      = "Secret&aacute;rio de Fomento e Incentivo &agrave; Cultura";
                 }else{ //SAV
                     $this->nomeSecretario = "ANA PAULA DOURADO SANTANA";
-                    $this->nomeOrgao      = "Secretária de Audiovisual";
+                    $this->nomeOrgao      = "Secret&aacute;ria de Audiovisual";
                 }*/
             }
         }else{
@@ -152,41 +152,40 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         
         //========== PROJETOS APROVADOS SEFIC e SAV - APROVACAO INICIAL =========================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']  = $idpronac;
+        $arrBusca['tp.idPronac in (?)']  = $idpronac;
         //$arrBusca['pr.Situacao = ?']     = "D03";
-        //$arrBusca['pr.Situacao IN (?)']  = array('D03', 'D01');
-        $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+        //$arrBusca['pr.Situacao in (?)']  = array('D03', 'D01');
+        $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
         $arrBusca['par.TipoParecer = ?'] = 1;
         $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
         $rsProjetosAprovados = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
         //========== PROJETOS INDEFERIDOS SEFIC e SAV - APROVACAO INICIAL =======================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']  = $idpronac;
-        //$arrBusca['pr.Situacao IN (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
-        $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+        $arrBusca['tp.idPronac in (?)']  = $idpronac;
+        //$arrBusca['pr.Situacao in (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
+        $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
         $arrBusca['par.TipoParecer = ?'] = 1;
         $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
         $rsProjetosIndeferidos = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
         //========== PROJETOS APROVADOS SEFIC e SAV - RECURSO ==========================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']   = $idpronac;
-        $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+        $arrBusca['tp.idPronac in (?)']   = $idpronac;
+        $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
         $arrBusca['par.TipoParecer <> ?'] = 1;
         $arrBusca['r.NrReuniao = ?']      = $nrReuniao;
         $rsProjetosAprovadosRecurso = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
         //========== PROJETOS INDEFERIDOS SEFIC e SAV - RECUSROS =======================/
         $arrBusca = array();
-        $arrBusca['tp.idPronac IN (?)']      = $idpronac;
-        $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+        $arrBusca['tp.idPronac in (?)']      = $idpronac;
+        $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
         $arrBusca['par.TipoParecer <> ?']    = 1;
         $arrBusca['r.NrReuniao = ?']         = $nrReuniao;
         $rsProjetosIndeferidosRecurso = $tblPauta->buscarProjetosTermoAprovacao($arrBusca);
         
-        //xd($rsProjetosAprovadosRecurso->toArray());*/
-        
+
         /**=================================================================*/
         /*=============== TRATAMENTO DE PROJETOS APROVADOS =================*/
         /**=================================================================*/
@@ -394,7 +393,7 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         $this->view->pautaSAVIndeferidosRecurso = $pautaSAVIndeferidosRecurso;
         $this->view->pautaSEFICIndeferidosRecurso = $pautaSEFICIndeferidosRecurso;
         
-        //TRATAMENTO CASO NENHUMA DAS CONDIÇÕES SEJAM ATENDIDAS
+        //TRATAMENTO CASO NENHUMA DAS CONDI&ccedil;&otilde;ES SEJAM ATENDIDAS
         if( (count($pautaSAVAprovados) <= 0) && 
             (count($pautaSEFICAprovados) <= 0) && 
             (count($pautaSAVIndeferidos) <= 0) && 
@@ -404,7 +403,7 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
             (count($pautaSAVIndeferidosRecurso) <= 0) && 
             (count($pautaSEFICIndeferidosRecurso) <= 0))
         {    
-            parent::message("O(s) projeto(s) informado(s) não atende(m) às condições necessárias para ser(em) impresso(s) no Termo de Decisão.", "gerartermodeaprovacao/", "ALERT");
+            parent::message("O(s) projeto(s) informado(s) n&atilde;o atende(m) &agrave;s condi&ccedil;&otilde;es necess&aacute;rias para ser(em) impresso(s) no Termo de Decis&atilde;o.", "gerartermodeaprovacao/", "ALERT");
         }
         
         /*$pautaSAVAprovados[$ct1]['PRONAC'] = $dadosresultado['pronac'];
@@ -440,10 +439,10 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         if($this->tipoProjeto == "analiseInicial"){
             //========== PROJETOS APROVADOS SEFIC e SAV - APROVACAO INICIAL =========================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']  = $idpronac;
+            $arrBusca['tp.idPronac in (?)']  = $idpronac;
             //$arrBusca['pr.Situacao = ?']     = "D03";
-            //$arrBusca['pr.Situacao IN (?)']  = array('D03', 'D01');
-            $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+            //$arrBusca['pr.Situacao in (?)']  = array('D03', 'D01');
+            $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
             $arrBusca['par.TipoParecer = ?'] = 1;
             $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;
@@ -452,9 +451,9 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
 
             //========== PROJETOS INDEFERIDOS SEFIC e SAV - APROVACAO INICIAL =======================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']  = $idpronac;
-            //$arrBusca['pr.Situacao IN (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
-            $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+            $arrBusca['tp.idPronac in (?)']  = $idpronac;
+            //$arrBusca['pr.Situacao in (?)']  = array('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14', 'A41');
+            $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
             $arrBusca['par.TipoParecer = ?'] = 1;
             $arrBusca['r.NrReuniao = ?']     = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;
@@ -465,8 +464,8 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         if($this->tipoProjeto == "readequacao"){
             //========== PROJETOS APROVADOS SEFIC e SAV - READEQUACAO ==========================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']   = $idpronac;
-            $arrBusca['tp.stAnalise IN (?)']  = array("AS","AC","AR");
+            $arrBusca['tp.idPronac in (?)']   = $idpronac;
+            $arrBusca['tp.stAnalise in (?)']  = array("AS","AC","AR");
             $arrBusca['par.TipoParecer <> ?'] = 1;
             $arrBusca['r.NrReuniao = ?']      = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;
@@ -475,8 +474,8 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
 
             //========== PROJETOS INDEFERIDOS SEFIC e SAV - READEQUACAO =======================/
             $arrBusca = array();
-            $arrBusca['tp.idPronac IN (?)']      = $idpronac;
-            $arrBusca['tp.stAnalise NOT IN (?)'] = array("AS","AC","AR");
+            $arrBusca['tp.idPronac in (?)']      = $idpronac;
+            $arrBusca['tp.stAnalise NOT in (?)'] = array("AS","AC","AR");
             $arrBusca['par.TipoParecer <> ?']    = 1;
             $arrBusca['r.NrReuniao = ?']         = $nrReuniao;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(pr.Orgao, 1) = ? "] = $this->codOrgaoSuperior;
@@ -519,7 +518,7 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
 
                 $pautaAprovadosReadequacao[$ct1]['PRONAC'] = $dadosresultado['pronac'];
                 $pautaAprovadosReadequacao[$ct1]['NomeProjeto'] = $dadosresultado['NomeProjeto'];
-                $pautaAprovadosReadequacao[$ct1]['TipoParecer'] = 'Readequação';
+                $pautaAprovadosReadequacao[$ct1]['TipoParecer'] = 'Readequa&ccedil;&atilde;o';
                 $pautaAprovadosReadequacao[$ct1]['NrReuniao'] = $dadosresultado['NrReuniao'];
                 $pautaAprovadosReadequacao[$ct1]['mesReuniao'] = date('m', strtotime($dadosresultado['DtInicio']));
                 $pautaAprovadosReadequacao[$ct1]['DtInicio'] = date('d', strtotime($dadosresultado['DtInicio']));
@@ -569,7 +568,7 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
 
                 $pautaIndeferidosReadequacao[$ct1]['PRONAC'] = $dadosresultado['pronac'];
                 $pautaIndeferidosReadequacao[$ct1]['NomeProjeto'] = $dadosresultado['NomeProjeto'];
-                $pautaIndeferidosReadequacao[$ct1]['TipoParecer'] = 'Readequação';
+                $pautaIndeferidosReadequacao[$ct1]['TipoParecer'] = 'Readequa&ccedil;&atilde;o';
                 $pautaIndeferidosReadequacao[$ct1]['NrReuniao'] = $dadosresultado['NrReuniao'];
                 $pautaIndeferidosReadequacao[$ct1]['mesReuniao'] = date('m', strtotime($dadosresultado['DtInicio']));
                 $pautaIndeferidosReadequacao[$ct1]['DtInicio'] = date('d', strtotime($dadosresultado['DtInicio']));
@@ -608,13 +607,13 @@ class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
         
         $this->view->mesPorExtenso = $mes_extenso;
         
-        //TRATAMENTO CASO NENHUMA DAS CONDIÇÕES SEJAM ATENDIDAS
+        //TRATAMENTO CASO NENHUMA DAS CONDI&ccedil;&otilde;ES SEJAM ATENDIDAS
         if( (count($pautaAprovados) <= 0) && 
             (count($pautaIndeferidos) <= 0) && 
             (count($pautaAprovadosReadequacao) <= 0) && 
             (count($pautaIndeferidosReadequacao) <= 0))
         {    
-            parent::message("O(s) projeto(s) informado(s) não atende(m) às condições necessárias para ser(em) impresso(s) no Termo de Decisão.", "gerartermodeaprovacao/", "ALERT");
+            parent::message("O(s) projeto(s) informado(s) n&atilde;o atende(m) &agrave;s condi&ccedil;&otilde;es necess&aacute;rias para ser(em) impresso(s) no Termo de Decis&atilde;o.", "gerartermodeaprovacao/", "ALERT");
         }
         
         if($this->codOrgaoSuperior == 251){

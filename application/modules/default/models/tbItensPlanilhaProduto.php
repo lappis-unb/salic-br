@@ -165,14 +165,14 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
         /*    $sql = "select distinct
                         pp.idPlanilhaItem as idPlanilhaItens,
                         right(i.Descricao,40) as Descricao
-                    from SAC.dbo.tbPlanilhaProposta pp
-                        inner join SAC.dbo.tbPlanilhaItens as i on pp.idPlanilhaItem = i.idPlanilhaItens
-                        inner join SAC.dbo.tbPlanilhaEtapa as e on pp.idEtapa = e.idPlanilhaEtapa
+                    from sac.dbo.tbPlanilhaProposta pp
+                        inner join sac.dbo.tbPlanilhaItens as i on pp.idPlanilhaItem = i.idPlanilhaItens
+                        inner join sac.dbo.tbPlanilhaEtapa as e on pp.idEtapa = e.idPlanilhaEtapa
                     where idEtapa = $idEtapa order by i.Descricao "; */
 //
 //        $sql = "select distinct a.idPlanilhaItens,b.Descricao
-//                   FROM SAC..tbItensPlanilhaProduto a
-//                   INNER JOIN SAC..tbPlanilhaItens b on (a.idPlanilhaItens = b.idPlanilhaItens)
+//                   FROM sac..tbItensPlanilhaProduto a
+//                   INNER JOIN sac..tbPlanilhaItens b on (a.idPlanilhaItens = b.idPlanilhaItens)
 //                   WHERE idPlanilhaEtapa = " . $idEtapa . " ";
 
         $select = $this->select()->distinct();

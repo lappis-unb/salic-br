@@ -1,5 +1,5 @@
 <?php
-/* inclui o menu lateral caso não venha através do proponente */
+/* inclui o menu lateral caso n&atilde;o venha atrav&eacute;s do proponente */
 if (!isset($this->dadosProjeto) && !empty($this->arrayGrupoProponente)) :
 	echo $this->partial('controlarmovimentacaobancaria/inc/menu.inc.php', $this);
 
@@ -38,7 +38,7 @@ endif;
 	<script type="text/javascript">
 	<!--
 	/**
-	 * Função para mostrar/ocultar a faixa de período fixo
+	 * Fun&ccedil;&atilde;o para mostrar/ocultar a faixa de período fixo
 	 */
 	function alterar_periodo(periodo)
 	{
@@ -50,12 +50,12 @@ endif;
 		{
 			$('#faixa_de_periodo').hide();
 		}
-	} // fecha função alterar_periodo()
+	} // fecha fun&ccedil;&atilde;o alterar_periodo()
 
 
 
 	/**
-	 * Função para verificar se a data final é menor que a data inicial
+	 * Fun&ccedil;&atilde;o para verificar se a data final &eacute; menor que a data inicial
 	 */
 	function verificar_data()
 	{
@@ -80,16 +80,16 @@ endif;
 		{
 			return true;
 		}
-	} // fecha função validar_data()
+	} // fecha fun&ccedil;&atilde;o validar_data()
 
 
 
 	/**
-	 * Funções que são chamadas após a página ser carregada
+	 * Fun&ccedil;&otilde;es que s&atilde;o chamadas após a p&aacute;gina ser carregada
 	 */
 	$(document).ready(function()
 	{
-		// máscaras dos campos
+		// m&aacute;scaras dos campos
 		$('#nr_pronac').keyup(function()
 		{
 			mascara(this, format_num); // somente números
@@ -100,7 +100,7 @@ endif;
 		});
 
 
-		// alteração de período
+		// altera&ccedil;&atilde;o de período
 		$('#periodo').change(function()
 		{
 			alterar_periodo(this.value);
@@ -117,10 +117,10 @@ endif;
 		});
 
 
-		// validações antes do envio do formulário
+		// valida&ccedil;&otilde;es antes do envio do formul&aacute;rio
 		$('#enviar').click(function()
 		{
-			// validação do período fixo
+			// valida&ccedil;&atilde;o do período fixo
 			if (!verificar_data())
 			{
 				return false;
@@ -133,7 +133,7 @@ endif;
 		});
 
 
-		// calendário
+		// calend&aacute;rio
 		$.datepicker.regional['pt-BR'] =
 		{
 			closeText: 'Fechar',
@@ -161,7 +161,7 @@ endif;
 
 
 
-	<!-- ========== INÍCIO FORMULÁRIO DE CONSULTA ========== -->
+	<!-- ========== INÍCIO FORMUL&aacute;RIO DE CONSULTA ========== -->
 	<form name="formBuscar" id="formBuscar" method="post"
 		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'pesquisar')); ?>"
 		enctype="multipart/form-data">
@@ -230,7 +230,7 @@ endif;
 		</table>
 
 	</form>
-	<!-- ========== FIM FORMULÁRIO DE CONSULTA ========== -->
+	<!-- ========== FIM FORMUL&aacute;RIO DE CONSULTA ========== -->
 
 
 
@@ -239,8 +239,8 @@ endif;
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

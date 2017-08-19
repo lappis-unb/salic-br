@@ -15,7 +15,7 @@
 
     <!-- inicio: conteudo principal #container -->
     <div id="container">
-        <!-- inicio: navegação local #qm0 -->
+        <!-- inicio: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido(){
                 var janela = $(window).width();
@@ -89,11 +89,11 @@
         <div class="top"></div>
         <div id="qm0" class="qmmc sanfona">
             
-            <div id="corfirma" title="Confirmação" style='display:none;'></div>
-            <div id="ok" title="Confirmação" style='display:none;'></div>
+            <div id="corfirma" title="Confirma&ccedil;&atilde;o" style='display:none;'></div>
+            <div id="ok" title="Confirma&ccedil;&atilde;o" style='display:none;'></div>
 
             <?php
-            /*Alysson - Menu do Corrdenador Geral presção de Contas*/
+            /*Alysson - Menu do Corrdenador Geral pres&ccedil;&atilde;o de Contas*/
             if ($this->grupoAtivo == 121) {
                 
             ?>
@@ -107,7 +107,7 @@
             <a href="<?php echo $this->baseUrl(); ?>/analisarexecucaofisicatecnico/comprovantes-de-execucao?idpronac=<?php echo $this->idPronac; ?>&relatorio=<?php echo $this->idRelatorio; ?>" title="Comprovantes de Execu&ccedil;&atilde;o" class="no_seta">Comprovantes de Execu&ccedil;&atilde;o</a>
 
             <div class="sanfonaDiv" style="display:none;"></div>
-            <a href="#" title="Execução" class="ancoraPrestacaoContas" onclick="return false;">Presta&ccedil;&atilde;o de Contas</a>
+            <a href="#" title="Execu&ccedil;&atilde;o" class="ancoraPrestacaoContas" onclick="return false;">Presta&ccedil;&atilde;o de Contas</a>
             <div class="sanfonaDiv" style="width: 90%; margin-left: 20px;">
                 <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'execucao-receita-despesa', 'idPronac'=>$this->idPronac)); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Execu&ccedil;&atilde;o da receita e despesa">Execu&ccedil;&atilde;o da receita e despesa</a>
                 <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-relacao-pagamentos', 'idPronac'=>$this->idPronac)); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Rela&ccedil;&atilde;o de Pagamentos">Rela&ccedil;&atilde;o de pagamentos</a>
@@ -120,15 +120,15 @@
             </div>
             <div class="sanfonaDiv" style="display:none;"></div>
 
-            <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac'=>$this->idPronac)).'?idPronac='.$this->idPronac.'&idRelatorio='.$this->idRelatorio; ?>" title="Ir para Execução Financeira Comprovada">Execução Financeira Comprovada</a>
+            <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac'=>$this->idPronac)).'?idPronac='.$this->idPronac.'&idRelatorio='.$this->idRelatorio; ?>" title="Ir para Execu&ccedil;&atilde;o Financeira Comprovada">Execu&ccedil;&atilde;o Financeira Comprovada</a>
             <?php } ?>
 
                 <?php
-                /*Menu do Corrdenador Geral presção de Contas*/
+                /*Menu do Corrdenador Geral pres&ccedil;&atilde;o de Contas*/
                 if ($this->grupoAtivo == 126 || $this->grupoAtivo == 125) {
                 ?>
                     <div class="sanfonaDiv" style="display:none;"></div>
-                    <a href="#" title="Execução" class="ancoraPrestacaoContas" onclick="return false;">Presta&ccedil;&atilde;o de Contas</a>
+                    <a href="#" title="Execu&ccedil;&atilde;o" class="ancoraPrestacaoContas" onclick="return false;">Presta&ccedil;&atilde;o de Contas</a>
                     <div class="sanfonaDiv" style="width: 90%; margin-left: 20px;">
                         <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'execucao-receita-despesa')); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Execu&ccedil;&atilde;o da receita e despesa">Execu&ccedil;&atilde;o da receita e despesa</a>
                         <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-relacao-pagamentos')); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Rela&ccedil;&atilde;o de Pagamentos">Rela&ccedil;&atilde;o de pagamentos</a>
@@ -141,9 +141,9 @@
                     </div>
                     <div class="sanfonaDiv" style="display:none;"></div>
                     
-                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'relatoriofinal')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execução do Objeto">Relatório de Comprovação do Objeto</a>-->
-                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'relatorio-final')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execução do Objeto">Relatório de Comprovação do Objeto</a>-->
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execução do Objeto">Execução Financeira Comprovada</a>
+                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'relatoriofinal')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execu&ccedil;&atilde;o do Objeto">Relatório de Comprova&ccedil;&atilde;o do Objeto</a>-->
+                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'relatorio-final')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execu&ccedil;&atilde;o do Objeto">Relatório de Comprova&ccedil;&atilde;o do Objeto</a>-->
+                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execu&ccedil;&atilde;o do Objeto">Execu&ccedil;&atilde;o Financeira Comprovada</a>
                     <!-- verifica se o projeto esta com encaminhamento atual para o coordenador -->
                     <?php if(isset($this->cdGruposDestinoAtual) && $this->cdGruposDestinoAtual == "125"){ ?>
                         <a class="no_seta" target="_blank" href="<?php echo $diligenciaUrl; ?>" title="Ir para Dilegenciar Proponente">Diligenciar Proponente</a>
@@ -156,7 +156,7 @@
                 /*Menu do Tecnico de prestacao de contas e Chefe de divisao*/
                 if ($this->grupoAtivo == '124' || $this->grupoAtivo == '132') {?>
                     <div class="sanfonaDiv" style="display:none;"></div>
-                    <a href="#" title="Execução" class="ancoraPrestacaoContas" onclick="return false;">Presta&ccedil;&atilde;o de Contas</a>
+                    <a href="#" title="Execu&ccedil;&atilde;o" class="ancoraPrestacaoContas" onclick="return false;">Presta&ccedil;&atilde;o de Contas</a>
                     <div class="sanfonaDiv" style="width: 90%; margin-left: 20px;">
                         <a href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extratos-bancarios'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>' target="_blank" class="no_seta" title="Ir para Dados Banc&aacute;rios">Dados Banc&aacute;rios</a>
                         <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'execucao-receita-despesa')); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Execu&ccedil;&atilde;o da receita e despesa">Execu&ccedil;&atilde;o da receita e despesa</a>
@@ -170,13 +170,13 @@
                     </div>
                     <div class="sanfonaDiv" style="display:none;"></div>
                     
-                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'relatoriofinal')).'?idPronac='.$id.'&status=1'; ?>" title="Ir para Relatorio de Execução do Objeto">Relatório de Comprovação do Objeto</a>-->
-                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'relatorio-final')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execução do Objeto">Relatório de Comprovação do Objeto</a>-->
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria')).'?idPronac='.$id; ?>" title="Ir para Execução Financeira Comprovada">Execução Financeira Comprovada</a>
+                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'relatoriofinal')).'?idPronac='.$id.'&status=1'; ?>" title="Ir para Relatorio de Execu&ccedil;&atilde;o do Objeto">Relatório de Comprova&ccedil;&atilde;o do Objeto</a>-->
+                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'relatorio-final')).'?idPronac='.$id; ?>" title="Ir para Relatorio de Execu&ccedil;&atilde;o do Objeto">Relatório de Comprova&ccedil;&atilde;o do Objeto</a>-->
+                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria')).'?idPronac='.$id; ?>" title="Ir para Execu&ccedil;&atilde;o Financeira Comprovada">Execu&ccedil;&atilde;o Financeira Comprovada</a>
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'emitirparecertecnico')).'?idPronac=' . $id; ?>" title="Ir para Emitir Parecer">Emitir Parecer</a>
                     <a class="no_seta" target="_blank" href="<?php echo $diligenciaUrl; ?>" title="Ir para Diligenciar Proponente">Diligenciar Proponente</a>
                     <!--<a class="no_seta" target="_blank" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem', 'idpronac' => $this->idPronac), null, true); ?>">Mensagens</a>-->
-                    <a class="no_seta" target="_blank" href="#" id="lnkDespacho">Finalizar Análise</a>
+                    <a class="no_seta" target="_blank" href="#" id="lnkDespacho">Finalizar An&aacute;lise</a>
                     <span class="no_seta last">&nbsp;</span>
                <?php } ?>
                <?php
@@ -205,7 +205,7 @@
             <?php if($this->codGrupo != 132){ //SE chefe de divisao  ?>
                 $("#analisar-confirm").html('Tem certeza que deseja finalizar a an&aacute;lise e enviar para o Chefe de Divis&atilde;o ?');
             <?php }else{ ?>
-                $("#analisar-confirm").html('Tem certeza que deseja finalizar a an&aacute;lise e enviar ao Coordenador de Prestação de Contas ?');
+                $("#analisar-confirm").html('Tem certeza que deseja finalizar a an&aacute;lise e enviar ao Coordenador de Presta&ccedil;&atilde;o de Contas ?');
             <?php }?>
             $("#analisar-confirm").dialog({
                 title : 'Confirma&ccedil;&atilde;o',

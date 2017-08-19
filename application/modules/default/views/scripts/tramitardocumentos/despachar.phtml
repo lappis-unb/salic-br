@@ -73,14 +73,14 @@
                         if (data[i].msg == 'ok'){
                             var codOrgao = <?php echo $this->codOrgao; ?>
 
-                            $('#l_localizacao').html('Localização: '+data[i].localizacao);
+                            $('#l_localizacao').html('Localiza&ccedil;&atilde;o: '+data[i].localizacao);
                             $('#l_processonome').html(data[i].processonome);
                             $('#idpronac').val(data[i].idpronac);
                             $('#idDestino').val(data[i].Orgao);
                             $('#btnSalvar').show();
                             $('#mostraMsg').html('');
                         } else {
-                            $('#l_localizacao').html('Projeto não Cadastrado!');
+                            $('#l_localizacao').html('Projeto n&atilde;o Cadastrado!');
                             $('#l_processonome').html('');
                             $('#idpronac').val('');
                         }
@@ -88,7 +88,7 @@
                 },
                 error: function(data){
                     $('#l_erro').html('Informe o Pronac!');
-                    //alert('Falha na recuperação dos dados.\nNão foi possível carregar os e-mails!');
+                    //alert('Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi possível carregar os e-mails!');
                 }
             });
         }
@@ -196,7 +196,7 @@
                 <th width="120">Documento</th>
                 <th width="70">Data</th>
                 <th>Arquivo</th>
-                <th>Situação</th>
+                <th>Situa&ccedil;&atilde;o</th>
                 <th>Excluir</th>
             </tr>
             <?php foreach($docs as $doc) { ?>
@@ -219,7 +219,7 @@
         <?php if($x == 0) :?>
         <table class="tabela">
             <tr>
-                <td class="centro">Não há documentos cadastrados!</td>
+                <td class="centro">N&atilde;o h&aacute; documentos cadastrados!</td>
             </tr>
         </table>
         <?php endif;?>
@@ -229,8 +229,8 @@
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

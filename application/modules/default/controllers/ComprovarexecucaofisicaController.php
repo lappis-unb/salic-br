@@ -288,7 +288,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     );
                    $success = $AbrangenciaDAO->cadastrar($dados);
                 } else {
-                    parent::message('Não é possível salvar o mesmo local mais de uma vez. '
+                    parent::message('N&atilde;o &eacute; possível salvar o mesmo local mais de uma vez. '
                             . '(País, Uf, Município)', $redirectUrl, 'ERROR');
                 }
             }
@@ -510,14 +510,14 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                             'nmArquivo'         => $arquivoNome,
                             'sgExtensao'        => $arquivoExtensao,
                             'biArquivo'         => $data,
-                            'dsDocumento'       => 'Comprovação do Relatório Trimestral/Final - Plano de Divulgação',
+                            'dsDocumento'       => 'Comprova&ccedil;&atilde;o do Relatório Trimestral/Final - Plano de Divulga&ccedil;&atilde;o',
                             'idPronac'          => $idpronac,
                             'idTipoDocumento'   => 18);
 
                     $Arquivo = new Arquivo();
                     $Arquivo->inserirUploads($dadosArquivo);
 
-                    $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                    $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                     $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>18), array('idDocumento DESC'));
                     $pldiv['idDocumento'] = $dadosDocumento[0]->idDocumento;
                 }
@@ -554,7 +554,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         }
 
                         if(empty($_FILES['arquivoNovo']['tmp_name'])){
-                            parent::message("Favor selecionar um arquivo para o novo Plano de Divulgação.", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                            parent::message("Favor selecionar um arquivo para o novo Plano de Divulga&ccedil;&atilde;o.", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                         }
 
                         $tipos = array('bmp','gif','jpeg','jpg','png','raw','tif','pdf');
@@ -571,14 +571,14 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                                 'nmArquivo'         => $arquivoNome,
                                 'sgExtensao'        => $arquivoExtensao,
                                 'biArquivo'         => $data,
-                                'dsDocumento'       => 'Comprovação do Relatório Trimestral/Final - Plano de Divulgação',
+                                'dsDocumento'       => 'Comprova&ccedil;&atilde;o do Relatório Trimestral/Final - Plano de Divulga&ccedil;&atilde;o',
                                 'idPronac'          => $idpronac,
                                 'idTipoDocumento'   => 18);
 
                         $Arquivo = new Arquivo();
                         $Arquivo->inserirUploads($dadosArquivo);
 
-                        $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                        $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                         $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>18), array('idDocumento DESC'));
 
                         $dados = array(
@@ -591,7 +591,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         );
                         $PlanoDeDivulgacao->inserir($dados);
                     } else {
-                        parent::message("Não foi poss&iacute;vel cadastrar o novo Plano de Divulga&ccedil;&atilde;o!", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
+                        parent::message("N&atilde;o foi poss&iacute;vel cadastrar o novo Plano de Divulga&ccedil;&atilde;o!", "comprovarexecucaofisica/plano-de-divulgacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac), "ERROR");
                     }
 
                 }
@@ -734,7 +734,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     $Arquivo = new Arquivo();
                     $Arquivo->inserirUploads($dadosArquivo);
 
-                    $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                    $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                     $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>$_POST['tipoDocumento']), array('idDocumento DESC'));
 
                     $dados = array(
@@ -1098,7 +1098,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $tipoDocumento = null;
                 switch ($registro['tpDocumento']) {
                     case 1:
-                        $tipoDocumento = 'Boleto Bancário';
+                        $tipoDocumento = 'Boleto Banc&aacute;rio';
                         break;
                     case 2:
                         $tipoDocumento = 'Cupom Fiscal';
@@ -1120,7 +1120,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         $formaPagamento = 'Cheque';
                         break;
                     case 2:
-                        $formaPagamento = 'Transferência Bancária';
+                        $formaPagamento = 'Transferência Banc&aacute;ria';
                         break;
                     case 3:
                         $formaPagamento = 'Saque/Dinheiro';
@@ -1466,7 +1466,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $dadosDocumento = $DocumentoProjeto->buscar(array('idPronac =?'=>$idpronac,'idTipoDocumento =?'=>25), array('idDocumento DESC'));
             }
 
@@ -1569,14 +1569,14 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Móvel',
+                        'dsDocumento'       => 'Comprova&ccedil;&atilde;o do Relatório Final - Bem Móvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 26);
 
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $DocumentoDoacao = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>26), array('idDocumento DESC'));
             }
 
@@ -1614,14 +1614,14 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Móvel',
+                        'dsDocumento'       => 'Comprova&ccedil;&atilde;o do Relatório Final - Bem Móvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 25);
 
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $documentoAceite = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>25), array('idDocumento DESC'));
             }
 
@@ -1692,14 +1692,14 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Imóvel',
+                        'dsDocumento'       => 'Comprova&ccedil;&atilde;o do Relatório Final - Bem Imóvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 26);
 
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $DocumentoDoacao = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>26), array('idDocumento DESC'));
             }
 
@@ -1737,14 +1737,14 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'nmArquivo'         => $arquivoNome,
                         'sgExtensao'        => $arquivoExtensao,
                         'biArquivo'         => $data,
-                        'dsDocumento'       => 'Comprovação do Relatório Final - Bem Imóvel',
+                        'dsDocumento'       => 'Comprova&ccedil;&atilde;o do Relatório Final - Bem Imóvel',
                         'idPronac'          => $idpronac,
                         'idTipoDocumento'   => 25);
 
                 $Arquivo = new Arquivo();
                 $Arquivo->inserirUploads($dadosArquivo);
 
-                $DocumentoProjeto = new tbDocumentoProjetoBDCORPORATIVO();
+                $DocumentoProjeto = new tbDocumentoProjetobdcorporativo();
                 $documentoAceite = $DocumentoProjeto->buscar(array('idPronac=?'=>$idpronac,'idTipoDocumento=?'=>25), array('idDocumento DESC'));
             }
 

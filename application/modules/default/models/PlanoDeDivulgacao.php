@@ -2,7 +2,7 @@
 
 class PlanoDeDivulgacao extends MinC_Db_Table_Abstract {
 
-    //protected $_name = 'SAC.dbo.PlanoDeDivulgacao';
+    //protected $_name = 'sac.dbo.PlanoDeDivulgacao';
     protected $_banco = 'sac';
     protected $_name = 'PlanoDeDivulgacao';
 
@@ -74,11 +74,11 @@ class PlanoDeDivulgacao extends MinC_Db_Table_Abstract {
                 idProjeto,
                
                 Usuario,
-                (select descricao from SAC.dbo.Verificacao where idverificacao = P.idPeca) as Peca,
-                (select descricao from SAC.dbo.Verificacao where idverificacao = P.idVeiculo) as Veiculo,
+                (select descricao from sac.dbo.Verificacao where idverificacao = P.idPeca) as Peca,
+                (select descricao from sac.dbo.Verificacao where idverificacao = P.idVeiculo) as Veiculo,
                 Usuario
             FROM
-                SAC.dbo.PlanoDeDivulgacao as P
+                sac.dbo.PlanoDeDivulgacao as P
             WHERE idProjeto=".$id_projeto;
 
         try

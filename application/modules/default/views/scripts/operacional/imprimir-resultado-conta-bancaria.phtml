@@ -99,10 +99,10 @@
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div class="paginaA4">
     <div align="center">
-        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Ministério da Cultura"/>
-        <br clear="all" /><span class="TituloMinC">Ministério da Cultura</span>
-        <br clear="all" /><span class="TituloDoDocumento">Conta Bancária - Resultado</span>
-        <br clear="all" /><span class="DataDoDocumento">Data da impressão: <?php echo date('d/m/Y - H:i:s'); ?></span>
+        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Minist&eacute;rio da Cultura"/>
+        <br clear="all" /><span class="TituloMinC">Minist&eacute;rio da Cultura</span>
+        <br clear="all" /><span class="TituloDoDocumento">Conta Banc&aacute;ria - Resultado</span>
+        <br clear="all" /><span class="DataDoDocumento">Data da impress&atilde;o: <?php echo date('d/m/Y - H:i:s'); ?></span>
         <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->dados).' projetos listados'; ?></span>
     </div>
 
@@ -112,18 +112,18 @@
             <tr class="titulo_tabela">
                 <th>PRONAC</th>
                 <th>Nome do Projeto</th>
-                <th>Área</th>
-                <th>Situação</th>
+                <th>&aacute;rea</th>
+                <th>Situa&ccedil;&atilde;o</th>
                 <th>CNPJ/CPF</th>
                 <th>Proponente</th>
                 <th>Tipo de Pessoa</th>
                 <th>N&ordm; Portaria</th>
-                <th>Dt. Publicação Portaria</th>
-                <th>Dt. Início Captação</th>
-                <th>Dt. Fim Captação</th>
+                <th>Dt. Publica&ccedil;&atilde;o Portaria</th>
+                <th>Dt. Início Capta&ccedil;&atilde;o</th>
+                <th>Dt. Fim Capta&ccedil;&atilde;o</th>
                 <th>Dt. Nascimento</th>
                 <th>Agência</th>
-                <th>Conta Captação</th>
+                <th>Conta Capta&ccedil;&atilde;o</th>
                 <th>Conta Movimento</th>
                 <th>Dt. Lote Remessa</th>
                 <th>Ocorrência</th>
@@ -181,31 +181,31 @@
                         if($d->OcorrenciaCB != '000'){
                             switch ($d->OcorrenciaCB) {
                                 case '001':
-                                    echo 'Tipo de pessoa inválido';
+                                    echo 'Tipo de pessoa inv&aacute;lido';
                                     break;
                                 case '002':
-                                    echo 'Tipo de CPF/CNPJ inválido';
+                                    echo 'Tipo de CPF/CNPJ inv&aacute;lido';
                                     break;
                                 case '003':
-                                    echo 'CPF/CNPJ inválido';
+                                    echo 'CPF/CNPJ inv&aacute;lido';
                                     break;
                                 case '004':
-                                    echo 'Data de nascimento inválida';
+                                    echo 'Data de nascimento inv&aacute;lida';
                                     break;
                                 case '005':
-                                    echo 'Nome cliente inválido';
+                                    echo 'Nome cliente inv&aacute;lido';
                                     break;
                                 case '006':
-                                    echo 'Agência inválida';
+                                    echo 'Agência inv&aacute;lida';
                                     break;
                                 case '007':
                                     echo 'Mais de 5 clientes cadastrado p/o CPF informado';
                                     break;
                                 case '008':
-                                    echo 'Cliente BB-Campus fora da faixa etária (16 a 28 anos)';
+                                    echo 'Cliente BB-Campus fora da faixa et&aacute;ria (16 a 28 anos)';
                                     break;
                                 case '009':
-                                    echo 'Cliente BB-Campus não titular do CPF';
+                                    echo 'Cliente BB-Campus n&atilde;o titular do CPF';
                                     break;
                                 case '010':
                                     echo 'Dados pessoa física divergentes';
@@ -214,7 +214,7 @@
                                     echo 'Dados pessoa jurídica divergentes';
                                     break;
                                 case '013':
-                                    echo 'Cliente BB-Campus não  titular do CPF';
+                                    echo 'Cliente BB-Campus n&atilde;o  titular do CPF';
                                     break;
                                 case '014':
                                     echo 'Perfil agência incompatível com tipo de pessoa';
@@ -223,10 +223,10 @@
                                     echo 'Tipo de pessoa incompatível  com natureza jurídica';
                                     break;
                                 case '016':
-                                    echo 'Tipo de repasse inválido';
+                                    echo 'Tipo de repasse inv&aacute;lido';
                                     break;
                                 case '017':
-                                    echo 'Tipo de pessoa não permitido para esse processo/tipo de repasse';
+                                    echo 'Tipo de pessoa n&atilde;o permitido para esse processo/tipo de repasse';
                                     break;
                                 default:
                                     echo '';
@@ -252,8 +252,8 @@
     <br clear="all" />
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

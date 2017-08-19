@@ -37,7 +37,7 @@
 	function confirmaracaopro()
 	{
 
-		$("#confirmartroca").html("Deseja desvincular o responsável do Projeto?");
+		$("#confirmartroca").html("Deseja desvincular o respons&aacute;vel do Projeto?");
 
 		$("#confirmartroca").dialog({
         	resizable: true,
@@ -48,7 +48,7 @@
             closeOnEscape : false,
             title : 'Alerta',
             buttons: {
-                'NÃO': function()
+                'N&atilde;O': function()
                 {
                     $(this).dialog('close');
                 },
@@ -97,16 +97,16 @@
 		<tr>
 			<th width="80" class="titulo_tabela">PRONAC</th>
 			<th class="titulo_tabela">Nome do Projeto</th>
-			<th width="130" class="titulo_tabela">CPF do responsável</th>
-			<th class="titulo_tabela">Nome do responsável</th>
+			<th width="130" class="titulo_tabela">CPF do respons&aacute;vel</th>
+			<th class="titulo_tabela">Nome do respons&aacute;vel</th>
 			<th class="titulo_tabela"></th>
 		</tr>
 		<?php foreach ($this->projetos as $p):?>
 		<tr>
 			<td align="center"><?php echo $p->PRONAC;?></td>
 			<td><?php echo $p->NomeProjeto;?></td>
-			<td><?php echo (!empty($p->Cpf)) ? Mascara::addMaskCPF($p->Cpf) : '<em>Não informado</em>';?></td>
-			<td><?php echo (!empty($p->Nome)) ? $p->Nome : '<em>Não informado</em>';?></td>
+			<td><?php echo (!empty($p->Cpf)) ? Mascara::addMaskCPF($p->Cpf) : '<em>N&atilde;o informado</em>';?></td>
+			<td><?php echo (!empty($p->Nome)) ? $p->Nome : '<em>N&atilde;o informado</em>';?></td>
 			<td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $p->idPreProjeto;?>" /></td>
 		</tr>
 		<?php endforeach; ?>

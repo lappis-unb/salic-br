@@ -12,11 +12,11 @@
 <div id="titulo">
 <?php
 $filtros = array(
-		 'aguardando_distribuicao' => 'Aguardando distribuição',
-		 'em_analise' => 'Em análise',
-		 'em_validacao' => 'Em validação',
+		 'aguardando_distribuicao' => 'Aguardando distribui&ccedil;&atilde;o',
+		 'em_analise' => 'Em an&aacute;lise',
+		 'em_validacao' => 'Em valida&ccedil;&atilde;o',
 		 'validados' => 'Validados',
-		 'devolvida' => 'Devolvidas para análise',
+		 'devolvida' => 'Devolvidas para an&aacute;lise',
 		 'impedimento_parecerista' => 'Impedimento do parecerista'
 );
 ?>
@@ -46,7 +46,7 @@ $filtros = array(
     </table>
     
     <?php if(count($this->dados)>0): ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -95,7 +95,7 @@ $filtros = array(
             echo " de ". $this->paginacao['total'];
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php endif; ?>
 
     <?php if($this->qtdDocumentos != 0): ?>
@@ -245,10 +245,10 @@ $filtros = array(
 		  <?php if ($dp->stPrincipal == 1) { ?>
 		  <!-- pergunto se tem secundarios abertos -->
 		  <?php if($this->checarValidacaoSecundarios[$dp->IdPRONAC] == 1) { ?>
-		  <!-- se retornar true mostra o botão -->
+		  <!-- se retornar true mostra o bot&atilde;o -->
 		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="Concluir" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
 		  <?php } ?>
-		  <!-- secundários: sempre exibe botão de concluir -->
+		  <!-- secund&aacute;rios: sempre exibe bot&atilde;o de concluir -->
 		  <?php } else { ?>
 		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="Concluir" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
 		  <?php } ?>
@@ -266,7 +266,7 @@ $filtros = array(
 
         <?php if(count($this->dados) > 0): ?>
 
-            <!-- ============ PAGINAÇÃO ============ -->
+            <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
             <center>
                 <?php
                     echo $this->paginacao['inicio']." a ";
@@ -316,7 +316,7 @@ $filtros = array(
                     </tr>
                 </tbody>
             </table>
-            <!-- ========== FIM PAGINAÇÃO ========== -->
+            <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
         <?php endif; ?>
     <?php endif; ?>
@@ -324,9 +324,9 @@ $filtros = array(
     <br clear="all" />
 
 </div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />
 
 

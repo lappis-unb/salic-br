@@ -9,7 +9,7 @@
  */
 class ManterAgentes extends MinC_Db_Table_Abstract
 {
-	protected $_name = 'area';
+	protected $_name = 'Area';
 	protected $_schema = 'sac';
 
 
@@ -29,8 +29,8 @@ class ManterAgentes extends MinC_Db_Table_Abstract
 						LEFT join agentes.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
 						LEFT join agentes.dbo.tbTitulacaoConselheiro T on T.idAgente = A.idAgente
 						LEFT join agentes.dbo.Visao V on V.idAgente = A.idAgente
-						LEFT join SAC.dbo.Area SA on SA.Codigo = T.cdArea
-						LEFT join SAC.dbo.Segmento SS on SS.Codigo = T.cdSegmento
+						LEFT join sac.dbo.Area SA on SA.Codigo = T.cdArea
+						LEFT join sac.dbo.Segmento SS on SS.Codigo = T.cdSegmento
 				WHERE (A.TipoPessoa = 0 OR A.TipoPessoa = 1) ";
 
 		if (!empty($cnpjcpf))
@@ -161,7 +161,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
     public static function buscarAreasCulturais()
     {
         $sql = "SELECT Codigo AS id, Descricao AS descricao ";
-        $sql.= "FROM SAC.dbo.Area ";
+        $sql.= "FROM sac.dbo.Area ";
         $sql.= "WHERE Codigo <> 7 ";
         $sql.= "ORDER BY Descricao;";
 
@@ -172,7 +172,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
         }
         catch (Zend_Exception_Db $e)
         {
-            $this->view->message = "Erro ao buscar Área Cultural: " . $e->getMessage();
+            $this->view->message = "Erro ao buscar &aacute;rea Cultural: " . $e->getMessage();
         }
 
         return $db->fetchAll($sql);
@@ -190,7 +190,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(array('area'), array('codigo AS id', 'descricao AS descricao'), $this->getSchema('sac'))
+            ->from(array('Area'), array('codigo AS id', 'descricao AS descricao'), $this->getSchema('sac'))
             ->where('codigo <> ?', '7')
             ->order('descricao');
 

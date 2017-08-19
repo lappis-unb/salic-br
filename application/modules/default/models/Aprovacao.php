@@ -101,7 +101,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                                                                WHEN a.TipoAprovacao = 4 THEN 'Redu��o'
                                                                WHEN a.TipoAprovacao = 8 THEN 'Readequa��o' END"),
                         "a.idReadequacao"
-                        ), "SAC.dbo"
+                        ), "SAC"
                     );
         $slct->joinInner(
                         array("p"=>"Projetos"),
@@ -110,23 +110,23 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                               "Pronac"=>new Zend_Db_Expr("p.AnoProjeto + p.Sequencial"),
                               "p.NomeProjeto",
                             ),
-                        "SAC.dbo"
+                        "SAC"
                         );
         $slct->joinLeft(
                         array("tbr"=>"tbReadequacao"),
                         "p.IdPRONAC = tbr.idPronac AND a.idReadequacao = tbr.idReadequacao",
-                        array(), "SAC.dbo"
+                        array(), "SAC"
                         );
         $slct->joinLeft(
                         array("tbtpr"=>"tbTipoReadequacao"),
                         "tbr.idTipoReadequacao = tbtpr.idTipoReadequacao",
-                        array('tbtpr.dsReadequacao'), "SAC.dbo"
+                        array('tbtpr.dsReadequacao'), "SAC"
                         );
         $slct->joinInner(
                         array("m"=>"Mecanismo"),
                         "p.Mecanismo = m.Codigo",
                         array("Mecanismo"=>"m.Descricao"),
-                        "SAC.dbo"
+                        "SAC"
                         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -138,29 +138,29 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $slctCount->setIntegrityCheck(false);
             $slctCount->from(
                          array("a"=>$this->_name),
-                         array('total'=>"count(*)"), "SAC.dbo"
+                         array('total'=>"count(*)"), "SAC"
                         );
             $slctCount->joinInner(
                             array("p"=>"Projetos"),
                             "a.AnoProjeto = p.AnoProjeto and a.Sequencial = p.Sequencial",
                             array(),
-                            "SAC.dbo"
+                            "SAC"
                             );
             $slct->joinLeft(
                         array("tbr"=>"tbReadequacao"),
                         "p.IdPRONAC = tbr.idPronac AND a.idReadequacao = tbr.idReadequacao",
-                        array(), "SAC.dbo"
+                        array(), "SAC"
                         );
             $slct->joinLeft(
                         array("tbtpr"=>"tbTipoReadequacao"),
                         "tbr.idTipoReadequacao = tbtpr.idTipoReadequacao",
-                        array('tbtpr.dsReadequacao'), "SAC.dbo"
+                        array('tbtpr.dsReadequacao'), "SAC"
                         );
             $slct->joinInner(
                         array("m"=>"Mecanismo"),
                         "p.Mecanismo = m.Codigo",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
             //adiciona quantos filtros foram enviados
@@ -234,12 +234,12 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     'a.DtFimExecucao',
                     new Zend_Db_Expr('sac.dbo.fnInicioCaptacao(a.AnoProjeto,a.Sequencial) as dtInicioCaptacao'),
                     new Zend_Db_Expr('sac.dbo.fnFimCaptacao(a.AnoProjeto,a.Sequencial) as dtFimCaptacao')
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
                 array('b' => 'Aprovacao'),
                 'a.AnoProjeto = b.AnoProjeto AND a.Sequencial = b.Sequencial',
-                array('b.PortariaAprovacao'), 'SAC.dbo'
+                array('b.PortariaAprovacao'), 'SAC'
         );
 
         foreach ($where as $comando => $valores) {
@@ -254,7 +254,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(
                 array('r' => 'tbReadequacao'),
-                array('idReadequacao', 'CAST(r.dsSolicitacao AS TEXT) AS dsSolicitacao'), 'SAC.dbo'
+                array('idReadequacao', 'CAST(r.dsSolicitacao AS TEXT) AS dsSolicitacao'), 'SAC'
         );
         $select->joinInner(
                 array('a' => 'Projetos'), 'r.idPronac = a.IdPRONAC',
@@ -262,15 +262,15 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     'a.IdPRONAC', 'a.AnoProjeto', 'a.Sequencial', 'a.NomeProjeto', 'a.DtInicioExecucao', 'a.DtFimExecucao',
                     new Zend_Db_Expr('sac.dbo.fnInicioCaptacao(a.AnoProjeto,a.Sequencial) as dtInicioCaptacao'),
                     new Zend_Db_Expr('sac.dbo.fnFimCaptacao(a.AnoProjeto,a.Sequencial) as dtFimCaptacao')
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
                 array('b' => 'Aprovacao'), 'a.AnoProjeto = b.AnoProjeto AND a.Sequencial = b.Sequencial AND b.idReadequacao = r.idReadequacao',
-                array('b.PortariaAprovacao'), 'SAC.dbo'
+                array('b.PortariaAprovacao'), 'SAC'
         );
         $select->joinInner(
                 array('tpr' => 'tbTipoReadequacao'), 'tpr.idTipoReadequacao = r.idTipoReadequacao',
-                array('tpr.idTipoReadequacao','tpr.dsReadequacao'), 'SAC.dbo'
+                array('tpr.idTipoReadequacao','tpr.dsReadequacao'), 'SAC'
         );
 
         foreach ($where as $comando => $valores) {
@@ -297,27 +297,27 @@ class Aprovacao extends MinC_Db_Table_Abstract {
                     new Zend_Db_Expr("
                         CASE
                             WHEN a.Mecanismo ='2' OR a.Mecanismo ='6'
-                            THEN SAC.dbo.fnValorAprovadoConvenio(a.AnoProjeto,a.Sequencial)
-                            ELSE SAC.dbo.fnValorAprovado(a.AnoProjeto,a.Sequencial)
+                            THEN sac.dbo.fnValorAprovadoConvenio(a.AnoProjeto,a.Sequencial)
+                            ELSE sac.dbo.fnValorAprovado(a.AnoProjeto,a.Sequencial)
                             END as ValorAprovado
                         "),
                     'b.PortariaAprovacao',
                     'b.DtPublicacaoAprovacao',
                     'b.DtPortariaAprovacao'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
                 array('b' => 'Aprovacao'),
                 'a.AnoProjeto = b.AnoProjeto AND a.Sequencial = b.Sequencial',
-                array('b.PortariaAprovacao'), 'SAC.dbo'
+                array('b.PortariaAprovacao'), 'SAC'
         );
         $select->joinInner(
                 array('c' => 'Area'), 'c.Codigo = a.Area',
-                array(''), 'SAC.dbo'
+                array(''), 'SAC'
         );
         $select->joinInner(
                 array('d' => 'Segmento'), 'd.Codigo = a.Segmento',
-                array(''), 'SAC.dbo'
+                array(''), 'SAC'
         );
 
         foreach ($where as $comando => $valores) {
@@ -333,8 +333,8 @@ class Aprovacao extends MinC_Db_Table_Abstract {
 
             $TotalReg = $PaginaAtual*$QntdPorPagina;
             $select =  new Zend_Db_Expr("select * from (select top ". $QntdPorPagina ." * from (SELECT TOP ". $TotalReg ."
-                ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Aprovacao AS ap
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."'  order by ap.idAprovacao)
+                ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM sac.dbo.Aprovacao AS ap
+            INNER JOIN sac.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."'  order by ap.idAprovacao)
             as tabela order by idAprovacao desc) as tabela order by idAprovacao");
 
             try {
@@ -349,8 +349,8 @@ class Aprovacao extends MinC_Db_Table_Abstract {
 
         public function buscarMecanismo($mecanismo) {
 
-            $select =  new Zend_Db_Expr("SELECT ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Aprovacao AS ap
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = $mecanismo  order by ap.idAprovacao");
+            $select =  new Zend_Db_Expr("SELECT ap.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM sac.dbo.Aprovacao AS ap
+            INNER JOIN sac.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = $mecanismo  order by ap.idAprovacao");
 
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
@@ -364,7 +364,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
 
         public static function buscaTotalAprovadoProjeto($anoProjeto, $sequencial) {
 
-            $select =  new Zend_Db_Expr("SELECT SAC.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial') as total");
+            $select =  new Zend_Db_Expr("SELECT sac.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial') as total");
 
             try {
                 $db= Zend_Db_Table::getDefaultAdapter();
@@ -409,7 +409,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac";
-            $alterar = $db->update("SAC.dbo.Aprovacao", $dados, $where);
+            $alterar = $db->update("sac.dbo.Aprovacao", $dados, $where);
         }
         catch (Exception $e)
         {
@@ -424,7 +424,7 @@ class Aprovacao extends MinC_Db_Table_Abstract {
         $select->from(
                 array($this->_name),
                 array(
-                    'totalAprovado' => new Zend_Db_Expr(" SAC.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial')")
+                    'totalAprovado' => new Zend_Db_Expr(" sac.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial')")
                 )
         );
 
@@ -434,8 +434,8 @@ class Aprovacao extends MinC_Db_Table_Abstract {
     public function buscarDatasCaptacao($pronac, $idProrrogacao) {
 
         $select =  new Zend_Db_Expr("
-            SELECT b.DtInicio,b.DtFinal FROM SAC.dbo.Aprovacao a
-            INNER JOIN SAC.dbo.Prorrogacao b on (a.AnoProjeto = b.AnoProjeto and a.Sequencial = b.Sequencial and  a.idProrrogacao =  b.idProrrogacao)
+            SELECT b.DtInicio,b.DtFinal FROM sac.dbo.Aprovacao a
+            INNER JOIN sac.dbo.Prorrogacao b on (a.AnoProjeto = b.AnoProjeto and a.Sequencial = b.Sequencial and  a.idProrrogacao =  b.idProrrogacao)
             WHERE a.TipoAprovacao ='3' and a.AnoProjeto+a.Sequencial='$pronac' and b.idProrrogacao = $idProrrogacao
         ");
 

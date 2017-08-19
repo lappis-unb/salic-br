@@ -122,7 +122,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
         if ($buscar) {
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-            $authAdapter->setTableName($this->getTableName())// CONTROLEDEACESSO.dbo.sgcacesso
+            $authAdapter->setTableName($this->getTableName())// controledeacesso.dbo.sgcacesso
             ->setIdentityColumn('Cpf')
                 ->setCredentialColumn('Senha');
 
@@ -157,7 +157,6 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             $select->where("Senha  = ?", $password);
         }
 
-//xd($select->assemble());
         $buscar = $this->fetchRow($select);
         if ($buscar) { // realiza a autenticacao
             // configura??es do banco
@@ -165,7 +164,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             // pegamos o zend_auth
 
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-            $authAdapter->setTableName($this->getTableName(null, null, false)) // CONTROLEDEACESSO.dbo.sgcacesso
+            $authAdapter->setTableName($this->getTableName(null, null, false)) // controledeacesso.dbo.sgcacesso
             ->setIdentityColumn('Cpf')
                 ->setCredentialColumn('Senha');
 
@@ -251,7 +250,6 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
         return $this->fetchAll($slct);
     }
 

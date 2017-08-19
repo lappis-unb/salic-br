@@ -57,8 +57,8 @@ class Conselheiro extends Zend_Db_Table
 		$sql.= "	agentes.dbo.Verificacao VL, ";
 		$sql.= "	agentes.dbo.tbTitulacaoConselheiro T, ";
 		$sql.= "	agentes.dbo.Visao V, ";
-		$sql.= "	SAC.dbo.Area SA, ";
-		$sql.= "	SAC.dbo.Segmento SS ";
+		$sql.= "	sac.dbo.Area SA, ";
+		$sql.= "	sac.dbo.Segmento SS ";
 		$sql.= "WHERE V.idAgente = A.idAgente ";
 		$sql.= "	AND V.Visao = 210 ";
 		$sql.= "	AND N.idAgente = A.idAgente ";

@@ -4,8 +4,8 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'));?>">Início</a></li>
-        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid'));?>">Fiscalização do Projeto</a></li>
-        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'parametropesquisa'));?>">Pesquisar projeto para fiscalização</a></li>
+        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid'));?>">Fiscaliza&ccedil;&atilde;o do Projeto</a></li>
+        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'parametropesquisa'));?>">Pesquisar projeto para fiscaliza&ccedil;&atilde;o</a></li>
         <li class="last">Resultado da Pesquisa</li>
     </ul>
 </div>
@@ -22,7 +22,7 @@
 <div id="conteudo">
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -49,12 +49,12 @@
                     <input style="width: 88px;" class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'resultadopesquisa')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->filtros->pronac.'&regiao='.$this->filtros->regiao.'&uf='.$this->filtros->uf.'&cidade='.$this->filtros->cidade.'&valorMenor='.$this->filtros->valorMenor.'&valorMaior='.$this->filtros->valorMaior.'&mecanismo='.$this->filtros->mecanismo.'&situacaoprojeto='.$this->filtros->situacaoprojeto.'&area='.$this->filtros->area.'&Segmento='.$this->filtros->Segmento; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++){ ?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php } ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="pronac" value="<?php echo $this->filtros->pronac;?>">
@@ -65,7 +65,7 @@
                     <input type="hidden" name="valorMaior" value="<?php echo $this->filtros->valorMaior;?>">
                     <input type="hidden" name="mecanismo" value="<?php echo $this->filtros->mecanismo;?>">
                     <input type="hidden" name="situacaoprojeto" value="<?php echo $this->filtros->situacaoprojeto;?>">
-                    <input type="hidden" name="area" value="<?php echo $this->filtros->area;?>">
+                    <input type="hidden" name="Area" value="<?php echo $this->filtros->area;?>">
                     <input type="hidden" name="Segmento" value="<?php echo $this->filtros->Segmento;?>">
                  </form>
                 </td>
@@ -79,7 +79,7 @@
             echo " de ". $this->paginacao['total'];
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php } ?>
 
 
@@ -89,10 +89,10 @@
             <tr class="titulo_tabela">
                 <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'resultadopesquisa')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=IdPRONAC&ordem='.$this->paginacao['novaOrdem'].$parametros; ?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'resultadopesquisa')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=NomeProjeto&ordem='.$this->paginacao['novaOrdem'].$parametros; ?>">Nome do Projeto</a></th>
-                <th>Região</th>
+                <th>Regi&atilde;o</th>
                 <th>UF</th>
                 <th>Cidade</th>
-                <th>Área</th>
+                <th>&aacute;rea</th>
                 <th>Segmento</th>
                 <th>Valor</th>
                 <th>Mecanismo</th>
@@ -116,9 +116,9 @@
                 <td><?php echo $d->dsSegmento; ?></td>
                 <td><?php echo 'R$ '.number_format($d->somatorio, 2, ',', '.'); ?></td>
                 <td><?php echo $d->dsMecanismo; ?></td>
-                <td><?php echo ($d->stPlanoAnual == 0) ? 'Não' : 'Sim'; ?></td>
+                <td><?php echo ($d->stPlanoAnual == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
                 <td align="center">
-                    <a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'oficializarfiscalizacao')).'?idPronac='.$d->IdPRONAC; ?>"><img src="../public/img/btn_busca.gif" alt="Dados da Fiscalização"/></a>
+                    <a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'oficializarfiscalizacao')).'?idPronac='.$d->IdPRONAC; ?>"><img src="../public/img/btn_busca.gif" alt="Dados da Fiscaliza&ccedil;&atilde;o"/></a>
                 </td>
             </tr>
             <?php } ?>
@@ -127,7 +127,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
         <?php if($this->qtdDocumentos > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -162,12 +162,12 @@
                         <input style="width: 88px;" class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'resultadopesquisa')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->filtros->pronac.'&regiao='.$this->filtros->regiao.'&uf='.$this->filtros->uf.'&cidade='.$this->filtros->cidade.'&valorMenor='.$this->filtros->valorMenor.'&valorMaior='.$this->filtros->valorMaior.'&mecanismo='.$this->filtros->mecanismo.'&situacaoprojeto='.$this->filtros->situacaoprojeto.'&area='.$this->filtros->area.'&Segmento='.$this->filtros->Segmento; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++){ ?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php } ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="pronac" value="<?php echo $this->filtros->pronac;?>">
@@ -178,14 +178,14 @@
                         <input type="hidden" name="valorMaior" value="<?php echo $this->filtros->valorMaior;?>">
                         <input type="hidden" name="mecanismo" value="<?php echo $this->filtros->mecanismo;?>">
                         <input type="hidden" name="situacaoprojeto" value="<?php echo $this->filtros->situacaoprojeto;?>">
-                        <input type="hidden" name="area" value="<?php echo $this->filtros->area;?>">
+                        <input type="hidden" name="Area" value="<?php echo $this->filtros->area;?>">
                         <input type="hidden" name="Segmento" value="<?php echo $this->filtros->Segmento;?>">
                      </form>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
     <?php } } ?>
 
@@ -205,7 +205,7 @@
     </form>
 
 </div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

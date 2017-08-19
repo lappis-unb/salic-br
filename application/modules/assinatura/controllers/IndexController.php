@@ -27,7 +27,6 @@ class Assinatura_IndexController extends Assinatura_GenericController
 
         $ordenacao = array("projetos.DtSituacao asc");
         $this->view->dados = $documentoAssinatura->obterProjetosComAssinaturasAbertas($this->grupoAtivo->codOrgao, $ordenacao);
-//xd($this->view->dados);
         // tipoDoAtoAdministrativo
         // idTipoDoAtoAdministrativo
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;

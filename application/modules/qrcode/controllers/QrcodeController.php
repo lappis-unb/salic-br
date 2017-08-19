@@ -18,7 +18,7 @@ class Qrcode_QrcodeController extends Qrcode_GenericController
 
         $get = Zend_Registry::get('get');
         if(!$get->texto) {
-            throw new Exception("Parâmetro 'texto' não informado.");
+            throw new Exception("Parâmetro 'texto' n&atilde;o informado.");
         }
         \PHPQRCode\QRcode::png($get->texto, false, 'L', 4, 2);
         die;

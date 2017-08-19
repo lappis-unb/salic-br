@@ -1,7 +1,7 @@
 <script src='<?php echo $this->baseUrl(); ?>/public/js/jquery.MultiFileTabela.js' type="text/javascript" language="javascript"></script>
 
 <?php //require_once "scripts/consultardadosprojeto/inc/menu.inc.php" // menu ?>
-<!-- início: navegação local #qm0 -->
+<!-- início: navega&ccedil;&atilde;o local #qm0 -->
 
 <!-- início: #breadcrumb -->
 <div id="breadcrumb">
@@ -19,7 +19,7 @@
 <!-- final: #titulo -->
 
 
-<!-- início: área principal #conteudo -->
+<!-- início: &aacute;rea principal #conteudo -->
 <div id="conteudo">
     <table class="tabela">
         <tr>
@@ -43,7 +43,7 @@
                     $PeriodoData = mktime(24*$dias, 0, 0, $mes, $dia, $ano);
                     $dataFormatada = date('d/m/Y',$PeriodoData);
                     $PeriodoData = $dataFormatada;
-                    echo " até ".$PeriodoData;
+                    echo " at&eacute; ".$PeriodoData;
                 ?>
             </td>
             <td align="center"><?php echo Data::tratarDataZend($DadosAnteriores->dtCadastro, 'Brasileira'); ?></td>

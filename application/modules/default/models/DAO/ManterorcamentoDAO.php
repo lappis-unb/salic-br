@@ -23,12 +23,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 					pp.Quantidade as Quantidade,
 					pp.Ocorrencia as Ocorrencia,
 					pp.ValorUnitario as ValorUnitario
-					FROM SAC.dbo.PreProjeto pre
-						INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-						INNER JOIN SAC.dbo.Produto P ON (pp.idProduto = p.Codigo)
-						INNER JOIN SAC..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
-						INNER JOIN SAC..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-						INNER JOIN SAC..tbPlanilhaUnidade tu ON tu.idUnidade = pp.Unidade
+					FROM sac.dbo.PreProjeto pre
+						INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+						INNER JOIN sac.dbo.Produto P ON (pp.idProduto = p.Codigo)
+						INNER JOIN sac..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
+						INNER JOIN sac..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+						INNER JOIN sac..tbPlanilhaUnidade tu ON tu.idUnidade = pp.Unidade
 					WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY p.Codigo ";
@@ -55,12 +55,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     pp.Ocorrencia as Ocorrencia,
                     pp.ValorUnitario as ValorUnitario,
                     uf.Descricao as Estado
-                    FROM SAC.dbo.PreProjeto pre
-                            INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                            INNER JOIN SAC..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
-                            INNER JOIN SAC..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                            LEFT JOIN SAC..tbPlanilhaUnidade tu ON tu.idUnidade = pp.Unidade
-                            INNER JOIN SAC..Uf uf ON uf.CodUfIbge = pp.UfDespesa
+                    FROM sac.dbo.PreProjeto pre
+                            INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                            INNER JOIN sac..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
+                            INNER JOIN sac..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                            LEFT JOIN sac..tbPlanilhaUnidade tu ON tu.idUnidade = pp.Unidade
+                            INNER JOIN sac..Uf uf ON uf.CodUfIbge = pp.UfDespesa
                     WHERE idPreProjeto = {$idPreProjeto} and tpCusto = 'A'";
 
         $sql.= " ORDER BY te.Descricao ";
@@ -87,12 +87,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     pp.ValorUnitario as ValorUnitario,
                     uf.Descricao as Estado,
                     pp.dsJustificativa as Justificativa
-                    FROM SAC.dbo.PreProjeto pre
-                            INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                            INNER JOIN SAC..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
-                            INNER JOIN SAC..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                            LEFT JOIN SAC..tbPlanilhaUnidade tu ON tu.idUnidade = pp.Unidade
-                            INNER JOIN SAC..Uf uf ON uf.CodUfIbge = pp.UfDespesa
+                    FROM sac.dbo.PreProjeto pre
+                            INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                            INNER JOIN sac..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
+                            INNER JOIN sac..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                            LEFT JOIN sac..tbPlanilhaUnidade tu ON tu.idUnidade = pp.Unidade
+                            INNER JOIN sac..Uf uf ON uf.CodUfIbge = pp.UfDespesa
                     WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY pp.idEtapa ";
@@ -131,15 +131,15 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     pp.ValorUnitario as ValorUnitario,
                     CAST(pp.dsJustificativa AS TEXT) as Justificativa,
                     pp.QtdeDias as QtdDias
-                    FROM SAC.dbo.PreProjeto AS pre
-                    INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
-                    INNER JOIN SAC.dbo.Produto AS P ON pp.idProduto = P.Codigo
-                    INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                    INNER JOIN SAC.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
+                    FROM sac.dbo.PreProjeto AS pre
+                    INNER JOIN sac.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
+                    INNER JOIN sac.dbo.Produto AS P ON pp.idProduto = P.Codigo
+                    INNER JOIN sac.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                    INNER JOIN sac.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
                     INNER JOIN agentes.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
-                    INNER JOIN SAC.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
-                    INNER JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
+                    INNER JOIN sac.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
+                    INNER JOIN sac.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
+                    INNER JOIN sac.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
                     WHERE pp.idEtapa = $idEtapa ";
 
         //echo "<pre>"; die($sql);
@@ -199,14 +199,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 SELECT DISTINCT
                 pd.idProduto AS CodigoProduto,
                 pd.idProjeto as idProposta
-                FROM SAC.dbo.PlanoDistribuicaoProduto AS pd
+                FROM sac.dbo.PlanoDistribuicaoProduto AS pd
                 WHERE (pd.idProduto = $idProduto and pd.idProjeto = $idPreProjeto) AND pd.stPlanoDistribuicaoProduto = 1";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 //        return $db->fetchAll($select);
-        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanoDistribuicaoProduto");
+        throw new Exception("M&eacute;todo transferido para: Proposta_Model_DbTable_PlanoDistribuicaoProduto");
         return $db->fetchAll($sql);
 
     }
@@ -219,14 +219,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $sql = "
             SELECT TOP 1
             tpp.idProjeto as idProposta
-            FROM SAC..tbPlanilhaProposta tpp
+            FROM sac..tbPlanilhaProposta tpp
             WHERE tpp.idProjeto = $idPreProjeto";
 
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanilhaProposta");
+        throw new Exception("M&eacute;todo transferido para: Proposta_Model_DbTable_PlanilhaProposta");
 
         return $db->fetchAll($sql);
 
@@ -241,7 +241,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->where('tpp.idProjeto = ?', $idPreProjeto)
             ->limit(1)
             ;
-        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanilhaProposta");
+        throw new Exception("M&eacute;todo transferido para: Proposta_Model_DbTable_PlanilhaProposta");
 
         return $db->fetchAll($sql);
     }
@@ -269,14 +269,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     pp.ValorUnitario as ValorUnitario,
                     pp.QtdeDias as QtdDias,
                     CAST(pp.dsJustificativa AS TEXT) as Justificativa
-                  FROM SAC.dbo.PreProjeto AS pre
-                        INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
-                        INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                        INNER JOIN SAC.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
+                  FROM sac.dbo.PreProjeto AS pre
+                        INNER JOIN sac.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
+                        INNER JOIN sac.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                        INNER JOIN sac.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
                         INNER JOIN agentes.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
-                        INNER JOIN SAC.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
-                        LEFT JOIN SAC.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
-                        LEFT JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
+                        INNER JOIN sac.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
+                        LEFT JOIN sac.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
+                        LEFT JOIN sac.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
                 WHERE (pre.idPreProjeto = {$array['idPreProjeto']} and  pp.idEtapa = {$array['etapa']} and pp.idPlanilhaItem = {$array['item']} )
                        and pp.idPlanilhaProposta = {$array['idPlanilhaProposta']}";
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -290,13 +290,13 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarEtapasProdutos($idPreProjeto)
     {
-        throw new Exception('Método transferido para : Proposta_Model_DbTable_PreProjeto');
+        throw new Exception('M&eacute;todo transferido para : Proposta_Model_DbTable_PreProjeto');
 
     }
 
     public function listarEtapasProdutos($idPreProjeto)
     {
-        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
     }
 
     public static function buscarEtapasProdutosPlanilha($idPreProjeto) {
@@ -307,10 +307,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 te.Descricao as DescricaoEtapa,
                 pre.idPreProjeto as idPreProjeto,
                 pp.idProduto
-                FROM SAC.dbo.PreProjeto pre
-                INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
-                INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
+                FROM sac.dbo.PreProjeto pre
+                INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                INNER JOIN sac.dbo.Produto p ON (pp.idProduto = p.Codigo)
+                INNER JOIN sac..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
                 WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY te.Descricao ";
@@ -332,9 +332,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $sql = "SELECT distinct
                 pp.idEtapa as idEtapa,
                 te.Descricao as DescricaoEtapa
-                FROM SAC.dbo.PreProjeto pre
-                        INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                        INNER JOIN SAC..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
+                FROM sac.dbo.PreProjeto pre
+                        INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                        INNER JOIN sac..tbPlanilhaEtapa te ON te.idPlanilhaEtapa = pp.idEtapa
                 WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY pp.idEtapa ";
@@ -359,7 +359,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $sql = "SELECT
                 idplanilhaetapa ,
                 Descricao
-                FROM SAC.dbo.tbPlanilhaEtapa where tpCusto = 'P'";
+                FROM sac.dbo.tbPlanilhaEtapa where tpCusto = 'P'";
 
 
         $sql.= " ORDER BY Descricao ";
@@ -371,7 +371,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
         //die($sql);
         return $db->fetchAll($sql);
     }
@@ -384,7 +384,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $sql = "SELECT
 		idplanilhaetapa ,
 		Descricao
-		FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
+		FROM sac..tbPlanilhaEtapa where tpcusto = 'A'";
 
         $sql.= " ORDER BY Descricao ";
 
@@ -396,7 +396,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
-        throw new Exception("Método transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
+        throw new Exception("M&eacute;todo transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
         
         return $db->fetchAll($sql);
     }
@@ -415,7 +415,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         //$sql = "SELECT
 		//idplanilhaetapa ,
 		//Descricao
-		//FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
+		//FROM sac..tbPlanilhaEtapa where tpcusto = 'A'";
 
         //$sql.= " ORDER BY Descricao ";
 
@@ -425,7 +425,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
-        throw new Exception("Método transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
+        throw new Exception("M&eacute;todo transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
         return $db->fetchAll($sql);
     }
 
@@ -457,15 +457,15 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             pp.QtdeDias,
             veri.idVerificacao as idFonteRecurso,
             veri.Descricao as DescricaoFonteRecurso
-            FROM SAC.dbo.PreProjeto pre
-                INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                INNER JOIN SAC.dbo.Produto P ON (pp.idProduto = p.Codigo)
-                INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                INNER JOIN SAC.dbo.Uf uf ON uf.CodUfIbge = pp.UfDespesa
+            FROM sac.dbo.PreProjeto pre
+                INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                INNER JOIN sac.dbo.Produto P ON (pp.idProduto = p.Codigo)
+                INNER JOIN sac.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                INNER JOIN sac.dbo.Uf uf ON uf.CodUfIbge = pp.UfDespesa
                 INNER JOIN agentes.dbo.Municipios municipio ON municipio.idMunicipioIBGE = pp.MunicipioDespesa
-                INNER JOIN SAC.dbo.Mecanismo mec ON mec.Codigo = pre.Mecanismo
-                INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = pp.Unidade
-                INNER JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
+                INNER JOIN sac.dbo.Mecanismo mec ON mec.Codigo = pre.Mecanismo
+                INNER JOIN sac.dbo.tbPlanilhaUnidade un ON un.idUnidade = pp.Unidade
+                INNER JOIN sac.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
             WHERE idPreProjeto = {$idPreProjeto} ";
 
         if($idItem) {
@@ -494,12 +494,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      * @param bool $idItem
      * @access public
      * @return void
-     * @todo método transferido para Proposta_Model_DbtTable_PreProjeto
-     * @deprecated método transferido para Proposta_Model_DbtTable_PreProjeto'
+     * @todo m&eacute;todo transferido para Proposta_Model_DbtTable_PreProjeto
+     * @deprecated m&eacute;todo transferido para Proposta_Model_DbtTable_PreProjeto'
      */
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
-        throw new Exception('método transferido para Proposta_Model_DbtTable_PreProjeto');
+        throw new Exception('m&eacute;todo transferido para Proposta_Model_DbtTable_PreProjeto');
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -524,7 +524,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = pp.municipiodespesa', array('municipio.descricao as Municipio'), $this->getSchema('agentes'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = pre.mecanismo', array('mec.descricao as DescricaoMecanismo'), $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'),  'un.idunidade = pp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(array('veri' => 'verificacao'),  'veri.idverificacao = pp.fonterecurso', array('veri.idverificacao as idFonteRecurso', 'veri.descricao as DescricaoFonteRecurso'), $this->getSchema('sac'))
+            ->join(array('veri' => 'Verificacao'),  'veri.idverificacao = pp.fonterecurso', array('veri.idverificacao as idFonteRecurso', 'veri.descricao as DescricaoFonteRecurso'), $this->getSchema('sac'))
             ->where('idpreprojeto = ?', $idPreProjeto)
             ->order('ti.descricao')
             ;
@@ -559,16 +559,16 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                         pp.QtdeDias,
                 veri.idVerificacao as idFonteRecurso,
                 veri.Descricao as DescricaoFonteRecurso
-                FROM SAC.dbo.PreProjeto pre
-                        INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                        INNER JOIN SAC.dbo.Produto P ON (pp.idProduto = p.Codigo)
-                        INNER JOIN SAC.dbo.tbPlanilhaEtapa e on (e.idPlanilhaEtapa = pp.idEtapa)
-                        INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                        INNER JOIN SAC.dbo.Uf uf ON uf.CodUfIbge = pp.UfDespesa
+                FROM sac.dbo.PreProjeto pre
+                        INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                        INNER JOIN sac.dbo.Produto P ON (pp.idProduto = p.Codigo)
+                        INNER JOIN sac.dbo.tbPlanilhaEtapa e on (e.idPlanilhaEtapa = pp.idEtapa)
+                        INNER JOIN sac.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                        INNER JOIN sac.dbo.Uf uf ON uf.CodUfIbge = pp.UfDespesa
                         INNER JOIN agentes.dbo.Municipios municipio ON municipio.idMunicipioIBGE = pp.MunicipioDespesa
-                        INNER JOIN SAC.dbo.Mecanismo mec ON mec.Codigo = pre.Mecanismo
-                        INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = pp.Unidade
-                        INNER JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
+                        INNER JOIN sac.dbo.Mecanismo mec ON mec.Codigo = pre.Mecanismo
+                        INNER JOIN sac.dbo.tbPlanilhaUnidade un ON un.idUnidade = pp.Unidade
+                        INNER JOIN sac.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
                 WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY ti.Descricao ";
@@ -597,12 +597,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     pp.UfDespesa as IdUf,
                     uf.Descricao as DescricaoUf,
                     mec.Descricao as DescricaoMecanismo
-                    FROM SAC.dbo.PreProjeto pre
-                            INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                            INNER JOIN SAC.dbo.Produto P ON (pp.idProduto = p.Codigo)
-                            INNER JOIN SAC..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                            INNER JOIN SAC..Uf uf ON uf.CodUfIbge = pp.UfDespesa
-                            INNER JOIN SAC..Mecanismo mec ON mec.Codigo = pre.Mecanismo
+                    FROM sac.dbo.PreProjeto pre
+                            INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                            INNER JOIN sac.dbo.Produto P ON (pp.idProduto = p.Codigo)
+                            INNER JOIN sac..tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                            INNER JOIN sac..Uf uf ON uf.CodUfIbge = pp.UfDespesa
+                            INNER JOIN sac..Mecanismo mec ON mec.Codigo = pre.Mecanismo
                     WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY ti.Descricao ";
@@ -626,14 +626,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     /*    $sql = "select distinct
 					pp.idPlanilhaItem as idPlanilhaItens,
 					right(i.Descricao,40) as Descricao
-				from SAC.dbo.tbPlanilhaProposta pp
-					inner join SAC.dbo.tbPlanilhaItens as i on pp.idPlanilhaItem = i.idPlanilhaItens
-					inner join SAC.dbo.tbPlanilhaEtapa as e on pp.idEtapa = e.idPlanilhaEtapa
+				from sac.dbo.tbPlanilhaProposta pp
+					inner join sac.dbo.tbPlanilhaItens as i on pp.idPlanilhaItem = i.idPlanilhaItens
+					inner join sac.dbo.tbPlanilhaEtapa as e on pp.idEtapa = e.idPlanilhaEtapa
 				where idEtapa = $idEtapa order by i.Descricao "; */
 
        $sql = "select distinct a.idPlanilhaItens,b.Descricao
-               FROM SAC..tbItensPlanilhaProduto a
-               INNER JOIN SAC..tbPlanilhaItens b on (a.idPlanilhaItens = b.idPlanilhaItens)
+               FROM sac..tbItensPlanilhaProduto a
+               INNER JOIN sac..tbPlanilhaItens b on (a.idPlanilhaItens = b.idPlanilhaItens)
                WHERE idPlanilhaEtapa = ".$idEtapa." ";
 
        if ( !empty( $idproduto ) ) {
@@ -647,7 +647,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         //$sql .= " order by 2 asc";
 		
-        throw new Exception('Método transferido para tbItensPlanilhaProduto');
+        throw new Exception('M&eacute;todo transferido para tbItensPlanilhaProduto');
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -655,12 +655,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarFonteRecurso() {
         $sql = "select Verificacao.idVerificacao, ltrim(Verificacao.Descricao) as VerificacaoDescricao
-                from SAC.dbo.Verificacao as Verificacao
-                inner join SAC.dbo.Tipo as Tipo
+                from sac.dbo.Verificacao as Verificacao
+                inner join sac.dbo.Tipo as Tipo
                 on Verificacao.idTipo = Tipo.idTipo
                 where Tipo.idTipo = 5";
 
-        throw new Exception('Método transferido para Proposta_Model_DbTable_Verificacao');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_Verificacao');
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -672,11 +672,11 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     DISTINCT
                         veri.idVerificacao as idFonteRecurso,
                     veri.Descricao as DescricaoFonteRecurso
-                FROM SAC.dbo.PreProjeto pre
-                left JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                left JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
-                    left JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
-                left JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
+                FROM sac.dbo.PreProjeto pre
+                left JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                left JOIN sac.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
+                    left JOIN sac.dbo.Produto p ON (pd.idProduto = p.Codigo)
+                left JOIN sac.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
                 WHERE idPreProjeto = $idPreProjeto and pd.idProduto != 0 and pp.idProduto != 0 and p.Codigo != 0";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -687,11 +687,11 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarUnidade() {
         $sql = "select idUnidade, Sigla, Descricao
-        FROM SAC.dbo.tbPlanilhaUnidade order by 3";
+        FROM sac.dbo.tbPlanilhaUnidade order by 3";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaUnidade');
+        throw new Exception('M&eacute;todo transferido para Proposta_Model_DbTable_TbPlanilhaUnidade');
         return $db->fetchAll($sql);
     }
 
@@ -705,15 +705,15 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     new Zend_Db_Expr('p.Codigo AS CodigoProduto'),
                     new Zend_Db_Expr('idPreProjeto AS PreProjeto'),
                     new Zend_Db_Expr(' pre.idPreProjeto AS idProposta')),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
                 'pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1',
                 array(''),
-                'SAC.dbo')
+                'SAC')
             ->joinInner(array('p' => 'Produto'),
                 'pd.idProduto = p.Codigo',
                 array(new Zend_Db_Expr('Descricao AS DescricaoProduto')),
-                'SAC.dbo')
+                'SAC')
             ->where('idPreProjeto = ?', $idPreProjeto)
             ->group('p.Codigo')
             ->group('p.Descricao')
@@ -728,7 +728,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     public function listarProdutos($idPreProjeto)
     {
         echo '<pre>';
-        var_dump ('Método transferido para Proposta Model DbTable Preprojeto');
+        var_dump ('M&eacute;todo transferido para Proposta Model DbTable Preprojeto');
         exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -752,9 +752,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                     pre.idPreProjeto as PreProjeto,
                     pre.idPreProjeto as idProposta,
                     pp.FonteRecurso
-                FROM SAC.dbo.PreProjeto pre
-                INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
+                FROM sac.dbo.PreProjeto pre
+                INNER JOIN sac.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                INNER JOIN sac.dbo.Produto p ON (pp.idProduto = p.Codigo)
                 WHERE idPreProjeto = {$idPreProjeto}
                 GROUP BY p.Codigo, p.Descricao, idPreProjeto, p.Codigo, pp.FonteRecurso ";
 
@@ -789,15 +789,15 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                         veri.Descricao as DescricaoFonteRecurso,
                         tpp.dsJustificativa as Justificativa,
                         tpp.idPlanilhaProposta
-                    FROM SAC..tbPlanilhaProposta tpp
-                            left JOIN SAC..Produto pd on pd.Codigo = tpp.idProduto
-                            INNER JOIN SAC..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
-                            INNER JOIN SAC..tbPlanilhaItens tpi on tpi.idPlanilhaItens = tpp.idPlanilhaItem
+                    FROM sac..tbPlanilhaProposta tpp
+                            left JOIN sac..Produto pd on pd.Codigo = tpp.idProduto
+                            INNER JOIN sac..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
+                            INNER JOIN sac..tbPlanilhaItens tpi on tpi.idPlanilhaItens = tpp.idPlanilhaItem
                             INNER JOIN agentes.dboUF uf on uf.idUF = tpp.UfDespesa
-                            INNER JOIN SAC..PreProjeto prep on prep.idPreProjeto = tpp.idProjeto
-                            INNER JOIN SAC..Mecanismo mec on mec.Codigo = prep.Mecanismo
-                            INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = tpp.Unidade
-                            INNER JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = tpp.FonteRecurso
+                            INNER JOIN sac..PreProjeto prep on prep.idPreProjeto = tpp.idProjeto
+                            INNER JOIN sac..Mecanismo mec on mec.Codigo = prep.Mecanismo
+                            INNER JOIN sac.dbo.tbPlanilhaUnidade un ON un.idUnidade = tpp.Unidade
+                            INNER JOIN sac.dbo.Verificacao veri ON veri.idVerificacao = tpp.FonteRecurso
                     WHERE tpe.tpCusto = '$tipoCusto' AND tpp.idProjeto = $idPreProjeto ";
 
         if($idEtapa){
@@ -841,7 +841,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         $sql.= " ORDER BY tpe.Descricao ";
 
-        throw new Exception('Método transferido para tbplanilhaproposta');
+        throw new Exception('M&eacute;todo transferido para tbplanilhaproposta');
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -870,16 +870,16 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 tpp.idPlanilhaProposta,
                 veri.idVerificacao as idFonteRecurso,
                 veri.Descricao as DescricaoFonteRecurso
-                FROM SAC..tbPlanilhaProposta tpp
-                left JOIN SAC..Produto pd on pd.Codigo = tpp.idProduto
-                INNER JOIN SAC..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
-                INNER JOIN SAC..tbPlanilhaItens tpi on tpi.idPlanilhaItens = tpp.idPlanilhaItem
+                FROM sac..tbPlanilhaProposta tpp
+                left JOIN sac..Produto pd on pd.Codigo = tpp.idProduto
+                INNER JOIN sac..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
+                INNER JOIN sac..tbPlanilhaItens tpi on tpi.idPlanilhaItens = tpp.idPlanilhaItem
                 INNER JOIN agentes.dboUF uf on uf.idUF = tpp.UfDespesa
                 INNER JOIN agentes.dbo.Municipios municipio ON municipio.idMunicipioIBGE = tpp.MunicipioDespesa
-                INNER JOIN SAC..PreProjeto prep on prep.idPreProjeto = tpp.idProjeto
-                INNER JOIN SAC..Mecanismo mec on mec.Codigo = prep.Mecanismo
-                INNER JOIN SAC.dbo.tbPlanilhaUnidade un ON un.idUnidade = tpp.Unidade
-                INNER JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = tpp.FonteRecurso
+                INNER JOIN sac..PreProjeto prep on prep.idPreProjeto = tpp.idProjeto
+                INNER JOIN sac..Mecanismo mec on mec.Codigo = prep.Mecanismo
+                INNER JOIN sac.dbo.tbPlanilhaUnidade un ON un.idUnidade = tpp.Unidade
+                INNER JOIN sac.dbo.Verificacao veri ON veri.idVerificacao = tpp.FonteRecurso
                 WHERE tpe.tpCusto = '$tipoCusto' AND tpp.idProjeto = {$idPreProjeto} ";
 
         $sql.= " ORDER BY tpe.Descricao ";
@@ -901,7 +901,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     public function listarItensCustosAdministrativos($idPreProjeto, $tipoCusto)
     {
         echo '<pre>';
-        var_dump ('Método transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
+        var_dump ('M&eacute;todo transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
         exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -948,7 +948,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(array('veri' => 'verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->join(array('veri' => 'Verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
             ->order('tpe.descricao')
@@ -968,9 +968,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ;
 
         //$sql = "SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa
-            //FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'A' AND idPlanilhaEtapa <> 6";
+            //FROM sac.dbo.tbPlanilhaEtapa WHERE tpCusto = 'A' AND idPlanilhaEtapa <> 6";
 
-        throw new Exception('Método transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
         return $db->fetchAll($sql);
     }
 
@@ -991,7 +991,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
             ;
 
-        throw new Exception('Método transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
+        throw new Exception('M&eacute;todo transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
         return $db->fetchAll($sql);
     }
 
@@ -1020,7 +1020,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             );
             $db= Zend_Db_Table::getDefaultAdapter();
             
-            $db->insert('SAC.dbo.tbPlanilhaProposta', $dados);
+            $db->insert('sac.dbo.tbPlanilhaProposta', $dados);
             return $db->lastInsertId();
         }
         catch (Exception $e) {
@@ -1037,12 +1037,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function updateProdutos($dados, $where) {
         $sql = "UPDATE
-                SAC..tbPlanilhaProposta pp
+                sac..tbPlanilhaProposta pp
                 SET ($idProposta, $idProduto, $idEtapa, $idItem, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $dsJustificativa, 462)
                         WHERE (pp.idProjeto = $idProposta and pp.idProduto = $idProduto and pp.idUsuario = 462) ";
 
         $db= Zend_Db_Table::getDefaultAdapter();
-        $db->update('SAC.dbo.tbPlanilhaProposta',$dados, $where);
+        $db->update('sac.dbo.tbPlanilhaProposta',$dados, $where);
 
 
     }
@@ -1051,7 +1051,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            $db->update('SAC.dbo.tbPlanilhaProposta', $dados, $where);
+            $db->update('sac.dbo.tbPlanilhaProposta', $dados, $where);
         }
         catch(Zend_Exception $e) {
             die("Erro:".$e->getMessage());
@@ -1069,7 +1069,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 			select
 				top 1 *
 			from
-				SAC.dbo.tbPlanilhaProposta
+				sac.dbo.tbPlanilhaProposta
 			order by
 				idPlanilhaProposta
 			desc
@@ -1081,7 +1081,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     public static function excluirItensProdutos($idPlanilhaProposta) {
 
         $db= Zend_Db_Table::getDefaultAdapter();
-        return $db->delete('SAC.dbo.tbPlanilhaProposta','idPlanilhaProposta =' .$idPlanilhaProposta);
+        return $db->delete('sac.dbo.tbPlanilhaProposta','idPlanilhaProposta =' .$idPlanilhaProposta);
     }
 
 }

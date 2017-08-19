@@ -38,7 +38,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->login($username, $password);
-//xd($buscar);
                 if ($buscar) {
                     $auth = array_change_key_case((array)Zend_Auth::getInstance()->getIdentity());
                     $objUnidades = $Usuario->buscarUnidades($auth['usu_codigo'], 21)->current();
@@ -328,7 +327,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $idUsuario = $Usuario->getIdUsuario(null, $auth['Cpf']);
 
         // caso nao tenha idAgente, atribui o idUsuario
-        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth['IdUsuario'];
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['IdUsuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
 
         $this->view->cpf = "";
@@ -456,7 +455,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->usu_identificacao);
         if (isset($auth->getIdentity()->usu_identificacao)) {
             // caso nao tenha idAgente, atribui o idUsuario
-            $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth->getIdentity()->usu_codigo;
+            $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->usu_codigo;
         }
 
         Zend_Layout::startMvc(array('layout' => 'layout'));
@@ -584,7 +583,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
 
         // caso nao tenha idAgente, atribui o idUsuario
-        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth['idusuario'];
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();

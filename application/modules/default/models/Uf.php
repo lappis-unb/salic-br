@@ -32,7 +32,7 @@ class Uf extends MinC_Db_Table_Abstract {
             'Regiao'
                 ), $this->_schema
         );
-        $select->joinInner(array('p' => 'Projetos'), 'uf.Sigla = p.UfProjeto', array(), 'SAC.dbo');
+        $select->joinInner(array('p' => 'Projetos'), 'uf.Sigla = p.UfProjeto', array(), 'SAC');
 
         $select->where('(p.AnoProjeto+p.Sequencial) = ?', $PRONAC);
 

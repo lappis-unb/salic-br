@@ -58,7 +58,7 @@
             $(".linkplanilha").click(function(){
                 $('.fundo_linha4').removeClass('fundo_linha4');
                 var idplanilhaaprovacao = $(this).attr('idPlanilhaAprovacao');
-                $("#form" + idplanilhaaprovacao).each(function() // necessário para resetar o formulário, pois, quando a modal é fechada o mesmo não é resetado
+                $("#form" + idplanilhaaprovacao).each(function() // necess&aacute;rio para resetar o formul&aacute;rio, pois, quando a modal &eacute; fechada o mesmo n&atilde;o &eacute; resetado
                 {
                     this.reset();
                     calcular_planilha_projeto(idplanilhaaprovacao); // recalcula o valor total do produto
@@ -86,7 +86,7 @@
                             }
                             else
                             {
-                                $("#form" + idplanilhaaprovacao).submit(); // envia o formulário
+                                $("#form" + idplanilhaaprovacao).submit(); // envia o formul&aacute;rio
                             }
                         }
                     }
@@ -143,7 +143,7 @@
             <div>Os campos ter&atilde;o seus valores redefinidos!</div>
         </div>
     </div>
-    <!-- ========== INÍCIO TÍTULO PÁGINA ========== -->
+    <!-- ========== INÍCIO TÍTULO P&aacute;GINA ========== -->
     <table class="tabela">
 
         <tr>
@@ -154,7 +154,7 @@
         </tr>
 
     </table>
-    <!-- ========== FIM TÍTULO PÁGINA ========== -->
+    <!-- ========== FIM TÍTULO P&aacute;GINA ========== -->
 
 
 
@@ -192,12 +192,12 @@
             </tr>
 
             <?php
-            $totalValRed = (float) 0; // valor total da página
-            $totalItensRed = (int) 0; // total itens da página
+            $totalValRed = (float) 0; // valor total da p&aacute;gina
+            $totalItensRed = (int) 0; // total itens da p&aacute;gina
             // caso tenha projetos
             if (count($this->analiseReduzido) > 0) {
                 foreach ($this->analiseReduzido as $resposta) :
-                    $i = $resposta['idPlanilhaAprovacao']; // criará id únido
+                    $i = $resposta['idPlanilhaAprovacao']; // criar&aacute; id únido
                     ?>
 
                     <tr onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);" onblur="out_tr(this);" onclick="click_tr(this);" onkeypress="click_tr(this);"
@@ -411,12 +411,12 @@
                 </tr>
 
                 <?php
-                $totalValRet = (float) 0; // valor total da página
-                $totalItensRet = (int) 0; // total itens da página
+                $totalValRet = (float) 0; // valor total da p&aacute;gina
+                $totalItensRet = (int) 0; // total itens da p&aacute;gina
                 // caso tenha projetos
                 if (count($this->analiseRetirado) > 0) {
                     foreach ($this->analiseRetirado as $resposta) :
-                        $i = $resposta['idPlanilhaAprovacao']; // criará id únido
+                        $i = $resposta['idPlanilhaAprovacao']; // criar&aacute; id únido
                         ?>
                         <tr onmouseover="over_tr(this);" onmouseout="out_tr(this);" onclick="click_tr(this);" class="red">
                             <td><a <?php echo $resposta['nrFonteRecurso'] == 109 ? "class='linkplanilha' valor='" . $resposta['idPlanilhaAprovacao'] . "' style='text-decoration: underline; cursor:pointer;'" : '' ?> idPlanilhaAprovacao ="<?php echo $resposta['idPlanilhaAprovacao']; ?>" ><?php echo $resposta['item']; ?></a>
@@ -601,7 +601,7 @@
 
 
 
-    <!-- ========== BOTÕES ========== -->
+    <!-- ========== BOT&otilde;ES ========== -->
     <br />
     <p class="centro">
         <input type="button" class="btn_p_anterior" value=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'parecerconsolidado')); ?>')" onkeypress="redirecionar('<?php echo $this->url(array('controller' => 'realizaranaliseprojeto', 'action' => 'parecerconsolidado')); ?>');"/>
@@ -617,8 +617,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

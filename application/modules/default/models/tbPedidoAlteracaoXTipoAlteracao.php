@@ -13,8 +13,8 @@
 class tbPedidoAlteracaoXTipoAlteracao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "BDCORPORATIVO.scSAC";
+	protected $_banco   = "bdcorporativo";
+	protected $_schema  = "bdcorporativo.scSAC";
 	protected $_name    = "tbPedidoAlteracaoXTipoAlteracao";
 
 
@@ -46,7 +46,7 @@ class tbPedidoAlteracaoXTipoAlteracao extends MinC_Db_Table_Abstract
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 108) AS hrSolicitacao'
 				,'p.stPedidoAlteracao'
 				,'p.siVerificacao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -89,19 +89,19 @@ class tbPedidoAlteracaoXTipoAlteracao extends MinC_Db_Table_Abstract
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 108) AS hrSolicitacao'
 				,'p.stPedidoAlteracao'
 				,'p.siVerificacao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 		$select->joinInner(
 			array('a' => 'tbAvaliacaoItemPedidoAlteracao')
 			,'a.idPedidoAlteracao = x.idPedidoAlteracao AND a.tpAlteracaoProjeto = x.tpAlteracaoProjeto'
 			,array()
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 		$select->joinInner(
 			array('c' => 'tbAcaoAvaliacaoItemPedidoAlteracao')
 			,'c.idAvaliacaoItemPedidoAlteracao = a.idAvaliacaoItemPedidoAlteracao'
 			,array('c.idAcaoAvaliacaoItemPedidoAlteracao AS idAcao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 
 		// adiciona quantos filtros foram enviados

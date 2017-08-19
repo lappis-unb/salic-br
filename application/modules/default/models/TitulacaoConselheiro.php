@@ -17,11 +17,11 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         );
         $select->joinInner
                 (
-                array('ar' => 'Area'), 'ar.Codigo = TC.cdArea', array('ar.Descricao as Area'), 'SAC.dbo'
+                array('ar' => 'Area'), 'ar.Codigo = TC.cdArea', array('ar.Descricao as Area'), 'SAC'
         );
         $select->joinInner
                 (
-                array('nm' => 'Nomes'), 'nm.idagente = tc.idAgente', array('nm.Descricao as nome'), 'agentes.dbo'
+                array('nm' => 'Nomes'), 'nm.idAgente = tc.idAgente', array('nm.Descricao as nome'), 'agentes'
         );
         if (isset($where)) {
             $keys = array_keys($where);
@@ -50,7 +50,7 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         $select->joinInner(
                 array('Ar' => 'Area'), 'Ar.Codigo = C.cdArea', array(
                 'Ar.Descricao as Area'
-                ), 'SAC.dbo'
+                ), 'SAC'
         );
         $select->joinInner(
                 array('Nm' => 'Nomes'), 'Nm.idAgente = C.idAgente', array('Nm.Descricao as Nome')
@@ -69,10 +69,10 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(array('T' => $this->_name), array("T.idAgente",
                     "(SELECT COUNT(SDPC.idPronac) as QTD
-                              FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao SDPC
-                              INNER JOIN SAC.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
+                              FROM bdcorporativo.scsac.tbDistribuicaoProjetoComissao SDPC
+                              INNER JOIN sac.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
                               WHERE pr.Situacao = 'C10' and SDPC.idAgente = T.idAgente
-                              and SDPC.idPronac not in (select idpronac from BDCORPORATIVO.scSAC.tbPauta)
+                              and SDPC.idPronac not in (select idpronac from bdcorporativo.scsac.tbPauta)
                       )  as QTD
                      ",
                 "T.cdArea"
@@ -82,7 +82,7 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
                 array('N' => 'Nomes'), "N.idAgente =   T.idAgente", array('N.Descricao as Nome')
         );
         $select->joinInner(
-                array('A' => 'Area'), 'A.Codigo =  T.cdArea', array('A.Descricao as Area'), 'SAC.dbo'
+                array('A' => 'Area'), 'A.Codigo =  T.cdArea', array('A.Descricao as Area'), 'SAC'
         );
         $select->where('T.stConselheiro = ?', 'A');
         $select->order('T.cdArea asc');
@@ -97,21 +97,21 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
                 array('C' => 'tbTitulacaoConselheiro'), array('C.idAgente')
         );
         $select->joinInner(
-                array('N' => 'Nomes'), 'C.idAgente = N.idAgente', array('N.Descricao as Nome'), 'agentes.dbo'
+                array('N' => 'Nomes'), 'C.idAgente = N.idAgente', array('N.Descricao as Nome'), 'agentes'
         );
         $select->joinInner(
-                array('A' => 'Area'), 'C.cdArea = A.Codigo', array('A.Descricao as Area'), 'SAC.dbo'
+                array('A' => 'Area'), 'C.cdArea = A.Codigo', array('A.Descricao as Area'), 'SAC'
         );
         $select->joinInner(
                 array('H' => 'tbHistoricoConselheiro'), 'H.idConselheiro = N.idAgente', array(
                 'H.idConselheiro',
                 'H.dsJustificativa as Just',
                 'CONVERT(CHAR(10), H.dtHistorico,103) as Data'
-                ), "BDCORPORATIVO.scAGENTES"
+                ), "bdcorporativo.scAGENTES"
         );
         $select->where('H.stConselheiro = ?', 'I');
         $select->where('C.stConselheiro = ?', 'I');
-        $select->where('H.dtHistorico in (select top 1 dtHistorico from BDCORPORATIVO.scAGENTES.tbHistoricoConselheiro where idConselheiro = C.idAgente order by dtHistorico desc )');
+        $select->where('H.dtHistorico in (select top 1 dtHistorico from bdcorporativo.scAGENTES.tbHistoricoConselheiro where idConselheiro = C.idAgente order by dtHistorico desc )');
         return $this->fetchAll($select);
     }
 
@@ -120,10 +120,10 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         $select->setIntegrityCheck(false);
         $select->from(array('T' => $this->_name), array("T.idAgente",
                     "(SELECT COUNT(SDPC.idPronac) as QTD
-                              FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao SDPC
-                              INNER JOIN SAC.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
+                              FROM bdcorporativo.scsac.tbDistribuicaoProjetoComissao SDPC
+                              INNER JOIN sac.dbo.projetos pr on pr.IdPRONAC = SDPC.idPronac
                               WHERE pr.Situacao = 'C10' and SDPC.idAgente = T.idAgente
-                              and SDPC.idPronac not in (select idpronac from BDCORPORATIVO.scSAC.tbPauta)
+                              and SDPC.idPronac not in (select idpronac from bdcorporativo.scsac.tbPauta)
                       )  as QTD
                      ",
                 "T.cdArea"
@@ -133,7 +133,7 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
                 array('N' => 'Nomes'), "N.idAgente =   T.idAgente", array('N.Descricao as Nome')
         );
         $select->joinInner(
-                array('A' => 'Area'), 'A.Codigo =  T.cdArea', array('A.Descricao as Area'), 'SAC.dbo'
+                array('A' => 'Area'), 'A.Codigo =  T.cdArea', array('A.Descricao as Area'), 'SAC'
         );
         $select->where('T.stConselheiro = ?', 'A');
         $select->where('T.cdArea = ?', $area);

@@ -23,13 +23,13 @@ class Agente_Model_InternetMapper extends MinC_Db_Mapper
 
     public function saveCustom($arrData)
     {
-        $rowsDeleted = $this->deleteBy(array('idagente' => $arrData['idagente']));
+        $rowsDeleted = $this->deleteBy(array('idAgente' => $arrData['idAgente']));
 
         # cadastra todos os e-mails
         $arrId = array();
         for ($i = 0; $i < sizeof($arrData['emails']); $i++) {
             $arrayEmail = array(
-                'idagente' => $arrData['idagente'],
+                'idAgente' => $arrData['idAgente'],
                 'tipointernet' => $arrData['tipoemails'][$i],
                 'descricao' => $arrData['emails'][$i],
                 'status' => $arrData['enviaremails'][$i],

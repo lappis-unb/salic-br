@@ -116,7 +116,7 @@ class tbreuniao extends MinC_Db_Table_Abstract{
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$cadastrar = $db->insert("SAC.dbo.tbReuniao", $dados);
+		$cadastrar = $db->insert("sac.dbo.tbReuniao", $dados);
                 
 		if ($cadastrar)
 		{

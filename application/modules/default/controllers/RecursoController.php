@@ -2070,7 +2070,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	} // fecha m�todo deferidosAction()
 
 	/**
-	 * M�todo com os Projetos Deferidos com Solicitação de Reenquadramento - Orçamento (Parecer Consolidado)
+	 * M�todo com os Projetos Deferidos com Solicita&ccedil;&atilde;o de Reenquadramento - Or&ccedil;amento (Parecer Consolidado)
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2292,10 +2292,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
 
         if(empty($dsAvaliacao)){
-            parent::message('Avaliação não preenchida!', "recurso/avaliar-recurso-enquadramento?recurso=$idRecurso", "ERROR");
+            parent::message('Avalia&ccedil;&atilde;o n&atilde;o preenchida!', "recurso/avaliar-recurso-enquadramento?recurso=$idRecurso", "ERROR");
         }
         if(empty($idRecurso)){
-            parent::message('Recurso não encontrado!', "recurso/avaliar-recurso-enquadramento?recurso=$idRecurso", "ERROR");
+            parent::message('Recurso n&atilde;o encontrado!', "recurso/avaliar-recurso-enquadramento?recurso=$idRecurso", "ERROR");
         }
 
         $tbRecurso = new tbRecurso();
@@ -2310,7 +2310,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $recurso->idAgenteAvaliador = $this->idUsuario;
 
             if($stAtendimento == 'I'){
-                $recurso->siRecurso = 10; // 10= Devolvido pelo técnico para o coordenador
+                $recurso->siRecurso = 10; // 10= Devolvido pelo t&eacute;cnico para o coordenador
                 $recurso->stAtendimento = 'I';
                 $recurso->stEstado = 0;
             }
@@ -2338,7 +2338,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
     {
         //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.Coordenado Admissibilidade
         if($this->idPerfil != 103 && $this->idPerfil != 127 && $this->idPerfil != 131 && $this->idPerfil != 92){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Você n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal", "ALERT");
         }
 
         $where = array();
@@ -2363,18 +2363,18 @@ class RecursoController extends MinC_Controller_Action_Abstract
         // Coordenador de Adimissibilidade
         if($this->idPerfil == 131){
             $where['a.siRecurso = ?'] = 10; // 1=Solicitado pelo proponente
-            $where['a.stAtendimento = ?'] = 'I'; // Não atendimento
+            $where['a.stAtendimento = ?'] = 'I'; // N&atilde;o atendimento
 
             $where2['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
             $where2['a.tpSolicitacao = ?'] = 'EN'; /// Enquadramento Recurso
             $where2['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
             $where2['a.tpRecurso = ?'] = 2; // 1=Solicitado pelo proponente
-            $where2['a.stAtendimento = ?'] = 'N'; // Não atendimento
+            $where2['a.stAtendimento = ?'] = 'N'; // N&atilde;o atendimento
 
             $this->view->recurso2fase = $tbRecurso->painelRecursosEnquadramento($where2);
         } else {
             $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
-            $where['a.stAtendimento = ?'] = 'N'; // Não atendimento
+            $where['a.stAtendimento = ?'] = 'N'; // N&atilde;o atendimento
             $where['a.tpRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
 
@@ -2410,10 +2410,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
 
         if(empty($dsAvaliacao)){
-            parent::message('Avaliação não preenchida!', "recurso", "ERROR");
+            parent::message('Avalia&ccedil;&atilde;o n&atilde;o preenchida!', "recurso", "ERROR");
         }
         if(empty($idRecurso)){
-            parent::message('Recurso não encontrado!', "recurso", "ERROR");
+            parent::message('Recurso n&atilde;o encontrado!', "recurso", "ERROR");
         }
 
         $tbRecurso = new tbRecurso();
@@ -2428,7 +2428,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $recurso->idAgenteAvaliador = $this->idUsuario;
 
             if($stAtendimento == 'I'){
-                $recurso->siRecurso = 15; //Solicitação finalizada
+                $recurso->siRecurso = 15; //Solicita&ccedil;&atilde;o finalizada
                 $recurso->stAtendimento = 'I';
                 $recurso->stEstado = 1;
             }

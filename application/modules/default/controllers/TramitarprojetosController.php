@@ -359,7 +359,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $mens = "Verificar os projetos abaixo na tabela tbHistoricoDocumento.<br /><br />";
             foreach ($tramitacoesRepetidas as $t) {
                 $mens .= "idPronac: ".$t->idPronac.'<br /><br />';
-                $mens .= "SELECT idHistorico,idPronac,idDocumento,idOrigem,idUnidade,idLote,Acao,stEstado,dsJustificativa<br />FROM SAC.dbo.tbHistoricoDocumento WHERE idPronac = $t->idPronac AND idDocumento = 0 ORDER BY 1 DESC";
+                $mens .= "SELECT idHistorico,idPronac,idDocumento,idOrigem,idUnidade,idLote,Acao,stEstado,dsJustificativa<br />FROM sac.dbo.tbHistoricoDocumento WHERE idPronac = $t->idPronac AND idDocumento = 0 ORDER BY 1 DESC";
                 $mens .= '<br /><br />';
             }
             $email = 'jefferson.silva@cultura.gov.br';

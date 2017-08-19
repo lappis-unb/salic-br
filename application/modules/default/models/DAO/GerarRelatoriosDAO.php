@@ -16,16 +16,16 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                         fd.nmFormDocumento as c7,
                         CONVERT(VARCHAR(10), envio.DtEnvio, 103) AS c8,
                         CONVERT(VARCHAR(10), ultimaAvaliacao.DtAvaliacao, 103) AS c9
-                from SAC.dbo.PreProjeto ppr
-                    inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
-                    inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
-                    left join SAC.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
-                    left join SAC.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.stEstado = 0)
+                from sac.dbo.PreProjeto ppr
+                    inner join sac.dbo.Edital e on (ppr.idEdital = e.idEdital)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    inner join bdcorporativo.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
+                    left join sac.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
+                    left join sac.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.stEstado = 0)
                     left join agentes.dboEnderecoNacional en on (en.idAgente = ppr.idAgente and Status = 1)
                     left join agentes.dboUF uf on (uf.idUF = en.UF)
                     left join agentes.dboMunicipios mun on (mun.idMunicipioIBGE = en.Cidade)
-                    left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25) ";
+                    left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25) ";
 
         if ($idEdital) {
             $sql .= " where e.idEdital = '$idEdital' ";
@@ -84,17 +84,17 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                         fd.nmFormDocumento as c7,
                         CONVERT(VARCHAR(10), envio.DtEnvio, 103) AS c8,
                     CONVERT(VARCHAR(10), ultimaAvaliacao.DtAvaliacao, 103) AS c9
-                from SAC.dbo.PreProjeto ppr
-                    inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
-                    inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
-                    left join SAC.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
-                        inner join SAC.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.ConformidadeOK = 1 and ultimaAvaliacao.stEstado = 0)
+                from sac.dbo.PreProjeto ppr
+                    inner join sac.dbo.Edital e on (ppr.idEdital = e.idEdital)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    inner join bdcorporativo.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
+                    left join sac.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
+                        inner join sac.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.ConformidadeOK = 1 and ultimaAvaliacao.stEstado = 0)
                     left join agentes.dboEnderecoNacional en on (en.idAgente = ppr.idAgente and Status = 1)
                     left join agentes.dboUF uf on (uf.idUF = en.UF)
                     left join agentes.dboMunicipios mun on (mun.idMunicipioIBGE = en.Cidade)
-                    left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25)
-                    left join SAC.dbo.Projetos pro on  pro.idProjeto = ppr.idPreProjeto
+                    left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25)
+                    left join sac.dbo.Projetos pro on  pro.idProjeto = ppr.idPreProjeto
                     where pro.idProjeto is null ";
 
         if ($idEdital) {
@@ -138,14 +138,14 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                     CONVERT(VARCHAR(10), envio.DtEnvio, 103) AS c8,
                     CONVERT(VARCHAR(10), ultimaAvaliacao.DtAvaliacao, 103) AS c9,
                     pro.IdPRONAC as c10
-                from SAC.dbo.PreProjeto ppr
-                    inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
-                    left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25)
-                    inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
-                    inner join SAC.dbo.Projetos pro on (pro.idProjeto = ppr.idPreProjeto)
-                    left join SAC.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
-                        left join SAC.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.stEstado = 0)
+                from sac.dbo.PreProjeto ppr
+                    inner join sac.dbo.Edital e on (ppr.idEdital = e.idEdital)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25)
+                    inner join bdcorporativo.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
+                    inner join sac.dbo.Projetos pro on (pro.idProjeto = ppr.idPreProjeto)
+                    left join sac.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
+                        left join sac.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.stEstado = 0)
                     left join agentes.dboEnderecoNacional en on (en.idAgente = ppr.idAgente and Status = 1)
                     left join agentes.dboUF uf on (uf.idUF = en.UF)
                     left join agentes.dboMunicipios mun on (mun.idMunicipioIBGE = en.Cidade) ";
@@ -205,17 +205,17 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
                         fd.nmFormDocumento as c7,
                         CONVERT(VARCHAR(10), envio.DtEnvio, 103) AS c8,
                         CONVERT(VARCHAR(10), ultimaAvaliacao.DtAvaliacao, 103) AS c9
-                from SAC.dbo.PreProjeto ppr
-                    inner join SAC.dbo.Edital e on (ppr.idEdital = e.idEdital)
-                    inner join CONTROLEDEACESSO..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
-                    inner join BDCORPORATIVO.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
-                    left join SAC.dbo.Projetos pro on  pro.idProjeto = ppr.idPreProjeto
-                    left join SAC.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
-                        inner join SAC.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.ConformidadeOK = 1 and ultimaAvaliacao.stEstado = 0)
+                from sac.dbo.PreProjeto ppr
+                    inner join sac.dbo.Edital e on (ppr.idEdital = e.idEdital)
+                    inner join controledeacesso..SGCacesso s on (ppr.idUsuario = s.IdUsuario)
+                    inner join bdcorporativo.scquiz.tbformdocumentoProjeto b on (ppr.idPreProjeto = b.idProjeto)
+                    left join sac.dbo.Projetos pro on  pro.idProjeto = ppr.idPreProjeto
+                    left join sac.dbo.tbAvaliacaoProposta envio on (envio.idProjeto = ppr.idPreProjeto and envio.ConformidadeOK = 9)
+                        inner join sac.dbo.tbAvaliacaoProposta ultimaAvaliacao on (ultimaAvaliacao.idProjeto = ppr.idPreProjeto and ultimaAvaliacao.ConformidadeOK = 1 and ultimaAvaliacao.stEstado = 0)
                     left join agentes.dboEnderecoNacional en on (en.idAgente = ppr.idAgente and Status = 1)
                     left join agentes.dboUF uf on (uf.idUF = en.UF)
                     left join agentes.dboMunicipios mun on (mun.idMunicipioIBGE = en.Cidade)
-                    left join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25)
+                    left join bdcorporativo.scQuiz.tbFormDocumento fd on fd.idEdital = ppr.idEdital and idClassificaDocumento not in (23,24,25)
                 where  pro.idProjeto is null ";
 
 
@@ -249,7 +249,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
 
     public static function consultaFundos() {
         $sql = "select idVerificacao as idFundo, Descricao as nmFundo
-                    from SAC..Verificacao
+                    from sac..Verificacao
                     where idTipo = 15 order by nmFundo";
 
 
@@ -262,7 +262,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
     }
 
     public static function consultaClassificacoes() {
-        $sql = "select cd.idClassificaDocumento as idClassificacao,cd.dsClassificaDocumento as nmClassificacao from BDCORPORATIVO.scSAC.tbClassificaDocumento cd
+        $sql = "select cd.idClassificaDocumento as idClassificacao,cd.dsClassificaDocumento as nmClassificacao from BDCORPORATIVO.scsac.tbClassificaDocumento cd
                     inner join BDCORPORATIVO.scQuiz.tbFormDocumento fd on fd.idClassificaDocumento = cd.idClassificaDocumento
                     where
                     fd.stModalidadeDocumento is not null
@@ -280,9 +280,9 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
 
     public static function consultaEditais($idFundo = null, $idClassificacao = null) {
         $sql = "select e.idEdital as id, fd.nmFormDocumento as descricao, e.nrEdital
-                from SAC.dbo.Edital e
+                from sac.dbo.Edital e
                     inner join BDCORPORATIVO.scQuiz.tbFormDocumento fd on e.idEdital = fd.idEdital and fd.idClassificaDocumento not in (23,24,25)
-                    inner join SAC.dbo.PreProjeto ppr on ppr.idEdital = e.idEdital ";
+                    inner join sac.dbo.PreProjeto ppr on ppr.idEdital = e.idEdital ";
 
 
         if ($idFundo) {

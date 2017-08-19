@@ -6,16 +6,16 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Comprovacaofisicadoprojeto extends Zend_Db_Table
 {
-	protected $_name = 'scSAC.dbo.tbComprovanteExecucao'; // nome da tabela
+	protected $_name = 'scsac.dbo.tbComprovanteExecucao'; // nome da tabela
 
 	/**
-	 * Método aguardandoavaliacao()
+	 * M&eacute;todo aguardandoavaliacao()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -28,17 +28,17 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 			      pro.NomeProjeto,
 			      doc.stParecerComprovante AS StatusComprovante,
 			      CONVERT(CHAR(10), tmp.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), tmp.dtEnvioComprovante,108) AS DataRecebimento
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc,
-			     BDCORPORATIVO.scSAC.Projetos pro,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro,
 			     (SELECT idPronac, MAX(dtEnvioComprovante) dtEnvioComprovante
-			      FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao
+			      FROM bdcorporativo.scsac.tbComprovanteExecucao
 			      WHERE stComprovante = 'A'
 			      GROUP BY idPronac) AS tmp
 			WHERE doc.idPRONAC = pro.IdPRONAC 
 				AND doc.dtEnvioComprovante = tmp.dtEnvioComprovante 
 				AND stComprovante = 'A' ";
 
-		// consulta inicial (mostra todos os projetos com comprovantes em avaliação)
+		// consulta inicial (mostra todos os projetos com comprovantes em avalia&ccedil;&atilde;o)
 		if (empty($pronac) && empty($status) && empty($dt_inicio) && empty($dt_fim))
 		{
 			$sql.= "AND doc.stParecerComprovante = 'AG' ";
@@ -52,21 +52,21 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 		if (!empty($status))
 		{
 			// se o projeto tiver pelo menos um comprovante 
-			// com o status 'Aguardando Avaliação'
+			// com o status 'Aguardando Avalia&ccedil;&atilde;o'
 			if ($status == "AG")
 			{
 				$sql.= "AND doc.stParecerComprovante = 'AG' ";
 			}
 
 			// se o projeto tiver pelo menos um comprovante 
-			// com o status 'Em Avaliação'
+			// com o status 'Em Avalia&ccedil;&atilde;o'
 			if ($status == "AV")
 			{
 				$sql.= "AND doc.stParecerComprovante = 'AV' ";
 			}
 
-			// se o projeto não tiver comprovantes  
-			// com os status 'Aguardando Avaliação' em 'Em Avaliação'
+			// se o projeto n&atilde;o tiver comprovantes  
+			// com os status 'Aguardando Avalia&ccedil;&atilde;o' em 'Em Avalia&ccedil;&atilde;o'
 			if ($status == "AA")
 			{
 				$sql.= "AND doc.stParecerComprovante <> 'AG' ";
@@ -101,7 +101,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 
 	
 	/**
-	 * Método comprovantesemavaliacao()
+	 * M&eacute;todo comprovantesemavaliacao()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -121,10 +121,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc,
-			     BDCORPORATIVO.scSAC.Projetos pro, 
-			     BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc,
-			     BDCORPORATIVO.scCorp.tbArquivo arq 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro, 
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
+			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idPRONAC = pro.IdPRONAC 
 				AND doc.idTipoDocumento = tipodoc.idTipoDocumento
 				AND doc.idArquivo = arq.idArquivo
@@ -141,7 +141,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 
 
 	/**
-	 * Método subcomprovantesemavaliacao()
+	 * M&eacute;todo subcomprovantesemavaliacao()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -157,9 +157,9 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc,
-			     BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc,
-			     BDCORPORATIVO.scCorp.tbArquivo arq 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
+			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento
 				AND doc.idArquivo = arq.idArquivo
 				AND doc.stComprovante = 'A' 
@@ -176,7 +176,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 
 
 	/**
-	 * Método avaliarcomprovante()
+	 * M&eacute;todo avaliarcomprovante()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -195,10 +195,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -225,10 +225,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -244,7 +244,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 	
 	
 	/**
-	 * Método aprovarcomprovante()
+	 * M&eacute;todo aprovarcomprovante()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -263,10 +263,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -280,7 +280,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 	
 	
 	/**
-	 * Método avaliarcomprovantealterado()
+	 * M&eacute;todo avaliarcomprovantealterado()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -297,10 +297,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -315,7 +315,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 	
 	
 	/**
-	 * Método aprovarcomprovantealterado()
+	 * M&eacute;todo aprovarcomprovantealterado()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -334,10 +334,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -357,10 +357,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -377,7 +377,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 	
 	
 	/**
-	 * Método aguardandoaprovacao()
+	 * M&eacute;todo aguardandoaprovacao()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -391,10 +391,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 			      doc.stParecerComprovante AS StatusComprovante,
 			      CONVERT(CHAR(10), tmp.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), tmp.dtEnvioComprovante,108) AS DataRecebimento, 
 			      CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc,
-			     BDCORPORATIVO.scSAC.Projetos pro,
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro,
 			     (SELECT idPronac, MAX(dtEnvioComprovante) dtEnvioComprovante
-			      FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao
+			      FROM bdcorporativo.scsac.tbComprovanteExecucao
 			      WHERE stComprovante = 'A'
 			      GROUP BY idPronac) AS tmp
 			WHERE doc.idPRONAC = pro.IdPRONAC 
@@ -410,21 +410,21 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 		if (!empty($status))
 		{
 			// se o projeto tiver pelo menos um comprovante 
-			// com o status 'Aguardando Avaliação'
+			// com o status 'Aguardando Avalia&ccedil;&atilde;o'
 			if ($status == "AG")
 			{
 				$sql.= "AND doc.stParecerComprovante = 'AG' ";
 			}
 
 			// se o projeto tiver pelo menos um comprovante 
-			// com o status 'Em Avaliação'
+			// com o status 'Em Avalia&ccedil;&atilde;o'
 			if ($status == "AV")
 			{
 				$sql.= "AND doc.stParecerComprovante = 'AV' ";
 			}
 
-			// se o projeto não tiver comprovantes  
-			// com os status 'Aguardando Avaliação' em 'Em Avaliação'
+			// se o projeto n&atilde;o tiver comprovantes  
+			// com os status 'Aguardando Avalia&ccedil;&atilde;o' em 'Em Avalia&ccedil;&atilde;o'
 			if ($status == "AA")
 			{
 				$sql.= "AND doc.stParecerComprovante <> 'AG' ";
@@ -459,7 +459,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 
 
 	/**
-	 * Método comprovantesemaprovacao()
+	 * M&eacute;todo comprovantesemaprovacao()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -479,10 +479,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc,
-			     BDCORPORATIVO.scSAC.Projetos pro, 
-			     BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc,
-			     BDCORPORATIVO.scCorp.tbArquivo arq 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.Projetos pro, 
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
+			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idPRONAC = pro.idPRONAC 
 				AND doc.idTipoDocumento = tipodoc.idTipoDocumento
 				AND doc.idArquivo = arq.idArquivo
@@ -499,7 +499,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 
 
 	/**
-	 * Método subcomprovantesemaprovacao()
+	 * M&eacute;todo subcomprovantesemaprovacao()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -515,9 +515,9 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				CONVERT(CHAR(10), doc.dtEnvioComprovante,103) + ' ' + CONVERT(CHAR(8), doc.dtEnvioComprovante,108) AS DataRecebimento,
 				CONVERT(CHAR(10), doc.dtParecer,103) + ' ' + CONVERT(CHAR(8), doc.dtParecer,108) AS DataResposta,
 			    doc.stParecerComprovante AS StatusComprovante
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc,
-			     BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc,
-			     BDCORPORATIVO.scCorp.tbArquivo arq 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc,
+			     bdcorporativo.scsac.tbTipoDocumento tipodoc,
+			     bdcorporativo.scCorp.tbArquivo arq 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento
 				AND doc.idArquivo = arq.idArquivo
 				AND doc.stComprovante = 'A' 
@@ -534,7 +534,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 	
 	
 	/**
-	 * Método visualizarcomprovantedeferido()
+	 * M&eacute;todo visualizarcomprovantedeferido()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -552,10 +552,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -570,7 +570,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 	
 	
 	/**
-	 * Método visualizarcomprovanteindeferido()
+	 * M&eacute;todo visualizarcomprovanteindeferido()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -588,10 +588,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa, 
 				doc.dsParecerComprovante AS Parecer 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 
@@ -606,7 +606,7 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 	
 	
 	/**
-	 * Método visualizarcomprovantesubstituido()
+	 * M&eacute;todo visualizarcomprovantesubstituido()
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -623,10 +623,10 @@ class Comprovacaofisicadoprojeto extends Zend_Db_Table
 				doc.idArquivo, 
 				arq.nmArquivo, 
 				doc.dsJustificativaAlteracao AS Justificativa 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scSAC.Projetos pro 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scsac.Projetos pro 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND doc.idPRONAC = pro.IdPRONAC 

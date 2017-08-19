@@ -130,7 +130,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 
 		$dados[3]['dt_movimentacao'] = "09/01/2011";
 		$dados[3]['deposito_origem'] = "1236-X";
-		$dados[3]['historico']       = "Compra com Cart�o<br />04/01 12:25 MADE IN BRAZIL";
+		$dados[3]['historico']       = "Compra com Cart�o<br />04/01 12:25 MADE in BRAZIL";
 		$dados[3]['documento']       = "144.736";
 		$dados[3]['op_valor']        = "D";
 		$dados[3]['valor']           = "300,00";
@@ -154,7 +154,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 
 		$dados[5]['dt_movimentacao'] = "09/01/2011";
 		$dados[5]['deposito_origem'] = "1236-X";
-		$dados[5]['historico']       = "Compra com Cart�o<br />04/01 12:25 MADE IN BRAZIL";
+		$dados[5]['historico']       = "Compra com Cart�o<br />04/01 12:25 MADE in BRAZIL";
 		$dados[5]['documento']       = "144.736";
 		$dados[5]['op_valor']        = "D";
 		$dados[5]['valor']           = "300,00";

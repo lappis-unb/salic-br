@@ -7,7 +7,7 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
 
     public function init() {
 
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura";
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura";
         $auth = Zend_Auth::getInstance();
         $Usuario = new UsuarioDAO();
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');

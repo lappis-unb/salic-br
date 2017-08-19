@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Anexardocumentos extends Zend_Db_Table
 {
 	/**
-	 * Método para buscar documentos de um PRONAC
+	 * M&eacute;todo para buscar documentos de um PRONAC
 	 * @access public
 	 * @static
 	 * @param integer $idPronac
@@ -34,10 +34,10 @@ class Anexardocumentos extends Zend_Db_Table
 					AS dtEnvioComprovante, 
 				doc.stParecerComprovante, 
 				doc.idComprovanteAnterior 
-			FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao doc, 
-				BDCORPORATIVO.scSAC.tbTipoDocumento tipodoc, 
-				BDCORPORATIVO.scCorp.tbArquivo arq, 
-				BDCORPORATIVO.scCorp.tbArquivoImagem arqimg 
+			FROM bdcorporativo.scsac.tbComprovanteExecucao doc, 
+				bdcorporativo.scsac.tbTipoDocumento tipodoc, 
+				bdcorporativo.scCorp.tbArquivo arq, 
+				bdcorporativo.scCorp.tbArquivoImagem arqimg 
 			WHERE doc.idTipoDocumento = tipodoc.idTipoDocumento 
 				AND doc.idArquivo = arq.idArquivo 
 				AND arq.idArquivo = arqimg.idArquivo 
@@ -55,22 +55,22 @@ class Anexardocumentos extends Zend_Db_Table
 			$this->view->message = "Erro ao buscar Comprovantes: " . $e->getMessage();
 		}
 
-	} // fecha método buscar()
+	} // fecha m&eacute;todo buscar()
 
 
 
 	/**
-	 * Método para cadastrar documentos do PRONAC
+	 * M&eacute;todo para cadastrar documentos do PRONAC
 	 * @access public
 	 * @param void
 	 * @return object
 	 */
 	public static function cadastrar($dados)
 	{
-		/*$sql = "INSERT INTO BDCORPORATIVO.scSAC.tbComprovanteExecucao ";
+		/*$sql = "INSERT INTO bdcorporativo.scsac.tbComprovanteExecucao ";
 		$sql.= "VALUES ($dados['idPRONAC'], $dados['idTipoDocumento'], $dados['nmComprovante'], $dados['dsComprovante'], $dados['idArquivo'], $dados['idSolicitante'], $dados['dtEnvioComprovante'], $dados['stComprovante'], $dados['stComprovante'], $dados['idComprovanteAnterior'])";*/
 
-	} // fecha método cadastrar()
+	} // fecha m&eacute;todo cadastrar()
 
 
 

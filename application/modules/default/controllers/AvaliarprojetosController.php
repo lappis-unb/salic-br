@@ -17,16 +17,16 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
     private $ST_APROVACAO_APROVADO             = 1;
     private $ST_APROVACAO_REPROVADO            = 0;
     /**
-     * Reescreve o método init()
+     * Reescreve o m&eacute;todo init()
      * @access public
      * @param void
      * @return void
      */
      public function init() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticaç?o
-        $this->view->title = "Salic - Sistema de Apoio ?s Leis de Incentivo ? Cultura"; // título da página
+        $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;?o
+        $this->view->title = "Salic - Sistema de Apoio ?s Leis de Incentivo ? Cultura"; // título da p&aacute;gina
 
-        $auth = Zend_Auth::getInstance();// instancia da autenticação
+        $auth = Zend_Auth::getInstance();// instancia da autentica&ccedil;&atilde;o
         if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
         {
               $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -37,11 +37,11 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
 
         $idorgao = $auth->getIdentity()->usu_orgao;
         $usu_identificacao = $auth->getIdentity()->usu_identificacao;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
 
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $this->codGrupo = $codGrupo; //  Grupo ativo na sessão
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess&atilde;o
+        $codOrgao = $GrupoAtivo->codOrgao; //  Órg&atilde;o ativo na sess&atilde;o
+        $this->codGrupo = $codGrupo; //  Grupo ativo na sess&atilde;o
         $this->codOrgao = $codOrgao;
         $this->view->codOrgao = $codOrgao;
         $this->view->codGrupo = $codGrupo;
@@ -66,7 +66,7 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
         }
 
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha m&eacute;todo init()
 
     public function indexAction(){
         $IdOrgao = $this->codOrgao;
@@ -152,13 +152,13 @@ class AvaliarprojetosController extends MinC_Controller_Action_Abstract
 				,'nrVersaoDocumento = ?' => $_POST['nrVersaoDocumento']) )->current()->toArray();
 			$idEdital = $idEdital['idEdital'];
 
-			// pega os documentos de critérios
+			// pega os documentos de crit&eacute;rios
 			$criterios = $tbFormDocumento->buscar(array(
 					'idEdital = ?'               => $idEdital
 					,'idClassificaDocumento = ?' => 25
 				))->toArray();;
 
-			// varre todos os critérios e adiciona na tbFormDocumentoProjeto
+			// varre todos os crit&eacute;rios e adiciona na tbFormDocumentoProjeto
 			$tbFormDocumentoProjeto = new tbFormDocumentoProjeto();
 
 			/*foreach ($criterios as $c) {

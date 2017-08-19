@@ -90,7 +90,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $plenario['naoplenario'][$contnaoplenario]['pronac'] = $buscaplenario->pronac;
                 $plenario['naoplenario'][$contnaoplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                 $plenario['naoplenario'][$contnaoplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                $plenario['naoplenario'][$contnaoplenario]['area'] = $buscaplenario->area;
+                $plenario['naoplenario'][$contnaoplenario]['Area'] = $buscaplenario->area;
                 $plenario['naoplenario'][$contnaoplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                 $plenario['naoplenario'][$contnaoplenario]['segmento'] = $buscaplenario->segmento;
                 $plenario['naoplenario'][$contnaoplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -255,7 +255,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $plenario['plenario'][$contplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                     $plenario['plenario'][$contplenario]['pronac'] = $buscaplenario->pronac;
                     $plenario['plenario'][$contplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                    $plenario['plenario'][$contplenario]['area'] = $buscaplenario->area;
+                    $plenario['plenario'][$contplenario]['Area'] = $buscaplenario->area;
                     $plenario['plenario'][$contplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                     $plenario['plenario'][$contplenario]['segmento'] = $buscaplenario->segmento;
                     $plenario['plenario'][$contplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -267,7 +267,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $plenario['naoplenario'][$contnaoplenario]['pronac'] = $buscaplenario->pronac;
                     $plenario['naoplenario'][$contnaoplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                     $plenario['naoplenario'][$contnaoplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                    $plenario['naoplenario'][$contnaoplenario]['area'] = $buscaplenario->area;
+                    $plenario['naoplenario'][$contnaoplenario]['Area'] = $buscaplenario->area;
                     $plenario['naoplenario'][$contnaoplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                     $plenario['naoplenario'][$contnaoplenario]['segmento'] = $buscaplenario->segmento;
                     $plenario['naoplenario'][$contnaoplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -421,7 +421,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $plenario['plenario'][$contplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                 $plenario['plenario'][$contplenario]['pronac'] = $buscaplenario->pronac;
                 $plenario['plenario'][$contplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                $plenario['plenario'][$contplenario]['area'] = $buscaplenario->area;
+                $plenario['plenario'][$contplenario]['Area'] = $buscaplenario->area;
                 $plenario['plenario'][$contplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                 $plenario['plenario'][$contplenario]['segmento'] = $buscaplenario->segmento;
                 $plenario['plenario'][$contplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -432,7 +432,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $plenario['naoplenario'][$contnaoplenario]['pronac'] = $buscaplenario->pronac;
                 $plenario['naoplenario'][$contnaoplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                 $plenario['naoplenario'][$contnaoplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                $plenario['naoplenario'][$contnaoplenario]['area'] = $buscaplenario->area;
+                $plenario['naoplenario'][$contnaoplenario]['Area'] = $buscaplenario->area;
                 $plenario['naoplenario'][$contnaoplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                 $plenario['naoplenario'][$contnaoplenario]['segmento'] = $buscaplenario->segmento;
                 $plenario['naoplenario'][$contnaoplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -449,7 +449,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $arrReuniao = array();
         $arrReuniao['idNrReuniao IS NULL ']= "?";
 
-        //$qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta( array(), null, null, null, false, "Não analisado", $arrReuniao)->count();
+        //$qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta( array(), null, null, null, false, "N&atilde;o analisado", $arrReuniao)->count();
         $qtdprojetonaoanalisados = $tblDistribuicao->qtdProjetoNaoAnalisados();
 
         $qtdplenario = count($plenario['plenario']);
@@ -518,7 +518,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
         //ANALISADOS
         $arrBusca =array();
-        $arrBusca['ar.Codigo IN (?)'] = $arrIdAreas;
+        $arrBusca['ar.Codigo in (?)'] = $arrIdAreas;
         if(isset($idReuniao) && $idReuniao != ""){$arrBusca['r.idNrReuniao = ?']=$idReuniao;}
         $arrReuniao = array();
         if(isset($idReuniao) && $idReuniao != ""){$arrReuniao['r.idNrReuniao = ?']=$idReuniao;}
@@ -527,7 +527,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
         //NAO ANALISADOS
         $arrBusca =array();
-        $arrBusca['ar.Codigo IN (?)'] = $arrIdAreas;
+        $arrBusca['ar.Codigo in (?)'] = $arrIdAreas;
         $arrReuniao = array();
         if(isset($idReuniao) && $idReuniao != "" && $idReuniao==$idReuniaoAutal){
             $arrReuniao['idNrReuniao IS NULL ']= "?";
@@ -693,7 +693,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $dadosvalores[$i]['NomeProjeto'] = utf8_encode($dados->NomeProjeto);
                 $dadosvalores[$i]['pronac'] = $dados->pronac;
                 $dadosvalores[$i]['stAnalise'] = $dados->stAnalise;
-                $dadosvalores[$i]['area'] = utf8_encode($dados->area);
+                $dadosvalores[$i]['Area'] = utf8_encode($dados->area);
                 $dadosvalores[$i]['AprovadoReal'] = 'R$ ' . number_format($dados->AprovadoReal, 2, ',', '.');
                 $dadosvalores[$i]['dsAnalise'] = utf8_encode($dados->dsConsolidacao);
                 $i++;
@@ -786,7 +786,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                         $tpVotacao = 2;
                     } else if($this->_request->getParam("tipo") == 'readequacao'){
                         $tpVotacao = 3;
-                        $idtipo = $_POST['idtipo'];
+                        $idtipo = $_POST['idTipo'];
                     }
 
                     //Inserindo registros na tabela tbVotacao para recber o voto de cada participante da plenaria
@@ -926,7 +926,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             foreach ($buscarTitConselheiro as $conselheiro) {
                 $tipo = $conselheiro->stTitular == 1 ? 'Titular' : 'Suplente';
                 $votantes[$area->Descricao][$c]['conselheiro'] = $conselheiro->nome . " - " . $tipo;
-                $votantes[$area->Descricao][$c]['idagente'] = $conselheiro->idAgente;
+                $votantes[$area->Descricao][$c]['idAgente'] = $conselheiro->idAgente;
                 $votantes[$area->Descricao][$c]['selecionado'] = in_array($conselheiro->idAgente, $votanteCadastrado) ? true : false;
                 $c++;
             }
@@ -943,14 +943,14 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         foreach ($buscarMembrosNatos as $membros) {
             $Agente = $usuario->getIdUsuario($membros->usu_codigo);
             
-            if ($Agente['idagente']) {
-                if ($idagenteAtual == $Agente['idagente']) {
-                    $idagenteAtual = $Agente['idagente'];
+            if ($Agente['idAgente']) {
+                if ($idagenteAtual == $Agente['idAgente']) {
+                    $idagenteAtual = $Agente['idAgente'];
                 } else {
-                    $membrosnatos[$num]['idAgente'] = $Agente['idagente'];
+                    $membrosnatos[$num]['idAgente'] = $Agente['idAgente'];
                     $membrosnatos[$num]['nome'] = $membros->usu_nome;
-                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idagente'], $votanteCadastrado) ? true : false;
-                    $idagenteAtual = $Agente['idagente'];
+                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idAgente'], $votanteCadastrado) ? true : false;
+                    $idagenteAtual = $Agente['idAgente'];
                 }
             }
             $num++;
@@ -1261,7 +1261,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $arrWhereFontesIncentivo['tpPlanilha = ? ']='SR';
             $arrWhereFontesIncentivo['stAtivo = ? ']='N';
             $arrWhereFontesIncentivo['NrFonteRecurso = ? ']='109';
-            $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
+            $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereFontesIncentivo["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $fonteincentivo = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereFontesIncentivo);
 
@@ -1270,7 +1270,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $arrWhereOutrasFontes['tpPlanilha = ? ']='SR';
             $arrWhereOutrasFontes['stAtivo = ? ']='N';
             $arrWhereOutrasFontes['NrFonteRecurso <> ? ']='109';
-            $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
+            $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
 
@@ -1279,7 +1279,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
             $arrWherePlanilhaPA['stAtivo = ? ']='N';
             $arrWherePlanilhaPA['NrFonteRecurso = ? ']='109';
-            $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
+            $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $valorparecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
         }
@@ -1563,7 +1563,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             /******** Planilha aprovacao SR (Proponente - solicitada) ****************/
             $arrBuscaPlanilha = array();
             $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
-            $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
+            $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
 
             $resuplanilha = null;  $cont = 0;
             $buscarplanilhaSR = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
@@ -1722,7 +1722,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $arrWhereSomaSR = $arrWhereSomaPlanilha;
             $arrWhereSomaSR['tpPlanilha = ? ']= 'SR';
             $arrWhereSomaSR['stAtivo = ? ']='N';
-            $arrWhereSomaSR["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
+            $arrWhereSomaSR["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereSomaSR["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $buscarsomaproposta = $planilhaaprovacao->somarItensPlanilhaAprovacao($arrWhereSomaSR);
 
@@ -1877,7 +1877,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             /******** Planilha aprovacao SR (Proponente - solicitada) ****************/
             $arrBuscaPlanilha = array();
             $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
-            $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
+            $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
 
             $resuplanilha = null; $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
@@ -1921,7 +1921,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
              $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
              $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
              $arrWhereSomaPlanilha['stAtivo = ? ']='N';
-             $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
+             $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
              $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
 
              $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';
@@ -2154,7 +2154,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             if($GrupoAtivo->codGrupo == '118' || $GrupoAtivo->codGrupo == '133') { //118 = componente da comissao  133 = membros natos
                 $arrBuscaVotados['vt.idAgente = ?'] = $idagente;
             }else{
-                $arrBuscaVotados['vt.idAgente = (?)'] = new Zend_Db_Expr('(SELECT TOP 1 max(idAgente) from BDCORPORATIVO.scSAC.tbVotacao where IdPRONAC = pr.IdPRONAC)');
+                $arrBuscaVotados['vt.idAgente = (?)'] = new Zend_Db_Expr('(SELECT TOP 1 max(idAgente) from bdcorporativo.scsac.tbVotacao where IdPRONAC = pr.IdPRONAC)');
             }
             $arrBuscaVotados['tp.idNrReuniao = ?'] = $idNrReuniao;
             $arrBuscaVotados['vt.idNrReuniao = ?'] = $idNrReuniao;
@@ -2204,7 +2204,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             //BUSCAR PROJETOS DE READEQUACAO
             if(!empty($readequacao) &&  $readequacao == 'true'){
-                //$arrBusca['par.TipoParecer IN (?)'] = array('2','4');
+                //$arrBusca['par.TipoParecer in (?)'] = array('2','4');
                 $where['par.TipoParecer <> ?'] = 1; //parecer de readequacao
                 $readequacao = "true";
             }else{

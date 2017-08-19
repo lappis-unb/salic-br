@@ -4,7 +4,7 @@ class MantercalendariocnicController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
 	 /**
-     * Reescreve o método init()
+     * Reescreve o m&eacute;todo init()
      * @access public
      * @param void
      * @return void
@@ -12,14 +12,14 @@ class MantercalendariocnicController extends MinC_Controller_Action_Abstract {
 
 	public function init()
 	{
-        $auth = Zend_Auth::getInstance(); // pega a autenticaç?o
-		$this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
+        $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;?o
+		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
 
-		// 3 => autenticaç?o scriptcase e autenticaç?o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
+		// 3 => autentica&ccedil;?o scriptcase e autentica&ccedil;?o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
 		// utilizar quando a Controller ou a Action for acessada via scriptcase e zend
 		// define as permiss?es
 		$PermissoesGrupo = array();
-		$PermissoesGrupo[] = 103; // Coordenador de Análise
+		$PermissoesGrupo[] = 103; // Coordenador de An&aacute;lise
 		$PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
 		parent::perfil(3, $PermissoesGrupo);
                 if (isset($auth->getIdentity()->usu_codigo))
@@ -40,7 +40,7 @@ class MantercalendariocnicController extends MinC_Controller_Action_Abstract {
 		}
 
 		parent::init(); // chama o init() do pai GenericControllerNew
-	} // fecha método init()
+	} // fecha m&eacute;todo init()
 
     public function indexAction() {
         $pag = 1;
@@ -140,11 +140,11 @@ class MantercalendariocnicController extends MinC_Controller_Action_Abstract {
           if ($atualizar)
         {
 
-            parent::message("Alteração realizada com sucesso!", "mantercalendariocnic/index", "CONFIRM");
+            parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "mantercalendariocnic/index", "CONFIRM");
         }
         else
         {
-            throw new Exception("Erro ao efetuar alteração da reunião");
+            throw new Exception("Erro ao efetuar altera&ccedil;&atilde;o da reuni&atilde;o");
         }
        }
     }

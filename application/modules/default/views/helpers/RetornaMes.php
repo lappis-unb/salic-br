@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.views.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class Zend_View_Helper_RetornaMes
 	 */
 	function retornaMes($mes)
 	{
-		$mesString = 'Mês inválido';
+		$mesString = 'Mês inv&aacute;lido';
 		
 	switch ($mes) {
 	    case 1:
@@ -30,7 +30,7 @@ class Zend_View_Helper_RetornaMes
 	        $mesString = 'Fevereiro';
 	        break;
 	    case 3:
-	        $mesString = 'Março';
+	        $mesString = 'Mar&ccedil;o';
 	        break;
 	    case 4:
 	        $mesString = 'Abril';
@@ -64,6 +64,6 @@ class Zend_View_Helper_RetornaMes
 	return $mesString;
 		
 		
-	} // fecha método formatarMilhar()
+	} // fecha m&eacute;todo formatarMilhar()
 
 } // fecha class

@@ -83,7 +83,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
                     'AC.ParecerFavoravel AS stAvaliacao_Antigo',
                     'Cast(AC.ParecerDeConteudo as Text)  AS dsAvaliacao_Antigo',
                     'AC.idUsuario AS idAgente_Antigo',
-                    'SAC.dbo.fnNomeParecerista(AC.idUsuario) AS Parecerista'
+                    'sac.dbo.fnNomeParecerista(AC.idUsuario) AS Parecerista'
                 )
         );
         $select->where('aa.tpAnalise = ?', $tpanalise);
@@ -101,7 +101,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
             $slctContador->setIntegrityCheck(false);
             $slctContador->from(array("aa"=>$this->_name),
                             array("total" => "count(*)"),
-                                  "SAC.dbo");
+                                  "SAC");
             $slctContador->joinInner(
                     array('prod' => 'Produto'),
                     'aa.idProduto = prod.Codigo',
@@ -184,15 +184,15 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('prod' => 'Produto'), 'aa.idProduto = prod.Codigo',
-                array('prod.Descricao as produto'), 'SAC.dbo'
+                array('prod.Descricao as produto'), 'SAC'
         );
         $select->joinInner(
                 array('proj' => 'Projetos'), 'proj.IdPRONAC = aa.idPRONAC',
-                array(), 'SAC.dbo'
+                array(), 'SAC'
         );
         $select->joinInner(
                 array('PDP' => 'PlanoDistribuicaoProduto'), 'PDP.idProjeto = proj.idProjeto and PDP.idProduto = aa.idProduto',
-                array('PDP.stPrincipal'), 'SAC.dbo'
+                array('PDP.stPrincipal'), 'SAC'
         );
         $select->joinInner(
                 array('AC' => 'tbAnaliseDeConteudo'), 'aa.idAnaliseConteudo = AC.idAnaliseDeConteudo',

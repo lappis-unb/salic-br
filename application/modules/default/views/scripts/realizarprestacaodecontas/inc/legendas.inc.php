@@ -25,7 +25,7 @@ function layout_fluido()
 	$("#rodapeConteudo").css("margin-left", "225px");
 	$(".sanfonaDiv").css("clear", "both");
 	$(".sanfonaDiv").css("width", "91%");
-} // fecha função layout_fluido()
+} // fecha fun&ccedil;&atilde;o layout_fluido()
  
 $(document).ready(function()
 {
@@ -47,19 +47,19 @@ $(document).ready(function()
         </tr>
         <tr>
             <td style="font-size: 40px; color: blue;">&bull;</td>
-            <td class="no_seta esquerda">< 10 dias para término do prazo da análise do projeto</td>
+            <td class="no_seta esquerda">< 10 dias para t&eacute;rmino do prazo da an&aacute;lise do projeto</td>
         </tr>
         <tr>
             <td style="font-size: 40px; color: green;">&bull;</td>
-            <td class="no_seta esquerda">< 10 dias de atraso no recebimento da solicitação (data inicial).</td>
+            <td class="no_seta esquerda">< 10 dias de atraso no recebimento da solicita&ccedil;&atilde;o (data inicial).</td>
         </tr>
         <tr>
             <td style="font-size: 40px; color: red;">&bull;</td>
-           <td class="no_seta esquerda">>= 20 dias de atraso no recebimento da solicitação (data inicial)</td>
+           <td class="no_seta esquerda">>= 20 dias de atraso no recebimento da solicita&ccedil;&atilde;o (data inicial)</td>
         </tr>
         <tr>
             <td style="font-size: 40px; color: #FF6600;">&bull;</td>
-            <td class="no_seta esquerda">>= 10 e < 20 dias de atraso no recebimento da solicitação (data inicial)</td>
+            <td class="no_seta esquerda">>= 10 e < 20 dias de atraso no recebimento da solicita&ccedil;&atilde;o (data inicial)</td>
         </tr>
     </table>
 

@@ -49,7 +49,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
 	public static function buscaDadosEdital ($idEdital = null)
     {
-		$sql = "select * from SAC.dbo.Edital where idEdital = $idEdital and NrEdital is not null";
+		$sql = "select * from sac.dbo.Edital where idEdital = $idEdital and NrEdital is not null";
 		
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -62,9 +62,9 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 //    {
 ////		$sql = "select
 ////			        idAvaliador as idAgente,nmFormDocumento as nmEdital, a.idEdital,d.NrEdital,stAtivo, a.idAvaliador
-////			    from BDCORPORATIVO.scSAC.tbAvaliadorEdital a
+////			    from bdcorporativo.scsac.tbAvaliadorEdital a
 ////			        inner join sac.dbo.Edital b on a.idEdital = b.idEdital
-////			        inner join BDCORPORATIVO.scQuiz.tbFormDocumento c on c.idEdital = a.idEdital and c.idClassificaDocumento not in (23,24,25)
+////			        inner join bdcorporativo.scQuiz.tbFormDocumento c on c.idEdital = a.idEdital and c.idClassificaDocumento not in (23,24,25)
 ////			        inner join sac.dbo.Edital d on a.idEdital = d.idEdital
 ////			    where  a.stAtivo = 'A' and a.idAvaliador = $idAgente
 ////			    order by d.NrEdital,nmFormDocumento asc ";
@@ -72,7 +72,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 //    	$sql = "select
 //			        nmFormDocumento as nmEdital, b.idEdital,b.NrEdital, b.idOrgao
 //			    from sac.dbo.Edital b
-//			        inner join BDCORPORATIVO.scQuiz.tbFormDocumento c on c.idEdital = b.idEdital 
+//			        inner join bdcorporativo.scQuiz.tbFormDocumento c on c.idEdital = b.idEdital 
 //			    where  c.stFormDocumento = 'A' and b.idOrgao = $codOrgao
 //			    order by b.NrEdital,nmFormDocumento asc ";
 //
@@ -90,8 +90,8 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 				      ,[dtFimFase]
 				      ,[qtDiasRecurso]
 				      ,[qtDiasJulgamento], a.idFaseEdital
-				  FROM [BDCORPORATIVO].[scSAC].[tbEditalXtbFaseEdital] a
-				  inner join BDCORPORATIVO.scQuiz.tbFormDocumento b on (a.idEdital = b.idEdital)
+				  FROM [bdcorporativo].[scSAC].[tbEditalXtbFaseEdital] a
+				  inner join bdcorporativo.scQuiz.tbFormDocumento b on (a.idEdital = b.idEdital)
 				  where  b.idClassificaDocumento not in (23,24,25) and
 				  a.dtFimFase >= {$objAcesso->getDate()} and (idFaseEdital = 4)
 				  order by dtFimFase";
@@ -104,7 +104,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
     public static function buscaEditais ($idAgente = null, $idEdital = null)
     {
-    	$sql = "select * from BDCORPORATIVO.scSAC.tbAvaliadorEdital where idAvaliador = $idAgente";
+    	$sql = "select * from bdcorporativo.scsac.tbAvaliadorEdital where idAvaliador = $idAgente";
     	if($idEdital){
     		$sql .= " and idEdital = $idEdital";
     	}
@@ -118,7 +118,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     
     public static function buscaEditaisAtivos ($idAgente = null)
     {
-    	$sql = "select * from BDCORPORATIVO.scSAC.tbAvaliadorEdital where idAvaliador = $idAgente and stAtivo = 'A'";
+    	$sql = "select * from bdcorporativo.scsac.tbAvaliadorEdital where idAvaliador = $idAgente and stAtivo = 'A'";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -130,7 +130,6 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
         $objAcesso= new Acesso();
     	$sql = "insert into agentes.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, {$objAcesso->getDate()}, 0, $idusuario)";
-		//xd($sql);
 		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

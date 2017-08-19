@@ -33,33 +33,33 @@
 //    {
 //        // busca todas as vis�es existentes no banco
 //        if ($todasVisoes) {
-//            $sql = "select distinct idverificacao, descricao from  " . GenericModel::getStaticTableName('agentes', 'verificacao') . "  where idtipo = 16 and sistema = 21 ";
+//            $sql = "select distinct idverificacao, descricao from  " . GenericModel::getStaticTableName('agentes', 'Verificacao') . "  where idtipo = 16 and sistema = 21 ";
 //        } // busca todas as vis�es do usu�rio
 //        else {
 //            $sql = "select
-//                                distinct vis.idvisao ,
+//                                distinct vis.idVisao ,
 //                                ver.descricao,
 //                                ver.idverificacao,
-//                                vis.idagente ,
-//                                vis.visao ,
+//                                vis.idAgente ,
+//                                vis.Visao ,
 //                                vis.usuario ,
 //                                vis.stativo ,
 //                                ar.descricao as area
-//                                from " . GenericModel::getStaticTableName('agentes', 'visao') . " vis
-//                                inner join " . GenericModel::getStaticTableName('agentes', 'verificacao') . " ver on ver.idverificacao = vis.visao
-//                                left join " . GenericModel::getStaticTableName('agentes', 'tbtitulacaoconselheiro') . " ttc on ttc.idagente =  vis.idagente
-//                                left join " . GenericModel::getStaticTableName('sac', 'area') . " ar on ttc.cdArea = ar.Codigo ";
+//                                from " . GenericModel::getStaticTableName('agentes', 'Visao') . " vis
+//                                inner join " . GenericModel::getStaticTableName('agentes', 'Verificacao') . " ver on ver.idverificacao = vis.Visao
+//                                left join " . GenericModel::getStaticTableName('agentes', 'tbTitulacaoConselheiro') . " ttc on ttc.idAgente =  vis.idAgente
+//                                left join " . GenericModel::getStaticTableName('sac', 'Area') . " ar on ttc.cdArea = ar.Codigo ";
 //
-//            $sql .= " where ver.idverificacao = vis.visao
-//				and ver.idtipo = 16 and sistema = 21";
+//            $sql .= " where ver.idverificacao = vis.Visao
+//				and ver.idTipo = 16 and sistema = 21";
 //
 //            if (!empty($idAgente)) // busca pelo id do agente
 //            {
-//                $sql .= " and vis.idagente = " . $idAgente;
+//                $sql .= " and vis.idAgente = " . $idAgente;
 //            }
 //            if (!empty($visao)) // busca pela vis�o
 //            {
-//                $sql .= " and vis.visao = " . $visao;
+//                $sql .= " and vis.Visao = " . $visao;
 //            }
 //        }
 //        $sql .= " order by 2";

@@ -4,7 +4,7 @@ require_once "library/MinC/Currency/Currency.php";
 class PareceristaController extends MinC_Controller_Action_Abstract {
 
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (vari&aacute;vel com o id do usu&aacute;rio logado)
      * @access private
      */
     private $getIdUsuario = 0;
@@ -12,32 +12,32 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
 
     public function init() {
-        $this->view->title  = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario            = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title  = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+        $auth               = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
+        $Usuario            = new UsuarioDAO(); // objeto usu&aacute;rio
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
 
-        if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+        if ($auth->hasIdentity()) // caso o usu&aacute;rio esteja autenticado
         {
-            // verifica as permissões
+            // verifica as permiss&otilde;es
             $PermissoesGrupo    = array();
             $PermissoesGrupo[]  = 94;
             $PermissoesGrupo[]  = 93;
             $PermissoesGrupo[]  = 137;
 
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est&aacute; no array de permiss&otilde;es
             {
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+                parent::message("Você n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, org&atilde;os e grupos do usu&aacute;rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario        = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos    = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo     = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo     = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a vis&atilde;o
+            $this->view->usuario        = $auth->getIdentity(); // manda os dados do usu&aacute;rio para a vis&atilde;o
+            $this->view->arrayGrupos    = $grupos; // manda todos os grupos do usu&aacute;rio para a vis&atilde;o
+            $this->view->grupoAtivo     = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu&aacute;rio para a vis&atilde;o
+            $this->view->orgaoAtivo     = $GrupoAtivo->codOrgao; // manda o órg&atilde;o ativo do usu&aacute;rio para a vis&atilde;o
 
             if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
             {
@@ -46,7 +46,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
             }
 
         } // fecha if
-        else // caso o usuário não esteja autenticado
+        else // caso o usu&aacute;rio n&atilde;o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -55,7 +55,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método index()
+     * M&eacute;todo index()
      * Consulta Coordenador
      * @access public
      * @param void
@@ -198,7 +198,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método consultar()
+     * M&eacute;todo consultar()
      * Consulta Parecerista
      * @access public
      * @param void
@@ -216,9 +216,9 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         $idAgente = 0;
 
         if (isset($auth->getIdentity()->usu_codigo)){
-            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu&aacute;rio
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-            $idAgente = $Agente['idagente'];
+            $idAgente = $Agente['idAgente'];
             $this->view->idAgente    = $idAgente;
         }
 
@@ -354,7 +354,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         $idAgente = 0;
 
         if (isset($auth->getIdentity()->usu_codigo)){
-            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu&aacute;rio
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
             $idAgente = $Agente['idAgente'];
         }
@@ -453,7 +453,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método addAssinantes()
+     * M&eacute;todo addAssinantes()
      * Adicionar assinante
      * @access public
      * @param void
@@ -480,7 +480,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método removeAssinantes()
+     * M&eacute;todo removeAssinantes()
      * Remover assinante
      * @access public
      * @param void
@@ -510,7 +510,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método configurarPagamentoParecerista()
+     * M&eacute;todo configurarPagamentoParecerista()
      * Configurar Pagamentos de Pareceristas
      * @access public
      * @param void
@@ -528,10 +528,10 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         $ultimoDespachoDoAno = $modelGerarPagamentoParecerista->ultimoDespachoDoAno();
         $this->view->assign('ultimoDespachoDoAno', $ultimoDespachoDoAno['UltimoDespachoDoAno']);
 
-        // Pega a autenticação
+        // Pega a autentica&ccedil;&atilde;o
         $auth = Zend_Auth::getInstance();
 
-        // Dados da configuração de pagamento
+        // Dados da configura&ccedil;&atilde;o de pagamento
         $configAtivo = $modelConfigurarPagamento->buscarConfiguracoes(array('stEstado = ?' => '1'));
         $objAcesso = new Acesso();
         if(count($configAtivo) == 0){
@@ -559,7 +559,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
             array_push($idAssinantes, $ac->idAssinantes);
         }
 
-        // Envia todos os assinantes que ainda não foram configurados
+        // Envia todos os assinantes que ainda n&atilde;o foram configurados
         $assinantes = $modelAssinantes->listarAssinantes(array('stEstado = ?' => 1));
         $listaAssinantes = array();
         $i = 0;
@@ -620,8 +620,8 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método configurouPagamentoParecerista()
-     * Confirmação da configuração de pagamentos de pareceristas
+     * M&eacute;todo configurouPagamentoParecerista()
+     * Confirma&ccedil;&atilde;o da configura&ccedil;&atilde;o de pagamentos de pareceristas
      * @access public
      * @param void
      * @return void
@@ -638,7 +638,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
         try {
 
-            // Dados da configuração de pagamento
+            // Dados da configura&ccedil;&atilde;o de pagamento
             $objAcesso = new Acesso();
             $dados = array('nrDespachoInicial'       => $nrDespachoInicial,
                            'nrDespachoFinal'         => $nrDespachoFinal,
@@ -688,7 +688,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método cancelarPagamentoParecerista()
+     * M&eacute;todo cancelarPagamentoParecerista()
      * Cancelar pagamentos de pareceristas
      * @access public
      * @param void
@@ -723,7 +723,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         try {
             // Exclui o registro na tabela [tbPagarParecerista]
             $modelPagarParecerista->delete(array('idPagarParecerista = ?' => $idPagamento));
-            parent::message('Exclusão realiazada com sucesso!', 'parecerista/configurar-pagamento-parecerista', 'CONFIRM');
+            parent::message('Exclus&atilde;o realiazada com sucesso!', 'parecerista/configurar-pagamento-parecerista', 'CONFIRM');
 
         } catch (Exception $exc) {
             parent::message('Erro ao excluir o registto.', 'parecerista/configurar-pagamento-parecerista', 'ERROR');
@@ -732,8 +732,8 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método solicitarPagamentoParecerista()
-     * Solicitação de pagamentos de pareceristas configurados
+     * M&eacute;todo solicitarPagamentoParecerista()
+     * Solicita&ccedil;&atilde;o de pagamentos de pareceristas configurados
      * @access public
      * @param void
      * @return void
@@ -861,7 +861,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método confirmarPagamentoParecerista()
+     * M&eacute;todo confirmarPagamentoParecerista()
      * Confirmar pagamento de parecerista
      * @access public
      * @param void
@@ -875,7 +875,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
         try {
 
-            // Mudar a situação do pagamento para 3 = Registrar ordem bancária
+            // Mudar a situa&ccedil;&atilde;o do pagamento para 3 = Registrar ordem banc&aacute;ria
             $dados = array('siPagamento'            => 3,
                            'idUsuario'              => $auth->getIdentity()->usu_codigo);
 
@@ -898,23 +898,23 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
         try {
 
-            // Mudar a situação do pagamento para 1
+            // Mudar a situa&ccedil;&atilde;o do pagamento para 1
             $dados = array('siPagamento'            => 1,
                            'idUsuario'              => $auth->getIdentity()->usu_codigo);
 
             $modelGerarPagamentoParecerista->update($dados, array('idGerarPagamentoParecerista = ?' => $idGerarPagamentoParecerista));
 
-            parent::message('Cancelamento de ordem bancária realizado com sucesso!', 'parecerista/registrar-ordem-bancaria', 'CONFIRM');
+            parent::message('Cancelamento de ordem banc&aacute;ria realizado com sucesso!', 'parecerista/registrar-ordem-bancaria', 'CONFIRM');
 
         } catch (Exception $exc) {
-            parent::message('Erro ao cancelar a ordem bancária! '.$exc->getMessage(), 'parecerista/registrar-ordem-bancaria', 'ERROR');
+            parent::message('Erro ao cancelar a ordem banc&aacute;ria! '.$exc->getMessage(), 'parecerista/registrar-ordem-bancaria', 'ERROR');
         }
 
     }
 
     /**
-     * Método registrarOrdemBancaria()
-     * Registrar ordem bancária
+     * M&eacute;todo registrarOrdemBancaria()
+     * Registrar ordem banc&aacute;ria
      * @access public
      * @param void
      * @return void
@@ -1042,7 +1042,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método finalizarPagamentoParecerista()
+     * M&eacute;todo finalizarPagamentoParecerista()
      * Finalizar os pagamentos dos Pareceristas
      * @access public
      * @param void
@@ -1176,7 +1176,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método gerarDespachoPagamentoParecerista()
+     * M&eacute;todo gerarDespachoPagamentoParecerista()
      * Gerar despacho de pagamento de Parecerista
      * @access public
      * @param void
@@ -1221,7 +1221,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método despachoPagamentoParecerista()
+     * M&eacute;todo despachoPagamentoParecerista()
      * Buscar despacho de pagamento de Parecerista
      * @access public
      * @param void
@@ -1286,7 +1286,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método imprimirDespacho()
+     * M&eacute;todo imprimirDespacho()
      * Imprimir despacho de pagamento de Parecerista
      * @access public
      * @param void
@@ -1374,7 +1374,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método efetivarPagamentoParecerista()
+     * M&eacute;todo efetivarPagamentoParecerista()
      * Efetivar Pagamentos de Pareceristas
      * @access public
      * @param void
@@ -1438,7 +1438,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método efetivouDespachoPagamentoParecerista()
+     * M&eacute;todo efetivouDespachoPagamentoParecerista()
      * Efetivou Despacho Pagamento de Parecerista
      * @access public
      * @param void
@@ -1460,15 +1460,15 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
             if(!empty($_FILES['arquivo']['tmp_name'])){
 
                 $arquivoNome     = $_FILES['arquivo']['name']; // nome
-                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome tempor&aacute;rio
                 $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
                 if (!empty($arquivoNome)){
-                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens&atilde;o
                 }
 
                 if(!Validacao::validarData($dtOrdemBancariaValidar)){
-                    parent::message("A data informada não e válida!", "parecerista/registrar-ordem-bancaria", "ALERT");
+                    parent::message("A data informada n&atilde;o e v&aacute;lida!", "parecerista/registrar-ordem-bancaria", "ALERT");
                 }
 
                 if(!isset($_FILES['arquivo'])){
@@ -1513,7 +1513,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
                 $arquivoParecerista->inserirArquivodePagamento($idGerarPagamentoParecerista, $idUltimoArquivo, 1);
 
-                // Mudar a situação do pagamento para 2 = pagamento efetivado
+                // Mudar a situa&ccedil;&atilde;o do pagamento para 2 = pagamento efetivado
                 $objAcesso = new Acesso();
                 $dados = array('dtEfetivacaoPagamento'  => $objAcesso->getExpressionDate(),
                                'dtOrdemBancaria'        => $dtOrdemBancaria,
@@ -1523,19 +1523,19 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
                 $modelGerarPagamentoParecerista->update($dados, array('idGerarPagamentoParecerista = ?' => $idGerarPagamentoParecerista));
 
-                parent::message('Ordem bancária registrada com sucesso!', 'parecerista/registrar-ordem-bancaria', 'CONFIRM');
+                parent::message('Ordem banc&aacute;ria registrada com sucesso!', 'parecerista/registrar-ordem-bancaria', 'CONFIRM');
             }else{
-                parent::message('Arquivo não anexado.', 'parecerista/registrar-ordem-bancaria', 'ALERT');
+                parent::message('Arquivo n&atilde;o anexado.', 'parecerista/registrar-ordem-bancaria', 'ALERT');
             }
 
         } catch (Exception $exc) {
-            parent::message('Erro ao registrar ordem bancária! '.$exc->getMessage(), 'parecerista/registrar-ordem-bancaria', 'ERROR');
+            parent::message('Erro ao registrar ordem banc&aacute;ria! '.$exc->getMessage(), 'parecerista/registrar-ordem-bancaria', 'ERROR');
         }
 
     }
 
     /**
-     * Método finalizarDespachoPagamentoParecerista()
+     * M&eacute;todo finalizarDespachoPagamentoParecerista()
      * Finalizou Despacho Pagamento de Parecerista
      * @access public
      * @param void
@@ -1550,7 +1550,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
         try {
 
-            // Mudar a situação do pagamento para 7 = pagamento finalizado
+            // Mudar a situa&ccedil;&atilde;o do pagamento para 7 = pagamento finalizado
             $dados = array('siPagamento'            => 7,
                            'idUsuario'              => $auth->getIdentity()->usu_codigo);
 
@@ -1565,7 +1565,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método assinouRpaParecerista()
+     * M&eacute;todo assinouRpaParecerista()
      * Assinou RPA do Parecerista
      * @access public
      * @param void
@@ -1584,11 +1584,11 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
             if(!empty($_FILES['arquivo']['tmp_name'])){
 
                 $arquivoNome     = $_FILES['arquivo']['name']; // nome
-                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome tempor&aacute;rio
                 $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
                 if (!empty($arquivoNome)){
-                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens&atilde;o
                 }
 
                 if(!isset($_FILES['arquivo'])){
@@ -1633,7 +1633,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
                 $arquivoParecerista->inserirArquivodePagamento($idGerarPagamentoParecerista, $idUltimoArquivo, 2);
 
-                // Mudar a situação do pagamento para 5 = pagamento confirmado pelo parecerista
+                // Mudar a situa&ccedil;&atilde;o do pagamento para 5 = pagamento confirmado pelo parecerista
                 $dados = array('siPagamento'            => 5,
                                'idUsuario'              => $auth->getIdentity()->usu_codigo);
 
@@ -1643,7 +1643,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
             }else{
 
-                parent::message('É preciso fazer o Upload do RPA assinado!', 'parecerista/confirmacao-pagamento-parecerista', 'ALERT');
+                parent::message('&eacute; preciso fazer o Upload do RPA assinado!', 'parecerista/confirmacao-pagamento-parecerista', 'ALERT');
 
             }
 
@@ -1655,7 +1655,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método confirmacaoPagamentoParecerista()
+     * M&eacute;todo confirmacaoPagamentoParecerista()
      * Confirmacao de pagamento do Parecerista
      * @access public
      * @param void
@@ -1670,9 +1670,9 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         $idAgente = 0;
 
         if (isset($auth->getIdentity()->usu_codigo)){
-            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu&aacute;rio
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-            $idAgente = $Agente['idagente'];
+            $idAgente = $Agente['idAgente'];
             $this->view->idAgente    = $idAgente;
         }
 
@@ -1748,8 +1748,8 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método abrirarquivo()
-     * Abrir arquivo em binário
+     * M&eacute;todo abrirarquivo()
+     * Abrir arquivo em bin&aacute;rio
      * @access public
      * @param void
      * @return void
@@ -1758,7 +1758,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
         $id = $this->_request->getParam("id");
 
-        // Configuração o php.ini para 10MB
+        // Configura&ccedil;&atilde;o o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -1769,10 +1769,10 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
 
         // erro ao abrir o arquivo
         if (!$resultado) {
-            $this->view->message = 'Não foi possível abrir o arquivo!';
+            $this->view->message = 'N&atilde;o foi possível abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
-            // lê os cabeçalhos formatado
+            // lê os cabe&ccedil;alhos formatado
             foreach ($resultado as $r) {
                 $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
                 $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
@@ -1793,7 +1793,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método gerenciarAssinantes()
+     * M&eacute;todo gerenciarAssinantes()
      * Gerenciar Assinantes
      * @access public
      * @param void
@@ -1807,7 +1807,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método novoAssinante()
+     * M&eacute;todo novoAssinante()
      * Adicionar Assinante
      * @access public
      * @param void
@@ -1826,7 +1826,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método addNovoAssinante()
+     * M&eacute;todo addNovoAssinante()
      * Adicionou novo Assinantes
      * @access public
      * @param void
@@ -1846,11 +1846,11 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
                            'idCargo'    => $cargo
             );
 
-            // Verificar se já existe o mesmo cadastrado com o mesmo cargo!
+            // Verificar se j&aacute; existe o mesmo cadastrado com o mesmo cargo!
             $verificacao = $modelAssinantes->buscar(array('idAgente = ?'=> $assinante, 'idCargo = ?' => $cargo));
 
             if(count($verificacao) > 0 && $verificacao[0]->stEstado == 1){
-                parent::message('Assinante já cadastrado com esse cargo! ', 'parecerista/novo-assinante', 'ALERT');
+                parent::message('Assinante j&aacute; cadastrado com esse cargo! ', 'parecerista/novo-assinante', 'ALERT');
             }else if(count($verificacao) > 0 && $verificacao[0]->stEstado == 0){
                 $modelAssinantes->update(array('stEstado' => 1), array('idAssinantes = ?'=> $verificacao[0]->idAssinantes));
             }else{
@@ -1867,7 +1867,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método removeAssinante()
+     * M&eacute;todo removeAssinante()
      * Remover assinante
      * @access public
      * @param void
@@ -1892,7 +1892,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método atualizaListaAssinantes()
+     * M&eacute;todo atualizaListaAssinantes()
      * atualiza a lista de assinantes
      * @access public
      * @param void

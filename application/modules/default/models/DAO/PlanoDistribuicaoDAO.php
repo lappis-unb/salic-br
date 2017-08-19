@@ -11,7 +11,7 @@
 
 class PlanoDistribuicaoDAO extends Zend_Db_Table {
     /* dados da tabela */
-    protected $_schema  = "SAC.dbo";
+    protected $_schema  = "SAC";
     protected $_name    = "tbPlanoDistribuicao";
     protected $_primary = "idPlano";
 
@@ -25,7 +25,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
      * @return object || bool
      */
     public static function buscar($idPlano) {
-        $sql = "SELECT * FROM SAC.dbo.tbPlanoDistribuicao WHERE idPlano = $idPlano ";
+        $sql = "SELECT * FROM sac.dbo.tbPlanoDistribuicao WHERE idPlano = $idPlano ";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -42,7 +42,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
      * @return object || bool
      */
     public static function buscarUltimo() {
-        $sql = "SELECT MAX(idPlano) AS id FROM SAC.dbo.tbPlanoDistribuicao ";
+        $sql = "SELECT MAX(idPlano) AS id FROM sac.dbo.tbPlanoDistribuicao ";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -62,7 +62,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("SAC.dbo.tbPlanoDistribuicao", $dados);
+        $cadastrar = $db->insert("sac.dbo.tbPlanoDistribuicao", $dados);
 
         if ($cadastrar) {
             return true;
@@ -88,7 +88,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
 
         $where = "idPlano = $idPlano ";
 
-        $alterar = $db->update("SAC.dbo.tbPlanoDistribuicao", $dados, $where);
+        $alterar = $db->update("sac.dbo.tbPlanoDistribuicao", $dados, $where);
 
         if ($alterar) {
             return true;
@@ -106,7 +106,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
 
 class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
     /* dados da tabela */
-    protected $_schema  = "SAC.dbo";
+    protected $_schema  = "SAC";
     protected $_name    = "PlanoDistribuicaoProduto";
     protected $_primary = "idPlano";
 
@@ -120,7 +120,7 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
      * @return object || bool
      */
     public static function buscar($idPlanoDistribuicao) {
-        $sql = "SELECT * FROM SAC.dbo.PlanoDistribuicaoProduto WHERE idPlanoDistribuicao = $idPlanoDistribuicao  AND stPlanoDistribuicaoProduto = 1";
+        $sql = "SELECT * FROM sac.dbo.PlanoDistribuicaoProduto WHERE idPlanoDistribuicao = $idPlanoDistribuicao  AND stPlanoDistribuicaoProduto = 1";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -140,7 +140,7 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("SAC.dbo.PlanoDistribuicaoProduto", $dados);
+        $cadastrar = $db->insert("sac.dbo.PlanoDistribuicaoProduto", $dados);
 
         if ($cadastrar) {
             return true;
@@ -166,7 +166,7 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
 
         $where = "idPlanoDistribuicao = $idPlanoDistribuicao ";
 
-        $alterar = $db->update("SAC.dbo.PlanoDistribuicaoProduto", $dados, $where);
+        $alterar = $db->update("sac.dbo.PlanoDistribuicaoProduto", $dados, $where);
 
         if ($alterar) {
             return true;

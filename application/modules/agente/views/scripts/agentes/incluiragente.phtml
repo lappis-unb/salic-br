@@ -84,7 +84,7 @@
                     </div>
                     <div class="input-field col s3">
                         <?php if (!$this->ehProponente) : ?>
-                            <select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
+                            <select name="Visao" id="Visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
                                     class="" >
                                 <?php if ($this->modulo != "movimentacaobancaria"): ?>
                                     <option value="0" selected="selected"> - Selecione -</option>
@@ -96,16 +96,16 @@
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </select>
-                            <label for="visao"> Informe a vis&atilde;o do Agente: </label>
+                            <label for="Visao"> Informe a vis&atilde;o do Agente: </label>
                             <span id="erroVisao" class="spanError"></span>
                             <span id="spanVisao"></span>
                         <?php else : ?>
-                            <select name="visao" id="visao"
+                            <select name="Visao" id="Visao"
                                     onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
                                     class="" >
                                         <option value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"> <?php echo $this->combovisoes[0]['Descricao']; ?> </option>
                             </select>
-                            <label for="visao"> Informe a vis&atilde;o do Agente: </label>
+                            <label for="Visao"> Informe a vis&atilde;o do Agente: </label>
                         <?php endif; ?>
                 </div>
             </div>
@@ -575,7 +575,7 @@
         ajax.open("GET", "<?php echo $this->url(array('module' => 'default', 'controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
         ajax.onreadystatechange = function () {
             if (cep.length != 10) {
-                $('#erroCep').html("O CEP informado é inv&aacute;lido!");
+                $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
             }
             else {
                 $('#erroCep').html("");
@@ -609,7 +609,7 @@
                     bairro.value = " ";
                     cidade.options[0].text = " - Selecione - ";
                     uf.options[0].text = " -- ";
-                    $('#erroCep').html("O CEP informado é inv&aacute;lido!");
+                    $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
                 }
                 else // caso o cep exista
                 {

@@ -40,7 +40,7 @@
                 height:160,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -65,7 +65,7 @@
                                     $('.ui-dialog-titlebar-close').remove();
                                     window.setTimeout('location.reload()', 1000);
                                 } else {
-                                    alertaModal("Não foi possível excluir o Plano de Distribuição.");
+                                    alertaModal("N&atilde;o foi possível excluir o Plano de Distribui&ccedil;&atilde;o.");
                                 }
                             },
                             dataType : 'json'
@@ -107,13 +107,13 @@
         <li class="first"><a href="#" title="In&iacute;cio">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar dados do Projeto">Consultar dados do Projeto</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/relatoriotrimestral/idpronac/<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Relat&oacute;rio Trimestral">Relat&oacute;rio Trimestral</a></li>
-        <li class="last">Comprovantes de Execução</li>
+        <li class="last">Comprovantes de Execu&ccedil;&atilde;o</li>
     </ul>
 </div>
 
 
 <div id="titulo">
-    <div>Comprovantes de Execução <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/relatoriotrimestral/idpronac/<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Voltar">Voltar</a></span></div>
+    <div>Comprovantes de Execu&ccedil;&atilde;o <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/relatoriotrimestral/idpronac/<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Voltar">Voltar</a></span></div>
 </div>
 
 
@@ -142,10 +142,10 @@
     <form id="formCadastroComprovante" action="<?php echo $this->url(array('controller' => 'comprovarexecucaofisica', 'action' => 'cadastrar-comprovante-execucao'), '', true); ?>?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" method="post" enctype="multipart/form-data">
         <table class="tabela">
             <tr align="center">
-                <th colspan="2">Comprovante de Execução</th>
+                <th colspan="2">Comprovante de Execu&ccedil;&atilde;o</th>
             </tr>
             <tr>
-                <td colspan="2">Fazer upload de fotos/vídeos de reformas, construções e de qualquer outro produto.</td>
+                <td colspan="2">Fazer upload de fotos/vídeos de reformas, constru&ccedil;&otilde;es e de qualquer outro produto.</td>
             </tr>
             <tr>
                 <td class="destacar bold w150" align="right">Tipo de comprovante <span style="color: red;">*</span></td>
@@ -163,7 +163,7 @@
                 <td><input type="file" id="arquivo" name="arquivo" class="obrigatorio"></td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right">Observações <span style="color: red;">*</span></td>
+                <td class="destacar bold" align="right">Observa&ccedil;&otilde;es <span style="color: red;">*</span></td>
                 <td><textarea name="observacoes" cols="" rows="5" class="textarea_simples obrigatorio" style="width: 99%;"></textarea></td>
             </tr>
         </table>
@@ -183,8 +183,8 @@
             <td class="destacar bold">Tipo de Comprovante</td>
             <td class="destacar bold">Nome do Arquivo</td>
             <td class="destacar bold">Data de Envio</td>
-            <td class="destacar bold">Observações</td>
-            <td class="destacar bold" width="1%">Ação</td>
+            <td class="destacar bold">Observa&ccedil;&otilde;es</td>
+            <td class="destacar bold" width="1%">A&ccedil;&atilde;o</td>
         </tr>
         <?php foreach ($this->DadosComprovantes as $DadosComprovantes) { ?>
         <tr>

@@ -77,13 +77,13 @@ $(function()
 	        }
 	        else if(dtinicio < dtAtual)
 		    {
-				alertar('O período não pode ser inferior a data de hoje!');
+				alertar('O período n&atilde;o pode ser inferior a data de hoje!');
 
 	            return false;
 	        }
 	        else if((instituicao == '') || (curso == '') || (endereco == ''))
 			{
-				alertar("Dados obrigatórios não preenchidos!");
+				alertar("Dados obrigatórios n&atilde;o preenchidos!");
 			}
 			else
 			{
@@ -106,7 +106,7 @@ $(function()
 	<ul>
 		<li class="first"><a href="#" title="Ir para Início">Início</a></li>
 		<li><a href="#" title="Agentes">Manter Agentes</a></li>
-		<li class="last">Informações Profissionais</li>
+		<li class="last">Informa&ccedil;&otilde;es Profissionais</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -115,7 +115,7 @@ $(function()
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Informações Profissionais<span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Informa&ccedil;&otilde;es Profissionais<span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -129,7 +129,7 @@ $(function()
 	<?php if(($this->grupoativo == "137")): ?>
 	<table class="tabela">
 		<tr>
-			<td>Para adicionar uma nova formação, clique em novo ao lado!</td>
+			<td>Para adicionar uma nova forma&ccedil;&atilde;o, clique em novo ao lado!</td>
 			<th width="150"><input type="button" class="btn_novo" value=" " onclick="novo();"/></th>
 		</tr>
 	</table>
@@ -143,10 +143,10 @@ $(function()
 
 		<table class="tabela">
 			<tr>
-				<th colspan="4">FORMAÇÃO PROFISSIONAL</th>
+				<th colspan="4">FORMA&ccedil;&atilde;O PROFISSIONAL</th>
 			</tr>
 			<tr>
-				<td width="200"><span style="color: red; font-weight: bold;">*</span> Profissão:</td>
+				<td width="200"><span style="color: red; font-weight: bold;">*</span> Profiss&atilde;o:</td>
 				<td colspan="3"><input type="text" name="profissao" id="profissao" value="" class="input_simples" style="width: 190px;" /></td>
 			</tr>
 			<tr>
@@ -154,7 +154,7 @@ $(function()
 				<td colspan="3"><input type="text" name="cargo" id="cargo" value="" class="input_simples" style="width: 190px;" /></td>
 			</tr>
 			<tr>
-				<td><span style="color: red; font-weight: bold;">*</span> Endereço:</td>
+				<td><span style="color: red; font-weight: bold;">*</span> Endere&ccedil;o:</td>
 				<td colspan="3"><input type="text" name="endereco" id="endereco" value="" class="input_simples" style="width: 300px;" /></td>
 			</tr>
 			<tr>
@@ -180,12 +180,12 @@ $(function()
 	<?php if(count($this->formacoes) != 0):?>
 	<table class="tabela" id="salvos">
 		<tr>
-			<th colspan="6">INFORMAÇÕES PROFISSIONAIS CADASTRADAS</th>
+			<th colspan="6">INFORMA&ccedil;&otilde;ES PROFISSIONAIS CADASTRADAS</th>
 		</tr>
 		<tr>
-			<td width="140" align="center"><b>PROFISSÃO</b></td>
+			<td width="140" align="center"><b>PROFISS&atilde;O</b></td>
 			<td width="140" align="center"><b>CARGO</b></td>
-			<td width="170" align="center"><b>ENDEREÇO</b></td>
+			<td width="170" align="center"><b>ENDERE&ccedil;O</b></td>
 			<td width="120" align="center"><b>DATA ENTRADA</b></td>
 			<td width="120" align="center"><b>DATA SAÍDA</b></td>
 			<td align="center"><b>DOCUMENTO</b></td>
@@ -209,8 +209,8 @@ $(function()
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

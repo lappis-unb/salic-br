@@ -67,9 +67,9 @@
 			<td align="center"><?php echo $dp->DtDistribuicaoPT; ?></td>
                         <td align="center"><?php if ($dp->Status == 1)
                             {
-                                echo 'Favorável';
+                                echo 'Favor&aacute;vel';
                             }else{
-                               echo'Desfavorável';
+                               echo'Desfavor&aacute;vel';
                            };
                             ?>
                         </td>
@@ -81,10 +81,10 @@
             <?php $nomeProjeto = $dp->NomeProjeto; $pronac = $dp->NrProjeto; $produto = $dp->Produto;?>
             <?php endforeach; ?>
        </table>
- <!-- ========== PAGINAÇ?O ========== -->
+ <!-- ========== PAGINA&ccedil;?O ========== -->
     <?php if($this->qtdDocumentos > 5){ echo "<p>" . $this->dadospainel . "</p>"; } ?>
-    <!-- ========== FIM PAGINAÇ?O ========== -->
+    <!-- ========== FIM PAGINA&ccedil;?O ========== -->
 </div>
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

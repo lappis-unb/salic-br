@@ -38,7 +38,7 @@
                                                 }
                                             }
                                         });
-                                        $("#alertar").html('Em 15 Minutos a Plenária será iniciada. Favor encerrar as suas atividades!');
+                                        $("#alertar").html('Em 15 Minutos a Plen&aacute;ria ser&aacute; iniciada. Favor encerrar as suas atividades!');
                                         $("#alertar").dialog('open');
                                         $('#cronometro').css('display','');
                                         $("#minu").html(valor[0]);
@@ -184,7 +184,7 @@
     <!-- início: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
 
         <?php
         $getPronac = $this->idpronac;
@@ -202,18 +202,18 @@
             <div class="bottom">
             </div>
             <div id="cronometro" style="background: #f8f8f8; display: none; font-size: 1.8em; padding-top: 2em; text-align: center; color: red; font-weight: 800; padding-left: 0.3em;" >
-                Início da Plenária em <br/><br/> <span id="minu"></span>' : <span id="seg" ></span>"
+                Início da Plen&aacute;ria em <br/><br/> <span id="minu"></span>' : <span id="seg" ></span>"
             </div>
             <div id="space_menu">
             </div>
         </div>
-        <div id="iniciareuniao" class="sumir">Plenária Iniciada. Você será redirecionado</div>
+        <div id="iniciareuniao" class="sumir">Plen&aacute;ria Iniciada. Você ser&aacute; redirecionado</div>
 
         <script type="text/javascript">
 
         </script>
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navega&ccedil;&atilde;o local #qm0 -->
     </div>
 </div>
 <!-- ========== FIM MENU ========== -->

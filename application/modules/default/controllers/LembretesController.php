@@ -6,53 +6,53 @@ class LembretesController extends MinC_Controller_Action_Abstract {
 	}
 	
 	/**
-	 * Reescreve o método init()
+	 * Reescreve o m&eacute;todo init()
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function init()
 	{
-		$this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-		$auth              = Zend_Auth::getInstance(); // pega a autenticação
-		$Usuario           = new UsuarioDAO(); // objeto usuário
-		$GrupoAtivo        = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+		$auth              = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
+		$Usuario           = new UsuarioDAO(); // objeto usu&aacute;rio
+		$GrupoAtivo        = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
 
-		if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+		if ($auth->hasIdentity()) // caso o usu&aacute;rio esteja autenticado
 		{
-			// verifica as permissões
+			// verifica as permiss&otilde;es
 			$PermissoesGrupo = array();
 			//$PermissoesGrupo[] = 93;  // Coordenador de Parecerista
 			//$PermissoesGrupo[] = 94;  // Parecerista
-			//$PermissoesGrupo[] = 103; // Coordenador de Análise
-			$PermissoesGrupo[] = 118; // Componente da Comissão
+			//$PermissoesGrupo[] = 103; // Coordenador de An&aacute;lise
+			$PermissoesGrupo[] = 118; // Componente da Comiss&atilde;o
 			//$PermissoesGrupo[] = 119; // Presidente da Mesa
 			//$PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
-			if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
+			if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est&aacute; no array de permiss&otilde;es
 			{
-				parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+				parent::message("Você n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
 			}
 
-			// pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+			// pega as unidades autorizadas, org&atilde;os e grupos do usu&aacute;rio (pega todos os grupos)
 			$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-			// manda os dados para a visão
-			$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuário para a visão
-			$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-			$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-			$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+			// manda os dados para a vis&atilde;o
+			$this->view->usuario     = $auth->getIdentity(); // manda os dados do usu&aacute;rio para a vis&atilde;o
+			$this->view->arrayGrupos = $grupos; // manda todos os grupos do usu&aacute;rio para a vis&atilde;o
+			$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu&aacute;rio para a vis&atilde;o
+			$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o órg&atilde;o ativo do usu&aacute;rio para a vis&atilde;o
 		} // fecha if
-		else // caso o usuário não esteja autenticado
+		else // caso o usu&aacute;rio n&atilde;o esteja autenticado
 		{
 			return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
 		}
 
 		parent::init(); // chama o init() do pai GenericControllerNew
-	} // fecha método init()
+	} // fecha m&eacute;todo init()
 	
 	public function indexAction() 
 	{
-		// caso o formulário seja enviado via post
+		// caso o formul&aacute;rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
 			$post = Zend_Registry::get('post');
@@ -64,7 +64,7 @@ class LembretesController extends MinC_Controller_Action_Abstract {
 		
 			$mens = new LembretesDAO();
 			$mens->alterarlembrete($contador, $lembrete);
-			parent::message("Alteração efetuada com sucesso!", "lembretes/index?pronac=".$idPronac."&databusca=".$databusca);
+			parent::message("Altera&ccedil;&atilde;o efetuada com sucesso!", "lembretes/index?pronac=".$idPronac."&databusca=".$databusca);
 		}
 			$get = Zend_Registry::get('get');
 			$pronac    = $get->pronac;
@@ -90,7 +90,7 @@ class LembretesController extends MinC_Controller_Action_Abstract {
 		$this->view->anoprojeto = $tblembretesprojeto[0]->AnoProjeto;		
 		$this->view->sequencial = $tblembretesprojeto[0]->Sequencial;
 
-		// caso o formulário seja enviado via post
+		// caso o formul&aacute;rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
 			$post 		= Zend_Registry::get('post');
@@ -182,7 +182,7 @@ public function alterarlembreteAction()
 	public function buscalembreteAction()
 	
 		{
-		// caso o formulário seja enviado via post
+		// caso o formul&aacute;rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
 			// recebe o pronac e data do lembrete via post
@@ -196,22 +196,22 @@ public function alterarlembreteAction()
 				// verifica se a data dolembrete veio vazio
 				if (empty($dtlembrete) && !Data::validarData($dtlembrete))
 				{
-					throw new Exception("A Data é inválida!");
+					throw new Exception("A Data &eacute; inv&aacute;lida!");
 				}
 				// busca o pronac no banco
 				else
 				{
-					// integração MODELO e VISÃO
+					// integra&ccedil;&atilde;o MODELO e VIS&atilde;O
 
 					$resultado = LembretesDAO::pesquisaLembrete($pronac,$dtlembrete);
 
-					// caso o Lembrete não esteja cadastrado
+					// caso o Lembrete n&atilde;o esteja cadastrado
 					if (!$resultado)
 					{
-						throw new Exception("Registro não encontrado!");
+						throw new Exception("Registro n&atilde;o encontrado!");
 					}
 					// caso o Lembrete esteja cadastrado, 
-					// vai para a página dos Lembretes
+					// vai para a p&aacute;gina dos Lembretes
 					else
 					{
 						// redireciona a data para o lembrete

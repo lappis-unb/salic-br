@@ -18,7 +18,7 @@
     	$("#rodapeConteudo").css("margin-left", "225px");
     	$(".sanfonaDiv").css("clear", "both");
     	$(".sanfonaDiv").css("width", "91%");
-    } // fecha função layout_fluido()
+    } // fecha fun&ccedil;&atilde;o layout_fluido()
 
     $(document).ready(function()
     {
@@ -55,7 +55,7 @@
     }
 </script>
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <?php
 
             $get = Zend_Registry::get("get");
@@ -80,7 +80,7 @@
 			<div id="espaco"></div>
 		</div>
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navega&ccedil;&atilde;o local #qm0 -->
    
 <div id="modalExcluirProposta" style="display:none"></div>
         </div>

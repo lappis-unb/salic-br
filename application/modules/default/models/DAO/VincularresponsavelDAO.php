@@ -41,7 +41,7 @@ class VincularresponsavelDAO extends Zend_Db_Table {
 //                        array('n' => 'Nomes'),
 //                        'a.idAgente = n.idAgente',
 //                        array('Descricao'),
-//                        'agentes.dbo'
+//                        'agentes'
 //                )
 //
 //                ->where('pr.IdPRONAC= ?', $idPronac)

@@ -1,8 +1,8 @@
 Módulo de Admissibilidade
 =========================
 
-Módulo responsável por realizar a admissibilidade da proposta.
+Módulo respons&aacute;vel por realizar a admissibilidade da proposta.
 
 ```
-@todo : Complementar esse arquivo com mais informações do módulo.
+@todo : Complementar esse arquivo com mais informa&ccedil;&otilde;es do módulo.
 ```

@@ -319,7 +319,7 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('ag' => 'Agentes'), 'ag.CNPJCPF = uog.usu_identificacao', array('ag.idAgente')
-                , "agentes.dbo"
+                , "agentes"
         );
         $select->where('uog.sis_codigo = ?', 21);
         //$select->where('uog.org_superior = ?', $idorgao);
@@ -342,7 +342,7 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
                 array('ag' => 'Agentes'), 'ag.CNPJCPF = uog.usu_identificacao', array('ag.idAgente')
-                , "agentes.dbo"
+                , "agentes"
         );
 
         //adiciona quantos filtros foram enviados

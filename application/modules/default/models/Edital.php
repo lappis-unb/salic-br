@@ -63,12 +63,12 @@ class Edital extends MinC_Db_Table_Abstract{
         $slct->joinInner(array('age' => 'Agentes'),
                 'age.idAgente = ava.idAvaliador',
                 array(''),
-                'agentes.dbo'
+                'agentes'
         );
         $slct->joinInner(array('nom' => 'Nomes'),
                 'nom.idAgente = age.idAgente',
                 array('age.Descricao'),
-                'agentes.dbo'
+                'agentes'
         );
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -92,13 +92,13 @@ class Edital extends MinC_Db_Table_Abstract{
                 array('tfd' => 'tbFormDocumento'),
                 'tfd.idEdital = edi.idEdital',
                 array('tfd.nmFormDocumento', 'tfd.stModalidadeDocumento','tfd.idClassificaDocumento', 'tfd.nrFormDocumento', 'tfd.nrVersaoDocumento'  ),
-                'BDCORPORATIVO.scQuiz'
+                'bdcorporativo.scQuiz'
         );
         $slct->joinInner(
                 array('exf' => 'tbEditalXtbFaseEdital'),
                 'exf.idEdital = edi.idEdital',
                 array('*'),
-                'BDCORPORATIVO.scSac'
+                'bdcorporativo.scSac'
         );
         $slct->joinInner(
                 array('ati' => 'atividade'),
@@ -151,13 +151,13 @@ class Edital extends MinC_Db_Table_Abstract{
         $sql = "SELECT
 					SUM(pg.vlParcela) as parcelas
 				FROM
-					BDCORPORATIVO.scSAC.tbPagamento as pg
-					INNER JOIN BDCORPORATIVO.scQuiz.tbPerguntaFormDocto as pfd ON pfd.nrPergunta=pg.nrPergunta
-					INNER JOIN BDCORPORATIVO.scQuiz.tbFormDocumento as fd ON fd.nrFormDocumento=pfd.nrFormDocumento and fd.nrVersaoDocumento=pfd.nrVersaoDocumento
-					INNER JOIN SAC.dbo.Edital as ed ON ed.idEdital= fd.idEdital
+					bdcorporativo.scsac.tbPagamento as pg
+					INNER JOIN bdcorporativo.scQuiz.tbPerguntaFormDocto as pfd ON pfd.nrPergunta=pg.nrPergunta
+					INNER JOIN bdcorporativo.scQuiz.tbFormDocumento as fd ON fd.nrFormDocumento=pfd.nrFormDocumento and fd.nrVersaoDocumento=pfd.nrVersaoDocumento
+					INNER JOIN sac.dbo.Edital as ed ON ed.idEdital= fd.idEdital
 					INNER JOIN BDSIMEC.pde.atividade AS ati ON ati.atiid=ed.idAti
-					INNER JOIN SAC.dbo.PreProjeto AS pp ON pp.idEdital=ed.idEdital
-					INNER JOIN SAC.dbo.Projetos AS p ON p.idProjeto=pp.idPreProjeto
+					INNER JOIN sac.dbo.PreProjeto AS pp ON pp.idEdital=ed.idEdital
+					INNER JOIN sac.dbo.Projetos AS p ON p.idProjeto=pp.idPreProjeto
 				WHERE
 					ed.idAti=$idAti";
 
@@ -192,8 +192,8 @@ class Edital extends MinC_Db_Table_Abstract{
         $conexao = new Conexao;
         $idEdital = NULL;
 
-        $queryIdEdital = "select idEdital FROM BDCORPORATIVO.scQuiz.tbFormDocumento
-        where BDCORPORATIVO.scQuiz.tbFormDocumento.nrFormDocumento = ?";
+        $queryIdEdital = "select idEdital FROM bdcorporativo.scQuiz.tbFormDocumento
+        where bdcorporativo.scQuiz.tbFormDocumento.nrFormDocumento = ?";
 
         $preparedStatement = $conexao->conexao->prepare($queryIdEdital);
         $preparedStatement->bindParam(1, $codFormDocumento);
@@ -215,7 +215,7 @@ class Edital extends MinC_Db_Table_Abstract{
     }
 
 	public static function buscarIdPi($idEdital){
-        $sql = "SELECT idAti FROM SAC.dbo.Edital where idEdital = $idEdital";
+        $sql = "SELECT idAti FROM sac.dbo.Edital where idEdital = $idEdital";
 
 //		
 

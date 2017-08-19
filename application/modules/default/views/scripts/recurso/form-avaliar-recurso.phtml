@@ -7,14 +7,14 @@
         
         $('#btn_finalizar_enquadramento').click(function(){
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente finalizar a análise do recurso?<br /><br />Ao finalizar o recurso será devolvido ao coordenador.');
+            $("#alerta").html('Deseja realmente finalizar a an&aacute;lise do recurso?<br /><br />Ao finalizar o recurso ser&aacute; devolvido ao coordenador.');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width:400,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -124,7 +124,7 @@
             carregarEnquadramento();
         });
         
-        //Atividades iniciados ao terminar o carregameto da página.
+        //Atividades iniciados ao terminar o carregameto da p&aacute;gina.
         carregarEnquadramento();
         CKEDITOR.replace( 'dsParecer', { toolbar: [] } );
     });
@@ -284,7 +284,7 @@
     
     <table class="tabela">
 		<tr>
-			<td><input type="button" name="grid1" id="g1_1" class="btn_adicionar" title="Expandir" />DADOS DA SOLICITAÇÃO</td>
+			<td><input type="button" name="grid1" id="g1_1" class="btn_adicionar" title="Expandir" />DADOS DA SOLICITA&ccedil;&atilde;O</td>
 		</tr>
 	</table>
 	<div id="div_g1_1" class="sumir">
@@ -296,7 +296,7 @@
                 <td colspan="3"><?php echo $this->dados->dsSolicitacaoRecurso; ?></td>
             </tr>
             <tr>
-                <td class="destacar bold">Tipo da Solicitação</td>
+                <td class="destacar bold">Tipo da Solicita&ccedil;&atilde;o</td>
                 <td class="destacar bold">Tipo do Recurso</td>
                 <td class="destacar bold">Dt. Recurso</td>
             </tr>
@@ -310,20 +310,20 @@
     
     <table class="tabela">
 		<tr>
-			<td><input type="button" name="grid1" id="g1_2" class="btn_adicionar" title="Expandir" />AVALIAÇÃO DO COORDENADOR</td>
+			<td><input type="button" name="grid1" id="g1_2" class="btn_adicionar" title="Expandir" />AVALIA&ccedil;&atilde;O DO COORDENADOR</td>
 		</tr>
 	</table>
 	<div id="div_g1_2" class="sumir">
         <table class="tabela">
             <tr>
-                <td class="destacar bold" colspan="3">Descrição</td>
+                <td class="destacar bold" colspan="3">Descri&ccedil;&atilde;o</td>
             </tr>
             <tr>
                 <td colspan="2"><?php echo $this->dados->dsAvaliacao; ?></td>
             </tr>
             <tr>
-                <td class="destacar bold">Situação</td>
-                <td class="destacar bold">Dt. Avaliação</td>
+                <td class="destacar bold">Situa&ccedil;&atilde;o</td>
+                <td class="destacar bold">Dt. Avalia&ccedil;&atilde;o</td>
             </tr>
             <tr>
                 <td><?php echo !empty($this->dados->stAtendimento) ? 'Deferido' : ''; ?></td>
@@ -333,7 +333,7 @@
     </div>
     
     
-    <?php //***** PROJETO INDEFERIDO / ENQUADRAMENTO E ORÇAMENTO *****// ?>
+    <?php //***** PROJETO INDEFERIDO / ENQUADRAMENTO E OR&ccedil;AMENTO *****// ?>
     <?php if($this->dados->tpSolicitacao == 'PI' || $this->dados->tpSolicitacao == 'EO' || $this->dados->tpSolicitacao == 'OR'){ ?>
         <script type="text/javascript">
             function AbrirFecharPlanilha(elemento) {
@@ -431,7 +431,7 @@
                     var idPlanilha = $(this).attr('idPlanilhaProjeto'),
                         itemClicado = $(this);
                         
-                    //AO ABRIR A MODAL, LIMPA TODOS OS CAMPOS EDITÁVEIS
+                    //AO ABRIR A MODAL, LIMPA TODOS OS CAMPOS EDIT&aacute;VEIS
                     $('.modalObrigatorios').each(function(){
                         $(this).css('border-color', '#CCCCCC');
                         $(this).val('');
@@ -441,7 +441,7 @@
                     $('#TotalCalculado').css('color','#222222');
                     $('#textoErroValores').html('');
                     
-                    //BUSCA OS DADOS DO ITEM PARA VISUALIZAÇÃO DOS NA MODAL
+                    //BUSCA OS DADOS DO ITEM PARA VISUALIZA&ccedil;&atilde;O DOS NA MODAL
                     $.ajax({
                         type: 'POST',
                         url: '<?php echo $this->url(array('controller' => 'recurso', 'action' => 'alterar-item')); ?>',
@@ -510,7 +510,7 @@
                                                 erros++;
                                                 $('#campoTotalSolicitado').css('color','blue');
                                                 $('#TotalCalculado').css('color','red');
-                                                $('#textoErroValores').html('O valor total não pode ser maior do que o solicitado.');
+                                                $('#textoErroValores').html('O valor total n&atilde;o pode ser maior do que o solicitado.');
                                             } else {
                                                 $('#campoTotalSolicitado').css('color','#222222');
                                                 $('#TotalCalculado').css('color','#222222');
@@ -533,7 +533,7 @@
                                                         valorSolicitado: valorParaMsgErro
                                                     },
                                                     success: function(data){
-                                                        // recebe os valores do formulário
+                                                        // recebe os valores do formul&aacute;rio
                                                         var qtd = Quantidade,
                                                             ocorrencia = Ocorrencia,
                                                             valor = ValorUnitario,
@@ -545,15 +545,15 @@
                                                         // adiciona o ponto na casa decimal
                                                         .replace(/(\d)(\d{2})$/, "$1.$2");
 
-                                                        // converte para float e adiciona precisão decimal
+                                                        // converte para float e adiciona precis&atilde;o decimal
                                                         qtd = parseFloat(qtd).toFixed(2);
                                                         ocorrencia = parseFloat(ocorrencia).toFixed(2);
                                                         valor = parseFloat(valor).toFixed(2);
 
-                                                        // variável com o resultado
+                                                        // vari&aacute;vel com o resultado
                                                         Total = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-                                                        // se não for número
+                                                        // se n&atilde;o for número
                                                         if (isNaN(Total)){
                                                             Total = '';
                                                         }
@@ -584,7 +584,7 @@
                                                             itemClicado.parent().parent().find('.textJustificativa').html(Justificativa);
                                                         }
 
-                                                        //ABRE O MODAL DE CONFIRMAÇÃO DA AÇÃO REALIZADA
+                                                        //ABRE O MODAL DE CONFIRMA&ccedil;&atilde;O DA A&ccedil;&atilde;O REALIZADA
                                                         $("#modalItem").dialog('close');
                                                         $("#alerta").dialog("destroy");
                                                         $("#alerta").html(data.msg);
@@ -619,7 +619,7 @@
                 
                 $('.multiplicarValores').keyup(function(){
                         
-                    // recebe os valores do formulário
+                    // recebe os valores do formul&aacute;rio
                     var qtd = $('#modalQuantidade').val(),
                         ocorrencia = $('#modalOcorrencia').val(),
                         valor = $('#modalValorUnitario').val();
@@ -630,15 +630,15 @@
                     // adiciona o ponto na casa decimal
                     .replace(/(\d)(\d{2})$/, "$1.$2");
 
-                    // converte para float e adiciona precisão decimal
+                    // converte para float e adiciona precis&atilde;o decimal
                     qtd        = parseFloat(qtd).toFixed(2);
                     ocorrencia = parseFloat(ocorrencia).toFixed(2);
                     valor      = parseFloat(valor).toFixed(2);
 
-                    // variável com o resultado
+                    // vari&aacute;vel com o resultado
                     resultado = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
 
-                    // se não for número
+                    // se n&atilde;o for número
                     if (isNaN(resultado))
                     {
                         resultado = '';
@@ -669,7 +669,7 @@
             });
         </script>
         
-        <?php //MODAL DE AVALIAÇÃO DO ITEM ?>
+        <?php //MODAL DE AVALIA&ccedil;&atilde;O DO ITEM ?>
         <div id="modalItem" class="sumir">
             <table class="tabela">
                 <tr>
@@ -699,7 +699,7 @@
                     <td class="destacar bold">Unidade</td>
                     <td class="destacar bold">Qtd</td>
                     <td class="destacar bold">Ocorrência</td>
-                    <td class="destacar bold">Vl. Unitário</td>
+                    <td class="destacar bold">Vl. Unit&aacute;rio</td>
                     <td class="destacar bold">Dias</td>
                     <td class="destacar bold">Total</td>
                 </tr>
@@ -720,7 +720,7 @@
                     <td class="destacar bold">Unidade</td>
                     <td class="destacar bold">Qtd</td>
                     <td class="destacar bold">Ocorrência</td>
-                    <td class="destacar bold">Vl. Unitário</td>
+                    <td class="destacar bold">Vl. Unit&aacute;rio</td>
                     <td class="destacar bold">Dias</td>
                     <td class="destacar bold">Total</td>
                 </tr>
@@ -750,19 +750,19 @@
                 </tr>
             </table>
         </div>
-        <?php //FIM MODAL DE AVALIAÇÃO DO ITEM ?>
+        <?php //FIM MODAL DE AVALIA&ccedil;&atilde;O DO ITEM ?>
         
         <table class="tabela">
             <tr>
-                <th colspan="4">Parecer Técnico</th>
+                <th colspan="4">Parecer T&eacute;cnico</th>
             </tr>
         </table>
     
         <?php $habilitarAnaliseDeCusto = false; ?>
         <?php foreach ($this->produtos as $produto){ ?>
         <?php
-            if($produto->stPrincipal){ //Verifica se é o produto principal
-                if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal é favorável
+            if($produto->stPrincipal){ //Verifica se &eacute; o produto principal
+                if($produto->ParecerFavoravel){ //Verifica se o parecer desse produto principal &eacute; favor&aacute;vel
                     $habilitarAnaliseDeCusto = true;
                 }
             }
@@ -786,13 +786,13 @@
                         <td>
                             <table class="tabela">
                                 <tr>
-                                    <td><input type="button" name="grid1" id="analiseconteudo_<?php echo $produto->idProduto; ?>" class="btn_remover" title="Expandir" onclick="EnquadramentoFavoravel('<?php echo $produto->idProduto; ?>', '<?php echo $produto->ParecerFavoravel; ?>');" />Análise de Conteúdo</td>
+                                    <td><input type="button" name="grid1" id="analiseconteudo_<?php echo $produto->idProduto; ?>" class="btn_remover" title="Expandir" onclick="EnquadramentoFavoravel('<?php echo $produto->idProduto; ?>', '<?php echo $produto->ParecerFavoravel; ?>');" />An&aacute;lise de Conteúdo</td>
                                 </tr>
                             </table>
                             <div id="div_analiseconteudo_<?php echo $produto->idProduto; ?>">
                                 <table class="tabela">
                                     <tr>
-                                        <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento Favorável? *</td>
+                                        <td class="destacar bold enquadramentoFavoravel" colspan="6">Enquadramento Favor&aacute;vel? *</td>
                                     </tr>
                                     <tr>
                                         <td colspan="6">
@@ -895,12 +895,12 @@
         <?php if($habilitarAnaliseDeCusto){ ?>
         <table class="tabela">
             <tr>
-                <td class="bold centro fundo_linha2">Planilha Orçamentária</td>
+                <td class="bold centro fundo_linha2">Planilha Or&ccedil;ament&aacute;ria</td>
             </tr>
         </table>
         <table class="tabela">
             <tr>
-                <td style="font-weight: bold;"><input type="button" name="grid1" id="p_planilha_orcamentaria" class="btn_adicionar" title="Expandir" />Análise de Custo</td>
+                <td style="font-weight: bold;"><input type="button" name="grid1" id="p_planilha_orcamentaria" class="btn_adicionar" title="Expandir" />An&aacute;lise de Custo</td>
             </tr>
         </table>
         <div id="div_p_planilha_orcamentaria" class="sumir">
@@ -1106,14 +1106,14 @@
             
             <table class="tabela">
                 <tr>
-                    <td align="right" class="destacar bold w150">Parecer Favorável?</td>
+                    <td align="right" class="destacar bold w150">Parecer Favor&aacute;vel?</td>
                     <td colspan="3">
                         <input type="radio" name="parecerProjeto" value="2" checked="checked" <?php echo (!$habilitarAnaliseDeCusto) ? 'disabled="disabled"' : ''; ?> /> <label for="parecerProjeto2" style="margin-right:25px; font-weight: normal;">Sim</label>
-                        <input type="radio" name="parecerProjeto" value="1" <?php echo (!$habilitarAnaliseDeCusto) ? 'checked="checked"' : ''; ?> /> <label for="parecerProjeto1" style="font-weight: normal;">Não</label>
+                        <input type="radio" name="parecerProjeto" value="1" <?php echo (!$habilitarAnaliseDeCusto) ? 'checked="checked"' : ''; ?> /> <label for="parecerProjeto1" style="font-weight: normal;">N&atilde;o</label>
                     </td>
                 </tr>
                 <tr>
-                    <td align="right" class="destacar bold w150">Área</td>
+                    <td align="right" class="destacar bold w150">&aacute;rea</td>
                     <td valign="top" width="200px">
                         <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" style="width: 160px;" <?php echo (!$habilitarAnaliseDeCusto) ? 'disabled="disabled"' : ''; ?>>
                             <option value=""> - Selecione - </option>
@@ -1170,18 +1170,18 @@
     <form name="form_enquadramento" id="form_enquadramento" action="<?php echo $this->baseUrl(); ?>/recurso/salvar-enquadramento" method="post">
         <table class="tabela">
             <tr>
-                <th colspan="4">Parecer Técnico</th>
+                <th colspan="4">Parecer T&eacute;cnico</th>
             </tr>
             <tr>
-                <td align="right" class="destacar bold w150">Parecer Favorável?</td>
+                <td align="right" class="destacar bold w150">Parecer Favor&aacute;vel?</td>
                 <td colspan="3">
                     <input type="radio" name="parecerProjeto" value="2" checked="checked" /> <label for="parecerProjeto2" style="margin-right:25px; font-weight: normal;">Sim</label>
-                                                                                          <input type="radio" name="parecerProjeto" value="1" <?php if (isset($this->Parecer->ParecerFavoravel)) { echo ($this->Parecer->ParecerFavoravel  == 1) ? 'checked="checked"' : '';} ?> /> <label for="parecerProjeto1" style="font-weight: normal;">Não</label>
+                                                                                          <input type="radio" name="parecerProjeto" value="1" <?php if (isset($this->Parecer->ParecerFavoravel)) { echo ($this->Parecer->ParecerFavoravel  == 1) ? 'checked="checked"' : '';} ?> /> <label for="parecerProjeto1" style="font-weight: normal;">N&atilde;o</label>
                 </td>
             </tr>
             <?php if($this->dados->tpSolicitacao == 'OR'){ $sumir = 'class="sumir"'; } ?>
             <tr <?php echo $sumir; ?>>
-                <td align="right" class="destacar bold w150">Área</td>
+                <td align="right" class="destacar bold w150">&aacute;rea</td>
                 <td valign="top" width="200px">
                     <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" style="width: 160px;">
                         <option value=""> - Selecione - </option>
@@ -1233,7 +1233,7 @@
     <br clear="all" />
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

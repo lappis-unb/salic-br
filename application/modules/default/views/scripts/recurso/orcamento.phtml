@@ -1,12 +1,12 @@
 <?php
 /**
- * Projetos Deferidos - Orçamento
+ * Projetos Deferidos - Or&ccedil;amento
  * @author Equipe RUP - Politec
  * @since 20/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.recurso
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -16,7 +16,7 @@
 	<ul>
 		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para Início">Início</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')); ?>" title="Ir para Recurso">Recurso</a></li>
-		<li class="last">Projetos Deferidos - Orçamento</li>
+		<li class="last">Projetos Deferidos - Or&ccedil;amento</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -25,7 +25,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Projetos Deferidos - Orçamento <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Projetos Deferidos - Or&ccedil;amento <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -73,7 +73,7 @@
 				}
 				else
 				{
-					echo "<em>Não informado.</em>";
+					echo "<em>N&atilde;o informado.</em>";
 				}
 				?>
 </td>
@@ -169,7 +169,7 @@
 				<tr class="IFF IFF_PRODUTO<?php echo $contadorProd; ?>">
 					<td colspan="12">
 						<strong style="margin-left:2%;">
-							<?php foreach ($this->planilhaEtapa as $etapa) : // Nome ou Descrição da Etapa ?>
+							<?php foreach ($this->planilhaEtapa as $etapa) : // Nome ou Descri&ccedil;&atilde;o da Etapa ?>
 								<?php if ($buscarEtapa->idEtapa == $etapa->idPlanilhaEtapa) : ?>
 									<div id="icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>" class="sumir"><a href="#icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>" onclick="$('#icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>, .IFF_ETAPA<?php echo $contadorEtapa; ?>').show(); $('#icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>').hide();" onkeypress=" "><div class="icn_mais" style="width:90%; margin-left:4%;"><span class="orange del_link"><?php echo $buscarEtapa->idEtapa; ?> - <?php echo $etapa->Descricao; ?></span></div></a></div>
 									<div id="icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>"><a href="#icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>" onclick="$('#icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>').show(); $('#icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>, .IFF_ETAPA<?php echo $contadorEtapa; ?>').hide();" onkeypress=" "><div class="icn_menos" style="width:90%; margin-left:4%;"><span class="orange del_link"><?php echo $buscarEtapa->idEtapa; ?> - <?php echo $etapa->Descricao; ?></span></div></a></div>
@@ -194,7 +194,7 @@
 					        <th width="11%">Valor Solicitado</th>
 					        <th width="11%">Valor Aprovado</th>
 					        <th width="30%">Justificativa Proponente</th>
-					        <th width="30%">Justificativa Técnica</th>
+					        <th width="30%">Justificativa T&eacute;cnica</th>
 					    </tr>
 	
 						<?php
@@ -203,7 +203,7 @@
 						if (count(RecursoDAO::analiseDeConta($buscarEtapa->IdPRONAC, $buscarEtapa->idProduto, $buscarEtapa->idEtapa, null, null, true)) > 0)
 						{
 							foreach (RecursoDAO::analiseDeConta($buscarEtapa->IdPRONAC, $buscarEtapa->idProduto, $buscarEtapa->idEtapa, null, null, true) as $resposta) :
-								$i = $resposta->idPlanilhaAprovacao; // criará id únido
+								$i = $resposta->idPlanilhaAprovacao; // criar&aacute; id únido
 						?>
 	
 					    <tr onmouseover="over_tr(this);" onfocus="over_tr(this);" onmouseout="out_tr(this);" onblur="out_tr(this);" onclick="click_tr(this);" onkeypress="click_tr(this);" 
@@ -253,7 +253,7 @@
 						
 												if (texto.length > 0 && texto != 'Digiteseutextoaqui...')
 												{
-													// verifica se o usuário clicou no botão
+													// verifica se o usu&aacute;rio clicou no bot&atilde;o
 													 
 													$('#justificativa').val(CKEDITOR.instances['justificativa'].getData());
 												}
@@ -266,7 +266,7 @@
 														draggable: false,
 														resizable: false,
 														closeOnEscape: false,
-														title: 'Dados obrigatórios não informados!',
+														title: 'Dados obrigatórios n&atilde;o informados!',
 														buttons:
 														{
 															Ok:function()
@@ -313,7 +313,7 @@
 										draggable: false,
 										resizable: false,
 										closeOnEscape: false,
-										title: 'Dados obrigatórios não informados!',
+										title: 'Dados obrigatórios n&atilde;o informados!',
 										buttons:
 										{
 											Ok:function()
@@ -428,8 +428,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

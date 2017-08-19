@@ -27,7 +27,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $schemaSac = parent::getSchema('sac');
 
         $a = array(
-            'a.idagente'
+            'a.idAgente'
             ,'a.CNPJCPF'
             ,'a.CNPJCPFSuperior'
             ,'a.tipopessoa'
@@ -56,15 +56,15 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()->distinct()->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'nomes'), 'n.idagente = a.idagente', array('n.descricao as nome'), $schemaAgentes)
-            ->joinLeft(array('e' => 'endereconacional'), 'e.idagente = a.idagente', $e, $schemaAgentes)
+            ->joinLeft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.descricao as nome'), $schemaAgentes)
+            ->joinLeft(array('e' => 'endereconacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', array('*', 'm.descricao as dscidade'), $schemaAgentes)
             ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
-            ->joinLeft(array('ve' => 'verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
-            ->joinLeft(array('vl' => 'verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
-            ->joinLeft(array('t' => 'tbtitulacaoconselheiro'), 't.idagente = a.idagente', $t, $schemaAgentes)
-            ->joinLeft(array('v' => 'visao'), 'v.idagente = a.idagente', '*', $schemaAgentes)
-            ->joinLeft(array('sa' => 'area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
+            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
+            ->joinLeft(array('t' => 'tbTitulacaoConselheiro'), 't.idAgente = a.idAgente', $t, $schemaAgentes)
+            ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
+            ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
             ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
             ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
             ;
@@ -77,7 +77,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             $sql->where('n.descricao LIKE ?', '%'.$nome.'%');
         } if (!empty($idAgente)) {
             # busca de acordo com o id do agente
-            $sql->where('a.idagente = ?',$idAgente);
+            $sql->where('a.idAgente = ?',$idAgente);
         }
 
         $sql->order(array('e.status Desc', 'n.descricao Asc'));
@@ -108,12 +108,12 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(array('a' => 'Agentes'), $a, 'agentes.dbo')
-            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes.dbo')
-            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes.dbo')
-            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes.dbo')
-            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes.dbo')
-            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes.dbo')
+            ->from(array('a' => 'Agentes'), $a, 'agentes')
+            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes')
+            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes')
+            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes')
+            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes')
+            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes')
             ->where('a.TipoPessoa = 0 OR a.TipoPessoa = 1')
             ->where('n.TipoNome = 18 OR n.TipoNome = 19')
             ->where('vis.Visao = 198')
@@ -188,11 +188,11 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(array('E' => 'EnderecoNacional'), $e, 'agentes.dbo')
-            ->joinLeft(array('VE' => 'Verificacao'), 'VE.idVerificacao = E.TipoEndereco', $ve, 'agentes.dbo')
-            ->joinLeft(array('M' => 'Municipios'), 'M.idMunicipioIBGE = E.Cidade', $m, 'agentes.dbo')
-            ->joinLeft(array('U' => 'UF'), 'U.idUF = E.UF', $u, 'agentes.dbo')
-            ->joinLeft(array('VL' => 'Verificacao'), 'VL.idVerificacao = E.TipoLogradouro', array('VL.Descricao as dsTipoLogradouro'), 'agentes.dbo')
+            ->from(array('E' => 'EnderecoNacional'), $e, 'agentes')
+            ->joinLeft(array('VE' => 'Verificacao'), 'VE.idVerificacao = E.TipoEndereco', $ve, 'agentes')
+            ->joinLeft(array('M' => 'Municipios'), 'M.idMunicipioIBGE = E.Cidade', $m, 'agentes')
+            ->joinLeft(array('U' => 'UF'), 'U.idUF = E.UF', $u, 'agentes')
+            ->joinLeft(array('VL' => 'Verificacao'), 'VL.idVerificacao = E.TipoLogradouro', array('VL.Descricao as dsTipoLogradouro'), 'agentes')
             ->where('E.idAgente = ?', $idAgente)
             ->order(array('Status DESC'))
             ;
@@ -217,7 +217,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         $i = array(
             'i.idinternet'
-            ,'i.idagente'
+            ,'i.idAgente'
             ,'i.tipointernet'
             ,'i.descricao'
             ,'i.status'
@@ -226,12 +226,12 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->from(array('i' => 'internet'), $i, $tblAgentes->getSchema('agentes'))
-            ->join(array('v' => 'verificacao'), 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $tblAgentes->getSchema('agentes'))
-            ->join(array('t' => 'tipo'), 't.idtipo = v.idtipo', null, $tblAgentes->getSchema('agentes'));
+            ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $tblAgentes->getSchema('agentes'))
+            ->join(array('t' => 'tipo'), 't.idTipo = v.idTipo', null, $tblAgentes->getSchema('agentes'));
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
 
-            $sql->where('i.idagente = ?', $idAgente);
+            $sql->where('i.idAgente = ?', $idAgente);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -267,12 +267,12 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from(array('tl' => 'telefones'), $tl, $tblAgentes->getSchema('agentes'))
             ->join(array('uf' => 'uf'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $tblAgentes->getSchema('agentes'))
-            ->join(array('ag' => 'Agentes'), 'ag.idagente = tl.idagente', array('ag.idagente'), $tblAgentes->getSchema('agentes'))
+            ->join(array('ag' => 'Agentes'), 'ag.idAgente = tl.idAgente', array('ag.idAgente'), $tblAgentes->getSchema('agentes'))
             ->joinLeft(array('ddd' => 'ddd'), 'tl.ddd = ddd.codigo', $ddd, $tblAgentes->getSchema('agentes'))
-            ->joinLeft(array('v' => 'verificacao'), 'v.idverificacao = tl.tipotelefone', array('v.descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
+            ->joinLeft(array('v' => 'Verificacao'), 'v.idverificacao = tl.tipotelefone', array('v.descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
             ;
         if (!empty($idAgente)) { // busca de acordo com o id do agente
-            $sql->where('tl.idagente = ?', $idAgente);
+            $sql->where('tl.idAgente = ?', $idAgente);
         }
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);

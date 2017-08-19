@@ -37,12 +37,12 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('c'=>$this->_name),
-            array('c.idagente', 'c.idcredenciamentoparecerista', 'c.sicredenciamento', 'c.qtponto', 'c.idverificacao'),
+            array('c.idAgente', 'c.idcredenciamentoparecerista', 'c.sicredenciamento', 'c.qtponto', 'c.idverificacao'),
             $this->_schema
         );
 
         $select->joinInner(
-            array('a'=>'area'),'a.codigo = c.idcodigoarea',
+            array('a'=>'Area'),'a.codigo = c.idcodigoarea',
             array('a.descricao as area'),
             $this->getSchema('sac')
         );
@@ -54,19 +54,19 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         );
 
         $select->joinLeft(
-            array('v'=>'verificacao'),'v.idverificacao = c.idverificacao',
+            array('v'=>'Verificacao'),'v.idverificacao = c.idverificacao',
             array('v.descricao as nivel'),
             $this->_schema
         );
 
         $select->joinLeft(
-            array('x'=>'visao'),'x.idagente = c.idagente',
-            array('x.visao'),
+            array('x'=>'Visao'),'x.idAgente = c.idAgente',
+            array('x.Visao'),
             $this->_schema
         );
 
-        $select->where('c.idagente = ?', $idAgente);
-        $select->where('x.visao = ?', 209);
+        $select->where('c.idAgente = ?', $idAgente);
+        $select->where('x.Visao = ?', 209);
         $select->order('a.descricao');
         $select->order('s.descricao');
 
@@ -87,7 +87,6 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         $select->where('A.idAgente = ?', $idAgente);
 
         $select->where('A.siCredenciamento = 1');
-        //xd($select->__toString());
         return $this->fetchAll($select);
 
     }
@@ -106,7 +105,6 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
 
         $select->where('A.siCredenciamento = 1');
         
-        //xd($select->__toString());
         return $this->fetchAll($select);
 
     }
@@ -127,7 +125,6 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
 
         $select->where('A.siCredenciamento = 1');
         
-        //xd($select->__toString());
         return $this->fetchAll($select);
 
     }
