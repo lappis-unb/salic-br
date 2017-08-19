@@ -307,7 +307,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
     {
     	$sql = "SELECT distinct
 					x.idVerificacao,
-					x.idTipo,
+					x.IdTipo,
 				    x.Descricao AS FonteRecurso
 				FROM sac.dbo.Projetos AS a INNER JOIN
 				     sac.dbo.tbPlanilhaProposta AS b ON a.idProjeto = b.idProjeto LEFT OUTER JOIN
