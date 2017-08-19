@@ -121,7 +121,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->from(array('i' => 'internet'), $i, $this->_schema)
-            ->join(array('v' => 'verificacao'), 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $this->_schema)
+            ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $this->_schema)
             ->join(array('t' => 'tipo'), 't.idtipo = v.idtipo', null, $this->_schema);
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente

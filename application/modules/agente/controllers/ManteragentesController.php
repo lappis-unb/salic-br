@@ -696,7 +696,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             foreach ($dados as $dado) :
                 $novos_dados[$i]['Visao'] = utf8_encode($dado->Visao);
                 $novos_dados[$i]['Descricao'] = utf8_encode($dado->Descricao);
-                $novos_dados[$i]['verificacao'] = utf8_encode($dado->idVerificacao);
+                $novos_dados[$i]['Verificacao'] = utf8_encode($dado->idVerificacao);
                 $novos_dados[$i]['area'] = ($dado->area) ? utf8_encode($dado->area) : 'false';
                 $i++;
             endforeach;

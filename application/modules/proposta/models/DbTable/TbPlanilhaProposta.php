@@ -100,7 +100,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             ->join(array('uf' => 'uf'), 'uf.CodUfIbge = pp.ufdespesa', 'uf.descricao AS DescricaoUf', $sacSchema)
             ->join(array('mun' => 'municipios'), 'mun.idmunicipioibge = pp.municipiodespesa','mun.descricao as DescricaoMunicipio', $this->getSchema('agentes'))
             ->join(array('pe' => 'tbplanilhaetapa'), 'pp.idetapa = pe.idplanilhaetapa', 'pe.descricao as DescricaoEtapa', $sacSchema)
-            ->join(array('rec' => 'verificacao'), 'rec.idverificacao = pp.fonterecurso', 'rec.descricao as DescricaoRecurso', $sacSchema)
+            ->join(array('rec' => 'Verificacao'), 'rec.idverificacao = pp.fonterecurso', 'rec.descricao as DescricaoRecurso', $sacSchema)
             ->join(array('uni' => 'tbplanilhaunidade'), 'uni.idunidade = pp.unidade', 'uni.descricao as DescricaoUnidade', $sacSchema)
 //            ->where('pp.idetapa = ?', $idEtapa)
         ;
@@ -429,7 +429,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
 
         $sql->joinLeft(array('u' => 'tbplanilhaunidade'),'u.idUnidade = p.unidade', array('unidadef' => 'u.descricao'), $this->_schema );
 
-        $sql->joinLeft(array('v' => 'verificacao'),'v.idverificacao = p.fonterecurso', array('fonterecursof' => 'v.descricao'), $this->_schema );
+        $sql->joinLeft(array('v' => 'Verificacao'),'v.idverificacao = p.fonterecurso', array('fonterecursof' => 'v.descricao'), $this->_schema );
 
         $sql->joinLeft(array('pr' => 'produto'),'pr.codigo = p.idproduto', array('ProdutoF' => 'pr.descricao'), $this->_schema );
 
@@ -505,7 +505,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(array('veri' => 'verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->join(array('veri' => 'Verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
             ->order('tpe.descricao');
@@ -607,7 +607,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             ->join(array('uf' => 'uf'), 'uf.CodUfIbge = pp.ufdespesa', 'uf.descricao AS DescricaoUf', $sacSchema)
             ->join(array('mun' => 'municipios'), 'mun.idmunicipioibge = pp.municipiodespesa','mun.descricao as DescricaoMunicipio', $this->getSchema('agentes'))
             ->join(array('pe' => 'tbplanilhaetapa'), 'pp.idetapa = pe.idplanilhaetapa', 'pe.descricao as DescricaoEtapa', $sacSchema)
-            ->join(array('rec' => 'verificacao'), 'rec.idverificacao = pp.fonterecurso', 'rec.descricao as DescricaoRecurso', $sacSchema)
+            ->join(array('rec' => 'Verificacao'), 'rec.idverificacao = pp.fonterecurso', 'rec.descricao as DescricaoRecurso', $sacSchema)
             ->join(array('uni' => 'tbplanilhaunidade'), 'uni.idunidade = pp.unidade', 'uni.descricao as DescricaoUnidade', $sacSchema)
         ;
 

@@ -109,8 +109,8 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('r' => 'verificacaopecaxveiculo'), '*', $this->_schema);
-        $select->joinLeft(array('p' => 'verificacao'), 'r.idverificacaopeca = p.idverificacao', 'descricao as pecadescicao', $this->_schema);
-        $select->joinLeft(array('v' => 'verificacao'), 'r.idverificacaoveiculo = v.idverificacao', 'descricao as veiculodescicao', $this->_schema);
+        $select->joinLeft(array('p' => 'Verificacao'), 'r.idverificacaopeca = p.idverificacao', 'descricao as pecadescicao', $this->_schema);
+        $select->joinLeft(array('v' => 'Verificacao'), 'r.idverificacaoveiculo = v.idverificacao', 'descricao as veiculodescicao', $this->_schema);
         //echo $slct; die;
         $select->where('idverificacaopeca = ? ', $pecaID);
 //        $select->order(array("dtmovimentacao DESC"));
@@ -169,7 +169,7 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
             $this->_schema
                            );
         $slct->joinInner(
-                array('v2' => 'verificacao'),
+                array('v2' => 'Verificacao'),
                 'v2.idverificacao = pd.idveiculo',
                 array('v2.descricao as veiculo'),
             $this->_schema

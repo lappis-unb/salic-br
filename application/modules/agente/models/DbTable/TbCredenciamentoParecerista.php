@@ -54,7 +54,7 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         );
 
         $select->joinLeft(
-            array('v'=>'verificacao'),'v.idverificacao = c.idverificacao',
+            array('v'=>'Verificacao'),'v.idverificacao = c.idverificacao',
             array('v.descricao as nivel'),
             $this->_schema
         );

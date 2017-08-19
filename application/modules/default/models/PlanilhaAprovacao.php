@@ -1668,7 +1668,7 @@ class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
                         $this->_schema
                         )
                 ->joinInner(
-                        array('verificacao' => 'Verificacao'),
+                        array('Verificacao' => 'Verificacao'),
                         'planilhaAprovacao.nrFonteRecurso = verificacao.idVerificacao',
                         array()
                         )

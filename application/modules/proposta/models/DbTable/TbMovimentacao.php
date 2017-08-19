@@ -82,7 +82,7 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
             $this->_schema);
 
         $slct->joinInner(
-            array('ver' => 'verificacao'),
+            array('ver' => 'Verificacao'),
             'mov.Movimentacao = ver.idVerificacao',
             array('Descricao as MovimentacaoNome'),
             $this->_schema

@@ -33,7 +33,7 @@
 //    {
 //        // busca todas as vis�es existentes no banco
 //        if ($todasVisoes) {
-//            $sql = "select distinct idverificacao, descricao from  " . GenericModel::getStaticTableName('agentes', 'verificacao') . "  where idtipo = 16 and sistema = 21 ";
+//            $sql = "select distinct idverificacao, descricao from  " . GenericModel::getStaticTableName('agentes', 'Verificacao') . "  where idtipo = 16 and sistema = 21 ";
 //        } // busca todas as vis�es do usu�rio
 //        else {
 //            $sql = "select
@@ -46,7 +46,7 @@
 //                                vis.stativo ,
 //                                ar.descricao as area
 //                                from " . GenericModel::getStaticTableName('agentes', 'visao') . " vis
-//                                inner join " . GenericModel::getStaticTableName('agentes', 'verificacao') . " ver on ver.idverificacao = vis.visao
+//                                inner join " . GenericModel::getStaticTableName('agentes', 'Verificacao') . " ver on ver.idverificacao = vis.visao
 //                                left join " . GenericModel::getStaticTableName('agentes', 'tbtitulacaoconselheiro') . " ttc on ttc.idagente =  vis.idagente
 //                                left join " . GenericModel::getStaticTableName('sac', 'area') . " ar on ttc.cdArea = ar.Codigo ";
 //

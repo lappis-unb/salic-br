@@ -11,7 +11,7 @@ class Verificacao extends MinC_Db_Table_Abstract
     const APROVACAO_INICIAL_DO_PROJETO = 626;
 
     protected $_schema = "sac";
-    protected $_name = "verificacao";
+    protected $_name = "Verificacao";
 
     /**
      * @param array $dados
