@@ -191,7 +191,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
-        $arrBusca['a.idagente = ?'] = $post->idAgente;
+        $arrBusca['a.idAgente = ?'] = $post->idAgente;
         $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
 
@@ -461,7 +461,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $stProposta = $rsPreProjeto["stProposta"];
             }
 
-            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idAgente'];
+            $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto['idAgente'];
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteENome($arrBuscaProponete)->current();
             if ($rsProponente) {
@@ -546,7 +546,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
             }
 
-            $arrBusca['a.idagente = ?'] = $post->idAgente;
+            $arrBusca['a.idAgente = ?'] = $post->idAgente;
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
             if ($rsProponente) {
@@ -1080,7 +1080,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         //PROCURA AS PROPOSTAS DE TODOS OS IDAGENTE'S
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
 
-        $wherePropostaD['pp.idagente = ?'] = $this->idAgenteProponente;
+        $wherePropostaD['pp.idAgente = ?'] = $this->idAgenteProponente;
         $wherePropostaD['pr.idprojeto IS NULL'] = '';
         $wherePropostaD['pp.idusuario <> ?'] = $this->idResponsavel;
         $listaPropostasD = $propostas->buscarPropostaProjetos($wherePropostaD);

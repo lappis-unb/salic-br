@@ -138,7 +138,7 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
                 array('Descricao',new Zend_Db_Expr("'1' as AgenteDoc, '' as ProjetoDoc"))
         );
 
-        $slct1->where("d.idagente = ".$idAgente);
+        $slct1->where("d.idAgente = ".$idAgente);
 
 
         //seleciona todos os arquivos referente ao projeto -- Para arquivos anexados da forma antiga

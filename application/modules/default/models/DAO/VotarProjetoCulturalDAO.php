@@ -14,7 +14,7 @@ class VotarProjetoCulturalDAO extends Zend_Db_table {
 	public static function verificaDadosProponente($idpronac = null, $idAgente = null) {
 		$sql = "SELECT  DISTINCT
                 nm.Descricao as nomes,
-                nm.idagente,
+                nm.idAgente,
                 pr.IdPRONAC,
                 case
                 when ag.TipoPessoa = 1 then 'Pessoa Jur�dica '

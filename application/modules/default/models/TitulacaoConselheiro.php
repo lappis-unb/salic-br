@@ -21,7 +21,7 @@ class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
         );
         $select->joinInner
                 (
-                array('nm' => 'Nomes'), 'nm.idagente = tc.idAgente', array('nm.Descricao as nome'), 'agentes'
+                array('nm' => 'Nomes'), 'nm.idAgente = tc.idAgente', array('nm.Descricao as nome'), 'agentes'
         );
         if (isset($where)) {
             $keys = array_keys($where);

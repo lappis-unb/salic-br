@@ -51,7 +51,7 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         			  );
 
         $select->joinInner(
-                array('n'=>'nomes'),'n.idagente = a.idagente',
+                array('n'=>'nomes'),'n.idAgente = a.idAgente',
                 array('n.descricao as nome'),
             $this->_schema
         );
@@ -81,7 +81,7 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         );
         $select->where('a.idtipoausencia = ?', $tipo);
         if (!empty($idAgente)) {
-        	$select->where('a.idagente = ?', $idAgente);
+        	$select->where('a.idAgente = ?', $idAgente);
         }
         $select->where($this->getExpressionDatePart('dtinicioausencia', 'year') . ' = ?', $ano);
         if (!empty($mes)) {

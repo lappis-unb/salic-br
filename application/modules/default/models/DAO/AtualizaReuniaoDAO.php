@@ -176,10 +176,10 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
     public static function selecionarvotantes($idreuniao)
     {
         $sql = "SELECT 
-                tbv.idagente,
+                tbv.idAgente,
                 nm.descricao
                 from bdcorporativo.scsac.tbvotante tbv
-                join agentes.dbo.nomes nm on nm.idagente = tbv.idagente
+                join agentes.dbo.nomes nm on nm.idAgente = tbv.idAgente
                 where tbv.idreuniao =" . $idreuniao . " and nm.TipoNome=18 order by 2 asc";
 
 //        die($sql);

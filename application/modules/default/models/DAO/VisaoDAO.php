@@ -40,14 +40,14 @@
 //                                distinct vis.idVisao ,
 //                                ver.descricao,
 //                                ver.idverificacao,
-//                                vis.idagente ,
+//                                vis.idAgente ,
 //                                vis.Visao ,
 //                                vis.usuario ,
 //                                vis.stativo ,
 //                                ar.descricao as area
 //                                from " . GenericModel::getStaticTableName('agentes', 'Visao') . " vis
 //                                inner join " . GenericModel::getStaticTableName('agentes', 'Verificacao') . " ver on ver.idverificacao = vis.Visao
-//                                left join " . GenericModel::getStaticTableName('agentes', 'tbtitulacaoconselheiro') . " ttc on ttc.idagente =  vis.idagente
+//                                left join " . GenericModel::getStaticTableName('agentes', 'tbtitulacaoconselheiro') . " ttc on ttc.idAgente =  vis.idAgente
 //                                left join " . GenericModel::getStaticTableName('sac', 'area') . " ar on ttc.cdArea = ar.Codigo ";
 //
 //            $sql .= " where ver.idverificacao = vis.Visao
@@ -55,7 +55,7 @@
 //
 //            if (!empty($idAgente)) // busca pelo id do agente
 //            {
-//                $sql .= " and vis.idagente = " . $idAgente;
+//                $sql .= " and vis.idAgente = " . $idAgente;
 //            }
 //            if (!empty($visao)) // busca pela vis�o
 //            {

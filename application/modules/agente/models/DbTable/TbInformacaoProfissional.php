@@ -74,7 +74,7 @@ class Agente_Model_DbTable_TbInformacaoProfissional extends MinC_Db_Table_Abstra
         	$select->where('a.siinformacao = ?', $situacao);
         }
         
-        $select->where('a.idagente = ?', $idAgente);
+        $select->where('a.idAgente = ?', $idAgente);
         
         $select->order('a.dtiniciovinculo');
         

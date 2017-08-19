@@ -58,7 +58,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             );
             $objSelect->joinLeft(
                 array('ttc' => 'tbtitulacaoconselheiro'),
-                "ttc.idagente =  vis.idagente",
+                "ttc.idAgente =  vis.idAgente",
                 array(),
                 $this->getSchema('agentes')
             );
@@ -73,7 +73,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             $objSelect->where('sistema = ? ', 21);
 
             if (!empty($idAgente)) {
-                $objSelect->where('vis.idagente = ? ', $idAgente);
+                $objSelect->where('vis.idAgente = ? ', $idAgente);
             }
 
             if (!empty($visao)) {

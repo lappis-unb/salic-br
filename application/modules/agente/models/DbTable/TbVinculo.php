@@ -20,13 +20,13 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
         );
 
         $slct->joinInner(
-                array('ag' => 'Agentes'), "ag.idagente = vi.idagenteproponente",
+                array('ag' => 'Agentes'), "ag.idAgente = vi.idAgenteproponente",
                 array('ag.CNPJCPF'),
                 $this->_schema
         );
 
         $slct->joinInner(
-                array('nm' => 'nomes'), "nm.idagente = ag.idagente",
+                array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
                 array('nm.descricao as nomeproponente'),
                 $this->_schema
         );
@@ -221,7 +221,7 @@ xd($slct1->assemble());
 		$select->where('p.IdPRONAC             = ?', $idPronac);
 
 		$select->order('v.idusuarioresponsavel ASC');
-		$select->order('v.idagenteproponente ASC');
+		$select->order('v.idAgenteproponente ASC');
 		$select->order('p.nomeprojeto ASC');
 
 		return $this->fetchAll($select);

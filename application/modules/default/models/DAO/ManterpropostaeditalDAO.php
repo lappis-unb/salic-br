@@ -64,7 +64,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 	public static function buscaredital($array) {
             $sql = "Select p.idPreProjeto,
                            nm.Descricao   as Proponente,
-                           p.idagente     as idAgente,
+                           p.idAgente     as idAgente,
                            p.NomeProjeto,
                            p.Mecanismo,
                            stTipoDemanda,

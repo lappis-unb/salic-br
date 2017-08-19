@@ -37,7 +37,7 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('c'=>$this->_name),
-            array('c.idagente', 'c.idcredenciamentoparecerista', 'c.sicredenciamento', 'c.qtponto', 'c.idverificacao'),
+            array('c.idAgente', 'c.idcredenciamentoparecerista', 'c.sicredenciamento', 'c.qtponto', 'c.idverificacao'),
             $this->_schema
         );
 
@@ -60,12 +60,12 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         );
 
         $select->joinLeft(
-            array('x'=>'Visao'),'x.idagente = c.idagente',
+            array('x'=>'Visao'),'x.idAgente = c.idAgente',
             array('x.Visao'),
             $this->_schema
         );
 
-        $select->where('c.idagente = ?', $idAgente);
+        $select->where('c.idAgente = ?', $idAgente);
         $select->where('x.Visao = ?', 209);
         $select->order('a.descricao');
         $select->order('s.descricao');

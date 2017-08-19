@@ -77,9 +77,9 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             } else {
                 $sql = $db->select()
                     ->from(array('a' => 'vinculacao'), null, $this->getSchema('agentes'))
-                    ->join(array('b' => 'Agentes'), '(a.idagente = b.idagente)', 'b.CNPJCPF' ,$this->getSchema('agentes'))
-                    ->join(array('c' => 'Agentes'), '(a.idvinculoprincipal = c.idagente)', null, $this->getSchema('agentes'))
-                    ->join(array('d' => 'Visao'), '(d.idagente = a.idagente)', null,$this->getSchema('agentes'))
+                    ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', 'b.CNPJCPF' ,$this->getSchema('agentes'))
+                    ->join(array('c' => 'Agentes'), '(a.idvinculoprincipal = c.idAgente)', null, $this->getSchema('agentes'))
+                    ->join(array('d' => 'Visao'), '(d.idAgente = a.idAgente)', null,$this->getSchema('agentes'))
                     ->where('b.CNPJCPF = ?', $cpfLogado)
                     ->where('c.CNPJCPF = ?', $cpfCnpjProponente)
                     ->where('d.Visao = 198')
@@ -100,8 +100,8 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             break;
         case 1:
             $sql = $db->select()
-                ->from(array('a' => 'preprojeto'), array('a.idagente', 'a.idusuario'), $this->getSchema('sac'))
-                ->join(array('b' => 'Agentes'), '(a.idagente = b.idagente)', array('b.CNPJCPF', 'b.tipopessoa'), $this->getSchema('agentes'))
+                ->from(array('a' => 'preprojeto'), array('a.idAgente', 'a.idusuario'), $this->getSchema('sac'))
+                ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', array('b.CNPJCPF', 'b.tipopessoa'), $this->getSchema('agentes'))
                 ->where('idpreprojeto = ?', $idPreProjeto)
                 ;
 
@@ -116,9 +116,9 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             } else {
                 $sql = $db->select()
                     ->from(array('a' => 'vinculacao'), null, $this->getSchema('agentes'))
-                    ->join(array('b' => 'Agentes'), '(a.idagente = b.idagente)', 'b.CNPJCPF', $this->getSchema('agentes'))
-                    ->join(array('c' => 'Agentes'), '(a.idvinculoprincipal = c.idagente)', null, $this->getSchema('agentes'))
-                    ->join(array('d' => 'Visao'), '(d.idagente = a.idagente)', null, $this->getSchema('agentes'))
+                    ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', 'b.CNPJCPF', $this->getSchema('agentes'))
+                    ->join(array('c' => 'Agentes'), '(a.idvinculoprincipal = c.idAgente)', null, $this->getSchema('agentes'))
+                    ->join(array('d' => 'Visao'), '(d.idAgente = a.idAgente)', null, $this->getSchema('agentes'))
                     ->where('b.CNPJCPF = ?', $cpfLogado )
                     ->where('c.CNPJCPF = ?', $cpfCnpjProponente)
                     ->where('d.Visao = 198')
@@ -177,7 +177,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     ->join(array('b' => 'Agentes'), '(a.cgccpf = b.CNPJCPF)', null , $this->getSchema('agentes'))
                     ->join(array('c' => 'tbprocuradorprojeto'), '(a.idpronac = c.idpronac)', null , $this->getSchema('agentes'))
                     ->join(array('d' => 'tbprocuracao'), '(c.idprocuracao = d.idprocuracao)', null , $this->getSchema('agentes'))
-                    ->join(array('f' => 'Agentes'), '(d.idagente = f.idagente)', null , $this->getSchema('agentes'))
+                    ->join(array('f' => 'Agentes'), '(d.idAgente = f.idAgente)', null , $this->getSchema('agentes'))
                     ->join(array('e' => 'sgcacesso'), '(f.CNPJCPF = e.cpf)', null , $this->getSchema('controledeacesso'))
                     ->where('c.siestado = 2')
                     ->where('e.idusuario = ?', $idUsuarioLogado)
@@ -191,8 +191,8 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     $sql = $db->select()
                         ->from(array('a' => 'projetos'), '(a.anoprojeto+a.sequencial) as pronac', $this->getSchema('sac'))
                         ->join(array('b' => 'Agentes'), '(a.cgccpf = b.CNPJCPF)', null , $this->getSchema('agentes'))
-                        ->join(array('c' => 'vinculacao'), '(b.idagente = c.idvinculoprincipal)', null , $this->getSchema('agentes'))
-                        ->join(array('d' => 'Agentes'), '(c.idagente = d.idagente)', null , $this->getSchema('agentes'))
+                        ->join(array('c' => 'vinculacao'), '(b.idAgente = c.idvinculoprincipal)', null , $this->getSchema('agentes'))
+                        ->join(array('d' => 'Agentes'), '(c.idAgente = d.idAgente)', null , $this->getSchema('agentes'))
                         ->join(array('e' => 'sgcacesso'), '(d.CNPJCPF = e.cpf)', null , $this->getSchema('controledeacesso'))
                         ->where('e.idusuario = ?', $idUsuarioLogado)
                         ->where('a.idpronac = ?', $idPreProjeto)

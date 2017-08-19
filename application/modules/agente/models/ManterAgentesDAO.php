@@ -27,7 +27,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $schemaSac = parent::getSchema('sac');
 
         $a = array(
-            'a.idagente'
+            'a.idAgente'
             ,'a.CNPJCPF'
             ,'a.CNPJCPFSuperior'
             ,'a.tipopessoa'
@@ -56,14 +56,14 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()->distinct()->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'nomes'), 'n.idagente = a.idagente', array('n.descricao as nome'), $schemaAgentes)
-            ->joinLeft(array('e' => 'endereconacional'), 'e.idagente = a.idagente', $e, $schemaAgentes)
+            ->joinLeft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.descricao as nome'), $schemaAgentes)
+            ->joinLeft(array('e' => 'endereconacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', array('*', 'm.descricao as dscidade'), $schemaAgentes)
             ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
             ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
             ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
-            ->joinLeft(array('t' => 'tbtitulacaoconselheiro'), 't.idagente = a.idagente', $t, $schemaAgentes)
-            ->joinLeft(array('v' => 'Visao'), 'v.idagente = a.idagente', '*', $schemaAgentes)
+            ->joinLeft(array('t' => 'tbtitulacaoconselheiro'), 't.idAgente = a.idAgente', $t, $schemaAgentes)
+            ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
             ->joinLeft(array('sa' => 'area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
             ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
             ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
@@ -77,7 +77,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             $sql->where('n.descricao LIKE ?', '%'.$nome.'%');
         } if (!empty($idAgente)) {
             # busca de acordo com o id do agente
-            $sql->where('a.idagente = ?',$idAgente);
+            $sql->where('a.idAgente = ?',$idAgente);
         }
 
         $sql->order(array('e.status Desc', 'n.descricao Asc'));
@@ -217,7 +217,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         $i = array(
             'i.idinternet'
-            ,'i.idagente'
+            ,'i.idAgente'
             ,'i.tipointernet'
             ,'i.descricao'
             ,'i.status'
@@ -231,7 +231,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
 
-            $sql->where('i.idagente = ?', $idAgente);
+            $sql->where('i.idAgente = ?', $idAgente);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -267,12 +267,12 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from(array('tl' => 'telefones'), $tl, $tblAgentes->getSchema('agentes'))
             ->join(array('uf' => 'uf'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $tblAgentes->getSchema('agentes'))
-            ->join(array('ag' => 'Agentes'), 'ag.idagente = tl.idagente', array('ag.idagente'), $tblAgentes->getSchema('agentes'))
+            ->join(array('ag' => 'Agentes'), 'ag.idAgente = tl.idAgente', array('ag.idAgente'), $tblAgentes->getSchema('agentes'))
             ->joinLeft(array('ddd' => 'ddd'), 'tl.ddd = ddd.codigo', $ddd, $tblAgentes->getSchema('agentes'))
             ->joinLeft(array('v' => 'Verificacao'), 'v.idverificacao = tl.tipotelefone', array('v.descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
             ;
         if (!empty($idAgente)) { // busca de acordo com o id do agente
-            $sql->where('tl.idagente = ?', $idAgente);
+            $sql->where('tl.idAgente = ?', $idAgente);
         }
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);

@@ -352,7 +352,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
             null,
             $this->_schema
         );
-        $select->where('sol.idagente = '.$idagente);
+        $select->where('sol.idAgente = '.$idagente);
         $select->order('sol.idsolicitaritem');
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -397,7 +397,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
             ->join(array('prod' => 'produto'), 'sol.idproduto = prod.codigo', null, $this->_schema)
             ->join(array('et' => 'tbplanilhaetapa'), 'sol.idetapa = et.idplanilhaetapa', null, $this->_schema)
             ->joinLeft(array('it' => 'tbplanilhaitens'),  'sol.idplanilhaitens = it.idplanilhaitens', null, $this->_schema)
-            ->where('sol.idagente = ?', $idAgente)
+            ->where('sol.idAgente = ?', $idAgente)
             ->order('sol.idsolicitaritem')
             ;
 

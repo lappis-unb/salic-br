@@ -65,7 +65,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 
         $select->join(
             array("a" => "Agentes"),
-            "a.idAgente = e.idagente",
+            "a.idAgente = e.idAgente",
             array(),
             $this->_schema
         );
@@ -79,7 +79,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         // busca pelo id do agente
         if (!empty($idAgente))
         {
-            $select->where("a.idagente = ?", $idAgente);
+            $select->where("a.idAgente = ?", $idAgente);
         }
 
         // busca pelo email ativado/desativado
@@ -112,7 +112,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 
         $i = array(
             'i.idinternet',
-            'i.idagente',
+            'i.idAgente',
             'i.tipointernet',
             'i.descricao',
             'i.status',
@@ -126,7 +126,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
 
-            $sql->where('i.idagente = ?', $idAgente);
+            $sql->where('i.idAgente = ?', $idAgente);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

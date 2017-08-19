@@ -70,7 +70,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
     {
         $tblAgente = new Agente_Model_DbTable_Agentes();
 
-        $proponente = $tblAgente->buscarAgenteENome(array('a.idagente = ?' => $idAgente))->current();
+        $proponente = $tblAgente->buscarAgenteENome(array('a.idAgente = ?' => $idAgente))->current();
 
         if ($proponente) {
             $proponente = array_change_key_case($proponente->toArray());
