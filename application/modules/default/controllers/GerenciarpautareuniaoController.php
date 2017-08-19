@@ -926,7 +926,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             foreach ($buscarTitConselheiro as $conselheiro) {
                 $tipo = $conselheiro->stTitular == 1 ? 'Titular' : 'Suplente';
                 $votantes[$area->Descricao][$c]['conselheiro'] = $conselheiro->nome . " - " . $tipo;
-                $votantes[$area->Descricao][$c]['idagente'] = $conselheiro->idAgente;
+                $votantes[$area->Descricao][$c]['idAgente'] = $conselheiro->idAgente;
                 $votantes[$area->Descricao][$c]['selecionado'] = in_array($conselheiro->idAgente, $votanteCadastrado) ? true : false;
                 $c++;
             }
@@ -943,14 +943,14 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         foreach ($buscarMembrosNatos as $membros) {
             $Agente = $usuario->getIdUsuario($membros->usu_codigo);
             
-            if ($Agente['idagente']) {
-                if ($idagenteAtual == $Agente['idagente']) {
-                    $idagenteAtual = $Agente['idagente'];
+            if ($Agente['idAgente']) {
+                if ($idagenteAtual == $Agente['idAgente']) {
+                    $idagenteAtual = $Agente['idAgente'];
                 } else {
-                    $membrosnatos[$num]['idAgente'] = $Agente['idagente'];
+                    $membrosnatos[$num]['idAgente'] = $Agente['idAgente'];
                     $membrosnatos[$num]['nome'] = $membros->usu_nome;
-                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idagente'], $votanteCadastrado) ? true : false;
-                    $idagenteAtual = $Agente['idagente'];
+                    $membrosnatos[$num]['selecionado'] = in_array($Agente['idAgente'], $votanteCadastrado) ? true : false;
+                    $idagenteAtual = $Agente['idAgente'];
                 }
             }
             $num++;

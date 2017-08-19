@@ -23,7 +23,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         if (!empty($idPreProjeto)) {
 
             $this->_proposta = $this->buscarProposta($idPreProjeto);
-            $this->_proponente = $this->buscarProponente($this->_proposta['idagente']);
+            $this->_proponente = $this->buscarProponente($this->_proposta['idAgente']);
 
             $this->view->idPreProjeto = $idPreProjeto;
             $this->view->proposta = $this->_proposta;

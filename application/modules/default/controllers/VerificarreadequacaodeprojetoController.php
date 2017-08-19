@@ -139,7 +139,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
 		if(isset($_POST['verifica2']) and $_POST['verifica2'] == 'x')
 		{
-			$idagente = $_POST['idagente'];
+			$idagente = $_POST['idAgente'];
 				if($idagente != ''){
 					$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 					$AgentesPerfil =  ReadequacaoProjetos::dadosAgentesPerfil($idagente);

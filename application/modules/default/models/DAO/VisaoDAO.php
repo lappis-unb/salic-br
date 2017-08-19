@@ -37,7 +37,7 @@
 //        } // busca todas as vis�es do usu�rio
 //        else {
 //            $sql = "select
-//                                distinct vis.idvisao ,
+//                                distinct vis.idVisao ,
 //                                ver.descricao,
 //                                ver.idverificacao,
 //                                vis.idagente ,

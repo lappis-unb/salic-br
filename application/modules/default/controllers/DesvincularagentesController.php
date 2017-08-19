@@ -87,7 +87,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
     {
         $filter = new Zend_Filter_StripTags();
 
-        $idagente = $filter->filter($this->_request->getPost('idagente'));
+        $idagente = $filter->filter($this->_request->getPost('idAgente'));
         $dados = DesvincularagentesDAO::desvincularagentes($idagente); 
 
         $post = Zend_Registry::get('get');

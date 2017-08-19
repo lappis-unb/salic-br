@@ -47,7 +47,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             $objSelect = $db->select();
             $objSelect->from(
                 array('vis' => 'Visao'),
-                array('idvisao', 'idagente', 'usuario', 'stativo', 'Visao'),
+                array('idVisao', 'idAgente', 'usuario', 'stativo', 'Visao'),
                 $this->getSchema('agentes')
             );
             $objSelect->joinInner(

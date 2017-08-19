@@ -947,7 +947,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayTelefones = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipotelefone' => $tipoFone,
                 'uf' => $ufFone,
                 'ddd' => $dddFone,
@@ -1035,7 +1035,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEmail = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipointernet' => $tipoEmail,
                 'descricao' => $Email,
                 'status' => $enviarEmail,
@@ -1805,7 +1805,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                         $dado[$key] = utf8_encode($value);
                     });
                     $novos_valores[0]['msgCPF'] = utf8_encode('cadastrado');
-                    $novos_valores[0]['idAgente'] = utf8_encode($dado['idagente']);
+                    $novos_valores[0]['idAgente'] = utf8_encode($dado['idAgente']);
                     $novos_valores[0]['Nome'] = utf8_encode($dado['nome']);
                     $novos_valores[0]['agente'] = $dado;
                 }
@@ -1874,7 +1874,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrNome = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tiponome' => $TipoNome,
                 'descricao' => $nome,
                 'status' => 0,
@@ -1896,7 +1896,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
          */
         if ($grupologado != 118):
             $GravarVisao = array(// insert
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'Visao' => $Visao,
                 'usuario' => $usuario,
                 'stativo' => 'A');
@@ -1963,7 +1963,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEnderecos = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
                 'tipoendereco' => $tipoEndereco,
                 'uf' => $ufEndereco,
@@ -1995,7 +1995,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             try {
                 $arrayTelefones = array(
-                    'idagente' => $idAgente,
+                    'idAgente' => $idAgente,
                     'tipotelefone' => $tipoFone,
                     'uf' => $ufFone,
                     'ddd' => $dddFone,
@@ -2021,7 +2021,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             try {
                 $arrayEmail = array(
-                    'idagente' => $idAgente,
+                    'idAgente' => $idAgente,
                     'tipointernet' => $tipoEmail,
                     'descricao' => $Email,
                     'status' => $enviarEmail,
@@ -2219,7 +2219,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         try {
             $mprNomes = new Agente_Model_NomesMapper();
             $arrNome = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tiponome' => $TipoNome,
                 'descricao' => $nome,
                 'status' => 0,
@@ -2354,7 +2354,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayTelefones = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipotelefone' => $tipoFone,
                 'uf' => $ufFone,
                 'ddd' => $dddFone,
@@ -2381,7 +2381,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEmail = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipointernet' => $tipoEmail,
                 'descricao' => $Email,
                 'status' => $enviarEmail,
@@ -2802,7 +2802,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 // cadastra todas as visoes do agente
                 foreach ($visaoAgente as $visao) {
                     $dados = array(
-                        'idagente' => $idAgente,
+                        'idAgente' => $idAgente,
                         'Visao' => $visao,
                         'usuario' => $this->getIdUsuario, // código do usuario logado
                         'stativo' => 'A');

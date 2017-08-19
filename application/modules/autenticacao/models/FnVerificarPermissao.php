@@ -48,7 +48,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
 
         //VERIFICAR SE O CPF LOGADO ESTA CADASTRADO NO BANCO AGENTES
         $sql = $db->select()
-            ->from('Agentes', 'idagente', $this->getSchema('agentes'))
+            ->from('Agentes', 'idAgente', $this->getSchema('agentes'))
             ->where('CNPJCPF = ?', $cpfLogado)
         ;
         $idAgenteLogado = $db->fetchRow($sql);
@@ -57,7 +57,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
 
          //PEGAR ID DO PROPONENTE E O TIPO DE PESSOA
         $sql = $db->select()
-            ->from('Agentes', array('idagente','tipopessoa'), $this->getSchema('agentes'))
+            ->from('Agentes', array('idAgente','tipopessoa'), $this->getSchema('agentes'))
             ->where('CNPJCPF = ?', $cpfLogado)
         ;
 

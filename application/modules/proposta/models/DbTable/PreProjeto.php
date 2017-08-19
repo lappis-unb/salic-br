@@ -82,7 +82,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $p = array(
             'p.idPreProjeto',
-            'idagente',
+            'idAgente',
             'NomeProjeto',
             'Mecanismo',
             'stTipoDemanda'
@@ -263,7 +263,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
        # ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
-       $rsPreProjeto->idAgente               = $dados["idagente"];
+       $rsPreProjeto->idAgente               = $dados["idAgente"];
        $rsPreProjeto->NomeProjeto            = $dados["nomeprojeto"];
        $rsPreProjeto->Mecanismo              = $dados["mecanismo"];
        $rsPreProjeto->AgenciaBancaria        = $dados["agenciabancaria"];
@@ -387,7 +387,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()->from('PreProjeto', array('idPreProjeto', 'idagente', 'NomeProjeto', 'Mecanismo'), $this->_schema)
+        $sql = $db->select()->from('PreProjeto', array('idPreProjeto', 'idAgente', 'NomeProjeto', 'Mecanismo'), $this->_schema)
             ->where('idagente = ?',$idagente)
             ->order('nomeprojeto');
 

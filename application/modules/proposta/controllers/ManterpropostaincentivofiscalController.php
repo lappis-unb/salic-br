@@ -242,7 +242,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $post = array_change_key_case($this->getRequest()->getPost());
 
-        if (empty($post['idagente'])) {
+        if (empty($post['idAgente'])) {
             throw new Zend_Exception("Informe o idagente");
         }
 
@@ -293,7 +293,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         }
 
         $dados = array(
-            "idagente" => isset($post['idagente']) ? $post['idagente'] : '',
+            "idAgente" => isset($post['idAgente']) ? $post['idAgente'] : '',
             "nomeprojeto" => isset($post['nomeprojeto']) ? $post['nomeprojeto'] : '',
             "mecanismo" => 1, //seguindo sistema legado
             "agenciabancaria" => isset($post['agenciabancaria']) ? $post['agenciabancaria'] : '',
@@ -344,12 +344,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
                 $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
-                $whereVinculo['idAgenteProponente   = ?'] = $post['idagente'];
+                $whereVinculo['idAgenteProponente   = ?'] = $post['idAgente'];
                 $vinculo = $tbVinculoDAO->buscar($whereVinculo);
 
                 if (count($vinculo) == 0) {
                     $dadosV = array(
-                        'idAgenteProponente' => $post['idagente'],
+                        'idAgenteProponente' => $post['idAgente'],
                         'dtVinculo' => MinC_Db_Expr::date(),
                         'siVinculo' => 2,
                         'idUsuarioResponsavel' => $this->idResponsavel
@@ -976,7 +976,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     public function listarPropostasAjaxAction()
     {
-        $idAgente = $this->getRequest()->getParam('idagente');
+        $idAgente = $this->getRequest()->getParam('idAgente');
         $start = $this->getRequest()->getParam('start');
         $length = $this->getRequest()->getParam('length');
         $draw = (int)$this->getRequest()->getParam('draw');

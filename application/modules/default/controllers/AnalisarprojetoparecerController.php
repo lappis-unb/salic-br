@@ -72,7 +72,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
 
         $UsuarioDAO = new Autenticacao_Model_Usuario();
         $agente = $UsuarioDAO->getIdUsuario($idusuario);
-        $idAgenteParecerista = $agente['idagente'];
+        $idAgenteParecerista = $agente['idAgente'];
 
         $situacao = $this->_request->getParam('situacao');
         

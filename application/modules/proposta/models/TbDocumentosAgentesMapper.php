@@ -37,7 +37,7 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                 $where = array();
                 $where['codigodocumento'] = $arrPost['documento'];
                 if($arrPost['tipoDocumento'] == 1){
-                    $where['idagente'] = $dadosProjeto['idAgente'];
+                    $where['idAgente'] = $dadosProjeto['idAgente'];
                 } else {
                     $where['idprojeto'] = $arrPost['idPreProjeto'];
                 }
@@ -52,7 +52,7 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                     'noarquivo' => $arquivoNome,
                     'taarquivo' => $arquivoTamanho,
                     'dsdocumento' => $arrPost['observacao'],
-                    'idagente' => $dadosProjeto['idAgente'],
+                    'idAgente' => $dadosProjeto['idAgente'],
                 );
 
                 if ($arrPost['tipoDocumento'] == 1) {

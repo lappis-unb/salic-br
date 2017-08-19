@@ -66,7 +66,7 @@
         })
         
         $(".expandir").click(function(){
-            var idagente = $(this).attr('idagente');
+            var idagente = $(this).attr('idAgente');
             if($(".projetos[idagente='"+idagente+"']").attr('aberto') == 'false'){
                 $(".projetos[idagente='"+idagente+"']").removeClass('sumir');
                 $(".projetos[idagente='"+idagente+"']").attr('aberto','true');
@@ -94,7 +94,7 @@
             $("#frmStatusComponente").each(function(){
                 this.reset();
             })
-            var idagente = $(this).attr('idagente'); 
+            var idagente = $(this).attr('idAgente'); 
             var status = $(this).attr('status'); 
             if(status == 'desabilitar'){
                 $("#frmStatusComponente").attr('action', '<?php echo $this->baseUrl(); ?>/projetosgerenciar/desabilitarcomponente');

@@ -127,7 +127,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                     'descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
-                    'idagente' => $this->idUsuario,
+                    'idAgente' => $this->idUsuario,
                     'dtsolicitacao' => new Zend_Db_Expr($dateFunc),
                     'stestado' => '0'
                 );
@@ -137,7 +137,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                     'descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
-                    'idagente' => $this->idUsuario,
+                    'idAgente' => $this->idUsuario,
                     'dtsolicitacao' => new Zend_Db_Expr($dateFunc),
                     'stestado' => '0'
                 );

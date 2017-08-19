@@ -23,9 +23,9 @@ class Agente_Model_NomesMapper extends MinC_Db_Mapper
 
     public function saveCustom( $arrData )
     {
-        $arrNome = $this->findBy(array('idagente' => $arrData['idagente']));
+        $arrNome = $this->findBy(array('idAgente' => $arrData['idAgente']));
         $arrData = array(
-            'idagente' => $arrData['idagente'],
+            'idAgente' => $arrData['idAgente'],
             'tiponome' => (strlen($arrData['cpf']) == 11 ? 18 : 19), # 18 = pessoa fisica e 19 = pessoa juridica
             'descricao' => $arrData['nome'],
             'status' => 0,

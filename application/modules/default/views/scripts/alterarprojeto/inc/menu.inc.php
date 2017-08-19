@@ -158,7 +158,7 @@ if (in_array($this->grupoAtivo, array(92,93,104,113,114,115,124,125,126,128,131,
 
         <form class="form" id="form" name="form" enctype="multipart/form-data" target="enviar_arquivo" method="post" action="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'incluirarquivo')); ?>">
         <input type="hidden" value="<?php echo $this->parecer->IdPRONAC; ?>" name="idpronac" />
-        <input type="hidden" value="<?php echo $this->parecer->Logon; ?>" name="idagente" />
+        <input type="hidden" value="<?php echo $this->parecer->Logon; ?>" name="idAgente" />
 
         <table class="tabela">
             <tr class="fundo">

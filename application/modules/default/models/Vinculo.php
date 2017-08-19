@@ -312,7 +312,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
     /*
       public function novapropostaAction()
       {
-      $idagente = $_POST["idagente"];
+      $idagente = $_POST["idAgente"];
       $NomeProjeto = $_POST["NomeProjeto"];
       $ResumoDoProjeto = $_POST["ResumoDoProjeto"];
       $stDataFixa = $_POST["stDataFixa"];

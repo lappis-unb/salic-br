@@ -536,7 +536,7 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
             $objAcesso = new Acesso();
             $dados = array(
                 'idPRONAC' 			=> $idPronac,
-                'idAgente' 			=> $Rtitulacao['idagente'],
+                'idAgente' 			=> $Rtitulacao['idAgente'],
                 'dtDistribuicao' 	=> $objAcesso->getExpressionDate(),
                 'idResponsavel' 	=> 0
             );

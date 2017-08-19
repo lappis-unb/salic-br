@@ -719,10 +719,10 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $arrPost = array_change_key_case($this->getRequest()->getPost());
             $arrPost['IdUsuario'] = $this->getIdUsuario;
             $arrPost['cpf'] = Mascara::delMaskCPF(Mascara::delMaskCNPJ($arrPost['cpf']));
-            if ($arrPost['idagente'] === '') {
+            if ($arrPost['idAgente'] === '') {
                 $tblAgentes = new Agente_Model_DbTable_Agentes();
                 $result = $tblAgentes->findBy(array('CNPJCPF' => $arrPost['cpf']));
-                $arrPost['idagente'] = $result['idagente'];
+                $arrPost['idAgente'] = $result['idAgente'];
             }
 
             $mprNomes = new Agente_Model_NomesMapper();

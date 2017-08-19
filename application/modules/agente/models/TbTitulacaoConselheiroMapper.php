@@ -27,17 +27,17 @@ class Agente_Model_TbTitulacaoConselheiroMapper extends MinC_Db_Mapper
         $areaCultural = $arrData['areacultural'];
         $segmentoCultural = $arrData['segmentocultural'];
         $intVisao = $arrData['Visao'];
-        $idAgente = $arrData['idagente'];
+        $idAgente = $arrData['idAgente'];
 
         # so salva area e segmento para a visao de componente da comissao e se os campos titular e areaCultural forem informados
         if ((int) $intVisao == 210 && ((int)$titular == 0 || (int)$titular == 1) && !empty($areaCultural)) {
             # busca a titulacao do agente (titular/suplente de area cultural)
-            $arrTitulacaoConselheiro = $this->findBy(array('idagente' => $idAgente));
+            $arrTitulacaoConselheiro = $this->findBy(array('idAgente' => $idAgente));
             $arrData = array (
                 'cdarea' => $areaCultural,
                 'cdsegmento' => $segmentoCultural,
                 'sttitular' => $titular,
-                'idagente' => $idAgente
+                'idAgente' => $idAgente
             );
             if (!$arrTitulacaoConselheiro) {
                 $arrData['stConselheiro'] = 'A';

@@ -50,7 +50,7 @@ class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-        $idagente = $idagente['idagente'];
+        $idagente = $idagente['idAgente'];
         //-------------------------------------------------------------------------------------------------------------
         $reuniao = new Reuniao();
         $ConsultaReuniaoAberta = $reuniao->buscar(array("stEstado = ?" => 0));

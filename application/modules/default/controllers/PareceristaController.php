@@ -218,7 +218,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         if (isset($auth->getIdentity()->usu_codigo)){
             $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu&aacute;rio
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-            $idAgente = $Agente['idagente'];
+            $idAgente = $Agente['idAgente'];
             $this->view->idAgente    = $idAgente;
         }
 
@@ -1672,7 +1672,7 @@ class PareceristaController extends MinC_Controller_Action_Abstract {
         if (isset($auth->getIdentity()->usu_codigo)){
             $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu&aacute;rio
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-            $idAgente = $Agente['idagente'];
+            $idAgente = $Agente['idAgente'];
             $this->view->idAgente    = $idAgente;
         }
 
