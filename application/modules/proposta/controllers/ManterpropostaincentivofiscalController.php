@@ -677,7 +677,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             if ($params['confirmarenvioaominc'] == true) {
                 if ($validado) {
 
-                    if ($projeto['area'] == 2) {
+                    if ($projeto['Area'] == 2) {
                         $orgaoUsuario = 171; # 171 - SAV/DAP
                     } else {
                         $orgaoUsuario = 262; # 262 - SEFIC/DIAAPI

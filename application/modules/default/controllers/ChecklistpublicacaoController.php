@@ -1014,7 +1014,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
     function recuperaAreaCulturalAction()
     {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $cdarea = $this->_request->getParam("area");
+        $cdarea = $this->_request->getParam("Area");
         //$cdarea = $post->area;
         $dadosSegmento = array();
         $vSegmento = array();

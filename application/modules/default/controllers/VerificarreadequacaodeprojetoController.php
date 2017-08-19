@@ -2656,7 +2656,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
                 // chama a fun��o para fazer o balanceamento
                 $areaProjeto = $projetos->BuscarAreaSegmentoProjetos($idPronac_Get);
-                $Rtitulacao  = $titulacaoConselheiro->buscarComponenteBalanceamento($areaProjeto['area']);
+                $Rtitulacao  = $titulacaoConselheiro->buscarComponenteBalanceamento($areaProjeto['Area']);
                 $Distribuicao->alterar(array('stDistribuicao' => 'I'), array('idPRONAC = ?'=>$idPronac_Get));
 
                 $dados = array(

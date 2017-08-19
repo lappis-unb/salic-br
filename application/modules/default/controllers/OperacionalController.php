@@ -2741,7 +2741,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
             'tipoPesqNomeProjeto' => 'QC',
             'nomeProjeto' => '',
             'tipoPesqArea' => 'EIG',
-            'area' => '',
+            'Area' => '',
             'segmento' => '',
             'tipoPesqComponente' => 'EIG',
             'componente' => '',

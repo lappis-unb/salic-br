@@ -156,7 +156,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			,'SAC'
 		);
 		$select->joinInner(
-			array('area' => 'Area')
+			array('Area' => 'Area')
 			,'area.Codigo = h.cdArea'
 			,array('area.Descricao AS Area')
 			,'SAC'

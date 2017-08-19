@@ -90,7 +90,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $plenario['naoplenario'][$contnaoplenario]['pronac'] = $buscaplenario->pronac;
                 $plenario['naoplenario'][$contnaoplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                 $plenario['naoplenario'][$contnaoplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                $plenario['naoplenario'][$contnaoplenario]['area'] = $buscaplenario->area;
+                $plenario['naoplenario'][$contnaoplenario]['Area'] = $buscaplenario->area;
                 $plenario['naoplenario'][$contnaoplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                 $plenario['naoplenario'][$contnaoplenario]['segmento'] = $buscaplenario->segmento;
                 $plenario['naoplenario'][$contnaoplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -255,7 +255,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $plenario['plenario'][$contplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                     $plenario['plenario'][$contplenario]['pronac'] = $buscaplenario->pronac;
                     $plenario['plenario'][$contplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                    $plenario['plenario'][$contplenario]['area'] = $buscaplenario->area;
+                    $plenario['plenario'][$contplenario]['Area'] = $buscaplenario->area;
                     $plenario['plenario'][$contplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                     $plenario['plenario'][$contplenario]['segmento'] = $buscaplenario->segmento;
                     $plenario['plenario'][$contplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -267,7 +267,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $plenario['naoplenario'][$contnaoplenario]['pronac'] = $buscaplenario->pronac;
                     $plenario['naoplenario'][$contnaoplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                     $plenario['naoplenario'][$contnaoplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                    $plenario['naoplenario'][$contnaoplenario]['area'] = $buscaplenario->area;
+                    $plenario['naoplenario'][$contnaoplenario]['Area'] = $buscaplenario->area;
                     $plenario['naoplenario'][$contnaoplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                     $plenario['naoplenario'][$contnaoplenario]['segmento'] = $buscaplenario->segmento;
                     $plenario['naoplenario'][$contnaoplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -421,7 +421,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $plenario['plenario'][$contplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                 $plenario['plenario'][$contplenario]['pronac'] = $buscaplenario->pronac;
                 $plenario['plenario'][$contplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                $plenario['plenario'][$contplenario]['area'] = $buscaplenario->area;
+                $plenario['plenario'][$contplenario]['Area'] = $buscaplenario->area;
                 $plenario['plenario'][$contplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                 $plenario['plenario'][$contplenario]['segmento'] = $buscaplenario->segmento;
                 $plenario['plenario'][$contplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -432,7 +432,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $plenario['naoplenario'][$contnaoplenario]['pronac'] = $buscaplenario->pronac;
                 $plenario['naoplenario'][$contnaoplenario]['IdPRONAC'] = $buscaplenario->IdPRONAC;
                 $plenario['naoplenario'][$contnaoplenario]['nomeprojeto'] = $buscaplenario->NomeProjeto;
-                $plenario['naoplenario'][$contnaoplenario]['area'] = $buscaplenario->area;
+                $plenario['naoplenario'][$contnaoplenario]['Area'] = $buscaplenario->area;
                 $plenario['naoplenario'][$contnaoplenario]['parecerfavoravel'] = $buscaplenario->stAnalise == 'IC' ? 'N&atilde;o' : 'Sim';
                 $plenario['naoplenario'][$contnaoplenario]['segmento'] = $buscaplenario->segmento;
                 $plenario['naoplenario'][$contnaoplenario]['datarecebimento'] = Data::tratarDataZend($buscaplenario->dtEnvioPauta, 'Brasileiro', true);
@@ -693,7 +693,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $dadosvalores[$i]['NomeProjeto'] = utf8_encode($dados->NomeProjeto);
                 $dadosvalores[$i]['pronac'] = $dados->pronac;
                 $dadosvalores[$i]['stAnalise'] = $dados->stAnalise;
-                $dadosvalores[$i]['area'] = utf8_encode($dados->area);
+                $dadosvalores[$i]['Area'] = utf8_encode($dados->area);
                 $dadosvalores[$i]['AprovadoReal'] = 'R$ ' . number_format($dados->AprovadoReal, 2, ',', '.');
                 $dadosvalores[$i]['dsAnalise'] = utf8_encode($dados->dsConsolidacao);
                 $i++;

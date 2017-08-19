@@ -102,7 +102,7 @@
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>&aacute;rea<span style="color: red;">*</span></td>
                     <td>
-                        <select name="area" id="area" class="select_simples obrigatorio">
+                        <select name="Area" id="Area" class="select_simples obrigatorio">
                             <option value="">- Selecione -</option>
                             <?php foreach ($this->Areas as $areas) { ?>
                             <option value="<?php echo $areas->Codigo; ?>" <?php echo (count($this->AreaCadastrada) > 0 && $this->AreaCadastrada[0]->cdArea == $areas->Codigo) ? 'selected="selected"' : ''; ?>><?php echo $areas->Descricao; ?></option>

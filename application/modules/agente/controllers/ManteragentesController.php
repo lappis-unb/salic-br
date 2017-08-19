@@ -633,19 +633,19 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->_helper->viewRenderer->setNoRender(true);
 
         // caso a area cultural esteja definida
-        if ($_REQUEST['area']) {
+        if ($_REQUEST['Area']) {
             $novos_dados = array();
             $i = 0;
 
             // busca os agentes vinculados a area/segmento cultutal (, $_REQUEST['segmento'])
-            $dados = TitulacaoConselheiroDAO::buscaAreaSegmento($_REQUEST['area']);
+            $dados = TitulacaoConselheiroDAO::buscaAreaSegmento($_REQUEST['Area']);
 
             // pega a quantidade de titulares na area
-            $Q_titulares = TitulacaoConselheiroDAO::buscaTitularArea($_REQUEST['area']);
+            $Q_titulares = TitulacaoConselheiroDAO::buscaTitularArea($_REQUEST['Area']);
             $novos_dados[$i]['Q_titulares'] = utf8_encode($Q_titulares[0]->QTD);
 
             // pega a quantidade de suplentes na area
-            $Q_suplentes = TitulacaoConselheiroDAO::buscaSuplentesArea($_REQUEST['area']);
+            $Q_suplentes = TitulacaoConselheiroDAO::buscaSuplentesArea($_REQUEST['Area']);
             $novos_dados[$i]['Q_suplentes'] = utf8_encode($Q_suplentes[0]->QTD);
 
             // caso nao existam mais vagas para titular e suplentes
@@ -697,7 +697,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $novos_dados[$i]['Visao'] = utf8_encode($dado->Visao);
                 $novos_dados[$i]['Descricao'] = utf8_encode($dado->Descricao);
                 $novos_dados[$i]['Verificacao'] = utf8_encode($dado->idVerificacao);
-                $novos_dados[$i]['area'] = ($dado->area) ? utf8_encode($dado->area) : 'false';
+                $novos_dados[$i]['Area'] = ($dado->area) ? utf8_encode($dado->area) : 'false';
                 $i++;
             endforeach;
 

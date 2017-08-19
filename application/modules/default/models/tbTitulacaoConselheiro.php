@@ -4,7 +4,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
     /* dados da tabela */
     protected $_banco   = "agentes";
     protected $_schema  = "agentes";
-    protected $_name    = "tbtitulacaoconselheiro";
+    protected $_name    = "tbTitulacaoConselheiro";
 
     public function buscarTitulacao($retornaSQL = false){
         $select = $this->select();

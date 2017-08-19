@@ -9,7 +9,7 @@
  */
 class ManterAgentes extends MinC_Db_Table_Abstract
 {
-	protected $_name = 'area';
+	protected $_name = 'Area';
 	protected $_schema = 'sac';
 
 
@@ -190,7 +190,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(array('area'), array('codigo AS id', 'descricao AS descricao'), $this->getSchema('sac'))
+            ->from(array('Area'), array('codigo AS id', 'descricao AS descricao'), $this->getSchema('sac'))
             ->where('codigo <> ?', '7')
             ->order('descricao');
 

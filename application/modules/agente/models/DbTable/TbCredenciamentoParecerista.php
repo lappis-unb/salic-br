@@ -42,7 +42,7 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         );
 
         $select->joinInner(
-            array('a'=>'area'),'a.codigo = c.idcodigoarea',
+            array('a'=>'Area'),'a.codigo = c.idcodigoarea',
             array('a.descricao as area'),
             $this->getSchema('sac')
         );

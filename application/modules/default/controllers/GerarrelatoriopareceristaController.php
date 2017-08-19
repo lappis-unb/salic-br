@@ -639,7 +639,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                         else
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['prodPrincipal'] =   '';
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['dtFechamento']      =   date('d/m/Y',strtotime($val2['DtDevolucao']));
-                        $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['area']              =   $val2['Area'];
+                        $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['Area']              =   $val2['Area'];
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['segmento']          =   $val2['Segmento'];
                     }
                 }
@@ -676,7 +676,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                         else
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['prodPrincipal']   		=   '';
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['dtFechamento']     		=   date('d/m/Y',strtotime($val2['DtDevolucao']));
-                        $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['area']            		=   $val2['Area'];
+                        $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['Area']            		=   $val2['Area'];
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['Produtos'][$val2['idProduto']]['segmento']        		=   $val2['Segmento'];
                     }
                 }
@@ -1125,7 +1125,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                                 <td>{$produto['nmProduto']}</td>
                                                 <td align=\"center\">{$pdPrincipal}</td>
                                                 <td>{$produto['dtFechamento']}</td>
-                                                <td>{$produto['area']}</td>
+                                                <td>{$produto['Area']}</td>
                                                 <td>{$produto['segmento']}</td>
                                             </tr>
                                             ";
@@ -1194,7 +1194,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                                 <td>{$produto['nmProduto']}</td>
                                                 <td align=\"center\">{$Principal}</td>
                                                 <td>{$produto['dtFechamento']}</td>
-                                                <td>{$produto['area']}</td>
+                                                <td>{$produto['Area']}</td>
                                                 <td>{$produto['segmento']}</td>
                                             </tr>
                                             ";

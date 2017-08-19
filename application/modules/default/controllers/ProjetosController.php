@@ -167,7 +167,7 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 }else{
                     //BUSCA AREA DO PROJETO
                     $areaProjeto = $projetos->BuscarAreaSegmentoProjetos($idPronac);
-                    $area = $areaProjeto['area']; //Area do projeto
+                    $area = $areaProjeto['Area']; //Area do projeto
                 }
             
                 $Rtitulacao = $titulacaoConselheiro->buscarcomponentebalanceamento($area)->current();
@@ -529,7 +529,7 @@ class ProjetosController extends MinC_Controller_Action_Abstract {
                 }else{
                     //BUSCA AREA DO PROJETO
                     $areaProjeto = $projetos->BuscarAreaSegmentoProjetos($idPronac);
-                    $area = $areaProjeto['area']; //Area do projeto
+                    $area = $areaProjeto['Area']; //Area do projeto
                 }
             
             $Rtitulacao = $titulacaoConselheiro->buscarComponenteBalanceamento($area);

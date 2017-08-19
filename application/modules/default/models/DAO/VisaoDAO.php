@@ -47,8 +47,8 @@
 //                                ar.descricao as area
 //                                from " . GenericModel::getStaticTableName('agentes', 'Visao') . " vis
 //                                inner join " . GenericModel::getStaticTableName('agentes', 'Verificacao') . " ver on ver.idverificacao = vis.Visao
-//                                left join " . GenericModel::getStaticTableName('agentes', 'tbtitulacaoconselheiro') . " ttc on ttc.idAgente =  vis.idAgente
-//                                left join " . GenericModel::getStaticTableName('sac', 'area') . " ar on ttc.cdArea = ar.Codigo ";
+//                                left join " . GenericModel::getStaticTableName('agentes', 'tbTitulacaoConselheiro') . " ttc on ttc.idAgente =  vis.idAgente
+//                                left join " . GenericModel::getStaticTableName('sac', 'Area') . " ar on ttc.cdArea = ar.Codigo ";
 //
 //            $sql .= " where ver.idverificacao = vis.Visao
 //				and ver.idtipo = 16 and sistema = 21";

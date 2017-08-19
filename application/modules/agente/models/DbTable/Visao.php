@@ -47,7 +47,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             $objSelect = $db->select();
             $objSelect->from(
                 array('vis' => 'Visao'),
-                array('idVisao', 'idAgente', 'usuario', 'stativo', 'Visao'),
+                array('idVisao', 'idAgente', 'Usuario', 'stAtivo', 'Visao'),
                 $this->getSchema('agentes')
             );
             $objSelect->joinInner(
@@ -57,15 +57,15 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
                 $this->getSchema('agentes')
             );
             $objSelect->joinLeft(
-                array('ttc' => 'tbtitulacaoconselheiro'),
+                array('ttc' => 'tbTitulacaoConselheiro'),
                 "ttc.idAgente =  vis.idAgente",
                 array(),
                 $this->getSchema('agentes')
             );
             $objSelect->joinLeft(
-                array('ar' => 'area'),
+                array('ar' => 'Area'),
                 "ttc.cdArea = ar.Codigo",
-                array('area' => 'ar.descricao'),
+                array('Area' => 'ar.Descricao'),
                 $this->getSchema('sac')
             );
             $objSelect->where('ver.idVerificacao = vis.Visao');

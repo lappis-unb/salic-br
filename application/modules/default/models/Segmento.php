@@ -73,7 +73,7 @@ class Segmento extends MinC_Db_Table_Abstract
         );
 
         $select->joinInner(
-            array('a' => 'area'),
+            array('a' => 'Area'),
             's.area = a.codigo',
             array(),
             $this->_schema

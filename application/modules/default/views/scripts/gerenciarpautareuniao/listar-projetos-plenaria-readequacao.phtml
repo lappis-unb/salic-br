@@ -133,7 +133,7 @@
                 <td class="centro"><a id="consultarprojetos" href="<?php echo $this->url(array('controller' => 'dadosprojeto', 'action' => 'index', 'idpronac'=>$plenario['IdPRONAC']),'',true); ?>" target="_new" title="Ir para Consultar Projetos"><?php echo $plenario['pronac'] ?></a></td>
                 <td><?php echo $plenario['NomeProjeto'] ?></td>
                 <?php if ($this->grupoativo == '119') { //presidente CNIC ?>
-                    <td><?php echo $plenario['area'] ?></td>
+                    <td><?php echo $plenario['Area'] ?></td>
                     <td><?php echo $plenario['segmento'] ?></td>
                 <?php } ?>
                 <!--<td class="centro"><?php echo $plenario['stAnalise'] == 'IC' ? 'N&atilde;o' : 'Sim' ?></td>-->

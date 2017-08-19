@@ -84,7 +84,7 @@
                             <div style="min-width: 300px; height: 180px; padding-left: 10px; border: 1px #ccc solid">
                                 <input type="checkbox" class="marcatodasareas" filho=".area" style="vertical-align: middle"/>&nbsp;<strong>Todas</strong><br />
                                 <?php foreach ($this->area as $a): ?>
-                                <input type="checkbox" name="area[]" class="area" <?php if(in_array($a['Codigo'], $this->editalAreas)){ echo 'checked="checked"';} ?> value="<?php echo $a['Codigo']; ?>" style="vertical-align: middle"/>
+                                <input type="checkbox" name="area[]" class="Area" <?php if(in_array($a['Codigo'], $this->editalAreas)){ echo 'checked="checked"';} ?> value="<?php echo $a['Codigo']; ?>" style="vertical-align: middle"/>
                                     &nbsp;<strong><?php echo $a['Descricao']; ?></strong><br />
                                 <?php endforeach; ?>
                             </div>
