@@ -36,7 +36,7 @@
     
     <table class="tabela">
 		<tr>
-			<td><input type="button" name="grid1" id="g1_1" class="btn_adicionar" title="Expandir" />DADOS DA SOLICITAÇÃO</td>
+			<td><input type="button" name="grid1" id="g1_1" class="btn_adicionar" title="Expandir" />DADOS DA SOLICITA&ccedil;&atilde;O</td>
 		</tr>
 	</table>
 	<div id="div_g1_1" class="sumir">
@@ -60,7 +60,7 @@
                 <td><?php echo Data::tratarDataZend($this->dados->dtSolicitacao, 'Brasileira'); ?></td>
             </tr>
             <tr>
-                <td colspan="3" class="destacar bold">Informação que será considerada para readequação de <?php echo $this->dados->dsReadequacao; ?></td>
+                <td colspan="3" class="destacar bold">Informa&ccedil;&atilde;o que ser&aacute; considerada para readequa&ccedil;&atilde;o de <?php echo $this->dados->dsReadequacao; ?></td>
             </tr>
             <tr>
                 <td colspan="3"><?php echo $this->dados->dsSolicitacao; ?></td>
@@ -68,7 +68,7 @@
             <?php } ?>
             
             <tr>
-                <td class="destacar bold" colspan="3">Justificativa da Solicitação</td>
+                <td class="destacar bold" colspan="3">Justificativa da Solicita&ccedil;&atilde;o</td>
             </tr>
             <tr>
                 <td colspan="3"><?php echo $this->dados->dsJustificativa; ?></td>
@@ -104,12 +104,12 @@
             <?php if($this->dados->idTipoReadequacao == 9){ ?>
             <tr>
                 <td colspan="3">
-                    <?php /***** CARREGA LOCAIS DE REALIZAÇÃO *****/ ?>
+                    <?php /***** CARREGA LOCAIS DE REALIZA&ccedil;&atilde;O *****/ ?>
                     <script type="text/javascript"> 
                         jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-locais-de-realizacao-readequacoes'), '', true) ?>?idPronac=<?php echo $this->dados->idPronac; ?>&idReadequacao=<?php echo $this->dados->idReadequacao; ?>', '', 'locaisParaRealizacao');
                     </script>
                     <div id="locaisParaRealizacao"></div>
-                    <?php /****** FIM LOCAIS DE REALIZAÇÃO ******/ ?>
+                    <?php /****** FIM LOCAIS DE REALIZA&ccedil;&atilde;O ******/ ?>
                 </td>
             </tr>
             <?php } ?>
@@ -117,12 +117,12 @@
             <?php if($this->dados->idTipoReadequacao == 11){ ?>
             <tr>
                 <td colspan="3">
-                    <?php /***** CARREGA PLANOS DE DISTRIBUIÇÃO *****/ ?>
+                    <?php /***** CARREGA PLANOS DE DISTRIBUI&ccedil;&atilde;O *****/ ?>
                     <script type="text/javascript">
                         jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-planos-de-distribuicao-readequacoes'), '', true) ?>?idPronac=<?php echo $this->dados->idPronac; ?>&idReadequacao=<?php echo $this->dados->idReadequacao; ?>', '', 'planosDeDistribuicao');
                     </script>
                     <div id="planosDeDistribuicao"></div>
-                    <?php /****** FIM PLANOS DE DISTRIBUIÇÃO ******/ ?>
+                    <?php /****** FIM PLANOS DE DISTRIBUI&ccedil;&atilde;O ******/ ?>
                 </td>
             </tr>
             <?php } ?>
@@ -130,12 +130,12 @@
             <?php if($this->dados->idTipoReadequacao == 14){ ?>
             <tr>
                 <td colspan="3">
-                    <?php /***** CARREGA PLANOS DE DIVULGAÇÃO *****/ ?>
+                    <?php /***** CARREGA PLANOS DE DIVULGA&ccedil;&atilde;O *****/ ?>
                     <script type="text/javascript">
                         jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-planos-de-divulgacao-readequacoes'), '', true) ?>?idPronac=<?php echo $this->dados->idPronac; ?>&idReadequacao=<?php echo $this->dados->idReadequacao; ?>', '', 'planosDeDivulgacao');
                     </script>
                     <div id="planosDeDivulgacao"></div>
-                    <?php /****** FIM PLANOS DE DIVULGAÇÃO ******/ ?>
+                    <?php /****** FIM PLANOS DE DIVULGA&ccedil;&atilde;O ******/ ?>
                 </td>
             </tr>
             <?php } ?>
@@ -144,7 +144,7 @@
     
     <table class="tabela">
         <tr>
-            <td><input type="button" name="grid1" id="g1_2" class="btn_adicionar" title="Expandir" />AVALIAÇÃO DO COORDENADOR</td>
+            <td><input type="button" name="grid1" id="g1_2" class="btn_adicionar" title="Expandir" />AVALIA&ccedil;&atilde;O DO COORDENADOR</td>
         </tr>
 	
     </table>
@@ -152,15 +152,15 @@
     <div id="div_g1_2" class="sumir">
         <table class="tabela">
             <tr>
-                <td class="destacar bold" style="width: 50%;">Situação</td>
-                <td class="destacar bold" style="width: 50%;">Dt. Avaliação</td>
+                <td class="destacar bold" style="width: 50%;">Situa&ccedil;&atilde;o</td>
+                <td class="destacar bold" style="width: 50%;">Dt. Avalia&ccedil;&atilde;o</td>
             </tr>
             <tr>
                 <td><?php echo !empty($this->dados->stAtendimento) ? 'Recebido' : 'Rejeitado'; ?></td>
                 <td><?php echo Data::tratarDataZend($this->dados->dtAvaliador, 'Brasileira'); ?></td>
             </tr>
             <tr>
-                <td class="destacar bold" colspan="2">Descrição da Avaliação</td>
+                <td class="destacar bold" colspan="2">Descri&ccedil;&atilde;o da Avalia&ccedil;&atilde;o</td>
             </tr>
             <tr>
                 <td colspan="2"><?php echo $this->dados->dsAvaliacao; ?></td>
@@ -171,13 +171,13 @@
     <?php if(isset($this->Parecer)){ ?>
     <table class="tabela">
         <tr>
-            <td align="right" class="destacar bold w150">Parecer Favorável?</td>
-            <td><?php echo (isset($this->Parecer->ParecerFavoravel) && ($this->Parecer->ParecerFavoravel == 2)) ? 'Sim' : 'Não'; ?></td>
+            <td align="right" class="destacar bold w150">Parecer Favor&aacute;vel?</td>
+            <td><?php echo (isset($this->Parecer->ParecerFavoravel) && ($this->Parecer->ParecerFavoravel == 2)) ? 'Sim' : 'N&atilde;o'; ?></td>
             <td align="right" class="destacar bold w150">Dt. Parecer</td>
             <td><?php echo (isset($this->Parecer->DtParecer) && !empty($this->Parecer->DtParecer)) ? Data::tratarDataZend($this->Parecer->DtParecer, 'Brasileira') : ''; ?></td>
         </tr>
         <tr>
-            <td colspan="4" class="destacar bold w150">Descriçao do Parecer</td>
+            <td colspan="4" class="destacar bold w150">Descri&ccedil;ao do Parecer</td>
         </tr>
         <tr>
             <td colspan="4"><?php echo (isset($this->Parecer->ResumoParecer) && !empty($this->Parecer->ResumoParecer)) ? $this->Parecer->ResumoParecer : ''; ?></td>
@@ -188,7 +188,7 @@
     <br clear="all" />
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

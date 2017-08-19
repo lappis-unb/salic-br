@@ -126,16 +126,16 @@ class AdmissibilidadeDAO extends Zend_Db_Table
         if ($params->fase != 'Documental') {
             $sql = "select idProjeto,
                            NomeProjeto,
-                           SAC.dbo.fnNomeTecnicoMinc(Tecnico) as Tecnico,
+                           sac.dbo.fnNomeTecnicoMinc(Tecnico) as Tecnico,
                            '{$params->fase}' Tipo
-                      from SAC.dbo.vwConformidadeVisualTecnico
+                      from sac.dbo.vwConformidadeVisualTecnico
                      where idProjeto = {$params->idProjeto}";
         } else {
             $sql = "select idProjeto,
                            NomeProjeto,
-                           SAC.dbo.fnNomeTecnicoMinc(idTecnico) as Tecnico,
+                           sac.dbo.fnNomeTecnicoMinc(idTecnico) as Tecnico,
                            '{$params->fase}' Tipo
-                      from SAC.dbo.vwConformidadeDocumentalTecnico
+                      from sac.dbo.vwConformidadeDocumentalTecnico
                      where idProjeto = {$params->idProjeto}";
         }
 
@@ -173,7 +173,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
 
     public static function redistribuirAnalise(stdClass $params)
     {
-        $sql = "UPDATE SAC.dbo.tbAvaliacaoProposta
+        $sql = "UPDATE sac.dbo.tbAvaliacaoProposta
                    SET idTecnico = {$params->usu_cod}
                  WHERE idProjeto = {$params->idProjeto}
                    AND stEstado  = 0";
@@ -204,7 +204,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                     idMovimentacao,
                     stTipoDemanda
                 FROM
-                    SAC.dbo.vwGerenciarProposta
+                    sac.dbo.vwGerenciarProposta
                 WHERE idSecretaria = {$params->cod_orgao}
                 ORDER BY Tecnico, DtAdmissibilidade";
         try {
@@ -244,16 +244,16 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                            a.CNPJCPF,
                            p.idAgente,
                            x.idTecnico AS idUsuario,
-                           SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico,
-                           SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria,
+                           sac.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico,
+                           sac.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria,
                            CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade,
                            DATEDIFF(d, x.DtAvaliacao, ".$objAcesso->getDate().") as dias,
                            x.idAvaliacaoProposta,
                            m.idMovimentacao,
                            p.stTipoDemanda
-                FROM   SAC.dbo.PreProjeto AS p
-                INNER JOIN SAC.dbo.tbMovimentacao AS m ON p.idPreProjeto = m.idProjeto AND m.Movimentacao = 127 AND m.stEstado = 0
-                INNER JOIN SAC.dbo.tbAvaliacaoProposta AS x ON p.idPreProjeto = x.idProjeto AND x.ConformidadeOK = 1 AND x.stEstado = 0
+                FROM   sac.dbo.PreProjeto AS p
+                INNER JOIN sac.dbo.tbMovimentacao AS m ON p.idPreProjeto = m.idProjeto AND m.Movimentacao = 127 AND m.stEstado = 0
+                INNER JOIN sac.dbo.tbAvaliacaoProposta AS x ON p.idPreProjeto = x.idProjeto AND x.ConformidadeOK = 1 AND x.stEstado = 0
                 INNER JOIN agentes.dbo.Agentes AS a ON p.idAgente = a.idAgente
                 WHERE {$meuWhere} (p.stEstado = 1) and p.stTipoDemanda = 'NA'
                 AND (NOT EXISTS
@@ -262,14 +262,14 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                                                    DtProtocolo, DtAnalise, Modalidade, OrgaoOrigem, Orgao, DtSaida, DtRetorno, UnidadeAnalise, Analista, DtSituacao, ResumoProjeto,
                                    ProvidenciaTomada, Localizacao, DtInicioExecucao, DtFimExecucao, SolicitadoUfir, SolicitadoReal, SolicitadoCusteioUfir,
                                    SolicitadoCusteioReal, SolicitadoCapitalUfir, SolicitadoCapitalReal, Logon, idProjeto
-                        FROM           SAC.dbo.Projetos AS u
+                        FROM           sac.dbo.Projetos AS u
                         WHERE          (p.idPreProjeto = idProjeto)
                         )
                 )
                 AND (NOT EXISTS
                         (
                         SELECT     TOP (1) Contador, idProjeto, CodigoDocumento, Opcao
-                        FROM       SAC.dbo.vwDocumentosPendentes AS z
+                        FROM       sac.dbo.vwDocumentosPendentes AS z
                         WHERE      (p.idPreProjeto = idProjeto)
                         )
                 )

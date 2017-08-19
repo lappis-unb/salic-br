@@ -28,7 +28,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             ->order("idPlanilhaEtapa ASC")
         ;
 
-        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM sac.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
         return $db->fetchAll($sql);
     }
@@ -98,7 +98,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
-        //xd($sql);
         return $db->fetchAll($select);
     }
 
@@ -175,7 +174,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(array('veri' => 'verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->join(array('veri' => 'Verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
             ->order('tpe.descricao');
@@ -214,7 +213,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         //$sql = "SELECT
         //idPlanilhaEtapa ,
         //Descricao
-        //FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
+        //FROM sac..tbPlanilhaEtapa where tpcusto = 'A'";
 
         //$sql.= " ORDER BY Descricao ";
 

@@ -693,7 +693,7 @@ class ControlarmovimentacaobancariaController extends MinC_Controller_Action_Abs
 
 
 						// busca o pronac de acordo com a ag�ncia e a conta do projeto
-						// obs: a conta tem 12 carateres na tabela SAC.dbo.ContaBancaria
+						// obs: a conta tem 12 carateres na tabela sac.dbo.ContaBancaria
 						$agencia      = $movimentacao2['agencia'][$cont2] . $movimentacao2['dv_agencia'][$cont2];
 						$conta        = '00' . $movimentacao2['conta'][$cont2] . $movimentacao2['dv_conta'][$cont2];
 						$this->ContaBancaria = new ContaBancaria();
@@ -780,7 +780,7 @@ class ControlarmovimentacaobancariaController extends MinC_Controller_Action_Abs
 
 
 						// busca o pronac de acordo com a ag�ncia e a conta do projeto
-						// obs: a conta tem 12 carateres na tabela SAC.dbo.ContaBancaria
+						// obs: a conta tem 12 carateres na tabela sac.dbo.ContaBancaria
 						$agencia      = $movimentacao3['agencia'][$cont3] . $movimentacao3['dv_agencia'][$cont3];
 						$conta        = '00' . $movimentacao3['conta'][$cont3] . $movimentacao3['dv_conta'][$cont3];
 						$this->ContaBancaria = new ContaBancaria();

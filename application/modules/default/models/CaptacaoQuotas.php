@@ -59,7 +59,7 @@ class CaptacaoQuotas extends MinC_Db_Table_Abstract {
                                 "c.AnoProjeto = q.AnoProjeto and
                                  c.Sequencial = q.Sequencial and
                                  c.AnoCav = q.AnoCav and
-                                 c.SequencialCav = q.SequencialCav", array(""), "SAC.dbo");
+                                 c.SequencialCav = q.SequencialCav", array(""), "SAC");
 
             $select->where('c.AnoProjeto = ?', $AnoProjeto,'c.Sequencial = ?', $Sequencial);
 

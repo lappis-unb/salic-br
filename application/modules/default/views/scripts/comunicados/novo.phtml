@@ -1,13 +1,13 @@
 <?php
 /**
- * Exemplo de Utilização do Layout
+ * Exemplo de Utiliza&ccedil;&atilde;o do Layout
  * @author Tarcísio Angelo - XTI
  * @since 11/01/2012
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.comunicados
  * @link http://salic.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 
 echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
@@ -16,17 +16,17 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 <script type="text/javascript">
 <!--
 	/**
-	 * Funções que são chamadas após a página ser carregada
+	 * Fun&ccedil;&otilde;es que s&atilde;o chamadas após a p&aacute;gina ser carregada
 	 */
 	$(document).ready(function()
 	{
-		// máscaras dos campos
+		// m&aacute;scaras dos campos
 		$("#periodo1, #periodo2").keyup(function()
 		{
 			mascara(this, format_data); // data
 		});
 
-		// calendário
+		// calend&aacute;rio
 		$.datepicker.regional['pt-BR'] = 
 		{
 			closeText: 'Fechar',
@@ -47,7 +47,7 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 		};
 		$.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-		// id dos campos que utilizarão o calendário
+		// id dos campos que utilizar&atilde;o o calend&aacute;rio
 		$("#dtInicioVigencia, #dtTerminoVigencia").datepicker($.datepicker.regional['pt-BR']);
 		
 		CKEDITOR.replace('comunicado');
@@ -65,7 +65,7 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 
         if(dtinicio != '' && compararDataInicialDataFinal(dtinicio, dtAtual) == 0)
 	    {
-			alertar('A data inicial não pode ser menor que a data atual!');
+			alertar('A data inicial n&atilde;o pode ser menor que a data atual!');
             return false;
         }
         
@@ -77,7 +77,7 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
         
         if (comunicado.length == 0)
         {
-            alertar('O campo comunicado é obrigatório!');
+            alertar('O campo comunicado &eacute; obrigatório!');
             return false;
         }
         
@@ -94,8 +94,8 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
-		<li><a href="<?php echo $this->url(array('controller' => 'comunicados', 'action' => 'index'), '', true); ?>" title="Ir para Página Comunicados">Comunicados</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">Início</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => 'comunicados', 'action' => 'index'), '', true); ?>" title="Ir para P&aacute;gina Comunicados">Comunicados</a></li>
 		<li class="last">Novo</li>
 	</ul>
 </div>
@@ -107,7 +107,7 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 <div id="titulo">
 	<div>
 		Novo comunicado
-		<span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span>
+		<span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span>
 	</div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
@@ -119,14 +119,14 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 
 <input type="hidden" name="dtatual" id="dtatual" value="<?php echo date("d/m/Y");?>" />
 
-	<!-- ========== INÍCIO FORMULÁRIO 1 ========== -->
+	<!-- ========== INÍCIO FORMUL&aacute;RIO 1 ========== -->
 	<form name="formnovo" id="formnovo" action="<?php echo $this->url(array('controller' => 'comunicados', 'action' => 'salvar')); ?>" method="POST">
 	<input type="hidden" name="stEstado" value="1" />
 	
 		<table class="tabela">
 			<tr>
 				<td>
-					<label for="stOpcao0">Opção: </label>&nbsp;&nbsp;&nbsp;
+					<label for="stOpcao0">Op&ccedil;&atilde;o: </label>&nbsp;&nbsp;&nbsp;
 					<label for="stOpcao0">SALIC</label>&nbsp;
 					<input type="radio" name="stOpcao" id="stOpcao0" value="0" class="input_simples" checked="checked" />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -162,7 +162,7 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 			</tr>
 		</table>
 	</form>
-	<!-- ========== FIM FORMULÁRIO 1 ========== -->
+	<!-- ========== FIM FORMUL&aacute;RIO 1 ========== -->
 
 
 </div>
@@ -170,8 +170,8 @@ echo $this->partial('inc/menu.inc.phtml', $this)// menu lateral
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

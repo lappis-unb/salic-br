@@ -688,7 +688,7 @@ class Upload
         public function getMimeType($ext){
             for($i=0; $i<count($this->ext_aut); $i++){
                 $auxExt = explode("/", $this->ext_aut[$i]);
-                //xd($auxExt);
+
                 if(is_array($auxExt)){
                     $pos = strpos(strtolower($auxExt[1]), strtolower($ext));
                     if($pos !== false){

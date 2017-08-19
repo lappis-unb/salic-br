@@ -11,7 +11,7 @@ class GerarRelatorioReuniaoExternoController extends MinC_Controller_Action_Abst
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-// fecha método init()
+// fecha m&eacute;todo init()
 
     public function gerarrelatorioreuniaoAction() {
         $reuniao = new Reuniao();

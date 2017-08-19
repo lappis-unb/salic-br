@@ -13,7 +13,7 @@ $this->_helper->layout->disableLayout();
 print_r("1");die;
 
 $idpronac    = $_GET['idpronac'];
-$idagente    = $_GET['idagente'];
+$idagente    = $_GET['idAgente'];
 $idnrreuniao = $_GET['idnrreuniao'];
 
 

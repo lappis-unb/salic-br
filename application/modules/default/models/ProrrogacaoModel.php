@@ -92,7 +92,7 @@ class ProrrogacaoModel implements ModelInterface
      */
     public function salvar()
     {
-        throw new Exception('Não implementado');
+        throw new Exception('N&atilde;o implementado');
     }
 
     /**
@@ -100,7 +100,7 @@ class ProrrogacaoModel implements ModelInterface
      */
     public function atualizar()
     {
-        throw new Exception('Não implementado');
+        throw new Exception('N&atilde;o implementado');
     }
 
     /**
@@ -112,7 +112,7 @@ class ProrrogacaoModel implements ModelInterface
         if ($idProrrogacao) {
             return $this->table->buscarDadosProrrogacao($idProrrogacao);
         }
-        throw new Exception('Não Implementado');
+        throw new Exception('N&atilde;o Implementado');
     }
 
     /**
@@ -145,8 +145,8 @@ class ProrrogacaoModel implements ModelInterface
      * @param type $logon
      * @param type $dataInicial
      * @param type $dataFinal
-     * @param datetime $opcaoDeferimento Decide se vai deferir enviando para análise do coordenador
-     * ou diretamente para o publicação do diário oficial
+     * @param datetime $opcaoDeferimento Decide se vai deferir enviando para an&aacute;lise do coordenador
+     * ou diretamente para o publica&ccedil;&atilde;o do di&aacute;rio oficial
      * @throws InvalidArgumentException
      */
     private function validarDeferimento($id, $observacao, $atendimento, $logon, $dataInicial, $dataFinal, $idPronac, $opcaoDeferimento)
@@ -156,13 +156,13 @@ class ProrrogacaoModel implements ModelInterface
         $dataI = explode('/', $dataInicial);
         $dtI = checkdate($dataI[1], $dataI[0], $dataI[2]);
         if (!$dtI) {
-            throw new DateException('Data inicinal inválida.');
+            throw new DateException('Data inicinal inv&aacute;lida.');
         }
 
         $dataF = explode('/', $dataFinal);
         $dtF = checkdate($dataF[1], $dataF[0], $dataF[2]);
         if (!$dtF) {
-            throw new DateException('Data final inválida.');
+            throw new DateException('Data final inv&aacute;lida.');
         }
 
         $checklistSolicitacaoProrrogacaoPrazo = new paChecklistSolicitacaoProrrogacaoPrazo();
@@ -198,8 +198,8 @@ class ProrrogacaoModel implements ModelInterface
      * @param int $logon
      * @param datetime $dataInicial
      * @param datetime $dataFinal
-     * @param datetime $opcaoDeferimento Decide se vai deferir enviando para análise do coordenador
-     * ou diretamente para o publicação do diário oficial
+     * @param datetime $opcaoDeferimento Decide se vai deferir enviando para an&aacute;lise do coordenador
+     * ou diretamente para o publica&ccedil;&atilde;o do di&aacute;rio oficial
      * @throws InvalidArgumentException
      */
     public function deferir($idProrrogacao, $observacao, $atendimento, $logon, $dataInicial, $dataFinal, $opcaoDeferimento)
@@ -211,7 +211,7 @@ class ProrrogacaoModel implements ModelInterface
             $grupoUsuarioLogado = new Zend_Session_Namespace('GrupoAtivo');
             if (self::PUBLICAR_DOU === $opcaoDeferimento || PerfilModel::COORDENADOR_DE_ACOMPANHAMENTO == $grupoUsuarioLogado->codGrupo) {
                 if(PerfilModel::COORDENADOR_DE_ACOMPANHAMENTO == $grupoUsuarioLogado->codGrupo){
-                    //Se for o coordenador de acompanhamento deferindo a prorrogação, o campo Atendimento passará de 'N' para 'S' para que a rotina de banco não duplique a informação;
+                    //Se for o coordenador de acompanhamento deferindo a prorroga&ccedil;&atilde;o, o campo Atendimento passar&aacute; de 'N' para 'S' para que a rotina de banco n&atilde;o duplique a informa&ccedil;&atilde;o;
                     $atendimento = ProrrogacaoModel::PROCESSADO;
                 }
                 $this->salvarAprovando($prorrogacaoRow, $observacao, $atendimento, $logon, $dataInicial, $dataFinal);
@@ -264,11 +264,11 @@ class ProrrogacaoModel implements ModelInterface
               ->setAnoProjeto($prorrogacaoRow->AnoProjeto)
               ->setSequencial($prorrogacaoRow->Sequencial)
               ->setTipo(AprovacaoModel::TIPO_PRORROGACAO)
-              ->setResumo('Parecer favorável para prorrogação')
+              ->setResumo('Parecer favor&aacute;vel para prorroga&ccedil;&atilde;o')
               ->setUsuarioLogado($logon);
             $aprovacaoModel->salvar();
         } catch (Exception $exception) {
-            throw new Exception('Erro ao tentar prorrogar o prazo de captação', null, $exeception);
+            throw new Exception('Erro ao tentar prorrogar o prazo de capta&ccedil;&atilde;o', null, $exeception);
         }
     }
 

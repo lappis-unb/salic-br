@@ -21,8 +21,8 @@ class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
 
     public function buscarFonteRecurso() {
 //        $sql = "select Verificacao.idVerificacao, ltrim(Verificacao.Descricao) as VerificacaoDescricao
-//                from SAC.dbo.Verificacao as Verificacao
-//                inner join SAC.dbo.Tipo as Tipo
+//                from sac.dbo.Verificacao as Verificacao
+//                inner join sac.dbo.Tipo as Tipo
 //                on Verificacao.idTipo = Tipo.idTipo
 //                where Tipo.idTipo = 5";
         $select = $this->select();
@@ -36,11 +36,11 @@ class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
             $this->_schema
             );
         $select->joinInner(array('tipo'=>'Tipo'),
-            'v.idtipo = tipo.idtipo' ,
+            'v.idTipo = tipo.idTipo' ,
             null,
             $this->_schema
         );
-        $select->where('tipo.idtipo = ?', '5');
+        $select->where('tipo.idTipo = ?', '5');
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

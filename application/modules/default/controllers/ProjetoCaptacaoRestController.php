@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2016 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 class ProjetoCaptacaoRestController extends MinC_Controller_Rest_Abstract {
 
@@ -26,11 +26,11 @@ class ProjetoCaptacaoRestController extends MinC_Controller_Rest_Abstract {
         $ProjetoCaptacao->dataTransferencia = '31/12/2015';
         $ProjetoCaptacao->porcentagemCapitado = 419022.40;
         $ProjetoCaptacao->valorCapitado = number_format(419022.40, 2, ',', '.');
-        $ProjetoCaptacao->bemServico = utf8_encode('Não');
+        $ProjetoCaptacao->bemServico = utf8_encode('N&atilde;o');
         $ProjetoCaptacao->valorTotalCapitado = number_format(419022.40, 2, ',', '.');
         $ProjetoCaptacao->porcentagemTotalCapitado = 99.99;
 
-        # Resposta da autenticação.
+        # Resposta da autentica&ccedil;&atilde;o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($ProjetoCaptacao));
     }
 

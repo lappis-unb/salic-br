@@ -13,7 +13,7 @@
 class tbAcaoAvaliacaoItemPedidoAlteracao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "BDCORPORATIVO";
+	protected $_banco   = "bdcorporativo";
 	protected $_schema  = "scSAC";
 	protected $_name    = "tbAcaoAvaliacaoItemPedidoAlteracao";
 

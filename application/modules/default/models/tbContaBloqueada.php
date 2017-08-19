@@ -45,13 +45,13 @@ class tbContaBloqueada extends MinC_Db_Table_Abstract {
 
         $slct->joinInner(array('pr'=>'Projetos'),
                            "pr.IdPRONAC = cb.IdPRONAC
-                                AND pr.CgcCpf NOT IN(SELECT TOP 1 CgcCpf FROM SAC..Inabilitado WHERE Habilitado='N' and CgcCpf=pr.CgcCpf)
+                                AND pr.CgcCpf NOT IN(SELECT TOP 1 CgcCpf FROM sac..Inabilitado WHERE Habilitado='N' and CgcCpf=pr.CgcCpf)
                                 AND cb.IdPRONAC IN
                                     (
                                         CASE
-                                            WHEN (pr.Situacao IN ('E15','E23')) AND (pr.IdPRONAC IN(SELECT idPronac FROM SAC..Prorrogacao WHERE Atendimento = 'N' AND idPronac=pr.IdPRONAC))
+                                            WHEN (pr.Situacao in ('E15','E23')) AND (pr.IdPRONAC IN(SELECT idPronac FROM sac..Prorrogacao WHERE Atendimento = 'N' AND idPronac=pr.IdPRONAC))
                                                     THEN pr.IdPRONAC
-                                            WHEN (pr.Situacao NOT IN ('E15','E23'))
+                                            WHEN (pr.Situacao NOT in ('E15','E23'))
                                                     THEN pr.IdPRONAC
                                             ELSE
                                                     NULL
@@ -63,13 +63,13 @@ class tbContaBloqueada extends MinC_Db_Table_Abstract {
                                  'pr.DtFimExecucao')
                            );
         $slct->joinInner(array("ap"=>"Aprovacao"),
-                            "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC AND DtInicioCaptacao IS NOT NULL)",
+                            "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from sac..Aprovacao where IdPRONAC = pr.IdPRONAC AND DtInicioCaptacao IS NOT NULL)",
                             array(
                                     'ap.DtInicioCaptacao',
                                     'ap.DtFimCaptacao')
                           );
         $slct->joinLeft(array("inb"=>"Inabilitado"),
-                            "inb.CgcCpf = pr.CgcCpf AND inb.AnoProjeto in (select TOP 1 max(AnoProjeto) from SAC..Inabilitado where CgcCpf = pr.CgcCpf)",
+                            "inb.CgcCpf = pr.CgcCpf AND inb.AnoProjeto in (select TOP 1 max(AnoProjeto) from sac..Inabilitado where CgcCpf = pr.CgcCpf)",
                             array("Habilitado")
                           );
         //adiciona quantos filtros foram enviados
@@ -104,13 +104,13 @@ class tbContaBloqueada extends MinC_Db_Table_Abstract {
 
         $slct->joinInner(array('b'=>'Projetos'),
                            "b.IdPRONAC = b.IdPRONAC
-                                AND b.CgcCpf NOT IN(SELECT TOP 1 CgcCpf FROM SAC..Inabilitado WHERE Habilitado='N' and CgcCpf=b.CgcCpf)
+                                AND b.CgcCpf NOT IN(SELECT TOP 1 CgcCpf FROM sac..Inabilitado WHERE Habilitado='N' and CgcCpf=b.CgcCpf)
                                 AND a.IdPRONAC IN
                                     (
                                         CASE
-                                            WHEN (b.Situacao IN ('E15','E23')) AND (b.IdPRONAC IN(SELECT idPronac FROM SAC..Prorrogacao WHERE Atendimento = 'N' AND idPronac=b.IdPRONAC))
+                                            WHEN (b.Situacao in ('E15','E23')) AND (b.IdPRONAC IN(SELECT idPronac FROM sac..Prorrogacao WHERE Atendimento = 'N' AND idPronac=b.IdPRONAC))
                                                     THEN b.IdPRONAC
-                                            WHEN (b.Situacao NOT IN ('E15','E23'))
+                                            WHEN (b.Situacao NOT in ('E15','E23'))
                                                     THEN b.IdPRONAC
                                             ELSE
                                                     NULL
@@ -157,12 +157,12 @@ class tbContaBloqueada extends MinC_Db_Table_Abstract {
                                  'pr.DtFimExecucao')
                            );
         $slct->joinInner(array("ap"=>"Aprovacao"),
-                            "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC AND DtInicioCaptacao IS NOT NULL)",
+                            "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from sac..Aprovacao where IdPRONAC = pr.IdPRONAC AND DtInicioCaptacao IS NOT NULL)",
                             array('ap.DtInicioCaptacao',
                                   'ap.DtFimCaptacao')
                           );
         $slct->joinLeft(array("inb"=>"Inabilitado"),
-                            "inb.CgcCpf = pr.CgcCpf AND inb.AnoProjeto in (select TOP 1 max(AnoProjeto) from SAC..Inabilitado where CgcCpf = pr.CgcCpf)",
+                            "inb.CgcCpf = pr.CgcCpf AND inb.AnoProjeto in (select TOP 1 max(AnoProjeto) from sac..Inabilitado where CgcCpf = pr.CgcCpf)",
                             array("Habilitado")
                           );
 
@@ -205,13 +205,13 @@ class tbContaBloqueada extends MinC_Db_Table_Abstract {
                                  'pr.DtFimExecucao')
                            );
         $slct->joinInner(array("ap"=>"Aprovacao"),
-                            "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from SAC..Aprovacao where IdPRONAC = pr.IdPRONAC AND DtInicioCaptacao IS NOT NULL)",
+                            "ap.idPronac = pr.idPronac AND ap.DtAprovacao in (select TOP 1 max(DtAprovacao) from sac..Aprovacao where IdPRONAC = pr.IdPRONAC AND DtInicioCaptacao IS NOT NULL)",
                             array(
                                     'ap.DtInicioCaptacao',
                                     'ap.DtFimCaptacao')
                           );
         $slct->joinLeft(array("inb"=>"Inabilitado"),
-                            "inb.CgcCpf = pr.CgcCpf AND inb.AnoProjeto in (select TOP 1 max(AnoProjeto) from SAC..Inabilitado where CgcCpf = pr.CgcCpf)",
+                            "inb.CgcCpf = pr.CgcCpf AND inb.AnoProjeto in (select TOP 1 max(AnoProjeto) from sac..Inabilitado where CgcCpf = pr.CgcCpf)",
                             array("Habilitado")
                           );
         //$slct->where("cb.idContaBloqueada not in ({$slcContasDesbloqueioSistemico})");

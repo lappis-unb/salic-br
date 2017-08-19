@@ -27,7 +27,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
                 array('org'=>'vwUsuariosOrgaosGrupos'),
                 'org.uog_orgao = o.Codigo ',
                 array('org.org_nomeautorizado'),
-                'tabelas.dbo'
+                'tabelas'
         );
         $select->where('o.Status = ?', 0);
         $select->where('o.idSecretaria IS NOT NULL');
@@ -87,13 +87,13 @@ class Orgaos extends MinC_Db_Table_Abstract{
 //                        array("se"=>"Segmento"),
 //                        "o.Codigo = se.idOrgao",
 //                        array(),
-//                        "SAC.dbo"
+//                        "SAC"
 //                        );
 //        $slct->joinInner(
 //                        array("a"=>"Area"),
 //                        "a.Codigo = substring(se.Codigo, 1, 1)",
 //                        array(),
-//                        "SAC.dbo"
+//                        "SAC"
 //                        );
 //
 //        //adiciona quantos filtros foram enviados
@@ -124,7 +124,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
                         array("se"=>"Segmento"),
                         "o.Codigo = se.idOrgao",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
         //adiciona quantos filtros foram enviados

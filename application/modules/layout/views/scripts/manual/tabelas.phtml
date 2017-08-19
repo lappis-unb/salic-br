@@ -1,13 +1,13 @@
 <?php
 /**
- * Exemplo de Utilização do Layout - Tabelas
+ * Exemplo de Utiliza&ccedil;&atilde;o do Layout - Tabelas
  * @author emanuel.sampaio - Politec
  * @since 27/05/2011
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.manual-layout
  * @link http://salic.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 
 echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
@@ -16,8 +16,8 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li><a href="<?php echo $this->url(array('controller' => '', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
-		<li><a href="<?php echo $this->url(array('controller' => 'manual-layout', 'action' => ''), '', true); ?>" title="Ir para Exemplo de Utilização do Layout">Exemplo de Utilização do Layout</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => '', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">Início</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => 'manual-layout', 'action' => ''), '', true); ?>" title="Ir para Exemplo de Utiliza&ccedil;&atilde;o do Layout">Exemplo de Utiliza&ccedil;&atilde;o do Layout</a></li>
 		<li class="last">Tabelas</li>
 	</ul>
 </div>
@@ -29,7 +29,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 <div id="titulo">
 	<div>
 		Tabelas
-		<span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span>
+		<span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span>
 	</div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
@@ -68,7 +68,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 		</tbody>
 		<tfoot>
 			<tr>
-				<td>Rodapé (tfoot)</td>
+				<td>Rodap&eacute; (tfoot)</td>
 			</tr>
 		</tfoot>
 	</table>
@@ -77,7 +77,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 	<br />
 
 	<div class="miolo">
-		<h4 class="centro">Tabela padrão com os dados do projeto:</h4>
+		<h4 class="centro">Tabela padr&atilde;o com os dados do projeto:</h4>
 	</div>
 
 	<table class="tabela">
@@ -102,7 +102,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 	<br />
 
 	<div class="miolo">
-		<h4 class="centro">Considerações para tabelas de registros vindos do banco:</h4>
+		<h4 class="centro">Considera&ccedil;&otilde;es para tabelas de registros vindos do banco:</h4>
 	</div>
 
 	<!-- ========== INÍCIO TABELA ========== -->
@@ -117,7 +117,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 				<td>Toda tabela deve utilizar a classe <strong>.tabela</strong></td>
 			</tr>
 			<tr class="fundo_linha2">
-				<td>Prefira os título dentro de <strong>thead</strong>, conteúdo geral dentro de <strong>tbody</strong> e rodapé dentro de <strong>tfoot</strong></td>
+				<td>Prefira os título dentro de <strong>thead</strong>, conteúdo geral dentro de <strong>tbody</strong> e rodap&eacute; dentro de <strong>tfoot</strong></td>
 			</tr>
 			<tr>
 				<td>Todo título deve estar dentro da tag <strong>th</strong></td>
@@ -131,7 +131,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 		</tbody>
 		<tfoot>
 			<tr>
-				<td>Rodapé (tfoot)</td>
+				<td>Rodap&eacute; (tfoot)</td>
 			</tr>
 		</tfoot>
 	</table>
@@ -146,59 +146,59 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 	<!-- ========== INÍCIO TABELA ========== -->
 	<div class="miolo">
 
-		<!-- ========== INÍCIO TABELA ALINHADA À ESQUERDA ========== -->
+		<!-- ========== INÍCIO TABELA ALINHADA &agrave; ESQUERDA ========== -->
 		<div class="w400 float_left">
 			<table class="tabela">
 				<thead>
 					<tr>
-						<th>Tabela alinhada à esquerda</th>
+						<th>Tabela alinhada &agrave; esquerda</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="linha">
-						<td>Para alterar a largura padrão de uma tabela utilize a classe <strong>.w500</strong>, onde 500 é a largura em pixels.</td>
+						<td>Para alterar a largura padr&atilde;o de uma tabela utilize a classe <strong>.w500</strong>, onde 500 &eacute; a largura em pixels.</td>
 					</tr>
 					<tr class="linha">
-						<td>Para alinhar a tabela à esqueda utilize a classe <strong>.float_left</strong>.</td>
+						<td>Para alinhar a tabela &agrave; esqueda utilize a classe <strong>.float_left</strong>.</td>
 					</tr>
 					<tr>
 						<td class="bg_red white">
-							Se for alinhar a tabela à esquerda, prefira utilizar a classe <strong>.float_left</strong> em uma <strong>div</strong>. 
+							Se for alinhar a tabela &agrave; esquerda, prefira utilizar a classe <strong>.float_left</strong> em uma <strong>div</strong>. 
 							Dentro dessa <strong>div</strong> insira a tabela normalmente. 
-							Dessa forma o alinhamento será obedecido nos navegadores Internet Explorer, Firefox e Chrome.
+							Dessa forma o alinhamento ser&aacute; obedecido nos navegadores Internet Explorer, Firefox e Chrome.
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<!-- ========== FIM TABELA ALINHADA À ESQUERDA ========== -->
+		<!-- ========== FIM TABELA ALINHADA &agrave; ESQUERDA ========== -->
 
-		<!-- ========== INÍCIO TABELA ALINHADA À DIREITA ========== -->
+		<!-- ========== INÍCIO TABELA ALINHADA &agrave; DIREITA ========== -->
 		<div class="w400 float_right">
 			<table class="tabela">
 				<thead>
 					<tr>
-						<th>Tabela alinhada à direita</th>
+						<th>Tabela alinhada &agrave; direita</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="linha">
-						<td>Para alterar a largura padrão de uma tabela utilize a classe <strong>.w500</strong>, onde 500 é a largura em pixels.</td>
+						<td>Para alterar a largura padr&atilde;o de uma tabela utilize a classe <strong>.w500</strong>, onde 500 &eacute; a largura em pixels.</td>
 					</tr>
 					<tr class="linha">
-						<td>Para alinhar a tabela à direita utilize a classe <strong>.float_right</strong>.</td>
+						<td>Para alinhar a tabela &agrave; direita utilize a classe <strong>.float_right</strong>.</td>
 					</tr>
 					<tr>
 						<td class="bg_red white">
-							Se for alinhar a tabela à direita, prefira utilizar a classe <strong>.float_right</strong> em uma <strong>div</strong>. 
+							Se for alinhar a tabela &agrave; direita, prefira utilizar a classe <strong>.float_right</strong> em uma <strong>div</strong>. 
 							Dentro dessa <strong>div</strong> insira a tabela normalmente. 
-							Dessa forma o alinhamento será obedecido nos navegadores Internet Explorer, Firefox e Chrome.
+							Dessa forma o alinhamento ser&aacute; obedecido nos navegadores Internet Explorer, Firefox e Chrome.
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<!-- ========== FIM TABELA ALINHADA À DIREITA ========== -->
+		<!-- ========== FIM TABELA ALINHADA &agrave; DIREITA ========== -->
 
 		<!-- ========== INÍCIO TABELA CENTRALIZADA ========== -->
 		<table class="tabela w400">
@@ -209,10 +209,10 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 			</thead>
 			<tbody>
 				<tr class="linha">
-					<td>Para alterar a largura padrão de uma tabela utilize a classe <strong>.w500</strong>, onde 500 é a largura em pixels.</td>
+					<td>Para alterar a largura padr&atilde;o de uma tabela utilize a classe <strong>.w500</strong>, onde 500 &eacute; a largura em pixels.</td>
 				</tr>
 				<tr>
-					<td class="bg_blue white">Para colocar essa tabela centralizada, basta colocar seu código fonte abaixo da alinhada à esqueda e da alinhada à direita.</td>
+					<td class="bg_blue white">Para colocar essa tabela centralizada, basta colocar seu código fonte abaixo da alinhada &agrave; esqueda e da alinhada &agrave; direita.</td>
 				</tr>
 			</tbody>
 		</table>
@@ -226,8 +226,8 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

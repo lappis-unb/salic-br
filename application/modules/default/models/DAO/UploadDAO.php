@@ -18,13 +18,13 @@ class UploadDAO extends MinC_Db_Table_Abstract {
         $select = $table->select()
             ->from('tbArquivo',
                 array('dsTipoPadronizado', 'nmArquivo'),
-                'BDCORPORATIVO.scCorp')
+                'bdcorporativo.scCorp')
             ->where('tbArquivo.idArquivo = ?',  $id)
             ->joinInner(
                 'tbArquivoImagem',
                 'tbArquivo.idArquivo = tbArquivoImagem.idArquivo',
                 array('biArquivo'),
-                'BDCORPORATIVO.scCorp');
+                'bdcorporativo.scCorp');
 
         $resultado = $db->fetchAll('SET TEXTSIZE 2147483647');
         return $db->fetchAll($select);
@@ -47,12 +47,12 @@ class UploadDAO extends MinC_Db_Table_Abstract {
             $select = $db->select()
                 ->from('tbDocumentosAgentes',
                     array('NoArquivo AS nmArquivo','imDocumento AS biArquivo',new Zend_db_Expr('1 AS biArquivo2')),
-                    'SAC.dbo')
+                    'SAC')
                 ->where('idDocumentosAgentes = ?', $id)
                 ->joinInner('DocumentosExigidos',
                     'tbDocumentosAgentes.CodigoDocumento = DocumentosExigidos.Codigo',
                     array(''),
-                    'SAC.dbo');
+                    'SAC');
 
         }
         else if ($busca == "tbDocumentosPreProjeto") { //acrescentado-jass
@@ -61,12 +61,12 @@ class UploadDAO extends MinC_Db_Table_Abstract {
             $select = $db->select()
                 ->from('tbDocumentosPreprojeto',
                     array('NoArquivo AS nmArquivo','imDocumento AS biArquivo',new Zend_db_Expr('1 AS biArquivo2')),
-                    'SAC.dbo')
+                    'SAC')
                 ->where('idDocumentosPreprojetos = ?', $id)
                 ->joinInner('DocumentosExigidos',
                     'tbDocumentosPreprojeto.CodigoDocumento = DocumentosExigidos.Codigo',
                     array(''),
-                    'SAC.dbo');
+                    'SAC');
 
         }
         else if ($busca == "tbDocumento") { //acrescentado-jass
@@ -75,13 +75,13 @@ class UploadDAO extends MinC_Db_Table_Abstract {
             $select = $db->select()
                 ->from('tbDocumento',
                     array('NoArquivo AS nmArquivo', 'imDocumento AS biArquivo', 'biDocumento AS biArquivo2'),
-                        'SAC.dbo')
+                        'SAC')
                 ->where('tbDocumento.idDocumento = ?',  $id)
                 ->joinInner(
                     'tbTipoDocumento',
                     'tbDocumento.idTipoDocumento = tbTipoDocumento.idTipoDocumento',
                      array(''),
-                    'SAC.dbo');
+                    'SAC');
 
         }
 

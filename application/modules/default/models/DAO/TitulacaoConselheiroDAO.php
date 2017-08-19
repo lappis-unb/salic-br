@@ -29,8 +29,8 @@ class TitulacaoConselheiroDAO extends Zend_Db_Table
 
 				FROM agentes.dbo.tbTitulacaoConselheiro A 
 					INNER JOIN agentes.dbo.Nomes N ON A.idAgente = N.idAgente 
-					INNER JOIN SAC.dbo.Area AC ON A.cdArea = AC.Codigo 
-					LEFT JOIN SAC.dbo.Segmento SC ON A.cdSegmento = SC.Codigo 
+					INNER JOIN sac.dbo.Area AC ON A.cdArea = AC.Codigo 
+					LEFT JOIN sac.dbo.Segmento SC ON A.cdSegmento = SC.Codigo 
 
 				WHERE A.cdArea = " . $area . " AND stConselheiro = 'A' ";
 

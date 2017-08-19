@@ -21,7 +21,7 @@ function layout_fluido()
 	$("#rodapeConteudo").css("margin-left", "225px");
 	$(".sanfonaDiv").css("clear", "both");
 	$(".sanfonaDiv").css("width", "91%");
-} // fecha função layout_fluido()
+} // fecha fun&ccedil;&atilde;o layout_fluido()
 
 $(document).ready(function()
 {
@@ -34,7 +34,7 @@ $(document).ready(function()
 </script>
 <!-- ========== FIM AJUSTE DO LAYOUT PARA ACOPLAR MENU LATERAL ========== -->
 
-<!-- início: navegação local #qm0 -->
+<!-- início: navega&ccedil;&atilde;o local #qm0 -->
 <script type="text/javascript">
 $(function(){
    carregaPagina();

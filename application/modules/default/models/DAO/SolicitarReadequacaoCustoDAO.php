@@ -16,15 +16,15 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
     {
     	$sql = "SELECT 
 					replace(CAST((SELECT SUM (qtItem * nrOcorrencia * vlUnitario)
-						FROM SAC.dbo.tbPlanilhaAprovacao
+						FROM sac.dbo.tbPlanilhaAprovacao
 						WHERE IdPRONAC = $idPronac AND stAtivo= 'S' AND tpplanilha != 'SR') AS money), ',', '.') AS totalAprovadoPlanilha
 					,replace(CAST((SELECT SUM (qtItem * nrOcorrencia * vlUnitario)
-						FROM SAC.dbo.tbPlanilhaAprovacao
+						FROM sac.dbo.tbPlanilhaAprovacao
 						WHERE IdPRONAC = $idPronac AND stAtivo= 'N' AND tpacao != 'E' AND tpplanilha = 'SR') AS money), ',', '.') AS totalSolicitado
 					,replace(CAST((SELECT SUM (qtItem * nrOcorrencia * vlUnitario)
-						FROM SAC.dbo.tbPlanilhaAprovacao
+						FROM sac.dbo.tbPlanilhaAprovacao
 						WHERE IdPRONAC = $idPronac AND stAtivo= 'N' AND tpacao = 'E' AND tpplanilha = 'SR') AS money), ',', '.') AS totalSolicitadoExcluido
-					,replace((SELECT SAC.dbo.fnTotalAprovadoProjeto((SELECT AnoProjeto FROM SAC.dbo.Projetos WHERE IdPRONAC = $idPronac), (SELECT Sequencial FROM SAC.dbo.Projetos WHERE IdPRONAC = $idPronac))), ',', '.') AS totalAprovado";
+					,replace((SELECT sac.dbo.fnTotalAprovadoProjeto((SELECT AnoProjeto FROM sac.dbo.Projetos WHERE IdPRONAC = $idPronac), (SELECT Sequencial FROM sac.dbo.Projetos WHERE IdPRONAC = $idPronac))), ',', '.') AS totalAprovado";
         
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -42,27 +42,27 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'pr.NomeProjeto',
                             'pr.CgcCpf'
                         )
-                        , 'SAC.dbo'
+                        , 'SAC'
                 )
                 ->joinInner(array('ar' => 'Area'),
                         "ar.Codigo = pr.Area",
                         array('Descricao as area'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(array('a' => 'Agentes'),
                         "a.CNPJCPF = pr.CgcCpf",
                         array('idAgente'),
-                        'agentes.dbo'
+                        'agentes'
                 )
                 ->joinInner(array('nm' => 'Nomes'),
                         "a.idAgente = nm.idAgente",
                         array('Descricao as Nome'),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinLeft(array('seg' => 'Segmento'),
                         "seg.Codigo = pr.Segmento",
                         array('Descricao as segmento'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('pr.IdPRONAC = ?', $idPronac);
 
@@ -79,7 +79,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
 //FROM "SAC"."dbo"."Projetos" AS "pr"
 //INNER JOIN "SAC"."dbo"."PreProjeto" AS "prep" ON prep.idPreProjeto = pr.idProjeto
 //INNER JOIN "Agentes"."dbo"."Agentes" AS "ag" ON ag.idAgente = prep.idAgente
-//LEFT JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpap on tpap.idpronac = pr.idpronac
+//LEFT JOIN bdcorporativo.scsac.tbPedidoAlteracaoProjeto tpap on tpap.idpronac = pr.idpronac
 //LEFT JOIN "SAC"."dbo"."tbPlanoDistribuicao" AS tpd ON tpd.idPedidoAlteracao = tpap.idPedidoAlteracao
 //LEFT JOIN "SAC"."dbo"."Produto" AS "pd" ON tpd.idProduto = pd.Codigo WHERE (pr.IdPRONAC= '127152')
                 
@@ -88,13 +88,13 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
         $slct->distinct();
         $slct->from(array('pr' => 'Projetos'),
                         array('IdPRONAC'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(
                         array('prep' => 'PreProjeto'),
                         'prep.idPreProjeto = pr.idProjeto',
                         array('idPreprojeto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('ag' => 'Agentes'),
@@ -103,13 +103,13 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
                         'tpap.IdPRONAC = pr.IdPRONAC',
                         array(),
-                        'BDCORPORATIVO.scSAC'
+                        'bdcorporativo.scSAC'
                 )
                 ->joinLeft(
                         array('tpd' => 'tbPlanoDistribuicao'),
@@ -117,7 +117,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'tpd.idProduto',
                             'tpd.idPlanoDistribuicao'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinLeft(
                         array('pd' => 'Produto'),
@@ -125,7 +125,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'pd.Descricao as produto'
                         ),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('pr.IdPRONAC= ?', $idPronac)
                 ->where('tpd.idProduto IS NOT NULL')
@@ -145,13 +145,13 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
         $slct->distinct();
         $slct->from(array('pr' => 'Projetos'),
                         array('IdPRONAC'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(
                         array('prep' => 'PreProjeto'),
                         'prep.idPreProjeto = pr.idProjeto',
                         array('idPreprojeto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('ag' => 'Agentes'),
@@ -160,13 +160,13 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinLeft(
                         array('tpap' => 'tbPedidoAlteracaoProjeto'),
                         'tpap.IdPRONAC = pr.IdPRONAC',
                         array(),
-                        'BDCORPORATIVO.scSAC'
+                        'bdcorporativo.scSAC'
                 )
                 ->joinLeft(
                         array('pdp' => 'planoDistribuicaoProduto'),
@@ -174,7 +174,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'pdp.idProduto',
                             'pdp.idPlanoDistribuicao'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinLeft(
                         array('pd' => 'Produto'),
@@ -182,7 +182,7 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
                         array(
                             'pd.Descricao as produto'
                         ),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('pr.IdPRONAC= ?', $idPronac)
                 ->where('pd.Descricao IS NOT NULL');
@@ -192,13 +192,13 @@ class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
     }
 
     public function buscarProdutosIndex($idPronac) {
-        $sql = "SELECT  TOP 1   SAC.dbo.Projetos.IdPRONAC, agentes.dbo.Agentes.idAgente, agentes.dbo.Agentes.TipoPessoa, SAC.dbo.Produto.Descricao, SAC.dbo.Produto.Codigo AS idProduto
-FROM         SAC.dbo.Projetos INNER JOIN
-                      SAC.dbo.PreProjeto ON SAC.dbo.Projetos.idProjeto = SAC.dbo.PreProjeto.idPreProjeto INNER JOIN
-                      agentes.dbo.Agentes ON SAC.dbo.PreProjeto.idAgente = agentes.dbo.Agentes.idAgente INNER JOIN
-                      SAC.dbo.PlanoDistribuicaoProduto ON SAC.dbo.PreProjeto.idPreProjeto = SAC.dbo.PlanoDistribuicaoProduto.idProjeto INNER JOIN
-                      SAC.dbo.Produto ON SAC.dbo.PlanoDistribuicaoProduto.idProduto = SAC.dbo.Produto.Codigo
-WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoProduto.stPlanoDistribuicaoProduto = 1 Order by SAC.dbo.Projetos.IdPRONAC Desc ";
+        $sql = "SELECT  TOP 1   sac.dbo.Projetos.IdPRONAC, agentes.dbo.Agentes.idAgente, agentes.dbo.Agentes.TipoPessoa, sac.dbo.Produto.Descricao, sac.dbo.Produto.Codigo AS idProduto
+FROM         sac.dbo.Projetos INNER JOIN
+                      sac.dbo.PreProjeto ON sac.dbo.Projetos.idProjeto = sac.dbo.PreProjeto.idPreProjeto INNER JOIN
+                      agentes.dbo.Agentes ON sac.dbo.PreProjeto.idAgente = agentes.dbo.Agentes.idAgente INNER JOIN
+                      sac.dbo.PlanoDistribuicaoProduto ON sac.dbo.PreProjeto.idPreProjeto = sac.dbo.PlanoDistribuicaoProduto.idProjeto INNER JOIN
+                      sac.dbo.Produto ON sac.dbo.PlanoDistribuicaoProduto.idProduto = sac.dbo.Produto.Codigo
+WHERE     sac.dbo.Projetos.IdPRONAC = $idPronac AND sac.dbo.PlanoDistribuicaoProduto.stPlanoDistribuicaoProduto = 1 Order by sac.dbo.Projetos.IdPRONAC Desc ";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -222,42 +222,42 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'qtDias',
                             '(nrOcorrencia * vlUnitario * qtItem) Total',
                             'nrFonteRecurso',
-                            'idUFDespesa as iduf',
+                            'idUFDespesa as idUF',
                             'idMunicipioDespesa as idmun',
                             'tpAcao',
                             'idEtapa',
                             'stAtivo'
                         ),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpe' => 'tbPlanilhaEtapa'),
                         'tpa.idEtapa = tpe.idPlanilhaEtapa',
                         array('Etapa' => 'tpe.Descricao'),
-                        "SAC.dbo")
+                        "SAC")
                 ->joinInner(array('tpu' => 'tbPlanilhaUnidade'),
                         'tpa.idUnidade = tpu.idUnidade',
                         array('Unidade' => 'tpu.Descricao'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpi' => 'tbPlanilhaItens'),
                         'tpa.idPlanilhaItem = tpi.idPlanilhaItens',
                         array('tpi.Descricao as Item'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('uf' => 'UF'),
                         'tpa.idUFDespesa = uf.idUF',
                         array('uf.Descricao as uf'),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
                         array('mun.Descricao as Municipio'),
-                        'agentes.dbo'
+                        'agentes'
                 )
                 ->joinInner(array('vf' => 'Verificacao'),
                         'tpa.nrFonteRecurso = vf.idVerificacao',
                         array('vf.Descricao as FonteRecurso')
-                        , 'SAC.dbo'
+                        , 'SAC'
                 )
                 ->where('tpa.stAtivo = ?', 'S');
         if (!empty($idPronac)) {
@@ -293,42 +293,42 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'qtDias',
                             '(nrOcorrencia * vlUnitario * qtItem) Total',
                             'nrFonteRecurso',
-                            'idUFDespesa as iduf',
+                            'idUFDespesa as idUF',
                             'idMunicipioDespesa as idmun',
                             'tpAcao',
                             'idEtapa',
                             'stAtivo'
                         ),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpe' => 'tbPlanilhaEtapa'),
                         'tpa.idEtapa = tpe.idPlanilhaEtapa',
                         array('Etapa' => 'tpe.Descricao'),
-                        "SAC.dbo")
+                        "SAC")
                 ->joinInner(array('tpu' => 'tbPlanilhaUnidade'),
                         'tpa.idUnidade = tpu.idUnidade',
                         array('Unidade' => 'tpu.Descricao'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('tpi' => 'tbPlanilhaItens'),
                         'tpa.idPlanilhaItem = tpi.idPlanilhaItens',
                         array('tpi.Descricao as Item'),
-                        "SAC.dbo"
+                        "SAC"
                 )
                 ->joinInner(array('uf' => 'UF'),
                         'tpa.idUFDespesa = uf.idUF',
                         array('uf.Descricao as uf'),
-                        "agentes.dbo"
+                        "agentes"
                 )
                 ->joinInner(array('mun' => 'Municipios'),
                         'tpa.idMunicipioDespesa = mun.idMunicipioIBGE',
                         array('mun.Descricao as Municipio'),
-                        'agentes.dbo'
+                        'agentes'
                 )
                 ->joinInner(array('vf' => 'Verificacao'),
                         'tpa.nrFonteRecurso = vf.idVerificacao',
                         array('vf.Descricao as FonteRecurso')
-                        , 'SAC.dbo'
+                        , 'SAC'
                 )
                 ->where('tpa.stAtivo = ?', 'N')
                 ->where('tpa.tpPlanilha = ?', 'SR')
@@ -353,7 +353,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
     public static function inserirCopiaPlanilha($idPronac, $idPedidoAlteracao) {
         $objAcesso= new Acesso();
-        $sql = "insert into SAC.dbo.tbPlanilhaAprovacao
+        $sql = "insert into sac.dbo.tbPlanilhaAprovacao
                     SELECT
                     'tpPlanilha' = 'SR',
                     {$objAcesso->getDate()},
@@ -382,7 +382,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                     tpAcao,
                     idRecursoDecisao,
                     'stAtivo' = 'N'
-                    FROM         SAC.dbo.tbPlanilhaAprovacao
+                    FROM         sac.dbo.tbPlanilhaAprovacao
                     WHERE     (IdPRONAC = $idPronac) AND (stAtivo = 'S') AND tpPlanilha='CO'
 
                     ";
@@ -396,7 +396,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         try {
             $idCodigoProduto = isset($post['idProduto']) ? $post['idProduto'] : 0;
             $item = isset($post['item']) ? $post['item'] : 0;
-            $sqlItem = "SELECT Descricao FROM SAC.dbo.tbPlanilhaItens WHERE SAC.dbo.tbPlanilhaItens.idPlanilhaItens = $item";
+            $sqlItem = "SELECT Descricao FROM sac.dbo.tbPlanilhaItens WHERE sac.dbo.tbPlanilhaItens.idPlanilhaItens = $item";
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $dscItem = $db->fetchRow($sqlItem);
@@ -428,7 +428,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                 'stAtivo' => "N"
             );
 
-            $db->insert('SAC.dbo.tbPlanilhaAprovacao', $dados);
+            $db->insert('sac.dbo.tbPlanilhaAprovacao', $dados);
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Exception $e) {
@@ -438,21 +438,21 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
     public static function inserirNovoProduto($dados) {
         $db= Zend_Db_Table::getDefaultAdapter();
-        $db->insert('SAC.dbo.tbPlanilhaAprovacao', $dados);
+        $db->insert('sac.dbo.tbPlanilhaAprovacao', $dados);
     }
 
     public function inserirPedido($dados) {
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $db->insert('BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto', $dados);
+        $db->insert('bdcorporativo.scsac.tbPedidoAlteracaoProjeto', $dados);
         return $db->lastInsertId();
     }
 
     public static function alterarPedidoAlterado($post) {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $db->update('BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto', $dados, $where);
+        $db->update('bdcorporativo.scsac.tbPedidoAlteracaoProjeto', $dados, $where);
     }
 
     public static function atualizaPedidoAlteracao($dados, $idPedido) {
@@ -461,7 +461,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            $db->update('BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto', $dados, $where);
+            $db->update('bdcorporativo.scsac.tbPedidoAlteracaoProjeto', $dados, $where);
         } catch (Exception $e) {
             return 'ERRO:' . $e->getMessage();
         }
@@ -473,7 +473,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $idAgente = $post['idAgente'];
         $acao = $post['acao'];
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scsac.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = 'T' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idAgente and idPedidoAlteracao = $idPedido ";
 
 
@@ -491,7 +491,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $idAgente = $post['idAgente'];
         $acao = $post['acao'];
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scsac.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = 'A' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idAgente and idPedidoAlteracao = $idPedido ";
 
 
@@ -507,7 +507,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
 
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scsac.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = '$status' WHERE IdPRONAC =  $idPronac ";
 
 
@@ -522,7 +522,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     public static function atualizaItem($dados, $where) {
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
-            $db->update('SAC.dbo.tbPlanilhaAprovacao', $dados, $where);
+            $db->update('sac.dbo.tbPlanilhaAprovacao', $dados, $where);
             return true;
         } catch (Exception $e) {
             return $e->getMessage();
@@ -530,7 +530,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     }
 
     public static function buscaUltimaPlanilhaAprovada($where) {
-        $sql = "SELECT TOP 1 idPlanilhaAprovacao FROM SAC.dbo.tbPlanilhaAprovacao
+        $sql = "SELECT TOP 1 idPlanilhaAprovacao FROM sac.dbo.tbPlanilhaAprovacao
                 WHERE $where ORDER BY  idPlanilhaAprovacao DESC
 
         ";
@@ -543,7 +543,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     public static function alterarItem($dados, $where) {
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
-            $db->update('SAC.dbo.tbPlanilhaAprovacao', $dados, $where);
+            $db->update('sac.dbo.tbPlanilhaAprovacao', $dados, $where);
             return true;
         } catch (Exception $e) {
             return $e->getMessage();
@@ -553,7 +553,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     public static function atualizaPedidoAlteracaoIndex($idPronac, $idPedido, $idSolicitante, $acao) {
 
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scsac.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = '$acao' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idSolicitante and idPedidoAlteracao = $idPedido ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -565,7 +565,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            $db->insert('BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao', $dados);
+            $db->insert('bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao', $dados);
         } catch (Zend_Exception $e) {
             die('erro:' . $e->getMessage());
         }
@@ -574,7 +574,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     public static function atualizaPedidoTipoAlteracao($idPedidoAlteracao, $justificativa) {
 
 
-        $sql = "update BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao set dsJustificativa = '$justificativa'
+        $sql = "update bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao set dsJustificativa = '$justificativa'
                 where idPedidoAlteracao = $idPedidoAlteracao and tpAlteracaoProjeto = 10    ";
 
 
@@ -588,7 +588,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     }
 
     public static function verificaPedidoTipoAlteracao($idPedidoAlteracao, $tpalteracaoprojeto) {
-        $sql = "select 1 from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE idPedidoAlteracao = '$idPedidoAlteracao' and tpAlteracaoProjeto = $tpalteracaoprojeto";
+        $sql = "select 1 from bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao WHERE idPedidoAlteracao = '$idPedidoAlteracao' and tpAlteracaoProjeto = $tpalteracaoprojeto";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -601,7 +601,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $idAgente = $post['idAgente'];
         $acao = $post['acao'];
 
-        $sql = "UPDATE    BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto SET
+        $sql = "UPDATE    bdcorporativo.scsac.tbPedidoAlteracaoProjeto SET
                     stPedidoAlteracao = 'T' WHERE IdPRONAC =  $idPronac and idSolicitante =  $idAgente and idPedidoAlteracao = $idPedido ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -611,7 +611,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
     public function verificaPedidoAlteracao($idPronac) {
     
-        $sql = "Select idPedidoAlteracao, stPedidoAlteracao  from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto
+        $sql = "Select idPedidoAlteracao, stPedidoAlteracao  from bdcorporativo.scsac.tbPedidoAlteracaoProjeto
                     WHERE IdPRONAC = $idPronac order by idPedidoAlteracao Desc ";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -627,7 +627,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         } else {
             $idProduto = $post['idProduto'];
         }
-        $sql = "select * from SAC.dbo.tbPlanilhaAprovacao where idEtapa = $etapa  and idProduto = $item and idPlanilhaItem = $idProduto and tpPlanilha = 'SR'";
+        $sql = "select * from sac.dbo.tbPlanilhaAprovacao where idEtapa = $etapa  and idProduto = $item and idPlanilhaItem = $idProduto and tpPlanilha = 'SR'";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -635,7 +635,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
     public static function verificaTipoAcao($idPronac) {
         $sql = "SELECT TOP 1    tpAcao
-                FROM         SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = $idPronac order by idPlanilhaAprovacao desc";
+                FROM         sac.dbo.tbPlanilhaAprovacao where IdPRONAC = $idPronac order by idPlanilhaAprovacao desc";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -643,7 +643,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
 
     public static function buscaIdPedidoAlteracao($idPronac) {
 
-        $sql = "select MAX(idPedidoAlteracao) as idpedidoalteracao from  BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where idpronac = $idPronac";
+        $sql = "select MAX(idPedidoAlteracao) as idpedidoalteracao from  bdcorporativo.scsac.tbPedidoAlteracaoProjeto where idpronac = $idPronac";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -660,7 +660,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                             'tpa.idProduto',
                                             'tpa.idPlanilhaAprovacao'
                                         ),
-                                        'SAC.dbo'
+                                        'SAC'
                                         )
                                         ->where('IdPRONAC = ?', $idPronac);
         if (!empty($idCodigoProduto)) {
@@ -683,26 +683,26 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                             'pdp.idProduto',
                                             'pd.Descricao AS produto'
                                         ),
-                                        'SAC.dbo'
+                                        'SAC'
                                         )
                                         ->joinInner(
                                                 array('pr' => 'Projetos'),
                                                 'pdp.idProjeto = pr.idProjeto',
                                                 array(),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
                                         ->joinInner(
                                                 array('pd' => 'Produto'),
                                                 'pdp.idProduto = pd.Codigo',
                                                 array(),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
 
                                         ->joinInner(
                                                 array('ag' => 'Agentes'),
                                                 'ag.CNPJCPF = pr.CgcCpf',
                                                 array(),
-                                                'agentes.dbo'
+                                                'agentes'
                                         )
                                         ->where('pr.IdPRONAC = ?', $idPronac)
                                         ->where('pdp.stPlanoDistribuicaoProduto = ?', 1);
@@ -720,7 +720,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                         array(
                                             'tpd.idProduto',
                                          ),
-                                        'SAC.dbo'
+                                        'SAC'
                                         )
                                         ->joinInner(
                                                 array('prd' => 'Produto'),
@@ -729,7 +729,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                     'prd.Codigo',
                                                     'prd.Descricao as produto',
                                                 ),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
                                         ->joinInner(
                                                 array('tpa' => 'tbPedidoAlteracaoProjeto'),
@@ -738,13 +738,13 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                     'tpa.IdPRONAC'
 
                                                 ),
-                                                'BDCORPORATIVO.scSac'
+                                                'bdcorporativo.scSac'
                                         )
                                         ->joinInner(
                                                 array('pr' => 'Projetos'),
                                                 'tpa.IdPRONAC = pr.IdPRONAC',
                                                 array(),
-                                                'SAC.dbo'
+                                                'SAC'
                                         )
                                         ->joinInner(
                                                 array('ag' => 'Agentes'),
@@ -754,7 +754,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                                                     'ag.TipoPessoa',
                                             'ag.idAgente',
                                                 ),
-                                                'agentes.dbo'
+                                                'agentes'
                                         )
                                         
                                         ->where('tpa.IdPRONAC = ?', $idPronac);
@@ -768,7 +768,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $slctEtapa->setIntegrityCheck(false);
         $slctEtapa->from('tbPlanilhaEtapa',
                 array(),
-                'SAC.dbo'
+                'SAC'
         );
         $slctEtapa->where('tpCusto= ?', $tipoproduto);
         return $this->fetchAll($slctEtapa);
@@ -780,19 +780,19 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $slctItens->from(
                         array('tpa' => 'tbPlanilhaAprovacao'),
                         array('*'),
-                        'SAC.dbo'
+                        'SAC'
                         )
                 ->joinInner(
                         array('pr' => 'Projetos'),
                         'tpa.idPronac = pr.IdPRONAC',
                         array(''),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('prep' => 'PreProjeto'),
                         'prep.idPreProjeto = pr.idProjeto',
                         array('idPreprojeto'),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->joinInner(
                         array('ag' => 'Agentes'),
@@ -801,7 +801,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'TipoPessoa',
                             'idAgente'
                         ),
-                        "agentes.dbo"
+                        "agentes"
                 );
         //$slctItens->where("tpPlanilha = ?", 'SR');
         $slctItens->where('tpa.idPronac = ?', $idPronac);
@@ -812,8 +812,8 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     public static function buscarItens($idEtapa, $idproduto = null) {
         $sql = " select distinct tpi.idPlanilhaItens,
                 tpi.Descricao
-                from SAC.dbo.tbPlanilhaItens tpi
-                INNER JOIN SAC..tbItensPlanilhaProduto tbipp on tbipp.idPlanilhaItens = tpi.idPlanilhaItens
+                from sac.dbo.tbPlanilhaItens tpi
+                INNER JOIN sac..tbItensPlanilhaProduto tbipp on tbipp.idPlanilhaItens = tpi.idPlanilhaItens
                 where idPlanilhaEtapa = $idEtapa  ";
 
         if (!empty($idproduto)) {
@@ -837,19 +837,19 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
                             'ver.idVerificacao',
                             '(ltrim(ver.Descricao)) as VerificacaoDescricao'
                         ),
-                        'SAC.dbo')
+                        'SAC')
                 ->joinInner(
                         array('tp' => 'Tipo'),
                         'ver.idTipo = tp.idTipo',
                         array(),
-                        'SAC.dbo'
+                        'SAC'
                 )
                 ->where('tp.idTipo = ?', '5');
         return $this->fetchAll($fonte);
     }
 
     public function buscarUnidade() {
-        $sql = "select idUnidade, Sigla, Descricao  from SAC.dbo.tbPlanilhaUnidade";
+        $sql = "select idUnidade, Sigla, Descricao  from sac.dbo.tbPlanilhaUnidade";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -865,7 +865,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
     }
 
     public static function buscarMunicipio($iduf) {
-        $sql = "select idMunicipioIBGE, idUFIBGE, Descricao from agentes.dbo.Municipios where idUFIBGE = $iduf";
+        $sql = "select idMunicipioIBGE, idUFIBGE, Descricao from agentes.dbo.Municipios where idUFIBGE = $idUF";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -877,7 +877,7 @@ WHERE     SAC.dbo.Projetos.IdPRONAC = $idPronac AND SAC.dbo.PlanoDistribuicaoPro
         $verifica->setIntegrityCheck(false);
         $verifica->from('tbPlanilhaAprovacao',
                         array(),
-                        'SAC.dbo')
+                        'SAC')
                 ->where('idPRONAC = ?', $idpronac)
                 ->where('tpPlanilha = ?', $tpplanilha);
         return $this->fetchAll($verifica)->current();

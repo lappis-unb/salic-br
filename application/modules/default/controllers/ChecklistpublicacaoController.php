@@ -150,16 +150,16 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             switch ($filtro) {
                 case '':
                     $where['pr.Situacao = ?'] = 'D03';
-                    $where['NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
+                    $where['NOT EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
                     break;
                 case 'desistencias':
-                    $where['NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
-                    $where['EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbRecurso WHERE stEstado = 1 and siFaseProjeto = 2 and siRecurso = 0 AND idPronac = pr.IdPRONAC)'] = '';
+                    $where['NOT EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
+                    $where['EXISTS(SELECT TOP 1 * FROM sac.dbo.tbRecurso WHERE stEstado = 1 and siFaseProjeto = 2 and siRecurso = 0 AND idPronac = pr.IdPRONAC)'] = '';
                     break;
                 case 'diligenciados':
                     $this->view->nmPagina = 'Proponentes Diligenciados';
                     $where['pr.Situacao = ?'] = 'D25';
-                    $where['EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
+                    $where['EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
                     break;
                 case 'irregulares':
                     $this->view->nmPagina = 'Proponentes Irregulares';
@@ -168,7 +168,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
                 case 'respondidos':
                     $this->view->nmPagina = 'Diligencias Respondidas';
                     $where['pr.Situacao = ?'] = 'D03';
-                    $where['EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NOT NULL AND stEstado = 0)'] = '';
+                    $where['EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NOT NULL AND stEstado = 0)'] = '';
                     break;
                 case 'finalizados':
                     $this->view->nmPagina = 'Projetos Finalizados';
@@ -176,18 +176,18 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
                     break;
                 case 'recursos':
                     $this->view->nmPagina = 'Projetos Recursos';
-                    $where['EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbRecurso WHERE idPronac = pr.idPronac AND siRecurso = ?)'] = 9;
+                    $where['EXISTS(SELECT TOP 1 * FROM sac.dbo.tbRecurso WHERE idPronac = pr.idPronac AND siRecurso = ?)'] = 9;
                     $where['pr.Situacao = ?'] = 'D20';
                     break;
                 case 'readequacoes':
                     $this->view->nmPagina = 'Projetos Readequa��es';
-                    $where['EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbReadequacao WHERE idPronac = pr.idPronac AND siEncaminhamento = ?)'] = 9;
+                    $where['EXISTS(SELECT TOP 1 * FROM sac.dbo.tbReadequacao WHERE idPronac = pr.idPronac AND siEncaminhamento = ?)'] = 9;
 //                    $where['pr.Situacao = ?'] = 'D20';
                     break;
             }
         } else {
             $where['pr.Situacao = ?'] = 'D03';
-            $where['NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
+            $where['NOT EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
         }
 
         if($this->view->filtro == 'finalizados'){
@@ -288,12 +288,12 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $this->view->filtro = $filtro;
             switch ($filtro) {
                 case '':
-                    $where['NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
+                    $where['NOT EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
                     break;
                 case 'diligenciados':
                     $this->view->nmPagina = 'Proponentes Diligenciados';
                     $where['pr.Situacao = ?'] = 'D25';
-                    $where['EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
+                    $where['EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL AND stEstado = 0 AND stEnviado = \'S\')'] = '';
                     break;
                 case 'irregulares':
                     $this->view->nmPagina = 'Proponentes Irregulares';
@@ -302,7 +302,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
                 case 'respondidos':
                     $this->view->nmPagina = 'Diligencias Respondidas';
                     $where['pr.Situacao = ?'] = 'D03';
-                    $where['EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NOT NULL AND stEstado = 0)'] = '';
+                    $where['EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NOT NULL AND stEstado = 0)'] = '';
                     break;
                 case 'finalizados':
                     $this->view->nmPagina = 'Projetos Finalizados';
@@ -353,7 +353,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 181;
         }
@@ -368,7 +368,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 182;
         }
@@ -396,7 +396,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $projetosReadequados = $projetos->buscarProjetosCheckList($arrBusca);
@@ -413,7 +413,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $projetosDiligenciadosReadequados = $projetos->buscarProjetosCheckList($arrBusca);
@@ -430,7 +430,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $salicReadequados = $projetos->buscarProjetosCheckList($arrBusca);
@@ -463,7 +463,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
         
         $projetosAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
@@ -480,7 +480,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $projetosDiligenciadosAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
@@ -499,7 +499,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
          if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
 
         $salicAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
@@ -526,11 +526,11 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $arrBusca = array();
             $arrBusca['pr.Situacao = ?'] = 'D25';
             $arrBusca['pr.Orgao = ?']    = $this->codOrgao;
-            $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL)"] = '(?)';
+            $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 181 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL)"] = '(?)';
 
             if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
 
             //calcula o total de registros
@@ -544,11 +544,11 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $arrBusca = array();
             $arrBusca['pr.Situacao = ?'] = 'D33';
             $arrBusca['pr.Orgao = ?']    = $this->codOrgao;
-            $arrBusca["EXISTS(SELECT TOP 1 * FROM SAC.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 182 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL)"] = '(?)';
+            $arrBusca["EXISTS(SELECT TOP 1 * FROM sac.dbo.tbDiligencia WHERE idPronac = pr.idPronac AND idTipoDiligencia = 182 AND DtSolicitacao IS NOT NULL AND DtResposta IS NULL)"] = '(?)';
 
             if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 182;
         }
@@ -581,7 +581,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if($this->codGrupo == 110 ){ // 110=Tecnico de Analise  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
 
             //calcula o total e retorna para a tela original
@@ -597,7 +597,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
                 if($this->codGrupo == 121 ){ //121=Tecnico Acompanhamento  - Inclui projetos que estao direcionados ao tecnico
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
             $this->view->codDiligencia = 182;
 
@@ -642,12 +642,12 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 
             if ($tipoAnalise == "readequados") :
                     $arrBusca = array();
-                    $arrBusca['re.siVerificacao IN (?)'] = array('1');
-                    $arrBusca['rex.tpAlteracaoProjeto IN (?)'] = array('1', '2', '5', '7', '8', '9', '10');
-                    $arrBusca['pr.Situacao NOT IN (?)'] = array('D27', 'D28');
+                    $arrBusca['re.siVerificacao in (?)'] = array('1');
+                    $arrBusca['rex.tpAlteracaoProjeto in (?)'] = array('1', '2', '5', '7', '8', '9', '10');
+                    $arrBusca['pr.Situacao NOT in (?)'] = array('D27', 'D28');
                     if ($this->codGrupo == 121) : // 121 = Tecnico Acompanhamento - Inclui projetos que estao direcionados ao tecnico
                             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
-                            $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
+                            $arrBusca['vp.stAnaliseProjeto NOT in (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
                     endif;
             endif;
             if (!empty($post->ordenacaoR)) { $ordem[] = "{$post->ordenacaoR} {$post->tipoOrdenacaoR}"; }else{$ordem = array('1 ASC');}
@@ -1014,7 +1014,7 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
     function recuperaAreaCulturalAction()
     {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $cdarea = $this->_request->getParam("area");
+        $cdarea = $this->_request->getParam("Area");
         //$cdarea = $post->area;
         $dadosSegmento = array();
         $vSegmento = array();
@@ -1069,8 +1069,8 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
             $arrBusca['(pr.AnoProjeto + pr.Sequencial) = ?'] = $pronac;}
         if(!empty($nrReuniao)){
             $arrBusca['tr.NrReuniao = ?'] = $nrReuniao;}
-        $arrBusca['vp.stAnaliseProjeto IN (?)'] = array('1','2','3');
-        $arrBusca['vp.stAnaliseProjeto in (SELECT TOP 1 max(stAnaliseProjeto) from SAC..tbVerificaProjeto where IdPRONAC = pr.IdPRONAC)'] = '?';
+        $arrBusca['vp.stAnaliseProjeto in (?)'] = array('1','2','3');
+        $arrBusca['vp.stAnaliseProjeto in (SELECT TOP 1 max(stAnaliseProjeto) from sac..tbVerificaProjeto where IdPRONAC = pr.IdPRONAC)'] = '?';
 
         if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('32 ASC');}
 

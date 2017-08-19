@@ -179,7 +179,7 @@ $(document).ready( function() {
             modal:true,
             buttons:
             {
-                'Não':function()
+                'N&atilde;o':function()
                 {
                     $(this).dialog('close'); // fecha a modal
                 },
@@ -397,7 +397,7 @@ include_once 'inc/funcoes.inc.php';
 
     <?php echo $this->partial('cadastraredital/inc/menu.inc.php', $this);?>
 <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
-<div id="alerta" title="Confirma&ccedil;&atilde;o" style="display: none">Nota Inicial não pode ser maior que a Nota Final!</div>
+<div id="alerta" title="Confirma&ccedil;&atilde;o" style="display: none">Nota Inicial n&atilde;o pode ser maior que a Nota Final!</div>
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>">In&iacute;cio</a></li>
@@ -405,12 +405,12 @@ include_once 'inc/funcoes.inc.php';
         <!-- <li><a href="<?php echo $this->url(array('controller' => 'cadastraredital', 'action' => 'consultaralterareditais')); ?>">Consultar/Alterar Edital</a></li>-->
         <?php //endif; ?>
         <li><a href="<?php echo $this->url(array('controller' => 'cadastraredital', 'action' => ''), '', true); ?>" title="Ir para Edital">Edital</a></li>
-        <li class="last">Critério de avalia&ccedil;&atilde;o</li>
+        <li class="last">Crit&eacute;rio de avalia&ccedil;&atilde;o</li>
     </ul>
 </div>
 
 <div id="titulo">
-    <div>Critério de avalia&ccedil;&atilde;o - Edital "<?php echo $this->nmEdital; ?>" <span class="voltar"><a href="javascript:voltar();" title="Página anterior">Voltar</a></span></div>
+    <div>Crit&eacute;rio de avalia&ccedil;&atilde;o - Edital "<?php echo $this->nmEdital; ?>" <span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina anterior">Voltar</a></span></div>
 
 </div>
 
@@ -427,18 +427,18 @@ include_once 'inc/funcoes.inc.php';
                     <table class="tabela">
                         <tbody>
                             <tr>
-                                <th>Dados do Critério de Avalia&ccedil;&atilde;o</i></th>
+                                <th>Dados do Crit&eacute;rio de Avalia&ccedil;&atilde;o</i></th>
                             </tr>
                             <tr>
                                 <td>
-                                    <b>Critério de Avalia&ccedil;&atilde;o *: </b><br>
+                                    <b>Crit&eacute;rio de Avalia&ccedil;&atilde;o *: </b><br>
                                     <input type="text" value="<?php echo $criterio?>" class="input_simples required dsPergunta" title="Crit?rio de avalia??o" null="false" id="dsPergunta" name="dsPergunta" >
                                     <div id="mensagem1"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <i><b>Texto de ajuda do Critério de Avalia&ccedil;&atilde;o: (opcional)</b></i><br>
+                                    <i><b>Texto de ajuda do Crit&eacute;rio de Avalia&ccedil;&atilde;o: (opcional)</b></i><br>
                                     <textarea class="input_simples" rows="3" cols="150" class="campoTexto"  id="dsLabelPergunta" name="dsLabelPergunta" apagar="false"><?php echo $textoAjuda?></textarea>
                                 </td>
                             </tr>

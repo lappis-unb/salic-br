@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 
 class DesvincularagentesController extends MinC_Controller_Action_Abstract {
@@ -18,49 +18,49 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
      * ====================
      */
     /**
-     * Reescreve o método init()
+     * Reescreve o m&eacute;todo init()
      * @access public
      * @param void
      * @return void
      */
     /**
-     * Reescreve o método init()
+     * Reescreve o m&eacute;todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+        $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
+        $Usuario = new UsuarioDAO(); // objeto usu&aacute;rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
 
-        if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+        if ($auth->hasIdentity()) // caso o usu&aacute;rio esteja autenticado
         {
-            // verifica as permissões
+            // verifica as permiss&otilde;es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
             //$PermissoesGrupo[] = 94;  // Parecerista
-            $PermissoesGrupo[] = 103; // Coordenador de Análise
-            //$PermissoesGrupo[] = 118; // Componente da Comissão
+            $PermissoesGrupo[] = 103; // Coordenador de An&aacute;lise
+            //$PermissoesGrupo[] = 118; // Componente da Comiss&atilde;o
             //$PermissoesGrupo[] = 119; // Presidente da Mesa
             $PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
             $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo est&aacute; no array de permiss&otilde;es
             {
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+                parent::message("Você n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, org&atilde;os e grupos do usu&aacute;rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a vis&atilde;o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usu&aacute;rio para a vis&atilde;o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu&aacute;rio para a vis&atilde;o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu&aacute;rio para a vis&atilde;o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órg&atilde;o ativo do usu&aacute;rio para a vis&atilde;o
         } // fecha if
-        else // caso o usuário não esteja autenticado
+        else // caso o usu&aacute;rio n&atilde;o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -69,7 +69,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
         // chama o init() do pai GenericControllerNew
     }
 
-    // fecha método init()
+    // fecha m&eacute;todo init()
     /**
      * Redireciona para o fluxo inicial do sistema
      * @access public
@@ -82,12 +82,12 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
         $this->_forward("buscaragentes");
     }
 
-    // fecha método buscaragentesAction()
+    // fecha m&eacute;todo buscaragentesAction()
     public function desvincularagentesAction() 
     {
         $filter = new Zend_Filter_StripTags();
 
-        $idagente = $filter->filter($this->_request->getPost('idagente'));
+        $idagente = $filter->filter($this->_request->getPost('idAgente'));
         $dados = DesvincularagentesDAO::desvincularagentes($idagente); 
 
         $post = Zend_Registry::get('get');
@@ -151,7 +151,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
     public function buscaragentesvinculadosAction() 
     {
 		
-        // caso o formulário seja enviado via post
+        // caso o formul&aacute;rio seja enviado via post
         if($this->getRequest()->isPOST()) 
         {
 		    // recebe o cpf/cnpj via post
@@ -159,7 +159,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
             $cnpjcpf = Mascara::delMaskCNPJ($post->cnpjcpf);
             $nome = $post->nome;
          
-            // VALIDAÇÃO
+            // VALIDA&ccedil;&atilde;O
             try {
                 if(!$cnpjcpf && !$nome) 
                 {
@@ -171,11 +171,11 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
                     {
                         if(strlen($cnpjcpf) == 11 && !Validacao::validarCPF($cnpjcpf)) 
                         {
-                            throw new Exception("O Nº do CPF é inválido!");
+                            throw new Exception("O Nº do CPF &eacute; inv&aacute;lido!");
                         }
                         elseif(strlen($cnpjcpf) > 11 && !Validacao::validarCNPJ($cnpjcpf)) 
                         {
-                            throw new Exception("O Nº do CNPJ é inválido!");
+                            throw new Exception("O Nº do CNPJ &eacute; inv&aacute;lido!");
                         }
                         
                         if(strlen($cnpjcpf) < 11 || strlen($cnpjcpf) > 14) 
@@ -187,7 +187,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
                         {
                             if(strlen($nome) > 70) 
                             {
-                                throw new Exception("Nome inválido!");
+                                throw new Exception("Nome inv&aacute;lido!");
                             }
                         }
                     }
@@ -195,7 +195,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
                     {
                         if(strlen($nome) > 70) 
                         {
-                            throw new Exception("Nome inválido!");
+                            throw new Exception("Nome inv&aacute;lido!");
                         }
                     }
                     
@@ -230,16 +230,16 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
             	if($tbentidade) 
 		        {
 		
-					// ========== INÍCIO PAGINAÇÃO ==========
-					//criando a paginaçao
+					// ========== INÍCIO PAGINA&ccedil;&atilde;O ==========
+					//criando a pagina&ccedil;ao
 					Zend_Paginator::setDefaultScrollingStyle('Sliding');
 					Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 					$paginator = Zend_Paginator::factory($tbentidade); // dados a serem paginados
 
-					// página atual e quantidade de ítens por página
+					// p&aacute;gina atual e quantidade de ítens por p&aacute;gina
 					$currentPage = $this->_getParam('page', 1);
 					$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(1);
-					// ========== FIM PAGINAÇÃO ==========
+					// ========== FIM PAGINA&ccedil;&atilde;O ==========
 
                     $this->view->entidade = $paginator;
                     $this->view->qtdEntidade    = count($tbentidade); // quantidade
@@ -248,7 +248,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
 		        }
 		        else
 		        {
-		        	throw new Exception("Registro não encontrado!");
+		        	throw new Exception("Registro n&atilde;o encontrado!");
 		        }
 		        
             }catch (Exception $e) {

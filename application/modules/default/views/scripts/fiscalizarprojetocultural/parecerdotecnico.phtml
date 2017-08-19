@@ -23,8 +23,8 @@ $selected = '';
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')); ?>" title="Ir para Fiscalização do Projeto">Fiscalização do Projeto</a></li>
-        <li class="last">Avaliar projeto para fiscalização</li>
+        <li class="second"><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')); ?>" title="Ir para Fiscaliza&ccedil;&atilde;o do Projeto">Fiscaliza&ccedil;&atilde;o do Projeto</a></li>
+        <li class="last">Avaliar projeto para fiscaliza&ccedil;&atilde;o</li>
     </ul>
 </div>
 
@@ -43,7 +43,7 @@ $selected = '';
             
         <table class="tabela">
             <tr>
-                <th colspan="2">Identificaç&atilde;o</th>
+                <th colspan="2">Identifica&ccedil;&atilde;o</th>
             </tr>
             <tr>
                 <td class="destacar bold" align="center" width="30%">PRONAC</td>
@@ -96,7 +96,7 @@ $selected = '';
 
         <table class="tabela">
             <tr>
-                <th colspan="4">Dados da Fiscalizaç&atilde;o</th>
+                <th colspan="4">Dados da Fiscaliza&ccedil;&atilde;o</th>
             </tr>
             <tr>
                 <td class="destacar bold" align="right" width="200">Data Início:</td>
@@ -105,7 +105,7 @@ $selected = '';
                 <td><?php echo date('d/m/Y', strtotime($projeto->dtFimFiscalizacaoProjeto)); ?></td>
             </tr>
             <tr>
-                <td class="destacar bold" align="right" width="200">Fiscalização:</td>
+                <td class="destacar bold" align="right" width="200">Fiscaliza&ccedil;&atilde;o:</td>
                 <td colspan="3"><?php if ($projeto['dsFiscalizacaoProjeto']) echo $projeto['dsFiscalizacaoProjeto']; ?></td>
             </tr>
             <tr>
@@ -124,10 +124,10 @@ $selected = '';
         <table class="tabela">
             <?php $y=1; ?>
             <tr>
-                <th>Resumo da Execuç&atilde;o</th>
+                <th>Resumo da Execu&ccedil;&atilde;o</th>
             </tr>
             <tr>
-                <td class="destacar bold"><?php echo $y++.'.'; ?> Aç&otilde;es Programadas</td>
+                <td class="destacar bold"><?php echo $y++.'.'; ?> A&ccedil;&otilde;es Programadas</td>
             </tr>
             <tr>
                 <td align="center">
@@ -135,7 +135,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold"><?php echo $y++.'.'; ?> Aç&otilde;es Executadas</td>
+                <td class="destacar bold"><?php echo $y++.'.'; ?> A&ccedil;&otilde;es Executadas</td>
             </tr>
             <tr>
                 <td align="center">
@@ -143,7 +143,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold"><?php echo $y++.'.'; ?> Benef&iacute;cios Alcançados</td>
+                <td class="destacar bold"><?php echo $y++.'.'; ?> Benef&iacute;cios Alcan&ccedil;ados</td>
             </tr>
             <tr>
                 <td align="center">
@@ -163,15 +163,15 @@ $selected = '';
         <?php /* ?>
         <table class="tabela">
             <tr>
-                <th colspan="2">Situaç&atilde;o do Conv&ecirc;nio na Realizaç&atilde;o da Fiscalizaç&atilde;o</th>
+                <th colspan="2">Situa&ccedil;&atilde;o do Conv&ecirc;nio na Realiza&ccedil;&atilde;o da Fiscaliza&ccedil;&atilde;o</th>
             </tr>
             <tr>
-                <td>5*<?php echo $y++.'.'; ?> Situaç&atilde;o SIAFI</td>
+                <td>5*<?php echo $y++.'.'; ?> Situa&ccedil;&atilde;o SIAFI</td>
                 <td width="230">
                     <?php if (isset($relatorio->stSiafi)) $selected = $relatorio->stSiafi;?>
                     <select null="false" class="campoForm w200" id="stSiafi" name="stSiafi" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
                         <option value="" <?php if ($selected == null) echo 'selected' ?>>--</option>
-                        <option value="0" <?php if ($selected == '0') echo 'selected' ?>>Não se aplica</option>
+                        <option value="0" <?php if ($selected == '0') echo 'selected' ?>>N&atilde;o se aplica</option>
                         <option value="1" <?php if ($selected == '1') echo 'selected' ?>>Aprovado</option>
                         <option value="2" <?php if ($selected == '2') echo 'selected' ?>>A aprovar</option>
                         <option value="3" <?php if ($selected == '3') echo 'selected' ?>>A comprovar</option>
@@ -179,7 +179,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td>6*<?php echo $y++.'.'; ?> Prestaç&atilde;o de Contas Apresentada?</td>
+                <td>6*<?php echo $y++.'.'; ?> Presta&ccedil;&atilde;o de Contas Apresentada?</td>
                 <td>
                     <?php if (isset($relatorio->stPrestacaoContas)) $selected = $relatorio->stPrestacaoContas; ?>
                     <select null="false" class="campoForm w200" id="stPrestacaoContas" name="stPrestacaoContas" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -203,7 +203,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td>8*<?php echo $y++.'.'; ?> Foi cumprido o prazo para entrega da prestaç&atilde;o de contas?</td>
+                <td>8*<?php echo $y++.'.'; ?> Foi cumprido o prazo para entrega da presta&ccedil;&atilde;o de contas?</td>
                 <td>
                     <?php if (isset($relatorio->stCumpridoPrazo)) $selected = $relatorio->stCumpridoPrazo; ?>
                     <select null="false" class="campoForm w200" id="stCumpridoPrazo" name="stCumpridoPrazo" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -219,10 +219,10 @@ $selected = '';
 
         <table class="tabela">
             <tr>
-                <th colspan="2">Utilizaç&atilde;o de Recursos</th>
+                <th colspan="2">Utiliza&ccedil;&atilde;o de Recursos</th>
             </tr>
             <tr>
-                <td><?php echo $y++.'.'; ?> Foi apurado por unidade fiscalizadora ou auditora a aplicaç&atilde;o irregular de recursos?</td>
+                <td><?php echo $y++.'.'; ?> Foi apurado por unidade fiscalizadora ou auditora a aplica&ccedil;&atilde;o irregular de recursos?</td>
                 <td width="220">
                     <?php if (isset($relatorio->stApuracaoUFiscalizacao)) $selected = $relatorio->stApuracaoUFiscalizacao; ?>
                     <select null="false" class="campoForm w200" id="stApuracaoUFiscalizacao" name="stApuracaoUFiscalizacao" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -234,7 +234,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td><?php echo $y++.'.'; ?> Comprovou a correta utilizaç&atilde;o dos recursos da contrapartida?</td>
+                <td><?php echo $y++.'.'; ?> Comprovou a correta utiliza&ccedil;&atilde;o dos recursos da contrapartida?</td>
                 <td>
                     <?php if (isset($relatorio->stComprovacaoUtilizacaoRecurso)) $selected = $relatorio->stComprovacaoUtilizacaoRecurso; ?>
                     <select null="false" class="campoForm w200" id="stComprovacaoUtilizacaoRecursos" name="stComprovacaoUtilizacaoRecursos" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -258,7 +258,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td><?php echo $y++.'.'; ?> Ocorreu despesas com multas, juros, taxas banc&aacute;rias ou correç&atilde;o monet&aacute;ria?</td>
+                <td><?php echo $y++.'.'; ?> Ocorreu despesas com multas, juros, taxas banc&aacute;rias ou corre&ccedil;&atilde;o monet&aacute;ria?</td>
                 <td>
                     <?php if (isset($relatorio->stOcorreuDespesas)) $selected = $relatorio->stOcorreuDespesas; ?>
                     <select null="false" class="campoForm w200" id="stOcorreuDespesas" name="stOcorreuDespesas" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -286,7 +286,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td>14*<?php echo $y++.'.'; ?> Ocorreu despesa com taxa de administraç&atilde;o?</td>
+                <td>14*<?php echo $y++.'.'; ?> Ocorreu despesa com taxa de administra&ccedil;&atilde;o?</td>
                 <td>
                     <?php if (isset($relatorio->stDespesaAdministracao)) $selected = $relatorio->stDespesaAdministracao; ?>
                     <select null="false" class="campoForm w200" id="stDespesaAdministracao" name="stDespesaAdministracao" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -298,7 +298,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td>15*<?php echo $y++.'.'; ?> H&aacute; transfer&ecirc;ncia de recurso para clubes/associaç&otilde;es ou outras entidades cong&ecirc;neres?</td>
+                <td>15*<?php echo $y++.'.'; ?> H&aacute; transfer&ecirc;ncia de recurso para clubes/associa&ccedil;&otilde;es ou outras entidades cong&ecirc;neres?</td>
                 <td>
                     <?php if (isset($relatorio->stTransferenciaRecurso)) $selected = $relatorio->stTransferenciaRecurso; ?>
                     <select null="false" class="campoForm w200" id="stTransferenciaRecurso" name="stTransferenciaRecurso" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -310,7 +310,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td>16*<?php echo $y++.'.'; ?> H&aacute; despesas com publicidade, salvo as de car&aacute;ter educativo, informativo ou de orientaç&atilde;o social?</td>
+                <td>16*<?php echo $y++.'.'; ?> H&aacute; despesas com publicidade, salvo as de car&aacute;ter educativo, informativo ou de orienta&ccedil;&atilde;o social?</td>
                 <td>
                     <?php if (isset($relatorio->stDespesasPublicidade)) $selected = $relatorio->stDespesasPublicidade; ?>
                     <select null="false" class="campoForm w200" id="stDespesasPublicidade" name="stDespesasPublicidade" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -322,7 +322,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td>17*<?php echo $y++.'.'; ?> Ocorreu aditamento prevendo alteraç&atilde;o de objeto?</td>
+                <td>17*<?php echo $y++.'.'; ?> Ocorreu aditamento prevendo altera&ccedil;&atilde;o de objeto?</td>
                 <td>
                     <?php if (isset($relatorio->stOcorreuAditamento)) $selected = $relatorio->stOcorreuAditamento; ?>
                     <select null="false" class="campoForm w200" id="stOcorreuAditamento" name="stOcorreuAditamento" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -350,7 +350,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td><?php echo $y++.'.'; ?> Ocorreu aplicaç&atilde;o de recursos em outra finalidade que n&atilde;o a do objeto pactuado?</td>
+                <td><?php echo $y++.'.'; ?> Ocorreu aplica&ccedil;&atilde;o de recursos em outra finalidade que n&atilde;o a do objeto pactuado?</td>
                 <td>
                     <?php if (isset($relatorio->stAplicacaoRecursosFinalidade)) $selected = $relatorio->stAplicacaoRecursosFinalidade; ?>
                     <select null="false" class="campoForm w200" id="stAplicacaoRecursosFinalidade" name="stAplicacaoRecursosFinalidade" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -425,7 +425,7 @@ $selected = '';
             
             <?php /* ?>
             <tr>
-                <td>23*<?php echo $y++.'.'; ?> A documentaç&atilde;o est&aacute; completa e arquivada?</td>
+                <td>23*<?php echo $y++.'.'; ?> A documenta&ccedil;&atilde;o est&aacute; completa e arquivada?</td>
                 <td>
                     <?php if (isset($relatorio->stDocumentacaoCompleta)) $selected = $relatorio->stDocumentacaoCompleta; ?>
                     <select null="false" class="campoForm w200" id="stDocumentacaoCompleta" name="stDocumentacaoCompleta" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -494,7 +494,7 @@ $selected = '';
             
             
             <tr>
-                <td><?php echo $y++.'.'; ?> As despesas coincidem com as informadas na relaç&atilde;o de pagamentos?</td>
+                <td><?php echo $y++.'.'; ?> As despesas coincidem com as informadas na rela&ccedil;&atilde;o de pagamentos?</td>
                 <td>
                     <?php if (isset($relatorio->stDespesaCoincidem)) $selected = $relatorio->stDespesaCoincidem; ?>
                     <select null="false" class="campoForm w200" id="stDespesaCoincidem" name="stDespesaCoincidem" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -534,7 +534,7 @@ $selected = '';
             
         <table class="tabela">
             <tr>
-                <th colspan="2">Divulgaç&atilde;o</th>
+                <th colspan="2">Divulga&ccedil;&atilde;o</th>
             </tr>
 
 
@@ -583,13 +583,13 @@ $selected = '';
 
         <table class="tabela">
             <tr>
-                <th colspan="2">Execuç&atilde;o</th>
+                <th colspan="2">Execu&ccedil;&atilde;o</th>
             </tr>
 
 
             <?php /* ?>
             <tr>
-                <td>34*<?php echo $y++.'.'; ?> Alcançou a finalidade esperada?</td>
+                <td>34*<?php echo $y++.'.'; ?> Alcan&ccedil;ou a finalidade esperada?</td>
                 <td width="1">
                     <?php if (isset($relatorio->stFinalidadeEsperada)) $selected = $relatorio->stFinalidadeEsperada; ?>
                     <select null="false" class="campoForm w200" id="stFinalidadeEsperada" name="stFinalidadeEsperada" <?php if ($this->grupoAtivo == 134) echo "disabled='disabled'" ?> >
@@ -674,7 +674,7 @@ $selected = '';
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold"><?php echo $y++.'.'; ?> Recomendaç&otilde;es da Equipe</td>
+                <td class="destacar bold"><?php echo $y++.'.'; ?> Recomenda&ccedil;&otilde;es da Equipe</td>
             </tr>
             <tr>
                 <td>
@@ -772,7 +772,7 @@ $selected = '';
 
         <p align="center">
             <?php if ($this->grupoAtivo == 135) { // TECNICO    ?>
-                <input id="Confirmar" class="btn_enviar" type="submit" onclick="" value="" title="Confirmar Fiscalizaç&atilde;o" style="margin-left: 5px;">
+                <input id="Confirmar" class="btn_enviar" type="submit" onclick="" value="" title="Confirmar Fiscaliza&ccedil;&atilde;o" style="margin-left: 5px;">
                 <input id="SalvarTecnico" class="btn_salvar" type="button" style="margin-left: 5px;">
                 <input id="Cancelar" class="btn_cancelar" type="button" style="margin-left: 5px;">
             <?php } ?>
@@ -790,7 +790,7 @@ $selected = '';
 </div>
 
 <div id="rodapeConteudo" ><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />
 
 <script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
@@ -1189,7 +1189,7 @@ $selected = '';
 	    <?php endif; ?>
             
             
-        //VOLTAR ESSA VERSÃO APÓS O COMANDO DOS GESTORES ROMULO E ALINE. - Jefferson Alessandro
+        //VOLTAR ESSA VERS&atilde;O APÓS O COMANDO DOS GESTORES ROMULO E ALINE. - Jefferson Alessandro
         //$(form).find('[null=false]').not('#dsParecer').each(function(){
         $(form).find('[null=false]').not('#dsParecer, #dsObservacao, #stRecursosCaptados').each(function(){
             if($(this).attr('type')=='radio'){

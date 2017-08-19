@@ -33,10 +33,10 @@ class GuiaModel
     public function validarCadastrar()
     {
         if (!$this->categoria) {
-            throw new Exception('Categoria inválida para cadastro / edição de Guia.');
+            throw new Exception('Categoria inv&aacute;lida para cadastro / edi&ccedil;&atilde;o de Guia.');
         }
         if (!$this->nome) {
-            throw new Exception('Nome inválido para cadastro / edição de Guia.');
+            throw new Exception('Nome inv&aacute;lido para cadastro / edi&ccedil;&atilde;o de Guia.');
         }
     }
 
@@ -46,7 +46,7 @@ class GuiaModel
     public function validarEditar()
     {
         if (!$this->guia) {
-            throw new Exception('Identificador inválido para edição da guia.');
+            throw new Exception('Identificador inv&aacute;lido para edi&ccedil;&atilde;o da guia.');
         }
     }
 

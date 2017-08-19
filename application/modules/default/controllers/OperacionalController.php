@@ -318,7 +318,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                                     $idsAreas[] = $area->Area;
                                             }
                                             $tblArea = new Area();
-                                            $rsArea = $tblArea->buscar(array("Codigo IN (?)"=>$idsAreas));
+                                            $rsArea = $tblArea->buscar(array("Codigo in (?)"=>$idsAreas));
                                             $arrAreas = array(0=>array("NomeArea"=>"Todas as &Aacute;reas"));
                                             foreach($rsArea as $area){
                                                     $arrAreas[$area->Codigo]["NomeArea"] = $area->Descricao;
@@ -359,7 +359,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                                     $idsOrgaos[] = $produto->Idorgao;
                                             }
                                             $tblOrgao = new Orgaos();
-                                            $rsOrgao = $tblOrgao->buscar(array("Codigo IN (?)"=>$idsOrgaos));
+                                            $rsOrgao = $tblOrgao->buscar(array("Codigo in (?)"=>$idsOrgaos));
                                             $arrOrgaos = array();
                                             foreach($rsOrgao as $orgao){
                                                     $arrOrgaos[$orgao->Codigo]["SiglaOrgao"] = $orgao->Sigla;
@@ -401,7 +401,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                                     $idsOrgaos[] = $produto->Idorgao;
                                             }
                                             $tblOrgao = new Orgaos();
-                                            $rsOrgao = $tblOrgao->buscar(array("Codigo IN (?)"=>$idsOrgaos));
+                                            $rsOrgao = $tblOrgao->buscar(array("Codigo in (?)"=>$idsOrgaos));
                                             $arrOrgaos = array();
                                             foreach($rsOrgao as $orgao){
                                                     $arrOrgaos[$orgao->Codigo]["SiglaOrgao"] = $orgao->Sigla;
@@ -497,7 +497,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                                     $idsOrgaos[] = $segmento->idOrgao;
                                             }
                                             $tblOrgao = new Orgaos();
-                                            $rsOrgao = $tblOrgao->buscar(array("Codigo IN (?)"=>$idsOrgaos));
+                                            $rsOrgao = $tblOrgao->buscar(array("Codigo in (?)"=>$idsOrgaos));
                                             $arrOrgaos = array();
                                             foreach($rsOrgao as $orgao){
                                                     $arrOrgaos[$orgao->Codigo]["SiglaOrgao"] = $orgao->Sigla;
@@ -539,7 +539,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                                     $idsOrgaos[] = $segmento->idOrgao;
                                             }
                                             $tblOrgao = new Orgaos();
-                                            $rsOrgao = $tblOrgao->buscar(array("Codigo IN (?)"=>$idsOrgaos));
+                                            $rsOrgao = $tblOrgao->buscar(array("Codigo in (?)"=>$idsOrgaos));
                                             $arrOrgaos = array();
                                             foreach($rsOrgao as $orgao){
                                                     $arrOrgaos[$orgao->Codigo]["SiglaOrgao"] = $orgao->Sigla;
@@ -2741,7 +2741,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
             'tipoPesqNomeProjeto' => 'QC',
             'nomeProjeto' => '',
             'tipoPesqArea' => 'EIG',
-            'area' => '',
+            'Area' => '',
             'segmento' => '',
             'tipoPesqComponente' => 'EIG',
             'componente' => '',

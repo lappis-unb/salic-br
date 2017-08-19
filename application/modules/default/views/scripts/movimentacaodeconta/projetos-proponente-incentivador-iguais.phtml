@@ -15,11 +15,11 @@
 <table class="tabela">
     <?php if ($this->registros->count() <= 0) : ?>
     <tr>
-        <td align="center" ><em>Consulta efetuada com sucesso, por&eacute;m, n&atilde;o existem contas com captações identificadas para o filtro solicitado!</em></td>
+        <td align="center" ><em>Consulta efetuada com sucesso, por&eacute;m, n&atilde;o existem contas com capta&ccedil;&otilde;es identificadas para o filtro solicitado!</em></td>
     </tr>
     <?php else: ?>      
         <?php $ct=1; $arrProjeto =array(); $arrIncentivador =array();
-            foreach($this->registros as $projeto): //xd($projeto);?>
+            foreach($this->registros as $projeto): ?>
             <?php if($ct==1) { ?>
             <thead>
             <tr class="">
@@ -55,8 +55,8 @@
                     <?php } ?>
                 </td>
                 <td align="center"><?php echo Validacao::mascaraCPFCNPJ($projeto->nrCpfCnpjProponente); ?></td>
-                <td align="center"><?php echo !empty($projeto->Agencia) ? $projeto->Agencia : '<em>Não informada</em>'; ?></td>
-                <td align="center"><?php echo !empty($projeto->ContaBloqueada) ? $projeto->ContaBloqueada : '<em>Não informada</em>'; ?></td>
+                <td align="center"><?php echo !empty($projeto->Agencia) ? $projeto->Agencia : '<em>N&atilde;o informada</em>'; ?></td>
+                <td align="center"><?php echo !empty($projeto->ContaBloqueada) ? $projeto->ContaBloqueada : '<em>N&atilde;o informada</em>'; ?></td>
                 <td align="center"><?php echo Validacao::mascaraCPFCNPJ($projeto->nrCpfCnpjIncentivador); ?></td>
                 <td align="center"><?php echo $projeto->dtCredito; ?></td>
                 <td align="right" class="<?php echo ($projeto->vlValorCredito == 'D') ? 'red' : 'blue' ; ?>"><?php echo $this->formatarReal($projeto->vlValorCredito); ?></td>
@@ -68,10 +68,10 @@
                 </td>
                 <td class="centro" id="coluna_<?php echo $projeto->tpValidacao."_".$ct; ?>">
                     <select class="input_simples updateTmpCaptacao" idTmpCaptacao="<?php echo $projeto->idTmpCaptacao; ?>">
-                        <option value="0">- Selecione a correção -</option>
-                        <option value="3" <?php echo $projeto->cdPatrocinio == 3 ? 'selected="selected"' : ''; ?>>Devolução Judicial</option>
-                        <option value="5" <?php echo $projeto->cdPatrocinio == 5 ? 'selected="selected"' : ''; ?>>Devolução FNC</option>
-                        <option value="4" <?php echo $projeto->cdPatrocinio == 4 ? 'selected="selected"' : ''; ?>>Outras devoluções</option>
+                        <option value="0">- Selecione a corre&ccedil;&atilde;o -</option>
+                        <option value="3" <?php echo $projeto->cdPatrocinio == 3 ? 'selected="selected"' : ''; ?>>Devolu&ccedil;&atilde;o Judicial</option>
+                        <option value="5" <?php echo $projeto->cdPatrocinio == 5 ? 'selected="selected"' : ''; ?>>Devolu&ccedil;&atilde;o FNC</option>
+                        <option value="4" <?php echo $projeto->cdPatrocinio == 4 ? 'selected="selected"' : ''; ?>>Outras devolu&ccedil;&otilde;es</option>
                     </select>
                 </td>
             </tr>

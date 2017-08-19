@@ -82,11 +82,11 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
         $sql = $db->select()->distinct()
             ->from(array('tl' => $this->_name), $tl, $this->_schema)
             ->join(array('uf' => 'uf'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $this->_schema)
-            ->join(array('ag' => 'Agentes'), 'ag.idagente = tl.idagente', array('ag.idagente'), $this->_schema)
+            ->join(array('ag' => 'Agentes'), 'ag.idAgente = tl.idAgente', array('ag.idAgente'), $this->_schema)
             ->joinLeft(array('ddd' => 'ddd'), 'tl.ddd = ddd.codigo', $ddd, $this->_schema);
 
         if (!empty($idAgente)) { // busca de acordo com o id do agente
-            $sql->where('tl.idagente = ?', $idAgente);
+            $sql->where('tl.idAgente = ?', $idAgente);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

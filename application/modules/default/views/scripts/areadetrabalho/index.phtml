@@ -192,7 +192,7 @@
                 height: 200,
                 title: 'Confirma&ccedil;&atilde;o',
                 buttons: {
-                    Não: function() {
+                    N&atilde;o: function() {
                         fecharModal('cancelar-retirar-pauta');
                         votacao = window.setInterval(function(){verificarReuniao()}, 1000);
                     },
@@ -285,7 +285,7 @@
 
     <!-- ========== INICIO FORMULARIO PARA CANCELAR A RETIRADA DE PAUTA ========== -->
     <div id="cancelar-retirar-pauta" class="sumir">
-            Tem certeza que deseja cancelar solicita&ccedil;&atilde;o de retirada de pauta?<br />O motivo e sua justificativa serão deletados.
+            Tem certeza que deseja cancelar solicita&ccedil;&atilde;o de retirada de pauta?<br />O motivo e sua justificativa ser&atilde;o deletados.
         <form name="formCancelarRetirarPauta" id="formCancelarRetirarPauta" action="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'cancelar-retirar-de-pauta')); ?>" method="post">
             <input type="hidden" name="idRetirarDePauta" id="idRetirarDePauta" />
         </form>

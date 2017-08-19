@@ -2,7 +2,7 @@
 class Votante extends MinC_Db_Table_Abstract
 {
     protected $_name = 'tbVotante';
-    protected $_schema = 'BDCORPORATIVO.scSAC';
+    protected $_schema = 'bdcorporativo.scSAC';
 
     public function selecionarvotantes($idreuniao) {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -15,9 +15,9 @@ class Votante extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
                 array('nm' => 'nomes'),
-                "nm.idagente = tbv.idagente",
+                "nm.idAgente = tbv.idAgente",
                 array('nm.descricao'),
-                'agentes.dbo'
+                'agentes'
         );
         $select->where('tbv.idreuniao = ?', $idreuniao);
         $select->order('nm.descricao asc');

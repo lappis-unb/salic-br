@@ -38,11 +38,11 @@ class ManterusuarioController extends MinC_Controller_Action_Abstract
                 $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
                 $email 		 = $scgAcessoDados['Email'];
-                $assunto 	 = "Alteração da senha de acesso";
+                $assunto 	 = "Altera&ccedil;&atilde;o da senha de acesso";
                 $perfil 	 = "SALICWEB";
                 $mens  		 = "Ol&aacute; " . $nome . ",<br><br>";
                 $mens 		.= "Senha....: " . $senhaFormatada . "<br><br>";
-                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresentaç?o de Projetos via Web do ";
+                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;?o de Projetos via Web do ";
                 $mens 		.= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
                 $mens 		.= "trocada no seu primeiro acesso ao sistema.<br><br>";
                 $mens 		.= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
@@ -100,11 +100,11 @@ class ManterusuarioController extends MinC_Controller_Action_Abstract
                 $usuariosSave = $usuarios->salvar($dados);
 
                 $email 		 = $_POST['email'];
-                $assunto 	 = "Alteração da senha de acesso";
+                $assunto 	 = "Altera&ccedil;&atilde;o da senha de acesso";
                 $perfil 	 = "SALICWEB";
                 $mens 		.= "Ol&aacute; " . $nome . ",<br><br>";
                 $mens 		.= "Senha....: " . $senha . "<br><br>";
-                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresentaç?o de Projetos via Web do ";
+                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;?o de Projetos via Web do ";
                 $mens 		.= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
                 $mens 		.= "trocada no seu primeiro acesso ao sistema.<br><br>";
                 $mens 		.= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
@@ -173,13 +173,13 @@ class ManterusuarioController extends MinC_Controller_Action_Abstract
     public function cadastrarusuarioexternoAction()
     {
 
-        $auth = Zend_Auth::getInstance();// instancia da autenticação
+        $auth = Zend_Auth::getInstance();// instancia da autentica&ccedil;&atilde;o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
         $usu_identificacao = $auth->getIdentity()->usu_identificacao;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sess&atilde;o
+        $codOrgao = $GrupoAtivo->codOrgao; //  Órg&atilde;o ativo na sess&atilde;o
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
 
@@ -213,7 +213,7 @@ class ManterusuarioController extends MinC_Controller_Action_Abstract
             $usuariosBuscar = $usuarios->buscar(array('usu_identificacao = ?' => $cpf))->current();
 
             if (!empty($usuariosBuscar)) {
-                parent::message("CPF já cadastrado!", "/manterusuario/cadastrarusuarioexterno", "ALERT");
+                parent::message("CPF j&aacute; cadastrado!", "/manterusuario/cadastrarusuarioexterno", "ALERT");
             }
 
             $pessoa = new Pessoas();

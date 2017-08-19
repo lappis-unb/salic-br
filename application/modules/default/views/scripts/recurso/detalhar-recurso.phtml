@@ -1,12 +1,12 @@
 <?php
 /**
- * Solicitação de Recurso
+ * Solicita&ccedil;&atilde;o de Recurso
  * @author Equipe RUP - Politec
  * @since 20/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.recurso
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -33,14 +33,14 @@
     <?php foreach ($this->dadosRecurso as $dadosRecurso) { ?>
     <table class="tabela">
         <tr>
-            <th colspan="2">Solicitação</th>
+            <th colspan="2">Solicita&ccedil;&atilde;o</th>
         </tr>
         <tr>
             <td class="destacar bold" align="right" width="100">Data do Recurso</td>
             <td><?php echo Data::tratarDataZend($dadosRecurso->dtSolicitacaoRecurso, 'Brasileiro'); ?></td>
         </tr>
         <tr>
-            <td class="destacar bold" align="right">Solicitação</td>
+            <td class="destacar bold" align="right">Solicita&ccedil;&atilde;o</td>
             <td><textarea class="textarea_simples" readonly="readonly" rows="" cols="" style="width: 99%"><?php echo strip_tags(trim($dadosRecurso->dsSolicitacaoRecurso)); ?></textarea></td>
         </tr>
     </table>
@@ -61,8 +61,8 @@
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

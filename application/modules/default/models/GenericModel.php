@@ -38,7 +38,7 @@ class GenericModel extends Zend_Db_Table_Abstract
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $arrConfig = $db->getConfig();
 
-                $strDb = str_replace('.dbo', '', $this->_schema);
+                $strDb = str_replace('', '', $this->_schema);
                 $arrConfig['dbname'] = strtoupper($strDb);
                 $this->_config = new Zend_Config(
                     array(
@@ -102,7 +102,7 @@ class GenericModel extends Zend_Db_Table_Abstract
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
             if ($isReturnDb && strpos($strSchema, '.') === false) {
-                $strSchema = $strSchema . ".dbo";
+                $strSchema = $strSchema . "";
             } elseif (strpos($strSchema, '.') === false) {
                 $strSchema = "dbo";
             }
@@ -167,8 +167,8 @@ class GenericModel extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql && $schema) {
-            if (strpos('.dbo', $schema) === false) {
-                $schema = $schema . '.dbo';
+            if (strpos('', $schema) === false) {
+                $schema = $schema . '';
             }
         }
 

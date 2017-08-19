@@ -45,7 +45,7 @@ class GerenciarPautaReuniaoDAO
 
     public static function consultaAreaCultural()
     {
-        $sql = "SELECT * FROM SAC.dbo.Area";
+        $sql = "SELECT * FROM sac.dbo.Area";
 
         try
         {
@@ -75,18 +75,18 @@ class GerenciarPautaReuniaoDAO
                        Projetos.NomeProjeto,
                        Segmento.Descricao,
                        Parecer.Atendimento
-                FROM   scSAC.tbPauta AS Pauta
+                FROM   scsac.tbPauta AS Pauta
                        LEFT JOIN
-                       SAC.dbo.Projetos AS Projetos
+                       sac.dbo.Projetos AS Projetos
                        ON Projetos.IdPRONAC = Pauta.IdPRONAC
                        LEFT JOIN
-                       SAC.dbo.Segmento AS Segmento
+                       sac.dbo.Segmento AS Segmento
                        ON Segmento.Codigo = Projetos.Segmento
                        LEFT JOIN
-                       SAC.dbo.Parecer AS Parecer
+                       sac.dbo.Parecer AS Parecer
                        ON Parecer.idPRONAC = Projetos.IdPRONAC
                        LEFT JOIN
-                       SAC.dbo.Area AS Area
+                       sac.dbo.Area AS Area
                        ON Area.Codigo = Projetos.Area";
         try
         {
@@ -111,8 +111,8 @@ class GerenciarPautaReuniaoDAO
                 tp.stAnalise,
                 CAST(tcv.dsConsolidacao AS TEXT) as dsConsolidacao
                 from bdcorporativo.scsac.tbpauta tp
-                JOIN SAC..Projetos pr on pr.IdPRONAC = tp.IdPRONAC
-                JOIN BDCORPORATIVO.scSAC.tbConsolidacaoVotacao tcv on tcv.IdPRONAC = tp.IdPRONAC and tcv.idNrReuniao = tp.idNrReuniao
+                JOIN sac..Projetos pr on pr.IdPRONAC = tp.IdPRONAC
+                JOIN bdcorporativo.scsac.tbConsolidacaoVotacao tcv on tcv.IdPRONAC = tp.IdPRONAC and tcv.idNrReuniao = tp.idNrReuniao
                 where tp.idNrReuniao = $idnrreuniao
                 and tp.idpronac = $idpronac
                 and tp.stAnalise in ('AS','IS')";
@@ -132,7 +132,7 @@ class GerenciarPautaReuniaoDAO
     public static function BuscarConsolidacaoReuniao($idnrreuniao, $idpronac)
     {
         $sql = "select dsConsolidacao
-                from BDCORPORATIVO.scSAC.tbconsolidacaovotacao
+                from bdcorporativo.scsac.tbconsolidacaovotacao
                 where idnrreuniao = $idnrreuniao
                 and idpronac = $idpronac";
         try

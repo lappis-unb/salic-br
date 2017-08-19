@@ -18,7 +18,7 @@ function xls()
 		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''),'',true); ?>" title="Ir para Início">Início</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'index'),'',true); ?>" title="Gerenciar Pareceres">Gerenciar Pareceres T&eacute;cnicos</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'pareceresaconsolidar'),'',true); ?>" title="Gerenciar Pareceres">Pareceres a Consolidar</a></li>
-		<li class="last">Visualizar Tramitação</li>
+		<li class="last">Visualizar Tramita&ccedil;&atilde;o</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -27,7 +27,7 @@ function xls()
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Visualizar Tramitação<span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Visualizar Tramita&ccedil;&atilde;o<span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -69,7 +69,7 @@ function xls()
 			<th width="200" align="left">TipoAnalise</th>
 			<th width="150" align="left">Unidade</th>
 			<th width="100" align="center">Data de Envio</th>
-			<th width="200" align="left">Observação</th>
+			<th width="200" align="left">Observa&ccedil;&atilde;o</th>
 			<th width="150" align="left">Usuario</th>
 		</tr>
 		<?php foreach($this->dados as $d): ?>
@@ -84,13 +84,13 @@ function xls()
 		<?php endforeach; ?>
 	</table>
 	
-	<!-- ============ PAGINAÇÃO ============ -->		   
+	<!-- ============ PAGINA&ccedil;&atilde;O ============ -->		   
 <?php if ($this->qtdDocumentos > 10) { echo $this->dados; } ?>
-<!-- ========== FIM PAGINAÇÃO ========== -->
+<!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 <?php else:?>
 	<center>
 	<br />	
-	<div style="text-align:center; color:#000; font-size:15px;">Não há registros a exibir</div>
+	<div style="text-align:center; color:#000; font-size:15px;">N&atilde;o h&aacute; registros a exibir</div>
 	<br />
 	<input type="button" class="btn_voltar" name="btn_voltar" value=" " onclick="history.back();"/>
 	</center><br />
@@ -102,8 +102,8 @@ function xls()
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

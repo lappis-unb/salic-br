@@ -77,7 +77,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         }
 
 
-        $tbDocumentos = new tbTipoDocumentoBDCORPORATIVO();
+        $tbDocumentos = new tbTipoDocumentobdcorporativo();
         $this->view->tiposDocumento = $tbDocumentos->buscar(array(), 'dsTipoDocumento desc');
 
         $pronac = $this->_request->getParam("pronac");
@@ -154,12 +154,12 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             }
         }
 
-        $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 2));
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
+        $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'sigla');
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 4, 'idverificacao' => array(28, 29)));
 
         parent::init(); // chama o init() do pai GenericControllerNew
     }
@@ -312,7 +312,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
 
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
-        $Visao = $this->_request->getParam("visao");
+        $Visao = $this->_request->getParam("Visao");
         $grupologado = $this->_request->getParam("grupologado");
 
         /*
@@ -1407,7 +1407,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             $whereI['AnoProjeto = ?'] = $dadosProjeto->AnoProjeto;
             $whereI['Sequencial = ?'] = $dadosProjeto->Sequencial;
             $retorno = $tbl->Localizar($whereI);
-            $msg = 'O proponente não pode ser habilitado à presente data. Para habilitá-lo, favor anexar documento.';
+            $msg = 'O proponente n&atilde;o pode ser habilitado &agrave; presente data. Para habilit&aacute;-lo, favor anexar documento.';
             if ((count($retorno) > 0) && ($retorno[0]->idTipoInabilitado > 0) && ($retorno[0]->idTipoInabilitado <= 7) && ($retorno[0]->Anos < 1)) {
                 parent::message($msg, "alterarprojeto/" . $post->pagina . "?pronac=" . Seguranca::encrypt($dadosProjeto->pronac) . "&menu=" . $post->menu, "ALERT");
             } else if ((count($retorno) > 0) && ($retorno[0]->idTipoInabilitado >= 4) && ($retorno[0]->idTipoInabilitado <= 5) && ($retorno[0]->Anos < 2)) {
@@ -1684,7 +1684,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
                     'idAgente' => $post->idagente,
                     'stAtivoDocumentoAgente' => 1
                 );
-                $tabela = new tbDocumentoAgenteBDCORPORATIVO();
+                $tabela = new tbDocumentoAgentebdcorporativo();
                 $tabela->inserir($dados);
             } else {
                 $dados = array(
@@ -1693,7 +1693,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
                     'idPronac' => $post->idpronac,
                     'stAtivoDocumentoProjeto' => 1
                 );
-                $tabela = new tbDocumentoProjetoBDCORPORATIVO();
+                $tabela = new tbDocumentoProjetobdcorporativo();
                 $tabela->inserir($dados);
             }
 

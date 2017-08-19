@@ -17,8 +17,8 @@ class AlteracaoNomeProponenteDAO  extends Zend_Db_Table{
                     prop.NomeProjeto,
                     sit.codigo+' - '+sit.descricao as situacao
                 from
-                    SAC.dbo.Projetos prop
-                    inner join SAC.dbo.Situacao sit on sit.codigo =  prop.situacao
+                    sac.dbo.Projetos prop
+                    inner join sac.dbo.Situacao sit on sit.codigo =  prop.situacao
                 where
                     CgcCpf = '{$cgccpf}'
                     ";
@@ -38,9 +38,9 @@ class AlteracaoNomeProponenteDAO  extends Zend_Db_Table{
                     aipa.dtFimAvaliacao as dtparecertecnico,
                     nom.Descricao as nometecnico
                 from
-                    BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao aipa
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao pt on pt.idPedidoAlteracao = aipa.idPedidoAlteracao
-                    inner join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap on pap.idPedidoAlteracao = pt.idPedidoAlteracao
+                    bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao aipa
+                    inner join bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao pt on pt.idPedidoAlteracao = aipa.idPedidoAlteracao
+                    inner join bdcorporativo.scsac.tbPedidoAlteracaoProjeto pap on pap.idPedidoAlteracao = pt.idPedidoAlteracao
                     inner join agentes.dbo.Nomes nom on nom.idAgente = aipa.idAgenteAvaliador
                 where
                     pap.IdPRONAC = {$idpedidoalteracao} and pt.tpAlteracaoProjeto = 1

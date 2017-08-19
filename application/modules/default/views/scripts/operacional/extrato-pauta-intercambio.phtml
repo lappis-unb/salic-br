@@ -93,7 +93,7 @@
 
     function addTodos() // adiciona todos os options da esquerda para direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visao.length; i++) // varre todo o option de origem
         {
@@ -104,12 +104,12 @@
             visao.remove(i); // remove o option do select de origem
             i--;
         }
-    } // fecha funç?o addTodos()
+    } // fecha fun&ccedil;?o addTodos()
 
 
     function delTodos() // deleta todos os options da direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
         {
@@ -123,12 +123,12 @@
                 i--;
             }
         }
-    } // fecha funç?o delTodos()
+    } // fecha fun&ccedil;?o delTodos()
 
 
     function addSelecionado() // adiciona o option selecionado da esquerda para direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visao.length; i++) // varre todo o option de origem
         {
@@ -142,12 +142,12 @@
                 i--;
             }
         }
-    } // fecha funç?o addSelecionado()
+    } // fecha fun&ccedil;?o addSelecionado()
 
 
     function delSelecionado() // deleta o option selecionado da direita
     {
-        visao       = document.getElementById("visao"); // select de origem
+        visao       = document.getElementById("Visao"); // select de origem
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
         {
@@ -161,17 +161,17 @@
                 i--;
             }
         }
-    } // fecha funç?o delSelecionado()
+    } // fecha fun&ccedil;?o delSelecionado()
 
 
-    function selecionarOptions() // funç?o para selecionar todos os options antes do envio do formulário
+    function selecionarOptions() // fun&ccedil;?o para selecionar todos os options antes do envio do formul&aacute;rio
     {
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
         {
             visaoAgente.options[i].selected = true; // adiciona o novo option no select de destino
         }
-    } // fecha funç?o selecionarOptions()
+    } // fecha fun&ccedil;?o selecionarOptions()
 </script>
 
 <?php include("scripts/operacional/inc/menu.inc.php"); ?>
@@ -265,15 +265,15 @@
                 <td colspan="3" align="left">
                     <table align="left" width="100%">
                         <tr>
-                            <th align="center">Não Mostrar</th>
+                            <th align="center">N&atilde;o Mostrar</th>
                             <th></th>
                             <th align="center">Mostrar</th>
                         </tr>
                         <tr>
                             <td class="centro" valign="top">
 
-                                    <label for="visao"> </label>
-                                    <select class="select_simples" name="visao[]" id="visao" multiple="multiple" size="7" style="width: 200px;"> 
+                                    <label for="Visao"> </label>
+                                    <select class="select_simples" name="visao[]" id="Visao" multiple="multiple" size="7" style="width: 200px;"> 
                                     </select>
                             </td>
                             <td class="centro" valign="middle" width="20px">
@@ -319,8 +319,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

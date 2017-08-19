@@ -21,7 +21,7 @@ class vwMemoriaDeCalculo extends MinC_Db_Table_Abstract {
         $select =  new Zend_Db_Expr("
                 SELECT idPronac,PRONAC,ValorProposta,OutrasFontes,ValorSolicitado,
                        Elaboracao,ValorParecer,ValorSugerido
-                FROM SAC.dbo.vwMemoriaDeCalculo
+                FROM sac.dbo.vwMemoriaDeCalculo
                 WHERE idPronac = $idPronac ");
         try {
             $db= Zend_Db_Table::getDefaultAdapter();

@@ -16,7 +16,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_name = 'visao';
+    protected $_name = 'Visao';
 
     /**
      * _primary
@@ -38,7 +38,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         if ($todasVisoes) {
-            $sql = "select distinct idVerificacao, Descricao from  " . GenericModel::getStaticTableName('agentes', 'verificacao') . "  where idtipo = 16 and sistema = 21 ";
+            $sql = 'select distinct "idVerificacao", "Descricao" from  "agentes"."Verificacao" where "IdTipo" = 16 and "Sistema" = 21';
             $dados = $db->fetchAll($sql);
         } else {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -46,38 +46,38 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
 
             $objSelect = $db->select();
             $objSelect->from(
-                array('vis' => 'visao'),
-                array('idvisao', 'idagente', 'usuario', 'stativo', 'Visao'),
+                array('vis' => 'Visao'),
+                array('idVisao', 'idAgente', 'Usuario', 'stAtivo', 'Visao'),
                 $this->getSchema('agentes')
             );
             $objSelect->joinInner(
-                array('ver' => 'verificacao'),
-                "ver.idVerificacao = vis.visao",
+                array('ver' => 'Verificacao'),
+                "ver.idVerificacao = vis.Visao",
                 array('ver.Descricao', 'ver.idVerificacao'),
                 $this->getSchema('agentes')
             );
             $objSelect->joinLeft(
-                array('ttc' => 'tbtitulacaoconselheiro'),
-                "ttc.idagente =  vis.idagente",
+                array('ttc' => 'tbTitulacaoConselheiro'),
+                "ttc.idAgente =  vis.idAgente",
                 array(),
                 $this->getSchema('agentes')
             );
             $objSelect->joinLeft(
-                array('ar' => 'area'),
+                array('ar' => 'Area'),
                 "ttc.cdArea = ar.Codigo",
-                array('area' => 'ar.descricao'),
+                array('Area' => 'ar.Descricao'),
                 $this->getSchema('sac')
             );
-            $objSelect->where('ver.idVerificacao = vis.visao');
-            $objSelect->where('ver.idtipo = ? ', 16);
+            $objSelect->where('ver.idVerificacao = vis.Visao');
+            $objSelect->where('ver.idTipo = ? ', 16);
             $objSelect->where('sistema = ? ', 21);
 
             if (!empty($idAgente)) {
-                $objSelect->where('vis.idagente = ? ', $idAgente);
+                $objSelect->where('vis.idAgente = ? ', $idAgente);
             }
 
             if (!empty($visao)) {
-                $objSelect->where('vis.visao = ? ', $visao);
+                $objSelect->where('vis.Visao = ? ', $visao);
             }
             $objSelect->order("2");
             $dados = $db->fetchAll($objSelect);

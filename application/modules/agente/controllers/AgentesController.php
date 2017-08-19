@@ -1,66 +1,43 @@
 <?php
 
-/**
- * AgentesController Responsavel por manter os agentes e seus tipos.
- * @author Equipe RUP - Politec
- * @author wouerner <woeurner@gmail.com>
- * @since 25/05/2011
- * @package agente
- * @subpackage controllers
- */
 class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (variavel com o id do usuario logado)
-     * @access private
      */
     private $getIdUsuario = 0;
 
     /**
      * @var integer (variavel para Parecerista)
-     * @access private
      */
     private $getParecerista = 'N';
 
     /**
      * @var integer (variavel com o id do grupo ativo)
-     * @access private
      */
     private $GrupoAtivoSalic = 0;
 
     /**
-     * combovisoes
-     *
      * @var bool
-     * @access private
      */
     private $combovisoes = array();
 
     /**
-     * modal
-     *
      * @var string
-     * @access private
      */
     private $modal = "n";
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init()
     {
         $mapperArea = new Agente_Model_AreaMapper;
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
         $mapperUF = new Agente_Model_UFMapper();
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo',  'Descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('IdTipo' => 4, 'idVerificacao' => array(28, 29)));
 
         //Monta o combo das visoes disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();
@@ -260,7 +237,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
             if (!$dados) {
-                parent::message("Agente não encontrado!", "agente/agentes/buscaragente", "ALERT");
+                parent::message("Agente n&atilde;o encontrado!", "agente/agentes/buscaragente", "ALERT");
             }
 
             $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
@@ -970,7 +947,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayTelefones = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipotelefone' => $tipoFone,
                 'uf' => $ufFone,
                 'ddd' => $dddFone,
@@ -1058,7 +1035,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEmail = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipointernet' => $tipoEmail,
                 'descricao' => $Email,
                 'status' => $enviarEmail,
@@ -1195,7 +1172,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     'biArquivo' => $arquivoBinario
                 );
 
-                $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
+                $dadosAI = "Insert into bdcorporativo.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
                 $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1319,7 +1296,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'biArquivo' => $arquivoBinario
             );
 
-            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
+            $dadosAI = "Insert into bdcorporativo.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
             $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1624,7 +1601,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'biArquivo' => $arquivoBinario
             );
 
-            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
+            $dadosAI = "Insert into bdcorporativo.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
             $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1828,7 +1805,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                         $dado[$key] = utf8_encode($value);
                     });
                     $novos_valores[0]['msgCPF'] = utf8_encode('cadastrado');
-                    $novos_valores[0]['idAgente'] = utf8_encode($dado['idagente']);
+                    $novos_valores[0]['idAgente'] = utf8_encode($dado['idAgente']);
                     $novos_valores[0]['Nome'] = utf8_encode($dado['nome']);
                     $novos_valores[0]['agente'] = $dado;
                 }
@@ -1897,7 +1874,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrNome = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tiponome' => $TipoNome,
                 'descricao' => $nome,
                 'status' => 0,
@@ -1911,7 +1888,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
-        $Visao = $this->_request->getParam("visao");
+        $Visao = $this->_request->getParam("Visao");
         $grupologado = $this->_request->getParam("grupologado");
         /*
          * Validacao - Se for componente da comissao ele nao salva a visao
@@ -1919,8 +1896,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
          */
         if ($grupologado != 118):
             $GravarVisao = array(// insert
-                'idagente' => $idAgente,
-                'visao' => $Visao,
+                'idAgente' => $idAgente,
+                'Visao' => $Visao,
                 'usuario' => $usuario,
                 'stativo' => 'A');
             try {
@@ -1986,7 +1963,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEnderecos = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
                 'tipoendereco' => $tipoEndereco,
                 'uf' => $ufEndereco,
@@ -2018,7 +1995,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             try {
                 $arrayTelefones = array(
-                    'idagente' => $idAgente,
+                    'idAgente' => $idAgente,
                     'tipotelefone' => $tipoFone,
                     'uf' => $ufFone,
                     'ddd' => $dddFone,
@@ -2044,7 +2021,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             try {
                 $arrayEmail = array(
-                    'idagente' => $idAgente,
+                    'idAgente' => $idAgente,
                     'tipointernet' => $tipoEmail,
                     'descricao' => $Email,
                     'status' => $enviarEmail,
@@ -2242,7 +2219,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         try {
             $mprNomes = new Agente_Model_NomesMapper();
             $arrNome = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tiponome' => $TipoNome,
                 'descricao' => $nome,
                 'status' => 0,
@@ -2257,7 +2234,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
-        $Visao = $this->_request->getParam("visao");
+        $Visao = $this->_request->getParam("Visao");
 
         $grupologado = $this->_request->getParam("grupologado");
 
@@ -2377,7 +2354,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayTelefones = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipotelefone' => $tipoFone,
                 'uf' => $ufFone,
                 'ddd' => $dddFone,
@@ -2404,7 +2381,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEmail = array(
-                'idagente' => $idAgente,
+                'idAgente' => $idAgente,
                 'tipointernet' => $tipoEmail,
                 'descricao' => $Email,
                 'status' => $enviarEmail,
@@ -2538,13 +2515,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             try {
                 // validacao dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigatórios n&atilde;o informados:<br /><br />é necessário informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigatórios n&atilde;o informados:<br /><br />&eacute; necess&aacute;rio informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) { // valida cnpj/cpf
-                    throw new Exception("O CPF/CNPJ informado é inválido!");
+                    throw new Exception("O CPF/CNPJ informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) { // valida cpf
-                    throw new Exception("O CPF informado é inválido!");
+                    throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) { // valida cnpj
-                    throw new Exception("O CNPJ informado é inválido!");
+                    throw new Exception("O CNPJ informado &eacute; inv&aacute;lido!");
                 } else {
                     // redireciona para a pagina com a busca dos dados com paginacao
                     $this->_redirect("agente/agentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
@@ -2577,7 +2554,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         if (!$buscar) {
             // redireciona para a pagina de cadastro de agentes, e, exibe uma notificacao relativa ao cadastro
-            parent::message("Agente n&atilde;o cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            parent::message("Agente n&atilde;o cadastrado!<br /><br />Por favor, cadastre o mesmo no formul&aacute;rio abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
             // ========== INICIO PAGINACAO ==========
             // criando a paginacao
@@ -2825,8 +2802,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 // cadastra todas as visoes do agente
                 foreach ($visaoAgente as $visao) {
                     $dados = array(
-                        'idagente' => $idAgente,
-                        'visao' => $visao,
+                        'idAgente' => $idAgente,
+                        'Visao' => $visao,
                         'usuario' => $this->getIdUsuario, // código do usuario logado
                         'stativo' => 'A');
                     $visaoTable->cadastrarVisao($dados);

@@ -38,7 +38,7 @@ class DesvincularagentesDAO extends Zend_Db_Table {
                         THEN Ag.CNPJCPFSuperior ELSE ag.CNPJCPF END AS CNPJCPF, TipoPessoa
                         FROM agentes.dbo.Agentes ag) AS tb
 			                INNER JOIN agentes.dbo.Nomes nm ON nm.idAgente = tb.idAgente
-			                INNER JOIN agentes.dbo.visao vi ON vi.idAgente = tb.idAgente
+			                INNER JOIN agentes.dbo.Visao vi ON vi.idAgente = tb.idAgente
 			                INNER JOIN agentes.dbo.Verificacao ve ON ve.idVerificacao = vi.Visao
 			                WHERE vi.Visao = '144' AND ";
         
@@ -73,7 +73,7 @@ class DesvincularagentesDAO extends Zend_Db_Table {
                 FROM agentes.dbo.Agentes as ag
                     INNER JOIN agentes.dbo.Nomes as nm on (ag.idAgente = nm.idAgente) and (nm.TipoNome = 18  or nm.TipoNome = 19)
                     INNER JOIN agentes.dbo.Vinculacao as v on (v.idVinculoPrincipal = $idVinculadoPrincipal)
-                        INNER JOIN agentes.dbo.visao vi ON vi.idAgente = ag.idAgente
+                        INNER JOIN agentes.dbo.Visao vi ON vi.idAgente = ag.idAgente
                         INNER JOIN agentes.dbo.Verificacao ve ON ve.idVerificacao = vi.Visao
                 WHERE vi.Visao = '198'";
 
@@ -102,7 +102,7 @@ FROM         agentes.dbo.Agentes AS a LEFT OUTER JOIN
 
                       agentes.dbo.Vinculacao AS v ON a.idAgente = v.idAgente
 
-                      INNER JOIN agentes.dbo.visao vi ON vi.idAgente = a.idAgente
+                      INNER JOIN agentes.dbo.Visao vi ON vi.idAgente = a.idAgente
 	              INNER JOIN agentes.dbo.Verificacao ve ON ve.idVerificacao = vi.Visao
 
 WHERE     (a.TipoPessoa = 0) AND (n.TipoNome = 18)  and v.idVinculoPrincipal = $idVinculoPrincipal";

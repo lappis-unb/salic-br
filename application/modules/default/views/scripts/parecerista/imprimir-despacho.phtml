@@ -102,15 +102,15 @@
         <div class="paginaA4">
             <div id="topo-despacho" style="text-align: center; font-size: 13px; font-weight: 500;">
                 <img src="<?php echo $this->baseUrl();?>/public/img/brasaoArmas.jpg" />
-                <div>Ministério da Cultura</div>
+                <div>Minist&eacute;rio da Cultura</div>
                 <div>Secretaria de Fomento e Incentivo a Cultura</div>
-                <div>Coordenação Técnica do Pronac</div>
+                <div>Coordena&ccedil;&atilde;o T&eacute;cnica do Pronac</div>
             </div>
             <br />
             <br />
             <div id="topo-despacho-descricao" style="text-align: left; padding-left: 0px; font-size: 15px; font-weight: 500;">
                 <div style="margin-bottom: 4px;">DESPACHO <?php echo $this->listaDePagamentos[0]['nrDespacho']; ?>/COTEP/GAB/SEFIC/MINC</div>
-                <div style="margin-bottom: 4px;">Assunto: Solicitação de Pagamento</div>
+                <div style="margin-bottom: 4px;">Assunto: Solicita&ccedil;&atilde;o de Pagamento</div>
             </div>
             <br />
             <br />
@@ -119,7 +119,7 @@
             </div>
             <br />
             <br />  
-            <div style="padding-left: 0px;">À Coordenação-Geral de Execusão Orçamentária e Financeira</div>
+            <div style="padding-left: 0px;">&agrave; Coordena&ccedil;&atilde;o-Geral de Execus&atilde;o Or&ccedil;ament&aacute;ria e Financeira</div>
 
             <table class="tabela" border="1">
                 <tr class="titulo_tabela">
@@ -148,19 +148,19 @@
             </table>
 
             <p class="break" style="text-indent: 30px; text-align: justify;">
-               Encaminho a V.Sa., Relação de Pareceres emitidos pelo(a) parecerista <strong><?php echo $this->pareceristaNome; ?></strong>, 
+               Encaminho a V.Sa., Rela&ccedil;&atilde;o de Pareceres emitidos pelo(a) parecerista <strong><?php echo $this->pareceristaNome; ?></strong>, 
                CPF: <?php echo Mascara::addMaskCPF($this->pareceristaCpf); ?>, cujo valor perfaz o montante de <?php echo $this->formatarReal($this->projetoValor); ?> 
                (<?php echo $this->projetoValorExtenso; ?>), referente ao mês de <?php echo nome_do_mes($this->dataCompetencia->format('m')) ?> de 
                <?php echo $this->dataCompetencia->format('Y') ?>.
             </p>
 
             <p style="text-indent: 30px; text-align: justify;">
-                Solicito que sejam tomadas as providências necessárias para efetuar o pagamento do valor acima citado, tendo em vista que os 
-                serviços foram devidamente realizados.
+                Solicito que sejam tomadas as providências necess&aacute;rias para efetuar o pagamento do valor acima citado, tendo em vista que os 
+                servi&ccedil;os foram devidamente realizados.
             </p>
             <p style="text-indent: 30px; text-align: justify;">
-                Realizado o pagamento, os respectivos Recibos de Pagamento Autônomo - RPA, serão encaminhados para a Secretaria de Fomento e 
-                Incentivo à Cultura - SEFIC, para fins de registro e controle.
+                Realizado o pagamento, os respectivos Recibos de Pagamento Autônomo - RPA, ser&atilde;o encaminhados para a Secretaria de Fomento e 
+                Incentivo &agrave; Cultura - SEFIC, para fins de registro e controle.
             </p>
 
             <?php
@@ -175,7 +175,7 @@
                             echo '<span style="float: right"> Em ___/___/' , date('Y') , '.</span>';
                             break;
                         case 3:
-                            echo '<div style="padding: 10px 0px 10px 0px; text-align: left;">De acordo, encaminhe-se à Coordenação-Geral de Execução Orçamentária e Financeira, para providências.</div>';
+                            echo '<div style="padding: 10px 0px 10px 0px; text-align: left;">De acordo, encaminhe-se &agrave; Coordena&ccedil;&atilde;o-Geral de Execu&ccedil;&atilde;o Or&ccedil;ament&aacute;ria e Financeira, para providências.</div>';
                             echo '<span style="float: right"> Em ___/___/' , date('Y') , '.</span>';
                             break;
                     endswitch;

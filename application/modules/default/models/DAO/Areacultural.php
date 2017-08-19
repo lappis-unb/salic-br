@@ -12,7 +12,7 @@
 
 class Areacultural extends Zend_Db_Table
 {
-	protected $_name = 'SAC.dbo.Area'; // nome da tabela
+	protected $_name = 'sac.dbo.Area'; // nome da tabela
 
 
 
@@ -25,7 +25,7 @@ class Areacultural extends Zend_Db_Table
 	public static function buscar()
 	{
 		$sql = "SELECT Codigo AS id, Descricao AS descricao ";
-		$sql.= "FROM SAC.dbo.Area ";
+		$sql.= "FROM sac.dbo.Area ";
 		$sql.= "ORDER BY Descricao;";
 
 		try

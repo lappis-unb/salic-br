@@ -48,7 +48,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.Acao = ?', 6);
@@ -75,7 +75,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.stEstado = ?', 1);
@@ -107,7 +107,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.stEstado = ?', 1);
@@ -140,7 +140,7 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     'h.idUnidade as idDestino',
                     'h.idLote as lote',
                 	'h.idOrigem',
-                    '(select Sigla from SAC.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
+                    '(select Sigla from sac.dbo.Orgaos where Codigo = '.$orgao.') as nomeDestino'
                 )
         );
         $select->where('h.stEstado = ?', 1);
@@ -210,20 +210,20 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                 array('org' => 'Orgaos'),
                 'org.org_codigo = p.orgao',
                 array('org.org_sigla as Origem'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->joinLeft(
                 array('usue' => 'Usuarios'),
                 'usue.usu_codigo = h.idUsuarioEmissor',
                 array('usue.usu_nome as Emissor'),
-                'tabelas.dbo'
+                'tabelas'
         );
         $select->joinLeft(
                 array('usud' => 'Usuarios'),
                 'usud.usu_codigo = h.idUsuarioReceptor',
                 array('usud.usu_nome as Receptor'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->where('h.idDocumento = ?', 0);
@@ -299,27 +299,27 @@ class HistoricoDocumento extends MinC_Db_Table_Abstract {
                     '(p.AnoProjeto + p.Sequencial) AS Pronac',
                     'p.NomeProjeto',
                     //'p.Processo'
-                    'SAC.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo'
+                    'sac.dbo.fnFormataProcesso(p.IdPRONAC) AS Processo'
                 )
         );
         $select->joinInner(
                 array('org' => 'Orgaos'),
                 'org.org_codigo = p.orgao',
                 array('org.org_sigla as Origem'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->joinLeft(
                 array('usue' => 'Usuarios'),
                 'usue.usu_codigo = h.idUsuarioEmissor',
                 array('usue.usu_nome as Emissor'),
-                'tabelas.dbo'
+                'tabelas'
         );
         $select->joinLeft(
                 array('usud' => 'Usuarios'),
                 'usud.usu_codigo = h.idUsuarioReceptor',
                 array('usud.usu_nome as Receptor'),
-                'tabelas.dbo'
+                'tabelas'
         );
 
         $select->where('h.idDocumento = ?', 0);

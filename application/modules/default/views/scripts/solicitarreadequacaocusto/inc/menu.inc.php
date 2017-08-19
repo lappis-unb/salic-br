@@ -5,7 +5,7 @@
     <!-- início: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -24,7 +24,7 @@
                 $("#rodapeConteudo").css("margin-left", "225px");
                 $(".sanfonaDiv").css("clear", "both");
                 $(".sanfonaDiv").css("width", "91%");
-            } // fecha função layout_fluido()
+            } // fecha fun&ccedil;&atilde;o layout_fluido()
 
             $(document).ready(function(){
 
@@ -59,12 +59,12 @@
                 clear: both;
             }
         </style>
-        <div style="display:none" id="dialog-alert">Solicitação realizada com sucesso!</div>
-        <div style="display:none" id="produtoDesativado">Não há produtos cadastrados para este projeto!</div>
+        <div style="display:none" id="dialog-alert">Solicita&ccedil;&atilde;o realizada com sucesso!</div>
+        <div style="display:none" id="produtoDesativado">N&atilde;o h&aacute; produtos cadastrados para este projeto!</div>
         <div style="display:none" id="pergunta"><?php if ($this->existirPlanilhaCusto == 'ok') { ?>Seu projeto sofreu <?php echo $this->verificarReadequacao; ?>.<br /><br /><?php } ?>Tem certeza que deseja Enviar e Finalizar?</div>
-        <div style="display:none" id="validarPlan">Antes de enviar a solicitação é necessário cadastrar os Itens de Custos para os Produtos sem planilha orçamentária!</div>
+        <div style="display:none" id="validarPlan">Antes de enviar a solicita&ccedil;&atilde;o &eacute; necess&aacute;rio cadastrar os Itens de Custos para os Produtos sem planilha or&ccedil;ament&aacute;ria!</div>
         <div style="display:none" id="validar15pct"></div>
-        <div style="display:none" id="dialog-em-analise">Há pedido de readequação em análise. Favor aguardar.</div>
+        <div style="display:none" id="dialog-em-analise">H&aacute; pedido de readequa&ccedil;&atilde;o em an&aacute;lise. Favor aguardar.</div>
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
@@ -153,7 +153,7 @@
 
                 <?php if ($this->buscastatus['stPedidoAlteracao'] == "A") { ?>
                     <div style='background:#f8f8f8;text-align: center'><br /><br /><br />
-                        <!--<input id="menunovo"  class="btn" value="Enviar Solicitação" style="text-align: center">-->
+                        <!--<input id="menunovo"  class="btn" value="Enviar Solicita&ccedil;&atilde;o" style="text-align: center">-->
                         <input type="button" id="menunovo" class="btn_enviar_solicitacao" />
                     </div>
 
@@ -168,7 +168,7 @@
 
 
             </div>
-            <!-- final: navegação local #qm0 -->
+            <!-- final: navega&ccedil;&atilde;o local #qm0 -->
         </div>
     </div>
 </div>
@@ -281,7 +281,7 @@
                                         closeOnEscape: true,
                                         autoOpen:true,
                                         buttons: {
-                                            'Não': function()
+                                            'N&atilde;o': function()
                                             {
                                                 $(this).dialog('close');
                                                 var idpronac = <?php echo $_GET['idpronac']; ?>;

@@ -9,7 +9,7 @@
 </div>
 
 <div id="titulo">
-    <div>Critério de Participa&ccedil;&atilde;o</div>
+    <div>Crit&eacute;rio de Participa&ccedil;&atilde;o</div>
 </div> 
 
 <!-- ========== INÍCIO CONTEÚDO ========== -->
@@ -29,10 +29,10 @@
             <table class="tabela" id="tbCriterioParticipacao" style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
                 <tbody>
                     <tr>
-                        <th colspan="2" style="font-size: 14px">Critério de Participa&ccedil;&atilde;o</th>
+                        <th colspan="2" style="font-size: 14px">Crit&eacute;rio de Participa&ccedil;&atilde;o</th>
                     </tr>
                     <tr>
-                        <td class="destacar bold w150 esquerdo">Descrição do crit&eacute;rio <span style="color: red;">*</span></td>
+                        <td class="destacar bold w150 esquerdo">Descri&ccedil;&atilde;o do crit&eacute;rio <span style="color: red;">*</span></td>
                         <td>
                             <input type="text" id="dsCriterioParticipacao" name="dsCriterioParticipacao" size="80" class="input_simples required">
                         </td>
@@ -44,7 +44,7 @@
                                 <option value="">- Selecione -</option>
                                 <option value="DN">Idade</option>
                                 <option value="SX">Sexo</option>
-                                <option value="RE">Região</option>
+                                <option value="RE">Regi&atilde;o</option>
                                 <option value="UF">UF</option>
                                 <option value="CI">Cidade</option>
                             </select>
@@ -96,7 +96,7 @@
                         <td class="destacar bold w150 esquerdo">Data de nascimento: <span style="color: red;">*</span></td>
                         <td>
                             <input type="text" name="dsFaixaEtariaInicio" id="dsFaixaEtariaInicio" onkeyup="num(this);" maxlength="3" class="input_simples" />
-                            &nbsp; à &nbsp;
+                            &nbsp; &agrave; &nbsp;
                             <input type="text" name="dsFaixaEtariaFim" id="dsFaixaEtariaFim" onkeyup="num(this);" maxlength="3" class="input_simples" />
                         </td>
                     </tr>
@@ -112,7 +112,7 @@
                         </td>
                     </tr>
                     <tr id="regiao" class="sumir">
-                        <td class="destacar bold w150 esquerdo">Região: <span style="color: red;">*</span></td>
+                        <td class="destacar bold w150 esquerdo">Regi&atilde;o: <span style="color: red;">*</span></td>
                         <td>
                             <div id="checkRegiao">
                                 <div style="float: left; width: 150px; margin: 10px 30px 10px 0px;">
@@ -161,12 +161,12 @@
         <?php if(count($this->criterioParticipacao) > 0): ?>
         <table class="tabela" id="tblCriteriosAdicionada" style="margin-top: 0px !important; padding-top: 0px !important; border-top: 1px #fff solid !important; ">
             <tbody><tr>
-                    <td colspan="4" class="destacar centro bold">CRITÉRIOS ADICIONADOS</td>
+                    <td colspan="4" class="destacar centro bold">CRIT&eacute;RIOS ADICIONADOS</td>
                 </tr>
                 <tr>
-                    <td class="destacar bold" style="width: 40%">Descrição do critério</td>
+                    <td class="destacar bold" style="width: 40%">Descri&ccedil;&atilde;o do crit&eacute;rio</td>
                     <td class="destacar bold " style="width: 15%">Regra para o campo</td>
-                    <td class="destacar bold centro" style="width: 15%">Ações</td>
+                    <td class="destacar bold centro" style="width: 15%">A&ccedil;&otilde;es</td>
                 </tr>
                 <?php foreach ($this->criterioParticipacao as $critP): ?>
                 <tr id="trCriterio_zero">
@@ -178,7 +178,7 @@
                             }else if($critP['rgCriterioParticipacao'] == 'SX'){
                                 echo 'Sexo';
                             }else if($critP['rgCriterioParticipacao'] == 'RE'){
-                                echo 'Região';
+                                echo 'Regi&atilde;o';
                             }else if($critP['rgCriterioParticipacao'] == 'UF'){
                                 echo 'UF';
                             }else if($critP['rgCriterioParticipacao'] == 'CI'){
@@ -387,7 +387,7 @@
     function excluirCriterioParticipacao(id){
         
         $("#alerta").dialog("destroy");
-        $("#alerta").html("Tem certeza que deseja excluir o critério de participação?");
+        $("#alerta").html("Tem certeza que deseja excluir o crit&eacute;rio de participa&ccedil;&atilde;o?");
         $("#alerta").dialog({
             resizable: false,
             title: 'Alerta!',
@@ -395,7 +395,7 @@
             height: 170,
             modal: true,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $(this).dialog('close');
                 },
                 'Sim': function() {

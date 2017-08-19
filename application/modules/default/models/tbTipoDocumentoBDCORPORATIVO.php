@@ -10,11 +10,11 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbTipoDocumentoBDCORPORATIVO extends MinC_Db_Table_Abstract
+class tbTipoDocumentobdcorporativo extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "BDCORPORATIVO.scCorp";
+	protected $_banco   = "bdcorporativo";
+	protected $_schema  = "bdcorporativo.scCorp";
 	protected $_name    = "tbTipoDocumento";
 
     public function init()
@@ -35,7 +35,7 @@ class tbTipoDocumentoBDCORPORATIVO extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $select = $db->select()
-            ->from($this->_name, array('idTipoDocumento', 'dsTipoDocumento'), 'BDCORPORATIVO.scCorp');
+            ->from($this->_name, array('idTipoDocumento', 'dsTipoDocumento'), 'bdcorporativo.scCorp');
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {

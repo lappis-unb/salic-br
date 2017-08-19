@@ -26,15 +26,15 @@ class ArquivoModel
      */
     public function cadastrar($inputName)
     {
-        // pega as informações do arquivo
+        // pega as informa&ccedil;&otilde;es do arquivo
         $arquivoNome = $_FILES[$inputName]['name']; // nome
-        $arquivoTemp = $_FILES[$inputName]['tmp_name']; // nome temporário
+        $arquivoTemp = $_FILES[$inputName]['tmp_name']; // nome tempor&aacute;rio
         $arquivoTipo = $_FILES[$inputName]['type']; // tipo
         $arquivoTamanho = $_FILES[$inputName]['size']; // tamanho
         
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-            $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens&atilde;o
+            $arquivoBinario = Upload::setBinario($arquivoTemp); // bin&aacute;rio
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
             if ($arquivoExtensao != 'doc' and $arquivoExtensao != 'docx' and $arquivoExtensao != '') {
                 // cadastra dados do arquivo
@@ -52,11 +52,11 @@ class ArquivoModel
                 // pega o id do último arquivo cadastrado
                 $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
                 $this->setId((int) $idUltimoArquivo[0]->id);
-                // cadastra o binário do arquivo
+                // cadastra o bin&aacute;rio do arquivo
                 ArquivoImagemDAO::cadastrar(array('idArquivo' => $this->getId(), 'biArquivo' => $arquivoBinario));
             }
         } else {
-            throw new ErrorException('Arquivo inválido.');
+            throw new ErrorException('Arquivo inv&aacute;lido.');
         }
     }
 

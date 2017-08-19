@@ -55,7 +55,7 @@ class Admissibilidade_EnquadramentoAssinaturaController extends Assinatura_Gener
         try {
 
             if (!filter_input(INPUT_GET, 'IdPRONAC')) {
-                throw new Exception ("Identificador do projeto é necessário para acessar essa funcionalidade.");
+                throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
             }
 
             $objTbProjetos = new Projeto_Model_DbTable_Projetos();
@@ -68,7 +68,7 @@ class Admissibilidade_EnquadramentoAssinaturaController extends Assinatura_Gener
             if ($post) {
 
                 if (!$post['motivoDevolucao']) {
-                    throw new Exception("Campo 'Motivação da Devolução para nova avaliação' não informado.");
+                    throw new Exception("Campo 'Motiva&ccedil;&atilde;o da Devolu&ccedil;&atilde;o para nova avalia&ccedil;&atilde;o' n&atilde;o informado.");
                 }
 
                 $objTbDepacho = new Proposta_Model_DbTable_TbDespacho();
@@ -228,7 +228,7 @@ class Admissibilidade_EnquadramentoAssinaturaController extends Assinatura_Gener
         $get = Zend_Registry::get('get');
         try {
             if (!filter_input(INPUT_GET, 'IdPRONAC')) {
-                throw new Exception ("Identificador do projeto é necessário para acessar essa funcionalidade.");
+                throw new Exception ("Identificador do projeto &eacute; necess&aacute;rio para acessar essa funcionalidade.");
             }
 
             $objProjetos = new Projetos();

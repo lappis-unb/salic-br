@@ -4,7 +4,7 @@
 class tbLoginTentativasAcesso extends GenericModel {
 
     protected $_banco = 'SAC';
-    protected $_schema = 'sac.dbo';
+    protected $_schema = 'sac';
     protected $_name = 'tbLoginTentativasAcesso';
 
     public function consultarAcessoCpf($cpf,$ip)
@@ -14,7 +14,7 @@ class tbLoginTentativasAcesso extends GenericModel {
         $select = $table->select()
             ->from('tbLoginTentativasAcesso',
                 array('*'),
-                'SAC.dbo')
+                'SAC')
             ->where('nrCPF = ?', $cpf)
             ->where('nrIP = ?',$ip);
 

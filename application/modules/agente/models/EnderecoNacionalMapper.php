@@ -23,7 +23,7 @@ class Agente_Model_EnderecoNacionalMapper extends MinC_Db_Mapper
 
     public function saveCustom($arrData)
     {
-        $rowsDeleted = $this->deleteBy(array('idagente' => $arrData['idagente']));
+        $rowsDeleted = $this->deleteBy(array('idAgente' => $arrData['idAgente']));
         if (!empty($arrData['correspondenciaenderecos'])) {
             $correspondenciaEnderecos = $arrData['correspondenciaEnderecos'];
         } else {
@@ -34,7 +34,7 @@ class Agente_Model_EnderecoNacionalMapper extends MinC_Db_Mapper
         $arrId = array();
         for ($i = 0; $i < sizeof($arrData['ceps']); $i++) {
             $arrayEnderecos = array(
-                'idagente' => $arrData['idagente'],
+                'idAgente' => $arrData['idAgente'],
                 'cep' => str_replace(".", "", str_replace("-", "", $arrData['ceps'][$i])),
                 'tipoendereco' => $arrData['tipoenderecos'][$i],
                 'uf' => $arrData['ufs'][$i],

@@ -22,15 +22,15 @@ class tbProcuracao extends MinC_Db_Table_Abstract
     );
     $select->joinInner(
             array('b' => 'Agentes'), "a.idAgente = b.idAgente",
-            array('idAgente'), 'agentes.dbo'
+            array('idAgente'), 'agentes'
     );
     $select->joinInner(
             array('c' => 'Nomes'), "b.idAgente = c.idAgente",
-            array('Descricao as Procurador'), 'agentes.dbo'
+            array('Descricao as Procurador'), 'agentes'
     );
     $select->joinInner(
             array('d' => 'tbDocumento'), "d.idDocumento = a.idDocumento",
-            array('idArquivo'), 'BDCORPORATIVO.scCorp'
+            array('idArquivo'), 'bdcorporativo.scCorp'
     );
 
     $select->where('a.siProcuracao = ?', 0);

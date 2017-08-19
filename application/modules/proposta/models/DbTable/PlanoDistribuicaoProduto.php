@@ -32,11 +32,11 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         );
         $a->joinInner(
                 array('b' => 'Projetos'), "a.idProjeto = b.idProjeto",
-                array('IdPRONAC'), 'SAC.dbo'
+                array('IdPRONAC'), 'SAC'
         );
         $a->joinInner(
                 array('c' => 'Produto'), "a.idProduto = c.Codigo",
-                array('Descricao as Produto'), 'SAC.dbo'
+                array('Descricao as Produto'), 'SAC'
         );
         $a->where('b.IdPRONAC = ?', $idPronac);
         return $this->fetchAll($a);
@@ -51,21 +51,20 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         );
         $a->joinInner(
                 array('b' => 'Projetos'), "a.idProjeto = b.idProjeto",
-                array(''), 'SAC.dbo'
+                array(''), 'SAC'
         );
         $a->joinInner(
                 array('c' => 'Produto'), "a.idProduto = c.Codigo",
-                array('Descricao as Produto'), 'SAC.dbo'
+                array('Descricao as Produto'), 'SAC'
         );
         $a->joinInner(
                 array('d' => 'tbAnaliseDeConteudo'), "a.idProduto = d.idProduto AND b.IdPRONAC = d.idPronac",
-                array('*'), 'SAC.dbo'
+                array('*'), 'SAC'
         );
         $a->where('b.IdPRONAC = ?', $idPronac);
         $a->where('d.idPronac = ?', $idPronac);
         $a->order(array('1 DESC', '3 ASC'));
 
-        //xd($a->assemble());
         return $this->fetchAll($a);
     }
 
@@ -78,11 +77,11 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         );
         $a->joinInner(
             array('b' => 'Produto'), "a.idProduto = b.codigo",
-            array('Descricao AS Produto'), 'SAC.dbo'
+            array('Descricao AS Produto'), 'SAC'
         );
         $a->joinInner(
             array('c' => 'Projetos'), "a.idProjeto = c.idProjeto",
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $a->where('c.IdPRONAC = ?', $idPronac);
 
@@ -97,7 +96,7 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
         );
         $b->joinInner(
             array('c' => 'Projetos'), "a.idProjeto = c.idProjeto",
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $b->where('c.IdPRONAC = ?', $idPronac);
 
@@ -106,7 +105,6 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
             ->union(array('('.$a.')', '('.$b.')'))
             ->order('1','2');
 
-        //xd($slctUnion->assemble());
         return $this->fetchAll($slctUnion);
     }
 
@@ -161,7 +159,7 @@ class Proposta_Model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
             ->from(
                 array('tbDetalhaPlanoDistribuicao'),
                 $cols,
-                'sac.dbo'
+                'sac'
             )
             ->where('idPlanoDistribuicao = ?', $idPlanoDistribuicao);
         echo $sql;die;

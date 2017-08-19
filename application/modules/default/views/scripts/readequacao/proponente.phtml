@@ -1,17 +1,17 @@
 <?php
 /**
- * PROPONENTE: Solicitação de alteração de dados do Proponente do Projeto
+ * PROPONENTE: Solicita&ccedil;&atilde;o de altera&ccedil;&atilde;o de dados do Proponente do Projeto
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 30/03/2012
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.readequacao
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2012 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
     echo $this->partial('inc/menu.inc.php', $this) // menu
-    // define os valores dos campos do formulário, se será lido o dado original ou o dado readequado
+    // define os valores dos campos do formul&aacute;rio, se ser&aacute; lido o dado original ou o dado readequado
     $CNPJCPF        = isset($this->dadosSR['CNPJCPF'])         ? Validacao::mascaraCPFCNPJ($this->escape($this->dadosSR['CNPJCPF'])) : Validacao::mascaraCPFCNPJ($this->escape($this->dadosAP['CNPJCPF']));
     $NomeProponente = isset($this->dadosSR['NomeProponente'])  ? $this->escape($this->dadosSR['NomeProponente'])                     : $this->escape($this->dadosAP['NomeProponente']);
     $Justificativa  = isset($this->pedido['dsJustificativa'])  ? $this->pedido['dsJustificativa']                                    : '';
@@ -19,15 +19,15 @@
 
 <script type="text/javascript">
     /**
-     * Funções que são chamadas após a página ser carregada
+     * Fun&ccedil;&otilde;es que s&atilde;o chamadas após a p&aacute;gina ser carregada
      */
     $(document).ready(function(){
-        // máscaras dos campos
+        // m&aacute;scaras dos campos
         $("#cpfcnpj").keyup(function(){
             mascaraCnpjCpf(this);
         });
 
-        // validação e cadastro de novo proponente
+        // valida&ccedil;&atilde;o e cadastro de novo proponente
         $("#cpfcnpj").blur(function(){
             $('html').css('overflow', 'hidden');
             $("body").append("<div id='divDinamicaAgentes'></div>");
@@ -113,7 +113,7 @@
     <!-- ========== FIM TOPO PROJETO ========== -->
 
 
-    <!-- ========== INÍCIO FORMULÁRIO ========== -->
+    <!-- ========== INÍCIO FORMUL&aacute;RIO ========== -->
     <form name="formReadequacao" id="formReadequacao" action="<?php echo $this->url(array('controller' => 'readequacao', 'action' => 'proponente')); ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="stPedidoAlteracao" id="stPedidoAlteracao" value="T" />
         <input type="hidden" name="siVerificacao" id="siVerificacao" value="0" />
@@ -142,7 +142,7 @@
             <tr>
                 <td>
                     <textarea name="justificativa" id="justificativa" class="textarea_simples w99p" rows="7" cols=""><?php echo $Justificativa; ?></textarea>
-                    <span style="float: left; color: red;">Limite máximo de 600 caracteres</span>
+                    <span style="float: left; color: red;">Limite m&aacute;ximo de 600 caracteres</span>
                 </td>
             </tr>
             <tr class="destacar bold">
@@ -152,7 +152,7 @@
                 <td>
                     <div>
                         <span style="float: left; margin-right: 10px;"><input type="file" name="arquivo[]" id="arquivo" class="multi input_simples w99p" accept="pdf" /></span>
-                        <span style="float: left; color: red;">Tamanho máximo de 5 MB</span>
+                        <span style="float: left; color: red;">Tamanho m&aacute;ximo de 5 MB</span>
                     </div>
                 </td>
             </tr>
@@ -182,7 +182,7 @@
         </table>
 
     </form>
-    <!-- ========== FIM FORMULÁRIO ========== -->
+    <!-- ========== FIM FORMUL&aacute;RIO ========== -->
 
 
     <!-- ========== INÍCIO HISTÓRICO ========== -->
@@ -195,7 +195,7 @@
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

@@ -52,7 +52,6 @@ $relatorio = $this->relatorioFiscalizacao;
         </tr>
     <?php $ct = 1; $idFiscalizacao = 0;
          foreach ($this->infoProjeto as $infoProjeto) {
-             //xd($infoProjeto);
              //http://localhost/integracaoCNIC/consultardadosprojeto/?idPronac=122903
             if($idFiscalizacao != $infoProjeto->idFiscalizacao) { ?>
             <tr>
@@ -61,11 +60,11 @@ $relatorio = $this->relatorioFiscalizacao;
                 </td>
                 <td align="center">
                     <?php if ($infoProjeto->dtInicioFiscalizacaoProjeto != '') {
-                            echo date('d/m/Y', strtotime($infoProjeto->dtInicioFiscalizacaoProjeto));} else { echo 'Não informado';} ?>
+                            echo date('d/m/Y', strtotime($infoProjeto->dtInicioFiscalizacaoProjeto));} else { echo 'N&atilde;o informado';} ?>
                 </td>
                 <td align="center">
                     <?php if ($infoProjeto->dtFimFiscalizacaoProjeto != '') {
-                            echo date('d/m/Y', strtotime($infoProjeto->dtFimFiscalizacaoProjeto));} else {echo 'Não informado';}?>
+                            echo date('d/m/Y', strtotime($infoProjeto->dtFimFiscalizacaoProjeto));} else {echo 'N&atilde;o informado';}?>
                 </td>
                 <td>
                     <?php echo Validacao::mascaraCPFCNPJ($infoProjeto->cpfTecnico); ?> - <?php echo $infoProjeto->nmTecnico; ?>

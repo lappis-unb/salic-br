@@ -20,7 +20,7 @@ class EnquadramentoDAO extends Zend_Db_Table
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac";
-            $alterar = $db->update("SAC.dbo.Enquadramento", $dados, $where);
+            $alterar = $db->update("sac.dbo.Enquadramento", $dados, $where);
         }
         catch (Exception $e)
         {

@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.execucaofisicaprojeto
- * @copyright © 2010 - Ministário da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&aacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 echo $this->partial('inc/menu.inc.php', $this) // menu
@@ -43,13 +43,13 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
                     modal:true,
                     buttons:
                         {
-                        'Não':function()
+                        'N&atilde;o':function()
                         {
                             $(this).dialog('close'); // fecha a modal
                         },
                         'Sim':function()
                         {
-                            $("#formulario").submit(); // envia o formulário
+                            $("#formulario").submit(); // envia o formul&aacute;rio
                         }
                     }
                 });
@@ -87,7 +87,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 
 
 
-    <!-- ========== INÍCIO TÍTULO PÁGINA ========== -->
+    <!-- ========== INÍCIO TÍTULO P&aacute;GINA ========== -->
     <table class="tabela">
 
         <?php foreach ($this->pronac as $p) : ?>
@@ -120,11 +120,11 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
             <?php } ?>
         </table>
         <?php } ?>
-        <!-- ========== FIM TÍTULO PÁGINA ========== -->
+        <!-- ========== FIM TÍTULO P&aacute;GINA ========== -->
 
 
 
-        <!-- ========== INÍCIO FORMULÁRIO ========== -->
+        <!-- ========== INÍCIO FORMUL&aacute;RIO ========== -->
         <form id="formulario" action="<?php echo $this->url(array('controller' => 'diligenciarproponente', 'action' => 'index')); ?>" method="post">
             <input type="hidden" name="idPronac" value="<?php echo $this->idpronac?>" />
 
@@ -144,7 +144,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 
 
 
-        <!-- ========== BOTÕES ========== -->
+        <!-- ========== BOT&otilde;ES ========== -->
         <br />
         <p class="centro" style="margin-right:10px;">
             <input type="button" class="btn_enviar" value=" " />
@@ -153,7 +153,7 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
         <br />
 
     </form>
-    <!-- ========== FIM FORMULÁRIO ========== -->
+    <!-- ========== FIM FORMUL&aacute;RIO ========== -->
 
 
 
@@ -162,8 +162,8 @@ echo $this->partial('inc/menu.inc.php', $this) // menu
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

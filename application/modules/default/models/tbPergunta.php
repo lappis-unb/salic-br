@@ -10,8 +10,8 @@
  * @author tisomar
  */
 class tbPergunta extends MinC_Db_Table_Abstract {
-    protected $_banco   = "BDCORPORATIVO";
-    protected $_schema  = "BDCORPORATIVO.scQuiz";
+    protected $_banco   = "bdcorporativo";
+    protected $_schema  = "bdcorporativo.scQuiz";
     protected $_name = 'tbPergunta';
 
 
@@ -105,7 +105,7 @@ class tbPergunta extends MinC_Db_Table_Abstract {
                 array("pfd" => "tbPerguntaFormDocto")
                 ,"p.nrPergunta = pfd.nrPergunta"
                 ,array('pfd.nrOrdemPergunta','dsLabelPergunta'=>new Zend_Db_Expr('CONVERT(TEXT,pfd.dsLabelPergunta)'))
-                ,'BDCORPORATIVO.scQuiz'
+                ,'bdcorporativo.scQuiz'
         );
         $select->where('pfd.nrFormDocumento = ?',$nrFormDocumento);
         $select->where('pfd.nrVersaoDocumento = ?',$nrVersaoDocumento);
@@ -127,13 +127,13 @@ class tbPergunta extends MinC_Db_Table_Abstract {
                 array("pfd" => "tbPerguntaFormDocto")
                 ,"pfd.nrPergunta = p.nrPergunta"
                 ,array('pfd.nrQtdMinResposta','pfd.nrQtdMaxResposta')
-                ,'BDCORPORATIVO.scQuiz'
+                ,'bdcorporativo.scQuiz'
         );
         $select->joinInner(
                 array("opr" => "tbOpcaoResposta")
                 ,"opr.nrPergunta = pfd.nrPergunta and opr.nrFormDocumento = pfd.nrFormDocumento and opr.nrVersaoDocumento = pfd.nrVersaoDocumento"
                 ,array('opr.nrOpcao','opr.stTipoObjetoPgr','opr.dsOpcao')
-                ,'BDCORPORATIVO.scQuiz'
+                ,'bdcorporativo.scQuiz'
         );
         $select->where('pfd.nrFormDocumento = ?',$nrFormDocumento);
         $select->where('pfd.nrVersaoDocumento = ?',$nrVersaoDocumento);

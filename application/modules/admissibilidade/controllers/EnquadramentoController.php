@@ -36,7 +36,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     public function gerenciarEnquadramentoAction()
     {
         // LEMBRAR :
-        // $this->grupoAtivo->codOrgao  => Orgão logado   ==== Projetos.Orgao
+        // $this->grupoAtivo->codOrgao  => Org&atilde;o logado   ==== Projetos.Orgao
 
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
         $enquadramento = new Admissibilidade_Model_Enquadramento();
@@ -101,7 +101,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             $post = $this->getRequest()->getPost();
             $observacao = trim($post['observacao']);
             if(empty($observacao)) {
-                throw new Exception("O campo 'Justificativa' é de preenchimento obrigatório.");
+                throw new Exception("O campo 'Justificativa' &eacute; de preenchimento obrigatório.");
             }
 
             $get = $this->getRequest()->getParams();
@@ -144,7 +144,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             $arrayDadosProjeto = array(
                 'Situacao' => $situacaoFinalProjeto,
                 'DtSituacao' => $objProjeto->getExpressionDate(),
-                'ProvidenciaTomada' => 'Projeto enquadrado após avaliação técnica.',
+                'ProvidenciaTomada' => 'Projeto enquadrado após avalia&ccedil;&atilde;o t&eacute;cnica.',
                 'Area' => $post['areaCultural'],
                 'Segmento' => $post['segmentoCultural'],
                 'logon' => $authIdentity['usu_codigo']

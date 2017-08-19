@@ -9,7 +9,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
     protected   $_banco = 'SAC';
     protected   $_schema = 'SAC';
     protected   $_name = 'Liberacao';
-    protected   $_base = 'SAC.dbo.Liberacao';
+    protected   $_base = 'sac.dbo.Liberacao';
 
     public function liberacaoPorProjeto($idPronac){
 
@@ -36,7 +36,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
                 array(
                         'u.usu_Nome'
                     ),
-                'tabelas.dbo'
+                'tabelas'
                 );
 
 
@@ -58,7 +58,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
                             array('b'=>'Projetos'),
                             'a.AnoProjeto = b.AnoProjeto and a.Sequencial = b.Sequencial',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->where('b.IdPRONAC = ?', $idPronac);
 
@@ -92,11 +92,11 @@ class Liberacao extends MinC_Db_Table_Abstract {
         $select->joinInner(
                 array('i' => 'Inabilitado'), 'i.AnoProjeto+i.Sequencial = p.AnoProjeto+p.Sequencial', array(
             "i.Habilitado as Status", "i.Orgao as idOrgao", "TABELAS.dbo.fnEstruturaOrgao(i.Orgao, 0) AS Orgao", "i.CgcCpf"
-                ), array(), 'SAC.dbo'
+                ), array(), 'SAC'
         );
 
         /*$select->joinInner(
-                array('c' => 'CertidoesNegativas'), 'c.AnoProjeto+c.Sequencial = p.AnoProjeto+p.Sequencial', array(), 'SAC.dbo'
+                array('c' => 'CertidoesNegativas'), 'c.AnoProjeto+c.Sequencial = p.AnoProjeto+p.Sequencial', array(), 'SAC'
         );*/
 
         if ($orgao) {
@@ -271,7 +271,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
     }
 
     public function buscarCertidoesVencidas($cpf) {
-        $sql = "select CONVERT(CHAR(10), DtValidade,103) as DtValidade from SAC.dbo.CertidoesNegativas where CgcCpf = '$cpf'";
+        $sql = "select CONVERT(CHAR(10), DtValidade,103) as DtValidade from sac.dbo.CertidoesNegativas where CgcCpf = '$cpf'";
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -284,7 +284,7 @@ class Liberacao extends MinC_Db_Table_Abstract {
 
     public function liberarProjeto($dados) {
 
-        $sql = "insert into SAC.dbo.Liberacao
+        $sql = "insert into sac.dbo.Liberacao
 				values
 				('$dados[AnoProjeto]', '$dados[Sequencial]', 1, '$dados[DtLiberacao]', '$dados[DtDocumento]', '$dados[NumeroDocumento]', '$dados[VlOutrasFontes]', '$dados[Observacao]', '$dados[CgcCpf]', '$dados[Permissao]', $dados[Logon])";
 
@@ -304,19 +304,19 @@ class Liberacao extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('p' => 'Projetos'), 'l.AnoProjeto=p.AnoProjeto AND l.Sequencial=p.Sequencial',
-            array( 'IdPRONAC', new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS Pronac'), 'NomeProjeto' ), 'SAC.dbo'
+            array( 'IdPRONAC', new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS Pronac'), 'NomeProjeto' ), 'SAC'
         );
         $select->joinInner(
             array('a' => 'Agentes'), 'p.CgcCpf = a.CNPJCPF',
-            array( 'CNPJCPF' ), 'agentes.dbo'
+            array( 'CNPJCPF' ), 'agentes'
         );
         $select->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array( 'Descricao as Proponente' ), 'agentes.dbo'
+            array( 'Descricao as Proponente' ), 'agentes'
         );
         $select->joinInner(
             array('u' => 'Usuarios'), 'l.Logon=u.usu_Codigo',
-            array(), 'TABELAS.dbo'
+            array(), 'TABELAS'
         );
 
        //adiciona quantos filtros foram enviados
@@ -353,19 +353,19 @@ class Liberacao extends MinC_Db_Table_Abstract {
         );
         $select->joinInner(
             array('p' => 'Projetos'), 'l.AnoProjeto=p.AnoProjeto AND l.Sequencial=p.Sequencial',
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('a' => 'Agentes'), 'p.CgcCpf = a.CNPJCPF',
-            array(), 'agentes.dbo'
+            array(), 'agentes'
         );
         $select->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array(), 'agentes.dbo'
+            array(), 'agentes'
         );
         $select->joinInner(
             array('u' => 'Usuarios'), 'l.Logon=u.usu_Codigo',
-            array(), 'TABELAS.dbo'
+            array(), 'TABELAS'
         );
 
        //adiciona quantos filtros foram enviados

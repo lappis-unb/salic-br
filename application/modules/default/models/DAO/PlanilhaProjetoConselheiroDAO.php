@@ -12,7 +12,7 @@
 class PlanilhaProjetoConselheiroDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
-	protected $_schema  = "SAC.dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbPlanilhaProjetoConselheiro";
 	protected $_primary = "idPlanilhaProjeto";
 
@@ -33,7 +33,7 @@ class PlanilhaProjetoConselheiroDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idPlanilhaProjeto = $idPlanilha AND IdPRONAC = $idPronac";
-		$alterar = $db->update("SAC.dbo.tbPlanilhaProjetoConselheiro", $dados, $where);
+		$alterar = $db->update("sac.dbo.tbPlanilhaProjetoConselheiro", $dados, $where);
 
 		if ($alterar)
 		{

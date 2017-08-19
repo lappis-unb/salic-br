@@ -20,10 +20,10 @@
 
     <!-- Calculo da Porcentagem -->
     <?php if ($this->verifica15porcento): ?>
-        <!-- <div style="padding-bottom: 1em; padding-top: 1em; color: red; font-size: 12pt; text-align: center;">Segundo a IN nº 1, de 05/10/2010, o valor da Etapa de Custos/Administrativos não pode ser maior que 15% do valor total do projeto. O valor atual é de <?php echo $this->porcentagemAdministrativo; ?>% do total do projeto. Favor readeque!</div> -->
-        <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">Aten&ccedil;ão! O valor dos
-            custos administrativos do projeto estão: <?php echo $this->porcentagemAdministrativo; ?>% acima permitido
-            pela IN n°1 de 05/10/2010 Artigo 24 Inciso V.<br/><br/>Favor readequar para finalizar sua analise!
+        <!-- <div style="padding-bottom: 1em; padding-top: 1em; color: red; font-size: 12pt; text-align: center;">Segundo a in nº 1, de 05/10/2010, o valor da Etapa de Custos/Administrativos n&atilde;o pode ser maior que 15% do valor total do projeto. O valor atual &eacute; de <?php echo $this->porcentagemAdministrativo; ?>% do total do projeto. Favor readeque!</div> -->
+        <div style="color:red; text-align: center; font-size: 16pt;  padding-bottom: 2em;">Aten&ccedil;&atilde;o! O valor dos
+            custos administrativos do projeto est&atilde;o: <?php echo $this->porcentagemAdministrativo; ?>% acima permitido
+            pela in n°1 de 05/10/2010 Artigo 24 Inciso V.<br/><br/>Favor readequar para finalizar sua analise!
         </div>
     <?php endif; ?>
     <!-- Fim do calculo da porcentagem -->
@@ -56,7 +56,7 @@
         $totalVal_03_UF = (float)0;
 
         // arrays que servem para armazenar os elementos, e, posteriormente,
-        // verificar se o elemento j&aacute; encontra-se no array e evitar a sua "impressão" duplicada na tela
+        // verificar se o elemento j&aacute; encontra-se no array e evitar a sua "impress&atilde;o" duplicada na tela
         $arrayIncentivo = array();
         $arrayProdutos = array();
         $arrayEtapas = array();
@@ -74,7 +74,7 @@
              * Percorre todos os produtos
              */
 
-            // vari&aacute;veis que servirão para fazer compara&ccedil;ão dos itens j&aacute; existentes,
+            // vari&aacute;veis que servir&atilde;o para fazer compara&ccedil;&atilde;o dos itens j&aacute; existentes,
             // e, evitar "imprimir" um iten j&aacute; "impresso"
             $comparadorIncentivo = $resposta->idFonte;
             $comparadorProdutos = $resposta->idFonte . $resposta->idProduto;

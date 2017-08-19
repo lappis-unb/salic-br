@@ -26,12 +26,12 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(
                 array('p' => 'Projetos'), 't.idPRONAC = p.IdPRONAC',
-                array(),'SAC.dbo'
+                array(),'SAC'
         );
 
         $slct->joinInner(
                 array('r' => 'Produto'), 't.idProduto = r.Codigo',
-                array(),'SAC.dbo'
+                array(),'SAC'
         );
 
         $slct->where('p.IdPRONAC = ? ', $idPronac);
@@ -65,14 +65,14 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
        $sql = "SELECT distinct d.idPronac, tabelas.dbo.fnEstruturaOrgao(d.idOrgao,0) AS Unidade,
 				d.DtEnvio, CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT,
 				d.Observacao, d.idUsuario,
-				SAC.dbo.fnNomeUsuario(d.idUsuario) AS Remetente,
+				sac.dbo.fnNomeUsuario(d.idUsuario) AS Remetente,
 				d.idAgenteParecerista, age.CNPJCPF, nm.Descricao AS Parecerista
 				 FROM sac.dbo.tbDistribuirParecer AS d
 				 INNER JOIN sac.dbo.Produto AS p ON d.idProduto = p.Codigo
 				 INNER JOIN agentes.dbo.Agentes AS age ON age.idAgente = d.idAgenteParecerista
 				 INNER JOIN agentes.dbo.Nomes AS nm ON nm.idAgente = d.idAgenteParecerista
 				 INNER JOIN TABELAS.dbo.usuarios AS usu ON usu.usu_identificacao = age.CNPJCPF
-				 WHERE (idPronac = '$idPronac') and d.idOrgao = $codOrgao and SAC.dbo.fnNomeUsuario(d.idUsuario) is not null";
+				 WHERE (idPronac = '$idPronac') and d.idOrgao = $codOrgao and sac.dbo.fnNomeUsuario(d.idUsuario) is not null";
 
                 
 		try
@@ -104,7 +104,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             "DtDistribuicao",
             "CONVERT(CHAR(10),DtDistribuicao,103) AS DtDistribuicaoPT",            "CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT",
             "cast(d.Observacao as Text) as Observacao",
-            "SAC.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
+            "sac.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
             "d.idAgenteParecerista",
             "d.stDiligenciado",
             "DtSolicitacao" => new Zend_Db_Expr('(select top 1 DtSolicitacao from tbDiligencia dili1 where dili1.idPronac = d.idPronac and dili1.idProduto = d.idProduto order by dili1.DtSolicitacao desc)'),
@@ -117,11 +117,11 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 array('p' => 'Produto'), 'd.idProduto = p.Codigo', array('Descricao as dsProduto')
         );
 
-        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes.dbo");
+        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes");
 
-        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes.dbo");
+        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes");
 
-        $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS.dbo'
+        $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS'
         );
 
         foreach ($where as $coluna => $valor) {
@@ -150,7 +150,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
             "DtDevolucao",
             "CONVERT(CHAR(10),DtEnvio,103) AS DtEnvioPT",
             "CAST(Observacao AS TEXT) AS Observacao",
-            "SAC.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
+            "sac.dbo.fnNomeUsuario(d.idUsuario) as nmUsuario",
             "d.idAgenteParecerista",
             "d.stDiligenciado",
             "DtSolicitacao" => new Zend_Db_Expr('(select top 1 DtSolicitacao from tbDiligencia dili1 where dili1.idPronac = d.idPronac and dili1.idProduto = d.idProduto order by dili1.DtSolicitacao desc)'),
@@ -163,11 +163,11 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 array('p' => 'Produto'), 'd.idProduto = p.Codigo', array('Descricao as dsProduto')
         );
 
-        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes.dbo");
+        $select->joinInner(array("age" => "Agentes"), "age.idAgente = d.idAgenteParecerista", array("age.CNPJCPF"), "agentes");
 
-        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes.dbo");
+        $select->joinInner(array("nm" => "Nomes"), "nm.idAgente = d.idAgenteParecerista", array("nm.Descricao as nmParecerista"), "agentes");
 
-        $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS.dbo'
+        $select->joinInner(array("usu" => "usuarios"), 'usu.usu_identificacao = age.CNPJCPF', array('usu.usu_codigo as idUsuario'), 'TABELAS'
         );
 
         foreach ($where as $coluna => $valor) {
@@ -206,7 +206,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                 "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
 //                "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-                "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
+                "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
             ));
 
             $select->joinInner(
@@ -231,9 +231,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
             $dadosWhere = array('t.stEstado = ?' => 0,
                                 't.FecharAnalise not in(1)' => '?',
-                                't.tipoanalise IN (3,1)' => '?', //solucao para mostrar projetos novo e projeto do legado
-                                't.tipoanalise = (SELECT TOP 1 max(tipoanalise) FROM SAC..tbDistribuirParecer WHERE idPRONAC = p.IdPRONAC and stEstado=0 and TipoAnalise in (1,3) )' => '?',  //solucao para mostrar projetos novo e projeto do legado
-                                'p.Situacao IN (\'B11\', \'B14\')' => '',
+                                't.tipoanalise in (3,1)' => '?', //solucao para mostrar projetos novo e projeto do legado
+                                't.tipoanalise = (SELECT TOP 1 max(tipoanalise) FROM sac..tbDistribuirParecer WHERE idPRONAC = p.IdPRONAC and stEstado=0 and TipoAnalise in (1,3) )' => '?',  //solucao para mostrar projetos novo e projeto do legado
+                                'p.Situacao in (\'B11\', \'B14\')' => '',
                                 't.idOrgao = ?' => $org_codigo);
 
             foreach ($dadosWhere as $coluna => $valor) {
@@ -273,9 +273,9 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 
         $dadosWhere = array('t.stEstado = ?' 					=> 0,
                             //'t.FecharAnalise = ?' 				=> 0,
-        					't.FecharAnalise IN (0,2)' 			=> '',
+        					't.FecharAnalise in (0,2)' 			=> '',
                             't.TipoAnalise = ?' 				=> 3,
-                            'p.Situacao IN (\'B11\', \'B14\')'	=> '',
+                            'p.Situacao in (\'B11\', \'B14\')'	=> '',
                             't.DtDevolucao is null'				=> '',
                             't.idAgenteParecerista is not null'	=> '',
                             't.stPrincipal = ? ' 				=> 0,
@@ -312,7 +312,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
 		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
 
@@ -341,8 +341,8 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
         );
 
 
-        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise IN (0,2)' => '', 't.TipoAnalise = ?' => 3,'p.Situacao IN (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
-//        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise = ?' => 0, 't.TipoAnalise = ?' => 3,'p.Situacao IN (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
+        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise in (0,2)' => '', 't.TipoAnalise = ?' => 3,'p.Situacao in (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
+//        $dadosWhere = array('t.stEstado = ?' => 0, 't.FecharAnalise = ?' => 0, 't.TipoAnalise = ?' => 3,'p.Situacao in (\'B11\',\'B14\')'=> '', 't.idOrgao = ?'=>$org_codigo);
 
 		foreach ($dadosWhere as $coluna => $valor) {
                 $select->where($coluna, $valor);
@@ -372,13 +372,13 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
 		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
 
                 $select->joinLeft(
                         array('pp' => 'tbPagamentoParecerista'),'pp.idProduto = t.idDistribuirParecer',
-                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'agentes.dbo'
+                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'agentes'
                 );
 
                 $select->joinInner(
@@ -412,7 +412,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                     $dadosWhere = array('t.stEstado = ?' 					=> 0,
                                     	't.FecharAnalise = ?' 				=> 1,
                                     	't.TipoAnalise = ?' 				=> 3,
-                                    	'p.Situacao IN (\'B11\',\'B14\')'	=> '',
+                                    	'p.Situacao in (\'B11\',\'B14\')'	=> '',
                                     	't.idOrgao = ?'						=>$org_codigo,
                                     	'pp.idProduto is null ' 			=> ''
 
@@ -424,7 +424,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                      $dadosWhere = array('t.stEstado = ?' 					=> 0,
 	                                     't.FecharAnalise = ?' 				=> 1,
 	                                     't.TipoAnalise = ?' 				=> 3,
-	                                     'p.Situacao IN (\'B11\',\'B14\')'	=> '',
+	                                     'p.Situacao in (\'B11\',\'B14\')'	=> '',
 	                                     'pp.idProduto is not null ' 		=> '',
 	                                     'pp.siPagamento = ? ' 				=> 0
 
@@ -464,13 +464,13 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
 		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
 
                 $select->joinLeft(
                         array('pp' => 'tbPagamentoParecerista'),'pp.idProduto = t.idDistribuirParecer',
-                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'agentes.dbo'
+                        array('pp.idPagamentoParecerista','idComprovantePagamento'),'agentes'
                 );
 
                 $select->joinInner(
@@ -533,8 +533,8 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
                     "CONVERT(CHAR(10), t.DtDevolucao, 103) AS DtDevolucaoPT",
                     "CONVERT(CHAR(10), t.DtDistribuicao, 103) AS DtDistribuicaoPT",
                     "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-                    "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
-                    "(Select SUM(x.Ocorrencia*x.Quantidade*x.ValorUnitario) FROM SAC.dbo.tbPlanilhaProjeto x WHERE p.IdPRONAC = x.idPRONAC and x.FonteRecurso = 109 and x.idProduto = t.idProduto) as Valor",
+                    "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
+                    "(Select SUM(x.Ocorrencia*x.Quantidade*x.ValorUnitario) FROM sac.dbo.tbPlanilhaProjeto x WHERE p.IdPRONAC = x.idPRONAC and x.FonteRecurso = 109 and x.idProduto = t.idProduto) as Valor",
 		    "(SELECT x1.Segmento FROM sac.dbo.PlanoDistribuicaoProduto x1
 		     WHERE x1.idProjeto = p.idProjeto and x1.idProduto = t.idProduto)  AS
 		    idSegmento, (SELECT x1.Segmento FROM sac.dbo.PlanoDistribuicaoProduto x1
@@ -592,7 +592,7 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
 		                 "CONVERT(CHAR(10), t.DtDevolucao, 103) AS DtDevolucaoPT",
 		                 "CONVERT(CHAR(10), t.DtDistribuicao, 103) AS DtDistribuicaoPT",
                                  "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
+		                 "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
         ));
 
 				/*$select->joinInner(
@@ -764,43 +764,43 @@ public function aguardandoparecerresumo($where) {
                 array("ag" => "Agentes")
                 ,"ag.idAgente = dp.idAgenteParecerista"
                 ,array('ag.idAgente')
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
                 ,"nm.idAgente = dp.idAgenteParecerista"
                 ,array('nmParecerista'=>'nm.Descricao')
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
                 ,"ag.CNPJCPF = usu.usu_identificacao"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("uog" => "UsuariosXOrgaosXGrupos")
                 ,"usu.usu_codigo = uog.uog_usuario and uog.uog_status = 1"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("org" => "Orgaos")
                 ,"org.Codigo = uog.uog_orgao"
                 ,array('idOrgao'=>'org.Codigo','nmOrgao'=>'org.Sigla')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("proj" => "Projetos")
                 ,"proj.IdPRONAC = dp.idPRONAC"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("prod" => "Produto")
                 ,"prod.Codigo = dp.idProduto"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->where('uog.uog_grupo = 94');
         $select->where('DtDevolucao is null');
@@ -869,43 +869,43 @@ public function aguardandoparecerresumo($where) {
                 array("ag" => "Agentes")
                 ,"ag.idAgente = dp.idAgenteParecerista"
                 ,array('ag.idAgente')
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
                 ,"nm.idAgente = dp.idAgenteParecerista"
                 ,array('nmParecerista'=>'nm.Descricao')
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
                 ,"ag.CNPJCPF = usu.usu_identificacao"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("uog" => "UsuariosXOrgaosXGrupos")
                 ,"usu.usu_codigo = uog.uog_usuario and uog.uog_status = 1"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("org" => "Orgaos")
                 ,"org.Codigo = uog.uog_orgao"
                 ,array('idOrgao'=>'org.Codigo','nmOrgao'=>'org.Sigla')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("proj" => "Projetos")
                 ,"proj.IdPRONAC = dp.idPRONAC"
                 ,array('proj.IdPRONAC','pronac'=>new Zend_Db_Expr('proj.AnoProjeto+proj.Sequencial'),'proj.NomeProjeto')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("prod" => "Produto")
                 ,"prod.Codigo = dp.idProduto"
                 ,array('nmProduto'=>'prod.Descricao')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->where('uog.uog_grupo = 94');
         $select->where('DtDevolucao is null');
@@ -983,43 +983,43 @@ public function aguardandoparecerresumo($where) {
                 array("ag" => "Agentes")
                 ,"ag.idAgente = dp.idAgenteParecerista"
                 ,array()
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
                 ,"nm.idAgente = dp.idAgenteParecerista"
                 ,array()
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
                 ,"ag.CNPJCPF = usu.usu_identificacao"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("uog" => "UsuariosXOrgaosXGrupos")
                 ,"usu.usu_codigo = uog.uog_usuario"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("org" => "Orgaos")
                 ,"org.Codigo = uog.uog_orgao"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("proj" => "Projetos")
                 ,"proj.IdPRONAC = dp.idPRONAC"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("prod" => "Produto")
                 ,"prod.Codigo = dp.idProduto"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->where('uog.uog_grupo = 94');
         $select->where('DtDevolucao is null');
@@ -1063,32 +1063,32 @@ public function aguardandoparecerresumo($where) {
                 'NrProjeto'=>new Zend_Db_Expr('p.AnoProjeto + p.Sequencial'),
                 'p.NomeProjeto'
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("r" => "Produto")
                 ,"t.idProduto = r.Codigo"
                 ,array('Produto'=>'r.Descricao')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("a" => "Area")
                 ,"p.Area = a.Codigo"
                 ,array('Area'=>'a.Descricao')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("s" => "Segmento")
                 ,"p.Segmento = s.Codigo"
                 ,array('Segmento'=>'s.Descricao')
-                ,'SAC.dbo'
+                ,'SAC'
         );
 
         $select->joinInner(
                 array("o" => "Orgaos")
                 ,"t.idOrgao = o.Codigo"
                 ,array('o.Sigla')
-                ,'SAC.dbo'
+                ,'SAC'
         );
 
         $select->where('t.stEstado = 0');
@@ -1119,32 +1119,32 @@ public function aguardandoparecerresumo($where) {
                 'NrProjeto'=>new Zend_Db_Expr('p.AnoProjeto + p.Sequencial'),
                 'p.NomeProjeto'
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("r" => "Produto")
                 ,"t.idProduto = r.Codigo"
                 ,array('Produto'=>'r.Descricao')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("a" => "Area")
                 ,"p.Area = a.Codigo"
                 ,array('Area'=>'a.Descricao')
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("s" => "Segmento")
                 ,"p.Segmento = s.Codigo"
                 ,array('Segmento'=>'s.Descricao')
-                ,'SAC.dbo'
+                ,'SAC'
         );
 
         $select->joinInner(
                 array("o" => "Orgaos")
                 ,"t.idOrgao = o.Codigo"
                 ,array('o.Sigla')
-                ,'SAC.dbo'
+                ,'SAC'
         );
 
         $select->where('t.stEstado = 0');
@@ -1171,21 +1171,21 @@ public function analisePorParecerista($where){
                         "tempoFimDiligencia"=>new Zend_Db_Expr("(
                                 select
                                         top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")  ,
                          "DtSolicitacao"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtSolicitacao
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )") ,
                          "DtResposta"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtResposta
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")
@@ -1197,7 +1197,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "ag.idAgente"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
@@ -1205,7 +1205,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "nmParecerista"=>"nm.Descricao"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinLeft(
                 array("cp" => "tbCredenciamentoParecerista")
@@ -1214,7 +1214,7 @@ public function analisePorParecerista($where){
                 "nmParecerista"=>"nm.Descricao",
                 "qtPonto"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinLeft(
                 array("ar" => "Area")
@@ -1223,7 +1223,7 @@ public function analisePorParecerista($where){
                    'Area'=>'ar.Descricao'
 
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinLeft(
                 array("seg" => "Segmento")
@@ -1231,7 +1231,7 @@ public function analisePorParecerista($where){
                 ,array(
                     'Segmento'=>'seg.Descricao'
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinLeft(
                 array("au" => "tbAusencia")
@@ -1240,25 +1240,25 @@ public function analisePorParecerista($where){
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
                 ,"ag.CNPJCPF = usu.usu_identificacao"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("uog" => "UsuariosXOrgaosXGrupos")
                 ,"usu.usu_codigo = uog.uog_usuario and uog.uog_status = 1"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("org" => "Orgaos")
                 ,"org.Codigo = uog.uog_orgao"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("proj" => "Projetos")
@@ -1269,13 +1269,13 @@ public function analisePorParecerista($where){
                     "proj.NomeProjeto"
 
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("prod" => "Produto")
                 ,"prod.Codigo = dp.idProduto"
                 ,array("nmProduto"=>"prod.Descricao",'idProduto'=>'prod.Codigo',)
-                ,'SAC.dbo'
+                ,'SAC'
         );
 
         $select->where('uog.uog_grupo = 94');
@@ -1296,71 +1296,71 @@ public function analisePorParecerista($where){
                     array('ag'=>'Agentes'),
                     'ag.idAgente = dp.idAgenteParecerista',
                     array(),
-                    'agentes.dbo'
+                    'agentes'
                     );
             $slct->joinInner(
                     array('nm'=>'Nomes'),
                     'nm.idAgente = dp.idAgenteParecerista',
                     array('nm.idAgente','Nome'=>'nm.Descricao'),
-                    'agentes.dbo'
+                    'agentes'
                     );
             $slct->joinInner(
                     array('usu'=>'Usuarios'),
                     'ag.CNPJCPF = usu.usu_identificacao',
                     array(),
-                    'TABELAS.dbo'
+                    'TABELAS'
                     );
             $slct->joinInner(
                     array('uog'=>'UsuariosXOrgaosXGrupos'),
                     'uog.uog_usuario = usu.usu_codigo',
                     array(),
-                    'TABELAS.dbo'
+                    'TABELAS'
                     );
             $slct->joinInner(
                     array('gru'=>'Grupos'),
                     'gru.gru_codigo = uog.uog_grupo',
                     array('cdPerfil'=>'gru.gru_codigo','Perfil'=>'gru.gru_nome'),
-                    'TABELAS.dbo'
+                    'TABELAS'
                     );
             $slct->joinInner(
                     array('org'=>'Orgaos'),
                     //'org.Codigo = uog.uog_orgao',
                     'org.Codigo = uog.uog_orgao and org.Codigo = dp.idOrgao',
                     array('Orgao'=>'org.Sigla'),
-                    'SAC.dbo'
+                    'SAC'
                     );
             $slct->joinInner(
                     array('usu2'=>'Usuarios'),
                     'usu2.usu_codigo = dp.idUsuario',
                     array(),
-                    'TABELAS.dbo'
+                    'TABELAS'
                     );
             /*$slct->joinInner(
                     array('uog2'=>'UsuariosXOrgaosXGrupos'),
                     'uog2.uog_usuario = usu2.usu_codigo',
                     array(),
-                    'TABELAS.dbo'
+                    'TABELAS'
                     );*/
             /*$slct->joinInner(
                     array('gru2'=>'Grupos'),
                     'gru2.gru_codigo = uog2.uog_grupo',
                     array('cdPerfil2'=>'gru2.gru_codigo','Perfil2'=>'gru2.gru_nome'),
-                    'TABELAS.dbo'
+                    'TABELAS'
                     );*/
             /*$slct->joinInner(
                     array('org2'=>'Orgaos'),
                     'org2.Codigo = uog2.uog_orgao',
                     array('Orgao2'=>'org2.Sigla'),
-                    'SAC.dbo'
+                    'SAC'
                     );*/
            /* $slct->joinInner(array('ag2'=>'Agentes'),
                             'ag2.CNPJCPF = usu2.usu_identificacao',
                             array('idAgente2'=>'ag2.idAgente'),
-                            'agentes.dbo');*/
+                            'agentes');*/
             /*$slct->joinInner(array('nm2'=>'Nomes'),
                              'nm2.idAgente = ag2.idAgente',
                             array('Nome2'=>'nm2.Descricao'),
-                            'agentes.dbo');*/
+                            'agentes');*/
 
             /*foreach ($where as $coluna => $valor) {
                 $slct->where($coluna, $valor);
@@ -1389,21 +1389,21 @@ public function analisePorParecerista($where){
                         "tempoFimDiligencia"=>new Zend_Db_Expr("(
                                 select
                                         top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")  ,
                          "DtSolicitacao"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtSolicitacao
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )") ,
                          "DtResposta"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtResposta
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")
@@ -1415,7 +1415,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "ag.idAgente"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
@@ -1423,7 +1423,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "nmParecerista"=>"nm.Descricao"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinLeft(
                 array("cp" => "tbCredenciamentoParecerista")
@@ -1432,7 +1432,7 @@ public function analisePorParecerista($where){
                 "nmParecerista"=>"nm.Descricao",
                 "qtPonto"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinLeft(
                 array("ar" => "Area")
@@ -1441,7 +1441,7 @@ public function analisePorParecerista($where){
                    'Area'=>'ar.Descricao'
 
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinLeft(
                 array("seg" => "Segmento")
@@ -1449,7 +1449,7 @@ public function analisePorParecerista($where){
                 ,array(
                     'Segmento'=>'seg.Descricao'
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinLeft(
                 array("au" => "tbAusencia")
@@ -1458,25 +1458,25 @@ public function analisePorParecerista($where){
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
                 ,"ag.CNPJCPF = usu.usu_identificacao"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("uog" => "UsuariosXOrgaosXGrupos")
                 ,"usu.usu_codigo = uog.uog_usuario and uog.uog_status = 1"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("org" => "Orgaos")
                 ,"org.Codigo = uog.uog_orgao"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("proj" => "Projetos")
@@ -1487,14 +1487,14 @@ public function analisePorParecerista($where){
                     "proj.NomeProjeto"
 
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
 
         $select->joinInner(
                 array("prod" => "Produto")
                 ,"prod.Codigo = dp.idProduto"
                 ,array("nmProduto"=>"prod.Descricao",'idProduto'=>'prod.Codigo',)
-                ,'SAC.dbo'
+                ,'SAC'
 
         );
         $select->where('uog.uog_grupo = 94');
@@ -1526,21 +1526,21 @@ public function analisePorParecerista($where){
                         "tempoFimDiligencia"=>new Zend_Db_Expr("(
                                 select
                                         top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")  ,
                          "DtSolicitacao"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtSolicitacao
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )") ,
                          "DtResposta"=>new Zend_Db_Expr("(
                                 select
                                         top 1 DtResposta
-                                from SAC.dbo.tbDiligencia  d
+                                from sac.dbo.tbDiligencia  d
                                 where d.idPronac = proj.IdPRONAC and d.idProduto = prod.Codigo
                                 order by DtSolicitacao desc
                          )")
@@ -1552,7 +1552,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "ag.idAgente"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("nm" => "Nomes")
@@ -1560,7 +1560,7 @@ public function analisePorParecerista($where){
                 ,array(
                 "nmParecerista"=>"nm.Descricao"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinLeft(
                 array("cp" => "tbCredenciamentoParecerista")
@@ -1569,7 +1569,7 @@ public function analisePorParecerista($where){
                 "nmParecerista"=>"nm.Descricao",
                 "qtPonto"
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinLeft(
                 array("ar" => "Area")
@@ -1578,7 +1578,7 @@ public function analisePorParecerista($where){
                    'Area'=>'ar.Descricao'
 
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinLeft(
                 array("seg" => "Segmento")
@@ -1586,7 +1586,7 @@ public function analisePorParecerista($where){
                 ,array(
                     'Segmento'=>'seg.Descricao'
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinLeft(
                 array("au" => "tbAusencia")
@@ -1595,25 +1595,25 @@ public function analisePorParecerista($where){
                     'au.dtFimAusencia',
                     'au.dtInicioAusencia',
                 )
-                ,'agentes.dbo'
+                ,'agentes'
         );
         $select->joinInner(
                 array("usu" => "Usuarios")
                 ,"ag.CNPJCPF = usu.usu_identificacao"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("uog" => "UsuariosXOrgaosXGrupos")
                 ,"usu.usu_codigo = uog.uog_usuario and uog.uog_status = 1"
                 ,array()
-                ,'TABELAS.dbo'
+                ,'TABELAS'
         );
         $select->joinInner(
                 array("org" => "Orgaos")
                 ,"org.Codigo = uog.uog_orgao"
                 ,array()
-                ,'SAC.dbo'
+                ,'SAC'
         );
         $select->joinInner(
                 array("proj" => "Projetos")
@@ -1624,14 +1624,14 @@ public function analisePorParecerista($where){
                     "proj.NomeProjeto"
 
                 )
-                ,'SAC.dbo'
+                ,'SAC'
         );
 
         $select->joinInner(
                 array("prod" => "Produto")
                 ,"prod.Codigo = dp.idProduto"
                 ,array("nmProduto"=>"prod.Descricao",'idProduto'=>'prod.Codigo',)
-                ,'SAC.dbo'
+                ,'SAC'
 
         );
         $select->where('uog.uog_grupo = 94');
@@ -1671,13 +1671,13 @@ public function analisePorParecerista($where){
                             array("PRONAC"=>new Zend_Db_Expr("p.AnoProjeto+ p.Sequencial"),
                                   "IdPRONAC",
                                   "NomeProjeto"),
-                            'SAC.dbo'
+                            'SAC'
                           );
         $slct->joinInner(
                             array('r'=>'Produto'),
                             't.idProduto = r.Codigo',
                             array("Produto" => "r.Descricao"),
-                            'SAC.dbo'
+                            'SAC'
                           );
 
         //adiciona quantos filtros foram enviados
@@ -1938,11 +1938,11 @@ public function analisePorParecerista($where){
         );
         $slct->joinInner(
             array('b'=>'Produto'), 'a.idProduto = b.Codigo',
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $slct->joinInner(
             array('c'=>'Orgaos'), 'a.idOrgao = c.Codigo',
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
 
         //adiciona quantos filtros foram enviados
@@ -1982,7 +1982,7 @@ public function analisePorParecerista($where){
     }
 
     public function checarValidacaoProdutosSecundarios($idPronac) {
-      $sql = "SELECT SAC.dbo.fnchecarValidacaoProdutoSecundario($idPronac)";
+      $sql = "SELECT sac.dbo.fnchecarValidacaoProdutoSecundario($idPronac)";
 
       $db= Zend_Db_Table::getDefaultAdapter();
       $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -1990,8 +1990,8 @@ public function analisePorParecerista($where){
     }
 
     public function inserirDistribuicaoParaParecer($idPreProjeto, $idPronac, $idVinculada ) {
-        $sqlDistribuirParecer = "INSERT INTO SAC.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
-                                         SELECT {$idPronac},idProduto, 3,{$idVinculada}, {$this->getDate()}, stPrincipal FROM SAC.dbo.PlanoDistribuicaoProduto
+        $sqlDistribuirParecer = "INSERT INTO sac.dbo.tbDistribuirParecer (idPronac,idProduto,TipoAnalise,idOrgao,DtEnvio, stPrincipal)
+                                         SELECT {$idPronac},idProduto, 3,{$idVinculada}, {$this->getDate()}, stPrincipal FROM sac.dbo.PlanoDistribuicaoProduto
                                           WHERE idProjeto = {$idPreProjeto}";
         $db= Zend_Db_Table::getDefaultAdapter();
         return $db->query($sqlDistribuirParecer);

@@ -49,13 +49,13 @@ class OrgaoFiscalizador  extends MinC_Db_Table_Abstract{
                             array('tbAgOF'=>'Agentes'),
                             "tbOF.idParecerista = tbAgOF.idAgente",
                             array('tbAgOF.CNPJCPF'),
-                            'agentes.dbo'
+                            'agentes'
                           );
         $select->joinLeft(
                             array('tbNmOF'=>'Nomes'),
                             "tbOF.idParecerista = tbNmOF.idAgente",
                             array('CAST(tbNmOF.Descricao AS TEXT) as Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                           );
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);

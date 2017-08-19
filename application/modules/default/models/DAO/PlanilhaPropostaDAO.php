@@ -11,7 +11,7 @@
 
 class PlanilhaPropostaDAO extends Zend_Db_Table
 {
-	protected $_schema = 'SAC.dbo';
+	protected $_schema = 'SAC';
 	protected $_name   = 'tbPlanilhaProposta';
 
 
@@ -26,12 +26,12 @@ class PlanilhaPropostaDAO extends Zend_Db_Table
 	 */
 	public static function buscar($idPlanilha)
 	{	
-		throw new Exception('Função não está sendo utilizada!');
+		throw new Exception('Fun&ccedil;&atilde;o n&atilde;o est&aacute; sendo utilizada!');
 		
 		$sql = "SELECT * 
-				FROM SAC.dbo.tbPlanilhaProposta PL
-				left join SAC.dbo.tbAnaliseDeConteudo AN on PL.idProjeto = AN.IdPRONAC
-				inner join SAC.dbo.Parecer PA on PL.idProjeto = PA.idPRONAC AND PL.idPlanilhaProjeto = " . $idPlanilha;
+				FROM sac.dbo.tbPlanilhaProposta PL
+				left join sac.dbo.tbAnaliseDeConteudo AN on PL.idProjeto = AN.IdPRONAC
+				inner join sac.dbo.Parecer PA on PL.idProjeto = PA.idPRONAC AND PL.idPlanilhaProjeto = " . $idPlanilha;
 
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -40,14 +40,14 @@ class PlanilhaPropostaDAO extends Zend_Db_Table
 	
  	public function parecerFavoravel($idpronac, $idproduto = null) 
         {
-		$sql = "UPDATE SAC.dbo.tbPlanilhaProjeto
+		$sql = "UPDATE sac.dbo.tbPlanilhaProjeto
 				SET 
 				Quantidade 		= pro.Quantidade
 				,Ocorrencia 	= pro.Ocorrencia
 				,ValorUnitario 	= pro.ValorUnitario
 				,Justificativa 	= ''
-				FROM SAC.dbo.tbPlanilhaProjeto AS PP
-				INNER JOIN SAC.dbo.tbPlanilhaProposta AS pro ON pro.idPlanilhaProposta = PP.idPlanilhaProposta
+				FROM sac.dbo.tbPlanilhaProjeto AS PP
+				INNER JOIN sac.dbo.tbPlanilhaProposta AS pro ON pro.idPlanilhaProposta = PP.idPlanilhaProposta
 				WHERE PP.idPronac = ".$idpronac;
 		
 		if(!empty($idproduto))

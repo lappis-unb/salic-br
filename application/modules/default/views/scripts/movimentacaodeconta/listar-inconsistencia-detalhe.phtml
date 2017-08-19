@@ -17,8 +17,8 @@
                     <a target="_blank" href='<?php echo $projetoUrl; ?>'><?php echo $this->projeto->pronac; ?></a>
                 </td>
                 <td><?php echo $this->projeto->NomeProjeto; ?></td>
-                <td align="center"><?php echo!empty($this->projeto->Agencia) ? $this->projeto->Agencia : '<em>Não informada</em>'; ?></td>
-                <td align="center"><?php echo!empty($this->projeto->ContaBloqueada) ? $this->projeto->ContaBloqueada : '<em>Não informada</em>'; ?></td>
+                <td align="center"><?php echo!empty($this->projeto->Agencia) ? $this->projeto->Agencia : '<em>N&atilde;o informada</em>'; ?></td>
+                <td align="center"><?php echo!empty($this->projeto->ContaBloqueada) ? $this->projeto->ContaBloqueada : '<em>N&atilde;o informada</em>'; ?></td>
                 <td align="center">
                     <b><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'dados-bancarios-captacao')); ?>?idPronac=<?php echo $this->idPronac; ?>" style="color: blue !important;" target="new">R$ <?php echo number_format($this->projeto->ValorCaptado, 2, ',', '.'); ?></a></b>
                 </td>
@@ -29,17 +29,17 @@
     <table class="tabela">
         <thead>
             <tr>
-                <td align="center" class="destacar bold" colspan="8">CAPTAÇÕES</td>
+                <td align="center" class="destacar bold" colspan="8">CAPTA&ccedil;&otilde;ES</td>
             </tr>
             <tr>
                 <th>#</th>
                 <th>Nome Incentivador</th>
                 <th>CPF / CNPJ Proponente</th>
                 <th>CPF / CNPJ Incentivador</th>
-                <th>Data do Crédito</th>
-                <th>Valor do Crédito</th>
+                <th>Data do Cr&eacute;dito</th>
+                <th>Valor do Cr&eacute;dito</th>
                 <th width="10px">Diligência</th>
-                <th width="10px">Ações</th>
+                <th width="10px">A&ccedil;&otilde;es</th>
             </tr>
         </thead>
         <tbody>
@@ -98,7 +98,7 @@
         event.preventDefault();
         var clickedElement = $(this);
         $("#msgAlerta").dialog("destroy");
-        $("#msgAlerta").html("Tem certeza que deseja remover esta captação?");
+        $("#msgAlerta").html("Tem certeza que deseja remover esta capta&ccedil;&atilde;o?");
         $("#msgAlerta").dialog
         ({
             width:310,
@@ -108,7 +108,7 @@
             resizable: true,
             closeOnEscape: false,
             modal:true,
-            title: "Remover Captação",
+            title: "Remover Capta&ccedil;&atilde;o",
             buttons:
             {
                 'Cancelar': function(){
@@ -131,7 +131,7 @@
                         },
                         error: function(response) {
                             $("#msgAlerta").dialog("destroy");
-                            message('Ocorreu um erro ao tentar realizar a operação para atualizar as inconsistências.', 'ERROR');
+                            message('Ocorreu um erro ao tentar realizar a opera&ccedil;&atilde;o para atualizar as inconsistências.', 'ERROR');
                         }
                     });
                 }
@@ -154,7 +154,7 @@
                 }
             },
             error: function(data) {
-                message('Ocorreu um erro ao tentar realizar a operação para atualizar as inconsistências.', 'ERROR');
+                message('Ocorreu um erro ao tentar realizar a opera&ccedil;&atilde;o para atualizar as inconsistências.', 'ERROR');
             },
             dataType: 'json'
         });
@@ -184,7 +184,7 @@ var resolverInconsistencia = function (event) {
 
 	    $('#row-' + idTmpCaptacao + ' .cpfcnpjIncentivador').html( format_cnpj(event.detail.CNPJCPF) );
 
-                $('#btnValidarProponenteIncentivadorIguais-' + idTmpCaptacao).closest('td').html("<font color='green'>[Correção enviada]</font>");
+                $('#btnValidarProponenteIncentivadorIguais-' + idTmpCaptacao).closest('td').html("<font color='green'>[Corre&ccedil;&atilde;o enviada]</font>");
         },
         error: function (data) {
             $("#carregando table tbody tr td").append(

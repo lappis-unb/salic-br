@@ -46,7 +46,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
 	public function init()
 	{
-		$this->view->title = 'Salic - Sistema de Apoio às Leis de Incentivo à Cultura'; // titulo da pagina
+		$this->view->title = 'Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura'; // titulo da pagina
 
 		/* ========== INICIO PERFIL ==========*/
 		// define os grupos que tem acesso
@@ -174,7 +174,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 					//$this->view->dados   = $this->tbTmpCaptacao->buscarDados($pronac, $data_recibo, $proponente, $incentivador, $data_credito);
 
                                         $arrBusca = array();
-                                        $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
+                                        $arrBusca['idTipoInconsistencia in (?)'] = array(2,3,7);
                                         $this->tbTipoInconsistencia = new tbTipoInconsistencia();
                                         $this->view->inconsistencias = $this->tbTipoInconsistencia->buscar($arrBusca);
                                         $this->view->parametrosBusca = $_POST;
@@ -613,7 +613,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->view->parametrosBuscaInc1 = $_POST;
 
             $arrBusca = array();
-            $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
+            $arrBusca['idTipoInconsistencia in (?)'] = array(2,3,7);
             $tbTipoInconsistencia = new tbTipoInconsistencia();
             $this->view->inconsistencias = $tbTipoInconsistencia->buscar($arrBusca);
 
@@ -948,7 +948,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                     if($vlrCaptacao > 0){
 
-                        //INSERT NA TABELA SAC.dbo.Captacao
+                        //INSERT NA TABELA sac.dbo.Captacao
                         $dados = array(
                             'AnoProjeto'        => $rs->nrAnoProjeto,
                             'Sequencial'        => $rs->nrSequencial,
@@ -977,7 +977,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                         # validacao removida para atender aporte mesmo em caso de valor zerado para a captacao
                         //if($vlrDevolucao > 0){
-                            # INSERT NA TABELA SAC.dbo.tbAporteCaptacao
+                            # INSERT NA TABELA sac.dbo.tbAporteCaptacao
                             $dadosAporte = array(
                                 'IdPRONAC'          => $rs->idProjeto,
                                 'idVerificacao'     => $tpDevolucao,
@@ -1125,7 +1125,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             $this->view->parametrosBusca = $_POST;
 
             $arrBusca = array();
-            $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
+            $arrBusca['idTipoInconsistencia in (?)'] = array(2,3,7);
             $this->tbTipoInconsistencia = new tbTipoInconsistencia();
             $this->view->inconsistencias = $this->tbTipoInconsistencia->buscar($arrBusca);
 
@@ -1205,14 +1205,14 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $this->view->filtro = $filtro;
                 switch ($filtro) {
                     case '': //captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
                         break;
                     case 'nc': //nao captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
                         break;
                 }
             } else {
-                $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
             }
 
             $tbCaptacao = new Captacao();
@@ -1308,14 +1308,14 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 $this->view->filtro = $filtro;
                 switch ($filtro) {
                     case '': //captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
                         break;
                     case 'nc': //nao captou 20%
-                        $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
+                        $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) < ?'] = 20;
                         break;
                 }
             } else {
-                $where['SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
+                $where['sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial) >= ?'] = 20;
             }
 
             $tbCaptacao = new Captacao();
@@ -1580,24 +1580,24 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	 * @param void
 	 * @return void
      * @todo existe um potencial erro nessa estrutura de codigo. Preciso
-     * avalair refatoração.
+     * avalair refatora&ccedil;&atilde;o.
 	 */
 	public function uploadAction() {
-            /*if ($this->getIdGrupo != 121 && $this->getIdGrupo != 129) // só Técnico de Acompanhamento que pode acessar
+            /*if ($this->getIdGrupo != 121 && $this->getIdGrupo != 129) // só T&eacute;cnico de Acompanhamento que pode acessar
 		{
-			parent::message('Voce nao tem permissão para acessar essa área do sistema!', 'principal/index', 'ALERT');
+			parent::message('Voce nao tem permiss&atilde;o para acessar essa &aacute;rea do sistema!', 'principal/index', 'ALERT');
 		}*/
 
-            // caso o formulário seja enviado via post
+            // caso o formul&aacute;rio seja enviado via post
             if ($this->getRequest()->isPost()) {
-                // configuração o php.ini para 100MB
+                // configura&ccedil;&atilde;o o php.ini para 100MB
                 @set_time_limit(0);
                 @ini_set('mssql.textsize',      10485760000);
                 @ini_set('mssql.textlimit',     10485760000);
                 @ini_set('mssql.timeout',       10485760000);
                 @ini_set('upload_max_filesize', '100M');
 
-                // pega as informações do arquivo
+                // pega as informa&ccedil;&otilde;es do arquivo
                 $arquivoNome    = $_FILES['arquivo']['name']; // nome
                 $arquivoTemp    = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
                 $arquivoTipo    = $_FILES['arquivo']['type']; // tipo

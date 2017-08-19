@@ -3,37 +3,37 @@
 /**
  * Description of Fiscalizarprojetocultural
  *
- * @author André Nogueira Pereira
+ * @author Andr&eacute; Nogueira Pereira
  */
 class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstract {
 
     public function init() {
 
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+        $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
+        $Usuario = new UsuarioDAO(); // objeto usu&aacute;rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
 
-        if ($auth->hasIdentity()) { // caso o usuário esteja autenticado
-            // verifica as permissões
+        if ($auth->hasIdentity()) { // caso o usu&aacute;rio esteja autenticado
+            // verifica as permiss&otilde;es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 135; // tecnico
             $PermissoesGrupo[] = 134; // coordenador
             $PermissoesGrupo[] = 123; //
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo est&aacute; no array de permiss&otilde;es
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, org&atilde;os e grupos do usu&aacute;rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a vis&atilde;o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usu&aacute;rio para a vis&atilde;o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu&aacute;rio para a vis&atilde;o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu&aacute;rio para a vis&atilde;o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órg&atilde;o ativo do usu&aacute;rio para a vis&atilde;o
         } // fecha if
-        else { // caso o usuário não esteja autenticado
+        else { // caso o usu&aacute;rio n&atilde;o esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
         //recupera ID do pre projeto (proposta)
@@ -41,11 +41,11 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-// fecha método init()*/
+// fecha m&eacute;todo init()*/
 
     public function painelcontroletecnicofiscalizacaoAction() {
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
         $idUsuario = $auth->getIdentity()->usu_codigo;
 
         $usuarios = new Autenticacao_Model_Usuario();
@@ -188,8 +188,8 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
 
     public function cadastraranexo($arquivoNome, $arquivoTemp, $arquivoTipo, $arquivoTamanho) {
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-            $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens&atilde;o
+            $arquivoBinario = Upload::setBinario($arquivoTemp); // bin&aacute;rio
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
@@ -209,7 +209,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
         $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
         $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
 
-        // cadastra o binário do arquivo
+        // cadastra o bin&aacute;rio do arquivo
         $dadosBinario = array(
             'idArquivo' => $idUltimoArquivo,
             'biArquivo' => $arquivoBinario);
@@ -280,14 +280,14 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
             $FiscalizacaoDAO = new Fiscalizacao();
             $FiscalizacaoDAO->alteraSituacaoProjeto(2, $idFiscalizacao);
 
-            parent::message("Formulário enviado com sucesso!", "pesquisarprojetofiscalizacao/grid", "CONFIRM");
+            parent::message("Formul&aacute;rio enviado com sucesso!", "pesquisarprojetofiscalizacao/grid", "CONFIRM");
         } else {
             parent::message("Dados salvos com sucesso!", "fiscalizarprojetocultural/parecerdotecnico" . '?idFiscalizacao=' . $idFiscalizacao, "CONFIRM");
         }
     }
 
     public function salvarelatoriocoordenadorAction() {
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autentica&ccedil;&atilde;o
         $dados = $_POST;
 
         $anexardocumentos = FALSE;
@@ -316,7 +316,7 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
 
 //        $Usuario = $usuarios->getIdUsuario($idUsuario);
 //        if(!isset($Usuario->idAgente)){
-//            parent::message("Não foi possível realizar a operação. Favor entrar em contato com os gestores do sistema!", "pesquisarprojetofiscalizacao/grid?tipoFiltro=analisados", "ERROR");
+//            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o. Favor entrar em contato com os gestores do sistema!", "pesquisarprojetofiscalizacao/grid?tipoFiltro=analisados", "ERROR");
 //        }
 //        $idAvaliador = $Usuario->idAgente;
         
@@ -406,11 +406,11 @@ class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstrac
         }
         if($dados['stAvaliacao']==0){
             $FiscalizacaoDAO->alteraSituacaoProjeto(1, $idFiscalizacao);
-            parent::message("Retornado ao técnico com sucesso!", "pesquisarprojetofiscalizacao/grid?tipoFiltro=analisados", "CONFIRM");
+            parent::message("Retornado ao t&eacute;cnico com sucesso!", "pesquisarprojetofiscalizacao/grid?tipoFiltro=analisados", "CONFIRM");
         }
 
         if($stAprovar) {
-            parent::message("Fiscalizaç&atilde;o aprovada com sucesso!", "pesquisarprojetofiscalizacao/grid?tipoFiltro=analisados", "CONFIRM");
+            parent::message("Fiscaliza&ccedil;&atilde;o aprovada com sucesso!", "pesquisarprojetofiscalizacao/grid?tipoFiltro=analisados", "CONFIRM");
         } else {
             parent::message("Dados salvos com sucesso!", "fiscalizarprojetocultural/parecerdocoordenador?idFiscalizacao=" . $idFiscalizacao, "CONFIRM");
         }

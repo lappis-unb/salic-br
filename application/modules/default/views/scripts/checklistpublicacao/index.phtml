@@ -1,5 +1,4 @@
 <?php 
-//xd($this->stDiligenciaAprovadosInic);
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -81,14 +80,14 @@
         });
 
         $("#modalConfirmacao").dialog({
-            title:"Confirmação",
+            title:"Confirma&ccedil;&atilde;o",
             resizable: true,
             width:300,
             height:150,
             modal: true,
             autoOpen:false,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $(this).dialog('close')
                 },
                 'Sim': function() {
@@ -175,7 +174,7 @@
             height:180,
             modal: true,
             autoOpen:true,
-            title:"Confirmação",
+            title:"Confirma&ccedil;&atilde;o",
             buttons: {
                 'OK': function() {
                     //$(this).dialog('close');
@@ -198,7 +197,7 @@
         $("body").append("<div id='divDinamica'></div>");
         $("#divDinamica").html("");
         $('#divDinamica').html("<br>Deseja realmente encaminhar o projeto para a publica&ccedil;&atilde;o no DOU?");
-        var title = 'Confirmação';
+        var title = 'Confirma&ccedil;&atilde;o';
         $("#divDinamica").dialog({
             //resizable: true,
             width:300,
@@ -207,7 +206,7 @@
             autoOpen:true,
             title: title,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $("#divDinamica").remove();
                     $(this).dialog('close');
                     $('html').css('overflow', 'auto');
@@ -369,7 +368,7 @@
     
     function JSFinalizarAnalise(idPronac,idAprovacao,grid){
         
-        $('#colunafinalizar'+idPronac).html('<center>Finalizando análise, aguarde...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
+        $('#colunafinalizar'+idPronac).html('<center>Finalizando an&aacute;lise, aguarde...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center>');
         $('#idpronac').val(idPronac);
         $('#idAprovacao').val(idAprovacao);
         $('#grid').val(grid);
@@ -378,9 +377,9 @@
         //CONFIRMACAO DA FINALIZACAO
         /*$('html').css('overflow', 'hidden');
         $("body").append("<div id='divDinamica'></div>");
-        $("#divDinamica").html("Deseja realmente finalizar a análise do projeto? ");
+        $("#divDinamica").html("Deseja realmente finalizar a an&aacute;lise do projeto? ");
         $("#divDinamica").dialog({
-            title: "Confirmação",
+            title: "Confirma&ccedil;&atilde;o",
             resizable: true,
             width:350,
             height:150,
@@ -388,7 +387,7 @@
             autoOpen:true,
             draggable:false,
             buttons: {
-                'NÃO': function() {
+                'N&atilde;O': function() {
                     $("#divDinamica").remove();
                     $(this).dialog('close');
                     $('html').css('overflow', 'auto');
@@ -452,7 +451,7 @@
         if(elemento == 'proponenteirregular' && $('#proponenteirregular_resultado').html() == ''){
             jqAjaxLink('<?php echo $this->Url(array('controller' => 'checklistpublicacao', 'action' => 'proponente-irregular', 'tipoAnalise' => $this->tipoAnalise)) ?>', '', 'proponenteirregular_resultado');
         }
-		//CARREGA - SOLICITAÇÃO READEQUAÇÃO
+		//CARREGA - SOLICITA&ccedil;&atilde;O READEQUA&ccedil;&atilde;O
         if(elemento == 'solicitacaoreadequacao' && $('#solicitacaoreadequacao_resultado').html() == ''){
 			jqAjaxLink('<?php echo $this->Url(array('controller' => 'checklistpublicacao', 'action' => 'solicitacao-readequacao', 'tipoAnalise' => $this->tipoAnalise)) ?>', '', 'solicitacaoreadequacao_resultado');
         }
@@ -472,7 +471,7 @@
         if(grid == 'proponenteirregular'){
             jqAjaxLink('<?php echo $this->Url(array('controller' => 'checklistpublicacao', 'action' => 'proponente-irregular', 'tipoAnalise' => $this->tipoAnalise)) ?>', '', 'proponenteirregular_resultado');
         }
-        //CARREGA - SOLICITAÇÃO READEQUAÇÃO
+        //CARREGA - SOLICITA&ccedil;&atilde;O READEQUA&ccedil;&atilde;O
         if(grid == 'solicitacaoreadequacao'){
             jqAjaxLink('<?php echo $this->Url(array('controller' => 'checklistpublicacao', 'action' => 'solicitacao-readequacao', 'tipoAnalise' => $this->tipoAnalise)) ?>', '', 'solicitacaoreadequacao_resultado');
         }
@@ -492,7 +491,7 @@
     }
 </script>
 <div id="modalConfirmacao" style="display:none;"></div>
-<div id="error" style="display:none;">Dados Obrigatórios não preenchidos!</div>
+<div id="error" style="display:none;">Dados Obrigatórios n&atilde;o preenchidos!</div>
 <div id="load" class="carregando sumir" style="width:100%; height:100%;" title="Carregando..."><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" alt="carregando"><br/><br/>Carregando...<br>Por Favor, aguarde!!</div>
 
 <form name="formFinalizarAnalise" id="formFinalizarAnalise" method="post" action="<?php echo $this->url(array('controller' => 'checklistpublicacao', 'action' => 'gravar-finalizacao-analise')); ?>">
@@ -514,7 +513,7 @@
 
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
-    <div>Checklist de publicaç&atilde;o</div>
+    <div>Checklist de publica&ccedil;&atilde;o</div>
 </div>
 <!-- ========== FIM TITULO ========== -->
 <!-- ========== INICIO CONTEUDO ========== -->
@@ -526,7 +525,7 @@
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left;"> A diligenciar</div>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice.png" width="20px"/></div><div style="margin-top: 2px;  margin-right: 15px; margin-left: 3px; float: left"> Diligenciado</div>
                 <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Diligência respondida</div>
-                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Diligência não respondida</div>
+                <div style="float: left;"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px; margin-right: 15px; margin-left: 3px; float: left"> Diligência n&atilde;o respondida</div>
             </td>
         </tr>
     </table>
@@ -538,7 +537,7 @@
     <!-- ================================================================-->
     <table class="tabela">
         <tr>
-            <td><input type="button" id="aguardandoanalise" class="btn_adicionar" title="Expandir" onclick="JSMostraOcultaElemento('aguardandoanalise')" />PROJETO APROVADO - AGUARDANDO ANÁLISE DOCUMENTAL - PROPONENTE REGULAR</td>
+            <td><input type="button" id="aguardandoanalise" class="btn_adicionar" title="Expandir" onclick="JSMostraOcultaElemento('aguardandoanalise')" />PROJETO APROVADO - AGUARDANDO AN&aacute;LISE DOCUMENTAL - PROPONENTE REGULAR</td>
             <!--<td width="100" align="right" >Quantidade: <span id="qtdeAguardandoAnalise" style="font-weight: bold"><?php //echo $this->totalAguardandoAnalise; ?></span></td>-->
         </tr>
     </table>
@@ -573,11 +572,11 @@
     
 	<?php if ($this->tipoAnalise == 'readequados') : ?>
 	<!-- ================================================================ -->
-	<!-- ================== SOLICITAÇÂO DE READEQUAÇÃO ================== -->
+	<!-- ================== SOLICITA&ccedil;ÂO DE READEQUA&ccedil;&atilde;O ================== -->
 	<!-- ================================================================ -->
 	<table class="tabela">
 		<tr>
-			<td><input type="button" id="solicitacaoreadequacao" class="btn_adicionar" title="Expandir" onclick="JSMostraOcultaElemento('solicitacaoreadequacao')" />PROJETO APROVADO - SOLICITAÇÃO DE READEQUAÇÃO</td>
+			<td><input type="button" id="solicitacaoreadequacao" class="btn_adicionar" title="Expandir" onclick="JSMostraOcultaElemento('solicitacaoreadequacao')" />PROJETO APROVADO - SOLICITA&ccedil;&atilde;O DE READEQUA&ccedil;&atilde;O</td>
 		</tr>
 	</table>
 

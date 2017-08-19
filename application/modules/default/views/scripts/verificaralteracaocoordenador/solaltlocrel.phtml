@@ -182,7 +182,7 @@ function modaljustificativa(id){
                             <td align="center" class="destacar bold">A&ccedil;&atilde;o</td>
                             <td align="center" class="destacar bold">Avalia&ccedil;&atilde;o</td>
                             <td align="center" class="destacar bold">Justificativa da Exclus&atilde;o</td>
-                            <td align="center" class="destacar bold">An&aacute;lise Técnica</td>
+                            <td align="center" class="destacar bold">An&aacute;lise T&eacute;cnica</td>
                         </tr>
                         <?php
                         $antpais = "";
@@ -296,7 +296,7 @@ function modaljustificativa(id){
                             </tbody>
                             <?php } ?>
 
-                            <div title="Justificativa da Exclusão" style="display: none;" id="modal-justificativa<?php echo $locarel->idAbrangencia; ?>">
+                            <div title="Justificativa da Exclus&atilde;o" style="display: none;" id="modal-justificativa<?php echo $locarel->idAbrangencia; ?>">
                                         <?php echo $locarel->dsExclusao; ?>
                             </div>
 
@@ -310,7 +310,7 @@ function modaljustificativa(id){
                     </td>
                 </tr>
                 <tr>
-                    <th colspan="2">JUSTIFICATIVA DA SOLICITAÇÃO DE ALTERAÇÃO</th>
+                    <th colspan="2">JUSTIFICATIVA DA SOLICITA&ccedil;&atilde;O DE ALTERA&ccedil;&atilde;O</th>
                 </tr>
                 <tr>
                     <td align="left" colspan="2"><textarea cols="" rows="7"  class="textarea_simples" style="width: 99%" readonly="readonly" ><?php echo isset($this->resultAbrangencia[0]->dsjustificativa) ? strip_tags($this->resultAbrangencia[0]->dsjustificativa) : '' ?></textarea></td>

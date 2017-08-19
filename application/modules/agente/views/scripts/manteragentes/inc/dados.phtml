@@ -1,7 +1,7 @@
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/json.js"></script>
 
 
-<!-- ========== FORMULÁRIO DADOS ========== -->
+<!-- ========== FORMUL&aacute;RIO DADOS ========== -->
 <table id="tabDados" width="800" align="center">
 <tr>
 		<th colspan="6">Cadastro de Agentes</th>
@@ -70,7 +70,7 @@
 
 	<tr>
 		<td colspan="2">
-			<label for="tipoEndereco">Tipo de Endereço *</label> 
+			<label for="tipoEndereco">Tipo de Endere&ccedil;o *</label> 
 			<select name="tipoEndereco" id="tipoEndereco" >
 
 				<?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
@@ -135,31 +135,31 @@
 
 	<tr>
 		<td colspan="2">
-			<label>Autorizo divulgar o endereço</label> 
+			<label>Autorizo divulgar o endere&ccedil;o</label> 
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1" class="checkradio" />
 			<label for="divulgarEnderecoS">Sim</label> 
 			
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0" class="checkradio" checked="checked"/>
-			<label for="divulgarEnderecoN">Não</label>
+			<label for="divulgarEnderecoN">N&atilde;o</label>
 		</td>
 		<td colspan="2">
-			<label>Endereço para correspondências?</label> 
+			<label>Endere&ccedil;o para correspondências?</label> 
 			<input type="radio" name="enderecoCorrespondencia" id="enderecoCorrespondenciaS" value="1" class="checkradio" /> 
 			<label for="enderecoCorrespondenciaS">Sim</label> 
 
 			<input type="radio" name="enderecoCorrespondencia" id="enderecoCorrespondenciaN" value="0" class="checkradio" checked="checked" />
-			<label for="enderecoCorrespondenciaN">Não</label>
+			<label for="enderecoCorrespondenciaN">N&atilde;o</label>
 		</td>
 	</tr>
 	<tr>
-		<td class="titulo_tabela" colspan="4">VISÃO DO AGENTE</td>
+		<td class="titulo_tabela" colspan="4">VIS&atilde;O DO AGENTE</td>
 	</tr>
 	<tr>
 		<td colspan="4">
-			Informe a visão do Agente: 
-			<select name="visao" id="visao" onchange="verificarVisao(this.value); buscarVisao()" style="width: 200px;" >
+			Informe a vis&atilde;o do Agente: 
+			<select name="Visao" id="Visao" onchange="verificarVisao(this.value); buscarVisao()" style="width: 200px;" >
 				<option value="0">-- Selecione --</option>
-				<option value="210">Componente da Comissão</option>
+				<option value="210">Componente da Comiss&atilde;o</option>
 				<option value="209">Parecerista</option>
 			</select>
 			<span id="erroVisao" class="spanError"></span>
@@ -171,7 +171,7 @@
 	
 
 	<tr class="titulo_tabela">
-		<th colspan="4">LISTA DE ÁREA</th>
+		<th colspan="4">LISTA DE &aacute;REA</th>
 		<th><span id="Q_suplentes" class="spanError"></span>
 		<span id="Q_titulares" class="spanError"></span>
 		<span id="msgAS" class="spanError"></span></th>
@@ -188,12 +188,12 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<label for="areaCultural">Área Cultural *</label> 
+			<label for="areaCultural">&aacute;rea Cultural *</label> 
 			<select name="areaCultural" id="areaCultural" 
 				onchange="carregar_combo(this.value, 
 					'segmentoCultural', 
 					'../segmentocultural/combo', 
-					' - Selecione uma Área Cultural - ');">
+					' - Selecione uma &aacute;rea Cultural - ');">
 
 				<?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
 				<option value="0"> - Selecione - </option>
@@ -214,7 +214,7 @@
 			<select name="segmentoCultural" id="segmentoCultural" onchange="buscarareasegmento();">
 
 				<?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-				<option value="0"> - Selecione uma Área Cultural - </option>
+				<option value="0"> - Selecione uma &aacute;rea Cultural - </option>
 				<?php } else { ?>
 
 					<?php if (!isset($this->segmentoCultural) || empty($this->segmentoCultural)) { ?>

@@ -6,8 +6,8 @@
  */
 class tbDocumento extends MinC_Db_Table_Abstract {
 
-    protected $_banco = "BDCORPORATIVO";
-    protected $_schema = 'BDCORPORATIVO.scCorp';
+    protected $_banco = "bdcorporativo";
+    protected $_schema = 'bdcorporativo.scCorp';
     protected $_name = "tbDocumento";
 
 
@@ -69,7 +69,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
                     'a.dtEnvio',
                     'a.nrTamanho'
                 ),
-                'BDCORPORATIVO.sccorp'
+                'bdcorporativo.sccorp'
         );
         $select->joinInner(
                 array('td' => 'tbTipoDocumento'),
@@ -77,7 +77,7 @@ class tbDocumento extends MinC_Db_Table_Abstract {
                 array(
                     'td.dsTipoDocumento'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         if ($idnrdocumento) {
             $select->where('d.idDocumento = ?', $idnrdocumento);

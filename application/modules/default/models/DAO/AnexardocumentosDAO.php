@@ -159,9 +159,9 @@ class AnexardocumentosDAO extends Zend_Db_Table
               tap.idpronac as idpronac,
               'docProp' as  tipoDocumento,
               'Anexado pelo Proponente' as Classificacao
-              from BDCORPORATIVO.scCorp.tbDocumento a4
-              inner join BDCORPORATIVO.scCorp.tbArquivo a5 on (a4.idArquivo = a5.idArquivo)
-              inner join BDCORPORATIVO.scCorp.tbDocumentoProjeto tap on tap.idDocumento = a4.idDocumento
+              from bdcorporativo.scCorp.tbDocumento a4
+              inner join bdcorporativo.scCorp.tbArquivo a5 on (a4.idArquivo = a5.idArquivo)
+              inner join bdcorporativo.scCorp.tbDocumentoProjeto tap on tap.idDocumento = a4.idDocumento
         ) tb where idpronac = $idpronac and nome <> '' order by tb.tipoDocumento, tb.idDocumento";
         
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -208,7 +208,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
         {
             $sql = "SELECT
                       biArquivo
-                FROM BDCORPORATIVO.scCorp.tbArquivoImagem
+                FROM bdcorporativo.scCorp.tbArquivoImagem
                 where idDocumento=$id";
         }
 
@@ -228,7 +228,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
      */
     public static function cadastrar($dados)
     {
-        /* $sql = "INSERT INTO BDCORPORATIVO.scSAC.tbComprovanteExecucao ";
+        /* $sql = "INSERT INTO bdcorporativo.scsac.tbComprovanteExecucao ";
           $sql.= "VALUES ($dados['idPRONAC'], $dados['idTipoDocumento'], $dados['nmComprovante'], $dados['dsComprovante'], $dados['idArquivo'], $dados['idSolicitante'], $dados['dtEnvioComprovante'], $dados['stComprovante'], $dados['stComprovante'], $dados['idComprovanteAnterior'])"; */
     }
 

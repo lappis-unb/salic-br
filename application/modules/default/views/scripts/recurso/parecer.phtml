@@ -1,12 +1,12 @@
 <?php
 /**
- * Projetos Deferidos - Orçamento
+ * Projetos Deferidos - Or&ccedil;amento
  * @author Equipe RUP - Politec
  * @since 20/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.recurso
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -16,7 +16,7 @@
 	<ul>
 		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para Início">Início</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')); ?>" title="Ir para Recurso">Recurso</a></li>
-		<li class="last">Projetos Deferidos com Solicitação de Reenquadramento</li>
+		<li class="last">Projetos Deferidos com Solicita&ccedil;&atilde;o de Reenquadramento</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -25,7 +25,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Projetos Deferidos com Solicitação de Reenquadramento <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Projetos Deferidos com Solicita&ccedil;&atilde;o de Reenquadramento <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -55,7 +55,7 @@
 		</tr>
 
 		<tr>
-			<td><?php echo (!empty($tbrecurso[0]->CgcCpf)) ? Validacao::mascaraCPFCNPJ($this->escape($tbrecurso[0]->CgcCpf)) : "<em>Não informado.</em>"; ?></td>
+			<td><?php echo (!empty($tbrecurso[0]->CgcCpf)) ? Validacao::mascaraCPFCNPJ($this->escape($tbrecurso[0]->CgcCpf)) : "<em>N&atilde;o informado.</em>"; ?></td>
 			<td><?php echo $this->escape($tbrecurso[0]->NomeProponente);?></td>
 		</tr>
 	</table>
@@ -89,7 +89,7 @@
 					</tr>
 					<tr>
 						<td>
-							<p><strong>Observação:</strong></p>
+							<p><strong>Observa&ccedil;&atilde;o:</strong></p>
 							<?php echo $p->dsJustificativa;?>
 						</td>
 					</tr>
@@ -101,7 +101,7 @@
 
 				<table class="tabela">
 					<tr>
-						<td align="right"><input type="submit" value=" Finalizar Análise do Recurso " class="btn" /></td>
+						<td align="right"><input type="submit" value=" Finalizar An&aacute;lise do Recurso " class="btn" /></td>
 					</tr>
 				</table>
 
@@ -117,8 +117,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

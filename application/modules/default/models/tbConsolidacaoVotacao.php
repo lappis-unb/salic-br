@@ -1,7 +1,7 @@
 <?php
 class tbConsolidacaoVotacao extends MinC_Db_Table_Abstract
 {
-    protected $_schema = "BDCORPORATIVO.scSAC";
+    protected $_schema = "bdcorporativo.scSAC";
     protected $_name   = "tbConsolidacaoVotacao";
 
     public function consolidacaoPlenaria($idPronac)

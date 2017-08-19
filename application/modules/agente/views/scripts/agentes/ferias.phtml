@@ -120,7 +120,7 @@
             alertar('A data final deve ser maior que a data inicial!');
             return false;
         } else if(dtInicio < dtAtual) {
-            alertar('O período não pode ser inferior a data de hoje!');
+            alertar('O período n&atilde;o pode ser inferior a data de hoje!');
             return false;
         } else {
             $("#form").submit();
@@ -132,7 +132,7 @@
         if (texto.length > 0){
             $('#justificativa').val(CKEDITOR.instances['justificativa'].getData());
         } else {
-            alertar('O Campo justificativa é obrigatório');
+            alertar('O Campo justificativa &eacute; obrigatório');
             return false;
         }
 
@@ -176,7 +176,7 @@
                 alertar('A data final deve ser maior que a data inicial!');
                 return false;
             } else if(dtInicio < dtAtual) {
-                alertar('O período não pode ser inferior a data de hoje!');
+                alertar('O período n&atilde;o pode ser inferior a data de hoje!');
                 return false;
             }
         }
@@ -207,7 +207,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Férias do Parecerista <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
+    <div>F&eacute;rias do Parecerista <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -221,10 +221,10 @@
     <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
     <table class="tabela">
         <tr>
-            <th colspan="2">Solicitação de Férias / Alteração </th>
+            <th colspan="2">Solicita&ccedil;&atilde;o de F&eacute;rias / Altera&ccedil;&atilde;o </th>
         </tr>
         <tr>
-            <td><b>Quantidade de dias já tirados: <?php echo $this->totalDias; ?> do total de 60</b></td>
+            <td><b>Quantidade de dias j&aacute; tirados: <?php echo $this->totalDias; ?> do total de 60</b></td>
             <?php if($this->grupoativo == "94"){ ?>
                 <?php if(((int)$this->totalDias) < 60){ ?>
             <td width="100"><input type="button" class="btn_novo" value="" size="20" maxlength="10" onclick="novo();" /></td>
@@ -239,14 +239,14 @@
 
             <table class="tabela">
                 <tr>
-                    <th colspan="7">Nova solicitação</th>
+                    <th colspan="7">Nova solicita&ccedil;&atilde;o</th>
                 </tr>
                 <tr>
                     <td width="250">Quantidade de dias: <span id="qtdDias">0</span></td>
-                    <td width="150" align="center">Data das férias: </td>
+                    <td width="150" align="center">Data das f&eacute;rias: </td>
                     <td>
                         <input type="text" name="dtinicio" id="dtinicio" class="input_simples w100" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" onchange="verDias();" type="text">
-					 à
+					 &agrave;
                         <input type="text" name="dtfim" id="dtfim" class="input_simples w100" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" onchange="verDias();"  type="text">
                     </td>
                     <td width="120" align="center"><input type="button" class="btn_incluir" value="" size="20" maxlength="10" onclick="validarForm();" /></td>
@@ -287,15 +287,15 @@
 
         <tr>
             <td width="180">Quantidade de dias: <span id="qtdDias"><?php echo $d->qtddias; ?></span></td>
-            <td align="center">Data das férias: </td>
+            <td align="center">Data das f&eacute;rias: </td>
             <td width="150" align="center"><?php echo $d->dtinicio; ?></td>
-            <td width="10" align="center">à</td>
+            <td width="10" align="center">&agrave;</td>
             <td width="150" align="center"><?php echo $d->dtfim; ?></td>
             <td width="50" align="center" style="background: white;"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $siAusencia; ?>.gif" title="<?php echo $title; ?>" border="0" style="cursor: pointer;" /></td>
             <td width="50" align="center">
             <?php if(($this->grupoativo == "94")){ ?>
             <?php if(($d->siAusencia != 2) && ($d->siAusencia != 3) && ($d->siAusencia != 4)){ ?>
-                <img style="cursor:pointer;" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/cancelar-p.gif" title="Alterar férias" onclick="remarcarferias('<?php echo $d->idAusencia; ?>','<?php echo $d->qtddias; ?>');"/>
+                <img style="cursor:pointer;" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/cancelar-p.gif" title="Alterar f&eacute;rias" onclick="remarcarferias('<?php echo $d->idAusencia; ?>','<?php echo $d->qtddias; ?>');"/>
             <?php } ?>
             <?php } ?>
             </td>
@@ -321,7 +321,7 @@
                 <tr>
                     <td colspan="3" align="center">
                         <input type="radio" value="0" id="alt1" name="tipoalteracao" checked="checked" onchange="cancelamentoferias(this.value);" />
-                        <label for="alt1">Alteração</label>
+                        <label for="alt1">Altera&ccedil;&atilde;o</label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" value="1" id="alt2" name="tipoalteracao" onchange="cancelamentoferias(this.value);" />
                         <label for="alt2">Cancelamento</label>
@@ -329,7 +329,7 @@
                 </tr>
                 <tr id="camposdatas">
                     <td align="center" >QTD dias: <span id="qtdDiasAlteracao">0</span></td>
-                    <td  align="center">Data das férias: </td>
+                    <td  align="center">Data das f&eacute;rias: </td>
                     <td align="center">
                         <input type="text" name="dtinicioalteracao" id="dtinicioalteracao" class="input_simples" style="width: 90px;" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" onchange="verDiasR();" type="text">
                         <input type="text" name="dtfimalteracao" id="dtfimalteracao" class="input_simples" style="width: 90px;" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" onchange="verDiasR();"  type="text">
@@ -355,8 +355,8 @@
 <?php } ?>
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

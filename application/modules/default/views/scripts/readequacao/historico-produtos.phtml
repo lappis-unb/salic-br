@@ -9,11 +9,11 @@
 <?php if (isset($dados['idPedidoAlteracao'])) : ?>
 <table class="tabela">
     <tr class="destacar bold" align="center">
-        <td width="5%">Solicitação</td>
-        <td width="10%">Data Solicitação</td>
+        <td width="5%">Solicita&ccedil;&atilde;o</td>
+        <td width="10%">Data Solicita&ccedil;&atilde;o</td>
         <td width="60%">Produto</td>
         <td width="15%">Justificativa Proponente</td>
-        <td width="10%">Ação</td>
+        <td width="10%">A&ccedil;&atilde;o</td>
     </tr>
 
     <?php for ($i = 0; $i < count($dados['idPedidoAlteracao']); $i++) : ?>
@@ -45,7 +45,7 @@
                         </td>
                         <td>
                             <strong>Produto Principal?</strong><br />
-                            <?php echo $dados['stPrincipal'][$i] == 0 ? 'Não' : 'Sim'; ?>
+                            <?php echo $dados['stPrincipal'][$i] == 0 ? 'N&atilde;o' : 'Sim'; ?>
                         </td>
                         <td>
                             <strong>&Aacute;rea</strong><br />
@@ -128,7 +128,7 @@
                     </tr>
                     <tr>
                         <td colspan="6">
-                            <?php echo (!empty($dados['dsJustificativa'][$i])) ? $dados['dsJustificativa'][$i] : '<em>Não informado</em>'; ?>
+                            <?php echo (!empty($dados['dsJustificativa'][$i])) ? $dados['dsJustificativa'][$i] : '<em>N&atilde;o informado</em>'; ?>
                         </td>
                     </tr>
                 </table>
@@ -151,7 +151,7 @@
                         </td>
                         <td>
                             <strong>Produto Principal?</strong><br />
-                            <?php echo $dados['dadosTecnico'][$i][0]['stPrincipal'] == 0 ? 'Não' : 'Sim'; ?>
+                            <?php echo $dados['dadosTecnico'][$i][0]['stPrincipal'] == 0 ? 'N&atilde;o' : 'Sim'; ?>
                         </td>
                         <td>
                             <strong>&Aacute;rea</strong><br />
@@ -283,7 +283,7 @@
 <script type="text/javascript">
 <!--
 /**
- * Função para abrir e fechar a grid
+ * Fun&ccedil;&atilde;o para abrir e fechar a grid
  */
 function grid_produtos(elemento)
 {
@@ -300,10 +300,10 @@ function grid_produtos(elemento)
 		$('#' + elemento).attr({title:'Expandir'});
 	}
 	$('#div_' + elemento).toggle('slow');
-} // fecha função grid_produtos()
+} // fecha fun&ccedil;&atilde;o grid_produtos()
 
 /**
- * Ações que serão executadas após o carregamento da página
+ * A&ccedil;&otilde;es que ser&atilde;o executadas após o carregamento da p&aacute;gina
  */
 $(document).ready(function()
 {

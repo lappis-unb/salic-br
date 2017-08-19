@@ -34,30 +34,30 @@ class Contratoxplanilhaaprovacao extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('a'=>'scSAC.tbContratoxPlanilhaAprovacao'),
+                array('a'=>'scsac.tbContratoxPlanilhaAprovacao'),
                 array('a.idContrato', 'a.idPlanilhaAprovacao')
         );
         $select->joinInner(
                 array('b' => 'tbPlanilhaAprovacao'),
                 'a.idPlanilhaAprovacao = b.idPlanilhaAprovacao',
-                array('b.idProduto','b.idEtapa','b.idPlanilhaItem'),'SAC.dbo'
+                array('b.idProduto','b.idEtapa','b.idPlanilhaItem'),'SAC'
         );
         $select->joinLeft(
                 array('c' => 'Produto'),
                 'b.idProduto = c.Codigo',
-                array('c.Descricao as dsProduto'),'SAC.dbo'
+                array('c.Descricao as dsProduto'),'SAC'
         );
         $select->joinInner(
                 array('d' => 'tbPlanilhaEtapa'),
                 'b.idEtapa = d.idPlanilhaEtapa',
                 array('d.Descricao as dsEtapa'),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('e' => 'tbPlanilhaItens'),
                 'b.idPlanilhaItem = e.idPlanilhaItens',
                 array('e.Descricao as dsItem'),
-                'SAC.dbo'
+                'SAC'
         );
         $select->where("a.idContrato = ?", $idContrato);
 

@@ -1,7 +1,7 @@
 <?php if($this->idPerfil == 1111){ ?>
 <table class="tabela">
     <tr>
-        <td><input type="button" class="btn_incluir" id="adicionarLocalRealizacao" title="Adicionar Local de Realização" /></td>
+        <td><input type="button" class="btn_incluir" id="adicionarLocalRealizacao" title="Adicionar Local de Realiza&ccedil;&atilde;o" /></td>
     </tr>
 </table>
 <?php } ?>
@@ -11,13 +11,13 @@
         <th>País</th>
         <th>UF</th>
         <th>Município</th>
-        <th style="width: 150px;">Solicitação Proponente</th>
+        <th style="width: 150px;">Solicita&ccedil;&atilde;o Proponente</th>
         <?php if(in_array($this->siEncaminhamento, array(4,5,6,7,9,10))){ ?>
-        <th style="width: 150px;">Avaliação Técnica</th>
+        <th style="width: 150px;">Avalia&ccedil;&atilde;o T&eacute;cnica</th>
         <?php } ?>
         
         <?php if(in_array($this->siEncaminhamento, array(7,9))){ ?>
-        <th style="width: 150px;">Avaliação Conselheiro</th>
+        <th style="width: 150px;">Avalia&ccedil;&atilde;o Conselheiro</th>
         <?php } ?>
     </tr>
     
@@ -49,7 +49,7 @@
             <?php if($this->idPerfil == 1111){
                     if($l['tpSolicitacao'] == 'E'){
                         echo '<span style="margin: 10px;">Excluído</span>';
-                        echo '<img src="'.$this->baseUrl().'/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItemLocalRealizacao" tipo="'.$l['tpSolicitacao'].'" idAbrangencia="'.$l['idAbrangencia'].'" title="restaurar o local de realização excluído"/>';
+                        echo '<img src="'.$this->baseUrl().'/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItemLocalRealizacao" tipo="'.$l['tpSolicitacao'].'" idAbrangencia="'.$l['idAbrangencia'].'" title="restaurar o local de realiza&ccedil;&atilde;o excluído"/>';
                     } else {  ?>
                         <input type="button" class="btn_excluir btnExcluirLR" idAbrangencia="<?php echo $l->idAbrangencia; ?>">
                 <?php } }
@@ -58,11 +58,11 @@
                     switch ($l['tpSolicitacao']) {
                         case 'E':
                             echo 'Excluído';
-                            $title = 'restaurar o local de realização excluído';
+                            $title = 'restaurar o local de realiza&ccedil;&atilde;o excluído';
                             break;
                         case 'I':
                             echo 'Incluído';
-                            $title = 'recusar inclusão de local de realização';
+                            $title = 'recusar inclus&atilde;o de local de realiza&ccedil;&atilde;o';
                             break;
                         case 'A':
                             echo 'Alterado';
@@ -198,7 +198,7 @@
             
             $("#modalInclusaoLR").dialog({
                 resizable: false,
-                title: 'Inclusão de Local de Realização!',
+                title: 'Inclus&atilde;o de Local de Realiza&ccedil;&atilde;o!',
                 width: 800,
                 modal: true,
                 buttons : {
@@ -253,9 +253,9 @@
             var idAbrangencia = $(this).attr('idAbrangencia'),
                 itemClicado = $(this);
                 
-            //ABRE O MODAL DE CONFIRMAÇÃO DA AÇÃO REALIZADA
+            //ABRE O MODAL DE CONFIRMA&ccedil;&atilde;O DA A&ccedil;&atilde;O REALIZADA
             $("#msgAlerta").dialog("destroy");
-            $("#msgAlerta").html('Tem certeza que deseja excluir o local de realização?');
+            $("#msgAlerta").html('Tem certeza que deseja excluir o local de realiza&ccedil;&atilde;o?');
             $("#msgAlerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
@@ -263,7 +263,7 @@
                 height:170,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         itemClicado.parent().parent().removeClass('fundo_linha4');
                         $(this).dialog('close');
                     },
@@ -341,9 +341,9 @@
                 msg = '';
                 
             if(tpAcao == 'I'){
-                msg = 'Tem certeza que deseja excluir o local de realização adicionado?';
+                msg = 'Tem certeza que deseja excluir o local de realiza&ccedil;&atilde;o adicionado?';
             } else {
-                msg = 'Tem certeza que deseja restaurar o local de realização excluído?';
+                msg = 'Tem certeza que deseja restaurar o local de realiza&ccedil;&atilde;o excluído?';
             }
             
             $("#msgAlerta").dialog("destroy");
@@ -354,7 +354,7 @@
                 modal: true,
                 title: 'Alerta!',
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -395,7 +395,7 @@
                     modal: true,
                     title: 'Alerta!',
                     buttons : {
-                        'Não' : function(){
+                        'N&atilde;o' : function(){
                             $(this).dialog('close');
                             select.val('');
                         },

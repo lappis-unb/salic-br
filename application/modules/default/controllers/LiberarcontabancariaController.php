@@ -84,7 +84,7 @@ class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
         $where = array();
         $where['idSecretaria = ?'] = $idSecretaria->idSecretaria;
         $where['PercentualCaptado > ?'] = 20; //Percentual maior do que 20%
-        //$where['SAC.dbo.fnpercentualCaptado (AnoProjeto, Sequencial) >= ?'] = 20;
+        //$where['sac.dbo.fnpercentualCaptado (AnoProjeto, Sequencial) >= ?'] = 20;
 
         if(isset($get->pronac) && !empty($get->pronac)){
             $where['AnoProjeto+Sequencial = ?'] = $this->view->pronac = $get->pronac;

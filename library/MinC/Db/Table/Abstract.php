@@ -496,7 +496,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
         foreach ($where as $column => $columnValue) {
             if (is_array($columnValue)) {
-                $select->where( $column. ' IN (?)', $columnValue);
+                $select->where( $column. ' in (?)', $columnValue);
             } else {
                 $select->where( $column. ' = ?', $columnValue);
             }

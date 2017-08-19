@@ -21,15 +21,15 @@ class tbAssinantes extends MinC_Db_Table_Abstract {
         );
 
         $select->joinInner(array('ag'=>'Agentes'), "a.idAgente = ag.idAgente",
-                            array('ag.idAgente'),'agentes.dbo'
+                            array('ag.idAgente'),'agentes'
         );
 
         $select->joinInner(array('nm'=>'Nomes'), "ag.idAgente = nm.idAgente",
-                            array('nm.Descricao as Nome'),'agentes.dbo'
+                            array('nm.Descricao as Nome'),'agentes'
         );
 
         $select->joinInner(array('v'=>'Verificacao'), "a.idCargo = v.idVerificacao",
-                            array('v.Descricao as Cargo'),'agentes.dbo'
+                            array('v.Descricao as Cargo'),'agentes'
         );
 
 
@@ -50,15 +50,15 @@ class tbAssinantes extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('ag'=>'Agentes'),
-                            array('ag.idAgente','ag.CNPJCPF'),'agentes.dbo'
+                            array('ag.idAgente','ag.CNPJCPF'),'agentes'
         );
 
         $select->joinInner(array('v'=>'Visao'), "ag.idAgente = v.idAgente",
-                            array('v.Visao'),'agentes.dbo'
+                            array('v.Visao'),'agentes'
         );
 
         $select->joinInner(array('nm'=>'Nomes'), "ag.idAgente = nm.idAgente",
-                            array('nm.Descricao as Nome'),'agentes.dbo'
+                            array('nm.Descricao as Nome'),'agentes'
         );
 
         $select->where('v.Visao in (?)', array(146,266));
@@ -75,7 +75,7 @@ class tbAssinantes extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('v'=>'Verificacao'),
-                            array('v.idVerificacao as idCargo','v.Descricao as Cargo'),'agentes.dbo'
+                            array('v.idVerificacao as idCargo','v.Descricao as Cargo'),'agentes'
         );
 
         $select->where('v.IdTipo = ?', 27);

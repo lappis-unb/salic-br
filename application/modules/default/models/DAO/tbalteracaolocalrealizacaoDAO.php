@@ -2,7 +2,7 @@
 
 class tbalteracaolocalrealizacaoDAO extends Zend_Db_Table
 {
-    protected $_name = "BDCORPORATIVO.scSAC.tbalteracaolocalrealizacao";
+    protected $_name = "bdcorporativo.scsac.tbalteracaolocalrealizacao";
 
     public static function buscarDadosAltLocRel($idpedidoalteracao)
     {
@@ -13,7 +13,7 @@ class tbalteracaolocalrealizacaoDAO extends Zend_Db_Table
         pais.Descricao as pais,
         alr.tpoperacao,
         alr.dsjustificativa
-        from BDCORPORATIVO.scSAC.tbAlteracaoLocalRealizacao alr
+        from bdcorporativo.scsac.tbAlteracaoLocalRealizacao alr
         left join agentes.dbo.Municipios mun on mun.idMunicipioIBGE = alr.idMunicipioIBGE
         left join agentes.dbo.UF uf on uf.idUF = alr.idUF
         join agentes.dbo.Pais pais on pais.idPais = alr.idPais

@@ -46,31 +46,31 @@ class tbBensDoados extends MinC_Db_Table_Abstract {
         );
         $slct->joinLeft(
                 array('b' => 'tbPlanilhaItens'), "a.idItemOrcamentario = b.idPlanilhaItens",
-                array('Descricao as ItemOrcamentario'), 'SAC.dbo'
+                array('Descricao as ItemOrcamentario'), 'SAC'
         );
         $slct->joinLeft(
                 array('c' => 'Agentes'), "a.idAgente = c.idAgente",
-                array('CNPJCPF'), 'agentes.dbo'
+                array('CNPJCPF'), 'agentes'
         );
         $slct->joinLeft(
                 array('d' => 'Nomes'), "a.idAgente = d.idAgente",
-                array('Descricao as NomeAgente'), 'agentes.dbo'
+                array('Descricao as NomeAgente'), 'agentes'
         );
         $slct->joinLeft(
                 array('e' => 'tbDocumento'), "a.idDocumentoDoacao = e.idDocumento",
-                array('idArquivo as idArquivoDoacao'), 'BDCORPORATIVO.scCorp'
+                array('idArquivo as idArquivoDoacao'), 'bdcorporativo.scCorp'
         );
         $slct->joinLeft(
                 array('f' => 'tbArquivo'), "e.idArquivo = f.idArquivo",
-                array('nmArquivo as nmArquivoDoacao'), 'BDCORPORATIVO.scCorp'
+                array('nmArquivo as nmArquivoDoacao'), 'bdcorporativo.scCorp'
         );
         $slct->joinLeft(
                 array('g' => 'tbDocumento'), "a.idDocumentoAceite = g.idDocumento",
-                array('idArquivo as idArquivoAceite'), 'BDCORPORATIVO.scCorp'
+                array('idArquivo as idArquivoAceite'), 'bdcorporativo.scCorp'
         );
         $slct->joinLeft(
                 array('h' => 'tbArquivo'), "g.idArquivo = h.idArquivo",
-                array('nmArquivo as nmArquivoAceite'), 'BDCORPORATIVO.scCorp'
+                array('nmArquivo as nmArquivoAceite'), 'bdcorporativo.scCorp'
         );
 
         // adicionando clausulas where

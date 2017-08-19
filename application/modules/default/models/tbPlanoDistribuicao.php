@@ -2,8 +2,8 @@
 /**
  * DAO tbPlanoDistribuicao
  * OBS:
- * 	-> A tabela SAC.dbo.PlanoDistribuicaoProduto armazena os produtos do projeto originais (aprovados)
- *  -> A tabela SAC.dbo.tbPlanoDistribuicao armazena os produtos do projeto que foram solicitados na readequa��o
+ * 	-> A tabela sac.dbo.PlanoDistribuicaoProduto armazena os produtos do projeto originais (aprovados)
+ *  -> A tabela sac.dbo.tbPlanoDistribuicao armazena os produtos do projeto que foram solicitados na readequa��o
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 20/04/2012
  * @version 1.0
@@ -49,7 +49,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			array('d' => 'Produto')
 			,'p.idProduto = d.Codigo'
 			,array('d.Descricao AS dsProduto')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->where("p.stPlanoDistribuicaoProduto = ?", "1");
 
@@ -101,7 +101,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			array('d' => 'Produto')
 			,'p.idProduto = d.Codigo'
 			,array('d.Descricao AS dsProduto')
-			,'SAC.dbo'
+			,'SAC'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -153,25 +153,25 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			array('pro' => 'Produto')
 			,'pro.Codigo = h.idProduto'
 			,array('pro.Descricao AS Produto')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(
-			array('area' => 'Area')
+			array('Area' => 'Area')
 			,'area.Codigo = h.cdArea'
 			,array('area.Descricao AS Area')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(
 			array('seg' => 'Segmento')
 			,'seg.Codigo = h.cdSegmento'
 			,array('seg.Descricao AS Segmento')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(
 			array('ver' => 'Verificacao')
 			,'ver.idVerificacao = h.idPosicaoLogo AND ver.idTipo = 3'
 			,array('LTRIM(ver.Descricao) AS PosicaoLogo')
-			,'SAC.dbo'
+			,'SAC'
 		);
 		$select->joinInner(
 			array('p' => 'tbPedidoAlteracaoProjeto')
@@ -181,7 +181,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 				,'p.idSolicitante'
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 103) AS dtSolicitacao'
 				,'CONVERT(CHAR(10), p.dtSolicitacao, 108) AS hrSolicitacao')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 
 		// adiciona quantos filtros foram enviados
@@ -215,13 +215,13 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			array('b' => 'tbAvaliacaoSubItemPlanoDistribuicao')
 			,'a.idPlano = b.idPlano'
 			,array('')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 		$select->joinInner(
 			array('c' => 'tbAvaliacaoSubItemPedidoAlteracao')
 			,'c.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao'
 			,array('')
-			,'BDCORPORATIVO.scSAC'
+			,'bdcorporativo.scSAC'
 		);
 
                 $select->where('a.idPedidoAlteracao = ?', $idPedidoAlteracao);
@@ -255,7 +255,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
                     (b.QtdeVendaNormal+b.QtdeVendaPromocional+b.QtdePatrocinador+b.QtdeOutros+b.QtdeProponente) as QtdeProduzida,
                     b.QtdePatrocinador,b.QtdeProponente,b.QtdeOutros,b.QtdeVendaNormal,b.QtdeVendaPromocional,b.PrecoUnitarioNormal,
                     b.PrecoUnitarioPromocional, b.stPrincipal,b.Usuario,'N' as tpSolicitacao")
-                ), 'SAC.dbo'
+                ), 'SAC'
             );
         } else {
             $select->joinInner(
@@ -268,31 +268,31 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
                         b.qtVendaPromocional as QtdeVendaPromocional, b.vlUnitarioNormal as PrecoUnitarioNormal, b.vlUnitarioPromocional as PrecoUnitarioPromocional,
                         b.stPrincipal, '0' as Usuario, b.tpSolicitacao, c.Descricao as Produto
                     ")
-                ) ,'SAC.dbo'
+                ) ,'SAC'
             );
         }
         $select->joinInner(
             array('c' => 'Produto'), 'c.Codigo = b.idProduto',
-            array('c.Descricao as Produto'), 'SAC.dbo'
+            array('c.Descricao as Produto'), 'SAC'
         );
 
         if($tabela == 'PlanoDistribuicaoProduto'){
             $select->joinInner(
                 array('d' => 'Area'), 'b.Area = d.Codigo',
-                array('d.Descricao as Area'), 'SAC.dbo'
+                array('d.Descricao as Area'), 'SAC'
             );
             $select->joinInner(
                 array('e' => 'Segmento'), 'b.Segmento = e.Codigo',
-                array('e.Descricao as Segmento'), 'SAC.dbo'
+                array('e.Descricao as Segmento'), 'SAC'
             );
         } else {
             $select->joinInner(
                 array('d' => 'Area'), 'b.cdArea = d.Codigo',
-                array('d.Descricao as Area'), 'SAC.dbo'
+                array('d.Descricao as Area'), 'SAC'
             );
             $select->joinInner(
                 array('e' => 'Segmento'), 'b.cdSegmento = e.Codigo',
-                array('e.Descricao as Segmento'), 'SAC.dbo'
+                array('e.Descricao as Segmento'), 'SAC'
             );
 
         }
@@ -321,19 +321,19 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
                     b.qtVendaPromocional as QtdeVendaPromocional, b.vlUnitarioNormal as PrecoUnitarioNormal, b.vlUnitarioPromocional as PrecoUnitarioPromocional,
                     b.stPrincipal, '0' as Usuario, b.tpSolicitacao,b.tpAnaliseTecnica,b.tpAnaliseComissao, c.Descricao as Produto
                 ")
-            ) ,'SAC.dbo'
+            ) ,'SAC'
         );
         $select->joinInner(
             array('c' => 'Produto'), 'c.Codigo = b.idProduto',
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('d' => 'Area'), 'b.cdArea = d.Codigo',
-            array('d.Descricao as Area'), 'SAC.dbo'
+            array('d.Descricao as Area'), 'SAC'
         );
         $select->joinInner(
             array('e' => 'Segmento'), 'b.cdSegmento = e.Codigo',
-            array('e.Descricao as Segmento'), 'SAC.dbo'
+            array('e.Descricao as Segmento'), 'SAC'
         );
 
         $select->where('b.idReadequacao = ?', $idReadequacao);
@@ -350,7 +350,7 @@ class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 			array('a' => 'PlanoDistribuicaoProduto'),
 			array(
                 new Zend_Db_Expr('a.*')
-            ), 'SAC.dbo'
+            ), 'SAC'
 		);
 
 		// adiciona quantos filtros foram enviados

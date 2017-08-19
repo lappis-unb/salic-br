@@ -191,7 +191,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
-        $arrBusca['a.idagente = ?'] = $post->idAgente;
+        $arrBusca['a.idAgente = ?'] = $post->idAgente;
         $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
 
@@ -242,7 +242,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $post = array_change_key_case($this->getRequest()->getPost());
 
-        if (empty($post['idagente'])) {
+        if (empty($post['idAgente'])) {
             throw new Zend_Exception("Informe o idagente");
         }
 
@@ -293,7 +293,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         }
 
         $dados = array(
-            "idagente" => isset($post['idagente']) ? $post['idagente'] : '',
+            "idAgente" => isset($post['idAgente']) ? $post['idAgente'] : '',
             "nomeprojeto" => isset($post['nomeprojeto']) ? $post['nomeprojeto'] : '',
             "mecanismo" => 1, //seguindo sistema legado
             "agenciabancaria" => isset($post['agenciabancaria']) ? $post['agenciabancaria'] : '',
@@ -344,12 +344,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
                 $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
-                $whereVinculo['idAgenteProponente   = ?'] = $post['idagente'];
+                $whereVinculo['idAgenteProponente   = ?'] = $post['idAgente'];
                 $vinculo = $tbVinculoDAO->buscar($whereVinculo);
 
                 if (count($vinculo) == 0) {
                     $dadosV = array(
-                        'idAgenteProponente' => $post['idagente'],
+                        'idAgenteProponente' => $post['idAgente'],
                         'dtVinculo' => MinC_Db_Expr::date(),
                         'siVinculo' => 2,
                         'idUsuarioResponsavel' => $this->idResponsavel
@@ -370,7 +370,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 }
                 /* **************************************************************************************** */
             }
-            // Plano de execução imediata #novain
+            // Plano de execu&ccedil;&atilde;o imediata #novain
             if ($post['stproposta'] == '618') { // proposta execucao imediata edital
                 $idDocumento = 248;
             } elseif ($post['stproposta'] == '619') { // proposta execucao imediata contrato de patrocínio
@@ -461,7 +461,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $stProposta = $rsPreProjeto["stProposta"];
             }
 
-            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idAgente'];
+            $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto['idAgente'];
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteENome($arrBuscaProponete)->current();
             if ($rsProponente) {
@@ -494,7 +494,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
-            $arrBuscaN['vi.sivinculo IN (0,2)'] = '';
+            $arrBuscaN['vi.sivinculo in (0,2)'] = '';
             $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
@@ -506,7 +506,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
                 $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
 
-                // Plano de execução imediata #novain
+                // Plano de execu&ccedil;&atilde;o imediata #novain
                 if ($stProposta == '618') { // proposta execucao imediata edital
                     $idDocumento = 248;
                 } elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
@@ -546,7 +546,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
             }
 
-            $arrBusca['a.idagente = ?'] = $post->idAgente;
+            $arrBusca['a.idAgente = ?'] = $post->idAgente;
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteENome($arrBusca)->current();
             if ($rsProponente) {
@@ -561,7 +561,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
 
-            // Plano de execução imediata #novain
+            // Plano de execu&ccedil;&atilde;o imediata #novain
             if ($this->_proposta["stproposta"] == '618') { // proposta execucao imediata edital
                 $idDocumento = 248;
             } elseif ($this->_proposta["stproposta"] == '619') { // proposta execucao imediata contrato de patrocínio
@@ -613,15 +613,15 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     /**
      * Encaminhar projeto ao MinC
      *
-     * Metódo para o proponente finalizar a situação do projeto, nem sempre este metódo será acionado,
+     * Metódo para o proponente finalizar a situa&ccedil;&atilde;o do projeto, nem sempre este metódo ser&aacute; acionado,
      * tendo em vista que existe uma rotina no banco para alterar a situacao do projeto após o prazo de alteracao.
      *
      * Regras antes de encaminhar
      * 1. Validar o checklist da proposta
      *
      * Regras ao encaminhar
-     * Quando o proponente clicar na opção Encaminhar projeto ao MinC, o sistema deverá a alterar situação do projeto para B20,
-     * com a seguinte providencia tomada: Projeto ajustado pelo proponente e encaminhado ao MinC para avaliação.
+     * Quando o proponente clicar na op&ccedil;&atilde;o Encaminhar projeto ao MinC, o sistema dever&aacute; a alterar situa&ccedil;&atilde;o do projeto para B20,
+     * com a seguinte providencia tomada: Projeto ajustado pelo proponente e encaminhado ao MinC para avalia&ccedil;&atilde;o.
      *
      *
      */
@@ -677,13 +677,13 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             if ($params['confirmarenvioaominc'] == true) {
                 if ($validado) {
 
-                    if ($projeto['area'] == 2) {
+                    if ($projeto['Area'] == 2) {
                         $orgaoUsuario = 171; # 171 - SAV/DAP
                     } else {
                         $orgaoUsuario = 262; # 262 - SEFIC/DIAAPI
                     }
 
-                    # verificar se o projeto já possui avaliador
+                    # verificar se o projeto j&aacute; possui avaliador
                     $tbAvaliacao = new Analise_Model_DbTable_TbAvaliarAdequacaoProjeto();
                     $avaliacao = $tbAvaliacao->buscarUltimaAvaliacao($idPronac);
 
@@ -976,7 +976,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     public function listarPropostasAjaxAction()
     {
-        $idAgente = $this->getRequest()->getParam('idagente');
+        $idAgente = $this->getRequest()->getParam('idAgente');
         $start = $this->getRequest()->getParam('start');
         $length = $this->getRequest()->getParam('length');
         $draw = (int)$this->getRequest()->getParam('draw');
@@ -1024,7 +1024,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     public function consultarresponsaveisAction()
     {
         $auth = Zend_Auth::getInstance();
-        $arrAuth = array_change_key_case((array)$auth->getIdentity()); // pega a autenticação
+        $arrAuth = array_change_key_case((array)$auth->getIdentity()); // pega a autentica&ccedil;&atilde;o
 
         $idUsuario = $arrAuth['idusuario'];
         $cpf = $arrAuth['cpf'];
@@ -1080,7 +1080,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         //PROCURA AS PROPOSTAS DE TODOS OS IDAGENTE'S
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
 
-        $wherePropostaD['pp.idagente = ?'] = $this->idAgenteProponente;
+        $wherePropostaD['pp.idAgente = ?'] = $this->idAgenteProponente;
         $wherePropostaD['pr.idprojeto IS NULL'] = '';
         $wherePropostaD['pp.idusuario <> ?'] = $this->idResponsavel;
         $listaPropostasD = $propostas->buscarPropostaProjetos($wherePropostaD);
@@ -1162,7 +1162,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     }
 
     /**
-     * Este metodo deve estar igual à regra de negocio 1.3 da spCheckListParaApresentacaoDeProposta
+     * Este metodo deve estar igual &agrave; regra de negocio 1.3 da spCheckListParaApresentacaoDeProposta
      * @param $idPreProjeto
      * @return ArrayObject|bool|mixed
      */
@@ -1183,7 +1183,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
                 $cnae = $TbPreProjeto->verificarCNAEProponenteComProdutoPrincipal($idPreProjeto);
 
-                # Se o CNAE estiver vazio, forçar atualização do proponente com os dados do webservice da receita
+                # Se o CNAE estiver vazio, for&ccedil;ar atualiza&ccedil;&atilde;o do proponente com os dados do webservice da receita
                 if (empty($cnae)) {
                     $servicoReceita = new ServicosReceitaFederal();
                     $dadosPessoaJuridica = $servicoReceita->consultarPessoaJuridicaReceitaFederal($proponente->CNPJCPF, true);

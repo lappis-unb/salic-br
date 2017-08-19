@@ -21211,7 +21211,7 @@ function printbuffer($arrayaux,$blockstate=0,$is_table=false,$is_list=false)
     }//end of for(i=0;i<arraysize;i++)
 
 
-    // PAINT DIV BORDER	// DISABLED IN COLUMNS AS DOESN'T WORK WHEN BROKEN ACROSS COLS??
+    // PAINT DIV BORDER	// DISABLED in COLUMNS AS DOESN'T WORK WHEN BROKEN ACROSS COLS??
     if ((isset($this->blk[$this->blklvl]['border']) || isset($this->blk[$this->blklvl]['bgcolor'])) && $blockstate  && ($this->y != $this->oldy)) {
 	$bottom_y = $this->y;	// Does not include Bottom Margin
 	if (isset($this->blk[$this->blklvl]['startpage']) && $this->blk[$this->blklvl]['startpage'] != $this->page && $blockstate != 1) {
@@ -29801,9 +29801,9 @@ function SubstituteCharsMB(&$writehtml_a, &$writehtml_i, &$writehtml_e) {
 	  }
 	}
 
-	// FIND IN DEFAULT FONT - removed mPDF 5.0
+	// FIND in DEFAULT FONT - removed mPDF 5.0
 
-	// LASTLY TRY IN BACKUP SUBS FONT
+	// LASTLY TRY in BACKUP SUBS FONT
 	if (!is_array($this->backupSubsFont)) { $this->backupSubsFont = array("$this->backupSubsFont"); }
 	foreach($this->backupSubsFont AS $bsfctr=>$bsf) {	// mPDF 5.0Beta.02
 		if ($this->currentfontfamily != $bsf) { $font = $bsf; }	// mPDF 5.0 not font['name']
@@ -30627,7 +30627,7 @@ function replaceArabic($str) {
 // ARABIC ===========================
 function InitArabic() {
 
-	// JOIN TO FOLLOWING LETTER IN LOGICAL ORDER
+	// JOIN TO FOLLOWING LETTER in LOGICAL ORDER
 	// U+060c U+061f; U+061b; U+0640; U+0626; U+0628; U+062a; U+062b; U+062c; U+062d; U+062e; U+0633; U+0634; U+0635; U+0636; U+0637; 
 	// U+0638; U+0639; U+063a; U+0641; U+0642; U+0643; U+0644; U+0645; U+0646; U+0647; U+064a; U+06a9; U+06cc; U+0686; U+06af; U+067e;
 	// U+06D0; U+0681; U+06C1;
@@ -30638,7 +30638,7 @@ function InitArabic() {
 	// \xd9\xb1 (U+0671) added to arabNextLink & final form added to Persian Glyphs (FB51)
 
 
-	// JOIN TO PREVIOUS LETTER IN LOGICAL ORDER
+	// JOIN TO PREVIOUS LETTER in LOGICAL ORDER
 	// U+0640 U+0622; U+0623; U+0624; U+0625; U+0627; U+0626; U+0628; U+0629; U+062a; U+062b; U+062c; U+062d; U+062e; U+062f; U+0630;
 	// U+0631; U+0632; U+0633; U+0634; U+0635; U+0636; U+0637; U+0638; U+0639; U+063a; U+0641; U+0642; U+0643; U+0644; U+0645; U+0646;
 	// U+0647; U+0648; U+0649; U+064a; U+06a9; U+06cc; U+0686; U+06af; U+0698; U+067e;
@@ -31589,7 +31589,7 @@ function pdf_write_value(&$value) {
 	}
 }
 
-// ========== OVERWRITE SEARCH STRING IN A PDF FILE ================
+// ========== OVERWRITE SEARCH STRING in A PDF FILE ================
 function OverWrite($file_in, $search, $replacement, $dest="D", $file_out="mpdf" ) {
 	$pdf = file_get_contents($file_in);
 

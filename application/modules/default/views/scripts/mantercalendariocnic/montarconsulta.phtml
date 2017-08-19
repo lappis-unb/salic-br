@@ -39,7 +39,7 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 <script type="text/javascript" src="../js/jquery.wysiwyg.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/jquery.wysiwyg.css"/>
 
-<!-- Realizar Análise Projeto -->
+<!-- Realizar An&aacute;lise Projeto -->
 <script type="text/javascript" src="../js/realizaranaliseprojeto.js"></script>
 <script type="text/javascript" src="../js/openwysiwyg/wysiwyg.js"></script>
 
@@ -50,7 +50,7 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 	<!--
 	function addTodos() // adiciona todos os options da esquerda para direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visao.length; i++) // varre todo o option de origem
 		{
@@ -61,12 +61,12 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 			visao.remove(i); // remove o option do select de origem
 			i--;
 		}
-	} // fecha função addTodos()
+	} // fecha fun&ccedil;&atilde;o addTodos()
 
 
 	function delTodos() // deleta todos os options da direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
 		{
@@ -80,12 +80,12 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 				i--;
 			}
 		}
-	} // fecha função delTodos()
+	} // fecha fun&ccedil;&atilde;o delTodos()
 
 
 	function addSelecionado() // adiciona o option selecionado da esquerda para direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visao.length; i++) // varre todo o option de origem
 		{
@@ -99,12 +99,12 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 				i--;
 			}
 		}
-	} // fecha função addSelecionado()
+	} // fecha fun&ccedil;&atilde;o addSelecionado()
 
 
 	function delSelecionado() // deleta o option selecionado da direita
 	{
-		visao       = document.getElementById("visao"); // select de origem
+		visao       = document.getElementById("Visao"); // select de origem
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
 		{
@@ -118,10 +118,10 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 				i--;
 			}
 		}
-	} // fecha função delSelecionado()
+	} // fecha fun&ccedil;&atilde;o delSelecionado()
 
 
-	function selecionarOptions() // função para selecionar todos os options antes do envio do formulário
+	function selecionarOptions() // fun&ccedil;&atilde;o para selecionar todos os options antes do envio do formul&aacute;rio
 	{
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
@@ -129,7 +129,7 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 			visaoAgente.options[i].selected = true; // adiciona o novo option no select de destino
 		}
 		document.getElementById('form').submit();
-	} // fecha função selecionarOptions()
+	} // fecha fun&ccedil;&atilde;o selecionarOptions()
 	//-->
 	</script>
 <form class="form" id="form">
@@ -142,10 +142,10 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 			</tr>
                         <tr>
 				<td class="centro" valign="top">
-					<label for="visao"> </label>
-					<select class="select w150" name="visao[]" id="visao" multiple="multiple" size="7">
+					<label for="Visao"> </label>
+					<select class="select w150" name="visao[]" id="Visao" multiple="multiple" size="7">
 
-						<option value="N.Reuniao">N. Reunião</option>
+						<option value="N.Reuniao">N. Reuni&atilde;o</option>
 						<option value="Dt.Inicio ">Dt. Início </option>
 						<option value="Dt.Final">Dt. Final</option>
 						<option value="Dt.Fechamento">Dt. Fechamento</option>
@@ -154,10 +154,10 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 					</select>
 				</td>
 				<td class="centro" valign="middle">
-					<p><input class="btn" value=" &gt;&gt;  " onkeypress=" " onclick="addTodos();" title="Adicionar todas as visões para o Agente" type="button"></p>
-					<p><input class="btn" value="  &gt;  " onkeypress=" " onclick="addSelecionado();" title="Adicionar a visão selecionada para o Agente" type="button"></p>
-					<p><input class="btn" value="  &lt;  " onkeypress=" " onclick="delSelecionado();" title="Remover a visão selecionada do Agente" type="button"></p>
-					<p><input class="btn" value=" &lt;&lt;  " onkeypress=" " onclick="delTodos();" title="Remover todas as visões do Agente" type="button"></p>
+					<p><input class="btn" value=" &gt;&gt;  " onkeypress=" " onclick="addTodos();" title="Adicionar todas as vis&otilde;es para o Agente" type="button"></p>
+					<p><input class="btn" value="  &gt;  " onkeypress=" " onclick="addSelecionado();" title="Adicionar a vis&atilde;o selecionada para o Agente" type="button"></p>
+					<p><input class="btn" value="  &lt;  " onkeypress=" " onclick="delSelecionado();" title="Remover a vis&atilde;o selecionada do Agente" type="button"></p>
+					<p><input class="btn" value=" &lt;&lt;  " onkeypress=" " onclick="delTodos();" title="Remover todas as vis&otilde;es do Agente" type="button"></p>
 				</td>
 				<td class="centro" valign="top">
 					<label for="visaoAgente"> </label>

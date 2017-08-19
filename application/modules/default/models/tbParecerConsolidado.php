@@ -74,14 +74,14 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
                 array('Doc' => 'tbDocumento'),
                 'Doc.idDocumento = D.idDocumento',
                 array("*"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         $slct->joinLeft(
                 array('Arq' => 'tbArquivo'),
                 'Arq.idArquivo = Doc.idArquivo',
                 array("*"),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
         $slct->where('D.idRelatorioConsolidado = ?', $idRelatorioConsolidado);
 
@@ -100,49 +100,49 @@ class tbParecerConsolidado extends MinC_Db_Table_Abstract {
                             array('gr'=>'Grupos'),
                             'gr.gru_codigo = pc.idPerfilAvaliador',
                             array('Perfil'=>'gr.gru_nome','cdPerfil'=>'gr.gru_codigo'),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('rc'=>'tbRelatorioConsolidado'),
                             'rc.idRelatorioConsolidado = pc.idRelatorioConsolidado',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('rel'=>'tbRelatorio'),
                             'rel.idRelatorio = rc.idRelatorio',
                             array(),
-                            'SAC.dbo'
+                            'SAC'
                            );
         $select->joinInner(
                             array('usu'=>'Usuarios'),
                             'pc.idAvaliador = usu.usu_codigo',
                             array(),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('ag'=>'Agentes'),
                             'ag.CNPJCPF = usu.usu_identificacao',
                             array('ag.idAgente'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'nm.idAgente = ag.idAgente',
                             array('Nome'=>'nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('uog'=>'UsuariosXOrgaosXGrupos'),
                             'uog.uog_usuario = usu.usu_codigo and uog.uog_grupo = gr.gru_codigo',
                             array(),
-                            'TABELAS.dbo'
+                            'TABELAS'
                            );
         $select->joinInner(
                             array('org'=>'Orgaos'),
                             'org.Codigo = uog.uog_orgao',
                             array('Orgao'=>'org.Sigla'),
-                            'SAC.dbo'
+                            'SAC'
                            );
 
         $select->where('rel.idPRONAC = ?', $idPronac);

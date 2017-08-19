@@ -3,7 +3,7 @@
 /**
  * Classe para abstrair consultas e ORM referente aos dados da tabela tbLancamentoBancario.
  *
- * @author Rafael José da Costa Gloria
+ * @author Rafael Jos&eacute; da Costa Gloria
  */
 class Model_LancamentoBancario extends GenericModel {
 

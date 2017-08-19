@@ -103,7 +103,6 @@ class Assinatura_Model_DbTable_TbDocumentoAssinatura extends MinC_Db_Table_Abstr
         $query->where("tbDocumentoAssinatura.cdSituacao = ?", Assinatura_Model_TbDocumentoAssinatura::CD_SITUACAO_DISPONIVEL_PARA_ASSINATURA);
         $query->where("Projetos.Situacao in (?)", array('B04'));
         $query->order($ordenacao);
-//xd($this->_db->fetchAll($query));
         return $this->_db->fetchAll($query);
     }
 

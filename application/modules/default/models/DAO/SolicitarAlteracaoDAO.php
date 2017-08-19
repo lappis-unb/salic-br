@@ -27,14 +27,14 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $objAcesso= new Acesso();
        /*$sql = "insert into sac.dbo.tbAbrangencia(tpAbrangencia,idPais,idUF,idMunicipioIBGE,tpAcao,idAbrangenciaAntiga,idPedidoAlteracao,dtRegistro)
             select 'SA',a.idPais,a.idUF,a.idMunicipioIBGE,'N',a.idAbrangencia,'$idPedidoAlteracao',GETDATE()
-            from SAC.dbo.Abrangencia a
-            inner join SAC.dbo.Projetos pr on pr.idProjeto = a.idProjeto
+            from sac.dbo.Abrangencia a
+            inner join sac.dbo.Projetos pr on pr.idProjeto = a.idProjeto
             where
-            (select COUNT(*) from SAC.dbo.tbAbrangencia ab where a.idAbrangencia = ab.idAbrangenciaAntiga) = 0
+            (select COUNT(*) from sac.dbo.tbAbrangencia ab where a.idAbrangencia = ab.idAbrangenciaAntiga) = 0
             and pr.idProjeto = $idProjeto";*/
         $sql = "insert into sac.dbo.tbAbrangencia(tpAbrangencia,idPais,idUF,idMunicipioIBGE,tpAcao,idAbrangenciaAntiga,idPedidoAlteracao,dtRegistro)
         		SELECT 'SA',a.idPais,a.idUF,a.idMunicipioIBGE,'N',a.idAbrangencia,'$idPedidoAlteracao',{$objAcesso->getDate()}
-            FROM SAC.dbo.Abrangencia a
+            FROM sac.dbo.Abrangencia a
             where a.idProjeto=$idProjeto AND a.stAbrangencia = 1";
 
         $db = Zend_Registry::get ( 'db' );
@@ -52,7 +52,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 				,tpAlteracaoProjeto
 				,CAST(dsJustificativa AS TEXT) AS dsJustificativa
 				,stVerificacao
-			FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+			FROM bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao
 			WHERE idPedidoAlteracao    = $idPedidoAlteracao 
 				AND tpAlteracaoProjeto = $status";
 
@@ -68,7 +68,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 				,tpAlteracaoProjeto
 				,CAST(dsJustificativa AS TEXT) AS dsJustificativa
 				,stVerificacao
-			FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+			FROM bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao
 			WHERE idPedidoAlteracao    = $idPedidoAlteracao ORDER BY idPedidoAlteracaoXTipoAlteracao desc
 				";
 
@@ -85,7 +85,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 				,tpAlteracaoProjeto
 				,CAST(dsJustificativa AS TEXT) AS dsJustificativa
 				,stVerificacao
-			FROM BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
+			FROM bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao
 			WHERE idPedidoAlteracao    = $idPedidoAlteracao AND tpAlteracaoProjeto in (1,2) ORDER BY idPedidoAlteracaoXTipoAlteracao desc
 				";
 
@@ -97,7 +97,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
         public function buscarTrocaProponente($idPedidoAlteracao)
 	{
-		$sql = "select * from  BDCORPORATIVO.scSAC.tbAlteracaoNomeProponente WHERE idPedidoAlteracao = $idPedidoAlteracao";
+		$sql = "select * from  bdcorporativo.scsac.tbAlteracaoNomeProponente WHERE idPedidoAlteracao = $idPedidoAlteracao";
 
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
@@ -108,7 +108,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
 	public function updatetbPedidoAlteracaoXTipoAlteracao($idPedidoAlteracao,$dsJustificativa,$status)
 	{
-        $sql = "update BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao set dsJustificativa = '$dsJustificativa'
+        $sql = "update bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao set dsJustificativa = '$dsJustificativa'
             where idPedidoAlteracao = $idPedidoAlteracao and tpAlteracaoProjeto = $status";
 
         $db = Zend_Registry::get ( 'db' );
@@ -150,7 +150,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 					,stPlanoAnual
 					,stTipoDemanda
 					,idPedidoAlteracao
-				FROM SAC.dbo.tbProposta 
+				FROM sac.dbo.tbProposta 
 				WHERE idPedidoAlteracao = $idPedidoAlteracao";
 
         $db = Zend_Registry::get ( 'db' );
@@ -187,7 +187,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 	public function buscarProposta2($idPedidoAlteracao)
 	{
         $sql = "SELECT CAST(dsEspecificacaoTecnica AS TEXT) AS dsEspecificacaoTecnica 
-				FROM SAC.dbo.tbProposta 
+				FROM sac.dbo.tbProposta 
 				WHERE idPedidoAlteracao = $idPedidoAlteracao";
 
         $db = Zend_Registry::get ( 'db' );
@@ -199,7 +199,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function buscarNomeProposta($idPedidoAlteracao)
     {
-        $sql = "select nmProjeto from SAC.dbo.tbProposta where idPedidoAlteracao = $idPedidoAlteracao and nmProjeto IS not NULL";
+        $sql = "select nmProjeto from sac.dbo.tbProposta where idPedidoAlteracao = $idPedidoAlteracao and nmProjeto IS not NULL";
 
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
@@ -210,7 +210,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function buscarRazaoSocial($idPedidoAlteracao)
     {
-        $sql = "select * from BDCORPORATIVO.scSAC.tbAlteracaoNomeProponente where idPedidoAlteracao = $idPedidoAlteracao";
+        $sql = "select * from bdcorporativo.scsac.tbAlteracaoNomeProponente where idPedidoAlteracao = $idPedidoAlteracao";
 
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
@@ -221,7 +221,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function insertRazaoSocial($idPedidoAlteracao, $CNPJCPF=null, $razaosocial)
     {
-        $sql = "insert into BDCORPORATIVO.scSAC.tbAlteracaoNomeProponente (idPedidoAlteracao, nrCNPJCPF, nmProponente)
+        $sql = "insert into bdcorporativo.scsac.tbAlteracaoNomeProponente (idPedidoAlteracao, nrCNPJCPF, nmProponente)
         values ('$idPedidoAlteracao', '$CNPJCPF', '$razaosocial');";
 
         $db = Zend_Registry::get ( 'db' );
@@ -233,7 +233,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function updateRazaoSocial($idPedidoAlteracao, $CNPJCPF=null, $razaosocial)
     {
-        $sql = "update BDCORPORATIVO.scSAC.tbAlteracaoNomeProponente set nmProponente = '$razaosocial', nrCNPJCPF = '$CNPJCPF' 
+        $sql = "update bdcorporativo.scsac.tbAlteracaoNomeProponente set nmProponente = '$razaosocial', nrCNPJCPF = '$CNPJCPF' 
         where idPedidoAlteracao = $idPedidoAlteracao";
 
         $db = Zend_Registry::get ( 'db' );
@@ -245,7 +245,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function buscaNomeProponente($idPedidoAlteracao)
     {
-        $sql = "select * from BDCORPORATIVO.scSAC.tbAlteracaoNomeProponente
+        $sql = "select * from bdcorporativo.scsac.tbAlteracaoNomeProponente
                 where idPedidoAlteracao = $idPedidoAlteracao";
 
         $db = Zend_Registry::get ( 'db' );
@@ -257,7 +257,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function updateNomeProponente($idPedidoAlteracao,$CNPJCPF,$Proponente)
     {
-        $sql = "update BDCORPORATIVO.scSAC.tbAlteracaoNomeProponente set nrCNPJCPF = '$CNPJCPF',nmProponente = '$Proponente'
+        $sql = "update bdcorporativo.scsac.tbAlteracaoNomeProponente set nrCNPJCPF = '$CNPJCPF',nmProponente = '$Proponente'
         where idPedidoAlteracao = $idPedidoAlteracao";
 
         $db = Zend_Registry::get ( 'db' );
@@ -269,7 +269,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function insertNomeProponente($idPedidoAlteracao,$CNPJCPF,$Proponente)
     {
-        $sql = "insert into BDCORPORATIVO.scSAC.tbAlteracaoNomeProponente (idPedidoAlteracao,nrCNPJCPF,nmProponente)
+        $sql = "insert into bdcorporativo.scsac.tbAlteracaoNomeProponente (idPedidoAlteracao,nrCNPJCPF,nmProponente)
                 values ($idPedidoAlteracao,'$CNPJCPF','$Proponente')";
 
         $db = Zend_Registry::get ( 'db' );
@@ -281,7 +281,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function insertArquivo($idArquivo,$idPedidoAlteracao,$status)
     {
-        $sql = "insert into BDCORPORATIVO.scSAC.tbPedidoAltProjetoXArquivo (idArquivo,idPedidoAlteracao,tpAlteracaoProjeto)
+        $sql = "insert into bdcorporativo.scsac.tbPedidoAltProjetoXArquivo (idArquivo,idPedidoAlteracao,tpAlteracaoProjeto)
                 values ($idArquivo,$idPedidoAlteracao,$status)";
 
         $db = Zend_Registry::get ( 'db' );
@@ -293,8 +293,8 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function buscarArquivo($idPedidoAlteracao,$status)
     {      
-        $sql = "select arquivo.nmArquivo,arquivo.idArquivo from BDCORPORATIVO.scSAC.tbPedidoAltProjetoXArquivo as pedido
-                inner join BDCORPORATIVO.scCorp.tbArquivo as arquivo
+        $sql = "select arquivo.nmArquivo,arquivo.idArquivo from bdcorporativo.scsac.tbPedidoAltProjetoXArquivo as pedido
+                inner join bdcorporativo.scCorp.tbArquivo as arquivo
                 on pedido.idArquivo = arquivo.idArquivo
                 where idPedidoAlteracao = $idPedidoAlteracao  and pedido.tpAlteracaoProjeto = $status ";
 
@@ -305,8 +305,8 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
     public function buscarArquivoTrocaNomeProponente($idPedidoAlteracao)
     {
-        $sql = "select arquivo.nmArquivo,arquivo.idArquivo from BDCORPORATIVO.scSAC.tbPedidoAltProjetoXArquivo as pedido
-                inner join BDCORPORATIVO.scCorp.tbArquivo as arquivo
+        $sql = "select arquivo.nmArquivo,arquivo.idArquivo from bdcorporativo.scsac.tbPedidoAltProjetoXArquivo as pedido
+                inner join bdcorporativo.scCorp.tbArquivo as arquivo
                 on pedido.idArquivo = arquivo.idArquivo
                 where idPedidoAlteracao = $idPedidoAlteracao  and pedido.tpAlteracaoProjeto in (1,2)";
 
@@ -327,17 +327,17 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 	 */
 	public static function excluirArquivo($idPedidoAlteracao, $idArquivo)
 	{
-		$sql = "DELETE FROM BDCORPORATIVO.scSAC.tbPedidoAltProjetoXArquivo WHERE idPedidoAlteracao = $idPedidoAlteracao AND idArquivo = $idArquivo";
+		$sql = "DELETE FROM bdcorporativo.scsac.tbPedidoAltProjetoXArquivo WHERE idPedidoAlteracao = $idPedidoAlteracao AND idArquivo = $idArquivo";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$excluir = $db->fetchAll($sql);
 
-		$sql = "DELETE FROM BDCORPORATIVO.scCorp.tbArquivoImagem WHERE idArquivo = $idArquivo";
+		$sql = "DELETE FROM bdcorporativo.scCorp.tbArquivoImagem WHERE idArquivo = $idArquivo";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$excluir = $db->fetchAll($sql);
 
-		$sql = "DELETE FROM BDCORPORATIVO.scCorp.tbArquivo WHERE idArquivo = $idArquivo";
+		$sql = "DELETE FROM bdcorporativo.scCorp.tbArquivo WHERE idArquivo = $idArquivo";
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$excluir = $db->fetchAll($sql);
@@ -354,7 +354,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 	 */
 	public static function verificarInteressadosAgentes($CNPJCPF)
 	{
-		$sqlInteressados = "SELECT CgcCpf FROM SAC.dbo.Interessado WHERE CgcCpf = '$CNPJCPF'";
+		$sqlInteressados = "SELECT CgcCpf FROM sac.dbo.Interessado WHERE CgcCpf = '$CNPJCPF'";
 		$sqlAgentes      = "SELECT CNPJCPF FROM agentes.dbo.Agentes WHERE CNPJCPF = '$CNPJCPF'";
 
 		$db = Zend_Registry::get ('db');
@@ -375,7 +375,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
 	public static function excluirArquivoDuplicado($idPedidoAlteracao,$Pais,$UF,$Cidade)
 	{
-		$sql = " DELETE FROM SAC.dbo.tbAbrangencia WHERE idPedidoAlteracao = $idPedidoAlteracao AND (tpAcao = 'I' OR tpAcao = 'N') AND idPais = $Pais AND idUF = $UF AND idMunicipioIBGE = $Cidade";
+		$sql = " DELETE FROM sac.dbo.tbAbrangencia WHERE idPedidoAlteracao = $idPedidoAlteracao AND (tpAcao = 'I' OR tpAcao = 'N') AND idPais = $Pais AND idUF = $UF AND idMunicipioIBGE = $Cidade";
 
 		$db = Zend_Registry::get ('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -394,7 +394,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
  	public static function alterarJustificativaPrimeiroArquivo($idPedidoAlteracao,$Pais,$UF,$Cidade, $dsJustificativaExclusao)
 	{
-		$sql = "UPDATE SAC.dbo.tbAbrangencia SET dsExclusao='".$dsJustificativaExclusao."' WHERE idPedidoAlteracao = $idPedidoAlteracao AND tpAcao = 'E' AND idPais = $Pais AND idUF = $UF AND idMunicipioIBGE = $Cidade";
+		$sql = "UPDATE sac.dbo.tbAbrangencia SET dsExclusao='".$dsJustificativaExclusao."' WHERE idPedidoAlteracao = $idPedidoAlteracao AND tpAcao = 'E' AND idPais = $Pais AND idUF = $UF AND idMunicipioIBGE = $Cidade";
 
 		$db = Zend_Registry::get ('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);

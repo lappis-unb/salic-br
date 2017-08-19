@@ -1,13 +1,13 @@
 <?php
 /**
- * Exemplo de Utilização do Layout - Menu Lateral
+ * Exemplo de Utiliza&ccedil;&atilde;o do Layout - Menu Lateral
  * @author emanuel.sampaio - Politec
  * @since 27/05/2011
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.manual-layout
  * @link http://salic.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 
 echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
@@ -16,8 +16,8 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li><a href="<?php echo $this->url(array('controller' => '', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
-		<li><a href="<?php echo $this->url(array('controller' => 'manual-layout', 'action' => ''), '', true); ?>" title="Ir para Exemplo de Utilização do Layout">Exemplo de Utilização do Layout</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => '', 'action' => ''), '', true); ?>" title="Ir para P&aacute;gina Inicial">Início</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => 'manual-layout', 'action' => ''), '', true); ?>" title="Ir para Exemplo de Utiliza&ccedil;&atilde;o do Layout">Exemplo de Utiliza&ccedil;&atilde;o do Layout</a></li>
 		<li class="last">Menu lateral</li>
 	</ul>
 </div>
@@ -29,7 +29,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 <div id="titulo">
 	<div>
 		Menu lateral
-		<span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span>
+		<span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span>
 	</div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
@@ -41,7 +41,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 
 	<!-- ========== INÍCIO MARGEM ========== -->
 	<div id="miolo">
-		<p>Esse é o esqueleto de uma página com menu lateral.</p>
+		<p>Esse &eacute; o esqueleto de uma p&aacute;gina com menu lateral.</p>
 
 		<br />
 
@@ -53,26 +53,26 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 		<br />
 
 		<p>
-			Inclua o arquivo no início da view que utilizará o menu lateral: 
+			Inclua o arquivo no início da view que utilizar&aacute; o menu lateral: 
 			<strong>require_once "manual-layout/inc/menu.inc.phtml";</strong>
 		</p>
 
 		<br />
 
 		<p class="bold">
-			Considerações importantes sobre o menu:
+			Considera&ccedil;&otilde;es importantes sobre o menu:
 		</p>
 
 		<br />
 
 		<p>
-			Os itens de menu estão dentro de: <strong>&lt;div id="qm0" class="qmmc"&gt;</strong>
+			Os itens de menu est&atilde;o dentro de: <strong>&lt;div id="qm0" class="qmmc"&gt;</strong>
 		</p>
 
 		<br />
 
 		<p>
-			O formato de um menu simple é: 
+			O formato de um menu simple &eacute;: 
 			<strong>
 				&lt;a class="no_seta" href="&lt;?php echo $this->url(array('controller' => 'nome-da-controller', 'action' => 'nome-da-action'), '', true); ?&gt;" title="Ir para Formul&aacute;rios"&gt;Formul&aacute;rios&lt;/a&gt;
 			</strong>
@@ -81,7 +81,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 		<br />
 
 		<p>
-			O formato de um menu contendo sub-menus é: 
+			O formato de um menu contendo sub-menus &eacute;: 
 			<strong>
 				<br />
 				&lt;a class="sanfona" href="#" title="Ir para M&aacute;scaras"&gt;M&aacute;scaras&lt;/a&gt;<br />
@@ -95,7 +95,7 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 		<br />
 
 		<p>
-			Quando o último menu não tiver sub-menus, utilizar a classe <strong>.last</strong>
+			Quando o último menu n&atilde;o tiver sub-menus, utilizar a classe <strong>.last</strong>
 		</p>
 	</div>
 	<!-- ========== FIM MARGEM ========== -->
@@ -105,8 +105,8 @@ echo $this->partial('manual-layout/inc/menu.inc.phtml', $this)// menu lateral
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

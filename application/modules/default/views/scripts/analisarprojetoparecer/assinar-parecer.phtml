@@ -150,7 +150,7 @@
 		    <?php foreach($this->dadosProdutos as $produto): ?>
 		    <tr>
 		      <td align="center"><a target="_blank" href="<?php echo $this->url(array('controller'=> 'analisarprojetoparecer','action' =>'produtosecundario'));?>?idPronac=<?php echo $produto->IdPRONAC; ?>&idProduto=<?php echo $produto->idProduto; ?>&stPrincipal=<?php echo $produto->tpProduto;?>">
-<?php echo $produto->Produto; ?></a></td> <!-- TODO: fazer if do produto principal / secundário -->
+<?php echo $produto->Produto; ?></a></td> <!-- TODO: fazer if do produto principal / secund&aacute;rio -->
 		      <td align="center"><?php echo $produto->tpProduto; ?></td>		      
 		      <td align="center"><?php echo $produto->QtdeProduzida; ?></td>
 		      <td align="center"><?php echo $produto->QtdeDistribuicaoGratuita; ?></td>

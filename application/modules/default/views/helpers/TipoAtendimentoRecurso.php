@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_TipoAtendimentoRecurso
 {
 	/**
-	 * Método com os tipos de atendimentos dos recursos
+	 * M&eacute;todo com os tipos de atendimentos dos recursos
 	 * @access public
 	 * @param string $tp
 	 * @return string
@@ -32,10 +32,10 @@ class Zend_View_Helper_TipoAtendimentoRecurso
 		}
 		else
 		{
-			$ds = "Não avaliado";
+			$ds = "N&atilde;o avaliado";
 		}
 
 		return $ds;
-	} // fecha método tipoAtendimentoRecurso()
+	} // fecha m&eacute;todo tipoAtendimentoRecurso()
 
 } // fecha class

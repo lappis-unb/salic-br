@@ -14,7 +14,7 @@ class ProjetoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
 	protected $_schema  = "";
-	protected $_name    = "BDCORPORATIVO.scSAC.Projetos";
+	protected $_name    = "bdcorporativo.scsac.Projetos";
 	protected $_primary = "IdPRONAC";
 
 
@@ -64,7 +64,7 @@ class ProjetoDAO extends Zend_Db_Table
 					,SolicitadoCapitalReal
 					,Logon
 					,idProjeto
-				FROM SAC.dbo.Projetos ";
+				FROM sac.dbo.Projetos ";
 
 		if (!empty($pronac)) // busca de acordo com o pronac
 		{
@@ -82,10 +82,10 @@ class ProjetoDAO extends Zend_Db_Table
 		$sql = "select distinct p.AnoProjeto, p.Sequencial, p.AnoProjeto+p.Sequencial as pronac, p.NomeProjeto, p.Processo, p.CgcCpf, 
 				p.Area as codArea, p.Segmento as codSegmento, p.Mecanismo as codMecanismo, p.SolicitadoReal, p.UfProjeto,
 				ar.Descricao as Area, s.Descricao as Segmento, m.Codigo as Mecanismo, m.Descricao as Descricao, p.Situacao
-				from SAC.dbo.Projetos p
-				inner join SAC.dbo.Area ar on ar.Codigo = p.Area
-				inner join SAC.dbo.Segmento s on s.Codigo = p.Segmento
-				inner join SAC.dbo.Mecanismo m on m.Codigo = p.Mecanismo
+				from sac.dbo.Projetos p
+				inner join sac.dbo.Area ar on ar.Codigo = p.Area
+				inner join sac.dbo.Segmento s on s.Codigo = p.Segmento
+				inner join sac.dbo.Mecanismo m on m.Codigo = p.Mecanismo
 				where p.AnoProjeto+p.Sequencial = '$pronac'";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
@@ -102,7 +102,7 @@ class ProjetoDAO extends Zend_Db_Table
 	 */
 	public static function buscarIdPronac($pronac)
 	{
-		$sql = "SELECT TOP 1 IdPRONAC FROM SAC.dbo.Projetos WHERE AnoProjeto+Sequencial = '$pronac'";
+		$sql = "SELECT TOP 1 IdPRONAC FROM sac.dbo.Projetos WHERE AnoProjeto+Sequencial = '$pronac'";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -120,7 +120,7 @@ class ProjetoDAO extends Zend_Db_Table
 	 */
 	public static function buscarPronac($idPronac)
 	{
-		$sql = "SELECT TOP 1 AnoProjeto+Sequencial AS pronac, idProjeto FROM SAC.dbo.Projetos WHERE IdPRONAC = $idPronac";
+		$sql = "SELECT TOP 1 AnoProjeto+Sequencial AS pronac, idProjeto FROM sac.dbo.Projetos WHERE IdPRONAC = $idPronac";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -139,7 +139,7 @@ class ProjetoDAO extends Zend_Db_Table
 	 */
 	public static function alterarSituacao($idPronac, $situacao)
 	{
-		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = '$situacao' WHERE IdPRONAC = $idPronac";
+		$sql = "UPDATE sac.dbo.Projetos SET Situacao = '$situacao' WHERE IdPRONAC = $idPronac";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -157,7 +157,7 @@ class ProjetoDAO extends Zend_Db_Table
 	 */
 	public static function buscarSituacoesProjeto($pronac)
 	{
-		$sql = "SELECT * FROM SAC.dbo.HistoricoSituacao WHERE AnoProjeto+Sequencial='$pronac' ORDER BY DtSituacao DESC;";
+		$sql = "SELECT * FROM sac.dbo.HistoricoSituacao WHERE AnoProjeto+Sequencial='$pronac' ORDER BY DtSituacao DESC;";
 
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -179,7 +179,7 @@ class ProjetoDAO extends Zend_Db_Table
 		$sql = "SELECT DtInicioExecucao
 					,DtFimExecucao
 					,DATEDIFF(DAY, DtInicioExecucao, DtFimExecucao) AS dias
-				FROM SAC.dbo.Projetos ";
+				FROM sac.dbo.Projetos ";
 
 		// busca pelo id pronac
 		if (!empty($idPronac))

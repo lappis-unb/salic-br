@@ -10,7 +10,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Meus Pagamentos <span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span></div>
+    <div>Meus Pagamentos <span class="voltar"><a href="javascript:voltar();" title="P&aacute;gina Anterior">Voltar</a></span></div>
 </div>
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 
@@ -75,9 +75,9 @@
         <br />
     </form>
     <?php endforeach; ?>
-    <!-- ========== PAGINAÇÃO ========== -->
+    <!-- ========== PAGINA&ccedil;&atilde;O ========== -->
     <?php if($this->qtdlistaDePagamentos > 10){ echo "<p>" . $this->listaDePagamentos . "</p>"; } ?>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php else: ?>
         <table class="tabela">
             <tr>
@@ -89,9 +89,9 @@
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 <div id="dialog"></div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />
 
 <script>
@@ -106,7 +106,7 @@
 
         if($('#rpa_'+id).is(":empty")){
             $('#rpa_'+id).css('border','solid 1px red');
-            $('#label_'+id).html('É preciso fazer o Upload do RPA assinado! &nbsp; &nbsp; &nbsp;');
+            $('#label_'+id).html('&eacute; preciso fazer o Upload do RPA assinado! &nbsp; &nbsp; &nbsp;');
 //            return false;
         }
 
@@ -118,9 +118,9 @@
             draggable: false,
             resizable: false,
             closeOnEscape: false,
-            title: 'Confirmação',
+            title: 'Confirma&ccedil;&atilde;o',
             buttons: {
-                Não:function() {
+                N&atilde;o:function() {
                     $(this).dialog('close');
                 },
                 Sim:function() {

@@ -16,7 +16,7 @@
  */
 class Agente_Model_Visao extends MinC_Db_Model
 {
-    protected $_idvisao;
+    protected $_idVisao;
     protected $_idagente;
     protected $_visao;
     protected $_usuario;
@@ -27,15 +27,15 @@ class Agente_Model_Visao extends MinC_Db_Model
      */
     public function getIdvisao()
     {
-        return $this->_idvisao;
+        return $this->_idVisao;
     }
 
     /**
-     * @param mixed $idvisao
+     * @param mixed $idVisao
      */
-    public function setIdvisao($idvisao)
+    public function setIdvisao($idVisao)
     {
-        $this->_idvisao = $idvisao;
+        $this->_idVisao = $idVisao;
     }
 
     /**

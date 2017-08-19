@@ -82,7 +82,6 @@ class Proposta_Model_DbTable_TbDocumentosPreProjeto  extends MinC_Db_Table_Abstr
 
         $slct->where("iddocumentospreprojetos = ?", $id);
 
-        //xd($slct->__toString());
         //$this->fetchAll("SET TEXTSIZE 10485760;");
         $db = $this->getDefaultAdapter();
         if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {

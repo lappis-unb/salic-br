@@ -2,9 +2,9 @@
 
 <script src='<?php echo $this->baseUrl(); ?>/public/js/jquery.MultiFile.js' type="text/javascript" language="javascript"></script>
 
-<div id="Teste" class="sumir" title="Enviar Solicitação"><p>Solicitação de readequação realizada com sucesso! Deseja fazer nova readequação?</p></div>
-<div id="div" class="sumir" title="Dados obrigatórios não informados!"></div>
-<div id="dialog-alert" class="sumir">Dados obrigatórios não informados!</div>
+<div id="Teste" class="sumir" title="Enviar Solicita&ccedil;&atilde;o"><p>Solicita&ccedil;&atilde;o de readequa&ccedil;&atilde;o realizada com sucesso! Deseja fazer nova readequa&ccedil;&atilde;o?</p></div>
+<div id="div" class="sumir" title="Dados obrigatórios n&atilde;o informados!"></div>
+<div id="dialog-alert" class="sumir">Dados obrigatórios n&atilde;o informados!</div>
 
 <script>
 function validarFormulario(form,idtext)
@@ -56,7 +56,7 @@ function EnviarProjeto()
             resizable: false,
             closeOnEscape: false,
             buttons: {
-                'Não': function()
+                'N&atilde;o': function()
                 {
                     $('#Projeto').attr('action','<?php echo $this->url(array('controller' => 'solicitaralteracao','action' => 'nomeproponente2')); ?>');
                     $('#Projeto').submit();
@@ -86,7 +86,7 @@ function EnviarNome()
             resizable: false,
             closeOnEscape: false,
             buttons: {
-                'Não': function()
+                'N&atilde;o': function()
                 {
                     $('#Social').attr('action','<?php echo $this->url(array('controller' => 'solicitaralteracao','action' => 'nomeprojeto2')); ?>');
                     $('#Social').submit();
@@ -117,13 +117,13 @@ function buscaragenteread(cpf)
     else
     {
         $('#erroCpf').html('');
-        // retira as máscaras do cpf/cnpj
+        // retira as m&aacute;scaras do cpf/cnpj
         value = value.replace(".","");
         value = value.replace(".","");
         value = value.replace("/","");
         cpf = value.replace("-","");
 
-        // faz a verificação do agente via post
+        // faz a verifica&ccedil;&atilde;o do agente via post
         $.ajax({
             type: "POST",
             dataType: 'json',
@@ -139,16 +139,16 @@ function buscaragenteread(cpf)
                 }
                 else if (data[0].msgCPF == 'invalido')
                 {
-                    $('#erroCpf').html('<p>CPF/CNPJ Inválido</p>');
+                    $('#erroCpf').html('<p>CPF/CNPJ Inv&aacute;lido</p>');
                 }
                 else if (data[0].msgCPF == 'novo')
                 {
-                	$('#erroCpf').html('<p>Preencha os dados abaixo. Após salvar a solicitação, você deverá terminar de cadastrar o Proponente!</p>');
+                	$('#erroCpf').html('<p>Preencha os dados abaixo. Após salvar a solicita&ccedil;&atilde;o, você dever&aacute; terminar de cadastrar o Proponente!</p>');
                 }
             },
             error: function (data)
             {
-                alert("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
+                alert("Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi possível carregar agente!");
             }
         });
     }
@@ -173,7 +173,7 @@ function buscaragenteread(cpf)
 </div>
 <!-- final: #titulo -->
 
-<!-- início: área principal #conteudo -->
+<!-- início: &aacute;rea principal #conteudo -->
 <div id="conteudo">
 
     <?php
@@ -200,7 +200,7 @@ function buscaragenteread(cpf)
       //$justificativa2 = "Digite seu texto aqui...";
       $justificativa2 = "";
     }
-    if ($menu=="Botão") {
+    if ($menu=="Bot&atilde;o") {
     	$readonly = 'readonly="readonly"';
     } else {
     	$readonly = '';
@@ -295,8 +295,8 @@ function buscaragenteread(cpf)
 	</form>
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

@@ -1,12 +1,12 @@
 <?php
 /**
- * Substituição de comprovantes (Acesso: PROPONENTES)
+ * Substitui&ccedil;&atilde;o de comprovantes (Acesso: PROPONENTES)
  * @author Equipe RUP - Politec
  * @since 28/04/2010
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.execucaofisicadoprojeto
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -14,7 +14,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="last">Comprovação de Execução Física do Projeto</li>
+		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -23,7 +23,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Comprovação de Execução Física do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'buscardocumentos')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
+	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'buscardocumentos')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -34,7 +34,7 @@
 
 
 
-	<!-- ========== INÍCIO FORMULÁRIO DE SUBSTITUIÇÃO ========== -->
+	<!-- ========== INÍCIO FORMUL&aacute;RIO DE SUBSTITUI&ccedil;&atilde;O ========== -->
 	<form name="formSubstituir" id="formSubstituir" method="post" 
 		action="<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'substituirdocumentos')); ?>?pronac=<?php echo $_GET['pronac']; ?>&doc=<?php echo $_GET['doc']; ?>" 
 		enctype="multipart/form-data">
@@ -81,7 +81,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th><label for="descricao">Descrição</label></th>
+			<th><label for="descricao">Descri&ccedil;&atilde;o</label></th>
 			<td>
 				<textarea class="textarea_simples w600" type="text" name="descricao" id="descricao" cols="60" rows="4" <?php echo $this->contadorTextarea('form.descricao', 'form.exibirContadorTextarea', 500); ?>><?php echo isset($this->descricao) ? $this->descricao : $doc->dsComprovante; ?></textarea>
 				<?php echo $this->exibirContadorTextarea('exibirContadorTextarea', 3, 500, strlen($doc->dsComprovante)); ?>
@@ -123,12 +123,12 @@
 	
 	
 	
-	<!-- ========== BOTÕES DE CADASTRO E ETC ========== -->
+	<!-- ========== BOT&otilde;ES DE CADASTRO E ETC ========== -->
 	<table class="tabela">
 		<tr>
 			<td>
 				<div class="float_left">
-					<input type="button" class="btn_voltar" title=" Página Anterior "
+					<input type="button" class="btn_voltar" title=" P&aacute;gina Anterior "
 						onkeypress=" " 
 						onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'buscardocumentos')); ?>?pronac=<?php echo $_GET['pronac']; ?>');" />
 				</div>
@@ -143,7 +143,7 @@
 	
 	
 	</form>
-	<!-- ========== FIM FORMULÁRIO DE SUBSTITUIÇÃO ========== -->
+	<!-- ========== FIM FORMUL&aacute;RIO DE SUBSTITUI&ccedil;&atilde;O ========== -->
 
 
 
@@ -152,8 +152,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

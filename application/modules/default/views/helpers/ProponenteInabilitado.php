@@ -1,6 +1,6 @@
 <?php 
 /**
- * Situação do Proponente
+ * Situa&ccedil;&atilde;o do Proponente
  * @author Equipe RUP - Politec
  * @since 29/03/2010
  * @version 1.0
@@ -13,7 +13,7 @@
 class Zend_View_Helper_ProponenteInabilitado
 {
 	/**
-	 * Informa a situação do Proponente
+	 * Informa a situa&ccedil;&atilde;o do Proponente
 	 * @access public
 	 * @param integer $cpf
 	 * @return boolean

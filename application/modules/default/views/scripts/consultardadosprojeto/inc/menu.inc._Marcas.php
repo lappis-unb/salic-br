@@ -18,7 +18,7 @@
     <!-- início: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navegaç?o local #qm0 -->
+        <!-- início: navega&ccedil;?o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -100,7 +100,7 @@
                     $('#msgErroImpressao').html("");
                     $('#frmOpcoesImpressao').submit();
                 }else{
-                    $('#msgErroImpressao').html("<center><font color='red'>É obrigatório selecionar ao menos uma informação para impressão.</font></center>");
+                    $('#msgErroImpressao').html("<center><font color='red'>&eacute; obrigatório selecionar ao menos uma informa&ccedil;&atilde;o para impress&atilde;o.</font></center>");
                 }
             }
 
@@ -152,7 +152,7 @@
               $qtdHabilitado = ceil($diasExecutados/90); */
 //                        x('Dt Inicio = '.$resp->DtInicioExecucao.' e Dt Fim = '.$resp->DtFimExecucao);
 //                        x('Qtd de relatórios esperados para o projeto = '.$qtdRelatorioEsperado);
-//                        x('Qtd de dias após o início da execuç?o = '.$diasExecutados);
+//                        x('Qtd de dias após o início da execu&ccedil;?o = '.$diasExecutados);
 //                        x('Qtd de relatórios habilitados para o cadastro = '.$qtdHabilitado);
 //                        x('Qtd de relatórios cadastrados = '.count($totalReg));
         }
@@ -312,7 +312,7 @@
                     <div class="sanfonaDiv"></div>
                     <!--<a class="no_seta" href="<?php //echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem', 'idpronac' => $this->idPronac), '', true); ?>">Mensagens</a>-->
                 <?php } ?>
-            <!-- <a class="no_seta" href="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => '')); ?>?idPronac=<?php echo $_GET['idPronac']; ?>">Extrato de Movimentaç?o Bancária</a> -->
+            <!-- <a class="no_seta" href="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => '')); ?>?idPronac=<?php echo $_GET['idPronac']; ?>">Extrato de Movimenta&ccedil;?o Banc&aacute;ria</a> -->
             <!-- <a class="no_seta" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'form-enviar-arquivo-marca')); ?><?php echo $codPronac; ?>">Marcas</a> -->
                     
              <!-- Manter Mensagens -->
@@ -328,7 +328,7 @@
             <div class="bottom"></div>
             <div id="space_menu"></div>
         </div>
-        <!-- final: navegaç?o local #qm0 -->
+        <!-- final: navega&ccedil;?o local #qm0 -->
     </div>
 </div>
 <div id="menu_comp_exec" style="display: none;"></div>

@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.readequacao
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2012 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
@@ -207,7 +207,7 @@ $dados = $this->planSR;
 						<th>Justificativa MinC</th>
 					</tr>
 					<tr>
-						<td>Justificativa Técnico</td>
+						<td>Justificativa T&eacute;cnico</td>
 					</tr>
 				</table>
 			</div>
@@ -228,7 +228,7 @@ $dados = $this->planSR;
 <script type="text/javascript">
 <!--
 /**
- * Função para abrir e fechar a grid
+ * Fun&ccedil;&atilde;o para abrir e fechar a grid
  */
 function grid_custo_produto(elemento)
 {
@@ -245,10 +245,10 @@ function grid_custo_produto(elemento)
 		$('#' + elemento).attr({title:'Expandir'});
 	}
 	$('#div_' + elemento).toggle('slow');
-} // fecha função grid_custo_produto()
+} // fecha fun&ccedil;&atilde;o grid_custo_produto()
 
 /**
- * Ações que serão executadas após o carregamento da página
+ * A&ccedil;&otilde;es que ser&atilde;o executadas após o carregamento da p&aacute;gina
  */
 $(document).ready(function()
 {
@@ -259,11 +259,11 @@ $(document).ready(function()
 });
 
 /**
- * Ações que serão executadas após o carregamento da página
+ * A&ccedil;&otilde;es que ser&atilde;o executadas após o carregamento da p&aacute;gina
  */
 $(document).ready(function()
 {
-	// controle de exibição da planilha solicitada
+	// controle de exibi&ccedil;&atilde;o da planilha solicitada
 	$(".icn_menos_HISTADM").click(function()
 	{
 		abrir_planilha(this, 'HISTADM');
@@ -296,7 +296,7 @@ $(document).ready(function()
 
 
 /**
- * Função para expandir/recolher a planilha
+ * Fun&ccedil;&atilde;o para expandir/recolher a planilha
  */
 function abrir_planilha(item, planilha)
 {
@@ -349,6 +349,6 @@ function abrir_planilha(item, planilha)
 		cidade  = $(item).attr('cidade' + planilha);
 		$(".cidade" + planilha + "[produto" + planilha + "='" + produto + "'][etapa" + planilha + "='" + etapa + "'][cidade" + planilha + "='" + cidade + "'][fonte" + planilha + "='" + fonte + "']").css('display', adisplay);
 	}
-} // fecha função abrir_planilha()
+} // fecha fun&ccedil;&atilde;o abrir_planilha()
 //-->
 </script>

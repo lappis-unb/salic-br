@@ -25,7 +25,7 @@ class tbEditalFluxo extends MinC_Db_Table_Abstract {
         
         $select->joinInner(array('f' => 'tbFluxo'), 'ef.idFluxo = f.idFluxo' , 
                         array('f.idFluxo',
-                              'f.dsFluxo'), 'sac.dbo'
+                              'f.dsFluxo'), 'sac'
         );
         
         foreach ($where as $coluna => $valor) {

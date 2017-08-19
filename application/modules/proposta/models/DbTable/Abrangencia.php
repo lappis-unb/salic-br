@@ -148,11 +148,10 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      */
     public function excluirPeloProjeto($idProjeto)
     {
-        $sql = "DELETE FROM SAC.dbo.Abrangencia WHERE idProjeto = " . $idProjeto . " AND stAbrangencia = 1";
+        $sql = "DELETE FROM sac.dbo.Abrangencia WHERE idProjeto = " . $idProjeto . " AND stAbrangencia = 1";
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        //xd($sql);
         if ($db->query($sql)) {
             return true;
         } else {
@@ -219,13 +218,13 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
             array('mun' => 'Municipios'),
             "mun.idUFIBGE = abr.idUF and mun.idMunicipioIBGE = abr.idMunicipioIBGE",
             array(),
-            'agentes.dbo'
+            'agentes'
         );
         $selectAbrangencia->joinInner(
             array('uf' => 'UF'),
             "uf.idUF = abr.idUF",
             array(),
-            'agentes.dbo'
+            'agentes'
         );
         $selectAbrangencia->where('abr.stAbrangencia = ?', 1);
 
@@ -253,7 +252,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("SAC.dbo.Abrangencia", $dados);
+        $cadastrar = $db->insert("sac.dbo.Abrangencia", $dados);
 
         if ($cadastrar) {
             return true;
@@ -278,9 +277,9 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
         $where = array("idAbrangencia = ? " => $where, "stAbrangencia = ?" => 1);
 
         // limpa a associa��o antes de excluir
-        $alterar = $db->update("SAC.dbo.tbAbrangencia", array("idAbrangenciaAntiga" => NULL), array("idAbrangenciaAntiga = ? " => $where));
+        $alterar = $db->update("sac.dbo.tbAbrangencia", array("idAbrangenciaAntiga" => NULL), array("idAbrangenciaAntiga = ? " => $where));
 
-        $excluir = $db->delete("SAC.dbo.Abrangencia", $where);
+        $excluir = $db->delete("sac.dbo.Abrangencia", $where);
 
         if ($excluir) {
             return true;
@@ -314,7 +313,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
     public function buscarAbrangenciasAtuais($idProjeto, $idPais, $idUF, $idMunicipioIBGE)
     {
-        $sql = "SELECT * from SAC.dbo.Abrangencia
+        $sql = "SELECT * from sac.dbo.Abrangencia
                     WHERE
                         idProjeto = $idProjeto
                         and idPais = $idPais
@@ -350,21 +349,21 @@ asipa.stAvaliacaoSubItemPedidoAlteracao as avaliacao,
 asipa.dsAvaliacaoSubItemPedidoAlteracao as dsAvaliacao,
 abran.dsExclusao
                 FROM
-                    SAC.dbo.tbAbrangencia abran
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN SAC.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
-                    INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
+                    sac.dbo.tbAbrangencia abran
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN sac.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scsac.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
+                    INNER JOIN sac.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
                     INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
             LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
             LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
---INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
---INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
 	AND asipa.idAvaliacaoSubItemPedidoAlteracao = abran.idAbrangencia )
                 WHERE
                     proj.IdPRONAC = $idpedidoalteracao and tpa.tpAlteracaoProjeto = 4 and taipa.tpAlteracaoProjeto = 4 and abran.tpAcao != 'N'
@@ -392,25 +391,25 @@ tasipa.stAvaliacaoSubItemPedidoAlteracao as avaliacao,
 tasipa.dsAvaliacaoSubItemPedidoAlteracao as dsAvaliacao,
 taipa.stAvaliacaoItemPedidoAlteracao
                 FROM
-                    SAC.dbo.tbAbrangencia abran
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN SAC.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
-                    INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
+                    sac.dbo.tbAbrangencia abran
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN sac.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scsac.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
+                    INNER JOIN sac.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
                     INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
             LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
             LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
---INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
---INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
 	AND asipa.idAvaliacaoSubItemPedidoAlteracao = abran.idAbrangencia )
 
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemAbragencia tasia ON (tasia.idAbrangencia = abran.idAbrangencia AND tasia.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasipa.idAvaliacaoSubItemPedidoAlteracao = tasia.idAvaliacaoSubItemPedidoAlteracao AND tasipa.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemAbragencia tasia ON (tasia.idAbrangencia = abran.idAbrangencia AND tasia.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasipa.idAvaliacaoSubItemPedidoAlteracao = tasia.idAvaliacaoSubItemPedidoAlteracao AND tasipa.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
                 WHERE
                     proj.IdPRONAC = $idpedidoalteracao and tpa.tpAlteracaoProjeto = 4 and taipa.tpAlteracaoProjeto = 4 and abran.tpAcao != 'N'
                     --AND taipa.stAvaliacaoItemPedidoAlteracao in ('EA', 'AG')
@@ -445,21 +444,21 @@ asipa.stAvaliacaoSubItemPedidoAlteracao as avaliacao,
 asipa.dsAvaliacaoSubItemPedidoAlteracao,
 abran.dsExclusao
                 FROM
-                    SAC.dbo.tbAbrangencia abran
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN SAC.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
-                    INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
+                    sac.dbo.tbAbrangencia abran
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN sac.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scsac.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
+                    INNER JOIN sac.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
                     INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
             LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
             LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
---INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
---INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
 	AND asipa.idAvaliacaoSubItemPedidoAlteracao = abran.idAbrangencia )
                 WHERE
                     proj.IdPRONAC = $idpedidoalteracao and tpa.tpAlteracaoProjeto = 4 and abran.tpAcao != 'N'
@@ -482,25 +481,25 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.
                     tasipa.dsAvaliacaoSubItemPedidoAlteracao as dsAvaliacao,
                     taipa.stAvaliacaoItemPedidoAlteracao
                 FROM
-                    SAC.dbo.tbAbrangencia abran
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN SAC.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
-                    INNER JOIN SAC.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
+                    sac.dbo.tbAbrangencia abran
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoProjeto proj on proj.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN sac.dbo.Projetos pr on pr.IdPRONAC = proj.IdPRONAC
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao tpa on tpa.idPedidoAlteracao = abran.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scsac.tbTipoAlteracaoProjeto ta on ta.tpAlteracaoProjeto = tpa.tpAlteracaoProjeto
+                    INNER JOIN sac.dbo.Abrangencia ab on ab.idProjeto = pr.idProjeto AND ab.stAbrangencia = 1
                     INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
             LEFT JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
             LEFT JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
---INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
---INNER JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
-LEFT JOIN BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+--INNER JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoItemPedidoAlteracao taipa ON taipa.idPedidoAlteracao = tpa.idPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAcaoAvaliacaoItemPedidoAlteracao taaipa ON taipa.idAvaliacaoItemPedidoAlteracao = taaipa.idAvaliacaoItemPedidoAlteracao
 
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao asipa ON (taipa.idAvaliacaoItemPedidoAlteracao = asipa.idAvaliacaoItemPedidoAlteracao
 	AND asipa.idAvaliacaoSubItemPedidoAlteracao = abran.idAbrangencia )
 
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemAbragencia tasia ON (tasia.idAbrangencia = abran.idAbrangencia AND tasia.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
-LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasipa.idAvaliacaoSubItemPedidoAlteracao = tasia.idAvaliacaoSubItemPedidoAlteracao AND tasipa.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemAbragencia tasia ON (tasia.idAbrangencia = abran.idAbrangencia AND tasia.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
+LEFT JOIN bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasipa.idAvaliacaoSubItemPedidoAlteracao = tasia.idAvaliacaoSubItemPedidoAlteracao AND tasipa.idAvaliacaoItemPedidoAlteracao = taipa.idAvaliacaoItemPedidoAlteracao)
                 WHERE
                     proj.IdPRONAC = $idpedidoalteracao and tpa.tpAlteracaoProjeto = 4  and abran.tpAcao != 'N'
                     --AND taipa.stAvaliacaoItemPedidoAlteracao in ('EA', 'AG')
@@ -524,11 +523,11 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                     mun.Descricao as mun,
                     paxta.dsJustificativa
                 from
-                    SAC.dbo.Abrangencia abran
-                    INNER JOIN SAC.dbo.Projetos pro on pro.idProjeto = abran.idProjeto
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap on pap.IdPRONAC = pro.IdPRONAC
-                    INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao paxta on paxta.idPedidoAlteracao = pap.idPedidoAlteracao
-                    INNER JOIN BDCORPORATIVO.scSAC.tbTipoAlteracaoProjeto tap on tap.tpAlteracaoProjeto = paxta.tpAlteracaoProjeto
+                    sac.dbo.Abrangencia abran
+                    INNER JOIN sac.dbo.Projetos pro on pro.idProjeto = abran.idProjeto
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoProjeto pap on pap.IdPRONAC = pro.IdPRONAC
+                    INNER JOIN bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao paxta on paxta.idPedidoAlteracao = pap.idPedidoAlteracao
+                    INNER JOIN bdcorporativo.scsac.tbTipoAlteracaoProjeto tap on tap.tpAlteracaoProjeto = paxta.tpAlteracaoProjeto
                     INNER JOIN agentes.dbo.Uf uf on uf.idUF = abran.idUF
                     INNER JOIN agentes.dbo.Municipios mun on mun.idMunicipioIBGE = abran.idMunicipioIBGE
                     INNER JOIN agentes.dbo.Pais	pais on pais.idPais = abran.idPais
@@ -552,9 +551,9 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                         agentes.dbo.Pais pais,
                         agentes.dbo.UF uf,
                         agentes.dbo.Municipios mun,
-                        SAC.dbo.tbAbrangencia ta,
-                        BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpa,
-                        BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao paxta
+                        sac.dbo.tbAbrangencia ta,
+                        bdcorporativo.scsac.tbPedidoAlteracaoProjeto tpa,
+                        bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao paxta
                     WHERE
                         tpa.idPronac = $idpedidoalteracao AND
                         uf.idUF = ta.idUF AND
@@ -583,9 +582,9 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                         agentes.dbo.Pais pais,
                         agentes.dbo.UF uf,
                         agentes.dbo.Municipios mun,
-                        SAC.dbo.tbAbrangencia ta,
-                        BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tpa,
-                        BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao paxta
+                        sac.dbo.tbAbrangencia ta,
+                        bdcorporativo.scsac.tbPedidoAlteracaoProjeto tpa,
+                        bdcorporativo.scsac.tbPedidoAlteracaoXTipoAlteracao paxta
                     WHERE
                         tpa.idPronac = $idpedidoalteracao AND
                         uf.idUF = ta.idUF AND
@@ -620,7 +619,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao", $dados);
+        $cadastrar = $db->insert("bdcorporativo.scsac.tbAvaliacaoSubItemPedidoAlteracao", $dados);
 
         if ($cadastrar) {
             return true;

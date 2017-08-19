@@ -10,19 +10,19 @@
  {
  	private $nomeOrgao;
  	
- 	// Esta função tem por objetivo instancia o objeto UnidadeFiscalizadora
+ 	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto UnidadeFiscalizadora
 	public function setUnidadeFiscalizadora (UnidadeFiscalizadora $unidadeFiscalizadora)
 	{
 		$this->unidadeFiscalizadora = $unidadeFiscalizadora;
 	}
 	
- 	// Esta função tem por objetivo instancia o objeto Email
+ 	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto Email
 	public function setEmail (Email $email)
 	{
 		$this->email = $email;
 	}
 	
-	// Esta função tem por objetivo instancia o objeto Uf
+	// Esta fun&ccedil;&atilde;o tem por objetivo instancia o objeto Uf
 	public function setUf (Uf $uf)
 	{
 		$this->uf = $uf;

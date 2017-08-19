@@ -7,14 +7,14 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2011 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  */
 
 class DbfController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @access private
-	 * @var integer (idAgente do usuário logado)
+	 * @var integer (idAgente do usu&aacute;rio logado)
 	 */
 	private $getIdUsuario;
 
@@ -38,31 +38,31 @@ class DbfController extends MinC_Controller_Action_Abstract
 
 
 	/**
-	 * Reescreve o método init()
+	 * Reescreve o m&eacute;todo init()
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function init()
 	{
-		$this->view->title = 'Salic - Sistema de Apoio às Leis de Incentivo à Cultura'; // título da página
+		$this->view->title = 'Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura'; // título da p&aacute;gina
 
 		/* ========== INÍCIO PERFIL ========== */
 		// define os grupos que tem acesso
 		$PermissoesGrupo = array();
-		//$PermissoesGrupo[] = 121; // Técnico de Acompanhamento
+		//$PermissoesGrupo[] = 121; // T&eacute;cnico de Acompanhamento
 		$PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
 		//$PermissoesGrupo[] = 123; // Coordenador - Geral de Acompanhamento
-		//$PermissoesGrupo[] = 129; // Técnico de Acompanhamento
-		//$PermissoesGrupo[] = ; // Coordenador de Avaliação
-		//$PermissoesGrupo[] = 134; // Coordenador de Fiscalização
-		//$PermissoesGrupo[] = 124; // Técnico de Prestação de Contas
-		//$PermissoesGrupo[] = 125; // Coordenador de Prestação de Contas
-		//$PermissoesGrupo[] = 126; // Coordenador - Geral de Prestação de Contas
+		//$PermissoesGrupo[] = 129; // T&eacute;cnico de Acompanhamento
+		//$PermissoesGrupo[] = ; // Coordenador de Avalia&ccedil;&atilde;o
+		//$PermissoesGrupo[] = 134; // Coordenador de Fiscaliza&ccedil;&atilde;o
+		//$PermissoesGrupo[] = 124; // T&eacute;cnico de Presta&ccedil;&atilde;o de Contas
+		//$PermissoesGrupo[] = 125; // Coordenador de Presta&ccedil;&atilde;o de Contas
+		//$PermissoesGrupo[] = 126; // Coordenador - Geral de Presta&ccedil;&atilde;o de Contas
 		parent::perfil(1, $PermissoesGrupo); // perfil novo salic
 
-		// pega o idAgente do usuário logado
-		$auth = Zend_Auth::getInstance(); // pega a autenticação
+		// pega o idAgente do usu&aacute;rio logado
+		$auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
 		if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
 		{
 			$this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -75,7 +75,7 @@ class DbfController extends MinC_Controller_Action_Abstract
 		/* ========== FIM PERFIL ========== */
 
 		parent::init();
-	} // fecha método init()
+	} // fecha m&eacute;todo init()
 
 
 
@@ -87,20 +87,20 @@ class DbfController extends MinC_Controller_Action_Abstract
 	 */
 	public function indexAction()
 	{
-		$this->_forward('form'); // redireciona para o formulário
-	} // fecha método indexAction()
+		$this->_forward('form'); // redireciona para o formul&aacute;rio
+	} // fecha m&eacute;todo indexAction()
 
 
 
 	/**
-	 * Formulário para gerar o DBF
+	 * Formul&aacute;rio para gerar o DBF
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function formAction()
 	{
-	} // fecha método formAction()
+	} // fecha m&eacute;todo formAction()
 
 
 
@@ -112,10 +112,10 @@ class DbfController extends MinC_Controller_Action_Abstract
 	 */
 	public function gerarDbfAction()
 	{
-		// caso o formulário seja enviado via post
+		// caso o formul&aacute;rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
-			// configuração o php.ini para 100MB
+			// configura&ccedil;&atilde;o o php.ini para 100MB
 			@set_time_limit(0);
 			@ini_set('mssql.textsize',      10485760000);
 			@ini_set('mssql.textlimit',     10485760000);
@@ -129,22 +129,22 @@ class DbfController extends MinC_Controller_Action_Abstract
 			$receber = (isset($post->receber) && $post->receber == 'S') ? 'S' : 'N';
 			$email   = strtolower($post->email);
 
-			// objeto para validação de e-mail
+			// objeto para valida&ccedil;&atilde;o de e-mail
 			$ValidarEmail = new Zend_Validate_EmailAddress();
 
 			try
 			{
 				if (empty($ano))
 				{
-					throw new Exception('Por favor, informe um ano válido!');
+					throw new Exception('Por favor, informe um ano v&aacute;lido!');
 				}
 				else if ($ano > date('Y'))
 				{
-					throw new Exception('O ano informado não pode ser maior que o ano atual!');
+					throw new Exception('O ano informado n&atilde;o pode ser maior que o ano atual!');
 				}
 				else if ($receber == 'S' && (empty($email) || !$ValidarEmail->isValid($email)))
 				{
-					throw new Exception('Por favor, informe um e-mail válido!');
+					throw new Exception('Por favor, informe um e-mail v&aacute;lido!');
 				}
 				else
 				{
@@ -152,7 +152,7 @@ class DbfController extends MinC_Controller_Action_Abstract
 					$this->sInformacaoReceitaFederalV3 = new sInformacaoReceitaFederalV3();
 					$this->sInformacaoReceitaFederalV3->gerarDBF($ano);
 
-					// busca as infomações que serão armazenadas no arquivo
+					// busca as infoma&ccedil;&otilde;es que ser&atilde;o armazenadas no arquivo
 					$this->Dbf = new Dbf();
 					$buscar = $this->Dbf->buscarInformacoes();
 
@@ -196,8 +196,8 @@ class DbfController extends MinC_Controller_Action_Abstract
 
 							if ($receber == 'S')
 							{
-								// envia uma cópia do arquivo para o e-mail informado no formulário
-								$msg = 'Segue cópia do arquivo para geração da DBF. ';
+								// envia uma cópia do arquivo para o e-mail informado no formul&aacute;rio
+								$msg = 'Segue cópia do arquivo para gera&ccedil;&atilde;o da DBF. ';
 								$msg.= 'O arquivo original foi salvo em: ';
 								$msg.= '<strong><a href="' . $url . '" title="Abrir arquivo" target="_blank">' . $url . '</a></strong>';
 
@@ -223,9 +223,9 @@ class DbfController extends MinC_Controller_Action_Abstract
 		} // fecha if post
 		else
 		{
-			parent::message('Por favor, preencha o formulário para gerar o DBF corretamente!', 'dbf/form', 'ALERT');
+			parent::message('Por favor, preencha o formul&aacute;rio para gerar o DBF corretamente!', 'dbf/form', 'ALERT');
 		}
 
-	} // fecha método gerarDbfAction()
+	} // fecha m&eacute;todo gerarDbfAction()
 
 } // fecha class

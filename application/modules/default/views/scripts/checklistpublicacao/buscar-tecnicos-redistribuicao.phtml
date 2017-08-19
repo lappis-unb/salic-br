@@ -58,9 +58,9 @@
             //CONFIRMAR  REDISTRIBUICAO
             $('html').css('overflow', 'hidden');
             $("body").append("<div id='divDinamica'></div>");
-            $("#divDinamica").html("Confirma a redistribuição dos projeto(s) selecionado(s)?");
+            $("#divDinamica").html("Confirma a redistribui&ccedil;&atilde;o dos projeto(s) selecionado(s)?");
             $("#divDinamica").dialog({
-                title: "Confirmação",
+                title: "Confirma&ccedil;&atilde;o",
                 resizable: true,
                 width:350,
                 height:150,
@@ -68,7 +68,7 @@
                 autoOpen:true,
                 draggable:false,
                 buttons: {
-                    'Não': function() {
+                    'N&atilde;o': function() {
                         $("#divDinamica").remove();
                         $(this).dialog('close');
                         $('html').css('overflow', 'auto');
@@ -99,11 +99,11 @@
                     <th><input type="checkbox" value="Selecionar todos" class="btn" id='selecionar'></th>
                     <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="1">pronac</a></th>
                     <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="2">Nome do Projeto</a></th>
-                    <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="24">N° da Reunião</a></th>
+                    <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="24">N° da Reuni&atilde;o</a></th>
                     <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="32">Dt. Recebimento</a></th>
-                    <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="31">Tempo de Análise</a></th>
+                    <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="31">Tempo de An&aacute;lise</a></th>
                     <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="29">Status</a></th>
-                    <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="28">Técnico</a></th>
+                    <th><a href="#resultadoPesquisa" class="orderBy" valorOrdenacao="28">T&eacute;cnico</a></th>
                 </tr>
             </thead>
             <tbody>

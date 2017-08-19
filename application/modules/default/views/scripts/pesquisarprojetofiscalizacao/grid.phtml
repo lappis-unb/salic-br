@@ -43,7 +43,7 @@
     <ul>
         <li class="first">Início</li>
         <li>Fiscalizar Projeto</li>
-        <li class="last">Fiscalização do Projeto</li>
+        <li class="last">Fiscaliza&ccedil;&atilde;o do Projeto</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -51,7 +51,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div><?php echo ($this->nmPagina) ? $this->nmPagina : 'Fiscalização em andamento'; ?></div>
+    <div><?php echo ($this->nmPagina) ? $this->nmPagina : 'Fiscaliza&ccedil;&atilde;o em andamento'; ?></div>
 </div>
 
 
@@ -59,15 +59,15 @@
 <div id="conteudo">           
     <table class="tabela">
 	<tr>
-            <?php if($this->grupoAtivo == 134){ //Se for coordenador habilita essa outra opção ?>
+            <?php if($this->grupoAtivo == 134){ //Se for coordenador habilita essa outra op&ccedil;&atilde;o ?>
             <td width="645" align="center">
                 <select name="tipoFiltro" id="tipoFiltro" style="width: 285px; margin-right: 10px;" class="input_simples">
-                    <option value="">Fiscalização em andamento</option>
-                    <option value="analisados" <?php echo ($this->filtro == 'analisados')?'selected="selected"':''; ?>>Fiscalização concluída pelo técnico</option>
-                    <option value="concluidos" <?php echo ($this->filtro == 'concluidos')?'selected="selected"':''; ?>>Fiscalização concluída pelo coordenador</option>
+                    <option value="">Fiscaliza&ccedil;&atilde;o em andamento</option>
+                    <option value="analisados" <?php echo ($this->filtro == 'analisados')?'selected="selected"':''; ?>>Fiscaliza&ccedil;&atilde;o concluída pelo t&eacute;cnico</option>
+                    <option value="concluidos" <?php echo ($this->filtro == 'concluidos')?'selected="selected"':''; ?>>Fiscaliza&ccedil;&atilde;o concluída pelo coordenador</option>
                 </select>
                 <select name="tecFiltro" id="tecFiltro" style="width: 235px;" class="input_simples">
-                    <option value="">Todos os técnicos</option>
+                    <option value="">Todos os t&eacute;cnicos</option>
                     <?php foreach ($this->Usuarios as $usuario) { ?>
                     <option value="<?php echo $usuario->idUsuario; ?>"><?php echo $usuario->Nome; ?></option>
                     <?php } ?>
@@ -77,7 +77,7 @@
             <?php } ?>
             <td align="center"><?php if($this->qntdProjetos > 0){echo ($this->qntdProjetos == 1) ? $this->qntdProjetos.' Projeto listado' : $this->qntdProjetos.' Projetos listados'; }else{ echo 'Nenhum Registro encontrado!';}?></td>
             
-            <?php if($this->grupoAtivo == 134){ //Se for coordenador habilita essa outra opção ?>
+            <?php if($this->grupoAtivo == 134){ //Se for coordenador habilita essa outra op&ccedil;&atilde;o ?>
             <td align="right" width="1">
                 <input type="button" id="btn_pesquisar_projeto" class="btn_pesquisar_projeto" value="" style="width: 175px;">
             </td>
@@ -86,7 +86,7 @@
     </table>
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -113,12 +113,12 @@
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&pronac='.$this->pronacProjeto; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -136,7 +136,7 @@
             echo " de ". $this->paginacao['total'];
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
     <?php } ?>
 
 
@@ -149,11 +149,11 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&campo=dtInicioFiscalizacaoProjeto&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Início</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&campo=dtFimFiscalizacaoProjeto&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Fim</a></th>
                 
-                <?php if($this->grupoAtivo == 134){ //Se for coordenador habilita essa outra opção ?>
-                    <th>Dados da Fiscalização</th>
+                <?php if($this->grupoAtivo == 134){ //Se for coordenador habilita essa outra op&ccedil;&atilde;o ?>
+                    <th>Dados da Fiscaliza&ccedil;&atilde;o</th>
 
                     <?php if($this->filtro != 'concluidos'){ ?>
-                    <th class="w150">Comunicar Proponente da Fiscalização</th>
+                    <th class="w150">Comunicar Proponente da Fiscaliza&ccedil;&atilde;o</th>
                     <?php } ?>
 
                 <?php } ?>
@@ -209,7 +209,7 @@
                 <?php if($this->filtro != 'concluidos' && $this->grupoAtivo == 134){ ?>
                 <td align="center">
                     <a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'visualizaremail'));?>?idPronac=<?php echo $d->IdPRONAC; ?>&idFiscalizacao=<?php echo $d->idFiscalizacao; ?>">
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" alt="Dados da Fiscalização" />
+                        <img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" alt="Dados da Fiscaliza&ccedil;&atilde;o" />
                     </a>
                 </td>
                 <?php } ?>
@@ -226,7 +226,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
         <?php if($this->qntdProjetos > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -261,12 +261,12 @@
                         <input class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&pronac='.$this->pronacProjeto; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -277,7 +277,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINA&ccedil;&atilde;O ========== -->
 
     <?php } } ?>
 
@@ -292,7 +292,7 @@
     <br clear="all" />
 
 </div>
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

@@ -45,7 +45,7 @@ class ErrorController extends Zend_Controller_Action
     {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setRender('error');
-        $this->view->message = 'Você não tem permissão para acessar este conteúdo.';
+        $this->view->message = 'Você n&atilde;o tem permiss&atilde;o para acessar este conteúdo.';
         $this->view->errorType = 'permissao';
     }
 
@@ -62,7 +62,7 @@ class ErrorController extends Zend_Controller_Action
     {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setRender('error');
-        $this->view->message = 'Página não encontrada.<br /> Você não possui permissão de acesso ou o link desejado não existe mais no sistema.';
+        $this->view->message = 'P&aacute;gina n&atilde;o encontrada.<br /> Você n&atilde;o possui permiss&atilde;o de acesso ou o link desejado n&atilde;o existe mais no sistema.';
         $this->view->errorType = 'pagina';
     }
 
@@ -100,15 +100,15 @@ class ErrorController extends Zend_Controller_Action
 
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
-                $this->view->message = 'Página não encontrada. Tem certeza que você digitou o endereço corretamente?';
+                $this->view->message = 'P&aacute;gina n&atilde;o encontrada. Tem certeza que você digitou o endere&ccedil;o corretamente?';
                 break;
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
-                $this->view->message = 'Controller não encontrada';
+                $this->view->message = 'Controller n&atilde;o encontrada';
                 break;
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 error -- controller or action not found
                 //$this->getResponse()->setHttpResponseCode(404);
-                $this->view->message = 'Action não encontrada';
+                $this->view->message = 'Action n&atilde;o encontrada';
                 break;
             default:
                 // application error

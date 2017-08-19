@@ -51,7 +51,7 @@
 <div id="menu">
     <!-- início: conteúdo principal #container -->
     <div id="container">
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <?php
             $get = Zend_Registry::get("get");
             //define id do PreProjeto que sera passado as outras implementacoes
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navega&ccedil;&atilde;o local #qm0 -->
     </div>
 </div>
 <div id="modalExcluirProposta" style="display:none"></div>

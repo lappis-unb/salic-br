@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.execucaofisicadoprojeto
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -28,7 +28,7 @@
         $('#btn_pesquisar').click(function(){
             if($("#checkCpf").attr('checked') == true){
                 if($("#CgcCpf").val().length != 14){
-                    $("#erro").html('Dados obrigatórios não informados ou incorretos!');
+                    $("#erro").html('Dados obrigatórios n&atilde;o informados ou incorretos!');
                     $("#erro").dialog('open');
                 }
                 else{
@@ -37,7 +37,7 @@
             }
             if($("#CheckCnpj").attr('checked') == true){
                 if($("#CgcCpf").val().length != 18){
-                    $("#erro").html('Dados obrigatórios não informados ou incorretos!');
+                    $("#erro").html('Dados obrigatórios n&atilde;o informados ou incorretos!');
                     $("#erro").dialog('open');
                 }
                 else{
@@ -68,26 +68,26 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="last">Solicitar Readequação</li>
+        <li class="last">Solicitar Readequa&ccedil;&atilde;o</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>SOLICITAR READEQUAÇÃO <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+    <div>SOLICITAR READEQUA&ccedil;&atilde;O <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="erro" title="Erro"></div>
 <div id="conteudo">
 
-    <!-- ========== FORMULÁRIO PARA BUSCAR PRONAC ========== -->
+    <!-- ========== FORMUL&aacute;RIO PARA BUSCAR PRONAC ========== -->
     <form class="form" name="formBuscar" id="formBuscar" method="post"
           action="<?php echo $this->url(array('controller' => 'solicitaralteracao', 'action' => 'projetos')); ?>">
 
         <table class="tabela_busca">
             <tr>
-                <th colspan="2">Solicitar Readequação</th>
+                <th colspan="2">Solicitar Readequa&ccedil;&atilde;o</th>
             <tr>
             <tr>
                 <th class="titulo_campo">
@@ -104,13 +104,13 @@
         </table>
 
     </form>
-    <!-- ========== FIM FORMULÁRIO DE BUSCA PRONAC ========== -->
+    <!-- ========== FIM FORMUL&aacute;RIO DE BUSCA PRONAC ========== -->
 
 </div>
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

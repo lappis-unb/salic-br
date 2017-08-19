@@ -182,14 +182,14 @@ if (  $this->modal == "s"  ) {?>
                 cod = $(this).attr('cod');
             
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente limpar os dados dessa certidão?');
+            $("#alerta").html('Deseja realmente limpar os dados dessa certid&atilde;o?');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',
                 width: 430,
                 modal: true,
                 buttons : {
-                    'Não' : function(){
+                    'N&atilde;o' : function(){
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
@@ -216,7 +216,7 @@ if (  $this->modal == "s"  ) {?>
                                     
                                 } else {
                                     $("#alerta").dialog("destroy");
-                                    $("#alerta").html("Não encontramos os dados dessa certidão!");
+                                    $("#alerta").html("N&atilde;o encontramos os dados dessa certid&atilde;o!");
                                     $("#alerta").dialog({
                                         resizable: false,
                                         title: 'Alerta!',
@@ -579,7 +579,7 @@ if (  $this->modal == "s"  ) {?>
     $dataatual = date('Y-m-d');
 ?>
 
-<!-- inï¿½cio: área principal #conteudo -->
+<!-- inï¿½cio: &aacute;rea principal #conteudo -->
 <?php if (  $this->modal == "s"  ) {?>
     <div id="conteudo">
         <table class="tabela">

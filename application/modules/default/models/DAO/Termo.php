@@ -5,7 +5,7 @@ class Termo extends Zend_Db_Table{
                  public function buscarReuniao() {
                    $sql0 = " select MAX(NrReuniao) as NrReuniao
                             from
-                            SAC.dbo.tbReuniao as reuniao
+                            sac.dbo.tbReuniao as reuniao
                             where
                             reuniao.stEstado = 1 and reuniao.stPlenaria = 'E'";
                     $db= Zend_Db_Table::getDefaultAdapter();
@@ -24,10 +24,10 @@ $sql = "select  tr.idNrReuniao,
         pr.NomeProjeto,
         tp.stAnalise, 
         ap.AprovadoReal
-		from BDCORPORATIVO.scSAC.tbPauta tp
-        inner join SAC.dbo.Projetos pr  on pr.IdPRONAC = tp.IdPRONAC
-        inner join SAC.dbo.tbReuniao tr on tp.idNrReuniao = tr.idNrReuniao
-        join SAC.dbo.Aprovacao ap on pr.IdPRONAC = ap.IdPRONAC
+		from bdcorporativo.scsac.tbPauta tp
+        inner join sac.dbo.Projetos pr  on pr.IdPRONAC = tp.IdPRONAC
+        inner join sac.dbo.tbReuniao tr on tp.idNrReuniao = tr.idNrReuniao
+        join sac.dbo.Aprovacao ap on pr.IdPRONAC = ap.IdPRONAC
 		where
         tr.NrReuniao = '$NrReuniao'   --/*parametro para a consulta
         and tp.stAnalise in ('AS', 'IS', 'AC', 'IC', 'AR')
@@ -65,14 +65,14 @@ $sql = "        SELECT
 		    when ap.TipoAprovacao = 3 then 'Prorroga��o de Prazo'
 		    when ap.TipoAprovacao = 4 then 'Redu��o'
 		    end as tipoaprovacao
-      		FROM SAC.dbo.Projetos pr
-		    INNER JOIN BDCORPORATIVO.scSAC.tbPauta tp ON pr.IdPRONAC = tp.IdPRONAC
-		    INNER JOIN SAC.dbo.tbReuniao tr ON tp.idNrReuniao = tr.idNrReuniao
-		    INNER JOIN SAC.dbo.Parecer par on par.idPRONAC = pr.IdPRONAC
-		    Inner JOIN SAC.dbo.Aprovacao ap ON pr.IdPRONAC = ap.IdPRONAC
+      		FROM sac.dbo.Projetos pr
+		    INNER JOIN bdcorporativo.scsac.tbPauta tp ON pr.IdPRONAC = tp.IdPRONAC
+		    INNER JOIN sac.dbo.tbReuniao tr ON tp.idNrReuniao = tr.idNrReuniao
+		    INNER JOIN sac.dbo.Parecer par on par.idPRONAC = pr.IdPRONAC
+		    Inner JOIN sac.dbo.Aprovacao ap ON pr.IdPRONAC = ap.IdPRONAC
 		WHERE
-		    pr.IdPRONAC IN ($pronac)
-		    AND tp.stAnalise IN ('AS', 'IS', 'AC', 'IC', 'AR')
+		    pr.IdPRONAC in ($pronac)
+		    AND tp.stAnalise in ('AS', 'IS', 'AC', 'IC', 'AR')
 		    AND tr.stEstado = 1 and tr.stPlenaria = 'E'
                     AND par.stAtivo = 1
 		    and ap.dtaprovacao in(select max(dtaprovacao) from sac.dbo.aprovacao where idpronac=pr.IdPRONAC)

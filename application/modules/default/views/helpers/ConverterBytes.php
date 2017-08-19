@@ -1,19 +1,19 @@
 <?php
 /**
- * Conversão de Bytes
+ * Convers&atilde;o de Bytes
  * @author Equipe RUP - Politec
  * @since 19/05/2010
  * @version 1.0
  * @package application
  * @subpackage application.view.helpers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Zend_View_Helper_ConverterBytes
 {
 	/**
-	 * Método para converter os bytes
+	 * M&eacute;todo para converter os bytes
 	 * @access public
 	 * @param string $bytes
 	 * @param string $casas (casas decimais)
@@ -32,6 +32,6 @@ class Zend_View_Helper_ConverterBytes
 		while ($bytes > 1024);
 
 		return sprintf("%1.{$casas}f%s", $bytes, $unidades[$unidade]);
-	} // fecha método converterBytes()
+	} // fecha m&eacute;todo converterBytes()
 
 } // fecha class

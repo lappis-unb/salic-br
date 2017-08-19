@@ -41,9 +41,9 @@ foreach ( $this->consultaReuniao as $value ) {
 		echo "<div id='teste'></div>";
 		echo "<table>";
 		echo "<tr>";
-		echo "<td>Status da Reunião: </td>";
+		echo "<td>Status da Reuni&atilde;o: </td>";
 		if ($value->stEstado == 0 and Data::CompararDatas ( $value->DtFechamento ) >= 0) {
-			echo "<td>Reunião em andamento</td>";
+			echo "<td>Reuni&atilde;o em andamento</td>";
 		}
 		
 		if (Data::CompararDatas ( $value->DtFechamento ) <= 0 and $value->stEstado <= 0) {
@@ -51,11 +51,11 @@ foreach ( $this->consultaReuniao as $value ) {
 		}
 		echo "</tr>";
 		echo "<tr >";
-		echo "<td>Período para inclusão de projetos:</td>";
+		echo "<td>Período para inclus&atilde;o de projetos:</td>";
 		echo "<td>" . $value->DtInicio . " a " . $value->DtFechamento . "</td>";
 		echo "</tr>";
 		echo "<tr >";
-		echo "<td>Total de projetos submetidos a Plenária:</td>";
+		echo "<td>Total de projetos submetidos a Plen&aacute;ria:</td>";
 		if (isset ( $submetidosPlenaria )) {
 			echo "<td>$submetidosPlenaria</td>";
 		} else {
@@ -63,7 +63,7 @@ foreach ( $this->consultaReuniao as $value ) {
 		}
 		echo "</tr>";
 		echo "<tr>";
-		echo "<td>Total de projetos não submetidos a Plenária:</td>";
+		echo "<td>Total de projetos n&atilde;o submetidos a Plen&aacute;ria:</td>";
 		if (isset ( $naoSubmetidosPauta )) {
 			echo "<td>$naoSubmetidosPauta</td>";
 		} else {
@@ -87,14 +87,14 @@ foreach ( $this->consultaReuniao as $value ) {
 				echo "'>";
 				echo "<input type='hidden' value='encerrar' name='reuniao'>";
 				echo "<td></td>";
-				echo "<td><input type='submit' size='30' value='Encerrar Reunião'></td>";
+				echo "<td><input type='submit' size='30' value='Encerrar Reuni&atilde;o'></td>";
 			} else {
 				echo "<input name='idReuniao' type='hidden' value='";
 				echo $this->consultaProjetosPautaReuniao[0]->NumeroReuniao;
 				echo "'>";
 				echo "<input type='hidden' value='iniciar' name='reuniao'>";
 				echo "<td></td>";
-				echo "<td><input type='submit' size='30' value='Fechar pauta/iniciar reunião'></td>";
+				echo "<td><input type='submit' size='30' value='Fechar pauta/iniciar reuni&atilde;o'></td>";
 			}
 		}
 		echo "</form>";

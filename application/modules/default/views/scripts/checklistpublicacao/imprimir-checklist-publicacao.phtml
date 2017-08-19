@@ -97,10 +97,10 @@
 <div class="paginaA4">
 
     <div align="center">
-        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Ministério da Cultura"/>
-        <br clear="all" /><span class="TituloMinC">Ministério da Cultura</span>
-        <br clear="all" /><span class="TituloDoDocumento">CheckList para Publicação - <?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando Análise Documental'; ?></span>
-        <br clear="all" /><span class="DataDoDocumento">Data da impressão: <?php echo date('d/m/Y - H:i:s'); ?></span>
+        <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Minist&eacute;rio da Cultura"/>
+        <br clear="all" /><span class="TituloMinC">Minist&eacute;rio da Cultura</span>
+        <br clear="all" /><span class="TituloDoDocumento">CheckList para Publica&ccedil;&atilde;o - <?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando An&aacute;lise Documental'; ?></span>
+        <br clear="all" /><span class="DataDoDocumento">Data da impress&atilde;o: <?php echo date('d/m/Y - H:i:s'); ?></span>
         <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->dados).' projetos listados'; ?></span>
     </div>
     
@@ -110,7 +110,7 @@
             <tr class="titulo_tabela">
                 <th>PRONAC</th>
                 <th>Nome do Projeto</th>
-                <th>Área / Segmento Cultural</th>
+                <th>&aacute;rea / Segmento Cultural</th>
                 <th>Enquadramento</th>
                 <th>Período de Execu&ccedil;&atilde;o</th>
                 <th>Vl. Aprovado&nbsp;(R$)</th>
@@ -135,7 +135,7 @@
                 <td><?php echo $d->NomeProjeto; ?></td>
                 <td><?php echo $d->dsArea.' / '.$d->dsSegmento; ?></td>
                 <td align="center"><?php echo 'Art. '.$d->enquadramento; ?></td>
-                <td align="center" <?php echo $classRed; ?>><?php echo Data::tratarDataZend($d->DtInicioExecucao, 'Brasileira'); ?> à <?php echo Data::tratarDataZend($d->DtFimExecucao, 'Brasileira'); ?></td>
+                <td align="center" <?php echo $classRed; ?>><?php echo Data::tratarDataZend($d->DtInicioExecucao, 'Brasileira'); ?> &agrave; <?php echo Data::tratarDataZend($d->DtFimExecucao, 'Brasileira'); ?></td>
                 <td align="right" nowrap><?php echo @number_format(($d->ValorAprovado), 2, ",", "."); ?></td>
                 <td align="center"><?php echo $d->nrreuniao; ?></td>
                 <td><?php echo $d->Tecnico; ?></td>

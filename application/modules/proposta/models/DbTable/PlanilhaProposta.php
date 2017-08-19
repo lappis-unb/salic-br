@@ -9,7 +9,7 @@
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @author Cleber Santos <oclebersantos@gmail.com>
  * @since 18/10/2016
- * @deprecated esse arquivo deverá ter seus metodos transferidos para Proposta_Model_DbTable_TbPlanilhaProposta
+ * @deprecated esse arquivo dever&aacute; ter seus metodos transferidos para Proposta_Model_DbTable_TbPlanilhaProposta
  * @link http://salic.cultura.gov.br
  */
 class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
@@ -39,7 +39,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
      */
     protected $_primary = 'idPlanilhaProposta';
 
-//    @todo : esse arquivo deverá ter seus metodos transferidos para Proposta_Model_DbTable_TbPlanilhaProposta e o arquivo apagado
+//    @todo : esse arquivo dever&aacute; ter seus metodos transferidos para Proposta_Model_DbTable_TbPlanilhaProposta e o arquivo apagado
     /*
      * @deprecated Todos os metodos deste arquivo, foram migrados para o arquivo TbPlanilhaPrposta.php (Proposta_Model_DbTable_TbPlanilhaProposta).
      */
@@ -84,7 +84,6 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         if ($outras) {
             $somar->where('FonteRecurso <> ?', $outras);
         }
-        //xd($somar->assemble());
         return $this->fetchRow($somar);
     }
 
@@ -107,19 +106,19 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         );
         $select->joinLeft(
             array('b' => 'Produto'), "a.idProduto = b.Codigo",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('c' => 'tbPlanilhaEtapa'), "a.idEtapa = c.idPlanilhaEtapa",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('d' => 'tbPlanilhaItens'), "a.idPlanilhaItem = d.idPlanilhaItens",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->joinInner(
             array('e' => 'tbPlanilhaUnidade'), "a.Unidade = e.idUnidade",
-            array(), 'SAC.dbo'
+            array(), 'SAC'
         );
         $select->where('a.idPlanilhaProposta = ?', $idPlanilhaProposta);
 
@@ -152,15 +151,15 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 //                    MunicipioDespesa,
 //                    idUsuario,
 //                    CAST(dsJustificativa AS TEXT) AS dsJustificativa,
-//                    (SELECT Descricao FROM SAC.dbo.tbPlanilhaEtapa WHERE idPlanilhaEtapa = P.idEtapa) as Etapa,
-//                    (select Descricao from SAC.dbo.tbPlanilhaItens where idPlanilhaItens = P.idPlanilhaItem) as Item,
-//                    (select descricao from SAC.dbo.tbPlanilhaUnidade where idUnidade = P.Unidade) as UnidadeF,
-//                    (select Descricao from SAC.dbo.Verificacao where idVerificacao=P.FonteRecurso)as FonteRecursoF,
+//                    (SELECT Descricao FROM sac.dbo.tbPlanilhaEtapa WHERE idPlanilhaEtapa = P.idEtapa) as Etapa,
+//                    (select Descricao from sac.dbo.tbPlanilhaItens where idPlanilhaItens = P.idPlanilhaItem) as Item,
+//                    (select descricao from sac.dbo.tbPlanilhaUnidade where idUnidade = P.Unidade) as UnidadeF,
+//                    (select Descricao from sac.dbo.Verificacao where idVerificacao=P.FonteRecurso)as FonteRecursoF,
 //                    (select descricao from agentes.dbo.uf where iduf = P.UfDespesa) as UfDespesaF,
 //                    (select descricao from agentes.dbo.Municipios where idMunicipioIBGE=P.MunicipioDespesa) as MunicipioDespesaF,
-//                    (SELECT Descricao from SAC.dbo.Produto where Codigo = P.idProduto) as ProdutoF
+//                    (SELECT Descricao from sac.dbo.Produto where Codigo = P.idProduto) as ProdutoF
 //                FROM
-//                    SAC.dbo.tbPlanilhaProposta as P
+//                    sac.dbo.tbPlanilhaProposta as P
 //                WHERE
 //                    idProjeto = ".$id_projeto."
 //                ORDER BY
@@ -186,7 +185,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
         $sql->joinLeft(array('u' => 'tbplanilhaunidade'),'u.idUnidade = p.unidade', array('unidadef' => 'u.descricao'), $this->_schema );
 
-        $sql->joinLeft(array('v' => 'verificacao'),'v.idverificacao = p.fonterecurso', array('fonterecursof' => 'v.descricao'), $this->_schema );
+        $sql->joinLeft(array('v' => 'Verificacao'),'v.idverificacao = p.fonterecurso', array('fonterecursof' => 'v.descricao'), $this->_schema );
 
         $sql->joinLeft(array('pr' => 'produto'),'pr.codigo = p.idproduto', array('ProdutoF' => 'pr.descricao'), $this->_schema );
 
@@ -265,7 +264,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
             ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(array('veri' => 'verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->join(array('veri' => 'Verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
             ->order('tpe.descricao');
@@ -323,7 +322,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 //        $sql = "
 //            SELECT TOP 1
 //            tpp.idProjeto as idProposta
-//            FROM SAC..tbPlanilhaProposta tpp
+//            FROM sac..tbPlanilhaProposta tpp
 //            WHERE tpp.idProjeto = $idPreProjeto";
 
         $select = $this->select();

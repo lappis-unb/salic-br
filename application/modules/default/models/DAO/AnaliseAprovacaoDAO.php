@@ -12,7 +12,7 @@
 class AnaliseAprovacaoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
-	protected $_schema  = "SAC.dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbAnaliseAprovacao";
 	protected $_primary = "idAnaliseAprovacao";
 
@@ -52,7 +52,7 @@ class AnaliseAprovacaoDAO extends Zend_Db_Table
 			$where.= "AND tpAnalise = '$tpAnalise'";
 		}
 
-		$alterar = $db->update("SAC.dbo.tbAnaliseAprovacao", $dados, $where);
+		$alterar = $db->update("sac.dbo.tbAnaliseAprovacao", $dados, $where);
 
 		if ($alterar)
 		{

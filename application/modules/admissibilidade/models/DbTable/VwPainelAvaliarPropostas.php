@@ -1,7 +1,7 @@
 <?php
 
 /**
- * View para painel de avaliação das propostas e tranformação em projetos.
+ * View para painel de avalia&ccedil;&atilde;o das propostas e tranforma&ccedil;&atilde;o em projetos.
  *
  * @link http://salic.cultura.gov.br
  */

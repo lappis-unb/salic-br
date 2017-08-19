@@ -53,7 +53,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO.dbo'
+                ), 'controledeacesso'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente", 
@@ -64,7 +64,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
         $s->joinInner(
                 array('d' => 'tbDocumento'), "p.idDocumento = d.idDocumento", 
                 array(''),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         $s->joinInner(
                 array('a' => 'tbArquivo'), "d.idArquivo = a.idArquivo", 
@@ -73,7 +73,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                     'a.dtEnvio',
                     'a.nmArquivo'
                 ),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         foreach($where as $key=>$valor){
             $s->where($key, $valor);
@@ -140,12 +140,12 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto",
                 array(	'(pr.AnoProjeto+pr.Sequencial) as pronac',
                 		'pr.OrgaoOrigem',
-                		'NomeProjeto'), 'SAC.dbo'
+                		'NomeProjeto'), 'SAC'
 
         );
         $s->joinInner(
                 array('org' => 'Orgaos'), "pr.Orgao = org.Codigo",
-                array('org.idSecretaria as OrgaoSuperior'), 'SAC.dbo'
+                array('org.idSecretaria as OrgaoSuperior'), 'SAC'
 
         );
         $s->joinInner(
@@ -160,7 +160,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('nmr' => 'SGCacesso'), "nmr.IdUsuario = v.idUsuarioResponsavel",
                 array(
                     'nmr.Nome as NomeResponsavel'
-                ), 'CONTROLEDEACESSO.dbo'
+                ), 'controledeacesso'
         );
         $s->joinInner(
                 array('nmp' => 'Nomes'), "nmp.idAgente = v.idAgenteProponente",
@@ -171,7 +171,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
         $s->joinInner(
                 array('d' => 'tbDocumento'), "p.idDocumento = d.idDocumento",
                 array(''),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         $s->joinInner(
                 array('a' => 'tbArquivo'), "d.idArquivo = a.idArquivo",
@@ -180,7 +180,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
                     'a.dtEnvio',
                     'a.nmArquivo'
                 ),
-                "BDCORPORATIVO.scCorp"
+                "bdcorporativo.scCorp"
         );
         foreach($where as $key=>$valor){
             $s->where($key, $valor);

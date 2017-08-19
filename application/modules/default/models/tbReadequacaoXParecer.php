@@ -35,11 +35,11 @@ class tbReadequacaoXParecer extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b' => 'Parecer'), 'b.IdParecer = a.idParecer',
-            array(''), 'SAC.dbo'
+            array(''), 'SAC'
         );
         $select->joinInner(
             array('c' => 'Usuarios'), 'c.usu_codigo = b.Logon',
-            array(''), 'TABELAS.dbo'
+            array(''), 'TABELAS'
         );
 
         //adiciona quantos filtros foram enviados

@@ -26,7 +26,7 @@
 
     <script type="text/javascript">
         /**
-         * Função para verificar se a data final é menor que a data inicial
+         * Fun&ccedil;&atilde;o para verificar se a data final &eacute; menor que a data inicial
          */
         function verificar_data(x){
             if (x == 1){ // data do recibo
@@ -60,13 +60,13 @@
             } else {
                 return true;
             }
-        } // fecha função validar_data()
+        } // fecha fun&ccedil;&atilde;o validar_data()
 
         /**
-         * Funções que são chamadas após a página ser carregada
+         * Fun&ccedil;&otilde;es que s&atilde;o chamadas após a p&aacute;gina ser carregada
          */
         $(document).ready(function(){
-            // máscaras dos campos
+            // m&aacute;scaras dos campos
             $('#nr_pronac').keyup(function(){
                 mascara(this, format_num); // somente números
             });
@@ -89,15 +89,15 @@
                 }
             });
 
-            // validações antes do envio do formulário
+            // valida&ccedil;&otilde;es antes do envio do formul&aacute;rio
             $('#enviar').click(function(){
-                // validação da data final meno que a inicial
+                // valida&ccedil;&atilde;o da data final meno que a inicial
                 if (!verificar_data(1) || !verificar_data(2)){
                     return false;
                 }
             });
 
-            // calendário
+            // calend&aacute;rio
             $.datepicker.regional['pt-BR'] = {
                 closeText: 'Fechar',
                 prevText: '&#x3c;Anterior',
@@ -122,7 +122,7 @@
 
     <br />
 
-    <!-- ========== INÍCIO FORMULÁRIO DE CONSULTA ========== -->
+    <!-- ========== INÍCIO FORMUL&aacute;RIO DE CONSULTA ========== -->
     <form name="formBuscar" id="formBuscar" method="post"
           action="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'listar-inconsistencias')); ?>"
           enctype="multipart/form-data">
@@ -154,7 +154,7 @@
                 </td>
             </tr>-->
             <tr>
-                <td class="destacar bold w150" align="left"><label for="data_credito">Dt. Crédito</label></td>
+                <td class="destacar bold w150" align="left"><label for="data_credito">Dt. Cr&eacute;dito</label></td>
                 <td>
                     <label for="data3">De</label> <input type="text" class="select_simples btn_calendario" name="data_credito[]" id="data3" maxlength="10" title="Selecione uma data v&aacute;lida!" />
                     <label for="data4">a</label> <input type="text" class="select_simples btn_calendario" name="data_credito[]" id="data4" maxlength="10" title="Selecione uma data v&aacute;lida!" />
@@ -165,14 +165,14 @@
         <table class="tabela w700">
             <tr>
                 <td align="center">
-                    <input type="submit" id="enviar" title="Gerar Relatório de Captações não Identificadas" class="btn_localizar" value=" " /> &nbsp;
+                    <input type="submit" id="enviar" title="Gerar Relatório de Capta&ccedil;&otilde;es n&atilde;o Identificadas" class="btn_localizar" value=" " /> &nbsp;
                     <input type="reset" title="Limpar" class="btn_limpar" value=" " />
                 </td>
             </tr>
         </table>
 
     </form>
-    <!-- ========== FIM FORMULÁRIO DE CONSULTA ========== -->
+    <!-- ========== FIM FORMUL&aacute;RIO DE CONSULTA ========== -->
 
     <br />
 
@@ -180,8 +180,8 @@
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

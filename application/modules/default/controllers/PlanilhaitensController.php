@@ -6,13 +6,13 @@
  * @version 1.0
  * @package application
  * @subpackage application.controllers
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2012 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
 class PlanilhaitensController extends Zend_Controller_Action {
     /**
-     * Método para buscar os itens de uma etapa
+     * M&eacute;todo para buscar os itens de uma etapa
      * Busca como XML para o AJAX
      * @access public
      * @param void
@@ -25,7 +25,7 @@ class PlanilhaitensController extends Zend_Controller_Action {
         $post = Zend_Registry::get('post');
         $id = (int) $post->id;
 
-        // integração MODELO e VISÃO
+        // integra&ccedil;&atilde;o MODELO e VIS&atilde;O
         $tbPlanilhaItens = new PlanilhaItens();
         $this->view->comboplanilha = $tbPlanilhaItens->combo(array('tipp.idPlanilhaEtapa = ?' => $id), array('tpi.Descricao ASC'));
     } // fecha comboAction()
@@ -39,7 +39,7 @@ class PlanilhaitensController extends Zend_Controller_Action {
         $idPlanilhaEtapa = (int) $ids[0];
         $idProduto = (int) $ids[1];
         
-        // integração MODELO e VISÃO
+        // integra&ccedil;&atilde;o MODELO e VIS&atilde;O
         $tbPlanilhaItens = new PlanilhaItens();
         $this->view->comboplanilha = $tbPlanilhaItens->combo(array('tipp.idPlanilhaEtapa = ?' => $idPlanilhaEtapa), array('tpi.Descricao ASC'));
     } // fecha comboAction()

@@ -349,7 +349,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                 {
                     $objAcesso = new Acesso();
                     // cadastra dados do arquivo
-                    $sql = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivo (nmArquivo, sgExtensao, dsTipo, nrTamanho, dtEnvio, dsHash, stAtivo) " .
+                    $sql = "INSERT INTO bdcorporativo.scCorp.tbArquivo (nmArquivo, sgExtensao, dsTipo, nrTamanho, dtEnvio, dsHash, stAtivo) " .
                             "VALUES ('" . $arquivoNome . "', '" . $arquivoExtensao . "', '" . $arquivoTipo . "', '" . $arquivoTamanho . "', {$objAcesso->getExpressionDate()}, '" . $arquivoHash . "', 'A')";
                     $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -358,10 +358,10 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                     // pega o id do arquivo
                     $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-                    $idGerado = $db->fetchOne("SELECT MAX(idArquivo) AS id FROM BDCORPORATIVO.scCorp.tbArquivo");
+                    $idGerado = $db->fetchOne("SELECT MAX(idArquivo) AS id FROM bdcorporativo.scCorp.tbArquivo");
 
                     // insere o bin�rio do arquivo
-                    $sql = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivoImagem " .
+                    $sql = "INSERT INTO bdcorporativo.scCorp.tbArquivoImagem " .
                             "VALUES ($idGerado, $arquivoBinario)";
                     $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -369,7 +369,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
 
                     // insere informa��es do documento
                     $objAcesso = new Acesso();
-                    $sql = "INSERT INTO BDCORPORATIVO.scSac.tbComprovanteExecucao (idPRONAC, idTipoDocumento, nmComprovante, dsComprovante, idArquivo, idSolicitante, dtEnvioComprovante, stParecerComprovante, stComprovante) " .
+                    $sql = "INSERT INTO bdcorporativo.scSac.tbComprovanteExecucao (idPRONAC, idTipoDocumento, nmComprovante, dsComprovante, idArquivo, idSolicitante, dtEnvioComprovante, stParecerComprovante, stComprovante) " .
                             "VALUES ($pronac, $tipoDocumento, '$titulo', '$descricao', $idGerado, 9997, {$objAcesso->getExpressionDate()}, 'AG', 'A')";
                     $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);

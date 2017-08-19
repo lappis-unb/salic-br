@@ -25,7 +25,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         $slct->from(
                 array("d"=>$this->_name),
                 array("DtSolicitacao"=>"CONVERT(CHAR(10),d.DtSolicitacao,121)", "idSolicitante", "idProponente", "idDiligencia", "idTipoDiligencia"),
-                "SAC.dbo"
+                "SAC"
         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -65,7 +65,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         $slct->from(
                 array("d"=>$this->_name),
                 array("*"),
-                "SAC.dbo"
+                "SAC"
         );
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -105,7 +105,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     'CONVERT(CHAR(10),D.dtSolicitacao,103) AS dtSolicitacao',
                     'D.Resposta'
                     ),
-                "SAC.dbo"
+                "SAC"
         );
         $select->joinInner(
                 array('Pr' => 'Projetos'),
@@ -115,7 +115,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     '(Pr.AnoProjeto + Pr.Sequencial) AS PRONAC',
                     'Pr.NomeProjeto'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('Pa' => 'Parecer'),
@@ -125,7 +125,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
 				  ELSE 'N�o'
 				  End AS ParecerFavoravel"
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->where('Pa.TipoParecer = ?', 1);
         $select->where('Pa.stAtivo = ?', 1);
@@ -145,7 +145,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         else{
             $select->where('D.DtResposta is null');
         }
-        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from SAC..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
+        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from sac..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
 
         return $this->fetchAll($select);
     }
@@ -163,7 +163,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
                 array(
                     'idPronac'
                     )
-                ,"SAC.dbo"
+                ,"SAC"
         );
 
         $select->where('((((DATEDIFF(day, DtSolicitacao, '.$this->getDate().') > 20');
@@ -190,10 +190,10 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     'CONVERT(CHAR(10),D.DtResposta,103) AS DtResposta',
                     'CONVERT(CHAR(10),D.dtSolicitacao,103) AS dtSolicitacao',
                     'D.Resposta',
-                    new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM BDCORPORATIVO.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
-                    new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM BDCORPORATIVO.scSAC.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
+                    new Zend_Db_Expr('ISNULL((SELECT tpAcao FROM bdcorporativo.scsac.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as Acao'),
+                    new Zend_Db_Expr('ISNULL((SELECT idRetirardepauta FROM bdcorporativo.scsac.tbRetirarDePauta x WHERE stAtivo = 1 and  x.idPronac = pr.idPronac),0) as idRetiradaPauta')
                     ),
-                "SAC.dbo"
+                "SAC"
         );
         $select->joinInner(
                 array('Pr' => 'Projetos'),
@@ -203,30 +203,30 @@ class Diligencia extends MinC_Db_Table_Abstract {
                     '(Pr.AnoProjeto + Pr.Sequencial) AS PRONAC',
                     'Pr.NomeProjeto'
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('Pa' => 'Parecer'),
-                'Pa.IdPRONAC = D.idPronac  AND Pa.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = Pr.IdPRONAC)',
+                'Pa.IdPRONAC = D.idPronac  AND Pa.DtParecer = (SELECT TOP 1 max(DtParecer) from sac..Parecer where IdPRONAC = Pr.IdPRONAC)',
                 array("CASE WHEN Pa.ParecerFavoravel in ('2','3')
 				  THEN 'Sim'
 				  ELSE 'N�o'
 				  End AS ParecerFavoravel"
                 ),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinInner(
                 array('DPC' => 'tbDistribuicaoProjetoComissao'),
                 'Pa.IdPRONAC = DPC.idPronac',
                 array(),
-                'BDCORPORATIVO.scSAC'
+                'bdcorporativo.scSAC'
         );
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from SAC..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
+        $select->where(New Zend_Db_Expr('D.DtSolicitacao = (SELECT TOP 1 max(DtSolicitacao) from sac..tbDiligencia WHERE idPronac = Pr.IdPRONAC)'));
         //adicionando linha order ao select
         $select->order($order);
 

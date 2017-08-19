@@ -52,10 +52,10 @@
             alertar('A data final deve ser maior que a data inicial!');
             return false;
         } else if(dtinicio < dtAtual) {
-            alertar('O período não pode ser inferior a data de hoje!');
+            alertar('O período n&atilde;o pode ser inferior a data de hoje!');
             return false;
         } else if((arquivo == '')){
-            alertar("Dados obrigatórios não preenchidos!");
+            alertar("Dados obrigatórios n&atilde;o preenchidos!");
         } else {
             $("#form").submit();
         }
@@ -106,10 +106,10 @@
 
         <center>
             <div id="impactosim" class="msgALERT sumir" style="width: 96%;">
-                <div style="float: left;">Todos os projetos dentro deste prazo serão retirados de sua responsabilidade e você não receberá por eles!</div>
+                <div style="float: left;">Todos os projetos dentro deste prazo ser&atilde;o retirados de sua responsabilidade e você n&atilde;o receber&aacute; por eles!</div>
             </div>
             <div id="impactonao" class="msgALERT" style="width: 96%;">
-                <div style="float: left;">Você continuará com os projetos se comprometer a entregar no dia!</div>
+                <div style="float: left;">Você continuar&aacute; com os projetos se comprometer a entregar no dia!</div>
             </div>
         </center>
 
@@ -117,7 +117,7 @@
             <input type="hidden" value="<?php echo date('d/m/Y');?>" id="dtatual" name="dtatual" />
             <table class="tabela">
                 <tr>
-                    <th colspan="4">ATESTADO MÉDICO</th>
+                    <th colspan="4">ATESTADO M&eacute;DICO</th>
                 </tr>
                 <tr>
                     <td colspan="4">
@@ -125,7 +125,7 @@
                         <input type="radio" name="impacto" id="impactoS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" onclick="msgImpacto('sim');" />
                         <label for="impactoS" style="padding-right: 20px;">Sim</label>
                         <input type="radio" name="impacto" id="impactoN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" onclick="msgImpacto('nao');" />
-                        <label for="impactoN">Não</label>
+                        <label for="impactoN">N&atilde;o</label>
                     </td>
                 </tr>
                 <tr>
@@ -151,7 +151,7 @@
     <?php if(count($this->atestados) != 0){ ?>
     <table class="tabela" id="salvos">
         <tr>
-            <th colspan="5">Atestados médicos cadastrados</th>
+            <th colspan="5">Atestados m&eacute;dicos cadastrados</th>
         </tr>
         <tr>
             <td width="130" align="center"><b>Dias de atestado</b></td>
@@ -165,7 +165,7 @@
             <td align="center"><?php echo $at->qtddias;?></td>
             <td align="center"><?php echo $at->dtinicio;?></td>
             <td align="center"><?php echo $at->dtfim;?></td>
-            <td align="center"><?php echo $at->stImpacto == 1 ? 'SIM' : 'NÃO';?></td>
+            <td align="center"><?php echo $at->stImpacto == 1 ? 'SIM' : 'N&atilde;O';?></td>
             <td>
                 <a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'abrirarquivo'), '', true); ?>?id=<?php echo $at->idArquivo; ?>"><?php echo $at->nmArquivo;?></a>
             </td>
@@ -183,8 +183,8 @@
 <!-- ========== FIM CONTEÚDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

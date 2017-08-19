@@ -20,7 +20,7 @@ class ContaBancariaDao extends Zend_Db_Table{
                     DtLoteRemessaCB,
                     DtLoteRemessaCL
                 from
-                    SAC.dbo.ContaBancaria cb
+                    sac.dbo.ContaBancaria cb
                 where
                         (cb.AnoProjeto+cb.Sequencial) = {$idPronac}";
             $db = Zend_Db_Table::getDefaultAdapter();

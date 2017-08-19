@@ -22,7 +22,7 @@ class ArquivoFiscalizacao extends MinC_Db_Table_Abstract {
                 array('arq'=>'tbArquivo'),
                 "arq.idArquivo = arqfis.idArquivo",
                 array('arq.idArquivo','arq.nmArquivo','arq.sgExtensao','dtEnvio','nrTamanho'),
-                'BDCORPORATIVO.scCorp'
+                'bdcorporativo.scCorp'
         );
 
         foreach ($where as $coluna => $valor) {

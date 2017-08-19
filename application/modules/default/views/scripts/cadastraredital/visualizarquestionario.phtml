@@ -44,7 +44,7 @@ $(function()
 
 <?php
 $nomeGuia = $this->nmFormDocumento;
-$nomeGuia = strtolower(preg_replace("[^a-zA-Z0-9 .]", "",strtr($nomeGuia, "á??âé?ëíóô?úüçÁ??ÂÉ?ÍÓÔ?ÚÜÇ ","aaaaeeeiooouucAAAAEEIOOOUUC ")));
+$nomeGuia = strtolower(preg_replace("[^a-zA-Z0-9 .]", "",strtr($nomeGuia, "&aacute;??â&eacute;?ëíóô?úü&ccedil;&aacute;??Â&eacute;?ÍÓÔ?ÚÜ&ccedil; ","aaaaeeeiooouucAAAAEEIOOOUUC ")));
 $arrCaracteresEspeciais1 = array("-","_","'","\"", "/", ".", ",", ";", ":", " ", "(", ")", "[", "]", "{", "}", "+","*","?","!","&","#","@","$","%","?","?");
 $arrCaracteresEspeciais2 = array("","","","", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
 $nomeGuia = str_replace($arrCaracteresEspeciais1, $arrCaracteresEspeciais2, $nomeGuia);

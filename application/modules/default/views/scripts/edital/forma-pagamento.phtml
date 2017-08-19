@@ -98,7 +98,7 @@
                     <td class="destacar bold" style="width: 40%">Valor do Apoio</td>
                     <td class="destacar bold centro" style="width: 10%">Quantidade de Premiados</td>
                     <td class="destacar bold centro" style="width: 10%">Quantidade de Parcelas</td>
-                    <td class="destacar bold centro" style="width: 10%">Ações</td>
+                    <td class="destacar bold centro" style="width: 10%">A&ccedil;&otilde;es</td>
                 </tr>
                 <?php foreach($this->formapagamento as $forP): ?>
                 <tr id="trCriterio_zero">
@@ -234,7 +234,7 @@
             var validaValores = $('#validaValores').val();
             
             if (validaValores === '1') {
-                $('#txtmsg').append('A soma das parcelas não batem com o valor de apoio!<br />');
+                $('#txtmsg').append('A soma das parcelas n&atilde;o batem com o valor de apoio!<br />');
                 $('#msg').show();
                 enviar = 1;
             }
@@ -371,7 +371,7 @@
             height: 170,
             modal: true,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $(this).dialog('close');
                 },
                 'Sim': function() {

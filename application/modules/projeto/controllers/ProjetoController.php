@@ -37,7 +37,7 @@ class Projeto_ProjetoController extends Proposta_GenericController {
         $arrAgente = $tableAgentes->findBy(array('CNPJCPF' => trim($cpf)));
 
         if ($arrAcesso)  $this->idResponsavel = $arrAcesso['idusuario'];
-        if ($arrAgente)  $this->idAgente 	  = $arrAgente['idagente'];
+        if ($arrAgente)  $this->idAgente 	  = $arrAgente['idAgente'];
         if ($arrUsuario) $this->idUsuario     = $arrUsuario['usu_codigo'];
         if ($this->idAgente != 0) $this->usuarioProponente = "S";
         $this->cpfLogado = $cpf;

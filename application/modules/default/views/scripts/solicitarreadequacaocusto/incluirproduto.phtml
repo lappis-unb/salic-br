@@ -121,21 +121,21 @@
             buttons: {
                 'OK': function() {
                     $(this).dialog('close');
-                    $('#acao').html('Solicitação de readequação realizada com sucesso! Deseja fazer nova readequação?');
+                    $('#acao').html('Solicita&ccedil;&atilde;o de readequa&ccedil;&atilde;o realizada com sucesso! Deseja fazer nova readequa&ccedil;&atilde;o?');
                     $('#acao').dialog('open');
                 }
             }
         });
 
         $("#acao").dialog({
-            title :'Alteração',
+            title :'Altera&ccedil;&atilde;o',
             resizable: false,
             width:400,
             height:170,
             modal: true,
             autoOpen:false,
             buttons: {
-                'Não': function() {
+                'N&atilde;o': function() {
                     $.ajax({ //funcao jquery para enviar os formularios via ajax
                         type: "POST",
                         url:  "<?php echo $this->url(array('controller' => 'solicitarreadequacaocusto', 'action' => 'incluirproduto')); ?>",
@@ -327,7 +327,7 @@
             }
 
             if(varnull == false){
-                $('#error').html('Dados obrigatórios não informados!');
+                $('#error').html('Dados obrigatórios n&atilde;o informados!');
                 $(".ui-dialog-titlebar-close").remove();
                 $('#error').dialog('open');
                 fecharModal('carregandoModalAjax');
@@ -373,10 +373,10 @@
                         if(!data.error){
                             $('#tipoAcao').val(tipoacao);
                             if(tipoacao == 'A'){
-                                $('#confirm').html('Alteração enviada com sucesso!');
+                                $('#confirm').html('Altera&ccedil;&atilde;o enviada com sucesso!');
                             }
                             else{
-                                $('#confirm').html('Solicitação enviada com sucesso!');
+                                $('#confirm').html('Solicita&ccedil;&atilde;o enviada com sucesso!');
                             }
                             $(".ui-dialog-titlebar-close").remove();
                             $('#confirm').dialog('open');
@@ -407,7 +407,7 @@
 ?>
 
 <?php $etapa = ""; // menu ?>
-<!-- início: navegação local #qm0 -->
+<!-- início: navega&ccedil;&atilde;o local #qm0 -->
 
     <?php $resultado = $this->buscaprojeto;
 
@@ -417,7 +417,7 @@
         }
         else
         {
-            $tipoCusto = "Administraç&atilde;o do projeto";
+            $tipoCusto = "Administra&ccedil;&atilde;o do projeto";
         }
     ?>
 
@@ -437,7 +437,7 @@
 </div>
 <!-- final: #titulo -->
 
-<!-- início: área principal #conteudo -->
+<!-- início: &aacute;rea principal #conteudo -->
 <div id="loader" class="carregando sumir" style="width:100%; height:100%;" title="Carregando..."><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" alt="carregando"><br/><br/> Carregando...</div>
 <div id="error" class="sumir" style="text-align: center;"></div>
 <div id="confirm" style="text-align: center;"></div>

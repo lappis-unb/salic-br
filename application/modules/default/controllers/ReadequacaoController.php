@@ -3,7 +3,7 @@
  * Controller Readequacao (Proponente, Respons�vel / Procurador)
  * Considera��es importantes:
  *  1. O Projeto tem que estar na Fase de Execu��o (2)
- *  2. O Projeto tem que estar Aprovado (SAC.dbo.Aprovacao):
+ *  2. O Projeto tem que estar Aprovado (sac.dbo.Aprovacao):
  * 		2.1. Os dados da Portaria tem que estar preenchidos
  * 		2.2. O Tipo de Aprova��o deve ser 1
  *  3. Os Projetos devem estar vinculados ao Proponente/Respons�vel/Procurador
@@ -32,7 +32,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	private $_idPronac          = 0; // id do pronac/projeto, obrigat�rio para todas as p�ginas
 	private $_idPreProjeto      = 0; // c�digo pr�-projeto do projeto
 	private $_idPedidoAlteracao = 0; // id do pedido de readequa��o do projeto, obrigat�rio caso exista solicita��o de readequa��o
-	private $_vlTotalAprovado   = 0; // valor aprovado do projeto (SAC.dbo.Aprovacao)
+	private $_vlTotalAprovado   = 0; // valor aprovado do projeto (sac.dbo.Aprovacao)
 	private $_vlTotalSolicitado = 0; // valor que o projeto ter� ap�s a solicita��o de readequa��o ser aprovada
 	private $_tipoReadequacao   = ''; // tipo de readequa��o: redu��o, complementa��o ou remanejamento
 	private $_stPedidoAlteracao = ''; // status do pedido de readequa��o atual (A - Ativo, I - Inativo, T - Tempor�rio)
@@ -54,13 +54,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	private $tbVinculo;                               // base AGENTES
 	private $Uf;                                      // base AGENTES
 	private $Visao;                                   // base AGENTES
-	private $tbAlteracaoNomeProponente;               // base BDCORPORATIVO
+	private $tbAlteracaoNomeProponente;               // base bdcorporativo
 	private $tbArquivo;                               // base BDCOORPORATIVO
 	private $tbArquivoImagem;                         // base BDCOORPORATIVO
-	private $tbPedidoAlteracaoProjeto;                // base BDCORPORATIVO
-	private $tbPedidoAlteracaoXTipoAlteracao;         // base BDCORPORATIVO
-	private $tbPedidoAltProjetoXArquivo;              // base BDCORPORATIVO
-	private $tbProrrogacaoPrazo;                      // base BDCORPORATIVO
+	private $tbPedidoAlteracaoProjeto;                // base bdcorporativo
+	private $tbPedidoAlteracaoXTipoAlteracao;         // base bdcorporativo
+	private $tbPedidoAltProjetoXArquivo;              // base bdcorporativo
+	private $tbProrrogacaoPrazo;                      // base bdcorporativo
 	private $Aprovacao;                               // base SAC
 	private $Area;                                    // base SAC
 	private $PreProjeto;                              // base SAC
@@ -398,11 +398,11 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 //		$this->_idProponente   = $buscarVisaoProponente > 0 ? $this->_idAgente : 0;
 //		$this->_idProcurador   = $buscarVisaoProcurador > 0 ? $this->_idAgente : 0;
 //
-//		// verifica se o usu�rio logado � Interno (base TABELAS) ou Externo (base CONTROLEDEACESSO)
+//		// verifica se o usu�rio logado � Interno (base TABELAS) ou Externo (base controledeacesso)
 //		$this->_idResponsavel = isset($auth->getIdentity()->IdUsuario)  ? $auth->getIdentity()->IdUsuario  : 0;
 //		$this->_idUsuario     = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : 0;
 //
-//		// o usu�rio tem que estar cadastrado no banco TABELAS ou CONTROLEDEACESSO para ter acesso ao sistema
+//		// o usu�rio tem que estar cadastrado no banco TABELAS ou controledeacesso para ter acesso ao sistema
 //		if (empty($this->_idResponsavel) && empty($this->_idUsuario)) :
 //			parent::message('Voc� n�o tem permiss�o para acessar essa �rea do sistema!', 'index', 'ALERT');
 //		endif;
@@ -443,7 +443,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->_idAgenteProjeto = isset($dadosProjeto['idAgente']) ? $dadosProjeto['idAgente'] : 0;
 
 		// busca os id do �ltimo pedido de readequa��o n�o finalizado
-		$wherePedido                    = array('IdPRONAC = ?' => $this->_idPronac, 'siVerificacao IN (?)' => array(0, 1));
+		$wherePedido                    = array('IdPRONAC = ?' => $this->_idPronac, 'siVerificacao in (?)' => array(0, 1));
 		$orderPedido                    = array('idPedidoAlteracao DESC');
 		$buscarPedidoAlteracao          = $this->tbPedidoAlteracaoProjeto->buscar($wherePedido, $orderPedido)->current();
 		$this->_idPedidoAlteracao       = count($buscarPedidoAlteracao) > 0 ? $buscarPedidoAlteracao['idPedidoAlteracao'] : 0;
@@ -612,7 +612,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 // busca o pedido (justificativa) da solicita��o de readequa��o
                 $whereTipoReadequacao = array(
                         'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-                        ,'x.tpAlteracaoProjeto IN (?)' => array(1, 2) // proponente
+                        ,'x.tpAlteracaoProjeto in (?)' => array(1, 2) // proponente
                 );
                 $buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
                 $this->view->pedido = $buscarPedido; // manda as informa��es para a vis�o
@@ -620,7 +620,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 // busca os arquivos da solicita��o de readequa��o
                 $whereArquivo = array(
                         'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-                        ,'x.tpAlteracaoProjeto IN (?)' => array(1, 2) // proponente
+                        ,'x.tpAlteracaoProjeto in (?)' => array(1, 2) // proponente
                 );
                 $buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
                 $this->view->arquivos = $buscarArquivo; // manda as informa��es para a vis�o
@@ -1000,7 +1000,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca o pedido (justificativa) da solicita��o de readequa��o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha t�cnica
+				,'x.tpAlteracaoProjeto in (?)' => array(3) // ficha t�cnica
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
 			$this->view->pedido = $buscarPedido; // manda as informa��es para a vis�o
@@ -1008,7 +1008,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha t�cnica
+				,'x.tpAlteracaoProjeto in (?)' => array(3) // ficha t�cnica
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$this->view->arquivos = $buscarArquivo; // manda as informa��es para a vis�o
@@ -1132,7 +1132,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca o pedido (justificativa) da solicita��o de readequa��o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realiza��o
+				,'x.tpAlteracaoProjeto in (?)' => array(4) // local de realiza��o
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
 			$this->view->pedido = $buscarPedido; // manda as informa��es para a vis�o
@@ -1140,7 +1140,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realiza��o
+				,'x.tpAlteracaoProjeto in (?)' => array(4) // local de realiza��o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$this->view->arquivos = $buscarArquivo; // manda as informa��es para a vis�o
@@ -1288,7 +1288,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca o pedido (justificativa) da solicita��o de readequa��o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(5) // nome do projeto
+				,'x.tpAlteracaoProjeto in (?)' => array(5) // nome do projeto
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
 			$this->view->pedido = $buscarPedido; // manda as informa��es para a vis�o
@@ -1296,7 +1296,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(5) // nome do projeto
+				,'x.tpAlteracaoProjeto in (?)' => array(5) // nome do projeto
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$this->view->arquivos = $buscarArquivo; // manda as informa��es para a vis�o
@@ -1414,7 +1414,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca o pedido (justificativa) da solicita��o de readequa��o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo de execu��o
+				,'x.tpAlteracaoProjeto in (?)' => array(9) // prazo de execu��o
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
 			$this->view->pedido = $buscarPedido; // manda as informa��es para a vis�o
@@ -1422,7 +1422,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo de execu��o
+				,'x.tpAlteracaoProjeto in (?)' => array(9) // prazo de execu��o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$this->view->arquivos = $buscarArquivo; // manda as informa��es para a vis�o
@@ -1545,7 +1545,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca o pedido (justificativa) da solicita��o de readequa��o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo de capta��o
+				,'x.tpAlteracaoProjeto in (?)' => array(8) // prazo de capta��o
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
 			$this->view->pedido = $buscarPedido; // manda as informa��es para a vis�o
@@ -1553,7 +1553,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo de capta��o
+				,'x.tpAlteracaoProjeto in (?)' => array(8) // prazo de capta��o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$this->view->arquivos = $buscarArquivo; // manda as informa��es para a vis�o
@@ -1672,7 +1672,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca o pedido (justificativa) da solicita��o de readequa��o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(6) // proposta pedag�gica
+				,'x.tpAlteracaoProjeto in (?)' => array(6) // proposta pedag�gica
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
 			$this->view->pedido = $buscarPedido; // manda as informa��es para a vis�o
@@ -1680,7 +1680,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			/*$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(6) // proposta pedag�gica
+				,'x.tpAlteracaoProjeto in (?)' => array(6) // proposta pedag�gica
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$this->view->arquivos = $buscarArquivo; // manda as informa��es para a vis�o*/
@@ -2143,10 +2143,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(1, 2)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(1, 2)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN'));
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(1, 2)
+			,'a.tpAlteracaoProjeto in (?)'             => array(1, 2)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN'));
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbAlteracaoNomeProponente->historicoReadequacao($where, $order);
 
@@ -2159,7 +2159,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$buscarArquivo = array();
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(1, 2) // proponente
+				,'x.tpAlteracaoProjeto in (?)' => array(1, 2) // proponente
 			);
 
 			$cacheItem = false;
@@ -2224,7 +2224,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 // busca os produtos alterados pelo t�cnico
                 $whereTecnico = array(
                     'p.IdPRONAC = ?' => $this->_idPronac
-                    ,'p.siVerificacao IN (?)' => array(1, 2)
+                    ,'p.siVerificacao in (?)' => array(1, 2)
                     ,'h.idPedidoAlteracao = ?' => $buscar[$i]['idPedidoAlteracao']);
                 $whereTecnico = !empty($buscar[$i]['idPlanoDistribuicao']) ? array_merge($whereTecnico, array('h.idPlanoDistribuicao = ?' => $buscar[$i]['idPlanoDistribuicao'])) : array_merge($whereTecnico, array('h.idPlanoDistribuicao IS NULL' => ''));
                 $orderTecnico = array('p.dtSolicitacao ASC');
@@ -2280,10 +2280,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(3)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(3)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN'));
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(3)
+			,'a.tpAlteracaoProjeto in (?)'             => array(3)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN'));
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProposta->historicoReadequacao($where, $order);
 
@@ -2294,7 +2294,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha t�cnica
+				,'x.tpAlteracaoProjeto in (?)' => array(3) // ficha t�cnica
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$cont++;
@@ -2336,10 +2336,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(4)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(4)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN'));
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(4)
+			,'a.tpAlteracaoProjeto in (?)'             => array(4)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN'));
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbAbrangencia->historicoReadequacao($where, $order);
 
@@ -2352,7 +2352,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$buscarArquivo = array();
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realiza��o
+				,'x.tpAlteracaoProjeto in (?)' => array(4) // local de realiza��o
 			);
 
 			$cacheItem = false;
@@ -2413,10 +2413,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(5)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(5)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN'));
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(5)
+			,'a.tpAlteracaoProjeto in (?)'             => array(5)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN'));
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProposta->historicoReadequacao($where, $order);
 
@@ -2427,7 +2427,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(5) // nome do projeto
+				,'x.tpAlteracaoProjeto in (?)' => array(5) // nome do projeto
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$cont++;
@@ -2469,10 +2469,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(9)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(9)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN')
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(9)
+			,'a.tpAlteracaoProjeto in (?)'             => array(9)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN')
 			,'h.tpProrrogacao = ?'                     => 'E'); // execu��o
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProrrogacaoPrazo->historicoReadequacao($where, $order);
@@ -2484,7 +2484,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo execu��o
+				,'x.tpAlteracaoProjeto in (?)' => array(9) // prazo execu��o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$cont++;
@@ -2527,10 +2527,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(8)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(8)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN')
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(8)
+			,'a.tpAlteracaoProjeto in (?)'             => array(8)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN')
 			,'h.tpProrrogacao = ?'                     => 'C'); // capta��o
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProrrogacaoPrazo->historicoReadequacao($where, $order);
@@ -2542,7 +2542,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os arquivos da solicita��o de readequa��o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo capta��o
+				,'x.tpAlteracaoProjeto in (?)' => array(8) // prazo capta��o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$cont++;
@@ -2585,10 +2585,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(6)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(6)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN'));
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(6)
+			,'a.tpAlteracaoProjeto in (?)'             => array(6)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN'));
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProposta->historicoReadequacao($where, $order);
 
@@ -2636,10 +2636,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(10)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(10)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN', 'EA')
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(10)
+			,'a.tpAlteracaoProjeto in (?)'             => array(10)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN', 'EA')
 			,'h.idProduto = ?'                         => 0);
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbPlanilhaAprovacao->historicoReadequacao($where, $order);
@@ -2696,10 +2696,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// busca os dados do hist�rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
-			,'p.siVerificacao IN (?)'                  => array(1, 2)
-			,'j.tpAlteracaoProjeto IN (?)'             => array(10)
-			,'a.tpAlteracaoProjeto IN (?)'             => array(10)
-			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN')
+			,'p.siVerificacao in (?)'                  => array(1, 2)
+			,'j.tpAlteracaoProjeto in (?)'             => array(10)
+			,'a.tpAlteracaoProjeto in (?)'             => array(10)
+			,'a.stAvaliacaoItemPedidoAlteracao in (?)' => array('AP', 'IN')
 			,'h.idProduto = ?'                         => 0);
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbPlanilhaAprovacao->historicoReadequacao($where, $order);

@@ -44,27 +44,27 @@ class tbBeneficiarioProdutoCultural extends MinC_Db_Table_Abstract {
         );
         $a->joinInner(
                 array('b' => 'PlanoDistribuicaoProduto'), "a.idPlanoDistribuicao = b.idPlanoDistribuicao",
-                array(''), 'SAC.dbo'
+                array(''), 'SAC'
         );
         $a->joinInner(
                 array('c' => 'Produto'), "b.idProduto = c.Codigo",
-                array('Descricao as Produto'), 'SAC.dbo'
+                array('Descricao as Produto'), 'SAC'
         );
         $a->joinInner(
                 array('d' => 'Nomes'), "a.idAgente = d.idAgente",
-                array('Descricao as Beneficiario'), 'agentes.dbo'
+                array('Descricao as Beneficiario'), 'agentes'
         );
         $a->joinInner(
                 array('e' => 'tbDocumento'), "a.idDocumento = e.idDocumento",
-                array(''), 'BDCORPORATIVO.scCorp'
+                array(''), 'bdcorporativo.scCorp'
         );
         $a->joinInner(
                 array('f' => 'tbArquivo'), "e.idArquivo = f.idArquivo",
-                array('idArquivo','nmArquivo','dtEnvio'), 'BDCORPORATIVO.scCorp'
+                array('idArquivo','nmArquivo','dtEnvio'), 'bdcorporativo.scCorp'
         );
         $a->joinInner(
                 array('g' => 'Agentes'), "d.idAgente = g.idAgente",
-                array('CNPJCPF'), 'agentes.dbo'
+                array('CNPJCPF'), 'agentes'
         );
         $a->where('a.IdPRONAC = ?', $idPronac);
         $a->order('c.Descricao');

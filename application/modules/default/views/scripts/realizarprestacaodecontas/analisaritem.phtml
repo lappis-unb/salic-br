@@ -37,12 +37,12 @@
                     var texto = CKEDITOR.instances['observacao'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
 
                     if (!$("input[@name='situacao']:checked").val()) {
-                       erro = '<b>Dados obrigatórios não informados!</b><br/>';
+                       erro = '<b>Dados obrigatórios n&atilde;o informados!</b><br/>';
                     }
 
                     if(texto == '')
                     {
-                        erro = '<b>Dados obrigatórios não informados!</b><br/>';
+                        erro = '<b>Dados obrigatórios n&atilde;o informados!</b><br/>';
                     }
 
                     if(erro != ''){
@@ -113,14 +113,14 @@
         </table>
         <table class="tabela">
             <tr>
-                <th>SITUAÇÃO</th>
+                <th>SITUA&ccedil;&atilde;O</th>
             </tr>
             <tr>
                 <td >
                     <input type="radio" name="situacao" value="1"> Executado Integralmente<br>
                     <input type="radio" name="situacao" value="2"> Executado Parcialmente<br>
-                    <input type="radio" name="situacao" value="3"> Não Executado<br>
-                    <input type="radio" name="situacao" value="4"> Sem Informação<br>
+                    <input type="radio" name="situacao" value="3"> N&atilde;o Executado<br>
+                    <input type="radio" name="situacao" value="4"> Sem Informa&ccedil;&atilde;o<br>
 
                 </td>
             </tr>
@@ -128,7 +128,7 @@
         <table class="tabela">
             <tr>
                 <th>
-                    Observação:
+                    Observa&ccedil;&atilde;o:
                 </th>
             </tr>
             <tr>
@@ -144,7 +144,7 @@
     <ul>
        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para p&aacute;gina inicial">Início</a></li>
         <li class=""><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'tecnicoprestacaocontas'));?>">Analisar presta&ccedil;&atilde;o de contas</a></li>
-        <li class=""><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac' => $this->AnalisarItem->IdPRONAC, 'idPlanilhaAprovacao' => $this->AnalisarItem->idPlanilhaAprovacao, 'idPlanilhaItem' => $this->AnalisarItem->idPlanilhaItens), '', true); ?>">Planilha or&ccedil;amentária comprovada</a></li>
+        <li class=""><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac' => $this->AnalisarItem->IdPRONAC, 'idPlanilhaAprovacao' => $this->AnalisarItem->idPlanilhaAprovacao, 'idPlanilhaItem' => $this->AnalisarItem->idPlanilhaItens), '', true); ?>">Planilha or&ccedil;ament&aacute;ria comprovada</a></li>
         <li class="last">Analisar item</li>
     </ul>
 </div>
@@ -305,5 +305,5 @@
     </form>
 </div>
 <div id="rodapeConteudo" ><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 <br clear="all" />

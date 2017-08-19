@@ -63,15 +63,15 @@ echo $this->partial('realizaranaliseprojeto/inc/menu.inc.php', $this) // menu
     <tr>
         <td><?php echo $this->escape($this->enquadramento); ?></td>
         <td><?php if($this->ResultRealizarAnaliseProjeto['TipoParecer'] == '2'){
-                        echo 'COMPLEMENTAÇÃO';
+                        echo 'COMPLEMENTA&ccedil;&atilde;O';
                    }elseif($this->ResultRealizarAnaliseProjeto['TipoParecer'] == '4'){
-                        echo 'REDUÇÃO';
+                        echo 'REDU&ccedil;&atilde;O';
                    }else{
-                        echo 'APROVAÇÃO INICIAL';
+                        echo 'APROVA&ccedil;&atilde;O INICIAL';
                    }
             ?>
         </td>
-        <td><?php echo $this->ResultRealizarAnaliseProjeto['ParecerFavoravel'] == '2' ? 'SIM' : 'NÃO'; ?></td>
+        <td><?php echo $this->ResultRealizarAnaliseProjeto['ParecerFavoravel'] == '2' ? 'SIM' : 'N&atilde;O'; ?></td>
         <td><?php echo Data::tratarDataZend($this->ResultRealizarAnaliseProjeto['DtParecer'], 'brasileiro'); ?></td>
         <td><?php echo $this->escape($this->formatarReal($this->valorparecerista)); ?></td>
     </tr>

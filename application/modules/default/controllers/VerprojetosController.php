@@ -157,7 +157,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         $arrWhereFontesIncentivo['tpPlanilha = ? ']='SR';
                         $arrWhereFontesIncentivo['stAtivo = ? ']='N';
                         $arrWhereFontesIncentivo['NrFonteRecurso = ? ']='109';
-                        $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                        $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                         $arrWhereFontesIncentivo["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                         $fonteincentivo = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereFontesIncentivo);
 
@@ -166,7 +166,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         $arrWhereOutrasFontes['tpPlanilha = ? ']='SR';
                         $arrWhereOutrasFontes['stAtivo = ? ']='N';
                         $arrWhereOutrasFontes['NrFonteRecurso <> ? ']='109';
-                        $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                        $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                         $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                         $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
 
@@ -175,7 +175,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
                         $arrWherePlanilhaPA['stAtivo = ? ']='N';
                         $arrWherePlanilhaPA['NrFonteRecurso = ? ']='109';
-                        $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                        $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                         $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                         $parecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
                     }
@@ -473,7 +473,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $tbRelatorioTec = new tbRelatorioTecnico();
             $arrBuscaF4 = array();
             $arrBuscaF4['idPronac = ?'] = $idPronac;
-            $arrBuscaF4['cdGrupo IN (?)'] = array('125','126');
+            $arrBuscaF4['cdGrupo in (?)'] = array('125','126');
             $rsF4 = $tbRelatorioTec->buscar($arrBuscaF4);
 
             //FASE INICIAL
@@ -989,11 +989,11 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
         $tipoDoc = 0;
         if($tipo == '1') {
-            $tipoDoc = "tbDocumentosAgentes"; //SAC.dbo.tbDocumentosAgentes
+            $tipoDoc = "tbDocumentosAgentes"; //sac.dbo.tbDocumentosAgentes
         } else if($tipo == '2') {
-            $tipoDoc = "tbDocumentosPreProjeto"; //SAC.dbo.tbDocumentosPreProjeto
+            $tipoDoc = "tbDocumentosPreProjeto"; //sac.dbo.tbDocumentosPreProjeto
         } else if($tipo == '3') {
-            $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
+            $tipoDoc = "tbDocumento"; //sac.dbo.tbDocumento
         }
 
         // Configura��o o php.ini para 10MB
@@ -2294,7 +2294,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $where['a.idEtapa in (?)'] = array(5);
         $PlanilhaRemanejadaGrupoD = $tbPlanilhaAprovacao->valorTotalPlanilha($where)->current();
 
-        //Os grupos est�o relacionados na tabela SAC.dbo.tbPlanilhaEtapa
+        //Os grupos est�o relacionados na tabela sac.dbo.tbPlanilhaEtapa
         $valorTotalGrupoA = 0;
         $valorTotalGrupoB = 0;
         $valorTotalGrupoC = 0;
@@ -2429,7 +2429,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $where['a.idEtapa in (?)'] = array(5);
             $PlanilhaRemanejadaGrupoD = $tbPlanilhaAprovacao->valorTotalPlanilha($where)->current();
 
-            //Os grupos est�o relacionados na tabela SAC.dbo.tbPlanilhaEtapa
+            //Os grupos est�o relacionados na tabela sac.dbo.tbPlanilhaEtapa
             $valorTotalGrupoA = 0;
             $valorTotalGrupoB = 0;
             $valorTotalGrupoC = 0;
@@ -2962,7 +2962,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWhereFontesIncentivo['tpPlanilha = ? ']='SR';
                     $arrWhereFontesIncentivo['stAtivo = ? ']='N';
                     $arrWhereFontesIncentivo['NrFonteRecurso = ? ']='109';
-                    $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWhereFontesIncentivo["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $fonteincentivo = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereFontesIncentivo);
 
@@ -2971,7 +2971,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWhereOutrasFontes['tpPlanilha = ? ']='SR';
                     $arrWhereOutrasFontes['stAtivo = ? ']='N';
                     $arrWhereOutrasFontes['NrFonteRecurso <> ? ']='109';
-                    $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
 
@@ -2980,7 +2980,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
                     $arrWherePlanilhaPA['stAtivo = ? ']='N';
                     $arrWherePlanilhaPA['NrFonteRecurso = ? ']='109';
-                    $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $parecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
                 }
@@ -3043,7 +3043,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWhereFontesIncentivo['tpPlanilha = ? ']='SR';
                     $arrWhereFontesIncentivo['stAtivo = ? ']='N';
                     $arrWhereFontesIncentivo['NrFonteRecurso = ? ']='109';
-                    $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWhereFontesIncentivo["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $fonteincentivo = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereFontesIncentivo);
 
@@ -3052,7 +3052,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWhereOutrasFontes['tpPlanilha = ? ']='SR';
                     $arrWhereOutrasFontes['stAtivo = ? ']='N';
                     $arrWhereOutrasFontes['NrFonteRecurso <> ? ']='109';
-                    $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
 
@@ -3061,7 +3061,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
                     $arrWherePlanilhaPA['stAtivo = ? ']='N';
                     $arrWherePlanilhaPA['NrFonteRecurso = ? ']='109';
-                    $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $valorparecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
                 }
@@ -3128,7 +3128,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWhereFontesIncentivo['tpPlanilha = ? ']='SR';
                     $arrWhereFontesIncentivo['stAtivo = ? ']='N';
                     $arrWhereFontesIncentivo['NrFonteRecurso = ? ']='109';
-                    $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWhereFontesIncentivo["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $fonteincentivo = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereFontesIncentivo);
 
@@ -3137,7 +3137,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWhereOutrasFontes['tpPlanilha = ? ']='SR';
                     $arrWhereOutrasFontes['stAtivo = ? ']='N';
                     $arrWhereOutrasFontes['NrFonteRecurso <> ? ']='109';
-                    $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
 
@@ -3146,7 +3146,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
                     $arrWherePlanilhaPA['stAtivo = ? ']='N';
                     $arrWherePlanilhaPA['NrFonteRecurso = ? ']='109';
-                    $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                    $arrWherePlanilhaPA["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                     $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                     $valorparecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
                 }
@@ -3291,7 +3291,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao SR (Proponente - solicitada) ****************/
                     $arrBuscaPlanilha = array();
                     $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
-                    $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')"] = '(?)';
+                    $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')"] = '(?)';
 
                     /******** Planilha aprovacao PA (Parecerista) ****************/
                     $resuplanilha = null; $count = 0;
@@ -3337,7 +3337,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                      $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
                      $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
                      $arrWhereSomaPlanilha['stAtivo = ? ']='N';
-                     $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                     $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                      $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
 
                      $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';
@@ -3443,7 +3443,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao SR (Proponente - solicitada) ****************/
                     $arrBuscaPlanilha = array();
                     $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
-                    $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')"] = '(?)';
+                    $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')"] = '(?)';
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
@@ -3489,7 +3489,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                      $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
                      $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
                      $arrWhereSomaPlanilha['stAtivo = ? ']='N';
-                     $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                     $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                      $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
 
                      $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';
@@ -3672,7 +3672,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     /******** Planilha aprovacao SR (Proponente - solicitada) ****************/
                     $arrBuscaPlanilha = array();
                     $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
-                    $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')"] = '(?)';
+                    $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')"] = '(?)';
 
                     $resuplanilha = null; $count = 0;
                     $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, 'SR', $arrBuscaPlanilha);
@@ -3718,7 +3718,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                      $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
                      $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
                      $arrWhereSomaPlanilha['stAtivo = ? ']='N';
-                     $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
+                     $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from sac.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                      $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
 
                      $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';

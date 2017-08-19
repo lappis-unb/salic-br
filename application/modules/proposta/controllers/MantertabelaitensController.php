@@ -127,7 +127,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                     'descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
-                    'idagente' => $this->idUsuario,
+                    'idAgente' => $this->idUsuario,
                     'dtsolicitacao' => new Zend_Db_Expr($dateFunc),
                     'stestado' => '0'
                 );
@@ -137,7 +137,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                     'descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
-                    'idagente' => $this->idUsuario,
+                    'idAgente' => $this->idUsuario,
                     'dtsolicitacao' => new Zend_Db_Expr($dateFunc),
                     'stestado' => '0'
                 );
@@ -171,7 +171,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                     $associaritem = new MantertabelaitensDAO();
                     $associaritem = $associaritem->associarItemObj($dadosassociar);
                     if ($associaritem) {
-                        parent::message("A solicitação foi encaminhada ao Minc. Aguarde a resposta!", "/proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+                        parent::message("A solicita&ccedil;&atilde;o foi encaminhada ao Minc. Aguarde a resposta!", "/proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
                     }
                 }else if ($solicitacao == 'novoitem');
                 {

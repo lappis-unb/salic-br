@@ -24,7 +24,7 @@ function filtroCNPJ()
 	document.getElementById('cpf').focus();
 	$('#menuDirigentes').show(); // mostra a aba com os dirigentes
 
-	visao = document.getElementById("visao");
+	visao = document.getElementById("Visao");
 	for (i = 1; i < visao.length; i++) // varre todo o option de origem
 	{
 		visao.remove(i); // remove os options
@@ -86,9 +86,9 @@ function filtroCNPJ()
 	<tr>
 		<td colspan="4">
 
-			<label for="visao"> Informe a vis&atilde;o do Agente: </label>
+			<label for="Visao"> Informe a vis&atilde;o do Agente: </label>
 
-            <select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoativo;?>);" style="width:20%;">
+            <select name="Visao" id="Visao" onchange="verificarVisao(this.value, <?php echo $this->grupoativo;?>);" style="width:20%;">
 				<option value="0" selected="selected"> - Selecione - </option>
                 <?php foreach ($this->combovisoes as $key => $value): ?>
 					<option value="<?php echo $key; ?>"> <?php echo $value; ?> </option>

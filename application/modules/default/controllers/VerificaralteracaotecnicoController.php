@@ -768,7 +768,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         try{
             $db->beginTransaction();
 
-            /*//UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA SAC.dbo.tbProposta
+            /*//UPDATE - CAMPOS: dsEstrategiaExecucao E dsEspecificacaoTecnica NA TABELA sac.dbo.tbProposta
             $sqlfinalproped = ReadequacaoProjetos::retornaSQLfinalprop($estrategia,$especificacao,$IdProposta);
             $finalproped = $db->fetchAll($sqlfinalproped);*/
 
@@ -943,7 +943,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 
                 $dadosAvaliacao = array('stAvaliacaoItemPedidoAlteracao' => 'AP', 'dtFimAvaliacao' => date('Y-m-d H:i:s'));
                 $avaliacao = $buscaInformacoes->atualizarAvaliacaopedido($dadosAvaliacao, $where);
-                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from BDCORPORATIVO.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
+                $where = " idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao and dtEncaminhamento in (select max(dtEncaminhamento) from bdcorporativo.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao )";
                 $dadosAcao = array('stAtivo' => '1', 'dtEncaminhamento' => date('Y-m-d H:i:s'));
                 $atualizapedidotipo = $buscaInformacoes->atualizarAvaliacaoAcao($dadosAcao, $where);
 

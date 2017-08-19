@@ -39,13 +39,13 @@ class Licitacaoxagentes extends MinC_Db_Table_Abstract {
                             array('ag'=>'Agentes'),
                             'lxa.idAgente = ag.idAgente',
                             array('ag.CNPJCPF'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->joinInner(
                             array('nm'=>'Nomes'),
                             'ag.idAgente = nm.idAgente',
                             array('nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->where('lxa.idLicitacao = ?', $idLicitacao);
 

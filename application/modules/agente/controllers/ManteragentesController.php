@@ -85,11 +85,11 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->cpfLogado = $Cpflogado;
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 4, 'idverificacao' => array(28, 29)));
 
         //Monta o combo das visees disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();
@@ -159,16 +159,16 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             try {
                 // validacao dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigatórios não informados:<br /><br />É necessário informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigatórios n&atilde;o informados:<br /><br />&eacute; necess&aacute;rio informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) // valida cnpj/cpf
                 {
-                    throw new Exception("O CPF/CNPJ informado é inválido!");
+                    throw new Exception("O CPF/CNPJ informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) // valida cpf
                 {
-                    throw new Exception("O CPF informado é inválido!");
+                    throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) // valida cnpj
                 {
-                    throw new Exception("O CNPJ informado é inválido!");
+                    throw new Exception("O CNPJ informado &eacute; inv&aacute;lido!");
                 } else {
                     // redireciona para a pagina com a busca dos dados com paginacao
                     $this->_redirect("agente/manteragentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
@@ -202,7 +202,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
         if (!$buscar) {
             // redireciona para a pagina de cadastro de agentes, e, exibe uma notificacao relativa ao cadastro
-            parent::message("Agente não cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            parent::message("Agente n&atilde;o cadastrado!<br /><br />Por favor, cadastre o mesmo no formul&aacute;rio abaixo!", "agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
             // ========== INICIO PAGINACAO ==========
             // criando a paginacao
@@ -318,7 +318,6 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             }
             $a++;
         }
-        //xd($selectCad);
         $this->view->visaoAgente = $visoes;
 
         // busca o agente pelo id
@@ -349,9 +348,9 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 endforeach;
 
                 if ($cadastrar) {
-                    parent::message("Alteração realizada com sucesso!", "manteragentes/alterarvisao?idAgente=" . $idAgente, "CONFIRM");
+                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "manteragentes/alterarvisao?idAgente=" . $idAgente, "CONFIRM");
                 } else {
-                    throw new Exception("Erro ao efetuar alteração das visões do agente!");
+                    throw new Exception("Erro ao efetuar altera&ccedil;&atilde;o das vis&otilde;es do agente!");
                 }
             } // fecha try
             catch (Exception $e) {
@@ -634,24 +633,24 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->_helper->viewRenderer->setNoRender(true);
 
         // caso a area cultural esteja definida
-        if ($_REQUEST['area']) {
+        if ($_REQUEST['Area']) {
             $novos_dados = array();
             $i = 0;
 
             // busca os agentes vinculados a area/segmento cultutal (, $_REQUEST['segmento'])
-            $dados = TitulacaoConselheiroDAO::buscaAreaSegmento($_REQUEST['area']);
+            $dados = TitulacaoConselheiroDAO::buscaAreaSegmento($_REQUEST['Area']);
 
             // pega a quantidade de titulares na area
-            $Q_titulares = TitulacaoConselheiroDAO::buscaTitularArea($_REQUEST['area']);
+            $Q_titulares = TitulacaoConselheiroDAO::buscaTitularArea($_REQUEST['Area']);
             $novos_dados[$i]['Q_titulares'] = utf8_encode($Q_titulares[0]->QTD);
 
             // pega a quantidade de suplentes na area
-            $Q_suplentes = TitulacaoConselheiroDAO::buscaSuplentesArea($_REQUEST['area']);
+            $Q_suplentes = TitulacaoConselheiroDAO::buscaSuplentesArea($_REQUEST['Area']);
             $novos_dados[$i]['Q_suplentes'] = utf8_encode($Q_suplentes[0]->QTD);
 
             // caso nao existam mais vagas para titular e suplentes
             if ($Q_titulares[0]->QTD >= 1 && $Q_suplentes[0]->QTD >= 2) {
-                $novos_dados[$i]['msgAS'] = utf8_encode('A Área Cultural selecionada já conta com 1 Titular e 2 Suplentes!');
+                $novos_dados[$i]['msgAS'] = utf8_encode('A &aacute;rea Cultural selecionada j&aacute; conta com 1 Titular e 2 Suplentes!');
             } else if ($Q_titulares[0]->QTD == 0 && $Q_suplentes[0]->QTD == 0) {
                 $novos_dados[0]['Nome'] = 'Sem cadastro';
                 $novos_dados[0]['Titular'] = '';
@@ -697,8 +696,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             foreach ($dados as $dado) :
                 $novos_dados[$i]['Visao'] = utf8_encode($dado->Visao);
                 $novos_dados[$i]['Descricao'] = utf8_encode($dado->Descricao);
-                $novos_dados[$i]['verificacao'] = utf8_encode($dado->idVerificacao);
-                $novos_dados[$i]['area'] = ($dado->area) ? utf8_encode($dado->area) : 'false';
+                $novos_dados[$i]['Verificacao'] = utf8_encode($dado->idVerificacao);
+                $novos_dados[$i]['Area'] = ($dado->area) ? utf8_encode($dado->area) : 'false';
                 $i++;
             endforeach;
 
@@ -720,10 +719,10 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $arrPost = array_change_key_case($this->getRequest()->getPost());
             $arrPost['IdUsuario'] = $this->getIdUsuario;
             $arrPost['cpf'] = Mascara::delMaskCPF(Mascara::delMaskCNPJ($arrPost['cpf']));
-            if ($arrPost['idagente'] === '') {
+            if ($arrPost['idAgente'] === '') {
                 $tblAgentes = new Agente_Model_DbTable_Agentes();
                 $result = $tblAgentes->findBy(array('CNPJCPF' => $arrPost['cpf']));
-                $arrPost['idagente'] = $result['idagente'];
+                $arrPost['idAgente'] = $result['idAgente'];
             }
 
             $mprNomes = new Agente_Model_NomesMapper();
@@ -859,7 +858,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 }
             } // fecha try
             catch (Exception $e) {
-                $this->view->message = "Erro ao salvar o endereço: " . $e->getMessage();
+                $this->view->message = "Erro ao salvar o endere&ccedil;o: " . $e->getMessage();
             }
             // ========== FIM SALVAR ENDERECO ==========
 
@@ -884,7 +883,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 }
             } // fecha try
             catch (Exception $e) {
-                $this->view->message = "Erro ao salvar a visão: " . $e->getMessage();
+                $this->view->message = "Erro ao salvar a vis&atilde;o: " . $e->getMessage();
             }
             // ========== FIM SALVAR VISAO ==========
 

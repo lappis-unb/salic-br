@@ -14,7 +14,7 @@ function aprovar(pronac, nota, PreProjeto)
         ,
         buttons:
         {
-            'Não':function()
+            'N&atilde;o':function()
             {
                 $(this).dialog('close');
                 return false;
@@ -37,7 +37,7 @@ function reprovar(Pro, nome, nota, idPreProjeto)
 	$("#idPreProj").val(idPreProjeto);
 	$("#just").val(idPreProjeto);
 	
-	 document.getElementById("modalJustificativa").title = "Justificativa para Reprovação de Projeto";
+	 document.getElementById("modalJustificativa").title = "Justificativa para Reprova&ccedil;&atilde;o de Projeto";
 
 		// modal com os ddos do dirigente
 		$("#modalJustificativa").dialog("destroy");
@@ -69,7 +69,7 @@ function alterar_nota(Pro, nome, nota, idPreProjeto)
 	$("#idPreProj").val(idPreProjeto);
 	$("#just").val('');
 	
-	 document.getElementById("modalJustificativa").title = "Justificativa para Alteração de Nota";
+	 document.getElementById("modalJustificativa").title = "Justificativa para Altera&ccedil;&atilde;o de Nota";
 
 		// modal com os ddos do dirigente
 		$("#modalJustificativa").dialog("destroy");
@@ -132,7 +132,7 @@ $(document).ready(function(){
 			        ,
 			        buttons:
 			        {
-			            'Não':function()
+			            'N&atilde;o':function()
 			            {
 			                $(this).dialog('close');
 			                return false;
@@ -156,7 +156,7 @@ $(document).ready(function(){
 			        ,
 			        buttons:
 			        {
-			            'Não':function()
+			            'N&atilde;o':function()
 			            {
 			                $(this).dialog('close');
 			                return false;
@@ -218,7 +218,7 @@ function JSPaginacao(url){
 	style="display: none">Tem certeza que deseja alterar a nota deste
 projeto?</div>
 <div id="confirm3" title="Confirma&ccedil;&atilde;o"
-	style="display: none">Dados obrigatórios não informados!</div>
+	style="display: none">Dados obrigatórios n&atilde;o informados!</div>
 <div style="display: none;" id="modalJustificativa"
 	title="Justificativa de Recusa do Projeto">
 <form name="formjustificativa" id="" method="post">
@@ -359,7 +359,7 @@ projeto?</div>
 <input type="hidden" id="pronacs" name="pronacs"></input> <input
 	type="hidden" id="idPreProjeto" name="idPreProjeto"></input> <input
 	type="hidden" id="nrNota" name="nrNota"></input> <input type=hidden
-	id="pre" name="pre"></input> <!-- ============ PAGINAÇÃO ============ -->
+	id="pre" name="pre"></input> <!-- ============ PAGINA&ccedil;&atilde;O ============ -->
 <table class="tabela">
 	<tbody>
 		<tr>
@@ -406,7 +406,7 @@ projeto?</div>
 		</tr>
 	</tbody>
 </table>
-<!-- ========== FIM PAGINAÇÃO ========== --></form>
+<!-- ========== FIM PAGINA&ccedil;&atilde;O ========== --></form>
 				<?php } else { ?>
 <table class="tabela_simples lista" style="width: 55%;" id="lista">
 	<tr>

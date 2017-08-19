@@ -26,7 +26,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
     <div style="width:100%; margin: 0 auto;">
         <table class="tabela" summary=" ">
             <tr>
-                <th width="90%" style="text-align:left; padding-left:2%" colspan="2">TIPOS DE READEQUAÇÕES</th>
+                <th width="90%" style="text-align:left; padding-left:2%" colspan="2">TIPOS DE READEQUA&ccedil;&otilde;ES</th>
                 <th width="10%" align="center">Quantidade de Projetos</th>
             </tr>
         </table>
@@ -50,7 +50,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -65,7 +65,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise5->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise5->areaDesc." / ".$AguardAnalise5->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise5->DataEnvio==''){echo '';} else{ ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise5->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise5->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise5->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise5->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise5->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise5->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -104,7 +104,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -119,7 +119,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise2->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise2->areaDesc." / ".$AguardAnalise2->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise2->DataEnvio==''){echo '';} else { ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise2->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise2->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise2->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise2->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise2->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise2->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -148,9 +148,9 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 		</div>
 		
 		
-		<table class="tabela" summary="local de realização">
+		<table class="tabela" summary="local de realiza&ccedil;&atilde;o">
 		   <tr>
-		     <td width="90%"><input type="button" name="grid1" id="g1_localderealizacao" class="btn_adicionar" title="Expandir" /> Local de Realização</td>
+		     <td width="90%"><input type="button" name="grid1" id="g1_localderealizacao" class="btn_adicionar" title="Expandir" /> Local de Realiza&ccedil;&atilde;o</td>
 		     <td width="10%" align="center"><?php echo count($this->AguardAnalise4);?></td>
 		   </tr>
 		</table>
@@ -159,7 +159,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -174,7 +174,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise4->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise4->areaDesc." / ".$AguardAnalise4->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise4->DataEnvio==''){echo '';} else { ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise4->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise4->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise4->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise4->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise4->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise4->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -214,7 +214,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -229,7 +229,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise1->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise1->areaDesc." / ".$AguardAnalise1->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise1->DataEnvio==''){echo '';} else{ ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise1->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise1->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise1->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise1->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise1->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise1->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -258,9 +258,9 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 		</div>
 		
 		
-		<table class="tabela" summary="ficha técnica">
+		<table class="tabela" summary="ficha t&eacute;cnica">
 		   <tr>
-		     <td width="90%"><input type="button" name="grid1" id="g1_fichatecnica" class="btn_adicionar" title="Expandir" /> Ficha Técnica</td>
+		     <td width="90%"><input type="button" name="grid1" id="g1_fichatecnica" class="btn_adicionar" title="Expandir" /> Ficha T&eacute;cnica</td>
 		     <td width="10%" align="center"><?php echo count($this->AguardAnalise3);?></td>
 		   </tr>
 		</table>
@@ -269,7 +269,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -284,7 +284,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise3->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise3->areaDesc." / ".$AguardAnalise3->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise3->DataEnvio==''){echo '';} else{ ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise3->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise3->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise3->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise3->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise3->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise3->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -313,9 +313,9 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 		</div>
 		
 		
-		<table class="tabela" summary="prorrogação de prazos - captação">
+		<table class="tabela" summary="prorroga&ccedil;&atilde;o de prazos - capta&ccedil;&atilde;o">
 		   <tr>
-		     <td width="90%"><input type="button" name="grid1" id="g1_prorrogacaocaptacao" class="btn_adicionar" title="Expandir" /> Prorrogação de Prazos - Captação</td>
+		     <td width="90%"><input type="button" name="grid1" id="g1_prorrogacaocaptacao" class="btn_adicionar" title="Expandir" /> Prorroga&ccedil;&atilde;o de Prazos - Capta&ccedil;&atilde;o</td>
 		     <td width="10%" align="center"><?php echo count($this->AguardAnalise8);?></td>
 		   </tr>
 		</table>
@@ -324,7 +324,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -339,7 +339,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise8->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise8->areaDesc." / ".$AguardAnalise8->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise8->DataEnvio==''){echo '';} else{ ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise8->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise8->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise8->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise8->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise8->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise8->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -368,9 +368,9 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 		</div>
 		
 		
-		<table class="tabela" summary="prorrogação de prazos - execução">
+		<table class="tabela" summary="prorroga&ccedil;&atilde;o de prazos - execu&ccedil;&atilde;o">
 		   <tr>
-		     <td width="90%"><input type="button" name="grid1" id="g1_prorrogacaoexecucao" class="btn_adicionar" title="Expandir" /> Prorrogação de Prazos - Execução</td>
+		     <td width="90%"><input type="button" name="grid1" id="g1_prorrogacaoexecucao" class="btn_adicionar" title="Expandir" /> Prorroga&ccedil;&atilde;o de Prazos - Execu&ccedil;&atilde;o</td>
 		     <td width="10%" align="center"><?php echo count($this->AguardAnalise9);?></td>
 		   </tr>
 		</table>
@@ -379,7 +379,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -394,7 +394,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise9->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise9->areaDesc." / ".$AguardAnalise9->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise9->DataEnvio==''){echo '';} else{ ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise9->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise9->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise9->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise9->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise9->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise9->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -434,7 +434,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -449,7 +449,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise7->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise7->areaDesc." / ".$AguardAnalise7->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise7->DataEnvio==''){echo '';} else{ ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise7->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise7->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise7->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise7->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise7->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise7->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -489,7 +489,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 				<tr>
                     <th width="7%" align="center">PRONAC</th>
 				    <th width="45%" style="text-align:left;">Nome do projeto</th>
-				    <th width="20%" align="center">Área / Segmento</th>
+				    <th width="20%" align="center">&aacute;rea / Segmento</th>
 				    <th width="5%" align="center">Qtd de dias</th>
 				    <th width="8%" align="center">Data de Recebimento</th>
 				    <th width="5%" align="center">Estado(s)</th>
@@ -504,7 +504,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 					<td style="text-align:left;"><?php echo $AguardAnalise6->NomeProjeto; ?></td>
 					<td align="center"><?php echo $AguardAnalise6->areaDesc." / ".$AguardAnalise6->segmentoDesc; ?></td>
 					<td align="center"><?php if($AguardAnalise6->DataEnvio==''){echo '';} else{ ?>     <script>document.write(diasDecorridosEntreDuasDatas('<?php echo date('d/m/Y'); ?>', '<?php echo Data::tratarDataZend($AguardAnalise6->DataEnvio,'brasileiro'); ?>'));</script><?php } ?></td>
-					<td align="center"><?php if($AguardAnalise6->DataEnvio==''){echo 'Não há registro';} else{ echo Data::tratarDataZend($AguardAnalise6->DataEnvio,'brasileiro');} ?></td>
+					<td align="center"><?php if($AguardAnalise6->DataEnvio==''){echo 'N&atilde;o h&aacute; registro';} else{ echo Data::tratarDataZend($AguardAnalise6->DataEnvio,'brasileiro');} ?></td>
 					<td align="center">
 						<?php foreach($this->UFs as $UFs): ?>
 						<?php if($AguardAnalise6->ID_PRONAC == $UFs->ID_PRONAC ){ echo $UFs->Sigla;} ?>
@@ -535,7 +535,7 @@ $historicoLink = $this->url(array('controller' => 'verificarreadequacaodeprojeto
 
 </div>
 <br />
-<p align="center" style="font-weight: bold">TOTAL DE SOLICITAÇÕES: <?php echo $this->AguardAnaliseQNTD;?></p>
+<p align="center" style="font-weight: bold">TOTAL DE SOLICITA&ccedil;&otilde;ES: <?php echo $this->AguardAnaliseQNTD;?></p>
 <br />
 
 </div>
@@ -564,7 +564,7 @@ $('.abrirJanela').keypress(function(){
                 <td><?php echo $this->resultConsulta['NomeProjeto']; ?></td>
             </tr>
         </table>
-        <br /><label for="solicitacao">Solicitação:</label><br />
+        <br /><label for="solicitacao">Solicita&ccedil;&atilde;o:</label><br />
         <textarea name="solicitacao" id="solicitacao" rows="6" cols="50" style="width:100%;" class="textarea_simples"></textarea>
         <input type="hidden" name="IdPronac" value="<?php echo $this->dados->IdPRONAC; ?>" />
         <p align="left" style="margin-top:1%;">
@@ -575,8 +575,8 @@ $('.abrirJanela').keypress(function(){
 <!-- FIM DO MODAL DILIGENCIAR -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

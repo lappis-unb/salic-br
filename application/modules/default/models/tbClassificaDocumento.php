@@ -12,7 +12,7 @@
 class tbClassificaDocumento extends MinC_Db_Table_Abstract
 {
 
-    protected $_banco  = "BDCORPORATIVO";
+    protected $_banco  = "bdcorporativo";
     protected $_schema = "scSAC";
     protected $_name   = "tbClassificaDocumento";
 
@@ -24,19 +24,19 @@ class tbClassificaDocumento extends MinC_Db_Table_Abstract
         $slct->from(
                     array("c"=>$this->_name),
                     array("idClassificaDocumento", "dsClassificaDocumento"),
-                    "BDCORPORATIVO.scSAC"
+                    "bdcorporativo.scSAC"
                     );
         $slct->joinInner(
                         array("f"=>"tbFormDocumento"),
                         "c.idClassificaDocumento = f.idClassificaDocumento",
                         array(),
-                        "BDCORPORATIVO.scQuiz"
+                        "bdcorporativo.scQuiz"
                         );
         $slct->joinInner(
                         array("e"=>"Edital"),
                         "f.idEdital =e.idEdital",
                         array(),
-                        "SAC.dbo"
+                        "SAC"
                         );
 
         //adiciona quantos filtros foram enviados

@@ -1035,7 +1035,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 break;
             case "alterar":
                 $alteraFormaPagamentoDao = new tbOpcaoResposta();
-//                update BDCORPORATIVO.scQuiz.tbOpcaoResposta set
+//                update bdcorporativo.scQuiz.tbOpcaoResposta set
 //                    dsOpcao = ? ,dsLabelResposta = ?
 //                    where nrFormDocumento = ? and nrVersaoDocumento = ? and nrPergunta = ? and nrOpcao = ?
                 $data = array(

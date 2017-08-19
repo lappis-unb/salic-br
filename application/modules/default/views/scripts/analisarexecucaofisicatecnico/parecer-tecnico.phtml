@@ -8,7 +8,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
  
 
         var countChars  = CountCharacters(fieldName);
-        //Atualização para os contadores de caracteres
+        //Atualiza&ccedil;&atilde;o para os contadores de caracteres
         if(fieldName === "parecerTecnico"){
             document.getElementById("contador" + fieldName).innerHTML = "Caracteres: " + countChars+ "/3000";
 
@@ -17,7 +17,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
             
         }
 
-        //mudança de cor caso ultrapasse o numero de caracteres
+        //mudan&ccedil;a de cor caso ultrapasse o numero de caracteres
 
             if ((countChars > maxchar) || (countChars <= minchar) ){
 	         document.getElementById("contador" + fieldName).style.color = "red";
@@ -29,7 +29,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 
    $(document).ready(function(){    
 
-        //inicializao e configuração do editor tinyMCE
+        //inicializao e configura&ccedil;&atilde;o do editor tinyMCE
 
         tinymce.init({
 	    plugins:"paste,textcolor",
@@ -67,7 +67,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 
     });
     
-    //Onde é feita a contagem do elemento do contador
+    //Onde &eacute; feita a contagem do elemento do contador
     function CountCharacters(contador) {
         var body = tinymce.get(contador).getBody();
         var content = tinymce.trim(body.innerText || body.textContent);
@@ -127,13 +127,13 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
     <ul>
         <li class="first"><a href="#" title="In&iacute;cio">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/analisarexecucaofisicatecnico" title="CLista de Relatórios">Lista de Relatórios</a></li>
-        <li class="last">Parecer Técnico</li>
+        <li class="last">Parecer T&eacute;cnico</li>
     </ul>
 </div>
 
 
 <div id="titulo">
-    <div>Parecer Técnico <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/analisarexecucaofisicatecnico/" title="Voltar">Voltar</a></span></div>
+    <div>Parecer T&eacute;cnico <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/analisarexecucaofisicatecnico/" title="Voltar">Voltar</a></span></div>
 </div>
 
 
@@ -178,7 +178,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
     <form id="formParecer" action="<?php echo $this->url(array('controller' => 'analisarexecucaofisicatecnico', 'action' => 'avaliar-relatorio-trimestral'), '', true); ?>?idpronac=<?php echo $this->idPronac; ?>" method="post">
         <table class="tabela">
             <tr align="center">
-                <td class="destacar bold">PARECER TÉCNICO <span style="color: red;">*</span></td>
+                <td class="destacar bold">PARECER T&eacute;CNICO <span style="color: red;">*</span></td>
             </tr>
             <tr>
                 <td>
@@ -187,7 +187,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
                 </td>
             </tr>
             <tr align="center">
-                <td class="destacar bold">RECOMENDAÇÕES</td>
+                <td class="destacar bold">RECOMENDA&ccedil;&otilde;ES</td>
             </tr>
             <tr>
                 <td>

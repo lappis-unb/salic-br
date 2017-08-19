@@ -4,7 +4,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
     /* dados da tabela */
     protected $_banco   = "agentes";
     protected $_schema  = "agentes";
-    protected $_name    = "tbtitulacaoconselheiro";
+    protected $_name    = "tbTitulacaoConselheiro";
 
     public function buscarTitulacao($retornaSQL = false){
         $select = $this->select();
@@ -18,7 +18,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
                             array('nm'=>'Nomes'),
                             'tc.idAgente = nm.idAgente',
                             array('nm.idAgente','Nome'=>'nm.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                            );
         $select->order('nm.Descricao');
 
@@ -64,11 +64,11 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
         );
         $select->joinInner(
             array('b'=>'Agentes'), 'a.idAgente = b.idAgente',
-            array(), 'agentes.dbo'
+            array(), 'agentes'
         );
         $select->joinInner(
             array('c'=>'Usuarios'), 'c.usu_identificacao = b.CNPJCPF',
-            array(), 'TABELAS.dbo'
+            array(), 'TABELAS'
         );
         $select->where('a.stConselheiro = ?', "A");
         $select->order('c.usu_nome');

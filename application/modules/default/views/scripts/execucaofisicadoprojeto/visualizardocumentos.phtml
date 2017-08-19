@@ -1,12 +1,12 @@
 <?php
 /**
- * Visualização de comprovantes (Acesso: PROPONENTES)
+ * Visualiza&ccedil;&atilde;o de comprovantes (Acesso: PROPONENTES)
  * @author Equipe RUP - Politec
  * @since 28/04/2010
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.execucaofisicadoprojeto
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Minist&eacute;rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -14,7 +14,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="last">Comprovação de Execução Física do Projeto</li>
+		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -23,7 +23,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Comprovação de Execução Física do Projeto <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -34,7 +34,7 @@
 
 
 
-	<!-- ========== INÍCIO VISUALIZAÇÃO DE COMPROVANTE ========== -->
+	<!-- ========== INÍCIO VISUALIZA&ccedil;&atilde;O DE COMPROVANTE ========== -->
 	<table class="tabela" colspan="2" class="titulo_tabela">
 	
 		<?php foreach ($this->buscarPronac as $p): ?>
@@ -58,7 +58,7 @@
 			<td class="esquerda"><?php echo $d->nmComprovante; ?></td>
 		</tr>
 		<tr>
-			<th class="centro">DESCRIÇÃO</th>
+			<th class="centro">DESCRI&ccedil;&atilde;O</th>
 			<td class="esquerda"><?php echo $d->dsComprovante; ?></td>
 		</tr>
 		<tr>
@@ -68,27 +68,27 @@
 	
 		<?php if ($d->stParecerComprovante == 'CS') : // 'Comprovante Substituído' ?>
 		<tr>
-			<th class="centro">JUSTIFICATIVA PARA A ALTERAÇÃO</th>
+			<th class="centro">JUSTIFICATIVA PARA A ALTERA&ccedil;&atilde;O</th>
 			<td class="esquerda"><?php echo $d->dsJustificativaAlteracao; ?></td>
 		</tr>
 		<tr>
-			<th class="centro">PARECER TÉCNICO</th>
+			<th class="centro">PARECER T&eacute;CNICO</th>
 			<td class="esquerda"><?php echo $d->dsJustificativaCoordenador; ?></td>
 		</tr>
 		<?php endif; ?>
 	
 		<?php if ($d->stParecerComprovante == 'AD' || $d->stParecerComprovante == 'AI') : // 'Comprovante Deferido - Indeferido' ?>
 		<tr>
-			<th class="centro">JUSTIFICATIVA DE ALTERAÇÃO</th>
+			<th class="centro">JUSTIFICATIVA DE ALTERA&ccedil;&atilde;O</th>
 			<td class="esquerda"><?php echo $d->dsJustificativaAlteracao; ?></td>
 		</tr>
 		<tr>
 			<td class="centro" colspan="2">
 				<?php if ($d->stParecerComprovante == 'AD') : // 'Comprovante Deferido' ?>
-				<p>Substituição aceita (deferido)</p>
+				<p>Substitui&ccedil;&atilde;o aceita (deferido)</p>
 				<?php endif; ?>
 				<?php if ($d->stParecerComprovante == 'AI') : // 'Comprovante Indeferido' ?>
-				<p>Substituição não aceita (indeferido)</p>
+				<p>Substitui&ccedil;&atilde;o n&atilde;o aceita (indeferido)</p>
 				<?php endif; ?>
 				<br />
 				<p>Justificativa: <?php echo $d->dsJustificativaCoordenador; ?></p>
@@ -104,12 +104,12 @@
 	
 	
 	
-	<!-- ========== BOTÕES VOLTAR E ETC ========== -->
+	<!-- ========== BOT&otilde;ES VOLTAR E ETC ========== -->
 	<table class="tabela">
 		<tr>
 			<td>
 				<div class="float_left">
-					<input type="button" class="btn_voltar" title=" Página Anterior "
+					<input type="button" class="btn_voltar" title=" P&aacute;gina Anterior "
 						onkeypress=" " 
 						onclick="voltar();" />
 				</div>			
@@ -117,7 +117,7 @@
 		</tr>
 	</table>
 	
-	<!-- ========== FIM VISUALIZAÇÃO DE COMPROVANTE ========== -->
+	<!-- ========== FIM VISUALIZA&ccedil;&atilde;O DE COMPROVANTE ========== -->
 
 
 
@@ -126,8 +126,8 @@
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÍCIO RODAP&eacute; DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAP&eacute; DO CONTEÚDO ========== -->
 
 <br clear="all" />

@@ -27,14 +27,14 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
                                 'gpp.idUsuario')
         );
         $select->joinInner(array('pp'=> 'tbPagarParecerista'), "pp.idGerarPagamentoParecerista = gpp.idGerarPagamentoParecerista",
-            array(),'SAC.dbo'
+            array(),'SAC'
         );
         $select->joinInner(array('ag'=> 'Agentes'), "pp.idParecerista = ag.idAgente",
-            array(''),'agentes.dbo'
+            array(''),'agentes'
         );
 
         $select->joinInner(array('nm'=> 'Nomes'), "ag.idAgente = nm.idAgente",
-            array(new Zend_Db_Expr('nm.Descricao AS nmParecerista')),'agentes.dbo'
+            array(new Zend_Db_Expr('nm.Descricao AS nmParecerista')),'agentes'
         );
 
 
@@ -88,7 +88,7 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
         );
 
         $select->joinInner(array('a'=> 'Agentes'), "pp.idParecerista = a.idAgente",
-                            array('a.CNPJCPF'),'agentes.dbo'
+                            array('a.CNPJCPF'),'agentes'
         );
 
         $select->joinInner(array('p'=> 'Produto'), "pp.idProduto = p.Codigo",
@@ -118,13 +118,13 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
             array('pa'=>'tbPagamentoPareceristaXArquivo'),
                 "pa.idGerarPagamentoParecerista = gpp.idGerarPagamentoParecerista and pa.siArquivo = {$siArquivo}",
             array(),
-                'SAC.dbo'
+                'SAC'
         );
         $select->joinLeft(
             array('arq'=>'tbArquivo'),
             "arq.idArquivo = pa.idArquivo",
             array('arq.idArquivo', 'nomeArquivo' => 'arq.nmArquivo'),
-            'BDCORPORATIVO.scCorp'
+            'bdcorporativo.scCorp'
         );
 
         foreach ($where as $coluna => $valor) {

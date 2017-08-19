@@ -11,7 +11,7 @@
 
 class tbDistribuicao extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "BDCORPORATIVO";
+	protected $_banco  = "bdcorporativo";
 	protected $_schema = "scSAC";
 	protected $_name   = "tbDistribuicao";
 
@@ -33,7 +33,7 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('nom'=>'Nomes'),
                             'nom.idAgente = dis.idDestinatario',
                             array('nom.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                             );
 
         foreach ($where as $coluna => $valor) {
@@ -62,13 +62,13 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('nom'=>'Nomes'),
                             'nom.idAgente = dis.idDestinatario',
                             array('nom.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                             );
             $slct->joinInner(
                             array('pro'=>'Projetos'),
                             'dis.idItemDistribuicao = pro.idProjeto',
                             array('pro.AnoProjeto','pro.Sequencial','NomeProjeto'),
-                            'SAC.dbo'
+                            'SAC'
                             );
 
         foreach ($where as $coluna => $valor) {
@@ -98,35 +98,35 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('nom'=>'Nomes'),
                             'nom.idAgente = dis.idDestinatario',
                             array('nom.Descricao'),
-                            'agentes.dbo'
+                            'agentes'
                             );
             $slct->joinInner(
                             array('pp'=>'PreProjeto'),
                             'dis.idItemDistribuicao = pp.idPreProjeto',
                             array('idPreProjeto'),
-                            'SAC.dbo'
+                            'SAC'
                             );
             $slct->joinInner(
                             array('edi'=>'Edital'),
                             'pp.idEdital = edi.idEdital',
                             array('NrEdital'),
-                            'SAC.dbo'  //'BDCORPORATIVO.scSAC' - Antigo
+                            'SAC'  //'bdcorporativo.scSAC' - Antigo
                             );
             $slct->joinInner(
                             array('pro'=>'Projetos'),
                             'pp.idPreProjeto = pro.idProjeto',
                             array('idPronac','UFProjeto','AnoProjeto','Sequencial','NomeProjeto','Situacao'),
-                            'SAC.dbo'
+                            'SAC'
                             );
             $slct->joinInner(array('fod' => 'tbFormDocumento'),
                             'fod.idEdital = edi.idEdital and fod.idClassificaDocumento not in (23,24,25)',
                             array('fod.nmFormDocumento'),
-                            'BDCORPORATIVO.scQuiz'
+                            'bdcorporativo.scQuiz'
                             );
             $slct->joinLeft(array('ava' => 'tbAvaliacaoPreProjeto'),
                             'ava.idPreProjeto = pp.idPreProjeto and ava.idAvaliador = dis.idDestinatario',
                             array('nrNotaFinal'),
-                            'BDCORPORATIVO.scSAC'
+                            'bdcorporativo.scSAC'
                             );
 
         foreach ($where as $coluna => $valor) {
@@ -157,13 +157,13 @@ class tbDistribuicao extends MinC_Db_Table_Abstract
                             array('PP'=>'PreProjeto'),
                             'PP.idPreProjeto = D.idItemDistribuicao',
                             array(''),
-                            'SAC.dbo'
+                            'SAC'
                             );
             $slct->joinInner(
                             array('Ed'=>'Edital'),
                             'Ed.idEdital = PP.idEdital',
                             array('Ed.qtAvaliador'),
-                            'SAC.dbo'
+                            'SAC'
                             );
 
             foreach ($where as $coluna => $valor) {
