@@ -9,7 +9,7 @@
 class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 {
     protected $_schema= "sac";
-    protected $_name = "preprojeto";
+    protected $_name = "PreProjeto";
     protected $_primary = "idPreProjeto";
 
     public $_totalRegistros = null;
@@ -329,11 +329,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $subSql = $db->select()
             ->from(array('pr' => 'projetos'), new Zend_Db_Expr('1'),  $this->_schema)
-            ->where('a.idpreprojeto = pr.idprojeto')
+            ->where('a.idPreProjeto = pr.idprojeto')
             ;
 
         $sql = $db->select()
-            ->from(array('a' => 'preprojeto'), $a,  $this->_schema)
+            ->from(array('a' => 'PreProjeto'), $a,  $this->_schema)
             ->join(array('ag' => 'agentes'), 'a.idAgente = ag.idAgente', 'ag.CNPJCPF AS CNPJCPF',$this->getSchema('agentes'))
             ->join(array('m' => 'nomes'), 'a.idAgente = m.idAgente', 'm.descricao AS NomeAgente',$this->getSchema('agentes'))
             ->where('a.idAgente = ?', $idAgente)
@@ -353,13 +353,13 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         );
 
         $sql2 = $db->select()
-            ->from(array('a' => 'preprojeto'), $aSql,  $this->_schema)
+            ->from(array('a' => 'PreProjeto'), $aSql,  $this->_schema)
             ->join(array('ag' => 'agentes'), '(a.idAgente = ag.idAgente)', 'ag.CNPJCPF AS CNPJCPF', $this->getSchema('agentes'))
             ->join(array('m' => 'nomes'), '(a.idAgente = m.idAgente)', 'm.descricao AS NomeAgente', $this->getSchema('agentes'))
             ->join(array('s' => 'SGCacesso'), 'a.idUsuario = s.IdUsuario', null, $this->getSchema('controledeacesso'))
             ->where('a.idusuario = ?', $idResponsavel)
             ->where('ag.CNPJCPF <> s.Cpf')
-            ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM sac.dbo.projetos pr WHERE  a.idpreprojeto = pr.idprojeto)'))
+            ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM sac.dbo.projetos pr WHERE  a.idPreProjeto = pr.idprojeto)'))
             ;
 
         foreach ($arrBusca as $value) {
@@ -589,7 +589,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
                         array('pre' => $this->_name),
-                        array('nomeProjeto' => 'pre.nomeprojeto', 'pronac'=>'pre.idpreprojeto'),
+                        array('nomeProjeto' => 'pre.nomeprojeto', 'pronac'=>'pre.idPreProjeto'),
                         $this->_schema
                      );
 
@@ -1038,7 +1038,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-        $slct->order('pp.idpreprojeto');
+        $slct->order('pp.idPreProjeto');
         $slct->order('pp.nomeprojeto');
 
         return $this->fetchAll($slct);
@@ -1058,7 +1058,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 //        $slct->where('NOT EXISTS(SELECT * FROM Projetos p WHERE p.idProjeto = pp.idPreProjeto)', '');
         $subSql = $db->select()
             ->from(array('p' => 'projetos'), array('*'),  $this->getSchema('sac'))
-            ->where('p.idprojeto = pp.idpreprojeto');
+            ->where('p.idprojeto = pp.idPreProjeto');
 
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -1084,7 +1084,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->where('idAgente = ?', $idAgenteProponente);
         $slct->where('stEstado = ?', 1);
         $slct->where(new Zend_Db_Expr("NOT EXISTS ($subSql)"));
-        $slct->order('pp.idpreprojeto');
+        $slct->order('pp.idPreProjeto');
         $slct->order('pp.nomeprojeto');
 
         return $this->fetchAll($slct);
@@ -1104,7 +1104,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $subSql = $db->select()
             ->from(array('p' => 'projetos'), array('*'),  $this->getSchema('sac'))
-            ->where('p.idprojeto = pp.idpreprojeto');
+            ->where('p.idprojeto = pp.idPreProjeto');
 
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -1132,7 +1132,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->where('pp.idAgente in (?)', $arrayIdAgentes);
         $slct->where('stEstado = ?', 1);
         $slct->where(new Zend_Db_Expr("NOT EXISTS ($subSql)"));
-        $slct->order('pp.idpreprojeto');
+        $slct->order('pp.idPreProjeto');
         $slct->order('pp.nomeprojeto');
 
         return $this->fetchAll($slct);
@@ -1225,11 +1225,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $subSql = $db->select()
             ->from(array('pr' => 'projetos'), array('idprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->where('a.idpreprojeto = pr.idprojeto')
+            ->where('a.idPreProjeto = pr.idprojeto')
             ;
 
         $sql = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'),Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'),Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->joinleft(array('n' => 'nomes'), 'n.idAgente = b.idAgente', array('n.descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->where('a.idAgente = ? ', $idAgente)
@@ -1240,10 +1240,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $subSql = $db->select()
             ->from(array('f' => 'projetos'), array('idprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->where('a.idpreprojeto = f.idprojeto');
+            ->where('a.idPreProjeto = f.idprojeto');
 
         $sql2 = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('c' => 'vinculacao'), 'b.idAgente = c.idvinculoprincipal', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('d' => 'agentes'), 'c.idAgente = d.idAgente', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
@@ -1257,15 +1257,15 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $subSql = $db->select()
             ->from(array('z' => 'projetos'), array('idprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->where('a.idpreprojeto = z.idprojeto')
+            ->where('a.idPreProjeto = z.idprojeto')
             ;
 
         $sql3 = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('c' => 'nomes'), 'b.idAgente = c.idAgente', array('c.descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
-            ->join(array('e' => 'tbvinculoproposta'), 'a.idpreprojeto = e.idpreprojeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('e' => 'tbvinculoproposta'), 'a.idPreProjeto = e.idPreProjeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('f' => 'tbvinculo'), 'e.idvinculo = f.idvinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -1297,7 +1297,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(array('a'=>'preprojeto'), null, $this->_schema)
+            ->from(array('a'=>'PreProjeto'), null, $this->_schema)
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinLeft(array('n' => 'nomes'), 'n.idAgente = b.idAgente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
             ->join(array('c' => 'sgcacesso'), 'b.CNPJCPF = c.cpf', null, $this->getSchema('controledeacesso'))
@@ -1305,10 +1305,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         ;
 
         $sql2 = $db->select()
-            ->from(array('a'=>'preprojeto'), null, $this->_schema)
+            ->from(array('a'=>'PreProjeto'), null, $this->_schema)
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'nomes'), 'n.idAgente = b.idAgente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
-            ->join(array('c' => 'tbvinculoproposta'), 'a.idpreprojeto = c.idpreprojeto', null, $this->getSchema('agentes'))
+            ->join(array('c' => 'tbvinculoproposta'), 'a.idPreProjeto = c.idPreProjeto', null, $this->getSchema('agentes'))
             ->join(array('d' => 'tbvinculo'), 'c.idvinculo = d.idvinculo', null, $this->getSchema('agentes'))
             ->join(array('f' => 'agentes'), 'd.idAgenteproponente = f.idAgente', null, $this->getSchema('agentes'))
             ->join(array('e' => 'sgcacesso'), 'f.CNPJCPF = e.cpf', null, $this->getSchema('controledeacesso'))
@@ -2596,7 +2596,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             } else {
                 $sql = $db->select()
                     ->from(array('v' => 'vcadastrarproponente'), 'v.*', $this->_schema)
-                    ->join(array('p' => 'preprojeto'), 'v.idAgente = p.idAgente', null, $this->_schema)
+                    ->join(array('p' => 'PreProjeto'), 'v.idAgente = p.idAgente', null, $this->_schema)
                     ->where('idpreprojeto = ?', $idPreProjeto)
                     ->where('Correspondencia = 1')
                     ->limit(1)
@@ -2614,7 +2614,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 //VERIFICAR A REGULARIDADE DO PROPONENTE
                 $sql = $db->select()
                     ->from(array('v' => 'vcadastrarproponente'), 'v.*',  $this->_schema)
-                    ->join(array('p' => 'preprojeto'), 'v.idAgente = p.idAgente', null, $this->_schema)
+                    ->join(array('p' => 'PreProjeto'), 'v.idAgente = p.idAgente', null, $this->_schema)
                     ->join(array('i' => 'inabilitado'), 'v.CnpjCpf=i.CgcCpf', null, $this->_schema)
                     ->where('idpreprojeto = ?', $idPreProjeto)
                     ->where('v.CnpjCpf=i.CgcCpf')
@@ -2633,7 +2633,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                //-- VERIFICAR SE HA OS EMAILS DO PROPONENTE CADASTRADOS
                 $sql = $db->select()
                     ->from(array('v' => 'internet'), 'v.*', $this->getSchema('agentes'))
-                    ->join(array('p' => 'preprojeto'), 'v.idAgente=p.idAgente', null, $this->_schema)
+                    ->join(array('p' => 'PreProjeto'), 'v.idAgente=p.idAgente', null, $this->_schema)
                     ->where('idpreprojeto= ?', $idPreProjeto)
                     ->where('Status=1')
                     ->limit(1)
@@ -2676,7 +2676,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 if ($tipoPessoa == 1) {
                     $sql = $db->select()
                         ->from(array('n' => 'natureza'), '*', $this->getSchema('agentes'))
-                        ->join(array('p' => 'preprojeto'), 'n.idAgente=p.idAgente', '*', $this->_schema)
+                        ->join(array('p' => 'PreProjeto'), 'n.idAgente=p.idAgente', '*', $this->_schema)
                         ->where('idpreprojeto = ?', $idPreProjeto)
                         ->limit(1)
                         ;
@@ -2692,7 +2692,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     //-- VERIFICAR SE HA DIRIGENTE CADASTRADO
                     $sql = $db->select()
                         ->from(array('v' => 'vcadastrardirigente'), '*', $this->_schema)
-                        ->join(array('p' => 'preprojeto'), 'v.idVinculoPrincipal=p.idAgente', '*', $this->_schema)
+                        ->join(array('p' => 'PreProjeto'), 'v.idVinculoPrincipal=p.idAgente', '*', $this->_schema)
                         ->where('idPreProjeto= ?', $idPreProjeto)
                         ;
 
@@ -2907,8 +2907,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(array('pre' => 'preprojeto'), array('pre.idpreprojeto as PreProjeto', 'pre.idpreprojeto as idProposta'), $this->getSchema('sac'))
-            ->join(array('pd' => 'planodistribuicaoproduto'), '(pre.idpreprojeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', array('pd.stPrincipal as ProdutoPrincipal'), $this->getSchema('sac'))
+            ->from(array('pre' => 'PreProjeto'), array('pre.idPreProjeto as PreProjeto', 'pre.idPreProjeto as idProposta'), $this->getSchema('sac'))
+            ->join(array('pd' => 'planodistribuicaoproduto'), '(pre.idPreProjeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', array('pd.stPrincipal as ProdutoPrincipal'), $this->getSchema('sac'))
             ->join(array('p' => 'produto'), '(pd.idproduto = p.codigo)', array('p.codigo as CodigoProduto', 'p.descricao as DescricaoProduto'),  $this->getSchema('sac'))
             ->where('idpreprojeto = ?', $idPreProjeto)
             ->order('pd.stPrincipal DESC')
@@ -2924,8 +2924,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         //$sql = $db->select()
-        //->from(['pre' => 'preprojeto'], 'pre.idpreprojeto as idPreProjeto', $this->getSchema('sac'))
-        //->join(['pp' => 'tbplanilhaproposta'], '(pre.idpreprojeto = pp.idProjeto)', ['pp.idproduto as idProduto', 'pp.idetapa as idEtapa'], $this->getSchema('sac'))
+        //->from(['pre' => 'PreProjeto'], 'pre.idPreProjeto as idPreProjeto', $this->getSchema('sac'))
+        //->join(['pp' => 'tbplanilhaproposta'], '(pre.idPreProjeto = pp.idProjeto)', ['pp.idproduto as idProduto', 'pp.idetapa as idEtapa'], $this->getSchema('sac'))
         //->join(['p' => 'produto'], '(pp.idproduto = p.codigo)', 'p.codigo as CodigoProduto', $this->getSchema('sac'))
         //->join(['te' => 'tbplanilhaetapa'], 'te.idplanilhaetapa = pp.idetapa', 'te.descricao as DescricaoEtapa', $this->getSchema('sac'))
         //->where('idpreprojeto = ?', $idPreProjeto)
@@ -2978,7 +2978,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()->distinct()
-            ->from(array('pre' => 'preprojeto'), null, $this->getSchema('sac'))
+            ->from(array('pre' => 'PreProjeto'), null, $this->getSchema('sac'))
             ->join(array('pp' => 'tbplanilhaproposta'),  '(pre.idPreProjeto = pp.idProjeto)', $pp, $this->getSchema('sac'))
             ->join(array('p' => 'produto'), '(pp.idProduto = p.codigo)', array('p.codigo as CodigoProduto'), $this->getSchema('sac'))
             ->join(array('ti' => 'tbplanilhaitens'), 'ti.idplanilhaitens = pp.idplanilhaitem', array('ti.descricao as DescricaoItem'), $this->getSchema('sac'))
@@ -3010,8 +3010,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             array(
                 'p.codigo as codigoproduto',
                 'p.descricao as descricaoproduto',
-                'pre.idpreprojeto as preprojeto',
-                'pre.idpreprojeto as idproposta'
+                'pre.idPreProjeto as preprojeto',
+                'pre.idPreProjeto as idproposta'
             ),
             $this->_schema
         );
@@ -3070,14 +3070,14 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 'pp.idproduto as idproduto',
                 'pp.idetapa as idetapa',
                 'te.descricao as descricaoetapa',
-                'pre.idpreprojeto as idpreprojeto'
+                'pre.idPreProjeto as idpreprojeto'
             ),
             $this->_schema
         );
 
         $select->joinInner(
             array('pp'=>'tbPlanilhaProposta'),
-            'pre.idpreprojeto = pp.idprojeto',
+            'pre.idPreProjeto = pp.idprojeto',
             null,
             $this->_schema
         );
@@ -3123,11 +3123,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $subSql = $db->select()
             ->from(array('pr' => 'projetos'), array('idprojeto'), $this->_schema)
-            ->where('a.idpreprojeto = pr.idprojeto')
+            ->where('a.idPreProjeto = pr.idprojeto')
         ;
 
         $sql = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'),$this->_schema)
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'),$this->_schema)
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'nomes'), 'n.idAgente = b.idAgente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('a.idAgente = ? ', $idAgente)
@@ -3137,7 +3137,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         ;
 
         $sql2 = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), $this->_schema)
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->_schema)
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->join(array('c' => 'vinculacao'), 'b.idAgente = c.idvinculoprincipal', array(), $this->getSchema('agentes'))
             ->join(array('d' => 'agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
@@ -3150,11 +3150,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         ;
 
         $sql3 = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('c' => 'nomes'), 'b.idAgente = c.idAgente', array('c.descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
-            ->join(array('e' => 'tbvinculoproposta'), 'a.idpreprojeto = e.idpreprojeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('e' => 'tbvinculoproposta'), 'a.idPreProjeto = e.idPreProjeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('f' => 'tbvinculo'), 'e.idvinculo = f.idvinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -3172,7 +3172,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql = $db->select()->union(array($sql, $sql2,$sql3), Zend_Db_Select::SQL_UNION);
 
         $sqlFinal = $db->select()->from(array("p" => $sql));
-//        ->joinInner( array('mov' => 'tbmovimentacao'), 'p.idpreprojeto = mov.idprojeto', array(), $this->_schema)
+//        ->joinInner( array('mov' => 'tbmovimentacao'), 'p.idPreProjeto = mov.idprojeto', array(), $this->_schema)
 //        ->joinInner( array('ver' => 'Verificacao'), 'mov.Movimentacao = ver.idVerificacao', array('Descricao as situacao'), $this->_schema)
 //        ->where('mov.stestado = ? ', 0);
 
@@ -3182,7 +3182,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if (!empty($search['value'])) {
-            $sqlFinal->where('p.idpreprojeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%'.$search['value'].'%');
+            $sqlFinal->where('p.idPreProjeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%'.$search['value'].'%');
         }
 
         $sqlFinal->order($order);
@@ -3215,11 +3215,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $subSql = $db->select()
             ->from(array('pr' => 'projetos'), array('idprojeto'), $this->_schema)
-            ->where('a.idpreprojeto = pr.idprojeto')
+            ->where('a.idPreProjeto = pr.idprojeto')
         ;
 
         $sql = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'),$this->_schema)
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'),$this->_schema)
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'nomes'), 'n.idAgente = b.idAgente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('a.idAgente = ? ', $idAgente)
@@ -3229,7 +3229,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         ;
 
         $sql2 = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), $this->_schema)
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->_schema)
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->join(array('c' => 'vinculacao'), 'b.idAgente = c.idvinculoprincipal', array(), $this->getSchema('agentes'))
             ->join(array('d' => 'agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
@@ -3242,11 +3242,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         ;
 
         $sql3 = $db->select()
-            ->from(array('a'=>'preprojeto'), array('a.idpreprojeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('a'=>'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('c' => 'nomes'), 'b.idAgente = c.idAgente', array('c.descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
-            ->join(array('e' => 'tbvinculoproposta'), 'a.idpreprojeto = e.idpreprojeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(array('e' => 'tbvinculoproposta'), 'a.idPreProjeto = e.idPreProjeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->join(array('f' => 'tbvinculo'), 'e.idvinculo = f.idvinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -3263,7 +3263,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql = $db->select()->union(array($sql, $sql2,$sql3), Zend_Db_Select::SQL_UNION);
 
-        $sqlFinal = $db->select()->from(array("p" => $sql), array('count(distinct p.idpreprojeto)'));
+        $sqlFinal = $db->select()->from(array("p" => $sql), array('count(distinct p.idPreProjeto)'));
 
         foreach ($where as $coluna=>$valor)
         {
@@ -3271,7 +3271,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if (!empty($search['value'])) {
-            $sqlFinal->where('p.idpreprojeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%'.$search['value'].'%');
+            $sqlFinal->where('p.idPreProjeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%'.$search['value'].'%');
         }
 
         $sqlFinal->order($order);
@@ -3317,9 +3317,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(array('pre'=>'preprojeto'), array(), $this->_schema)
+            ->from(array('pre'=>'PreProjeto'), array(), $this->_schema)
             ->join(array('a' => 'agentes'), 'pre.idAgente = a.idAgente', array('*'), $this->getSchema('agentes'))
-            ->where("pre.idpreprojeto = ?", $idPreProjeto);
+            ->where("pre.idPreProjeto = ?", $idPreProjeto);
         ;
         return $db->fetchRow($sql);
 

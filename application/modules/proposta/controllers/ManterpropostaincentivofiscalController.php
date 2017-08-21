@@ -94,7 +94,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             //VERIFICA SE A PROPOSTA TEM DILIGENCIAS
             $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
-            $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idpreprojeto = ?' => $this->idPreProjeto));
+            $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
 
             $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
@@ -469,9 +469,9 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             }
 
             $ag = new Agente_Model_DbTable_Agentes();
-            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto, 'vprp.sivinculoproposta = ?' => 2));
+            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.sivinculoproposta = ?' => 2));
 
-            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto))->count();
+            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto))->count();
 
             if ($verificarvinculoCount > 0) {
                 $this->view->verificarsolicitacaovinculo = true;
@@ -490,7 +490,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             $tblVinculo = new Agente_Model_DbTable_TbVinculo();
 
-            $arrBuscaP['vp.idpreprojeto = ?'] = $idPreProjeto;
+            $arrBuscaP['vp.idPreProjeto = ?'] = $idPreProjeto;
             $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 

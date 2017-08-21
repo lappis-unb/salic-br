@@ -93,8 +93,8 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         );
 
         $sacSchema = $this->_schema;
-        $sql = $db->select()->from(array('pre' => 'preprojeto'),'pre.idpreprojeto as idProposta' , $sacSchema)
-            ->join(array('pp' => 'tbplanilhaproposta'), 'pre.idpreprojeto = pp.idprojeto', $pp, $sacSchema)
+        $sql = $db->select()->from(array('pre' => 'PreProjeto'),'pre.idPreProjeto as idProposta' , $sacSchema)
+            ->join(array('pp' => 'tbplanilhaproposta'), 'pre.idPreProjeto = pp.idprojeto', $pp, $sacSchema)
             ->join(array('p' => 'produto'), 'pp.idproduto = p.codigo', 'p.codigo AS CodigoProduto', $sacSchema)
             ->join(array('ti' => 'tbplanilhaitens'), 'ti.idplanilhaitens = pp.idplanilhaitem', 'ti.descricao as DescricaoItem', $sacSchema)
             ->join(array('uf' => 'uf'), 'uf.CodUfIbge = pp.ufdespesa', 'uf.descricao AS DescricaoUf', $sacSchema)
@@ -106,7 +106,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
         ;
 
         if($idPreProjeto){
-            $sql->where('pre.idpreprojeto = ?', $idPreProjeto);
+            $sql->where('pre.idPreProjeto = ?', $idPreProjeto);
         }
 
         if($idEtapa){
@@ -120,7 +120,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             $sql->where('pp.idplanilhaitem = ?', $idItem);
         }
         if($idPlanilhaProposta){
-            $sql->where('pre.idpreprojeto  = ?', $idPreProjeto);
+            $sql->where('pre.idPreProjeto  = ?', $idPreProjeto);
         }
 
         if($idUf){
@@ -200,7 +200,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
 
         $sql = $this->select()
                     ->setIntegrityCheck(false)
-                    ->from(array('pre' => 'preprojeto'), array('pre.idpreprojeto'), $this->_schema );
+                    ->from(array('pre' => 'PreProjeto'), array('pre.idPreProjeto'), $this->_schema );
 
         $sql->joinInner(array('pp' => 'tbPlanilhaProposta'), 'pre.idPreProjeto = pp.idProjeto', $pp, $this->_schema);
 
@@ -502,7 +502,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             ->join(array('tpi' => 'tbplanilhaitens'), 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
             ->joinLeft(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
             ->joinLeft(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa', $mun, $this->getSchema('agentes'))
-            ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
+            ->join(array('prep' => 'PreProjeto'), 'prep.idPreProjeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
             ->join(array('veri' => 'Verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))

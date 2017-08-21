@@ -100,7 +100,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             break;
         case 1:
             $sql = $db->select()
-                ->from(array('a' => 'preprojeto'), array('a.idAgente', 'a.idusuario'), $this->getSchema('sac'))
+                ->from(array('a' => 'PreProjeto'), array('a.idAgente', 'a.idusuario'), $this->getSchema('sac'))
                 ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', array('b.CNPJCPF', 'b.tipopessoa'), $this->getSchema('agentes'))
                 ->where('idpreprojeto = ?', $idPreProjeto)
                 ;
@@ -139,7 +139,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
 
                     if ($permissao == 0) {
                         $sql = $db->select()
-                            ->from(array('a' => 'preprojeto'), 'a.idAgente', $this->getSchema('sac'))
+                            ->from(array('a' => 'PreProjeto'), 'a.idAgente', $this->getSchema('sac'))
                             ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', null, $this->getSchema('agentes'))
                             ->join(array('c' => 'tbvinculoproposta'), '(a.idPreProjeto = c.idPreProjeto)', null, $this->getSchema('agentes'))
                             ->join(array('d' => 'tbvinculo'), '(c.idVinculo = d.idVinculo)', null, $this->getSchema('agentes'))

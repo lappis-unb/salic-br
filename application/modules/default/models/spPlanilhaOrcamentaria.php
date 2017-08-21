@@ -70,7 +70,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function planilhaOrcamentariaProposta($idPronac)
     {
         $a = array(
-            'a.idpreprojeto as idPronac',
+            'a.idPreProjeto as idPronac',
             new Zend_Db_Expr("' ' AS PRONAC"),
             'a.nomeprojeto',
             new Zend_Db_Expr(" CASE WHEN idproduto = 0
@@ -101,7 +101,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         $convert = MinC_Db_Expr::convertOrToChar('d.idplanilhaetapa');
 
         $sql = $db->select()
-            ->from(array('a' => 'preprojeto'), $a, $sac)
+            ->from(array('a' => 'PreProjeto'), $a, $sac)
             ->joinInner(array('b' => 'tbplanilhaproposta'), '(a.idpreProjeto = b.idprojeto)', $b, $sac)
             ->joinLeft(array('c' => 'produto'), '(b.idproduto = c.codigo)', null, $sac)
             ->joinInner(array('d' => 'tbplanilhaetapa'), '(b.idetapa = d.idplanilhaetapa)', 'd.descricao as Etapa', $sac)
@@ -110,7 +110,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.descricao as FonteRecurso', $sac)
             ->joinLeft(array('f' => 'municipios'), '(b.municipiodespesa = f.idmunicipioibge)',array('u.sigla as UF'),$this->getSchema('agentes'))
             ->joinLeft(array('u' => 'uf'), '(f.idufibge = u.iduf and b.ufdespesa = u.iduf)',array('f.descricao as Municipio'),$this->getSchema('agentes'))
-            ->where('a.idpreprojeto = ? ', $idPronac)
+            ->where('a.idPreProjeto = ? ', $idPronac)
             ->order("x.descricao")
             ->order("c.descricao DESC")
             ->order("$convert  $concat '-'  $concat d.descricao")

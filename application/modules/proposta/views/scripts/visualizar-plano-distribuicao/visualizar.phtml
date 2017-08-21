@@ -560,7 +560,7 @@ Vue.component('visualizar-plano-distribuicao', {
             var vue = this;
 
             this.$data.produtos = [];
-            url = "/proposta/visualizar-plano-distribuicao/detalhar/idPreProjeto/"+this.idpreprojeto+"?idPlanoDistribuicao=" + this.idplanodistribuicao + "&idMunicipio=" + this.idmunicipioibge +"&idUF=" + this.iduf
+            url = "/proposta/visualizar-plano-distribuicao/detalhar/idPreProjeto/"+this.idPreProjeto+"?idPlanoDistribuicao=" + this.idplanodistribuicao + "&idMunicipio=" + this.idmunicipioibge +"&idUF=" + this.iduf
             console.log(url);
             $3.ajax({
               type: "GET",

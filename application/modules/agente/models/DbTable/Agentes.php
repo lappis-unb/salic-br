@@ -303,12 +303,12 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $slct->joinLeft(
             array('vprp' => 'tbvinculoproposta'), "vprp.idvinculo = vp.idvinculo",
-            array("vprp.sivinculoproposta", "vprp.idpreprojeto", "vprp.idvinculo"),
+            array("vprp.sivinculoproposta", "vprp.idPreProjeto", "vprp.idvinculo"),
             $this->_schema
         );
 
         $slct->joinLeft(
-            array('pr' => 'projetos'), "pr.idprojeto = vprp.idpreprojeto",
+            array('pr' => 'projetos'), "pr.idprojeto = vprp.idPreProjeto",
             array('pr.idpronac'),
             $this->getSchema('sac')
         );
