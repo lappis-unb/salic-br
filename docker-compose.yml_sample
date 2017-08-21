@@ -8,10 +8,10 @@ services:
      - "80:80"
      - "9000:9000"
     volumes:
-     - /var/www/project/salic-br:/var/www/salic-br
-     - /var/www/project/log/salic-br/apache2:/var/log/apache2
-     - /var/www/project/salic-br/public/txt:/var/www/salic-br/public/txt/
-     - /var/www/project/salic-br/public/plenaria:/var/www/salic-br/public/plenaria/
+     - ./app:/var/www/salic-br
+     - ./log/apache2:/var/log/apache2
+     - ./app/public/txt:/var/www/salic-br/public/txt/
+     - ./app/public/plenaria:/var/www/salic-br/public/plenaria/
     environment:
      - APPLICATION_ENV=development
       #xDebug configs for 'development' enviroment
