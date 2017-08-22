@@ -3,11 +3,6 @@
 class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 {
     /**
-     * @var bool $_banco
-     */
-    protected $_banco = 'agentes';
-
-    /**
      * @var bool $_name
      */
     protected $_name = 'Agentes';
@@ -297,7 +292,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         );
         $slct->joinLeft(
-            array('vp' => 'tbVinculo'), "vp.idAgenteproponente  = ag.idAgente",
+            array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente",
             array("vp.idVinculo as idVinculoproponente", "sivinculo", "idUsuarioResponsavel"),
             $this->_schema
         );
@@ -354,7 +349,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
 
         $select->joinLeft(
-            array('vp' => 'tbVinculo'), "vp.idAgenteproponente  = ag.idAgente and vp.idUsuarioResponsavel = $idResponsavel",
+            array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente and vp.idUsuarioResponsavel = $idResponsavel",
             array("vp.idVinculo as idVinculoproponente", "sivinculo", "idUsuarioResponsavel"),
             $this->_schema
         );
