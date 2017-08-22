@@ -142,7 +142,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                             ->from(array('a' => 'PreProjeto'), 'a.idAgente', $this->getSchema('sac'))
                             ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', null, $this->getSchema('agentes'))
                             ->join(array('c' => 'tbvinculoproposta'), '(a.idPreProjeto = c.idPreProjeto)', null, $this->getSchema('agentes'))
-                            ->join(array('d' => 'tbvinculo'), '(c.idVinculo = d.idVinculo)', null, $this->getSchema('agentes'))
+                            ->join(array('d' => 'tbVinculo'), '(c.idVinculo = d.idVinculo)', null, $this->getSchema('agentes'))
                             ->join(array('e' => 'sgcacesso'), '(d.idUsuarioResponsavel = e.idUsuario)', null, $this->getSchema('controledeacesso'))
                             ->where('c.siVinculoProposta = 2')
                             ->where('e.IdUsuario = ?', $idUsuarioLogado)
