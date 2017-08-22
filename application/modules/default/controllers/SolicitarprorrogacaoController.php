@@ -52,7 +52,7 @@ class SolicitarprorrogacaoController extends MinC_Controller_Action_Abstract {
         $dataI = explode('/', $_POST['dtInicio']);
         $dtI = checkdate($dataI[1], $dataI[0], $dataI[2]);
         if(!$dtI){
-            parent::message("Data Início inv&aacute;lida.", "solicitarprorrogacao", "ERROR");
+            parent::message("Data In&iacute;cio inv&aacute;lida.", "solicitarprorrogacao", "ERROR");
         }
 
         $dataF = explode('/', $_POST['dtFinal']);

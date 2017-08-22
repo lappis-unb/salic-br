@@ -6,7 +6,7 @@
     <div style="display:none" id="dialog-alerta">Solicita&ccedil;&atilde;o realizada com sucesso!</div>
     <div style="display:none" id="dialog-em-analise">H&aacute; pedido de readequa&ccedil;&atilde;o em an&aacute;lise. Favor aguardar.</div>
 
-    <!-- início: conteúdo principal #container -->
+    <!-- in&iacute;cio: conteúdo principal #container -->
     <div id="container">
 
         <script type="text/javascript">

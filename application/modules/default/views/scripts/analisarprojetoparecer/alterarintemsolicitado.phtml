@@ -151,7 +151,7 @@ header("Pragma: no-cache");
                                     valor      = $('#vlunitario' + cont).val(),
 				    resultado  = '';
         
-                                // retira os pontos e as vírgulas, deixando somente números
+                                // retira os pontos e as v&iacute;rgulas, deixando somente números
                                 valor = valor.replace(/\D/g, "")
                                 .replace(/(\d{0})(\d)/, "$1$2")
                                 // adiciona o ponto na casa decimal
@@ -197,7 +197,7 @@ header("Pragma: no-cache");
                                 calcular_total = $('#calcular_total' + i).html();
                                 calcular_total = calcular_total.replace('R$ ', '');
 
-                                // retira os pontos e as vírgulas, deixando somente números
+                                // retira os pontos e as v&iacute;rgulas, deixando somente números
                                 calcular_total = calcular_total.replace(/\D/g, "");
                                 calcular_total = calcular_total.replace(/(\d{0})(\d)/, "$1$2");
 

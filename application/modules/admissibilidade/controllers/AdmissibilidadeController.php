@@ -2581,7 +2581,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $sqlSequencialProjetos = " INSERT INTO sac.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
             $resultado = $db->query($sqlSequencialProjetos);
             if (!$resultado) {
-                throw new Exception ("N&atilde;o &eacute; possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
+                throw new Exception ("N&atilde;o &eacute; poss&iacute;vel incluir ou alterar mais de um registro na tabela SequencialProjetos.");
             }
         }
 

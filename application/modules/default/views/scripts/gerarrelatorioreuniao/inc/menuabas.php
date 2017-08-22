@@ -29,7 +29,7 @@
         echo "</tr>";
         echo "<tr colspan=1>";
         echo "<td>";
-        echo "Período para inclus&atilde;o de projetos";
+        echo "Per&iacute;odo para inclus&atilde;o de projetos";
         echo "</td>";
         echo "<td>";
         echo $dataInicio . " " . $dataFechamento;

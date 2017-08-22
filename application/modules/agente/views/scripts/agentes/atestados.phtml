@@ -52,7 +52,7 @@
             alertar('A data final deve ser maior que a data inicial!');
             return false;
         } else if(dtinicio < dtAtual) {
-            alertar('O período n&atilde;o pode ser inferior a data de hoje!');
+            alertar('O per&iacute;odo n&atilde;o pode ser inferior a data de hoje!');
             return false;
         } else if((arquivo == '')){
             alertar("Dados obrigatórios n&atilde;o preenchidos!");
@@ -75,7 +75,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li>Manter Agentes</li>
         <li class="last">Principal</li>
     </ul>
@@ -129,7 +129,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="200"><span style="color: red; font-weight: bold;">*</span> Data saída:</td>
+                    <td width="200"><span style="color: red; font-weight: bold;">*</span> Data sa&iacute;da:</td>
                     <td width="300"><input type="text" name="dtinicio" id="dtinicio" class="input_simples w100" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" ></td>
                     <td width="100"><span style="color: red; font-weight: bold;">*</span> Data volta:</td>
                     <td><input type="text" name="dtfim" id="dtfim" class="input_simples w100" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" ></td>

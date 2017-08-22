@@ -395,7 +395,7 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             RecursoDAO::cadastrar($dados);
             parent::message('A desistência do prazo recursal foi cadastrada com sucesso!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "CONFIRM");
         } else {
-            parent::message('N&atilde;o foi possível cadastrar a desistência do prazo recursal!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "ERROR");
+            parent::message('N&atilde;o foi poss&iacute;vel cadastrar a desistência do prazo recursal!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "ERROR");
         }
     }
 

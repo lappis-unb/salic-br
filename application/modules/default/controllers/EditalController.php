@@ -253,7 +253,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         $modelEditalFinal   = new EditalFinal();
         if(($idTextoEdital == '') || ($idEdital == '')){
-            parent::message('Texto do Edital excluído com sucesso!', 'edital/montagem-edital/idEdital/'.$idEdital, 'ERROR');
+            parent::message('Texto do Edital exclu&iacute;do com sucesso!', 'edital/montagem-edital/idEdital/'.$idEdital, 'ERROR');
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -267,7 +267,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
              $modelEditalFinal->delete($where);
 
             $db->commit();
-            parent::message('Texto do Edital excluído com sucesso!!', 'edital/montagem-edital/idEdital/'.$idEdital, 'CONFIRM');
+            parent::message('Texto do Edital exclu&iacute;do com sucesso!!', 'edital/montagem-edital/idEdital/'.$idEdital, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
@@ -1173,7 +1173,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
              $modelCriterioParticipacao->delete($where);
 
             $db->commit();
-            parent::message('Crit&eacute;rio de Participacao excluído!', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
+            parent::message('Crit&eacute;rio de Participacao exclu&iacute;do!', 'edital/criterios-participacao/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
@@ -1263,7 +1263,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         $modelParcelaFormaPagamento = new tbParcelaFormaPagamento();
         
         if(($idFormaPagamento == '') || ($idEdital == '')){
-            parent::message('Forma de Pagamento excluído com sucesso!', 'edital/forma-pagamento/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
+            parent::message('Forma de Pagamento exclu&iacute;do com sucesso!', 'edital/forma-pagamento/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'ERROR');
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -1280,7 +1280,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
             $modelFormaPagamento->delete($where);
 
             $db->commit();
-            parent::message('Forma de Pagamento excluída com sucesso!', 'edital/forma-pagamento/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
+            parent::message('Forma de Pagamento exclu&iacute;da com sucesso!', 'edital/forma-pagamento/idEdital/'.$idEdital.'/idModulo/'.$idModulo.'/idCategoria/'.$idCategoria, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();
@@ -1715,7 +1715,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
         
         $criterioAvaliacao = new tbCriteriosAvaliacao();
         if(($idCriterio == '') || ($idEdital == '')){
-            parent::message('Crit&eacute;rio de avalia&ccedil;&atilde;o excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ERROR');
+            parent::message('Crit&eacute;rio de avalia&ccedil;&atilde;o exclu&iacute;do com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'ERROR');
         }
         
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -1729,7 +1729,7 @@ class EditalController extends MinC_Controller_Action_Abstract {
              $criterioAvaliacao->delete($where);
 
             $db->commit();
-            parent::message('Crit&eacute;rio de avalia&ccedil;&atilde;o excluído com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'CONFIRM');
+            parent::message('Crit&eacute;rio de avalia&ccedil;&atilde;o exclu&iacute;do com sucesso!', 'edital/criterios-avaliacao/idEdital/'.$idEdital, 'CONFIRM');
             
         } catch (Exception $exc) {
             $db->rollBack();

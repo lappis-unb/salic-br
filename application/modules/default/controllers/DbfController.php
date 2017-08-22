@@ -45,7 +45,7 @@ class DbfController extends MinC_Controller_Action_Abstract
 	 */
 	public function init()
 	{
-		$this->view->title = 'Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura'; // título da p&aacute;gina
+		$this->view->title = 'Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura'; // t&iacute;tulo da p&aacute;gina
 
 		/* ========== INÍCIO PERFIL ========== */
 		// define os grupos que tem acesso

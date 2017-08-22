@@ -20,7 +20,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 	 */
 	public function init()
 	{
-		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // t&iacute;tulo da p&aacute;gina
 
 		parent::init();
 	} // fecha m&eacute;todo init()
@@ -195,7 +195,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 						Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 						$paginator = Zend_Paginator::factory($arrayComprovantes); // dados a serem paginados
 
-						// p&aacute;gina atual e quantidade de ítens por p&aacute;gina
+						// p&aacute;gina atual e quantidade de &iacute;tens por p&aacute;gina
 						$currentPage = $this->_getParam('page', 1);
 						$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(20);
 						// ========== FIM PAGINA&ccedil;&atilde;O ==========
@@ -281,13 +281,13 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 				{
 					throw new Exception("Por favor, informe o tipo de documento!");
 				}
-				else if (empty($titulo) || $titulo == 'Digite o título do comprovante...')
+				else if (empty($titulo) || $titulo == 'Digite o t&iacute;tulo do comprovante...')
 				{
-					throw new Exception("Por favor, informe o título do documento!");
+					throw new Exception("Por favor, informe o t&iacute;tulo do documento!");
 				}
 				else if (strlen($titulo) < 2 || strlen($titulo) > 100)
 				{
-					throw new Exception("O título do documento &eacute; inv&aacute;lido! A quantidade mínima &eacute; de 2 caracteres!");
+					throw new Exception("O t&iacute;tulo do documento &eacute; inv&aacute;lido! A quantidade m&iacute;nima &eacute; de 2 caracteres!");
 				}
 				else if (empty($descricao) || $descricao == 'Digite o texto do comprovante...')
 				{
@@ -496,11 +496,11 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 				}
 				else if (empty($titulo))
 				{
-					throw new Exception("Por favor, informe o título do documento!");
+					throw new Exception("Por favor, informe o t&iacute;tulo do documento!");
 				}
 				else if (strlen($titulo) < 2 || strlen($titulo) > 100)
 				{
-					throw new Exception("O título do documento &eacute; inv&aacute;lido! A quantidade mínima &eacute; de 2 caracteres!");
+					throw new Exception("O t&iacute;tulo do documento &eacute; inv&aacute;lido! A quantidade m&iacute;nima &eacute; de 2 caracteres!");
 				}
 				else if (empty($descricao))
 				{
@@ -698,11 +698,11 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 				}
 				else if (empty($titulo))
 				{
-					throw new Exception("Por favor, informe o título do documento!");
+					throw new Exception("Por favor, informe o t&iacute;tulo do documento!");
 				}
 				else if (strlen($titulo) < 2 || strlen($titulo) > 100)
 				{
-					throw new Exception("O título do documento &eacute; inv&aacute;lido! A quantidade mínima &eacute; de 2 caracteres!");
+					throw new Exception("O t&iacute;tulo do documento &eacute; inv&aacute;lido! A quantidade m&iacute;nima &eacute; de 2 caracteres!");
 				}
 				else if (empty($descricao))
 				{
@@ -1022,7 +1022,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 		Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 		$paginator = Zend_Paginator::factory($resultado); // dados a serem paginados
 
-		// p&aacute;gina atual e quantidade de ítens por p&aacute;gina
+		// p&aacute;gina atual e quantidade de &iacute;tens por p&aacute;gina
 		$currentPage = $this->_getParam('page', 1);
 		$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(20);
 		// ========== FIM PAGINA&ccedil;&atilde;O ==========
@@ -1126,7 +1126,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 						Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 						$paginator = Zend_Paginator::factory($arrayComprovantes); // dados a serem paginados
 
-						// p&aacute;gina atual e quantidade de ítens por p&aacute;gina
+						// p&aacute;gina atual e quantidade de &iacute;tens por p&aacute;gina
 						$currentPage = $this->_getParam('page', 1);
 						$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(20);
 						// ========== FIM PAGINA&ccedil;&atilde;O ==========
@@ -1200,7 +1200,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 					// caso o PRONAC esteja cadastrado
 					else
 					{
-						// busca o comprovante anterior caso seja um comprovante substituído
+						// busca o comprovante anterior caso seja um comprovante substitu&iacute;do
 						$resultComprovanteSubstituido = ComprovanteExecucaoFisicaDAO::buscarUltimoComprovanteAprovado($resultPronac[0]->IdPRONAC, $doc, $resultComprovante[0]->idComprovanteAnterior);
 						$this->view->buscarComprovanteSubstituido = $resultComprovanteSubstituido;
 
@@ -1282,7 +1282,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 						$dadosComprovante   = array('stParecerComprovante' => 'AV');
 						$alterarComprovante = ComprovanteExecucaoFisicaDAO::alterar($dadosComprovante, $doc);
 
-						// busca o comprovante anterior caso seja um comprovante substituído
+						// busca o comprovante anterior caso seja um comprovante substitu&iacute;do
 						$resultComprovanteSubstituido = ComprovanteExecucaoFisicaDAO::buscarUltimoComprovanteAprovado($resultPronac[0]->IdPRONAC, $doc, $resultComprovante[0]->idComprovanteAnterior);
 						$this->view->buscarComprovanteSubstituido = $resultComprovanteSubstituido;
 
@@ -1394,7 +1394,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 		Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 		$paginator = Zend_Paginator::factory($resultado); // dados a serem paginados
 
-		// p&aacute;gina atual e quantidade de ítens por p&aacute;gina
+		// p&aacute;gina atual e quantidade de &iacute;tens por p&aacute;gina
 		$currentPage = $this->_getParam('page', 1);
 		$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(20);
 		// ========== FIM PAGINA&ccedil;&atilde;O ==========
@@ -1498,7 +1498,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 						Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 						$paginator = Zend_Paginator::factory($arrayComprovantes); // dados a serem paginados
 
-						// p&aacute;gina atual e quantidade de ítens por p&aacute;gina
+						// p&aacute;gina atual e quantidade de &iacute;tens por p&aacute;gina
 						$currentPage = $this->_getParam('page', 1);
 						$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(20);
 						// ========== FIM PAGINA&ccedil;&atilde;O ==========
@@ -1574,7 +1574,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 					// caso o PRONAC esteja cadastrado
 					else
 					{
-						// busca o comprovante anterior caso seja um comprovante substituído
+						// busca o comprovante anterior caso seja um comprovante substitu&iacute;do
 						$resultComprovanteSubstituido = ComprovanteExecucaoFisicaDAO::buscarUltimoComprovanteAprovado($resultPronac[0]->IdPRONAC, $doc, $resultComprovante[0]->idComprovanteAnterior);
 						$this->view->buscarComprovanteSubstituido = $resultComprovanteSubstituido;
 
@@ -1665,7 +1665,7 @@ class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 					// caso o PRONAC esteja cadastrado
 					else
 					{
-						// busca o comprovante anterior caso seja um comprovante substituído
+						// busca o comprovante anterior caso seja um comprovante substitu&iacute;do
 						$resultComprovanteSubstituido = ComprovanteExecucaoFisicaDAO::buscarUltimoComprovanteAprovado($resultPronac[0]->IdPRONAC, $doc, $resultComprovante[0]->idComprovanteAnterior);
 						$this->view->buscarComprovanteSubstituido = $resultComprovanteSubstituido;
 

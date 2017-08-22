@@ -286,7 +286,7 @@ function linhaPEI(info){
                                         }
                                         else{
                                             $(tr).remove();
-                                            janelaAlerta('Excluído com sucesso!');
+                                            janelaAlerta('Exclu&iacute;do com sucesso!');
                                         }
 
                                         $(this).dialog('close');

@@ -26,7 +26,7 @@ class Zend_View_Helper_PatrocinioBancario
 		}
 		else
 		{
-			$dsTipo = "Patrocínio";
+			$dsTipo = "Patroc&iacute;nio";
 		}
 
 		return $dsTipo;

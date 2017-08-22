@@ -15,10 +15,10 @@
         });
     </script>
 
-    <!-- início: conteúdo principal #container -->
+    <!-- in&iacute;cio: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navega&ccedil;?o local #qm0 -->
+        <!-- in&iacute;cio: navega&ccedil;?o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -152,7 +152,7 @@
               $qtdHabilitado = ceil($diasExecutados/90); */
 //                        x('Dt Inicio = '.$resp->DtInicioExecucao.' e Dt Fim = '.$resp->DtFimExecucao);
 //                        x('Qtd de relatórios esperados para o projeto = '.$qtdRelatorioEsperado);
-//                        x('Qtd de dias após o início da execu&ccedil;?o = '.$diasExecutados);
+//                        x('Qtd de dias após o in&iacute;cio da execu&ccedil;?o = '.$diasExecutados);
 //                        x('Qtd de relatórios habilitados para o cadastro = '.$qtdHabilitado);
 //                        x('Qtd de relatórios cadastrados = '.count($totalReg));
         }

@@ -7,7 +7,7 @@ class HistoricoController extends MinC_Controller_Action_Abstract {
 	
 		public function init()
 	{
-		// Visualiza&ccedil;&atilde;o do título da p&aacute;gina
+		// Visualiza&ccedil;&atilde;o do t&iacute;tulo da p&aacute;gina
 		$this->view->title = "Visualiza&ccedil;&atilde;o dos Históricos dos Projetos";
 
 		parent::init();

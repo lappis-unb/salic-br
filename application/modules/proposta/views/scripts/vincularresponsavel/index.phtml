@@ -31,7 +31,7 @@
                         },
                         success: function(data){
                             if(!data.error){
-                                confirma('Sua solicita&ccedil;&atilde;o de vínculo foi enviada com sucesso.',
+                                confirma('Sua solicita&ccedil;&atilde;o de v&iacute;nculo foi enviada com sucesso.',
                                     function(){
                                         window.location = 'manterpropostaincentivofiscal/listarproposta';
                                     }
@@ -54,7 +54,7 @@
 
     function retirarAcento(text) {
         var varString = text;
-        var stringAcentos = new String('&agrave;âêôû&atilde;&otilde;&aacute;&eacute;íóú&ccedil;ü&agrave;ÂÊÔÛ&atilde;&otilde;&aacute;&eacute;ÍÓÚ&ccedil;Ü');
+        var stringAcentos = new String('&agrave;âêôû&atilde;&otilde;&aacute;&eacute;&iacute;óú&ccedil;ü&agrave;ÂÊÔÛ&atilde;&otilde;&aacute;&eacute;ÍÓÚ&ccedil;Ü');
         var stringSemAcento = new String('aaeouaoaeioucuAAEOUAOAEIOUCU');
 
         var i = new Number();
@@ -85,7 +85,7 @@
                 $("#error").html('Você deve preencher pelo menos um campo!');
             } else if( (cnpjcpf != '') && (cnpjcpf.length < 14) ) {
                 $("#error").removeClass('sumir');
-                $("#error").html('O cpf/cnpj deve conter, no mínimo, 11 caracteres');
+                $("#error").html('O cpf/cnpj deve conter, no m&iacute;nimo, 11 caracteres');
             }
             else if((cnpjcpf.length == 18) && (!valida_cnpj(cnpjcpf))) {
                 $("#error").removeClass('sumir');

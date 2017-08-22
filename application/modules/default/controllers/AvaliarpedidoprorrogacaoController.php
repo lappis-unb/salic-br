@@ -280,7 +280,7 @@ class AvaliarpedidoprorrogacaoController extends MinC_Controller_Action_Abstract
                 $this->view->Erros = $prorrogacaoModel->getErros();
                 $this->view->dadosProjeto = $prorrogacaoModel->getProjeto($idProrrogacao);
             } else {
-                parent::message('N&atilde;o foi possível realizar seu pedido!', "avaliarpedidoprorrogacao/detalhar/prorrogacao/{$idProrrogacao}", "ERROR");
+                parent::message('N&atilde;o foi poss&iacute;vel realizar seu pedido!', "avaliarpedidoprorrogacao/detalhar/prorrogacao/{$idProrrogacao}", "ERROR");
             }
         }
     }
@@ -289,7 +289,7 @@ class AvaliarpedidoprorrogacaoController extends MinC_Controller_Action_Abstract
     {
         $prorrogacaoModel = new ProrrogacaoModel();
         $prorrogacaoModel->deletar($this->getRequest()->getParam('idProrrogacao'));
-        parent::message("Prorroga&ccedil;&atilde;o excluída com sucesso!", "avaliarpedidoprorrogacao", "CONFIRM");
+        parent::message("Prorroga&ccedil;&atilde;o exclu&iacute;da com sucesso!", "avaliarpedidoprorrogacao", "CONFIRM");
     }
 
 }

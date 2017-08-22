@@ -263,7 +263,7 @@ if($menu != 0){ ?>
                 <?php } ?>
 
                 <?php if(in_array($this->grupoAtivo, array(103))){ ?>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'sintese', 'pronac' => $this->pronac)); ?>" title="Ir para síntese do projeto">Síntese do Projeto</a>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'sintese', 'pronac' => $this->pronac)); ?>" title="Ir para s&iacute;ntese do projeto">S&iacute;ntese do Projeto</a>
                 <?php } ?>
 
                 <?php if(in_array($this->grupoAtivo, array(97,103,122,123,125,126,127,134,138))){ ?>
@@ -275,7 +275,7 @@ if($menu != 0){ ?>
                 <?php } ?>
 
                 <?php if(in_array($this->grupoAtivo, array(97,103,110,121,122,123,127))){ ?>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'periododeexecucao'), '', true); ?>?pronac=<?php echo $this->pronac ?>" title="Ir para per&iacute;odo de execu&ccedil;&atilde;o">Período de Execu&ccedil;&atilde;o</a>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'periododeexecucao'), '', true); ?>?pronac=<?php echo $this->pronac ?>" title="Ir para per&iacute;odo de execu&ccedil;&atilde;o">Per&iacute;odo de Execu&ccedil;&atilde;o</a>
                 <?php } ?>
 
                 <?php /*if(in_array('8', $menuAtor)){ ?>

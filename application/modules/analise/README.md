@@ -12,7 +12,7 @@ RN - 37.1
 - §1º O prazo para adequa&ccedil;&atilde;o do projeto ser&aacute; de 10 (dez) dias corridos, improrrog&aacute;vel, a contar do dia seguinte do seu registro no Salic e envio desta informa&ccedil;&atilde;o pelo sistema.
 
 RN - 37.2
-- §2º O dispositivo do caput n&atilde;o se aplica para projetos de prote&ccedil;&atilde;o do patrimônio material ou imaterial e de acervos, aos planos anuais, aos projetos museológicos, aos projetos de manuten&ccedil;&atilde;o de corpos est&aacute;veis ou de equipamentos culturais, bem como projetos aprovados em editais públicos ou privados com termo de parceria, ou com contratos de patrocínios firmados, que garantam o alcance do índice ou projetos apresentados por institui&ccedil;&otilde;es criadas pelo patrocinador na forma do §2º do Art. 27 da Lei 8.313/91.
+- §2º O dispositivo do caput n&atilde;o se aplica para projetos de prote&ccedil;&atilde;o do patrimônio material ou imaterial e de acervos, aos planos anuais, aos projetos museológicos, aos projetos de manuten&ccedil;&atilde;o de corpos est&aacute;veis ou de equipamentos culturais, bem como projetos aprovados em editais públicos ou privados com termo de parceria, ou com contratos de patroc&iacute;nios firmados, que garantam o alcance do &iacute;ndice ou projetos apresentados por institui&ccedil;&otilde;es criadas pelo patrocinador na forma do §2º do Art. 27 da Lei 8.313/91.
 
 ##CASO DE USO
 

@@ -22,7 +22,7 @@ class Zend_View_Helper_TipoPessoa
 	{
 		if ($tipopessoa == 1)
 		{
-			$bg = "Pessoa Física";
+			$bg = "Pessoa F&iacute;sica";
 		}
 		else
 		{

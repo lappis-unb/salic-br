@@ -22,11 +22,11 @@ class Zend_View_Helper_InconsistenciaBancaria
 	{
 		if ($tipo == 1)
 		{
-			$dsTipo = "O Período de Execu&ccedil;&atilde;o n&atilde;o est&aacute; vigente.";
+			$dsTipo = "O Per&iacute;odo de Execu&ccedil;&atilde;o n&atilde;o est&aacute; vigente.";
 		}
 		else if ($tipo == 2)
 		{
-			$dsTipo = "O Período de Capta&ccedil;&atilde;o n&atilde;o est&aacute; vigente.";
+			$dsTipo = "O Per&iacute;odo de Capta&ccedil;&atilde;o n&atilde;o est&aacute; vigente.";
 		}
 		else if ($tipo == 3)
 		{
@@ -38,7 +38,7 @@ class Zend_View_Helper_InconsistenciaBancaria
 		}
 		else if ($tipo == 5)
 		{
-			$dsTipo = "N&atilde;o foi possível encontrar o E-mail do Proponente.";
+			$dsTipo = "N&atilde;o foi poss&iacute;vel encontrar o E-mail do Proponente.";
 		}
 		else if ($tipo == 6)
 		{

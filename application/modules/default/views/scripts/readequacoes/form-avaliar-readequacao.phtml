@@ -168,7 +168,7 @@
             } else if(tpAcao == 'A'){
                 msg = 'Tem certeza que deseja reintegrar o valor do item?';
             } else {
-                msg = 'Tem certeza que deseja restaurar o item excluído pelo proponente?';
+                msg = 'Tem certeza que deseja restaurar o item exclu&iacute;do pelo proponente?';
             }
                 
             $("#alerta").dialog("destroy");
@@ -361,7 +361,7 @@
                 ocorrencia = $('#modalOcorrencia').val(),
                 valor = $('#modalValorUnitario').val();
 
-            // retira os pontos e as vírgulas, deixando somente números
+            // retira os pontos e as v&iacute;rgulas, deixando somente números
             valor = valor.replace(/\D/g, "")
             .replace(/(\d{0})(\d)/, "$1$2")
             // adiciona o ponto na casa decimal

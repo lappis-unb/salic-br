@@ -9,7 +9,7 @@
 <table class="tabela">
     <tr>
         <th>Pe&ccedil;a</th>
-        <th>Veículo</th>
+        <th>Ve&iacute;culo</th>
         <th style="width: 150px;">Solicita&ccedil;&atilde;o Proponente</th>
         <?php if(in_array($this->siEncaminhamento, array(4,5,6,7,9,10))){ ?>
         <th style="width: 150px;">Avalia&ccedil;&atilde;o T&eacute;cnica</th>
@@ -46,7 +46,7 @@
         <td class="centro">
             <?php if($this->idPerfil == 1111){
                     if($p['tpSolicitacao'] == 'E'){
-                        echo '<span style="margin: 10px;">Item excluído</span>';
+                        echo '<span style="margin: 10px;">Item exclu&iacute;do</span>';
                         echo '<img src="'.$this->baseUrl().'/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItemPlanoDivulgacao" tipo="'.$p['tpSolicitacao'].'" idPlanoDivulgacao="'.$p['idPlanoDivulgacao'].'" title="restaurar item"/>';
                     } else {  ?>
                         <input type="button" class="btn_excluir btnExcluirPDD" idPlanoDivulgacao="<?php echo $p->idPlanoDivulgacao; ?>">
@@ -55,11 +55,11 @@
                     $title = '';
                     switch ($p['tpSolicitacao']) {
                         case 'E':
-                            echo 'Excluído';
-                            $title = 'restaurar plano de divulga&ccedil;&atilde;o excluído';
+                            echo 'Exclu&iacute;do';
+                            $title = 'restaurar plano de divulga&ccedil;&atilde;o exclu&iacute;do';
                             break;
                         case 'I':
-                            echo 'Incluído';
+                            echo 'Inclu&iacute;do';
                             $title = 'recusar inclus&atilde;o de plano de divulga&ccedil;&atilde;o';
                             break;
                         case 'A':
@@ -147,7 +147,7 @@
     <table class="tabela">
         <tr>
             <td class="destacar bold" style="width: 50%">Pe&ccedil;a</td>
-            <td class="destacar bold" style="width: 50%">Veículo</td>
+            <td class="destacar bold" style="width: 50%">Ve&iacute;culo</td>
         </tr>
         <tr>
             <td>
@@ -272,7 +272,7 @@
             if(tpAcao == 'I'){
                 msg = 'Tem certeza que deseja excluir o plano de divulga&ccedil;&atilde;o adicionado?';
             } else {
-                msg = 'Tem certeza que deseja restaurar o plano de divulga&ccedil;&atilde;o excluído?';
+                msg = 'Tem certeza que deseja restaurar o plano de divulga&ccedil;&atilde;o exclu&iacute;do?';
             }
             
             $("#alertaPDD").dialog("destroy");

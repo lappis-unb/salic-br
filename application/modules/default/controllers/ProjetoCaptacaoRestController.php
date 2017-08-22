@@ -21,7 +21,7 @@ class ProjetoCaptacaoRestController extends MinC_Controller_Rest_Abstract {
         $ProjetoCaptacao = new stdClass();
         $ProjetoCaptacao->incentivador = utf8_encode('Sucoritrico Cutrale Ltda');
         $ProjetoCaptacao->numeroRecibo = 1499;
-        $ProjetoCaptacao->tipoApoio = utf8_encode('Patrocínio');
+        $ProjetoCaptacao->tipoApoio = utf8_encode('Patroc&iacute;nio');
         $ProjetoCaptacao->dataCaptacao = '29/12/2015';
         $ProjetoCaptacao->dataTransferencia = '31/12/2015';
         $ProjetoCaptacao->porcentagemCapitado = 419022.40;

@@ -100,13 +100,13 @@
     <?php foreach ($this->DatasProjeto as $datasAtuais) { ?>
     <table class="tabela">
         <tr>
-            <th colspan="2">Período de Execu&ccedil;&atilde;o Atual</th>
-            <th colspan="2">Período de Capta&ccedil;&atilde;o Atual</th>
+            <th colspan="2">Per&iacute;odo de Execu&ccedil;&atilde;o Atual</th>
+            <th colspan="2">Per&iacute;odo de Capta&ccedil;&atilde;o Atual</th>
         </tr>
         <tr>
-            <td class="destacar bold" align="center" width="25%">Data Inícial Atual</td>
+            <td class="destacar bold" align="center" width="25%">Data In&iacute;cial Atual</td>
             <td class="destacar bold" align="center" width="25%">Data Final Atual</td>
-            <td class="destacar bold" align="center" width="25%">Data Inícial Atual</td>
+            <td class="destacar bold" align="center" width="25%">Data In&iacute;cial Atual</td>
             <td class="destacar bold" align="center" width="25%">Data Final Atual</td>
         </tr>
         <tr>
@@ -122,10 +122,10 @@
     <form id="formulario" action="<?php echo $this->url(array('controller' => 'solicitarprorrogacao', 'action' => 'cadastrar-prorrogacao')); ?>" method="post" enctype="multipart/form-data">
         <table class="tabela">
             <tr>
-                <th colspan="2">Novo Período de Capta&ccedil;&atilde;o</th>
+                <th colspan="2">Novo Per&iacute;odo de Capta&ccedil;&atilde;o</th>
             </tr>
             <tr>
-                <td class="destacar bold" align="right" width="100px">Data Início<span style="color: red;">*</span></td>
+                <td class="destacar bold" align="right" width="100px">Data In&iacute;cio<span style="color: red;">*</span></td>
                 <td><input type="text" class="input_simples obrigatorio btn_calendario" name="dtInicio" id="dtInicio" value="<?php $datasAtuais->DtFimCaptacao = trim($datasAtuais->DtFimCaptacao); echo !empty($datasAtuais->DtFimCaptacao) ? Data::somarData(Data::dataAmericana($datasAtuais->DtFimCaptacao), 1) : ''; ?>"></td>
             </tr>
             <tr>

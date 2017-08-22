@@ -186,9 +186,9 @@
                 <th colspan="7">Dados do Local de Realiza&ccedil;&atilde;o (Atual)</th>
             </tr>
             <tr align="center">
-                <td class="destacar bold">País</td>
+                <td class="destacar bold">Pa&iacute;s</td>
                 <td class="destacar bold">UF</td>
-                <td class="destacar bold">Município</td>
+                <td class="destacar bold">Munic&iacute;pio</td>
                 <td class="destacar bold">Status</td>
                <?php echo ($this->LocaisDeRealizacao[0]->dtInicioRealizacao)?'<td class="destacar bold" width="1">Dt. In&iacute;cio Realiza&ccedil;&atilde;o</td>':'' ?>
                <?php echo ($this->LocaisDeRealizacao[0]->dtFimRealizacao)?'<td class="destacar bold" width="1">Dt. Fim Realiza&ccedil;&atilde;o</td>':'' ?>
@@ -244,7 +244,7 @@
                 </td>
             </tr>
             <tr align="left" id="dtInicioRealizacao">
-                <td class="destacar bold">Dt. Início Realiza&ccedil;&atilde;o</td>
+                <td class="destacar bold">Dt. In&iacute;cio Realiza&ccedil;&atilde;o</td>
                 <td><input maxlength="10" id="dtInicio" name="dtInicioRealizacao" class="input_simples btn_calendario" value="<?php echo ($this->LocaisDeRealizacao[0]->dtInicioRealizacao)? Data::tratarDataZend($this->LocaisDeRealizacao[0]->dtInicioRealizacao, 'Brasileira') : '';?>"></td>
             </tr>
             <tr align="left" id="dtFimRealizacao">

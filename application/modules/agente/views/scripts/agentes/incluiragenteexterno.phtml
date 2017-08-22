@@ -118,7 +118,7 @@ function buscaragente(cpf)
             },
             error: function (data)
             {
-                alert("Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi possível carregar agente!");
+                alert("Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi poss&iacute;vel carregar agente!");
             }
         });
 
@@ -220,7 +220,7 @@ function buscarcep(cep)
                 {
                     if (txtTipoLogradouro == tipoLogradouro.options[i].text)
                     {
-                        // seleciona o ítem igual
+                        // seleciona o &iacute;tem igual
                         tipoLogradouro.options[i].selected = true;
                     }
                 }
@@ -247,7 +247,7 @@ function buscarcep(cep)
                 {
                     if (txtUF == uf.options[i].text)
                     {
-                        // seleciona o ítem igual
+                        // seleciona o &iacute;tem igual
                         uf.options[i].selected = true;
                     }
                 }
@@ -268,7 +268,7 @@ function buscarcep(cep)
                 // preenche o combo com a cidade
                 else
                 {
-                    // deixa apenas um elemento no combo, os outros s&atilde;o excluídos
+                    // deixa apenas um elemento no combo, os outros s&atilde;o exclu&iacute;dos
                     document.getElementById("cidade").options.length = 0;
 
                     // cria um novo option

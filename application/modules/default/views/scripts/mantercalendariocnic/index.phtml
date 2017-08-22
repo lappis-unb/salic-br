@@ -16,7 +16,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Início">Início</a></li>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="In&iacute;cio">In&iacute;cio</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'mantercalendariocnic', 'action' => 'index')); ?>">Calend&aacute;rio CNIC</a></li>
 	</ul>
 </div>
@@ -265,7 +265,7 @@ function validarForm(){
      if(document.getElementById("NrReuniao").value == ""){
          alert("Numero da Reuni?o &eacute; um campo de preenchimento obrigatório");
      }else if(document.getElementById("DtInicio").value == "" || document.getElementById("DtInicio").value == "00/00/0000"){
-         alert("Data Início &eacute; um campo de preenchimento obrigatório");
+         alert("Data In&iacute;cio &eacute; um campo de preenchimento obrigatório");
      }else if(document.getElementById("DtFinal").value == "" || document.getElementById("DtFinal").value == "00/00/0000"){
         alert("Data Final &eacute; um campo de preenchimento obrigatório");
      }else if(document.getElementById("DtFechamento").value == "" || document.getElementById("DtFechamento").value == "00/00/0000"){
@@ -300,7 +300,7 @@ function validarForm(){
                         </td>
                     </tr>
                     <tr>
-                        <td>Data Início</td>
+                        <td>Data In&iacute;cio</td>
                         <td><input type="text" name="DtInicio" id="DtInicio" class="input_simples w200" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '00/00/0000');" onblur="restaurar_campo(this, '00/00/0000');" type="text"></td>
                     </tr>
                     <tr>
@@ -312,7 +312,7 @@ function validarForm(){
                         <td><input type="text" name="DtFechamento" id="DtFechamento" class="input_simples w200" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '00/00/0000');" onblur="restaurar_campo(this, '00/00/0000');" type="text"></td>
                     </tr>
                     <tr>
-                        <td>Mecanísmo</td>
+                        <td>Mecan&iacute;smo</td>
                         <td><input type="radio" name="Mecanismo" id="Mecanismo" value="1">&ensp;Mecenato&ensp;&ensp;&ensp;<input type="radio" name="Mecanismo" id="FNC" value="2">&ensp;FNC</td>
                     </tr>
                 </table>
@@ -344,7 +344,7 @@ function validarForm(){
                                                     <select class="select w150" name="colunas[]" id="Visao" multiple="multiple" size="7">
 
                                                             <option value="N.Reuniao">N. Reuni?o</option>
-                                                            <option value="Dt.Inicio">Dt. Início </option>
+                                                            <option value="Dt.Inicio">Dt. In&iacute;cio </option>
                                                             <option value="Dt.Final">Dt. Final</option>
                                                             <option value="Dt.Fechamento">Dt. Fechamento</option>
                                                             <option value="Mecanismo">Mecanismo </option>
@@ -384,7 +384,7 @@ function validarForm(){
 
 <div id="titulo"><div>Reuni&atilde;o da CNIC<span class="voltar"><a href="#">Voltar</a></span></div></div></form><div id="conteudo">
     <div id="cronometro" style="display: none; font-size: 2em; margin-top: 0.5em; text-align: center; color: red;" >
-        Tempo restante para início da Plen&aacute;ria = <span id="minu" ></span>' : <span id="seg" ></span>"
+        Tempo restante para in&iacute;cio da Plen&aacute;ria = <span id="minu" ></span>' : <span id="seg" ></span>"
     </div>
 
     <div id="miolo">

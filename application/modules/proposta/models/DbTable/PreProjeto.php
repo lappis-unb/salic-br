@@ -2705,7 +2705,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     }
                 }
 
-                // Verifica se o proponente Proposta aprovado em editais (618) ou Proposta  com contratos de patrocínios (619)
+                // Verifica se o proponente Proposta aprovado em editais (618) ou Proposta  com contratos de patroc&iacute;nios (619)
                 $sql = $db->select()
                     ->from($this->_name, $this->_getCols(), $this->_schema)
                     ->where('idPreProjeto = ?', $idPreProjeto);

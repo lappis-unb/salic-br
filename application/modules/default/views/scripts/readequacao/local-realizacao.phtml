@@ -28,7 +28,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
  * A&ccedil;&otilde;es que ser&atilde;o executadas após o carregamento da p&aacute;gina
  */
     $(document).ready(function(){
-        // desabilita a uf e a cidade caso o país n&atilde;o seja o brasil
+        // desabilita a uf e a cidade caso o pa&iacute;s n&atilde;o seja o brasil
         $('#pais').change(function()
         {
             if ($(this).val() == 31)
@@ -59,7 +59,7 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
 
 	// exclus&atilde;o de local de realiza&ccedil;&atilde;o
 	$('.btn_excluir_local').click(function(){
-            item = $(this).attr('id'); // pega o registro que est&aacute; sendo excluído
+            item = $(this).attr('id'); // pega o registro que est&aacute; sendo exclu&iacute;do
             $('#dsExclusao').attr('value', ''); // limpa a justificativa
 
             $('#modal-exclusao-local').dialog('destroy');

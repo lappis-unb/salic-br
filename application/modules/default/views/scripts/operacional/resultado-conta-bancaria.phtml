@@ -92,7 +92,7 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Tipo de Pessoa</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">N&ordm; Portaria</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Publica&ccedil;&atilde;o Portaria</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Início Capta&ccedil;&atilde;o</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Dt. In&iacute;cio Capta&ccedil;&atilde;o</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=12&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Fim Capta&ccedil;&atilde;o</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=13&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Nascimento</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'resultado-conta-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&pronac='.$this->pronac.'&tpPessoa='.$this->tpPessoa.'&ocorrencia='.$this->ocorrencia.'&estadoConta='.$this->estadoConta.'&tpDtLtCap='.$this->tpDtLtCap.'&dtInicioLtCap='.$this->dtInicioLtCap.'&dtFimLtCap='.$this->dtFimLtCap.'&campo=14&ordem='.$this->paginacao['novaOrdem'];?>">Agência</a></th>
@@ -115,7 +115,7 @@
                 <td align="center"><?php echo $d->Situacao; ?></td>
                 <td align="center"><?php echo (strlen($d->CgcCpf) > 11) ? Mascara::addMaskCNPJ($d->CgcCpf) : Mascara::addMaskCPF($d->CgcCpf); ?></td>
                 <td><?php echo $d->Proponente; ?></td>
-                <td><?php echo ($d->TipoPessoa == 1) ? 'Pessoa Jurídica' : 'Pessoa Física'; ?></td>
+                <td><?php echo ($d->TipoPessoa == 1) ? 'Pessoa Jur&iacute;dica' : 'Pessoa F&iacute;sica'; ?></td>
                 <td><?php echo $d->NrPortaria; ?></td>
                 <td align="center"><?php echo !empty($d->DtPublicacaoPortaria) ? Data::tratarDataZend($d->DtPublicacaoPortaria, 'Brasileira') : ''; ?></td>
                 <td align="center"><?php echo !empty($d->DtInicioCaptacao) ? Data::tratarDataZend($d->DtInicioCaptacao, 'Brasileira') : ''; ?></td>
@@ -185,19 +185,19 @@
                                     echo 'Cliente BB-Campus n&atilde;o titular do CPF';
                                     break;
                                 case '010':
-                                    echo 'Dados pessoa física divergentes';
+                                    echo 'Dados pessoa f&iacute;sica divergentes';
                                     break;
                                 case '011':
-                                    echo 'Dados pessoa jurídica divergentes';
+                                    echo 'Dados pessoa jur&iacute;dica divergentes';
                                     break;
                                 case '013':
                                     echo 'Cliente BB-Campus n&atilde;o  titular do CPF';
                                     break;
                                 case '014':
-                                    echo 'Perfil agência incompatível com tipo de pessoa';
+                                    echo 'Perfil agência incompat&iacute;vel com tipo de pessoa';
                                     break;
                                 case '015':
-                                    echo 'Tipo de pessoa incompatível  com natureza jurídica';
+                                    echo 'Tipo de pessoa incompat&iacute;vel  com natureza jur&iacute;dica';
                                     break;
                                 case '016':
                                     echo 'Tipo de repasse inv&aacute;lido';

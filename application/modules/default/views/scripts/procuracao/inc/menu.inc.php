@@ -15,10 +15,10 @@
         });
     </script>
 
-    <!-- início: conteúdo principal #container -->
+    <!-- in&iacute;cio: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
+        <!-- in&iacute;cio: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
