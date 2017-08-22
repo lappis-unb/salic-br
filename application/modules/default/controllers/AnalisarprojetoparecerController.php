@@ -732,7 +732,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract
 
         $this->view->itens = $itensCusto;
         $this->view->stPrincipal = $stPrincipal;
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'Descricao');
         $this->view->valorpossivel = $valorPossivel;
         $this->view->vlSolicitado = $valorSolicitado;
 

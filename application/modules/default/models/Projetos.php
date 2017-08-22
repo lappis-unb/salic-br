@@ -103,7 +103,7 @@ class Projetos extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(array('l' => 'vwExtratoDaMovimentacaoBancaria'), array(
             'numero' => new Zend_Db_Expr('CONVERT(CHAR(2), l.dtLancamento, 101)'),
-            'descricao' => new Zend_Db_Expr('DATENAME(MONTH,l.dtLancamento)')
+            'Descricao' => new Zend_Db_Expr('DATENAME(MONTH,l.dtLancamento)')
         ), 'dbo')
             ->where('l.idPronac = ?', (int)$idPronac)
             ->where('CONVERT(CHAR(4), l.dtLancamento, 120) = ?', (int)$ano)
@@ -947,10 +947,10 @@ class Projetos extends MinC_Db_Table_Abstract
             array('mc' => 'Mecanismo'), "mc.Codigo = pr.Mecanismo", array('mc.Descricao as dsMecanismo')
         );
         $select->joinInner(
-            array('ar' => 'Area'), "ar.Codigo = pr.Area", array('ar.descricao as dsArea')
+            array('ar' => 'Area'), "ar.Codigo = pr.Area", array('ar.Descricao as dsArea')
         );
         $select->joinInner(
-            array('sg' => 'Segmento'), "sg.Codigo = pr.Segmento", array('sg.descricao as dsSegmento')
+            array('sg' => 'Segmento'), "sg.Codigo = pr.Segmento", array('sg.Descricao as dsSegmento')
         );
         $select->joinLeft(
             array('enq' => 'Enquadramento'), "enq.IdPRONAC = pr.IdPRONAC", array('enq.Enquadramento', 'enq.dtEnquadramento', 'IdEnquadramento')
@@ -1041,10 +1041,10 @@ class Projetos extends MinC_Db_Table_Abstract
             array('mc' => 'Mecanismo'), "mc.Codigo = pr.Mecanismo", array('mc.Descricao as dsMecanismo'), 'SAC'
         );
         $select->joinInner(
-            array('ar' => 'Area'), "ar.Codigo = pr.Area", array('ar.descricao as dsArea'), 'SAC'
+            array('ar' => 'Area'), "ar.Codigo = pr.Area", array('ar.Descricao as dsArea'), 'SAC'
         );
         $select->joinInner(
-            array('sg' => 'Segmento'), "sg.Codigo = pr.Segmento", array('sg.descricao as dsSegmento'), 'SAC'
+            array('sg' => 'Segmento'), "sg.Codigo = pr.Segmento", array('sg.Descricao as dsSegmento'), 'SAC'
         );
         $select->joinLeft(
             array('enq' => 'Enquadramento'), "enq.IdPRONAC = pr.IdPRONAC", array('enq.Enquadramento', 'enq.dtEnquadramento', 'IdEnquadramento'), 'SAC'
@@ -1691,10 +1691,10 @@ class Projetos extends MinC_Db_Table_Abstract
             'dbo.fnFormataProcesso(pr.idPronac) as Processo'));
 
         $slct->joinInner(
-            array('ar' => 'Area'), "ar.Codigo = pr.Area", array('ar.descricao as dsArea')
+            array('ar' => 'Area'), "ar.Codigo = pr.Area", array('ar.Descricao as dsArea')
         );
         $slct->joinInner(
-            array('sg' => 'Segmento'), "sg.Codigo = pr.Segmento", array('sg.descricao as dsSegmento')
+            array('sg' => 'Segmento'), "sg.Codigo = pr.Segmento", array('sg.Descricao as dsSegmento')
         );
         $slct->joinInner(
             array('mc' => 'Mecanismo'), "mc.Codigo = pr.Mecanismo", array('mc.Descricao as dsMecanismo')
@@ -2880,7 +2880,7 @@ class Projetos extends MinC_Db_Table_Abstract
             , "A.idAgente"
             , "A.CNPJCPF"
             , "St.Codigo AS CodSituacao"
-            , "St.descricao AS Situacao"
+            , "St.Descricao AS Situacao"
             , "NomeProponente" => new Zend_Db_Expr("
                     CASE
                         WHEN N.Descricao IS NULL

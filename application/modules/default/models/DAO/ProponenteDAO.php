@@ -171,8 +171,8 @@ Class ProponenteDAO extends Zend_Db_Table
 							Pr.IdPRONAC,
                                                         Pr.AnoProjeto+Pr.Sequencial as pronac,
 							Pr.NomeProjeto,
-							Ar.descricao dsArea,
-							Sg.descricao dsSegmento,
+							Ar.Descricao dsArea,
+							Sg.Descricao dsSegmento,
 							Pr.SolicitadoReal,
 							CASE WHEN Pr.Mecanismo in ('2','6')
 							THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial) 
@@ -205,8 +205,8 @@ Class ProponenteDAO extends Zend_Db_Table
                     Pr.IdPRONAC,
                     Pr.NomeProjeto,
                     Pr.AnoProjeto+Pr.Sequencial as pronac,
-                    Ar.descricao dsArea,
-                    Sg.descricao dsSegmento,
+                    Ar.Descricao dsArea,
+                    Sg.Descricao dsSegmento,
                     Pr.SolicitadoReal,
                     CASE WHEN Pr.Mecanismo in ('2','6')
                     THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
@@ -232,8 +232,8 @@ Class ProponenteDAO extends Zend_Db_Table
                     Pr.IdPRONAC,
                     Pr.AnoProjeto+Pr.Sequencial as pronac,
                     Pr.NomeProjeto,
-                    Ar.descricao dsArea,
-                    Sg.descricao dsSegmento,
+                    Ar.Descricao dsArea,
+                    Sg.Descricao dsSegmento,
                     Pr.SolicitadoReal,
                     CASE WHEN Pr.Mecanismo in ('2','6')
                     THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)

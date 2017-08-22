@@ -87,7 +87,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
         $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 2));
         $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 13));
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'Descricao');
         $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 3));
         $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 4, 'idverificacao' => array(28, 29)));
 

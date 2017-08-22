@@ -15,7 +15,7 @@ class AlteracaoNomeProponenteDAO  extends Zend_Db_Table{
         $sql = "select
                     prop.Sequencial+prop.AnoProjeto as IdPRONAC,
                     prop.NomeProjeto,
-                    sit.codigo+' - '+sit.descricao as situacao
+                    sit.codigo+' - '+sit.Descricao as situacao
                 from
                     sac.dbo.Projetos prop
                     inner join sac.dbo.Situacao sit on sit.codigo =  prop.situacao

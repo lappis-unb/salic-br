@@ -699,7 +699,7 @@ function buscarFornecedor(este){
             var fornecedor = buscarJson('<?php echo $buscarFornecedorHref;?>',{cnpjcpf:$(este).val()});
             if(fornecedor.retorno){
                $('#'+$(este).attr('idAgente')).val(fornecedor.idAgente);
-               $('#'+$(este).attr('idDescricao')).val(fornecedor.descricao).attr('readonly',true);
+               $('#'+$(este).attr('idDescricao')).val(fornecedor.Descricao).attr('readonly',true);
 
             } else {
                 $('html').css('overflow', 'hidden');

@@ -62,10 +62,10 @@ class Proposta_Model_DbTable_DocumentosExigidos extends MinC_Db_Table_Abstract
         $select = $this->select()
             ->setIntegrityCheck(false)
             ->from($this->getName('vwdocumentosexigidosapresentacaoproposta'),
-                array('codigo', 'descricao'),
+                array('codigo', 'Descricao'),
                 $this->_schema)
             ->where('opcao = ?', $idOpcao)
-            ->order('descricao');
+            ->order('Descricao');
         $result = $this->fetchAll($select);
         return ($result)? $result->toArray() : array();
     }

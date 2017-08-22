@@ -211,7 +211,7 @@ $menuExiste = false;
                 success: function(data)
                 {
                     if (data.error) {
-                        $('#novas_mensagens').append('<div id="validar-pct">'+data.descricao+'<div>');                               
+                        $('#novas_mensagens').append('<div id="validar-pct">'+data.Descricao+'<div>');                               
                         $('#validar-pct').dialog("destroy");
                         $('#validar-pct').dialog
                         ({

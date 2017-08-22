@@ -45,7 +45,7 @@
             <?php
             foreach($this->relatorios[$key] as $dados){?>
             <tr>
-                <td><?php echo $dados['descricao']?></td>
+                <td><?php echo $dados['Descricao']?></td>
                 <td style="text-align: center;">
                     <?php if($a <= $this->qtdrelatorios){ ?><a href="<?php echo $this->url(array('controller' => 'analisarexecucaofisicatecnico', 'action' => 'relatoriotrimestral', 'idpronac' => $this->idpronac, 'nrrelatorio' => $a)); ?>">
                         <img src="<?php echo $this->baseurl(); ?>/public/img/table_multiple.png" alt=""></a>

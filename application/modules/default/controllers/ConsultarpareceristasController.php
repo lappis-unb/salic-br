@@ -79,11 +79,11 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
         if (self::$perfilAtual == 'Parecerista') {
             $pagamentos = array();
             $pagamentos[0]['codigo'] = 2;
-            $pagamentos[0]['descricao'] = "Todos";
+            $pagamentos[0]['Descricao'] = "Todos";
             $pagamentos[1]['codigo'] = 1;
-            $pagamentos[1]['descricao'] = "Efetuados";
+            $pagamentos[1]['Descricao'] = "Efetuados";
             $pagamentos[2]['codigo'] = 0;
-            $pagamentos[2]['descricao'] = "Pendentes";
+            $pagamentos[2]['Descricao'] = "Pendentes";
             $this->view->Pagamentos = $pagamentos;
 
             $this->view->Produtos = $produtoDAO->buscar(array('stEstado = ?' => 0));

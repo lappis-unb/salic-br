@@ -73,16 +73,16 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->setIntegrityCheck(false)
             ->distinct()
             ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.descricao as nome'), $schemaAgentes)
+            ->joinLeft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'endereconacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
             ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
-            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
-            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
+            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.Descricao as dstipoendereco', $schemaAgentes)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.Descricao as dstipologradouro', $schemaAgentes)
             ->joinLeft(array('t' => 'tbTitulacaoConselheiro'), 't.idAgente = a.idAgente', $t, $schemaAgentes)
             ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
-            ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
-            ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
+            ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.Descricao as dsarea', $schemaSac)
+            ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.Descricao as dssegmento', $schemaSac)
             ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
         ;
 
@@ -92,13 +92,13 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         }
         if (!empty($nome)) {
         # filtra pelo nome
-            $select->where('n.descricao LIKE ?', '%'.$nome.'%');
+            $select->where('n.Descricao LIKE ?', '%'.$nome.'%');
         } if (!empty($idAgente)) {
             # busca de acordo com o id do agente
             $select->where('a.idAgente = ?',$idAgente);
         }
 
-        $select->order(array('e.status Desc', 'n.descricao Asc'));
+        $select->order(array('e.status Desc', 'n.Descricao Asc'));
         $result = $this->fetchAll($select);
         $result = ($result)? $result->toArray() : array();
 
@@ -292,7 +292,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(
             array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
-            array('nm.descricao as nomeagente'),
+            array('nm.Descricao as nomeagente'),
             $this->_schema
 
         );
@@ -348,8 +348,8 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
 
         $select->joinInner(
-            array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
-            array('nm.descricao as nomeagente'),
+            array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
+            array('nm.Descricao as nomeagente'),
             $this->_schema
         );
 

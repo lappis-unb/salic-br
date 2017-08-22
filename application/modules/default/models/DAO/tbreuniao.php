@@ -26,7 +26,7 @@ class tbreuniao extends MinC_Db_Table_Abstract{
         $slct->joinInner(
                 array('v2' => 'Mecanismo'),
                 'v2.Codigo = tbr.Mecanismo',
-                array('v2.descricao as str_Mecanismo')
+                array('v2.Descricao as str_Mecanismo')
         );
 
         //adiciona quantos filtros foram enviados
@@ -92,7 +92,7 @@ class tbreuniao extends MinC_Db_Table_Abstract{
         $slct->joinInner(
                 array('v2' => 'Mecanismo'),
                 'v2.Codigo = tbr.Mecanismo',
-                array('v2.descricao as str_Mecanismo')
+                array('v2.Descricao as str_Mecanismo')
         );
 
             // adicionando clausulas where

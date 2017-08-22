@@ -192,7 +192,7 @@ class ManterAgentes extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from(array('Area'), array('codigo AS id', 'descricao AS descricao'), $this->getSchema('sac'))
             ->where('codigo <> ?', '7')
-            ->order('descricao');
+            ->order('Descricao');
 
         return $db->fetchAll($sql);
     }

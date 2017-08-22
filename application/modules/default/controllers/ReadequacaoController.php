@@ -2809,7 +2809,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$i = 0;
 			foreach ($buscar as $r) :
 				$vlJson[$i]['id']        = $r->id;
-				$vlJson[$i]['descricao'] = utf8_encode($r->descricao);
+				$vlJson[$i]['Descricao'] = utf8_encode($r->descricao);
 				$i++;
 			endforeach;
 			$json = json_encode($vlJson);

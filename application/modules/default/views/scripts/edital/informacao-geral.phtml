@@ -95,7 +95,7 @@
                                 <input type="checkbox" class="marcatodos" filho=".Segmento" style="vertical-align: middle"/>&nbsp;<strong>Todas</strong><br />    
                                 <?php foreach ($this->segmento as $s): ?>
                                     <span class="pai-<?php echo substr($s['id'], 0, 1); ?> mta" style="<?php if(!in_array(substr($s['id'], 0, 1), $this->editalAreas)){ echo 'display: none;';} ?>">
-                                        <input class="filho-<?php echo substr($s['id'], 0, 1); ?> segmento" type="checkbox" <?php if(in_array($s['id'], $this->editalSegmentos)){ echo 'checked="checked"';} ?> name="segmento[]" value="<?php echo $s['id']; ?>"  style="vertical-align: middle" />&nbsp;<strong><?php echo $s['descricao']; ?></strong><br />
+                                        <input class="filho-<?php echo substr($s['id'], 0, 1); ?> segmento" type="checkbox" <?php if(in_array($s['id'], $this->editalSegmentos)){ echo 'checked="checked"';} ?> name="segmento[]" value="<?php echo $s['id']; ?>"  style="vertical-align: middle" />&nbsp;<strong><?php echo $s['Descricao']; ?></strong><br />
                                     </span>
                                 <?php endforeach; ?>
                             </div>

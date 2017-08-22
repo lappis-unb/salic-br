@@ -1413,7 +1413,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         $this->view->Descricao3     =   $resposta[2]->Descricao;
         $this->view->vlCotacao3     =   number_format($resposta[2]->vlCotacao, 2, ',','.');
 
-        $this->view->documentosAnexados = array(array('id'=>1,'nome'=>utf8_encode('Documento de comprova��o'),'descricao'=>utf8_encode('Documento de comprova��o')));
+        $this->view->documentosAnexados = array(array('id'=>1,'nome'=>utf8_encode('Documento de comprova��o'),'Descricao'=>utf8_encode('Documento de comprova��o')));
 
         $tbCotacaoxplanilhaaprovacao = new Cotacaoxplanilhaaprovacao();
         $this->view->itensVinculados = $tbCotacaoxplanilhaaprovacao->itensVinculados($this->view->idcotacao);
@@ -1667,7 +1667,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
             foreach($resposta as $key=>$cotacao) {
                 $array[$key] = array('idcotacao'   => $cotacao->idCotacao,
                                      'nrcotacao'   => $cotacao->nrCotacao,
-                                     'descricao'   => $cotacao->dsCotacao,
+                                     'Descricao'   => $cotacao->dsCotacao,
                                      'datacotacao' => date('d/m/Y', strtotime($cotacao->dtCotacao)),
                                      'finalizado'  => false);
             }
@@ -2416,7 +2416,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
 
         $fornecedor = $agentesDao->buscarFornecedor(array(' A.CNPJCPF = ? '=>$cnpjcpf))->current();
         if ($fornecedor) {
-            $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$fornecedor->idAgente,'descricao'=>utf8_encode($fornecedor->nome));
+            $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$fornecedor->idAgente,'Descricao'=>utf8_encode($fornecedor->nome));
         } else {
             $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);
         }
@@ -2454,7 +2454,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
 
                 if ($erro == 0 && count($arrResultado) > 0) {
                     $retorno['error'] = '';
-                    $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$arrResultado['idPessoaFisica'],'descricao'=>utf8_encode($arrResultado['nmPessoaFisica']));
+                    $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$arrResultado['idPessoaFisica'],'Descricao'=>utf8_encode($arrResultado['nmPessoaFisica']));
                 } else {
                     $retorno['error'] = utf8_encode('Pessoa n�o encontrada!!');
                     $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);
@@ -2474,7 +2474,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
 
                 if ($erro == 0 && count($arrResultado) > 0) {
                     $retorno['error'] = '';
-                    $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$arrResultado['idPessoaJuridica'],'descricao'=>utf8_encode($arrResultado['nmRazaoSocial']));
+                    $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$arrResultado['idPessoaJuridica'],'Descricao'=>utf8_encode($arrResultado['nmRazaoSocial']));
                 } else {
                     $retorno['error'] = utf8_encode('Pessoa n�o encontrada!');
                     $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);

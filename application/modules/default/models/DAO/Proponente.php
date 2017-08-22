@@ -160,8 +160,8 @@ where Pr.IdPRONAC = " . $pronac . "";
         $sql3 = "SELECT
                                                 Pr.IdPRONAC,
                                                 Pr.NomeProjeto,
-                                                Ar.descricao dsArea,
-                                                Sg.descricao dsSegmento,
+                                                Ar.Descricao dsArea,
+                                                Sg.Descricao dsSegmento,
                                                 Pr.SolicitadoReal,
                                                 CASE WHEN Pr.Mecanismo in ('2','6')
                                                 THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
@@ -194,8 +194,8 @@ where Pr.IdPRONAC = " . $pronac . "";
         $sql4 = "SELECT
                                                 Pr.IdPRONAC,
                                                 Pr.NomeProjeto,
-                                                Ar.descricao dsArea,
-                                                Sg.descricao dsSegmento,
+                                                Ar.Descricao dsArea,
+                                                Sg.Descricao dsSegmento,
                                                 Pr.SolicitadoReal,
                                                 CASE WHEN Pr.Mecanismo in ('2','6')
                                                 THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)
@@ -226,8 +226,8 @@ where Pr.IdPRONAC = " . $pronac . "";
         $sql5 = "SELECT
 							Pr.IdPRONAC,
 							Pr.NomeProjeto,
-							Ar.descricao dsArea,
-							Sg.descricao dsSegmento,
+							Ar.Descricao dsArea,
+							Sg.Descricao dsSegmento,
 							Pr.SolicitadoReal,
 							CASE WHEN Pr.Mecanismo in ('2','6')
 							THEN sac.dbo.fnValorAprovadoConvenio(Pr.AnoProjeto,Pr.Sequencial)

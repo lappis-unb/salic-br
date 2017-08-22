@@ -164,7 +164,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
                 if ($recebidoPost->stAprovacao == 'D')
                 {
                     $recDadosParaAlteracao = tbalteracaoaltrazDAO::buscarDadosAltRaz($_POST['idpedidoalteracao']);
-                    $dadosalterar = array("descricao" => $recDadosParaAlteracao[0]->nmrazaosocial);
+                    $dadosalterar = array("Descricao" => $recDadosParaAlteracao[0]->nmrazaosocial);
                     tbalteracaoaltrazDAO::alterarRazaoSocialProjeto($dadosalterar, $recDadosParaAlteracao[0]->idAgente);
                 }
                 $this->InserirStatusAvaliacaoProjeto($_POST);

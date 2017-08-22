@@ -475,7 +475,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 					,AP.idAnaliseConteudo
 					,AP.IdPRONAC
 					,AP.idProduto
-                    ,PROD.descricao as produto
+                    ,PROD.Descricao as produto
 					,AP.stLei8313
 					,AP.stArtigo3
 					,AP.nrIncisoArtigo3

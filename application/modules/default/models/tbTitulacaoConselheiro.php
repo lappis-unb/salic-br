@@ -44,7 +44,7 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
             array('Nome'=>'b.Descricao AS nome'), 'agentes'
         );
         $select->where('a.stConselheiro = ?', "A");
-        $select->order('b.descricao');
+        $select->order('b.Descricao');
 
         return $this->fetchAll($select);
     }

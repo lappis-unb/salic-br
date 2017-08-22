@@ -160,7 +160,7 @@ public function alterarlembreteAction()
 		$contador  = $_GET['id'];
 		$pronac    = $_GET['pronac'];
 
-		$lembrete = $_GET['descricao'];
+		$lembrete = $_GET['Descricao'];
 	
 		$resultado = LembretesDAO::alterarlembrete($contador, $lembrete);
 				

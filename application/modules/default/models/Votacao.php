@@ -47,7 +47,7 @@ class Votacao extends MinC_Db_Table_Abstract {
         $select->joinInner(
                           array('nm'=>'nomes'),
                           'nm.idAgente = tv.idAgente',
-                          array('nm.descricao as nome'),
+                          array('nm.Descricao as nome'),
                           'agentes'
                           );
         $select->where('idNrReuniao = ?', $idNrReuniao);

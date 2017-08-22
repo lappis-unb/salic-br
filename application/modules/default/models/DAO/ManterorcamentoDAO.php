@@ -407,9 +407,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(array('tbplanilhaetapa'), array('idplanilhaetapa','descricao'), $this->getSchema('sac'))
+            ->from(array('tbplanilhaetapa'), array('idplanilhaetapa','Descricao'), $this->getSchema('sac'))
             ->where("tpcusto = 'A'")
-            ->order('descricao')
+            ->order('Descricao')
             ;
 
         //$sql = "SELECT
@@ -519,14 +519,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->from(array('pre' => 'PreProjeto'), null, $this->getSchema('sac'))
             ->join(array('pp' => 'tbplanilhaproposta'),  '(pre.idPreProjeto = pp.idProjeto)', $pp, $this->getSchema('sac'))
             ->join(array('p' => 'produto'), '(pp.idProduto = p.codigo)', array('p.codigo as CodigoProduto'), $this->getSchema('sac'))
-            ->join(array('ti' => 'tbplanilhaitens'), 'ti.idplanilhaitens = pp.idplanilhaitem', array('ti.descricao as DescricaoItem'), $this->getSchema('sac'))
-            ->join(array('uf' => 'uf'),  'uf.codufibge = pp.ufdespesa', array('uf.descricao as DescricaoUf', 'uf.uf as SiglaUF'), $this->getSchema('sac'))
-            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = pp.municipiodespesa', array('municipio.descricao as Municipio'), $this->getSchema('agentes'))
-            ->join(array('mec' => 'mecanismo'), 'mec.codigo = pre.mecanismo', array('mec.descricao as DescricaoMecanismo'), $this->getSchema('sac'))
-            ->join(array('un' => 'tbplanilhaunidade'),  'un.idunidade = pp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(array('veri' => 'Verificacao'),  'veri.idverificacao = pp.fonterecurso', array('veri.idverificacao as idFonteRecurso', 'veri.descricao as DescricaoFonteRecurso'), $this->getSchema('sac'))
+            ->join(array('ti' => 'tbplanilhaitens'), 'ti.idplanilhaitens = pp.idplanilhaitem', array('ti.Descricao as DescricaoItem'), $this->getSchema('sac'))
+            ->join(array('uf' => 'uf'),  'uf.codufibge = pp.ufdespesa', array('uf.Descricao as DescricaoUf', 'uf.uf as SiglaUF'), $this->getSchema('sac'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = pp.municipiodespesa', array('municipio.Descricao as Municipio'), $this->getSchema('agentes'))
+            ->join(array('mec' => 'mecanismo'), 'mec.codigo = pre.mecanismo', array('mec.Descricao as DescricaoMecanismo'), $this->getSchema('sac'))
+            ->join(array('un' => 'tbplanilhaunidade'),  'un.idunidade = pp.unidade', 'un.Descricao as Unidade', $this->getSchema('sac'))
+            ->join(array('veri' => 'Verificacao'),  'veri.idverificacao = pp.fonterecurso', array('veri.idverificacao as idFonteRecurso', 'veri.Descricao as DescricaoFonteRecurso'), $this->getSchema('sac'))
             ->where('idpreprojeto = ?', $idPreProjeto)
-            ->order('ti.descricao')
+            ->order('ti.Descricao')
             ;
 
         if($idItem) {
@@ -736,9 +736,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $sql = $db->select()
             ->from(array('pre' => 'PreProjeto'), array('pre.idPreProjeto as PreProjeto', 'pre.idPreProjeto as idProposta'), $this->getSchema('sac'))
             ->join(array('pd' => 'planodistribuicaoproduto'), '(pre.idPreProjeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', null, $this->getSchema('sac'))
-            ->join(array('p' => 'produto'), '(pd.idproduto = p.codigo)', array('p.codigo as CodigoProduto', 'p.descricao as DescricaoProduto'),  $this->getSchema('sac'))
+            ->join(array('p' => 'produto'), '(pd.idproduto = p.codigo)', array('p.codigo as CodigoProduto', 'p.Descricao as DescricaoProduto'),  $this->getSchema('sac'))
             ->where('idpreprojeto = ?', $idPreProjeto)
-            ->group(array('p.codigo', 'p.descricao', 'idpreprojeto'))
+            ->group(array('p.codigo', 'p.Descricao', 'idpreprojeto'))
             ;
 
         return $db->fetchAll($sql);
@@ -918,24 +918,24 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         $tpe = array(
             'tpe.tpcusto as custo',
-            'tpe.descricao as etapa',
+            'tpe.Descricao as etapa',
             'tpe.idplanilhaetapa as idEtapa',
             'tpe.tpcusto',
         );
 
         $tpi = array(
-            'tpi.descricao as DescricaoItem',
+            'tpi.Descricao as DescricaoItem',
             'tpi.idplanilhaitens as idItem',
         );
 
         $uf = array(
-            'uf.descricao as DescricaoUf',
+            'uf.Descricao as DescricaoUf',
             'uf.sigla as SiglaUF',
         );
 
         $veri = array(
             'veri.idverificacao as idFonteRecurso',
-            'veri.descricao as DescricaoFonteRecurso'
+            'veri.Descricao as DescricaoFonteRecurso'
         );
 
         $sql = $db->select()
@@ -944,14 +944,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->join(array('tpe' => 'tbplanilhaetapa'), 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
             ->join(array('tpi' => 'tbplanilhaitens'), 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
             ->join(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
-            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa','municipio.descricao as Municipio', $this->getSchema('agentes'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa','municipio.Descricao as Municipio', $this->getSchema('agentes'))
             ->join(array('prep' => 'PreProjeto'), 'prep.idPreProjeto = tpp.idprojeto', null, $this->getSchema('sac'))
-            ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
-            ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.Descricao as mecanismo', $this->getSchema('sac'))
+            ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.Descricao as Unidade', $this->getSchema('sac'))
             ->join(array('veri' => 'Verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
-            ->order('tpe.descricao')
+            ->order('tpe.Descricao')
             ;
 
         return $db->fetchAll($sql);

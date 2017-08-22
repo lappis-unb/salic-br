@@ -1436,7 +1436,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                             if($dados->tpSolicitacao == 'EN' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR' || $dados->tpSolicitacao == 'PI'){
                                 $this->view->projetosENReconsideracao = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                                $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'descricao');
+                                $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'Descricao');
                                 $objSegmentocultural = new Segmentocultural();
                                 $this->view->combosegmentosculturaisReconsideracao = $objSegmentocultural->buscarSegmento($this->view->projetosENReconsideracao->cdArea);
 
@@ -1475,7 +1475,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                             if($dados->tpSolicitacao == 'EN' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR' || $dados->tpSolicitacao == 'PI'){
                                 $this->view->projetosENRecurso = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                                $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'descricao');
+                                $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'Descricao');
                                 $objSegmentocultural = new Segmentocultural();
                                 $this->view->combosegmentosculturaisRecurso = $objSegmentocultural->buscarSegmento($this->view->projetosENRecurso->cdArea);
 

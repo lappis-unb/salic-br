@@ -27,8 +27,8 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
                 pd.idPeca,
                 pd.idVeiculo,
                 pd.Usuario,
-                ve.descricao as Pe�a,
-                ve1.descricao as Veiculo
+                ve.Descricao as Pe�a,
+                ve1.Descricao as Veiculo
 
                 FROM
                     sac.dbo.PlanoDeDivulgacao pd
@@ -165,13 +165,13 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
         $slct->joinInner(
             array('v1' => 'Verificacao'),
                    'v1.idverificacao = pd.idpeca',
-                   array('v1.descricao as peca'),
+                   array('v1.Descricao as peca'),
             $this->_schema
                            );
         $slct->joinInner(
                 array('v2' => 'Verificacao'),
                 'v2.idverificacao = pd.idveiculo',
-                array('v2.descricao as veiculo'),
+                array('v2.Descricao as veiculo'),
             $this->_schema
         );
 

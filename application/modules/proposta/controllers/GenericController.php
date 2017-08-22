@@ -272,7 +272,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                     'idprojeto' => $idPreProjeto,
                     'idetapa' => $idEtapa,
                     'idplanilhaitem' => $item->idPlanilhaItens,
-                    'descricao' => '',
+                    'Descricao' => '',
                     'unidade' => '1',
                     'quantidade' => '1',
                     'ocorrencia' => '1',

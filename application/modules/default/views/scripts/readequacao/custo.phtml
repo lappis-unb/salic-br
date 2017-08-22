@@ -213,9 +213,9 @@ $idPronacCrip = Seguranca::encrypt($this->idPronac);
                             for (i in dados) {
                                 if(i != 'error') {
                                     if (data.idPlanilhaItem == dados[i].id) {
-                                        $('#item').append('<option value="' + dados[i].id + '" selected="selected">' + dados[i].descricao + '</option>');
+                                        $('#item').append('<option value="' + dados[i].id + '" selected="selected">' + dados[i].Descricao + '</option>');
                                     } else {
-                                        $('#item').append('<option value="' + dados[i].id + '">' + dados[i].descricao + '</option>');
+                                        $('#item').append('<option value="' + dados[i].id + '">' + dados[i].Descricao + '</option>');
                                     }
                                 }
                             }

@@ -20,7 +20,7 @@ class Segmento extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('s'=>$this->_name),
-                    array('id'=>'Codigo', 'descricao'=>'Descricao')
+                    array('id'=>'Codigo', 'Descricao'=>'Descricao')
         );
 
         $slct->joinInner(array('a'=>'Area'),'LEFT(s.Codigo, 1) = a.Codigo',

@@ -460,7 +460,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             if ($option['codigo'] == $idDocumento) {
                 $selected = "selected='selected' ";
             }
-            $htmlOptions .= "<option value='{$option['codigo']}' {$selected}>" . ucfirst(((($option['descricao'])))) . " </option>";
+            $htmlOptions .= "<option value='{$option['codigo']}' {$selected}>" . ucfirst(((($option['Descricao'])))) . " </option>";
         }
         echo $htmlOptions;
     }

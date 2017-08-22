@@ -633,7 +633,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             $msg = 'Favor ajustar os custos de Divulga��o / Comercializa��o que excedem <b>'. number_format($valorvinteporcento, '2', ',', '.') .'</b>, valor para que possa enviar sua solicita��o de readequa��o.';
 //            $msg = 'Na readequa&ccedil;�o de planilha or&ccedil;ament�ria, o sistema deve bloquear envio planilha com custos administrativos superior a 15% do valor total do projeto.';
             $novos_valores['error'] = true;
-            $novos_valores['descricao'] = utf8_encode($msg);
+            $novos_valores['Descricao'] = utf8_encode($msg);
             $this->_helper->json($novos_valores);
             $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else  if ($valoracustosadministrativos > $valorquinzeporceto) {
@@ -642,7 +642,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
 
             $msg = 'Favor ajustar os Custos Administrativos que excedem <b>'. number_format($valorquinzeporceto, '2', ',', '.') .'</b>, valor para que possa enviar sua solicita��o de readequa��o.';
             $novos_valores['error'] = true;
-            $novos_valores['descricao'] = utf8_encode($msg);
+            $novos_valores['Descricao'] = utf8_encode($msg);
             $this->_helper->json($novos_valores);
             $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else {

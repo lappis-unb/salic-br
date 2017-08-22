@@ -74,7 +74,7 @@ class Agente_DddController extends Zend_Controller_Action
             if(count($arrayDados) > 0){
                 foreach ($arrayDados as $value) {
                     $dados[$i]['id'] = $value->id;
-                    $dados[$i]['descricao'] = $value->descricao;
+                    $dados[$i]['Descricao'] = $value->descricao;
                     $i++;
                 }
                 $jsonEncode = json_encode($dados);

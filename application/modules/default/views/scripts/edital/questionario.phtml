@@ -733,7 +733,7 @@
     GuiaListaAdicionar = function(guia) {
         $('#tblGuiaAdicionada tbody #trGuia_zero').remove();
         $('#tblGuiaAdicionada tbody').append(
-                '<tr id="guia_' + guia.guia + '"><td>' + guia.nome + '</td><td>' + guia.descricao + '</td>' +
+                '<tr id="guia_' + guia.guia + '"><td>' + guia.nome + '</td><td>' + guia.Descricao + '</td>' +
                 '<td>' +
                 '<input type="button" class="btn_editar" data-guia="' + guia.guia + '" />' +
                 '<input type="button" class="btn_exclusao" data-guia="' + guia.guia + '" />' +
@@ -745,7 +745,7 @@
 
     GuiaListaAtualizar = function(guia) {
         $('#tblGuiaAdicionada tbody #guia_' + guia.guia + ' td:first').html(guia.nome);
-        $('#tblGuiaAdicionada tbody #guia_' + guia.guia + ' td:first').next().html(guia.descricao);
+        $('#tblGuiaAdicionada tbody #guia_' + guia.guia + ' td:first').next().html(guia.Descricao);
     };
 
     GuiaListaDeletar = function(guia) {
@@ -900,7 +900,7 @@
 
     QuestaoListaAtualizar = function(questao) {
         $('#tblQuestaoAdicionada tbody #questao_' + questao.questao + ' td:first').html(questao.pergunta);
-        /*$('#tblQuestaoAdicionada tbody #questao_'+questao.questao+' td:first').next().html(questao.descricao);*/
+        /*$('#tblQuestaoAdicionada tbody #questao_'+questao.questao+' td:first').next().html(questao.Descricao);*/
     };
 
     QuestaoListaDeletar = function(guia) {

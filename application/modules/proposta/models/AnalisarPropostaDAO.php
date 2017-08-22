@@ -749,7 +749,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                         left join sac.dbo.tbPlanilhaUnidade pu on pp.Unidade = pu.idUnidade
                         left join sac.dbo.Uf uf on pp.UfDespesa = uf.CodUfIbge
                         where idPlanilhaItens = $iditem
-                        order by i.descricao
+                        order by i.Descricao
                 ";
 
 

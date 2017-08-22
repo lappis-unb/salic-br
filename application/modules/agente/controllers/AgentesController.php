@@ -1037,7 +1037,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arrayEmail = array(
                 'idAgente' => $idAgente,
                 'tipointernet' => $tipoEmail,
-                'descricao' => $Email,
+                'Descricao' => $Email,
                 'status' => $enviarEmail,
                 'divulgar' => $divulgarEmail,
                 'usuario' => $Usuario
@@ -1876,7 +1876,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arrNome = array(
                 'idAgente' => $idAgente,
                 'tiponome' => $TipoNome,
-                'descricao' => $nome,
+                'Descricao' => $nome,
                 'status' => 0,
                 'usuario' => $usuario
             );
@@ -2023,7 +2023,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $arrayEmail = array(
                     'idAgente' => $idAgente,
                     'tipointernet' => $tipoEmail,
-                    'descricao' => $Email,
+                    'Descricao' => $Email,
                     'status' => $enviarEmail,
                     'divulgar' => $divulgarEmail,
                     'usuario' => $usuario
@@ -2221,7 +2221,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arrNome = array(
                 'idAgente' => $idAgente,
                 'tiponome' => $TipoNome,
-                'descricao' => $nome,
+                'Descricao' => $nome,
                 'status' => 0,
                 'usuario' => $Usuario
             );
@@ -2383,7 +2383,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $arrayEmail = array(
                 'idAgente' => $idAgente,
                 'tipointernet' => $tipoEmail,
-                'descricao' => $Email,
+                'Descricao' => $Email,
                 'status' => $enviarEmail,
                 'divulgar' => $divulgarEmail,
                 'usuario' => $Usuario

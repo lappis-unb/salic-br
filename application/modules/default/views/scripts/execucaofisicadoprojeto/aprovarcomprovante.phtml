@@ -163,13 +163,13 @@
 			</td>
 		</tr>
 		<tr>
-			<th style="border:none;" class="centro"><label for="descricao">JUSTIFICATIVA</label></th>
+			<th style="border:none;" class="centro"><label for="Descricao">JUSTIFICATIVA</label></th>
 			<td style="border:none;">
 				<input type="hidden" name="idPronac" id="idPronac" value="<?php echo $d->idPRONAC; ?>" />
 				<input type="hidden" name="pronac" id="pronac" value="<?php echo $d->pronac; ?>" />
 				<input type="hidden" name="doc" id="doc" value="<?php echo $d->idComprovante; ?>" />
 				<input type="hidden" name="idComprovanteAnterior" id="idComprovanteAnterior" value="<?php echo $d->idComprovanteAnterior; ?>" />
-				<textarea class="textarea_simples w600" type="text" name="parecer" id="descricao" cols="60" rows="4" <?php echo $this->contadorTextarea('form.descricao', 'form.exibirContadorTextarea', 500); ?> 
+				<textarea class="textarea_simples w600" type="text" name="parecer" id="Descricao" cols="60" rows="4" <?php echo $this->contadorTextarea('form.Descricao', 'form.exibirContadorTextarea', 500); ?> 
 					onclick="limpar_campo(this, 'Digite a justificativa...');" onmousedown=" " onkeypress=" " 
 					onblur="restaurar_campo(this, 'Digite a justificativa...');"><?php echo isset($this->parecer) ? $this->parecer : 'Digite a justificativa...'; ?></textarea>
 				<?php echo $this->exibirContadorTextarea('exibirContadorTextarea', 3, 500, strlen($this->parecer)); ?>

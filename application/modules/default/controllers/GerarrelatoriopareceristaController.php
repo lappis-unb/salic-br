@@ -472,7 +472,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         $this->view->Orgaos         =   $OrgaosDAO->buscar(array('Status = ?'=>0,'Vinculo = ?'=>1));
         $this->view->Pareceristas   =   $NomesDAO->buscarPareceristas();
         	// O mesmo do Manter Agentes
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'Descricao');
 
         $this->view->Areas          =   $AreaDAO->buscar();
         $this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));
