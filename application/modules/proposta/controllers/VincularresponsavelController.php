@@ -156,7 +156,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         if (isset($_POST['solicitarvinculo'])) {
             $idAgenteProponente = $_POST['idAgente'];
             $idUsuarioResponsavel = $this->idResponsavel;
-            $dados = array('idusuarioresponsavel' => $idUsuarioResponsavel,
+            $dados = array('idUsuarioResponsavel' => $idUsuarioResponsavel,
                 'idagenteproponente' => $idAgenteProponente,
                 'dtvinculo' => $tableInternet->getExpressionDate(),
                 'sivinculo' => 0
@@ -164,7 +164,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
             try {
 
                 $where['idagenteproponente   = ?'] = $idAgenteProponente;
-                $where['idusuarioresponsavel = ?'] = $idUsuarioResponsavel;
+                $where['idUsuarioResponsavel = ?'] = $idUsuarioResponsavel;
                 $vinculocadastrado = $v->buscar($where);
 
                 if (count($vinculocadastrado) > 0) {

@@ -491,11 +491,11 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             $tblVinculo = new Agente_Model_DbTable_TbVinculo();
 
             $arrBuscaP['vp.idPreProjeto = ?'] = $idPreProjeto;
-            $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaP['vi.idUsuarioResponsavel = ?'] = $this->idResponsavel;
             $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
             $arrBuscaN['vi.sivinculo in (0,2)'] = '';
-            $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaN['vi.idUsuarioResponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
 

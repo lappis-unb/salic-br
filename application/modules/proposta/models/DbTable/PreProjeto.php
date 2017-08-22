@@ -1271,7 +1271,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
             ->where('e.sivinculoproposta = 2')
-            ->where('f.idusuarioresponsavel = ?', $idResponsavel)
+            ->where('f.idUsuarioResponsavel = ?', $idResponsavel)
             ;
 
         if (!empty($idAgenteCombo)) {
@@ -1329,7 +1329,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->from(array('a'=>'agentes'), array('a.CNPJCPF', 'a.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.descricao as nomeproponente'), $this->getSchema('agentes'))
             ->join(array('b' => 'tbVinculo'), 'a.idAgente = b.idAgenteproponente', null, $this->getSchema('agentes'))
-            ->join(array('c' => 'sgcacesso'), 'b.idusuarioresponsavel = c.idusuario', null, $this->getSchema('controledeacesso'))
+            ->join(array('c' => 'sgcacesso'), 'b.idUsuarioResponsavel = c.idusuario', null, $this->getSchema('controledeacesso'))
             ->where('b.sivinculo = 2')
             ->where('c.idusuario = ?', $idResponsavel)
             ;
@@ -3160,7 +3160,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
             ->where('e.sivinculoproposta = 2')
-            ->where('f.idusuarioresponsavel = ?', $idResponsavel)
+            ->where('f.idUsuarioResponsavel = ?', $idResponsavel)
         ;
 
         if (!empty($idAgenteCombo)) {
@@ -3252,7 +3252,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
             ->where('e.sivinculoproposta = 2')
-            ->where('f.idusuarioresponsavel = ?', $idResponsavel)
+            ->where('f.idUsuarioResponsavel = ?', $idResponsavel)
         ;
 
         if (!empty($idAgenteCombo)) {
