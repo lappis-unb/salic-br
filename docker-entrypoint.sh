@@ -13,14 +13,14 @@ if ! [ -d "/var/www/salic-br" ] || ! [ -d "/var/www/salic-br/application" ]; the
     ls -la /tmp/salic-br
 
     echo "[ ****************** ] Copying Project from temporary folder to workdir"
-#    cp /tmp/salic-br -rT /var/www/salic-br
+ #    cp /tmp/salic-br -rT /var/www/salic-br
     cp /tmp/salic-br -R /var/www/
 
     echo "[ ****************** ] Copying sample application configuration to real one"
     cp /var/www/salic-br/application/configs/exemplo-application.ini /var/www/salic-br/application/configs/application.ini
 
-    #echo "[ ****************** ] Changing owner and group from the Project to 'www-data' "
-    #chown www-data:www-data -R /var/www/salic-br
+    echo "[ ****************** ] Changing owner and group from the Project to 'www-data' "
+    chown www-data:www-data -R /var/www/salic-br
 
     ls -la /var/www/salic-br
 
@@ -37,6 +37,9 @@ if ! [ -d "/var/www/salic-br" ] || ! [ -d "/var/www/salic-br/application" ]; the
     php -r "unlink('composer-setup.php');"
     mv composer.phar /usr/local/bin/composer
 
+
+    cd /var/www/salic-br
+    composer update
     echo "Complete! The application has been successfully copied to /var/www/salic-br"
 fi
 
