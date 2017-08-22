@@ -71,6 +71,13 @@ if ! [ -v $XDEBUG_REMOTE_ENABLE ] && [ "$XDEBUG_INSTALL" = "true" ] ; then
 	        echo "xdebug.remote_port=$XDEBUG_REMOTE_PORT" >> $XDEBUGINI_PATH
 	    fi
 
+	    if ! [ -v $XDEBUG_DEFAULT_ENABLE ] ; then
+            echo "xdebug.default_enable=$XDEBUG_DEFAULT_ENABLE" >> $XDEBUGINI_PATH
+        fi
+        if ! [ -v $XDEBUG_IDEKEY ] ; then
+            echo "xdebug.idekey=$XDEBUG_IDEKEY" >> $XDEBUGINI_PATH
+        fi
+
 	    echo "xdebug.remote_host="`/sbin/ip route|awk '/default/ { print $3 }'` >> $XDEBUGINI_PATH
 	    echo "[ ****************** ] Ending install of XDebug and dependencies."
 
