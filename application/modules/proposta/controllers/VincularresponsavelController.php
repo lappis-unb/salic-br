@@ -38,7 +38,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $acesso = $sgcAcesso->findBy(array('cpf' => $cpf));
+        $acesso = $sgcAcesso->findBy(array('Cpf' => $cpf));
 
         // Busca na Usuarios
         $mdlUsuario = new Autenticacao_Model_Usuario();
