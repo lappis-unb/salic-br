@@ -83,15 +83,25 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                 $condition .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
             }
         } else {
-            $cleanCondition = trim($condition);
-            $separator = '=';
-            if ($cleanCondition && strpos($cleanCondition, $separator) !== false) {
-                $arrayColunas = explode($separator, $condition);
-                $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
-                $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
-                $condition = "{$coluna1} {$separator} {$coluna2}";
+            $arrayConditions = explode('and', $condition);
+            if (count($arrayConditions) > 1) {
+                $condition = '';
+                foreach ($arrayConditions as $arrayCondition) {
+                    if (!empty($condition)) {
+                        $condition .= ' and ';
+                    }
+                    $condition .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
+                }
+            } else {
+                $cleanCondition = trim($condition);
+                $separator = '=';
+                if ($cleanCondition && strpos($cleanCondition, $separator) !== false) {
+                    $arrayColunas = explode($separator, $condition);
+                    $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
+                    $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
+                    $condition = "{$coluna1} {$separator} {$coluna2}";
+                }
             }
-
         }
         return $condition;
     }

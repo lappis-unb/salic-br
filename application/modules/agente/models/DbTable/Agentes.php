@@ -349,7 +349,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
 
         $select->joinLeft(
-            array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente and vp.idUsuarioResponsavel = $idResponsavel",
+            array('vp' => 'tbVinculo'), "vp.idAgenteProponente = ag.idAgente and vp.idUsuarioResponsavel = $idResponsavel",
             array("vp.idVinculo as idVinculoproponente", "sivinculo", "idUsuarioResponsavel"),
             $this->_schema
         );
