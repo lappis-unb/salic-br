@@ -54,7 +54,7 @@
     }
 </script>
 
-        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
+        <!-- in&iacute;cio: navega&ccedil;&atilde;o local #qm0 -->
         <?php
 
             $get = Zend_Registry::get("get");

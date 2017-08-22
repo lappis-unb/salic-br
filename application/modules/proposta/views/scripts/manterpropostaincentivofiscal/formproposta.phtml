@@ -196,7 +196,7 @@
                                     <div id="comprovanteplanodeexecucao" style="display: none">
                                         <?php if( !empty( $this->arquivoExecucaoImediata[0]) ) : ?>
                                             <div id="comprovanteDocumentoAnexado" class="doc<?php echo $this->arquivoExecucaoImediata[0]['codigodocumento']; ?>">
-                                                <label for="arquivo" style="width: 50px; "><?php echo $this->arquivoExecucaoImediata[0]['descricao']; ?> </label>
+                                                <label for="arquivo" style="width: 50px; "><?php echo $this->arquivoExecucaoImediata[0]['Descricao']; ?> </label>
                                                 <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>">
                                                     <?php echo $this->arquivoExecucaoImediata[0]['noarquivo']; ?>
                                                 </a>

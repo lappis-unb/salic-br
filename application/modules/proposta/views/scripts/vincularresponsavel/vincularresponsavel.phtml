@@ -2,7 +2,7 @@
     $(document).ready(function(){
         $(".vincular").click(function(){
             var res = $(this).attr('res');
-            var idvinculoproposta = $(this).attr('idvinculoproposta');
+            var idVinculoproposta = $(this).attr('idVinculoproposta');
             $.ajax({
                 async: true,
                 dataType:'json',
@@ -10,7 +10,7 @@
                 url: "../vincularresponsavel/vinculo",
                 data:{
                     stVinculoProposta : res,
-                    idVinculoProposta : idvinculoproposta,
+                    idVinculoProposta : idVinculoproposta,
                     aceitevinculo : 1
                 },
                 success: function(data)
@@ -41,14 +41,14 @@
             });
         });
         $(".desvincular").click(function(){
-            var idvinculoproposta = $(this).attr('idvinculoproposta');
+            var idVinculoproposta = $(this).attr('idVinculoproposta');
             $.ajax({
                 async: true,
                 dataType:'json',
                 type: "post",
                 url: "../vincularresponsavel/vinculo",
                 data:{
-                    idVinculoProposta : idvinculoproposta,
+                    idVinculoProposta : idVinculoproposta,
                     desvincular : 1
                 },
                 success: function(data)
@@ -84,7 +84,7 @@
 <!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li class="last">Vincular Respons&aacute;vel</li>
     </ul>
 </div>

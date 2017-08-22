@@ -80,8 +80,8 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
                 ,'(p.idproduto = pr.codigo)'
                 , array(
                     'pr.codigo as idProduto'
-                    ,'pr.descricao as Produto'
-                    //,'i.descricao as NomeDoItem'
+                    ,'pr.Descricao as Produto'
+                    //,'i.Descricao as NomeDoItem'
                 )
                 , $this->_schema
             )
@@ -90,7 +90,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
             ;
 
         if(!empty($nomeItem)) {
-            $sql->where('i.descricao = ?', $nomeItem);
+            $sql->where('i.Descricao = ?', $nomeItem);
         }
         if(!empty($item)) {
             $sql->where('i.idplanilhaitens = ?', $item);
@@ -126,7 +126,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         $sql->joinInner(array('i'=>'tbplanilhaitens'), 'p.idplanilhaitens = i.idplanilhaitens', null, $this->_schema);
 
-        $sql->joinInner(array('e'=>'tbplanilhaetapa'), 'p.idplanilhaetapa = e.idplanilhaetapa',  array('e.idplanilhaetapa as idEtapa', 'e.descricao as Etapa'), $this->_schema);
+        $sql->joinInner(array('e'=>'tbplanilhaetapa'), 'p.idplanilhaetapa = e.idplanilhaetapa',  array('e.idplanilhaetapa as idEtapa', 'e.Descricao as Etapa'), $this->_schema);
 
         $sql->where('p.idproduto = ?', $idProduto);
         $sql->order('Etapa ASC');
@@ -146,7 +146,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         $sql->joinInner(array('i'=>'tbplanilhaitens'), 'p.idplanilhaitens = i.idplanilhaitens',
                         array('idItem' => 'i.idplanilhaitens',
-                             'NomeDoItem' => 'i.descricao'), $this->_schema
+                             'NomeDoItem' => 'i.Descricao'), $this->_schema
                         );
         $sql->joinInner(array('e'=>'tbplanilhaetapa'), 'p.idplanilhaetapa = e.idplanilhaetapa', null, $this->_schema);
 
@@ -188,9 +188,9 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->from(array('p' => 'tbitensplanilhaproduto'), 'p.idplanilhaitens', $this->_schema)
-            ->join(array('pr' => 'produto'), '(p.idproduto = pr.codigo)', array('pr.codigo as idProduto','pr.descricao as Produto'), $this->_schema)
-            ->join(array('i' => 'tbplanilhaitens'), '(p.idplanilhaitens = i.idplanilhaitens)', array('i.descricao as NomeDoItem'), $this->_schema)
-            ->join(array('e' => 'tbplanilhaetapa'), '(p.idplanilhaetapa = e.idplanilhaetapa)', array('e.idplanilhaetapa as idEtapa', 'e.descricao as Etapa'), $this->_schema)
+            ->join(array('pr' => 'produto'), '(p.idproduto = pr.codigo)', array('pr.codigo as idProduto','pr.Descricao as Produto'), $this->_schema)
+            ->join(array('i' => 'tbplanilhaitens'), '(p.idplanilhaitens = i.idplanilhaitens)', array('i.Descricao as NomeDoItem'), $this->_schema)
+            ->join(array('e' => 'tbplanilhaetapa'), '(p.idplanilhaetapa = e.idplanilhaetapa)', array('e.idplanilhaetapa as idEtapa', 'e.Descricao as Etapa'), $this->_schema)
             ;
 
         //$sql = "SELECT
@@ -209,7 +209,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         }
         if(!empty($nomeItem)){
             //$sql .=" AND i.Descricao ".$nomeItem;
-            $sql->where("i.descricao = ? ", $nomeItem);
+            $sql->where("i.Descricao = ? ", $nomeItem);
         }
 
         return $db->fetchRow($sql);
@@ -301,7 +301,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->from('tbplanilhaitens', array('idplanilhaitens as coditens', 'descricao as Item', 'idusuario'), $this->_schema)
-            ->order('descricao');
+            ->order('Descricao');
 
         return $db->fetchAll($sql);
     }
@@ -323,12 +323,12 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
             array('sol' => $this->_name),
             array(
                 "prod.codigo as idproduto",
-                "prod.descricao as produto",
+                "prod.Descricao as produto",
                 "et.idplanilhaetapa",
-                "et.descricao as etapa",
+                "et.Descricao as etapa",
                 "sol.idsolicitaritem",
-                new zend_db_expr("(case when sol.idplanilhaitens > 0 then it.descricao else sol.nomedoitem end) as itemsolicitado"),
-                "sol.descricao as justificativa",
+                new zend_db_expr("(case when sol.idplanilhaitens > 0 then it.Descricao else sol.nomedoitem end) as itemsolicitado"),
+                "sol.Descricao as justificativa",
                 new zend_db_expr( "(case sol.stestado when 0 then 'solicitado' when 1 then 'atendido' else 'negado' end) as estado"),
                 "resposta"
             ),
@@ -375,15 +375,15 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         $col = array(
             'prod.codigo as idproduto',
-            'prod.descricao as produto',
+            'prod.Descricao as produto',
             'et.idplanilhaetapa',
-            'et.descricao as etapa',
+            'et.Descricao as etapa',
             'sol.idsolicitaritem',
             new Zend_Db_Expr("CASE
-                WHEN  sol.idplanilhaitens > 0 THEN it.descricao
+                WHEN  sol.idplanilhaitens > 0 THEN it.Descricao
                 ELSE sol.nomedoitem
             END as itemsolicitado"),
-            'sol.descricao as justificativa',
+            'sol.Descricao as justificativa',
             new Zend_Db_Expr("CASE sol.stEstado
                 WHEN 0 THEN 'Solicitado'
                 WHEN 1 THEN 'Atendido'
@@ -530,15 +530,15 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         $cols = array(
             'prod.codigo as idProduto',
-            'prod.descricao as Produto',
+            'prod.Descricao as Produto',
             'et.idplanilhaetapa',
-            'et.descricao as Etapa',
+            'et.Descricao as Etapa',
             'sol.idsolicitaritem',
             new Zend_Db_Expr("CASE
-                WHEN  sol.idplanilhaitens > 0 THEN it.descricao
+                WHEN  sol.idplanilhaitens > 0 THEN it.Descricao
                 ELSE sol.nomedoitem
             END as ItemSolicitado"),
-            'sol.descricao as Justificativa',
+            'sol.Descricao as Justificativa',
             new Zend_Db_Expr("CASE sol.stestado
                 WHEN 0 THEN 'Solicitado'
                 WHEN 1 THEN 'Atendido'
@@ -561,7 +561,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         if(!empty($nomeItem)){
             $sql->where('sol.NomeDoItem = ?', $nomeItem);
-            $sql->orWhere('it.descricao = ?', $nomeItem);
+            $sql->orWhere('it.Descricao = ?', $nomeItem);
         }
         $sql->order('sol.idsolicitaritem');
 

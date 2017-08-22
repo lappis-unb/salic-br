@@ -21,7 +21,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
 <!-- ========== FIM TITULO ========== -->
 
 
-<!-- início: &aacute;rea principal #conteudo -->
+<!-- in&iacute;cio: &aacute;rea principal #conteudo -->
 <div id="conteudo">
     <form action="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'cadastrarfiscalizacao')); ?>" id="frOficializar" method="post" enctype="multipart/form-data">
         <input type="hidden" name="idPronac" value="<?php echo $this->idPronac; ?>" />
@@ -55,7 +55,7 @@ $ExcluirHref = $this->url(array('controller' => 'Pesquisarprojetofiscalizacao', 
                 <th colspan="2">Oficializar Fiscaliza&ccedil;&atilde;o</th>
             </tr>
             <tr>
-                <td class="destacar bold" align="right" width="180">Data Início<span style="color: red;">*</span></td>
+                <td class="destacar bold" align="right" width="180">Data In&iacute;cio<span style="color: red;">*</span></td>
                 <td><input type="text" name="dtInicio" maiorquedataatual="true" id="dtInicio" menorque="dtFim" title="Data In&iacute;cio" null="false" data="true" value="<?php if ($this->infoProjeto[0]->dtInicioFiscalizacaoProjeto != ''){ echo date('d/m/Y', strtotime($this->infoProjeto[0]->dtInicioFiscalizacaoProjeto)); } else { echo ''; } ?>"/></td>
             </tr>
             <tr>

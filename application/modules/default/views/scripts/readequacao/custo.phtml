@@ -46,24 +46,24 @@ $idPronacCrip = Seguranca::encrypt($this->idPronac);
 	// c&aacute;lculo do total (quantidade * ocorrencia * valor unit&aacute;rio)
 	$('#qtd, #ocorrencia, #vlUnitario').blur(function(){
             qtd = document.getElementById('qtd').value;
-            qtd = qtd.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            qtd = qtd.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             qtd = qtd.replace(/(\d{0})(\d)/, "$1$2");
             qtd = parseInt(qtd); // converte para int
 
             ocorrencia = document.getElementById('ocorrencia').value;
-            ocorrencia = ocorrencia.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            ocorrencia = ocorrencia.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             ocorrencia = ocorrencia.replace(/(\d{0})(\d)/, "$1$2");
             ocorrencia = parseInt(ocorrencia); // converte para int
 
             vlUnitario = document.getElementById('vlUnitario').value;
-            vlUnitario = vlUnitario.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            vlUnitario = vlUnitario.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             vlUnitario = vlUnitario.replace(/(\d{0})(\d)/, "$1$2");
             vlUnitario = vlUnitario.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
             vlUnitario = parseFloat(vlUnitario).toFixed(2); // converte para float e adiciona precis&atilde;o decimal
 
             total = parseFloat(qtd * ocorrencia * vlUnitario).toFixed(2); // armazena o resultado
 
-            // formata a saída do total
+            // formata a sa&iacute;da do total
             if (isNaN(total)){ // se n&atilde;o for número
                 total = '';
             } else {
@@ -213,9 +213,9 @@ $idPronacCrip = Seguranca::encrypt($this->idPronac);
                             for (i in dados) {
                                 if(i != 'error') {
                                     if (data.idPlanilhaItem == dados[i].id) {
-                                        $('#item').append('<option value="' + dados[i].id + '" selected="selected">' + dados[i].descricao + '</option>');
+                                        $('#item').append('<option value="' + dados[i].id + '" selected="selected">' + dados[i].Descricao + '</option>');
                                     } else {
-                                        $('#item').append('<option value="' + dados[i].id + '">' + dados[i].descricao + '</option>');
+                                        $('#item').append('<option value="' + dados[i].id + '">' + dados[i].Descricao + '</option>');
                                     }
                                 }
                             }

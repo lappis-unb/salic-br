@@ -1093,7 +1093,7 @@ class Proposta_ManterorcamentoController extends Proposta_GenericController
             $dados = array('idprojeto' => $idProposta,
                 'idetapa' => $idEtapa,
                 'idplanilhaitem' => $idItem,
-                'descricao' => '',
+                'Descricao' => '',
                 'unidade' => $unidade,
                 'quantidade' => $quantidade,
                 'ocorrencia' => $ocorrencia,

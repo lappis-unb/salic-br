@@ -16,9 +16,9 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para p&aacute;gina inicial">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'consultarprojeto')); ?>" title="Ir para alterar projeto">Alterar projeto</a></li>
-        <li class="last">Alterar síntese do projeto</li>
+        <li class="last">Alterar s&iacute;ntese do projeto</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -26,7 +26,7 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
 
 <!-- ========== BUTTON VOLTAR ========== -->
 <div id="titulo">
-    <div>Alterar síntese do projeto <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
+    <div>Alterar s&iacute;ntese do projeto <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -38,7 +38,7 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
             // Define as regras
             rules:{
                 sinteseProjeto:{
-                    // campoNome ser&aacute; obrigatório (required) e ter&aacute; tamanho mínimo (minLength)
+                    // campoNome ser&aacute; obrigatório (required) e ter&aacute; tamanho m&iacute;nimo (minLength)
                     required: true
                 },
                 justificativa:{
@@ -85,7 +85,7 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
 
         <table class="tabela">
             <tr>
-                <th>Síntese do Projeto<span style="color: red;">*</span></th>
+                <th>S&iacute;ntese do Projeto<span style="color: red;">*</span></th>
             </tr>
             <tr>
                 <td align="center">

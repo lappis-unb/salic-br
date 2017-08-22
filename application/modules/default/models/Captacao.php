@@ -1100,7 +1100,7 @@ class Captacao extends MinC_Db_Table_Abstract {
                           "c.DtRecibo",
                           "c.CaptacaoReal",
                           "c.NumeroRecibo",
-                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patrocínio' WHEN c.TipoApoio = 2 then 'Doa&ccedil;&atilde;o' END "),
+                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patroc&iacute;nio' WHEN c.TipoApoio = 2 then 'Doa&ccedil;&atilde;o' END "),
                           "Incentivador" =>  new Zend_Db_Expr("sac.dbo.fnNome(a.idAgente)"),
                           "DtLiberacao" =>  new Zend_Db_Expr("(SELECT TOP 1 DtLiberacao FROM sac.dbo.Liberacao l WHERE c.AnoProjeto+c.Sequencial = l.AnoProjeto+l.Sequencial)"),
                           "Percentual" =>  new Zend_Db_Expr("sac.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial)"),

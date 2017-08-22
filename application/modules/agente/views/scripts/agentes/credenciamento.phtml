@@ -35,7 +35,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="#" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="#" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li><a href="#" title="Tramita&ccedil;&atilde;o de Documentos">Manter Agentes</a></li>
         <li class="last">Principal</li>
     </ul>
@@ -117,9 +117,9 @@
                         &nbsp; <span id="erroSegmentoCultural" class="spanError"></span>
                     </td>
                     <td colspan="2" valign="top" align="center">
-                        <label for="nivel">Nível *</label>
+                        <label for="nivel">N&iacute;vel *</label>
                         <select name="nivel" id="nivel" class="input_simples">
-                            <option value="0"> - Selecione um Nível - </option>
+                            <option value="0"> - Selecione um N&iacute;vel - </option>
                             <?php foreach ($this->Niveis as $nivel) { ?>
                             <option value="<?php echo $nivel->idVerificacao; ?>"><?php echo $nivel->Descricao; ?></option>
                             <?php } ?>
@@ -145,7 +145,7 @@
         <tr>
             <td class="destacar bold" align="center">&aacute;rea</td>
             <td class="destacar bold" align="center"><b>Segmento</b></td>
-            <td class="destacar bold" align="center"><b>Nível</b></td>
+            <td class="destacar bold" align="center"><b>N&iacute;vel</b></td>
             <td class="destacar bold" align="center" width="130"><b></b></td>
         </tr>
         <?php foreach($this->credenciados as $c){ ?>

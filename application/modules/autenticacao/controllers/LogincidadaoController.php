@@ -2,13 +2,13 @@
 
 /**
  * Classe respons&aacute;vel por fazer a autentica&ccedil;&atilde;o Utilizando o Login Cidad&atilde;o.
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @author Vin&iacute;cius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 06/10/16 11:25
  */
 class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
 {
     /**
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vin&iacute;cius Feitosa da Silva <viniciusfesil@mail.com>
      * @author Cleber Santos <oclebersantos@gmail.com>
      * @return void
      */
@@ -46,18 +46,18 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
     }
 
     /**
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vin&iacute;cius Feitosa da Silva <viniciusfesil@mail.com>
      * @return void
      */
     public function errorAction()
     {
-        parent::message("N&atilde;o foi possível autenticar na aplica&ccedil;&atilde;o.", "/autenticacao", "ALERT");
+        parent::message("N&atilde;o foi poss&iacute;vel autenticar na aplica&ccedil;&atilde;o.", "/autenticacao", "ALERT");
     }
 
     /**
      * @access public
      * @return void
-     * @author Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
+     * @author Vin&iacute;cius Feitosa da Silva <viniciusfesil@gmail.com>
      * @author Cleber Santos <oclebersantos@gmail.com>
      */
     public function cadastrarusuarioAction()
@@ -118,7 +118,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
 
     /**
      * @param array $dados
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vin&iacute;cius Feitosa da Silva <viniciusfesil@mail.com>
      * @return void
      */
     private function validarCadastro(array $dados)

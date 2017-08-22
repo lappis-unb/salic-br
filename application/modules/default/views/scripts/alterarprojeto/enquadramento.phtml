@@ -16,8 +16,8 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para p&aacute;gina inicial">Início</a></li>
-        <li><!--a href="<?php echo $this->baseUrl(); ?>" title="Início"-->Manuten&ccedil;&atilde;o<!--/a--></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
+        <li><!--a href="<?php echo $this->baseUrl(); ?>" title="In&iacute;cio"-->Manuten&ccedil;&atilde;o<!--/a--></li>
         <li><a href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'consultarprojeto')); ?>" title="Ir para alterar projeto">Alterar projeto</a></li>
         <li class="last">Alterar enquadramento</li>
     </ul>
@@ -39,7 +39,7 @@ echo $this->partial('alterarprojeto/inc/menu.inc.php', $this);
             // Define as regras
             rules:{
                 idEnquadramento:{
-                    // campoNome ser&aacute; obrigatório (required) e ter&aacute; tamanho mínimo (minLength)
+                    // campoNome ser&aacute; obrigatório (required) e ter&aacute; tamanho m&iacute;nimo (minLength)
                     required: true
                 },
                 justificativa:{

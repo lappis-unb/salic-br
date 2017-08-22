@@ -24,7 +24,7 @@ class CargoAssinanteController extends Zend_Controller_Action
         } catch (InvalidArgumentException $exception) {
             $mensagem = $exception->getMessage();
         } catch (InvalidArgumentException $exception) {
-            $mensagem = 'N&atilde;o foi possível cadastrar o cargo!';
+            $mensagem = 'N&atilde;o foi poss&iacute;vel cadastrar o cargo!';
         }
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->flashMessenger->addMessage($mensagem);

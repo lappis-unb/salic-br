@@ -51,12 +51,12 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
     public function buscarEnderecos($idAgente = null)
     {
         $ve = array(
-            've.descricao as tipoendereco',
+            've.Descricao as tipoendereco',
             've.idverificacao as codtipoendereco',
         );
 
         $m = array(
-            'm.descricao as municipio',
+            'm.Descricao as municipio',
             'm.idmunicipioibge as codmun',
         );
 
@@ -71,7 +71,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
             ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', $ve, $this->_schema)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', $m, $this->_schema)
             ->joinLeft(array('u' => 'uf'), 'U.iduf = e.uf', $u, $this->_schema)
-            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', array('vl.descricao as dstipologradouro'), $this->_schema)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', array('vl.Descricao as dstipologradouro'), $this->_schema)
             ->where('e.idAgente = ?', $idAgente)
             ->order(array('status DESC'))
         ;

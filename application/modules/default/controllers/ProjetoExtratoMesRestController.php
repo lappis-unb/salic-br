@@ -23,7 +23,7 @@ class ProjetoExtratoMesRestController extends Minc_Controller_AbstractRest {
         $arrListaResult = $objListaResult->toArray();
         if($arrListaResult){
             foreach($arrListaResult as $mes) {
-                $mes['descricao'] = utf8_encode($mes['descricao']);
+                $mes['Descricao'] = utf8_encode($mes['Descricao']);
                 $listaMes[] = (object)$mes;
             }
         }

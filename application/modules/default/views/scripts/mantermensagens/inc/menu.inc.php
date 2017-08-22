@@ -45,7 +45,7 @@
 <!-- ========== INÍCIO MENU ========== -->
 <div id='nomsg' style="display:none">Este usu&aacute;rio n&atilde;o participou da an&aacute;lise deste projeto!</div>
 <div id="menu">
-    <!-- início: conteúdo principal #container -->
+    <!-- in&iacute;cio: conteúdo principal #container -->
     <div id="container">
         <div id="menuContexto">
             <div class="top"></div>

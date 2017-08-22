@@ -5,7 +5,7 @@ $geraldeanaliseHref             =   $this->url(array('controller' => 'gerarrelat
 $consolidacaopareceristaHref    =   $this->url(array('controller' => 'gerarrelatorioparecerista', 'action' => 'consolidacaoparecerista'));
 ?>
 <!-- ========== INÍCIO MENU ========== -->
-        <!-- início: navega&ccedil;?o local #qm0 -->
+        <!-- in&iacute;cio: navega&ccedil;?o local #qm0 -->
 <script type="text/javascript">
     function layout_fluido()
     {

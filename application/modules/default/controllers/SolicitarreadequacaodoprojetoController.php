@@ -30,7 +30,7 @@ class SolicitarReadequacaoDoProjetoController extends MinC_Controller_Action_Abs
         $mapperArea = new Agente_Model_AreaMapper();
         
             // combo com as �reas culturais
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'Descricao');
 
             // busca os pa�ses
             $pais = new PaisDao();
@@ -958,7 +958,7 @@ class SolicitarReadequacaoDoProjetoController extends MinC_Controller_Action_Abs
 	{
         $mapperArea = new Agente_Model_AreaMapper();
 
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'Descricao');
         $stPedido = 'T';
 
 		if (!empty ($_POST))

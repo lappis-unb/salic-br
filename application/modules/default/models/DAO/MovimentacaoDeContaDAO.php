@@ -57,7 +57,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 
     public static function buscarPatrocinador($cpf_cnpj)
     {
-		$sql = "SELECT N.descricao nome 
+		$sql = "SELECT N.Descricao nome 
 				FROM agentes.dbo.Agentes A, agentes.dbo.Nomes N
         		WHERE A.idAgente = N.idAgente
         		AND A.CNPJCPF = '".$cpf_cnpj."'";

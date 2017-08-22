@@ -1,6 +1,6 @@
 <?php
 /**
- * Bot&atilde;o Pesquisar Acessível
+ * Bot&atilde;o Pesquisar Acess&iacute;vel
  * @author Equipe RUP - Politec
  * @since 28/04/2010
  * @version 1.0

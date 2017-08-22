@@ -46,7 +46,7 @@ return array(
 
     // Zend_Validate_Alnum
     "Invalid type given, value should be float, string, or integer" => "Tipo especificado inv&aacute;lido, o valor deve ser float, string, ou inteiro",
-    "'%value%' contains characters which are non alphabetic and no digits" => "'%value%' cont&eacute;m caracteres que n&atilde;o s&atilde;o alfab&eacute;ticos e nem dígitos",
+    "'%value%' contains characters which are non alphabetic and no digits" => "'%value%' cont&eacute;m caracteres que n&atilde;o s&atilde;o alfab&eacute;ticos e nem d&iacute;gitos",
     "'%value%' is an empty string" => "'%value%' &eacute; uma string vazia",
 
     // Zend_Validate_Alpha
@@ -69,14 +69,14 @@ return array(
     "Failure within the callback, exception returned" => "Falha na chamada de retorno, exce&ccedil;&atilde;o retornada",
 
     // Zend_Validate_Ccnum
-    "'%value%' must contain between 13 and 19 digits" => "'%value%' deve conter entre 13 e 19 dígitos",
+    "'%value%' must contain between 13 and 19 digits" => "'%value%' deve conter entre 13 e 19 d&iacute;gitos",
     "Luhn algorithm (mod-10 checksum) failed on '%value%'" => "O algoritmo de Luhn (checksum de módulo 10) falhou em '%value%'",
 
     // Zend_Validate_CreditCard
     "Luhn algorithm (mod-10 checksum) failed on '%value%'" => "O algoritmo de Luhn (checksum de módulo 10) falhou em '%value%'",
-    "'%value%' must contain only digits" => "'%value%' deve conter apenas dígitos",
+    "'%value%' must contain only digits" => "'%value%' deve conter apenas d&iacute;gitos",
     "Invalid type given, value should be a string" => "Tipo especificado inv&aacute;lido, o valor deve ser uma string",
-    "'%value%' contains an invalid amount of digits" => "'%value%' cont&eacute;m uma quantidade inv&aacute;lida de dígitos",
+    "'%value%' contains an invalid amount of digits" => "'%value%' cont&eacute;m uma quantidade inv&aacute;lida de d&iacute;gitos",
     "'%value%' is not from an allowed institute" => "'%value%' n&atilde;o vem de uma institui&ccedil;&atilde;o autorizada",
     "Validation of '%value%' has been failed by the service" => "A valida&ccedil;&atilde;o de '%value%' falhou por causa do servi&ccedil;o",
     "The service returned a failure while validating '%value%'" => "O servi&ccedil;o devolveu um erro enquanto validava '%value%'",
@@ -108,11 +108,11 @@ return array(
 
     // Zend_Validate_File_Count
     "Too many files, maximum '%max%' are allowed but '%count%' are given" => "H&aacute; muitos arquivos, s&atilde;o permitidos no m&aacute;ximo '%max%', mas '%count%' foram fornecidos",
-    "Too few files, minimum '%min%' are expected but '%count%' are given" => "H&aacute; poucos arquivos, s&atilde;o esperados no mínimo '%min%', mas '%count%' foram fornecidos",
+    "Too few files, minimum '%min%' are expected but '%count%' are given" => "H&aacute; poucos arquivos, s&atilde;o esperados no m&iacute;nimo '%min%', mas '%count%' foram fornecidos",
 
     // Zend_Validate_File_Crc32
     "File '%value%' does not match the given crc32 hashes" => "O arquivo '%value%' n&atilde;o corresponde ao hash crc32 fornecido",
-    "A crc32 hash could not be evaluated for the given file" => "N&atilde;o foi possível avaliar um hash crc32 para o arquivo fornecido",
+    "A crc32 hash could not be evaluated for the given file" => "N&atilde;o foi poss&iacute;vel avaliar um hash crc32 para o arquivo fornecido",
     "File '%value%' could not be found" => "O arquivo '%value%' n&atilde;o pôde ser encontrado",
 
     // Zend_Validate_File_ExcludeExtension
@@ -133,19 +133,19 @@ return array(
 
     // Zend_Validate_File_FilesSize
     "All files in sum should have a maximum size of '%max%' but '%size%' were detected" => "Todos os arquivos devem ter um tamanho m&aacute;ximo de '%max%', mas um tamanho de '%size%' foi detectado",
-    "All files in sum should have a minimum size of '%min%' but '%size%' were detected" => "Todos os arquivos devem ter um tamanho mínimo de '%min%', mas um tamanho de '%size%' foi detectado",
+    "All files in sum should have a minimum size of '%min%' but '%size%' were detected" => "Todos os arquivos devem ter um tamanho m&iacute;nimo de '%min%', mas um tamanho de '%size%' foi detectado",
     "One or more files can not be read" => "Um ou mais arquivos n&atilde;o puderam ser lidos",
 
     // Zend_Validate_File_Hash
     "File '%value%' does not match the given hashes" => "O arquivo '%value%' n&atilde;o corresponde ao hash fornecido",
-    "A hash could not be evaluated for the given file" => "N&atilde;o foi possível avaliar um hash para o arquivo fornecido",
+    "A hash could not be evaluated for the given file" => "N&atilde;o foi poss&iacute;vel avaliar um hash para o arquivo fornecido",
     "File '%value%' could not be found" => "O arquivo '%value%' n&atilde;o pôde ser encontrado",
 
     // Zend_Validate_File_ImageSize
     "Maximum allowed width for image '%value%' should be '%maxwidth%' but '%width%' detected" => "A largura m&aacute;xima permitida para a imagem '%value%' deve ser '%maxwidth%', mas '%width%' foi detectada",
-    "Minimum expected width for image '%value%' should be '%minwidth%' but '%width%' detected" => "A largura mínima esperada para a imagem '%value%' deve ser '%minwidth%', mas '%width%' foi detectada",
+    "Minimum expected width for image '%value%' should be '%minwidth%' but '%width%' detected" => "A largura m&iacute;nima esperada para a imagem '%value%' deve ser '%minwidth%', mas '%width%' foi detectada",
     "Maximum allowed height for image '%value%' should be '%maxheight%' but '%height%' detected" => "A altura m&aacute;xima permitida para a imagem '%value%' deve ser '%maxheight%', mas '%height%' foi detectada",
-    "Minimum expected height for image '%value%' should be '%minheight%' but '%height%' detected" => "A altura mínima esperada para a imagem '%value%' deve ser '%minheight%', mas '%height%' foi detectada",
+    "Minimum expected height for image '%value%' should be '%minheight%' but '%height%' detected" => "A altura m&iacute;nima esperada para a imagem '%value%' deve ser '%minheight%', mas '%height%' foi detectada",
     "The size of image '%value%' could not be detected" => "O tamanho da imagem '%value%' n&atilde;o pôde ser detectado",
     "File '%value%' can not be read" => "O arquivo '%value%' n&atilde;o pôde ser lido",
 
@@ -161,7 +161,7 @@ return array(
 
     // Zend_Validate_File_Md5
     "File '%value%' does not match the given md5 hashes" => "O arquivo '%value%' n&atilde;o corresponde ao hash md5 fornecido",
-    "A md5 hash could not be evaluated for the given file" => "N&atilde;o foi possível avaliar um hash md5 para o arquivo fornecido",
+    "A md5 hash could not be evaluated for the given file" => "N&atilde;o foi poss&iacute;vel avaliar um hash md5 para o arquivo fornecido",
     "File '%value%' could not be found" => "O arquivo '%value%' n&atilde;o pôde ser encontrado",
 
     // Zend_Validate_File_MimeType
@@ -174,12 +174,12 @@ return array(
 
     // Zend_Validate_File_Sha1
     "File '%value%' does not match the given sha1 hashes" => "O arquivo '%value%' n&atilde;o corresponde ao hash sha1 fornecido",
-    "A sha1 hash could not be evaluated for the given file" => "N&atilde;o foi possível avaliar um hash sha1 para o arquivo fornecido",
+    "A sha1 hash could not be evaluated for the given file" => "N&atilde;o foi poss&iacute;vel avaliar um hash sha1 para o arquivo fornecido",
     "File '%value%' could not be found" => "O arquivo '%value%' n&atilde;o pôde ser encontrado",
 
     // Zend_Validate_File_Size
     "Maximum allowed size for file '%value%' is '%max%' but '%size%' detected" => "O tamanho m&aacute;ximo permitido para o arquivo '%value%' &eacute; '%max%', mas '%size%' foram detectados",
-    "Minimum expected size for file '%value%' is '%min%' but '%size%' detected" => "O tamanho mínimo esperado para o arquivo '%value%' &eacute; '%min%', mas '%size%' foram detectados",
+    "Minimum expected size for file '%value%' is '%min%' but '%size%' detected" => "O tamanho m&iacute;nimo esperado para o arquivo '%value%' &eacute; '%min%', mas '%size%' foram detectados",
     "File '%value%' could not be found" => "O arquivo '%value%' n&atilde;o pôde ser encontrado",
 
     // Zend_Validate_File_Upload
@@ -190,13 +190,13 @@ return array(
     "No temporary directory was found for file '%value%'" => "Nenhum diretório tempor&aacute;rio foi encontrado para o arquivo '%value%'",
     "File '%value%' can't be written" => "O arquivo '%value%' n&atilde;o pôde ser escrito",
     "A PHP extension returned an error while uploading the file '%value%'" => "Uma extens&atilde;o do PHP retornou um erro enquanto o arquivo '%value%' era enviado",
-    "File '%value%' was illegally uploaded. This could be a possible attack" => "O arquivo '%value%' foi enviado ilegalmente. Este poderia ser um possível ataque",
+    "File '%value%' was illegally uploaded. This could be a possible attack" => "O arquivo '%value%' foi enviado ilegalmente. Este poderia ser um poss&iacute;vel ataque",
     "File '%value%' was not found" => "O arquivo '%value%' n&atilde;o foi encontrado",
     "Unknown error while uploading file '%value%'" => "Erro desconhecido ao enviar o arquivo '%value%'",
 
     // Zend_Validate_File_WordCount
     "Too much words, maximum '%max%' are allowed but '%count%' were counted" => "H&aacute; muitas palavras, s&atilde;o permitidas no m&aacute;ximo '%max%', mas '%count%' foram contadas",
-    "Too less words, minimum '%min%' are expected but '%count%' were counted" => "H&aacute; poucas palavras, s&atilde;o esperadas no mínimo '%min%', mas '%count%' foram contadas",
+    "Too less words, minimum '%min%' are expected but '%count%' were counted" => "H&aacute; poucas palavras, s&atilde;o esperadas no m&iacute;nimo '%min%', mas '%count%' foram contadas",
     "File '%value%' could not be found" => "O arquivo '%value%' n&atilde;o pôde ser encontrado",
 
     // Zend_Validate_Float
@@ -216,14 +216,14 @@ return array(
     "'%value%' appears to be a DNS hostname but cannot match TLD against known list" => "'%value%' parece ser um hostname de DNS, mas o TLD n&atilde;o corresponde a nenhum TLD conhecido",
     "'%value%' appears to be a DNS hostname but contains a dash in an invalid position" => "'%value%' parece ser um hostname de DNS, mas cont&eacute;m um tra&ccedil;o em uma posi&ccedil;&atilde;o inv&aacute;lida",
     "'%value%' appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'" => "'%value%' parece ser um hostname de DNS, mas n&atilde;o corresponde ao esquema de hostname para o TLD '%tld%'",
-    "'%value%' appears to be a DNS hostname but cannot extract TLD part" => "'%value%' parece ser um hostname de DNS, mas o TLD n&atilde;o pôde ser extraído",
+    "'%value%' appears to be a DNS hostname but cannot extract TLD part" => "'%value%' parece ser um hostname de DNS, mas o TLD n&atilde;o pôde ser extra&iacute;do",
     "'%value%' does not match the expected structure for a DNS hostname" => "'%value%' n&atilde;o corresponde com a estrutura esperada para um hostname de DNS",
     "'%value%' does not appear to be a valid local network name" => "'%value%' n&atilde;o parece ser um nome de rede local v&aacute;lido",
     "'%value%' appears to be a local network name but local network names are not allowed" => "'%value%' parece ser um nome de rede local, mas os nomes de rede local n&atilde;o s&atilde;o permitidos",
     "'%value%' appears to be a DNS hostname but the given punycode notation cannot be decoded" => "'%value%' parece ser um hostname de DNS, mas a nota&ccedil;&atilde;o punycode fornecida n&atilde;o pode ser decodificada",
 
     // Zend_Validate_Iban
-    "Unknown country within the IBAN '%value%'" => "País desconhecido para o IBAN '%value%'",
+    "Unknown country within the IBAN '%value%'" => "Pa&iacute;s desconhecido para o IBAN '%value%'",
     "'%value%' has a false IBAN format" => "'%value%' n&atilde;o &eacute; um formato IBAN v&aacute;lido",
     "'%value%' has failed the IBAN check" => "'%value%' falhou na verifica&ccedil;&atilde;o do IBAN",
 

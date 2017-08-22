@@ -98,7 +98,7 @@
                                         <div style="float:left; width: 85%">
                                             Proponente:
                                             <span
-                                                style="color: blue;"><?php echo $this->proponente['descricao']; ?></span>
+                                                style="color: blue;"><?php echo $this->proponente['Descricao']; ?></span>
                                         </div>
                                         <div style="float:left; width: 15%">
                                             Nr da Proposta:<br/>
@@ -222,7 +222,7 @@
                                             <div id="comprovanteDocumentoAnexado"
                                                  class="doc<?php echo $this->arquivoExecucaoImediata[0]['codigodocumento']; ?>">
                                                 <label for="arquivo"
-                                                       style="width: 50px; "><?php echo $this->arquivoExecucaoImediata[0]['descricao']; ?> </label>
+                                                       style="width: 50px; "><?php echo $this->arquivoExecucaoImediata[0]['Descricao']; ?> </label>
                                                 <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>">
                                                     <?php echo $this->arquivoExecucaoImediata[0]['noarquivo']; ?>
                                                 </a>

@@ -22,7 +22,7 @@ class Segmentocultural extends MinC_Db_Table_Abstract
             array('vSegmento' => new Zend_Db_Expr("({$viewVSegmento})")),
             array(
                 'id' => 'Codigo',
-                'descricao' => 'Descricao',
+                'Descricao' => 'Descricao',
                 'tp_enquadramento'
             )
         );
@@ -82,7 +82,7 @@ class Segmentocultural extends MinC_Db_Table_Abstract
                 array('vSegmento' => new Zend_Db_Expr("({$viewVSegmento})")),
                 array(
                     'codigo' => 'Codigo',
-                    'descricao' => 'Descricao',
+                    'Descricao' => 'Descricao',
                     'tp_enquadramento'
                 )
             );

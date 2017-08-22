@@ -288,8 +288,8 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                     );
                    $success = $AbrangenciaDAO->cadastrar($dados);
                 } else {
-                    parent::message('N&atilde;o &eacute; possível salvar o mesmo local mais de uma vez. '
-                            . '(País, Uf, Município)', $redirectUrl, 'ERROR');
+                    parent::message('N&atilde;o &eacute; poss&iacute;vel salvar o mesmo local mais de uma vez. '
+                            . '(Pa&iacute;s, Uf, Munic&iacute;pio)', $redirectUrl, 'ERROR');
                 }
             }
 

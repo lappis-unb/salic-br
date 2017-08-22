@@ -101,7 +101,7 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         if($arrListaRs){
             foreach ($arrListaRs as $mensagem) {
                 $mensagem['titulo'] = utf8_encode($mensagem['titulo']);
-                $mensagem['descricao'] = utf8_encode($mensagem['descricao']);
+                $mensagem['Descricao'] = utf8_encode($mensagem['Descricao']);
                 $listaMensagens[] = (object)$mensagem;
             }
         }

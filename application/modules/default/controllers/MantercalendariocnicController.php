@@ -13,7 +13,7 @@ class MantercalendariocnicController extends MinC_Controller_Action_Abstract {
 	public function init()
 	{
         $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;?o
-		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // t&iacute;tulo da p&aacute;gina
 
 		// 3 => autentica&ccedil;?o scriptcase e autentica&ccedil;?o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
 		// utilizar quando a Controller ou a Action for acessada via scriptcase e zend

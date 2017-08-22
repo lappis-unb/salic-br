@@ -70,12 +70,12 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
     public function planilhaOrcamentariaProposta($idPronac)
     {
         $a = array(
-            'a.idpreprojeto as idPronac',
+            'a.idPreProjeto as idPronac',
             new Zend_Db_Expr("' ' AS PRONAC"),
             'a.nomeprojeto',
             new Zend_Db_Expr(" CASE WHEN idproduto = 0
                        THEN 'Administra&ccedil;&atilde;o do Projeto'
-                       ELSE c.descricao
+                       ELSE c.Descricao
                   END as Produto"),
         );
 
@@ -101,22 +101,22 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         $convert = MinC_Db_Expr::convertOrToChar('d.idplanilhaetapa');
 
         $sql = $db->select()
-            ->from(array('a' => 'preprojeto'), $a, $sac)
+            ->from(array('a' => 'PreProjeto'), $a, $sac)
             ->joinInner(array('b' => 'tbplanilhaproposta'), '(a.idpreProjeto = b.idprojeto)', $b, $sac)
             ->joinLeft(array('c' => 'produto'), '(b.idproduto = c.codigo)', null, $sac)
-            ->joinInner(array('d' => 'tbplanilhaetapa'), '(b.idetapa = d.idplanilhaetapa)', 'd.descricao as Etapa', $sac)
-            ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.unidade = e.idunidade)', 'e.descricao as Unidade', $sac)
-            ->joinInner(array('i' => 'tbplanilhaitens'), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.descricao as Item', $sac)
-            ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.descricao as FonteRecurso', $sac)
+            ->joinInner(array('d' => 'tbplanilhaetapa'), '(b.idetapa = d.idplanilhaetapa)', 'd.Descricao as Etapa', $sac)
+            ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.unidade = e.idunidade)', 'e.Descricao as Unidade', $sac)
+            ->joinInner(array('i' => 'tbplanilhaitens'), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.Descricao as Item', $sac)
+            ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.Descricao as FonteRecurso', $sac)
             ->joinLeft(array('f' => 'municipios'), '(b.municipiodespesa = f.idmunicipioibge)',array('u.sigla as UF'),$this->getSchema('agentes'))
-            ->joinLeft(array('u' => 'uf'), '(f.idufibge = u.iduf and b.ufdespesa = u.iduf)',array('f.descricao as Municipio'),$this->getSchema('agentes'))
-            ->where('a.idpreprojeto = ? ', $idPronac)
-            ->order("x.descricao")
-            ->order("c.descricao DESC")
-            ->order("$convert  $concat '-'  $concat d.descricao")
+            ->joinLeft(array('u' => 'uf'), '(f.idufibge = u.iduf and b.ufdespesa = u.iduf)',array('f.Descricao as Municipio'),$this->getSchema('agentes'))
+            ->where('a.idPreProjeto = ? ', $idPronac)
+            ->order("x.Descricao")
+            ->order("c.Descricao DESC")
+            ->order("$convert  $concat '-'  $concat d.Descricao")
             ->order('u.sigla')
-            ->order('f.descricao')
-            ->order('i.descricao');
+            ->order('f.Descricao')
+            ->order('i.Descricao');
 
         return $db->fetchAll($sql);
     }
@@ -171,9 +171,9 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             ->joinInner(array('b' => 'tbplanilhaproposta'), 'a.idProjeto = b.idProjeto', $b, $sac)
             ->joinLeft(array('c' => 'produto'), '(b.idproduto = c.codigo)', null, $sac)
             ->JoinInner(array('d' => 'tbplanilhaetapa '), '(b.idetapa = d.idplanilhaetapa)', 'd.Descricao as Etapa', $sac)
-            ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.unidade = e.idunidade)', 'e.descricao as Unidade', $sac)
-            ->joinInner(array('i' => 'tbplanilhaitens '), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.descricao as Item', $sac)
-            ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.descricao as FonteRecurso', $sac)
+            ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.unidade = e.idunidade)', 'e.Descricao as Unidade', $sac)
+            ->joinInner(array('i' => 'tbplanilhaitens '), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.Descricao as Item', $sac)
+            ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.Descricao as FonteRecurso', $sac)
             ->joinInner(array('f' => 'vufmunicipio '), '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', array('f.uf as UF','f.municipio as  Municipio'), 'agentes')
             ->where('a.idpronac = ? ', $idPronac)
             ->order("x.Descricao")
@@ -245,9 +245,9 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             ->joinInner(array('z' => 'tbplanilhaproposta'), '(b.idplanilhaproposta=z.idplanilhaproposta)', $z, $sac)
             ->joinLeft(array('c' => 'produto'), '(b.idproduto = c.codigo)', null, $sac)
             ->joinInner(array('d' => 'tbPlanilhaEtapa'), '(b.idEtapa = d.idPlanilhaEtapa)', 'd.Descricao as Etapa', $sac)
-            ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.idunidade = e.idunidade)', 'e.descricao as unidade', $sac)
-            ->joinInner(array('i' => 'tbplanilhaitens'), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.descricao as item', $sac)
-            ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.descricao as fonterecurso', $sac)
+            ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.idunidade = e.idunidade)', 'e.Descricao as unidade', $sac)
+            ->joinInner(array('i' => 'tbplanilhaitens'), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.Descricao as item', $sac)
+            ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.Descricao as fonterecurso', $sac)
             ->joinInner(array('f' => 'vufmunicipio'), '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', $f, 'agentes')
             ->where('a.idPronac = ?', $idPronac)
             ->order('x.Descricao')

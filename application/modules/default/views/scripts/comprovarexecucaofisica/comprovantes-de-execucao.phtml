@@ -65,7 +65,7 @@
                                     $('.ui-dialog-titlebar-close').remove();
                                     window.setTimeout('location.reload()', 1000);
                                 } else {
-                                    alertaModal("N&atilde;o foi possível excluir o Plano de Distribui&ccedil;&atilde;o.");
+                                    alertaModal("N&atilde;o foi poss&iacute;vel excluir o Plano de Distribui&ccedil;&atilde;o.");
                                 }
                             },
                             dataType : 'json'
@@ -145,7 +145,7 @@
                 <th colspan="2">Comprovante de Execu&ccedil;&atilde;o</th>
             </tr>
             <tr>
-                <td colspan="2">Fazer upload de fotos/vídeos de reformas, constru&ccedil;&otilde;es e de qualquer outro produto.</td>
+                <td colspan="2">Fazer upload de fotos/v&iacute;deos de reformas, constru&ccedil;&otilde;es e de qualquer outro produto.</td>
             </tr>
             <tr>
                 <td class="destacar bold w150" align="right">Tipo de comprovante <span style="color: red;">*</span></td>
@@ -153,7 +153,7 @@
                     <select class="select_simples obrigatorio" name="tipoDocumento">
                         <option value=""> - Selecione - </option>
                         <option value="22">Fotos</option>
-                        <option value="23">Vídeos</option>
+                        <option value="23">V&iacute;deos</option>
                         <option value="24">Arquivo</option>
                     </select>
                 </td>
@@ -193,7 +193,7 @@
                     if($DadosComprovantes->idTipoDocumento == 22){
                         echo 'Fotos';
                     } else if($DadosComprovantes->idTipoDocumento == 23){
-                        echo 'Vídeos';
+                        echo 'V&iacute;deos';
                     } else if($DadosComprovantes->idTipoDocumento == 24){
                         echo 'Arquivo';
                     }

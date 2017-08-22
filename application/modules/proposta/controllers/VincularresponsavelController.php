@@ -38,7 +38,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $acesso = $sgcAcesso->findBy(array('cpf' => $cpf));
+        $acesso = $sgcAcesso->findBy(array('Cpf' => $cpf));
 
         // Busca na Usuarios
         $mdlUsuario = new Autenticacao_Model_Usuario();
@@ -156,7 +156,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         if (isset($_POST['solicitarvinculo'])) {
             $idAgenteProponente = $_POST['idAgente'];
             $idUsuarioResponsavel = $this->idResponsavel;
-            $dados = array('idusuarioresponsavel' => $idUsuarioResponsavel,
+            $dados = array('idUsuarioResponsavel' => $idUsuarioResponsavel,
                 'idagenteproponente' => $idAgenteProponente,
                 'dtvinculo' => $tableInternet->getExpressionDate(),
                 'sivinculo' => 0
@@ -164,7 +164,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
             try {
 
                 $where['idagenteproponente   = ?'] = $idAgenteProponente;
-                $where['idusuarioresponsavel = ?'] = $idUsuarioResponsavel;
+                $where['idUsuarioResponsavel = ?'] = $idUsuarioResponsavel;
                 $vinculocadastrado = $v->buscar($where);
 
                 if (count($vinculocadastrado) > 0) {
@@ -419,7 +419,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         $arrData = array();
         $arrData['opcaovinculacao'] = $this->_request->getParam("opcaovinculacao");
         $arrData['idpreprojeto'] = $this->_request->getParam("propostas");
-        $arrData['idvinculo'] = $parte[0];
+        $arrData['idVinculo'] = $parte[0];
         $arrData['idresponsavel'] = $parte[1];
         if ($tblTbVinculoProposta->saveCustom($arrData)) {
             parent::message($tblTbVinculoProposta->getMessage(), "proposta/manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");

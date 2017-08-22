@@ -41,7 +41,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first">Início</li>
+        <li class="first">In&iacute;cio</li>
         <li>Fiscalizar Projeto</li>
         <li class="last">Fiscaliza&ccedil;&atilde;o do Projeto</li>
     </ul>
@@ -63,8 +63,8 @@
             <td width="645" align="center">
                 <select name="tipoFiltro" id="tipoFiltro" style="width: 285px; margin-right: 10px;" class="input_simples">
                     <option value="">Fiscaliza&ccedil;&atilde;o em andamento</option>
-                    <option value="analisados" <?php echo ($this->filtro == 'analisados')?'selected="selected"':''; ?>>Fiscaliza&ccedil;&atilde;o concluída pelo t&eacute;cnico</option>
-                    <option value="concluidos" <?php echo ($this->filtro == 'concluidos')?'selected="selected"':''; ?>>Fiscaliza&ccedil;&atilde;o concluída pelo coordenador</option>
+                    <option value="analisados" <?php echo ($this->filtro == 'analisados')?'selected="selected"':''; ?>>Fiscaliza&ccedil;&atilde;o conclu&iacute;da pelo t&eacute;cnico</option>
+                    <option value="concluidos" <?php echo ($this->filtro == 'concluidos')?'selected="selected"':''; ?>>Fiscaliza&ccedil;&atilde;o conclu&iacute;da pelo coordenador</option>
                 </select>
                 <select name="tecFiltro" id="tecFiltro" style="width: 235px;" class="input_simples">
                     <option value="">Todos os t&eacute;cnicos</option>
@@ -146,7 +146,7 @@
             <tr class="titulo_tabela">
                 <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&campo=PRONAC&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&campo=NomeProjeto&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&campo=dtInicioFiscalizacaoProjeto&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Início</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&campo=dtInicioFiscalizacaoProjeto&ordem='.$this->paginacao['novaOrdem'];?>">Dt. In&iacute;cio</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'pesquisarprojetofiscalizacao', 'action' => 'grid')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&tecFiltro='.$this->tecnico.'&campo=dtFimFiscalizacaoProjeto&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Fim</a></th>
                 
                 <?php if($this->grupoAtivo == 134){ //Se for coordenador habilita essa outra op&ccedil;&atilde;o ?>

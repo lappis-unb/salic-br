@@ -11,8 +11,8 @@
  */
 class Agente_Model_TbVinculoProposta extends MinC_Db_Model
 {
-    protected $_idvinculoproposta;
-    protected $_idvinculo;
+    protected $_idVinculoproposta;
+    protected $_idVinculo;
     protected $_idpreprojeto;
     protected $_sivinculoproposta;
 
@@ -21,16 +21,16 @@ class Agente_Model_TbVinculoProposta extends MinC_Db_Model
      */
     public function getIdvinculoproposta()
     {
-        return $this->_idvinculoproposta;
+        return $this->_idVinculoproposta;
     }
 
     /**
-     * @param mixed $idvinculoproposta
+     * @param mixed $idVinculoproposta
      * @return Agente_Model_TbVinculoProposta
      */
-    public function setIdvinculoproposta($idvinculoproposta)
+    public function setIdvinculoproposta($idVinculoproposta)
     {
-        $this->_idvinculoproposta = $idvinculoproposta;
+        $this->_idVinculoproposta = $idVinculoproposta;
         return $this;
     }
 
@@ -39,16 +39,16 @@ class Agente_Model_TbVinculoProposta extends MinC_Db_Model
      */
     public function getIdvinculo()
     {
-        return $this->_idvinculo;
+        return $this->_idVinculo;
     }
 
     /**
-     * @param mixed $idvinculo
+     * @param mixed $idVinculo
      * @return Agente_Model_TbVinculoProposta
      */
-    public function setIdvinculo($idvinculo)
+    public function setIdvinculo($idVinculo)
     {
-        $this->_idvinculo = $idvinculo;
+        $this->_idVinculo = $idVinculo;
         return $this;
     }
 

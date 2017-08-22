@@ -20,21 +20,21 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
         );
 
         $slct->joinInner(
-                array('ag' => 'Agentes'), "ag.idAgente = vi.idAgenteproponente",
+                array('ag' => 'Agentes'), "ag.idAgente = vi.idAgenteProponente",
                 array('ag.CNPJCPF'),
                 $this->_schema
         );
 
         $slct->joinInner(
                 array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
-                array('nm.descricao as nomeproponente'),
+                array('nm.Descricao as nomeproponente'),
                 $this->_schema
         );
 
         $slct
             ->joinLeft(
-                array('sga' => 'sgcacesso'), "sga.idusuario = vi.idusuarioresponsavel",
-                array('sga.idusuario as idusuarioresponsavel', 'sga.nome as nomeresponsavel', 'sga.cpf as cpfresponsavel'),
+                array('sga' => 'sgcacesso'), "sga.idusuario = vi.idUsuarioResponsavel",
+                array('sga.idusuario as idUsuarioResponsavel', 'sga.nome as nomeresponsavel', 'sga.cpf as cpfresponsavel'),
                 $this->getSchema('controledeacesso')
             );
 
@@ -220,8 +220,8 @@ xd($slct1->assemble());
 		$select->where('v.idUsuarioResponsavel = ?', $idResponsavel);
 		$select->where('p.IdPRONAC             = ?', $idPronac);
 
-		$select->order('v.idusuarioresponsavel ASC');
-		$select->order('v.idAgenteproponente ASC');
+		$select->order('v.idUsuarioResponsavel ASC');
+		$select->order('v.idAgenteProponente ASC');
 		$select->order('p.nomeprojeto ASC');
 
 		return $this->fetchAll($select);

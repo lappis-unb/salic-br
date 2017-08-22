@@ -31,7 +31,7 @@ class Agente_Model_InternetMapper extends MinC_Db_Mapper
             $arrayEmail = array(
                 'idAgente' => $arrData['idAgente'],
                 'tipointernet' => $arrData['tipoemails'][$i],
-                'descricao' => $arrData['emails'][$i],
+                'Descricao' => $arrData['emails'][$i],
                 'status' => $arrData['enviaremails'][$i],
                 'divulgar' => $arrData['divulgaremails'][$i],
                 'usuario' => $arrData['usuario']

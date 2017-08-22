@@ -8,9 +8,9 @@
 
 <table class="tabela" id="modal-tabela-lr">
     <tr>
-        <th>País</th>
+        <th>Pa&iacute;s</th>
         <th>UF</th>
-        <th>Município</th>
+        <th>Munic&iacute;pio</th>
         <th style="width: 150px;">Solicita&ccedil;&atilde;o Proponente</th>
         <?php if(in_array($this->siEncaminhamento, array(4,5,6,7,9,10))){ ?>
         <th style="width: 150px;">Avalia&ccedil;&atilde;o T&eacute;cnica</th>
@@ -48,8 +48,8 @@
         <td class="centro">
             <?php if($this->idPerfil == 1111){
                     if($l['tpSolicitacao'] == 'E'){
-                        echo '<span style="margin: 10px;">Excluído</span>';
-                        echo '<img src="'.$this->baseUrl().'/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItemLocalRealizacao" tipo="'.$l['tpSolicitacao'].'" idAbrangencia="'.$l['idAbrangencia'].'" title="restaurar o local de realiza&ccedil;&atilde;o excluído"/>';
+                        echo '<span style="margin: 10px;">Exclu&iacute;do</span>';
+                        echo '<img src="'.$this->baseUrl().'/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItemLocalRealizacao" tipo="'.$l['tpSolicitacao'].'" idAbrangencia="'.$l['idAbrangencia'].'" title="restaurar o local de realiza&ccedil;&atilde;o exclu&iacute;do"/>';
                     } else {  ?>
                         <input type="button" class="btn_excluir btnExcluirLR" idAbrangencia="<?php echo $l->idAbrangencia; ?>">
                 <?php } }
@@ -57,11 +57,11 @@
                     $title = '';
                     switch ($l['tpSolicitacao']) {
                         case 'E':
-                            echo 'Excluído';
-                            $title = 'restaurar o local de realiza&ccedil;&atilde;o excluído';
+                            echo 'Exclu&iacute;do';
+                            $title = 'restaurar o local de realiza&ccedil;&atilde;o exclu&iacute;do';
                             break;
                         case 'I':
-                            echo 'Incluído';
+                            echo 'Inclu&iacute;do';
                             $title = 'recusar inclus&atilde;o de local de realiza&ccedil;&atilde;o';
                             break;
                         case 'A':
@@ -149,9 +149,9 @@
 <div id="modalInclusaoLR" class="sumir">
     <table class="tabela">
         <tr>
-            <td class="destacar bold" style="width: 33%">País</td>
+            <td class="destacar bold" style="width: 33%">Pa&iacute;s</td>
             <td class="destacar bold" style="width: 33%">UF</td>
-            <td class="destacar bold" style="width: 33%">Município</td>
+            <td class="destacar bold" style="width: 33%">Munic&iacute;pio</td>
         </tr>
         <tr>
             <td>
@@ -343,7 +343,7 @@
             if(tpAcao == 'I'){
                 msg = 'Tem certeza que deseja excluir o local de realiza&ccedil;&atilde;o adicionado?';
             } else {
-                msg = 'Tem certeza que deseja restaurar o local de realiza&ccedil;&atilde;o excluído?';
+                msg = 'Tem certeza que deseja restaurar o local de realiza&ccedil;&atilde;o exclu&iacute;do?';
             }
             
             $("#msgAlerta").dialog("destroy");

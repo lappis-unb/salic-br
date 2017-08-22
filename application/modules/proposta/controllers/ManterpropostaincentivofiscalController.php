@@ -94,7 +94,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             //VERIFICA SE A PROPOSTA TEM DILIGENCIAS
             $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
-            $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idpreprojeto = ?' => $this->idPreProjeto));
+            $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
 
             $this->view->acao = $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar";
@@ -373,7 +373,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             // Plano de execu&ccedil;&atilde;o imediata #novain
             if ($post['stproposta'] == '618') { // proposta execucao imediata edital
                 $idDocumento = 248;
-            } elseif ($post['stproposta'] == '619') { // proposta execucao imediata contrato de patrocínio
+            } elseif ($post['stproposta'] == '619') { // proposta execucao imediata contrato de patroc&iacute;nio
                 $idDocumento = 162;
             }
 
@@ -469,9 +469,9 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             }
 
             $ag = new Agente_Model_DbTable_Agentes();
-            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto, 'vprp.sivinculoproposta = ?' => 2));
+            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.sivinculoproposta = ?' => 2));
 
-            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto))->count();
+            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto))->count();
 
             if ($verificarvinculoCount > 0) {
                 $this->view->verificarsolicitacaovinculo = true;
@@ -490,12 +490,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             $tblVinculo = new Agente_Model_DbTable_TbVinculo();
 
-            $arrBuscaP['vp.idpreprojeto = ?'] = $idPreProjeto;
-            $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaP['vp.idPreProjeto = ?'] = $idPreProjeto;
+            $arrBuscaP['vi.idUsuarioResponsavel = ?'] = $this->idResponsavel;
             $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
             $arrBuscaN['vi.sivinculo in (0,2)'] = '';
-            $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaN['vi.idUsuarioResponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
 
@@ -509,7 +509,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 // Plano de execu&ccedil;&atilde;o imediata #novain
                 if ($stProposta == '618') { // proposta execucao imediata edital
                     $idDocumento = 248;
-                } elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
+                } elseif ($stProposta == '619') { // proposta execucao imediata contrato de patroc&iacute;nio
                     $idDocumento = 162;
                 }
                 if (!empty($idDocumento))
@@ -564,7 +564,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             // Plano de execu&ccedil;&atilde;o imediata #novain
             if ($this->_proposta["stproposta"] == '618') { // proposta execucao imediata edital
                 $idDocumento = 248;
-            } elseif ($this->_proposta["stproposta"] == '619') { // proposta execucao imediata contrato de patrocínio
+            } elseif ($this->_proposta["stproposta"] == '619') { // proposta execucao imediata contrato de patroc&iacute;nio
                 $idDocumento = 162;
             }
             if (!empty($idDocumento))
@@ -721,7 +721,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $this->verificarPermissaoAcesso(true, false, false);
 
         if ($this->isEditarProjeto) {
-            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
 
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
@@ -735,7 +735,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         if ($preProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listarproposta", "CONFIRM");
         } else {
-            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
     }
 

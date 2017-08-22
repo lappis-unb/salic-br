@@ -14,7 +14,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto</li>
+		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o F&iacute;sica do Projeto</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -23,7 +23,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'comprovantesemavaliacao')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
+	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o F&iacute;sica do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'comprovantesemavaliacao')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -144,12 +144,12 @@
 		?>
 
 		<tr>
-			<th style="border:none;"><label for="descricao">PARECER</label></th>
+			<th style="border:none;"><label for="Descricao">PARECER</label></th>
 			<td style="border:none;">
 				<input type="hidden" name="idPronac" id="idPronac" value="<?php echo $d->idPRONAC; ?>" />
 				<input type="hidden" name="pronac" id="pronac" value="<?php echo $d->pronac; ?>" />
 				<input type="hidden" name="doc" id="doc" value="<?php echo $d->idComprovante; ?>" />
-				<textarea class="textarea_simples w600" type="text" name="parecer" id="descricao" cols="60" rows="4" <?php echo $this->contadorTextarea('form.descricao', 'form.exibirContadorTextarea', 500); ?> 
+				<textarea class="textarea_simples w600" type="text" name="parecer" id="Descricao" cols="60" rows="4" <?php echo $this->contadorTextarea('form.Descricao', 'form.exibirContadorTextarea', 500); ?> 
 					onclick="limpar_campo(this, 'Digite o parecer...');" onmousedown=" " onkeypress=" " 
 					onblur="restaurar_campo(this, 'Digite o parecer...');"><?php echo isset($this->parecer) ? $this->parecer : 'Digite o parecer...'; ?></textarea>
 				<?php echo $this->exibirContadorTextarea('exibirContadorTextarea', 3, 500, strlen($this->parecer)); ?>

@@ -80,7 +80,7 @@
 
 	    if (erroData) {
 		$("#camposObrigatorios").dialog("destroy");
-		$("#camposObrigatorios").html("Data fim n&atilde;o pode ser menor que data início");
+		$("#camposObrigatorios").html("Data fim n&atilde;o pode ser menor que data in&iacute;cio");
 		$("#camposObrigatorios").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -182,7 +182,7 @@
                         novoMunicipio.removeAttr('disabled');
                         novoMunicipio.append('<option value=""> - Selecione - </option>');
                         for ( i in data.conteudo){
-                           novoMunicipio.append('<option value="'+data.conteudo[i].id+'">'+data.conteudo[i].descricao+'</option>');
+                           novoMunicipio.append('<option value="'+data.conteudo[i].id+'">'+data.conteudo[i].Descricao+'</option>');
                         }
                     } else {
                         novoMunicipio.html('');
@@ -231,7 +231,7 @@
                                     $('.ui-dialog-titlebar-close').remove();
                                     window.setTimeout('location.reload()', 1000);
                                 } else {
-                                    alertaModal("N&atilde;o foi possível excluir o Local de Realiza&ccedil;&atilde;o.");
+                                    alertaModal("N&atilde;o foi poss&iacute;vel excluir o Local de Realiza&ccedil;&atilde;o.");
                                 }
                             },
                             dataType : 'json'
@@ -397,9 +397,9 @@
             </tr>
             <tr align="center">
                 <td class="destacar bold">Editar</td>
-                <td class="destacar bold">País</td>
+                <td class="destacar bold">Pa&iacute;s</td>
                 <td class="destacar bold">UF</td>
-                <td class="destacar bold">Município</td>
+                <td class="destacar bold">Munic&iacute;pio</td>
                 <td class="destacar bold" width="10%">Status</td>
                 <td class="destacar bold" width="1">Dt. In&iacute;cio Realiza&ccedil;&atilde;o</td>
                 <td class="destacar bold" width="1">Dt. Fim Realiza&ccedil;&atilde;o</td>
@@ -456,9 +456,9 @@
                 <th colspan="8">Local de Realiza&ccedil;&atilde;o (Outras fontes)</th>
             </tr>
             <tr align="center">
-                <td class="destacar bold">País</td>
+                <td class="destacar bold">Pa&iacute;s</td>
                 <td class="destacar bold">UF</td>
-                <td class="destacar bold">Município</td>
+                <td class="destacar bold">Munic&iacute;pio</td>
                 <td class="destacar bold" width="1">Status</td>
                 <td class="destacar bold" width="1">Dt. In&iacute;cio Realiza&ccedil;&atilde;o</td>
                 <td class="destacar bold" width="1">Dt. Fim Realiza&ccedil;&atilde;o</td>

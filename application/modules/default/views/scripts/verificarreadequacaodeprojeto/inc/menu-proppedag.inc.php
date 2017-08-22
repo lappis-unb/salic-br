@@ -30,7 +30,7 @@
 </script>
 <!-- ========== FIM AJUSTE DO LAYOUT PARA ACOPLAR MENU LATERAL ========== -->
 
-<!-- início: navega&ccedil;&atilde;o local #qm0 -->
+<!-- in&iacute;cio: navega&ccedil;&atilde;o local #qm0 -->
 <script type="text/javascript">
     $(function(){
         carregaPagina();

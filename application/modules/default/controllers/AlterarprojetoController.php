@@ -155,11 +155,11 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         }
 
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 2));
-        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 13));
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
-        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 3));
-        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idTipo' => 4, 'idverificacao' => array(28, 29)));
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'Descricao', array('idTipo' => 2));
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'Descricao', array('idTipo' => 13));
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'Descricao');
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'Descricao', array('idTipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'Descricao', array('idTipo' => 4, 'idverificacao' => array(28, 29)));
 
         parent::init(); // chama o init() do pai GenericControllerNew
     }
@@ -1068,7 +1068,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             $this->view->parecer = $listaparecer[0];
             $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
 
-            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'descricao');
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'Descricao');
             $objSegmentocultural = new Segmentocultural();
             $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($listaparecer[0]->Area);
 

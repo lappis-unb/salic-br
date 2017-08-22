@@ -83,7 +83,7 @@ class Mensagem extends GenericModel{
                 'idPronac',
                 'idDiligencia',
                 'titulo',
-                'descricao',
+                'Descricao',
                 'dtEnvio',
                 'dtAcesso'), 'SAC')
             ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC')
@@ -95,7 +95,7 @@ class Mensagem extends GenericModel{
                 'm.idPronac',
                 'm.idDiligencia',
                 'm.titulo',
-                'm.descricao',
+                'm.Descricao',
                 'm.dtEnvio',
                 'm.dtAcesso'))
             ->order(array(

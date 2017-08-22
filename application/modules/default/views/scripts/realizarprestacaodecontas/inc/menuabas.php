@@ -50,7 +50,7 @@ foreach ( $this->consultaReuniao as $value ) {
 		}
 		echo "</tr>";
 		echo "<tr >";
-		echo "<td>Período para inclus&atilde;o de projetos:</td>";
+		echo "<td>Per&iacute;odo para inclus&atilde;o de projetos:</td>";
 		echo "<td>" . $value->DtInicio . " a " . $value->DtFechamento . "</td>";
 		echo "</tr>";
 		echo "<tr >";

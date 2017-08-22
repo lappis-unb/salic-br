@@ -1,6 +1,6 @@
 <?php
 /**
- * Nomes dos status da comprova&ccedil;&atilde;o física do projeto
+ * Nomes dos status da comprova&ccedil;&atilde;o f&iacute;sica do projeto
  * @author Equipe RUP - Politec
  * @since 14/05/2010
  * @version 1.0

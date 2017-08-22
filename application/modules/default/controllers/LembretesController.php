@@ -13,7 +13,7 @@ class LembretesController extends MinC_Controller_Action_Abstract {
 	 */
 	public function init()
 	{
-		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+		$this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // t&iacute;tulo da p&aacute;gina
 		$auth              = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
 		$Usuario           = new UsuarioDAO(); // objeto usu&aacute;rio
 		$GrupoAtivo        = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
@@ -145,7 +145,7 @@ class LembretesController extends MinC_Controller_Action_Abstract {
 		}
 		else
 		{
-			parent::message("Lembrete excluído com sucesso!", "lembretes/index?pronac=".$pronac."&databusca=".$databusca, "CONFIRM");
+			parent::message("Lembrete exclu&iacute;do com sucesso!", "lembretes/index?pronac=".$pronac."&databusca=".$databusca, "CONFIRM");
 		}
 
 		
@@ -160,7 +160,7 @@ public function alterarlembreteAction()
 		$contador  = $_GET['id'];
 		$pronac    = $_GET['pronac'];
 
-		$lembrete = $_GET['descricao'];
+		$lembrete = $_GET['Descricao'];
 	
 		$resultado = LembretesDAO::alterarlembrete($contador, $lembrete);
 				

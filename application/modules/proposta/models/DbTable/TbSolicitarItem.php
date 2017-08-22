@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Modelo que representa a tabela sac.dbo.tbSolicitarItem
- * @author Jefferson Alessandro
- * @version 1.0 - 08/01/2013
- */
-
 class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
     protected  $_banco  = 'sac';
@@ -160,7 +154,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
             array('sol' => $this->_name),
             array(
                 "pr.Codigo as idProduto",
-                "pr.descricao as Produto",
+                "pr.Descricao as Produto",
                 "e.idPlanilhaEtapa",
                 "i.idPlanilhaItens",
             ),
@@ -352,7 +346,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
             $this->_schema
         );
 
-        $select->order("descricao");
+        $select->order("Descricao");
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -370,7 +364,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
             array('sol' => $this->_name),
             array(
                 "prod.Codigo as idProduto",
-                "prod.descricao as Produto",
+                "prod.Descricao as Produto",
                 "et.idPlanilhaEtapa",
                 "et.Descricao as Etapa",
                 "sol.idSolicitarItem",

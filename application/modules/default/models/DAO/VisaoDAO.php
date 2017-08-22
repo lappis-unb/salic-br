@@ -38,13 +38,13 @@
 //        else {
 //            $sql = "select
 //                                distinct vis.idVisao ,
-//                                ver.descricao,
+//                                ver.Descricao,
 //                                ver.idverificacao,
 //                                vis.idAgente ,
 //                                vis.Visao ,
 //                                vis.usuario ,
 //                                vis.stativo ,
-//                                ar.descricao as area
+//                                ar.Descricao as area
 //                                from " . GenericModel::getStaticTableName('agentes', 'Visao') . " vis
 //                                inner join " . GenericModel::getStaticTableName('agentes', 'Verificacao') . " ver on ver.idverificacao = vis.Visao
 //                                left join " . GenericModel::getStaticTableName('agentes', 'tbTitulacaoConselheiro') . " ttc on ttc.idAgente =  vis.idAgente

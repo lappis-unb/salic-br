@@ -26,7 +26,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        $sql = "SELECT Pr.AnoProjeto+Pr.Sequencial AS pronac,Pr.IdPRONAC,Pr.NomeProjeto,St.descricao AS situacao,pr.Cgccpf,
+        $sql = "SELECT Pr.AnoProjeto+Pr.Sequencial AS pronac,Pr.IdPRONAC,Pr.NomeProjeto,St.Descricao AS situacao,pr.Cgccpf,
                     CASE
                       WHEN (pr.Situacao = 'D02' OR pr.Situacao = 'D03')
                            THEN 'Projeto Aprovado'
@@ -178,7 +178,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$sql = "SELECT
 				Pr.AnoProjeto+Pr.Sequencial as nrpronac, Pr.NomeProjeto as nmprojeto,
 				Pr.IdPRONAC, a.CNPJCPF,
-				St.descricao as situacao,
+				St.Descricao as situacao,
 				CASE WHEN N.Descricao IS NULL
 				THEN I.Nome
 				ELSE N.Descricao
@@ -214,7 +214,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$sql = "SELECT
 				Pr.AnoProjeto+Pr.Sequencial as nrpronac, Pr.NomeProjeto as nmprojeto,
 				Pr.IdPRONAC, a.CNPJCPF,
-				St.descricao as situacao,
+				St.Descricao as situacao,
 				CASE WHEN N.Descricao IS NULL
 				THEN I.Nome
 				ELSE N.Descricao

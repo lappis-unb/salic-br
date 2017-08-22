@@ -183,7 +183,7 @@ if ($this->isEditavel) {
             <?php
             $idVinculoProposta = "";
             if (!empty($this->dadosVinculo[0])) {
-                $idVinculoProposta = $this->dadosVinculo[0]->idvinculoproposta;
+                $idVinculoProposta = $this->dadosVinculo[0]->idVinculoproposta;
             }
             ?>
             <input type="hidden" value="<?php echo $idVinculoProposta; ?>" name="idVinculoProposta"/>
@@ -202,7 +202,7 @@ if ($this->isEditavel) {
                                 <?php foreach ($this->listaProponentes as $lp): $lp = array_change_key_case($lp); ?>
                                     <?php if ($lp['idagenteproponente'] != $idAgente): ?>
                                         <option
-                                            value="<?php echo $lp['idvinculo']; ?>:<?php echo $lp['idagenteproponente']; ?>"><?php echo $lp['nomeproponente']; ?></option>
+                                            value="<?php echo $lp['idVinculo']; ?>:<?php echo $lp['idagenteproponente']; ?>"><?php echo $lp['nomeproponente']; ?></option>
                                     <?php endif; ?>
 
                                     <?php $idAgente = $lp['idagenteproponente']; ?>

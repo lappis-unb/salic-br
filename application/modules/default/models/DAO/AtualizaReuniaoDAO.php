@@ -177,7 +177,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
     {
         $sql = "SELECT 
                 tbv.idAgente,
-                nm.descricao
+                nm.Descricao
                 from bdcorporativo.scsac.tbvotante tbv
                 join agentes.dbo.nomes nm on nm.idAgente = tbv.idAgente
                 where tbv.idreuniao =" . $idreuniao . " and nm.TipoNome=18 order by 2 asc";

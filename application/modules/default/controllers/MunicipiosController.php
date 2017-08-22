@@ -46,7 +46,7 @@ class MunicipiosController extends Zend_Controller_Action {
         if(count($result) > 0){
             foreach ($result as $registro) {
                 $arrayMunicipios[$a]['id'] = $registro['id'];
-                $arrayMunicipios[$a]['descricao'] = utf8_encode($registro['descricao']);
+                $arrayMunicipios[$a]['Descricao'] = utf8_encode($registro['Descricao']);
                 $a++;
             }
             $jsonEncode = json_encode($arrayMunicipios);

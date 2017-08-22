@@ -32,7 +32,7 @@ class tbPedidoAlteracaoProjetoDAO extends Zend_Db_Table
                   apa.dsRetornoCoordenador,
                   apa.dtRetornoCoordenador,
                   apa.idCoordenador,
-                  nm.descricao as nomecoordenador,
+                  nm.Descricao as nomecoordenador,
                   pap.dsJustificativaAvaliacao,
                   pap.dtAvaliacao,
                   pap.idAvaliador,

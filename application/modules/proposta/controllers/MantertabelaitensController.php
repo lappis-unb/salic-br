@@ -124,7 +124,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                 $dadosassociar = array(
                     'idplanilhaitens' => $idPlanilhaItens,
                     'nomedoitem' => $nomeItem[0]->NomeDoItem,
-                    'descricao' => $justificativa,
+                    'Descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
                     'idAgente' => $this->idUsuario,
@@ -134,7 +134,7 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
                 $dadosincluir = array(
                     'idplanilhaitens' => 0,
                     'nomedoitem' => $NomeItem,
-                    'descricao' => $justificativa,
+                    'Descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
                     'idAgente' => $this->idUsuario,
@@ -507,13 +507,13 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
             $where = null;
             if ($item){
                 if($tipoPesquisa==1) {
-                    $where["i.descricao LIKE (?)"] = "%" . $item . "%";
+                    $where["i.Descricao LIKE (?)"] = "%" . $item . "%";
                 }elseif($tipoPesquisa==2) {
-                    $where["i.descricao LIKE (?)"] = "%" . $item;
+                    $where["i.Descricao LIKE (?)"] = "%" . $item;
                 }elseif($tipoPesquisa==3) {
-                    $where["i.descricao = ?"] = $item;
+                    $where["i.Descricao = ?"] = $item;
                 }elseif($tipoPesquisa==4) {
-                    $where["i.descricao <> ?"] = "%" . $item;
+                    $where["i.Descricao <> ?"] = "%" . $item;
                 }
             }
 
@@ -629,13 +629,13 @@ class Proposta_MantertabelaitensController extends Proposta_GenericController {
 
         $where = null;
         if($tipoPesquisa==1) {
-            $where["i.descricao LIKE (?)"] = "%" . $item . "%";
+            $where["i.Descricao LIKE (?)"] = "%" . $item . "%";
         }elseif($tipoPesquisa==2) {
-            $where["i.descricao LIKE (?)"] = "%" . $item;
+            $where["i.Descricao LIKE (?)"] = "%" . $item;
         }elseif($tipoPesquisa==3) {
-            $where["i.descricao = ?"] = $item;
+            $where["i.Descricao = ?"] = $item;
         }elseif($tipoPesquisa==4) {
-            $where["i.descricao <> ?"] = "%" . $item;
+            $where["i.Descricao <> ?"] = "%" . $item;
         }
 
         $tbpretitem = new MantertabelaitensDAO();

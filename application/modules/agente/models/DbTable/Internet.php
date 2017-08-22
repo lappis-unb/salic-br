@@ -57,7 +57,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
             array("e" => $this->_name),
             array("e.idinternet as idemail"
             ,"e.tipointernet as tipoemail"
-            ,"e.descricao as email"
+            ,"e.Descricao as email"
             ,"e.status"
             ,"e.divulgar"),
             $this->_schema
@@ -114,14 +114,14 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
             'i.idinternet',
             'i.idAgente',
             'i.tipointernet',
-            'i.descricao',
+            'i.Descricao',
             'i.status',
             'i.divulgar'
         );
 
         $sql = $db->select()
             ->from(array('i' => 'internet'), $i, $this->_schema)
-            ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $this->_schema)
+            ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idverificacao', 'v.Descricao as tipo', $this->_schema)
             ->join(array('t' => 'tipo'), 't.idTipo = v.idTipo', null, $this->_schema);
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente

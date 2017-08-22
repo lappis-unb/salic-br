@@ -233,7 +233,7 @@ endif;
 	$('.linksModReadequacao').click( function() { return false; }); // bloqueia os links
 	$('.linksModReadequacao').css('text-decoration', 'none'); // oculta os links
 	$('.linksModReadequacao').css('cursor', 'auto'); // oculta o cursor de link
-	$('.linksModReadequacao').attr('title', 'Produto disponível apenas para consulta');
+	$('.linksModReadequacao').attr('title', 'Produto dispon&iacute;vel apenas para consulta');
 	<?php endif; ?>
 
 	// efetua o envio dos formul&aacute;rios
@@ -370,7 +370,7 @@ endif;
             if ($('#dtInicioExecucaoSR').val() == '' || $('#dtFimExecucaoSR').val() == '' || $('#justificativa').val() == '') {
                 validacao = false;
             } else if (!validarData($('#dtInicioExecucaoSR').val())) {
-                var div = $("<div id='modal-validar-dataE-validacao1'></div>").html('Data de Início Inv&aacute;lida!').appendTo('body');
+                var div = $("<div id='modal-validar-dataE-validacao1'></div>").html('Data de In&iacute;cio Inv&aacute;lida!').appendTo('body');
                 alertModal("Alerta!", "modal-validar-dataE-validacao1");
                 return 'cancelarSegundaModal';
             } else if (!validarData($('#dtFimExecucaoSR').val())) {
@@ -378,15 +378,15 @@ endif;
                 alertModal("Alerta!", "modal-validar-dataE-validacao2");
                 return 'cancelarSegundaModal';
             } else if (compararDataInicialDataFinal($('#dtInicioExecucaoSR').val(), $('#dtFimExecucaoSR').val()) == 1){
-                var div = $("<div id='modal-validar-dataE-inicio'></div>").html('Data Início n&atilde;o poder&aacute; ser superior a Data Fim!').appendTo('body');
+                var div = $("<div id='modal-validar-dataE-inicio'></div>").html('Data In&iacute;cio n&atilde;o poder&aacute; ser superior a Data Fim!').appendTo('body');
                 alertModal("Alerta!", "modal-validar-dataE-inicio");
                 return 'cancelarSegundaModal';
             } else if (compararDataInicialDataFinal($('#dtFimExecucao').val(), $('#dtInicioExecucaoSR').val()) != 0 || diasDecorridosEntreDuasDatas($('#dtFimExecucao').val(), $('#dtInicioExecucaoSR').val()) != 1){
-                var div = $("<div id='modal-validar-dataE-inicial'></div>").html('A nova Data de Início deve ser um dia posterior a Data Final atual!').appendTo('body');
+                var div = $("<div id='modal-validar-dataE-inicial'></div>").html('A nova Data de In&iacute;cio deve ser um dia posterior a Data Final atual!').appendTo('body');
                 alertModal("Alerta!", "modal-validar-dataE-inicial");
                 return 'cancelarSegundaModal';
             } else if ($('#dtInicioExecucaoSR').val().substr(6,4) != $('#dtFimExecucaoSR').val().substr(6,4)) {
-                var div = $("<div id='modal-validar-dataE-ano'></div>").html('As Datas dever&atilde;o ser na ocorrência do mesmo ano de exercício fiscal!').appendTo('body');
+                var div = $("<div id='modal-validar-dataE-ano'></div>").html('As Datas dever&atilde;o ser na ocorrência do mesmo ano de exerc&iacute;cio fiscal!').appendTo('body');
                 alertModal("Alerta!", "modal-validar-dataE-ano");
                 return 'cancelarSegundaModal';
             }

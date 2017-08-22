@@ -43,19 +43,19 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
 
         $select->joinInner(
             array('a'=>'Area'),'a.codigo = c.idcodigoarea',
-            array('a.descricao as area'),
+            array('a.Descricao as area'),
             $this->getSchema('sac')
         );
 
         $select->joinInner(
             array('s'=>'segmento'),'s.codigo = c.idcodigosegmento',
-            array('s.descricao as segmento'),
+            array('s.Descricao as segmento'),
             $this->getSchema('sac')
         );
 
         $select->joinLeft(
             array('v'=>'Verificacao'),'v.idverificacao = c.idverificacao',
-            array('v.descricao as nivel'),
+            array('v.Descricao as nivel'),
             $this->_schema
         );
 
@@ -67,8 +67,8 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
 
         $select->where('c.idAgente = ?', $idAgente);
         $select->where('x.Visao = ?', 209);
-        $select->order('a.descricao');
-        $select->order('s.descricao');
+        $select->order('a.Descricao');
+        $select->order('s.Descricao');
 
         return $this->fetchAll($select);
     }

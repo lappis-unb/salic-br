@@ -1,7 +1,7 @@
 <?php
 /**
  * Class Admissibilidade_Model_DbTable_Gerenciarparecertecnico
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @author Vin&iacute;cius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 02/12/2016 15:05
  */
 class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Table_Abstract{
@@ -464,7 +464,7 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
         $slct->joinInner(
                 array('v5' => 'Mecanismo'),
                 'v5.Codigo = tbr.Mecanismo',
-                array('v5.descricao as MecanismoDescricao')
+                array('v5.Descricao as MecanismoDescricao')
            );
 
         //adiciona quantos filtros foram enviados

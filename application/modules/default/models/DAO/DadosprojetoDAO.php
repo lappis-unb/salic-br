@@ -17,10 +17,10 @@ Class DadosprojetoDAO extends Zend_Db_Table{
 			Pr.NomeProjeto,
 			Pr.ResumoProjeto, 
 			Tp.meDespacho,
-			St.descricao dsSituacao,
-			Mc.descricao dsMecanismo,
-			Sg.descricao dsSegmento,
-			Ar.descricao dsArea,
+			St.Descricao dsSituacao,
+			Mc.Descricao dsMecanismo,
+			Sg.Descricao dsSegmento,
+			Ar.Descricao dsArea,
 			PP.idPreProjeto,
 			CASE WHEN N.Descricao IS NULL
 			THEN I.Nome

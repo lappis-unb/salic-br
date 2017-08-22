@@ -1045,7 +1045,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         if($_POST['newPaisLR'] == 31){
             if(empty($_POST['newUFLR']) && empty($_POST['newMunicipioLR'])){
-                $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e Município se tornam obrigatórios no cadastro!');
+                $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e Munic&iacute;pio se tornam obrigatórios no cadastro!');
                 $this->_helper->json(array('resposta'=>false, 'msg'=>$msg)); $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             $verificaLocalRepetido = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idPais=?'=>$_POST['newPaisLR'], 'idUF=?'=>$_POST['newUFLR'], 'idMunicipioIBGE=?'=>$_POST['newMunicipioLR']));
@@ -3241,10 +3241,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na sac.dbo.Abrangencia
+                                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi exclu&iacute;da, atualiza os status da abrangencia na sac.dbo.Abrangencia
                                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela sac.dbo.Abrangencia
+                                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi inclu&iacute;da, cria um novo registro na tabela sac.dbo.Abrangencia
                                             $novoLocalRead = array();
                                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3299,10 +3299,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribui&ccedil;&atilde;o foi excluído, atualiza os status do plano na sac.dbo.PlanoDistribuicaoProduto
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de distribui&ccedil;&atilde;o foi exclu&iacute;do, atualiza os status do plano na sac.dbo.PlanoDistribuicaoProduto
                                             $PlanoDistribuicaoProduto->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idProduto = ?'=>$plano->idProduto, 'Area = ?'=>$plano->cdArea, 'Segmento = ?'=>$plano->cdSegmento));
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribui&ccedil;&atilde;o foi incluído, cria um novo registro na tabela sac.dbo.PlanoDistribuicaoProduto
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de distribui&ccedil;&atilde;o foi inclu&iacute;do, cria um novo registro na tabela sac.dbo.PlanoDistribuicaoProduto
                                             $novoPlanoDistRead = array();
                                             $novoPlanoDistRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDistRead['idProduto'] = $plano->idProduto;
@@ -3350,7 +3350,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
                             // READEQUA&ccedil;&atilde;O DE PERÍODO DE EXECU&ccedil;&atilde;O
-                            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de período de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.Projetos.
+                            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de per&iacute;odo de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.Projetos.
                                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3375,7 +3375,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                                     if($avaliacao == 'D'){
-                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi excluído, atualiza os status do plano na sac.dbo.PlanoDeDivulgacao
+                                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi exclu&iacute;do, atualiza os status do plano na sac.dbo.PlanoDeDivulgacao
                                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                                             $tbLogomarca = new tbLogomarca();
                                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3386,7 +3386,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                                                 $PlanoDivulgacaoEmQuestao->delete();
                                             }
 
-                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi incluído, cria um novo registro na tabela sac.dbo.PlanoDeDivulgacao
+                                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi inclu&iacute;do, cria um novo registro na tabela sac.dbo.PlanoDeDivulgacao
                                             $novoPlanoDivRead = array();
                                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -3705,10 +3705,10 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                     if($avaliacao == 'D'){
-                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi excluída, atualiza os status da abrangencia na sac.dbo.Abrangencia
+                        if($abg->tpSolicitacao == 'E'){ //Se a abrangencia foi exclu&iacute;da, atualiza os status da abrangencia na sac.dbo.Abrangencia
                             $Abrangencia->delete(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPais = ?'=>$abg->idPais, 'idUF = ?'=>$abg->idUF, 'idMunicipioIBGE = ?'=>$abg->idMunicipioIBGE));
 
-                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi incluída, cria um novo registro na tabela sac.dbo.Abrangencia
+                        } else if($abg->tpSolicitacao == 'I') { //Se a abangência foi inclu&iacute;da, cria um novo registro na tabela sac.dbo.Abrangencia
                             $novoLocalRead = array();
                             $novoLocalRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoLocalRead['idPais'] = $abg->idPais;
@@ -3833,7 +3833,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
 
             // READEQUA&ccedil;&atilde;O DE PERÍODO DE EXECU&ccedil;&atilde;O
-            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de período de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.Projetos.
+            } else if($read->idTipoReadequacao == 13){ //Se for readequa&ccedil;&atilde;o de per&iacute;odo de execu&ccedil;&atilde;o, atualiza os dados na sac.dbo.Projetos.
                 $dtFimExecucao = Data::dataAmericana($read->dsSolicitacao);
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3858,7 +3858,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                     //Se a avalia&ccedil;&atilde;o foi deferida, realiza as mudan&ccedil;as necess&aacute;rias na tabela original.
                     if($avaliacao == 'D'){
-                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi excluído, atualiza os status do plano na sac.dbo.PlanoDeDivulgacao
+                        if($plano->tpSolicitacao == 'E'){ //Se o plano de divulga&ccedil;&atilde;o foi exclu&iacute;do, atualiza os status do plano na sac.dbo.PlanoDeDivulgacao
                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                             $tbLogomarca = new tbLogomarca();
                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
@@ -3867,7 +3867,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                             }
                             $PlanoDivulgacaoEmQuestao->delete();
 
-                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi incluído, cria um novo registro na tabela sac.dbo.PlanoDeDivulgacao
+                        } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulga&ccedil;&atilde;o foi inclu&iacute;do, cria um novo registro na tabela sac.dbo.PlanoDeDivulgacao
                             $novoPlanoDivRead = array();
                             $novoPlanoDivRead['idProjeto'] = $dadosPrj->idProjeto;
                             $novoPlanoDivRead['idPeca'] = $plano->idPeca;
@@ -4100,7 +4100,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
      * Criada em 31/05/2016
      * @author: Fern&atilde;o Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
-     * @return Bool   True se foi possível criar a planilha ou se ela existe
+     * @return Bool   True se foi poss&iacute;vel criar a planilha ou se ela existe
      */
     public function verificarPlanilhaAtivaAction() {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao

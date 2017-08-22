@@ -16,11 +16,11 @@ class Votante extends MinC_Db_Table_Abstract
         $select->joinInner(
                 array('nm' => 'nomes'),
                 "nm.idAgente = tbv.idAgente",
-                array('nm.descricao'),
+                array('nm.Descricao'),
                 'agentes'
         );
         $select->where('tbv.idreuniao = ?', $idreuniao);
-        $select->order('nm.descricao asc');
+        $select->order('nm.Descricao asc');
         return $this->fetchAll($select);
     }
 }

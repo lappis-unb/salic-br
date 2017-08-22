@@ -13,7 +13,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
         $select->from(
             $this->_name,
             array('id'=>'idUF',
-                'descricao'=> 'sigla'),
+                'Descricao'=> 'sigla'),
             $this->_schema
         );
         $select->order('sigla');

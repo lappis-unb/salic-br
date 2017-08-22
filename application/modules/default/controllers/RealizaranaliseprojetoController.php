@@ -1133,7 +1133,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                         $inserir = $tblParecer->inserir($dados);
                         $this->_helper->json(array('error' => false));
                     } catch (Exception $e) {
-                        $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
+                        $this->_helper->json(array('error' => true, 'Descricao' => $e->getMessage()));
                     }
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 } else {
@@ -1143,13 +1143,13 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                         $this->_helper->json(array('error' => false));
 
                     } catch (Zend_Exception $e) {
-                        $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
+                        $this->_helper->json(array('error' => true, 'Descricao' => $e->getMessage()));
                     }
                     $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
             } else {
 
-                $this->_helper->json(array('error' => true, 'descricao' => 'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
+                $this->_helper->json(array('error' => true, 'Descricao' => 'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
                 $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }

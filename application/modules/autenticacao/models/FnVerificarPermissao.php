@@ -78,7 +78,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                 $sql = $db->select()
                     ->from(array('a' => 'vinculacao'), null, $this->getSchema('agentes'))
                     ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', 'b.CNPJCPF' ,$this->getSchema('agentes'))
-                    ->join(array('c' => 'Agentes'), '(a.idvinculoprincipal = c.idAgente)', null, $this->getSchema('agentes'))
+                    ->join(array('c' => 'Agentes'), '(a.idVinculoprincipal = c.idAgente)', null, $this->getSchema('agentes'))
                     ->join(array('d' => 'Visao'), '(d.idAgente = a.idAgente)', null,$this->getSchema('agentes'))
                     ->where('b.CNPJCPF = ?', $cpfLogado)
                     ->where('c.CNPJCPF = ?', $cpfCnpjProponente)
@@ -100,7 +100,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             break;
         case 1:
             $sql = $db->select()
-                ->from(array('a' => 'preprojeto'), array('a.idAgente', 'a.idusuario'), $this->getSchema('sac'))
+                ->from(array('a' => 'PreProjeto'), array('a.idAgente', 'a.idusuario'), $this->getSchema('sac'))
                 ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', array('b.CNPJCPF', 'b.tipopessoa'), $this->getSchema('agentes'))
                 ->where('idpreprojeto = ?', $idPreProjeto)
                 ;
@@ -117,7 +117,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                 $sql = $db->select()
                     ->from(array('a' => 'vinculacao'), null, $this->getSchema('agentes'))
                     ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', 'b.CNPJCPF', $this->getSchema('agentes'))
-                    ->join(array('c' => 'Agentes'), '(a.idvinculoprincipal = c.idAgente)', null, $this->getSchema('agentes'))
+                    ->join(array('c' => 'Agentes'), '(a.idVinculoprincipal = c.idAgente)', null, $this->getSchema('agentes'))
                     ->join(array('d' => 'Visao'), '(d.idAgente = a.idAgente)', null, $this->getSchema('agentes'))
                     ->where('b.CNPJCPF = ?', $cpfLogado )
                     ->where('c.CNPJCPF = ?', $cpfCnpjProponente)
@@ -139,10 +139,10 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
 
                     if ($permissao == 0) {
                         $sql = $db->select()
-                            ->from(array('a' => 'preprojeto'), 'a.idAgente', $this->getSchema('sac'))
+                            ->from(array('a' => 'PreProjeto'), 'a.idAgente', $this->getSchema('sac'))
                             ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', null, $this->getSchema('agentes'))
                             ->join(array('c' => 'tbvinculoproposta'), '(a.idPreProjeto = c.idPreProjeto)', null, $this->getSchema('agentes'))
-                            ->join(array('d' => 'tbvinculo'), '(c.idVinculo = d.idVinculo)', null, $this->getSchema('agentes'))
+                            ->join(array('d' => 'tbVinculo'), '(c.idVinculo = d.idVinculo)', null, $this->getSchema('agentes'))
                             ->join(array('e' => 'sgcacesso'), '(d.idUsuarioResponsavel = e.idUsuario)', null, $this->getSchema('controledeacesso'))
                             ->where('c.siVinculoProposta = 2')
                             ->where('e.IdUsuario = ?', $idUsuarioLogado)
@@ -191,7 +191,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
                     $sql = $db->select()
                         ->from(array('a' => 'projetos'), '(a.anoprojeto+a.sequencial) as pronac', $this->getSchema('sac'))
                         ->join(array('b' => 'Agentes'), '(a.cgccpf = b.CNPJCPF)', null , $this->getSchema('agentes'))
-                        ->join(array('c' => 'vinculacao'), '(b.idAgente = c.idvinculoprincipal)', null , $this->getSchema('agentes'))
+                        ->join(array('c' => 'vinculacao'), '(b.idAgente = c.idVinculoprincipal)', null , $this->getSchema('agentes'))
                         ->join(array('d' => 'Agentes'), '(c.idAgente = d.idAgente)', null , $this->getSchema('agentes'))
                         ->join(array('e' => 'sgcacesso'), '(d.CNPJCPF = e.cpf)', null , $this->getSchema('controledeacesso'))
                         ->where('e.idusuario = ?', $idUsuarioLogado)

@@ -52,7 +52,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         $tblSituacao = new Situacao();
         $rsSitucao = $tblSituacao->buscar(array("Codigo in (?)" => array("A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20", "A21", "A22", "A23", "A24", "A25", "A26", "A27", "A37", "A38", "A40", "A41", "B10", "B11", "B12", "B13", "B14", "B15", "E12")));
 
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'Descricao');
         $this->view->comboestados = Estado::buscar();
         $this->view->mecanismo = $mecanismo2;
         $this->view->situacoes = $rsSitucao;
@@ -195,7 +195,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         if(count($agente) == 0 ){
             $this->_helper->json(array('agente'=>false));
         } else{
-            $this->_helper->json(array('agente'=>true , 'descricao' => utf8_encode($agente[0]['Descricao']) ));
+            $this->_helper->json(array('agente'=>true , 'Descricao' => utf8_encode($agente[0]['Descricao']) ));
         }
 
 

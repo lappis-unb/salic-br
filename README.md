@@ -14,6 +14,7 @@ independentemente do Sistema Operacional(SO) utilizado. Informaçoes mais detalh
 [aqui](doc/Guia_utilizacao_docker.md).
 
 Para criar um ambiente para trabalhar com o SALIC basta executar o comando abaixo:
+
 ```
   docker-compose up -d
 ```

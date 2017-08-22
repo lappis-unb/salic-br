@@ -1,6 +1,6 @@
 <?php
 /**
- * Helper para verificar o ícone da diligência do projeto
+ * Helper para verificar o &iacute;cone da diligência do projeto
  * @author Equipe RUP - Politec
  * @since 23/11/2011
  * @version 1.0

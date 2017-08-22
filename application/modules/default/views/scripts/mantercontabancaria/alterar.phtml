@@ -14,7 +14,7 @@
     <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
     <div id="breadcrumb">
         <ul>
-            <li class="first"><a href="index" title="Ir para Início">In&iacute;cio</a></li>
+            <li class="first"><a href="index" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
             <li class="second"><a href="<?php echo $this->url(array('controller' => 'mantercontabancaria', 'action' => 'consultar')); ?>" title="Ir para Liberar conta banc&aacute;ria">Manter conta banc&aacute;ria</a></li>
             <li class="last">Cadastrar conta banc&aacute;ria</li>
         </ul>
@@ -136,7 +136,7 @@
                     
                     if(justificativa){
                         $("#erro").dialog("destroy");
-                        $("#erro").html("O campo Justificativa deve ter o mínimo de 20 caracteres.");
+                        $("#erro").html("O campo Justificativa deve ter o m&iacute;nimo de 20 caracteres.");
                         $("#erro").dialog({
                           resizable: false,
                                 title: 'Alerta!',

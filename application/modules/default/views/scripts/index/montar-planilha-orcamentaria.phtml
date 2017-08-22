@@ -924,7 +924,7 @@ else if($this->tipoPlanilha == 5){ ?>
                                 $vlComprovado = 0;
                                 foreach ($this->planilha[$fonte][$produto][$etapa][$cidade] as $planilha) {
                                     $vlAprovado += $planilha['vlAprovado'];
-                                    // soma somente quando n&atilde;o tiver excluído o item
+                                    // soma somente quando n&atilde;o tiver exclu&iacute;do o item
                                     $valorAprovadoTotalUf += $planilha['vlAprovado'];
                                     $valorAprovadoTotalEtapa += $planilha['vlAprovado'];
                                     $valorAprovadoTotalProduto += $planilha['vlAprovado'];
@@ -1141,7 +1141,7 @@ else if($this->tipoPlanilha == 6){ ?>
                                 $vlAprovado = 0;
                                 foreach ($this->planilha[$fonte][$produto][$etapa][$cidade] as $planilha) {
                                     $vlAprovado += $planilha['vlAprovado'];
-                                    // soma somente quando n&atilde;o tiver excluído o item
+                                    // soma somente quando n&atilde;o tiver exclu&iacute;do o item
                                     if($planilha['tpAcao'] != 'E'){
                                         $valorAprovadoTotalUf += $planilha['vlAprovado'];
                                         $valorAprovadoTotalEtapa += $planilha['vlAprovado'];
@@ -1195,7 +1195,7 @@ else if($this->tipoPlanilha == 6){ ?>
                                         <td class="excluirItem centro" style="width: 1%;">
                                         <?php if($this->link && $this->idPerfil == 1111){ ?>
                                             <?php if($planilha['tpAcao'] == 'E'){ ?>
-                                                Item excluído
+                                                Item exclu&iacute;do
                                                 <img src="<?php echo $this->baseUrl(); ?>/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItem" tipo="<?php echo $planilha['tpAcao']; ?>" idPlanilha="<?php echo $planilha['idPlanilhaAprovacao']; ?>" title="<?php echo 'restaurar item'; ?>"/>
                                             <?php } else { ?>
                                                 <?php if(empty($planilha['vlComprovado'])){ ?>
@@ -1205,11 +1205,11 @@ else if($this->tipoPlanilha == 6){ ?>
                                             <?php $title = '';
                                                 switch ($planilha['tpAcao']) {
                                                     case 'E':
-                                                        echo 'Excluído';
+                                                        echo 'Exclu&iacute;do';
                                                         $title = 'restaurar item';
                                                         break;
                                                     case 'I':
-                                                        echo 'Incluído';
+                                                        echo 'Inclu&iacute;do';
                                                         $title = 'recusar inclus&atilde;o de item';
                                                         break;
                                                     case 'A':

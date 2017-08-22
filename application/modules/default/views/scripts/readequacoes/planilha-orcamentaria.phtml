@@ -537,7 +537,7 @@
                 ocorrencia = $('#modalOcorrencia').val(),
                 valor = $('#modalValorUnitario').val();
 
-            // retira os pontos e as vírgulas, deixando somente números
+            // retira os pontos e as v&iacute;rgulas, deixando somente números
             valor = valor.replace(/\D/g, "")
             .replace(/(\d{0})(\d)/, "$1$2")
             // adiciona o ponto na casa decimal
@@ -584,7 +584,7 @@
                 ocorrencia = $('#newOcorrencia').val(),
                 valor = $('#newValorUnitario').val();
 
-            // retira os pontos e as vírgulas, deixando somente números
+            // retira os pontos e as v&iacute;rgulas, deixando somente números
             valor = valor.replace(/\D/g, "")
             .replace(/(\d{0})(\d)/, "$1$2")
             // adiciona o ponto na casa decimal
@@ -635,7 +635,7 @@
             $('.restaurarItem').live('click', function(){
                 var idPlanilha = $(this).attr('idPlanilha'),
                     tpAcao = $(this).attr('tipo'),
-                    msg = 'Tem certeza que deseja restaurar o item excluído?';
+                    msg = 'Tem certeza que deseja restaurar o item exclu&iacute;do?';
 
                 $("#msgAlerta").dialog("destroy");
                 $("#msgAlerta").html(msg);
@@ -972,7 +972,7 @@
             <tr>
                 <td class="destacar bold" style="width: 33%">Recursos</td>
                 <td class="destacar bold" style="width: 33%">UF</td>
-                <td class="destacar bold" style="width: 33%">Município</td>
+                <td class="destacar bold" style="width: 33%">Munic&iacute;pio</td>
             </tr>
             <tr>
                 <td>

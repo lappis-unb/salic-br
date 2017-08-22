@@ -272,7 +272,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
                     'idprojeto' => $idPreProjeto,
                     'idetapa' => $idEtapa,
                     'idplanilhaitem' => $item->idPlanilhaItens,
-                    'descricao' => '',
+                    'Descricao' => '',
                     'unidade' => '1',
                     'quantidade' => '1',
                     'ocorrencia' => '1',
@@ -423,7 +423,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         # metakey de backup para o objeto atual
         $tableName = str_replace('dbo.', '', $object->getTableName());
 
-        if ($tableName == 'preprojeto' || $tableName == 'tbplanodistribuicao')
+        if ($tableName == 'PreProjeto' || $tableName == 'tbplanodistribuicao')
             return false;
 
         # recupera e verifica se os itens existem

@@ -14,7 +14,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto</li>
+		<li class="last">Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o F&iacute;sica do Projeto</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -23,7 +23,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o Física do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'buscardocumentos')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
+	<div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o F&iacute;sica do Projeto <span class="voltar"><a href="#" onclick="redirecionar('<?php echo $this->url(array('controller' => 'execucaofisicadoprojeto', 'action' => 'buscardocumentos')); ?>?pronac=<?php echo $_GET['pronac']; ?>');">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -74,16 +74,16 @@
 			</td>
 		</tr>
 		<tr>
-			<th><label for="titulos">Título</label></th>
+			<th><label for="titulos">T&iacute;tulo</label></th>
 			<td>
 				<input class="input_simples w600" type="text" name="titulo" id="titulos" maxlength="100" 
 					value="<?php echo isset($this->titulo) ? $this->titulo : $doc->nmComprovante; ?>" />
 			</td>
 		</tr>
 		<tr>
-			<th><label for="descricao">Descri&ccedil;&atilde;o</label></th>
+			<th><label for="Descricao">Descri&ccedil;&atilde;o</label></th>
 			<td>
-				<textarea class="textarea_simples w600" type="text" name="descricao" id="descricao" cols="60" rows="4" <?php echo $this->contadorTextarea('form.descricao', 'form.exibirContadorTextarea', 500); ?>><?php echo isset($this->descricao) ? $this->descricao : $doc->dsComprovante; ?></textarea>
+				<textarea class="textarea_simples w600" type="text" name="Descricao" id="Descricao" cols="60" rows="4" <?php echo $this->contadorTextarea('form.Descricao', 'form.exibirContadorTextarea', 500); ?>><?php echo isset($this->descricao) ? $this->descricao : $doc->dsComprovante; ?></textarea>
 				<?php echo $this->exibirContadorTextarea('exibirContadorTextarea', 3, 500, strlen($doc->dsComprovante)); ?>
 			</td>
 		</tr>

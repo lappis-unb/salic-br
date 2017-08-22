@@ -30,7 +30,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // título da p&aacute;gina
+        $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // t&iacute;tulo da p&aacute;gina
         $auth = Zend_Auth::getInstance(); // pega a autentica&ccedil;&atilde;o
         $Usuario = new UsuarioDAO(); // objeto usu&aacute;rio
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess&atilde;o com o grupo ativo
@@ -236,7 +236,7 @@ class DesvincularagentesController extends MinC_Controller_Action_Abstract {
 					Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 					$paginator = Zend_Paginator::factory($tbentidade); // dados a serem paginados
 
-					// p&aacute;gina atual e quantidade de ítens por p&aacute;gina
+					// p&aacute;gina atual e quantidade de &iacute;tens por p&aacute;gina
 					$currentPage = $this->_getParam('page', 1);
 					$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(1);
 					// ========== FIM PAGINA&ccedil;&atilde;O ==========

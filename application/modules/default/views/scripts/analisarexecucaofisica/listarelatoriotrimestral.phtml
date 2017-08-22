@@ -13,7 +13,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="index.html" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="index.html" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li class="last">Relat&oacute;rios Trimestrais,</li>
     </ul>
 </div>
@@ -45,7 +45,7 @@
             <?php
             foreach($this->relatorios[$key] as $dados){?>
             <tr>
-                <td><?php echo $dados['descricao']?></td>
+                <td><?php echo $dados['Descricao']?></td>
                 <td style="text-align: center;">
                     <?php if($a <= $this->qtdrelatorios){ ?><a href="<?php echo $this->url(array('controller' => 'analisarexecucaofisicatecnico', 'action' => 'relatoriotrimestral', 'idpronac' => $this->idpronac, 'nrrelatorio' => $a)); ?>">
                         <img src="<?php echo $this->baseurl(); ?>/public/img/table_multiple.png" alt=""></a>
@@ -64,7 +64,7 @@
 <?php } ?>
 </div><!-- final: conteudo principal #conteudo -->
 
-<!-- início: detalhe final da div conteudo #rodapeConteudo -->
+<!-- in&iacute;cio: detalhe final da div conteudo #rodapeConteudo -->
 <div id="rodapeConteudo"><span></span></div>
 <!-- final: detalhe final da div conteudo #rodapeConteudo -->
 

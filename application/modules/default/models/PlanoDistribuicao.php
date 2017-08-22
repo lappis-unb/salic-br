@@ -88,14 +88,14 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             $slct->from(array("a"=> $this->_name), $cols, $this->_schema);
             $slct->joinInner(array("b"=>"produto"),
                             "a.idproduto = b.codigo",
-                            array("Produto"=>"b.descricao"),
+                            array("Produto"=>"b.Descricao"),
                             $this->_schema);
             $slct->joinInner(array("ar"=>"Area"),
                             "a.area = ar.codigo",
-                            array("DescricaoArea"=>"ar.descricao"),  $this->_schema);
+                            array("DescricaoArea"=>"ar.Descricao"),  $this->_schema);
             $slct->joinInner(array("s"=>"segmento"),
                             "a.segmento = s.codigo",
-                            array("DescricaoSegmento"=>"s.descricao"),  $this->_schema);
+                            array("DescricaoSegmento"=>"s.Descricao"),  $this->_schema);
 
             $slct->where('a.stplanodistribuicaoproduto = ?', '1');
 
@@ -259,21 +259,21 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             "p.idPlanoDistribuicao = d.idPlanoDistribuicao",
             '*', $this->_schema);
 
-        $slct->joinInner(array('uf' => 'uf'), 'uf.CodUfIbge = d.idUF', 'uf.descricao AS DescricaoUf', $this->_schema);
+        $slct->joinInner(array('uf' => 'uf'), 'uf.CodUfIbge = d.idUF', 'uf.Descricao AS DescricaoUf', $this->_schema);
 
-        $slct->joinInner(array('mun' => 'municipios'), 'mun.idmunicipioibge = d.idMunicipio','mun.descricao as DescricaoMunicipio', $this->getSchema('agentes'));
+        $slct->joinInner(array('mun' => 'municipios'), 'mun.idmunicipioibge = d.idMunicipio','mun.Descricao as DescricaoMunicipio', $this->getSchema('agentes'));
 
         $slct->joinInner(array("b"=>"produto"),
             "p.idproduto = b.codigo",
-            array("Produto"=>"b.descricao"),
+            array("Produto"=>"b.Descricao"),
             $this->_schema);
 
         $slct->joinInner(array("ar"=>"Area"),
             "p.area = ar.codigo",
-            array("DescricaoArea"=>"ar.descricao"),  $this->_schema);
+            array("DescricaoArea"=>"ar.Descricao"),  $this->_schema);
         $slct->joinInner(array("s"=>"segmento"),
             "p.segmento = s.codigo",
-            array("DescricaoSegmento"=>"s.descricao"),  $this->_schema);
+            array("DescricaoSegmento"=>"s.Descricao"),  $this->_schema);
 
         $slct->where('p.idProjeto = ?', $idPreProjeto);
 

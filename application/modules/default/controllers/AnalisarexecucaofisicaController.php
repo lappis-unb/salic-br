@@ -67,78 +67,78 @@ class AnalisarexecucaofisicaController extends MinC_Controller_Action_Abstract {
             for ($anoperiodo; $anoperiodo < $anoatual; $anoperiodo++) {
                 if ($mesperiodo <= 3 and $anoperiodo < $anoatual) {
                     $periodo[$a]['valor'] = '01-01-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
                     $periodo[$a]['valor'] = '01-04-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 2 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 2 - " . $anoperiodo;
                     $a++;
                     $periodo[$a]['valor'] = '01-07-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 3 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 3 - " . $anoperiodo;
                     $a++;
                     $periodo[$a]['valor'] = '01-10-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 4 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 4 - " . $anoperiodo;
                     $a++;
                 } else if ($mesperiodo >= 4 and $mesperiodo <= 6 and $anoperiodo) {
                     $periodo[$a]['valor'] = '01-04-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
                     $periodo[$a]['valor'] = '01-07-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 2 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 2 - " . $anoperiodo;
                     $a++;
                     $periodo[$a]['valor'] = '01-10-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 3 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 3 - " . $anoperiodo;
                     $a++;
                 } else if ($mesperiodo >= 7 and $mesperiodo <= 9 and $anoperiodo) {
                     $periodo[$a]['valor'] = '01-07-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
                     $periodo[$a]['valor'] = '01-10-' . $anoperiodo. '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 2 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 2 - " . $anoperiodo;
                     $a++;
                 } else if ($mesperiodo >= 10 and $anoperiodo < $anoatual) {
                     $periodo[$a]['valor'] = '01-10-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
                 }
                 if ($mesatual <= 3 and $anoperiodo == $anoatual) {
                     $periodo[$a]['valor'] = '01-01-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
                 } else if ($mesatual >= 4 and $mesatual <= 6 and $anoperiodo == $anoatual) {
                     $periodo[$a]['valor'] = '01-01-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
 
                     $periodo[$a]['valor'] = '01-03-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 2 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 2 - " . $anoperiodo;
                     $a++;
                 } else if ($mesatual >= 7 and $mesatual <= 9 and $anoperiodo == $anoatual) {
                     $periodo[$a]['valor'] = '01-01-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
 
                     $periodo[$a]['valor'] = '01-03-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 2 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 2 - " . $anoperiodo;
                     $a++;
 
                     $periodo[$a]['valor'] = '01-07-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 3 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 3 - " . $anoperiodo;
                     $a++;
                 } else if ($mesatual >= 10 and $anoperiodo == $anoatual) {
                     $periodo[$a]['valor'] = '01-01-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 1 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 1 - " . $anoperiodo;
                     $a++;
 
                     $periodo[$a]['valor'] = '01-03-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 2 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 2 - " . $anoperiodo;
                     $a++;
 
                     $periodo[$a]['valor'] = '01-07-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 3 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 3 - " . $anoperiodo;
                     $a++;
 
                     $periodo[$a]['valor'] = '01-10-' . $anoperiodo . '/' . date('d-m-Y');
-                    $periodo[$a]['descricao'] = "Relatorio 4 - " . $anoperiodo;
+                    $periodo[$a]['Descricao'] = "Relatorio 4 - " . $anoperiodo;
                     $a++;
                 }
                 $anogravado = $anoperiodo;

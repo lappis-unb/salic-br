@@ -27,7 +27,7 @@ class Agente_Model_NomesMapper extends MinC_Db_Mapper
         $arrData = array(
             'idAgente' => $arrData['idAgente'],
             'tiponome' => (strlen($arrData['cpf']) == 11 ? 18 : 19), # 18 = pessoa fisica e 19 = pessoa juridica
-            'descricao' => $arrData['nome'],
+            'Descricao' => $arrData['nome'],
             'status' => 0,
             'usuario' => $arrData['IdUsuario'],
         );

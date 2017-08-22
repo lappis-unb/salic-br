@@ -64,7 +64,7 @@ $('#cnpfcpf').blur(function(){
                 function(data){
                     if(data.agente){
                         $('#nomeProponente').html('');
-                        $('#nomeProponente').html(data.descricao);
+                        $('#nomeProponente').html(data.Descricao);
                     } else{
                         $("#erro").dialog("destroy");
                         $("#erro").html("Agente n�o cadastrado no Sistema.<br />Deseja cadastra-lo ? ");

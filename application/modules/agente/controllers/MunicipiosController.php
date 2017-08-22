@@ -61,6 +61,6 @@ class Agente_MunicipiosController extends Zend_Controller_Action
 
         // integracao MODELO e VISAO
         $municipioMapper = new Agente_Model_MunicipiosMapper();
-        $this->view->combocidades = $municipioMapper->fetchPairs('idmunicipioibge', 'descricao', array('idufibge' => $id));
+        $this->view->combocidades = $municipioMapper->fetchPairs('idmunicipioibge', 'Descricao', array('idufibge' => $id));
     }
 }

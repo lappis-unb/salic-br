@@ -99,27 +99,27 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
         {
             /* ========== INÍCIO SOMA DE INGRESSOS ========== */
             patrocinador = document.getElementById('patrocinador').value;
-            patrocinador = patrocinador.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            patrocinador = patrocinador.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             patrocinador = patrocinador.replace(/(\d{0})(\d)/, "$1$2");
             patrocinador = parseInt(patrocinador); // converte para int
 
             divulgacao = document.getElementById('divulgacao').value;
-            divulgacao = divulgacao.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            divulgacao = divulgacao.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             divulgacao = divulgacao.replace(/(\d{0})(\d)/, "$1$2");
             divulgacao = parseInt(divulgacao); // converte para int
 
             beneficiario = document.getElementById('beneficiario').value;
-            beneficiario = beneficiario.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            beneficiario = beneficiario.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             beneficiario = beneficiario.replace(/(\d{0})(\d)/, "$1$2");
             beneficiario = parseInt(beneficiario); // converte para int
 
             normal = document.getElementById('normal').value;
-            normal = normal.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            normal = normal.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             normal = normal.replace(/(\d{0})(\d)/, "$1$2");
             normal = parseInt(normal); // converte para int
 
             promocional = document.getElementById('promocional').value;
-            promocional = promocional.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            promocional = promocional.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             promocional = promocional.replace(/(\d{0})(\d)/, "$1$2");
             promocional = parseInt(promocional); // converte para int
 
@@ -151,13 +151,13 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
 
             /* ========== INÍCIO CALCULO DE INGRESSOS ========== */
             vlNormal = document.getElementById('vlNormal').value;
-            vlNormal = vlNormal.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            vlNormal = vlNormal.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             vlNormal = vlNormal.replace(/(\d{0})(\d)/, "$1$2");
             vlNormal = vlNormal.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
             vlNormal = parseFloat(vlNormal).toFixed(2); // converte para float e adiciona precis&atilde;o decimal
 
             vlPromocional = document.getElementById('vlPromocional').value;
-            vlPromocional = vlPromocional.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+            vlPromocional = vlPromocional.replace(/\D/g, ""); // retira os pontos e as v&iacute;rgulas, deixando somente números
             vlPromocional = vlPromocional.replace(/(\d{0})(\d)/, "$1$2");
             vlPromocional = vlPromocional.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
             vlPromocional = parseFloat(vlPromocional).toFixed(2); // converte para float e adiciona precis&atilde;o decimal

@@ -38,7 +38,7 @@ class Proposta_Model_DbTable_TbDocumentosPreProjeto  extends MinC_Db_Table_Abstr
         );
         $slct->joinInner(
             array("b"=> "documentosexigidos"), "a.codigodocumento = b.codigo",
-            array("descricao"), $this->getSchema('sac')
+            array("Descricao"), $this->getSchema('sac')
         );
 
         //adiciona quantos filtros foram enviados

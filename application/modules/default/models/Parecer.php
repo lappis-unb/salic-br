@@ -3,7 +3,7 @@
 /**
  * Class Parecer
  * @author augusto
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @author Vin&iacute;cius Feitosa da Silva <viniciusfesil@mail.com>
  * @since
  */
 class Parecer extends MinC_Db_Table_Abstract

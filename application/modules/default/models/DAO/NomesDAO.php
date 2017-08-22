@@ -77,7 +77,7 @@ class NomesDAO extends MinC_Db_Table_Abstract
         $dados = array(
             'idAgente' => $idAgente,
             'tiponome' => $TipoNome,
-            'descricao' => $Descricao,
+            'Descricao' => $Descricao,
             'status' => $Status,
             'usuario' => $Usuario
         );

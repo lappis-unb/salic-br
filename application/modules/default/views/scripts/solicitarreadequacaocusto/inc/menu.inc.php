@@ -2,10 +2,10 @@
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
 
-    <!-- início: conteúdo principal #container -->
+    <!-- in&iacute;cio: conteúdo principal #container -->
     <div id="container">
 
-        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
+        <!-- in&iacute;cio: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -204,7 +204,7 @@
                     success: function(data)
                     {
                         if (data.error) {
-                            $('#novas_mensagens').append('<div id="validar-pct">'+data.descricao+'<div>');                               
+                            $('#novas_mensagens').append('<div id="validar-pct">'+data.Descricao+'<div>');                               
                             $('#validar-pct').dialog("destroy");
                             $('#validar-pct').dialog
                             ({

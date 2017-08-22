@@ -1,7 +1,7 @@
 <?php include_once 'inc/menu.infger.inc.php'; ?>
 <div id="breadcrumb">
     <ul>
-        <li class="first">Início</li>
+        <li class="first">In&iacute;cio</li>
         <li class=""><a href="edital/index">Criar Edital - Passo 1</a></li>
         <li class="">Criar Edital - Passo 2</li>
     </ul>
@@ -51,14 +51,14 @@
                     <tr>
                         <td class="destacar bold esquerdo">Fase de Inscri&ccedil;&atilde;o <span style="color: red;">*</span></td>
                         <td colspan="<?php echo $this->existePRP == 1 ? '1':'3'?>">
-                            Dt. Início &nbsp;<input onkeyup="mascara(this, format_data);" name="dtInicioElaboracao" id="dtInicioElaboracao" size="10" maxlength="10" value="<?php echo ($this->dadosEdital) ? Data::tratarDataZend($this->dadosEdital->dtInicioEdital, 'brasileira') : '';  ?>" class="input_simples cmpData btn_calendario required"/>
+                            Dt. In&iacute;cio &nbsp;<input onkeyup="mascara(this, format_data);" name="dtInicioElaboracao" id="dtInicioElaboracao" size="10" maxlength="10" value="<?php echo ($this->dadosEdital) ? Data::tratarDataZend($this->dadosEdital->dtInicioEdital, 'brasileira') : '';  ?>" class="input_simples cmpData btn_calendario required"/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             Dt. Fim &nbsp;<input onkeyup="mascara(this, format_data);" name="dtFimElaboracao" id="dtFimElaboracao" size="10" maxlength="10" value="<?php echo ($this->dadosEdital) ? Data::tratarDataZend($this->dadosEdital->dtFimEdital, 'brasileira') : '';  ?>" class="input_simples cmpData btn_calendario required"/>
                         </td>
                         <?php if($this->existePRP == 1):?>
                         <td class="destacar bold esquerdo">Realiza&ccedil;&atilde;o do projeto</td>
                         <td colspan="1">
-                            Dt. Início &nbsp;<input onkeyup="mascara(this, format_data);" name="dtInicioRealizacao" id="dtInicioRealizacao" size="10" maxlength="10" value="<?php echo ($this->dadosEdital->dtInicioRealizacao) ? Data::tratarDataZend($this->dadosEdital->dtInicioRealizacao, 'brasileira') : '';  ?>" class="input_simples cmpData btn_calendario required"/>
+                            Dt. In&iacute;cio &nbsp;<input onkeyup="mascara(this, format_data);" name="dtInicioRealizacao" id="dtInicioRealizacao" size="10" maxlength="10" value="<?php echo ($this->dadosEdital->dtInicioRealizacao) ? Data::tratarDataZend($this->dadosEdital->dtInicioRealizacao, 'brasileira') : '';  ?>" class="input_simples cmpData btn_calendario required"/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             Dt. Fim &nbsp;<input onkeyup="mascara(this, format_data);" name="dtFimRealizacao" id="dtFimRealizacao" size="10" maxlength="10" value="<?php echo ($this->dadosEdital->dtFimRealizacao) ? Data::tratarDataZend($this->dadosEdital->dtFimRealizacao, 'brasileira') : '';  ?>" class="input_simples cmpData btn_calendario required"/>
                         </td>
@@ -95,7 +95,7 @@
                                 <input type="checkbox" class="marcatodos" filho=".Segmento" style="vertical-align: middle"/>&nbsp;<strong>Todas</strong><br />    
                                 <?php foreach ($this->segmento as $s): ?>
                                     <span class="pai-<?php echo substr($s['id'], 0, 1); ?> mta" style="<?php if(!in_array(substr($s['id'], 0, 1), $this->editalAreas)){ echo 'display: none;';} ?>">
-                                        <input class="filho-<?php echo substr($s['id'], 0, 1); ?> segmento" type="checkbox" <?php if(in_array($s['id'], $this->editalSegmentos)){ echo 'checked="checked"';} ?> name="segmento[]" value="<?php echo $s['id']; ?>"  style="vertical-align: middle" />&nbsp;<strong><?php echo $s['descricao']; ?></strong><br />
+                                        <input class="filho-<?php echo substr($s['id'], 0, 1); ?> segmento" type="checkbox" <?php if(in_array($s['id'], $this->editalSegmentos)){ echo 'checked="checked"';} ?> name="segmento[]" value="<?php echo $s['id']; ?>"  style="vertical-align: middle" />&nbsp;<strong><?php echo $s['Descricao']; ?></strong><br />
                                     </span>
                                 <?php endforeach; ?>
                             </div>
@@ -297,13 +297,13 @@
             var dtFimRealizacao   = $('#dtFimRealizacao').val();
             
             if( (new Date(dtAtual).getTime() > new Date(dtInicioElaboracao).getTime())){
-                $('#txtmsg').append('<br />Fase de Inscri&ccedil;&atilde;o: A data de início n&atilde;o pode ser menor que a data atual.');
+                $('#txtmsg').append('<br />Fase de Inscri&ccedil;&atilde;o: A data de in&iacute;cio n&atilde;o pode ser menor que a data atual.');
                 $('#msg').show();
                 enviar = 1;
             }
             
             if( (new Date(dtInicioElaboracao).getTime() > new Date(dtFimElaboracao).getTime())){
-                $('#txtmsg').append('<br />Fase de Inscri&ccedil;&atilde;o: A data de início n&atilde;o pode ser maior que a do fim.');
+                $('#txtmsg').append('<br />Fase de Inscri&ccedil;&atilde;o: A data de in&iacute;cio n&atilde;o pode ser maior que a do fim.');
                 $('#msg').show();
                 enviar = 1;
             }
@@ -311,13 +311,13 @@
             <?php if($this->existePRP == 1):?>
                 
                 if( (new Date(dtInicioRealizacao).getTime() > new Date(dtFimRealizacao).getTime())){
-                    $('#txtmsg').append('<br />Realiza&ccedil;&atilde;o do projeto: A data de início n&atilde;o pode ser maior que a do fim.');
+                    $('#txtmsg').append('<br />Realiza&ccedil;&atilde;o do projeto: A data de in&iacute;cio n&atilde;o pode ser maior que a do fim.');
                     $('#msg').show();
                     enviar = 1;
                 }
 
                 if( (new Date(dtFimElaboracao).getTime() > new Date(dtInicioRealizacao).getTime())){
-                    $('#txtmsg').append('<br />Realiza&ccedil;&atilde;o do projeto: A data de início n&atilde;o pode ser maior que a do fim da Fase de Inscri&ccedil;&atilde;o.');
+                    $('#txtmsg').append('<br />Realiza&ccedil;&atilde;o do projeto: A data de in&iacute;cio n&atilde;o pode ser maior que a do fim da Fase de Inscri&ccedil;&atilde;o.');
                     $('#msg').show();
                     enviar = 1;
                 }

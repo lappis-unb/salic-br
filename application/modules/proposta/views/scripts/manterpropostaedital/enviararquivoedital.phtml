@@ -78,7 +78,7 @@ $edital='';
                     </tr>
                     <?php foreach ($this->arquivosProposta as $arquivosProposta) { ?>
                     <tr>
-                        <td><?php echo $arquivosProposta['descricao']; ?></td>
+                        <td><?php echo $arquivosProposta['Descricao']; ?></td>
                         <td align="center"><?php echo Data::tratarDataZend($arquivosProposta['data'], 'Brasileira'); ?></td>
                         <td>
                             <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $arquivosProposta['iddocumentospreprojetos']; ?>">

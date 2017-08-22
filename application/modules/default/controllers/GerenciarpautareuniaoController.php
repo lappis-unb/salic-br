@@ -775,7 +775,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $rsVotacao = $votacao->buscar($where)->current();
 
                 if(!empty($rsVotacao) && $this->_request->getParam("tipo") != 'readequacao'){
-                    $this->_helper->json(array('error' => true, 'descricao' => 'J&aacute; existe uma vota&ccedil;&atildeo em aberto para este Pronac. Favor encerrar a vota&ccedil;&atildeo antes de iniciar uma outra.'));
+                    $this->_helper->json(array('error' => true, 'Descricao' => 'J&aacute; existe uma vota&ccedil;&atildeo em aberto para este Pronac. Favor encerrar a vota&ccedil;&atildeo antes de iniciar uma outra.'));
 
                 }else{
 
@@ -821,7 +821,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $this->_helper->json(array('error' => false));
                 }
             } catch (Exception $e) {
-                $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'Descricao' => $e->getMessage()));
             }
         } else {
             try {
@@ -835,7 +835,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $apagar = $votacao->apagar($where);
                 $this->_helper->json(array('error' => false));
             } catch (Exception $e) {
-                $this->_helper->json(array('error' => true, 'descricao' => $e->getMessage()));
+                $this->_helper->json(array('error' => true, 'Descricao' => $e->getMessage()));
             }
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
@@ -1374,7 +1374,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $Projetos = new Projetos();
                 $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+                $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'Descricao');
                 $objSegmentocultural = new Segmentocultural();
                 $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($this->view->projetosEN->cdArea);
 

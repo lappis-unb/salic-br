@@ -49,9 +49,9 @@
 </script>
 
 <div id="menu">
-    <!-- início: conteúdo principal #container -->
+    <!-- in&iacute;cio: conteúdo principal #container -->
     <div id="container">
-        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
+        <!-- in&iacute;cio: navega&ccedil;&atilde;o local #qm0 -->
         <?php
             $get = Zend_Registry::get("get");
             //define id do PreProjeto que sera passado as outras implementacoes

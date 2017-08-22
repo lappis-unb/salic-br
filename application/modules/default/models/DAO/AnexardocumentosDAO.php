@@ -90,7 +90,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
 //                        NoArquivo,
 //                        TaArquivo,
 //                        idDocumentosPreprojetos,
-//                        'preprojeto' as tipo
+//                        'PreProjeto' as tipo
 //                        FROM sac.dbo.tbDocumentosPreProjeto d
 //                        INNER JOIN sac.dbo.DocumentosExigidos e on (d.CodigoDocumento = e.Codigo)
 //                        WHERE idProjeto = $idprojeto

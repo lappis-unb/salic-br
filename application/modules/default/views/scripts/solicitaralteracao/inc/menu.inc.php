@@ -7,13 +7,13 @@ $menuExiste = false;
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
 
-    <!-- início: conteúdo principal #container -->
+    <!-- in&iacute;cio: conteúdo principal #container -->
     <div id="container">
         <div style="display:none" id="pergunta"><?php if ($this->existirPlanilhaCusto == 'ok') { ?>Seu projeto sofreu <?php echo $this->verificarReadequacao; ?>.<br /><br /><?php } ?>Tem certeza que deseja Enviar e Finalizar?</div>
         <div style="display:none" id="validarPlan">Antes de enviar a solicita&ccedil;&atilde;o &eacute; necess&aacute;rio cadastrar os Itens de Custos para os Produtos sem planilha or&ccedil;ament&aacute;ria!</div>
         <div style="display:none" id="dialog-alerta">Solicita&ccedil;&atilde;o realizada com sucesso!</div>
         <div style="display:none" id="dialog-em-analise">H&aacute; pedido de readequa&ccedil;&atilde;o em an&aacute;lise. Favor aguardar.</div>
-        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
+        <!-- in&iacute;cio: navega&ccedil;&atilde;o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -211,7 +211,7 @@ $menuExiste = false;
                 success: function(data)
                 {
                     if (data.error) {
-                        $('#novas_mensagens').append('<div id="validar-pct">'+data.descricao+'<div>');                               
+                        $('#novas_mensagens').append('<div id="validar-pct">'+data.Descricao+'<div>');                               
                         $('#validar-pct').dialog("destroy");
                         $('#validar-pct').dialog
                         ({
