@@ -36,7 +36,7 @@ EXPOSE 8888
 EXPOSE 9000
 
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY ./docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 RUN echo "[ ***** ***** ***** ] - Begin of Actions inside Image ***** ***** ***** "
