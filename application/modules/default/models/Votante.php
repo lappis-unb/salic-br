@@ -14,7 +14,7 @@ class Votante extends MinC_Db_Table_Abstract
             $this->_schema
         );
         $select->joinInner(
-                array('nm' => 'nomes'),
+                array('nm' => 'Nomes'),
                 "nm.idAgente = tbv.idAgente",
                 array('nm.Descricao'),
                 'agentes'

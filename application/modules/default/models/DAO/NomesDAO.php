@@ -3,7 +3,7 @@
 class NomesDAO extends MinC_Db_Table_Abstract
 {
 
-	protected $_name = 'nomes';
+	protected $_name = 'Nomes';
 	protected $_schema = 'agentes';
 
 

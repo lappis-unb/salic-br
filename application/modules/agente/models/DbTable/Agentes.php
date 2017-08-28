@@ -68,7 +68,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->setIntegrityCheck(false)
             ->distinct()
             ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
+            ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'EnderecoNacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
             ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
@@ -171,7 +171,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name), '*', $this->_schema);
-        $slct->joinInner(array('m' => 'nomes'), 'a.idAgente=m.idAgente', array('*'), $this->_schema);
+        $slct->joinInner(array('m' => 'Nomes'), 'a.idAgente=m.idAgente', array('*'), $this->_schema);
 
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -286,7 +286,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $this->_schema
         );
         $slct->joinInner(
-            array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
+            array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
             array('nm.Descricao as nomeagente'),
             $this->_schema
 
@@ -697,7 +697,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             array('v' => 'tbVinculo'), "v.idAgenteProponente = ag.idAgente ", array('v.siVinculo')
         );
         $sl->joinInner(
-            array('nm' => 'nomes'), "nm.idAgente = ag.idAgente", array('nm.Descricao')
+            array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente", array('nm.Descricao')
         );
 
         foreach ($where as $key => $valor) {
