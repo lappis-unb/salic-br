@@ -179,7 +179,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
                 tbv.idAgente,
                 nm.Descricao
                 from bdcorporativo.scsac.tbvotante tbv
-                join agentes.dbo.nomes nm on nm.idAgente = tbv.idAgente
+                join agentes.dbo.Nomes nm on nm.idAgente = tbv.idAgente
                 where tbv.idreuniao =" . $idreuniao . " and nm.TipoNome=18 order by 2 asc";
 
 //        die($sql);
