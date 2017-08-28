@@ -30,7 +30,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             'a.idAgente'
             ,'a.CNPJCPF'
             ,'a.CNPJCPFSuperior'
-            ,'a.tipopessoa'
+            ,'a.TipoPessoa'
         );
 
         $e = array(
@@ -66,7 +66,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
             ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.Descricao as dsarea', $schemaSac)
             ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.Descricao as dssegmento', $schemaSac)
-            ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
+            ->where('a.TipoPessoa = 0 or a.TipoPessoa = 1')
             ;
 
         if (!empty($cnpjcpf)) {
