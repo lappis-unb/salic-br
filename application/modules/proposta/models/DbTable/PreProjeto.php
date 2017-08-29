@@ -2983,7 +2983,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->join(array('p' => 'produto'), '(pp.idProduto = p.codigo)', array('p.codigo as CodigoProduto'), $this->getSchema('sac'))
             ->join(array('ti' => 'tbplanilhaitens'), 'ti.idplanilhaitens = pp.idplanilhaitem', array('ti.Descricao as DescricaoItem'), $this->getSchema('sac'))
             ->join(array('uf' => 'uf'),  'uf.codufibge = pp.ufdespesa', array('uf.Descricao as DescricaoUf', 'uf.uf as SiglaUF'), $this->getSchema('sac'))
-            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = pp.municipiodespesa', array('municipio.Descricao as Municipio'), $this->getSchema('agentes'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idMunicipioIBGE = pp.municipiodespesa', array('municipio.Descricao as Municipio'), $this->getSchema('agentes'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = pre.mecanismo', array('mec.Descricao as DescricaoMecanismo'), $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'),  'un.idunidade = pp.unidade', 'un.Descricao as Unidade', $this->getSchema('sac'))
             ->join(array('veri' => 'Verificacao'),  'veri.idverificacao = pp.fonterecurso', array('veri.idverificacao as idFonteRecurso', 'veri.Descricao as DescricaoFonteRecurso'), $this->getSchema('sac'))

@@ -191,7 +191,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
         $sql->joinLeft(array('uf' => 'uf'), 'uf.iduf = p.ufdespesa', array('ufdespesaf' => 'uf.Descricao'), $this->getSchema('agentes'));
 
-        $sql->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = p.municipiodespesa', array('municipiodespesaf' => 'm.Descricao'), $this->getSchema('agentes'));
+        $sql->joinLeft(array('m' => 'municipios'), 'm.idMunicipioIBGE = p.municipiodespesa', array('municipiodespesaf' => 'm.Descricao'), $this->getSchema('agentes'));
 
         $sql->where('p.idprojeto = ?', $id_projeto);
         $sql->order('p.idetapa','p.idproduto');
@@ -260,7 +260,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
             ->join(array('tpe' => 'tbplanilhaetapa'), 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
             ->join(array('tpi' => 'tbplanilhaitens'), 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
             ->join(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
-            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa', $mun, $this->getSchema('agentes'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idMunicipioIBGE = tpp.municipiodespesa', $mun, $this->getSchema('agentes'))
             ->join(array('prep' => 'PreProjeto'), 'prep.idPreProjeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.Descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.Descricao as Unidade', $this->getSchema('sac'))

@@ -108,7 +108,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.unidade = e.idunidade)', 'e.Descricao as Unidade', $sac)
             ->joinInner(array('i' => 'tbplanilhaitens'), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.Descricao as Item', $sac)
             ->joinInner(array('x' => 'Verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.Descricao as FonteRecurso', $sac)
-            ->joinLeft(array('f' => 'municipios'), '(b.municipiodespesa = f.idmunicipioibge)',array('u.sigla as UF'),$this->getSchema('agentes'))
+            ->joinLeft(array('f' => 'municipios'), '(b.municipiodespesa = f.idMunicipioIBGE)',array('u.sigla as UF'),$this->getSchema('agentes'))
             ->joinLeft(array('u' => 'uf'), '(f.idufibge = u.iduf and b.ufdespesa = u.iduf)',array('f.Descricao as Municipio'),$this->getSchema('agentes'))
             ->where('a.idPreProjeto = ? ', $idPronac)
             ->order("x.Descricao")

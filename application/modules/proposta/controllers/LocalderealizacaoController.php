@@ -441,7 +441,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             "usuario" => $this->usuarioLogado,
             "idpais" => $pais,
             "idUF" => ($pais == 31) ? $estados : 0,
-            "idmunicipioibge" => ($pais == 31) ? $cidades : 0
+            "idMunicipioIBGE" => ($pais == 31) ? $cidades : 0
         );
 
         $msg = "Local de realiza&ccedil;&atilde;o cadastrado com sucesso!";
@@ -451,7 +451,7 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
             if (empty($idAbrangencia)) {
                 $retorno = $tblAbrangencia->insert($dadosAbrangencia);
             } else {
-                $this->atualizarLocaldeRealizacaoDaPlanilha($idAbrangencia, $dadosAbrangencia["idUF"], $dadosAbrangencia["idmunicipioibge"]);
+                $this->atualizarLocaldeRealizacaoDaPlanilha($idAbrangencia, $dadosAbrangencia["idUF"], $dadosAbrangencia["idMunicipioIBGE"]);
 
                 $msg = "Local de realiza&ccedil;&atilde;o alterado com sucesso!";
                 $whereAbrangencia['idAbrangencia = ?'] = $idAbrangencia;

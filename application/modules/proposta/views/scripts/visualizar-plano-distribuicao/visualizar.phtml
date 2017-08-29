@@ -42,7 +42,7 @@
                                                                                 idplanodistribuicao="<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>"
                                                                                 idpreprojeto="<?php echo $this->idPreProjeto; ?>"
                                                                                 iduf="<?php echo $abrangencia['idUF']?>"
-                                                                                idmunicipioibge="<?php echo $abrangencia['idMunicipioIBGE']?>"
+                                                                                idMunicipioIBGE="<?php echo $abrangencia['idMunicipioIBGE']?>"
                                                                             ></visualizar-plano-distribuicao>
                                                                         </td>
                                                                     </tr>
@@ -300,7 +300,7 @@ Vue.component('visualizar-plano-distribuicao', {
             radio : 'n'
         }
     },
-    props:['idpreprojeto','idplanodistribuicao', 'idmunicipioibge', 'idUF', 'disabled'],
+    props:['idpreprojeto','idplanodistribuicao', 'idMunicipioIBGE', 'idUF', 'disabled'],
     computed:{
         // Limite: pre&ccedil;o popular: Quantidade de Inteira
         qtPrecoPopularValorIntegralLimite: function() {
@@ -560,7 +560,7 @@ Vue.component('visualizar-plano-distribuicao', {
             var vue = this;
 
             this.$data.produtos = [];
-            url = "/proposta/visualizar-plano-distribuicao/detalhar/idPreProjeto/"+this.idPreProjeto+"?idPlanoDistribuicao=" + this.idplanodistribuicao + "&idMunicipio=" + this.idmunicipioibge +"&idUF=" + this.iduf
+            url = "/proposta/visualizar-plano-distribuicao/detalhar/idPreProjeto/"+this.idPreProjeto+"?idPlanoDistribuicao=" + this.idplanodistribuicao + "&idMunicipio=" + this.idMunicipioIBGE +"&idUF=" + this.iduf
             console.log(url);
             $3.ajax({
               type: "GET",

@@ -128,10 +128,10 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
             ->from(array('de' => $this->_name), $de, $this->_schema)
             ->joinLeft(array('pao'=>'pais'), 'de.idpaisorigem = pao.idpais','pao.Descricao as po', $agenteSchema)
             ->joinLeft(array('ufo'=>'uf'), 'de.iduforigem = ufo.idUF','ufo.Descricao as ufo', $agenteSchema)
-            ->joinLeft(array('muo' => 'municipios'), 'de.idmunicipioorigem = muo.idmunicipioibge','muo.Descricao as muo', $agenteSchema)
+            ->joinLeft(array('muo' => 'municipios'), 'de.idmunicipioorigem = muo.idMunicipioIBGE','muo.Descricao as muo', $agenteSchema)
             ->joinLeft(array('pad' => 'pais'), 'de.idpaisdestino = pad.idpais', 'pad.Descricao as pd', $agenteSchema)
             ->joinLeft(array('ufd' => 'uf'), 'de.idufdestino = ufd.idUF','ufd.Descricao as ufd', $agenteSchema)
-            ->joinLeft(array('mud' => 'municipios'), 'de.idmunicipiodestino = mud.idmunicipioibge', 'mud.Descricao as mud', $agenteSchema)
+            ->joinLeft(array('mud' => 'municipios'), 'de.idmunicipiodestino = mud.idMunicipioIBGE', 'mud.Descricao as mud', $agenteSchema)
             ->where("idprojeto = ?", $idProjeto)
             ;
 

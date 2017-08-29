@@ -70,7 +70,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
             ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'EnderecoNacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
-            ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
+            ->joinLeft(array('m' => 'municipios'), 'm.idMunicipioIBGE = e.cidade', '*', $schemaAgentes)
             ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
             ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.Descricao as dstipoendereco', $schemaAgentes)
             ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.TipoLogradouro', 'vl.Descricao as dsTipoLogradouro', $schemaAgentes)

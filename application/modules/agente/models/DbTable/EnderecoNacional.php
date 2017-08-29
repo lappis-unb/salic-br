@@ -57,7 +57,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
 
         $m = array(
             'm.Descricao as municipio',
-            'm.idmunicipioibge as codmun',
+            'm.idMunicipioIBGE as codmun',
         );
 
         $u = array(
@@ -69,7 +69,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
             ->setIntegrityCheck(false)
             ->from(array('e' => 'EnderecoNacional'), $this->_getCols(), $this->_schema)
             ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', $ve, $this->_schema)
-            ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', $m, $this->_schema)
+            ->joinLeft(array('m' => 'municipios'), 'm.idMunicipioIBGE = e.cidade', $m, $this->_schema)
             ->joinLeft(array('u' => 'uf'), 'U.iduf = e.uf', $u, $this->_schema)
             ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.TipoLogradouro', array('vl.Descricao as dsTipoLogradouro'), $this->_schema)
             ->where('e.idAgente = ?', $idAgente)

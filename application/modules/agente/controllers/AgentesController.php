@@ -1791,7 +1791,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o layout
         $this->_helper->viewRenderer->setNoRender(true);
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
-
         $novos_valores = array();
         $dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
@@ -1970,7 +1969,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'cidade' => $CidadeEndereco,
                 'logradouro' => $Endereco,
                 'divulgar' => $divulgarEndereco,
-                'tipologradouro' => $tipoLogradouro,
+                'TipoLogradouro' => $tipoLogradouro,
                 'numero' => $numero,
                 'complemento' => $complemento,
                 'bairro' => $bairro,
