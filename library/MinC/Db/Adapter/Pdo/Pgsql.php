@@ -73,32 +73,34 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
     public function treatJoinConditionDoubleQuotes($condition)
     {
-        $arrayConditionsUpper = explode('AND', $condition);
-        $arrayConditionsLower = explode('and', $condition);
-        if (count($arrayConditionsUpper) > 1) {
-            $condition = '';
-            foreach ($arrayConditionsUpper as $arrayCondition) {
-                if (!empty($condition)) {
-                    $condition .= ' AND ';
+        $arrayClauses = ['and', 'AND', 'or', 'OR'];
+        $condition = $this->treatJoinConditionsClauses($condition, $arrayClauses);
+        $cleanCondition = trim($condition);
+        $separator = '=';
+        if ($cleanCondition && strpos($cleanCondition, $separator) !== false) {
+            $arrayColunas = explode($separator, $condition);
+            $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
+            $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
+            $condition = "{$coluna1} {$separator} {$coluna2}";
+        }
+
+        return $condition;
+    }
+
+    protected function treatJoinConditionsClauses($condition, $arrayClauses)
+    {
+        if (is_array($arrayClauses)) {
+            foreach ($arrayClauses as $clause) {
+                $arrayConditions = explode($clause, $condition);
+                if (count($arrayConditions) > 1) {
+                    $condition = '';
+                    foreach ($arrayConditions as $explodedCondition) {
+                        if (!empty($condition)) {
+                            $condition .= " {$clause} ";
+                        }
+                        $condition .= $this->treatJoinConditionDoubleQuotes($explodedCondition);
+                    }
                 }
-                $condition .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
-            }
-        } elseif (count($arrayConditionsLower) > 1) {
-            $condition = '';
-            foreach ($arrayConditionsLower as $arrayCondition) {
-                if (!empty($condition)) {
-                    $condition .= ' and ';
-                }
-                $condition .= $this->treatJoinConditionDoubleQuotes($arrayCondition);
-            }
-        } else {
-            $cleanCondition = trim($condition);
-            $separator = '=';
-            if ($cleanCondition && strpos($cleanCondition, $separator) !== false) {
-                $arrayColunas = explode($separator, $condition);
-                $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
-                $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
-                $condition = "{$coluna1} {$separator} {$coluna2}";
             }
         }
 
@@ -124,6 +126,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                 }
             }
         }
+
         return $field;
     }
 
@@ -135,7 +138,6 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             && strpos($field, '"') === false
             && strpos($field, '(') === false
             && strpos($field, ')') === false
-            && strpos($field, ')') === false
         ) {
 
             $field = "'{$field}'";
@@ -146,7 +148,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
     public function treatColumnsDoubleQuotes($arrayColumns)
     {
-        if(is_array($arrayColumns)) {
+        if (is_array($arrayColumns)) {
             foreach ($arrayColumns as &$column) {
                 $columnParts = explode(' as ', $column);
                 if (count($columnParts) > 1) {
