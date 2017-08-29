@@ -35,24 +35,24 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         $e = array(
             'e.TipoLogradouro'
-            ,'e.cidade'
-            ,'e.cep as cep'
-            ,'e.uf'
-            ,'e.status'
-            ,'e.tipoendereco'
-            ,'e.idendereco'
-            ,'e.logradouro'
-            ,'e.numero'
-            ,'e.complemento'
-            ,'e.bairro'
-            ,'e.divulgar as divulgarendereco'
-            ,'e.status as enderecocorrespondencia'
+            ,'e.Cidade'
+            ,'e.Cep as cep'
+            ,'e.UF'
+            ,'e.Status'
+            ,'e.TipoEndereco'
+            ,'e.idEndereco'
+            ,'e.Logradouro'
+            ,'e.Numero'
+            ,'e.Complemento'
+            ,'e.Bairro'
+            ,'e.Divulgar as divulgarendereco'
+            ,'e.Status as enderecocorrespondencia'
         );
 
         $t = array(
-            't.sttitular'
-            ,'t.cdarea'
-            ,'t.cdsegmento'
+            't.stTitular'
+            ,'t.cdArea'
+            ,'t.cdSegmento'
         );
 
         $sql = $db->select()->distinct()->from(array('a' => 'Agentes'), $a, $schemaAgentes)
